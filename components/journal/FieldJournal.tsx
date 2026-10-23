@@ -328,7 +328,7 @@ export default function FieldJournal() {
             background: 'var(--bg-1)', border: '1px dashed var(--border)', marginBottom: 20,
           }}>
             <NotebookPen size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 10px' }} />
-            <div style={{ font: '600 16px Newsreader, Georgia, serif', color: 'var(--text-primary)', marginBottom: 6 }}>
+            <div style={{ font: '600 16px var(--font-display), Georgia, serif', color: 'var(--text-primary)', marginBottom: 6 }}>
               {ui('Nothing recorded yet', 'Akukho okubhaliwe okwamanje')}
             </div>
             <div style={{ font: '400 13px/1.5 var(--font-sans), sans-serif', color: 'var(--text-muted)', maxWidth: 320, margin: '0 auto' }}>
@@ -392,7 +392,7 @@ export default function FieldJournal() {
                       </span>
                     </div>
 
-                    <div style={{ font: '600 15.5px/1.3 Newsreader, Georgia, serif', color: 'var(--text-primary)', marginBottom: 4 }}>
+                    <div style={{ font: '600 15.5px/1.3 var(--font-display), Georgia, serif', color: 'var(--text-primary)', marginBottom: 4 }}>
                       {ex.title}
                     </div>
                     <div style={{ font: '400 13.5px/1.55 var(--font-sans), sans-serif', color: 'var(--text-secondary)' }}>
@@ -477,7 +477,7 @@ export default function FieldJournal() {
                       </div>
 
                       {entry.title && (
-                        <div style={{ font: '600 15.5px/1.3 Newsreader, Georgia, serif', color: 'var(--text-primary)', marginBottom: entry.notes ? 4 : 0 }}>
+                        <div style={{ font: '600 15.5px/1.3 var(--font-display), Georgia, serif', color: 'var(--text-primary)', marginBottom: entry.notes ? 4 : 0 }}>
                           {entry.title}
                         </div>
                       )}

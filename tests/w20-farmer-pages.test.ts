@@ -36,3 +36,11 @@ test('w20-04: chips are inline-flex; stats are a phone grid', () => {
   assert.match(s, /display: 'inline-flex',\s*alignItems: 'center',\s*gap: 4,\s*padding: '6px 11px'/);
   assert.match(s, /grid grid-cols-3 gap-x-3 gap-y-2 sm:flex/);
 });
+
+test('w20-05: journal and evidence titles use the hashed display font variable', () => {
+  for (const p of ['components/journal/FieldJournal.tsx', 'components/journal/JournalEntrySheet.tsx', 'components/EvidenceSheet.tsx', 'components/EvidenceCatalogue.tsx']) {
+    const s = read(p);
+    assert.doesNotMatch(s, /font: '[^']*Newsreader/, p);
+    assert.match(s, /var\(--font-display\), Georgia, serif/, p);
+  }
+});
