@@ -12,7 +12,8 @@ import g08 from './g08-records-money-crops';
 import g09 from './g09-farmer-design-home';
 import g10 from './g10-journal-samples-consent';
 import s01 from './s01-mel-templates';
+import s02 from './s02-study-tracks';
 
-const SHARDS: Record<string, string>[] = [g01, g02, g03, g04, g05, g06, g07, g08, g09, g10, s01];
+const SHARDS: Record<string, string>[] = [g01, g02, g03, g04, g05, g06, g07, g08, g09, g10, s01, s02];
 
 export const XH_INLINE_SOURCE: Record<string, string> = Object.assign({}, ...SHARDS);
