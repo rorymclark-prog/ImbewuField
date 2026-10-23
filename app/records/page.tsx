@@ -1749,8 +1749,9 @@ export default function RecordsPage() {
                 // ledger below instead. Picked has no desktop ledger substitute yet (its
                 // harvest-entry form has no FinancialSheet equivalent), so it still shows
                 // here at every width.
-                className={`rounded-2xl${tab === 'sold' ? ' lg:hidden' : ''}${tab === 'picked' ? ' lg:max-w-[640px]' : ''}`}
-                style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
+                // w19-11: plain wrapper (the MyRecords Card inside is the one surface) and
+                // full width like the other tabs, no half-empty desktop.
+                className={tab === 'sold' ? 'lg:hidden' : undefined}
               >
                 <MyRecords section={tab} onChanged={loadData} />
               </div>
