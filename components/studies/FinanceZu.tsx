@@ -39,7 +39,7 @@ export function FinanceZuBadge({ hasDraft }: { hasDraft: boolean }) {
         display: 'inline-flex', borderRadius: 999, padding: '2px 10px', fontSize: 12, fontWeight: 600,
         color: hasDraft ? '#704B08' : '#5C5040',
         background: hasDraft ? '#FFF1C2' : 'rgba(140,122,98,0.08)',
-        border: `1px solid ${hasDraft ? '#E9CC76' : '#E2D8C4'}`,
+        border: `1px solid ${hasDraft ? '#E9CC76' : 'var(--border)'}`,
       }}
     >
       {hasDraft ? t('studentZuluLessonDraftBadge') : t('studentZuluLessonEnglishBadge')}

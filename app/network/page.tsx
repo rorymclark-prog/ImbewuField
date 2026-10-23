@@ -48,11 +48,8 @@ import { useLanguage } from '@/lib/i18n';
 import FieldDataStatus from '@/components/FieldDataStatus';
 import { useNetworkPortfolio } from '@/lib/use-network-portfolio';
 import type { UserRole } from '@/lib/db/types';
-import BackButton from '@/components/BackButton';
-import BrandLogo from '@/components/BrandLogo';
-import SettingsButton from '@/components/SettingsButton';
+import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
-import MenuButton from '@/components/MenuButton';
 import {
   attentionFlags,
   filterNetwork,
@@ -63,7 +60,6 @@ import {
 } from '@/lib/network';
 import { DEMO_NETWORK_NOTICE } from '@/lib/network-demo';
 import type { GardenStatus } from '@/lib/db/types';
-import { APP_HEADER_INSET } from '@/lib/app-header';
 
 const NetworkMap = dynamic(() => import('@/components/network/NetworkMap'), {
   ssr: false,
@@ -73,20 +69,23 @@ const NetworkMap = dynamic(() => import('@/components/network/NetworkMap'), {
 function NetworkMapLoading() {
   const { lang } = useLanguage();
   return (
-    <div className="flex-1 flex items-center justify-center" style={{ background: '#E4DCC6' }}>
-      <span className="font-display" style={{ fontSize: 14, color: '#5C5040' }}>
+    <div className="flex-1 flex items-center justify-center" style={{ background: 'var(--bg-0)' }}>
+      <span className="font-display" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
         {lang === 'zu' ? 'Kulayishwa imephu yohlelo…' : 'Loading the portfolio map…'}
       </span>
     </div>
   );
 }
 
-const INK = '#20190F';
-const INK_SOFT = '#5C5040';
-const INK_MUTED = '#755942';
-const LINE = '#E2D8C4';
-const PAPER = '#FFFEFA';
-const ATTENTION = '#C0531E';
+// code-02 / dark-03: these used to be literal paper-and-ink hex, which painted the page as
+// light-mode-forever — the dark frame showed a light page with dark text. Theme tokens instead,
+// so the network portfolio follows the theme like every other screen.
+const INK = 'var(--text-primary)';
+const INK_SOFT = 'var(--text-secondary)';
+const INK_MUTED = 'var(--text-muted)';
+const LINE = 'var(--border)';
+const PAPER = 'var(--bg-1)';
+const ATTENTION = 'var(--orange)';
 
 const STATUS_COLOR: Record<GardenStatus, string> = {
   thriving: '#1F4D2B',
@@ -179,7 +178,7 @@ export default function NetworkPage() {
   // between renders as auth rehydrates.
   if (!authLoading && user && isLive && !canAccessRolePage(role, NETWORK_ALLOWED_ROLES)) {
     return (
-      <div className="flex h-screen items-center justify-center px-4" style={{ background: '#E4DCC6' }}>
+      <div className="flex h-screen items-center justify-center px-4" style={{ background: 'var(--bg-0)' }}>
         <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: PAPER, border: `1px solid ${LINE}` }}>
           <p className="text-sm font-display font-semibold mb-1" style={{ color: INK }}>{tr('This is the portfolio view', 'Leli yikhasi lohlelo lwabalimi')}</p>
           <p className="text-xs font-sans leading-relaxed" style={{ color: INK_MUTED }}>
@@ -191,69 +190,65 @@ export default function NetworkPage() {
   }
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       {/* ── Header ── */}
-      <header
-        className="flex-shrink-0 flex items-center px-3 md:px-4 gap-2"
-        style={{ ...APP_HEADER_INSET, background: PAPER, borderBottom: `1px solid ${LINE}` }}
-      >
-        <MenuButton />
-        <BackButton fallback="/home" />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: LINE }} />
-        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: INK_SOFT }}>
-          {tr('Network · funder portfolio', 'Inethiwekhi · uhlelo lwabaxhasi')}
-        </h1>
-        <div className="flex-1" />
+      <AppHeader
+        title={tr('Network · funder portfolio', 'Inethiwekhi · uhlelo lwabaxhasi')}
+        right={
+          <>
+            {/* The org picker only appears for a caller entitled to more than one org — a
+                single-org NGO has nothing to choose and should not be asked to. */}
+            {!portfolio.isDemo && portfolio.orgs.length > 1 && (
+              <select
+                aria-label={tr('Organisation', 'Inhlangano')}
+                value={portfolio.orgId ?? ''}
+                onChange={(e) => portfolio.setOrgId(e.target.value)}
+                className="font-sans"
+                style={{
+                  fontSize: 12, color: INK, background: PAPER, border: `1px solid ${LINE}`,
+                  borderRadius: 8, padding: '4px 8px', maxWidth: 190, marginRight: 4,
+                }}
+              >
+                {portfolio.orgs.map((o) => (
+                  <option key={o.id} value={o.id}>{o.name}</option>
+                ))}
+              </select>
+            )}
 
-        {/* The org picker only appears for a caller entitled to more than one org — a
-            single-org NGO has nothing to choose and should not be asked to. */}
-        {!portfolio.isDemo && portfolio.orgs.length > 1 && (
-          <select
-            aria-label={tr('Organisation', 'Inhlangano')}
-            value={portfolio.orgId ?? ''}
-            onChange={(e) => portfolio.setOrgId(e.target.value)}
-            className="font-sans"
-            style={{
-              fontSize: 11.5, color: INK, background: PAPER, border: `1px solid ${LINE}`,
-              borderRadius: 8, padding: '4px 8px', maxWidth: 190, marginRight: 4,
-            }}
-          >
-            {portfolio.orgs.map((o) => (
-              <option key={o.id} value={o.id}>{o.name}</option>
-            ))}
-          </select>
-        )}
-
-        {portfolio.isDemo && (
-          <span
-            // NEVER hide this on small screens. The privacy review caught it at
-            // 375px: the stat strip read "16 sites · 27 090 kg · R215 520" with
-            // no sample label anywhere on the first paint, so a funder's phone
-            // screenshot would carry fabricated figures as if they were programme
-            // results. A disclaimer that disappears at the size people actually
-            // photograph is worse than none.
-            //
-            // It is now conditional on isDemo, and ONLY on isDemo — the label must
-            // track what the rows actually are. Leaving it on real data would be
-            // the same failure in the other direction: a funder discounting real
-            // programme results as a mock-up.
-            className="font-sans font-semibold"
-            style={{
-              fontSize: 10.5,
-              color: '#9E5C08',
-              background: 'rgba(158,92,8,0.10)',
-              border: '1px solid rgba(158,92,8,0.30)',
-              borderRadius: 999,
-              padding: '3px 9px',
-              marginRight: 4,
-            }}
-          >
-            {tr('Programme portfolio', 'Iphothifoliyo yohlelo')}
-          </span>
-        )}
-        <SettingsButton />
-      </header>
+            {portfolio.isDemo && (
+              <span
+                // NEVER hide this on small screens. The privacy review caught it at
+                // 375px: the stat strip read "16 sites · 27 090 kg · R215 520" with
+                // no sample label anywhere on the first paint, so a funder's phone
+                // screenshot would carry fabricated figures as if they were programme
+                // results. A disclaimer that disappears at the size people actually
+                // photograph is worse than none.
+                //
+                // It is now conditional on isDemo, and ONLY on isDemo — the label must
+                // track what the rows actually are. Leaving it on real data would be
+                // the same failure in the other direction: a funder discounting real
+                // programme results as a mock-up.
+                className="font-sans font-semibold"
+                style={{
+                  fontSize: 12,
+                  color: 'var(--gold-dim)',
+                  background: 'rgba(158,92,8,0.10)',
+                  border: '1px solid rgba(158,92,8,0.30)',
+                  borderRadius: 999,
+                  padding: '3px 9px',
+                  marginRight: 4,
+                }}
+              >
+                {tr('Programme portfolio', 'Iphothifoliyo yohlelo')}
+              </span>
+            )}
+          </>
+        }
+      />
+      {/* nav-17: AppHeader's title is a <span>; keep a real h1 for the page since the old
+          header's h1 is gone. The stat strip right below already repeats "Sites" etc, so this
+          stays visually quiet (matches the previous text-xs treatment). */}
+      <h1 className="sr-only">{tr('Network · funder portfolio', 'Inethiwekhi · uhlelo lwabaxhasi')}</h1>
 
       {/* An authorised read that failed says so. It must not render as an empty portfolio:
           "no farmers" and "we could not find out" look identical on a dashboard and mean
@@ -264,8 +259,8 @@ export default function NetworkPage() {
           className="flex-shrink-0 flex items-center gap-2 px-3 md:px-4 py-2"
           style={{ background: 'rgba(158,92,8,0.08)', borderBottom: `1px solid ${LINE}` }}
         >
-          <AlertTriangle size={13} style={{ color: '#9E5C08', flexShrink: 0 }} />
-          <span className="font-sans" style={{ fontSize: 11.5, color: '#7A4A06' }}>
+          <AlertTriangle size={13} style={{ color: 'var(--gold-dim)', flexShrink: 0 }} />
+          <span className="font-sans" style={{ fontSize: 12, color: 'var(--gold-dim)' }}>
             {portfolio.error === 'No organisation is linked to this account yet.'
               ? tr(portfolio.error, 'Ayikho inhlangano exhunyiwe kule akhawunti okwamanje.')
               : portfolio.error === 'Could not reach the portfolio service.'
@@ -276,7 +271,7 @@ export default function NetworkPage() {
             onClick={portfolio.reload}
             className="font-sans font-semibold"
             style={{
-              fontSize: 11, color: '#7A4A06', background: 'transparent',
+              fontSize: 12, color: 'var(--gold-dim)', background: 'transparent',
               border: '1px solid rgba(158,92,8,0.35)', borderRadius: 7,
               padding: '2px 9px', cursor: 'pointer', marginLeft: 'auto', flexShrink: 0,
             }}
@@ -289,7 +284,7 @@ export default function NetworkPage() {
       {portfolio.loading && !portfolio.error && (
         <div
           className="flex-shrink-0 px-3 md:px-4 py-1.5 font-sans"
-          style={{ fontSize: 11, color: INK_MUTED, background: PAPER, borderBottom: `1px solid ${LINE}` }}
+          style={{ fontSize: 12, color: INK_MUTED, background: PAPER, borderBottom: `1px solid ${LINE}` }}
         >
           {tr('Loading the portfolio…', 'Kulayishwa uhlelo…')}
         </div>
@@ -297,7 +292,7 @@ export default function NetworkPage() {
 
       {isZulu && (
         <p role="note" className="flex-shrink-0 px-3 md:px-4 py-1.5 font-sans"
-          style={{ fontSize: 11, color: INK_SOFT, background: PAPER, borderBottom: `1px solid ${LINE}` }}>
+          style={{ fontSize: 12, color: INK_SOFT, background: PAPER, borderBottom: `1px solid ${LINE}` }}>
           Imephu nemininingwane yomlimi ewindini layo kusaboniswa ngesiNgisi.
         </p>
       )}
@@ -307,7 +302,11 @@ export default function NetworkPage() {
         className="flex-shrink-0"
         style={{ background: PAPER, borderBottom: `1px solid ${LINE}` }}
       >
-        <div className="flex items-stretch gap-0 overflow-x-auto px-3 md:px-4">
+        {/* staff-05 / ux-20: this used to be a single overflow-x row with no scroll hint, which
+            cut 'Needs attention' off at a phone's right edge. It now wraps onto a second row
+            below sm, rather than clipping silently; md+ keeps the original single-row strip,
+            which already has the width for it. */}
+        <div className="flex flex-wrap sm:flex-nowrap items-stretch gap-y-1.5 sm:overflow-x-auto px-3 md:px-4">
           {stats.map((s) => (
             <div
               key={s.label}
@@ -322,8 +321,8 @@ export default function NetworkPage() {
               <span
                 className="font-sans"
                 style={{
-                  fontSize: 9.5,
-                  letterSpacing: '0.1em',
+                  fontSize: 12,
+                  letterSpacing: '0.08em',
                   textTransform: 'uppercase',
                   color: INK_MUTED,
                   whiteSpace: 'nowrap',
@@ -368,7 +367,7 @@ export default function NetworkPage() {
         {totals.reportingCount < totals.farmerCount && (
           <p
             className="font-sans px-3 md:px-4"
-            style={{ fontSize: 10.5, color: INK_MUTED, paddingBottom: 6 }}
+            style={{ fontSize: 12, color: INK_MUTED, paddingBottom: 6 }}
           >
             {tr(
               `Totals cover ${totals.reportingCount} of ${totals.farmerCount} sites — the rest are not readable by this account.`,
@@ -376,7 +375,10 @@ export default function NetworkPage() {
             )}
           </p>
         )}
-        <p className="font-sans px-3 md:px-4" style={{ fontSize: 10.5, color: INK_MUTED, paddingBottom: 6 }}>
+        {/* ux-20 asks for this to move into the map's legend popover at >=12px; that popover
+            lives in components/network/NetworkMap.tsx, owned by another track this wave, so it
+            stays here for now — raised to the 12px floor rather than left at 10.5px. */}
+        <p className="font-sans px-3 md:px-4" style={{ fontSize: 12, color: INK_MUTED, paddingBottom: 6 }}>
           {tr('A dash (—) means no readable value. It never means zero.', 'Udeshi (—) usho ukuthi alikho inani elifundekayo. Akusho uziro.')}
         </p>
       </div>
@@ -388,7 +390,7 @@ export default function NetworkPage() {
           className={`${
             listOpen ? 'flex absolute inset-0 z-30' : 'hidden'
           } lg:flex lg:static lg:z-auto lg:w-[304px] lg:flex-shrink-0 flex-col overflow-hidden`}
-          style={{ background: '#F4EFE4', borderRight: `1px solid ${LINE}` }}
+          style={{ background: 'var(--bg-2)', borderRight: `1px solid ${LINE}` }}
         >
           {/* Search + filters */}
           <div className="flex-shrink-0 px-3 pt-3 pb-2" style={{ borderBottom: `1px solid ${LINE}` }}>
@@ -402,7 +404,7 @@ export default function NetworkPage() {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={tr('Farmer, site or district…', 'Umlimi, indawo noma isifunda…')}
                 aria-label={tr('Search the portfolio', 'Sesha ohlelweni')}
-                className="flex-1 font-sans bg-transparent outline-none"
+                className="flex-1 font-sans bg-transparent outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded"
                 style={{ fontSize: 13, color: INK, border: 'none', minWidth: 0 }}
               />
               {query && (
@@ -435,12 +437,12 @@ export default function NetworkPage() {
                     aria-pressed={on}
                     className="font-sans font-semibold"
                     style={{
-                      fontSize: 11,
+                      fontSize: 12,
                       borderRadius: 999,
                       padding: '3.5px 9px',
                       cursor: 'pointer',
                       background: on ? '#1F4D2B' : 'rgba(32,25,15,0.05)',
-                      color: on ? '#F7F2E9' : INK_SOFT,
+                      color: on ? 'var(--on-forest)' : INK_SOFT,
                       border: `1px solid ${on ? '#1F4D2B' : LINE}`,
                     }}
                   >
@@ -451,7 +453,7 @@ export default function NetworkPage() {
             </div>
 
             <div className="flex items-center gap-1.5" style={{ marginTop: 8 }}>
-              <span className="font-sans" style={{ fontSize: 10, color: INK_MUTED, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <span className="font-sans" style={{ fontSize: 12, color: INK_MUTED, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                 {tr('Sort', 'Hlela ngokulandelana')}
               </span>
               {SORTS.map((key) => (
@@ -462,12 +464,12 @@ export default function NetworkPage() {
                   aria-pressed={sort === key}
                   className="font-sans font-semibold"
                   style={{
-                    fontSize: 11,
+                    fontSize: 12,
                     borderRadius: 999,
                     padding: '3px 8px',
                     cursor: 'pointer',
                     background: sort === key ? 'rgba(31,77,43,0.12)' : 'transparent',
-                    color: sort === key ? '#1F4D2B' : INK_MUTED,
+                    color: sort === key ? 'var(--color-forest-800)' : INK_MUTED,
                     border: `1px solid ${sort === key ? 'rgba(31,77,43,0.35)' : LINE}`,
                   }}
                 >
@@ -532,13 +534,13 @@ export default function NetworkPage() {
                   </div>
                   <div
                     className="font-sans"
-                    style={{ fontSize: 11, color: INK_MUTED, marginTop: 1, paddingLeft: 17 }}
+                    style={{ fontSize: 12, color: INK_MUTED, marginTop: 1, paddingLeft: 17 }}
                   >
                     {farmer.siteName} · {farmer.district}
                   </div>
                   <div
                     className="font-sans"
-                    style={{ fontSize: 11, color: INK_SOFT, marginTop: 2, paddingLeft: 17 }}
+                    style={{ fontSize: 12, color: INK_SOFT, marginTop: 2, paddingLeft: 17 }}
                   >
                     {statKg(metrics.producedKg)} · {statZar(metrics.incomeZar)} ·{' '}
                     {group(farmer.plotSizeM2)} m²
@@ -550,7 +552,7 @@ export default function NetworkPage() {
             <p
               className="font-sans"
               style={{
-                fontSize: 10,
+                fontSize: 12,
                 color: INK_MUTED,
                 lineHeight: 1.5,
                 margin: '10px 8px 4px',
@@ -581,7 +583,7 @@ export default function NetworkPage() {
         <NetworkMap rows={rows} selectedId={selectedId} onSelect={select} />
       </div>
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

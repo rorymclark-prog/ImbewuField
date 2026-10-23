@@ -1,0 +1,16 @@
+{
+  "accepted-targets.json": "982d6151e95ba3ac522ed26754d4ce35c85797eb880c98163de56b01f2d8f785",
+  "accepted-paired-objects.json": "1fea568b5c3926bbb42c7d08cd27504598a271212e3c299432aa4108e97a56a9",
+  "accepted-ts-hold-metadata-amendment.json": "f3a26283d97c506ebc3bb636e8a78e8b58da961c6e15e9ec9b2dafdb2f7bb6af",
+  "native-before.json": "1aac497c420d9fcf9fe5252482c6655809a74e79b200e610264fa8c3dba9430f",
+  "native-after.json": "b564e7ed377f616ae996e49e118c40b99f0f407388d61c999a509d6b4546e4ca",
+  "canonical-before.json": "0c2a888bda6308e28d22bb15a0edc87c7630da184378ed5ee0d0d0cd7b8c1f02",
+  "ve-paired-before.json": "b933e501e5e77a6e15ab63ae270d16c56552d1cf1e08d927a02cb43a70dfb9d5",
+  "ts-paired-before.json": "10d0f9ede93fc7c323d60dab330b670d4c21b30720e073426598d27f8e444603",
+  "st-paired-before.json": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+  "ve-paired-after.json": "8f0b681a7661804affd9038bdd8ba09a080f7eaf9509a740070db5ac4005e80b",
+  "ts-paired-after.json": "2773290f06d9d9e48c638cd63e2c29d01281a666a6f42294c06b71db0e053e3d",
+  "st-paired-after.json": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+  "protected-st-intro.json": "c18392e966a76e80b5c701082463ea0c35a02b62f6b14c5f1e92bb7261249c74",
+  "source-file-before-hashes.json": "a1bd47e2dfd7a7f5ca68eee974661f9ce5d9aeee52a18689848f68d3b110fc34"
+}

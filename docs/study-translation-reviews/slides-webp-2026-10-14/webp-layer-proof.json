@@ -1,0 +1,5065 @@
+{
+ "status": "perf-03-perf-05-media-format-layer",
+ "date": "2026-10-14",
+ "note": "English and isiZulu lesson slides re-encoded from JPEG to WebP (quality 78, effort 5, same pixel size) and two Studies overview thumbnails added. No words, slide order or translations change. Each retired JPEG keeps its exact recorded size and digest here; its bytes stay in git history before this layer.",
+ "predecessorInventorySha256": "14fdd1383741d86b91520984a6154f01fd81d87f8bbd13a0fc725ec682c08d8e",
+ "retired": [
+  {
+   "path": "public/course-decks/food-forest/en/slide-01.jpg",
+   "bytes": 504470,
+   "sha256": "52ccee0f2e6d67b4a3754fcb9d6b2e110153027d03d6edd677db6fe7fe63e574",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-01.webp",
+    "bytes": 207028,
+    "sha256": "4c682ce4d862c800e5dbbbd99476ea17f6be138e23dece053ebcb64cc001ed7f"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-02.jpg",
+   "bytes": 106214,
+   "sha256": "cf9375afa2601ec2dd6569cad5690923655f3a55489db8be5148fea8814c66ba",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-02.webp",
+    "bytes": 30724,
+    "sha256": "ca98685ac3fc488469be71100461226f5d2ad9620522f225fac0b60ffc7b5086"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-03.jpg",
+   "bytes": 122690,
+   "sha256": "c7c11016db6a580ea091724dea04ded0e55144a3668ff2923ad913d8b80c33df",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-03.webp",
+    "bytes": 36528,
+    "sha256": "5f164c7936bfed093fe8fc648c71b5024f619e1dd4e527fbff677b8081cf08d7"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-04.jpg",
+   "bytes": 140698,
+   "sha256": "33327b803b34e0f61bfb25d883e21f004d30e1316d05451c24b00230b79c6bd7",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-04.webp",
+    "bytes": 43984,
+    "sha256": "6d44e7ff4e1bbc9c76912f5cc3010cac6a7fdb87e19ae32f07848ba6e94983db"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-05.jpg",
+   "bytes": 277669,
+   "sha256": "449529a643a2db01517aa47ed5de08f64955f107299a154b4986a4864cb9898b",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-05.webp",
+    "bytes": 142564,
+    "sha256": "7e153478c185cb452c40d0491781abd99fe36101bf06b6a6a365b2356d709bbb"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-06.jpg",
+   "bytes": 447141,
+   "sha256": "36b3a508a4327505f2c4a917e70b55ab3f6bfaf7a1be0adeef62528a576640bd",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-06.webp",
+    "bytes": 181564,
+    "sha256": "f91a5de34fa8680d297a62d289c1cc759bd42f19af34a667d34d52ef093610d1"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-07.jpg",
+   "bytes": 142318,
+   "sha256": "5da90a95d711cb09a68dad0e31da61d32255aa0ac5103ee823e812e0dcf75c83",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-07.webp",
+    "bytes": 44212,
+    "sha256": "de2204669bb474ad759cf3977ecdacc7ac2b9c742e10ea6afdab1bec803c378f"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-08.jpg",
+   "bytes": 1077897,
+   "sha256": "402ef1cdcfec39766a95e4d6c065eb95ee17b497f74736392673b88d55f9f874",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-08.webp",
+    "bytes": 510944,
+    "sha256": "194d58b6bb8f2a6e97259e6892e7270fe250e7913a8095dec8d640b6e2e3c656"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-09.jpg",
+   "bytes": 252956,
+   "sha256": "fb19f9202a4d8ac86d4cdfc6df0a433769bd9e4c29e6d33ef5aae6d1f6231324",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-09.webp",
+    "bytes": 89246,
+    "sha256": "fa75d297542aabe2ee7edc7dad7662f510a3b21870f10922dc49ad0658a3bdbb"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-10.jpg",
+   "bytes": 222883,
+   "sha256": "2f17872e8dc56465c0ecb7e35af2a2e92fb384f6ecd463c2a274ee8112d074e8",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-10.webp",
+    "bytes": 50990,
+    "sha256": "da0834251fd5d4369bb2c25c3227c4e55b54c641b5a8a3fe3701e525af4eec02"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-11.jpg",
+   "bytes": 140996,
+   "sha256": "92867722f6615fb8f1fbef25e99c4be7d52166583d7ef35f757131a9f50922b6",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-11.webp",
+    "bytes": 42892,
+    "sha256": "743c3736888154817050c0a5246da3a09c920e43338ca69e9c2a0ea125a78154"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-12.jpg",
+   "bytes": 142322,
+   "sha256": "d1deeeb6b4705690adf585a672efae9c64cb294a2ea04bd354015aaf14ecf5e4",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-12.webp",
+    "bytes": 43266,
+    "sha256": "309378c9fb27853ea7eb324b25394af0b2070874858e957d40bf81b35b49b817"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-13.jpg",
+   "bytes": 965661,
+   "sha256": "6c526116be7288944715a8b11fe4517dbc0ca7412181d6d56bd2ea7f052ef566",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-13.webp",
+    "bytes": 418074,
+    "sha256": "8644b0679007f1ade0ddedf3c5a400bd5b4ef2f0412dca17305a73b1ae6c809b"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-14.jpg",
+   "bytes": 260146,
+   "sha256": "228925c2e961ffa10fb9daf8280a4ef4c64275957d5ad4f5a10588e02f70b59f",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-14.webp",
+    "bytes": 95010,
+    "sha256": "288d1350319a6afae41c87793c1608f25b8fad438bfac02119b139a6ccac2f41"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-15.jpg",
+   "bytes": 818287,
+   "sha256": "5da76f68ab565e0dd658f0b278ee7bf84502df036b36a556691d7d1b86f44f7f",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-15.webp",
+    "bytes": 389418,
+    "sha256": "7c73255bdfb6444d5f1c65e459879b369c5e23c948fd39d2003045fbd27d656b"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-16.jpg",
+   "bytes": 1048768,
+   "sha256": "e29d55559e5f6364a512c66a66eb59c50154a58b9df7c52dd0e35b315f6aed6f",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-16.webp",
+    "bytes": 498672,
+    "sha256": "eec044c63aa817304862a2a7165dddde11c5c5b9aef45ba3c4dc090d3549ab85"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-17.jpg",
+   "bytes": 330920,
+   "sha256": "4f8f3d9ffe505a05e251249ad98f5d95a7450267b4f9b8a1799656b196c50a0b",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-17.webp",
+    "bytes": 82916,
+    "sha256": "3b6282e2418f21aa8d1b7d91cdcb95150e44bdcbbcff552112aa3f02734749dc"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-18.jpg",
+   "bytes": 833538,
+   "sha256": "e163d0e76ac35437fabf5438657694dd74304e82e25ff22c19662f7b71232a97",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-18.webp",
+    "bytes": 356286,
+    "sha256": "d4bbe7c702977c1ca0720c84c518041188522efb02a8693c410dd24088fc27a7"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-19.jpg",
+   "bytes": 115313,
+   "sha256": "b55a999c76e940983f67efadf108c60408954fb105e0d62ae6423d9c7742ac69",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-19.webp",
+    "bytes": 33396,
+    "sha256": "f76ac1bafa5448ed68de8d6307eb98363e5d8f66066821125df8ebe9e1dd7285"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/en/slide-20.jpg",
+   "bytes": 103327,
+   "sha256": "a49b68637fdecb9a3b9dfa8f09328ba31000843f27acc1ad222d44c4f28fb04e",
+   "successor": {
+    "path": "public/course-decks/food-forest/en/slide-20.webp",
+    "bytes": 29684,
+    "sha256": "7248534f8891b0719119d84685ab0c63f9820c65ba94f085ae943da7528eaa88"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-01.jpg",
+   "bytes": 386372,
+   "sha256": "48285c05304568ca344853d4355877b38a2fdde1ed605d3d29cc4790d1f54111",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-01.webp",
+    "bytes": 164022,
+    "sha256": "232ab9a0b44d155e8b39da8fa785e3db55a841f8bd92041d18433e58f73458c0"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-02.jpg",
+   "bytes": 95403,
+   "sha256": "bb57c0ab1e60e6ac4aa1fd6ca8bf7555a172bb7a43d14a74bbfb49977f7b3f6d",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-02.webp",
+    "bytes": 27114,
+    "sha256": "5c5e0c6d5a43e47be396fd65a721301d8fd388e68bd17947ec15828d71da6237"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-03.jpg",
+   "bytes": 88242,
+   "sha256": "582360b6d3336f08eb90972b7263632063730d0c39a3ec48f654323b96df028d",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-03.webp",
+    "bytes": 25278,
+    "sha256": "f6d954ff85f134def93ab39d5ffd16a0ea2b5a7c10f70a936ecd383609581a64"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-04.jpg",
+   "bytes": 119689,
+   "sha256": "6b851f7acbc5062a542eb522b032d5ac363b2776c2398122ca9af79c6a6d313f",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-04.webp",
+    "bytes": 34166,
+    "sha256": "c33b9d1a7a026a312d03829a7630398dc9ed07f047ab5d00f100d0df931157ff"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-05.jpg",
+   "bytes": 491163,
+   "sha256": "8079c1e6bbe9b5d4616279d5ab04d4e1c35d138d19bc73cddcf4808de1122124",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-05.webp",
+    "bytes": 196996,
+    "sha256": "298093a7ba22f3bc055a16a0bd45b09a704ac0341cc205d2127ffd77268214eb"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-06.jpg",
+   "bytes": 421205,
+   "sha256": "e3a49409b969a1260df655bf3c6df01824095ad72379861cfd9425bdf4e9b210",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-06.webp",
+    "bytes": 180794,
+    "sha256": "bf001b042244cde8b57a2becede570c925b7ba6f3b9ffd8964658c7d7989f07a"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-07.jpg",
+   "bytes": 124121,
+   "sha256": "b4acb77f227b2149290a079721ea8872b110a3acfe59c56550226745fa966c87",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-07.webp",
+    "bytes": 35804,
+    "sha256": "9c87320df3c099ad809d5943033b5e414b9cd73bf89cdde35bf539ac7e297768"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-08.jpg",
+   "bytes": 820456,
+   "sha256": "ce03c8f5edabfa6e35a687b169d594b7655901c76ffcf0c0a9064030b87acd68",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-08.webp",
+    "bytes": 417440,
+    "sha256": "d28494407f0b6e566a190058a1f063722bdc91bb810d87111d9d45f25581245c"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-09.jpg",
+   "bytes": 254756,
+   "sha256": "43c2c077dfccc2539a93ffd4ae754f26abceb7fbde48e13d31c688f79d0b90c9",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-09.webp",
+    "bytes": 91330,
+    "sha256": "becf8a3b19cda43ae511c6cf1d6e5cbd774c059484dc67247c83c4947e01da15"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-10.jpg",
+   "bytes": 326746,
+   "sha256": "225c6c645ea9131669cda440608b8e2514bfb66b4870700ce55f1d3e1ccbc02f",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-10.webp",
+    "bytes": 113716,
+    "sha256": "fdd545bb48ff86d96c3092860245de33c784667fb2a5509460210a0d7f575b97"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-11.jpg",
+   "bytes": 143953,
+   "sha256": "173ceba6ac26d8b4fa0cfaff18c07a137ff9bc587949e329d8029d8571af9b91",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-11.webp",
+    "bytes": 42354,
+    "sha256": "5a49393ee9fcd7a5ff1ddbf09969258790d6451d7f54b029328f2ac287204f7c"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-12.jpg",
+   "bytes": 148781,
+   "sha256": "e43f774a80c2d4534599619c1533355221a5db286dd3a2d029d45c1938ca06d8",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-12.webp",
+    "bytes": 43498,
+    "sha256": "327a5bb557fd17d4a121dab55b1cef141509b86725377c058821cb1144d7fc7e"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-13.jpg",
+   "bytes": 724564,
+   "sha256": "4cfd2a66676c1af6a1095b8b0d93251876e8a51782b4aa788ce1a7ac9517511e",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-13.webp",
+    "bytes": 341468,
+    "sha256": "23cd610887008950dc3e81599ae927991575e9a3ba2861cbc2b1c4e88342256a"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-14.jpg",
+   "bytes": 250827,
+   "sha256": "d6a95ccb17faa76798613a89ce6a30f44cbbeb733e36c5d1cf137a0d8ca2ab84",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-14.webp",
+    "bytes": 95534,
+    "sha256": "df7b7a9e3db94ab84a7fc1fb9fabcb96682bea2ae857e4110ebfb9857af40aa8"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-15.jpg",
+   "bytes": 813025,
+   "sha256": "4f0afe8c8ca6338145c1cfa398bd497ab5049b48493180965dade7a618af0f3b",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-15.webp",
+    "bytes": 414388,
+    "sha256": "9b7fb84dec64c5e62c084f3699138025041547f13c8a7959055948de8c82f736"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-16.jpg",
+   "bytes": 826753,
+   "sha256": "f667204f6273b23541f99077b9a941efadcb11488fdebc52741c8522e40f27e0",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-16.webp",
+    "bytes": 429724,
+    "sha256": "0fce9710b5b1d38bd690ed5de2fa06f1a96e05ccc9f54e7ff1711503d559863d"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-17.jpg",
+   "bytes": 117417,
+   "sha256": "ff47cd9d5db47bd57b9bdc8ec0348a51118897d6fe4b111f08b548dec572a1bd",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-17.webp",
+    "bytes": 33562,
+    "sha256": "6aa22ac9dba8512f2f89f569b46f9fdab8609810605bca99b4d4a3d3cec0824e"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-18.jpg",
+   "bytes": 627323,
+   "sha256": "ddc4ad09934c0c478d877dd5fe4b1c09153d479c13512f3f4f04856286c9cb20",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-18.webp",
+    "bytes": 279070,
+    "sha256": "385597aaad25983d5509b36b09f6808d0eb2cfc2d41000cc0ed4d5dcf3ba7ace"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-19.jpg",
+   "bytes": 188285,
+   "sha256": "bcc7b055774aa8a2f4e00e7ac3811fc855d68e230ec306f8761679dab2d67f42",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-19.webp",
+    "bytes": 56490,
+    "sha256": "2f2ce3ce4bef689b6b6941adf11ccabdbd5c3f51768c6b978921bf5a8c9ff6bc"
+   }
+  },
+  {
+   "path": "public/course-decks/food-forest/zu/slide-20.jpg",
+   "bytes": 181015,
+   "sha256": "d7297a7a885def9d95a5f96b05f87f8266f34309feac9c974e3adac27d536c24",
+   "successor": {
+    "path": "public/course-decks/food-forest/zu/slide-20.webp",
+    "bytes": 53272,
+    "sha256": "d81af48d2d6d9a002aa54005ff6ca70f0d6553f7171c7b975e0f823b5ba6cd22"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-01.jpg",
+   "bytes": 193427,
+   "sha256": "5eff171928f5667338df9f3851bc0069c21837b5fd22ab5f8437c8c61310482a",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-01.webp",
+    "bytes": 53812,
+    "sha256": "37c8cbfb229e15dbc64d14c9d1ff2b88e5f8fd5bc1ed117cd317c1db2ba7d988"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-02.jpg",
+   "bytes": 134950,
+   "sha256": "23ef5c9fe1cc42744f55f314385a48de03657f7cb87e1bf76ec2bb91192d8e27",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-02.webp",
+    "bytes": 42164,
+    "sha256": "2104574142417486bda58f9125c806d4c06bf2d70cf1d56ec02d4ff165c1e975"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-03.jpg",
+   "bytes": 134473,
+   "sha256": "eb28bbd690bba2aa703806918488511d9456deeba698d21023c6724284ced582",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-03.webp",
+    "bytes": 41562,
+    "sha256": "437349e11d1bd909bd4f5fbc54ef5a5f6d409302d93e9c01820baae5c699db3e"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-04.jpg",
+   "bytes": 937411,
+   "sha256": "eb737ae1d0a4c97b2ba07e51598d0e1d4fbdc536697460616eed8b74b6760cfc",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-04.webp",
+    "bytes": 407858,
+    "sha256": "a58f6753512700c9a4658629bcbd9533b10dc84c1763d6aa3df28dc5943fd323"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-05.jpg",
+   "bytes": 820804,
+   "sha256": "7bf1781f49f57ec7e0b720f5d6fb05a9a1fb84166e86b12bc92f2f1f91ab2ca1",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-05.webp",
+    "bytes": 328236,
+    "sha256": "d800079b9274bc54cc287e795f18af987860b6ec66e86187d8533bebc3a87fdd"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-06.jpg",
+   "bytes": 896665,
+   "sha256": "8063f5f96cad928c0d0ed1b591b6bd4e6a0a52af309ccc342c1923b4795d4c98",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-06.webp",
+    "bytes": 380016,
+    "sha256": "174ea13a720e75af5847f78005431319d69879d276fe075ae4a67b5abdf711ec"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-07.jpg",
+   "bytes": 193845,
+   "sha256": "6fdd71ea1d6ec88df71cbc54d14187eea77b2fd595a732559a0a040bb475cde2",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-07.webp",
+    "bytes": 41496,
+    "sha256": "6f9e03da5d7acbf5a8fead75edb17043b64f4d468daa01a8f885cfe966a0481e"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-08.jpg",
+   "bytes": 170366,
+   "sha256": "4ec4de2e51887873985a30ed947a6b2ec2837107c8ea2bfa6d9015b48974492e",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-08.webp",
+    "bytes": 39054,
+    "sha256": "8ce1e10b64d5f689d159c188e0b44c86ad2a73163beb6d7519ba8bc3d4b203e2"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-09.jpg",
+   "bytes": 175352,
+   "sha256": "3051ef4c378d1cd7c59febefb8d22111f830eda301f38267e9386de66e04f322",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-09.webp",
+    "bytes": 48410,
+    "sha256": "99d85cb7b96ca1589d550a26246d367af2304f2180b6fa39ce5d405b0acdb7a5"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-10.jpg",
+   "bytes": 965719,
+   "sha256": "ebdf8f6fd8a534c8d29c745935bce339c2543e447628827ae71a0a631c94f686",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-10.webp",
+    "bytes": 447090,
+    "sha256": "a5f3a275ffa4c0f8d8e6525c649c206629aa40603b1f0d5fac63f33bd5988e5c"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-11.jpg",
+   "bytes": 133377,
+   "sha256": "c41fcccd3b6684b5d1d067b8491fcd3999bbc106601d48df744faf03b6d61568",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-11.webp",
+    "bytes": 39868,
+    "sha256": "f2650f4f825c5eb44d44485dcafe7ebed126edad7165fd06fea48843fd543650"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-12.jpg",
+   "bytes": 151270,
+   "sha256": "62afdb2e9fe7c125b59026fed98718f058553e4c5bbee024ea8e0e5cffd5b8fc",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-12.webp",
+    "bytes": 46336,
+    "sha256": "5828e2146406b86dc84c9c7b21bb3a373be1243777180d5ac27b2be985c74af8"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-13.jpg",
+   "bytes": 414391,
+   "sha256": "8a0b381366b4c77494dc35a4cc38f7599acb025f1be5ac584a6df36ffbf77531",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-13.webp",
+    "bytes": 188958,
+    "sha256": "96645f3802709d0b06d95a636f97c0090134d4d608c86b9f2a028ebb951dd387"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-14.jpg",
+   "bytes": 183156,
+   "sha256": "051e05eb09200db1cead557dcb99571dff6cd9692bcd263e830fc6e0cd6b3a09",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-14.webp",
+    "bytes": 56986,
+    "sha256": "c9f22a5dceb0234bb08297fa3d529af88b7cec64bf423a9b35d0855b79139e63"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-15.jpg",
+   "bytes": 268341,
+   "sha256": "91e4ce70e103b33ab47aed8a548f68f87fc420eb975e746f3bf4d1e0471b7ed5",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-15.webp",
+    "bytes": 82584,
+    "sha256": "f5d65dabed960ea0e067c8cbcd32e4eb2f9225c7b7e1870213c2c6d7e532badf"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-16.jpg",
+   "bytes": 1025138,
+   "sha256": "e7c6e409c918ec47fd0819153e414054cb41b1beef07b1273fa50ea7b505b20d",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-16.webp",
+    "bytes": 455342,
+    "sha256": "fa41a96f1577a23e55a84cff40417d7e1f0f8df5b731d8d85b9bce4367c3c4c8"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-17.jpg",
+   "bytes": 179001,
+   "sha256": "b162ea71c3458818e1f93b3691b7bafeade2bc062193de9ea27f446aec717dce",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-17.webp",
+    "bytes": 46902,
+    "sha256": "da51256658d751b70024e612ee75ecd32aa03f8e4f4c019dad0032478de14f14"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-18.jpg",
+   "bytes": 211016,
+   "sha256": "44d1e945e200f4a5b8f5d31c1957a405685d1283e9ab6b3b5690dea46f47f711",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-18.webp",
+    "bytes": 53936,
+    "sha256": "6c6beb28a87ff168c5a73fc3b24a57291fb73c94a65391a663fbe43393fc348c"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-19.jpg",
+   "bytes": 875174,
+   "sha256": "dbba1527d5495e292ac38c02cb5ca28c47ac81994f63ed832bf171bb7ad5c6a8",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-19.webp",
+    "bytes": 393386,
+    "sha256": "55a4c573e28ae9f41684b70a6426e8425bb08c3bf9b001b438f2f1989fbbe7df"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-20.jpg",
+   "bytes": 764768,
+   "sha256": "02b5008a34bb398e5a39aeb7b01c9fd6d88a8ea6e3b4b627efd7ffb5195bcfa5",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-20.webp",
+    "bytes": 317168,
+    "sha256": "397f7c99d7d806a45809a57fbbe48872329c07be6347e86b7aabc52883d4b171"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-21.jpg",
+   "bytes": 125144,
+   "sha256": "972e06ba0d5f63261c0196579459265c99abe8c6b331974599dccdbfbbfe15c4",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-21.webp",
+    "bytes": 38014,
+    "sha256": "aad35f8d8d1c74d9982297f40dbc512a1223170b3152b66d7f083a1e88f7ef50"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/en/slide-22.jpg",
+   "bytes": 140502,
+   "sha256": "174b5d4a96c663321c29a21e2e556316553b57cde0fc09d82c603aed70c03c98",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/en/slide-22.webp",
+    "bytes": 44312,
+    "sha256": "439eade965c10e4a3c059cc5038110a272c465600d764c8e36ab7bf59aff4b27"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-01.jpg",
+   "bytes": 115360,
+   "sha256": "3b2a53c79e058fad6ce2e3f4324854794c29d9f7e4e0e06b1b7b094e77a3024a",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-01.webp",
+    "bytes": 42046,
+    "sha256": "9497109eebffde73513b4b290a20b532346902aa6f7f1864ade5f7da2557a0e0"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-02.jpg",
+   "bytes": 90648,
+   "sha256": "b6e40a20da7c498b4ee081631143748507ac0b286a2a14dfcdaaf2280f4060d4",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-02.webp",
+    "bytes": 34466,
+    "sha256": "ed4610315a61bc0e949cb13653bde9e166542ae7a171bbab70db5634f43fd22f"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-03.jpg",
+   "bytes": 145072,
+   "sha256": "19305071271778fb20cd5009394cf91ff695b4b81ad50b4880b9dfea28d26be8",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-03.webp",
+    "bytes": 58912,
+    "sha256": "b62ce3795caba143bbd11a7aa8376e374e5aa25bd09f2262a3860221b36a3755"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-04.jpg",
+   "bytes": 570352,
+   "sha256": "c10a35e6dbe8f9364dea4ddf2005cd991172198e98cb342b9cee51dca3a6f27e",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-04.webp",
+    "bytes": 329594,
+    "sha256": "28e417006667233ae1fdf701788805bad5cba20287e4d49959ccf8de0727f533"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-05.jpg",
+   "bytes": 510585,
+   "sha256": "9ba3e9b07750477ba62738d16cbfe15b94de708b374c3823a4a20ae00cd60d67",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-05.webp",
+    "bytes": 272758,
+    "sha256": "884e60557d2a65e626b7c8f8b7fa9b94ef800d2c1c62810848ecbe33567faa35"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-06.jpg",
+   "bytes": 523606,
+   "sha256": "137c00d576570a6beab3df072ed60edd8d7a3d1b3eedf3dfe060192968272535",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-06.webp",
+    "bytes": 284794,
+    "sha256": "e6cf9e788bdfd44477feac1b37eaccd66558b20a40dde1876f957a6f59b02623"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-07.jpg",
+   "bytes": 166808,
+   "sha256": "0524978e63be0e533ae45ba94802bbf1f52edec78766b532a41ff87c738ee0d6",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-07.webp",
+    "bytes": 59026,
+    "sha256": "588013371f2cf292f20b4137c0c9725407fa6af01adeb24101fbbf34c338c33b"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-08.jpg",
+   "bytes": 87857,
+   "sha256": "d6e4061fbf9905f2ce62c925a27f010881bcfa59327f6378183d312fdbdf26d9",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-08.webp",
+    "bytes": 33162,
+    "sha256": "2778034974f4435c41e049765b546a37a18e561f1f858ac6a5295d2684afe684"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-09.jpg",
+   "bytes": 145747,
+   "sha256": "f7cd56351a00ab8dad2eba62fb061f12d2d6fb1941fa64f0219144aebb819440",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-09.webp",
+    "bytes": 54014,
+    "sha256": "38d72f9e969a2aab0773518dfedfceba1bcc5ee4f9c1556fa40d956eedb971e9"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-10.jpg",
+   "bytes": 612227,
+   "sha256": "4ba8ce2ca760fa1457d864d72dbc400eb7bb526ffe5606a180a4190f33ee795c",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-10.webp",
+    "bytes": 352166,
+    "sha256": "5aa37bf8399e4e16caaa048e7ee73daca4bcf95d6b84fc6d00c9c309ad3f53aa"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-11.jpg",
+   "bytes": 141788,
+   "sha256": "e7e47aa66346b54876e304cf9e8c0b88e87b031b0c7106ad37c136eccb16c808",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-11.webp",
+    "bytes": 58112,
+    "sha256": "49baa363aac5e2c18e21e06c39a1c356088053c4a7ba165087e0f8849a357cbb"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-12.jpg",
+   "bytes": 121669,
+   "sha256": "e9ac919c864ed5525cf9ee1ec999cc05031d801f35c81a114d0f6df79ffe0b6c",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-12.webp",
+    "bytes": 47656,
+    "sha256": "61b315e89c9698feb77420c5b5086b4c8df6e48d5dbb6299bcd2b86e737b4b01"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-13.jpg",
+   "bytes": 136217,
+   "sha256": "ae049fb97441baa8d676ef39239918feebf8406997377b5bf2ac1689158435d4",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-13.webp",
+    "bytes": 49158,
+    "sha256": "d610a995adb0ec6b462ccb70e951dc966aeef35d87f0c2dab7542dd44c5bd81d"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-14.jpg",
+   "bytes": 148615,
+   "sha256": "001d5cd83dd878f354edfa60a0b59a9a269826256383ebc84c2d69d145f6f66a",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-14.webp",
+    "bytes": 60262,
+    "sha256": "c06f220b8f4be70fd14adf7415a20b2ef243e8914541fd925be4525e61dcccef"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-15.jpg",
+   "bytes": 659781,
+   "sha256": "6f57d9be42e56ff501d9f0cdd477eaddf6b9cd00fd2ecc58d2508f386ba61f75",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-15.webp",
+    "bytes": 400756,
+    "sha256": "8b1f8ce37a9751647f1aef74b0387870b8010c253e3071923c263ba0dd975c25"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-16.jpg",
+   "bytes": 654069,
+   "sha256": "c0c372608bd62f3a9da86450d27e98ab19b912e41f895442e7824efa744bd269",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-16.webp",
+    "bytes": 392318,
+    "sha256": "2bad4900323553111cf1647fa277db31e2b69daeedb1cb4f18ec5244f8f70637"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-17.jpg",
+   "bytes": 101820,
+   "sha256": "d122cc346850181bf587f9ebbdcc76dd9b9b987a0ffd253f2c0d19b53fd8c674",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-17.webp",
+    "bytes": 39714,
+    "sha256": "b2461cab41ea11e6529eb8ee14b8849fcaf305a74c1cbf983bafad874dffb219"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-18.jpg",
+   "bytes": 109219,
+   "sha256": "c95a9f1bf820adfb6126cb1f5ad9a31535ebdb6d16880f2c58fa894d82df3ed2",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-18.webp",
+    "bytes": 42472,
+    "sha256": "079ea63f0e295aa91fe1bf9164aed1774005be843179d25b18da064448ee2303"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-19.jpg",
+   "bytes": 706242,
+   "sha256": "dff3ac76d4e5a24771af7f677c2f5db90abe329f1a2f46ddb79f335dc7023595",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-19.webp",
+    "bytes": 459328,
+    "sha256": "0fa8ae1f70ac3718ad34ff0221698159e3dc543756ba30065edbd38fc8ea528e"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-20.jpg",
+   "bytes": 507760,
+   "sha256": "4e39c78c7ecf9c5d39ff6b81bd8d0351b46c67416785fc6a4db86a829b83bf83",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-20.webp",
+    "bytes": 282716,
+    "sha256": "eb07b66a41bcfb2a3dd38bc763243e997d5f3a89d25d700b036e3927414ef39b"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-21.jpg",
+   "bytes": 107958,
+   "sha256": "198240d37fd85dbc060a3fbce3657c36ae75d3f632119aba01cdf41388849c8e",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-21.webp",
+    "bytes": 43288,
+    "sha256": "d40a8108d4185767a30b875f5935749855a246e6019d4bf414350a653e7556e8"
+   }
+  },
+  {
+   "path": "public/course-decks/intro-permaculture/zu/slide-22.jpg",
+   "bytes": 102138,
+   "sha256": "594d43839fbd23119dd1fe976bf596d3f852b377f83045365deef8b62498b067",
+   "successor": {
+    "path": "public/course-decks/intro-permaculture/zu/slide-22.webp",
+    "bytes": 40490,
+    "sha256": "c2fb47560eb160d54d3d9a0888622142cc6a417265949412e466bb085cfa6440"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-01.jpg",
+   "bytes": 409619,
+   "sha256": "8cac9be9eb251098a0ea2f4ad304d0432cab7dfea8aefda51ddff2668e5ea04b",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-01.webp",
+    "bytes": 150416,
+    "sha256": "f5b638777af41107855b0a7943b27ef0aa9a584c5c098deee41fc4163747e315"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-02.jpg",
+   "bytes": 151849,
+   "sha256": "df1f86fd0f30596a8bb9bcccfd0b3b9875a55b1c2e762d958d928aa0168a5cda",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-02.webp",
+    "bytes": 39120,
+    "sha256": "6d7a5ec4c20f11211c0803da4873e56ce5ff63441f678ba9e28bb29e0707ab0d"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-03.jpg",
+   "bytes": 127111,
+   "sha256": "52862d29adaaf657a585c7c45ed66e2dde643f66573ca893da75529aecc2f87d",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-03.webp",
+    "bytes": 39060,
+    "sha256": "0df23abddc528e0912dcb3e499bd259a7f2244036132e9720d0a863ab44498ab"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-04.jpg",
+   "bytes": 224944,
+   "sha256": "d4218b9f523ad7effe33ba7290b3b7bcdf2c4c21b83c3df80f4243c5bbe25d8c",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-04.webp",
+    "bytes": 47252,
+    "sha256": "05d713e153117cbbc42572d03c02965b0275f08aebac550b4e0c00a718ec53af"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-05.jpg",
+   "bytes": 505128,
+   "sha256": "b565f5e17f0ed553d38fa4fd7e9c16c3e303862873aa3bf897d3276b748dbce4",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-05.webp",
+    "bytes": 188966,
+    "sha256": "49df497bb27cf96cc82b90fcbc66d98c03d3544d5f330d23f9f4885562e90d9f"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-06.jpg",
+   "bytes": 133791,
+   "sha256": "04d7ec6ead62e7cede15cd98bbedd41fc8fea55f12c048004ea257c65f65ea84",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-06.webp",
+    "bytes": 41460,
+    "sha256": "c49db9920d90a6f06b012ba1df8c32cb26df84cd8ef6501e94881ffde596692b"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-07.jpg",
+   "bytes": 802371,
+   "sha256": "aa1479c2d3b615390d1a798bc63dba63ab9672c3f7abe66eb0de2956f34ae4cf",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-07.webp",
+    "bytes": 319400,
+    "sha256": "4a14b998179e612c40fe731515c893f87265dc1fee22e9d39d8625015248acdc"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-08.jpg",
+   "bytes": 110217,
+   "sha256": "44e6593579c40e7f91689dda20fae9bb2f5d087017ee43ac6c3e059d0c431811",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-08.webp",
+    "bytes": 31968,
+    "sha256": "0a12ca8dee2bc84c74238b4bb0c6eecd15ffd0d436442dc3b6db14d6f8d2d2ad"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-09.jpg",
+   "bytes": 191111,
+   "sha256": "07ed3c60f85fc1c23445e1404161ee99b0ed36169416ce2e2d18a11e64f90cb3",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-09.webp",
+    "bytes": 39240,
+    "sha256": "7cf1e044a67be17a73d7afec8b31ec455a9cf5992ecd19798d3964d01b75c047"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-10.jpg",
+   "bytes": 823629,
+   "sha256": "f0b4bc6a8ebdf4ddf22c645c1b327c21121d60136d61653b0a90a101980c78f1",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-10.webp",
+    "bytes": 345312,
+    "sha256": "c4d0c29dd93d5231c43320a2bff4cbbd62f3991b13aefa05a39b32c8dbcdbf84"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-11.jpg",
+   "bytes": 136160,
+   "sha256": "40bc3c9837cb3cf23b629b6181d5ed93ee4ba5467e7006f53588e32c1bb02849",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-11.webp",
+    "bytes": 41732,
+    "sha256": "40219f6f2b80f347e2fd96bd4dbb8b75949fc14ae8b4bde3bbfbab2f41a69b31"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-12.jpg",
+   "bytes": 117841,
+   "sha256": "fa2dc0927b99794d24e767e2480424ed6f018f0164af0025c449963bda30d67e",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-12.webp",
+    "bytes": 34666,
+    "sha256": "91466c4a432a0ed76e0ce896fc4e96a5ffc3f296b2f86f1efad3b63be4696147"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-13.jpg",
+   "bytes": 167361,
+   "sha256": "d2c5ed41dcd6e18c77caa08ced1f82a7ecaf40f89d765d3ad50b1a1091be3f19",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-13.webp",
+    "bytes": 44136,
+    "sha256": "ccbc35ca306377e590006a4989cbcd6db0b022b369dbe7da8fccae95219cca71"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-14.jpg",
+   "bytes": 208457,
+   "sha256": "d535ba4f2cbfa2012ed470ee1d82307c81029eb5a65477ffe7a646cd68f9eec2",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-14.webp",
+    "bytes": 42538,
+    "sha256": "a587d4f0523a55276ff724206f5e0e70395f55867f339cb7768b98d608af3cfa"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-15.jpg",
+   "bytes": 738631,
+   "sha256": "0d019fcd0f6982fc54aa579af81d463d7ec23782a266ba783dabb3aa9737518b",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-15.webp",
+    "bytes": 282568,
+    "sha256": "42e898a8ed12088561f4cd687d1b35ac162172870ef368366b782dab66298447"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-16.jpg",
+   "bytes": 861957,
+   "sha256": "22e44b6ce9b5eac598abfb55dd8149574039a3604d93808e76adcc62d5213d2b",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-16.webp",
+    "bytes": 358330,
+    "sha256": "6cd58d63814b97e1b252bf0ceef26c9d4936974c287d3a9d5109b38847df36a9"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-17.jpg",
+   "bytes": 142492,
+   "sha256": "6c839a057bc518bd92e0f52f95a88857121751cfb9bbb4eaac1bd20813643433",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-17.webp",
+    "bytes": 44728,
+    "sha256": "8cb65ac930e069766af0fa667445b745de21f8a4e22b964a2c516db760811e83"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-18.jpg",
+   "bytes": 860955,
+   "sha256": "ba14df873c730694fc4c75c10b6747b613d309709537cfaa68fd093f179ef693",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-18.webp",
+    "bytes": 355566,
+    "sha256": "8e8080456b668f8f47081f7d7b5c8d74d8deab139645f82a52b5d2f529a348ef"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-19.jpg",
+   "bytes": 154910,
+   "sha256": "1b6098c6bab76f87f99a44895a776b89025b052aa26f856670b3d23a7304a797",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-19.webp",
+    "bytes": 49194,
+    "sha256": "a212cdcadce1a210808006e9e0bc57a2a6d243c84047cd00b055f255c4e687ca"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/en/slide-20.jpg",
+   "bytes": 257692,
+   "sha256": "ceb68f4d1478c28bdce9b0065fb5e21d35b557acf235d7824f0166e43e874351",
+   "successor": {
+    "path": "public/course-decks/market-community/en/slide-20.webp",
+    "bytes": 81308,
+    "sha256": "f46896e3f219e2fef61ffc6635d8dd25c29a357b1090dd6a3b8390c6e17a3558"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-01.jpg",
+   "bytes": 231014,
+   "sha256": "127f302a34f3ab8ed1101ffb60889fd48134ea512d77507f67cf73b3c00d997b",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-01.webp",
+    "bytes": 126656,
+    "sha256": "0cedffbb6e9ad0a44938ce214aa13344dbd6fad3175c11fd7eb1e56e91767e75"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-02.jpg",
+   "bytes": 99870,
+   "sha256": "40f54d5e56ac5d891b9e68cde07ab28a4878c20206e71e16b9bc6ed32d53ba82",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-02.webp",
+    "bytes": 39986,
+    "sha256": "715ddd01ac2d2dbd08c9acbd4eb87d434d55e26f62578d835bf4a6b10b898e06"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-03.jpg",
+   "bytes": 110807,
+   "sha256": "c0b1c1cd3d77b386b642353694af09785916d56e6ffe252abd2ce527a8509e0d",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-03.webp",
+    "bytes": 48604,
+    "sha256": "94d473161ea81b6c427faba0c2b846ae88066c2b841e3e096bdd96a27b58c243"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-04.jpg",
+   "bytes": 113605,
+   "sha256": "3b25e3a0cc9ad2e13ff60ffb775bfca6ae688300aca1f36f8f23fd334b74e0b2",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-04.webp",
+    "bytes": 43406,
+    "sha256": "4a16ff4ce571ad83ca2f12c541aed456511ee71d6452abb175b39b1ca320b71f"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-05.jpg",
+   "bytes": 329274,
+   "sha256": "b9ee6b369524f936dce7c6ae06b1201e3a91ebf660958a214092be605fba66d6",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-05.webp",
+    "bytes": 186250,
+    "sha256": "05190826550fad4364ab1d8f5684b7b3a7948f9fab6f21e14b5de6fa65db2554"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-06.jpg",
+   "bytes": 106387,
+   "sha256": "c89c172122f292f06f179e26bc7089989764d74260ea69d23c613a41fc42671d",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-06.webp",
+    "bytes": 46914,
+    "sha256": "2696072bbfccd8019da475a5ca0785e8f6f5690cf3d4c7985335207fdc7e707d"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-07.jpg",
+   "bytes": 506997,
+   "sha256": "6f3ec3132e49a313f3bfa47175dd9f23b0cd2c88686eea0c1a8646ba4fbad21b",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-07.webp",
+    "bytes": 315512,
+    "sha256": "b580f799c478001e545c97f1e3bc2f0a582b9762ddad4f7412a36120b105dcf1"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-08.jpg",
+   "bytes": 98568,
+   "sha256": "8e020e1b431aa54550c48d2825d0806cea9162c38ee44c96d4df1f58bb7c89c1",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-08.webp",
+    "bytes": 41994,
+    "sha256": "991fbcca35dafcce85242d1665899baa160c9ce24be3f39285516d2a8aea03ea"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-09.jpg",
+   "bytes": 129027,
+   "sha256": "eb07a5e3a95687527b6525dc7bea8561ed6aa90268bf9556a6aa6e098a0abc7b",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-09.webp",
+    "bytes": 52516,
+    "sha256": "230a3baaaad0add979c69fba338175b78f9c8a4ec21a32f3460f6442faa72372"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-10.jpg",
+   "bytes": 529918,
+   "sha256": "35cf2659ab6811a2c7ff787ea87bf109fe4f7637ba3f7c015a047d5bd68f8cb6",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-10.webp",
+    "bytes": 337338,
+    "sha256": "6e66085f65ce92f373dcb203de5ca8736adbafb64e78ca3aec1fecf19a26afe2"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-11.jpg",
+   "bytes": 124215,
+   "sha256": "88d3e61844af989d8be3de23f6828f42db88c1dc19ef3b38da8bd463f52ec420",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-11.webp",
+    "bytes": 55210,
+    "sha256": "0f67bc9fe14000037f46354e4fefd0b22063889a171b947bce29dbd9660c2571"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-12.jpg",
+   "bytes": 97910,
+   "sha256": "9380a6151f7acd7a246c13434346b11c9b27b9b62ffa286b5177640a8a1fe92c",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-12.webp",
+    "bytes": 42792,
+    "sha256": "60d3d6363a7606662b06f23bacb5228fffb3638fee4277d291ee6f4e5a626bef"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-13.jpg",
+   "bytes": 109717,
+   "sha256": "baf55ac87ad7d10ee5663dcbd32183dbe412f188edc112a9e10cb13a8529f2fa",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-13.webp",
+    "bytes": 44884,
+    "sha256": "5d1d7356ada5aaf1093d498ad920fcaa5c22c44fda873cadd650806aac58d54c"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-14.jpg",
+   "bytes": 109943,
+   "sha256": "6a935180a5d86dad2bbe9725107cf1ec795aa2d734934c459f903beb11a918f9",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-14.webp",
+    "bytes": 46650,
+    "sha256": "f64c21a8dd87dbbca99ce943c2274010b35ba001826e473d3d9b564cc4c1d7cc"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-15.jpg",
+   "bytes": 471220,
+   "sha256": "cbe38c2674856845f4df2b95d51729ce0a19cf8ed6ad6fd2d659257fc8048cbd",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-15.webp",
+    "bytes": 276678,
+    "sha256": "4b3045523cd0635d2144d480380c93a873f496ed59883e4d7723374158e00d03"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-16.jpg",
+   "bytes": 553093,
+   "sha256": "9c6e1f306da0a5572dbc16a01fac67f6c37e404a488e99189543ddc406f066d1",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-16.webp",
+    "bytes": 353310,
+    "sha256": "5887f27484bff27485d5741696f5f62b10dcf76b1afc01d4b0590a18c3f3f3ee"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-17.jpg",
+   "bytes": 136297,
+   "sha256": "bab12a4b781411828fcd63e1a32d89c18fad0434ff536499784191ea32b839a4",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-17.webp",
+    "bytes": 59328,
+    "sha256": "42c5c1f9e214f2afb13708f95351b8593591ff9598dce33524dd50335a922de9"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-18.jpg",
+   "bytes": 544791,
+   "sha256": "fbc461537a8039a546078953e3e51bdd3fa3eed3a0be85022e84b04e8271ca30",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-18.webp",
+    "bytes": 346166,
+    "sha256": "c9fc6f7658cc9d1f35bc45fae9e109dfa4809ba4113fc601e7e8f2009c7f354b"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-19.jpg",
+   "bytes": 135405,
+   "sha256": "f0aa079b2b354f0b47e86dd6be4e4689aa7de2cdacfd3287adf2591be746d431",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-19.webp",
+    "bytes": 59666,
+    "sha256": "a06a0d3f3164f801ccf9e402a6ff91b9291db837ca02a5f1265a25d1f0decd65"
+   }
+  },
+  {
+   "path": "public/course-decks/market-community/zu/slide-20.jpg",
+   "bytes": 138860,
+   "sha256": "5a5c44847b589b81ec4d2a77f33c22c0238a5f6e73bc08d1703c8666d639b4f6",
+   "successor": {
+    "path": "public/course-decks/market-community/zu/slide-20.webp",
+    "bytes": 62694,
+    "sha256": "8aeec4a31648cd794e907fbca435c93e00c789c3b026bad398c47d5ed85204ae"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-01.jpg",
+   "bytes": 432945,
+   "sha256": "6b6a23bbce7d38f2b369ae6b05b089da6857832582be6426200d3441e1c4a095",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-01.webp",
+    "bytes": 298124,
+    "sha256": "a9bf6ac3409a3c6b2fe787b9c6308d54c0d6dfa36b31d5b2fcfff21ed780fb48"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-02.jpg",
+   "bytes": 92697,
+   "sha256": "0bcc7237a2e7a561d5e6ba774d2efb10abc3909cc84a2173815deaf9b06d807b",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-02.webp",
+    "bytes": 41366,
+    "sha256": "f28ae00725a92c48bd90f1d065ae3e898cf07030b13bc78a003d593bde36b5aa"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-03.jpg",
+   "bytes": 339682,
+   "sha256": "4926376d56d8d8e31335d92e04473f4948d8c2283e6cbf8a71233635fcf49ae3",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-03.webp",
+    "bytes": 206976,
+    "sha256": "f66862a192ddddd1a18245fa5045197ef030088d0aa9a8aa0977f3419d21da4c"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-04.jpg",
+   "bytes": 79266,
+   "sha256": "f777beae214d6f90f3ff9377c141a1510e57c536855b94f097cbadbb807ceb41",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-04.webp",
+    "bytes": 34492,
+    "sha256": "6b6ea02fa08c14635600890ec35805d7698cc39c2978dd743cec4317c4355d3c"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-05.jpg",
+   "bytes": 341124,
+   "sha256": "c247045c55e5bc5a84bbc670a6a2b1f7ff56cf4965c5f008a4e3de9367459a09",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-05.webp",
+    "bytes": 209122,
+    "sha256": "480df15cfca6d7327d7fe468ed333209959100a44f404a6c282fbfed70d6eed6"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-06.jpg",
+   "bytes": 79097,
+   "sha256": "ec7c6474422f4400de981a88291fba9932e51c96aeed8e721a326424e5981382",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-06.webp",
+    "bytes": 34548,
+    "sha256": "f747b35d55048d3ce82f4bb1b05491553ae689feea7fec6c96e3ca6822574ddb"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-07.jpg",
+   "bytes": 276149,
+   "sha256": "a66e64a42ae97160f23d4b7a38475ed8c60b811f9e6e2647b086ae492d8d101b",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-07.webp",
+    "bytes": 158976,
+    "sha256": "e168c76c249b383634269756c41854d2fbba1f821fccba9d012fe300b3a95a58"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-08.jpg",
+   "bytes": 79208,
+   "sha256": "04f6cc1416aa78a52d266edd42ec35a3a06fd23e31df105a4fbf88420744e7e7",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-08.webp",
+    "bytes": 33978,
+    "sha256": "288795555a646e94f6cae184d45b3637860f95809e8dcb267aca4865a5174ec8"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-09.jpg",
+   "bytes": 341795,
+   "sha256": "0b6d669a990661784d11ecc925489e6d2dda24f926730ed1e0a96df383c44538",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-09.webp",
+    "bytes": 214944,
+    "sha256": "50aaa0a94b4cc83019d4a571dc1cb3a716555bf015509845efa7167abcfee98a"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-10.jpg",
+   "bytes": 86826,
+   "sha256": "7629e132151ad55b91152ed209fe60469facbd8edac38585250ba19ee770927b",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-10.webp",
+    "bytes": 38040,
+    "sha256": "70894f52510cacfab9cadab408d7f47892166281ab68745bc9585d17f2108e6a"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-11.jpg",
+   "bytes": 378603,
+   "sha256": "bad82cd0482ecb362c948b6bd4f0ffa86112be8f0cd79a2c09dca827cbacf0eb",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-11.webp",
+    "bytes": 248544,
+    "sha256": "f864d70c5b122158fbd16c3263aa7068537371987235381f9c2fa9670e4236c6"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-12.jpg",
+   "bytes": 88938,
+   "sha256": "48da7cc2846df9e7b1c4ee1f67111ff3d4715b6cf707dea5448349d4d496e5dc",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-12.webp",
+    "bytes": 39412,
+    "sha256": "836cdd38f9c038517773b3edbe3cd77f9e7d8a1be8ea76d2fd0a54fde128a274"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-13.jpg",
+   "bytes": 281349,
+   "sha256": "e50c0bec1ee490d3ddeebdecdd9c744dc7300ac7cd2921837bd3f1c822015d07",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-13.webp",
+    "bytes": 158648,
+    "sha256": "112800909e086bc6f736370861942da8a548723bc93dfb265c9ff500f8efbd8e"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-14.jpg",
+   "bytes": 95986,
+   "sha256": "131d2a86f22c9fce7a643c266088d97921db64105cccae8e078e08ba322910ea",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-14.webp",
+    "bytes": 42590,
+    "sha256": "321d2c97d59b386f71353a1a57ce9952fcd74737f1f0559b79066f9def20245f"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-16.jpg",
+   "bytes": 97609,
+   "sha256": "a65944351571afb317016da56628ae045b2c43380a125418a57964f0e3a2442d",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-16.webp",
+    "bytes": 43642,
+    "sha256": "e7f25553d85d9dc47391d6d2b3b26560d4ac4b05a7bd130f9133ab7c94f129f2"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-17.jpg",
+   "bytes": 361652,
+   "sha256": "c14d1d3c2193bdbba1be910f842c0b961a46ff3dd8e359cce71ad8bed3bd511c",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-17.webp",
+    "bytes": 234010,
+    "sha256": "40503133ad7a496db0c39ad191bbefe1ce657bdf3cd690967b7646e11a9250dd"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-18.jpg",
+   "bytes": 92798,
+   "sha256": "f76e2e205c71128422dab4a69593f144c6a30b533966529306434a1a122f46c8",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-18.webp",
+    "bytes": 41414,
+    "sha256": "3a9051915d669612f6e31b04e60c67f80f076a75261f03ca530b51fe83577c52"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-19.jpg",
+   "bytes": 379837,
+   "sha256": "fc18c80bd03f8271fb934e9bc830e9f37a98ce36d88870dc3cc6c86648b8e468",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-19.webp",
+    "bytes": 244258,
+    "sha256": "15ebb10d026458946bd7c040746b1bdd3d403196aac6fc85efc5402c45c7498f"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-20.jpg",
+   "bytes": 92485,
+   "sha256": "2dfc194516d18dcad9bc3a046a3ec73e510053ae759b53b2980ff6bb893c69bb",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-20.webp",
+    "bytes": 41432,
+    "sha256": "fc20114568d1a55f85a2d008283136d5bd5167f1a7dcf41a4027520e269edf24"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-21.jpg",
+   "bytes": 353195,
+   "sha256": "37b5bd9e60970a2f66bc101ded4f02448f4670debd9a2fbb1a919ec8472a8cfb",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-21.webp",
+    "bytes": 227880,
+    "sha256": "4aeaa9ddd4150937e2712d78b4b3e82bd8d62baf19c18c18f2ece6de3d51e92c"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-22.jpg",
+   "bytes": 93812,
+   "sha256": "4aaf05117732a8189fa4c2fff97a2874b1f8ee6e476f799a3cbb18a12c39c3e2",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-22.webp",
+    "bytes": 41436,
+    "sha256": "5b274d3a0e3a3987d6bf02ebc9a204615911ab74b75615fbf63c6507db1a1ad6"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-23.jpg",
+   "bytes": 292829,
+   "sha256": "999c64007f338d76ee1cf554c8b993512a4ff4e31eadaad7384dd545880e7564",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-23.webp",
+    "bytes": 174466,
+    "sha256": "34899b95fc53d47f89f3972833fa36a86b5dae4db88a60bf023a18d696726a0e"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-24.jpg",
+   "bytes": 94579,
+   "sha256": "e25aa8c612f1ce35aed370c945d9275346cd7509c7acc631083688a01942d2df",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-24.webp",
+    "bytes": 42004,
+    "sha256": "5c793b813ab34537c6f4c936856e5dc3aef43afbfc6b64587003a0d79579b34a"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-25.jpg",
+   "bytes": 397945,
+   "sha256": "d5d8e23497a85af5f72b421dfe135258a5b9d03e8788e2822aa3652a4edae8e8",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-25.webp",
+    "bytes": 266622,
+    "sha256": "208b9023e2590e3ae1640ad1dd0220c20231fe2948908d14adc428d9c1492264"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-26.jpg",
+   "bytes": 88361,
+   "sha256": "91021532edcc8c1a5bf15dc47b07dff5c014b73b591407e71f5467eacdf4f68c",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-26.webp",
+    "bytes": 39034,
+    "sha256": "a82cc90efe382d42cd2677a17ad74c3162c9f38cafc1c8bfd028f4e057e7f1ea"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-27.jpg",
+   "bytes": 394630,
+   "sha256": "0f0188e6b206b8bec42c2f802b98ff9af5f059771e06451be841e369a103dc2c",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-27.webp",
+    "bytes": 264792,
+    "sha256": "091bbb7068ea16a2338b38073cb00add9825b5d893602f7e07de50498b4fa168"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-28.jpg",
+   "bytes": 95226,
+   "sha256": "9e4bca01477ca72019a84e5c6e513f3988843fde50615e9e22b3faa1a0efc5f4",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-28.webp",
+    "bytes": 41680,
+    "sha256": "9229843dff36f2deeec02f0c3d51c1b66785e7e39b09296ef0b059423c904178"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-30.jpg",
+   "bytes": 87058,
+   "sha256": "c83650be05adcd23f89b7543b4014f94553c12889a4bc73a8c77b2ed39b00c1e",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-30.webp",
+    "bytes": 38708,
+    "sha256": "cff3a3b60137b0bb908da49c2cc0ddfdc80196434dae8610d078410e7acb0d03"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-31.jpg",
+   "bytes": 357574,
+   "sha256": "683fc28c2fe966a8132c26b6024c004a04a781f914a95b950abc71467d177a07",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-31.webp",
+    "bytes": 227398,
+    "sha256": "264b786c81bbd7cb82d92ec2381debf7286cd6c33cb51ede082cd637188c55d5"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-32.jpg",
+   "bytes": 83767,
+   "sha256": "1bcb14d13b7ec062dbfd5300019c8519474f8ef7f121ec49c93d8c2d8b0a53ce",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-32.webp",
+    "bytes": 36722,
+    "sha256": "0111905bd1f1a7ff2fc3da477b2689194b221f4ac80635ee044b0220d88e18e9"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-33.jpg",
+   "bytes": 256695,
+   "sha256": "6a75c9bbd0d834bdb5c077e0e9e555e550831b1983e1e6437ba75ed1c65813b7",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-33.webp",
+    "bytes": 138906,
+    "sha256": "4d16886487dc40e10f14a8484bf703073e65cb7af4a348e86ed17da41922f303"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-34.jpg",
+   "bytes": 87716,
+   "sha256": "be69bc94f0c97eb44f15cd2e438f508b48e6f07314d9466543bc56e950fcc68c",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-34.webp",
+    "bytes": 39252,
+    "sha256": "b3579b46f09f6375de53ac2067744a750e0b63afb3c4812babf01d1e216d39d1"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-35.jpg",
+   "bytes": 347884,
+   "sha256": "698fc6b1581d728d0c8ec0a34dca72e849c1a1c71cdd685e6bf1c1504c15d926",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-35.webp",
+    "bytes": 213398,
+    "sha256": "648361cc44c72d2610f5636cbaa7bfa80927f9564cbb9c19bb2468939683e0a8"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-36.jpg",
+   "bytes": 85801,
+   "sha256": "b8346a069adb6ab03398d07c2ea1cf306ec81d5d26708ba6ef9cb5855b4754ac",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-36.webp",
+    "bytes": 38168,
+    "sha256": "abd369b7d2f3b644fdd5f9ecd832bb48ac8a612d39f9e860c477dd8011795d71"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-38.jpg",
+   "bytes": 94272,
+   "sha256": "1410395669d28dfaec16a2eac251471a9cb0c327d3f99fc7904031e34613e380",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-38.webp",
+    "bytes": 41678,
+    "sha256": "40687c6335d849d8407e1420eb8b9c3694bb447fd9a3fa324046bfafd1845f11"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-39.jpg",
+   "bytes": 363565,
+   "sha256": "5cf77f4a478e6ece24c8b12cb045e45dbc7a311b1b9201cdbbc88d7a16824a3c",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-39.webp",
+    "bytes": 228842,
+    "sha256": "dbf11f88414b849c120383a9be44f80bed3b769b051ab59b6baf7aa404bca665"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-40.jpg",
+   "bytes": 84959,
+   "sha256": "530708c2fe84a4cf01fb78d61dd4bf1abb40c7ef54b1a1a86a2ed11eaf8af542",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-40.webp",
+    "bytes": 38000,
+    "sha256": "bfe56197b14d7b4976cf671d05b7287a8b73dae8c58c56769fe7af1ee2db438b"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-41.jpg",
+   "bytes": 390634,
+   "sha256": "f664b86db1e863c2fc11f0752ef7b5289086cca33304a6f00c483b4dabb0cdb1",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-41.webp",
+    "bytes": 260080,
+    "sha256": "95ebe0e1f716d26f64ace6590d8d4d4fba7b2d6abbce6417aeb886734c444d51"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-42.jpg",
+   "bytes": 93799,
+   "sha256": "340ace132dacd3b8ba3daf298c6f6e0cd4753cb9abe8db1963de6df52ed9f5e5",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-42.webp",
+    "bytes": 41756,
+    "sha256": "574e9a7d031e88b3aad56607270b6054b86ab91f665359d4fa860d348e395484"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-43.jpg",
+   "bytes": 101020,
+   "sha256": "8ca2f077dcc3b470ff6bcf5d13e8bbbf080b98ef0c5ed1cd0a18ed09a5d19f6e",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-43.webp",
+    "bytes": 44938,
+    "sha256": "44f764bff7b3de2147011d868f02af703c9289d31a6b1ac599178fc3d53f4aa6"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-44.jpg",
+   "bytes": 397140,
+   "sha256": "86d7cd651bf525eebec1e7eb62f891105ddf818df21a3c7fa9ab7b3e025cb894",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-44.webp",
+    "bytes": 267280,
+    "sha256": "faf81696039d6ee06b1fa15fde59c60b78f8d8f6df98927733c7a3c2e49f80a8"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-45.jpg",
+   "bytes": 97674,
+   "sha256": "1d2cb5f513ae1a7427d8a1eef9b5a1df3e22fd33761a9bf4c51260a204d466f0",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-45.webp",
+    "bytes": 43302,
+    "sha256": "ea699aa139865988838a0087ee02508f1f63f3d13b557486d2f42ef51fa660b6"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-46.jpg",
+   "bytes": 337475,
+   "sha256": "6ee0d1c09e9a6afefc03513b718defc4c5b75ad5326204947a725db3a62c291d",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-46.webp",
+    "bytes": 209544,
+    "sha256": "1e64c31737136b16b8a00d4a579b81a634b3aa40adcb807391a7c4923ea1cfea"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-47.jpg",
+   "bytes": 84831,
+   "sha256": "00616f780369b3c1a3d3c6c66b4c80e19a4732bfdc7ee2ea6ec05493e038df40",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-47.webp",
+    "bytes": 37776,
+    "sha256": "8a39ced17315fc33e86ba337b8e351f22b4a5fa086b384000ef618b62fb9f50a"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-48.jpg",
+   "bytes": 405515,
+   "sha256": "b8fbfbd5e513d93f966d53a8196d79944f71e20a3eb090318fe42a4b0fe4b3e4",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-48.webp",
+    "bytes": 275468,
+    "sha256": "3f0748f3ce3b433164b9fe7e48ae916b027de6da29d430e275e26b508fb43d86"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-49.jpg",
+   "bytes": 89016,
+   "sha256": "84cbb2dc0c26d25c007cc814c10f4e7a49512e5fef7f9703227b72731e91c44f",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-49.webp",
+    "bytes": 39366,
+    "sha256": "c5ea26329fa6f2d81b0a83787f0c676fd288c7b7b66a418e95e5087729572054"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-50.jpg",
+   "bytes": 362063,
+   "sha256": "dbfabe666a48a84a91f73bcdca622593f29fe472da8a55f32e16e256dba03da9",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-50.webp",
+    "bytes": 230178,
+    "sha256": "95c02f9ede8db3fadac17a081e96f9ba44ec193e410b35c446561bcee7748cc5"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-51.jpg",
+   "bytes": 93379,
+   "sha256": "c9903bbd9ee587284b89cef41ed65fe8524f6f0c168c9bc1a49fef9bfff803a4",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/en/slide-51.webp",
+    "bytes": 42222,
+    "sha256": "64e08db2ab770cddee9839d6cb3dd3b64e261d4c6a11e67cd6ef8d8da3e877a4"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-01.jpg",
+   "bytes": 432945,
+   "sha256": "6b6a23bbce7d38f2b369ae6b05b089da6857832582be6426200d3441e1c4a095",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-01.webp",
+    "bytes": 298124,
+    "sha256": "a9bf6ac3409a3c6b2fe787b9c6308d54c0d6dfa36b31d5b2fcfff21ed780fb48"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-02.jpg",
+   "bytes": 121476,
+   "sha256": "e43147966c9530ccf585401f4d8eb0da771d025b5586821c9842a4e5883c646f",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-02.webp",
+    "bytes": 56058,
+    "sha256": "871993044b8fc5e17757e39e730ce23e881586ddcfd183a1e0dff2b38d844a23"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-03.jpg",
+   "bytes": 339682,
+   "sha256": "4926376d56d8d8e31335d92e04473f4948d8c2283e6cbf8a71233635fcf49ae3",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-03.webp",
+    "bytes": 206976,
+    "sha256": "f66862a192ddddd1a18245fa5045197ef030088d0aa9a8aa0977f3419d21da4c"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-04.jpg",
+   "bytes": 102742,
+   "sha256": "17231108242a935234e89419a0ecd6a818652d100777ece142597c4509b95705",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-04.webp",
+    "bytes": 46294,
+    "sha256": "65d67a929c0c4353b49f6a8f80d90f0e59e72d86f27bd58a69416342558e6127"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-05.jpg",
+   "bytes": 341124,
+   "sha256": "c247045c55e5bc5a84bbc670a6a2b1f7ff56cf4965c5f008a4e3de9367459a09",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-05.webp",
+    "bytes": 209122,
+    "sha256": "480df15cfca6d7327d7fe468ed333209959100a44f404a6c282fbfed70d6eed6"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-06.jpg",
+   "bytes": 105385,
+   "sha256": "71aa24c3cb5b171f09099a7266f537bab5458e0c17851479d41007d6d4c68f15",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-06.webp",
+    "bytes": 46964,
+    "sha256": "9259bc4b8c5017b3b18408a6f121fb6b20c1ac582f55b353230a34256ccef712"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-07.jpg",
+   "bytes": 276149,
+   "sha256": "a66e64a42ae97160f23d4b7a38475ed8c60b811f9e6e2647b086ae492d8d101b",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-07.webp",
+    "bytes": 158976,
+    "sha256": "e168c76c249b383634269756c41854d2fbba1f821fccba9d012fe300b3a95a58"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-08.jpg",
+   "bytes": 104748,
+   "sha256": "045f1bcb604dc766c627054719688ef2ee242935df0fc7afed864838a46e0058",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-08.webp",
+    "bytes": 47050,
+    "sha256": "1b2d23667dfe0be89b21631d6e93dbec61a23bb14f45c0e962efaae62f9e5dd8"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-09.jpg",
+   "bytes": 341795,
+   "sha256": "0b6d669a990661784d11ecc925489e6d2dda24f926730ed1e0a96df383c44538",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-09.webp",
+    "bytes": 214944,
+    "sha256": "50aaa0a94b4cc83019d4a571dc1cb3a716555bf015509845efa7167abcfee98a"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-10.jpg",
+   "bytes": 116472,
+   "sha256": "0a458829f26e2819bc1b92e1d67213751156de03e2eb31db638ed75674bea3ea",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-10.webp",
+    "bytes": 53500,
+    "sha256": "812217ef364d505882c417a5d37f3b3454a8ab6faff986724335adcfc21efb33"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-11.jpg",
+   "bytes": 378603,
+   "sha256": "bad82cd0482ecb362c948b6bd4f0ffa86112be8f0cd79a2c09dca827cbacf0eb",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-11.webp",
+    "bytes": 248544,
+    "sha256": "f864d70c5b122158fbd16c3263aa7068537371987235381f9c2fa9670e4236c6"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-12.jpg",
+   "bytes": 109587,
+   "sha256": "811e7d30e495aba5722ceca88068fb81436865d64681621e8a90c9e552684e4f",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-12.webp",
+    "bytes": 50046,
+    "sha256": "bdbe564da0f34975fd9650400e4ba0fd978ebbefa55f062ad1be48b9ed29a9b2"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-13.jpg",
+   "bytes": 281349,
+   "sha256": "e50c0bec1ee490d3ddeebdecdd9c744dc7300ac7cd2921837bd3f1c822015d07",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-13.webp",
+    "bytes": 158648,
+    "sha256": "112800909e086bc6f736370861942da8a548723bc93dfb265c9ff500f8efbd8e"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-14.jpg",
+   "bytes": 112679,
+   "sha256": "746b611a3727911d0b578f8c0f49c76ed936035d3d83d380b0e7533cc43c204e",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-14.webp",
+    "bytes": 51698,
+    "sha256": "803b64a0e5a565a8885ba5eecf627867b5f9222b918430392aae4813b76b048c"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-15.jpg",
+   "bytes": 365630,
+   "sha256": "f83121c89d1fa28075f04b3e1fcd62880028502a1d64c2fb452a8a1249d0b2bb",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-15.webp",
+    "bytes": 225842,
+    "sha256": "2b8646796484d075802c930dd2ae8375fd280c023e3d2c0e6ea76789fa2a4c8d"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-16.jpg",
+   "bytes": 120518,
+   "sha256": "7a6921fb22c4934349d043d5ab3979635813aa021bf77dcbdcf1d764e590d4fa",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-16.webp",
+    "bytes": 55290,
+    "sha256": "c497923b6a6fef95048378b4d775564b1b785482d7154f22a243f8dab6035973"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-17.jpg",
+   "bytes": 361652,
+   "sha256": "c14d1d3c2193bdbba1be910f842c0b961a46ff3dd8e359cce71ad8bed3bd511c",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-17.webp",
+    "bytes": 234010,
+    "sha256": "40503133ad7a496db0c39ad191bbefe1ce657bdf3cd690967b7646e11a9250dd"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-18.jpg",
+   "bytes": 117746,
+   "sha256": "c19c519dc4788ac83dbd841fce593fb47980e0b54637964624de6350cc7df4c1",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-18.webp",
+    "bytes": 53612,
+    "sha256": "1fd4c26d2b3bbbe858efa21451e05dcbc64110175b682e021006edc4087a5a44"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-19.jpg",
+   "bytes": 379837,
+   "sha256": "fc18c80bd03f8271fb934e9bc830e9f37a98ce36d88870dc3cc6c86648b8e468",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-19.webp",
+    "bytes": 244258,
+    "sha256": "15ebb10d026458946bd7c040746b1bdd3d403196aac6fc85efc5402c45c7498f"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-20.jpg",
+   "bytes": 126249,
+   "sha256": "3d1c465fcdd84c44bee34ec02c171f06203b60ed096e0fe56c7ca9e86a21cc3c",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-20.webp",
+    "bytes": 57810,
+    "sha256": "7d81f67267d5ed5ae8b50247af49f279eeba1150d975316c66acea19ea9d7c5d"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-21.jpg",
+   "bytes": 353195,
+   "sha256": "37b5bd9e60970a2f66bc101ded4f02448f4670debd9a2fbb1a919ec8472a8cfb",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-21.webp",
+    "bytes": 227880,
+    "sha256": "4aeaa9ddd4150937e2712d78b4b3e82bd8d62baf19c18c18f2ece6de3d51e92c"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-22.jpg",
+   "bytes": 119063,
+   "sha256": "7e6f6969a73e382e5c77c8142e3a18a87012433d37b6617cf1b1402de7fab3fd",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-22.webp",
+    "bytes": 54308,
+    "sha256": "f9f2a1a44e85084540473899192d8f466630c47599976bf2a991b728080ea9b1"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-23.jpg",
+   "bytes": 290121,
+   "sha256": "04dda4cadaa7f4579c56ad57258edcab15e7089440a098d4bcca478b5ccd9b03",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-23.webp",
+    "bytes": 172624,
+    "sha256": "a98f9b360b825382171ae12078595e8fb2fcfb48de52fb5744c0b6d67f330f47"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-24.jpg",
+   "bytes": 107513,
+   "sha256": "8403112acf117da6644c83d3b86c567b4e36aa3da0b863e933f5624a214d9fd2",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-24.webp",
+    "bytes": 49106,
+    "sha256": "7b5c496520b872a19a6368d3fa834b7709bb1b31395dd2188abc71c833910f89"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-25.jpg",
+   "bytes": 397945,
+   "sha256": "d5d8e23497a85af5f72b421dfe135258a5b9d03e8788e2822aa3652a4edae8e8",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-25.webp",
+    "bytes": 266622,
+    "sha256": "208b9023e2590e3ae1640ad1dd0220c20231fe2948908d14adc428d9c1492264"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-26.jpg",
+   "bytes": 99415,
+   "sha256": "06d54f0712586b2c5ad4507e41e5ba8e23f78e9e0f27711e041995265972bcc3",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-26.webp",
+    "bytes": 44728,
+    "sha256": "504dd67f24ad2bdaf2c26990566eb4cd884797f8ad68ed98ff493199232225d1"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-27.jpg",
+   "bytes": 394630,
+   "sha256": "0f0188e6b206b8bec42c2f802b98ff9af5f059771e06451be841e369a103dc2c",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-27.webp",
+    "bytes": 264792,
+    "sha256": "091bbb7068ea16a2338b38073cb00add9825b5d893602f7e07de50498b4fa168"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-28.jpg",
+   "bytes": 93555,
+   "sha256": "4bb33eaeeaad4af438d805c3824018ab2188dca41fe7a6a007ce77a34369a364",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-28.webp",
+    "bytes": 42178,
+    "sha256": "87c5e6a202a14d6333ea0d55e82c1542d08dd9c0ba084420586ad6183a38f090"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-29.jpg",
+   "bytes": 362050,
+   "sha256": "e67a561f4a389c40aaf31d9c62327f56d542206a184cbf4844906b9b413c705d",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-29.webp",
+    "bytes": 235240,
+    "sha256": "bc2094561318015f60539c4e9df3ce3978a511aaf6b540f628ef6bbcf52632f4"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-30.jpg",
+   "bytes": 116119,
+   "sha256": "4efa63a2cc29bf0bbf16f5db0326449a104e74d04e47cedc9d5c44c924e2dcf1",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-30.webp",
+    "bytes": 52748,
+    "sha256": "55a37d4fe6b69bc2a1f770424f7b3ea6ed9509787c8b27341ff14e0f4a3aed4d"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-31.jpg",
+   "bytes": 357574,
+   "sha256": "683fc28c2fe966a8132c26b6024c004a04a781f914a95b950abc71467d177a07",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-31.webp",
+    "bytes": 227398,
+    "sha256": "264b786c81bbd7cb82d92ec2381debf7286cd6c33cb51ede082cd637188c55d5"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-32.jpg",
+   "bytes": 112496,
+   "sha256": "825a6a5521d98bbe00e6e38515805e8aec353b455684a06f9ccd2cac20c4b81c",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-32.webp",
+    "bytes": 51754,
+    "sha256": "63081f1c9c32bd5860984efbc0e4bde23186bdea202250e174a5b9bf61c98905"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-33.jpg",
+   "bytes": 256695,
+   "sha256": "6a75c9bbd0d834bdb5c077e0e9e555e550831b1983e1e6437ba75ed1c65813b7",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-33.webp",
+    "bytes": 138906,
+    "sha256": "4d16886487dc40e10f14a8484bf703073e65cb7af4a348e86ed17da41922f303"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-34.jpg",
+   "bytes": 118211,
+   "sha256": "d17ed6df91f3f0c0df8e414b087cd480d61ad605995e47083f13b97f2095a1e7",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-34.webp",
+    "bytes": 54138,
+    "sha256": "65f0b9af2aab9f6919d126058574f59d88544f5063385105d0c8d3e10c41cc97"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-35.jpg",
+   "bytes": 347884,
+   "sha256": "698fc6b1581d728d0c8ec0a34dca72e849c1a1c71cdd685e6bf1c1504c15d926",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-35.webp",
+    "bytes": 213398,
+    "sha256": "648361cc44c72d2610f5636cbaa7bfa80927f9564cbb9c19bb2468939683e0a8"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-36.jpg",
+   "bytes": 115358,
+   "sha256": "a811bfcba2911fa786ca1ddc4f33cccc0636bff8f08ee0d6e6f56cbc6eba5788",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-36.webp",
+    "bytes": 52880,
+    "sha256": "d43f4d6030e170f070f2babc12d8ea46b2ec1836fa45a2623037f0a5abd5f283"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-37.jpg",
+   "bytes": 393518,
+   "sha256": "123dddd618c89649157b92af43022d661b5777de8b271a6c49adfa46e8579203",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-37.webp",
+    "bytes": 259300,
+    "sha256": "1ed0320b15403b77bfc01ad66fb7c9dec4c2af1dec76f5ef86d02df01c868fd1"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-38.jpg",
+   "bytes": 96291,
+   "sha256": "0e972c16185bfbcdc0d092b43d93d1f6cefd3fffdecf4b473ffaff4c95e611f3",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-38.webp",
+    "bytes": 43190,
+    "sha256": "89e0839de8fefbd025b810f9a3195034fe8b8bc417067c75bb64c74a38d84b45"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-39.jpg",
+   "bytes": 363565,
+   "sha256": "5cf77f4a478e6ece24c8b12cb045e45dbc7a311b1b9201cdbbc88d7a16824a3c",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-39.webp",
+    "bytes": 228842,
+    "sha256": "dbf11f88414b849c120383a9be44f80bed3b769b051ab59b6baf7aa404bca665"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-40.jpg",
+   "bytes": 112358,
+   "sha256": "d12c0a6a4d4a13f19ea2d05eb85f996ed6467fd5c23a6b518989c0c620c8d79e",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-40.webp",
+    "bytes": 51562,
+    "sha256": "eb302684fd1436c4bb47b13ab2dc45a990efe349ad62ae2c21510b2ad9e2dfe9"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-41.jpg",
+   "bytes": 390634,
+   "sha256": "f664b86db1e863c2fc11f0752ef7b5289086cca33304a6f00c483b4dabb0cdb1",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-41.webp",
+    "bytes": 260080,
+    "sha256": "95ebe0e1f716d26f64ace6590d8d4d4fba7b2d6abbce6417aeb886734c444d51"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-42.jpg",
+   "bytes": 115361,
+   "sha256": "cb63e3521ceedddcc6a538649dddf0206e451ec47dd74cd16b634f9040133b53",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-42.webp",
+    "bytes": 52818,
+    "sha256": "6983ffd8cdcbe36beafdd39f886d3bd569127fcc81395fd94e8341649ae4c679"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-43.jpg",
+   "bytes": 101412,
+   "sha256": "be6ad51c72a166f55f45a28081a0d21e3236e22873ae06b380428c693a211f97",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-43.webp",
+    "bytes": 45408,
+    "sha256": "80f63b1c53e62469ad3b543ef7de6394c2a8fe1db2f3ce53026ac1542dbc677e"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-44.jpg",
+   "bytes": 397140,
+   "sha256": "86d7cd651bf525eebec1e7eb62f891105ddf818df21a3c7fa9ab7b3e025cb894",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-44.webp",
+    "bytes": 267280,
+    "sha256": "faf81696039d6ee06b1fa15fde59c60b78f8d8f6df98927733c7a3c2e49f80a8"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-45.jpg",
+   "bytes": 127375,
+   "sha256": "bf92e4674de66eb47cbf35045e1ff39b6f1326f1d5b860f2924f84a1d067fbc0",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-45.webp",
+    "bytes": 58410,
+    "sha256": "e4f36d20cb3312e7df9a764fdd29fb285bcabadd29ffcdffecfc6d5a3ad82887"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-46.jpg",
+   "bytes": 337475,
+   "sha256": "6ee0d1c09e9a6afefc03513b718defc4c5b75ad5326204947a725db3a62c291d",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-46.webp",
+    "bytes": 209544,
+    "sha256": "1e64c31737136b16b8a00d4a579b81a634b3aa40adcb807391a7c4923ea1cfea"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-47.jpg",
+   "bytes": 105999,
+   "sha256": "343b441c8ec91433de983e65ad98b7f248edf1334824f1d8946162fbf8109a81",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-47.webp",
+    "bytes": 48476,
+    "sha256": "a3f5bcb9559f7c4d0dcdb14204f403c70582c7c9a5899216306ad49fd8ca389c"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-48.jpg",
+   "bytes": 405515,
+   "sha256": "b8fbfbd5e513d93f966d53a8196d79944f71e20a3eb090318fe42a4b0fe4b3e4",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-48.webp",
+    "bytes": 275468,
+    "sha256": "3f0748f3ce3b433164b9fe7e48ae916b027de6da29d430e275e26b508fb43d86"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-49.jpg",
+   "bytes": 125206,
+   "sha256": "a9b948839103de7dafe2cdf4815fff7c0f31d658eb03419969e2a60f89a7233b",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-49.webp",
+    "bytes": 56942,
+    "sha256": "722015c37c39c829f1a91478bb247fadffd9294a85063ce73212ab08ba6ef763"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-50.jpg",
+   "bytes": 362063,
+   "sha256": "dbfabe666a48a84a91f73bcdca622593f29fe472da8a55f32e16e256dba03da9",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-50.webp",
+    "bytes": 230178,
+    "sha256": "95c02f9ede8db3fadac17a081e96f9ba44ec193e410b35c446561bcee7748cc5"
+   }
+  },
+  {
+   "path": "public/course-decks/plant-guilds/zu/slide-51.jpg",
+   "bytes": 109124,
+   "sha256": "ce6242028876c944a6e3800956a9dd1be41cca73ae9605dc23affb066412c6e0",
+   "successor": {
+    "path": "public/course-decks/plant-guilds/zu/slide-51.webp",
+    "bytes": 51122,
+    "sha256": "254a2bc88d14734f6cabfb42d90da1969ee5dc84ed93f6d40d6b5e057db3b002"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-01.jpg",
+   "bytes": 204084,
+   "sha256": "97caf13eae7ba0f924899f65c12f3d97ee11da260316759735af2d021929554c",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-01.webp",
+    "bytes": 54246,
+    "sha256": "7bc03fe5cd1b4620c63693ef51cc090fe0a1bc8a8ae7d4f093148ac0f245ca27"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-02.jpg",
+   "bytes": 117415,
+   "sha256": "650df1168c4daa5fd125c6d81dd9c95972d413cdedca23fe0c1950959a379384",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-02.webp",
+    "bytes": 34522,
+    "sha256": "5c485337271fa49e970415a64821ee4a08d16822a407eb4fd80195542d27ad2d"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-03.jpg",
+   "bytes": 141547,
+   "sha256": "a305d687cdfd543f3dec0916d645bc1b2aec0a946594d610f89d88fc2ebcfb2f",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-03.webp",
+    "bytes": 45668,
+    "sha256": "9c2f097958e8b26c316815a3c50891de452d5a92189c09cdc84c7fcf9eccb5dc"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-04.jpg",
+   "bytes": 114019,
+   "sha256": "f2ffcc7a105dc2d806f2b2b668cf8f430fce75b74f94b7bfce6736948f111d18",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-04.webp",
+    "bytes": 37938,
+    "sha256": "df4d385d157091b87390ce8292c109bf579cabd9b9357ff779efc4e8fb078ed4"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-05.jpg",
+   "bytes": 157140,
+   "sha256": "5d07872447eda6ebd069a245295b3b49dd7ad7d16bc9e468474a04e532f693aa",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-05.webp",
+    "bytes": 47666,
+    "sha256": "114dda096d86e0a67ab8c4e8384b6be1ba8a69a6d88ebf2b9ce1fc4e964ad7ea"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-06.jpg",
+   "bytes": 878007,
+   "sha256": "b5338bd9d9c2cc615ffbaaf67765a32091b8bff46559a66510f9d5d9d11af388",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-06.webp",
+    "bytes": 378038,
+    "sha256": "c9dfa71ef6bf1b54efa6a3fdfecb555eca3c7660a2115923d41bf4f537d5c369"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-07.jpg",
+   "bytes": 128310,
+   "sha256": "16eb6ee68e24f69ab115a29f2e9588c094715cc14983ecf312f84b1cdb8cd348",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-07.webp",
+    "bytes": 43918,
+    "sha256": "5147482d4bd70e04c63f30f59cd1e090b6017693b3ac9785738ce53365738327"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-08.jpg",
+   "bytes": 280503,
+   "sha256": "71a5f1d71eeed2be6a50628df6593fd808722975c9c3c25cd90ba887e5c66caa",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-08.webp",
+    "bytes": 85392,
+    "sha256": "7c0048a6969513b914c6fa1106aed17859b5f4bcc27c3831f8cedade51eb4299"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-09.jpg",
+   "bytes": 152526,
+   "sha256": "43cbf43ee90b665951e1f9af6d46561a60a05bfe8de00ed72a218912cb3076d3",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-09.webp",
+    "bytes": 43776,
+    "sha256": "f678f3a1a82ec31dc5a9f59cdcd8c3759e95948eac9a00b26e2017e6ab3dd60b"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-10.jpg",
+   "bytes": 1027371,
+   "sha256": "e65a4e948fd344f89cc19af5ff56ce6cd27d525503d14bcf9a89605daf5ac883",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-10.webp",
+    "bytes": 454184,
+    "sha256": "6427f0ae44d18edcf8f42b793be28d02465a36a317f58958a8e7beb4d428a05a"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-11.jpg",
+   "bytes": 200698,
+   "sha256": "856d4d61bc47e837d8d589082dac16accbe5ec77de1b309c5bed9e181927f569",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-11.webp",
+    "bytes": 56164,
+    "sha256": "e9703dd4b367e82126d89bf7b160c1716e11968223d8aa693baf40f6bdcc1380"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-12.jpg",
+   "bytes": 611476,
+   "sha256": "8625651e93c4229b26ac499a2bcd9ca832c7fc9a92aaa8a228d36e56b79e39a1",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-12.webp",
+    "bytes": 251722,
+    "sha256": "02a457a6c7391e7cb60cfbcef616918ed84408038cf1a8c45fe7d2b3ce0b37c7"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-13.jpg",
+   "bytes": 186345,
+   "sha256": "09c3f8c71c5389712a92dd02b82c66e049394b051930a9f983ff3b43d9cb1ad0",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-13.webp",
+    "bytes": 49024,
+    "sha256": "265b230ed77440a6010b73d50f01bb91a228f97d02e23abbcea3ffe0066db563"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-14.jpg",
+   "bytes": 220784,
+   "sha256": "3d6a7948f0df58a891e81b65195d93ff7c9cddd2f2520a874422f4756acd3dbb",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-14.webp",
+    "bytes": 70422,
+    "sha256": "1e1cfb55ee336af1b2316261beafb7781a300a5252e94411a9ae1cf119a7d2da"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-15.jpg",
+   "bytes": 244385,
+   "sha256": "881f34153c9d59a4c9d4e30d1dd1ab767c084357431f76973a23ea6c638c9bdc",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-15.webp",
+    "bytes": 74950,
+    "sha256": "8e2c446235ad10c67dc559da0e4e59bb26b89d64f205806fd16dc834363a691a"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-16.jpg",
+   "bytes": 154668,
+   "sha256": "51b43dbfa8d93a830d26fab1d9bf13c3111ca468e862a046f85d1ec4c00f2285",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-16.webp",
+    "bytes": 45864,
+    "sha256": "a61c954d0da7e30d29e625b585a60e55cdfb27c5cd7ec51eb907a057c738ca16"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-17.jpg",
+   "bytes": 175441,
+   "sha256": "ef33d852ee56066ce9fed243c4b5060422cb8656587505958ef5d7b402996eef",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-17.webp",
+    "bytes": 55592,
+    "sha256": "befcbbfd4950d26128f04fd9a28b179ed6f0f8277cbb0a4924f548c41c319a6d"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-18.jpg",
+   "bytes": 882780,
+   "sha256": "5139797a2f70c9f2fb6e57ee510d71e807dce68e86794df166d5097a1a69a97b",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-18.webp",
+    "bytes": 382552,
+    "sha256": "7e08c238a2d494ea01c960e2cd6309c774cbbcb3d07de588865ddc3f56aa5c9c"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-19.jpg",
+   "bytes": 105724,
+   "sha256": "d36d726154a0eba281adec0fbe7144346b8411dde2f45a7d08f5464bb6cc57ca",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-19.webp",
+    "bytes": 30002,
+    "sha256": "06a844fdb59df5d05a9c72de4fe700ac02626ca950035dced3ee71cc9c0523f8"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-20.jpg",
+   "bytes": 1136835,
+   "sha256": "2c655782c83064115d716b20f70b05a82a115bbaa15412c7e51a409231d1dfc2",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-20.webp",
+    "bytes": 539200,
+    "sha256": "022dff670d6f079f3a26f50dee488610291e39a011def2b34f4bc585c0bf6eef"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/en/slide-21.jpg",
+   "bytes": 114448,
+   "sha256": "e35d67a1d0d9f7e697a89bb94939cf161f8451e816880a9f705a0a4d9076dd63",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/en/slide-21.webp",
+    "bytes": 33350,
+    "sha256": "a543a9223643cb57bd7cb4b2e0717014dd9b2acec83f0b5a051d43c4a7e4a706"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-01.jpg",
+   "bytes": 94361,
+   "sha256": "07ac3db0e4cef80a4f9093c6bfa3054b25db381e57be7a28031be415a0be072b",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-01.webp",
+    "bytes": 36008,
+    "sha256": "5e247e9f99efb5ae1adeef7c4682b45928b4568622b2b9fea335cc046a03b9fe"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-02.jpg",
+   "bytes": 79810,
+   "sha256": "69232d4c724d5e26504a790852e84f0e2f124e5eebd0e82aa084e7a6a3816255",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-02.webp",
+    "bytes": 30198,
+    "sha256": "96ac0c915a35c0bda4ad3f71dfe063d0919c82bb75f4b6093737eeddd2217894"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-03.jpg",
+   "bytes": 80659,
+   "sha256": "8d3988e5b7b209689a92a271807182a30da7ddf53b602e48f0894cd92eb449ca",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-03.webp",
+    "bytes": 30114,
+    "sha256": "dbb4881992179b7df099239e793318b2767d8aa3d1229bbc4c4b1f33b5ba0f78"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-04.jpg",
+   "bytes": 73038,
+   "sha256": "955d3c7eee8397ed63c0ba71ffa888e80779e2402f9ed4b5d34145691786b5d8",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-04.webp",
+    "bytes": 27288,
+    "sha256": "ad67caaf7919ba8d220affb6835dbb006352046b116686df6c4fd695c0c4890b"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-05.jpg",
+   "bytes": 119647,
+   "sha256": "4b6dc697fd52821de19a99b2459e9a53efa77c1abfb330e42cbd2638eb104c52",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-05.webp",
+    "bytes": 51354,
+    "sha256": "451ff1faa64ad69c8e9e113311b6a3729bacf564a2451a23193b2f5ac556fccf"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-06.jpg",
+   "bytes": 548850,
+   "sha256": "8ffaf70625733434283eec6a7654c5ab5812fc98f5d4b2b1537caf712f283781",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-06.webp",
+    "bytes": 356888,
+    "sha256": "1c80d0221f0d701f6b98cdf4dc3ad07049748ff1521b91358fdc0de458970974"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-07.jpg",
+   "bytes": 86570,
+   "sha256": "f4528a9ccbc4495800c9bfe74c207448c1bacf5b5cb9d41b02ef907fcfa088da",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-07.webp",
+    "bytes": 33516,
+    "sha256": "604270e97f88c039403c09d724b486b09a2bb6d83976ba5c4065f9ad063263d4"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-08.jpg",
+   "bytes": 114425,
+   "sha256": "68f45ee34af4b02001ba58bc663a57051317f897e7d488cb9680e3de949519ed",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-08.webp",
+    "bytes": 46600,
+    "sha256": "786572f6c74b52b0dd51a78c20d6d464a0a44277764db7ad6964f27bcdbaedfb"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-09.jpg",
+   "bytes": 116987,
+   "sha256": "64b884914b75f8409816546e80a32f747ec712586221516be1dd8312f55d6f0b",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-09.webp",
+    "bytes": 47766,
+    "sha256": "30db7d06303b313ddb151b0fdd0b1b02bb1ab8f0c86ff626e7bb738262528eab"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-10.jpg",
+   "bytes": 609185,
+   "sha256": "34d0840eb7575bfbd2a52c235f9d1cb9570a1cda21b2e8ba82a4356f5f5c06ef",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-10.webp",
+    "bytes": 411582,
+    "sha256": "6ee510908bbbe5656b12e388ab1bcd039903f6097449691031dd784c7e771551"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-11.jpg",
+   "bytes": 110309,
+   "sha256": "1788814857897c37bda367931239b2eb2261f340ad1f49fe38ffc5136e0cead9",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-11.webp",
+    "bytes": 43222,
+    "sha256": "2e6acedc7dc63d254a3bf2f0317a125b86776c183a11766597341d8d72164032"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-12.jpg",
+   "bytes": 343810,
+   "sha256": "4040e1d3884bcd6341eefe32406dcb07d07616d0ed331b3077966575d37e11f6",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-12.webp",
+    "bytes": 209782,
+    "sha256": "50192a824ec51031a4136b0203e2fc1bf96067c5f39133ac38100714ce5987f7"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-13.jpg",
+   "bytes": 124142,
+   "sha256": "f9cb5112e5ac230e62a55ee92237f70911f5826300deb11c52c70a33150b85c1",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-13.webp",
+    "bytes": 54680,
+    "sha256": "3b9aa75b8365b1524878035f792cc3e5d90df3f8fe0f24e4d08b05a2bcab2f62"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-14.jpg",
+   "bytes": 139873,
+   "sha256": "de84d16da97425a71e4766489160138ac5b8fe6509729c8ba8c1e0211ba79ceb",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-14.webp",
+    "bytes": 54810,
+    "sha256": "a0a097b4898c6735873613930ec808fbbc41b6c8da6dc234dc7b1e147c720c40"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-15.jpg",
+   "bytes": 130204,
+   "sha256": "874ad9e74aff2f2f20012b023b1f126fd2fbaf866c15381d73069e59cd318179",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-15.webp",
+    "bytes": 50058,
+    "sha256": "c0cc4c427ea8eef9b45718bbe6e526cd824d7abba1471487303e6917a947401d"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-16.jpg",
+   "bytes": 132375,
+   "sha256": "3b8309701852a7d3e2b6fa59ef1a9b45f32a11ebd54715caab181fc9ff69fcbb",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-16.webp",
+    "bytes": 57044,
+    "sha256": "be0cf36a635a0ab258bc6741940465f487edbfdad59c619e8aba430eba4e9116"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-17.jpg",
+   "bytes": 147397,
+   "sha256": "d550e9fc4563e968e9dd5e596880d0e7701079b66e2cb2f6ff54ae2b44ec1a4c",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-17.webp",
+    "bytes": 63800,
+    "sha256": "00a8f87a118b9045e1f1fbc46e2f23dbbe6cb904f8eebb3f13f03186e01c152d"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-18.jpg",
+   "bytes": 538432,
+   "sha256": "8cbe07a15f009ee77cc49d72bfba4c8e5d60c7deb3536608d8184093a48239f0",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-18.webp",
+    "bytes": 338478,
+    "sha256": "7a8fa062da143e1a87f2977df7977ccfe399252935544f5aa20dd5374388cccd"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-19.jpg",
+   "bytes": 122213,
+   "sha256": "7dcde68048180ed847c65de9849d9b0a5b74deed021310f499aa2861eb33b14b",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-19.webp",
+    "bytes": 49270,
+    "sha256": "15b293ba1bf0ce45a2cfba5baf31a28a113db9a6f315b022ff2a5b43c9d397b4"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-20.jpg",
+   "bytes": 691452,
+   "sha256": "67a244ff387e01e50891d13f0d0130ddd93b6f6f07a8df7e6c3fed67ff5f650b",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-20.webp",
+    "bytes": 488914,
+    "sha256": "1f813ccdd466981bd1bf5ae2aa10965f12c8be44c0aaf21dfe7fccf893faf595"
+   }
+  },
+  {
+   "path": "public/course-decks/reading-landscape/zu/slide-21.jpg",
+   "bytes": 165471,
+   "sha256": "671ffe898204d0c0def188c41beec6ed09565dfe82d44491a6a3f3d2513e5cb2",
+   "successor": {
+    "path": "public/course-decks/reading-landscape/zu/slide-21.webp",
+    "bytes": 67662,
+    "sha256": "773537599698f8a1f872037c38ba9689ddc386ab71ce7756a03f2caea22f2c79"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-01.jpg",
+   "bytes": 152319,
+   "sha256": "7754407b4cd22b177eaf78b3ea1e5b7f9429ed86ca00d698d9f8d95f4d30e50a",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-01.webp",
+    "bytes": 58702,
+    "sha256": "b12c1bd2ccd57a3631eaecc5a2b115ce474149c77c64ef3ad8319f56707befa5"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-02.jpg",
+   "bytes": 84917,
+   "sha256": "ee10fde8f0efda84b41850a0d1483c338da4b50ef531711ca46036f207c63d92",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-02.webp",
+    "bytes": 29104,
+    "sha256": "da37f375ee139373543347e1d505f8b1123b318ca33f66f7d355d589f7906829"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-03.jpg",
+   "bytes": 52417,
+   "sha256": "140e77b3fbeda1dec290f4f324424b4f6ce976822adbf380b40b796fcd88b05f",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-03.webp",
+    "bytes": 16522,
+    "sha256": "8da81733226d767cab18f5d092e1294ceff4d68a9ab02992287ccbaf1909175f"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-04.jpg",
+   "bytes": 72520,
+   "sha256": "7688323efe7aed828b3610fecf585034319764e4e53df965a538e9e760937d08",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-04.webp",
+    "bytes": 25932,
+    "sha256": "12da9c7704e99c1550c57f5fd18c223744bd8db89f7bf31e9c2c31f79a802df6"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-05.jpg",
+   "bytes": 55991,
+   "sha256": "c76cf033bee424a371e5c2b8bca5bd8350df14d4b789bce5861d7794d797f7b6",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-05.webp",
+    "bytes": 14126,
+    "sha256": "cd0d16d77dc8e1ff146b35516a82317ae2d462bfbe2f01d3fa3639e8cb9df6c5"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-06.jpg",
+   "bytes": 65620,
+   "sha256": "ffb4ff3a68c1282544f13ce714f5defa41387ab0a487d3bf0085050fcc0a609d",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-06.webp",
+    "bytes": 23580,
+    "sha256": "8ced8d399469589fad0049174b4e2ccbef2891144cdbc23ff3eee4ce303c7b90"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-07.jpg",
+   "bytes": 108413,
+   "sha256": "990e3ca99c21fada6bcb671493465d290da8264e528bbdd248e386d14cf1b471",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-07.webp",
+    "bytes": 36624,
+    "sha256": "6848e0cbe7880944e6ae89ff68656a3e76476e7d9859d65b6fb7d5723348c5c5"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-08.jpg",
+   "bytes": 117037,
+   "sha256": "ff846967377ae005a191b8351cb7d063a34976f13a63101b817af626f3b904f1",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-08.webp",
+    "bytes": 42594,
+    "sha256": "474f116df6627355beba3b873e920f19e97bb08726aa6940e1f9d9c874674d19"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-09.jpg",
+   "bytes": 80468,
+   "sha256": "66e75257a66d1c07e27fdae084e4d7c50eeecbbf4227edbc0d5fdc4fe1463604",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-09.webp",
+    "bytes": 30864,
+    "sha256": "6de2c2e1614557ff706cd7ee910fa8c9b9ad78d68f6a2d7080846467f19b0aa7"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-10.jpg",
+   "bytes": 61802,
+   "sha256": "b5a1bec5bda44d20a6e9413e232f1190c622fa9bfb791df423b09a257b4aa0e0",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-10.webp",
+    "bytes": 16700,
+    "sha256": "77105c08fbc531b524d4c5e0ca833600978c0e8d5d495efdcc8017bc089e8272"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-11.jpg",
+   "bytes": 56499,
+   "sha256": "cb34c3db63e4527498bec8927f2767844f5e1cf3466e96aa44eaf111593a4e0c",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-11.webp",
+    "bytes": 18376,
+    "sha256": "6fd8f0307afd7527fcaa9ba9bed2081215b88349e69dd105419f8d92cde9034f"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-12.jpg",
+   "bytes": 75953,
+   "sha256": "ffc29192922986e5ddadfe9234b8ff55c578c5e75acd6460a31b94472d6cf661",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-12.webp",
+    "bytes": 27790,
+    "sha256": "fcc6dca8bce0bf8842c76f9b3cb032a71a9589d6d4529cde8c64e8d278161d15"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-13.jpg",
+   "bytes": 126956,
+   "sha256": "bcdac85aa6810e0d1780786e2587bfe52bccbd658a50a9fba81e76c16764097b",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-13.webp",
+    "bytes": 33698,
+    "sha256": "08158a036da318af56b3ecf9ef09914e9e481d04b593ea27c39268149c509349"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-14.jpg",
+   "bytes": 71010,
+   "sha256": "74895d68e1405c3dfabdf85df6b755d40e567a80cd611bcf829bff98c0c95486",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-14.webp",
+    "bytes": 25950,
+    "sha256": "4b47aa7cfabb49465f65b09b69cfd0df5791f15dd8b213dcea876b6cd57dbda3"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-15.jpg",
+   "bytes": 69785,
+   "sha256": "59b74af2c659455585ecc8d064332a192255e90588a47a91c0a6cd37db8fb4ed",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-15.webp",
+    "bytes": 19850,
+    "sha256": "f169b28104c75decbb3d2e7effcd2c4c058d8d9b29c37707c957f9abe297900c"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-16.jpg",
+   "bytes": 53999,
+   "sha256": "0eb832999bb39a2fc16d4d23e5bf6d787864d23e486d6cc0d72d7999cb568aa7",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-16.webp",
+    "bytes": 16898,
+    "sha256": "13faa8d804e7ab22e30ae8a0b26b8d09e7ba1fea0f88542114c85cd4a9da3f19"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-17.jpg",
+   "bytes": 51766,
+   "sha256": "037a8f3983b11fd2d2ecdb9c24f60327f83642f0896984c64843236870349a50",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-17.webp",
+    "bytes": 16830,
+    "sha256": "5bf72b251cd79f216a52c87196d86a74411fb9ced2d2dc6b383a8b89a84c795a"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-18.jpg",
+   "bytes": 63589,
+   "sha256": "7415ce9286bfd0b4ad92b534fe0d8a0a8544c4e837ff25cb7443c9a4b263fdb5",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-18.webp",
+    "bytes": 19014,
+    "sha256": "ef7435c4eff9331da35450637195e7d322f76ee7f8402ec31526def3ba447c9a"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-19.jpg",
+   "bytes": 87500,
+   "sha256": "b6d18ab8f6764bacea0d87fdfeba337d0401ce73b08de56cffc8ef2f2cc45c6f",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-19.webp",
+    "bytes": 28550,
+    "sha256": "4aa90f741a6d42f6610217c0929e98ec6d38eb39a0e37ef201d3e6f84716b32e"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-20.jpg",
+   "bytes": 66150,
+   "sha256": "7f90e79758e7f590c84ad05a5c4abdc89dad59b780d5d77a4142bf76eeb66a77",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-20.webp",
+    "bytes": 21784,
+    "sha256": "cec9ab0acee7d2b96a7f85b7995c0fef860c014ac7b5af3b5a8e51d36ed8c2c8"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-21.jpg",
+   "bytes": 108782,
+   "sha256": "c5a1cec9296efa0c586f5e4fe21a51b1db906faaab7cb480cd8a2ea2453eec64",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-21.webp",
+    "bytes": 24202,
+    "sha256": "dc767fc5fb1fca326537f1c99672a1bd61f8dbdf6420b12412aa86d50422be1f"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-22.jpg",
+   "bytes": 148984,
+   "sha256": "e70fc0a0746b9115f5dc5fb670e5f171c4b1a3345127b1e5859c0665451a89ed",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-22.webp",
+    "bytes": 57518,
+    "sha256": "67f44f028880cd456a10c32123cd25dd01d0033fd3e2c2f55d7be54e328ccadf"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-23.jpg",
+   "bytes": 64553,
+   "sha256": "1b6bc40734bf3fb11ea1b30676716645db5a69ba8d9064f39d54148d8645ddaf",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-23.webp",
+    "bytes": 22638,
+    "sha256": "2bb75d9f8c1fa6398cae32e207e004cad550ad50aac705786272756c2f091aef"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/en/slide-24.jpg",
+   "bytes": 47648,
+   "sha256": "c7f24d3e437fdb08f0dc64711d97cecc2b489044f05acdfc73af5faf7d25d8b8",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/en/slide-24.webp",
+    "bytes": 16168,
+    "sha256": "eb5a208e06334b475f56e8281c8ecf8b8ec09eb44610e37a262df92df7e8b8d0"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-01.jpg",
+   "bytes": 479728,
+   "sha256": "a0078d05c46c4df02c8e0a6a321b6f04f9381c7bc23332842d4ea8e2bfbeb64d",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-01.webp",
+    "bytes": 161714,
+    "sha256": "4dac9cae8237b8074b2fff34cacd6955e9788f0c51c18a3cfcaf4b5d8064caa3"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-02.jpg",
+   "bytes": 238013,
+   "sha256": "d24d41a5613afb935c39bf30806e32098a29d458902672290e230de68630e858",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-02.webp",
+    "bytes": 71662,
+    "sha256": "10bcd9d0194c6acae70c3391cc85f463a85180e087b9e2154faeb3ff223f5198"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-03.jpg",
+   "bytes": 168488,
+   "sha256": "dea5ca589f193e814e0f9013e4d07e0199d1f454a9f03748af42a3b77786d93b",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-03.webp",
+    "bytes": 47968,
+    "sha256": "9e6dd36df2b4eddfa32965aadf08d46bff8088e3c167647de1cb91c729f8b098"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-04.jpg",
+   "bytes": 219853,
+   "sha256": "b07f4442feaab6d4189b8e491ad44c911e16eea0e127a58debf29b1cc1912ce6",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-04.webp",
+    "bytes": 66274,
+    "sha256": "98f70b80f7ccaffcaff4c363a03e1dd73a628ee43d26e711fc5472873cbf85e5"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-05.jpg",
+   "bytes": 153082,
+   "sha256": "4d1b0eec2a3c9b343b59e98365b310513cfe96600636738fc3fc6da2169b6aa1",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-05.webp",
+    "bytes": 35322,
+    "sha256": "ed7cc681948833e2550270a1d626c69ad3e44bd0779453c470482ba42d4934d1"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-06.jpg",
+   "bytes": 197921,
+   "sha256": "8fc5553b8adc43c2e7d853830c25127534abeea8c3cbc82cd0fb419ad9ce770b",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-06.webp",
+    "bytes": 63392,
+    "sha256": "61c933af17c41be7afc185e4988541fd76d3371ae78aa7b4b7b53ca2330e7979"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-07.jpg",
+   "bytes": 283157,
+   "sha256": "9f58dfe086b312b30599281fa6b63f4a444b455ecb7520d1dfb19ec7b64f98e9",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-07.webp",
+    "bytes": 80886,
+    "sha256": "ac92c61e3e1a99d769658a9b7ec61a101ffc7b12b2c3918c05da81bc18609989"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-08.jpg",
+   "bytes": 384403,
+   "sha256": "b143b6e3b6ef3f40ccb28b533160a0b1c64d868f6e717192ad7d35fc2e1d6a02",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-08.webp",
+    "bytes": 124502,
+    "sha256": "26667df657fa0165d17df78544f58c390990ca50a80bf0e53f8f6987080da249"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-09.jpg",
+   "bytes": 298024,
+   "sha256": "1205f626bc3be27755dc784717e92c1998dca9ccd865108b17683d075258735b",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-09.webp",
+    "bytes": 100100,
+    "sha256": "c3d6557bcf98f6023ac4ba4996d1d372a38ba73b400b461ad07c815601783837"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-10.jpg",
+   "bytes": 168031,
+   "sha256": "e3df0e6aedb48a0a3f02afbb8fbd2d9d0dc35c56776b38c4eeb815dbe7bbff59",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-10.webp",
+    "bytes": 41262,
+    "sha256": "2c5c4f0994a2e521b7f79ce4f8e03619f14bc7ebd75e506f3739a37db09fe24e"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-11.jpg",
+   "bytes": 183890,
+   "sha256": "322f2987002b6da4063669f4069d0e2c2a87f3766bc152b3f43020c8cb6bb0db",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-11.webp",
+    "bytes": 53864,
+    "sha256": "29be8777f36b3e3f0488a977c87e32597cd0af21c4e2266a3bad4689d7d84a07"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-12.jpg",
+   "bytes": 272376,
+   "sha256": "6385482946330e75b322e69b85b0c16b3415ed7b415986a12aaf3cbd7d64aa5a",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-12.webp",
+    "bytes": 89100,
+    "sha256": "0096c267416bbaec8d49c179bfa28b841d1113d51225e61110e2eb81c4b8d12f"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-14.jpg",
+   "bytes": 224839,
+   "sha256": "febf88345e533454129b3972bd63af97d8a97c5f09cfb661d4d677c888954157",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-14.webp",
+    "bytes": 73030,
+    "sha256": "0e23e07c550716259cc87150250f46cf7b5884f9f0f6f24c79f5a3a5294f88d1"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-15.jpg",
+   "bytes": 199309,
+   "sha256": "9559cc405a8976d00eb934a6b4e009041e2d6941dc73e434b04a9884786aab2c",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-15.webp",
+    "bytes": 49980,
+    "sha256": "df67f57b55ceb5d22a5f08340435b5badbc441d06f9bbf08e82e7220baa3332e"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-16.jpg",
+   "bytes": 184478,
+   "sha256": "48e9316d62352798e1ba7f314f1965e4918738fbfb9aff1768887b973b51b18e",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-16.webp",
+    "bytes": 55232,
+    "sha256": "2f6f17c5afc13ccd2ba2d54dc3693ff1b4c9547c5c185d4d688520c2b56bca5e"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-17.jpg",
+   "bytes": 181961,
+   "sha256": "96bb1d9031787229a6724d437c6ec615bef43c56581243b03ab3615a24278017",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-17.webp",
+    "bytes": 55212,
+    "sha256": "7fa97f798b3852198a1c4c3ee2834893e644af835b20a44001584202a2176161"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-18.jpg",
+   "bytes": 190497,
+   "sha256": "1dca3cbfeb3736c1b34e0ec01b29d49f565c86e409f7e237af148ee30ffa53b8",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-18.webp",
+    "bytes": 55224,
+    "sha256": "77dbd7034cbefe052f124d655239a52a36405693866c65c76f1a88fe05e5f040"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-19.jpg",
+   "bytes": 386984,
+   "sha256": "d0609142d86ebe735fde6fe6d0d459b1d8555d0c7b64565db522c97866aed717",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-19.webp",
+    "bytes": 113898,
+    "sha256": "da1531f59ed65b5db1305dc8d8620d859f70171cfd780c4bbfe40a43aead0748"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-20.jpg",
+   "bytes": 197638,
+   "sha256": "19a4c3e845912a0421a91644a031e65fcbeb07edb3eb2b3ea0f8e5ba7d5964fb",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-20.webp",
+    "bytes": 58358,
+    "sha256": "3618bebaaf8d6f51baf1b47e303dc705b326a9707fa5020b0e4c36ff737ab9b4"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-21.jpg",
+   "bytes": 195131,
+   "sha256": "1fb821c85762fce73a3d9b05b12acbd922ed27a21254089d3090940d85bb0c88",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-21.webp",
+    "bytes": 49756,
+    "sha256": "ef6e5a4faffe99108f6dcbd37431d92ef24450d9ab0f4e32ff7fbba2631603c7"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-22.jpg",
+   "bytes": 483599,
+   "sha256": "f8b143abe04f7bff75ec554cf4ff6ec6a0669acc577db5ef5cbae6b003b78bd1",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-22.webp",
+    "bytes": 160772,
+    "sha256": "fb4fdb8a40433beb9d51a60869bfb466c445200a77e851fd3f8596521570fc5b"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-23.jpg",
+   "bytes": 206279,
+   "sha256": "7592231fe1fc01d2c8a3c2ad75afb98f979ece6ae7827912cdf1ec8a7d6815af",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-23.webp",
+    "bytes": 66398,
+    "sha256": "4cfef92d771ba97df977fe16aaf9ef2fff1e86001bbc3debc1c57e1f2b897423"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-24.jpg",
+   "bytes": 173531,
+   "sha256": "92cdf3af1fcc1446d9afa627e727b1361e9b350697f8b2bed467a04a9149137b",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/hi/slide-24.webp",
+    "bytes": 51848,
+    "sha256": "961b9c45a225cee2ca8b965491afba6a94f7cdd0dc45323aafd44ea9c94f7440"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-01.jpg",
+   "bytes": 155050,
+   "sha256": "a8b7ff8a9b89dbee1076b0829d96eb906de35ac2b7a1be35b130668e51095404",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-01.webp",
+    "bytes": 60562,
+    "sha256": "ae9de96ca3db81b76702ca2181c09177145afbb41ef0124814f47f82144250a2"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-02.jpg",
+   "bytes": 79211,
+   "sha256": "6608e60521ed6361d3a90dd0616b965a2981a53268e14fbc03199ee04e05175c",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-02.webp",
+    "bytes": 28680,
+    "sha256": "a1e1de5177480ff6dc57ceaee076e8e65e644b2e1246758c6c4bdc073bd75fb7"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-03.jpg",
+   "bytes": 52028,
+   "sha256": "f9cb2e7b087fc4ab46503a819df35e4db41f6ca7da103ce61288a997e4b1fddc",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-03.webp",
+    "bytes": 18118,
+    "sha256": "7031841107d471d97df89fe4cf67e5303a648a2fc99e8b4fbeb7f3b83bdf3f76"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-04.jpg",
+   "bytes": 72668,
+   "sha256": "20b1c361dedf13b710745b50f86504b9739682fff8ddcb94c4427b1e4d2e8e37",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-04.webp",
+    "bytes": 27598,
+    "sha256": "d5768df0516686b1c43c3906766ccafc66f30e1b396c34d0941e484f1f0f3800"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-05.jpg",
+   "bytes": 49895,
+   "sha256": "d635e94af7c94d5885037ae7dc308b9ac81f37f550c66e8a928c15250b0b86fb",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-05.webp",
+    "bytes": 13386,
+    "sha256": "0899bb9236acf11d086ea5955b8ef5540046079ba873a1700af5549214508d43"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-06.jpg",
+   "bytes": 65087,
+   "sha256": "e9faff0e7c095548970da2c9e081ebef1dacbb35867f9a2bc5f00f5b56eedcf7",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-06.webp",
+    "bytes": 25384,
+    "sha256": "d779178cb2996e3b25090d2f3fb7c2d4040310303c2a5a5e2a0b046661fde42a"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-07.jpg",
+   "bytes": 99501,
+   "sha256": "2aab40f1431d74dc3f3d568ff185ad8efcd493202cfb456e20e7e3e377eb956c",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-07.webp",
+    "bytes": 34738,
+    "sha256": "b5e5b30e939a1c44986dfc9d7b50a6342b3d9ea21dd4e4d7ced8cb5f8fb53899"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-08.jpg",
+   "bytes": 125779,
+   "sha256": "4c316371267beaabb81cff47d392296352197a3515a1ae56a98825a9f0ee0784",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-08.webp",
+    "bytes": 49192,
+    "sha256": "807e3aa776d7bafc1777d698f5102c7dad8eb47b38c7513a4a15170ccafb5fb2"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-09.jpg",
+   "bytes": 92435,
+   "sha256": "7a4363482536f99f1c5348038fa572dedda9246039da0215d7717769be1ecc2b",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-09.webp",
+    "bytes": 36918,
+    "sha256": "e514f8faa94c25f56ff398d61bd74cea468e80f285bcf2f8c1b32fac4a7916a4"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-10.jpg",
+   "bytes": 55336,
+   "sha256": "cb5be04dc14343d196f932168c2d912b65e0e052f634577b7337f7bb35c452cf",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-10.webp",
+    "bytes": 16272,
+    "sha256": "62997c70ee05798074b56ec550925fc4f6cf949f7acdc437a07e5669dd3541ad"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-11.jpg",
+   "bytes": 57997,
+   "sha256": "de45199ba7754264b5184ae66235c0798b54f54bcc3f4c7706db784cfd18773d",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-11.webp",
+    "bytes": 21368,
+    "sha256": "84e22b26f738c4446b29142aed3d6d5f4f6a90c92115d75decdda5bb89903901"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-12.jpg",
+   "bytes": 82616,
+   "sha256": "c3df5b7815313b0522e455b6ee9ad5a57e499116ea51c7ed9ec0eb764fadd92b",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-12.webp",
+    "bytes": 32120,
+    "sha256": "07b6f7049533ea9407d2fd92a2a41b3077ba5381d1ecca6e1a97697e8e30d7a2"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-13.jpg",
+   "bytes": 134449,
+   "sha256": "0f483956f1f71da4708dcabfc02eac8bc5d385dcddaca9d3799a8d9bda4753a1",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-13.webp",
+    "bytes": 37276,
+    "sha256": "686c4caf5be38a80c3408489d2e1483531861aeedb2c89299783fa57a0d57bf3"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-14.jpg",
+   "bytes": 67619,
+   "sha256": "128ad9e11f0642ea18c3bcc65da5c93fffde40a35abbd2be0d98381d37e973e6",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-14.webp",
+    "bytes": 26044,
+    "sha256": "6f9b759e75db944ed16ee4c52233737e1aaab5b5b1c569f30b55230e64af4c76"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-15.jpg",
+   "bytes": 66235,
+   "sha256": "a0549454df9da70bcbe0bf24221e5a2e61c3a5386bd91819189285478c73573d",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-15.webp",
+    "bytes": 19548,
+    "sha256": "c5a30dabcea67321cf8c680be2de6cd64991868427fa2c9a75e346d4c0be16e4"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-16.jpg",
+   "bytes": 60861,
+   "sha256": "dd336e2bf5e7f72945b0c2b2004a0382f6a37c79da7d42b22721e7d039bb6bfa",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-16.webp",
+    "bytes": 21278,
+    "sha256": "47198bbdf07b6a3c4cfb8f76afb588e3d462c36712e0b6c89a0ebc30d5cf9264"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-17.jpg",
+   "bytes": 59031,
+   "sha256": "0e396ce087c158e3bf03dfd51a900f6e07336bd3fea493295963ce794a9749b1",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-17.webp",
+    "bytes": 22294,
+    "sha256": "703b0612e7f75702a90a0b3326e9ce8d8c9f1efb4556acdabad440669ed5278d"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-18.jpg",
+   "bytes": 60557,
+   "sha256": "567f7ee1de14aa2535970d9275c3377960948eeea769f7689199e824bf6be24e",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-18.webp",
+    "bytes": 21036,
+    "sha256": "fc22af76cef02bec8ca0c1535d3b363c9b964ef1b9d57a0668757a65e70b9dd0"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-19.jpg",
+   "bytes": 109389,
+   "sha256": "9ce2943c41c8579a547d221bce31f122c16ef971ca759c16ffcb966d099ebb74",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-19.webp",
+    "bytes": 37024,
+    "sha256": "2e504130f3019480c6c86bd7bb7ee359883ba5685c1a6ba3ea8441d77ad54c5a"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-20.jpg",
+   "bytes": 66086,
+   "sha256": "ec040d93218952255f5445cf4fc046cb6554c125aa45361d0330adbe7df3b00f",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-20.webp",
+    "bytes": 23590,
+    "sha256": "37c0620088409854523ecd583266f76364682f478952d233efd4baac5541584d"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-21.jpg",
+   "bytes": 111330,
+   "sha256": "23263f144ba999b0f8ea1bd84ba4649b936f995ead13ad50b6c60ae9149a8aba",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-21.webp",
+    "bytes": 25160,
+    "sha256": "25f01d0875ddefe6c615bf0c9c57f18e01b7f44760eeb6cba579ca4371ffe2a2"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-22.jpg",
+   "bytes": 153749,
+   "sha256": "5cb0b52186b80d2e471e892772dfd4c4bfaa3cc5165ffa568bcebb3eb5c292a2",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-22.webp",
+    "bytes": 59168,
+    "sha256": "eedbc9851c601f2e91842f68e98472432eefdcd3e809760f4a94b67de3c487ac"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-23.jpg",
+   "bytes": 66361,
+   "sha256": "09de5e376677f3a416ec09e5cfc4f06a477453d28f5f8b4fc8485db551f3e888",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-23.webp",
+    "bytes": 25556,
+    "sha256": "11e964250207ba940626304859efa54af326d03d3a60260b79c16000941d8f23"
+   }
+  },
+  {
+   "path": "public/course-decks/seeds-sovereignty/zu/slide-24.jpg",
+   "bytes": 55527,
+   "sha256": "cb020d4e0388e05012798dd0f93a894c543539d9175e872d760a3c2b9adc10dc",
+   "successor": {
+    "path": "public/course-decks/seeds-sovereignty/zu/slide-24.webp",
+    "bytes": 20216,
+    "sha256": "6f776d32fa1f769fd5657f956ff431b17cdcdbe3a33c82a8f3566072967f996c"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-01.jpg",
+   "bytes": 205538,
+   "sha256": "be0a2279e4cc5c2b7097ac682cbd1bb814f453f548f831e74f527f0545734688",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-01.webp",
+    "bytes": 64142,
+    "sha256": "ace44b42faee279451ab869bd66d6d7d9b0761dbdf140e3a1618d21f92d8e3c5"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-02.jpg",
+   "bytes": 118717,
+   "sha256": "a3851aa9afeadfb8348a00706631e8ebbd1f4275d06536440563dc313955ccf0",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-02.webp",
+    "bytes": 35788,
+    "sha256": "66308b698ff5b65134ddc6fd6d86f1598ad80bf163d93f2429267c07d04828b6"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-03.jpg",
+   "bytes": 122700,
+   "sha256": "1af73892bb7912ec14e9d5e903089ffd5a9642b607080a5f580e2cc221114efb",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-03.webp",
+    "bytes": 44916,
+    "sha256": "89c02152d40d113d5815dac227896fd56e8cc508f663f3709bee7963f0915693"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-04.jpg",
+   "bytes": 664823,
+   "sha256": "532a97a58cce629f35c4b2f188d0353de6a779dce6e3a3930a681b7da19e5ceb",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-04.webp",
+    "bytes": 339548,
+    "sha256": "57c13e8ea4d0b253c300fb5a9cf39861711acc9c56f176f62df13f4adbaf2c16"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-05.jpg",
+   "bytes": 182814,
+   "sha256": "0bf59d1cbf8e82303c3b4b289b742b6d1f0e567311db476602ddaf98cca50819",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-05.webp",
+    "bytes": 56714,
+    "sha256": "049b0fb03151ed64fed966e53f2ffc8259f4b603a2e545c31dc6334ec19a4ad2"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-06.jpg",
+   "bytes": 974145,
+   "sha256": "0288089f30804e178da4ed6d216f5977fbf98c5b5a83b18537f4d1dc3a4bfa03",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-06.webp",
+    "bytes": 445752,
+    "sha256": "928106bff3328bcef527f2c8eb48afd9a2fa61d56684a2be0c65bb0c35720328"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-07.jpg",
+   "bytes": 1006561,
+   "sha256": "31f411e51960c3ac4fbb4d1670baa974a40609df227d1d0c18121ad049726d65",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-07.webp",
+    "bytes": 460228,
+    "sha256": "cccf162a21644174892f73c96afe0c1b0987bac9ca6af2db441eb761d9dce7a8"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-08.jpg",
+   "bytes": 296063,
+   "sha256": "622dcb7bcea69b402b768fe2c474068d8ed80f75e44284fa6440c35f54937f8d",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-08.webp",
+    "bytes": 65534,
+    "sha256": "27916bee2c32916c66bd8b8c1812d53618f211d8b780b7abeec8f8caf5565ac1"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-09.jpg",
+   "bytes": 153404,
+   "sha256": "c115e3b119c1763386650d066dd25bd44ba0d58044dc38a56de69489e6071f39",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-09.webp",
+    "bytes": 41598,
+    "sha256": "cb68cb0dbeee6eff0e70acd6b814972f4178fa250cf2a4a5096a1d387dfcc34e"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-10.jpg",
+   "bytes": 183430,
+   "sha256": "03d6a7091fae166b38f0129849ef42cae347e7ae02bbf2472bbd578c5ac1a05f",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-10.webp",
+    "bytes": 42836,
+    "sha256": "d5d68489cb3a1e60228a05e333e03af3a34ce656a209c077b86325ec20d4ddc6"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-11.jpg",
+   "bytes": 169262,
+   "sha256": "9eee3e4c2fe82fb2c76896b06a5832c8914cdc81f997a2ac9af1597386887a10",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-11.webp",
+    "bytes": 54722,
+    "sha256": "e630772073762ba029e210691a1c69a4552ec0583f4befed965945428cc5ca53"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-12.jpg",
+   "bytes": 1001026,
+   "sha256": "456952ba4ef3b41009c6e5544a6d7108b6892422990558b16e23c3fe2b215c8b",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-12.webp",
+    "bytes": 449976,
+    "sha256": "1534390d359e32a63a0799a627c40a1ddfda4c06be8c150fef541e2c606afb2c"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-13.jpg",
+   "bytes": 156404,
+   "sha256": "242fd66d3218d7dab0a5228e9d4a08e0eaae2cb2c7f7354d44d6705e3c36976c",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-13.webp",
+    "bytes": 49940,
+    "sha256": "27ce457aecb9aaf652ae3981fcdd71f7b019ab9f86704c35b63e5810c5bc3ffc"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-14.jpg",
+   "bytes": 223444,
+   "sha256": "ebf5c1543310169c5ca1a7c7f5f287af8800bcd5348026265a600d7896231997",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-14.webp",
+    "bytes": 48300,
+    "sha256": "80c26d36dbefccef36b3a1d121fab2656846712647ee57a85a47bde8004c67b5"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-15.jpg",
+   "bytes": 212782,
+   "sha256": "cf084dd0c65650360d638fbcd8c7abd5ba7d1f2b9567a8d6c080593e35647ba2",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-15.webp",
+    "bytes": 47024,
+    "sha256": "bf63703bed32c6fd7d9fa5fb57e8662553686ad7e91211c82e0fc418b2675cf1"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-16.jpg",
+   "bytes": 156109,
+   "sha256": "de420ce50801df474c52a12622061d0bdabf71f74cde7b4c27d0491dbda9c5e0",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-16.webp",
+    "bytes": 48068,
+    "sha256": "4b4f8b4094da12bc889086742ba875928e984eca177f4ed7213d8e4a9b690363"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-17.jpg",
+   "bytes": 829749,
+   "sha256": "8e3dd522770c62fb21bd86b491c59d04a9dbf5cbd402d8cbbc80dcb4f9ebe924",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-17.webp",
+    "bytes": 339046,
+    "sha256": "fc368edebf59ef8b4a089513d394925b888be5238c0d16e203370b47780653ce"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-18.jpg",
+   "bytes": 150535,
+   "sha256": "fcfc3d1b8cdc4776b639d6401a6b2da2144b8bc00cfa838832c78bc1dd86823e",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-18.webp",
+    "bytes": 47020,
+    "sha256": "04d30b0df41800c96e9ba202f5cb30b17ca43b7dc58476976128213d23aa3382"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-19.jpg",
+   "bytes": 213263,
+   "sha256": "3e3504664838c83637e16ea2576503facb4d8bbfee4ce54674026f61aa3cad54",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-19.webp",
+    "bytes": 65258,
+    "sha256": "c6b303449d7299dcb4c4dfc9c4e57e321fa0108a753415f5c6a2d3acfbf51337"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/en/slide-20.jpg",
+   "bytes": 149251,
+   "sha256": "18c74f0a74ac59ea5a56f98eca58164c6e7a633274198b51d36cc1dde01ec087",
+   "successor": {
+    "path": "public/course-decks/small-livestock/en/slide-20.webp",
+    "bytes": 46588,
+    "sha256": "f13648de16652ee2bb31b4c8333895609865747d1d142267306efd01c4188312"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-01.jpg",
+   "bytes": 124737,
+   "sha256": "60ed1f3e8d61463e5131917de0a4fb61cb5be8284f490f49d0ac105a753bf3ee",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-01.webp",
+    "bytes": 51304,
+    "sha256": "f5be8ac75110e02c9d0843bc51026eafed8813c0dadf863aa18611d1f7fdb655"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-02.jpg",
+   "bytes": 107374,
+   "sha256": "ed90d62d93b708e251c43fd21f6e8cf2b3a77582f5034ae8183c10d5c911af50",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-02.webp",
+    "bytes": 45324,
+    "sha256": "f94e6fdf600f5a9f7acb25d1f968c46c375c168590d9c1902558ef3515fb8595"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-03.jpg",
+   "bytes": 116058,
+   "sha256": "57c2236d196049be0daf4bcd1f5389db2db5ae599430c74a57b8ceb9dda9696b",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-03.webp",
+    "bytes": 48780,
+    "sha256": "f3a3d395434c816e50c032bb429f8338e693dd3b8573eb7cb12e0acdaf07b96a"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-04.jpg",
+   "bytes": 600390,
+   "sha256": "8a90b5bfedbe2367539b02c5d051de54c9c414180bdabaf1ac30e5fd73909fbb",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-04.webp",
+    "bytes": 339548,
+    "sha256": "57c13e8ea4d0b253c300fb5a9cf39861711acc9c56f176f62df13f4adbaf2c16"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-05.jpg",
+   "bytes": 133553,
+   "sha256": "fe0ff8c7e320e1f8f4bf2261eb9d9fb1748af785c771cec582c40b5351cae62b",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-05.webp",
+    "bytes": 55032,
+    "sha256": "162bcf9427078e50930469b887752c0fe61cbc1834ffbc0b4a12cd58d7430d51"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-06.jpg",
+   "bytes": 719922,
+   "sha256": "f82b47de84d94426806802fce7fb9eb0a32ba718d76ad955061e23e095fdd7b9",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-06.webp",
+    "bytes": 436784,
+    "sha256": "8e481e7b709ac2a4ca91fd04da856dfaf780c40317f3c1ce754ca53c6b589038"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-07.jpg",
+   "bytes": 742292,
+   "sha256": "6e86608db72ee3f1b4d31e913ce49cc567c6727ecea4adba15d2467633b9f28c",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-07.webp",
+    "bytes": 448674,
+    "sha256": "8141298a43a4bd1693f83b3b2b2bb9717ff09a09bb0937248c917c6a8bd2f34a"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-08.jpg",
+   "bytes": 109517,
+   "sha256": "996fd6d08018455c2d37460395a898719929c845ab1700760505be0d1988b35e",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-08.webp",
+    "bytes": 46118,
+    "sha256": "26c5149dd88e4bb153ec9f4eb57a435b4b75ca836e5a1221f01d83daaef1460a"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-09.jpg",
+   "bytes": 210454,
+   "sha256": "bf793a0d87a43eead23e9d4278afe0d30de5dbfd286d76a0a5a1335080cef089",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-09.webp",
+    "bytes": 71458,
+    "sha256": "8eea0a04b6f600996f8258e10b29d0a43c8d85123114e0eb03360f2c915cff98"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-10.jpg",
+   "bytes": 135019,
+   "sha256": "86171548710dd806b248092b7aa94fb10b156299295b48a28ca3be1bb6c0dda1",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-10.webp",
+    "bytes": 43708,
+    "sha256": "dfc59a601d918057595326610adb3cbdd8e0663685279a28a8c98c8f616b08b8"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-11.jpg",
+   "bytes": 113916,
+   "sha256": "0d9b50186bd85ce13b01c4b38c10d875e69b7ee6019b071fd096e32be1ce9948",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-11.webp",
+    "bytes": 47742,
+    "sha256": "ce3e309b7d68e9e374d1eea64eb8be5ae306499f66858a3a55a2e982e066cc0f"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-12.jpg",
+   "bytes": 721174,
+   "sha256": "c458a5a61bfd77ba89be3106b721ed45ba25b3bb77b40d8369631a96333cd899",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-12.webp",
+    "bytes": 435920,
+    "sha256": "4ecafbf1d0eec38bb19766a0e2c2db4624bf73ff53a3ff35709f91fcf6ef1731"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-13.jpg",
+   "bytes": 150058,
+   "sha256": "800d827be389a23c594a690082b2cb166117d7c249a19770e16c13c1eea5edf9",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-13.webp",
+    "bytes": 63042,
+    "sha256": "780128e8706047f88a35f97e291876c750678d3a638d5bdefdfa5d410ca04126"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-14.jpg",
+   "bytes": 110272,
+   "sha256": "e269d20d78224b961e42427b2c8efa0279028a33362fe0fe69fa55cf72e6783f",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-14.webp",
+    "bytes": 43406,
+    "sha256": "5218934142808b128d09a64709991aa241d15d78465c4230a711472ff4fad8d1"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-15.jpg",
+   "bytes": 121069,
+   "sha256": "3d50ff5fb29dad11333462f3d896e4437f2c7b460b9941870bf4b14705a003f1",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-15.webp",
+    "bytes": 47652,
+    "sha256": "def2efffb4151261499bca22618eb6364ec661a17a78d6d6e4848d1e6c9f35ad"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-16.jpg",
+   "bytes": 136984,
+   "sha256": "bcc8598024d3c30d04f56e4f9fd6c3e87307f0aca404bbab16788c56ddcab034",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-16.webp",
+    "bytes": 56384,
+    "sha256": "069e5fc4ad6a63b0d89cb611cffc4d0d5f357f01a0f10a6f70d2b60535d29b79"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-17.jpg",
+   "bytes": 614770,
+   "sha256": "9e0f10d3994347f1a170181a3434da562f31c1a2bafa54fc674a737b5e188007",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-17.webp",
+    "bytes": 331596,
+    "sha256": "a0726667fea10400f198a4cf3fa370c6b1252b30ccbee93ef2d38ad9593f7033"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-18.jpg",
+   "bytes": 147203,
+   "sha256": "4b62bc8d1bb2ca0e3962dd4caddc72b693cf4be8a935dd59d0ab9b06c4689b22",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-18.webp",
+    "bytes": 60968,
+    "sha256": "d4fb21b9610ae5cb4781443376935fc6b38bacb7c601602bf73246b69cfc033a"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-19.jpg",
+   "bytes": 143968,
+   "sha256": "d1a99d3cf337ae851847402964d980434b9af25b335b6a338a71d707d9166a11",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-19.webp",
+    "bytes": 59560,
+    "sha256": "5e47e8f96f05235f1adde9ed260bd49d74abd15a8e65b303632b80da9620c800"
+   }
+  },
+  {
+   "path": "public/course-decks/small-livestock/zu/slide-20.jpg",
+   "bytes": 123357,
+   "sha256": "f70d366cd49d3fb392eaec057a756de7c9b50f2e772626af8af02a7730f5e94f",
+   "successor": {
+    "path": "public/course-decks/small-livestock/zu/slide-20.webp",
+    "bytes": 52196,
+    "sha256": "bba5f40511a6f503e9b51714c582a10bfcf08cc6d829a5d3fbfc7bb10cf0ca2a"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-01.jpg",
+   "bytes": 373121,
+   "sha256": "469fbca64085c06768260ebb8709955eab99924a012f9c32773063673b3f22c3",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-01.webp",
+    "bytes": 137952,
+    "sha256": "8062943e019c4d35129e851d31405ddf1a0d821906a56fab8a29c42864472de8"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-02.jpg",
+   "bytes": 108169,
+   "sha256": "2f3295362adefb9fc250fedc2cfd7f796b86e1119aadf383a9c2cb7ece10705f",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-02.webp",
+    "bytes": 32018,
+    "sha256": "e291890b6171e375735f07f4c4496122346cd87dd3970c1ea3d592ee3ced9919"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-03.jpg",
+   "bytes": 114796,
+   "sha256": "fdd02ca890e70d505e09b97e105cfdb9c4023affd935de5f12b8ff1a18f23d26",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-03.webp",
+    "bytes": 33428,
+    "sha256": "9cd3796914857ea166d09ea8466d7478de889cc62a08fd4884ed8181d7821a33"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-04.jpg",
+   "bytes": 97128,
+   "sha256": "f4dd5cd1566a3e7a440274b51c4363f058e0c548f64eae76d58471b931259ba1",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-04.webp",
+    "bytes": 27176,
+    "sha256": "83a2d9a64d9d687fd535f132583a0582a2ebbbc5dfbe4f3df3d9777c54d96a45"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-05.jpg",
+   "bytes": 701546,
+   "sha256": "046f74aeb49befbfee33934a7a04d654466c027be75ab2c7fc6a204166e0766a",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-05.webp",
+    "bytes": 309816,
+    "sha256": "5c2d0116c238411d002d837c83a6df7aac4a4ff1ab3368a20f67ceb88f82a740"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-06.jpg",
+   "bytes": 486223,
+   "sha256": "f5249626d61dd20440933606e21171473b9da9883f6f88780d2c06528d584617",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-06.webp",
+    "bytes": 180826,
+    "sha256": "a53fbec1580c7f4df575eeaf611103bf255e812b8212c6f31acefce3d51b81ed"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-07.jpg",
+   "bytes": 111507,
+   "sha256": "d41630a376d36f4e63cff766852e6dd98d26cbeca30fca6a5186747a1e209548",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-07.webp",
+    "bytes": 32020,
+    "sha256": "34ca207b08cb4ae496589b57c9882ae1d8c58b38e0814f23ccb1cc6b8d9c104c"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-08.jpg",
+   "bytes": 931947,
+   "sha256": "f7fdcf59d1680a90be3334aa1274068a49b63d7a74c8e659da84b6f61cea7c35",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-08.webp",
+    "bytes": 409040,
+    "sha256": "214472a3f5c6f8c5f69e7e2625ccab9bdc508239aedb5c9d3f550ab722db066f"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-09.jpg",
+   "bytes": 204856,
+   "sha256": "535e892e2bedaa65c547f4988be2a15227d69634a8383aaa1b8d8d628646a7ba",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-09.webp",
+    "bytes": 57970,
+    "sha256": "739cb7fc4aeff2b1c9d75a45831660f1585a22aa469d4e3176a3173fd3af244d"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-10.jpg",
+   "bytes": 173766,
+   "sha256": "60b825ac777be298b3b97dbb7347c621d7ca3f395acb107fd1e820ea9571d9f1",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-10.webp",
+    "bytes": 45038,
+    "sha256": "bc86fae669913c209b3b82cb665c0862f0b7ea69d52062f0167108e907af36cb"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-11.jpg",
+   "bytes": 966224,
+   "sha256": "357ba1dbaa51d3182646631fef32b9a919b753eaf82ade0d04c57d55644ef671",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-11.webp",
+    "bytes": 432104,
+    "sha256": "a1a14f108ac2da841e49246fa81e0ecb465922516d8b00a8ec0814e2c67985b1"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-12.jpg",
+   "bytes": 139207,
+   "sha256": "f54f0742b6e64b023ef2ca758ff37def8b6ae9a12945c7db45d804a38410784e",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-12.webp",
+    "bytes": 43086,
+    "sha256": "f2bc02d948af6cdb76d578c320ec8f42d7dcb2fe2e8e6de37206d19654fac551"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-13.jpg",
+   "bytes": 113019,
+   "sha256": "3169a74b1ac28c1805344e295f3274fdb2780a680da01916b680567da05cb125",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-13.webp",
+    "bytes": 31412,
+    "sha256": "b6e53cbfa7d11fc487d78e7792db70863fafce862b35b1ab0a26911d6f73805e"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-14.jpg",
+   "bytes": 221671,
+   "sha256": "4e06cb5c1e7707c191f1744efe7935045a2f922b7b4fea1f032edc254c02658c",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-14.webp",
+    "bytes": 40866,
+    "sha256": "66486b407f8f52869c676fdbab65447b44e153c169750a61574a96198dff7e39"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-15.jpg",
+   "bytes": 879762,
+   "sha256": "c038999ef53c6192fcb739c428b82f0cbfd8691bf9803fcbce618af294c6695d",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-15.webp",
+    "bytes": 373656,
+    "sha256": "8fa1cfc6c7f626fd34d1d4507b02694659e45542e62dc00e10804e10c6db8106"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-16.jpg",
+   "bytes": 932837,
+   "sha256": "c8dceb3a3d080a0a14126c9e7f39e7dfe16fdaebab322769a5b5b29aafb9e08b",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-16.webp",
+    "bytes": 342216,
+    "sha256": "36449ec16908b4f37a47c11892d9d3951b5050343276d61dbed740bcaef087bb"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-17.jpg",
+   "bytes": 784137,
+   "sha256": "25d1f04a8005ebdf58cc576baa7ee2668ef0dbc5183c8d1fcdfee737ebe57775",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-17.webp",
+    "bytes": 313272,
+    "sha256": "f9af9ab170fdc48bbcf8966ae5dbb98a375f89fa6df5a2ebacc5bfeb0782295a"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-18.jpg",
+   "bytes": 795928,
+   "sha256": "c091a8b6a0d21609afe173ba82e1f3afba04b7d5c359d0f852b022e85f3b2827",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-18.webp",
+    "bytes": 280594,
+    "sha256": "2f7c08ea057123e93ad7ab99028944954ff3b53209c97ef91854854e2fcde97a"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-19.jpg",
+   "bytes": 88867,
+   "sha256": "987a29a9417f03b74a642f9583517819067c62ec4fb024f0756abff9ff250a59",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-19.webp",
+    "bytes": 24440,
+    "sha256": "6e433ac736a55b1a338128e0eb5f91848e08c1da6008279d42d2d44759226ec2"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/en/slide-20.jpg",
+   "bytes": 128522,
+   "sha256": "a603ad0f04261e47fb5d7aaaf6f6446100ec050149c706d6b2af645eeeeba025",
+   "successor": {
+    "path": "public/course-decks/soil-health/en/slide-20.webp",
+    "bytes": 39310,
+    "sha256": "75c692bfa343e8bb8732bf211067a76842f0904079e005999baf126ca2e58c10"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-01.jpg",
+   "bytes": 217341,
+   "sha256": "4e48ea48e82b4558f35ee3a7720b4cdf54e398a77c5939d41f18d4427532b55d",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-01.webp",
+    "bytes": 115764,
+    "sha256": "3c4dbf2329572c4d5e1c075445c38cebe0c114e3ff26441bca460cecf6138270"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-02.jpg",
+   "bytes": 142890,
+   "sha256": "3dd67490729f0a4162cfe9e2ab62257439e78e9f75761d39194c58b7fd618146",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-02.webp",
+    "bytes": 57224,
+    "sha256": "0609b33fabd4e73823850d4e8d86ac9b619f670b618d4c60459b38491620a28c"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-03.jpg",
+   "bytes": 153350,
+   "sha256": "2a11be14ff7bb12d115854b80551648118c656fa09042523e5216a214e29f1cd",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-03.webp",
+    "bytes": 62360,
+    "sha256": "0ff848bed6519eaaa57d2c3c7f5be55f01117908cde9da2f53247e926685a80b"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-04.jpg",
+   "bytes": 130104,
+   "sha256": "31d2e4d68b6b789062d6839343fc84e1f5d7eb03736331ded9a91957ab51f647",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-04.webp",
+    "bytes": 51486,
+    "sha256": "eebfbd6085f8b2d5b5264f7642c6fa1cc201c91fbb61f1e95150dd4e1c2f9189"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-05.jpg",
+   "bytes": 321286,
+   "sha256": "c870d633b04bb7a716723ce4cc9c98d7350fa9f552a05897f0dec7c63b196489",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-05.webp",
+    "bytes": 173790,
+    "sha256": "426d462e5d530a13c505b54bd80cc7e8af00f92d1a8b03c9d1c3af91e0876d50"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-06.jpg",
+   "bytes": 337634,
+   "sha256": "78ef52df55addfbff4402d2b5baa227c407b6f804391f5ba5023dbe0956aa558",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-06.webp",
+    "bytes": 182130,
+    "sha256": "7ee4cf8dc8b6d8f756b1f6966501c8febd1d6da20eb3bb8215b9a59f9e7c5777"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-07.jpg",
+   "bytes": 153578,
+   "sha256": "6909dd9870145bfcd54eb8d7a5365bbbd7badb478d506a7e67a729cf50913f53",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-07.webp",
+    "bytes": 60746,
+    "sha256": "e935dc1bd983e897084e16488e750728c4219311bcd764d7fc3971781a366de4"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-08.jpg",
+   "bytes": 625162,
+   "sha256": "022eb3adac689c3a7477ac63a24cc42b30cc088808efb4c4f526723f42c664f7",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-08.webp",
+    "bytes": 399568,
+    "sha256": "44597d3fb9ee486a3004aeac45a0e9725eed011e927db71c093c9fbca5ca1ead"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-09.jpg",
+   "bytes": 142138,
+   "sha256": "e0b7c8367c055816fced089b63f300751fccbf07cee9748359a2010ea3c7d7a5",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-09.webp",
+    "bytes": 58608,
+    "sha256": "575049827be21b5d03205265678c91d69ce44c1b05be22ec4605a49244b242e0"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-10.jpg",
+   "bytes": 415021,
+   "sha256": "d4ab87aefce98f59eefc4db5aff2c58b654c3bf52ea05cec2b1724b30b9b7b8e",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-10.webp",
+    "bytes": 260024,
+    "sha256": "01052333bf560b2cecbfee7ab6d1e40eb9123618140f6239984d1a00144609fa"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-11.jpg",
+   "bytes": 146194,
+   "sha256": "1f0c60175923e8979a5d58c5ebf9dc4b75c1ad81849e30d48131325c3d81377e",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-11.webp",
+    "bytes": 61938,
+    "sha256": "c9ca3772c5a743f0f34b9830509e26702ecc17e03f9c2774b7476adbc7186c05"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-12.jpg",
+   "bytes": 150025,
+   "sha256": "25e5343856ead9240c4ec821d67b8560409ecfe97d6aeb4c52bbfc273264d381",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-12.webp",
+    "bytes": 58270,
+    "sha256": "27f27feddc5e37b5fa35ee4cf975d69400f80951e3cea111eb0d66b6e0009387"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-13.jpg",
+   "bytes": 142281,
+   "sha256": "2b0c24561c0978b441fa132b8a6fe2aa2af8eefc014010a7381e8ce6aa674863",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-13.webp",
+    "bytes": 56752,
+    "sha256": "5d9aec39613b2535b6869ca315e36a88b4b353e5939843701810a5ca35214d8f"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-14.jpg",
+   "bytes": 143248,
+   "sha256": "71985552dbee152f76cab425f6d2a4421ad5106aa3a36e9568a5770d560f7d96",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-14.webp",
+    "bytes": 57934,
+    "sha256": "fc97744510bd72645f6fa664219aaad736fe2e86151ca4d924fb5d1341306c55"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-15.jpg",
+   "bytes": 593180,
+   "sha256": "ae08441643009885635d27276d5d55d94acc4a32fa751780c68e2da861c368e9",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-15.webp",
+    "bytes": 359542,
+    "sha256": "c315ce47a396d77c64d78e781717667cfeee8c5cd06c768c06d7738027d9b92b"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-16.jpg",
+   "bytes": 162471,
+   "sha256": "014e0310a5edd5898b5c684347c0f57b2326b9f243a166db5a13d9fda67a285f",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-16.webp",
+    "bytes": 64256,
+    "sha256": "2dd737215569bb46c836f8d4ace5343de9ee02705305842820b09e5fc62180e9"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-17.jpg",
+   "bytes": 534781,
+   "sha256": "76523b29993ae3fbf278a23408ae76c8f6d31c01540dbab51538cb92943beda3",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-17.webp",
+    "bytes": 304148,
+    "sha256": "50c3b4a79e03e4657131d4ff0a7a72f025d6cc5db5237d658a3e7a9f89c601b0"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-18.jpg",
+   "bytes": 142649,
+   "sha256": "3a466fc44da504ca9fc30b06d9efdc04b4047d3bfeae21fac7f9e7be68cffc15",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-18.webp",
+    "bytes": 57842,
+    "sha256": "0ac921d9fe754f8969b733314236089bce7b203c66ec3aed2ef7445c87be32d3"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-19.jpg",
+   "bytes": 105583,
+   "sha256": "646c16afd0674aaee0bede36b591ba7c69b3df4efc55021c0463024fdc345d6a",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-19.webp",
+    "bytes": 42258,
+    "sha256": "40f8170969fd888e18d3b24698758fcdbe1f80a46316d1e8dfe33ad9d95fdf79"
+   }
+  },
+  {
+   "path": "public/course-decks/soil-health/zu/slide-20.jpg",
+   "bytes": 183172,
+   "sha256": "c6a5996c546e346014c9f2afa0a266be697f0e48f58789d0b51ef703107e8208",
+   "successor": {
+    "path": "public/course-decks/soil-health/zu/slide-20.webp",
+    "bytes": 73612,
+    "sha256": "4f8172fc808c7a1a12f17eb5119c47d8363a3cc5b699f24a90005a0663427e50"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/en/slide-01.jpg",
+   "bytes": 198301,
+   "sha256": "f664b5141f8380c2dbaa947affa08943663843071685578c89d365eac5d3f95c",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/en/slide-01.webp",
+    "bytes": 53048,
+    "sha256": "c9e6b93accced7c60c14a7844a6ae08a9c6142e67b77038500bcb5d122a839c4"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/en/slide-02.jpg",
+   "bytes": 93326,
+   "sha256": "876af8e930fd444783749533c1457d028ef69e52b89dbe6213978f81cca83396",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/en/slide-02.webp",
+    "bytes": 26424,
+    "sha256": "8f79a0ea29126404c035f9d650a2f80f6571a4dec2151f30ef71b8670b8d42e3"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/en/slide-03.jpg",
+   "bytes": 128091,
+   "sha256": "ac1dea8fd12b23c7dcc034a3b71155ec35ee80b94327a402101c1ce8cd691972",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/en/slide-03.webp",
+    "bytes": 39298,
+    "sha256": "774099c9d57c057be4d06a794551c1bb5a41eaeeebcd5c873350f87dbd1967fa"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/en/slide-04.jpg",
+   "bytes": 972260,
+   "sha256": "007df396b8b5b58f6b4a27b264cf58e2e3f4c6082f6bd4029201bd3e2d256b8c",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/en/slide-04.webp",
+    "bytes": 441662,
+    "sha256": "632409af9289e13ab1f50f6b8aed2730cfbb349c524c24d8eab05d67c8b27a9a"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/en/slide-05.jpg",
+   "bytes": 120541,
+   "sha256": "44fe5e80dea8ddaa27db20a8d329d9dc3df2c2d3d3425b5454ab631f98978c34",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/en/slide-05.webp",
+    "bytes": 35146,
+    "sha256": "2868de188fb43d5b3fd9032faeb31ea06636586cd4e15d35e47fe2f9ad04e769"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/en/slide-06.jpg",
+   "bytes": 890647,
+   "sha256": "5bf0d4af19f4b4005ce0fcd498e3263ab7dacd5a4b64267e5a787abb7759e130",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/en/slide-06.webp",
+    "bytes": 377628,
+    "sha256": "fb7a8f83eb018a55d84805cf258987a55d39820ab66a90796560715691c90acc"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/en/slide-07.jpg",
+   "bytes": 1024099,
+   "sha256": "bb330db3139edc64c0c6322e8a1b5100252755b5554667e786970319ceae9735",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/en/slide-07.webp",
+    "bytes": 473438,
+    "sha256": "ace4da15b9beeac31d547390a6050c89340cb6a1e6bb28fb88d451a8a54ab540"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/en/slide-08.jpg",
+   "bytes": 251134,
+   "sha256": "6203d7ad24e90ffc78ebd3215453ad44d4ba5ce7eb1f78f38fdc7cc3096e1f9b",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/en/slide-08.webp",
+    "bytes": 75498,
+    "sha256": "f4b72f88fa66f52ac014ff383c91353054eecd9fe506745ea3da6692bc9a38a1"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/en/slide-09.jpg",
+   "bytes": 244029,
+   "sha256": "bcae1eaba6e1b198d1f4e15a51c9b15914afe7d72104993a761ca155671232e7",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/en/slide-09.webp",
+    "bytes": 53260,
+    "sha256": "cd67c01d57d2e65f6a27f54d885be47c96aa40704d80d78b99bade643ce5b2af"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/en/slide-10.jpg",
+   "bytes": 1044467,
+   "sha256": "655e2ff9f14f399ae762abfbb243d800b924367e4272cf51deeae46505cd3a57",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/en/slide-10.webp",
+    "bytes": 466114,
+    "sha256": "556ad0664f3609f5052ad38128a567dbe90a4fb243bb10143669a99f28bf15f6"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/en/slide-11.jpg",
+   "bytes": 261180,
+   "sha256": "b2bb6092e21bb29c5d91bf817240181efed1301059b3465a2aacfc0c9dee4601",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/en/slide-11.webp",
+    "bytes": 59014,
+    "sha256": "670a71e6800a7504068838110cc5f5a2b9b72e4594f4cafa7fd3701b26a220bd"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/en/slide-12.jpg",
+   "bytes": 489787,
+   "sha256": "98995e84b772c95cd1b2157d763c7d0736f1f3addc91209e0c17b4af7e9fcc31",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/en/slide-12.webp",
+    "bytes": 184786,
+    "sha256": "dfa75d766e76f7f6616045599df404fc945707bfc773423368fd61978579fa57"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/en/slide-13.jpg",
+   "bytes": 182433,
+   "sha256": "557b3dec511b95c8013d22dce1dff40e94aabf61cf58aa40b0e521f674bc4b01",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/en/slide-13.webp",
+    "bytes": 57552,
+    "sha256": "539f987c16ce0c9930111e76235e898893a37cdc2a61cc15a6ef7b544b0f3b2e"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/en/slide-14.jpg",
+   "bytes": 118941,
+   "sha256": "23078d19ef9124fd3775a8b2acac81b02e9ed204fc0cca660c459b03bb90b5a7",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/en/slide-14.webp",
+    "bytes": 35500,
+    "sha256": "e4e968cc8fdc30a91aff679bb3eb8e680e57973b6db5c4d80032319e1dda163b"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/en/slide-15.jpg",
+   "bytes": 728993,
+   "sha256": "7580e2e9ed75c9c430a99fde96c3cc26fee5309ba7e9b8ebfd8a4baa300abda0",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/en/slide-15.webp",
+    "bytes": 271666,
+    "sha256": "b4d4dd4b732522e4af4d6cf2baadf000e1c92f7b6f5dd3b375d32e22b726655f"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/en/slide-16.jpg",
+   "bytes": 443907,
+   "sha256": "8f919c5d6595f00b8e5fe926d42f7e9bc5b4a111d06a51b1cd25ddbd8cc8e95f",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/en/slide-16.webp",
+    "bytes": 100030,
+    "sha256": "b1bb12ae5569ac8772d94bf940bc3ded23fc02a941716ee5c514f59d1da0f551"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/en/slide-17.jpg",
+   "bytes": 101251,
+   "sha256": "3d3f03c9908328c93ba54ec9ec627536fb413ecc131a4c5dd59fa1b0059d58a6",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/en/slide-17.webp",
+    "bytes": 28790,
+    "sha256": "b8d7a351de37538f7803c24c6e66615b0a4fa09d8d7c1160c96ee5bdc0a2104a"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/en/slide-18.jpg",
+   "bytes": 84363,
+   "sha256": "7d0c0cb09e09d338cd40b9a75c1806de380d67692b3ee082e4cba902fab0da41",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/en/slide-18.webp",
+    "bytes": 22840,
+    "sha256": "c778608f268ddf220a977720dc06d73b3cfe21492af7400f5172b3fa0cd3c93e"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/zu/slide-01.jpg",
+   "bytes": 93804,
+   "sha256": "107c4e2d2c3a46adc2234e30d2e05e2d6cf5e094231df00379edac606b756be4",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/zu/slide-01.webp",
+    "bytes": 36294,
+    "sha256": "873d1d7b8cc5c345790be3101a9543bff3da07a41eb11f655f91b004de4ef2ae"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/zu/slide-02.jpg",
+   "bytes": 93317,
+   "sha256": "0066fd8dd45839a8e55bfb863dad8625e307b6f76a3b6ea17b6a64bb1648101f",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/zu/slide-02.webp",
+    "bytes": 42976,
+    "sha256": "5347e6c22919a44dcc01e953266798108b59ad7fdd0bd20f274a1061ad6d4b23"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/zu/slide-03.jpg",
+   "bytes": 63601,
+   "sha256": "bba565891e656257b6cad02f5a0e06425ee9338ebd654708c46fb8bda3e91d4c",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/zu/slide-03.webp",
+    "bytes": 25806,
+    "sha256": "b7ba1060fa2424b9fc9fe3aa8907e3924dde34fe765339917d76f1e3776018d4"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/zu/slide-04.jpg",
+   "bytes": 593672,
+   "sha256": "1c52e3879d3a7481ec9ca70cd0a6b1ed9fd73229faceed2d22ae531c0902fcd7",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/zu/slide-04.webp",
+    "bytes": 429100,
+    "sha256": "72cc5fc4d3261b25af33ddb6ef4d1413ea15a8e500bc0e903c9befc1ea13ffc7"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/zu/slide-05.jpg",
+   "bytes": 97331,
+   "sha256": "473285046e2668faaa35594f4e19148dc3604b5bbd215e5355a5c79fd93a16f9",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/zu/slide-05.webp",
+    "bytes": 44390,
+    "sha256": "b256de83aec23d70b517b1119be850d90d95e87a8c96e878dc69cd88129c9b36"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/zu/slide-06.jpg",
+   "bytes": 537499,
+   "sha256": "30f39adc7709aef39f94921592c7c5c0fee9c3fde9dc05f546ef12520a4a10c8",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/zu/slide-06.webp",
+    "bytes": 369718,
+    "sha256": "0eb9503bee00f87dba8b091261c4a9a1a8894d2073eb626156450b5fde29a84b"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/zu/slide-07.jpg",
+   "bytes": 617044,
+   "sha256": "a9698b857ba236ac52bb5d9b313567364a3e083079e141fdbe6dbac32dd185b4",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/zu/slide-07.webp",
+    "bytes": 459772,
+    "sha256": "4a52901801bc3d8410dbfc1bc32a9d0beb591d25e2bc385dce7ce7cfb3c50a81"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/zu/slide-08.jpg",
+   "bytes": 161455,
+   "sha256": "6ce9f3931ae7099be2e375c972eb30afe93ffcb3e9b89f0bd2c32f59b398cdab",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/zu/slide-08.webp",
+    "bytes": 77238,
+    "sha256": "d8ad676349e9ad4b5d9f4a941e4a74e3c99caffa5ee6e4dbe8b5919748659116"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/zu/slide-09.jpg",
+   "bytes": 89029,
+   "sha256": "8e6399322b5360aabf53891dcda1bca68b559c8ecb11fd2625a069a0552ae750",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/zu/slide-09.webp",
+    "bytes": 41032,
+    "sha256": "ece0f22b157217b39c7b49eadc53e8c2f2fe2982870a9d6605f4b1a581c9fee9"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/zu/slide-10.jpg",
+   "bytes": 633799,
+   "sha256": "74a47759c0ababaec2051549b691e3c0e63d39ec8820c8527ffb70df63601d51",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/zu/slide-10.webp",
+    "bytes": 462200,
+    "sha256": "ecebe8b664897e8e7b7699370aabf8fb08198d01651c044a520b56688e036c49"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/zu/slide-11.jpg",
+   "bytes": 111581,
+   "sha256": "9307e0f18ab96711890de25e7b786a55199c65cac1a47a4c8a38cc7ec610e3a0",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/zu/slide-11.webp",
+    "bytes": 51814,
+    "sha256": "4091c4f4afc2b96c616d6e83e09f62a608461c0f5270bca89611bbd2f7b206b1"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/zu/slide-12.jpg",
+   "bytes": 301322,
+   "sha256": "727ce77fe810e36bbbd9faabf60ca366ef016e82da9bc859d307eafb43c77d7e",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/zu/slide-12.webp",
+    "bytes": 187126,
+    "sha256": "60f114b6894fb2f0a318208a6831f18fba5ce0738476933b438f0b99b7dad150"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/zu/slide-13.jpg",
+   "bytes": 195912,
+   "sha256": "1368022830d05d0a7a6f76179c861f5d11bccf8d79029c803b81494e3ee67e50",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/zu/slide-13.webp",
+    "bytes": 65348,
+    "sha256": "ebece2f5a3fa6cab6b6f81f71354991471656c98bc5a638bfe9f43b33840dd64"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/zu/slide-14.jpg",
+   "bytes": 112988,
+   "sha256": "eba73f80acd23f297b56dc7cbdc96216fb5af3b6abf8ccafbaeb8afb432ecf11",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/zu/slide-14.webp",
+    "bytes": 52940,
+    "sha256": "66473d9493990483421a0fcd5a5f7d98e290b5a5fb56bd9fd59fc07c9c301321"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/zu/slide-15.jpg",
+   "bytes": 445155,
+   "sha256": "1cbd2fe2a69f01ea4c406c7e321a662c175b83e275465322b18036a1e9bd9161",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/zu/slide-15.webp",
+    "bytes": 265578,
+    "sha256": "82947727141bbc588c124cb6273a89d94bec34439cbef8ab5d8155e96803e04d"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/zu/slide-16.jpg",
+   "bytes": 122857,
+   "sha256": "fed229945cc4f826f779d5104ea1162bf36ec6dcfcfbc7f4c1749669ce335cb0",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/zu/slide-16.webp",
+    "bytes": 52706,
+    "sha256": "43020103ded905096f09a55e6d57b6d8301347da2f0bd8c5d90c8fb20bac4f5d"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/zu/slide-17.jpg",
+   "bytes": 83212,
+   "sha256": "8d6c0b86e337a0b6a306fa28ec2a7402a483d49d7d6e50dee80abd473501f762",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/zu/slide-17.webp",
+    "bytes": 38032,
+    "sha256": "5edd4b577b98ef7fd5464a46667e4e2b212ba149d4332d515074118cb4cb5e4a"
+   }
+  },
+  {
+   "path": "public/course-decks/vegetables-staples/zu/slide-18.jpg",
+   "bytes": 74156,
+   "sha256": "df0445384e7f1733f06bed7e1d0ddd61d6a38c1c61201fe184706e81934dcfbe",
+   "successor": {
+    "path": "public/course-decks/vegetables-staples/zu/slide-18.webp",
+    "bytes": 33336,
+    "sha256": "577dca3a068047d6abf7da9433c7f331a00c252bee935a1ea4b2c7f015057ca4"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-01.jpg",
+   "bytes": 198842,
+   "sha256": "23bb02b3980885efa91fd987d38db328aa380c5bb7a942644f5e7687c742d74f",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-01.webp",
+    "bytes": 51590,
+    "sha256": "4daeafd762dfb99daa83e81d6231be2e36a3af92ca4b52a77c09e3939863da2f"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-02.jpg",
+   "bytes": 182122,
+   "sha256": "a683f5aadeac9c48ab83261dfbb0ac793ed9ecb414545e55971938c521334ad4",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-02.webp",
+    "bytes": 58894,
+    "sha256": "839fd65d9dce9f36f92c0ef9367db5dbe4966e6e1981ae8e5dc762d6c3cac61c"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-03.jpg",
+   "bytes": 189183,
+   "sha256": "d53813b3899abc8bee0060780889f67acda9555ab3208d6333ed096336316d9a",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-03.webp",
+    "bytes": 54264,
+    "sha256": "5aa2ecbe8c3e70c8e3277168b7a3865a05831b7f046b1af89f30751f12cbde02"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-04.jpg",
+   "bytes": 169603,
+   "sha256": "f262846e847defc865866ccb58b110129db1748b3e8e31af9e88d0ecde0bdcf5",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-04.webp",
+    "bytes": 42288,
+    "sha256": "45c0b25676130da2449bda6e6b1100e5b063007201283f0c580513b8247e54f4"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-05.jpg",
+   "bytes": 143356,
+   "sha256": "72a73b1ef4a085391c0598953a22fa675e4f043c6d16f230c437df8f502b1f6c",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-05.webp",
+    "bytes": 37450,
+    "sha256": "a51d3932b118374f8587a78df9f41847bcdd22829780fc7d972c0a7338016b9d"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-06.jpg",
+   "bytes": 120663,
+   "sha256": "502d27053394b8232bd7c1a26c3aa922fc38beb37e37db3892e6462b940c1939",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-06.webp",
+    "bytes": 35538,
+    "sha256": "177bc5d1eab860a3ca30651b8e3306ccce9b6f93cb118a05e326b18668f1ede4"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-07.jpg",
+   "bytes": 205907,
+   "sha256": "11195dd0c9d8db7bc7856da7730b518dee38a2f1c3ff9240a58c31e2b0aacc60",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-07.webp",
+    "bytes": 57312,
+    "sha256": "8eca59fc8027dc00ef508aac02c5f9dd16edb1e632fb421ef4bd427fc609d1dd"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-08.jpg",
+   "bytes": 91814,
+   "sha256": "5c8d1a7f22ffcfe5a67a3b9fa040e00d1b0cbd2d7ef93d877262ca51ce512298",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-08.webp",
+    "bytes": 24970,
+    "sha256": "686e84d2483cd2a5dac8aecd0a64def7bc37d72472188ad2c128c906d409ef69"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-09.jpg",
+   "bytes": 125958,
+   "sha256": "951fe3c91aceb3292ccd3c837295baf282612077dfab9b0ce47796cb22864df6",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-09.webp",
+    "bytes": 33394,
+    "sha256": "7677770aff03f44b79ec9f10c041d95c8fd11c59a60add13b20dab17d61d0253"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-10.jpg",
+   "bytes": 157746,
+   "sha256": "9344f48cd388e6d61167cafe7d694d0d961c211436d1138b267ceed9a4ca243a",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-10.webp",
+    "bytes": 36590,
+    "sha256": "9e005c5e4f9fb0bf09b00245228e1dc8117d717655451af397145d718b903616"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-11.jpg",
+   "bytes": 132360,
+   "sha256": "4c926b151b18ed88fbb1211421d13ade19e336e7816c0236e616a4f2d607058a",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-11.webp",
+    "bytes": 39406,
+    "sha256": "3c5b572556a69be59b7af6a5634e8f18f106766ac88fbf15c59bb57325b35ef8"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-12.jpg",
+   "bytes": 188962,
+   "sha256": "c43a6a2a1d2d3f99d913e526a57fc6ecc825d5f9df0ce3e100e0c5911316e63e",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-12.webp",
+    "bytes": 45158,
+    "sha256": "4100f94b047d5b84415cc640fe5756176597269b2165aeadd3cb786512c01e50"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-13.jpg",
+   "bytes": 116455,
+   "sha256": "43c84ac9a5aa6321814be02dab23cc0760c784e43075b0d5ccc9320fe54ec596",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-13.webp",
+    "bytes": 33918,
+    "sha256": "05ee64e5d6e72e8154c8a0078892a64f07986d814fc7572c03f2730fcd4f2020"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-14.jpg",
+   "bytes": 791008,
+   "sha256": "ad9afcc7c736e58af89fb6db72db6730194dc13bc361030bcc8443f9636a18f6",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-14.webp",
+    "bytes": 335740,
+    "sha256": "99ad1c51af236863dada11f1057d7faafc5205866b8e2c3b1b3b3f1a33250c01"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-15.jpg",
+   "bytes": 395057,
+   "sha256": "234e088e971408b9063474544af8d21ff742360b9a983f3f587c906b7c7d3f8e",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-15.webp",
+    "bytes": 128830,
+    "sha256": "8a8b4e76d02427b46bf130dccb766b4935783ba22f57362d67810cd59aff6d34"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-16.jpg",
+   "bytes": 107480,
+   "sha256": "57b0f929de94fd1942beca27114f9b3728c692ee9cb0763b36dbee43f751faa1",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-16.webp",
+    "bytes": 24042,
+    "sha256": "581b685f48c8b0e2a1f418116ab5a0324f1d83cac365ff6d86e13579686f1092"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-17.jpg",
+   "bytes": 124203,
+   "sha256": "acf7b2169b6263d50e565d5e579df49002783d080ce0dd1e086280d91bb38555",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-17.webp",
+    "bytes": 36456,
+    "sha256": "710f8d7101332f2cd1e4ddb24cefe963f2f548327233ff2e2c17965cd9384c4e"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-18.jpg",
+   "bytes": 854348,
+   "sha256": "4970cdd00dad4832627999faf042782c12ebb9e1b0c5178c52d38d6ee2247d3e",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-18.webp",
+    "bytes": 350560,
+    "sha256": "5f100a1f38160eb4a0a40a2e1d86dd3c9ba3085db14ed28812dc8c537ebfe444"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-19.jpg",
+   "bytes": 96825,
+   "sha256": "a717630fe4e619c51a82fb921956e973c8b4c9162b338a0be7971b4c68978108",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-19.webp",
+    "bytes": 31166,
+    "sha256": "253063656af38c54b8e2e92ec9bd7b3358d1f8051233af4decd9b8312f98d315"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-20.jpg",
+   "bytes": 92865,
+   "sha256": "0669872d31078861ba5db3c1e3b8cabac98f2b904f4af526b33e2419b415aad2",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-20.webp",
+    "bytes": 30438,
+    "sha256": "c10de6cd68159ccc487cf1c21924fe1d1df7b2b5472196af8518db4bce969df6"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-21.jpg",
+   "bytes": 88134,
+   "sha256": "88bdc3cbac6f5f781235ac30d9fd8aa185e839de0ec4db8205ae637bb967656f",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-21.webp",
+    "bytes": 28274,
+    "sha256": "6931f3fc6cd31be19be843f5092fbeb099938e9c9c53516327e25e15bf66d7d1"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-22.jpg",
+   "bytes": 104414,
+   "sha256": "d9cac62aa6e27d6081e76f9196ca23c7752eec30a908d67ed3c64ac21936bd8f",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-22.webp",
+    "bytes": 33036,
+    "sha256": "1c8a6919b977600646b57cb5d47f87eb7748f5b28ca25429b2936f44a1d60e7d"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-23.jpg",
+   "bytes": 101044,
+   "sha256": "5753dfb5f8df0dc5375fc219ead72c0ab4468e6f654a54fe4f6d10b9d1c15f23",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-23.webp",
+    "bytes": 28060,
+    "sha256": "9d44f3b9179d268100805c60679877c6edaf6063835ed64ddca678a78a0bf9d6"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/en/slide-24.jpg",
+   "bytes": 112556,
+   "sha256": "e94d9859ac091dbfc80490c40e4b5eabd448827a02e221b078e54904f347dccb",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/en/slide-24.webp",
+    "bytes": 33460,
+    "sha256": "86f0fe4c270c64e956db54777ae8cbfdea61c3f2189365302a2abc2e44b66ba5"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-01.jpg",
+   "bytes": 60091,
+   "sha256": "aae74464299874b2c64e4ec6653f3c5a0af30394647e4752f814a2f98d789156",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-01.webp",
+    "bytes": 19592,
+    "sha256": "5baa21fd5e9b513f326c56c00e51f74906617ceae3c9e71ffe610c17190dfe4a"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-02.jpg",
+   "bytes": 237431,
+   "sha256": "ca98aed7ab463e765fdcea8d923c8409432b95cd2efddd3060323477c9f2fdba",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-02.webp",
+    "bytes": 74476,
+    "sha256": "8f9100272c0aa57683cd8e3c215a1787f67911b620d4c8510a080557c41e148c"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-03.jpg",
+   "bytes": 175954,
+   "sha256": "ee93c05e20cc0390363774d28e35720ccb80dc911867ae3621438e6f0e89f2e9",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-03.webp",
+    "bytes": 55566,
+    "sha256": "f6b7b7becd7a851dac3bbbdcf4995f8a93e3d64ebfa309f21528e971882e1ac6"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-04.jpg",
+   "bytes": 158856,
+   "sha256": "46e68f83802c4410bb723bfa3a6a6cb3f0898cebe508e558d11b3d1f1016c04d",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-04.webp",
+    "bytes": 49414,
+    "sha256": "064bc2ddf329e53508f05d593319ad2986cacf52cf48504202b4f2496fafa3a3"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-05.jpg",
+   "bytes": 172060,
+   "sha256": "2d50a5742bbd93a8a25bfb13fc47f529ddce33665227dcfe1819a016d5169a36",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-05.webp",
+    "bytes": 53944,
+    "sha256": "83b29cf54b4282b4e70f3635a7632404555a7f69e1de0117555c1aeec6edf0c0"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-06.jpg",
+   "bytes": 226480,
+   "sha256": "654507ef1b024af59db4f5d00ad6dc842cf02fab454366d81af41efadf914568",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-06.webp",
+    "bytes": 70878,
+    "sha256": "dd6c90b5d8834e8ada753743d5cd36eb51f8c7bc3bb10bd5ff676104c8d0b105"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-07.jpg",
+   "bytes": 217842,
+   "sha256": "45f3f74701d7589abd19d731804742983229c588ab4ca338f60e7a87c49e0622",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-07.webp",
+    "bytes": 68274,
+    "sha256": "618f22530a91cb894a3b1db3e62d556a09238ada28aa012fa7eca6e7d0208ca9"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-08.jpg",
+   "bytes": 123654,
+   "sha256": "45ef39001ca49a62d758e067f8a79a64bddebf3a17a516d92331ebac0d2e2a43",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-08.webp",
+    "bytes": 38008,
+    "sha256": "46826a8df01778f5dc0bdc09e01c3ebaf3e6fa28137af6e006ad20b7ffbe45c8"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-09.jpg",
+   "bytes": 111929,
+   "sha256": "6ad348ae37473f42c61bd9525e70d33d144bfe930d98f27ed60a92b696048cf0",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-09.webp",
+    "bytes": 34176,
+    "sha256": "01a425b75d28dd74b6a96559cb925db951e2f61d44140d2184334eda00e9561d"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-10.jpg",
+   "bytes": 204643,
+   "sha256": "4bb378ae72964d22464563f5fe0a0b2c30f9f25eaf5106f17409483117d8e344",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-10.webp",
+    "bytes": 64390,
+    "sha256": "d1fed8f9ab54af5c7c29f2cf7ab92e8dd6130bc7623e260cb40c1d16c69cdb65"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-11.jpg",
+   "bytes": 209814,
+   "sha256": "e431ba88f09ae00dafa105daa778dd282f40aaf973f4bb676ecbfcbdfa3c25ca",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-11.webp",
+    "bytes": 65110,
+    "sha256": "d787c442218ce65702318e51f1c26213c91e07d003ba83d8e0f8b9cfbe8bf6ff"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-12.jpg",
+   "bytes": 156556,
+   "sha256": "981b26bba76a6e64542a56ffe7bb7bbf727ccdab4e0c56b18abc0f48d5bbb341",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-12.webp",
+    "bytes": 48002,
+    "sha256": "ce1c85385497a831820a181184ffa8324bab5a1b72c22f4f504d65d25e563653"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-13.jpg",
+   "bytes": 194429,
+   "sha256": "def04c35e03c2986d8d9345d87f66963aeead2b364504268858021f030e7cfb9",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-13.webp",
+    "bytes": 60666,
+    "sha256": "bbe1023b28c57db56802d49504ec192a119d04768274e600586d3420e70eaee2"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-14.jpg",
+   "bytes": 224192,
+   "sha256": "1223eb744d207dde7257642c89ad2f1a83a57744a679534bcf587e36a4c86c8b",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-14.webp",
+    "bytes": 70256,
+    "sha256": "ede6625beb78f5581508b077dd7b6145740bfb8cb51ecc12806f385edacd0923"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-15.jpg",
+   "bytes": 191240,
+   "sha256": "5aefaf351310280596983e0ef556427d8d03a1924457523c9eb8f26a89edf1f3",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-15.webp",
+    "bytes": 59438,
+    "sha256": "e552a6132eb215dbbc0345748e2b6468cc3dc9480f67a5bb2799d5736d646c65"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-16.jpg",
+   "bytes": 183910,
+   "sha256": "27967447640824c6e6934238a78f1d63fd5448fb79e39db49001574a1603ac3a",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-16.webp",
+    "bytes": 57578,
+    "sha256": "7397fc208e8afb847fe1680f7a993c816e3aa57cbea6aeb2f2fc9cea8caa3cef"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-17.jpg",
+   "bytes": 217458,
+   "sha256": "24a1c861dc2384f2b2e423401242e69bcd347988b8f2bc78289202092302a3ba",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-17.webp",
+    "bytes": 69572,
+    "sha256": "457a3012900af2efe5c6bbd34efb3e8c4d62fdea890357929a7a5af218373fb7"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-18.jpg",
+   "bytes": 205114,
+   "sha256": "b08305592bea14c7688f94a5e6587ab666801db6a62bd6abc5b6b82742148dcd",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-18.webp",
+    "bytes": 65170,
+    "sha256": "ab7b7c961927577bd0cf39b160552b534c9a9112b3eca48dd1344118def8680e"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-19.jpg",
+   "bytes": 178928,
+   "sha256": "d5c5a15fb8c714a10db923ac01390c24bfd2facd089c228cdee1cde4f34d1670",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-19.webp",
+    "bytes": 56734,
+    "sha256": "5696ecdec006b7db33f4d9032ea49fa8fbdbf2869d85afc1db638cc8e6c02b37"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-20.jpg",
+   "bytes": 265620,
+   "sha256": "f2ed8e7874746d069036ceaf682f7fa9f84072d88c65d6b1e2246a516a5a28f9",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-20.webp",
+    "bytes": 85248,
+    "sha256": "02d87a7d84676b99717f54dbb35c817f65263e2ce9470bd1d53751c681b82456"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-21.jpg",
+   "bytes": 165293,
+   "sha256": "ff3e56c00afab4bd2527ea37f9bc41a48f3cd7b61e37d36e2726859368977e2e",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-21.webp",
+    "bytes": 51870,
+    "sha256": "8ceaac0b8c3fc8d72094cc352f13cf6f8a65c174c7df060c84cb138300a6db10"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-22.jpg",
+   "bytes": 189745,
+   "sha256": "19368b4ebe7936d03366e07ef473bdc8ac0da6c6be385fa95b7f3c7f72ecdc52",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-22.webp",
+    "bytes": 59150,
+    "sha256": "ca40182e49e24525e45ada486541f924a96bf427f1e412a95e7eba357f0e8562"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-23.jpg",
+   "bytes": 171437,
+   "sha256": "972eff27fe2723f338428232631fe0b71404e2be7ace042766ddcb4e946bd218",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-23.webp",
+    "bytes": 53494,
+    "sha256": "ae3cff47580b0a18796b0f6bfba0f03e02f527a2c99455c1f78452d8bc142933"
+   }
+  },
+  {
+   "path": "public/course-decks/water-harvesting/zu/slide-24.jpg",
+   "bytes": 195161,
+   "sha256": "c85f1fe60deb98e049d6f6affb3f4a24097e0471dba3cc4a55ec979880eac65d",
+   "successor": {
+    "path": "public/course-decks/water-harvesting/zu/slide-24.webp",
+    "bytes": 60460,
+    "sha256": "bee695482f4a1f1d40a7a6005bb9b89842061f61103adaf4c1f4b48e97610af9"
+   }
+  }
+ ],
+ "added": [
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-15.webp",
+   "bytes": 225842,
+   "sha256": "2b8646796484d075802c930dd2ae8375fd280c023e3d2c0e6ea76789fa2a4c8d"
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-29.webp",
+   "bytes": 235240,
+   "sha256": "bc2094561318015f60539c4e9df3ce3978a511aaf6b540f628ef6bbcf52632f4"
+  },
+  {
+   "path": "public/course-decks/plant-guilds/en/slide-37.webp",
+   "bytes": 259300,
+   "sha256": "1ed0320b15403b77bfc01ad66fb7c9dec4c2af1dec76f5ef86d02df01c868fd1"
+  },
+  {
+   "path": "public/studies-guides/thumbs/expense-record.webp",
+   "bytes": 21798,
+   "sha256": "921dff8a8927c8f3b64728f796b4f967a2b871a75b60fe93c47c6db4489ea329"
+  },
+  {
+   "path": "public/studies-guides/thumbs/sketch-the-site.webp",
+   "bytes": 18056,
+   "sha256": "774d8c57009c54b78a0b6711ffc15bb94b8d79e198375f9a0818585c86de4155"
+  }
+ ],
+ "files": {
+  "lib/course-asset-sizes.ts": {
+   "beforePath": "docs/study-translation-reviews/slides-webp-2026-10-14/before/lib/course-asset-sizes.ts.txt",
+   "beforeBytes": 117408,
+   "beforeSha256": "06ede2f422106a6ea27951991ced9213c29b9d914d3e8a78d9ecfb05171569e8",
+   "afterBytes": 117924,
+   "afterSha256": "fc9b9a75b0f70f523bb1cd32459d37c7a058f30dea1f55b18ae7cde86c513bdc"
+  },
+  "lib/course-deck.ts": {
+   "beforePath": "docs/study-translation-reviews/slides-webp-2026-10-14/before/lib/course-deck.ts.txt",
+   "beforeBytes": 29568,
+   "beforeSha256": "2563213cbabaa688cee56c58080f197cb3cbe3a960070a2e4732b02373badf8d",
+   "afterBytes": 29808,
+   "afterSha256": "4aff11ce5bb46d5209ea34b2b01ce347f02cbfcbfe224686ab0ab860ac33fa8e"
+  },
+  "lib/course-deck-source-bindings.ts": {
+   "beforePath": "docs/study-translation-reviews/slides-webp-2026-10-14/before/lib/course-deck-source-bindings.ts.txt",
+   "beforeBytes": 387091,
+   "beforeSha256": "b6f8c6e1d1492156d62fb3537c8c31a687af947754250628e6fc5a102a5d1ffe",
+   "afterBytes": 387331,
+   "afterSha256": "d3b0a8c478d564ebc7617cd9150c9ab8102aeeabe7c6a6b52ca1fcc7736d1abe"
+  },
+  "app/student/page.tsx": {
+   "beforePath": "docs/study-translation-reviews/slides-webp-2026-10-14/before/app/student/page.tsx.txt",
+   "beforeBytes": 86728,
+   "beforeSha256": "9c989f15c2ec2b1147f8b73c6f263514885794841d74f05d6bfbcbbcbf286aff",
+   "afterBytes": 86744,
+   "afterSha256": "8ccbf5a6965bd9e0fc872b76f3715a2e3b32bec695bbd1b579e80b7a9c2ddf6b"
+  }
+ }
+}

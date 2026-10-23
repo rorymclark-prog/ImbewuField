@@ -1,0 +1,167 @@
+{
+  "key": "spider-plant",
+  "name": "Spider Plant",
+  "localNames": {
+    "en": "Cleome / cat's whiskers",
+    "af": "Oorpeultjie",
+    "nr": "Lude",
+    "nso": "Lerotho",
+    "ve": "Murudi",
+    "zu": "Amazonde"
+  },
+  "botanicalName": "Cleome gynandra L. (syn. Gynandropsis gynandra)",
+  "family": "Cleomaceae",
+  "role": "food",
+  "foodGroup": "leafy_green",
+  "harvestProduct": "fresh leaves and growth tips (flowers also eaten)",
+  "frostTender": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "Cleome requires temperatures of 18 °C to 25 °C and high light intensity as it is sensitive to cold.",
+        "url": "https://web.archive.org/web/20260513011153/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cleome.pdf",
+        "page": 3,
+        "doc": "Cleome — Production guideline, DAFF, 2010"
+      },
+      {
+        "quote": "It is sensitive to cold and does not grow well when temperatures drop below 15°C.",
+        "url": "https://amanziforfood.co.za/wp-content/uploads/2017/08/PGALV.pdf",
+        "page": 18,
+        "doc": "Production Guidelines for African Leafy Vegetables, WRC Report TT 536/12, 2012"
+      }
+    ],
+    "notes": "Neither consulted source uses the literal word 'frost' for this crop — both describe cold sensitivity (below 15-18°C). Recorded as frost-tender by reasonable inference from these statements, not from a direct frost claim."
+  },
+  "transplant": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "Sow seeds in seedbeds or sow directly in rows in the field. ... Transplant/thinning: Germination of Spider plant is uneven. Take care during transplanting not to injure the taproots of the seedlings. Desired spacing is 25-50 cm between rows and 15 cm between plants.",
+        "url": "https://amanziforfood.co.za/wp-content/uploads/2017/08/PGALV.pdf",
+        "page": 18,
+        "doc": "Production Guidelines for African Leafy Vegetables, WRC Report TT 536/12, 2012"
+      }
+    ],
+    "notes": "The DAFF 2010 Cleome guideline describes only direct sowing with thinning ('Seeds are densely sown directly at 30 cm inter-row spacing and later thinned out to 10 cm to 15 cm between plants') and does not mention transplanting at all; the WRC/DAFF PGALV guideline describes both seedbed transplanting and direct sowing. Both methods are recorded as valid since the two official sources differ on this point."
+  },
+  "sowMonths": {
+    "summer": {
+      "months": [8, 9, 10],
+      "evidence": [
+        {
+          "quote": "Production Schedules — Planting [shaded: August, September, October]; Harvesting [shaded: January, February, March, November, December]",
+          "url": "https://web.archive.org/web/20260513011153/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cleome.pdf",
+          "page": 7,
+          "doc": "Cleome — Production guideline, DAFF, 2010 (Production Schedules table, read from the shaded cells)"
+        }
+      ]
+    },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "daysToHarvestRange": {
+    "value": [28, 42],
+    "evidence": [
+      {
+        "quote": "Cleome is harvested in summer during the first rains and can be harvested until autumn. Leaf harvesting starts four to six weeks after seedling emergence and it may last four to five weeks. Leaves can also be picked when the plants have reached a height of about 15 cm.",
+        "url": "https://web.archive.org/web/20260513011153/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cleome.pdf",
+        "page": 5,
+        "doc": "Cleome — Production guideline, DAFF, 2010"
+      }
+    ],
+    "notes": "First leaf pick, counted from seedling EMERGENCE (not from sowing date) — the source does not separately state a sowing-to-emergence interval, so this range cannot be converted to a from-sowing figure without an unsourced assumption."
+  },
+  "harvestPeriodWeeksOrMonths": {
+    "value": "Leaf harvesting lasts about 4-5 weeks per DAFF; the WRC/PGALV guideline instead frames it as 2-4+ cutback harvests per season.",
+    "evidence": [
+      {
+        "quote": "Leaf harvesting starts four to six weeks after seedling emergence and it may last four to five weeks.",
+        "url": "https://web.archive.org/web/20260513011153/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cleome.pdf",
+        "page": 5,
+        "doc": "Cleome — Production guideline, DAFF, 2010"
+      },
+      {
+        "quote": "Cut back the shoots 10-40 cm from the ground to form new side shoots. The harvest can be repeated 2 to 4 times and even more during the season, depending on the soil fertility and moisture conditions.",
+        "url": "https://amanziforfood.co.za/wp-content/uploads/2017/08/PGALV.pdf",
+        "page": 19,
+        "doc": "Production Guidelines for African Leafy Vegetables, WRC Report TT 536/12, 2012"
+      }
+    ]
+  },
+  "rowSpacingRangeCm": {
+    "value": [25, 50],
+    "evidence": [
+      {
+        "quote": "Seeds are densely sown directly at 30 cm inter-row spacing and later thinned out to 10 cm to 15 cm between plants.",
+        "url": "https://web.archive.org/web/20260513011153/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cleome.pdf",
+        "page": 4,
+        "doc": "Cleome — Production guideline, DAFF, 2010"
+      },
+      {
+        "quote": "Desired spacing is 25-50 cm between rows and 15 cm between plants.",
+        "url": "https://amanziforfood.co.za/wp-content/uploads/2017/08/PGALV.pdf",
+        "page": 18,
+        "doc": "Production Guidelines for African Leafy Vegetables, WRC Report TT 536/12, 2012"
+      }
+    ],
+    "notes": "DAFF's direct-sow figure (30cm) falls inside the WRC/PGALV transplant-method range (25-50cm); range given is the WRC/PGALV figure, which brackets both."
+  },
+  "inRowSpacingRangeCm": {
+    "value": [10, 15],
+    "evidence": [
+      {
+        "quote": "later thinned out to 10 cm to 15 cm between plants",
+        "url": "https://web.archive.org/web/20260513011153/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cleome.pdf",
+        "page": 4,
+        "doc": "Cleome — Production guideline, DAFF, 2010"
+      },
+      {
+        "quote": "Desired spacing is 25-50 cm between rows and 15 cm between plants.",
+        "url": "https://amanziforfood.co.za/wp-content/uploads/2017/08/PGALV.pdf",
+        "page": 18,
+        "doc": "Production Guidelines for African Leafy Vegetables, WRC Report TT 536/12, 2012"
+      }
+    ]
+  },
+  "sowDepthRangeCm": {
+    "value": null,
+    "evidence": [],
+    "notes": "DAFF states only 'Seeds are planted at a shallow depth to ensure emergence and a good field stand' — no numeric depth given in either source."
+  },
+  "seedRateKgPerHaRange": null,
+  "yield": {
+    "tPerHaRange": null,
+    "product": "fresh leaves",
+    "conditions": null,
+    "evidence": [],
+    "notes": "GAP: no fresh-leaf yield figure (t/ha) found in the DAFF guideline or the WRC/DAFF PGALV guideline. Both South African sources state production levels are unknown ('Cleome is not formally cultivated in South Africa ... Production levels are not known yet'). No acceptable primary/peer-reviewed SA source with a quantified yield figure was located despite searching (MDPI, ScienceDirect, ResearchGate, Tandfonline were all network-blocked in this session)."
+  },
+  "ecocrop": {
+    "row": "Gynandropsis gynandra (ECOCROP's listing for Cleome gynandra; recorded there as a synonym)",
+    "TOPMN": 18,
+    "TOPMX": 25,
+    "TMIN": 10,
+    "TMAX": 35,
+    "GMIN": 0,
+    "GMAX": 0
+  },
+  "coverCrop": null,
+  "varieties": [],
+  "zoneNotes": {
+    "midlands-mistbelt": "KwaZulu-Natal named as a major production area.",
+    "highveld": "Free State and North West named as major production areas.",
+    "karoo-arid": "Northern Cape named as a major production area, despite the crop's stated cold-sensitivity — no reconciling detail given in the source.",
+    "lowveld-bushveld": "Limpopo named as a major production area."
+  },
+  "gaps": [
+    "No fresh-leaf yield (t/ha) figure found in any consulted source.",
+    "Only one national sowing/harvest window is published (DAFF schedule); no separate winter, all-year or mild-frost data.",
+    "Sow depth and seed rate not quantified in either source.",
+    "No South African cultivars exist: DAFF states explicitly 'No cultivars have been developed in South Africa as yet.' No ARC-VOPI accession/line names for this species were found in the sources consulted.",
+    "Family classification is inconsistent within the DAFF document itself: the Classification section states 'Family: Cleomaceae' while the Description section states 'Cleome belongs to the Capparaceae family' — both are printed in the same document without reconciliation. Cleomaceae (the modern placement) is used here as the primary value.",
+    "Neither source uses the word 'frost' for this crop specifically (see frostTender notes) — frost-tenderness is inferred from stated cold-sensitivity below 15-18°C, not a direct frost statement."
+  ],
+  "verdict": "partial",
+  "summary": "DAFF's 2010 Cleome guideline and the WRC/DAFF Production Guidelines for African Leafy Vegetables agree closely on spacing, cold sensitivity and a 4-6-week first-leaf-pick window, and give a national Aug-Oct planting schedule. The crop is an uncultivated, self-seeding landrace in South Africa with no registered cultivars and no found yield figure (t/ha) in any consulted source, so it cannot be marked ready."
+}

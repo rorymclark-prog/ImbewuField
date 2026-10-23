@@ -1,0 +1,107 @@
+{
+  "renderedAt": "2026-10-08",
+  "outputSize": [
+    1440,
+    5400
+  ],
+  "encoding": {
+    "format": "WEBP",
+    "quality": 88,
+    "method": 6
+  },
+  "cards": [
+    {
+      "module": "reading-landscape",
+      "language": "st",
+      "slide": 12,
+      "sourcePng": "/tmp/reading-title-st-12-review-20261008/slide-12.png",
+      "sourcePngSha256": "1b3869c2c600f56582b597129f7d7775473a63a397ec4cae7fe493419c4b9066",
+      "beforeAsset": "docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/assets/before-reading-landscape-st-12.webp",
+      "beforeSha256": "12682c3891c9ad88a47cfc67af60b7de64c123f2fc3850fe46b24a4556b3d418",
+      "beforeBytes": 472172,
+      "beforeDimensions": [
+        1440,
+        5400
+      ],
+      "asset": "public/course-decks/reading-landscape/st/slide-12.webp",
+      "afterSha256": "72baa7bf43e1ea969f5456f0f91985490cb24983ae0db10aeaeffc8497a206c1",
+      "afterBytes": 472466,
+      "afterDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ve",
+      "slide": 12,
+      "sourcePng": "/tmp/reading-title-ve-12-review-20261008/slide-12.png",
+      "sourcePngSha256": "362ed6570b2806561fe3e4a8ff54ea33671e9d4bb93272623bdeaafdaa3db3c7",
+      "beforeAsset": "docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/assets/before-reading-landscape-ve-12.webp",
+      "beforeSha256": "a8c60da35333d647ff65f10e4deb52e7d1ea8d94901ee36a5ed355647a10d90a",
+      "beforeBytes": 471730,
+      "beforeDimensions": [
+        1440,
+        5400
+      ],
+      "asset": "public/course-decks/reading-landscape/ve/slide-12.webp",
+      "afterSha256": "7fbf695cd27db5032f2dfc7e1d6697f5c509fe6ea3a141351c2482b9be66b29e",
+      "afterBytes": 476936,
+      "afterDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ts",
+      "slide": 12,
+      "sourcePng": "/tmp/reading-title-ts-12-review-20261008/slide-12.png",
+      "sourcePngSha256": "8f8902b6429a7df4f3dd0e28abecc69122c1a5f706a4bd0f58e4bc464373c8b3",
+      "beforeAsset": "docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/assets/before-reading-landscape-ts-12.webp",
+      "beforeSha256": "0081f3d65b19ece3ff731397445eadf4e41abeca1b31b42f2e77423b6c5d6dca",
+      "beforeBytes": 473304,
+      "beforeDimensions": [
+        1440,
+        5400
+      ],
+      "asset": "public/course-decks/reading-landscape/ts/slide-12.webp",
+      "afterSha256": "0384ba29e168c177a600f7fd0031760557d173c67331ff06699d9dd75a31ef2c",
+      "afterBytes": 473120,
+      "afterDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 16,
+      "sourcePng": "/tmp/reading-title-vegetables-st-16-review-20261008/slide-16.png",
+      "sourcePngSha256": "81caf69d6474c05eb2bed8f4a97ced12e2d0f1ef929eccb0ffddae63346c136c",
+      "beforeAsset": "docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/assets/before-vegetables-staples-st-16.webp",
+      "beforeSha256": "49a3f5c356b0dc9683181231ab0322c42673269c815994a5f77538c43833fa02",
+      "beforeBytes": 570296,
+      "beforeDimensions": [
+        1440,
+        5576
+      ],
+      "asset": "public/course-decks/vegetables-staples/st/slide-16.webp",
+      "afterSha256": "4a8fbc7940696996062f9b27e9ac1008ea7c879045a2654e26a6e47aa9e5b118",
+      "afterBytes": 592226,
+      "afterDimensions": [
+        1440,
+        5400
+      ]
+    }
+  ],
+  "compressedContact": {
+    "path": "docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/assets/compressed-four-card-contact.webp",
+    "sha256": "d9092be7cff358cab0c8eecc1885ffb360e1f8dc33ad5f8b76aad47d4e97b4da",
+    "bytes": 510006,
+    "dimensions": [
+      960,
+      3600
+    ]
+  }
+}

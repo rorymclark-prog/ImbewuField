@@ -9,7 +9,7 @@ import React, { Suspense, useCallback, useEffect, useMemo, useRef, useState, typ
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
-import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock } from 'lucide-react';
+import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock, AlertTriangle, Droplets } from 'lucide-react';
 import { CRASH_LOOP_SETTLE_MS, designSafeMode, exitSafeMode, lastCrashPhase, markPageSettled, noteCrashPhase } from '@/lib/crash-loop';
 import { clearPulseCookie } from '@/lib/server-rescue';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
@@ -124,7 +124,6 @@ import { resolveBaseLayers, type MapRefLayers } from '@/lib/base-layers';
 import { fetchBasemapForFrame } from '@/lib/basemap-imagery';
 import DesignCanvas, { type TracedLayer } from '@/components/design/DesignCanvas';
 import DesignPalette, {
-  type DesignMode,
   type PlantingSublayerVisibility,
   type WaterInfrastructureVisibility,
 } from '@/components/design/DesignPalette';
@@ -212,7 +211,7 @@ const STEP_BTN: CSSProperties = {
   background: '#FFFDF7',
   color: '#7A4408',
   cursor: 'pointer',
-  fontSize: 10,
+  fontSize: 11,
   lineHeight: 1,
   padding: 0,
   touchAction: 'none',
@@ -230,14 +229,17 @@ function readStoredGeometryLock(): boolean {
   }
 }
 
-const PAPER = '#FFFEFA';
+// Theme-aware page chrome (picker/header/toolbars). The canvas itself (satellite imagery,
+// floating tool palettes drawn over the map) stays on its own fixed look — only the plain-page
+// surfaces below follow dark/slate (dark-05, nav-01).
+const PAPER = 'var(--bg-1)';
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E';
-// Ochre is a FILL — as text on paper it measures 2.54:1. #7A4408 is the dim variant for text
-// and icon strokes (CLAUDE.md); keep OCHRE itself for fills and borders.
-const GOLD_DIM = '#7A4408';
-const DARK = '#0B120B';
+// Ochre is a FILL — as text on paper it measures 2.54:1. var(--gold-dim) is the dim variant for
+// text and icon strokes (CLAUDE.md), themed per column; keep OCHRE itself for fills and borders.
+const GOLD_DIM = 'var(--gold-dim)';
+const DARK = 'var(--text-primary)';
 const AREA_FILL_PREF_KEY = 'imbewu_design_area_fill_v1';
 
 /** How far Snap will reach when its normal, deliberately-short reach finds nothing. Four metres
@@ -519,7 +521,13 @@ function EmptyState() {
         textAlign: 'center',
       }}
     >
-      <Compass size={40} color={GREEN} />
+      <Compass size={40} color="var(--color-forest-800)" />
+      {/* nav-17: /design had no h1 at all while this empty-site state was showing. One visible
+          h1 matching the nav label ("Design studio"), small so it doesn't compete with the
+          instructional copy below. */}
+      <h1 style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--color-forest-800)', margin: 0 }}>
+        {isZulu ? 'Isitudiyo Sokuklama' : 'Design studio'}
+      </h1>
       {places.length > 0 ? (
         <>
           <p style={{ fontSize: 16, maxWidth: 340, lineHeight: 1.5, fontWeight: 600 }}>
@@ -537,8 +545,8 @@ function EmptyState() {
                   padding: '12px 14px',
                   minHeight: 48,
                   borderRadius: 14,
-                  background: '#FFFFFF',
-                  border: '1px solid #E2D8C4',
+                  background: 'var(--input-bg)',
+                  border: '1px solid var(--border)',
                   color: DARK,
                   textDecoration: 'none',
                   textAlign: 'left',
@@ -550,14 +558,14 @@ function EmptyState() {
                     {p.name}
                   </span>
                   {p.biome && (
-                    <span style={{ display: 'block', fontSize: 11.5, color: '#755942' }}>{p.biome}</span>
+                    <span style={{ display: 'block', fontSize: 12, color: 'var(--text-muted)' }}>{p.biome}</span>
                   )}
                 </span>
-                <span style={{ fontSize: 12, color: GREEN, fontWeight: 600, flexShrink: 0 }}>{isZulu ? 'Klama →' : 'Design →'}</span>
+                <span style={{ fontSize: 12, color: 'var(--color-forest-800)', fontWeight: 600, flexShrink: 0 }}>{isZulu ? 'Klama →' : 'Design →'}</span>
               </Link>
             ))}
           </div>
-          <p style={{ fontSize: 12.5, color: '#755942', maxWidth: 340 }}>
+          <p style={{ fontSize: 12.5, color: 'var(--text-muted)', maxWidth: 340 }}>
             {isZulu ? 'Icebiso: indawo enomngcele odwetshiwe iba nesithombe sesathelayithi esilingana kahle.' : 'Tip: sites with a traced boundary get a perfectly-fitted satellite view.'}
           </p>
         </>
@@ -576,7 +584,7 @@ function EmptyState() {
           minHeight: 44,
           borderRadius: 999,
           background: GREEN,
-          color: PAPER,
+          color: 'var(--on-forest)',
           fontWeight: 600,
           textDecoration: 'none',
         }}
@@ -620,11 +628,6 @@ function DesignStudioInner() {
       setPlaceName(null);
     }
   }, [hasSite, lat, lon]);
-
-  // The Studio now always exposes its tools. Guidance is an additional bottom-panel aid, not a
-  // mode that can hide working controls, so an old saved Pro/Guided preference cannot change
-  // what a farmer can reach on their next visit.
-  const designMode: DesignMode = 'guided';
 
   // Geometry Lock — off by default, but persisted when the farmer turns it on for testing.
   const [geometryLock, setGeometryLock] = useState(false);
@@ -1022,20 +1025,16 @@ function DesignStudioInner() {
     () => normaliseBedBlockSpec({ bedLengthM: 3, bedWidthM: 1.2, pathWidthM: 0.5, count: 4 }),
   );
   const [bedBlockArmed, setBedBlockArmed] = useState(false);
-  // Switching INTO guided restores every layer — a first-timer should never land in guided
-  // with a layer invisibly hidden. Layer toggles now exist in guided too, but this reset is
-  // still the safe default on mode switch.
+  // On mount, restore every layer — a first-timer should never land in the Studio with a layer
+  // invisibly hidden.
   //
   // `boundary` is preserved rather than reset, alongside contours and sector. What the reset
   // protects against is an ELEMENT layer being off: those also filter the palette, so a hidden
   // one takes the farmer's tools away and leaves them hunting. The fence is a pure reference
-  // overlay with no palette effect, so turning it off is a deliberate presentation choice —
-  // and switching modes putting it back is just the fence returning uninvited.
+  // overlay with no palette effect, so turning it off is a deliberate presentation choice.
   useEffect(() => {
-    if (designMode === 'guided') {
-      setActiveLayers((a) => ({ water: true, earthworks: true, zones: true, planting: true, structures: true, access: true, animals: true, ground: true, references: true, boundary: a.boundary, labels: true, symbols: true, contours: a.contours, sector: a.sector }));
-    }
-  }, [designMode]);
+    setActiveLayers((a) => ({ water: true, earthworks: true, zones: true, planting: true, structures: true, access: true, animals: true, ground: true, references: true, boundary: a.boundary, labels: true, symbols: true, contours: a.contours, sector: a.sector }));
+  }, []);
 
   // Item edit sheet — the item currently being edited via DesignCanvas's onEditItem.
   const [editItemId, setEditItemId] = useState<string | null>(null);
@@ -3068,7 +3067,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           <ArrowLeft size={20} />
         </Link>
         <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2, minWidth: 0, flexShrink: 1 }}>
-          <span style={{ fontWeight: 700, fontSize: 15 }}>{tr('Design Studio', 'Isitudiyo Sokuklama')}</span>
+          <h1 style={{ fontWeight: 700, fontSize: 15, margin: 0, lineHeight: 'inherit' }}>{tr('Design Studio', 'Isitudiyo Sokuklama')}</h1>
           <span style={{ fontSize: 12, opacity: 0.65, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{siteName}</span>
         </div>
         <span style={{ flexShrink: 0, display: isPhone ? 'none' : undefined }}>
@@ -3103,7 +3102,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         {canvasState && (
           <Link
             href={`/facilitator/crops?canvasSite=${encodeURIComponent(canvasState.siteId)}`}
-            aria-label={tr("Open this farm's crop plan", 'Vula uhlelo lwezitshalo zaleli pulazi')}
+            aria-label={tr("Open this farm's production plan", 'Vula uhlelo lokukhiqiza lwaleli pulazi')}
             style={{
               display: isPhone ? 'none' : 'inline-flex', alignItems: 'center', gap: 6,
               minHeight: 32, padding: '5px 12px', borderRadius: 10,
@@ -3111,7 +3110,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               fontSize: 12, fontWeight: 800, whiteSpace: 'nowrap',
             }}
           >
-            <Sprout size={15} /> {tr('Crop plan', 'Uhlelo lwezitshalo')}
+            <Sprout size={15} /> {tr('Production plan', 'Uhlelo lokukhiqiza')}
           </Link>
         )}
         {canvasState && frame && (
@@ -3161,7 +3160,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               border: '1px solid rgba(31,77,43,0.2)',
               background: 'rgba(31,77,43,0.04)',
               color: GREEN,
-              fontSize: 11,
+              fontSize: 12,
               fontWeight: 800,
               letterSpacing: 0.2,
               whiteSpace: 'nowrap',
@@ -3173,7 +3172,9 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         <div
           title={saveError ?? undefined}
           style={{
-            display: isPhone ? 'none' : undefined,
+            display: isPhone ? 'none' : 'flex',
+            alignItems: 'center',
+            gap: 4,
             fontSize: 12,
             opacity: saveError ? 1 : 0.6,
             fontWeight: saveError ? 800 : 400,
@@ -3182,18 +3183,19 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             lineHeight: 1.15,
           }}
         >
-          {saveError ? tr('⚠ NOT saved — storage full', '⚠ AKUGCINWANGA — indawo yokugcina igcwele') : saved ? tr('Saved', 'Kugciniwe') : tr('Saving…', 'Kuyagcinwa…')}
+          {saveError && <AlertTriangle size={12} style={{ flexShrink: 0 }} />}
+          {saveError ? tr('NOT saved — storage full', 'AKUGCINWANGA — indawo yokugcina igcwele') : saved ? tr('Saved', 'Kugciniwe') : tr('Saving…', 'Kuyagcinwa…')}
         </div>
       </header>
 
       {isPhone && canvasState && (
-        <div id="design-studio-more-actions" hidden={!phoneActionsOpen} style={{ padding: '10px 14px', borderBottom: '1px solid #E2D8C4', background: PAPER }}>
+        <div id="design-studio-more-actions" hidden={!phoneActionsOpen} style={{ padding: '10px 14px', borderBottom: '1px solid var(--border)', background: PAPER }}>
           <div role="group" aria-label={tr('Other Studio actions', 'Ezinye izenzo zesitudiyo')} style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             <Link href="/farmer" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '0 12px', border: '1px solid #D8D0BB', borderRadius: 10, color: GREEN, fontWeight: 700 }}>
               {tr('Back to map', 'Buyela kumephu')}
             </Link>
             <Link href={`/facilitator/crops?canvasSite=${encodeURIComponent(canvasState.siteId)}`} style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '0 12px', border: '1px solid #D8D0BB', borderRadius: 10, color: GREEN, fontWeight: 700 }}>
-              {tr('Crop plan', 'Uhlelo lwezitshalo')}
+              {tr('Production plan', 'Uhlelo lokukhiqiza')}
             </Link>
             {frame && <button type="button" onClick={() => { setPhoneActionsOpen(false); setPrintOpen(true); }} style={{ minHeight: 44, padding: '0 12px', border: '1px solid #D8D0BB', borderRadius: 10, background: PAPER, color: GREEN, fontWeight: 700, cursor: 'pointer' }}>
               {tr('Print / Export', 'Phrinta / Khipha')}
@@ -3318,7 +3320,6 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               boundary: refLayers.boundary.length > 2,
               house: refLayers.house.length > 2,
             }}
-            mode={designMode}
           />
         </div>
       )}
@@ -3343,7 +3344,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           ~half the screen). Collapsed: a one-line step nav + "Show steps"; expanded: a
           quiet "More space" that folds the auto-design bar + wizard away. */}
       {canvasState && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '3px 14px', minHeight: 34, borderBottom: chromeCollapsed ? '1px solid #E2D8C4' : 'none', background: PAPER, position: isPhone && topShow.stepNav ? 'sticky' : undefined, top: isPhone && topShow.stepNav ? 54 : undefined, zIndex: isPhone && topShow.stepNav ? 19 : undefined }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '3px 14px', minHeight: 34, borderBottom: chromeCollapsed ? '1px solid var(--border)' : 'none', background: PAPER, position: isPhone && topShow.stepNav ? 'sticky' : undefined, top: isPhone && topShow.stepNav ? 54 : undefined, zIndex: isPhone && topShow.stepNav ? 19 : undefined }}>
           {!isPhone && (
             <div style={{ display: 'flex', minWidth: 0, flex: '1 1 auto' }}>
               <CardsStepper step={canvasState.step} onStep={setStep} />
@@ -3366,8 +3367,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             const idx = STEP_ORDER.indexOf(canvasState.step);
             const navBtn = (disabled: boolean): React.CSSProperties => ({
               width: 30, height: 30, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-              borderRadius: 8, border: '1px solid #E2D8C4', background: '#FFFEFA',
-              color: disabled ? '#C9BFAD' : GREEN, cursor: disabled ? 'default' : 'pointer',
+              borderRadius: 8, border: '1px solid var(--border)', background: PAPER,
+              color: disabled ? 'var(--text-muted)' : GREEN, cursor: disabled ? 'default' : 'pointer',
               opacity: disabled ? 0.5 : 1, flexShrink: 0, padding: 0,
             });
             return (
@@ -3377,7 +3378,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                 </button>
                 <span style={{ fontSize: 13, fontWeight: 700, color: GREEN, whiteSpace: 'nowrap' }}>
                   {stepName(canvasState.step)}
-                  <span style={{ color: '#755942', fontWeight: 500 }}> · {idx + 1}/{STEP_ORDER.length}</span>
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}> · {idx + 1}/{STEP_ORDER.length}</span>
                 </span>
                 <button type="button" aria-label={tr('Next step', 'Isinyathelo esilandelayo')} disabled={idx >= STEP_ORDER.length - 1} onClick={() => idx < STEP_ORDER.length - 1 && setStep(STEP_ORDER[idx + 1])} style={navBtn(idx >= STEP_ORDER.length - 1)}>
                   <ChevronRight size={16} />
@@ -3445,7 +3446,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                   minWidth: 54, minHeight: 34, padding: '4px 9px', borderRadius: 8,
                   border: 'none', background: workspaceMode === layout ? GREEN : 'transparent',
                   color: workspaceMode === layout ? PAPER : GREEN, cursor: 'pointer',
-                  fontSize: 11, fontWeight: 800, textTransform: 'capitalize',
+                  fontSize: 12, fontWeight: 800, textTransform: 'capitalize',
                 }}
               >
                 {layout === 'docked' ? 'Dock' : layout === 'floating' ? 'Float' : 'Tray'}
@@ -3746,7 +3747,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                         {glyph}
                       </button>
                     ))}
-                    <span style={{ fontSize: 11, opacity: 0.75, minWidth: 34, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
+                    <span style={{ fontSize: 12, opacity: 0.75, minWidth: 34, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
                       {(liveAlign.rotationDeg ?? 0).toFixed(1)}°
                     </span>
                   </span>
@@ -3788,12 +3789,12 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                       onBlur={commitAlign}
                       style={{ width: 96 }}
                     />
-                    <span style={{ fontSize: 11, opacity: 0.75, minWidth: 38, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
+                    <span style={{ fontSize: 12, opacity: 0.75, minWidth: 38, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
                       {Math.round((liveAlign.scale ?? 1) * 100)}%
                     </span>
                   </span>
                   <label style={{ display: 'inline-flex', alignItems: 'center', gap: 5, flexShrink: 0 }} title={tr('Fade your photo to see the satellite underneath while you line them up', 'Fiphaza isithombe sakho ukuze ubone esesathelayithi ngaphansi ngesikhathi usiqondanisa')}>
-                    <span style={{ fontSize: 11, opacity: 0.75 }}>{tr('See through', 'Bona okungaphansi')}</span>
+                    <span style={{ fontSize: 12, opacity: 0.75 }}>{tr('See through', 'Bona okungaphansi')}</span>
                     <input
                       type="range"
                       min={0.1}
@@ -3811,7 +3812,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                       type="button"
                       onClick={resetBaseAlign}
                       title="Put the photo back where it was imported — square, in place, fully opaque"
-                      style={{ border: 'none', background: 'transparent', color: DARK, opacity: 0.65, fontWeight: 600, cursor: 'pointer', fontSize: 11.5, padding: '4px 4px' }}
+                      style={{ border: 'none', background: 'transparent', color: DARK, opacity: 0.65, fontWeight: 600, cursor: 'pointer', fontSize: 12, padding: '4px 4px' }}
                     >
                       Reset
                     </button>
@@ -3927,11 +3928,11 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             onClick={onDripAllBeds}
             style={{ display: 'flex', alignItems: 'center', gap: 8, minHeight: 40, padding: '6px 14px', borderRadius: 12, border: `1px solid ${OCHRE}`, background: 'rgba(192,122,30,0.10)', color: GREEN, cursor: 'pointer', textAlign: 'left', fontSize: 12.5, flexShrink: 0 }}
           >
-            <span aria-hidden>💧</span>
+            <Droplets size={15} style={{ flexShrink: 0 }} />
             <span><span style={{ fontWeight: 800 }}>{tr('Drip all beds', 'Faka imigqa yokunisela kuyo yonke imibhede')}</span> — {tr('one line down the centre of each', 'umugqa owodwa phakathi nendawo embhedeni ngamunye')}</span>
           </button>
           {dripNote && (
-            <span style={{ fontSize: 11.5, color: DARK, opacity: 0.75, flex: 1, minWidth: 0 }}>{dripNote}</span>
+            <span style={{ fontSize: 12, color: DARK, opacity: 0.75, flex: 1, minWidth: 0 }}>{dripNote}</span>
           )}
         </div>
       )}
@@ -3959,7 +3960,6 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             step={canvasState.step}
             state={canvasState}
             ctx={{ hasBoundary: refLayers.boundary.length >= 3, hasHouse: refLayers.house.length >= 3 }}
-            mode={designMode}
             onArm={armSubStep}
             monthlyRainfallMm={locationData?.rainfall?.monthly}
             onDailyWaterUseLChange={(dailyWaterUseL) => {
@@ -4040,7 +4040,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                     background: 'transparent',
                     border: 'none',
                     color: '#8A7C63',
-                    fontSize: 11.5,
+                    fontSize: 12,
                     fontWeight: 600,
                     cursor: 'pointer',
                     flexShrink: 0,
@@ -4064,7 +4064,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                       minHeight: 44,
                       padding: '4px 10px',
                       borderRadius: 999,
-                      border: zoneDraw === pin.zone && tool === 'zone' ? `2px solid ${GREEN}` : '1px solid #E2D8C4',
+                      border: zoneDraw === pin.zone && tool === 'zone' ? `2px solid ${GREEN}` : '1px solid var(--border)',
                       background: '#FFFFFF',
                       color: DARK,
                       fontSize: 12,
@@ -4109,14 +4109,14 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           rails are small, always present when their edge is hidden, and carry the same handle. */}
       {!topShow.stepNav && (
         <div style={{ position: 'fixed', top: 'calc(env(safe-area-inset-top, 0px) + 4px)', left: 0, right: 0, display: 'flex', justifyContent: 'center', zIndex: 30, pointerEvents: 'none' }}>
-          <span style={{ pointerEvents: 'auto', background: PAPER, borderRadius: 999, padding: '0 12px', boxShadow: '0 4px 14px -6px rgba(0,0,0,0.35)', border: '1px solid #E2D8C4' }}>
+          <span style={{ pointerEvents: 'auto', background: PAPER, borderRadius: 999, padding: '0 12px', boxShadow: '0 4px 14px -6px rgba(0,0,0,0.35)', border: '1px solid var(--border)' }}>
             <ChromeHandle stop={topStop} stops={TOP_STOPS} onChange={setTopStop} invert label="Show the steps again" />
           </span>
         </div>
       )}
       {!bottomShow.tools && (
         <div style={{ position: 'fixed', bottom: 'calc(env(safe-area-inset-bottom, 0px) + 4px)', left: 0, right: 0, display: 'flex', justifyContent: 'center', zIndex: 30, pointerEvents: 'none' }}>
-          <span style={{ pointerEvents: 'auto', background: PAPER, borderRadius: 999, padding: '0 12px', boxShadow: '0 4px 14px -6px rgba(0,0,0,0.35)', border: '1px solid #E2D8C4' }}>
+          <span style={{ pointerEvents: 'auto', background: PAPER, borderRadius: 999, padding: '0 12px', boxShadow: '0 4px 14px -6px rgba(0,0,0,0.35)', border: '1px solid var(--border)' }}>
             <ChromeHandle stop={bottomStop} stops={BOTTOM_STOPS} onChange={setBottomStop} label="Show the tools again" />
           </span>
         </div>
@@ -4137,7 +4137,6 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           onBottomStopChange={setBottomStop}
           hiddenSections={simple ? undefined : { count: dismissed.length, onRestore: showAllSections }}
           step={canvasState.step}
-          mode={designMode}
           tool={tool}
           setTool={handleSetTool}
           placeDefId={placeDefId}
@@ -4208,7 +4207,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           farmer can generate a beautiful single-layer map without leaving their place in the flow. */}
       {canvasState && frame && previewFilter && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 60, background: PAPER, display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderBottom: '1px solid #E2D8C4', flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
             <ImageIcon size={18} color={GOLD_DIM} />
             <span style={{ fontWeight: 800, color: GREEN, fontSize: 15 }}>{tr('Preview map', 'Buka imephu')}</span>
             <button
@@ -4486,7 +4485,7 @@ function ItemEditSheet({
               borderRadius: 10,
               border: 'none',
               background: GREEN,
-              color: PAPER,
+              color: 'var(--on-forest)',
               fontWeight: 700,
               fontSize: 14,
               cursor: 'pointer',
@@ -4623,7 +4622,7 @@ function DesignPrintLazy(props: {
   }, []);
   if (!Comp) {
     return (
-      <div style={{ position: 'fixed', inset: 0, zIndex: 60, background: 'rgba(15,12,8,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: PAPER, fontWeight: 700 }}>
+      <div style={{ position: 'fixed', inset: 0, zIndex: 60, background: 'rgba(15,12,8,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--on-forest)', fontWeight: 700 }}>
         Loading Print / Export…
       </div>
     );

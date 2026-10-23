@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-13T08:42:07.733053+00:00",
+  "base": "a9cf3f4b2dcc7c1c665f6f1b2a14b73346797206",
+  "rootActualPixelsViewed": true,
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "scrollWidth": 390
+  },
+  "instruction": "Save the slides and their displayed posters on this phone. The deck then works offline without narration or video.",
+  "instructionRect": {
+    "left": 54,
+    "right": 357,
+    "width": 303,
+    "top": 599.359375,
+    "bottom": 655.890625,
+    "height": 56.53125
+  },
+  "sourceCopySha256": "9423ace98349ff0af860e50ac495021c538f54495957e4a47ef6c2ba23e242dd",
+  "screenshotSha256": "e9db216763af24d75138aa8c6af70fd1563b77941f645ba35dd23e474326242b",
+  "copyProbe": {
+    "checkedCells": 390,
+    "heldCells": 6,
+    "languageScope": 6,
+    "unlistedKeysPreserved": true,
+    "actualProductionLookupEvaluated": true
+  },
+  "context": "Public samples \u2192 Open Student \u2192 Sesotho Study offline; backend unconfigured (no public project/API key), fictional local onboarding only, no production accounts/records/paid actions/downloads",
+  "qualityUi": "Not rendered: all current regional higher-quality totals equal standard. No forced larger tier or role bypass. Actual production lookup evaluated for all six held cells instead.",
+  "browserConsoleErrorsAtAcceptedView": [],
+  "earlierLocalLimits": "Initial navigation timeout while Next compiled, font-override warning and unrelated dev CSS404 observed before accepted view; no claim of clean historical development logs",
+  "cleanup": "Local language restored to prior Xitsonga, own tab5 closed, viewport reset and isolated port4243 listener stopped"
+}

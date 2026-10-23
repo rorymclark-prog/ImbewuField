@@ -1,0 +1,94 @@
+{
+  "title": "TS Intro L1 assessment question: preserve negative and alternatives while translating ordinary framing",
+  "date": "2026-10-05",
+  "status": "Applied in shared working tree; pending root diff review",
+  "baseCommit": "a5fd76db64e70fd69d6c5e449cc6b8ce4dda7a0b",
+  "independentCheck": "/tmp/imbewu-intro-ordinary-learner-residual-independent-check-20261005.json",
+  "independentCheckSha256": "713d32255c5c1b3bbbb8bf81a846e0963240a28eb626c5d91c36766cba9490eb",
+  "candidatePacket": "/tmp/imbewu-intro-ordinary-learner-residual-candidates-20261005.json",
+  "candidatePacketSha256": "f63d4b5d210a3191748f6efd278d122ba7c67ec4b070dff52925d435e649b5d4",
+  "reviewDisposition": "Accepted exact rootReadyCandidate by independent reviewer; machine-draft semantics only, not fluent approval.",
+  "authorityHashesAfterChange": {
+    "lib/course-modules.ts": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+    "lib/course-translation-drafts-ts.ts": "c0208f9b977aa57328f4b38b21f7b03aab102dcdf2ed20cdbc506d8c880a2f55",
+    "lib/course-localization.ts": "503f628a1c0679c5247558887e7438260fead024b67ac5112626e6e52bb1ff9f",
+    "tests/course-translation-drafts-ts.test.ts": "2883e8496694ba90e19c2a0231ffa668755b7ed775dc1a355c1fa2ecddcbcad0"
+  },
+  "field": {
+    "language": "ts",
+    "lessonId": "intro-permaculture-l1",
+    "path": "quiz[0].question",
+    "sourceEnglish": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
+    "previousTarget": "Murimi u xavisa all his surplus maize kambe keeps nothing for composting or seed saving. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?",
+    "target": "Murimi u xavisa all his surplus maize kambe a nga hlayisi xilo xa composting kumbe seed saving. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?",
+    "reviewStatus": "machine-draft",
+    "segments": [
+      {
+        "sourceEnglish": "A farmer sells ",
+        "text": "Murimi u xavisa ",
+        "status": "draft",
+        "reason": "Translate the ordinary subject/action frame."
+      },
+      {
+        "sourceEnglish": "all his surplus maize",
+        "text": "all his surplus maize",
+        "status": "english-hold",
+        "reason": "Keep the complete quantity/ownership/crop anchor exact."
+      },
+      {
+        "sourceEnglish": " but keeps nothing for ",
+        "text": " kambe a nga hlayisi xilo xa ",
+        "status": "draft",
+        "reason": "Translate the negative reserve/keeping frame; technical use names remain exact."
+      },
+      {
+        "sourceEnglish": "composting",
+        "text": "composting",
+        "status": "english-hold",
+        "reason": "Retain the named soil-input practice pending local wording check."
+      },
+      {
+        "sourceEnglish": " or ",
+        "text": " kumbe ",
+        "status": "draft",
+        "reason": "Translate the alternative connector."
+      },
+      {
+        "sourceEnglish": "seed saving",
+        "text": "seed saving",
+        "status": "english-hold",
+        "reason": "Retain the named seed practice exact."
+      },
+      {
+        "sourceEnglish": ". Which ",
+        "text": ". Hi yihi ",
+        "status": "draft",
+        "reason": "Preserve the question transition."
+      },
+      {
+        "sourceEnglish": "ethic",
+        "text": "ethic",
+        "status": "english-hold",
+        "reason": "Retain the formal ethics-category term exact."
+      },
+      {
+        "sourceEnglish": " is he most failing?",
+        "text": " leyi a tsandzekaka ku yi landzelela ngopfu?",
+        "status": "draft",
+        "reason": "Restore the existing resolver’s exact final question wording, including the “follow” phrasing and most/superlative marker."
+      }
+    ],
+    "correctIndex": 2,
+    "optionsOrRationaleChanged": false
+  },
+  "preservedChecks": [
+    "Exact source question binding is unchanged.",
+    "“all his surplus maize” remains exact, preserving all/ownership/crop scope.",
+    "The negative “keeps nothing” and alternative connector are retained in the translated frame; composting and seed saving remain exact English technical anchors.",
+    "“ethic” remains exact; the existing final question phrase, including “most”, is unchanged.",
+    "All answer-option source pairs/order, option drafts, rationale pair and correct answer index 2 remain unchanged.",
+    "The field remains marked machine-draft and is surfaced as an unreviewed learner draft.",
+    "Source drift falls back to the changed canonical English question."
+  ],
+  "scope": "Only TS Intro L1 quiz[0].question target and its exact retained-clause hold metadata are changed by this addition. No media/assets or canonical source changed."
+}

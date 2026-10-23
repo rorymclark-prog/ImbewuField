@@ -1,0 +1,136 @@
+{
+  "lessonId": "water-harvesting-l3",
+  "language": "ve",
+  "sourceMainSha": "94a2fb4baf5bf801a12647ea8c2d53a4af045223",
+  "status": "unwired-machine-draft",
+  "keyPoints": [
+    {
+      "sourceEnglish": "Roof area, rain, demand and losses determine useful storage",
+      "draft": "Vhuhulwane ha roof, mvula, water demand na losses zwi laula uri hu nga vhulungwa maḓi mangana ane a shumisea.",
+      "literalBacktranslation": "The size of the roof, rain, water demand and losses determine how much usable water can be stored.",
+      "uncertainty": "Roof, water demand and losses remain English anchors; the mixed-language Tshivenda grammar and the term for useful storage need fluent review."
+    },
+    {
+      "sourceEnglish": "Size and maintain the first-flush diverter for the roof",
+      "draft": "Size and maintain the first-flush diverter for the roof",
+      "literalBacktranslation": "Size and maintain the first-flush diverter according to the roof.",
+      "uncertainty": "Root targeted check retains exact source: uncertain technical imperative or matched-use wording.",
+      "candidateStatus": "hold"
+    },
+    {
+      "sourceEnglish": "Clear water can still contain germs or chemicals",
+      "draft": "Clear water i nga kha ḓi vha na germs kana chemicals.",
+      "literalBacktranslation": "Clear water can contain germs or chemicals.",
+      "uncertainty": "The source's possibility remains explicit with i nga vha; clear, germs and chemicals stay English to avoid implying visibly clean water is safe."
+    },
+    {
+      "sourceEnglish": "Testing and treatment must match the intended use",
+      "draft": "Testing and treatment must match the intended use",
+      "literalBacktranslation": "Testing and treatment must correspond to the intended use.",
+      "uncertainty": "Root targeted check retains exact source: uncertain technical imperative or matched-use wording.",
+      "candidateStatus": "hold"
+    }
+  ],
+  "quiz": [
+    {
+      "question": {
+        "sourceEnglish": "What information is needed to choose a rainwater tank?",
+        "draft": "Ndi mafhungo afhio ane a ṱoḓea u khetha rainwater tank?",
+        "literalBacktranslation": "What information is needed to choose a rainwater tank?",
+        "uncertainty": "Rainwater tank stays English as the technical object; question wording is a machine draft."
+      },
+      "options": [
+        {
+          "sourceEnglish": "Only the province where the farm is located",
+          "draft": "Province ine farm ya vha khayo fhedzi.",
+          "literalBacktranslation": "Only the province where the farm is located.",
+          "uncertainty": "Province and farm are retained as English anchors; only remains explicit."
+        },
+        {
+          "sourceEnglish": "Roof area, rainfall pattern, water demand and collection losses",
+          "draft": "Vhuhulwane ha roof, pattern ya mvula, water demand na losses dza kuvhanganya maḓi.",
+          "literalBacktranslation": "The size of the roof, rainfall pattern, water demand and water-collection losses.",
+          "uncertainty": "The list preserves all four factors; technical anchors and mixed concord need fluent review."
+        },
+        {
+          "sourceEnglish": "Only the amount of rain in one storm",
+          "draft": "Tshivhalo tsha mvula ya storm nthihi fhedzi.",
+          "literalBacktranslation": "Only the amount of rain in one storm.",
+          "uncertainty": "Storm remains an English term; one event and only are retained."
+        },
+        {
+          "sourceEnglish": "Only the price of the biggest available tank",
+          "draft": "Mutengo wa tank khulwanesa ine ya wanala fhedzi.",
+          "literalBacktranslation": "Only the price of the biggest tank that is available.",
+          "uncertainty": "Tank remains English; the superlative and only are retained."
+        }
+      ],
+      "sourceCorrectIndex": 1,
+      "rationale": {
+        "sourceEnglish": "Tank planning must compare usable supply with demand through wet and dry periods. One fixed regional size cannot do that.",
+        "draft": "U pulana tank hu tea u vhambedza supply ine ya nga shumiswa na demand kha wet na dry periods. Sayizi nthihi ya region yo tiwaho a i nga koni u ita zwenezwo.",
+        "literalBacktranslation": "Tank planning must compare usable supply with demand during wet and dry periods. One fixed size for a region cannot do that.",
+        "uncertainty": "The comparison and inability of one fixed regional size are retained. Wet and dry periods, supply, demand and region remain English anchors."
+      }
+    },
+    {
+      "question": {
+        "sourceEnglish": "Why does a first-flush diverter matter even for irrigation-only tank water?",
+        "draft": "Ndi ngani first-flush diverter i tshi thusa na musi maḓi a tank a tshi shumiswa kha irrigation fhedzi?",
+        "literalBacktranslation": "Why does a first-flush diverter help even when tank water is used only for irrigation?",
+        "uncertainty": "The irrigation-only limitation is preserved. First-flush diverter and irrigation remain English technical terms."
+      },
+      "options": [
+        {
+          "sourceEnglish": "It doesn't matter for irrigation, only drinking water",
+          "draft": "A i na mushumo kha irrigation; i thusa kha drinking water fhedzi.",
+          "literalBacktranslation": "It has no importance for irrigation; it helps only for drinking water.",
+          "uncertainty": "The distractor's only-drinking-water claim is retained; irrigation and drinking water remain English."
+        },
+        {
+          "sourceEnglish": "The first flush carries concentrated droppings, dust and pathogens that can contaminate edible crops",
+          "draft": "First flush i hwala concentrated droppings, dust na pathogens dzine dza nga contaminate edible crops.",
+          "literalBacktranslation": "The first flush carries concentrated droppings, dust and pathogens that can contaminate edible crops.",
+          "uncertainty": "Concentrated, all three contaminant types, can-contaminate modality and edible crops are kept explicit in English."
+        },
+        {
+          "sourceEnglish": "It's more acidic and changes soil pH over time",
+          "draft": "It's more acidic nahone i shandula soil pH nga tshifhinga.",
+          "literalBacktranslation": "It is more acidic and changes soil pH over time.",
+          "uncertainty": "The comparative more acidic and the soil-pH/time claim remain exact English to avoid changing the distractor."
+        },
+        {
+          "sourceEnglish": "It stops the tank overfilling in storms",
+          "draft": "I thivhela tank uri i sa ḓadzehe nga maḓi manzhi nga storms.",
+          "literalBacktranslation": "It prevents the tank from filling too much with water during storms.",
+          "uncertainty": "Overfilling and the storm condition are retained; storm remains an English anchor."
+        }
+      ],
+      "sourceCorrectIndex": 1,
+      "rationale": {
+        "sourceEnglish": "Diverting early runoff can reduce contamination, but it does not guarantee that later water is safe. Assess quality for the intended use.",
+        "draft": "U divert-a early runoff zwi nga fhungudza contamination, fhedzi a zwi khwaṱhisedzi uri maḓi a tevhelaho a tsireledzea. Ṱolani quality u ya nga intended use.",
+        "literalBacktranslation": "Diverting early runoff can reduce contamination, but it does not guarantee that the later water is safe. Assess quality according to the intended use.",
+        "uncertainty": "Can-reduce, no-guarantee, later water, and assessment for intended use are all preserved; runoff, contamination and quality remain English anchors."
+      }
+    }
+  ],
+  "provenance": {
+    "canonicalPath": "lib/course-modules.ts",
+    "registryPath": "lib/course-translation-drafts-ve-water-harvesting.ts",
+    "sourceCheckedAt": "94a2fb4baf5bf801a12647ea8c2d53a4af045223",
+    "scope": "Only the four held key points and two held quizzes are drafted. Existing body, title and infographic alt are untouched; alt was excluded because diagram review was not requested."
+  },
+  "independentSemanticBackcheck": {
+    "result": "No material repair identified",
+    "checked": "Canonical keypoint/question/option/rationale source fidelity; correct indices [1,1]; wet/dry supply versus demand; roof area, rainfall, demand and losses; concentrated first-flush contamination; can-reduce and no later-water safety guarantee; intended-use testing/treatment",
+    "reviewer": "regional_principles_phone_qa",
+    "approval": "Machine semantic check only; not fluent-speaker or local practitioner approval",
+    "publication": "Unwired checked candidate; user authorized regional translation override on 2 October; original English unchanged.",
+    "targetedRepairs": "VE KP2/KP4 exact-source holds; VE KP3 can-still restored; TS KP1 usable (can be used) restored. Not fluent approval."
+  },
+  "implementationBaseSha": "94a2fb4baf5bf801a12647ea8c2d53a4af045223",
+  "currentSourceCheckedAt": "94a2fb4baf5bf801a12647ea8c2d53a4af045223",
+  "authorizationNote": "Rory explicitly authorized regional lesson and quiz translations on 2026-10-02 (“ok yes”); canonical English sources remain unchanged.",
+  "learnerStatusNote": "Machine draft for facilitator review; this is not fluent-speaker or local practitioner approval."
+}

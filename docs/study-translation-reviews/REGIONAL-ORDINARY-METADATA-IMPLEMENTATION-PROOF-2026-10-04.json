@@ -1,0 +1,127 @@
+{
+  "createdAt": "2026-10-04",
+  "branch": "codex/regional-vegetables-ordinary-next-20261004",
+  "purpose": "Exact source/target proof for approved regional ordinary Study metadata and lesson-title drafts.",
+  "scope": "9 metadata/title fields: four Vegetables module card fields, two Water Harvesting L3 titles, TS Soil Health L1 title, VE Soil Health L3 title, and TS Vegetables L4 title.",
+  "rows": [
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "fieldPath": "vegetables-staples.title",
+      "canonicalSource": "Vegetables and Staple Crops",
+      "frozenSource": "Vegetables and Staple Crops",
+      "currentTarget": "Matsavu na Staple Crops",
+      "reviewStatus": "machine-draft",
+      "cardResolution": {
+        "title": "Matsavu na Staple Crops",
+        "description": "Bed prep, succession planting, staple crops and pest management — ntirho wa siku ni siku wa ku rima swakudya.",
+        "status": "draft"
+      }
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "fieldPath": "vegetables-staples.description",
+      "canonicalSource": "Bed prep, succession planting, staple crops and pest management — the daily work of growing food.",
+      "frozenSource": "Bed prep, succession planting, staple crops and pest management — the daily work of growing food.",
+      "currentTarget": "Bed prep, succession planting, staple crops and pest management — ntirho wa siku ni siku wa ku rima swakudya.",
+      "reviewStatus": "machine-draft",
+      "cardResolution": {
+        "title": "Matsavu na Staple Crops",
+        "description": "Bed prep, succession planting, staple crops and pest management — ntirho wa siku ni siku wa ku rima swakudya.",
+        "status": "draft"
+      }
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "fieldPath": "vegetables-staples.title",
+      "canonicalSource": "Vegetables and Staple Crops",
+      "frozenSource": "Vegetables and Staple Crops",
+      "currentTarget": "Miroho na Staple Crops",
+      "reviewStatus": "machine-draft",
+      "cardResolution": {
+        "title": "Miroho na Staple Crops",
+        "description": "Bed prep, succession planting, staple crops and pest management — mushumo wa ḓuvha ḽiṅwe na ḽiṅwe wa u lima zwiḽiwa.",
+        "status": "draft"
+      }
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "fieldPath": "vegetables-staples.description",
+      "canonicalSource": "Bed prep, succession planting, staple crops and pest management — the daily work of growing food.",
+      "frozenSource": "Bed prep, succession planting, staple crops and pest management — the daily work of growing food.",
+      "currentTarget": "Bed prep, succession planting, staple crops and pest management — mushumo wa ḓuvha ḽiṅwe na ḽiṅwe wa u lima zwiḽiwa.",
+      "reviewStatus": "machine-draft",
+      "cardResolution": {
+        "title": "Miroho na Staple Crops",
+        "description": "Bed prep, succession planting, staple crops and pest management — mushumo wa ḓuvha ḽiṅwe na ḽiṅwe wa u lima zwiḽiwa.",
+        "status": "draft"
+      }
+    },
+    {
+      "language": "ts",
+      "moduleId": "water-harvesting",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "water-harvesting.lessons[water-harvesting-l3].title",
+      "canonicalSource": "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
+      "frozenSource": "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
+      "currentTarget": "Rainwater Tanks and Roof Catchment: Ku hlengeleta ni ku sirhelela mati",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "language": "ve",
+      "moduleId": "water-harvesting",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "water-harvesting.lessons[water-harvesting-l3].title",
+      "canonicalSource": "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
+      "frozenSource": "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
+      "currentTarget": "Rainwater Tanks and Roof Catchment: U kuvhanganya na u tsireledza maḓi",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "soil-health",
+      "lessonId": "soil-health-l1",
+      "fieldPath": "soil-health.lessons[soil-health-l1].title",
+      "canonicalSource": "Understanding Your Soil: The Foundation of Everything",
+      "frozenSource": "Understanding Your Soil: The Foundation of Everything",
+      "currentTarget": "Ku twisisa misava ya wena: Masungulo ya swilo hinkwawo",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "language": "ve",
+      "moduleId": "soil-health",
+      "lessonId": "soil-health-l3",
+      "fieldPath": "soil-health.lessons[soil-health-l3].title",
+      "canonicalSource": "Mulching and Cover Crops: Protecting and Building Soil",
+      "frozenSource": "Mulching and Cover Crops: Protecting and Building Soil",
+      "currentTarget": "Mulching and Cover Crops: U tsireledza mavu na Building Soil",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "vegetables-staples.lessons[vegetables-staples-l4].title",
+      "canonicalSource": "Observe and Manage Pests and Disease",
+      "frozenSource": "Observe and Manage Pests and Disease",
+      "currentTarget": "Xiyisisa ni ku lawula Pests na Disease",
+      "reviewStatus": "machine-draft"
+    }
+  ],
+  "checks": {
+    "canonicalSourceMatchesFrozen": true,
+    "allChangedPairsMachineDraft": true,
+    "vegetablesCardsResolveToDraft": true,
+    "unlistedStudyMetadataChanged": false,
+    "canonicalEnglishChanged": false,
+    "bodyOrMarketContentChangedByThisMetadataStep": false,
+    "typescript": "npx tsc --noEmit: passed",
+    "focusedTests": "6 named source-binding/title/fallback tests passed (course-content, TS Soil Health, TS Water Harvesting, VE Water Harvesting)",
+    "diffCheck": "git diff --check: passed",
+    "fullSuite": "not run; parent requested focused verification only",
+    "fluentApproval": "not implied; translated values remain visibly machine-draft"
+  }
+}

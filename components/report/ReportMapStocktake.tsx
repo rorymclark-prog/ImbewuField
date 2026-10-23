@@ -57,7 +57,9 @@ export default function ReportMapStocktake({ maps, selectedIds, siteId, scope, d
           if (persist(next) && nextStatus === 'not-needed' && included) onSelect(selectedIds.filter(id => !versions.some(m => m.id === id)));
         }}>
           {!picked && <option value="missing">{tr('Missing', 'Ayikho')}</option>}
-          {picked && <><option value="saved">{tr('✓ Saved · review needed', '✓ Igciniwe · idinga ukubuyekezwa')}</option><option value="needs-changes">{tr('Needs changes', 'Idinga ukushintshwa')}</option><option value="reviewed">{tr('✓ Reviewed', '✓ Ibuyekeziwe')}</option></>}
+          {/* code-11: a native <option> can only hold text, never a Lucide icon — the ✓ glyphs
+              are dropped rather than swapped; "Saved" and "Reviewed" already say the state. */}
+          {picked && <><option value="saved">{tr('Saved · review needed', 'Igciniwe · idinga ukubuyekezwa')}</option><option value="needs-changes">{tr('Needs changes', 'Idinga ukushintshwa')}</option><option value="reviewed">{tr('Reviewed', 'Ibuyekeziwe')}</option></>}
           <option value="not-needed">{tr('Not needed for this site', 'Ayidingeki kule ndawo')}</option>
         </select></div>
         <div className={styles.actions}>

@@ -3,8 +3,9 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import styles from './Studies.module.css';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones, Video, ExternalLink, Lock, Camera, Mic, Trophy, PlayCircle } from 'lucide-react';
+import { Check, CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones, Video, ExternalLink, Lock, Camera, Mic, Trophy, PlayCircle } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useSampleRole } from '@/lib/use-role-navigation';
 import { isBackendConfigured } from '@/lib/firebase/init';
@@ -13,38 +14,49 @@ import {
   myCourseProgress, setCourseProgress, myAssignments,
   myCourseSubmissions, submitCourseModule, uploadCourseSubmissionFile,
 } from '@/lib/db/queries';
-import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, CATEGORY_TEXT_COLORS, LESSON_INDEX, type ModuleCategory, type Lesson } from '@/lib/course-modules';
-import BrandLogo from '@/components/BrandLogo';
+import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, LESSON_INDEX, type ModuleCategory, type Lesson } from '@/lib/course-modules';
+import { CATEGORY_TEXT_COLORS } from '@/lib/category-text-colors';
 import LimaBar from '@/components/LimaBar';
-import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import CourseAudioPlayer from '@/components/course/CourseAudioPlayer';
 import LessonInfographic from '@/components/course/LessonInfographic';
-import DeckPlayer from '@/components/course/DeckPlayer';
+import DesignDraftCopy from '@/components/studies/DesignDraftCopy';
+import LanguageDraftNote from '@/components/LanguageDraftNote';
+import AppHeader from '@/components/layout/AppHeader';
+// perf-04: the deck player (slides, animation and narration wiring) only renders once a lesson's
+// deck is actually opened — load its chunk then, not with the rest of Studies.
+const DeckPlayer = dynamic(() => import('@/components/course/DeckPlayer'), {
+  ssr: false,
+  loading: () => (
+    <div
+      className="w-full rounded-xl flex items-center justify-center"
+      style={{ aspectRatio: '16 / 9', background: 'rgba(32,25,15,0.04)' }}
+    >
+      <Loader2 size={24} className="animate-spin" style={{ color: 'var(--text-secondary)' }} />
+    </div>
+  ),
+});
 import OfflineDownload from '@/components/course/OfflineDownload';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
 import { hasDeck, deckFor, deckSlideCount, resolveDeckLang } from '@/lib/course-deck';
 import { isModuleComplete_Content, moduleReadinessDetail, readinessLabel } from '@/lib/course-readiness';
-import { useLanguage } from '@/lib/i18n';
-import { allTracks, hasNarration, resolveNarrationLang, tracksForLesson } from '@/lib/course-audio';
-import { narrationReviewPending } from '@/lib/narration-blockers';
+import { T_en, translate, useLanguage } from '@/lib/i18n';
+import { allTracks, hasNarration, requiresExplicitNarrationChoice, resolveNarrationLang, tracksForLesson } from '@/lib/course-audio';
+import { narrationReviewPending, regionalNarrationDraft } from '@/lib/narration-blockers';
 import { APP_GUIDES } from '@/lib/course-app-guides';
 import { resolveLearnerLessonPresentation } from '@/lib/course-localization';
-import { resolveCourseModulePresentation } from '@/lib/course-module-translation-drafts';
+import { regionalModuleDraftBadge, resolveCourseModulePresentation } from '@/lib/course-module-translation-drafts';
 import { guideScreens } from '@/components/studies/guide-screens';
 import OfflinePageLink from '@/components/studies/OfflinePageLink';
 import {
-  assignmentState, formatDue, orderModulesForLearner, summariseAssignments, toDateKey,
+  assignmentState, formatDue, localisedDueText, orderModulesForLearner, summariseAssignments, toDateKey,
   type AssignmentState, type CourseAssignment,
 } from '@/lib/course-assignments';
 import {
-  isModuleUnlocked, currentModuleId, isCapstoneUnlocked, unlockReason,
+  isModuleUnlocked, currentModuleId, isCapstoneUnlocked, unlockReason, localisedUnlockReason,
   assignmentFor, submittedModuleIds,
   type GatingContext, type CourseSubmission, type ModuleAssignment,
 } from '@/lib/course-gating';
-import { APP_HEADER_STYLE } from '@/lib/app-header';
 import { useAppLevel, isStaffRole } from '@/lib/app-level';
 
 const CATEGORY_LABEL_KEYS: Record<ModuleCategory, string> = {
@@ -70,10 +82,10 @@ function localisedModuleTitle(moduleId: string, lang: string): string {
 }
 
 const ASSIGNMENT_TONE: Record<AssignmentState, { fg: string; bg: string; border: string }> = {
-  overdue:    { fg: '#B03A2E', bg: 'rgba(176,58,46,0.10)',  border: 'rgba(176,58,46,0.30)' },
-  'due-soon': { fg: '#7A4408', bg: 'rgba(192,122,30,0.10)', border: 'rgba(192,122,30,0.30)' },
-  open:       { fg: '#235E86', bg: 'rgba(35,94,134,0.10)',  border: 'rgba(35,94,134,0.28)' },
-  done:       { fg: '#1F4D2B', bg: 'rgba(31,77,43,0.10)',   border: 'rgba(31,77,43,0.28)' },
+  overdue:    { fg: 'var(--orange)', bg: 'rgba(176,58,46,0.10)',  border: 'rgba(176,58,46,0.30)' },
+  'due-soon': { fg: 'var(--gold-dim)', bg: 'rgba(192,122,30,0.10)', border: 'rgba(192,122,30,0.30)' },
+  open:       { fg: 'var(--blue)', bg: 'rgba(35,94,134,0.10)',  border: 'rgba(35,94,134,0.28)' },
+  done:       { fg: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.10)',   border: 'rgba(31,77,43,0.28)' },
 };
 
 function formatDuration(mins: number, t: (key: string) => string) {
@@ -83,27 +95,7 @@ function formatDuration(mins: number, t: (key: string) => string) {
   return `${hours} ${t(hours === 1 ? 'studentHourOne' : 'studentHours')}${remaining > 0 ? ` ${remaining} ${t('studentMinutes')}` : ''}`;
 }
 
-function localisedDueText(text: string | null, lang: string, t: (key: string) => string) {
-  if (!text || lang !== 'zu') return text;
-  if (text === 'Due today') return t('studentDueToday');
-  if (text === 'Due tomorrow') return t('studentDueTomorrow');
-  const overdue = text.match(/^(\d+) day(?:s)? overdue$/);
-  if (overdue) return t('studentDaysOverdue').replace('{count}', overdue[1]);
-  const dueIn = text.match(/^Due in (\d+) days$/);
-  if (dueIn) return t('studentDueInDays').replace('{count}', dueIn[1]);
-  if (text.startsWith('Due ')) return t('studentDueDate').replace('{date}', text.slice(4));
-  return text;
-}
-
-function localisedUnlockReason(text: string | null, lang: string, t: (key: string) => string) {
-  if (!text || lang !== 'zu') return text;
-  if (text === 'Opened by your mentor') return t('studentOpenedByMentor');
-  const finish = text.match(/^Finish (.+) to open this$/);
-  if (finish) return t('studentFinishToUnlock').replace('{title}', finish[1]);
-  const submit = text.match(/^Submit the (.+) assignment to open this$/);
-  if (submit) return t('studentSubmitToUnlock').replace('{title}', submit[1]);
-  return text;
-}
+const SOURCE_PAIRED_LANGUAGES = new Set(['st', 've', 'ts']);
 
 const ZULU_MEDIA_LANGUAGE_NOTICES = {
   bothEnglish: {
@@ -132,8 +124,8 @@ function QuizQuestion({ q, options, correct, rationale, englishSource }: {
 
   return (
     <div className="rounded-xl p-4 space-y-3" style={{ background: 'rgba(32,25,15,0.04)', border: '1px solid rgba(32,25,15,0.08)' }}>
-      <p className="font-sans text-sm font-semibold leading-snug" style={{ color: '#20190F' }}>{q}</p>
-      {englishSource && englishSource.q !== q && <p lang="en" className="font-sans text-xs leading-snug" style={{ color: '#5C5040' }}>English source: {englishSource.q}</p>}
+      <p className="font-sans text-sm font-semibold leading-snug" style={{ color: 'var(--text-primary)' }}>{q}</p>
+      {englishSource && englishSource.q !== q && <p lang="en" className="font-sans text-xs leading-snug" style={{ color: 'var(--text-secondary)' }}>English source: {englishSource.q}</p>}
       <div className="space-y-2">
         {options.map((opt, i) => {
           const isSelected = selected === i;
@@ -141,17 +133,17 @@ function QuizQuestion({ q, options, correct, rationale, englishSource }: {
 
           let bg = 'rgba(32,25,15,0.04)';
           let border = '1px solid rgba(32,25,15,0.10)';
-          let textColor = '#5C5040';
+          let textColor = 'var(--text-secondary)';
 
           if (revealed) {
             if (isCorrect) {
               bg = 'rgba(31,77,43,0.10)';
               border = '1px solid rgba(31,77,43,0.35)';
-              textColor = '#1F4D2B';
+              textColor = 'var(--color-forest-800)';
             } else if (isSelected) {
               bg = 'rgba(180,30,30,0.08)';
               border = '1px solid rgba(180,30,30,0.30)';
-              textColor = '#8B2020';
+              textColor = 'var(--orange)';
             }
           }
 
@@ -163,14 +155,14 @@ function QuizQuestion({ q, options, correct, rationale, englishSource }: {
               className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-sans leading-snug transition-all"
               style={{ background: bg, border, color: textColor, cursor: revealed ? 'default' : 'pointer' }}
             >
-              <span className="font-mono text-xs mr-2" style={{ opacity: 0.5 }}>{String.fromCharCode(65 + i)}.</span>
+              <span className="text-xs mr-2" style={{ opacity: 0.5 }}>{String.fromCharCode(65 + i)}.</span>
               {opt}
               {englishSource && englishSource.options[i] !== opt && <span lang="en" className="block ml-5 mt-1 text-xs" style={{ opacity: 0.8 }}>{englishSource.options[i]}</span>}
               {revealed && isCorrect && (
-                <span className="ml-2 text-xs font-semibold" style={{ color: '#1F4D2B' }}>{t('studentCorrect')}</span>
+                <span className="ml-2 text-xs font-semibold" style={{ color: 'var(--color-forest-800)' }}>{t('studentCorrect')}</span>
               )}
               {revealed && isSelected && !isCorrect && (
-                <span className="ml-2 text-xs font-semibold" style={{ color: '#8B2020' }}>
+                <span className="ml-2 text-xs font-semibold" style={{ color: 'var(--orange)' }}>
                   {t('studentIncorrectSee').replace('{answer}', String.fromCharCode(65 + correct))}
                 </span>
               )}
@@ -180,8 +172,8 @@ function QuizQuestion({ q, options, correct, rationale, englishSource }: {
       </div>
       {revealed && rationale && (
         <div className="flex items-start gap-2 rounded-lg px-3 py-2.5" style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)' }}>
-          <Lightbulb size={13} style={{ color: '#7A4408', flexShrink: 0, marginTop: 2 }} />
-          <div className="font-sans text-xs leading-relaxed" style={{ color: '#5C5040' }}>
+          <Lightbulb size={13} style={{ color: 'var(--gold-dim)', flexShrink: 0, marginTop: 2 }} />
+          <div className="font-sans text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
             <p>{rationale}</p>
             {englishSource?.rationale && englishSource.rationale !== rationale && <p lang="en" className="mt-1">English source: {englishSource.rationale}</p>}
           </div>
@@ -216,8 +208,26 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
   const presentation = resolveLearnerLessonPresentation(lesson, lang);
   const lessonContent = presentation.content;
   const regionalDraft = (lang === 'st' || lang === 'ts' || lang === 've') && presentation.status === 'draft';
+  const isiZuluDraft = lang === 'zu' && presentation.status === 'draft';
+  const sourcePairedDraft = regionalDraft || isiZuluDraft;
   const regionalFallback = (lang === 'st' || lang === 'ts' || lang === 've') && presentation.status === 'english-fallback';
-  const infographicAltDraft = regionalDraft && lessonContent.infographicAlt &&
+  const regionalDeck = resolveDeckLang(moduleId, lang);
+  const regionalNarration = resolveNarrationLang(moduleId, lang);
+  // The entry must describe the same silent default as the player, rather than promise a voice.
+  const silentDeckEntry = requiresExplicitNarrationChoice(moduleId, lang);
+  const deckDescriptionKey = silentDeckEntry
+    ? regionalNarration?.lang === 'en' ? 'studentSilentDeckDescription'
+      : regionalNarration ? 'courseDeckSilentStatus' : 'studentSilentDeckNoVoiceDescription'
+    : 'studentDeckDescription';
+  const deckCount = String(deckSlideCount(moduleId, lesson.id));
+  const regionalMediaNotice = `${regionalDeck?.exact
+    ? 'Source-paired draft slides are available; some text remains in English.'
+    : 'Slides remain in English.'} ${regionalNarration?.exact
+    ? 'Narration in your chosen language is available.'
+    : regionalNarration?.lang === 'en'
+      ? 'English narration is an optional choice.'
+      : 'No narration is available.'}`;
+  const infographicAltDraft = sourcePairedDraft && lessonContent.infographicAlt &&
     lessonContent.infographicAlt !== lesson.infographicAlt
     ? lessonContent.infographicAlt
     : undefined;
@@ -242,45 +252,47 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
       >
         {hasInfographic
           ? <img src={lesson.infographicUrl} alt="" loading="lazy" width={112} height={75} className={styles.lessonArt} />
-          : <BookOpen size={24} style={{ color, flexShrink: 0 }} />}
+          : <BookOpen size={24} style={{ color: textColor, flexShrink: 0 }} />}
         <span className="flex-1 min-w-0">
           <span className={`font-display ${styles.lessonTitle}`}>{lessonContent.title}</span>
           <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
             <span className={`font-sans ${styles.lessonHint}`}>{open ? t('studentCloseLesson') : t('studentOpenLesson')}{hasAudio ? ` · ${t('studentListenOrRead')}` : ` · ${t('studentReadAndPractise')}`}</span>
             {lang === 'zu' && presentation.status === 'draft' && (
-              <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold leading-tight" style={{ color: '#704B08', background: '#FFF1C2', border: '1px solid #E9CC76' }}>
+              <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold leading-tight" style={{ color: 'var(--gold-dim)', background: 'rgba(192,122,30,0.14)', border: '1px solid rgba(192,122,30,0.32)' }}>
                 {t('studentZuluLessonDraftBadge')}
               </span>
             )}
             {lang === 'zu' && presentation.status === 'english-fallback' && (
-              <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold leading-tight" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>
+              <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold leading-tight" style={{ color: 'var(--text-secondary)', background: 'rgba(140,122,98,0.08)', border: '1px solid var(--border)' }}>
                 {t('studentZuluLessonEnglishBadge')}
               </span>
             )}
-            {regionalDraft && <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold" style={{ color: '#704B08', background: '#FFF1C2', border: '1px solid #E9CC76' }}>{lang === 've' ? 'Tshivenda AI draft · review pending' : 'AI draft · review pending'}</span>}
-            {regionalFallback && <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>English lesson</span>}
+            {regionalDraft && <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold" style={{ color: 'var(--gold-dim)', background: 'rgba(192,122,30,0.14)', border: '1px solid rgba(192,122,30,0.32)' }}>{lang === 've' ? 'Tshivenda AI draft · review pending' : 'AI draft · review pending'}</span>}
+            {regionalFallback && <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold" style={{ color: 'var(--text-secondary)', background: 'rgba(140,122,98,0.08)', border: '1px solid var(--border)' }}>English lesson</span>}
           </span>
         </span>
         {open
-          ? <ChevronUp size={14} style={{ color: '#755942', flexShrink: 0 }} />
-          : <ChevronDown size={14} style={{ color: '#755942', flexShrink: 0 }} />}
+          ? <ChevronUp size={14} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
+          : <ChevronDown size={14} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />}
       </button>
 
       {open && (
         <div className={`px-4 pb-5 space-y-5 ${styles.lessonContent}`} style={{ borderTop: `1px solid ${color}18` }}>
           {lang === 'zu' && presentation.status === 'draft' && (
-            <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>
-              {t('studentZuluLessonDraftNotice')}
+            <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: 'var(--gold-dim)', background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)' }}>
+              <p>{t('studentZuluLessonDraftNotice')}</p>
+              <p lang="en" className="mt-1 text-xs">Exact English source is shown alongside the lesson and answers. The isiZulu draft has not received fluent-speaker or local-farming approval.</p>
             </div>
           )}
           {lang === 'zu' && presentation.status === 'english-fallback' && (
-            <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>
-              {t('studentZuluLessonEnglishFallbackNotice')}
+            <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', background: 'rgba(140,122,98,0.08)', border: '1px solid var(--border)' }}>
+              <p>{t('studentZuluLessonEnglishFallbackNotice')}</p>
+              <p lang="en" className="mt-1 text-xs">English is shown because the isiZulu draft is unavailable or its checked English source no longer matches the current lesson. IsiZulu audio, if available, does not mean the lesson text or questions have been reviewed.</p>
             </div>
           )}
-          {regionalDraft && lang !== 've' && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed {lang === 'st' ? 'Sesotho' : 'Xitsonga'} AI draft. Exact English source is shown alongside the lesson and answers. {lang === 'st' && moduleId === 'intro-permaculture' ? 'Slides pair Sesotho drafts and English holds with exact English source. Narration remains English.' : 'Slides and narration remain in English.'}</div>}
-          {regionalFallback && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#5C5040', background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}>This lesson, its slides and narration are still in English.</div>}
-          {lang === 've' && regionalDraft && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: '#704B08', background: '#FFF5D6', border: '1px solid #E9CC76' }}>Unreviewed Tshivenda AI draft. It has not been checked by a fluent speaker or local farming reviewer. Exact English source is shown alongside the lesson and answers. Slides and narration remain in English.</div>}
+          {regionalDraft && lang !== 've' && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: 'var(--gold-dim)', background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)' }}>Unreviewed {lang === 'st' ? 'Sesotho' : 'Xitsonga'} AI draft. Exact English source is shown alongside the lesson and answers. {regionalMediaNotice}</div>}
+          {regionalFallback && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', background: 'rgba(140,122,98,0.08)', border: '1px solid var(--border)' }}>This lesson is in English. {regionalMediaNotice}</div>}
+          {lang === 've' && regionalDraft && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: 'var(--gold-dim)', background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)' }}>Unreviewed Tshivenda AI draft. It has not been checked by a fluent speaker or local farming reviewer. Exact English source is shown alongside the lesson and answers. {regionalMediaNotice}</div>}
           {hasAudio && (
             <div className="pt-4">
               <CourseAudioPlayer
@@ -306,14 +318,17 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
                   className="w-full flex items-center gap-3 rounded-xl px-4 py-3 text-left"
                   style={{ border: `1px solid ${color}33`, background: `${color}0C` }}
                 >
-                  <PlayCircle size={18} style={{ color, flexShrink: 0 }} />
+                  <PlayCircle size={18} style={{ color: textColor, flexShrink: 0 }} />
                   <span className="flex-1">
-                    <span className="block font-sans text-sm font-semibold" style={{ color: '#20190F' }}>
-                      {t('studentWatchAndListen')}
+                    <span className="block font-sans text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+                      {t(silentDeckEntry ? 'studentViewSilentSlides' : 'studentWatchAndListen')}
                     </span>
-                    <span className="block font-sans text-xs" style={{ color: '#5C5040' }}>
-                      {t('studentDeckDescription').replace('{count}', String(deckSlideCount(moduleId, lesson.id)))}
+                    <span className="block font-sans text-xs" style={{ color: 'var(--text-secondary)' }}>
+                      {t(deckDescriptionKey).replace('{count}', deckCount)}
                     </span>
+                    {silentDeckEntry && <span lang="en" className="mt-1 block font-sans text-xs" style={{ color: 'var(--text-secondary)' }}>
+                      English source: {T_en.studentViewSilentSlides}. {T_en[deckDescriptionKey].replace('{count}', deckCount)}
+                    </span>}
                   </span>
                 </button>
               )}
@@ -325,10 +340,10 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
             <div className={hasAudio ? '' : 'pt-4'}>
               <LessonInfographic url={lesson.infographicUrl!} alt={lessonContent.infographicAlt ?? lesson.infographicAlt!} />
               {infographicAltDraft && (
-                <div className="mt-2 rounded-lg px-3 py-2.5 space-y-1.5 font-sans leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#3A3020' }}>
-                  <p lang="en" className="text-xs font-semibold">Machine draft · {lang === 'st' ? 'Sesotho' : lang === 'ts' ? 'Xitsonga' : 'Tshivenda'} image description</p>
+                <div className="mt-2 rounded-lg px-3 py-2.5 space-y-1.5 font-sans leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: 'var(--text-primary)' }}>
+                  <p lang="en" className="text-xs font-semibold">Machine draft · {lang === 'st' ? 'Sesotho' : lang === 'ts' ? 'Xitsonga' : lang === 'zu' ? 'isiZulu' : 'Tshivenda'} image description</p>
                   <p lang={lang} className="text-sm">{infographicAltDraft}</p>
-                  <p lang="en" className="text-xs" style={{ color: '#5C5040' }}><span className="font-semibold">Exact English source:</span> {lesson.infographicAlt}</p>
+                  <p lang="en" className="text-xs" style={{ color: 'var(--text-secondary)' }}><span className="font-semibold">Exact English source:</span> {lesson.infographicAlt}</p>
                 </div>
               )}
             </div>
@@ -336,21 +351,21 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
 
           {/* Body */}
           <div className={hasLeadIn ? 'space-y-3' : 'space-y-3 pt-4'}>
-            {regionalDraft && lessonContent.body === lesson.body ? (
-              <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#5C5040' }}>
+            {sourcePairedDraft && lessonContent.body === lesson.body ? (
+              <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: 'var(--text-secondary)' }}>
                 <p className="font-semibold">Exact English source</p>
                 <p><span className="font-semibold">Title:</span> {lesson.title}</p>
                 {lesson.body.split('\n\n').map((para, i) => <p key={i}>{para}</p>)}
               </div>
             ) : (
               <>
-                {regionalDraft && <p lang="en" className="font-sans text-xs font-semibold leading-relaxed" style={{ color: '#5C5040' }}>English source title: {lesson.title}</p>}
+                {sourcePairedDraft && <p lang="en" className="font-sans text-xs font-semibold leading-relaxed" style={{ color: 'var(--text-secondary)' }}>English source title: {lesson.title}</p>}
                 {lessonContent.body.split('\n\n').map((para, i) => (
-                  <p key={i} className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
+                  <p key={i} className="font-sans text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                     {para}
                   </p>
                 ))}
-                {regionalDraft && <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: '#5C5040' }}><p className="font-semibold">Exact English source</p>{lesson.body.split('\n\n').map((para, i) => <p key={i}>{para}</p>)}</div>}
+                {sourcePairedDraft && <div lang="en" className="rounded-lg px-3 py-2.5 space-y-2 font-sans text-xs leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: 'var(--text-secondary)' }}><p className="font-semibold">Exact English source</p>{lesson.body.split('\n\n').map((para, i) => <p key={i}>{para}</p>)}</div>}
               </>
             )}
           </div>
@@ -362,7 +377,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               {lessonContent.keyPoints.map((kp, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 flex-shrink-0 rounded-full" style={{ width: 5, height: 5, background: color }} />
-                  <span className="font-sans text-sm leading-snug" style={{ color: '#3A3020' }}>{kp}{regionalDraft && kp !== lesson.keyPoints[i] && <span lang="en" className="block text-xs mt-1" style={{ color: '#5C5040' }}>English source: {lesson.keyPoints[i]}</span>}</span>
+                  <span className="font-sans text-sm leading-snug" style={{ color: 'var(--text-primary)' }}>{kp}{sourcePairedDraft && kp !== lesson.keyPoints[i] && <span lang="en" className="block text-xs mt-1" style={{ color: 'var(--text-secondary)' }}>English source: {lesson.keyPoints[i]}</span>}</span>
                 </li>
               ))}
             </ul>
@@ -376,23 +391,23 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2.5 px-3.5 py-3 rounded-xl transition-colors"
-              style={{ background: 'rgba(140,122,98,0.08)', border: '1px solid #E2D8C4' }}
+              style={{ background: 'rgba(140,122,98,0.08)', border: '1px solid var(--border)' }}
             >
-              <Video size={14} style={{ color: '#755942', flexShrink: 0 }} />
-              <span className="flex-1 font-sans text-xs leading-snug" style={{ color: '#5C5040' }}>
+              <Video size={14} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
+              <span className="flex-1 font-sans text-xs leading-snug" style={{ color: 'var(--text-secondary)' }}>
                 {t('studentFacilitatorVideo')}
               </span>
-              <ExternalLink size={12} style={{ color: '#755942', flexShrink: 0 }} />
+              <ExternalLink size={12} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
             </a>
           )}
 
           {/* Quiz */}
           <div className="space-y-3">
-            <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#755942' }}>
+            <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
               {t('studentCheckUnderstanding')}
             </p>
             {lessonContent.quiz.map((q, i) => (
-              <QuizQuestion key={i} q={q.q} options={q.options} correct={q.correct} rationale={q.rationale} englishSource={regionalDraft ? lesson.quiz[i] : undefined} />
+              <QuizQuestion key={i} q={q.q} options={q.options} correct={q.correct} rationale={q.rationale} englishSource={sourcePairedDraft ? lesson.quiz[i] : undefined} />
             ))}
           </div>
 
@@ -400,7 +415,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               above rather than rendered as a dead button. */}
           {related.length > 0 && (
             <div className="space-y-2">
-              <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: '#755942' }}>
+              <p className="font-display font-semibold text-xs uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
                 {t('studentRelatedLessons')}
               </p>
               <div className="flex flex-wrap gap-2">
@@ -491,7 +506,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
 
   return (
     <div className="rounded-xl p-4 space-y-3.5" style={{ background: `${color}0A`, border: `1px solid ${color}25` }}>
-      <p className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>{assignment.prompt}</p>
+      <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>{assignment.prompt}</p>
 
       {assignment.selfCheckItems.length > 0 && (
         <div className="space-y-1.5">
@@ -504,12 +519,12 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
                 onClick={() => toggleCheck(item)}
                 aria-pressed={isChecked}
                 className="w-full flex items-center gap-2.5 text-left px-3 py-2 rounded-lg transition-colors"
-                style={{ background: isChecked ? `${color}14` : 'rgba(32,25,15,0.03)', border: `1px solid ${isChecked ? `${color}40` : '#E2D8C4'}` }}
+                style={{ background: isChecked ? `${color}14` : 'rgba(32,25,15,0.03)', border: `1px solid ${isChecked ? `${color}40` : 'var(--border)'}` }}
               >
                 {isChecked
                   ? <CheckCircle size={15} style={{ color, flexShrink: 0 }} />
-                  : <Circle size={15} style={{ color: '#755942', flexShrink: 0 }} />}
-                <span className="font-sans text-sm" style={{ color: '#3A3020' }}>{item}</span>
+                  : <Circle size={15} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />}
+                <span className="font-sans text-sm" style={{ color: 'var(--text-primary)' }}>{item}</span>
               </button>
             );
           })}
@@ -523,12 +538,12 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
         type="button"
         onClick={() => photoInputRef.current?.click()}
         className="w-full flex items-center gap-2.5 px-3.5 py-3 rounded-xl transition-colors"
-        style={{ background: '#FFFEFA', border: `1px dashed ${photoPreview ? color : '#E2D8C4'}` }}
+        style={{ background: 'var(--bg-1)', border: `1px dashed ${photoPreview ? color : 'var(--border)'}` }}
       >
         {photoPreview
           ? <img src={photoPreview} alt="" className="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
           : <Camera size={16} style={{ color, flexShrink: 0 }} />}
-        <span className="flex-1 font-sans text-xs text-left" style={{ color: '#5C5040' }}>
+        <span className="flex-1 font-sans text-xs text-left" style={{ color: 'var(--text-secondary)' }}>
           {photoPreview ? t('studentPhotoAdded') : t('studentPhotoRequired')}
         </span>
       </button>
@@ -540,15 +555,15 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
         type="button"
         onClick={() => voiceInputRef.current?.click()}
         className="w-full flex items-center gap-2.5 px-3.5 py-3 rounded-xl transition-colors"
-        style={{ background: '#FFFEFA', border: `1px dashed ${voiceFile ? color : '#E2D8C4'}` }}
+        style={{ background: 'var(--bg-1)', border: `1px dashed ${voiceFile ? color : 'var(--border)'}` }}
       >
-        <Mic size={16} style={{ color: voiceFile ? color : '#755942', flexShrink: 0 }} />
-        <span className="flex-1 font-sans text-xs text-left" style={{ color: '#5C5040' }}>
+        <Mic size={16} style={{ color: voiceFile ? color : 'var(--text-muted)', flexShrink: 0 }} />
+        <span className="flex-1 font-sans text-xs text-left" style={{ color: 'var(--text-secondary)' }}>
           {voiceFile ? t('studentVoiceAdded').replace('{name}', voiceFile.name) : t('studentVoiceOptional')}
         </span>
       </button>
 
-      {error && <p className="font-sans text-xs" style={{ color: '#B03A2E' }}>{error}</p>}
+      {error && <p className="font-sans text-xs" style={{ color: 'var(--orange)' }}>{error}</p>}
 
       <button
         type="button"
@@ -557,7 +572,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
         className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold text-sm transition-all"
         style={{
           background: canSubmit ? color : 'rgba(226,216,196,0.6)',
-          color: canSubmit ? '#FFFEFA' : '#755942',
+          color: canSubmit ? 'var(--bg-1)' : 'var(--text-muted)',
           cursor: canSubmit ? 'pointer' : 'not-allowed',
         }}
       >
@@ -567,7 +582,7 @@ function SubmissionPanel({ moduleId, assignment, color, existing, onSubmitted }:
       </button>
 
       {existing && (
-        <p className="font-sans text-xs text-center" style={{ color: '#755942' }}>
+        <p className="font-sans text-xs text-center" style={{ color: 'var(--text-muted)' }}>
           {t('studentAlreadySubmitted')}
         </p>
       )}
@@ -744,14 +759,11 @@ export default function StudentPage() {
   // by design, and this gate would otherwise spin forever instead of showing the demo.
   if (isLive && (loading || !user) && !isSampleMode()) {
     return (
-      <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
-        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
-          <MenuButton /><BackButton fallback="/home" />
-          <BrandLogo />
-        </header>
+      <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+        <AppHeader title={t('studentMyStudies')} backFallback="/home" />
         <main className="flex-1 flex items-center justify-center">
-          <div className="flex flex-col items-center gap-3 font-sans text-sm" role="status" aria-live="polite" style={{ color: '#5C5040' }}>
-            <Loader2 size={28} className="animate-spin" aria-hidden="true" style={{ color: '#1F4D2B' }} />
+          <div className="flex flex-col items-center gap-3 font-sans text-sm" role="status" aria-live="polite" style={{ color: 'var(--text-secondary)' }}>
+            <Loader2 size={28} className="animate-spin" aria-hidden="true" style={{ color: 'var(--color-forest-800)' }} />
             <span>{lang === 'zu' ? 'Sicela ulinde… Please wait while your account loads.' : 'Loading your account…'}</span>
           </div>
         </main>
@@ -761,35 +773,28 @@ export default function StudentPage() {
 
   if (!loading && user && isLive && role && !STUDENT_ALLOWED_ROLES.has(role)) {
     return (
-      <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
-        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
-          <MenuButton /><BackButton fallback="/home" />
-          <BrandLogo />
-          <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-          <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>{t('studentPortal')}</span>
-          <div className="flex-1" />
-          <SettingsButton />
-        </header>
+      <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+        <AppHeader title={t('studentPortal')} backFallback="/home" />
         <main className="flex-1 flex items-center justify-center px-4">
-          <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+          <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
             <div className="mx-auto mb-3 flex items-center justify-center rounded-full" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.08)' }}>
-              <GraduationCap size={22} style={{ color: '#1F4D2B' }} />
+              <GraduationCap size={22} style={{ color: 'var(--color-forest-800)' }} />
             </div>
-            <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>{t('studentPortalTitle')}</p>
-            <p className="text-xs font-sans leading-relaxed mb-5" style={{ color: '#755942' }}>
+            <p className="text-sm font-display font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>{t('studentPortalTitle')}</p>
+            <p className="text-xs font-sans leading-relaxed mb-5" style={{ color: 'var(--text-muted)' }}>
               {t('studentPortalBody')}
             </p>
             <button
               onClick={() => router.push('/home')}
               className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold text-sm transition-all"
-              style={{ background: '#1F4D2B', color: '#F7F2E9' }}
+              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800)' }}
             >
               <Home size={15} />
               {t('studentBackHome')}
             </button>
           </div>
         </main>
-        <TabBar />
+        <TabBar hideAtDesktop />
       </div>
     );
   }
@@ -810,45 +815,36 @@ export default function StudentPage() {
   const dashOffset = C - (C * pct) / 100;
 
   return (
-    <div className={`flex flex-col overflow-hidden ${styles.page}`} style={{ height: '100dvh', background: '#EEEBDD' }}>
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
-        <MenuButton /><BackButton fallback="/home" />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-sm font-display truncate min-w-0" style={{ color: '#35503B' }}>{t('studentMyStudies')}</span>
-        <div className="flex-1" />
-        <LessonLink id="student:overview" label={t('homeQuickStudy')} />
-        <SettingsButton />
-      </header>
+    <div className={`flex flex-col overflow-hidden ${styles.page}`} style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+      <AppHeader title={t('studentMyStudies')} backFallback="/home" right={<LessonLink id="student:overview" label={t('homeQuickStudy')} />} />
 
       <main className={`flex-1 overflow-y-auto space-y-4 ${styles.main}`}>
+        {/* zu-04: the one shared language-draft note (components/LanguageDraftNote.tsx), once under
+            the header, never inside a card or button; the course-specific line below it says which
+            lessons carry isiZulu drafts. */}
+        <LanguageDraftNote lang={lang} scope="student" />
         {lang === 'zu' && (
-          <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
-            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+          <p className="font-sans" role="note" style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
             {t('studentZuluCourseLanguageNote')}
-            {' '}
-            <span className="block mt-1">
-              Ulimi lwesixhumi sohlelo sesiZulu luwuhlaka lomshini olungakabuyekezwa umuntu okhuluma kahle isiZulu. The isiZulu interface is a machine draft and has not been reviewed by a fluent isiZulu speaker.
-            </span>
           </p>
         )}
         {lang === 'st' && (
           <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
-            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: 'var(--text-secondary)' }}>
             <span lang="st">{t('studentSesothoUiDraftNotice')}</span>
             <span lang="en" className="block mt-1">English source: {t('studentSesothoUiDraftNoticeSource')}</span>
           </p>
         )}
         {lang === 'ts' && (
           <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
-            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: 'var(--text-secondary)' }}>
             <span lang="ts">{t('xitsongaUiDraftNotice')}</span>{' '}
             <span lang="en">/ Unreviewed Xitsonga draft.</span>
           </p>
         )}
         {lang === 've' && (
           <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
-            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: 'var(--text-secondary)' }}>
             <span lang="en">{t('studentTshivendaUiDraftNotice')}</span>
           </p>
         )}
@@ -873,7 +869,7 @@ export default function StudentPage() {
             <svg width="64" height="64" viewBox="0 0 100 100" aria-hidden="true" style={{ transform: 'rotate(-90deg)' }}>
               <circle cx="50" cy="50" r={R} fill="none" stroke="rgba(32,25,15,0.10)" strokeWidth="8" />
               <circle cx="50" cy="50" r={R} fill="none"
-                stroke={pct === 100 ? '#1F4D2B' : '#C07A1E'}
+                stroke={pct === 100 ? 'var(--color-forest-800)' : '#C07A1E'}
                 strokeWidth="8"
                 strokeLinecap="round"
                 strokeDasharray={C}
@@ -883,10 +879,10 @@ export default function StudentPage() {
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               {fetching ? (
-                <Loader2 size={20} className="animate-spin" style={{ color: '#1F4D2B' }} />
+                <Loader2 size={20} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
               ) : (
                 <>
-                  <span className="font-display font-bold text-xl leading-none" style={{ color: '#20190F' }}>{pct}%</span>
+                  <span className="font-display font-bold text-xl leading-none" style={{ color: 'var(--text-primary)' }}>{pct}%</span>
                 </>
               )}
             </div>
@@ -894,18 +890,18 @@ export default function StudentPage() {
 
           {/* Text */}
           <div className="flex-1 min-w-0">
-            <div className="font-display font-semibold text-base leading-tight" role={fetching ? 'status' : undefined} aria-live={fetching ? 'polite' : undefined} style={{ color: '#20190F' }}>
+            <div className="font-display font-semibold text-base leading-tight" role={fetching ? 'status' : undefined} aria-live={fetching ? 'polite' : undefined} style={{ color: 'var(--text-primary)' }}>
               {fetching
                 ? lang === 'zu' ? 'Ilayisha inqubekelaphambili… Loading progress…' : 'Loading progress…'
                 : pct === 100 ? t('studentCourseComplete') : doneCount === 0 ? t('studentReady') : t('studentKeepGoing')}
             </div>
             {!fetching && !simple && (
-              <div className="font-sans text-xs mt-1" style={{ color: '#5C5040' }}>
+              <div className="font-sans text-xs mt-1" style={{ color: 'var(--text-secondary)' }}>
                 {t('studentModulesComplete').replace('{done}', String(doneCount)).replace('{total}', String(TOTAL_MODULES))}
               </div>
             )}
             {progressError && (
-              <div className="font-sans text-xs mt-2 leading-relaxed" style={{ color: '#8C4938' }}>
+              <div className="font-sans text-xs mt-2 leading-relaxed" style={{ color: 'var(--orange)' }}>
                 {t('studentProgressError')}
               </div>
             )}
@@ -913,17 +909,22 @@ export default function StudentPage() {
                 chip and practitioner badge below are All tools only. */}
             {!simple && pct < 100 && totalMins > 0 && (
               <div className="flex items-center gap-1.5 mt-2">
-                <Clock size={12} style={{ color: '#755942' }} />
-                <span className="font-sans text-xs" style={{ color: '#755942' }}>
+                <Clock size={12} style={{ color: 'var(--text-muted)' }} />
+                <span className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>
                   ~{formatDuration(totalMins, t)} {t('studentRemaining')}
                 </span>
               </div>
             )}
             {!simple && pct === 100 && (
               <div className="flex items-center gap-1.5 mt-2">
-                <GraduationCap size={13} style={{ color: '#1F4D2B' }} />
-                <span className="font-sans text-xs font-semibold" style={{ color: '#1F4D2B' }}>
+                <GraduationCap size={13} style={{ color: 'var(--color-forest-800)' }} />
+                <span className="font-sans text-xs font-semibold" style={{ color: 'var(--color-forest-800)' }}>
                   {t('studentPractitioner')}
+                  {SOURCE_PAIRED_LANGUAGES.has(lang) && (
+                    <small lang="en" className="block mt-1 text-xs font-normal leading-snug" style={{ color: 'var(--text-secondary)' }}>
+                      English source: {translate('en', 'studentPractitioner')}
+                    </small>
+                  )}
                 </span>
               </div>
             )}
@@ -934,47 +935,47 @@ export default function StudentPage() {
 
         {/* What the mentor has actually asked for — only shown when there is something */}
         {assignSummary && assignSummary.total > 0 && (
-          <div className="rounded-2xl px-4 py-3.5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+          <div className="rounded-2xl px-4 py-3.5" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
             <div className="flex items-center gap-2 mb-2">
-              <ClipboardList size={14} style={{ color: '#1F4D2B' }} />
-              <span className="font-display text-xs font-semibold uppercase tracking-wide" style={{ color: '#5C5040' }}>
+              <ClipboardList size={14} style={{ color: 'var(--color-forest-800)' }} />
+              <span className="font-display text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-secondary)' }}>
                 {t('studentAssignmentSetByMentor')}
               </span>
             </div>
             {simple ? (
               // One urgency line: the done count and whichever is more pressing, overdue beating
               // due-soon — not the dual overdue-then-due-soon counts stacked in All tools.
-              <p className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
+              <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                 {t('studentAssignmentProgress').replace('{done}', String(assignSummary.done)).replace('{total}', String(assignSummary.total))}
                 {(assignSummary.overdue > 0 || assignSummary.dueSoon > 0) && ' '}
                 {assignSummary.overdue > 0 ? (
-                  <span style={{ color: '#B03A2E', fontWeight: 600 }}>
+                  <span style={{ color: 'var(--orange)', fontWeight: 600 }}>
                     {t('studentAssignmentOverdue').replace('{count}', String(assignSummary.overdue))}
                   </span>
                 ) : assignSummary.dueSoon > 0 ? (
-                  <span style={{ color: '#7A4408', fontWeight: 600 }}>
+                  <span style={{ color: 'var(--gold-dim)', fontWeight: 600 }}>
                     {t('studentAssignmentDueSoon').replace('{count}', String(assignSummary.dueSoon))}
                   </span>
                 ) : null}
               </p>
             ) : (
               <>
-                <p className="font-sans text-sm leading-relaxed" style={{ color: '#3A3020' }}>
+                <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                   {t('studentAssignmentProgress').replace('{done}', String(assignSummary.done)).replace('{total}', String(assignSummary.total))}
                   {assignSummary.overdue > 0 && ' '}
                   {assignSummary.overdue > 0 && (
-                    <span style={{ color: '#B03A2E', fontWeight: 600 }}>
+                    <span style={{ color: 'var(--orange)', fontWeight: 600 }}>
                       {t('studentAssignmentOverdue').replace('{count}', String(assignSummary.overdue))}
                     </span>
                   )}
                   {assignSummary.dueSoon > 0 && ' '}
                   {assignSummary.dueSoon > 0 && (
-                    <span style={{ color: '#7A4408', fontWeight: 600 }}>
+                    <span style={{ color: 'var(--gold-dim)', fontWeight: 600 }}>
                       {t('studentAssignmentDueSoon').replace('{count}', String(assignSummary.dueSoon))}
                     </span>
                   )}
                 </p>
-                <p className="font-sans text-xs mt-1.5" style={{ color: '#755942' }}>
+                <p className="font-sans text-xs mt-1.5" style={{ color: 'var(--text-muted)' }}>
                   {t('studentAssignmentsOrder')}
                 </p>
               </>
@@ -1015,9 +1016,15 @@ export default function StudentPage() {
             const assignment = assignmentByModule.get(mod.id);
             const state = assignment && today ? assignmentState(assignment, doneIds, today) : null;
             const dueText = assignment && today ? localisedDueText(formatDue(assignment.due_at, today, lang), lang, t) : null;
+            const englishDueSource = SOURCE_PAIRED_LANGUAGES.has(lang) && assignment && today
+              ? formatDue(assignment.due_at, today, 'en') : null;
             const modulePresentation = resolveCourseModulePresentation(mod, lang);
+            const moduleDraftBadge = lang === 'st' || lang === 'ts' || lang === 've'
+              ? regionalModuleDraftBadge(mod, lang) : null;
             const zuluSlidesReady = resolveDeckLang(mod.id, 'zu')?.exact ?? false;
             const zuluAudioReady = resolveNarrationLang(mod.id, 'zu')?.exact ?? false;
+            // Archived recordings remain owned, but must not advertise a voice over revised text.
+            const ownNarrationReady = resolveNarrationLang(mod.id, lang)?.exact ?? false;
             const deck = deckFor(mod.id);
             const regionalDraftSlides = Boolean(deck?.slideLanguages.includes(lang) &&
               deck.slides.some(slide => !deck.missingSlides?.[lang]?.includes(slide.slide)));
@@ -1042,9 +1049,12 @@ export default function StudentPage() {
             // toggle either, so a locked module can't be cheated past by ticking it directly.
             if (!unlocked) {
               const reason = unlockReason(mod.id, gatingCtx, (id) => localisedModuleTitle(id, lang));
+              const englishReason = unlockReason(mod.id, gatingCtx);
+              const englishUnlockSource = SOURCE_PAIRED_LANGUAGES.has(lang) && englishReason
+                ? localisedUnlockReason(englishReason, lang, (key) => translate('en', key)) : null;
               return (
                 <div key={mod.id} className={`rounded-2xl overflow-hidden ${styles.module} ${styles.locked}`}
-                  style={{ border: '1px solid #DEDCCE' }}>
+                  style={{ border: '1px solid var(--border)' }}>
                   <div className={styles.moduleHeader}>
                     <div className={styles.moduleArt}>
                       {mod.lessons?.[0]?.infographicUrl && <img src={mod.lessons[0].infographicUrl} alt="" loading="lazy" width={128} height={85} />}
@@ -1056,9 +1066,9 @@ export default function StudentPage() {
                           {modulePresentation.title}
                         </span>
                         {(lang === 'zu' || lang === 'st' || lang === 'ts' || lang === 've') && (
-                          <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
-                            style={{ background: 'rgba(192,122,30,0.08)', color: '#8C5E1A', border: '1px solid rgba(192,122,30,0.24)' }}>
-                            {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : (modulePresentation.status === 'draft' ? `${lang === 've' ? 'Tshivenda ' : ''}AI draft · review pending` : (lang === 've' && mod.id === 'vegetables-staples' ? 'English module · one Tshivenda lesson draft' : 'English module'))}
+                          <span className="min-w-0 max-w-full whitespace-normal break-words text-xs font-sans font-semibold px-2 py-0.5 rounded-2xl"
+                            style={{ background: 'rgba(192,122,30,0.08)', color: 'var(--gold-dim)', border: '1px solid rgba(192,122,30,0.24)' }}>
+                            {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : moduleDraftBadge}
                           </span>
                         )}
                         <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
@@ -1068,7 +1078,14 @@ export default function StudentPage() {
                       </div>
                       <p className={`font-sans ${styles.lockedReason}`}>
                         <Lock size={14} style={{ flexShrink: 0, marginTop: 2 }} />
-                        {localisedUnlockReason(reason, lang, t) ?? t('studentLocked')}
+                        <span className="min-w-0">
+                          {localisedUnlockReason(reason, lang, t) ?? t('studentLocked')}
+                          {englishUnlockSource && (
+                            <small lang="en" className="block mt-1 text-xs font-normal leading-snug" style={{ color: 'var(--text-secondary)' }}>
+                              English source: {englishUnlockSource}
+                            </small>
+                          )}
+                        </span>
                       </p>
                     </div>
                   </div>
@@ -1082,14 +1099,14 @@ export default function StudentPage() {
 
             return (
               <div key={mod.id} id={`module-${mod.id}`} className={`rounded-2xl overflow-hidden ${styles.module}`} data-expanded={isExpanded}
-                style={{ background: '#FFFEFA', border: `1px solid ${isCurrent ? color : (done ? '#1F4D2B30' : '#E2D8C4')}` }}>
+                style={{ background: 'var(--bg-1)', border: `1px solid ${isCurrent ? color : (done ? 'color-mix(in srgb, var(--color-forest-800) 19%, transparent)' : 'var(--border)')}` }}>
 
                 {/* Module header row */}
                 <div className={styles.moduleHeader}>
                   {/* Number / check */}
                   <div className={styles.moduleArt}>
                     {mod.lessons?.[0]?.infographicUrl && <img src={mod.lessons[0].infographicUrl} alt="" loading="lazy" width={128} height={85} />}
-                    <span className={`font-sans ${styles.moduleNumber}`}>{done ? `✓ ${t('studentComplete')}` : t('studentModule').replace('{number}', String(MODULE_NUMBER.get(mod.id) ?? idx + 1))}</span>
+                    <span className={`font-sans ${styles.moduleNumber}`}>{done ? <span className="inline-flex items-center justify-center gap-1"><Check size={12} aria-hidden />{t('studentComplete')}</span> : t('studentModule').replace('{number}', String(MODULE_NUMBER.get(mod.id) ?? idx + 1))}</span>
                   </div>
 
                   {/* Content — tap to expand lessons */}
@@ -1100,9 +1117,9 @@ export default function StudentPage() {
                   >
                     <span className={`font-display ${styles.moduleTitle}`}>{modulePresentation.title}</span>
                     {(lang === 'zu' || lang === 'st' || lang === 'ts' || lang === 've') && (
-                      <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
-                        style={{ background: 'rgba(192,122,30,0.08)', color: '#8C5E1A', border: '1px solid rgba(192,122,30,0.24)' }}>
-                        {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : (modulePresentation.status === 'draft' ? `${lang === 've' ? 'Tshivenda ' : ''}AI draft · review pending` : (lang === 've' && mod.id === 'vegetables-staples' ? 'English module · one Tshivenda lesson draft' : 'English module'))}
+                      <span className="min-w-0 max-w-full whitespace-normal break-words text-xs font-sans font-semibold px-2 py-0.5 rounded-2xl"
+                        style={{ background: 'rgba(192,122,30,0.08)', color: 'var(--gold-dim)', border: '1px solid rgba(192,122,30,0.24)' }}>
+                        {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : moduleDraftBadge}
                       </span>
                     )}
                     <div className="flex items-start gap-2 flex-wrap">
@@ -1117,8 +1134,8 @@ export default function StudentPage() {
                         </span>
                       )}
                       {isCurrent && (
-                        <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
-                          style={{ background: '#1F4D2B18', color: '#1F4D2B', border: '1px solid #1F4D2B30' }}>
+                        <span className="min-w-0 max-w-full whitespace-normal break-words text-xs font-sans font-semibold px-2 py-0.5 rounded-2xl"
+                          style={{ background: 'color-mix(in srgb, var(--color-forest-800) 9%, transparent)', color: 'var(--color-forest-800)', border: '1px solid color-mix(in srgb, var(--color-forest-800) 19%, transparent)' }}>
                           {t('studentContinueHere')}
                         </span>
                       )}
@@ -1132,10 +1149,11 @@ export default function StudentPage() {
                       {!simple && isStaff && (
                         <span
                           title={readinessTitle}
-                          className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
+                          // Regional readiness labels are longer; keep every word inside the phone card.
+                          className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0 max-w-full whitespace-normal"
                           style={contentComplete
-                            ? { background: '#1F4D2B', color: '#EAF3E2', border: '1px solid #1F4D2B' }
-                            : { background: 'rgba(32,25,15,0.05)', color: '#755942', border: '1px solid #E2D8C4' }}
+                            ? { background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: '1px solid var(--color-forest-800)' }
+                            : { background: 'rgba(32,25,15,0.05)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}
                         >
                         {readiness?.text === 'Fully built'
                           ? t('studentReadinessComplete')
@@ -1145,55 +1163,64 @@ export default function StudentPage() {
                         </span>
                       )}
                       {state && state !== 'done' && (
-                        <span className="flex items-center gap-1 text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
+                        <span className="flex min-w-0 max-w-full items-start gap-1 text-xs font-sans px-2 py-0.5 rounded-2xl"
                           style={{
                             background: ASSIGNMENT_TONE[state].bg,
                             color: ASSIGNMENT_TONE[state].fg,
                             border: `1px solid ${ASSIGNMENT_TONE[state].border}`,
                           }}>
-                          {state === 'overdue' ? <AlertTriangle size={10} /> : <CalendarClock size={10} />}
-                          {dueText ?? t('studentAssigned')}
+                          {state === 'overdue' ? <AlertTriangle size={10} className="mt-0.5 shrink-0" /> : <CalendarClock size={10} className="mt-0.5 shrink-0" />}
+                          <span className="flex min-w-0 flex-col break-words">
+                            {dueText ?? t('studentAssigned')}
+                            {englishDueSource && (
+                              <small lang="en" className="mt-1 text-[12px] font-normal leading-snug" style={{ color: 'var(--text-secondary)' }}>
+                                English source: {englishDueSource}
+                              </small>
+                            )}
+                          </span>
                         </span>
                       )}
                     </div>
                     {assignment?.note && (
-                      <p className="font-sans text-xs mt-1 leading-relaxed italic" style={{ color: '#5C5040' }}>
+                      <p className="font-sans text-xs mt-1 leading-relaxed italic" style={{ color: 'var(--text-secondary)' }}>
                         &ldquo;{assignment.note}&rdquo;
                       </p>
                     )}
-                    <p className="font-sans text-xs mt-1 leading-relaxed" style={{ color: '#5C5040' }}>
+                    <p className="font-sans text-xs mt-1 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                       {modulePresentation.description}
                     </p>
-                    {(lang === 'st' || lang === 'ts' || lang === 've') && modulePresentation.status === 'draft' && <p lang="en" className="font-sans text-xs mt-1 leading-relaxed" style={{ color: '#5C5040' }}>English source: {mod.title} — {mod.description}</p>}
+                    {(lang === 'st' || lang === 'ts' || lang === 've') && modulePresentation.status === 'draft' && <p lang="en" className="font-sans text-xs mt-1 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>English source: {mod.title} — {mod.description}</p>}
                     <div className={styles.moduleMeta}>
                       <div className="flex items-center gap-1.5">
-                        <Clock size={11} style={{ color: '#755942' }} />
-                        <span className="font-mono text-xs" style={{ color: '#755942' }}>{formatDuration(mod.durationMins, t)}</span>
+                        <Clock size={11} style={{ color: 'var(--text-muted)' }} />
+                        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{formatDuration(mod.durationMins, t)}</span>
                       </div>
                       {hasNarration(mod.id) && (
                         <div className="flex items-center gap-1">
-                          <Headphones size={11} style={{ color: '#1F4D2B' }} />
-                          <span className="font-sans text-xs" style={{ color: '#1F4D2B' }}>
-                            {lang === 'zu' && !zuluAudioReady ? 'Umsindo: isiNgisi' : (lang === 'st' || lang === 'ts' || lang === 've') ? 'Audio: English' : t('studentAudio')}
+                          <Headphones size={11} style={{ color: 'var(--color-forest-800)' }} />
+                          <span className="font-sans text-xs" style={{ color: 'var(--color-forest-800)' }}>
+                            {lang === 'zu' && !zuluAudioReady ? 'Umsindo: isiNgisi'
+                              : ownNarrationReady && regionalNarrationDraft(mod.id, lang) ? `Audio: ${{ st: 'Sesotho', ts: 'Xitsonga', ve: 'Tshivenda' }[lang as 'st' | 'ts' | 've']} AI draft + English holds`
+                                : (lang === 'st' || lang === 'ts' || lang === 've') ? 'Audio: optional English' : t('studentAudio')}
                           </span>
                         </div>
                       )}
                       {lang === 'zu' && hasDeck(mod.id) && !zuluSlidesReady && (
-                        <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>Izilayidi: isiNgisi</span>
+                        <span className="font-sans text-xs" style={{ color: 'var(--gold-dim)' }}>Izilayidi: isiNgisi</span>
                       )}
-                      {(lang === 'st' || lang === 'ts' || lang === 've') && hasDeck(mod.id) && <span className="font-sans text-xs" style={{ color: '#8C5E1A' }}>
+                      {(lang === 'st' || lang === 'ts' || lang === 've') && hasDeck(mod.id) && <span className="font-sans text-xs" style={{ color: 'var(--gold-dim)' }}>
                         {regionalDraftSlides
                           ? `Slides: ${{ st: 'Sesotho', ts: 'Xitsonga', ve: 'Tshivenda' }[lang]} AI draft + English source`
                           : 'Slides: English'}
                       </span>}
                       {mod.lessons && mod.lessons.length > 0 && (
                         <div className="flex items-center gap-1">
-                          <span className="font-sans text-xs" style={{ color: '#755942' }}>
+                          <span className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>
                             {mod.lessons.length} {mod.lessons.length === 1 ? t('studentLessonOne') : t('studentLessons')}
                           </span>
                           {isExpanded
-                            ? <ChevronUp size={11} style={{ color: '#755942' }} />
-                            : <ChevronDown size={11} style={{ color: '#755942' }} />}
+                            ? <ChevronUp size={11} style={{ color: 'var(--text-muted)' }} />
+                            : <ChevronDown size={11} style={{ color: 'var(--text-muted)' }} />}
                         </div>
                       )}
                     </div>
@@ -1207,9 +1234,9 @@ export default function StudentPage() {
                     aria-pressed={done}
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-display font-semibold transition-all ${styles.markDone}`}
                     style={{
-                      background: done ? 'rgba(31,77,43,0.08)' : '#1F4D2B',
+                      background: done ? 'rgba(31,77,43,0.08)' : 'var(--color-forest-800)',
                       border: done ? '1px solid rgba(31,77,43,0.2)' : 'none',
-                      color: done ? '#1F4D2B' : '#EAF3E2',
+                      color: done ? 'var(--color-forest-800)' : 'var(--on-forest-800)',
                       cursor: isToggling ? 'wait' : 'pointer',
                       opacity: isToggling ? 0.6 : 1,
                     }}
@@ -1224,7 +1251,7 @@ export default function StudentPage() {
 
                 {/* Lessons panel */}
                 {isExpanded && mod.lessons && mod.lessons.length > 0 && (
-                  <div className={`px-4 pb-4 space-y-2 ${styles.moduleContent}`} style={{ borderTop: '1px solid #E2D8C4' }}>
+                  <div className={`px-4 pb-4 space-y-2 ${styles.moduleContent}`} style={{ borderTop: '1px solid var(--border)' }}>
                     {/* TAKE IT HOME. Sits directly above the players, because it is the answer to
                         the question those players raise: a farmer who has just seen what the
                         slides and narration are worth is the one who wants them on the phone
@@ -1237,7 +1264,7 @@ export default function StudentPage() {
                     />
                     {lang === 'zu' && (!zuluSlidesReady || !zuluAudioReady) && (
                       <p className="rounded-xl px-3 py-2 font-sans text-sm leading-relaxed" role="note"
-                        style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
+                        style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: 'var(--text-secondary)' }}>
                         {(() => {
                           const notice = !zuluSlidesReady && !zuluAudioReady
                             ? ZULU_MEDIA_LANGUAGE_NOTICES.bothEnglish
@@ -1248,10 +1275,12 @@ export default function StudentPage() {
                         })()}
                       </p>
                     )}
-                    {narrationReviewPending(mod.id, lang) && (
+                    {ownNarrationReady && narrationReviewPending(mod.id, lang) && (
                       <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
-                        style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
-                        {t('studentZuluAudioDraftNotice')}
+                        style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: 'var(--text-secondary)' }}>
+                        {regionalNarrationDraft(mod.id, lang)
+                          ? `Unreviewed machine ${lang === 'st' ? 'Sesotho' : lang === 've' ? 'Tshivenda' : 'Xitsonga'} narration. Some passages are spoken in exact English for safety and terminology. Fluent-speaker, local-farming and listening review are pending.`
+                          : t('studentZuluAudioDraftNotice')}
                       </p>
                     )}
                     {/* THE LESSON ITSELF, FIRST — not a list of files that add up to one.
@@ -1278,7 +1307,7 @@ export default function StudentPage() {
                         />
                       </div>
                     ) : null}
-                    <p className="font-display text-xs font-semibold uppercase tracking-wide pt-3 pb-1" style={{ color: '#755942' }}>
+                    <p className="font-display text-xs font-semibold uppercase tracking-wide pt-3 pb-1" style={{ color: 'var(--text-muted)' }}>
                       {t('studentLessonsLabel')}
                     </p>
                     {mod.lessons.map((lesson) => (
@@ -1300,21 +1329,21 @@ export default function StudentPage() {
                     this module (see the LOUD COMMENT on MODULE_ASSIGNMENTS in
                     lib/course-gating.ts); degrades to nothing until then. */}
                 {content && (
-                  <div className="px-4 pb-4" style={{ borderTop: isExpanded ? 'none' : '1px solid #E2D8C4' }}>
+                  <div className="px-4 pb-4" style={{ borderTop: isExpanded ? 'none' : '1px solid var(--border)' }}>
                     <button
                       type="button"
                       onClick={() => setSubmissionOpenId((prev) => (prev === mod.id ? null : mod.id))}
                       className="w-full flex items-center gap-2 px-3.5 py-2.5 mt-3 rounded-xl transition-colors"
                       style={{ background: `${color}0C`, border: `1px solid ${color}25` }}
                     >
-                      <ClipboardList size={13} style={{ color, flexShrink: 0 }} />
+                      <ClipboardList size={13} style={{ color: textColor, flexShrink: 0 }} />
                       <span className="flex-1 text-left font-sans text-xs font-semibold" style={{ color: textColor }}>
                         {submission ? t('studentSubmittedResubmit') : t('studentSubmitModule')}
                       </span>
-                      {submission && <CheckCircle size={13} style={{ color, flexShrink: 0 }} />}
+                      {submission && <CheckCircle size={13} style={{ color: textColor, flexShrink: 0 }} />}
                       {submissionOpen
-                        ? <ChevronUp size={12} style={{ color, flexShrink: 0 }} />
-                        : <ChevronDown size={12} style={{ color, flexShrink: 0 }} />}
+                        ? <ChevronUp size={12} style={{ color: textColor, flexShrink: 0 }} />
+                        : <ChevronDown size={12} style={{ color: textColor, flexShrink: 0 }} />}
                     </button>
                     {submissionOpen && (
                       <div className="mt-2">
@@ -1339,18 +1368,18 @@ export default function StudentPage() {
             completion artifact. */}
         <div className="rounded-2xl px-5 py-5"
           style={{
-            background: capstoneUnlocked ? 'rgba(31,77,43,0.06)' : '#FFFEFA',
-            border: `1px solid ${capstoneUnlocked ? 'rgba(31,77,43,0.25)' : '#E2D8C4'}`,
+            background: capstoneUnlocked ? 'rgba(31,77,43,0.06)' : 'var(--bg-1)',
+            border: `1px solid ${capstoneUnlocked ? 'rgba(31,77,43,0.25)' : 'var(--border)'}`,
           }}>
           <div className="flex items-center gap-2 mb-2">
             {capstoneUnlocked
-              ? <Trophy size={16} style={{ color: '#1F4D2B', flexShrink: 0 }} />
-              : <Lock size={14} style={{ color: '#755942', flexShrink: 0 }} />}
-            <span className="font-display font-semibold text-sm" style={{ color: capstoneUnlocked ? '#1F4D2B' : '#755942' }}>
+              ? <Trophy size={16} style={{ color: 'var(--color-forest-800)', flexShrink: 0 }} />
+              : <Lock size={14} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />}
+            <span className="font-display font-semibold text-sm" style={{ color: capstoneUnlocked ? 'var(--color-forest-800)' : 'var(--text-muted)' }}>
               {t('studentCapstone')}
             </span>
           </div>
-          <p className="font-sans text-xs leading-relaxed mb-3" style={{ color: capstoneUnlocked ? '#3A3020' : '#755942' }}>
+          <p className="font-sans text-xs leading-relaxed mb-3" style={{ color: capstoneUnlocked ? 'var(--text-primary)' : 'var(--text-muted)' }}>
             {capstoneUnlocked
               ? t('studentCapstoneComplete')
               : t('studentCapstoneLocked').replace('{count}', String(TOTAL_MODULES))}
@@ -1358,7 +1387,7 @@ export default function StudentPage() {
           {capstoneUnlocked && (
             <Link href="/design"
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl font-sans font-semibold text-sm transition-all"
-              style={{ background: '#1F4D2B', color: '#F7F2E9', textDecoration: 'none' }}>
+              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', textDecoration: 'none' }}>
               {t('studentOpenDesignStudio')}
             </Link>
           )}
@@ -1380,7 +1409,7 @@ export default function StudentPage() {
         <div className={styles.coursePreviews}>
         <details className={`${styles.companions} ${styles.collapsible}`}>
           <summary className={styles.previewSummary} aria-labelledby="design-pathway-title">
-            <img src="/studies-guides/sketch-the-site.jpg" alt="" loading="lazy" width={150} height={100} />
+            <img src="/studies-guides/thumbs/sketch-the-site.webp" alt="" loading="lazy" width={150} height={100} />
             <div><span className={styles.choiceLabel}>{t('studentDesignEnglishPreview')}</span>
               <h2 id="design-pathway-title" className="font-display">{t('studentDesignPreviewTitle')}</h2></div>
           </summary>
@@ -1394,7 +1423,7 @@ export default function StudentPage() {
 
         <details className={`${styles.companions} ${styles.collapsible}`}>
           <summary className={styles.previewSummary} aria-labelledby="finance-course-title">
-            <img src="/studies-guides/expense-record.jpg" alt="" loading="lazy" width={150} height={100} />
+            <img src="/studies-guides/thumbs/expense-record.webp" alt="" loading="lazy" width={150} height={100} />
             <div><span className={styles.choiceLabel}>{t('studentFinanceEnglishPreview')}</span>
               <h2 id="finance-course-title" className="font-display">{t('studentFinancePreviewTitle')}</h2></div>
           </summary>
@@ -1410,13 +1439,11 @@ export default function StudentPage() {
 
         <div className={styles.coursePreviews}>
           <Link href="/student/teach-the-teachers" className={styles.coursePreviewLink}>
-            <span><strong className="font-display">Teach the Teachers · ACT refresher</strong>
-              <span>Two days of facilitation practice with the core agroecology lessons, app exercises and a paper fallback. English teaching preview.</span>
-              <em>Open the two-day course →</em></span>
+            <span><strong className="font-display"><DesignDraftCopy en="Teach the Teachers · ACT refresher" zu="Fundisa Othisha · Ukuvuselelwa kwe-ACT" /></strong>
+              <span><DesignDraftCopy en="Two days of facilitation practice with the core agroecology lessons, app exercises and a paper fallback. English teaching preview." zu="Izinsuku ezimbili zokuzilolonga ekufundiseni ngezifundo ezisemqoka ze-agroecology, imisebenzi yohlelo lokusebenza nesu lephepha uma kungekho i-inthanethi. Okokufundisa kuboniswa ngesiNgisi." /></span>
+              <em><DesignDraftCopy en="Open the two-day course" zu="Vula ikhosi yezinsuku ezimbili" /></em></span>
           </Link>
         </div>
-
-        <LimaBar />
 
         <details className={`${styles.companions} ${styles.collapsible} ${styles.appGuides}`}>
           <summary aria-labelledby="app-guides-title">
@@ -1427,9 +1454,9 @@ export default function StudentPage() {
             <p>{t('studentGuidesDescription')}</p>
           </div>
           {APP_GUIDES.map(guide => <OfflinePageLink key={guide.id} href={guide.href} className={styles.guideCard}>
-            <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" />
+            <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" width={160} height={107} />
             {/* Simple: the card itself is the "read the guide" link — the identical "Read the
-                guide · English →" line does not need to repeat once per card (14 times). */}
+                guide · English →" line does not need to repeat once per card (14 times). */}
             <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span>{!simple && <em>{t('studentAppGuideAction')}</em>}</span>
           </OfflinePageLink>)}
           <Link href="/tour" className={styles.guideTour}>{t('studentSampleTourAction')}</Link>
@@ -1440,11 +1467,11 @@ export default function StudentPage() {
         {pct === 100 && (
           <div className="rounded-2xl px-5 py-5 text-center space-y-2"
             style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.2)' }}>
-            <Sprout size={28} style={{ color: '#1F4D2B', margin: '0 auto' }} />
-            <div className="font-display font-bold text-base" style={{ color: '#1F4D2B' }}>
+            <Sprout size={28} style={{ color: 'var(--color-forest-800)', margin: '0 auto' }} />
+            <div className="font-display font-bold text-base" style={{ color: 'var(--color-forest-800)' }}>
               {t('studentCourseComplete')}
             </div>
-            <p className="font-sans text-sm" style={{ color: '#5C5040' }}>
+            <p className="font-sans text-sm" style={{ color: 'var(--text-secondary)' }}>
               {/* No push/SMS/email notification exists anywhere in this app — the mentor
                   dashboard only shows progress when a mentor opens it and looks. The old
                   wording ("Your trainer will be notified") promised an alert the code never
@@ -1455,12 +1482,13 @@ export default function StudentPage() {
         )}
 
         {!isLive && (
-          <p className="text-center text-xs font-mono" style={{ color: '#755942' }}>
+          <p className="text-center text-xs" style={{ color: 'var(--text-muted)' }}>
             {t('studentProgressFirebase')}
           </p>
         )}
       </main>
-      <TabBar />
+      <LimaBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

@@ -1,0 +1,97 @@
+{
+  "speciesId": "olea-europaea-subsp-europaea",
+  "commonName": "Olive",
+  "botanicalName": "Olea europaea subsp. europaea",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [
+    {
+      "region": "Western Cape — cultivar and end-use dependent olive harvest",
+      "months": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "evidence": {
+        "quote": "February to July in the Western Cape",
+        "url": "https://www.saolive.co.za/olive-growing/",
+        "doc": "SA Olive Association, Olive Growing",
+        "page": null
+      },
+      "notes": "Association's regional range across cultivars and table/oil purposes, not a single cultivar's continuous season. Actual local green/black/oil picking stage must be recorded."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No locally qualified numeric first-crop age was established in the checked primary sources. Record planting date, nursery starting age and propagation method."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured local numeric full-bearing age was established. No yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified mature per-plant food kg with age, product basis and management context was established. Missing output remains unknown rather than zero."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No universal numeric chilling requirement is assigned. Check the actual cultivar and site's winter conditions."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Check the actual cultivar's pollen needs; no universal classification is inferred from a named cultivar."
+  },
+  "harvestProduct": "fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Cultivar and product choice",
+      "quote": "Suited to the production of high quality olive oil and as a cross pollinator",
+      "url": "https://www.saolive.co.za/olive-growing/",
+      "doc": "SA Olive Association, Olive Growing",
+      "page": null,
+      "note": "Frantoio is described as an oil and cross-pollen candidate. Mission suits black table olives and oil; Kalamata black table, Manzanilla and Barouni green table. Climate fit and pollen needs depend on cultivar."
+    },
+    {
+      "title": "Regional orchard budget is not per-tree yield evidence",
+      "quote": "ENTERPRISE BUDGET SUMMARY ESTABLISHMENT TO FULL BEARING",
+      "url": "https://www.elsenburg.com/wp-content/uploads/2022/04/SUMMARY-OIL-OLIVES.pdf",
+      "doc": "Western Cape Department of Agriculture, Oil Olives, Garden/Little Karoo budget, 13 March 2021",
+      "page": 1,
+      "note": "This is a historical one-hectare financial model; it does not provide matched per-tree kg or a measured biological maturity curve. No financial values or pesticide recipes are copied."
+    }
+  ],
+  "productionGuidance": {
+    "products": "fruit",
+    "care": [
+      "Match the cultivar to table olives or oil. Check drainage, irrigation and winter conditions; humid summer rainfall can bring disease problems.",
+      "Pick at the intended green, black or oil stage. Processing and safe kept-stock conditions must be recorded separately."
+    ],
+    "purchase": [
+      "Mission is a source-backed black-table and oil candidate; Kalamata is for black table olives; Manzanilla and Barouni for green table olives; Frantoio for oil and compatible pollen. Confirm regional fit through SA Olive's registered nurseries."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://www.saolive.co.za/olive-growing/",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    },
+    {
+      "url": "https://www.elsenburg.com/wp-content/uploads/2022/04/SUMMARY-OIL-OLIVES.pdf",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    }
+  ],
+  "gaps": [
+    "No measured generic first/full age or mature per-tree kg in the checked primary guidance.",
+    "SA Olive's winter temperature guidance is not a chill-unit count; no monthly-temperature conversion is made.",
+    "The broad February–July range needs cultivar/end-use narrowing; no household preserving recipe or shelf life inferred."
+  ]
+}

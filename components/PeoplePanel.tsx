@@ -167,7 +167,7 @@ function PersonCard({
         padding: '12px 14px',
         borderRadius: 12,
         background: 'var(--bg-1)',
-        border: `1px solid ${isCurrentUser ? 'rgba(31,77,43,0.3)' : '#E2D8C4'}`,
+        border: `1px solid ${isCurrentUser ? 'rgba(31,77,43,0.3)' : 'var(--border)'}`,
         cursor: isCurrentUser ? 'pointer' : 'default',
         transition: 'border-color 0.15s',
         textAlign: 'left',
@@ -391,7 +391,7 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
         }}
       >
         <span
-          className="font-mono"
+          className="font-sans"
           style={{
             fontSize: 12,
             fontWeight: 600,

@@ -789,3 +789,63 @@ Left in isiZulu on purpose (check with the reviewer):
   meaning the physical edge of a bed or field, *amanzi agelezayo* meaning flowing water (ch 11), and
   "organic material" (*izinto eziphilayo ezibolayo*) where the English does not say organic matter.
 - Permaculture is not re-explained after chapters 0 and 1, because it is the subject of the whole manual.
+
+## Second edition (27 Sep 2026)
+
+Chapters 00 to 11 and the new chapter 13 (`13-notes-and-references`) were re-translated fresh from
+the shorter second-edition English (Rory's voice). Chapter 12 (Glossary) is unchanged. The 66
+"Kept in English" words above still apply: first use in a chapter bold with a short isiZulu gloss,
+later uses plain, prefix joined with a hyphen. Machine draft for fluent-speaker review, as before.
+The terms below are new or changed in this edition; all are **(check)** unless noted.
+
+| English | isiZulu | Notes |
+|---|---|---|
+| By the end of this chapter you will be able to: | Ekupheleni kwalesi sahluko uzokwazi: | Every chapter (ch 0: *kwalesi singeniso*). Bullets then start with *Uku-* (infinitive). |
+| Try it (activity heading) | Zama lokhu | Every chapter. |
+| Share fairly / fair share (third ethic) | Ukwabelana ngokulinganayo (**fair share**) | Replaces *Ukwabelana nokubuyisela okusele* in ch 1, because the English heading is now "Share fairly". |
+| Principle sayings (Holmgren) | *Omisa utshani ilanga lisaphuma* (make hay…); *Akusetshenzwa ngesisu esingenalutho* (empty stomach); *Ongachithi akasweli* (waste not…); *Izandla ziyagezana* (many hands…, a real isiZulu proverb); *Kancane kancane kuyafikwa* (slow and steady); *Ungafaki wonke amaqanda akho kubhasikidi elilodwa* (eggs in one basket) | Ch 1. Local proverbs used where one fits; the others are plain translations. |
+| Month names | uMasingana, uNhlolanja, uNdasa, uMbasa, uNhlaba, uNhlangulana, uNtulikazi, uNcwaba, uMandulo, uMfumfu, uLwezi, uZibandlela | Used in all chapters instead of *Okthoba*, *Disemba* etc. "August winds" (ch 3) kept as *imimoya ka-Agasti*, the name people use. A reviewer may prefer the English-derived names readers use daily. |
+| aspect | uhlangothi obheke kulo (aspect) | Ch 2. Short form of the section-2 glossary term. |
+| base map | imephu eyisisekelo | Ch 2 (was already in section 2). |
+| tap timer | isibali-sikhathi esifakwa empompini (tap timer) | Ch 4. |
+| cut and come again | (amaqabunga) aphinde ahlume | Ch 4. |
+| push-seeder | umshini wokuhlwanyela ophushwayo | Ch 4. |
+| open-pollinated seed | imbewu evulekele impova (open-pollinated) | Ch 4 (section 5 term, English added). |
+| omnivore | -dla konke (omnivores) | Ch 5, as a verb phrase: *Izinkukhu zidla konke*. |
+| dust bath | ukugeza othulini | Ch 5. |
+| predator (ch 5 heading) | ama-predator (izilwane ezizingela ezinye) | Ch 5 heading now *Indlu, amanzi nama-predator*, following the Kept-in-English rule. |
+| layers / broilers | izikhukhukazi zamaqanda (layers) / izinkukhu zenyama (broilers) | Ch 5. |
+| puzzle bush | umklele (*Ehretia rigida*) | Ch 5, 6. |
+| karee | i-karee (*Searsia lancea*) | Ch 5, 6, 9. Loan kept; no confirmed isiZulu name. |
+| parasitic wasps | iminyovu ezalela kwezinye izinambuzane | Ch 10. Replaces the course loan *ama-parasitoid wasp*. |
+| sap suckers / plant eaters | (izinambuzane) ezimunca ubisi lwesitshalo / ezidla izitshalo | Ch 10. |
+| African bollworm, diamond-back moth, fall armyworm, red spider mite, root-knot nematode, scale insect, mealybug, thrips, earwig | i-African bollworm, i-diamond-back moth, i-fall armyworm, ama-red spider mite, ama-root-knot nematode, ama-scale insect, ama-mealybug, ama-thrips, ama-earwig | Ch 10. Loan words; no settled isiZulu names. |
+| fruit fly / pumpkin fly | izimpukane zezithelo / izimpukane zamathanga | Ch 10. |
+| honeydew / sooty mould | i-honeydew / isikhunta esimnyama njengomsizi | Ch 10. |
+| golden mole / porcupine | ama-golden mole / inungu (pl. izinungu) | Ch 10. Mole-rat stays *ivukuzi*. |
+| rat lungworm, red-billed quelea, mosquitofish | i-rat lungworm, i-red-billed quelea, i-mosquitofish | Ch 10, 9. Loans. |
+| brinjal | isitshalo seqanda (brinjal) | Ch 10 (from the ch 6 list). |
+| moonflower (*Datura*) | iloyi | Ch 10 (section 9 term). |
+| jar test | ukuhlola ngembiza | Ch 8. The app's *ukuhlola umhlabathi ebhodleleni* also fits. |
+| sheet mulching | ukumboza ngezingqimba (sheet mulching) | Ch 7 and 8 now agree. The old ch 8 *ukumboza ngamaphepha* is dropped. |
+| mulch bank | indawo yokutshala i-mulch (mulch bank) | Ch 8. |
+| red grass (*Themeda triandra*) | insinde | Ch 8. |
+| rhizobium inoculant | i-rhizobium inoculant (impuphu yamagciwane ezimpande awusizo) | Ch 8. |
+| survey staff | induku yokulinganisa (survey staff) | Captions. |
+| corrugated iron / roof tiles | uthayela / izingcwecwe zophahla (tiles) | Ch 7. |
+| runoff coefficient | isilinganiso se-runoff (runoff coefficient) | Ch 7. Follows the Kept-in-English rule for runoff. |
+| spillway | indlela yokuchichima (spillway) | Ch 7 (section 4 term). |
+| dragonfly | uzekamanzi (pl. ozekamanzi) | Ch 7 and 9 now both use this form; section 4's *ujekamanzi* is dropped. |
+| inverter | i-inverter | Ch 11. |
+| solar geyser / indirect geyser | i-geyser yelanga / i-geyser engaqondile (indirect) | Ch 11. |
+| solar cooker (box, panel, parabolic) | isitofu selanga: esiyibhokisi, samaphaneli, esiyisitsha (parabolic) | Ch 11. |
+| aflatoxin | i-aflatoxin (ubuthi besibindi) | Ch 11. |
+| hay box | ibhokisi lotshani | Ch 11. |
+| brazier | imbawula | Ch 11. |
+| carbon monoxide / methane | i-carbon monoxide / i-methane | Ch 11. |
+| samp | isitambu | Ch 11. |
+| cob (building) | udaka (cob) | Captions. |
+| clinic | umtholampilo | Ch 13. |
+| Department of Water and Sanitation | uMnyango Wezamanzi Nokuthuthwa Kwendle | Ch 13. Check against the department's own isiZulu name. |
+| Act names (ch 13) | English name kept, short isiZulu gloss in brackets on first use, e.g. *i-National Water Act, umthetho kazwelonke wamanzi* | Ch 13. |
+| electrician | umkhandi kagesi oqeqeshiwe (electrician) | Ch 13. |

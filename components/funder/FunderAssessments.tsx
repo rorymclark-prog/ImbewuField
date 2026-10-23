@@ -6,6 +6,7 @@ import { paidApiHeaders } from '@/lib/api-client-auth';
 import { MelMetrics, melRequest } from '@/components/MelDashboard';
 import type { MelMetric } from '@/lib/mel';
 import styles from '@/components/MelDashboard.module.css';
+import { formatStaffDate } from '@/lib/format-figures';
 import MelCoverage from '@/components/MelCoverage';
 import SampleProgramme from '@/components/SampleProgramme';
 
@@ -44,7 +45,10 @@ export default function FunderAssessments() {
       <label>Organisation<select value={org} onChange={e => setOrg(e.target.value)}>{orgs.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}</select></label>
       {error && <p role="alert" className={styles.error}>{error}</p>}{loading && <p>Loading approved summaries…</p>}
       {!loading && !error && !summaries.length && <p className={styles.card}>No approved assessment summaries are available here yet.</p>}
-      {summaries.map(s => <details className={styles.card} key={s.id} style={{ margin: '16px 0' }}><summary><strong>{s.title}</strong> · {s.project}</summary><p>Due {s.due} · {s.completed} completed / {s.assigned} assigned</p><MelMetrics metrics={s.metrics} /><p className={styles.muted}>Survey responses are self-reported. Small groups are withheld; these figures alone do not establish project impact.</p></details>)}
+      {/* sdesk-14: these report cards used to stack full-width in a single column at 1280px;
+          styles.grid (MelDashboard.module.css) now puts 2-3 side by side at lg+. staff-13: the
+          due date was a raw 'YYYY-MM-DD' string. */}
+      <div className={styles.grid}>{summaries.map(s => <details className={styles.card} key={s.id}><summary><strong>{s.title}</strong> · {s.project}</summary><p>Due {formatStaffDate(s.due, 'en')} · {s.completed} completed / {s.assigned} assigned</p><MelMetrics metrics={s.metrics} /><p className={styles.muted}>Survey responses are self-reported. Small groups are withheld; these figures alone do not establish project impact.</p></details>)}</div>
     </>}
   </div></section>;
 }

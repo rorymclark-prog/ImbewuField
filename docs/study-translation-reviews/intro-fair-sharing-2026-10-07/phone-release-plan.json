@@ -1,0 +1,27 @@
+{
+  "status": "Pending exact preview; not evidence of completed QA",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "learnerChecks": [
+    "ZU Introduction L1 corrected Q1 option C and feedback, source and unreviewed notice",
+    "TS Introduction L1 all eight changed leaves and both correct C answers/feedback/source",
+    "Equality distractor and equal-circle description remain unchanged"
+  ],
+  "cardChecks": [
+    "ZU silent6/7 and TS6/7 actual expanded images and English source panels",
+    "Affected old ZU narration withheld; English explicitly optional",
+    "ST Introduction own audio binding remains untouched"
+  ],
+  "offlineChecks": [
+    "Save one slides-only Introduction pack, measure one changed cached frame SHA against assets.json",
+    "Verify existing-route selected frame/source offline; do not claim whole-course cold start"
+  ],
+  "publishGates": [
+    "final original typecheck/full suite/whitespace/notes",
+    "exact-head PR and push test/rules plus native build-info",
+    "history-preserving merge and main test/rules/deploy",
+    "actual production build-info and issue35 final ledger"
+  ]
+}

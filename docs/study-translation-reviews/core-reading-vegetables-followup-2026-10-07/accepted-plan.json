@@ -1,0 +1,248 @@
+{
+  "head": "dfdf51d26adc4d9ca27ef9a18c809e4f8cb143a3",
+  "status": "DATA ONLY: exact current bindings; root final review and next fresh batch required",
+  "pairedFields": [
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "slide": 15,
+      "bodyIndex": 0,
+      "segmentIndex": 4,
+      "english": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. ",
+            "status": "draft",
+            "text": "Beha frost-sensitive seedling nursery ka ntle ho cold pockets tseo o di boneng. "
+          },
+          {
+            "sourceEnglish": "Compare candidate places through the local frost season. ",
+            "status": "draft",
+            "text": "Bapisa dibaka tseo e ka bang tsona nakong ya local frost season. "
+          },
+          {
+            "sourceEnglish": "Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. ",
+            "status": "draft",
+            "text": "Hlahloba local minimum-temperature records kapa o botse local agriculture adviser pele o kgetha permanent position. "
+          },
+          {
+            "sourceEnglish": "Check sun and damaging wind too. ",
+            "status": "draft",
+            "text": "Hlahloba letsatsi le moya o senyang le tsona. "
+          },
+          {
+            "sourceEnglish": "No hillside position guarantees freedom from frost.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
+      },
+      "oldSegment": {
+        "sourceEnglish": "No hillside position guarantees freedom from frost.",
+        "status": "english-hold"
+      },
+      "newSegment": {
+        "sourceEnglish": "No hillside position guarantees freedom from frost.",
+        "status": "draft",
+        "text": "Ha ho hillside position e ka tiisang hore ha ho frost.",
+        "reason": "Independently semantically checked unreviewed machine draft; exact English paired. No fluent/local farming approval."
+      }
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "slide": 15,
+      "bodyIndex": 0,
+      "segmentIndex": 4,
+      "english": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. ",
+            "status": "draft",
+            "text": "Veka frost-sensitive seedling nursery ehandle ka cold pockets leti u ti voneke. "
+          },
+          {
+            "sourceEnglish": "Compare candidate places through the local frost season. ",
+            "status": "draft",
+            "text": "Pimanisa candidate places through the local frost season. "
+          },
+          {
+            "sourceEnglish": "Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. ",
+            "status": "draft",
+            "text": "Kambela local minimum-temperature records kumbe u vutisa local agriculture adviser u nga si hlawula permanent position. "
+          },
+          {
+            "sourceEnglish": "Check sun and damaging wind too. ",
+            "status": "draft",
+            "text": "Kambela dyambu ni moya lowu onhaka na swona. "
+          },
+          {
+            "sourceEnglish": "No hillside position guarantees freedom from frost.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
+      },
+      "oldSegment": {
+        "sourceEnglish": "No hillside position guarantees freedom from frost.",
+        "status": "english-hold"
+      },
+      "newSegment": {
+        "sourceEnglish": "No hillside position guarantees freedom from frost.",
+        "status": "draft",
+        "text": "A ku na hillside position leyi tiyisisaka leswaku ku nga vi na frost.",
+        "reason": "Independently semantically checked unreviewed machine draft; exact English paired. No fluent/local farming approval."
+      }
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "slide": 12,
+      "bodyIndex": 1,
+      "segmentIndex": 0,
+      "english": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Walk the land on windy days. ",
+            "status": "draft",
+            "text": "Famba-famba eka misava hi masiku lama nga ni moya. "
+          },
+          {
+            "sourceEnglish": "Record where damaging wind comes from and what it affects. ",
+            "status": "draft",
+            "text": "Tsala laha moya lowu onhaka wu humaka kona ni leswi wu swi khumbaka. "
+          },
+          {
+            "sourceEnglish": "Check local weather records before placing a windbreak.",
+            "status": "draft",
+            "text": "Kambela tirhekhodo ta maxelo ya le ndhawini u nga si veka xisirhelelo xa moya."
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "oldSegment": {
+        "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. ",
+        "status": "english-hold"
+      },
+      "newSegment": {
+        "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. ",
+        "status": "draft",
+        "text": "Tlhelo na matla ya moya lowu onhaka swi cinca hi muganga, nguva na ti-ridges and gaps ta ndhawu ya wena. ",
+        "reason": "Independently semantically checked unreviewed machine draft; exact English paired. No fluent/local farming approval."
+      }
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "slide": 7,
+      "bodyIndex": 2,
+      "segmentIndex": 1,
+      "english": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose ",
+            "text": "Contours leti nga vekiwa hi ndlela yo biha ti nga engetela erosion, naswona misava leyi tswongaka mati hi ku nonoka yi nga khoma mati yo tala ngopfu. Hlawula ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "any water works for the site",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and plan a safe route for excess water.",
+            "text": ", kutani u pulana ndlela leyi hlayisekeke ya mati yo tala.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "oldSegment": {
+        "sourceEnglish": "any water works for the site",
+        "status": "english-hold"
+      },
+      "newSegment": {
+        "sourceEnglish": "any water works for the site",
+        "status": "draft",
+        "text": "water works yin'wana ni yin'wana leyi faneleke ndhawu yoleyo",
+        "reason": "Independently semantically checked unreviewed machine draft; exact English paired. No fluent/local farming approval."
+      }
+    },
+    {
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 6,
+      "bodyIndex": 0,
+      "segmentIndex": 1,
+      "english": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Some crops resent having their roots disturbed. ",
+            "status": "draft",
+            "text": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. "
+          },
+          {
+            "sourceEnglish": "They do better",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " sown straight where they'll grow. ",
+            "status": "draft",
+            "text": " musi zwi tshi zwaliwa nga ho livhaho hune zwa ḓo aluwa hone. "
+          },
+          {
+            "sourceEnglish": "Beans, carrots",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " na "
+          },
+          {
+            "sourceEnglish": "maize",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " belong in that group.",
+            "status": "draft",
+            "text": " zwi wela kha tshigwada itsho."
+          }
+        ]
+      },
+      "oldSegment": {
+        "sourceEnglish": "They do better",
+        "status": "english-hold"
+      },
+      "newSegment": {
+        "sourceEnglish": "They do better",
+        "status": "draft",
+        "text": "Zwi ita khwine",
+        "reason": "Exact checked learner predicate reuse; unreviewed machine draft and English paired."
+      }
+    }
+  ],
+  "learnerCandidates": [
+    {
+      "file": "lib/course-translation-drafts-st-reading-landscape.ts",
+      "oldSpan": "Serame (frost) ke leqhwa le iphelang hodima ntho e batang.",
+      "newSpan": "Serame (frost) ke leqhwa le bopehang hodima surface e batang.",
+      "condition": "Only this first sentence; preserve remainder/source/status/indices."
+    },
+    {
+      "file": "lib/course-translation-drafts-ve-market-community.ts",
+      "oldSpan": "Distance affects costs, but it is not the only factor.",
+      "newSpan": "Distance i kwama costs, fhedzi a si yone factor nthihi fhedzi.",
+      "condition": "Only draft value, exact canonical untouched; preserve remainder/indices."
+    }
+  ],
+  "implementationBase": "c4c6d4c847e04adfc47992841ef481d22f497df4"
+}

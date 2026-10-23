@@ -1,0 +1,1028 @@
+{
+  "recordId": "SOIL-HEALTH-REGIONAL-SILENT-SLIDES-2026-10-03",
+  "baselineHead": "00abeeb7ae967e733971f5af70d9da9fa2d5d0c0",
+  "scope": "15 paired body drafts (slides 1,2,5,19; five per language) and 12 regional WebPs.",
+  "languageNames": {
+    "st": "Sesotho",
+    "ve": "Tshivenda",
+    "ts": "Xitsonga"
+  },
+  "candidateRows": [
+    {
+      "languageCode": "st",
+      "languageName": "Sesotho",
+      "moduleId": "soil-health",
+      "slideNumber": 1,
+      "slideFrameIndex": 0,
+      "bodyPartIndex": 1,
+      "fieldPath": "slides[0].target.body[1]",
+      "canonicalSourceFile": "docs/narration/soil-health.en.md",
+      "pairedRendererInput": "docs/narration/soil-health.st.paired-draft.json",
+      "pairedSourceExactEnglish": "It is a living place that feeds crops, holds water, and carries your harvest.",
+      "currentRegionalText": null,
+      "currentRegionalStatus": "english-hold",
+      "candidate": "Ke sebaka se phelang se fepang crops, se tshwarang metsi, mme se jereng kotulo ya hao.",
+      "drafterBacktranslation": "It is a living place that feeds crops, holds water, and carries your harvest.",
+      "conditionsAndUncertainty": "Keep crops as the ordinary farming term; literal verbs retain feed, hold and carry. The metaphor “carries your harvest” should be checked locally.",
+      "reviewStatus": "unreviewed machine-draft candidate; independently backchecked with review flags",
+      "renderedSlideAsset": "public/course-decks/soil-health/st/slide-01.webp",
+      "independentBackcheck": {
+        "decision": "accept with review flags; candidate remains an unreviewed machine draft",
+        "reviewFlags": [
+          "The “carries your harvest” analogy is retained; a local reviewer should confirm its naturalness and intended sense."
+        ]
+      }
+    },
+    {
+      "languageCode": "st",
+      "languageName": "Sesotho",
+      "moduleId": "soil-health",
+      "slideNumber": 1,
+      "slideFrameIndex": 0,
+      "bodyPartIndex": 2,
+      "fieldPath": "slides[0].target.body[2]",
+      "canonicalSourceFile": "docs/narration/soil-health.en.md",
+      "pairedRendererInput": "docs/narration/soil-health.st.paired-draft.json",
+      "pairedSourceExactEnglish": "In this module, learn to read soil, make safe compost, protect bare ground, and use cover crops and worm farms.",
+      "currentRegionalText": null,
+      "currentRegionalStatus": "english-hold",
+      "candidate": "Mojulung ona, ithute ho bala soil, ho etsa safe compost, ho sireletsa bare ground, le ho sebedisa cover crops le worm farms.",
+      "drafterBacktranslation": "In this module, learn to read soil, make safe compost, protect bare ground, and use cover crops and worm farms.",
+      "conditionsAndUncertainty": "Ordinary framing and each action verb are localized in source order: learn/read soil; make safe compost; protect bare ground; use cover crops and worm farms. The difficult terms soil, safe compost, bare ground, cover crops, and worm farms stay exact English. No outcome or safety guarantee is added. Unreviewed machine candidate; local language and soil-practice review still required.",
+      "reviewStatus": "unreviewed machine-draft candidate; independent source/meaning backcheck accepted with review flags",
+      "renderedSlideAsset": "public/course-decks/soil-health/st/slide-01.webp",
+      "previousCandidate": "Mojulung ona, ithute ho read soil; make safe compost, protect bare ground, and use cover crops and worm farms.",
+      "independentBackcheck": {
+        "decision": "accept with review flags",
+        "reviewFlags": [
+          "All five actions are retained in source order, and each ordinary action verb is localized around the protected farming terms.",
+          "“safe” remains attached to “compost”; candidate adds no composting method, outcome, or safety guarantee.",
+          "Unreviewed language wording; local fluent and soil-practice review remains necessary."
+        ],
+        "actionOrder": [
+          "learn to read soil",
+          "make safe compost",
+          "protect bare ground",
+          "use cover crops and worm farms"
+        ],
+        "orderedTechnicalTerms": [
+          "soil",
+          "safe compost",
+          "bare ground",
+          "cover crops",
+          "worm farms"
+        ]
+      },
+      "consolidationNote": "Replaced prior slide 1/body part 2 candidate with independently checked fuller candidate; source, target key, and english-hold status unchanged."
+    },
+    {
+      "languageCode": "st",
+      "languageName": "Sesotho",
+      "moduleId": "soil-health",
+      "slideNumber": 2,
+      "slideFrameIndex": 1,
+      "bodyPartIndex": 1,
+      "fieldPath": "slides[1].target.body[1]",
+      "canonicalSourceFile": "docs/narration/soil-health.en.md",
+      "pairedRendererInput": "docs/narration/soil-health.st.paired-draft.json",
+      "pairedSourceExactEnglish": "Repeated bare ground, compaction and loss of organic matter can damage it. Colour alone does not tell the whole story.",
+      "currentRegionalText": null,
+      "currentRegionalStatus": "english-hold",
+      "candidate": "Repeated bare ground, compaction and loss of organic matter can damage it. Mmala feela ha o bolele pale yohle.",
+      "drafterBacktranslation": "Repeated bare ground, compaction and loss of organic matter can damage it. Colour alone does not tell the whole story.",
+      "conditionsAndUncertainty": "Keeps the risk claim exact; translates only the ordinary color observation.",
+      "reviewStatus": "unreviewed machine-draft candidate; independently backchecked with review flags",
+      "renderedSlideAsset": "public/course-decks/soil-health/st/slide-02.webp",
+      "independentBackcheck": {
+        "decision": "accept with review flags; candidate remains an unreviewed machine draft",
+        "reviewFlags": [
+          "Full causal damage clause remains exact English. Only the ordinary color-observation sentence is translated."
+        ]
+      }
+    },
+    {
+      "languageCode": "st",
+      "languageName": "Sesotho",
+      "moduleId": "soil-health",
+      "slideNumber": 5,
+      "slideFrameIndex": 4,
+      "bodyPartIndex": 1,
+      "fieldPath": "slides[4].target.body[1]",
+      "canonicalSourceFile": "docs/narration/soil-health.en.md",
+      "pairedRendererInput": "docs/narration/soil-health.st.paired-draft.json",
+      "pairedSourceExactEnglish": "First, look at soil structure. In the field, feel how a moist piece breaks apart.",
+      "currentRegionalText": null,
+      "currentRegionalStatus": "english-hold",
+      "candidate": "Pele, sheba soil structure. Ha o le tshimong, utlwa hore karolo ya mobu o mongobo e arohana jwang.",
+      "drafterBacktranslation": "First, look at soil structure. In the field, feel how a moist piece of soil breaks apart.",
+      "conditionsAndUncertainty": "Keeps soil structure as English technical vocabulary; translates the source observation without adding a diagnosis.",
+      "reviewStatus": "unreviewed machine-draft candidate; independently backchecked with review flags",
+      "renderedSlideAsset": "public/course-decks/soil-health/st/slide-05.webp",
+      "independentBackcheck": {
+        "decision": "accept with review flags; candidate remains an unreviewed machine draft",
+        "reviewFlags": [
+          "No diagnosis is added. Check that “moist” remains damp rather than saturated; “soil” is made explicit for “piece” in context."
+        ]
+      }
+    },
+    {
+      "languageCode": "st",
+      "languageName": "Sesotho",
+      "moduleId": "soil-health",
+      "slideNumber": 19,
+      "slideFrameIndex": 18,
+      "bodyPartIndex": 1,
+      "fieldPath": "slides[18].target.body[1]",
+      "canonicalSourceFile": "docs/narration/soil-health.en.md",
+      "pairedRendererInput": "docs/narration/soil-health.st.paired-draft.json",
+      "pairedSourceExactEnglish": "Compare another spot and note recent weather and management.",
+      "currentRegionalText": null,
+      "currentRegionalStatus": "english-hold",
+      "candidate": "Bapisa sebaka se seng, mme o ele hloko boemo ba lehodimo ba morao tjena le management.",
+      "drafterBacktranslation": "Compare another spot, and take note of recent weather and management.",
+      "conditionsAndUncertainty": "Preserves comparison with another spot and the recent-weather/management subjects; management remains English.",
+      "reviewStatus": "unreviewed machine-draft candidate; independently backchecked with review flags",
+      "renderedSlideAsset": "public/course-decks/soil-health/st/slide-19.webp",
+      "independentBackcheck": {
+        "decision": "accept with review flags; candidate remains an unreviewed machine draft",
+        "reviewFlags": [
+          "Comparison remains with another spot; recent weather and management are named, with management retained exact English."
+        ]
+      }
+    },
+    {
+      "languageCode": "ve",
+      "languageName": "Tshivenda",
+      "moduleId": "soil-health",
+      "slideNumber": 1,
+      "slideFrameIndex": 0,
+      "bodyPartIndex": 1,
+      "fieldPath": "slides[0].target.body[1]",
+      "canonicalSourceFile": "docs/narration/soil-health.en.md",
+      "pairedRendererInput": "docs/narration/soil-health.ve.paired-draft.json",
+      "pairedSourceExactEnglish": "It is a living place that feeds crops, holds water, and carries your harvest.",
+      "currentRegionalText": null,
+      "currentRegionalStatus": "english-hold",
+      "candidate": "Ndi fhethu hu tshilaho hune ha fha crops zwiḽiwa, ha fara maḓi, nahone ha hwala harvest yaṋu.",
+      "drafterBacktranslation": "It is a living place that feeds crops, holds water, and carries your harvest.",
+      "conditionsAndUncertainty": "Keeps crop and harvest terms recognizable; retains feed, hold and carry claims. The harvest metaphor requires local review.",
+      "reviewStatus": "unreviewed machine-draft candidate; independently backchecked with review flags",
+      "renderedSlideAsset": "public/course-decks/soil-health/ve/slide-01.webp",
+      "independentBackcheck": {
+        "decision": "accept with review flags; candidate remains an unreviewed machine draft",
+        "reviewFlags": [
+          "The “carries your harvest” analogy is retained; a local reviewer should confirm its naturalness and intended sense."
+        ]
+      }
+    },
+    {
+      "languageCode": "ve",
+      "languageName": "Tshivenda",
+      "moduleId": "soil-health",
+      "slideNumber": 1,
+      "slideFrameIndex": 0,
+      "bodyPartIndex": 2,
+      "fieldPath": "slides[0].target.body[2]",
+      "canonicalSourceFile": "docs/narration/soil-health.en.md",
+      "pairedRendererInput": "docs/narration/soil-health.ve.paired-draft.json",
+      "pairedSourceExactEnglish": "In this module, learn to read soil, make safe compost, protect bare ground, and use cover crops and worm farms.",
+      "currentRegionalText": null,
+      "currentRegionalStatus": "english-hold",
+      "candidate": "Kha module iyi, gudani u vhala soil, u ita safe compost, u tsireledza bare ground, na u shumisa cover crops na worm farms.",
+      "drafterBacktranslation": "In this module, learn to read soil, make safe compost, protect bare ground, and use cover crops and worm farms.",
+      "conditionsAndUncertainty": "Ordinary framing and each action verb are localized in source order: learn/read soil; make safe compost; protect bare ground; use cover crops and worm farms. The difficult terms soil, safe compost, bare ground, cover crops, and worm farms stay exact English. No outcome or safety guarantee is added. Unreviewed machine candidate; local language and soil-practice review still required.",
+      "reviewStatus": "unreviewed machine-draft candidate; independent source/meaning backcheck accepted with review flags",
+      "renderedSlideAsset": "public/course-decks/soil-health/ve/slide-01.webp",
+      "previousCandidate": "Kha module iyi, gudani u read soil; make safe compost, protect bare ground, na u shumisa cover crops na worm farms.",
+      "independentBackcheck": {
+        "decision": "accept with review flags",
+        "reviewFlags": [
+          "All five actions are retained in source order, and each ordinary action verb is localized around the protected farming terms.",
+          "“safe” remains attached to “compost”; candidate adds no composting method, outcome, or safety guarantee.",
+          "Unreviewed language wording; local fluent and soil-practice review remains necessary."
+        ],
+        "actionOrder": [
+          "learn to read soil",
+          "make safe compost",
+          "protect bare ground",
+          "use cover crops and worm farms"
+        ],
+        "orderedTechnicalTerms": [
+          "soil",
+          "safe compost",
+          "bare ground",
+          "cover crops",
+          "worm farms"
+        ]
+      },
+      "consolidationNote": "Replaced prior slide 1/body part 2 candidate with independently checked fuller candidate; source, target key, and english-hold status unchanged."
+    },
+    {
+      "languageCode": "ve",
+      "languageName": "Tshivenda",
+      "moduleId": "soil-health",
+      "slideNumber": 2,
+      "slideFrameIndex": 1,
+      "bodyPartIndex": 1,
+      "fieldPath": "slides[1].target.body[1]",
+      "canonicalSourceFile": "docs/narration/soil-health.en.md",
+      "pairedRendererInput": "docs/narration/soil-health.ve.paired-draft.json",
+      "pairedSourceExactEnglish": "Repeated bare ground, compaction and loss of organic matter can damage it. Colour alone does not tell the whole story.",
+      "currentRegionalText": null,
+      "currentRegionalStatus": "english-hold",
+      "candidate": "Repeated bare ground, compaction and loss of organic matter can damage it. Muvhala u woṱhe a u sumbedzi zwoṱhe.",
+      "drafterBacktranslation": "Repeated bare ground, compaction and loss of organic matter can damage it. Colour alone does not tell the whole story.",
+      "conditionsAndUncertainty": "Keeps the risk claim exact; translates only the ordinary color observation.",
+      "reviewStatus": "unreviewed machine-draft candidate; independently backchecked with review flags",
+      "renderedSlideAsset": "public/course-decks/soil-health/ve/slide-02.webp",
+      "independentBackcheck": {
+        "decision": "accept with review flags; candidate remains an unreviewed machine draft",
+        "reviewFlags": [
+          "Full causal damage clause remains exact English. Only the ordinary color-observation sentence is translated."
+        ]
+      }
+    },
+    {
+      "languageCode": "ve",
+      "languageName": "Tshivenda",
+      "moduleId": "soil-health",
+      "slideNumber": 5,
+      "slideFrameIndex": 4,
+      "bodyPartIndex": 1,
+      "fieldPath": "slides[4].target.body[1]",
+      "canonicalSourceFile": "docs/narration/soil-health.en.md",
+      "pairedRendererInput": "docs/narration/soil-health.ve.paired-draft.json",
+      "pairedSourceExactEnglish": "First, look at soil structure. In the field, feel how a moist piece breaks apart.",
+      "currentRegionalText": null,
+      "currentRegionalStatus": "english-hold",
+      "candidate": "Tsha u thoma, lavhelesani soil structure. Musi ni tshi vha tsimuni, pfelelani uri tshipiḓa tsha mavu o tsakamaho tshi kwashea hani.",
+      "drafterBacktranslation": "First, look at soil structure. In the field, feel how a moist piece of soil breaks apart.",
+      "conditionsAndUncertainty": "Keeps soil structure as English technical vocabulary; candidate expresses the field/touch observation only.",
+      "reviewStatus": "unreviewed machine-draft candidate; independently backchecked with review flags",
+      "renderedSlideAsset": "public/course-decks/soil-health/ve/slide-05.webp",
+      "independentBackcheck": {
+        "decision": "accept with review flags; candidate remains an unreviewed machine draft",
+        "reviewFlags": [
+          "No diagnosis is added. Check that “moist” remains damp rather than saturated; “soil” is made explicit for “piece” in context."
+        ]
+      }
+    },
+    {
+      "languageCode": "ve",
+      "languageName": "Tshivenda",
+      "moduleId": "soil-health",
+      "slideNumber": 19,
+      "slideFrameIndex": 18,
+      "bodyPartIndex": 1,
+      "fieldPath": "slides[18].target.body[1]",
+      "canonicalSourceFile": "docs/narration/soil-health.en.md",
+      "pairedRendererInput": "docs/narration/soil-health.ve.paired-draft.json",
+      "pairedSourceExactEnglish": "Compare another spot and note recent weather and management.",
+      "currentRegionalText": null,
+      "currentRegionalStatus": "english-hold",
+      "candidate": "Vhambedzani na uṅwe fhethu, ni ṱhogomele weather ya zwinozwino na management.",
+      "drafterBacktranslation": "Compare another spot, and take note of recent weather and management.",
+      "conditionsAndUncertainty": "Preserves comparison with another spot and recent weather/management; management stays English.",
+      "reviewStatus": "unreviewed machine-draft candidate; independently backchecked with review flags",
+      "renderedSlideAsset": "public/course-decks/soil-health/ve/slide-19.webp",
+      "independentBackcheck": {
+        "decision": "accept with review flags; candidate remains an unreviewed machine draft",
+        "reviewFlags": [
+          "Comparison remains with another spot; recent weather and management are named, with management retained exact English."
+        ]
+      }
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "Xitsonga",
+      "moduleId": "soil-health",
+      "slideNumber": 1,
+      "slideFrameIndex": 0,
+      "bodyPartIndex": 1,
+      "fieldPath": "slides[0].target.body[1]",
+      "canonicalSourceFile": "docs/narration/soil-health.en.md",
+      "pairedRendererInput": "docs/narration/soil-health.ts.paired-draft.json",
+      "pairedSourceExactEnglish": "It is a living place that feeds crops, holds water, and carries your harvest.",
+      "currentRegionalText": null,
+      "currentRegionalStatus": "english-hold",
+      "candidate": "I ndhawu leyi hanyaka leyi yi phamelaka crops, yi hlayisaka mati, naswona yi rhwalaka ntshovelo wa wena.",
+      "drafterBacktranslation": "It is a living place that feeds crops, holds water, and carries your harvest.",
+      "conditionsAndUncertainty": "Keeps crops as an ordinary farming term; retains feed, hold and carry. Check that the harvest metaphor is natural locally.",
+      "reviewStatus": "unreviewed machine-draft candidate; independently backchecked with review flags",
+      "renderedSlideAsset": "public/course-decks/soil-health/ts/slide-01.webp",
+      "independentBackcheck": {
+        "decision": "accept with review flags; candidate remains an unreviewed machine draft",
+        "reviewFlags": [
+          "The “carries your harvest” analogy is retained; a local reviewer should confirm its naturalness and intended sense."
+        ]
+      }
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "Xitsonga",
+      "moduleId": "soil-health",
+      "slideNumber": 1,
+      "slideFrameIndex": 0,
+      "bodyPartIndex": 2,
+      "fieldPath": "slides[0].target.body[2]",
+      "canonicalSourceFile": "docs/narration/soil-health.en.md",
+      "pairedRendererInput": "docs/narration/soil-health.ts.paired-draft.json",
+      "pairedSourceExactEnglish": "In this module, learn to read soil, make safe compost, protect bare ground, and use cover crops and worm farms.",
+      "currentRegionalText": null,
+      "currentRegionalStatus": "english-hold",
+      "candidate": "Eka modulu leyi, dyondza ku hlaya soil, ku endla safe compost, ku sirhelela bare ground, ni ku tirhisa cover crops na worm farms.",
+      "drafterBacktranslation": "In this module, learn to read soil, make safe compost, protect bare ground, and use cover crops and worm farms.",
+      "conditionsAndUncertainty": "Ordinary framing and each action verb are localized in source order: learn/read soil; make safe compost; protect bare ground; use cover crops and worm farms. The difficult terms soil, safe compost, bare ground, cover crops, and worm farms stay exact English. No outcome or safety guarantee is added. Unreviewed machine candidate; local language and soil-practice review still required.",
+      "reviewStatus": "unreviewed machine-draft candidate; independent source/meaning backcheck accepted with review flags",
+      "renderedSlideAsset": "public/course-decks/soil-health/ts/slide-01.webp",
+      "previousCandidate": "Eka modulu leyi, dyondza ku read soil; make safe compost, protect bare ground, ni ku tirhisa cover crops na worm farms.",
+      "independentBackcheck": {
+        "decision": "accept with review flags",
+        "reviewFlags": [
+          "All five actions are retained in source order, and each ordinary action verb is localized around the protected farming terms.",
+          "“safe” remains attached to “compost”; candidate adds no composting method, outcome, or safety guarantee.",
+          "Unreviewed language wording; local fluent and soil-practice review remains necessary."
+        ],
+        "actionOrder": [
+          "learn to read soil",
+          "make safe compost",
+          "protect bare ground",
+          "use cover crops and worm farms"
+        ],
+        "orderedTechnicalTerms": [
+          "soil",
+          "safe compost",
+          "bare ground",
+          "cover crops",
+          "worm farms"
+        ]
+      },
+      "consolidationNote": "Replaced prior slide 1/body part 2 candidate with independently checked fuller candidate; source, target key, and english-hold status unchanged."
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "Xitsonga",
+      "moduleId": "soil-health",
+      "slideNumber": 2,
+      "slideFrameIndex": 1,
+      "bodyPartIndex": 1,
+      "fieldPath": "slides[1].target.body[1]",
+      "canonicalSourceFile": "docs/narration/soil-health.en.md",
+      "pairedRendererInput": "docs/narration/soil-health.ts.paired-draft.json",
+      "pairedSourceExactEnglish": "Repeated bare ground, compaction and loss of organic matter can damage it. Colour alone does not tell the whole story.",
+      "currentRegionalText": null,
+      "currentRegionalStatus": "english-hold",
+      "candidate": "Repeated bare ground, compaction and loss of organic matter can damage it. Muhlovo ntsena a wu kombisi mhaka leyi heleleke.",
+      "drafterBacktranslation": "Repeated bare ground, compaction and loss of organic matter can damage it. Colour alone does not tell the whole story.",
+      "conditionsAndUncertainty": "Keeps the risk claim exact; translates only the ordinary color observation.",
+      "reviewStatus": "unreviewed machine-draft candidate; independently backchecked with review flags",
+      "renderedSlideAsset": "public/course-decks/soil-health/ts/slide-02.webp",
+      "independentBackcheck": {
+        "decision": "accept with review flags; candidate remains an unreviewed machine draft",
+        "reviewFlags": [
+          "Full causal damage clause remains exact English. Only the ordinary color-observation sentence is translated."
+        ]
+      }
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "Xitsonga",
+      "moduleId": "soil-health",
+      "slideNumber": 5,
+      "slideFrameIndex": 4,
+      "bodyPartIndex": 1,
+      "fieldPath": "slides[4].target.body[1]",
+      "canonicalSourceFile": "docs/narration/soil-health.en.md",
+      "pairedRendererInput": "docs/narration/soil-health.ts.paired-draft.json",
+      "pairedSourceExactEnglish": "First, look at soil structure. In the field, feel how a moist piece breaks apart.",
+      "currentRegionalText": null,
+      "currentRegionalStatus": "english-hold",
+      "candidate": "Xosungula, languta soil structure. Loko u ri ensin’wini, twa ndlela leyi xiphemu xa misava lexi tsakamaka xi hambanaka ha yona.",
+      "drafterBacktranslation": "First, look at soil structure. In the field, feel how a moist piece of soil breaks apart.",
+      "conditionsAndUncertainty": "Keeps soil structure as English technical vocabulary; translates the field/touch observation without adding a diagnostic claim.",
+      "reviewStatus": "unreviewed machine-draft candidate; independently backchecked with review flags",
+      "renderedSlideAsset": "public/course-decks/soil-health/ts/slide-05.webp",
+      "independentBackcheck": {
+        "decision": "accept with review flags; candidate remains an unreviewed machine draft",
+        "reviewFlags": [
+          "No diagnosis is added. Check that “moist” remains damp rather than saturated; “soil” is made explicit for “piece” in context."
+        ]
+      }
+    },
+    {
+      "languageCode": "ts",
+      "languageName": "Xitsonga",
+      "moduleId": "soil-health",
+      "slideNumber": 19,
+      "slideFrameIndex": 18,
+      "bodyPartIndex": 1,
+      "fieldPath": "slides[18].target.body[1]",
+      "canonicalSourceFile": "docs/narration/soil-health.en.md",
+      "pairedRendererInput": "docs/narration/soil-health.ts.paired-draft.json",
+      "pairedSourceExactEnglish": "Compare another spot and note recent weather and management.",
+      "currentRegionalText": null,
+      "currentRegionalStatus": "english-hold",
+      "candidate": "Fananisa ni ndhawu yin’wana, u tekela enhlokweni maxelo ya sweswinyana na management.",
+      "drafterBacktranslation": "Compare another spot, and take note of recent weather and management.",
+      "conditionsAndUncertainty": "Preserves comparison with another spot and recent weather/management; management remains English.",
+      "reviewStatus": "unreviewed machine-draft candidate; independently backchecked with review flags",
+      "renderedSlideAsset": "public/course-decks/soil-health/ts/slide-19.webp",
+      "independentBackcheck": {
+        "decision": "accept with review flags; candidate remains an unreviewed machine draft",
+        "reviewFlags": [
+          "Comparison remains with another spot; recent weather and management are named, with management retained exact English."
+        ]
+      }
+    }
+  ],
+  "pairedInputs": [
+    {
+      "language": "st",
+      "path": "docs/narration/soil-health.st.paired-draft.json",
+      "baselineSha256": "686c507563f41c068b4c82f290993d950d7d4130c2bdbcf8a504c5edde6e9b89",
+      "currentSha256": "5da43b20af88c32d40b85fc494604d6063e60f6a7d6c3af9cfdb02da1eb72679",
+      "baselineSlidesSha256": "fcfb712f4427dc4b5e2fdb22bbca21c4959af19002514bcac6232b982b760ad2",
+      "reconstructedSlidesSha256": "fcfb712f4427dc4b5e2fdb22bbca21c4959af19002514bcac6232b982b760ad2"
+    },
+    {
+      "language": "ve",
+      "path": "docs/narration/soil-health.ve.paired-draft.json",
+      "baselineSha256": "e635d3b199f12721f0018ac622fd90dbe8051acf9750169ef3b2a19e5e1142fd",
+      "currentSha256": "4418bd70de311b998e68548dd19f5cf4bfdfd6972e6cf559f0c9d7caac10c2f1",
+      "baselineSlidesSha256": "e44fd2890c4182be080fe63e61d0bb39977bc09de1717d194f238e820dcc9116",
+      "reconstructedSlidesSha256": "e44fd2890c4182be080fe63e61d0bb39977bc09de1717d194f238e820dcc9116"
+    },
+    {
+      "language": "ts",
+      "path": "docs/narration/soil-health.ts.paired-draft.json",
+      "baselineSha256": "55bf4fe533d9ab634280fee71b40c590a7c252535fa8003188eda6e9bfb145e6",
+      "currentSha256": "5e52ba2ee2c0cbf91fe835431d4bce1e15fa4acec73ffb6a3893fcd59572bd84",
+      "baselineSlidesSha256": "0303e601ac11e702a5d8ad356cce70970d8ec9cfb569866582d7fa296077a380",
+      "reconstructedSlidesSha256": "0303e601ac11e702a5d8ad356cce70970d8ec9cfb569866582d7fa296077a380"
+    }
+  ],
+  "canonicalSource": {
+    "path": "docs/narration/soil-health.en.md",
+    "sha256": "9c0eb67c153b0ff35fce26d9e97fb36ee4ebe196e9a38e695c31adb7de4d47ea",
+    "baselineSha256": "9c0eb67c153b0ff35fce26d9e97fb36ee4ebe196e9a38e695c31adb7de4d47ea"
+  },
+  "changedAssets": [
+    {
+      "path": "public/course-decks/soil-health/st/slide-01.webp",
+      "sha256": "c8a1ecd8af4ec996de8baff9b33d10126032c5bdf511dae6ed8b17776f3755fc",
+      "bytes": 292856,
+      "baselineSha256": "bad8522b399e7783320c5a07dba2e295a7645033873a807f271e5e5c88693b0d",
+      "baselineBytes": 301620,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "format": "WEBP"
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-02.webp",
+      "sha256": "b498da74a840a6120c750d587da15e668dfa5406f4e9cab3660ccfb43e49ec3f",
+      "bytes": 203032,
+      "baselineSha256": "c2f35962414322d38ca5949bd542d5de151312e980f64411d3ae77dac55f39c4",
+      "baselineBytes": 183018,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "format": "WEBP"
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-05.webp",
+      "sha256": "e6b758800347eb78f7663109f6c2ca37520fe2f6cb7af2c3af6fba82444a2c93",
+      "bytes": 494012,
+      "baselineSha256": "91751ae6bdd061c9855a4a3a0c0df2d26ad77de3dabddb3d376bb5191220fee8",
+      "baselineBytes": 496186,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "format": "WEBP"
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-19.webp",
+      "sha256": "f0a049b327b8f32b0a9164be95eb90a043a523060bc67e95ddfba0c641aae78e",
+      "bytes": 239002,
+      "baselineSha256": "5d982f9a09c1388fea3054b0dabb31d233190f1eeb728f5a11015fa7f67d97d2",
+      "baselineBytes": 235408,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "format": "WEBP"
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-01.webp",
+      "sha256": "0feac139a5d6069592dca67d1e3b159aa0ffdc4a58b5870aef5c71002de8067c",
+      "bytes": 294586,
+      "baselineSha256": "8e7a144a3c274aefb5f6649f8b2d885c3a425848378c12ecea0e24307e89eba7",
+      "baselineBytes": 246338,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "format": "WEBP"
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-02.webp",
+      "sha256": "759789f447b4cf73548832b20a23c77532ed9fba5e7d74c829cb9607a9a1c464",
+      "bytes": 204700,
+      "baselineSha256": "00b5f91ddf846b1fd8576a354507d0b388310cd9ceae7cfeb8dabffa91a8d823",
+      "baselineBytes": 184496,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "format": "WEBP"
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-05.webp",
+      "sha256": "b47db4a412c289d14a5d5347459bcd62b6099c03879dc814500029609fa35f89",
+      "bytes": 504088,
+      "baselineSha256": "5860c23cd46c5442d588ae0c2e31402c295174292f949dfbc1ab7a0a580ae1e8",
+      "baselineBytes": 498712,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "format": "WEBP"
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-19.webp",
+      "sha256": "79c6715172d7f184870143b9943681f3412040a9e504e0fdbf997eeebc1fd3a0",
+      "bytes": 237298,
+      "baselineSha256": "c25b3c15f2cc81789bbdcf01b321fd4d9b3a084da0209061fb31c7b253d6ab3e",
+      "baselineBytes": 235824,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "format": "WEBP"
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-01.webp",
+      "sha256": "d66511853ab5374a7ff4bf30ccdc336b254229a1469b298b000f3969636bfbb0",
+      "bytes": 301798,
+      "baselineSha256": "6f53fb2688cecd69c3f529b85c82db64df9e2419c359c7ec59c8ed79b713d1d5",
+      "baselineBytes": 304324,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "format": "WEBP"
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-02.webp",
+      "sha256": "3c1d47777a37f8521f44320b3127973e60d947008785dfdbc8527e61d14797d0",
+      "bytes": 215968,
+      "baselineSha256": "3220afb6e604270acb7c462a4c211d289179fa896fe3003ef49038fb087adcb9",
+      "baselineBytes": 222770,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "format": "WEBP"
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-05.webp",
+      "sha256": "f75898c08245f784f9fe7f74562f4717513d4b9439452b9485a2190eb1cc24f4",
+      "bytes": 505286,
+      "baselineSha256": "94d906537ba862fcbfc8867e910aa51a6eccc45e8648850fc92c2e5f79352996",
+      "baselineBytes": 499706,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "format": "WEBP"
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-19.webp",
+      "sha256": "9769824c3af18066f62fc10decd51d0238560d1ce99c75c9c9da7daf24e51a71",
+      "bytes": 237284,
+      "baselineSha256": "f4bd4af99536304361c58341fa92951b600d29157ba813c5f08e78f761416bef",
+      "baselineBytes": 234234,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "format": "WEBP"
+    }
+  ],
+  "preservedRegionalAssets": [
+    {
+      "path": "public/course-decks/soil-health/st/slide-03.webp",
+      "sha256": "e02dd6969d85e9518e09438825b36404dedef0e9bfdf76c2420dbe1c5320c81d",
+      "bytes": 203852,
+      "baselineSha256": "e02dd6969d85e9518e09438825b36404dedef0e9bfdf76c2420dbe1c5320c81d",
+      "baselineBytes": 203852
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-04.webp",
+      "sha256": "6e5ffba8ddc3b7d946b80e158104321785dd7e5e1f77e676038b2e659193bb53",
+      "bytes": 229520,
+      "baselineSha256": "6e5ffba8ddc3b7d946b80e158104321785dd7e5e1f77e676038b2e659193bb53",
+      "baselineBytes": 229520
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-06.webp",
+      "sha256": "d012ea7326c93bc05d7adddc4d21bd5fea85d515d2b246ef061ebad5b47e3509",
+      "bytes": 393576,
+      "baselineSha256": "d012ea7326c93bc05d7adddc4d21bd5fea85d515d2b246ef061ebad5b47e3509",
+      "baselineBytes": 393576
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-07.webp",
+      "sha256": "55e6e1eb0c305f6d0567b3274cf578c1d5b18d37dda7c6c6fc3af55f26094182",
+      "bytes": 254360,
+      "baselineSha256": "55e6e1eb0c305f6d0567b3274cf578c1d5b18d37dda7c6c6fc3af55f26094182",
+      "baselineBytes": 254360
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-08.webp",
+      "sha256": "ac71f2bfa889bc902753e1b0570d986dc5e444a95a93ae365a144dc5137a96fb",
+      "bytes": 578780,
+      "baselineSha256": "ac71f2bfa889bc902753e1b0570d986dc5e444a95a93ae365a144dc5137a96fb",
+      "baselineBytes": 578780
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-09.webp",
+      "sha256": "ab64fed56d56a26121bf30352482ce1c4cd2a38db1e91a3faeb6c2f9495aa9cd",
+      "bytes": 268680,
+      "baselineSha256": "ab64fed56d56a26121bf30352482ce1c4cd2a38db1e91a3faeb6c2f9495aa9cd",
+      "baselineBytes": 268680
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-10.webp",
+      "sha256": "4733af1941c88e94ff29152975645c63f187f86b6e2428a60438cb2795c90d70",
+      "bytes": 182962,
+      "baselineSha256": "4733af1941c88e94ff29152975645c63f187f86b6e2428a60438cb2795c90d70",
+      "baselineBytes": 182962
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-11.webp",
+      "sha256": "61fbc67b74ef875b18a3fb01111c3b16995686631666a9d9b591960037e97801",
+      "bytes": 557614,
+      "baselineSha256": "61fbc67b74ef875b18a3fb01111c3b16995686631666a9d9b591960037e97801",
+      "baselineBytes": 557614
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-12.webp",
+      "sha256": "6a37fea6341376d9ec7a952a3f7cce53654ac8622a5b1cda298b6964f1b6dbf3",
+      "bytes": 311318,
+      "baselineSha256": "6a37fea6341376d9ec7a952a3f7cce53654ac8622a5b1cda298b6964f1b6dbf3",
+      "baselineBytes": 311318
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-13.webp",
+      "sha256": "79e9b14b3a5532d9f44ffd66820bcea4c4a46813508e8e5500b49d8e2ecde9a6",
+      "bytes": 279812,
+      "baselineSha256": "79e9b14b3a5532d9f44ffd66820bcea4c4a46813508e8e5500b49d8e2ecde9a6",
+      "baselineBytes": 279812
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-14.webp",
+      "sha256": "da2ad348a5f179d9cad3e1b173c7c6d20da9577695629b5a1bff128137da5950",
+      "bytes": 199802,
+      "baselineSha256": "da2ad348a5f179d9cad3e1b173c7c6d20da9577695629b5a1bff128137da5950",
+      "baselineBytes": 199802
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-15.webp",
+      "sha256": "8b0daaa8406cccb52e0ca3350d0aa2acbc612d5286ff0eed968cf4d2cf5de6d0",
+      "bytes": 526996,
+      "baselineSha256": "8b0daaa8406cccb52e0ca3350d0aa2acbc612d5286ff0eed968cf4d2cf5de6d0",
+      "baselineBytes": 526996
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-16.webp",
+      "sha256": "0261355bdc3bb5e16499047ef9f56fa774e405f41407df1d28f404ff19d4344c",
+      "bytes": 555086,
+      "baselineSha256": "0261355bdc3bb5e16499047ef9f56fa774e405f41407df1d28f404ff19d4344c",
+      "baselineBytes": 555086
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-17.webp",
+      "sha256": "429dd12ebd74125c579caf1bff1966d3bbf1d3d0b11bf46054e3713634d0f64a",
+      "bytes": 534468,
+      "baselineSha256": "429dd12ebd74125c579caf1bff1966d3bbf1d3d0b11bf46054e3713634d0f64a",
+      "baselineBytes": 534468
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-18.webp",
+      "sha256": "d53b6b6683ec22b14cbdf4a6211e55ecb7a91065e8636642958a19be2ea11305",
+      "bytes": 495908,
+      "baselineSha256": "d53b6b6683ec22b14cbdf4a6211e55ecb7a91065e8636642958a19be2ea11305",
+      "baselineBytes": 495908
+    },
+    {
+      "path": "public/course-decks/soil-health/st/slide-20.webp",
+      "sha256": "d5b188a4e8de846831f0bc4c310df9aedda5bafa8a32db143cc6f41d2615c8bc",
+      "bytes": 243848,
+      "baselineSha256": "d5b188a4e8de846831f0bc4c310df9aedda5bafa8a32db143cc6f41d2615c8bc",
+      "baselineBytes": 243848
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-03.webp",
+      "sha256": "52be080e4c4f85fc4a5a2aa04b070f977593f083271ce5ededf71371b305026b",
+      "bytes": 206032,
+      "baselineSha256": "52be080e4c4f85fc4a5a2aa04b070f977593f083271ce5ededf71371b305026b",
+      "baselineBytes": 206032
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-04.webp",
+      "sha256": "633db235b3b7ac7491c92cf2f7b7da157820d3bf83d687fcca19ba88e95a3c5b",
+      "bytes": 233190,
+      "baselineSha256": "633db235b3b7ac7491c92cf2f7b7da157820d3bf83d687fcca19ba88e95a3c5b",
+      "baselineBytes": 233190
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-06.webp",
+      "sha256": "5376cecdd63587895db822095181ae4371f42e479325b227173eb1af715dbe07",
+      "bytes": 321406,
+      "baselineSha256": "5376cecdd63587895db822095181ae4371f42e479325b227173eb1af715dbe07",
+      "baselineBytes": 321406
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-07.webp",
+      "sha256": "85649480d21252430a90dc6ad434e267179a6b30be75e95e1430600f75e097e6",
+      "bytes": 213154,
+      "baselineSha256": "85649480d21252430a90dc6ad434e267179a6b30be75e95e1430600f75e097e6",
+      "baselineBytes": 213154
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-08.webp",
+      "sha256": "d16afa1576b36db6f9d7d500f2925710e338e7099d5dc338d8318cb833dcf8af",
+      "bytes": 470114,
+      "baselineSha256": "d16afa1576b36db6f9d7d500f2925710e338e7099d5dc338d8318cb833dcf8af",
+      "baselineBytes": 470114
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-09.webp",
+      "sha256": "039a631264c20b1ceb14a17feb083663354725fa2a38a254ae47001bcc26e00e",
+      "bytes": 224038,
+      "baselineSha256": "039a631264c20b1ceb14a17feb083663354725fa2a38a254ae47001bcc26e00e",
+      "baselineBytes": 224038
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-10.webp",
+      "sha256": "d4b5ec6481e436f97a05302114346b88efb09d51767b689aed7ea24c34ec544b",
+      "bytes": 153480,
+      "baselineSha256": "d4b5ec6481e436f97a05302114346b88efb09d51767b689aed7ea24c34ec544b",
+      "baselineBytes": 153480
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-11.webp",
+      "sha256": "b2a5fc0f01cab211d7f20c138fb76dde59a584fb43ed1d42e43d20b55a5ecc4c",
+      "bytes": 451540,
+      "baselineSha256": "b2a5fc0f01cab211d7f20c138fb76dde59a584fb43ed1d42e43d20b55a5ecc4c",
+      "baselineBytes": 451540
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-12.webp",
+      "sha256": "15a1c5d31abd3ae6cfe33ea5ffa4dece331552985874f5cc26fc86ee7ea31f14",
+      "bytes": 259924,
+      "baselineSha256": "15a1c5d31abd3ae6cfe33ea5ffa4dece331552985874f5cc26fc86ee7ea31f14",
+      "baselineBytes": 259924
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-13.webp",
+      "sha256": "1889ca7fc0a84fabb1491165c70bb4e7dfd6407ab668f1f4e5d32b2080c91524",
+      "bytes": 233342,
+      "baselineSha256": "1889ca7fc0a84fabb1491165c70bb4e7dfd6407ab668f1f4e5d32b2080c91524",
+      "baselineBytes": 233342
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-14.webp",
+      "sha256": "cc45b976bff1b147378ac43b49f1e06234c8f00aabce198616e6278cb7751535",
+      "bytes": 202276,
+      "baselineSha256": "cc45b976bff1b147378ac43b49f1e06234c8f00aabce198616e6278cb7751535",
+      "baselineBytes": 202276
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-15.webp",
+      "sha256": "c3e0c9e54065ba96ba10b43acb743d833ce599d76642dff54aa54296ecba4cb7",
+      "bytes": 525636,
+      "baselineSha256": "c3e0c9e54065ba96ba10b43acb743d833ce599d76642dff54aa54296ecba4cb7",
+      "baselineBytes": 525636
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-16.webp",
+      "sha256": "6f6694aa70e9d8d243fdd82d03f97c07a634b043341a66e5f98b4fce71a5f3d3",
+      "bytes": 445382,
+      "baselineSha256": "6f6694aa70e9d8d243fdd82d03f97c07a634b043341a66e5f98b4fce71a5f3d3",
+      "baselineBytes": 445382
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-17.webp",
+      "sha256": "865ef6dd3972f255dcd838c591e112ba395d6929000dc71cea4b7592739572f8",
+      "bytes": 431786,
+      "baselineSha256": "865ef6dd3972f255dcd838c591e112ba395d6929000dc71cea4b7592739572f8",
+      "baselineBytes": 431786
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-18.webp",
+      "sha256": "627ec7d35f5c2e872b952e47c09770d6c95ba695b1aeb01f08aa2ecadb0c73b0",
+      "bytes": 497588,
+      "baselineSha256": "627ec7d35f5c2e872b952e47c09770d6c95ba695b1aeb01f08aa2ecadb0c73b0",
+      "baselineBytes": 497588
+    },
+    {
+      "path": "public/course-decks/soil-health/ve/slide-20.webp",
+      "sha256": "ff9bbd072a94c9dfac3657c12e26960f63bc656f9da7ec017b1e931cbcf9c2e8",
+      "bytes": 243836,
+      "baselineSha256": "ff9bbd072a94c9dfac3657c12e26960f63bc656f9da7ec017b1e931cbcf9c2e8",
+      "baselineBytes": 243836
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-03.webp",
+      "sha256": "94ee5cf98b1f6b2a85f0ee098df3f8c1143bc9bd43d6fd90be425793a36092ab",
+      "bytes": 211840,
+      "baselineSha256": "94ee5cf98b1f6b2a85f0ee098df3f8c1143bc9bd43d6fd90be425793a36092ab",
+      "baselineBytes": 211840
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-04.webp",
+      "sha256": "66cc6b9908f6df355acafe4b1f16c99db1a8d7ec0b37e6d10ff15059f38b7620",
+      "bytes": 234660,
+      "baselineSha256": "66cc6b9908f6df355acafe4b1f16c99db1a8d7ec0b37e6d10ff15059f38b7620",
+      "baselineBytes": 234660
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-06.webp",
+      "sha256": "128321c8808b7d639ee959f6f31daaa578a3279d02fd53d85f101e0d22fbb264",
+      "bytes": 394282,
+      "baselineSha256": "128321c8808b7d639ee959f6f31daaa578a3279d02fd53d85f101e0d22fbb264",
+      "baselineBytes": 394282
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-07.webp",
+      "sha256": "a9c5424356be560158205ab7d1860e5f8c55cd5e1131013bcf826f7353ebc201",
+      "bytes": 254320,
+      "baselineSha256": "a9c5424356be560158205ab7d1860e5f8c55cd5e1131013bcf826f7353ebc201",
+      "baselineBytes": 254320
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-08.webp",
+      "sha256": "dbf883e9595be67f92b16d40c225e32fa1a8445db7da64df840f9efb056b0031",
+      "bytes": 581760,
+      "baselineSha256": "dbf883e9595be67f92b16d40c225e32fa1a8445db7da64df840f9efb056b0031",
+      "baselineBytes": 581760
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-09.webp",
+      "sha256": "875445fad9cae4a82b549bad5f8b77292b9bba3d62469b2d9190b4907bb809c2",
+      "bytes": 273166,
+      "baselineSha256": "875445fad9cae4a82b549bad5f8b77292b9bba3d62469b2d9190b4907bb809c2",
+      "baselineBytes": 273166
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-10.webp",
+      "sha256": "1c6edafc5a02004ad8d627bb61f2a1ccf34a05e40608eff6ede18266b7171574",
+      "bytes": 183708,
+      "baselineSha256": "1c6edafc5a02004ad8d627bb61f2a1ccf34a05e40608eff6ede18266b7171574",
+      "baselineBytes": 183708
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-11.webp",
+      "sha256": "09dea54d2fad2887d7b57dac4a714b9f99ded08c75cbec978cc97f8e6ed64919",
+      "bytes": 558610,
+      "baselineSha256": "09dea54d2fad2887d7b57dac4a714b9f99ded08c75cbec978cc97f8e6ed64919",
+      "baselineBytes": 558610
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-12.webp",
+      "sha256": "40845a27173865ca4f41f7cfe225d739eb51d0013aa19092739d321b9dbd86d0",
+      "bytes": 311954,
+      "baselineSha256": "40845a27173865ca4f41f7cfe225d739eb51d0013aa19092739d321b9dbd86d0",
+      "baselineBytes": 311954
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-13.webp",
+      "sha256": "749f06b089dea2bf906ec9da755f11f365b6f4f5179d726ee6f6d553b26e7aab",
+      "bytes": 280750,
+      "baselineSha256": "749f06b089dea2bf906ec9da755f11f365b6f4f5179d726ee6f6d553b26e7aab",
+      "baselineBytes": 280750
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-14.webp",
+      "sha256": "f7a484058d1dc2aa6e62386f4e5cbf7c2b8e15c32949e7307f9e2b8e4adb3f12",
+      "bytes": 203436,
+      "baselineSha256": "f7a484058d1dc2aa6e62386f4e5cbf7c2b8e15c32949e7307f9e2b8e4adb3f12",
+      "baselineBytes": 203436
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-15.webp",
+      "sha256": "c9b14dca186958cfcbb50c1a6f4463dad9606bbecc6ff8531bf8cc3c66efd085",
+      "bytes": 522880,
+      "baselineSha256": "c9b14dca186958cfcbb50c1a6f4463dad9606bbecc6ff8531bf8cc3c66efd085",
+      "baselineBytes": 522880
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-16.webp",
+      "sha256": "0ff6a09d400aa4ca50c5cdb2fd4681e5be7a4134aebecdef14fa91a4404ee38d",
+      "bytes": 556034,
+      "baselineSha256": "0ff6a09d400aa4ca50c5cdb2fd4681e5be7a4134aebecdef14fa91a4404ee38d",
+      "baselineBytes": 556034
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-17.webp",
+      "sha256": "b6da73ef242ad0b9bcf670f5046967c0dfce68393c0941e9750d83fc1824d080",
+      "bytes": 535128,
+      "baselineSha256": "b6da73ef242ad0b9bcf670f5046967c0dfce68393c0941e9750d83fc1824d080",
+      "baselineBytes": 535128
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-18.webp",
+      "sha256": "612c51f183fa27d1ee5ab9272b9af8f2c9c4b2fad72ad5f1869a407002d3b362",
+      "bytes": 507096,
+      "baselineSha256": "612c51f183fa27d1ee5ab9272b9af8f2c9c4b2fad72ad5f1869a407002d3b362",
+      "baselineBytes": 507096
+    },
+    {
+      "path": "public/course-decks/soil-health/ts/slide-20.webp",
+      "sha256": "7cd6cb7466e3a8793a7a7cd5fa2a49724faca055cca073873ecd9dcce603af1d",
+      "bytes": 244612,
+      "baselineSha256": "7cd6cb7466e3a8793a7a7cd5fa2a49724faca055cca073873ecd9dcce603af1d",
+      "baselineBytes": 244612
+    }
+  ],
+  "preservedEnglishArt": [
+    {
+      "path": "public/course-decks/soil-health/en/slide-01.jpg",
+      "sha256": "469fbca64085c06768260ebb8709955eab99924a012f9c32773063673b3f22c3",
+      "bytes": 373121
+    },
+    {
+      "path": "public/course-decks/soil-health/en/slide-02.jpg",
+      "sha256": "2f3295362adefb9fc250fedc2cfd7f796b86e1119aadf383a9c2cb7ece10705f",
+      "bytes": 108169
+    },
+    {
+      "path": "public/course-decks/soil-health/en/slide-05.jpg",
+      "sha256": "046f74aeb49befbfee33934a7a04d654466c027be75ab2c7fc6a204166e0766a",
+      "bytes": 701546
+    },
+    {
+      "path": "public/course-decks/soil-health/en/slide-19.jpg",
+      "sha256": "987a29a9417f03b74a642f9583517819067c62ec4fb024f0756abff9ff250a59",
+      "bytes": 88867
+    }
+  ],
+  "assetSizeManifest": {
+    "path": "lib/course-asset-sizes.ts",
+    "baselineSha256": "70ceaf0f06c636e46b53e777032447654f4efa5406f2bf1435d66c0bb14204bf",
+    "currentSha256": "e5de82af67d7e95351cf5febf2cbefab103f44cf992e9f99ad69757e715f32f4"
+  },
+  "visualReview": {
+    "reviewer": "root actual image inspection",
+    "status": "unreviewed language draft; visual layout checked only",
+    "framesViewed": {
+      "st": [
+        1,
+        2,
+        5,
+        19
+      ],
+      "ve": [
+        1,
+        2,
+        5,
+        19
+      ],
+      "ts": [
+        1,
+        2,
+        5,
+        19
+      ]
+    },
+    "inputs": "/tmp/imbewu-soil-health-{st,ve,ts}-review-20261003/slide-{01,02,05,19}.png",
+    "observed": [
+      "All twelve changed images show visible language AI DRAFT / NOT REVIEWED status.",
+      "Target body wording and exact English body panels are legible and unclipped.",
+      "Unchanged English illustrated source remains above both text panels.",
+      "Rust-coloured English holds remain marked.",
+      "Tall static frames require scrolling; they contain the full source without needing narration."
+    ],
+    "notYetVerified": [
+      "Final compressed repository WebPs",
+      "Exact deployed SHA",
+      "390px deployed slide player and offline download"
+    ]
+  },
+  "backchecks": [
+    "/tmp/imbewu-soil-slide-ordinary-backcheck-20261003.json",
+    "/tmp/imbewu-soil-slide-intro-fuller-backcheck-20261003.json"
+  ],
+  "historicalReports": "Existing docs/media/soil-health/qa reports/contact sheets are pre-change snapshots; this dated record supersedes hashes for these selected slides. Historical files remain unchanged.",
+  "reviewStatus": "Unreviewed machine drafts; root viewed all 12 PNGs and compressed slide 05 for all three languages and found copy/status legible and unclipped. No fluent approval claimed.",
+  "pending": [
+    "390px deployed player QA",
+    "offline download/load QA",
+    "exact deployed SHA verification"
+  ]
+}

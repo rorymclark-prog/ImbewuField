@@ -1,0 +1,196 @@
+{
+  "lessonId": "soil-health-l3",
+  "language": "st",
+  "languageName": "Sesotho",
+  "sourceMainSha": "3b1c519ce01f80426ac0efcf0dab25b0236e040d",
+  "status": "unwired-machine-candidate; requires independent semantic backcheck",
+  "scopeNote": "Read-only Sesotho candidate built only after verifying the current registry language is st and the paired field is sesothoDraft. The canonical source and current body source match exactly at 13 paragraphs. Existing translated seasonal-risk paragraphs 10–12 are preserved verbatim; candidate drafts fill English holds in paragraphs 1–9 and 13. This is not fluent-speaker or local agronomic approval.",
+  "body": {
+    "sourceEnglish": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce evaporation, soften the impact of rain and suppress weeds.\n\nKeep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.\n\nCover crops can protect ground between main crops. Choose for local weather, available water and the next planting.\n\nThe course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.\n\nWorm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.\n\nLiquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.\n\nLeachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.\n\nA Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.\n\nCover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+    "currentRegistryDraft": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce evaporation, soften the impact of rain and suppress weeds.\n\nKeep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.\n\nCover crops can protect ground between main crops. Choose for local weather, available water and the next planting.\n\nThe course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.\n\nWorm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.\n\nLiquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.\n\nLeachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.\n\nTšimo ea Highveld e siiloeng e sa koaheloa ka mor’a kotulo ea maize e tobana le likotsi tse peli tse kholo.\n\nMoea oa mariha o ka nka mobu o ommeng o ka holimo.\n\nSefefo sa pele se matla sa selemo se ka otla mobu o sa koaheloang ’me sa senya bokaholimo le sebopeho sa mobu. Ha metsi a phalla holim’a tšimo, a ka nka mobu o khoehileng.\n\nCover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+    "candidateDraft": "Koahela mobu o pepesitsweng ka mulch e hlwekileng e loketseng, jwalo ka straw, dry grass kapa wood chips.\n\nMulch e ka fokotsa evaporation, ya fokotsa matla ao pula e otlang mobu ka ona, mme ya fokotsa kgolo ya mefoka.\n\nE boloke e le hole le trunks and stems. Hlahloba mongobo ka tlasa mulch mme o fetole layer ha ho hlokahala; mulch e ngata ha e dule e le betere.\n\nCover crops di ka sireletsa mobu pakeng tsa main crops. Di kgethe ho latela boemo ba lehodimo ba sebakeng sa heno, metsi a fumanehang le next planting.\n\nMehlala ya thuto ena e kenyelletsa oats, lupins, sunn hemp le cowpea. Hlahloba hore di loketse sebaka sa heno pele o jala.\n\nLegumes di hloka bacteria tse loketseng le maemo a kgolo a loketseng hore di kgone ho fix nitrogen. Dimatlafatsi tse masalleng a tsona di a fumaneha ha thepa eo e ntse e bola.\n\nWorm farms di ka fetola food scraps le bedding tse loketseng hore e be worm castings. Hlahloba bin ho e-na le ho lebella letsatsi le behilweng la kotulo.\n\nMokelikeli o rothang ka tlhaho ho tswa worm bin o bitswa leachate. Ha o tshwane le worm-casting tea e lokisitsweng.\n\nLeachate e ka ba le harmful organisms kapa substances. O se ke wa e sebedisa hodima edible plants kapa wa nahana hore ho e hlapolla ho etsa hore e bolokehe.\n\nTšimo ea Highveld e siiloeng e sa koaheloa ka mor’a kotulo ea maize e tobana le likotsi tse peli tse kholo.\n\nMoea oa mariha o ka nka mobu o ommeng o ka holimo.\n\nSefefo sa pele se matla sa selemo se ka otla mobu o sa koaheloang ’me sa senya bokaholimo le sebopeho sa mobu. Ha metsi a phalla holim’a tšimo, a ka nka mobu o khoehileng.\n\nCover crops, mulch le organic matter di ka thusa ho tshwara mobu sebakeng sa wona le ho o thusa hore o dule o phela.",
+    "paragraphs": [
+      {
+        "index": 1,
+        "sourceEnglish": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.",
+        "currentDraft": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.",
+        "candidateDraft": "Koahela mobu o pepesitsweng ka mulch e hlwekileng e loketseng, jwalo ka straw, dry grass kapa wood chips.",
+        "literalBacktranslation": "Cover exposed soil with suitable clean mulch, such as straw, dry grass or wood chips.",
+        "currentStatus": "exact-English hold",
+        "preservationOrUncertainty": "New draft. Retains bare/exposed soil, suitability and cleanliness, mulch, and all three exact example materials; technical materials stay English."
+      },
+      {
+        "index": 2,
+        "sourceEnglish": "Mulch can reduce evaporation, soften the impact of rain and suppress weeds.",
+        "currentDraft": "Mulch can reduce evaporation, soften the impact of rain and suppress weeds.",
+        "candidateDraft": "Mulch e ka fokotsa evaporation, ya fokotsa matla ao pula e otlang mobu ka ona, mme ya fokotsa kgolo ya mefoka.",
+        "literalBacktranslation": "Mulch can reduce evaporation, reduce the force with which rain hits the soil, and reduce weed growth.",
+        "currentStatus": "exact-English hold",
+        "preservationOrUncertainty": "New draft. Retains can/may, reduced evaporation, softened rain impact and weed suppression. “Reduce weed growth” avoids implying eradication."
+      },
+      {
+        "index": 3,
+        "sourceEnglish": "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.",
+        "currentDraft": "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.",
+        "candidateDraft": "E boloke e le hole le trunks and stems. Hlahloba mongobo ka tlasa mulch mme o fetole layer ha ho hlokahala; mulch e ngata ha e dule e le betere.",
+        "literalBacktranslation": "Keep it away from trunks and stems. Check moisture under mulch and adjust the layer when needed; more mulch is not always better.",
+        "currentStatus": "exact-English hold",
+        "preservationOrUncertainty": "New draft. Retains distance from trunks/stems, moisture check underneath, layer adjustment and the warning that more is not always better."
+      },
+      {
+        "index": 4,
+        "sourceEnglish": "Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.",
+        "currentDraft": "Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.",
+        "candidateDraft": "Cover crops di ka sireletsa mobu pakeng tsa main crops. Di kgethe ho latela boemo ba lehodimo ba sebakeng sa heno, metsi a fumanehang le next planting.",
+        "literalBacktranslation": "Cover crops can protect soil between main crops. Choose them according to local weather, available water and the next crop.",
+        "currentStatus": "exact-English hold",
+        "preservationOrUncertainty": "New draft. Retains protection between main crops and all three selection factors: local weather, available water and next planting."
+      },
+      {
+        "index": 5,
+        "sourceEnglish": "The course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.",
+        "currentDraft": "The course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.",
+        "candidateDraft": "Mehlala ya thuto ena e kenyelletsa oats, lupins, sunn hemp le cowpea. Hlahloba hore di loketse sebaka sa heno pele o jala.",
+        "literalBacktranslation": "The examples in this course include oats, lupins, sunn hemp and cowpea. Check that they are suitable for your area before sowing.",
+        "currentStatus": "exact-English hold",
+        "preservationOrUncertainty": "New draft. All four source species/examples remain exactly named; local suitability check stays before sowing."
+      },
+      {
+        "index": 6,
+        "sourceEnglish": "Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.",
+        "currentDraft": "Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.",
+        "candidateDraft": "Legumes di hloka bacteria tse loketseng le maemo a kgolo a loketseng hore di kgone ho fix nitrogen. Dimatlafatsi tse masalleng a tsona di a fumaneha ha thepa eo e ntse e bola.",
+        "literalBacktranslation": "Legumes need suitable bacteria and suitable growing conditions in order to fix nitrogen. Nutrients in their residues become available as that material decomposes.",
+        "currentStatus": "exact-English hold",
+        "preservationOrUncertainty": "New draft. Retains suitable bacteria and growing conditions as requirements for nitrogen fixation, and residues becoming available only as material decomposes."
+      },
+      {
+        "index": 7,
+        "sourceEnglish": "Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.",
+        "currentDraft": "Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.",
+        "candidateDraft": "Worm farms di ka fetola food scraps le bedding tse loketseng hore e be worm castings. Hlahloba bin ho e-na le ho lebella letsatsi le behilweng la kotulo.",
+        "literalBacktranslation": "Worm farms can turn suitable food scraps and bedding into worm castings. Check the bin instead of expecting a set harvest date.",
+        "currentStatus": "exact-English hold",
+        "preservationOrUncertainty": "New draft. Retains suitability of both scraps and bedding, conversion to castings, and checking the bin instead of relying on a fixed harvest date."
+      },
+      {
+        "index": 8,
+        "sourceEnglish": "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
+        "currentDraft": "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
+        "candidateDraft": "Mokelikeli o rothang ka tlhaho ho tswa worm bin o bitswa leachate. Ha o tshwane le worm-casting tea e lokisitsweng.",
+        "literalBacktranslation": "Liquid that drains naturally from a worm bin is called leachate. It is not the same as prepared worm-casting tea.",
+        "currentStatus": "exact-English hold",
+        "preservationOrUncertainty": "New draft. Retains naturally draining liquid, identifies it as leachate, and distinguishes it from prepared worm-casting tea."
+      },
+      {
+        "index": 9,
+        "sourceEnglish": "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.",
+        "currentDraft": "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.",
+        "candidateDraft": "Leachate e ka ba le harmful organisms kapa substances. O se ke wa e sebedisa hodima edible plants kapa wa nahana hore ho e hlapolla ho etsa hore e bolokehe.",
+        "literalBacktranslation": "Leachate can contain harmful organisms or substances. Do not use it on edible plants or think that diluting it makes it safe.",
+        "currentStatus": "exact-English hold",
+        "preservationOrUncertainty": "New draft. Safety language preserves “can contain,” prohibition on edible plants, and no assumption that dilution makes it safe."
+      },
+      {
+        "index": 10,
+        "sourceEnglish": "A Highveld field left bare after the maize harvest faces two main risks.",
+        "currentDraft": "Tšimo ea Highveld e siiloeng e sa koaheloa ka mor’a kotulo ea maize e tobana le likotsi tse peli tse kholo.",
+        "candidateDraft": "Tšimo ea Highveld e siiloeng e sa koaheloa ka mor’a kotulo ea maize e tobana le likotsi tse peli tse kholo.",
+        "literalBacktranslation": "A Highveld field left bare after the maize harvest faces two main risks.",
+        "currentStatus": "existing translated seasonal-risk paragraph",
+        "preservationOrUncertainty": "Existing Sesotho seasonal-risk translation preserved verbatim."
+      },
+      {
+        "index": 11,
+        "sourceEnglish": "Winter wind can carry away dry topsoil.",
+        "currentDraft": "Moea oa mariha o ka nka mobu o ommeng o ka holimo.",
+        "candidateDraft": "Moea oa mariha o ka nka mobu o ommeng o ka holimo.",
+        "literalBacktranslation": "Winter wind can carry away dry topsoil.",
+        "currentStatus": "existing translated seasonal-risk paragraph",
+        "preservationOrUncertainty": "Existing Sesotho seasonal-risk translation preserved verbatim."
+      },
+      {
+        "index": 12,
+        "sourceEnglish": "The first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.",
+        "currentDraft": "Sefefo sa pele se matla sa selemo se ka otla mobu o sa koaheloang ’me sa senya bokaholimo le sebopeho sa mobu. Ha metsi a phalla holim’a tšimo, a ka nka mobu o khoehileng.",
+        "candidateDraft": "Sefefo sa pele se matla sa selemo se ka otla mobu o sa koaheloang ’me sa senya bokaholimo le sebopeho sa mobu. Ha metsi a phalla holim’a tšimo, a ka nka mobu o khoehileng.",
+        "literalBacktranslation": "The first heavy spring storm can hit bare soil and damage its surface and structure. If water flows over the field, it can carry loose soil away.",
+        "currentStatus": "existing translated seasonal-risk paragraph",
+        "preservationOrUncertainty": "Existing Sesotho seasonal-risk translation preserved verbatim, including the conditional runoff clause."
+      },
+      {
+        "index": 13,
+        "sourceEnglish": "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+        "currentDraft": "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+        "candidateDraft": "Cover crops, mulch le organic matter di ka thusa ho tshwara mobu sebakeng sa wona le ho o thusa hore o dule o phela.",
+        "literalBacktranslation": "Cover crops, mulch and organic matter can help hold soil in place and help it remain alive.",
+        "currentStatus": "exact-English hold",
+        "preservationOrUncertainty": "New draft. Retains all three materials/covers and modal “can help” for holding soil in place and helping it stay alive."
+      }
+    ]
+  },
+  "paragraphGapAudit": {
+    "canonicalParagraphCount": 13,
+    "registryParagraphCount": 13,
+    "sourceEnglishMatchesCanonical": true,
+    "exactEnglishHoldParagraphs": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      13
+    ],
+    "alreadyTranslatedAndPreserved": [
+      10,
+      11,
+      12
+    ],
+    "draftedParagraphs": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      13
+    ]
+  },
+  "preservation": {
+    "existingSeasonalParagraphsPreservedVerbatim": [
+      10,
+      11,
+      12
+    ],
+    "paragraphBoundariesPreserved": true,
+    "speciesExamplesPreservedExactly": [
+      "oats",
+      "lupins",
+      "sunn hemp",
+      "cowpea"
+    ],
+    "noDatesOrRatiosAdded": true
+  },
+  "criticalConditions": [
+    "Use only suitable clean mulch; examples stay straw, dry grass and wood chips.",
+    "Mulch can reduce evaporation, soften rain impact and suppress weeds; more mulch is not always better.",
+    "Keep mulch clear of trunks/stems; check moisture underneath and adjust the layer.",
+    "Choose cover crops for local weather, available water and next planting.",
+    "Preserve named examples exactly: oats, lupins, sunn hemp and cowpea; check local suitability before sowing.",
+    "Nitrogen fixation depends on suitable bacteria and growing conditions; residues release nutrients as they decompose.",
+    "Check worm bin rather than expecting a fixed harvest date.",
+    "Leachate is naturally draining liquid and differs from prepared worm-casting tea.",
+    "Leachate can contain harmful organisms/substances; do not use on edible plants or assume dilution makes it safe.",
+    "Preserve existing seasonal sequence: bare Highveld field after maize harvest, winter wind, first heavy spring storm, and conditional overland runoff carrying loosened soil.",
+    "Cover crops, mulch and organic matter can help hold soil and keep it alive."
+  ],
+  "uncertaintySummary": "Unreviewed Sesotho machine candidate, not fluent approval. Technical mulch/cover-crop/species, nitrogen-fixation, bacteria/residue, castings/leachate/tea and safety terms are retained in English where precision is uncertain. Independent review should check ordinary prose and confirm safety and modality.",
+  "independentBackcheck": "Root and independent semantic review accepted conditions/source/paragraph preservation. Retain main crops and next planting English to avoid size-vs-main and crop-vs-planting ambiguity; trunks and stems English retained for precise exclusion. No fluent/local approval."
+}

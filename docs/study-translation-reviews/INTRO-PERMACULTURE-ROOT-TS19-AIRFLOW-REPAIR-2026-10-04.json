@@ -1,0 +1,36 @@
+{
+  "title": "Root accepted TS slide 19 windbreak airflow geometry hold",
+  "date": "2026-10-04",
+  "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json",
+  "originalNormalized65Packet": "docs/study-translation-reviews/INTRO-PERMACULTURE-VE-TS-ROOT-65-NORMALIZED-CANDIDATES-2026-10-04.json",
+  "independentActualFileReview": "/tmp/imbewu-ts-intro-slide19-windbreak-targeted-review-20261004.json",
+  "scope": {
+    "language": "ts",
+    "slide": 19,
+    "bodyIndex": 2
+  },
+  "sourceEnglish": "Some air passes through the windbreak. Other air moves over it or around its ends.",
+  "finalTarget": {
+    "status": "mixed",
+    "segments": [
+      {
+        "status": "draft",
+        "sourceEnglish": "Some air passes through the windbreak.",
+        "text": "Air yin’wana yi hundza hi le ka windbreak."
+      },
+      {
+        "status": "english-hold",
+        "sourceEnglish": " Other air moves over it or around its ends."
+      }
+    ],
+    "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+  },
+  "sourceConcatenationExact": true,
+  "preservedSeparateParagraph": {
+    "bodyIndex": 3,
+    "text": "Shelter yi nga hunguta wind speed endzhaku ka yona. Design ni ku hlayisiwa ka windbreak swi na nkoka.",
+    "sourceEnglish": "The shelter can reduce wind speed behind it. The design and care of the windbreak matter."
+  },
+  "reason": "“ematlhelo ya yona” may mean around its sides; the exact source sentence about moving around the windbreak ends is held. Through-flow remains localized. The separate paragraph preserves “can”, behind direction, and design/care.",
+  "fluentReviewStatus": "still open; publication is for facilitator feedback, not fluent approval"
+}

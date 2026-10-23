@@ -1,0 +1,36 @@
+{
+  "base": "432a99174819a303424404473ee54a08081ff2b4",
+  "changes": [
+    {
+      "language": "st",
+      "lesson": "market-community-l2",
+      "field": "quiz[1].options[3]"
+    },
+    {
+      "language": "ve",
+      "lesson": "market-community-l1",
+      "field": "keyPoints[0]"
+    },
+    {
+      "language": "ve",
+      "lesson": "market-community-l1",
+      "field": "quiz[1].options[1]"
+    },
+    {
+      "language": "ve",
+      "lesson": "market-community-l2",
+      "field": "quiz[1].options[3]"
+    },
+    {
+      "language": "ts",
+      "lesson": "market-community-l2",
+      "field": "quiz[1].options[3]"
+    },
+    {
+      "language": "ts",
+      "lesson": "market-community-l1",
+      "field": "quiz[1].options[3]"
+    }
+  ],
+  "allOtherExportValuesSourcesAndCorrectIndicesUnchanged": true
+}

@@ -1,0 +1,119 @@
+{
+  "lessonId": "soil-health-l2",
+  "sourceMainSha": "3143c07e047ad3f2cc8bc1e1481a307167942f65",
+  "status": "unwired-machine-draft",
+  "scopeNote": "Source-paired Tshivenda candidates for the four canonical key points and both quizzes, in source order. Canonical strings and indices were rechecked against lib/course-modules.ts at current origin/main 3143c07; the canonical lesson agrees in this checkout. The actual registry is lib/course-translation-drafts-ve-soil-health.ts: all four Soil L2 key points, both quiz questions, all options, and both rationales currently retain exact-English text with reviewStatus hold. Candidates are unwired, unreviewed machine drafts. No repository files were changed.",
+  "keyPoints": [
+    {
+      "index": 0,
+      "sourceEnglish": "Balance browns, greens, moisture and air",
+      "draft": "Linganyisani browns, greens, moisture na air.",
+      "literalBacktranslation": "Balance browns, greens, moisture and air.",
+      "uncertainty": "Keeps the source categories at the same scope; removes added dry/fresh qualifiers. Browns, greens, moisture and air remain recognizable compost terms in English."
+    },
+    {
+      "index": 1,
+      "sourceEnglish": "A hot centre does not prove the whole heap is sanitised",
+      "draft": "Vhukati ho fhisaho a vhu sumbedzi uri heap yoṱhe yo sanitised.",
+      "literalBacktranslation": "A hot centre does not show that the whole heap has been sanitised.",
+      "uncertainty": "Retains heap and sanitised in English. The negative evidential claim applies to the whole heap, not only its centre; it does not imply that heat is irrelevant."
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "Keep seed pods and contaminated materials out",
+      "draft": "Siyani seed pods na contaminated materials nnḓa ha heap.",
+      "literalBacktranslation": "Keep seed pods and contaminated materials outside the heap.",
+      "uncertainty": "Retains seed pods and contaminated materials as technical English terms. Heap is supplied from the lesson context so the instruction has a clear object."
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "Judge readiness from the compost condition, not a fixed regional timetable",
+      "draft": "Ṱolani uri compost yo lugela nga condition yayo; ni songo shumisa fixed regional timetable.",
+      "literalBacktranslation": "Check whether the compost is ready from its condition; do not use a fixed regional timetable.",
+      "uncertainty": "Keeps condition and fixed regional timetable in English to avoid implying a specific readiness test or duration. The contrast with judging from compost condition is explicit."
+    }
+  ],
+  "quiz": [
+    {
+      "index": 0,
+      "question": {
+        "sourceEnglish": "A farmer's compost heap smells strongly of ammonia and is wet and slimy. What's the fix?",
+        "draft": "Heap ya compost ya mulimi i nukha ammonia nga maanḓa nahone i wet na slimy. Ndi mini zwine zwa nga lugisa?",
+        "literalBacktranslation": "The farmer’s compost heap smells strongly of ammonia and is wet and slimy. What could fix it?",
+        "uncertainty": "Keeps wet in English because the earlier Tshivenda wording could mean raised/high rather than wet. Retains the strong ammonia smell and slimy condition; the request remains a question about a possible fix."
+      },
+      "options": [
+        {
+          "sourceEnglish": "Add more nitrogen-rich green material",
+          "draft": "Engedzani green material ine ya vha na nitrogen nnzhi"
+        },
+        {
+          "sourceEnglish": "Add more dry carbon material like straw and turn the heap",
+          "draft": "Engedzani dry carbon material i ngaho straw nahone ni i rembuluse."
+        },
+        {
+          "sourceEnglish": "Stop turning it and let it cool",
+          "draft": "Litshani u rembulusa heap, ni i tende i rothole."
+        },
+        {
+          "sourceEnglish": "Add more water — the smell means it's too dry",
+          "draft": "Engedzani maḓi manzhi — honoyo munukho u amba uri yo oma nga maanḓa"
+        }
+      ],
+      "sourceCorrectIndex": 1,
+      "rationale": {
+        "sourceEnglish": "A wet, slimy heap may need more air and drier material. Add dry browns and turn the heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy.",
+        "draft": "A wet, slimy heap may need more air and drier material. Engedzani dry browns ni i rembuluse heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy.",
+        "literalBacktranslation": "A wet, slimy heap may need more air and drier material. Add dry browns and turn the heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy.",
+        "uncertainty": "Root retains to open it up English rather than replacing it with air entering; current modal/caution clauses remain exact English. Ordinary add and turn verbs use the independently checked body terminology."
+      }
+    },
+    {
+      "index": 1,
+      "question": {
+        "sourceEnglish": "Why keep wattle seed pods out of an ordinary compost heap?",
+        "draft": "Ndi ngani ni tshi tea u vhea wattle seed pods nnḓa ha ordinary compost heap?",
+        "literalBacktranslation": "Why should you keep wattle seed pods outside an ordinary compost heap?",
+        "uncertainty": "Retains wattle seed pods and ordinary compost heap in English to preserve the exact material and process scope."
+      },
+      "options": [
+        {
+          "sourceEnglish": "Bark makes every heap too hot",
+          "draft": "Bark i ita uri heap iṅwe na iṅwe i fhise nga maanḓa"
+        },
+        {
+          "sourceEnglish": "Some seeds may survive and spread when the compost is used",
+          "draft": "Dziṅwe seeds dzi nga survive nahone dza phaḓalala musi compost i tshi shumiswa"
+        },
+        {
+          "sourceEnglish": "Pods always attract termites",
+          "draft": "Pods dzi kunga termites tshifhinga tshoṱhe"
+        },
+        {
+          "sourceEnglish": "Pods release a gas that kills every soil organism",
+          "draft": "Pods dzi bvisa gas ine ya vhulaha zwivhumbiwa zwoṱhe zwa soil"
+        }
+      ],
+      "sourceCorrectIndex": 1,
+      "rationale": {
+        "sourceEnglish": "An ordinary heap may not expose every seed to conditions that make it non-viable. Excluding pods avoids spreading them with the compost.",
+        "draft": "An ordinary heap may not expose every seed to conditions that make it non-viable. U bvisa pods zwi thivhela uri dzi phaḓalale dzi tshi ṱuwa na compost.",
+        "literalBacktranslation": "An ordinary heap may not expose every seed to conditions that make it non-viable. Removing pods prevents them from spreading as they go with the compost.",
+        "uncertainty": "Root retains the full technical seed-exposure clause as exact English, protecting may not/every seed/conditions/non-viable scope. Ordinary exclusion/spread sentence remains an unreviewed Tshivenda draft."
+      }
+    }
+  ],
+  "sourceCorrectIndices": [
+    1,
+    1
+  ],
+  "registryFinding": "Verified in lib/course-translation-drafts-ve-soil-health.ts: all four Soil L2 key points, both quiz questions, all eight options and both rationales are exact-English holds (reviewStatus hold).",
+  "semanticChecks": [
+    "Canonical key points, both question strings, every option in order, both rationales, and correct indices [1,1] were checked against current origin/main 3143c07; the packet sourceEnglish fields now match exactly.",
+    "The Q0 question retains the strong ammonia smell and wet/slimy state; wet remains English where the prior Tshivenda word was ambiguous. The keyed option adds dry carbon such as straw and turns the heap.",
+    "The Q0 rationale preserves may need more air and drier material, dry browns plus turning to open the heap, can also suggest excess nitrogen-rich material, and damp rather than soggy. It makes no definitive diagnosis or guarantee.",
+    "Q1 rationale retains may not and every seed, followed by excluding pods to avoid spreading them with compost; it does not claim all seeds survive or an ordinary heap never makes seeds non-viable.",
+    "No order, answer index, species, quantities, timing, or sanitation guarantee has been changed."
+  ],
+  "uncertaintySummary": "Unreviewed, unwired machine candidates; not fluent-speaker approval. All listed assessment fields are confirmed exact-English holds in the current Tshivenda registry. Difficult compost terms remain in English where needed. The Q0 modal and moisture-caution clauses remain verbatim English to protect their limits; the translated action and Q1 rationale still need independent Tshivenda review."
+}

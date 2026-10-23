@@ -14,7 +14,7 @@ const GOLD = '#C07A1E';
 const FOREST = '#1F4D2B';
 const INK = '#20190F';
 const MUTED = '#5C5040';
-const BORDER = '#E2D8C4';
+const BORDER = 'var(--border)';
 const DANGER = '#C0531E';
 
 export default function SiteManageMenu({ place }: { place: SavedPlace }) {
@@ -64,7 +64,7 @@ export default function SiteManageMenu({ place }: { place: SavedPlace }) {
   const btnPrimary: React.CSSProperties = {
     flex: 1, minHeight: 40, borderRadius: 9, border: 'none', cursor: 'pointer',
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-    background: FOREST, color: '#F7F2E9', fontSize: 13.5, fontWeight: 600,
+    background: FOREST, color: 'var(--on-forest)', fontSize: 13.5, fontWeight: 600,
   };
   const btnGhost: React.CSSProperties = {
     minHeight: 40, padding: '0 12px', borderRadius: 9, border: `1px solid ${BORDER}`, cursor: 'pointer',
@@ -114,7 +114,7 @@ export default function SiteManageMenu({ place }: { place: SavedPlace }) {
 
           {mode === 'rename' && (
             <div style={{ padding: 6 }}>
-              <input
+              <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                 value={name}
                 autoFocus
                 onChange={(e) => setName(e.target.value)}

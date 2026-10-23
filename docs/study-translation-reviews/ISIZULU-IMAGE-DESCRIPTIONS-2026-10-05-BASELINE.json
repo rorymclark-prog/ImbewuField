@@ -1,0 +1,860 @@
+{
+  "title": "Frozen isiZulu learner registry baseline for image descriptions",
+  "date": "2026-10-05",
+  "base": "724f1d32a125d4a52fd8abc3ee0d6568dbcc52ea",
+  "authority": "Native COURSE_TRANSLATION_DRAFTS and canonical COURSE_MODULES before this batch; immutable ISIZULU_REVIEW_DRAFT_SOURCE_SNAPSHOTS; root-repaired accepted packet.",
+  "scopeCount": 32,
+  "baselineRegistrySha256": "1dc66f5c208313c868da2245331dbacae8db0aaefd38a57e5058e9ec528cae1b",
+  "registryRecordCount": 33,
+  "registryRecords": [
+    {
+      "lessonId": "plant-guilds-l1",
+      "draftSha256": "72306f1e2f335919c6653f39b8645fe6ce8c4dc1290e5072946f08aa86354946",
+      "unlistedFieldsSha256": "72306f1e2f335919c6653f39b8645fe6ce8c4dc1290e5072946f08aa86354946",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "plant-guilds-l2",
+      "draftSha256": "69d0fda97e6ae0a8fede7defa61cab5e0d05ef49bf6407778bdb4066b3a0d8ea",
+      "unlistedFieldsSha256": "69d0fda97e6ae0a8fede7defa61cab5e0d05ef49bf6407778bdb4066b3a0d8ea",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "plant-guilds-l3",
+      "draftSha256": "4558e50a0b9260b8ccb9f82161561ecbaa847103c0b757238aa3354b380b6ee6",
+      "unlistedFieldsSha256": "4558e50a0b9260b8ccb9f82161561ecbaa847103c0b757238aa3354b380b6ee6",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "seeds-sovereignty-l1",
+      "draftSha256": "54a1ed336bf2c04542d56f9f3365532bf71980c8af4833e8cc1fdf1a297e103b",
+      "unlistedFieldsSha256": "54a1ed336bf2c04542d56f9f3365532bf71980c8af4833e8cc1fdf1a297e103b",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "seeds-sovereignty-l2",
+      "draftSha256": "191e9f1d15b5ff2e58e8b22318a46352fb25b280f2cb35fedcf57289a7832ecd",
+      "unlistedFieldsSha256": "191e9f1d15b5ff2e58e8b22318a46352fb25b280f2cb35fedcf57289a7832ecd",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "seeds-sovereignty-l3",
+      "draftSha256": "e322c6c800ab1c106052e4865673513987eb9cc1af25c958d8d97e33ce43ae20",
+      "unlistedFieldsSha256": "e322c6c800ab1c106052e4865673513987eb9cc1af25c958d8d97e33ce43ae20",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "intro-permaculture-l1",
+      "draftSha256": "0ed262fee8f792da41537e2d5851deed4aed80c7686337c12b9aa72a29e697f8",
+      "unlistedFieldsSha256": "0ed262fee8f792da41537e2d5851deed4aed80c7686337c12b9aa72a29e697f8",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "intro-permaculture-l2",
+      "draftSha256": "70ae43a80490442d31b9b627a98ce53fcf55fb1c6497640b1fe246dc0b44f9c6",
+      "unlistedFieldsSha256": "70ae43a80490442d31b9b627a98ce53fcf55fb1c6497640b1fe246dc0b44f9c6",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "intro-permaculture-l3",
+      "draftSha256": "b9290d6dc7737fde2d4059f2201c082e44d660a17b0b12e2c329f59fc99f6057",
+      "unlistedFieldsSha256": "b9290d6dc7737fde2d4059f2201c082e44d660a17b0b12e2c329f59fc99f6057",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "draftSha256": "da0b2486fbee6f676b9570935368a8de76c9436f9b5a6bb05987451f5d932baa",
+      "unlistedFieldsSha256": "da0b2486fbee6f676b9570935368a8de76c9436f9b5a6bb05987451f5d932baa",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "reading-landscape-l2",
+      "draftSha256": "c02781bad553bb3fff8ceee032942f91348b28f7f3e21ef7f0f89f671c13ef8d",
+      "unlistedFieldsSha256": "c02781bad553bb3fff8ceee032942f91348b28f7f3e21ef7f0f89f671c13ef8d",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "draftSha256": "99b32c5a922badad6649b4c20403e545e71f827455621b5f67593c80f548abe5",
+      "unlistedFieldsSha256": "99b32c5a922badad6649b4c20403e545e71f827455621b5f67593c80f548abe5",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "draftSha256": "22e43b66ebf4d7963556e1732b18d580342ec5a9732db2d81aaee81fd25a993c",
+      "unlistedFieldsSha256": "22e43b66ebf4d7963556e1732b18d580342ec5a9732db2d81aaee81fd25a993c",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "water-harvesting-l1",
+      "draftSha256": "11cab194ee90f9337e143c7d6129512e69f40bc104827b1792576dceb3c60293",
+      "unlistedFieldsSha256": "11cab194ee90f9337e143c7d6129512e69f40bc104827b1792576dceb3c60293",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "draftSha256": "b59658a561586009ffe1c569d0c90044524f873d0cedcb70a06c6740c7b38f23",
+      "unlistedFieldsSha256": "b59658a561586009ffe1c569d0c90044524f873d0cedcb70a06c6740c7b38f23",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "water-harvesting-l3",
+      "draftSha256": "1fe184e37fe2636330d7ae6d5cdb7cf658a5cf4fb61774083f777e4ec5e2f25a",
+      "unlistedFieldsSha256": "1fe184e37fe2636330d7ae6d5cdb7cf658a5cf4fb61774083f777e4ec5e2f25a",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "water-harvesting-l4",
+      "draftSha256": "23cd51d84599c82c47fb557002a43f0fea74dbf2b9b574b26648647213b6cea3",
+      "unlistedFieldsSha256": "23cd51d84599c82c47fb557002a43f0fea74dbf2b9b574b26648647213b6cea3",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "soil-health-l1",
+      "draftSha256": "f53fa54ac0a0a7007a4390d3ba660050bd90a563faeee6a8e2a54f42fdf70d5e",
+      "unlistedFieldsSha256": "f53fa54ac0a0a7007a4390d3ba660050bd90a563faeee6a8e2a54f42fdf70d5e",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "soil-health-l2",
+      "draftSha256": "2ece2567e1593f75f13dbeff0e0b9738ba80ca23c63786e2c203c57d594e2420",
+      "unlistedFieldsSha256": "2ece2567e1593f75f13dbeff0e0b9738ba80ca23c63786e2c203c57d594e2420",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "soil-health-l3",
+      "draftSha256": "c217c0e79d504abc904941315ce89a8145affbf2d72a578aa130a421ecc059e6",
+      "unlistedFieldsSha256": "c217c0e79d504abc904941315ce89a8145affbf2d72a578aa130a421ecc059e6",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "vegetables-staples-l1",
+      "draftSha256": "2af484f7d61537bdda27fe107e11d283da97327b60cf705bcb113ad913e77f0e",
+      "unlistedFieldsSha256": "2af484f7d61537bdda27fe107e11d283da97327b60cf705bcb113ad913e77f0e",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "vegetables-staples-l2",
+      "draftSha256": "b3f9aae05bce3cc9a280a9bd57f58b64dba1e3a8bf21259baf2fa025932c311a",
+      "unlistedFieldsSha256": "b3f9aae05bce3cc9a280a9bd57f58b64dba1e3a8bf21259baf2fa025932c311a",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "vegetables-staples-l3",
+      "draftSha256": "c147782ece1147564f7db489704c93f9edeb50da46cff0fffe0151961ac48798",
+      "unlistedFieldsSha256": "c147782ece1147564f7db489704c93f9edeb50da46cff0fffe0151961ac48798",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "vegetables-staples-l4",
+      "draftSha256": "6865c85e3fffa20811116d0ea28d2d9beff229f56a7d296735756b5692c644e7",
+      "unlistedFieldsSha256": "6865c85e3fffa20811116d0ea28d2d9beff229f56a7d296735756b5692c644e7",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "food-forest-l1",
+      "draftSha256": "6f66654f5280ab537209f43fc8f087a4d2cabd6f7f222c43a266221ce416412a",
+      "unlistedFieldsSha256": "6f66654f5280ab537209f43fc8f087a4d2cabd6f7f222c43a266221ce416412a",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "food-forest-l2",
+      "draftSha256": "f97c8d4b27a7d50533198f5756565d2b3e8162a6e1317df26d444f7446072a0d",
+      "unlistedFieldsSha256": "f97c8d4b27a7d50533198f5756565d2b3e8162a6e1317df26d444f7446072a0d",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "food-forest-l3",
+      "draftSha256": "79627c58047bf7b823924f74c7151d3b5a34a28d9500c66c1e9fe7cc670edeae",
+      "unlistedFieldsSha256": "79627c58047bf7b823924f74c7151d3b5a34a28d9500c66c1e9fe7cc670edeae",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "small-livestock-l1",
+      "draftSha256": "599bf5238bdf6aa497c0d31ea2564b0acb2ecec4e802aa5ea02f550ea4476f23",
+      "unlistedFieldsSha256": "599bf5238bdf6aa497c0d31ea2564b0acb2ecec4e802aa5ea02f550ea4476f23",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "small-livestock-l2",
+      "draftSha256": "5000141e0101bcfa5eef839bebce88690048f1cdaff2051539635e9290cfcae7",
+      "unlistedFieldsSha256": "5000141e0101bcfa5eef839bebce88690048f1cdaff2051539635e9290cfcae7",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "small-livestock-l3",
+      "draftSha256": "745b4ce55762c13ed6e24cbfbd7d2f7a56ffc40f94608f3ac33bff55fa2d7402",
+      "unlistedFieldsSha256": "745b4ce55762c13ed6e24cbfbd7d2f7a56ffc40f94608f3ac33bff55fa2d7402",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "market-community-l1",
+      "draftSha256": "3e1fc96f7b73d22b70537dac50c966d4cab80f2fbfe4828c1f03cfe0cdce9096",
+      "unlistedFieldsSha256": "3e1fc96f7b73d22b70537dac50c966d4cab80f2fbfe4828c1f03cfe0cdce9096",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "market-community-l2",
+      "draftSha256": "19ab521aa4135ab6355cb61bedfaa1430cba542bb297392f1635b35d5471e187",
+      "unlistedFieldsSha256": "19ab521aa4135ab6355cb61bedfaa1430cba542bb297392f1635b35d5471e187",
+      "priorInfographicAlt": null
+    },
+    {
+      "lessonId": "market-community-l3",
+      "draftSha256": "a99d0c0028143341436f3d9276acef1f01b2df8bd13076de2646ac444dbab9eb",
+      "unlistedFieldsSha256": "a99d0c0028143341436f3d9276acef1f01b2df8bd13076de2646ac444dbab9eb",
+      "priorInfographicAlt": null
+    }
+  ],
+  "selectedRows": [
+    {
+      "moduleId": "intro-permaculture",
+      "lessonId": "intro-permaculture-l1",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "The three ethics as three linked circles of equal size: a hand holding soil for Earth Care, two people for People Care, and a basket passing between hands for Fair Share.",
+      "sourceSha256": "31f6179ce322fbe97bc0cde05838b5b08d0f835a04b541dd7e77fdc690e19e91",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "The three ethics as three linked circles of equal size: a hand holding soil for Earth Care, two people for People Care, and a basket passing between hands for Fair Share.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/intro-permaculture/intro-permaculture-l1.jpg",
+        "repositoryPath": "public/course-images/intro-permaculture/intro-permaculture-l1.jpg",
+        "bytes": 61072,
+        "sha256": "88f45d7e5aeaeaf7b1a0ae54388794de9e0a70180527f80676d25c2764826dfb",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "dee062ccb16e7c911e6040f9eead1088d0952cb7"
+      }
+    },
+    {
+      "moduleId": "intro-permaculture",
+      "lessonId": "intro-permaculture-l2",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "Twelve design principles arranged as segments around a central seedling, each shown as a simple picture — an eye for observing, a droplet for catching water, a sun for energy, a loop for returning waste.",
+      "sourceSha256": "5e35a4002948eef7937ec64c603c39e7ee641bdcf52bdd5cafa34c696c7b3efb",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "Twelve design principles arranged as segments around a central seedling, each shown as a simple picture — an eye for observing, a droplet for catching water, a sun for energy, a loop for returning waste.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/intro-permaculture/intro-permaculture-l2.jpg",
+        "repositoryPath": "public/course-images/intro-permaculture/intro-permaculture-l2.jpg",
+        "bytes": 85271,
+        "sha256": "1d6c59707d2b5e971b8c65fe670acde04304483401b759cd9c7693a248d0328a",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "86742295c3b13e15126e4c03a4564b5453dc913d"
+      }
+    },
+    {
+      "moduleId": "intro-permaculture",
+      "lessonId": "intro-permaculture-l3",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
+      "sourceSha256": "6b0cf3944e9189849861edc054985e8825c83eb37f928020d87f2620f8e0d48f",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/intro-permaculture/intro-permaculture-l3-footpath.jpg",
+        "repositoryPath": "public/course-images/intro-permaculture/intro-permaculture-l3-footpath.jpg",
+        "bytes": 295823,
+        "sha256": "938a4d4ec42559eb1fd62d90999f214d8a2695ddba23e4766c7fde20b74eac3f",
+        "width": 1200,
+        "height": 675,
+        "gitBlobOid": "fcf4e7e04b3049bf7b9b54098603d9cd847c002f"
+      }
+    },
+    {
+      "moduleId": "reading-landscape",
+      "lessonId": "reading-landscape-l1",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "A hillside seen from the side, with arrows showing where rain runs down the slope, where it collects in a hollow, and where it soaks in as the ground flattens.",
+      "sourceSha256": "b5e2369c0b3e21e4cbbc5b9f9cead9bbb8794bc620406368b3bd8e04991cea13",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "A hillside seen from the side, with arrows showing where rain runs down the slope, where it collects in a hollow, and where it soaks in as the ground flattens.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/reading-landscape/reading-landscape-l1.jpg",
+        "repositoryPath": "public/course-images/reading-landscape/reading-landscape-l1.jpg",
+        "bytes": 77931,
+        "sha256": "a354007e3c9b7b600aba8bf7e8e9a29294513b180336f9746251da4cd457dd7c",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "723eb08af57d743db6e7cfb30f4ba32114c33a64"
+      }
+    },
+    {
+      "moduleId": "reading-landscape",
+      "lessonId": "reading-landscape-l2",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "A slope with the sun in the north. Shadows from the building and the tree fall south, down the slope.",
+      "sourceSha256": "51662fd94e45f22f273197d6486096c9d74cb5aaf252a82197a7458e7a29badb",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "A slope with the sun in the north. Shadows from the building and the tree fall south, down the slope.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/reading-landscape/reading-landscape-l2.jpg",
+        "repositoryPath": "public/course-images/reading-landscape/reading-landscape-l2.jpg",
+        "bytes": 342902,
+        "sha256": "9cdca0f00b563c866d4e48330adb833c647facd95e36e82d2c8f1e16c257aa83",
+        "width": 1672,
+        "height": 941,
+        "gitBlobOid": "623881029a04f6cf7abb085fb5d61946fc232591"
+      }
+    },
+    {
+      "moduleId": "reading-landscape",
+      "lessonId": "reading-landscape-l3",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "A farm from above with arrows showing wind direction, cold air draining downhill into a frost hollow, and the direction of the slope.",
+      "sourceSha256": "84bcfaacb25fedab29ca53e7177cbb688f386e855914bbd06ac409de113ff5ec",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "A farm from above with arrows showing wind direction, cold air draining downhill into a frost hollow, and the direction of the slope.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/reading-landscape/reading-landscape-l3.jpg",
+        "repositoryPath": "public/course-images/reading-landscape/reading-landscape-l3.jpg",
+        "bytes": 820409,
+        "sha256": "97010984fd8cba92143d1c10e6517352ece444d86d235d2f967b0ec1a9e32583",
+        "width": 1672,
+        "height": 941,
+        "gitBlobOid": "155ce5ca91f8d6a29cb07dadf92fb37aa0057451"
+      }
+    },
+    {
+      "moduleId": "reading-landscape",
+      "lessonId": "reading-landscape-l4",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "A hand-drawn site map on paper showing north, the buildings, the water, and the boundary — rough, as a farmer would draw it.",
+      "sourceSha256": "ff88c6f049ae68f2b614cdd2e62d8e24c8b4bb71873e6a5b06c1b70f7893e7c1",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "A hand-drawn site map on paper showing north, the buildings, the water, and the boundary — rough, as a farmer would draw it.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/reading-landscape/reading-landscape-l4.jpg",
+        "repositoryPath": "public/course-images/reading-landscape/reading-landscape-l4.jpg",
+        "bytes": 64625,
+        "sha256": "8e6f76f55a6776757c0006c7a4891d0eb08da6a5c5dedd4b518fd244983c34d5",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "d426c5e9efaabb9e2e13703c41254c92412d4e14"
+      }
+    },
+    {
+      "moduleId": "water-harvesting",
+      "lessonId": "water-harvesting-l1",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "Concept cross-section of a level contour swale with a raised mound below it. Arrows show runoff slowing and spreading; infiltration depends on the soil and site.",
+      "sourceSha256": "1e79efd0c4876e545995995c13957c943760a0fc8e29e9de43949f1bbc7397fc",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "Concept cross-section of a level contour swale with a raised mound below it. Arrows show runoff slowing and spreading; infiltration depends on the soil and site.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/water-harvesting/water-harvesting-l1.jpg",
+        "repositoryPath": "public/course-images/water-harvesting/water-harvesting-l1.jpg",
+        "bytes": 74285,
+        "sha256": "b8ad640fd59043de481d865e3b680a59da450cf4d3ba688689a6041d3baad6bc",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "f9f2b2bae9b5bd5ef9becf182f57ca02f6b31655"
+      }
+    },
+    {
+      "moduleId": "water-harvesting",
+      "lessonId": "water-harvesting-l2",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "A farm dam cut through the middle: water flowing in at one end, the stored body of water, a spillway at the top edge for overflow, and a planted bank holding the soil.",
+      "sourceSha256": "f1ed0caeef126d6d0b779b92f86f5f2ba6eab218e2fc87d3350b5baa41d4f9e6",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "A farm dam cut through the middle: water flowing in at one end, the stored body of water, a spillway at the top edge for overflow, and a planted bank holding the soil.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/water-harvesting/water-harvesting-l2.jpg",
+        "repositoryPath": "public/course-images/water-harvesting/water-harvesting-l2.jpg",
+        "bytes": 63646,
+        "sha256": "93ffe7afe403ead605e85954a74010a6df0cb948e123848a2f1bc5d9224b8e66",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "0138565ce5378482b91480b132f23b486bd6f446"
+      }
+    },
+    {
+      "moduleId": "water-harvesting",
+      "lessonId": "water-harvesting-l3",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "Rain running off a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.",
+      "sourceSha256": "64b42aac1147a7e5067e1b258a88c958b811a1ca0047e529014e73efe2a57729",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "Rain running off a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/water-harvesting/water-harvesting-l3.jpg",
+        "repositoryPath": "public/course-images/water-harvesting/water-harvesting-l3.jpg",
+        "bytes": 503160,
+        "sha256": "9842fbccd193e5d3f8468dac1214bfa509cccca8e805ddadb8e4d3492d2009c5",
+        "width": 1672,
+        "height": 941,
+        "gitBlobOid": "3e56a7b06bf66ac9f604fbbeee9852637d9c1ad1"
+      }
+    },
+    {
+      "moduleId": "soil-health",
+      "lessonId": "soil-health-l1",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+      "sourceSha256": "3ad88ec005e797eb4efc3b8d96993c0075664b8f9eb9766dbf1b731183bfc10d",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/soil-health/soil-health-l1.jpg",
+        "repositoryPath": "public/course-images/soil-health/soil-health-l1.jpg",
+        "bytes": 660969,
+        "sha256": "8ce365d12633d237a4e6a7e2c383b9e01a280ee7c1dc95a07004a5b3b6e0cde0",
+        "width": 1672,
+        "height": 941,
+        "gitBlobOid": "4d53c62aa6a0c774115b4634564c03e7ab4a88ba"
+      }
+    },
+    {
+      "moduleId": "soil-health",
+      "lessonId": "soil-health-l2",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+      "sourceSha256": "ce0e4f517a64852d6130b59f4b06f55eabf33b84454ed26678f0fad0c327d959",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/soil-health/soil-health-l2.jpg",
+        "repositoryPath": "public/course-images/soil-health/soil-health-l2.jpg",
+        "bytes": 98639,
+        "sha256": "54c239adb036acbd06f081254936722a9fe10ed9a858334e49e559257f386a87",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "6ace9b35283ea91385e96ff5de0c609bc7918cab"
+      }
+    },
+    {
+      "moduleId": "soil-health",
+      "lessonId": "soil-health-l3",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
+      "sourceSha256": "6462a6098f9205602f7a6a3a6c36c99b6ebdf9cfa38c789f28e55063024b1921",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/soil-health/soil-health-l3.jpg",
+        "repositoryPath": "public/course-images/soil-health/soil-health-l3.jpg",
+        "bytes": 92909,
+        "sha256": "7cced4ab286fbfb1ee6689ab8ec866b84a883c1844d0c624842f23785aca0ce1",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "c47903804faea0c0366c07ad53eab4a05adc1834"
+      }
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l1",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "sourceSha256": "4f306bc6793a9692268b1d49cac0db8552a36914d71aba82a6adffabf54650c6",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/vegetables-staples/vegetables-staples-l1.jpg",
+        "repositoryPath": "public/course-images/vegetables-staples/vegetables-staples-l1.jpg",
+        "bytes": 62890,
+        "sha256": "780bd7086c2807d08a245d15786d5910a36e2ce5ee5a90b019563eacadf658f0",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "a4a877065dde34ce93c1b4a6d58f092a0ee78af7"
+      }
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "sourceSha256": "7468e7c9ac4891347cf88fa3e927a578797056496ac4d3392e67973b27d5b9b1",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/vegetables-staples/vegetables-staples-l2.jpg",
+        "repositoryPath": "public/course-images/vegetables-staples/vegetables-staples-l2.jpg",
+        "bytes": 121294,
+        "sha256": "892c33566d537dce0c3ded26e72b15d8ba553cd3e48bdac67ebe9298dc8d68f8",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "140a60189f1ba1d948d0ee03408b4e5e7dc6ea99"
+      }
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.",
+      "sourceSha256": "ff4e32e04c4a871f72450c58cb2d4fb70c4f5d886d23c651dd8583d352662d06",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/vegetables-staples/vegetables-staples-l3.jpg",
+        "repositoryPath": "public/course-images/vegetables-staples/vegetables-staples-l3.jpg",
+        "bytes": 651032,
+        "sha256": "71a675e5a42d902a0096040d0485223ef8c54cd8efd01ef6f36055c2541e5821",
+        "width": 1672,
+        "height": 941,
+        "gitBlobOid": "90b634aa00c767d07fa378280e0af2014cf810f3"
+      }
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "sourceSha256": "05105f7c8b784f9705507d3c1c86d7107ec997cb41179af4c6a7c6e8546f67c2",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/vegetables-staples/vegetables-staples-l4.jpg",
+        "repositoryPath": "public/course-images/vegetables-staples/vegetables-staples-l4.jpg",
+        "bytes": 79603,
+        "sha256": "bfb0f3e547989781eb25654e449167bab539e5e1528bbb921f75b7ab8fab8ffa",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "6ca76dbfa8de0cabb387b3082eb4901094549378"
+      }
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "lessonId": "seeds-sovereignty-l1",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "Two seed packets above a simplified comparison: five similar-looking plants on the left and five varied plants on the right. Actual offspring depend on variety and pollination.",
+      "sourceSha256": "2832fa4d0a6bed1c6a41b29855283adc78eb6aa9fbfc2b2bcc17e856f1b37d0c",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "Two seed packets above a simplified comparison: five similar-looking plants on the left and five varied plants on the right. Actual offspring depend on variety and pollination.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/seeds-sovereignty/seeds-sovereignty-l1.jpg",
+        "repositoryPath": "public/course-images/seeds-sovereignty/seeds-sovereignty-l1.jpg",
+        "bytes": 71069,
+        "sha256": "4ca6d7421fb00398c6fc6bc7cc127c9608605d85c4def84b07f8ee1e152fae47",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "5f1dfeb426552438f35c81c65349035391a5089e"
+      }
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "lessonId": "seeds-sovereignty-l2",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "Dry seed is collected from mature pods. The tomato wet-method example shows brief fermentation, rinsing and drying.",
+      "sourceSha256": "8ed1943ef26b8df90d65b34dd559422e6b31e0491124aef44fd2c50d4601375b",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "Dry seed is collected from mature pods. The tomato wet-method example shows brief fermentation, rinsing and drying.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/seeds-sovereignty/seeds-sovereignty-l2.jpg",
+        "repositoryPath": "public/course-images/seeds-sovereignty/seeds-sovereignty-l2.jpg",
+        "bytes": 75252,
+        "sha256": "740845c3def29092a75ee919e1ee03dff8d57db61781ab1d8ab843314d30f806",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "d9718db7d53d32de981e27088b569ad76df8ead2"
+      }
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "lessonId": "seeds-sovereignty-l3",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "Seed envelopes stored in a sealed container, kept cool, dark and dry. Beside it, ten seeds on a damp cloth — some sprouted, some not — as a germination test.",
+      "sourceSha256": "57489709af2cbd276ff6e69e3d961c0b157658d697830d1c6a5c6709bffd763b",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "Seed envelopes stored in a sealed container, kept cool, dark and dry. Beside it, ten seeds on a damp cloth — some sprouted, some not — as a germination test.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/seeds-sovereignty/seeds-sovereignty-l3.jpg",
+        "repositoryPath": "public/course-images/seeds-sovereignty/seeds-sovereignty-l3.jpg",
+        "bytes": 68568,
+        "sha256": "882f2e86f3141a80ac42cbbd59f279daec644e40ad22c21dc0ccbe88cc9f538b",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "9560c0b1c1ebc2592dd4d4873ee6106b836ddc16"
+      }
+    },
+    {
+      "moduleId": "plant-guilds",
+      "lessonId": "plant-guilds-l1",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "Conceptual guild teaching illustration; confirm plant identity with reliable botanical guidance.",
+      "sourceSha256": "8be9dc6a9c7d8c3024778d12f2861487caa18ee04a42bebc2eb6bb4d977c68e1",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "Conceptual guild teaching illustration; confirm plant identity with reliable botanical guidance.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-decks/plant-guilds/en/slide-15.jpg",
+        "repositoryPath": "public/course-decks/plant-guilds/en/slide-15.jpg",
+        "bytes": 365630,
+        "sha256": "f83121c89d1fa28075f04b3e1fcd62880028502a1d64c2fb452a8a1249d0b2bb",
+        "width": 1280,
+        "height": 720,
+        "gitBlobOid": "8f825c02282e6ad6da32cbcbacb1092918eb7461"
+      }
+    },
+    {
+      "moduleId": "plant-guilds",
+      "lessonId": "plant-guilds-l2",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "Conceptual guild teaching illustration; confirm plant identity with reliable botanical guidance.",
+      "sourceSha256": "8be9dc6a9c7d8c3024778d12f2861487caa18ee04a42bebc2eb6bb4d977c68e1",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "Conceptual guild teaching illustration; confirm plant identity with reliable botanical guidance.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-decks/plant-guilds/en/slide-29.jpg",
+        "repositoryPath": "public/course-decks/plant-guilds/en/slide-29.jpg",
+        "bytes": 362050,
+        "sha256": "e67a561f4a389c40aaf31d9c62327f56d542206a184cbf4844906b9b413c705d",
+        "width": 1280,
+        "height": 720,
+        "gitBlobOid": "4286279b44f172671eab7fa35c885aef2e3922b9"
+      }
+    },
+    {
+      "moduleId": "plant-guilds",
+      "lessonId": "plant-guilds-l3",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "Conceptual guild teaching illustration; confirm plant identity with reliable botanical guidance.",
+      "sourceSha256": "8be9dc6a9c7d8c3024778d12f2861487caa18ee04a42bebc2eb6bb4d977c68e1",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "Conceptual guild teaching illustration; confirm plant identity with reliable botanical guidance.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-decks/plant-guilds/en/slide-37.jpg",
+        "repositoryPath": "public/course-decks/plant-guilds/en/slide-37.jpg",
+        "bytes": 393518,
+        "sha256": "123dddd618c89649157b92af43022d661b5777de8b271a6c49adfa46e8579203",
+        "width": 1280,
+        "height": 720,
+        "gitBlobOid": "45ea6b927902de30249ead36852a409dfd65caa9"
+      }
+    },
+    {
+      "moduleId": "food-forest",
+      "lessonId": "food-forest-l1",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "A food forest cross-section with a tall central tree, smaller trees, shrubs, upright plants, ground cover and a vine, with their roots branching through the soil; sunlight enters from the upper left.",
+      "sourceSha256": "52da082d07e3f01f6d1257e9b17544b411c27a22f50ba73c57239832214cee86",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "A food forest cross-section with a tall central tree, smaller trees, shrubs, upright plants, ground cover and a vine, with their roots branching through the soil; sunlight enters from the upper left.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/food-forest/food-forest-l1.jpg",
+        "repositoryPath": "public/course-images/food-forest/food-forest-l1.jpg",
+        "bytes": 466047,
+        "sha256": "0a5f4f6c858dd4cd1448bf97133515861fabe5b8c4d77f8df7984845d43817b0",
+        "width": 1100,
+        "height": 825,
+        "gitBlobOid": "e08e9a57bae387900ad6875bcbff3ddd3213cad2"
+      }
+    },
+    {
+      "moduleId": "food-forest",
+      "lessonId": "food-forest-l2",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "A simple shape of South Africa divided into three growing areas by ground colour and terrain alone: a pale high inland plateau with hills, a green humid coastal strip, and a hot red-brown low-lying area. Different tree shapes stand in each.",
+      "sourceSha256": "12dc6b2993bf67df9b0d1f74015ff8e24cbfbccd54a16d2cf51be096b6a749b8",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "A simple shape of South Africa divided into three growing areas by ground colour and terrain alone: a pale high inland plateau with hills, a green humid coastal strip, and a hot red-brown low-lying area. Different tree shapes stand in each.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/food-forest/food-forest-l2.jpg",
+        "repositoryPath": "public/course-images/food-forest/food-forest-l2.jpg",
+        "bytes": 245107,
+        "sha256": "9b846238272eddd03f02b806d36b5708e25aa30a818d0cd4ef2c6d854753c5f8",
+        "width": 1100,
+        "height": 825,
+        "gitBlobOid": "7f10e84517c62e8d8b9b09bce6cea630f58e5c33"
+      }
+    },
+    {
+      "moduleId": "food-forest",
+      "lessonId": "food-forest-l3",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "The same patch of ground at four stages, left to right: loose mulch being spread over cardboard on soil, then fast low pioneer plants, then young canopy trees with lower layers filling in, and finally a settled layered planting.",
+      "sourceSha256": "ed7ec9777da4d11a25fdc5abf156cb417cf0d817630a775546a77ec6c5f2dbe4",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "The same patch of ground at four stages, left to right: loose mulch being spread over cardboard on soil, then fast low pioneer plants, then young canopy trees with lower layers filling in, and finally a settled layered planting.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/food-forest/food-forest-l3-mulch-layer-corrected.jpg",
+        "repositoryPath": "public/course-images/food-forest/food-forest-l3-mulch-layer-corrected.jpg",
+        "bytes": 302363,
+        "sha256": "6e2d15499c2118137af622ba38b685681e3b24908ae74ab133f47518f494d507",
+        "width": 1448,
+        "height": 1086,
+        "gitBlobOid": "a04598a025b880a53255cc60150a53c6ac8dc849"
+      }
+    },
+    {
+      "moduleId": "small-livestock",
+      "lessonId": "small-livestock-l1",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "An illustration of a wheeled chicken pen shown in two positions along a strip of ground. An arrow points right; three chickens stand in the pen on the right, and a darker scratched patch lies between the two positions.",
+      "sourceSha256": "ac71ebbbe0ca7ca3c4ba6716d128fc9918531634546ec25053f6264a6e1c7eba",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "An illustration of a wheeled chicken pen shown in two positions along a strip of ground. An arrow points right; three chickens stand in the pen on the right, and a darker scratched patch lies between the two positions.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/small-livestock/small-livestock-l1.jpg",
+        "repositoryPath": "public/course-images/small-livestock/small-livestock-l1.jpg",
+        "bytes": 81375,
+        "sha256": "dba4e34107451eb984b91c579bb9bec6fac0b2b3c0c8253c28e6d5fe97b64cb6",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "1b62312a87905c9c92635d1ee7c0f17e18a4c053"
+      }
+    },
+    {
+      "moduleId": "small-livestock",
+      "lessonId": "small-livestock-l2",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "A beehive cut open showing the stacked frames inside, and a wide circle over a farm map showing how far the bees travel to forage.",
+      "sourceSha256": "49c0123c75b4bf4d5579d6d228feb5ee07144bdc3121995991a7e20e2cbee433",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "A beehive cut open showing the stacked frames inside, and a wide circle over a farm map showing how far the bees travel to forage.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/small-livestock/small-livestock-l2.jpg",
+        "repositoryPath": "public/course-images/small-livestock/small-livestock-l2.jpg",
+        "bytes": 79389,
+        "sha256": "32072d15edc3b204ec40e803a25954b81fdbd4d102a22d2fa21f6ba80c7c596f",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "aa9b8e6edd567843aa7b936688834d7f22d5a9b9"
+      }
+    },
+    {
+      "moduleId": "small-livestock",
+      "lessonId": "small-livestock-l3",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "Bought feed enters the farm. Animals produce manure, some nutrients return to the growing area through fully composted manure, and food and other products leave the farm.",
+      "sourceSha256": "16181441bce81b6f1a48df3829f6c380a206ff259808080ff0ade6475eb6ae03",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "Bought feed enters the farm. Animals produce manure, some nutrients return to the growing area through fully composted manure, and food and other products leave the farm.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/small-livestock/small-livestock-l3.jpg",
+        "repositoryPath": "public/course-images/small-livestock/small-livestock-l3.jpg",
+        "bytes": 137569,
+        "sha256": "96be6c45ef998d1ebceaf47cfc6929d0132474f2094e0246dc23e8f6cd2c2e76",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "7f368bfc1e4477a8f8a6cc803e4082c8a3266a8e"
+      }
+    },
+    {
+      "moduleId": "market-community",
+      "lessonId": "market-community-l1",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
+      "sourceSha256": "c43938cde25cb98f5b559a850582bf3167d3cb39fa4bde616eb44f893f9a4d59",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/market-community/market-community-l1.jpg",
+        "repositoryPath": "public/course-images/market-community/market-community-l1.jpg",
+        "bytes": 668960,
+        "sha256": "b1be48979b9fb59dd8f03ca3eb5a083f0dec34afc4a68fd0de181a28fbd057af",
+        "width": 1672,
+        "height": 941,
+        "gitBlobOid": "d95f61f3507d52f119e9906389b71ac7736cb8f1"
+      }
+    },
+    {
+      "moduleId": "market-community",
+      "lessonId": "market-community-l2",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
+      "sourceSha256": "5ce5bc4f00b97d976435c0f642398465bce0f2494df8c03dbab3373e8cbb3ace",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/market-community/market-community-l2.jpg",
+        "repositoryPath": "public/course-images/market-community/market-community-l2.jpg",
+        "bytes": 70909,
+        "sha256": "8c93588838b4aac3fb4a9e8a595cd169881051aa9a59a6ae91f8482026d9d9c5",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "a1efafe9a62b50e0bc54bbad29a35b2a605e351c"
+      }
+    },
+    {
+      "moduleId": "market-community",
+      "lessonId": "market-community-l3",
+      "field": "lesson.imageDescription",
+      "sourceEnglish": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+      "sourceSha256": "332de2c2f7ed2b3983584e7ad68bdbfd4af3036ac7e55d2e0153ca1b2a3b5c55",
+      "priorRegistryAlt": null,
+      "priorResolvedAlt": null,
+      "priorRenderedAltFallback": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+      "priorPresentationStatus": "draft",
+      "image": {
+        "url": "/course-images/market-community/market-community-l3.jpg",
+        "repositoryPath": "public/course-images/market-community/market-community-l3.jpg",
+        "bytes": 65427,
+        "sha256": "072cfdafc4b5d0c956eb133ce9bd1954fd1b6a75b49da38810b2d5288f236251",
+        "width": 1200,
+        "height": 800,
+        "gitBlobOid": "6b9000e40751604c53efccb364bb4fad68adc10f"
+      }
+    }
+  ],
+  "preserved": [
+    "canonical English source snapshots",
+    "all learner body, title, key points and quiz fields",
+    "source images and image URLs",
+    "review-draft status",
+    "narration and deck assets",
+    "PLAN_VERSION",
+    "ST Introduction hashes"
+  ]
+}

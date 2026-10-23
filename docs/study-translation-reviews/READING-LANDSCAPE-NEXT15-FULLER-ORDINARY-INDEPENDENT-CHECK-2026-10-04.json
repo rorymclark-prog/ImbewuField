@@ -1,0 +1,236 @@
+{
+  "title": "Reading Landscape fuller ordinary wording independent semantic check",
+  "date": "2026-10-04",
+  "candidatePacket": "/tmp/imbewu-reading-landscape-fuller-ordinary-candidates-20261004.json",
+  "candidatePacketSHA256": "1599b41b6f4b17e31488b899f6b06e3a1b3aa6c94ef87982433a8663bf488d94",
+  "scope": {
+    "rowsReviewed": 9,
+    "languages": [
+      "st",
+      "ve",
+      "ts"
+    ],
+    "repositoryEdits": 0,
+    "rendered": false
+  },
+  "method": "Compared every complete mixed candidate with its exact English source and inspected every localized clause and retained English segment. Checks are semantic and bounded, not fluent-speaker approval.",
+  "rows": [
+    {
+      "language": "st",
+      "slide": 8,
+      "bodyIndex": 2,
+      "decision": "accept_candidate_unreviewed",
+      "sourceEnglishExact": "Watch your own site before choosing where to place tender crops, trees, or buildings.",
+      "currentLearnerExact": {
+        "status": "draft",
+        "text": "Sheba sebaka sa hao pele u khetha where to place tender crops, trees, or buildings."
+      },
+      "candidateFullMixedExact": "Sheba sebaka sa hao pele u khetha moo o ka behang tender crops, trees, or buildings.",
+      "proposedFullMixedRepair": null,
+      "reason": "“before choosing” is retained and the locative wording says where to place the listed objects; tender crops, trees, and buildings remain exact source English.",
+      "checks": {
+        "beforePlacementOrConstructionConditionPreserved": true,
+        "walkOrDrawVersusWrite": "not_applicable_to_these_source_clauses",
+        "shadeLocationAndObjectsPreserved": true,
+        "timesExactly8amMidday4pm": false,
+        "winterVersusSummerDifferencePreserved": false,
+        "decisionOnlyAfterObserving": false,
+        "fullMixedConcatenationChecked": true
+      },
+      "fluencyOrLocalApprovalClaim": false
+    },
+    {
+      "language": "st",
+      "slide": 10,
+      "bodyIndex": 1,
+      "decision": "accept_candidate_unreviewed_with_english_action_clause_repair",
+      "sourceEnglishExact": "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+      "currentLearnerExact": {
+        "status": "draft",
+        "text": "A wall or shade cloth can shade a bed longer in winter than in summer. Hlahloba shadows tsa sebele before you build or fix a shade structure in place."
+      },
+      "candidateFullMixedExact": "A wall or shade cloth can shade a bed longer in winter than in summer. Hlahloba shadows tsa sebele pele o haha kapa o lokisa shade structure sebakeng sa yona.",
+      "proposedFullMixedRepair": "A wall or shade cloth can shade a bed longer in winter than in summer. Hlahloba shadows tsa sebele before you build or fix a shade structure in place.",
+      "reason": "The translated “fix in place” verb can read as repair/adjust/arrange rather than install or secure at the chosen position. Keep the complete source action and its before condition in English; the localized actual-shadow check remains before that action. The winter-versus-summer possibility (“can … longer”) is preserved exactly in source English.",
+      "checks": {
+        "beforePlacementOrConstructionConditionPreserved": true,
+        "walkOrDrawVersusWrite": "not_applicable_to_these_source_clauses",
+        "shadeLocationAndObjectsPreserved": true,
+        "timesExactly8amMidday4pm": false,
+        "winterVersusSummerDifferencePreserved": true,
+        "decisionOnlyAfterObserving": true,
+        "fullMixedConcatenationChecked": true
+      },
+      "fluencyOrLocalApprovalClaim": false
+    },
+    {
+      "language": "st",
+      "slide": 10,
+      "bodyIndex": 2,
+      "decision": "accept_candidate_unreviewed",
+      "sourceEnglishExact": "Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls.",
+      "currentLearnerExact": {
+        "status": "draft",
+        "text": "Ema sebakeng seo at 8am, midday, and 4pm on a winter's day. Watch where the shade falls."
+      },
+      "candidateFullMixedExact": "Ema sebakeng seo at 8am, midday, and 4pm on a winter's day. Shebella moo moriti o welang teng.",
+      "proposedFullMixedRepair": null,
+      "reason": "The source sentence keeps 8am, midday, 4pm and winter’s day exactly; the localized clauses say stand in that spot and observe where the shade falls. The preceding slide-10 clause gives the decision/action condition: check actual shadows before construction/placement.",
+      "checks": {
+        "beforePlacementOrConstructionConditionPreserved": false,
+        "walkOrDrawVersusWrite": "not_applicable_to_these_source_clauses",
+        "shadeLocationAndObjectsPreserved": true,
+        "timesExactly8amMidday4pm": true,
+        "winterVersusSummerDifferencePreserved": false,
+        "decisionOnlyAfterObserving": true,
+        "fullMixedConcatenationChecked": true
+      },
+      "fluencyOrLocalApprovalClaim": false
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 2,
+      "decision": "accept_candidate_unreviewed",
+      "sourceEnglishExact": "Watch your own site before choosing where to place tender crops, trees, or buildings.",
+      "currentLearnerExact": {
+        "status": "draft",
+        "text": "Sedzani site yaṋu ni sa athu nanga where to place tender crops, trees, or buildings."
+      },
+      "candidateFullMixedExact": "Sedzani site yaṋu ni sa athu nanga hune na nga vhea tender crops, trees, or buildings.",
+      "proposedFullMixedRepair": null,
+      "reason": "“before choosing” is retained and the locative wording says where to place the listed objects; tender crops, trees, and buildings remain exact source English.",
+      "checks": {
+        "beforePlacementOrConstructionConditionPreserved": true,
+        "walkOrDrawVersusWrite": "not_applicable_to_these_source_clauses",
+        "shadeLocationAndObjectsPreserved": true,
+        "timesExactly8amMidday4pm": false,
+        "winterVersusSummerDifferencePreserved": false,
+        "decisionOnlyAfterObserving": false,
+        "fullMixedConcatenationChecked": true
+      },
+      "fluencyOrLocalApprovalClaim": false
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "bodyIndex": 1,
+      "decision": "accept_candidate_unreviewed_with_english_action_clause_repair",
+      "sourceEnglishExact": "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+      "currentLearnerExact": {
+        "status": "draft",
+        "text": "A wall or shade cloth can shade a bed longer in winter than in summer. Sedzani shadows dza vhukuma before you build or fix a shade structure in place."
+      },
+      "candidateFullMixedExact": "A wall or shade cloth can shade a bed longer in winter than in summer. Sedzani shadows dza vhukuma ni sa athu u fhaṱa kana u dzudzanya shade structure fhethu hayo.",
+      "proposedFullMixedRepair": "A wall or shade cloth can shade a bed longer in winter than in summer. Sedzani shadows dza vhukuma before you build or fix a shade structure in place.",
+      "reason": "The translated “fix in place” verb can read as repair/adjust/arrange rather than install or secure at the chosen position. Keep the complete source action and its before condition in English; the localized actual-shadow check remains before that action. The winter-versus-summer possibility (“can … longer”) is preserved exactly in source English.",
+      "checks": {
+        "beforePlacementOrConstructionConditionPreserved": true,
+        "walkOrDrawVersusWrite": "not_applicable_to_these_source_clauses",
+        "shadeLocationAndObjectsPreserved": true,
+        "timesExactly8amMidday4pm": false,
+        "winterVersusSummerDifferencePreserved": true,
+        "decisionOnlyAfterObserving": true,
+        "fullMixedConcatenationChecked": true
+      },
+      "fluencyOrLocalApprovalClaim": false
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "bodyIndex": 2,
+      "decision": "accept_candidate_unreviewed",
+      "sourceEnglishExact": "Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls.",
+      "currentLearnerExact": {
+        "status": "draft",
+        "text": "Imani fhethu at 8am, midday, and 4pm on a winter's day. Watch where the shade falls."
+      },
+      "candidateFullMixedExact": "Imani fhethu at 8am, midday, and 4pm on a winter's day. Sedzani hune murunzi wa wela hone.",
+      "proposedFullMixedRepair": null,
+      "reason": "The source sentence keeps 8am, midday, 4pm and winter’s day exactly; the localized clauses say stand in that spot and observe where the shade falls. The preceding slide-10 clause gives the decision/action condition: check actual shadows before construction/placement.",
+      "checks": {
+        "beforePlacementOrConstructionConditionPreserved": false,
+        "walkOrDrawVersusWrite": "not_applicable_to_these_source_clauses",
+        "shadeLocationAndObjectsPreserved": true,
+        "timesExactly8amMidday4pm": true,
+        "winterVersusSummerDifferencePreserved": false,
+        "decisionOnlyAfterObserving": true,
+        "fullMixedConcatenationChecked": true
+      },
+      "fluencyOrLocalApprovalClaim": false
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 2,
+      "decision": "accept_candidate_unreviewed",
+      "sourceEnglishExact": "Watch your own site before choosing where to place tender crops, trees, or buildings.",
+      "currentLearnerExact": {
+        "status": "draft",
+        "text": "Languta ndhawu ya wena u nga si hlawula where to place tender crops, trees, or buildings."
+      },
+      "candidateFullMixedExact": "Languta ndhawu ya wena u nga si hlawula laha u nga vekaka tender crops, trees, or buildings.",
+      "proposedFullMixedRepair": null,
+      "reason": "“before choosing” is retained and the locative wording says where to place the listed objects; tender crops, trees, and buildings remain exact source English.",
+      "checks": {
+        "beforePlacementOrConstructionConditionPreserved": true,
+        "walkOrDrawVersusWrite": "not_applicable_to_these_source_clauses",
+        "shadeLocationAndObjectsPreserved": true,
+        "timesExactly8amMidday4pm": false,
+        "winterVersusSummerDifferencePreserved": false,
+        "decisionOnlyAfterObserving": false,
+        "fullMixedConcatenationChecked": true
+      },
+      "fluencyOrLocalApprovalClaim": false
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "bodyIndex": 1,
+      "decision": "accept_candidate_unreviewed_with_english_action_clause_repair",
+      "sourceEnglishExact": "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+      "currentLearnerExact": {
+        "status": "draft",
+        "text": "A wall or shade cloth can shade a bed longer in winter than in summer. Kambela shadows ta xiviri before you build or fix a shade structure in place."
+      },
+      "candidateFullMixedExact": "A wall or shade cloth can shade a bed longer in winter than in summer. Kambela shadows ta xiviri u nga si aka kumbe ku lulamisa shade structure endhawini ya yona.",
+      "proposedFullMixedRepair": "A wall or shade cloth can shade a bed longer in winter than in summer. Kambela shadows ta xiviri before you build or fix a shade structure in place.",
+      "reason": "The translated “fix in place” verb can read as repair/adjust/arrange rather than install or secure at the chosen position. Keep the complete source action and its before condition in English; the localized actual-shadow check remains before that action. The winter-versus-summer possibility (“can … longer”) is preserved exactly in source English.",
+      "checks": {
+        "beforePlacementOrConstructionConditionPreserved": true,
+        "walkOrDrawVersusWrite": "not_applicable_to_these_source_clauses",
+        "shadeLocationAndObjectsPreserved": true,
+        "timesExactly8amMidday4pm": false,
+        "winterVersusSummerDifferencePreserved": true,
+        "decisionOnlyAfterObserving": true,
+        "fullMixedConcatenationChecked": true
+      },
+      "fluencyOrLocalApprovalClaim": false
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "bodyIndex": 2,
+      "decision": "accept_candidate_unreviewed",
+      "sourceEnglishExact": "Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls.",
+      "currentLearnerExact": {
+        "status": "draft",
+        "text": "Yima endhawini yoleyo at 8am, midday, and 4pm on a winter's day. Watch where the shade falls."
+      },
+      "candidateFullMixedExact": "Yima endhawini yoleyo at 8am, midday, and 4pm on a winter's day. Languta laha ndzhuti wu welaka kona.",
+      "proposedFullMixedRepair": null,
+      "reason": "The source sentence keeps 8am, midday, 4pm and winter’s day exactly; the localized clauses say stand in that spot and observe where the shade falls. The preceding slide-10 clause gives the decision/action condition: check actual shadows before construction/placement.",
+      "checks": {
+        "beforePlacementOrConstructionConditionPreserved": false,
+        "walkOrDrawVersusWrite": "not_applicable_to_these_source_clauses",
+        "shadeLocationAndObjectsPreserved": true,
+        "timesExactly8amMidday4pm": true,
+        "winterVersusSummerDifferencePreserved": false,
+        "decisionOnlyAfterObserving": true,
+        "fullMixedConcatenationChecked": true
+      },
+      "fluencyOrLocalApprovalClaim": false
+    }
+  ],
+  "overallLimit": "Candidate wording remains unreviewed machine draft. For slide 10 body 1, proposed repair retains the potentially ambiguous “build or fix … in place” action and before condition in English while localizing the actual-shadow check. No fluent/local approval is claimed."
+}

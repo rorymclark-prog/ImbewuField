@@ -1,0 +1,163 @@
+{
+  "key": "sunn-hemp",
+  "name": "Sunn Hemp",
+  "localNames": null,
+  "botanicalName": "Crotalaria juncea",
+  "family": "Fabaceae",
+  "role": "cover",
+  "foodGroup": null,
+  "harvestProduct": "green manure / biomass mulch (terminated before or at flowering)",
+  "frostTender": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "Suited to the warm summer rainfall areas (or irrigation). Plant as soon as soil temperatures are higher than 16°C (October – November)",
+        "url": "https://barenbrug.co.za/cover-crops/products/sunn-hemp-black",
+        "page": null,
+        "doc": "Black | Sunn Hemp product page, Barenbrug South Africa"
+      }
+    ]
+  },
+  "transplant": { "value": false, "evidence": [] },
+  "sowMonths": {
+    "summer": {
+      "months": [10, 11],
+      "evidence": [
+        {
+          "quote": "Plant as soon as soil temperatures are higher than 16°C (October – November)",
+          "url": "https://barenbrug.co.za/cover-crops/products/sunn-hemp-black",
+          "page": null,
+          "doc": "Black | Sunn Hemp product page, Barenbrug South Africa"
+        },
+        {
+          "quote": "This is a tropical legume that has huge potential as a cover crop. It is planted in the warm season and is an annual that produces large quantities of biomass.",
+          "url": "https://www.grainsa.co.za/upload/conservation-agriculture/eng/6-CA-manual-Chapter-5-Cover-crops.pdf",
+          "page": 6,
+          "doc": "Conservation Agriculture Manual, Chapter 5: Cover crops, Grain SA, 2016"
+        }
+      ]
+    },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": {
+      "months": [10, 11],
+      "evidence": [
+        {
+          "quote": "Suited to the warm summer rainfall areas (or irrigation). Plant as soon as soil temperatures are higher than 16°C (October – November)",
+          "url": "https://barenbrug.co.za/cover-crops/products/sunn-hemp-black",
+          "page": null,
+          "doc": "Black | Sunn Hemp product page, Barenbrug South Africa"
+        }
+      ]
+    },
+    "mild-frost": {
+      "months": [10, 11],
+      "evidence": [
+        {
+          "quote": "Plant as soon as soil temperatures are higher than 16°C (October – November)",
+          "url": "https://barenbrug.co.za/cover-crops/products/sunn-hemp-black",
+          "page": null,
+          "doc": "Black | Sunn Hemp product page, Barenbrug South Africa"
+        }
+      ]
+    }
+  },
+  "daysToHarvestRange": {
+    "value": [60, 90],
+    "evidence": [
+      {
+        "quote": "It has been used extensively as a soil improvement or green manure crop in the tropics because of its ability to produce large amounts of biomass in as little as 60 to 90 days.",
+        "url": "https://barenbrug.co.za/cover-crops/products/sunn-hemp-black",
+        "page": null,
+        "doc": "Black | Sunn Hemp product page, Barenbrug South Africa"
+      }
+    ],
+    "notes": "Days to reach a large-biomass state for termination as green manure, not a fixed flowering date; no SA source gives days-to-flower specifically."
+  },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": null,
+  "inRowSpacingRangeCm": null,
+  "sowDepthRangeCm": null,
+  "seedRateKgPerHaRange": {
+    "value": [20, 50],
+    "evidence": [
+      {
+        "quote": "Seeding rate (pure) 40-50kg/ha",
+        "url": "https://barenbrug.co.za/cover-crops/products/sunn-hemp-black",
+        "page": null,
+        "doc": "Black | Sunn Hemp product page, Barenbrug South Africa"
+      },
+      {
+        "quote": "Seeding rate (pure) 20kg/ha",
+        "url": "https://barenbrug.co.za/cover-crops/products/sunn-hemp-red",
+        "page": null,
+        "doc": "Red | Sunn Hemp product page, Barenbrug South Africa"
+      }
+    ]
+  },
+  "yield": null,
+  "ecocrop": {
+    "row": "Crotalaria juncea",
+    "TOPMN": 20,
+    "TOPMX": 30,
+    "TMIN": 4,
+    "TMAX": 40,
+    "GMIN": 60,
+    "GMAX": 160
+  },
+  "coverCrop": {
+    "nFixedKgPerHa": 120,
+    "biomassTPerHa": null,
+    "terminateAfterDays": 90,
+    "evidence": [
+      {
+        "quote": "It has a suppression effect on plant parasitic nematodes and fixes around 120kg/ha of nitrogen.",
+        "url": "https://www.grainsa.co.za/upload/conservation-agriculture/eng/6-CA-manual-Chapter-5-Cover-crops.pdf",
+        "page": 6,
+        "doc": "Conservation Agriculture Manual, Chapter 5: Cover crops, Grain SA, 2016"
+      }
+    ]
+  },
+  "varieties": [
+    {
+      "name": "Black Sunn Hemp",
+      "zones": ["highveld", "lowveld-bushveld", "mild-frost"],
+      "maturity": null,
+      "season": "Sow Oct-Nov once soil temp > 16°C",
+      "note": "High fibre content, more difficult to manage as a green manure; fast establishment, short growing season.",
+      "evidence": [
+        {
+          "quote": "High fibre content making it more difficult to manage as a green manure",
+          "url": "https://barenbrug.co.za/cover-crops/products/sunn-hemp-black",
+          "page": null,
+          "doc": "Black | Sunn Hemp product page, Barenbrug South Africa"
+        }
+      ]
+    },
+    {
+      "name": "Red Sunn Hemp",
+      "zones": ["highveld", "lowveld-bushveld", "mild-frost"],
+      "maturity": null,
+      "season": "Sow Oct-Nov once soil temp > 16°C",
+      "note": "Low in fibre, fast deterioration as a green manure; medium-fast establishment, long growing season.",
+      "evidence": [
+        {
+          "quote": "Low in fibre, fast deterioration as a green manure",
+          "url": "https://barenbrug.co.za/cover-crops/products/sunn-hemp-red",
+          "page": null,
+          "doc": "Red | Sunn Hemp product page, Barenbrug South Africa"
+        }
+      ]
+    }
+  ],
+  "zoneNotes": {
+    "western-cape": "No source evidence found for sunn hemp in winter-rainfall areas; it is a warm-season legume needing soil temp above 16°C."
+  },
+  "gaps": [
+    "Row/in-row spacing not found in any SA source (Barenbrug gives only a broadcast/drilled seeding rate).",
+    "Dry-matter biomass t/ha not found for sunn hemp specifically (only N-fixed figure).",
+    "No numeric yield (t/ha) source found.",
+    "sowMonths for all-year/mild-frost zones inferred from a generic 'warm summer rainfall areas' description, not zone-specific confirmation."
+  ],
+  "verdict": "partial",
+  "summary": "Well sourced for sow window (Oct-Nov, soil temp >16°C), seed rate (20-50 kg/ha, cultivar dependent) and N-fixation (~120 kg/ha, Grain SA CA manual). Row/in-row spacing and a dry-matter biomass or yield figure are not sourced in any acceptable SA document and are recorded as gaps."
+}

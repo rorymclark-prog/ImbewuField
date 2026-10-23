@@ -1,0 +1,96 @@
+{
+  "title": "Eight refreshed regional Study stills",
+  "generatedFrom": "scripts/make-lesson-slides.mjs paired-draft outputs; WebP quality 88, method 6",
+  "dimensions": [
+    1440,
+    5400
+  ],
+  "frames": [
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 18,
+      "file": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/public/course-decks/vegetables-staples/st/slide-18.webp",
+      "png": "/tmp/imbewu-record-intro-reading-render-20261004/vegetables-staples/st/slide-18.png",
+      "bytes": 335662,
+      "sha256": "085cbe026b0937dd20d5483c33d10c1e9a562dd12c448c4e3d0b191f79c2b54e"
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ve",
+      "slide": 18,
+      "file": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/public/course-decks/vegetables-staples/ve/slide-18.webp",
+      "png": "/tmp/imbewu-record-intro-reading-render-20261004/vegetables-staples/ve/slide-18.png",
+      "bytes": 341276,
+      "sha256": "56dab7175ada546e4231468c052f763bfaad2f1cf1a6cda4101fc128a1b71887"
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ts",
+      "slide": 18,
+      "file": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/public/course-decks/vegetables-staples/ts/slide-18.webp",
+      "png": "/tmp/imbewu-record-intro-reading-render-20261004/vegetables-staples/ts/slide-18.png",
+      "bytes": 338916,
+      "sha256": "681d4bb0cc7c145c9ff8477c0630ebb55a752213478ece61d489badd53a691f3"
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "ve",
+      "slide": 14,
+      "file": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/public/course-decks/intro-permaculture/ve/slide-14.webp",
+      "png": "/tmp/imbewu-record-intro-reading-render-20261004/intro-permaculture/ve/slide-14.png",
+      "bytes": 444458,
+      "sha256": "59b2746c14d79d38690e1fa7f39e63d25c1b7c7c1778fc5c52ad16d420eb7a93"
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "ts",
+      "slide": 14,
+      "file": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/public/course-decks/intro-permaculture/ts/slide-14.webp",
+      "png": "/tmp/imbewu-record-intro-reading-render-20261004/intro-permaculture/ts/slide-14.png",
+      "bytes": 446868,
+      "sha256": "3c2b7f62b6a5aa715048598ce59b98c0c3277a24459654414a83b4d2e3760859"
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ts",
+      "slide": 18,
+      "file": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/public/course-decks/reading-landscape/ts/slide-18.webp",
+      "png": "/tmp/imbewu-record-intro-reading-render-20261004/reading-landscape/ts/slide-18.png",
+      "bytes": 594350,
+      "sha256": "b66b9fb618ff84f1dccab407ef3418dcefef93d67bce5f321673bc8352bb682a"
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ve",
+      "slide": 19,
+      "file": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/public/course-decks/reading-landscape/ve/slide-19.webp",
+      "png": "/tmp/imbewu-record-intro-reading-render-20261004/reading-landscape/ve/slide-19.png",
+      "bytes": 275530,
+      "sha256": "533567a28e10ce1a0a9396b49cd81f8cdefad9b549a7a8b6b77a508df1e8c48c"
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ts",
+      "slide": 19,
+      "file": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/public/course-decks/reading-landscape/ts/slide-19.webp",
+      "png": "/tmp/imbewu-record-intro-reading-render-20261004/reading-landscape/ts/slide-19.png",
+      "bytes": 277052,
+      "sha256": "a8c1f82e2278be95d912c19a2b7682d75c273621df675fd70ededd9ce46dbfee"
+    }
+  ],
+  "contactSheet": "/tmp/imbewu-record-intro-reading-contact-20261004.png",
+  "assetSizeManifest": {
+    "path": "lib/course-asset-sizes.ts",
+    "refreshedFrameCount": 8,
+    "verification": "Each selected manifest entry equals the corresponding compressed WebP byte count in frames; no other asset-size entry changed."
+  },
+  "visualReview": {
+    "contactSheetReviewed": true,
+    "originalSizeFramesReviewed": [
+      "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/public/course-decks/intro-permaculture/ve/slide-14.webp",
+      "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/public/course-decks/reading-landscape/ts/slide-19.webp"
+    ],
+    "reviewerFinding": "Root saw all eight frames in the contact sheet and the two listed compressed frames at original size; wording fit within the panels, source pairing and English holds were visible, and no collision was observed."
+  }
+}

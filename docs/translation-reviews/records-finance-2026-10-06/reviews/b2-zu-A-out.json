@@ -1,0 +1,12 @@
+[
+{"id":"R271","back":"Choose harvest/crop / product","flags":["'isivuno' = harvest/crop yield, 'umkhiqizo' = product; ' / ' alternative mirrors an either-or; acceptable"]},
+{"id":"R276","back":"Products of animals","flags":[]},
+{"id":"R277","back":"Products that you have added","flags":["Relative 'oyengezile' reads correctly as 'which you have added'"]},
+{"id":"R278","back":"Add another product...","flags":[]},
+{"id":"R279","back":"Name of the new product","flags":[]},
+{"id":"R280","back":"Type the product name","flags":["'Thayipha' is an English loan (type); understandable; 'Bhala' (write) would be native"]},
+{"id":"R281","back":"Save (preserve/keep) the product","flags":["'Londoloza' = save/preserve/protect; standard Zulu UI 'save'"]},
+{"id":"R282","back":"Money by hand (cash handed over)","flags":["'ngesandla' = 'by hand/with the hand'; reads as hand-paid money = cash, but it is a descriptive phrase rather than the usual word; after 'Invoice ·' acceptable but not certain"]},
+{"id":"R283","back":"Card","flags":["Loan 'ikhadi'; bare, could be any card"]},
+{"id":"R284","back":"Phone","flags":["'Ifoni' = the telephone device only; does not read as a payment method; no mobile-money meaning"]}
+]

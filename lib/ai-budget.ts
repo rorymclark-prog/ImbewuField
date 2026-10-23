@@ -1,8 +1,8 @@
 // A monthly AI allowance per person, and a small daily one per guest.
 //
 // WHY: every AI call is priced (lib/ai-cost.ts), but nothing added the prices up per person, so one
-// heavy user could run up any bill. Rory's rule (Sep 2026): about €3 of AI per signed-in user per
-// month. Reaching it does NOT switch AI off — it moves that person onto the cheap model until the
+// heavy user could run up any bill. Rory's rule (Oct 2026): R18 of AI per signed-in user per
+// month — the same as the R18 a month the platform is priced at. Reaching it does NOT switch AI off — it moves that person onto the cheap model until the
 // 1st of next month. Guests (no sign-in) get a tiny daily pool on the cheap model, then a nudge to
 // sign in. Both numbers are env-tunable so the cap can follow the research without a deploy of code.
 //
@@ -28,19 +28,19 @@ const num = (v: string | undefined, fallback: number): number => {
 };
 
 export interface AiBudgetConfig {
-  /** Monthly allowance per signed-in person, in euro. */
-  monthlyCapEur: number;
-  /** Daily allowance per guest address, in euro. */
-  guestDailyEur: number;
+  /** Monthly allowance per signed-in person, in rand. */
+  monthlyCapZar: number;
+  /** Daily allowance per guest address, in rand. */
+  guestDailyZar: number;
   /** Planning rate: the API bills in US dollars. */
-  usdPerEur: number;
+  zarPerUsd: number;
 }
 
 export function budgetConfig(env: Record<string, string | undefined> = process.env): AiBudgetConfig {
   return {
-    monthlyCapEur: num(env.AI_MONTHLY_CAP_EUR, 3),
-    guestDailyEur: num(env.AI_GUEST_DAILY_EUR, 0.05),
-    usdPerEur: num(env.AI_USD_PER_EUR, 1.1) || 1.1,
+    monthlyCapZar: num(env.AI_MONTHLY_CAP_ZAR, 18),
+    guestDailyZar: num(env.AI_GUEST_DAILY_ZAR, 1),
+    zarPerUsd: num(env.AI_ZAR_PER_USD, 18) || 18,
   };
 }
 
@@ -77,9 +77,9 @@ export interface AiSpendStore {
 
 export interface AiAllowance {
   kind: Spender['kind'];
-  spentEur: number;
-  capEur: number;
-  remainingEur: number;
+  spentZar: number;
+  capZar: number;
+  remainingZar: number;
   /** YYYY-MM-DD the allowance refills (tomorrow for guests, the 1st for signed-in people). */
   resetsOn: string;
   /** True once the allowance is used up: calls run on the cheap model (or stop, for guests). */
@@ -87,16 +87,16 @@ export interface AiAllowance {
 }
 
 export function allowanceFrom(who: Spender, spentUsd: number, now: Date, cfg: AiBudgetConfig): AiAllowance {
-  const capEur = who.kind === 'user' ? cfg.monthlyCapEur : cfg.guestDailyEur;
-  const spentEur = spentUsd / cfg.usdPerEur;
+  const capZar = who.kind === 'user' ? cfg.monthlyCapZar : cfg.guestDailyZar;
+  const spentZar = spentUsd * cfg.zarPerUsd;
   const tomorrow = new Date(now.getTime() + 86_400_000).toISOString().slice(0, 10);
   return {
     kind: who.kind,
-    spentEur: Math.round(spentEur * 100) / 100,
-    capEur,
-    remainingEur: Math.max(0, Math.round((capEur - spentEur) * 100) / 100),
+    spentZar: Math.round(spentZar * 100) / 100,
+    capZar,
+    remainingZar: Math.max(0, Math.round((capZar - spentZar) * 100) / 100),
     resetsOn: who.kind === 'user' ? monthlyResetDate(now) : tomorrow,
-    capped: spentEur >= capEur,
+    capped: spentZar >= capZar,
   };
 }
 

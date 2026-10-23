@@ -1,0 +1,351 @@
+{
+  "title": "Independent check of root-repaired Tshivenda Study UI candidates",
+  "date": "2026-10-07",
+  "status": "INDEPENDENT_SEMANTIC_COMPOSITION_CHECK; NO_FLUENT_APPROVAL",
+  "worktree": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField",
+  "head": "25f6baaefc56e82a4fae5f679a43aa5f605d66f0",
+  "sourcePacket": "/tmp/imbewu-study-ui-ve-full-root-reviewed-20261007.json",
+  "count": 18,
+  "counts": {
+    "accept": 17,
+    "repair": 1,
+    "hold": 0
+  },
+  "method": "Checked each root pending candidate against its exact source literal, display condition, relevant component wording, and the actual locale button/control draft when called out. Placeholders are compared literally and in order.",
+  "rows": [
+    {
+      "language": "ve",
+      "key": "studentFacilitatorVideo",
+      "source": "Facilitator training video — for in-person sessions, not for streaming here.",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 396,
+        "displayCondition": "open → lesson.videoUrl"
+      },
+      "rootCandidate": "Vidiyo ya u gudisa facilitator — ya miṱangano ya vhathu vha re fhethu huthihi; a i tambiwi hafha kha inthanethe.",
+      "finalCandidate": "Vidiyo ya training ya facilitator — ya miṱangano ya vhathu vha re fhethu huthihi, hu si ya streaming hafha.",
+      "literalBackTranslation": "This is a facilitator training video for sessions where people are physically together, not for streaming here.",
+      "decision": "REPAIR",
+      "semanticReason": "The root version’s “does not play here on the internet” can sound like online playback is impossible in general. This revision preserves the narrower “not for streaming here” limitation. “Facilitator” remains the role term, not manager.",
+      "remainingRisk": "Draft wording remains unreviewed by a fluent Tshivenda speaker; this decision checks source meaning and UI composition only.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "studentResubmit",
+      "source": "Resubmit",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 579,
+        "displayCondition": "not (submitting) → existing"
+      },
+      "rootCandidate": "Rumelani hafhu",
+      "finalCandidate": "Rumelani hafhu",
+      "literalBackTranslation": "Submit again.",
+      "decision": "ACCEPT",
+      "semanticReason": "The display condition is an existing submission, so “send/submit again” is the right action. The polite command form follows other locale imperatives such as Vhulungani, Tobani, and Fhedzani. Fluency still needs a speaker.",
+      "remainingRisk": "Draft wording remains unreviewed by a fluent Tshivenda speaker; this decision checks source meaning and UI composition only.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmit",
+      "source": "Submit",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 579,
+        "displayCondition": "not (submitting) → not (existing)"
+      },
+      "rootCandidate": "Rumelani",
+      "finalCandidate": "Rumelani",
+      "literalBackTranslation": "Submit/send.",
+      "decision": "ACCEPT",
+      "semanticReason": "The action is the initial form submission. Rumelani is a plural/polite command and is semantically suitable; keep the form distinct by pairing the existing-submission state with Rumelani hafhu.",
+      "remainingRisk": "Draft wording remains unreviewed by a fluent Tshivenda speaker; this decision checks source meaning and UI composition only.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "studentPortalBody",
+      "source": "It's set up for students — not your role. Head back to your own home to keep going.",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 793,
+        "displayCondition": "!loading && user && isLive && role && !STUDENT_ALLOWED_ROLES.has(role)"
+      },
+      "rootCandidate": "Ho itelwa vhagudi — a si role yaṋu. Vhuyelani kha siaṱari ḽaṋu ḽa hayani uri ni bvele phanḓa.",
+      "finalCandidate": "Ho itelwa vhagudi — a si role yaṋu. Vhuyelani kha siaṱari ḽaṋu ḽa hayani uri ni bvele phanḓa.",
+      "literalBackTranslation": "It is intended for learners — this is not your account role. Return to your home page to continue.",
+      "decision": "ACCEPT",
+      "semanticReason": "The revised wording makes “home” an app page, matching the actual /home route and button, rather than a physical home. Retaining role as an account term preserves the warning’s scope.",
+      "remainingRisk": "Draft wording remains unreviewed by a fluent Tshivenda speaker; this decision checks source meaning and UI composition only.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "studentBackHome",
+      "source": "Back to my home",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 801,
+        "displayCondition": "!loading && user && isLive && role && !STUDENT_ALLOWED_ROLES.has(role)"
+      },
+      "rootCandidate": "Murahu kha siaṱari ḽanga ḽa hayani",
+      "finalCandidate": "Murahu kha siaṱari ḽanga ḽa hayani",
+      "literalBackTranslation": "Back to my home page.",
+      "decision": "ACCEPT",
+      "semanticReason": "The button routes to /home, so “home page” accurately identifies the destination and avoids a physical-home reading.",
+      "remainingRisk": "Draft wording remains unreviewed by a fluent Tshivenda speaker; this decision checks source meaning and UI composition only.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentsOrder",
+      "source": "Assigned modules are listed first. Everything else is still open to you.",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 991,
+        "displayCondition": "assignSummary && assignSummary.total > 0 → not (simple)"
+      },
+      "rootCandidate": "Modulu dzo ni nangelwaho dzi sumbedzwa u thoma. Zwiṅwe zwoṱhe ni kha ḓi kona u zwi vula.",
+      "finalCandidate": "Modulu dzo ni nangelwaho dzi sumbedzwa u thoma. Zwiṅwe zwoṱhe ni kha ḓi kona u zwi vula.",
+      "literalBackTranslation": "Modules assigned to you are shown/listed first. You can still open everything else.",
+      "decision": "ACCEPT",
+      "semanticReason": "The repair changes “combined” to “shown,” preserving display order. The second sentence keeps access open for all other modules.",
+      "remainingRisk": "Draft wording remains unreviewed by a fluent Tshivenda speaker; this decision checks source meaning and UI composition only.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmitModule",
+      "source": "Submit this module",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 1333,
+        "displayCondition": "content → not (submission)"
+      },
+      "rootCandidate": "Rumelani modulu iyi",
+      "finalCandidate": "Rumelani modulu iyi",
+      "literalBackTranslation": "Submit this module.",
+      "decision": "ACCEPT",
+      "semanticReason": "The page shows this only before a submission exists. Rumelani modulu iyi preserves the submit action; retaining module keeps the object the source names.",
+      "remainingRisk": "Draft wording remains unreviewed by a fluent Tshivenda speaker; this decision checks source meaning and UI composition only.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckRegion",
+      "source": "Lesson slides. Use Left and Right arrow keys to change slides.",
+      "sourceBinding": {
+        "file": "components/course/DeckPlayer.tsx",
+        "line": 548,
+        "displayCondition": "Deck UI at components/course/DeckPlayer.tsx:548; player is mounted only for a module with a deck, then control text follows current slide/player state."
+      },
+      "rootCandidate": "Slides dza ngudo. Shumisani keys dza misevhe ya Left na Right u shandula slides.",
+      "finalCandidate": "Slides dza ngudo. Shumisani keys dza misevhe ya Left na Right u shandula slides.",
+      "literalBackTranslation": "Lesson slides. Use the Left and Right arrow keys to change slides.",
+      "decision": "ACCEPT",
+      "semanticReason": "The added word keys explicitly names physical keyboard keys. Left and Right stay as key labels, and slides remains the content being changed.",
+      "remainingRisk": "Draft wording remains unreviewed by a fluent Tshivenda speaker; this decision checks source meaning and UI composition only.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckNarrationFailed",
+      "source": "Narration could not play. Check your connection and press Play lesson again, or read this slide below.",
+      "sourceBinding": {
+        "file": "components/course/DeckPlayer.tsx",
+        "line": 767,
+        "displayCondition": "audioFailed"
+      },
+      "rootCandidate": "Ṱhalutshedzo nga ipfi a yo ngo tamba. Ṱolani vhuṱumani haṋu ni tobani Tshimbidzani ngudo hafhu, kana ni vhale slide iyi afho fhasi.",
+      "finalCandidate": "Ṱhalutshedzo nga ipfi a yo ngo tamba. Ṱolani vhuṱumani haṋu ni tobani Tshimbidzani ngudo hafhu, kana ni vhale slide iyi afho fhasi.",
+      "literalBackTranslation": "Narration could not play. Check your connection and press the Play lesson button again, or read this slide below.",
+      "decision": "ACCEPT",
+      "semanticReason": "The retry uses the actual play control label Tshimbidzani ngudo and the surrounding verb indicates pressing it. The alternative reading path remains intact.",
+      "remainingRisk": "Draft wording remains unreviewed by a fluent Tshivenda speaker; this decision checks source meaning and UI composition only.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckNarrationFallback",
+      "source": "Narration is in {spokenLanguage}. {appLanguage} narration is not available for this module yet.",
+      "sourceBinding": {
+        "file": "components/course/DeckPlayer.tsx",
+        "line": 799,
+        "displayCondition": "spokenLang && !spokenLang.exact"
+      },
+      "rootCandidate": "Ṱhalutshedzo nga ipfi i kha {spokenLanguage}. Ṱhalutshedzo nga ipfi ya {appLanguage} a i athu wanala ya modulu iyi.",
+      "finalCandidate": "Ṱhalutshedzo nga ipfi i kha {spokenLanguage}. Ṱhalutshedzo nga ipfi ya {appLanguage} a i athu wanala ya modulu iyi.",
+      "literalBackTranslation": "Narration is in {spokenLanguage}. Narration in {appLanguage} is not available for this module yet.",
+      "decision": "ACCEPT",
+      "semanticReason": "The exact source placeholders and unavailable-yet scope are retained. This row only displays when another narration language is actually selected.",
+      "remainingRisk": "Draft wording remains unreviewed by a fluent Tshivenda speaker; this decision checks source meaning and UI composition only.",
+      "sourcePlaceholders": [
+        "{spokenLanguage}",
+        "{appLanguage}"
+      ],
+      "candidatePlaceholders": [
+        "{spokenLanguage}",
+        "{appLanguage}"
+      ]
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckSilentStatus",
+      "source": "No narration will play. Use Next to read at your own pace.",
+      "sourceBinding": {
+        "file": "components/course/DeckPlayer.tsx",
+        "line": 807,
+        "displayCondition": "narrationChoice === NO_NARRATION && !needsSourceNarrationChoice"
+      },
+      "rootCandidate": "A hu nga ḓo tamba ṱhalutshedzo nga ipfi. Shumisani Tevhelaho u vhala nga luvhilo lwaṋu.",
+      "finalCandidate": "A hu nga ḓo tamba ṱhalutshedzo nga ipfi. Shumisani Tevhelaho u vhala nga luvhilo lwaṋu.",
+      "literalBackTranslation": "No narration will play. Use Next to read at your own pace/speed.",
+      "decision": "ACCEPT",
+      "semanticReason": "The screen state explicitly selects no narration. The revised luvhiḽo lwaṋu means “your speed/pace,” which better preserves self-paced reading than “in your own time.” Tevhelaho matches the Next button draft.",
+      "remainingRisk": "Draft wording remains unreviewed by a fluent Tshivenda speaker; this decision checks source meaning and UI composition only.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "offlineGetSlidesWhileSignal",
+      "source": "Save the slides and their displayed posters on this phone. The deck then works offline without narration or video.",
+      "sourceBinding": {
+        "file": "components/course/OfflineDownload.tsx",
+        "line": 183,
+        "displayCondition": "!compact → regionalSlidePack && variant === 'slides'"
+      },
+      "rootCandidate": "Vhulungani slides na posters dzine dza sumbedzwa kha founu iyi. Nga murahu deck i ḓo shuma ni si na inthanethe hu si na ṱhalutshedzo nga ipfi kana video.",
+      "finalCandidate": "Vhulungani slides na posters dzine dza sumbedzwa kha founu iyi. Nga murahu deck i ḓo shuma ni si na inthanethe hu si na ṱhalutshedzo nga ipfi kana video.",
+      "literalBackTranslation": "Save the slides and their displayed posters on this phone. The deck then works offline without spoken narration or video.",
+      "decision": "ACCEPT",
+      "semanticReason": "This is the slides-only variant; it explicitly says no narration or video. Replacing generic narration with the established spoken-explanation wording keeps that condition clear.",
+      "remainingRisk": "Draft wording remains unreviewed by a fluent Tshivenda speaker; this decision checks source meaning and UI composition only.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "offlineEnglishMediaFallback",
+      "source": "This pack includes slides or narration in English where your chosen language is not available yet.",
+      "sourceBinding": {
+        "file": "components/course/OfflineDownload.tsx",
+        "line": 191,
+        "displayCondition": "hasEnglishMedia → not (variant === 'slides')"
+      },
+      "rootCandidate": "Pack iyi i na slides kana ṱhalutshedzo nga ipfi nga English hune luambo lwe na lu nanga lu sa athu wanala.",
+      "finalCandidate": "Pack iyi i na slides kana ṱhalutshedzo nga ipfi nga English hune luambo lwe na lu nanga lu sa athu wanala.",
+      "literalBackTranslation": "This pack includes slides or spoken narration in English where the language you chose is not available yet.",
+      "decision": "ACCEPT",
+      "semanticReason": "This fallback is conditioned on English media being present. The candidate keeps the chosen-language scope and the source’s inclusive “or.”",
+      "remainingRisk": "Draft wording remains unreviewed by a fluent Tshivenda speaker; this decision checks source meaning and UI composition only.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalPackChoice",
+      "source": "Regional deck download contents",
+      "sourceBinding": {
+        "file": "components/course/OfflineDownload.tsx",
+        "line": 238,
+        "displayCondition": "regionalSlidePack && !busy"
+      },
+      "rootCandidate": "Zwi re kha download ya slides dza luambo lwe na lu nanga",
+      "finalCandidate": "Zwi re kha download ya slides dza luambo lwe na lu nanga",
+      "literalBackTranslation": "Contents of the download of slides in the language you chose.",
+      "decision": "ACCEPT",
+      "semanticReason": "The source label is used only when regionalSlidePack is true. The resolver defines that state by selected language and a non-exact narration match, so the root wording correctly refers to the chosen language rather than geographic region.",
+      "remainingRisk": "Draft wording remains unreviewed by a fluent Tshivenda speaker; this decision checks source meaning and UI composition only.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalFullMediaNote",
+      "source": "The full pack includes available English source narration, animations and lesson images.",
+      "sourceBinding": {
+        "file": "components/course/OfflineDownload.tsx",
+        "line": 269,
+        "displayCondition": "regionalSlidePack && !busy → variant === 'full'"
+      },
+      "rootCandidate": "Pack yoṱhe i katela ṱhalutshedzo nga ipfi ya English source ine ya vha hone, animations na zwifanyiso zwa ngudo.",
+      "finalCandidate": "Pack yoṱhe i katela ṱhalutshedzo nga ipfi ya English source ine ya vha hone, animations na zwifanyiso zwa ngudo.",
+      "literalBackTranslation": "The full pack includes available English source narration, animations, and lesson images.",
+      "decision": "ACCEPT",
+      "semanticReason": "The phrase ya English source keeps “English source” attached to narration; ine ya vha hone preserves “available.” The qualifier avoids promising narration for every deck.",
+      "remainingRisk": "Draft wording remains unreviewed by a fluent Tshivenda speaker; this decision checks source meaning and UI composition only.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "offlineQualityHigherNote",
+      "source": "facilitators & funders · wifi",
+      "sourceBinding": {
+        "file": "components/course/OfflineDownload.tsx",
+        "line": 286,
+        "displayCondition": "hasHigher && !busy && phase !== 'done' && !simple && isStaff"
+      },
+      "rootCandidate": "facilitators na vhaṋei vha tshelede · wifi",
+      "finalCandidate": "facilitators na vhaṋei vha tshelede · wifi",
+      "literalBackTranslation": "Facilitators and funders · Wi-Fi.",
+      "decision": "ACCEPT",
+      "semanticReason": "Keeping facilitator in English avoids changing the role to a manager or generic leader. Funders is translated as people who provide money; Wi-Fi remains a technical label.",
+      "remainingRisk": "Draft wording remains unreviewed by a fluent Tshivenda speaker; this decision checks source meaning and UI composition only.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "offlineFilesFailed",
+      "source": "{count} files did not download. Tap Finish download again while you still have signal — the rest is already saved.",
+      "sourceBinding": {
+        "file": "components/course/OfflineDownload.tsx",
+        "line": 328,
+        "displayCondition": "failed.length > 0"
+      },
+      "rootCandidate": "Files {count} a dzo ngo download-a. Tobani Fhedzisani download hafhu musi signal i kha hone — dziṅwe dzo no vhulungwa.",
+      "finalCandidate": "Files {count} a dzo ngo download-a. Tobani Fhedzisani download hafhu musi signal i kha hone — dziṅwe dzo no vhulungwa.",
+      "literalBackTranslation": "{count} files did not download. Tap “Finish download” again while you still have signal — the rest is already saved.",
+      "decision": "ACCEPT",
+      "semanticReason": "The retry label matches the actual companion button text Fhedzisani download, and the sentence preserves the exact failure count, signal timing, and already-saved remainder.",
+      "remainingRisk": "Draft wording remains unreviewed by a fluent Tshivenda speaker; this decision checks source meaning and UI composition only.",
+      "sourcePlaceholders": [
+        "{count}"
+      ],
+      "candidatePlaceholders": [
+        "{count}"
+      ]
+    },
+    {
+      "language": "ve",
+      "key": "offlineLowStorage",
+      "source": "This phone is low on space — the download may not fit.",
+      "sourceBinding": {
+        "file": "components/course/OfflineDownload.tsx",
+        "line": 340,
+        "displayCondition": "tightOnSpace && phase !== 'done'"
+      },
+      "rootCandidate": "Founu iyi yo sala na fhethu huṱuku — download i nga vha khulwane u fhira fhethu ho salaho.",
+      "finalCandidate": "Founu iyi yo sala na fhethu huṱuku — download i nga vha khulwane u fhira fhethu ho salaho.",
+      "literalBackTranslation": "This phone has little space left — the download may be larger than the remaining space.",
+      "decision": "ACCEPT",
+      "semanticReason": "The repaired second clause preserves “may not fit” as a possibility; it does not say the download definitely cannot fit.",
+      "remainingRisk": "Draft wording remains unreviewed by a fluent Tshivenda speaker; this decision checks source meaning and UI composition only.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    }
+  ]
+}

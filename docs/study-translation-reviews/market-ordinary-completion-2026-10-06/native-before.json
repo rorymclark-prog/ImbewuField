@@ -1,0 +1,1104 @@
+{
+  "baselineCommit": "b2c81e32458f83cff951250e3b9065d2b1314206",
+  "sourceFileBindings": [
+    {
+      "path": "lib/course-modules.ts",
+      "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "exactOriginMain": true
+    },
+    {
+      "path": "lib/course-localization.ts",
+      "sha256": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+      "exactOriginMain": true
+    },
+    {
+      "path": "lib/course-translation-drafts-st-market-community.ts",
+      "sha256": "a3c2170501056b0996e83ec66f0b831f44569f66c20dcdd18242cf9c72cb0fbd",
+      "exactOriginMain": true
+    },
+    {
+      "path": "lib/course-translation-drafts-ve-market-community.ts",
+      "sha256": "6e801aa8b9dfde31be37f713fd52b1937c7971bdc1c782ad0c152df406b545fd",
+      "exactOriginMain": true
+    },
+    {
+      "path": "lib/course-translation-drafts-ts-market-community.ts",
+      "sha256": "e32e3b5e0530a5779b6317637f4433fba396d44f5ab00e86676a8885c1e36d38",
+      "exactOriginMain": true
+    }
+  ],
+  "native": {
+    "st": {
+      "id": "market-community",
+      "language": "st",
+      "reviewStatus": "machine-draft",
+      "sourceMetadata": {
+        "durationMins": 20,
+        "category": "business"
+      },
+      "title": {
+        "sourceEnglish": "Market Gardening & Community",
+        "sesothoDraft": "Temo ya Marakeng le Setjhaba",
+        "reviewStatus": "machine-draft"
+      },
+      "description": {
+        "sourceEnglish": "Record-keeping, selling surplus and building local food networks.",
+        "sesothoDraft": "Ho boloka direkoto, ho rekisa dihlahiswa tse fetang tlhoko le ho aha marang-rang a dijo tsa lehae.",
+        "reviewStatus": "machine-draft"
+      },
+      "lessons": [
+        {
+          "id": "market-community-l1",
+          "infographicAlt": {
+            "sourceEnglish": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
+            "sesothoDraft": "Motho o tshwere pentshele hodima record grid e se nang letho bukeng e bulehileng; haufi le basket le loose vegetables.",
+            "reviewStatus": "machine-draft"
+          },
+          "title": {
+            "sourceEnglish": "Record-Keeping: Knowing What Your Farm Is Actually Producing",
+            "sesothoDraft": "Ho Boloka Direkoto: Ho Tseba Hantle Seo Polasi ya Hao e se Hlahisang",
+            "reviewStatus": "machine-draft"
+          },
+          "body": {
+            "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+            "sesothoDraft": "Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha).\n\nHo rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.\n\nSebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.\n\nNgola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.\n\nNgola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.\n\nSebedisa mokgwa ona o bonolo o tshwanang bakeng sa dijo tse bolokwang lapeng, dihlahiswa tse rekisitsweng, tse fanweng e le mpho, le tse entsweng compost.\n\nO se ke wa itshetleha ka mohopolo qetellong ya sehla.\n\nSehla se le seng sa direkoto se araba dipotso tse sebetsang.\n\nKe dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return for each hour of work?\n\nKe dijalo dife tse sebedisang dipeo, metsi le compost tse ngata ho feta seo di se kgutlisang?\n\nRekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.\n\nPele o beha theko, rekota ditjeo tsa tlhahiso, ho paka le ho rekisa, ho kenyeletsa mosebetsi le dipalangoang.\n\nMohlala ona ke wa ho ruta, eseng theko ya mmaraka: ditamati di bitsa R18 ka kilogram ho di hlahisa, empa di rekiswa ka R15 ka kilogram. Theko eo ha e koahele ditjeo tse boletsweng.\n\nHlahloba theko, ditjeo le ho lema ho latelang. Sheba seo bareki ba tla se reka e le kannete; theko e hodimo eo o e kopang ha e tiise thekiso.\n\nSebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.\n\nKhetha dijalo tse loketseng sebaka sa heno, mme o rale o kgutlela morao ho tloha kotulong eo o e hlokang. Hlahloba maemo a ho jala le nako e lebelletsweng ya kotulo.\n\nLetsatsi le sebetsang polasing e nngwe le ka nna la se sebetse mona. Kenyelletsa leano la bobedi haeba pula, metsi kapa dijalo di hloleha.",
+            "reviewStatus": "machine-draft"
+          },
+          "keyPoints": [
+            {
+              "sourceEnglish": "Record harvest amounts and destinations separately from cash",
+              "sesothoDraft": "Rekota bongata ba kotulo le moo e yang teng ka thoko ho tjhelete",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Include production and selling costs when assessing a price",
+              "sesothoDraft": "Kenyelletsa ditjeo tsa tlhahiso le thekiso ha o lekola theko.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Label worked examples; use your actual costs for decisions",
+              "sesothoDraft": "Tshwaya worked examples; sebedisa ditjeo tsa hao tsa nnete ha o etsa diqeto.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Plan for food gaps using local growing conditions and harvest timing",
+              "sesothoDraft": "Rera bakeng sa dikgeo tsa dijo o sebedisa maemo a ho lema a lehae le nako ya kotulo.",
+              "reviewStatus": "machine-draft"
+            }
+          ],
+          "quiz": [
+            {
+              "question": {
+                "sourceEnglish": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+                "sesothoDraft": "Mohlaleng ona wa ho ruta, ditamati di rekiswa ka R15/kg mme di bitsa R18/kg ho di hlahisa. Ke eng seo molemi a lokelang ho se hlahloba?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
+                  "sesothoDraft": "Tswela pele o rekisa ka R15 — tahlehelo ya nako e khutshwane e aga dikamano.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Stop growing tomatoes entirely",
+                  "sesothoDraft": "Emisa ho lema tamati ka ho felletseng.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
+                  "sesothoDraft": "Theko ya thekiso, ditjeo, le hore na sejalo se seng se ka fana ka better return.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Apply for a subsidy to cover the gap",
+                  "sesothoDraft": "Etsa kopo ya subsidy ho kwahela phapang ya ditjeo.",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+                "sesothoDraft": "Theko ya mohlaleng e ka tlase ho ditjeo tse boletsweng. Hlahloba phapang le seo bareki ba se batlang pele o etsa qeto ya tlhahiso e latelang.",
+                "reviewStatus": "machine-draft"
+              }
+            },
+            {
+              "question": {
+                "sourceEnglish": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+                "sesothoDraft": "Direkoto tsa molemi di bontsha hore meroho ya hae e a haella ka June le July selemo se seng le se seng. Ke kgato efe e thusang?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Buy vegetables at market each June and July",
+                  "sesothoDraft": "Reka meroho mmarakeng ka June le July e nngwe le e nngwe.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
+                  "sesothoDraft": "Rera o kgutlela morao ho tloha kgaellong ya dijo, o sebedisa dijalo tse loketseng sebaka sa heno le nako ya tsona ya kotulo.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Accept her farm can't produce in winter",
+                  "sesothoDraft": "Amohela hore polasi ya hae e ke ke ya hlahisa dijalo mariha.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "The records show a soil fertility problem",
+                  "sesothoDraft": "Direkoto di bontsha bothata ba monono wa mobu.",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
+                "sesothoDraft": "Direkoto di bontsha kgaello. Kgetho ya dijalo le matsatsi a ho jala di lokela ho dumellana le tlelaemete ya sebaka, metsi le nako e lebelletsweng ya kotulo.",
+                "reviewStatus": "machine-draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "market-community-l2",
+          "infographicAlt": {
+            "sourceEnglish": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
+            "sesothoDraft": "Mekgwa e meraro ya ho rekisa ho tswa polasing e le nngwe: setala se pela tsela, thomelo ya sehlopha lebenkeleng, le lebokose le yang ka kotloloho lapeng.",
+            "reviewStatus": "machine-draft"
+          },
+          "title": {
+            "sourceEnglish": "Selling Surplus: Where to Sell and How to Price",
+            "sesothoDraft": "Ho rekisa surplus: moo o ka rekisang le kamoo o ka behang theko.",
+            "reviewStatus": "machine-draft"
+          },
+          "body": {
+            "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+            "sesothoDraft": "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.\n\nBapisa ditefello tsa mmaraka, dipalangoang, ho paka le dihlahiswa tse sa rekiswang, hammoho le theko ya thekiso.\n\nHlahloba melao ya mmaraka le ditlhoko tsa lehae tsa kgwebo le dijo. Setala sa informal ha se bolele ka boyona hore ha ho na melao kapa ditjeo.\n\nHo rekisa ka kotloloho ho ka retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.\n\nMokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.\n\nDumellanang ka box contents, price, payment le se tla etsahala ha crops di haella. Regular orders di thusa ho rera feela ha customers le growers ba ka phethahatsa agreement.\n\nQala ka seo o ka reliably supply le seo bareki ba se batlang.\n\nSheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa ho fana ka mabokose kgafetsa.\n\nSebaka sa tshingwana kapa palo ya bareki feela ha e bolele esale pele hore na income e tla ba bokae. Leka mokgwa oo o ka o laolang, mme o ngole diphetho.\n\nHa tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.\n\nFana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.\n\nHlalosa ditsela tseo o lemang ka tsona ka botshepehi. Pele o sebedisa label, hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang.",
+            "reviewStatus": "machine-draft"
+          },
+          "keyPoints": [
+            {
+              "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
+              "sesothoDraft": "Dumellanang ka sehlahiswa, bongata, boleng, thomello le tefo.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Compare costs and losses as well as selling price",
+              "sesothoDraft": "Bapisa ditshenyehelo le ditahlehelo mmoho le theko ya thekiso",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Promise regular boxes only when supply and customer terms support them",
+              "sesothoDraft": "Tshepisa regular boxes feela ha supply le customer terms di di tshehetsa.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Check market rules and describe growing practices honestly",
+              "sesothoDraft": "Hlahloba market rules mme o hlalose growing practices tsa hao ka botshepehi.",
+              "reviewStatus": "machine-draft"
+            }
+          ],
+          "quiz": [
+            {
+              "question": {
+                "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+                "sesothoDraft": "Molemi ea nang le polasi e nyenyane o na le tlhahiso e sa tšoaneng beke le beke — ho ba le masalla libekeng tse ling, ’me ho be le ho fokolang libekeng tse ling. Ke channel efe e mo loketseng ka ho fetisisa?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "A formal market stall needing consistent weekly supply",
+                  "sesothoDraft": "Formal market stall e hlokang supply e tsitsitseng beke le beke.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "A box scheme needing the same produce weekly",
+                  "sesothoDraft": "Box scheme e hlokang produce e tshwanang beke le beke.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
+                  "sesothoDraft": "Informal market kapa thekiso ho baahisani ntle le fixed commitment.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "A daily-delivery school contract",
+                  "sesothoDraft": "Konteraka ya sekolo e hlokang ho tlisa letsatsi le letsatsi.",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+                "sesothoDraft": "Ena ke yona feela channel e sa mo hlokeng ho tshepisa fixed amount beke le beke — o rekisa seo a nang le sona ka nnete.",
+                "reviewStatus": "machine-draft"
+              }
+            },
+            {
+              "question": {
+                "sourceEnglish": "How can agreed regular orders help a grower plan?",
+                "sesothoDraft": "Ditaelo tsa kamehla tseo ho dumellanweng ka tsona di ka thusa molemi jwang ho rera?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Box customers always pay more per kilogram",
+                  "sesothoDraft": "Bareki ba box ba dula ba lefa tjhelete e ngata ka kilogram.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Box schemes let you charge extra for packaging",
+                  "sesothoDraft": "Box schemes di dumella hore o lefise tjhelete e eketsehileng bakeng sa ho paka.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+                  "sesothoDraft": "Committed subscription income e o dumella ho rera production ho potoloha real demand ho e-na le ho lema ka ho hakanya.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Box schemes avoid tax obligations",
+                  "sesothoDraft": "Box schemes di qoba tax obligations",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+                "sesothoDraft": "Ditaelo tse netefaditsweng di fana ka tlhahisoleseding ka demand. Boleng ba tsona bo ntse bo itshetlehile ka reliable supply, payment le costs tsa ho di phethahatsa.",
+                "reviewStatus": "machine-draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "market-community-l3",
+          "infographicAlt": {
+            "sourceEnglish": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+            "sesothoDraft": "Dibethe tse hlano tse nyane tse jetsweng, tse nang le metsu e lebang lebokoseng la bohareng le tletseng dihlahiswa; kharafu e nyane ya letsoho le nkgo ya dipeo di behilwe ka tlase.",
+            "reviewStatus": "machine-draft"
+          },
+          "title": {
+            "sourceEnglish": "Building Community Food Networks: Strength in Numbers",
+            "sesothoDraft": "Ho Aha Marang-rang a Dijo tsa Setjhaba: Matla a Kopanelo",
+            "reviewStatus": "machine-draft"
+          },
+          "body": {
+            "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+            "sesothoDraft": "Baahisani ba ka arolelana mefuta e fapaneng ya dijalo le mosebetsi wa ho boloka peo.\n\nNgola crop, variety, source le collection date. Rera isolation, selection, drying le storage tse loketseng crop e nngwe le e nngwe.\n\nHo arolelana ha ho bolele hore diversity e tla eketseha kapa quality e ntlafale ka boyona. Hlahloba identity le germination pele o itshetleha ka shared seed. Pele o fapanyetsana peo, hlahloba hore na variety e sireleditswe le hore na permission e a hlokahala.\n\nHo arolelana lisebelisoa ho etsa hore sehlopha se khone ho sebelisa lisebelisoa tse turang.\n\nPompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.\n\nHo sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.\n\nTshwara produce ka bonolo mme o boloke moriti o loketseng, packaging le storage nakong yohle ya delivery.\n\nMoreki wa haufi a ka fokotsa leeto, empa losses le selling costs di sa ntse di lokela ho lekanngwa.\n\nBapisa tjhelete e amohetsweng ka mora fees, transport le spoilage bakeng sa option e nngwe le e nngwe. O se ke wa nka hore nearest buyer ka mehla o fana ka best return.\n\nBaahisani ba ka bontsha bokgoni bo molemo mme ba bapisa se etsahetseng mapolasing a bona.\n\nNgola method, conditions le result hore ba bang ba kgone ho ahlola hore na e ka tshwanela naha ya bona.\n\nKopa qualified advice bakeng sa unfamiliar disease kapa technical problems. Shared experience le specialist help di ka sebetsa mmoho.",
+            "reviewStatus": "machine-draft"
+          },
+          "keyPoints": [
+            {
+              "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
+              "sesothoDraft": "Ngola seed identity, source le quality, mme o hlahlobe hore na permission e a hlokahala pele o arolelana.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Agree care, booking and repair responsibilities for shared tools",
+              "sesothoDraft": "Dumellanang ka boikarabelo ba tlhokomelo, ho behela nako le ho lokisa disebediswa tse arolelwanwang",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Measure losses and net returns for each selling route",
+              "sesothoDraft": "Lekanya losses le net returns bakeng sa selling route ka nngwe.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Combine shared experience with qualified help when needed",
+              "sesothoDraft": "Kopanya shared experience le qualified help ha ho hlokahala.",
+              "reviewStatus": "machine-draft"
+            }
+          ],
+          "quiz": [
+            {
+              "question": {
+                "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+                "sesothoDraft": "Baahelani ba batla ho arolelana dipeo tseo ba di bolokileng. Ke eng e thusang hore peo e arolelwanwang e be molemo?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Mix all varieties without labels",
+                  "sesothoDraft": "Kopanya mefuta yohle ntle le labels.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Agree seed-quality checks and check whether permission is needed to share the variety",
+                  "sesothoDraft": "Lumellanang ka seed-quality checks, mme le hlahlobe hore na permission e a hlokahala ho arolelana variety.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Assume sharing automatically improves every seed lot",
+                  "sesothoDraft": "Nka hore sharing e ntlafatsa seed lot e nngwe le e nngwe ka boyona.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Rely only on the size of the group",
+                  "sesothoDraft": "Itshetlehe feela ka size ya group.",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+                "sesothoDraft": "Boleng ba peo bo itshetlehile ka crop-specific isolation, selection, labelling, storage le germination checks. Ditshekatsheko tseo ha di netefatse permission ya ho fapanyetsana protected variety; hlahloba applicable rights pele o arolelana.",
+                "reviewStatus": "machine-draft"
+              }
+            },
+            {
+              "question": {
+                "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+                "sesothoDraft": "Molemi o bapisa mmaraka o hole le bareki ba haufi. Ke eng e lokelang ho tataisa qeto?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Always choose the highest headline price",
+                  "sesothoDraft": "Khetha kamehla headline price e phahameng ka ho fetisisa.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Always choose the shortest journey",
+                  "sesothoDraft": "Khetha kamehla tsela e kgutshwane ka ho fetisisa.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
+                  "sesothoDraft": "Bapisa tjhelete e amohetsweng ka mora fees, transport, dihlahiswa tse sa rekiswang le tahlehelo.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Assume joining a group removes all costs",
+                  "sesothoDraft": "Nka hore ho kena group ho tlosa costs tsohle.",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+                "sesothoDraft": "Distance e ama costs, empa ha se yona feela factor. Sebedisa actual returns le losses ho bapisa options.",
+                "reviewStatus": "machine-draft"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ve": {
+      "id": "market-community",
+      "language": "ve",
+      "reviewStatus": "machine-draft",
+      "sourceMetadata": {
+        "durationMins": 20,
+        "category": "business"
+      },
+      "title": {
+        "sourceEnglish": "Market Gardening & Community",
+        "tshivendaDraft": "U Ṱavha Zwimela U Itela Maraga na Vhadzulapo",
+        "reviewStatus": "machine-draft"
+      },
+      "description": {
+        "sourceEnglish": "Record-keeping, selling surplus and building local food networks.",
+        "tshivendaDraft": "U vhulunga rekhodo, u rengisa zwo salaho, na u fhaṱa local food networks.",
+        "reviewStatus": "machine-draft"
+      },
+      "lessons": [
+        {
+          "id": "market-community-l1",
+          "infographicAlt": {
+            "sourceEnglish": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
+            "tshivendaDraft": "Muthu u fara pencil nga nṱha ha record grid i si na tshithu kha notebook yo vuleaho, tsini na basket na loose vegetables.",
+            "reviewStatus": "machine-draft"
+          },
+          "title": {
+            "sourceEnglish": "Record-Keeping: Knowing What Your Farm Is Actually Producing",
+            "tshivendaDraft": "Record-Keeping: U Ḓivha Zwine Bulasi Yaṋu Ya Bveledza Zwa Vhukuma",
+            "reviewStatus": "machine-draft"
+          },
+          "body": {
+            "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+            "tshivendaDraft": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.\n\nU ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.\n\nShumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.\n\nṄwalani khaṋo iṅwe na iṅwe musi i tshi itea.\n\nṄwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.\n\nShumisani maitele a sa lemelaho a fanaho kha zwiḽiwa zwine zwa dzula hayani, zwibveledzwa zwo rengiswaho, zwo ṋewaho vhaṅwe nga mpho, na zwo itwaho compost.\n\nMusi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.\n\nRekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.\n\nNdi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwimela zwifhio zwine zwa vhuisa the most return for each hour of work?\n\nNdi zwimela zwifhio zwine zwa shumisa mbeu, maḓi na compost zwinzhi u fhira zwine zwa vhuisa?\n\nRekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.\n\nMusi ni sa athu vhea mutengo, ṅwalani masheleni a u bveledza, u paka na u rengisa, hu tshi katelwa mushumo na transport.\n\nTsumbo iyi ndi ya u funza, a si mutengo wa makete: tomatoes cost R18 per kilogram to produce but sell for R15 per kilogram. Mutengo wonoyo a u swikeli cost yo bulwaho.\n\nSedzani mutengo, costs na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u khwaṱhisedzi uri zwi ḓo rengiswa.\n\nShumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.\n\nNangani zwimela zwine zwa tea vhupo haṋu, ni dzudzanye ni tshi vhalela murahu u bva kha harvest ine na i ṱoḓa. Ṱolani nyimele dza u zwala na tshifhinga tsho lavhelelwaho tsha u kaṋa.\n\nḒuvha ḽine ḽa shuma bulasini ḽiṅwe ḽi nga kha ḽi sa shumi fhano. Katelani a backup plan arali mvula, maḓi kana zwimela zwa kundelwa.",
+            "reviewStatus": "machine-draft"
+          },
+          "keyPoints": [
+            {
+              "sourceEnglish": "Record harvest amounts and destinations separately from cash",
+              "tshivendaDraft": "Ṅwalani harvest amounts na hune khaṋo ya ya hone, nga u fhambana na cash.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Include production and selling costs when assessing a price",
+              "tshivendaDraft": "Katelani masheleni a u bveledza na u rengisa musi ni tshi sedza mutengo.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Label worked examples; use your actual costs for decisions",
+              "tshivendaDraft": "Label worked examples; shumisani costs dzaṋu dza vhukuma u dzhia tsheo.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Plan for food gaps using local growing conditions and harvest timing",
+              "tshivendaDraft": "Pulani nga ha zwikhala zwa zwiḽiwa ni tshi shumisa nyimele dza u alusa dza henefho na tshifhinga tsha khanwiwa.",
+              "reviewStatus": "machine-draft"
+            }
+          ],
+          "quiz": [
+            {
+              "question": {
+                "sourceEnglish": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+                "tshivendaDraft": "Kha tsumbo iyi ya u funza, tomatoes sell at R15/kg and cost R18/kg to produce. Mulimi u fanela u sedza mini?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
+                  "tshivendaDraft": "Bvelani phanḓa ni tshi rengisa nga R15 — short-term loss i fhaṱa vhushaka.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Stop growing tomatoes entirely",
+                  "tshivendaDraft": "Litshani u tavha matamatisi nga hoṱhe.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
+                  "tshivendaDraft": "Mutengo wa u rengisa, costs, na uri tshimela tshiṅwe tshi nga netshedza return i khwine.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Apply for a subsidy to cover the gap",
+                  "tshivendaDraft": "Iteni khumbelo ya subsidy u lifha phambano.",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+                "tshivendaDraft": "Mutengo wa tsumbo u fhasi ha cost yo ambiwaho. Sedzani phambano na zwine vharengi vha zwi ṱoḓa ni sa athu dzhia tsheo ya u bveledza hu tevhelaho.",
+                "reviewStatus": "machine-draft"
+              }
+            },
+            {
+              "question": {
+                "sourceEnglish": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+                "tshivendaDraft": "Rekhodo dza mulimi dzi sumbedza uri u na miroho i sa eḓanaho nga June na July ṅwaha muṅwe na muṅwe. Ndi vhukando vhufhio vhune ha thusa?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Buy vegetables at market each June and July",
+                  "tshivendaDraft": "Rengani miroho makete nga June na July ṅwaha muṅwe na muṅwe.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
+                  "tshivendaDraft": "Pulani ni tshi humela murahu u bva kha tshikhala tsha zwiḽiwa, ni tshi shumisa zwimela zwi fanelaho vhupo ha henefho na tshifhinga tshazwo tsha u kaṋa.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Accept her farm can't produce in winter",
+                  "tshivendaDraft": "Tanganedzani uri bulasi ḽawe a ḽi nga bveledzi zwimela nga vhuria.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "The records show a soil fertility problem",
+                  "tshivendaDraft": "Rekhodo dzi sumbedza thaidzo ya pfushi ya mavu.",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
+                "tshivendaDraft": "Rekhodo dzi sumbedza u shaya. U nanga zwimela na maḓuvha a u zwala zwi tea u tendelana na mutsho wa henefho, maḓi na tshifhinga tsho lavhelelwaho tsha u kaṋa.",
+                "reviewStatus": "machine-draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "market-community-l3",
+          "infographicAlt": {
+            "sourceEnglish": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+            "tshivendaDraft": "Mibedo miṱuku miṱanu yo ṱavhiwaho i na misevhe i tshi livha kha crate ya produce i re vhukati; hand trowel na jar ya seeds zwi re nga fhasi.",
+            "reviewStatus": "machine-draft"
+          },
+          "title": {
+            "sourceEnglish": "Building Community Food Networks: Strength in Numbers",
+            "tshivendaDraft": "U fhaṱa network ya zwiḽiwa zwa tshitshavhani: Strength in Numbers",
+            "reviewStatus": "machine-draft"
+          },
+          "body": {
+            "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+            "tshivendaDraft": "Vhahura vha nga kovhelana mifuda yo fhambanaho na mushumo wa u vhulunga mbeu.\n\nṄwalani crop, variety, source na datumu ya u kuvhanganya. Pulani isolation, selection, drying na storage zwo teaho kha crop iṅwe na iṅwe.\n\nU kovhekana a zwi ambi nga u tou kovhekana fhedzi uri diversity i ḓo engedzea kana quality i khwinifhale. Ṱolani identity na germination ni sa athu ḓitika nga shared seed. Before exchanging seed, ṱolani arali variety yo tsireledzwa na arali permission i tshi ṱoḓea.\n\nU kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.\n\nPhampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.\n\nU zwi shumisa roṱhe zwi phaḓaladza ndeme yazwo kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽi si kone u u ita ḽoṱhe.\n\nFarani produce nga vhulenda, ni vhulunge nga shade yo teaho, packaging na storage u swika delivery i tshi fhela.\n\nMutengi wa tsini a nga fhungudza lwendo, fhedzi losses na selling costs zwi kha ḓi tea u pimiwa.\n\nVhambedzani money received nga murahu ha fees, transport na spoilage kha option iṅwe na iṅwe. Ni songo humbula uri nearest buyer u dzula a tshi netshedza best return.\n\nVhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.\n\nṄwalani method, conditions na result uri vhaṅwe vha kone u vhona arali zwi tshi nga fanela their land.\n\nṰoḓani qualified advice nga ha unfamiliar disease kana technical problems. Shared experience na specialist help zwi nga shuma khathihi.",
+            "reviewStatus": "machine-draft"
+          },
+          "keyPoints": [
+            {
+              "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
+              "tshivendaDraft": "Ṅwalani seed identity, source na quality, nahone ni sedze arali permission i tshi ṱoḓea ni sa athu u kovhelana.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Agree care, booking and repair responsibilities for shared tools",
+              "tshivendaDraft": "Tendelani nga vhuḓifhinduleli ha u ṱhogomela zwishumiswa zwine zwa kovhekanywa, booking yazwo, na u zwi lugisa.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Measure losses and net returns for each selling route",
+              "tshivendaDraft": "Pimani losses na net returns kha selling route iṅwe na iṅwe.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Combine shared experience with qualified help when needed",
+              "tshivendaDraft": "Ṱanganyisani shared experience na qualified help musi zwi tshi ṱoḓea.",
+              "reviewStatus": "machine-draft"
+            }
+          ],
+          "quiz": [
+            {
+              "question": {
+                "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+                "tshivendaDraft": "Vhahura vha ṱoḓa u kovhelana saved seed. Ndi mini tshi nga thusa uri seed yo kovhelanaho i shume zwavhuḓi?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Mix all varieties without labels",
+                  "tshivendaDraft": "Ṱanganyisani mifuda yoṱhe ni songo i ṅwala labels.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Agree seed-quality checks and check whether permission is needed to share the variety",
+                  "tshivendaDraft": "Thendelanani nga seed-quality checks nahone ni sedze arali permission i tshi ṱoḓea u kovhelana variety.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Assume sharing automatically improves every seed lot",
+                  "tshivendaDraft": "Humbulani uri u kovhelana hu khwinifhadza seed lot iṅwe na iṅwe nga u tou ita zwenezwo.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Rely only on the size of the group",
+                  "tshivendaDraft": "Fulufhelani fhedzi kha size ya group.",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+                "tshivendaDraft": "Kwalithi ya mbeu i ḓitika nga crop-specific isolation, selection, labelling, storage na germination checks. Dzi check idzi a dzi sumbedzi permission to exchange a protected variety; ṱolani applicable rights ni sa athu u kovhelana.",
+                "reviewStatus": "machine-draft"
+              }
+            },
+            {
+              "question": {
+                "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+                "tshivendaDraft": "Mulimi u khou vhambedza market i re kule na vharengi vha re tsini. Ndi mini ine ya tea u livhisa phetho?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Always choose the highest headline price",
+                  "tshivendaDraft": "Khethani tshifhinga tshoṱhe headline price ya nṱhesa.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Always choose the shortest journey",
+                  "tshivendaDraft": "Khethani tshifhinga tshoṱhe shortest journey.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
+                  "tshivendaDraft": "Vhambedzani money received nga murahu ha fees, transport, unsold produce na losses.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Assume joining a group removes all costs",
+                  "tshivendaDraft": "Humbulani uri u dzhena kha group zwi fhelisa costs dzoṱhe.",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+                "tshivendaDraft": "Distance affects costs, but it is not the only factor. Shumisani actual returns na losses u vhambedza options.",
+                "reviewStatus": "machine-draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "market-community-l2",
+          "infographicAlt": {
+            "sourceEnglish": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
+            "tshivendaDraft": "Nḓila tharu dza u rengisa zwi tshi bva kha farm nthihi: roadside stall, u isa produce shop nga tshigwada, na box i yaho nga ho livhaho muṱani.",
+            "reviewStatus": "machine-draft"
+          },
+          "title": {
+            "sourceEnglish": "Selling Surplus: Where to Sell and How to Price",
+            "tshivendaDraft": "U rengisa surplus: Hune wa nga rengisa hone na uri wa vhea mutengo hani",
+            "reviewStatus": "machine-draft"
+          },
+          "body": {
+            "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+            "tshivendaDraft": "Vhudzisani uri mutengi u ṱoḓa mini: product, tshivhalo, quality, delivery na ḓuvha ḽa payment.\n\nVhambedzani market fees, transport, u paka na zwibveledzwa zwi sa rengiswi, na mutengo wa u rengisa.\n\nSedzani milayo ya market na ṱhoḓea dza henefho dza u rengisa na zwiḽiwa. Informal stall a zwi sokou amba uri a hu na milayo kana costs.\n\nU rengisa nga ho livhisa kha vharengi zwi nga retain more of the sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, packing, transport na customer care.\n\nBox scheme i ṋetshedza regular selection kha vharengi vho tendelanaho.\n\nTendelani nga box contents, mutengo, payment na zwine zwa ḓo itea arali crops dzi tshi vha dzi si gathi. Regular orders dzi thusa u pulana fhedzi musi customers na growers vha tshi kona u tevhedza agreement.\n\nThomani nga zwine na nga kona u tshi zwi ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.\n\nṰolani costs na household food needs musi ni sa athu fulufhedzisa regular boxes.\n\nTshikalo tsha ngade kana tshivhalo tsha vharengi fhedzi a tshi sumbedzi uri hu ḓo vha na income nngafhani. Lingedzani nḓila ine na nga kona u langula, ni ṅwale zwe zwa bvelela.\n\nArali production i tshi shanduka vhege nga vhege, ni songo fulufhedzisa fixed delivery ine na si kone u i ṋetshedza.\n\nṊetshedzani surplus ine na vha nayo nahone ni tendelane na vharengi nga clear terms.\n\nṰalusani growing practices dzaṋu nga u fulufhedzea. Musi ni sa athu shumisa label, sedzani certification kana claim ine murengi a i ṱoḓa.",
+            "reviewStatus": "machine-draft"
+          },
+          "keyPoints": [
+            {
+              "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
+              "tshivendaDraft": "Tendelani nga ha tshibveledzwa, tshivhalo, quality, delivery na payment.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Compare costs and losses as well as selling price",
+              "tshivendaDraft": "Vhambedzani tsengo na ndozwo khathihi na mutengo wa u rengisa.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Promise regular boxes only when supply and customer terms support them",
+              "tshivendaDraft": "Fulufhedzisani regular boxes fhedzi musi supply na customer terms zwi tshi zwi tendela.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Check market rules and describe growing practices honestly",
+              "tshivendaDraft": "Sedzani market rules, nahone ni ṱaluse growing practices dzaṋu nga u fulufhedzea.",
+              "reviewStatus": "machine-draft"
+            }
+          ],
+          "quiz": [
+            {
+              "question": {
+                "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+                "tshivendaDraft": "Mulimi wa bulasi ḽiṱuku u na production ine ya fhambana vhege nga vhege — surplus vhege dziṅwe, ya vha ṱhukhu kha dziṅwe. Ndi channel ifhio ine ya mu tea nga maanḓa?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "A formal market stall needing consistent weekly supply",
+                  "tshivendaDraft": "Formal market stall ine ya ṱoḓa supply yo fulufhedzeaho ya vhege iṅwe na iṅwe.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "A box scheme needing the same produce weekly",
+                  "tshivendaDraft": "Box scheme ine ya ṱoḓa produce i fanaho vhege iṅwe na iṅwe.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
+                  "tshivendaDraft": "Informal market kana u rengisa kha vhahura hu si na fixed commitment.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "A daily-delivery school contract",
+                  "tshivendaDraft": "Thendelano ya tshikolo ine ya ṱoḓa u isa zwithu ḓuvha ḽiṅwe na ḽiṅwe.",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+                "tshivendaDraft": "Iyi ndi yone channel nthihi ine ya si ṱoḓe uri a fulufhedzise fixed amount vhege iṅwe na iṅwe — u rengisa zwe a vha nazwo zwa vhukuma.",
+                "reviewStatus": "machine-draft"
+              }
+            },
+            {
+              "question": {
+                "sourceEnglish": "How can agreed regular orders help a grower plan?",
+                "tshivendaDraft": "Agreed regular orders zwi nga thusa hani mulimi u pulana?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Box customers always pay more per kilogram",
+                  "tshivendaDraft": "Vharengi vha box vha badela tshifhinga tshoṱhe tshelede nnzhi nga kilogram.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Box schemes let you charge extra for packaging",
+                  "tshivendaDraft": "Box schemes dzi ni tendela u badelisa tshelede yo engedzeaho ya packaging.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+                  "tshivendaDraft": "Committed subscription income i ni thusa u pulana production u tevhela real demand, nṱhani ha u alusa nga speculation.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Box schemes avoid tax obligations",
+                  "tshivendaDraft": "Box schemes dzi iledza tax obligations",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+                "tshivendaDraft": "Dzioda dzo khwaṱhiswaho dzi ni fha mafhungo nga ha demand. Ndeme yadzo i kha ḓi dzhia uri hu vhe na reliable supply, payment na costs dza u dzi swikisa.",
+                "reviewStatus": "machine-draft"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ts": {
+      "id": "market-community",
+      "language": "ts",
+      "reviewStatus": "machine-draft",
+      "sourceMetadata": {
+        "durationMins": 20,
+        "category": "business"
+      },
+      "title": {
+        "sourceEnglish": "Market Gardening & Community",
+        "xitsongaDraft": "Market Gardening Ni Vaaki",
+        "reviewStatus": "machine-draft"
+      },
+      "description": {
+        "sourceEnglish": "Record-keeping, selling surplus and building local food networks.",
+        "xitsongaDraft": "Ku hlayisa tirhekhodo, ku xavisa leswi saleke, ni ku aka local food networks.",
+        "reviewStatus": "machine-draft"
+      },
+      "lessons": [
+        {
+          "id": "market-community-l1",
+          "infographicAlt": {
+            "sourceEnglish": "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.",
+            "xitsongaDraft": "Munhu u khome pencil e henhla ka record grid leyi nga tsariwangiki eka notebook leyi pfulekeke, ekusuhi ni basket ni loose vegetables.",
+            "reviewStatus": "machine-draft"
+          },
+          "title": {
+            "sourceEnglish": "Record-Keeping: Knowing What Your Farm Is Actually Producing",
+            "xitsongaDraft": "Record-Keeping: Ku tiva leswi purasi ra wena ri swi humesaka hakunene",
+            "reviewStatus": "machine-draft"
+          },
+          "body": {
+            "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+            "xitsongaDraft": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.\n\nKu tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.\n\nTirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.\n\nTsala ntshovelo wun'wana ni wun'wana loko wu humelela.\n\nTsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.\n\nTirhisa mukhuva lowu wo olova lowu fanaka eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.\n\nLoko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.\n\nNguva yin’we ya tirhekhodo yi hlamula swivutiso leswi pfunaka.\n\nHi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return for each hour of work?\n\nHi swihi swibyariwa leswi tirhisaka mbewu, mati na compost swo tala ku tlurisa leswi swi swi vuyisaka?\n\nRekhodo yi tlhela yi komba leswaku muti wu xava swakudya hi tin’hweti tihi.\n\nU nga si veka nxavo, tsala production, packing and selling costs, ku katsa labour ni transport.\n\nLexi i xikombiso xo dyondzisa, a hi nxavo wa makete: matamatisi ya durha R18 hi kilogram ku ma humesa, kambe ya xavisiwa hi R15 hi kilogram. Nxavo wolowo a wu hakeli ntsengo lowu boxiweke.\n\nLanguta nxavo, costs ni ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombisaka a wu tiyisisi ku xavisiwa.\n\nTirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.\n\nHlawula swibyariwa leswi faneleke ndhawu ya wena, u tlhela u tirha u tlhelela endzhaku ku suka eka ntshovelo lowu u wu lavaka. Kambisisa swiyimo swa ku byala ni nkarhi lowu ntshovelo wu languteriwaka ku fika ha wona.\n\nSiku leri tirhaka epurasini rin’wana ri nga ha ka ri nga tirhi laha. Nghenisa pulani ya vumbirhi loko mpfula, mati kumbe swibyariwa swi tsandzeka.",
+            "reviewStatus": "machine-draft"
+          },
+          "keyPoints": [
+            {
+              "sourceEnglish": "Record harvest amounts and destinations separately from cash",
+              "xitsongaDraft": "Tsala nhlayo ya ntshovelo ni laha wu yeke kona hi ku hambana ni mali",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Include production and selling costs when assessing a price",
+              "xitsongaDraft": "Katsa mali ya ku humesa ni ku xavisa loko u kambisisa nxavo.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Label worked examples; use your actual costs for decisions",
+              "xitsongaDraft": "Marka worked examples; tirhisa costs ta wena ta xiviri eka swiboho.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Plan for food gaps using local growing conditions and harvest timing",
+              "xitsongaDraft": "Pulana ku pfumaleka ka swakudya hi ku tirhisa swiyimo swa ku byala swa ndhawu ya wena ni nkarhi wa ntshovelo.",
+              "reviewStatus": "machine-draft"
+            }
+          ],
+          "quiz": [
+            {
+              "question": {
+                "sourceEnglish": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+                "xitsongaDraft": "Eka xikombiso lexi xo dyondzisa, matamatisi ya xavisiwa hi R15/kg naswona ya durha R18/kg ku ma humesa. Murimi u fanele a kambisisa yini?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
+                  "xitsongaDraft": "Hambeta u xavisa hi R15 — ku lahlekeriwa ka nkarhi wo koma ku aka vuxaka.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Stop growing tomatoes entirely",
+                  "xitsongaDraft": "Tshika ku byala matamatisi hi ku helela.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
+                  "xitsongaDraft": "Nxavo wa ku xavisa, mali leyi tirhisiweke, ni loko xibyariwa xin’wana xi nga vuyisa mbuyelo wo antswa.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Apply for a subsidy to cover the gap",
+                  "xitsongaDraft": "Endla xikombelo xa subsidy ku hakela ku hambana.",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+                "xitsongaDraft": "Nxavo wa xikombiso wu le hansi ka cost leyi boxiweke. Kambisisa ku hambana ni leswi vaxavi va swi lavaka u nga se endla xiboho xa production leyi landzelaka.",
+                "reviewStatus": "machine-draft"
+              }
+            },
+            {
+              "question": {
+                "sourceEnglish": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+                "xitsongaDraft": "Tirhekhodo ta murimi ti komba leswaku matsavu a ma enelanga hi June na July lembe rin’wana ni rin’wana. Hi rihi goza leri pfunaka?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Buy vegetables at market each June and July",
+                  "xitsongaDraft": "Xava matsavu emakete hi June na July lembe rin’wana ni rin’wana.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
+                  "xitsongaDraft": "Hlela u tlhelela endzhaku ku suka eka mpfumaleko wa swakudya, u tirhisa swibyariwa leswi lulameleke ndhawu ya wena ni nkarhi wa swona wa ntshovelo.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Accept her farm can't produce in winter",
+                  "xitsongaDraft": "Amukela leswaku purasi ra yena a ri nge humesi swibyariwa hi xixika.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "The records show a soil fertility problem",
+                  "xitsongaDraft": "Tirhekhodo ti komba leswaku ku na xiphiqo xa soil fertility.",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
+                "xitsongaDraft": "Tirhekhodo ti komba ku pfumaleka. Ku hlawula swibyariwa ni masiku yo byala swi fanele swi fambisana ni local climate, mati ni nkarhi lowu ntshovelo wu languteriweke.",
+                "reviewStatus": "machine-draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "market-community-l2",
+          "infographicAlt": {
+            "sourceEnglish": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
+            "xitsongaDraft": "Tindlela tinharhu to xavisa ku suka eka farm rin’we: roadside stall, ku yisa produce eka shop hi ntlawa, ni box leri kongomaka eka ndyangu.",
+            "reviewStatus": "machine-draft"
+          },
+          "title": {
+            "sourceEnglish": "Selling Surplus: Where to Sell and How to Price",
+            "xitsongaDraft": "Ku xavisa surplus: laha u nga xaviselaka kona ni ndlela yo veka nxavo.",
+            "reviewStatus": "machine-draft"
+          },
+          "body": {
+            "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+            "xitsongaDraft": "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.\n\nPimanisa market fees, transport, ku paka ni leswi nga xavisiwangiki, swin’we ni nxavo wo xavisa.\n\nKambisisa milawu ya makete ni swilaveko swa ndhawu swa ku xavisa ni swakudya. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe costs.\n\nKu xavisa hi ku kongoma swi nga retain more of the sale price, kambe swi tlhela swi teka nkarhi, packing, transport ni ku khathalela vaxavi.\n\nBox scheme yi nyika regular selection eka vaxavi lava pfumelelaneke.\n\nPfumelelanani hi box contents, nxavo, ku hakela ni leswi nga ta endleka loko crops ti kala. Tioda leti vuyeleriwaka ti pfuna ku pulana ntsena loko vaxavi ni varimi va kota ku hetisisa agreement.\n\nSungula hi leswi u nga kotaka ku swi nyika hi ku tshamiseka ni leswi vaxavi va swi lavaka.\n\nKambisisa costs ni swilaveko swa swakudya swa ndyangu u nga se tshembisa ku nyika regular boxes.\n\nVukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena does not predict income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke.\n\nLoko production yi cinca vhiki na vhiki, papalata ku tshembisa fixed delivery leyi u nga ta ka u nga swi koti ku yi nyika.\n\nNyika surplus leyi u nga na yona, kutani mi twanana hi clear terms ni vaxavi.\n\nHlamusela maendlelo ya wena ya ku byala hi ku vula xiviri. U nga si tirhisa label, kambisisa certification kumbe claim leyi muxavi a yi lavaka.",
+            "reviewStatus": "machine-draft"
+          },
+          "keyPoints": [
+            {
+              "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
+              "xitsongaDraft": "Pfumelelanani hi product, nhlayo, khwalithi, ku yisa ni ku hakela.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Compare costs and losses as well as selling price",
+              "xitsongaDraft": "Pimanisa costs ni losses xikan’we ni selling price.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Promise regular boxes only when supply and customer terms support them",
+              "xitsongaDraft": "Tshembisa regular boxes ntsena loko supply ni customer terms swi swi seketela.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Check market rules and describe growing practices honestly",
+              "xitsongaDraft": "Kambisisa market rules kutani u hlamusela growing practices ta wena hi ku vula ntiyiso.",
+              "reviewStatus": "machine-draft"
+            }
+          ],
+          "quiz": [
+            {
+              "question": {
+                "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+                "xitsongaDraft": "Murimi wa purasi leritsongo u ni production leyi nga faniki vhiki ni vhiki — surplus hi mavhiki man’wana, yi va yitsongo hi man’wana. Hi yihi channel leyi n’wi fanelaka best?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "A formal market stall needing consistent weekly supply",
+                  "xitsongaDraft": "Formal market stall leyi lavaka supply leyi tshamisekeke vhiki ni vhiki.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "A box scheme needing the same produce weekly",
+                  "xitsongaDraft": "Box scheme leyi lavaka produce leyi fanaka vhiki ni vhiki.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
+                  "xitsongaDraft": "Informal market kumbe ku xavisa eka vaakelani ku nga ri na fixed commitment.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "A daily-delivery school contract",
+                  "xitsongaDraft": "Kontraka ya xikolo leyi lavaka ku yisa siku ni siku.",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+                "xitsongaDraft": "Leyi hi yona channel yin’we ntsena leyi nga laviki leswaku a tshembisa fixed amount vhiki ni vhiki — u xavisa leswi a nga na swona hakunene.",
+                "reviewStatus": "machine-draft"
+              }
+            },
+            {
+              "question": {
+                "sourceEnglish": "How can agreed regular orders help a grower plan?",
+                "xitsongaDraft": "Tioda ta nkarhi na nkarhi leti ku pfumelelaneke ti nga n’wi pfuna njani murimi ku pulana?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Box customers always pay more per kilogram",
+                  "xitsongaDraft": "Vaxavi va box va hakela mali yo tala hi kilogram minkarhi hinkwato.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Box schemes let you charge extra for packaging",
+                  "xitsongaDraft": "Box schemes ti ku pfumelela ku charge extra for packaging.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+                  "xitsongaDraft": "Committed subscription income yi ku pfuna ku pulana production hi ku landzelela real demand ematshan’wini yo byala hi ku bvumbha.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Box schemes avoid tax obligations",
+                  "xitsongaDraft": "Box schemes ti papalata tax obligations",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+                "xitsongaDraft": "Tioda leti tiyisisiweke ti nyika vuxokoxoko hi demand. Nkoka wa tona wa ha titshege hi reliable supply, payment ni costs ta ku ti hetisisa.",
+                "reviewStatus": "machine-draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "market-community-l3",
+          "infographicAlt": {
+            "sourceEnglish": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+            "xitsongaDraft": "Five small planted beds, with miseve leyi kombetelaka eka crate ya produce leyi nga exikarhini; hand trowel ni jar ya mbewu swi le hansi ka yona.",
+            "reviewStatus": "machine-draft"
+          },
+          "title": {
+            "sourceEnglish": "Building Community Food Networks: Strength in Numbers",
+            "xitsongaDraft": "Ku aka network ya swakudya swa muganga: Strength in Numbers",
+            "reviewStatus": "machine-draft"
+          },
+          "body": {
+            "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+            "xitsongaDraft": "Vaakelani va nga avelana different varieties ni mintirho yo hlayisa mbewu.\n\nTsala crop, variety, source ni siku ra ku hlengeleta. Pulana isolation, selection, drying ni storage leswi faneleke eka crop yin’wana ni yin’wana.\n\nKu avelana a swi vuli leswaku diversity yi ta engeteleka kumbe quality yi ta antswa hi yoxe. Kambisisa identity ni germination u nga si titshega hi shared seed. U nga si cincana mbewu, kambisisa loko variety yi sirheleriwile ni loko ku laveka permission.\n\nKu avelana switirhisiwa swo durha swi endla leswaku ntlawa wu swi kota ku swi tirhisa.\n\nPompo ya mati kumbe muchini wo sila mavele swi nga ha durha ngopfu leswaku ndyangu wun’we wu swi xava.\n\nKu tirhisa switirhisiwa swin’we swi endla leswaku ntlawa wu vuyeriwaka hi swona, naswona swi pfuna purasi rin’wana ni rin’wana ku endla mintirho leyi a ri nga ta yi kota ri ri roxe.\n\nKhoma produce hi vukheta, u hlayisa ndzhuti lowu faneleke, packaging ni storage ku fikela loko yi fikisiwa.\n\nMuxavi wa le kusuhi a nga ha hunguta riendzo, kambe losses ni selling costs swa ha fanele ku pimiwa.\n\nPimanisa mali leyi u yi amukelaka endzhaku ka fees, transport na spoilage eka option yin’wana ni yin’wana. U nga ehleketi leswaku nearest buyer u nyika best return minkarhi hinkwato.\n\nVaakelani va nga komba vuswikoti bya nkoka naswona va pimanisa leswi humeleleke emapurasi ya vona.\n\nTsala method, conditions ni result leswaku van’wana va kota ku kambela whether it may suit their land.\n\nLavani qualified advice hi unfamiliar disease kumbe technical problems. Shared experience ni specialist help swi nga tirha swin’we.",
+            "reviewStatus": "machine-draft"
+          },
+          "keyPoints": [
+            {
+              "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
+              "xitsongaDraft": "Tsala seed identity, source ni quality, kutani u kambisisa loko permission yi laveka u nga si avelana.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Agree care, booking and repair responsibilities for shared tools",
+              "xitsongaDraft": "Pfumelelanani hi vutihlamuleri byo hlayisa switirhisiwa leswi avelaniwaka, booking ya swona ni ku swi lunghisa.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Measure losses and net returns for each selling route",
+              "xitsongaDraft": "Pima losses ni net returns eka selling route yin’wana ni yin’wana.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Combine shared experience with qualified help when needed",
+              "xitsongaDraft": "Hlanganisa shared experience ni qualified help loko swi laveka.",
+              "reviewStatus": "machine-draft"
+            }
+          ],
+          "quiz": [
+            {
+              "question": {
+                "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+                "xitsongaDraft": "Vaakelani va lava ku avelana mbewu leyi va yi hlayiseke. I yini lexi nga endla leswaku mbewu leyi avelaniweke yi pfuna?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Mix all varieties without labels",
+                  "xitsongaDraft": "Hlanganisa all varieties without labels.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Agree seed-quality checks and check whether permission is needed to share the variety",
+                  "xitsongaDraft": "Pfumelelana hi seed-quality checks ni ku kambisisa loko permission yi laveka ku avelana variety.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Assume sharing automatically improves every seed lot",
+                  "xitsongaDraft": "Assume sharing automatically improves every seed lot",
+                  "reviewStatus": "hold"
+                },
+                {
+                  "sourceEnglish": "Rely only on the size of the group",
+                  "xitsongaDraft": "Tshemba ntsena eka vukulu bya group.",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+                "xitsongaDraft": "Quality ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage ni germination checks. Ticheki teto a ti tiyisisi permission to exchange a protected variety; kambisisa applicable rights u nga si avelana.",
+                "reviewStatus": "machine-draft"
+              }
+            },
+            {
+              "question": {
+                "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+                "xitsongaDraft": "Murimi u pimanisa makete wa le kule ni vaxavi va le kusuhi. Xana xiboho xi fanele ku kongomisiwa hi yini?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Always choose the highest headline price",
+                  "xitsongaDraft": "Nkarhi hinkwawu hlawula the highest headline price.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Always choose the shortest journey",
+                  "xitsongaDraft": "Nkarhi hinkwawu hlawula the shortest journey.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
+                  "xitsongaDraft": "Pimanisa mali leyi u yi amukelaka endzhaku ka fees, transport, unsold produce ni losses.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Assume joining a group removes all costs",
+                  "xitsongaDraft": "Ehleketa leswaku ku nghena eka group ku susa costs hinkwato.",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+                "xitsongaDraft": "Ku leha ka riendzo ku khumba costs, kambe a hi xona ntsena lexi faneleke ku kambisiwa. Tirhisa actual returns ni losses ku pimanisa options.",
+                "reviewStatus": "machine-draft"
+              }
+            }
+          ]
+        }
+      ],
+      "holds": []
+    }
+  }
+}

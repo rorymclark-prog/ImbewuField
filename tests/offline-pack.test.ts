@@ -4,14 +4,69 @@ import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
-import { appGuideOfflinePack, offlinePack, downloadableModules, wholeCourseBytes, formatPackSize } from '@/lib/offline-pack';
+import { appGuideOfflinePack, offlinePack, downloadableModules, wholeCourseBytes, formatPackSize, defaultOfflinePackVariant, regionalPackNeedsNarrationChoice } from '@/lib/offline-pack';
 import { APP_GUIDES, appGuideNarrationSections } from '@/lib/course-app-guides';
-import { COURSE_DECKS, slideImageFor } from '@/lib/course-deck';
+import { COURSE_DECKS, animationUrls, slideAudioUrl, slideImageFor } from '@/lib/course-deck';
 import { COURSE_NARRATION, resolveNarrationLang, trackUrl } from '@/lib/course-audio';
 import { COURSE_MODULES } from '@/lib/course-modules';
 import { FINANCE_PATHWAY_MEDIA_URLS, STUDIES_PATHWAY_PACKS, STUDIES_PATHWAY_PAGES } from '@/lib/studies-pathway-pack';
+import { isiZuluDeckReviewHoldEntries } from '@/lib/course-deck-review-holds';
+import { resolveIsiZuluSilentDeckDraft } from '@/lib/course-deck-silent-drafts-registry';
 
 const PUBLIC = join(process.cwd(), 'public');
+
+test('silent regional downloads including updated Sesotho Introduction default to slides', () => {
+  assert.equal(defaultOfflinePackVariant(['intro-permaculture'], 'st'), 'slides');
+  assert.equal(regionalPackNeedsNarrationChoice(['intro-permaculture'], 'st'), true);
+  for (const lang of ['st', 've', 'ts']) {
+    assert.equal(defaultOfflinePackVariant(['vegetables-staples'], lang), 'slides');
+    const silent = offlinePack('vegetables-staples', lang, 'standard', defaultOfflinePackVariant(['vegetables-staples'], lang));
+    assert.ok(silent.entries.length > 0);
+    assert.ok(silent.entries.every(entry => entry.kind !== 'audio' && entry.kind !== 'animation'));
+  }
+  assert.equal(defaultOfflinePackVariant(['intro-permaculture', 'vegetables-staples'], 'st'), 'slides');
+  assert.equal(defaultOfflinePackVariant(['vegetables-staples'], 'zu'), 'full');
+  const optional = offlinePack('vegetables-staples', 'st', 'standard', 'full');
+  assert.ok(optional.entries.some(entry => entry.kind === 'audio' && entry.url.includes('/en/')));
+  const intro = offlinePack('intro-permaculture', 'st', 'standard', 'full');
+  assert.equal(intro.entries.filter(entry => entry.kind === 'audio' && entry.url.includes('/en/')).length, 22);
+  assert.ok(!intro.entries.some(entry => entry.kind === 'audio' && entry.url.includes('/st/')),
+    '2026-10-06: updated silent pair permits explicit English only; archived ST remains owned');
+});
+
+test('the nine updated regional slides resolve to the exact still in a silent offline pack', () => {
+  const changed = [
+    ['intro-permaculture', 've', 22], ['intro-permaculture', 'ts', 22],
+    ['vegetables-staples', 'st', 3], ['vegetables-staples', 've', 3], ['vegetables-staples', 'ts', 3],
+    ['market-community', 'st', 15], ['market-community', 'ts', 15],
+    ['reading-landscape', 've', 14], ['reading-landscape', 'ts', 14],
+  ] as const;
+  for (const [moduleId, language, slide] of changed) {
+    const image = slideImageFor(moduleId, language, slide);
+    const expected = `/course-decks/${moduleId}/${language}/slide-${String(slide).padStart(2, '0')}.webp`;
+    assert.ok(image?.exact, `${language} ${moduleId} slide ${slide} must use its source-paired still`);
+    assert.equal(image.url, expected);
+    assert.equal(animationUrls(moduleId, slide, language), null,
+      `${language} slide ${slide} must not put an English film poster over its unreviewed source pair`);
+    assert.equal(slideAudioUrl(moduleId, language, slide), null,
+      `${language} slide ${slide} has no regional recording and must remain silent by default`);
+    assert.equal(defaultOfflinePackVariant([moduleId], language), 'slides');
+    const pack = offlinePack(moduleId, language, 'standard', 'slides');
+    assert.deepEqual(pack.missing, [], `${language} ${moduleId} slide ${slide} must be available offline`);
+    const entry = pack.entries.find(item => item.url === expected);
+    assert.ok(entry, `${expected} must be included in the learner-selected slides-only pack`);
+    assert.equal(entry.kind, 'slide');
+    assert.equal(entry.bytes, statSync(join(PUBLIC, expected)).size);
+    assert.ok(pack.entries.every(item => item.kind !== 'audio' && item.kind !== 'animation'),
+      `${language} ${moduleId} default pack must not add audio or animation`);
+  }
+  for (const language of ['en', 'zu'] as const) {
+    assert.ok(animationUrls('market-community', 15, language),
+      `${language} Market lesson retains its existing source-language film`);
+  }
+  assert.equal(slideAudioUrl('intro-permaculture', 'st', 22), null,
+    '2026-10-06: archived ST recording cannot voice the updated silent source pair');
+});
 
 test('public teaching-preview packs name every static reading route and the finance materials it links', () => {
   const finance = STUDIES_PATHWAY_PACKS.finance;
@@ -73,6 +128,17 @@ test('every size in the generated manifest matches the real file, to the byte', 
   assert.deepEqual(wrong, [], `stale asset sizes — run: node scripts/gen-asset-sizes.mjs`);
 });
 
+test('Sesotho and Xitsonga Market review decks download every exact frame offline', () => {
+  for (const language of ['st', 'ts']) {
+    const pack = offlinePack('market-community', language, 'standard', 'slides');
+    assert.deepEqual(pack.missing, [], `${language} Market slide pack must be complete`);
+    const slides = pack.entries.filter((item) => item.kind === 'slide');
+    assert.equal(slides.length, 20);
+    assert.ok(slides.every((item) => item.url.startsWith(`/course-decks/market-community/${language}/`)));
+    assert.equal(new Set(slides.map(({ url }) => url)).size, 20);
+  }
+});
+
 test('the deck manifest states each clip\'s true size — the play button is a promise', () => {
   // course-deck.ts carries its own `bytes` because the play button shows it before a farmer spends
   // the data. Hand-rounded values survived a re-encode once and every button on the page was then
@@ -108,12 +174,15 @@ test('a pack names no file that does not exist', () => {
   }
 });
 
-test('Soil isiZulu offline packs use localized compost stills and Thando voice clips', () => {
+test('Soil isiZulu offline pack uses the displayed review-aware stills and available Thando clips', () => {
   const zu = offlinePack('soil-health', 'zu');
   const english = offlinePack('soil-health', 'en');
   assert.deepEqual(zu.missing, []);
   assert.equal(zu.entries.filter((e) => e.kind === 'slide').length, 20);
-  assert.equal(zu.entries.filter((e) => e.kind === 'audio').length, 20);
+  const availableTracks = COURSE_NARRATION['soil-health'].tracks
+    .map(track => trackUrl('soil-health', 'zu', track.slide))
+    .filter((url): url is string => url !== null);
+  assert.deepEqual(zu.entries.filter((e) => e.kind === 'audio').map(e => e.url), availableTracks);
   assert.ok(zu.entries.some((e) => e.url === '/course-audio/soil-health/zu/slide-17.mp3'));
   assert.equal(zu.entries.some((e) => e.kind === 'animation'), false,
     'the mismatched English compost clips are not charged to the isiZulu pack');
@@ -121,20 +190,50 @@ test('Soil isiZulu offline packs use localized compost stills and Thando voice c
   assert.ok(english.entries.some((e) => e.url === '/course-animations/soil-health/flow-compost-materials.mp4'));
 });
 
-test('every module a language claims narration for actually packs that narration', () => {
+test('offline packs include every available narration track and omit only source-review-held ZU rows', () => {
   // The complement of the test above: `missing` only catches a file the manifest forgot.
   // It cannot catch a pack that never ASKED for the audio, which is the other half of how
   // the 2026-08-04 regression stayed invisible — a stale manifest and an unasked-for asset
-  // both look like "0 missing". COURSE_NARRATION is the promise; the pack must honour it.
+  // both look like "0 missing". The resolved current voice is the promise; archived inventory alone cannot authorize playback.
   for (const [moduleId, narration] of Object.entries(COURSE_NARRATION)) {
     for (const lang of narration.languages) {
       const audio = offlinePack(moduleId, lang).entries.filter((e) => e.kind === 'audio');
-      assert.equal(
-        audio.length,
-        narration.tracks.length,
-        `${moduleId}/${lang}: narration promises ${narration.tracks.length} clips, pack carries ${audio.length}`,
-      );
+      const resolved = resolveNarrationLang(moduleId, lang);
+      const expected = narration.tracks
+        .map(track => resolved ? trackUrl(moduleId, resolved.lang, track.slide) : null)
+        .filter((url): url is string => url !== null);
+      assert.deepEqual(audio.map(entry => entry.url), expected,
+        `${moduleId}/${lang}: every playable track is packed and held rows are not reported as missing files`);
     }
+  }
+});
+
+test('full isiZulu packs include each displayed held-row still without adding implicit narration', () => {
+  const holds = isiZuluDeckReviewHoldEntries();
+  assert.ok(holds.length > 0, 'the review ledger supplies the held source rows');
+  for (const { moduleId, slide } of holds) {
+    const shown = slideImageFor(moduleId, 'zu', slide);
+    assert.ok(shown, `${moduleId}/${slide} still has an image`);
+    const silentDraft = resolveIsiZuluSilentDeckDraft(moduleId, slide);
+    assert.equal(shown.lang, silentDraft ? 'zu' : 'en',
+      `${moduleId}/${slide} uses its checked silent correction when present, otherwise English while ZU narration is held`);
+    assert.equal(shown.exact, Boolean(silentDraft),
+      `${moduleId}/${slide} accurately reports whether its corrected isiZulu still is available`);
+    if (silentDraft) assert.equal(shown.url, silentDraft.imageUrl);
+    assert.equal(trackUrl(moduleId, 'zu', slide), null, `${moduleId}/${slide} held isiZulu audio has no URL`);
+    assert.equal(trackUrl(moduleId, 'en', slide), `/course-audio/${moduleId}/en/slide-${String(slide).padStart(2, '0')}.mp3`,
+      `${moduleId}/${slide} English audio remains an explicit language choice`);
+
+    const pack = offlinePack(moduleId, 'zu', 'standard', 'full');
+    assert.deepEqual(pack.missing, [], `${moduleId}/${slide} hold is not a missing-file error`);
+    assert.ok(pack.entries.some(entry => entry.kind === 'slide' && entry.url === shown.url),
+      `${moduleId}/${slide} offline pack contains the image actually displayed`);
+    assert.ok(!pack.entries.some(entry => entry.kind === 'audio' &&
+      entry.url === `/course-audio/${moduleId}/zu/slide-${String(slide).padStart(2, '0')}.mp3`),
+    `${moduleId}/${slide} pack omits held isiZulu audio`);
+    assert.ok(!pack.entries.some(entry => entry.kind === 'audio' &&
+      entry.url === `/course-audio/${moduleId}/en/slide-${String(slide).padStart(2, '0')}.mp3`),
+    `${moduleId}/${slide} isiZulu pack does not substitute English narration`);
   }
 });
 
@@ -156,13 +255,17 @@ test('one language, not both — packing both would double the download for nobo
   assert.ok(zuAudio.every((e) => e.url.includes('/zu/')), 'isiZulu pack must carry only isiZulu audio');
 });
 
-test('a learner can hear the player’s fallback narration after downloading in another app language', () => {
+test('a learner can hear every playable fallback clip after downloading in another app language', () => {
   for (const [moduleId, narration] of Object.entries(COURSE_NARRATION)) {
     for (const requested of ['en', 'zu', 'xh']) {
       const spoken = resolveNarrationLang(moduleId, requested);
       if (!spoken) continue;
       const audio = offlinePack(moduleId, requested).entries.filter(e => e.kind === 'audio');
-      assert.deepEqual(audio.map(e => e.url), narration.tracks.map(t => trackUrl(moduleId, spoken.lang, t.slide)));
+      const playable = narration.tracks
+        .map(t => trackUrl(moduleId, spoken.lang, t.slide))
+        .filter((url): url is string => url !== null);
+      assert.deepEqual(audio.map(e => e.url), playable,
+        `${moduleId}/${requested}: held ZU clips are omitted, while every playable fallback is packed`);
     }
   }
 });
@@ -188,42 +291,218 @@ test('a pack carries whatever the player will actually show, including any fallb
   }
 });
 
-test('Sesotho intro lessons download all paired images and keep English source audio distinct', () => {
-  const pack = offlinePack('intro-permaculture', 'st');
+test('Sesotho intro lessons download the new silent pair with explicitly selected English source narration', () => {
+  const pack = offlinePack('intro-permaculture', 'st', 'standard', 'full');
   assert.deepEqual(pack.missing, [], 'a missing image would only surface after the learner went offline');
   const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
   assert.equal(slides.filter((url) => url.endsWith('.webp')).length, 22);
-  assert.ok(slides.includes('/course-decks/intro-permaculture/st/slide-22.webp'));
+  assert.ok(slides.includes('/course-decks/intro-permaculture/st-silent/slide-22.webp'));
   assert.ok(!slides.some((url) => url.includes('/course-decks/intro-permaculture/en/')));
   assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
     entry.url === '/course-audio/intro-permaculture/en/slide-04.mp3'));
-  assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/intro-permaculture/st/')));
+  assert.equal(pack.entries.filter((entry) => entry.kind === 'audio' &&
+    entry.url.startsWith('/course-audio/intro-permaculture/en/slide-')).length, 22,
+  'the offline pack carries each distinct slide clip once without redownloading full.mp3');
+  assert.ok(!pack.entries.some((entry) => entry.url.endsWith('/full.mp3')));
+  assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/intro-permaculture/st/')),
+    '2026-10-06: explicit full variant adds compatible English, never stale archived ST');
+  const silent = offlinePack('intro-permaculture', 'st', 'standard', 'slides');
+  assert.ok(silent.entries.every(entry => entry.kind !== 'audio'), 'default slides variant remains silent');
 });
 
-test('Tshivenda and Xitsonga Introduction downloads include orientation stills and English fallback', () => {
+test('Sesotho Soil Health entry keeps paired stills and English source narration offline', () => {
+  const pack = offlinePack('soil-health', 'st');
+  assert.deepEqual(pack.missing, []);
+  const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
+  assert.equal(slides.filter((url) => url.startsWith('/course-decks/soil-health/st/')).length, 20,
+    'the complete source-paired Sesotho deck must be available offline');
+  for (let n = 1; n <= 20; n++) {
+    const number = String(n).padStart(2, '0');
+    assert.ok(slides.includes(`/course-decks/soil-health/st/slide-${number}.webp`));
+  }
+  assert.ok(!slides.some((url) => url.includes('/course-decks/soil-health/en/')),
+    'each Sesotho slide already includes its exact English source');
+  assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
+    entry.url === '/course-audio/soil-health/en/slide-04.mp3'));
+  assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/soil-health/st/')));
+  assert.ok(!pack.entries.some((entry) => entry.url.includes('/course-animations/soil-health/')),
+    'English compost films cannot cover the paired Sesotho slides in the silent pack');
+});
+
+test('itsonga Soil Health keeps all 20 paired stills and only optional English source audio offline', () => {
+  const pack = offlinePack('soil-health', 'ts');
+  assert.deepEqual(pack.missing, []);
+  const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
+  for (let n = 1; n <= 20; n++) {
+    const number = String(n).padStart(2, '0');
+    assert.ok(slides.includes(`/course-decks/soil-health/ts/slide-${number}.webp`),
+      `the silent Xitsonga deck needs paired slide ${number}`);
+  }
+  assert.ok(!slides.some((url) => url.includes('/course-decks/soil-health/en/')),
+    'every Xitsonga frame embeds its English source, so no separate fallback slide is needed');
+  assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
+    entry.url === '/course-audio/soil-health/en/slide-04.mp3'),
+  'English source audio remains an explicit optional choice');
+  assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/soil-health/ts/')));
+});
+
+test('Tshivenda Soil Health packs all paired frames and leaves English narration optional offline', () => {
+  const pack = offlinePack('soil-health', 've');
+  assert.deepEqual(pack.missing, [], 'all 20 regional stills and selected English audio assets exist');
+  const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
+  assert.equal(slides.filter((url) => url.includes('/course-decks/soil-health/ve/')).length, 20,
+    'the offline pack carries every Tshivenda source-paired frame');
+  for (let slide = 1; slide <= 20; slide++) {
+    const number = String(slide).padStart(2, '0');
+    assert.ok(slides.includes(`/course-decks/soil-health/ve/slide-${number}.webp`));
+  }
+  assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
+    entry.url === '/course-audio/soil-health/en/slide-01.mp3'),
+  'English source narration remains available only as an optional player choice');
+  assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/soil-health/ve/')),
+    'the deck does not promise Tshivenda narration');
+});
+
+test('regional Introduction downloads every selected still and never promise regional audio', () => {
   for (const lang of ['ve', 'ts']) {
     const pack = offlinePack('intro-permaculture', lang);
     assert.deepEqual(pack.missing, []);
     const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
-    for (const n of ['01', '02', '03', '04', '05', '06']) {
-      assert.ok(slides.includes(`/course-decks/intro-permaculture/${lang}/slide-${n}.webp`));
+    const deck = COURSE_DECKS['intro-permaculture'];
+    for (const { slide } of deck.slides) {
+      const selected = slideImageFor('intro-permaculture', lang, slide);
+      assert.ok(selected, `${lang} slide ${slide} must resolve to a regional or English frame`);
+      assert.ok(slides.includes(selected.url), `offline pack must include the shown ${lang} slide ${slide}`);
+      if (selected.exact) assert.equal(selected.lang, lang);
+      else assert.equal(selected.lang, 'en', `${lang} slide ${slide} fallback must be the exact English source`);
     }
-    assert.ok(slides.includes('/course-decks/intro-permaculture/en/slide-07.jpg'));
     assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
       entry.url === '/course-audio/intro-permaculture/en/slide-04.mp3'));
+    if (lang === 've') {
+      assert.equal(slides.filter((url) => url.endsWith('.webp')).length, 22,
+        'all 22 source-paired Tshivenda frames must be included in its download');
+      for (const n of [7, 10]) {
+        assert.ok(slides.includes(`/course-decks/intro-permaculture/ve/slide-${String(n).padStart(2, '0')}.webp`),
+          `Tshivenda slide ${n} should download its source-paired English hold frame`);
+      }
+    }
+    assert.equal(COURSE_NARRATION['intro-permaculture'].languages.includes(lang), false,
+      `${lang} slides must not promise an unreviewed narration track`);
     assert.ok(pack.entries.every((entry) => !entry.url.includes(`/course-audio/intro-permaculture/${lang}/`)));
   }
 });
 
-test('both languages of the finished module are whole — no slide falls back', () => {
-  // Seeds is the module being shown to people as the finished sample. A farmer reading isiZulu
-  // should not meet an English slide in it.
+test('Tshivenda and Xitsonga slide-only packs contain every displayed still and poster, with no media', () => {
+  for (const moduleId of Object.keys(COURSE_DECKS)) {
+    const deck = COURSE_DECKS[moduleId];
+    for (const lang of ['ve', 'ts']) {
+      if (!deck.slideLanguages.includes(lang)) continue;
+      const pack = offlinePack(moduleId, lang, 'standard', 'slides');
+      assert.deepEqual(pack.missing, [], `${moduleId}/${lang}`);
+      assert.deepEqual(pack.entries.filter((e) => e.kind === 'slide').map((e) => e.url).sort(),
+        deck.slides.map(({ slide }) => slideImageFor(moduleId, lang, slide)!.url).sort(),
+        `${moduleId}/${lang} includes the exact regional or English fallback stills shown by DeckPlayer`);
+      const expectedPosters = deck.slides.flatMap(({ slide }) => {
+        const animation = animationUrls(moduleId, slide, lang);
+        return animation ? [animation.poster] : [];
+      }).sort();
+      assert.deepEqual(pack.entries.filter((e) => e.kind === 'poster').map((e) => e.url).sort(), expectedPosters,
+        `${moduleId}/${lang} includes only posters its player can show`);
+      assert.ok(pack.entries.every((e) => e.kind === 'slide' || e.kind === 'poster'),
+        `${moduleId}/${lang} slide-only pack contains no narration, video, or lesson infographic`);
+      assert.equal(pack.bytes, pack.entries.reduce((sum, e) => sum + e.bytes, 0));
+      for (const item of pack.entries) {
+        assert.equal(item.bytes, statSync(join(PUBLIC, item.url.replace(/^\//, ''))).size, item.url);
+      }
+    }
+  }
+});
+
+test('Sesotho Food Forest saves all 20 paired stills without the English Flow poster', () => {
+  const pack = offlinePack('food-forest', 'st');
+  assert.deepEqual(pack.missing, []);
+  const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
+  assert.equal(slides.length, 20);
+  for (let n = 1; n <= 20; n++) {
+    assert.ok(slides.includes(`/course-decks/food-forest/st/slide-${String(n).padStart(2, '0')}.webp`),
+      `the source-paired Sesotho deck needs slide ${n} offline`);
+  }
+  assert.ok(!pack.entries.some((entry) => entry.kind === 'poster' || entry.kind === 'animation'),
+    'the English Flow poster must not hide the source-paired Sesotho slide');
+  assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
+    entry.url === '/course-audio/food-forest/en/slide-04.mp3'),
+    'existing English source narration remains an available explicit choice');
+  assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/food-forest/st/')),
+    'no Sesotho narration is claimed or packed');
+});
+
+test('Sesotho Vegetables saves all 18 paired stills and never hides slide 6 under English animation', () => {
+  const pack = offlinePack('vegetables-staples', 'st');
+  assert.deepEqual(pack.missing, []);
+  const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
+  assert.equal(slides.length, 18);
+  for (let n = 1; n <= 18; n++) {
+    assert.ok(slides.includes(`/course-decks/vegetables-staples/st/slide-${String(n).padStart(2, '0')}.webp`),
+      `the source-paired Sesotho deck needs slide ${n} offline`);
+  }
+  assert.ok(!pack.entries.some((entry) => entry.kind === 'poster' || entry.kind === 'animation'),
+    'an English animation poster must not hide the source-paired Sesotho still');
+  assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/vegetables-staples/st/')),
+    'no Sesotho narration is claimed or packed');
+});
+
+test('the optional full regional pack preserves legacy contents and its English source narration', () => {
+  for (const lang of ['ve', 'ts']) {
+    const legacy = offlinePack('intro-permaculture', lang);
+    const explicitFull = offlinePack('intro-permaculture', lang, 'standard', 'full');
+    const slidesOnly = offlinePack('intro-permaculture', lang, 'standard', 'slides');
+    assert.deepEqual(explicitFull, legacy, `${lang} default remains the existing full pack`);
+    assert.ok(explicitFull.entries.some((e) => e.kind === 'audio' &&
+      e.url === '/course-audio/intro-permaculture/en/slide-04.mp3'),
+      `${lang} full pack carries the available English source narration`);
+    assert.ok(explicitFull.bytes > slidesOnly.bytes, `${lang} full pack quotes the larger actual total`);
+  }
+});
+
+test('whole-course regional slide-only totals include every saved still without narration or video', () => {
+  const moduleIds = COURSE_MODULES.map(({ id }) => id);
+  for (const lang of ['ve', 'ts']) {
+    const slidesOnly = moduleIds.map((id) => offlinePack(id, lang, 'standard', 'slides'))
+      .filter((pack) => pack.entries.length > 0);
+    const full = moduleIds.map((id) => offlinePack(id, lang, 'standard', 'full'))
+      .filter((pack) => pack.entries.length > 0);
+    const slidesOnlyBytes = slidesOnly.reduce((sum, pack) => sum + pack.bytes, 0);
+    const fullBytes = full.reduce((sum, pack) => sum + pack.bytes, 0);
+    assert.ok(slidesOnly.length > 0, `${lang} whole-course selection has downloadable deck files`);
+    assert.ok(slidesOnly.every((pack) => pack.entries.every((e) => e.kind === 'slide' || e.kind === 'poster')));
+    assert.equal(slidesOnlyBytes, slidesOnly.reduce((sum, pack) =>
+      sum + pack.entries.reduce((packSum, entry) => packSum + entry.bytes, 0), 0));
+    assert.ok(fullBytes > slidesOnlyBytes, `${lang} full course visibly costs more than slides only`);
+    assert.ok(full.some((pack) => pack.entries.some((e) => e.kind === 'audio' && e.url.includes('/en/'))),
+      `${lang} full course includes its available English source narration`);
+  }
+});
+
+test('Seeds shows a checked silent ZU still or English fallback while held ZU narration stays unavailable', () => {
+  // Corrected silent cards have their own reviewed-source binding and do not release the legacy
+  // voice hold. Rows without a corrected still continue to use the English source frame.
   const deck = COURSE_DECKS['seeds-sovereignty'];
   for (const lang of deck.slideLanguages) {
     for (const slide of deck.slides) {
       const shown = slideImageFor('seeds-sovereignty', lang, slide.slide);
       assert.ok(shown, `${lang} slide ${slide.slide} has no image at all`);
-      assert.equal(shown!.exact, true, `${lang} slide ${slide.slide} falls back to ${shown!.lang}`);
+      const held = lang === 'zu' && Boolean(isiZuluDeckReviewHoldEntries()
+        .some(row => row.moduleId === 'seeds-sovereignty' && row.slide === slide.slide));
+      const corrected = held && Boolean(resolveIsiZuluSilentDeckDraft('seeds-sovereignty', slide.slide));
+      assert.equal(shown!.exact, !held || corrected,
+        `${lang} slide ${slide.slide} must use its exact reviewed pair or source fallback`);
+      assert.equal(shown!.lang, held && !corrected ? 'en' : lang);
+      if (held) {
+        assert.equal(trackUrl('seeds-sovereignty', 'zu', slide.slide), null,
+          `slide ${slide.slide} stays silent until its held ZU voice is reviewed`);
+        assert.equal(animationUrls('seeds-sovereignty', slide.slide, 'zu'), null,
+          `slide ${slide.slide} must not cover its source-paired still with an animation`);
+      }
     }
   }
 });
@@ -235,17 +514,18 @@ test('a pack has one entry per file, even when two slides resolve to the same on
   assert.equal(pack.bytes, pack.entries.reduce((s, e) => s + e.bytes, 0));
 });
 
-test('the pack covers every slide and every narration track', () => {
+test('the pack covers every displayed slide and every playable narration track', () => {
   // Under-packing is the failure that hides: the download succeeds, and the gap only appears in a
-  // homestead with no signal. So the count is checked against the manifests, not eyeballed.
+  // homestead with no signal. Held recordings are deliberately not playable, so only those rows
+  // are omitted while their resolved English still remains in the pack.
   const deck = COURSE_DECKS['seeds-sovereignty'];
   const pack = offlinePack('seeds-sovereignty', 'zu');
   assert.equal(pack.entries.filter((e) => e.kind === 'slide').length, deck.slides.length);
-  assert.equal(
-    pack.entries.filter((e) => e.kind === 'audio').length,
-    COURSE_NARRATION['seeds-sovereignty'].tracks.length,
-  );
-  const withAnimation = deck.slides.filter((s) => s.animation).length;
+  const playableTracks = COURSE_NARRATION['seeds-sovereignty'].tracks
+    .map(track => trackUrl('seeds-sovereignty', 'zu', track.slide))
+    .filter((url): url is string => url !== null);
+  assert.deepEqual(pack.entries.filter((e) => e.kind === 'audio').map(e => e.url), playableTracks);
+  const withAnimation = deck.slides.filter((s) => s.animation && animationUrls('seeds-sovereignty', s.slide, 'zu')).length;
   assert.equal(pack.entries.filter((e) => e.kind === 'animation').length, withAnimation);
   assert.equal(pack.entries.filter((e) => e.kind === 'poster').length, withAnimation);
 });
@@ -316,12 +596,17 @@ test('standard stays the default everywhere — a farmer never opts in by accide
   assert.equal(downloadableModules('zu').length, downloadableModules('zu', 'high').length);
 });
 
-test('the isiZulu guild offline pack contains all 51 local slides and tracks and the localized labels', () => {
+test('the isiZulu guild offline pack contains all displayed slides and only available isiZulu tracks', () => {
   const pack = offlinePack('plant-guilds', 'zu');
   assert.deepEqual(pack.missing, []);
   assert.equal(pack.entries.filter(e => e.kind === 'slide').length, 51);
-  assert.equal(pack.entries.filter(e => e.kind === 'audio').length, 51);
-  assert.ok(pack.entries.filter(e => e.kind === 'slide' || e.kind === 'audio').every(e => e.url.includes('/zu/')));
+  const expectedAudio = COURSE_NARRATION['plant-guilds'].tracks
+    .map(track => trackUrl('plant-guilds', 'zu', track.slide))
+    .filter((url): url is string => url !== null);
+  assert.deepEqual(pack.entries.filter(e => e.kind === 'audio').map(e => e.url), expectedAudio);
+  assert.ok(pack.entries.filter(e => e.kind === 'audio').every(e => e.url.includes('/zu/')));
+  assert.ok(pack.entries.filter(e => e.kind === 'slide').every(e =>
+    slideImageFor('plant-guilds', 'zu', Number(e.url.match(/slide-(\d+)/)?.[1]))?.url === e.url));
   assert.ok(pack.entries.some(e => e.url.endsWith('Imbewu-Guilds-09-Labelled-zu.mp4')));
   assert.ok(!pack.entries.some(e => e.url.endsWith('Imbewu-Guilds-09-Labelled.mp4')));
 });

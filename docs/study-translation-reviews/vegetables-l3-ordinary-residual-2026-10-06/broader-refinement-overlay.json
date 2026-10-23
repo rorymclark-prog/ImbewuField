@@ -1,0 +1,158 @@
+{
+  "reportType": "read-only independent refinement overlay; source/current binding inherited only where reverified; no fluency approval",
+  "date": "2026-10-06",
+  "baseIndependentReport": {
+    "path": "/tmp/imbewu-vegetables-l3-remaining-ordinary-independent-check-20261006.json",
+    "sha256": "36edf19dc30d1775b16bffb8757206b0c8bfaf78975c92ae5576d22eb36a3db4",
+    "provenancePreservedUnchanged": true
+  },
+  "candidatePacket": {
+    "path": "/tmp/imbewu-vegetables-l3-remaining-ordinary-actual-candidates-20261006.json",
+    "sha256": "d1c7befd1c09fb0af1b663192a4f299db3977071df30ae5f8f1c9481d0784d88",
+    "expectedSha256": "d1c7befd1c09fb0af1b663192a4f299db3977071df30ae5f8f1c9481d0784d88",
+    "matchesExpected": true
+  },
+  "baseline": {
+    "head": "68f955a1227b1a9bfc659e8a7908fee099f8ab9b",
+    "expectedHead": "68f955a1227b1a9bfc659e8a7908fee099f8ab9b",
+    "resolverSnapshotSha256": "26aaaa92362985ec97358a2a48ee0c77b1b737fdcef746066365efa770ab86cd",
+    "snapshotShaExpected": "26aaaa92362985ec97358a2a48ee0c77b1b737fdcef746066365efa770ab86cd",
+    "bodyParagraphCount": 16,
+    "allSourceAndTargetClaimsReadAgainstImmutableResolverSnapshot": true
+  },
+  "overrides": [
+    {
+      "id": "st:body[2]:weather-pests",
+      "priorReportCorrection": "The prior row said retain pests but emitted disenyi. Final recommendation and composed body consistently retain exact English pests."
+    },
+    {
+      "id": "ts:quiz[0].options[0]:open-pollinated-yield-more",
+      "priorReportCorrection": "Do not approve yi humesa swo tala; without an explicit comparative it can mean produces many/plenty. Hold current yield more."
+    },
+    {
+      "id": "ts:body[9]:other-staples-struggle",
+      "priorReportCorrection": "Use the requested precise mixed-language option with other staples exact; subject agreement `swi` matches existing TS body14 usage. Draft only; fluent confirmation remains."
+    }
+  ],
+  "rows": [
+    {
+      "id": "st:body[2]:weather-pests",
+      "decision": "repair to localize weather while retaining source noun “pests”",
+      "finalField": "Staple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha maemo a leholimo kapa pests di otla.",
+      "reason": "Fixes the inconsistency in the prior report. “maemo a leholimo” translates weather; current source condition, hit predicate, two-or-more quantity, choices, and sentence remain intact. Keep pests exact."
+    },
+    {
+      "id": "st:body[15]:resources",
+      "decision": "accept; compose cumulatively with protection span",
+      "finalField": "Dijalo tse fapaneng di sebedisa metsi, mobu le dinako tsa selemo ka ditsela tse fapaneng. Phapang eo ke yona tshireletso.",
+      "reason": "Translate ordinary resource and time nouns. Full target below combines both disjoint body[15] spans, so neither overwrites the other."
+    },
+    {
+      "id": "st:body[15]:protection",
+      "decision": "accept; compose cumulatively with resource span",
+      "finalField": "Dijalo tse fapaneng di sebedisa metsi, mobu le dinako tsa selemo ka ditsela tse fapaneng. Phapang eo ke yona tshireletso.",
+      "reason": "tshireletso expresses protection; “different use” remains the reason protection exists, without a guarantee."
+    },
+    {
+      "id": "ts:body[0]:staple-earns-place",
+      "decision": "hold exact current target",
+      "finalField": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.",
+      "reason": "Candidate “xi fanele ku va kona” introduces ought/should, making the explanatory idiom a prescription. The existing English predicate is retained; the localized because-clause and beyond-harvest condition remain exact."
+    },
+    {
+      "id": "ts:body[9]:other-staples-struggle",
+      "decision": "accept conservative mixed-language candidate as an unreviewed draft; fluent confirmation pending",
+      "finalField": "Amadumbe yi kota ku tiyisela eka wetter ground, laha other staples swi tikeriwaka.",
+      "candidateExact": "Amadumbe yi kota ku tiyisela eka wetter ground, laha other staples swi tikeriwaka.",
+      "reason": "Retains “other staples” exactly to protect crop class and wetter ground exactly; localizes where/struggle as where other staples find it difficult. The `swi` subject agreement matches the same native paragraph’s established `staples swi ku nyika` in body[14]. Source does not say cannot handle or fail, and the candidate adds neither. No fluent claim."
+    },
+    {
+      "id": "ts:body[14]:two-or-more-staples",
+      "decision": "accept corrected exact quantity and source-class candidate",
+      "finalField": "Staples swimbirhi kumbe ku fhira swi ku nyika tindlela to tala ta ku ya mahlweni u dya.",
+      "candidateExact": "Staples swimbirhi kumbe ku fhira swi ku nyika tindlela to tala ta ku ya mahlweni u dya.",
+      "reason": "Keeps `staples` explicit and uses the same-module `swimbirhi kumbe ku fhira` pattern (two or more), avoiding `ku engetela` (to add). Existing clause about more ways to keep eating is retained."
+    },
+    {
+      "id": "ve:quiz[0].options[0]:open-pollinated-yield-more",
+      "decision": "hold exact current option",
+      "finalField": "Varieties dza open-pollinated yield more.",
+      "reason": "`Mixaka` is unsupported as Tshivenda and appears Xitsonga-shaped. Keep source statement in English, still option index 0, correct index 1."
+    },
+    {
+      "id": "ts:quiz[0].options[0]:open-pollinated-yield-more",
+      "source": "Open-pollinated varieties yield more",
+      "current": "Mixaka ya open-pollinated yield more.",
+      "candidateChecked": "Mixaka ya open-pollinated yi humesa swo tala.",
+      "decision": "hold exact current option",
+      "recommendedFinal": "Mixaka ya open-pollinated yield more.",
+      "reason": "The replacement clearly says “produces much/many”; without an expressed comparator it may weaken the source comparative “yield more.” Local same-module TS uses “ngopfu ku hundza” to express a maximum/comparison in the companion-failure sentence. Keep “yield more” until a concise comparative is checked. Preserve option index 0 and correct answer index 1."
+    },
+    {
+      "id": "ve:quiz[1].rationale:actually-prefers",
+      "decision": "hold exact current lead",
+      "finalField": "Amadumbe actually prefers",
+      "reason": "`i funa vhukuma` risks changing actually to really/very and prefers to likes/wants. Preserve source lead and exact tail, including would/capability."
+    },
+    {
+      "id": "ts:quiz[1].rationale:actually-prefers",
+      "decision": "hold exact current lead",
+      "finalField": "Amadumbe actually prefers",
+      "reason": "`yi tsakela swinene` risks changing actually prefers to likes very much. Preserve source lead and exact comparison/modality tail."
+    }
+  ],
+  "cumulativeFullNativeBodies": {
+    "st": {
+      "paragraphCount": 16,
+      "fullBody": "Staple e tshwanelwa ke sebaka sa yona hobane e fepa lelapa le kamora letsatsi la kotulo.\n\nE fana ka energy kapa protein. E a bolokwa, kapa e sala e le mobung ho fihlela o e hloka. Hangata e boetse e na le cultural memory.\n\nStaple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha maemo a leholimo kapa pests di otla.\n\nLema bonyane tse pedi. E seng se le seng.\n\nKe staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nStaple e nngwe le e nngwe e o sireletsa kgahlanong le ntho e fapaneng.\n\nMaize e fana ka calories, ’me e ka bolokoa e omme. Open-pollinated maize e boetse e u lumella ho boloka peo ea hao, haeba u laola isolation le selection.\n\nBeans le cowpeas li fana ka protein harvest e ka bolokoang.\n\nSweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too.\n\nAmadumbe e khona ho mamella wetter ground, moo lijalo tse ling tsa staple li thatafalloang teng.\n\nHlokomela hore di hloleha maemong a fapaneng. Ke yona ntlha yohle.\n\nHo mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.\n\nHo bolela hore ho hloleha ho le hong ha ho fedise morero wa dijo wa lelapa la hao.\n\nSejalo se le seng ke point of failure e le nngwe.\n\nDijalo tse pedi kapa ho feta tsa staple di o fa ditsela tse ngata tsa ho tswela pele o ja.\n\nDijalo tse fapaneng di sebedisa metsi, mobu le dinako tsa selemo ka ditsela tse fapaneng. Phapang eo ke yona tshireletso.",
+      "statusBefore": "draft",
+      "statusAfter": "draft"
+    },
+    "ve": {
+      "paragraphCount": 16,
+      "fullBody": "Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo.\n\nTshiḽiwa tsha vhuthogwa tshi fara energy kana protein. Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa. Nahone kanzhi tshi na cultural memory.\n\nTshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea khetho musi mutsho kana zwikhokhonono zwi tshi kwama zwimela.\n\nAlusani zwivhili kana zwo engaho. Hu si tshithihi.\n\nNdi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nTshiḽiwa tsha vhuthogwa tshiṅwe na tshiṅwe tshi ni tsireledza kha zwithu zwo fhambanaho.\n\nMaize i ṋea calories nahone i a vhulungea yo oma. Open-pollinated maize i dovha ya ni tendela ni vhulunga mbeu yaṋu, arali ni tshi langula isolation na selection.\n\nBeans na cowpeas zwi ṋea protein harvest ine ya nga vhulungwa.\n\nSweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too.\n\nAmadumbe i a konḓelela mavu ane a vha na maḓi manzhi u fhira, hune zwiṅwe zwimela zwa vhuthogwa zwa konḓelwa.\n\nṰhogomelani uri zwi kundwa kha conditions dzo fhambanaho. Ndi zwone zwine zwa vha ndeme nga maanḓa.\n\nResilience a zwi ambi uri a hu na zwine zwa kundwa.\n\nZwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu.\n\nTshibyariwa tshithihi ndi point nthihi ya failure.\n\nZwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea dziṅwe nḓila nnzhi dza u bvela phanḓa ni tshiḽa.\n\nZwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho. Phambano yeneyo ndi yone tsireledzo.",
+      "statusBefore": "draft",
+      "statusAfter": "draft"
+    },
+    "ts": {
+      "paragraphCount": 16,
+      "fullBody": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.\n\nYi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory.\n\nStaple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.\n\nByala swimbirhi kumbe ku fhira. Ku nga ri xin'we.\n\nHi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nStaple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana.\n\nMaize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection.\n\nBeans na cowpeas swi nyika protein harvest leyi nga hlayisiwa.\n\nSweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too.\n\nAmadumbe yi kota ku tiyisela eka wetter ground, laha other staples swi tikeriwaka.\n\nXiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.\n\nResilience a swi vuli leswaku a ku na lexi tsandzekaka.\n\nSwi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.\n\nXibyariwa xin'we i \"point of failure\" yin'we.\n\nStaples swimbirhi kumbe ku fhira swi ku nyika tindlela to tala ta ku ya mahlweni u dya.\n\nSwibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.",
+      "statusBefore": "draft",
+      "statusAfter": "draft"
+    }
+  },
+  "quizInvariant": {
+    "veOption0": "Varieties dza open-pollinated yield more.",
+    "tsOption0": "Mixaka ya open-pollinated yield more.",
+    "optionIndex": 0,
+    "correctIndexBeforeAndAfter": 1,
+    "quizStatusChanged": false
+  },
+  "preservation": {
+    "allUnlistedParagraphsUnchanged": true,
+    "bodyIndicesUnchanged": true,
+    "quizIndicesAndCorrectAnswersUnchanged": true,
+    "sourceStatusAndReviewStatusUnchanged": true,
+    "speciesNumbersConditionsModalNegationOrGuaranteeChanged": false,
+    "originalBackcheckReportModified": false,
+    "repositoryWrites": false,
+    "fluencyApproval": false
+  },
+  "lexicalSources": [
+    {
+      "term": "pests / disenyi",
+      "decision": "This overlay keeps exact “pests” in final composed target regardless of the external support recorded in the original report."
+    },
+    {
+      "term": "tshireletso",
+      "source": "https://www.gov.za/st/services/export-permits-import/phytosanitary-permit",
+      "note": "Government name for NPPO includes Tshireletso ya Dimela (plant protection)."
+    },
+    {
+      "term": "weather pests Sesotho usage",
+      "source": "https://www.grainsa.co.za/upload/article_pdfs/Pula-July-2022_Sesotho_WEB.pdf",
+      "note": "Grain SA Sesotho agronomy text calls fall armyworm among “disenyi”; recorded only as lexical context, not substituted into the final recommendation."
+    }
+  ],
+  "overall": "Final cumulative recommendation corrects the prior ST pests inconsistency, holds TS yield more untranslated until an explicit comparative is supported, and accepts the TS9 mixed rendering only as an unreviewed candidate with an exact staple class and locally evidenced `swi` concord. All other decisions from the base independent review remain as recorded above; no repository changes."
+}

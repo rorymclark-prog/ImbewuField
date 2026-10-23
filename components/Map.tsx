@@ -37,7 +37,10 @@ import {
   ESRI_TILE_URL,
 } from '@/lib/basemap-imagery';
 import { buildDesignOverlay, type DesignOverlay } from '@/lib/design-overlay';
-import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, Minus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid, Printer } from 'lucide-react';
+import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, Minus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid, Printer, MapPinOff } from 'lucide-react';
+import mapboxgl from 'mapbox-gl';
+import Link from 'next/link';
+import EmptyState from '@/components/EmptyState';
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
 import { CONTOUR_CASING, CONTOUR_CASING_EXTRA, CONTOUR_CORE, CONTOUR_CORE_MAJOR, CONTOUR_LABEL, CONTOUR_LABEL_HALO } from '@/lib/contour-cartography';
 import SpeakButton from './SpeakButton';
@@ -358,6 +361,16 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const simple = useAppLevel() === 'simple';
   const mapRef = useRef<MapRef>(null);
   const drawRef = useRef<MapboxDraw | null>(null);
+  // ux-14/desk-10/nav-14: on a phone or locked-down machine without WebGL the map area used to
+  // be a blank beige (or black, in dark mode) slab with no message, icon or next step — "Map is
+  // not supported by this browser" only ever reached the console. Checked once on mount (the
+  // capability does not change mid-session) plus a live catch on the Map constructor itself,
+  // since mapboxgl.supported() misses some GPU/driver failures that only surface at init.
+  const [mapSupported, setMapSupported] = useState(true);
+  useEffect(() => {
+    try { if (!mapboxgl.supported()) setMapSupported(false); }
+    catch { setMapSupported(false); }
+  }, []);
   const [style, setStyle] = useState<'satellite-streets-v12' | 'outdoors-v12'>('satellite-streets-v12');
   const [connected,setConnected]=useState(true),[canvasOnly,setCanvasOnly]=useState(false);
   const offlineCanvas=!connected||canvasOnly;
@@ -1779,18 +1792,18 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       if (!dataUrl) return;
       const w = window.open('', '_blank');
       if (!w) return;
-      w.document.write(`<!doctype html><html><head><title>ImbewuField — base map</title>`
+      w.document.write(`<!doctype html><html><head><title>${t('mapPrintWindowTabTitle')}</title>`
         + `<style>@page{size:A4 landscape;margin:8mm}*{box-sizing:border-box}`
         + `body{margin:0;font-family:Georgia,serif;color:#20190f}`
         + `h1{font-size:16px;margin:0 0 4px}.s{font-size:11px;color:#6b5a42;margin:0 0 8px}`
         + `img{width:100%;height:auto;border:1px solid #d8cdb6;border-radius:6px}</style></head>`
-        + `<body><h1>Site base map</h1>`
-        + `<div class="s">Print and sketch your design by hand — beds, paths, trees, water, compost. Drawn to scale; contours show the slope.</div>`
+        + `<body><h1>${t('mapPrintWindowHeading')}</h1>`
+        + `<div class="s">${t('mapPrintWindowInstructions')}</div>`
         + `<img src="${dataUrl}" onload="setTimeout(function(){window.print();},300)"/></body></html>`);
       w.document.close();
     });
     map.triggerRepaint();
-  }, [showFeatures, showHatch]);
+  }, [showFeatures, showHatch, t]);
 
   // Tell the parent when reticle drawing is active (so it can hide the mobile "Results" FAB).
   // Also broadcast globally so the Lima FAB (rendered in the root layout) can step aside.
@@ -2124,6 +2137,31 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setElTreeCustomOpen(false);
   };
 
+  // ux-14/desk-10/nav-14: no message, icon or action where the map used to just be blank. The
+  // site report and crop plan are unaffected by a missing map, so point there instead of a dead
+  // end — this farmer's data is not lost, only the map canvas is unavailable on this device.
+  if (!mapSupported) {
+    return (
+      <div className="relative w-full h-full flex items-center justify-center" style={{ background: 'var(--bg-0)' }}>
+        <EmptyState
+          icon={MapPinOff}
+          title={t('mapUnsupportedTitle')}
+          message={t('mapUnsupportedMessage')}
+          actions={
+            <>
+              <Link href="/reports" className="inline-flex items-center justify-center rounded-lg px-3.5 py-2 text-sm font-display font-semibold" style={{ minHeight: 44, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)' }}>
+                {t('mapUnsupportedOpenReports')}
+              </Link>
+              <Link href="/design/lite" className="inline-flex items-center justify-center rounded-lg px-3.5 py-2 text-sm font-display" style={{ minHeight: 44, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}>
+                {t('mapUnsupportedOpenLiteDesign')}
+              </Link>
+            </>
+          }
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-full h-full">
       {offlineCanvas&&<div role="status" style={{position:'absolute',bottom:80,left:12,maxWidth:'calc(100% - 24px)',zIndex:10,padding:'8px 12px',borderRadius:10,background:'var(--bg-1)',color:'#203127',fontSize:14,pointerEvents:'none'}}>{t('mapOfflineCanvasStatus')}</div>}
@@ -2318,7 +2356,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-3 font-sans z-[25]"
               style={{ bottom: 'calc(72px + env(safe-area-inset-bottom) + 12px)', background: 'rgba(16,22,14,0.9)', backdropFilter: 'blur(14px)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '10px 14px' }}>
               <Move size={16} style={{ color: 'rgba(234,243,226,0.55)', flexShrink: 0 }} />
-              <span style={{ fontSize: 13.5, fontWeight: 700, color: '#EAF3E2' }}>Drag <span style={{ color: resolveColor(p) }}>{p.name}</span> to new spot</span>
+              <span style={{ fontSize: 13.5, fontWeight: 700, color: '#EAF3E2' }}>
+                {t('movePinBarText')} <span style={{ color: resolveColor(p) }}>{p.name}</span> {t('movePinBarSuffix')}
+              </span>
               <button onClick={() => setMovingPin(null)}
                 className="flex items-center justify-center active:scale-90 transition-all"
                 style={{ width: 32, height: 32, borderRadius: 9, background: 'rgba(247,242,233,0.12)', border: '1px solid rgba(234,243,226,0.18)', cursor: 'pointer' }}>
@@ -2397,7 +2437,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               </div>
               <div style={{
                 background: 'rgba(20,20,20,0.78)', color: 'white',
-                fontSize: 9.5, fontFamily: 'var(--font-mono)', fontWeight: 600,
+                fontSize: 9.5, fontFamily: 'var(--font-sans)', fontWeight: 600,
                 padding: '1px 5px', borderRadius: 4, whiteSpace: 'nowrap', maxWidth: 72,
                 overflow: 'hidden', textOverflow: 'ellipsis',
               }}>{p.name}</div>
@@ -2617,7 +2657,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               className="flex flex-col items-center justify-center rounded-2xl font-display transition-all active:scale-95"
               style={{ flex: '0 1 56px', minWidth: 0, padding: '9px 0', opacity: draftPoints.length < 3 ? 0.5 : 1,
                 background: draftPoints.length < 3 ? 'rgba(22,37,20,0.7)' : '#1F4D2B',
-                border: '1.5px solid rgba(31,77,43,0.6)', color: draftPoints.length < 3 ? 'rgba(232,240,230,0.4)' : '#F7F2E9' }}>
+                border: '1.5px solid rgba(31,77,43,0.6)', color: draftPoints.length < 3 ? 'rgba(232,240,230,0.4)' : 'var(--on-forest)' }}>
               <Check size={17} />
               <span style={{ fontSize: 12, marginTop: 3 }}>{t('drawFinishButton')}</span>
             </button>
@@ -2788,7 +2828,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             </button>
             <button onClick={finishReticleEdit}
               className="flex flex-col items-center justify-center rounded-2xl font-display font-bold transition-all active:scale-95"
-              style={{ flex: '0 1 50px', minWidth: 0, padding: '9px 0', background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.6)', color: '#F7F2E9' }}>
+              style={{ flex: '0 1 50px', minWidth: 0, padding: '9px 0', background: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.6)', color: 'var(--on-forest-800)' }}>
               <Check size={17} />
               <span style={{ fontSize: 11, marginTop: 3 }}>{t('editDoneButton')}</span>
             </button>
@@ -2821,8 +2861,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <span className="flex items-center justify-center flex-shrink-0" style={{ width: 26, height: 26, borderRadius: 8, background: '#1F4D2B', color: MAP_COLOR_BOUNDARY_FILL }}>
               <Sprout size={15} strokeWidth={1.7} />
             </span>
-            <span style={{ color: '#F7F2E9', fontSize: 14.5, fontWeight: 600, lineHeight: 1.35, flex: 1, minWidth: 0 }}>{t('guidedBarSearch')}</span>
-            <SpeakButton text={t('guidedBarSearch')} color="#F7F2E9" />
+            <span style={{ color: 'var(--on-forest)', fontSize: 14.5, fontWeight: 600, lineHeight: 1.35, flex: 1, minWidth: 0 }}>{t('guidedBarSearch')}</span>
+            <SpeakButton text={t('guidedBarSearch')} color="var(--on-forest)" />
           </div>
           <div className="flex gap-2">
             <button
@@ -2831,14 +2871,14 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 requestAnimationFrame(() => (document.querySelector('.map-search-input') as HTMLInputElement | null)?.focus());
               }}
               className="flex-1 flex items-center justify-center gap-1.5 active:scale-95"
-              style={{ minHeight: 44, borderRadius: 11, border: '1px solid rgba(234,243,226,0.18)', background: 'rgba(234,243,226,0.10)', color: '#F7F2E9', fontSize: 13.5, fontWeight: 600, cursor: 'pointer' }}
+              style={{ minHeight: 44, borderRadius: 11, border: '1px solid rgba(234,243,226,0.18)', background: 'rgba(234,243,226,0.10)', color: 'var(--on-forest)', fontSize: 13.5, fontWeight: 600, cursor: 'pointer' }}
             >
               <Search size={16} /> {t('searchPlaceholder')}
             </button>
             <button
               onClick={goToMyLocation}
               className="flex-1 flex items-center justify-center gap-1.5 active:scale-95"
-              style={{ minHeight: 44, borderRadius: 11, border: '1px solid rgba(234,243,226,0.18)', background: 'rgba(234,243,226,0.10)', color: '#F7F2E9', fontSize: 13.5, fontWeight: 600, cursor: 'pointer' }}
+              style={{ minHeight: 44, borderRadius: 11, border: '1px solid rgba(234,243,226,0.18)', background: 'rgba(234,243,226,0.10)', color: 'var(--on-forest)', fontSize: 13.5, fontWeight: 600, cursor: 'pointer' }}
             >
               <LocateFixed size={16} /> {t('guidedBarLocate')}
             </button>
@@ -2856,7 +2896,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             background: 'rgba(22,30,18,0.86)', border: '1px solid rgba(234,243,226,0.12)',
             backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
             boxShadow: '0 8px 24px -10px rgba(0,0,0,0.5)',
-            color: '#F7F2E9', fontSize: 14.5, fontWeight: 600,
+            color: 'var(--on-forest)', fontSize: 14.5, fontWeight: 600,
           }}
         >
           <span className="flex items-center justify-center" style={{ width: 26, height: 26, borderRadius: 8, background: '#1F4D2B', color: MAP_COLOR_BOUNDARY_FILL }}><Sprout size={15} strokeWidth={1.7} /></span>
@@ -2890,7 +2930,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <div className="flex items-center justify-center" style={{ width: 30, height: 30, borderRadius: 9, background: '#1F4D2B', color: MAP_COLOR_BOUNDARY_FILL }}>
               <Sprout size={17} strokeWidth={1.7} />
             </div>
-            <span className="font-display" style={{ fontWeight: 600, fontSize: 17, color: '#F7F2E9' }}>{t('toolbarHeader')}</span>
+            <span className="font-display" style={{ fontWeight: 600, fontSize: 17, color: 'var(--on-forest)' }}>{t('toolbarHeader')}</span>
           </div>
           <div className="flex items-center gap-1.5">
             {/* Share this site — saves draw + places + water, copies URL */}
@@ -2969,7 +3009,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             onFocus={() => { if (!searchQuery.trim() && recents.length) setShowRecents(true); }}
             onBlur={() => setTimeout(() => { setSuggestions([]); setShowRecents(false); }, 150)}
             placeholder={t('searchPlaceholder')}
-            className="map-search-input flex-1 font-sans outline-none min-w-0"
+            className="map-search-input flex-1 font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] min-w-0"
             style={{ background: 'transparent', border: 'none', color: '#e8f0e6', fontSize: 15 }}
           />
           <button
@@ -3004,7 +3044,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         {showRecents && suggestions.length === 0 && recents.length > 0 && (
           <div className="absolute left-0 right-0 rounded-lg overflow-hidden z-50"
             style={{ top: 'calc(100% + 4px)', background: 'rgba(6,16,10,0.97)', border: '1px solid rgba(58,104,48,0.6)', boxShadow: '0 8px 28px rgba(0,0,0,0.55)' }}>
-            <div style={{ padding: '8px 12px', fontSize: 12, color: 'rgba(232,240,230,0.55)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.06em', borderBottom: '1px solid rgba(58,104,48,0.25)' }}>{t('recentSearchesHeader')}</div>
+            <div style={{ padding: '8px 12px', fontSize: 12, color: 'rgba(232,240,230,0.55)', fontFamily: 'var(--font-sans)', textTransform: 'uppercase', letterSpacing: '0.06em', borderBottom: '1px solid rgba(58,104,48,0.25)' }}>{t('recentSearchesHeader')}</div>
             {recents.map((r, i) => (
               <button key={i}
                 onMouseDown={(e) => { e.preventDefault(); selectSuggestion(r); }}
@@ -3018,8 +3058,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           </div>
         )}
         </div>
-        {searchError && <p className="text-xs font-mono" style={{ color: 'var(--orange)', marginTop: -4 }}>{searchError}</p>}
-        {searchResult && <p className="text-xs font-mono truncate" style={{ color: 'var(--teal)', marginTop: -4 }}>↳ {searchResult}</p>}
+        {searchError && <p className="text-xs font-sans" style={{ color: 'var(--orange)', marginTop: -4 }}>{searchError}</p>}
+        {searchResult && <p className="text-xs font-sans truncate" style={{ color: 'var(--teal)', marginTop: -4 }}>↳ {searchResult}</p>}
 
         {/* Layers expander — keeps the rarely-changed map-view toggles tucked away
             so the toolbar isn't a wall of tiny buttons on a phone. */}
@@ -3102,7 +3142,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
         {/* Heads-up: 3D tilts the map and can stop you zooming in close enough to draw */}
         {!simple && layersOpen && show3dWarning && (
-          <div className="rounded-lg font-mono"
+          <div className="rounded-lg font-sans"
             style={{ background: 'rgba(212,168,83,0.14)', border: '1px solid rgba(212,168,83,0.45)',
               color: 'var(--gold)', fontSize: TOUCH_FS - 2, padding: '8px 12px', lineHeight: 1.45 }}>
             <AlertTriangle size={13} className="inline mr-1" /> {t('threeDWarning')}
@@ -3275,7 +3315,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 {t(activeDraw === 'water' ? 'drawingInProgressWater' : 'drawingInProgressBoundary')} · {t('drawingInProgressInstruction')}
               </div>
               <button onClick={cancelDraw}
-                className="px-2 py-1 rounded-lg text-xs font-display transition-all"
+                className="min-h-11 px-2 py-1 rounded-lg text-xs font-display transition-all"
                 style={{ background: 'rgba(212,110,66,0.15)', border: '1px solid rgba(212,110,66,0.4)', color: 'var(--orange)', minHeight: 32 }}>
                 <X size={13} className="inline mr-1" />{t('drawCancelButton')}
               </button>
@@ -3302,7 +3342,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   } catch { /* ignore */ }
                   recompute();
                 }}
-                className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
+                className="min-h-11 flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
                 style={{ background: 'rgba(91,158,212,0.12)', border: '1px solid rgba(91,158,212,0.35)', color: '#7FC4F0', minHeight: 32, opacity: nativeEditBackupRef.current ? 1 : 0.4 }}>
                 <Undo2 size={12} className="inline mr-1" />{t('nativeEditUndoButton')}
               </button>
@@ -3311,20 +3351,20 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   const type = f?.properties?.featureType === 'water' ? 'water' : 'site';
                   openShapeNaming(editingFeatureId, type);
                 }}
-                className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
+                className="min-h-11 flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
                 style={{ background: 'rgba(168,216,138,0.12)', border: '1px solid rgba(168,216,138,0.35)', color: MAP_COLOR_BOUNDARY_FILL, minHeight: 32 }}>
                 <PenLine size={12} className="inline mr-1" />{t('nativeEditRenameButton')}
               </button>
               <button onClick={() => requestDelete(editingFeatureId)}
-                className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
+                className="min-h-11 flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
                 style={pendingDelete === editingFeatureId
                   ? { background: 'rgba(212,110,66,0.9)', border: '1px solid rgba(212,110,66,0.7)', color: '#fff', minHeight: 32 }
                   : { background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)', minHeight: 32 }}>
                 <Trash2 size={12} className="inline mr-1" />{pendingDelete === editingFeatureId ? t('nativeEditConfirmDeleteButton') : t('nativeEditDeleteButton')}
               </button>
               <button onClick={finishEditing}
-                className="flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-display font-semibold transition-all"
-                style={{ background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.6)', color: '#F7F2E9', minHeight: 32 }}>
+                className="min-h-11 flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-display font-semibold transition-all"
+                style={{ background: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.6)', color: 'var(--on-forest-800)', minHeight: 32 }}>
                 <Check size={12} className="inline mr-1" />{t('nativeEditSaveButton')}
               </button>
             </>
@@ -4044,8 +4084,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               </div>
               <input value={placeName} onChange={(e) => setPlaceName(e.target.value)} autoFocus
                 placeholder={t('savePlaceNamePlaceholder')}
-                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
-                style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] mb-3"
+                style={{ fontSize: 15, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
               <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{t('savePlaceLabelHeader')}</div>
               <div className="grid grid-cols-4 gap-2 mb-3">
                 {PLACE_LABELS.map((l) => {
@@ -4081,7 +4121,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   {t('savePlaceCancelButton')}
                 </button>
                 <button onClick={confirmSavePlace}
-                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#1F4D2B', border: 'none', color: '#F7F2E9', cursor: 'pointer' }}>
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: 'var(--color-forest-800)', border: 'none', color: 'var(--on-forest-800)', cursor: 'pointer' }}>
                   <Check size={15} />{t('savePlaceConfirmButton')}
                 </button>
               </div>
@@ -4108,8 +4148,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               </div>
               <input value={shapeName} onChange={(e) => setShapeName(e.target.value)} autoFocus
                 placeholder={t(shapeNaming.type === 'water' ? 'shapeNamingPlaceholderWater' : 'shapeNamingPlaceholderLand')}
-                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
-                style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] mb-3"
+                style={{ fontSize: 15, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
               <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{t('shapeNamingCategoryHeader')}</div>
               <div className="flex flex-wrap gap-2 mb-4">
                 {SHAPE_CATEGORIES[shapeNaming.type].map((c) => {
@@ -4148,7 +4188,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   {t('shapeNamingSkipButton')}
                 </button>
                 <button onClick={confirmShapeNaming}
-                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: '#1F4D2B', border: 'none', color: '#F7F2E9', cursor: 'pointer' }}>
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: 'var(--color-forest-800)', border: 'none', color: 'var(--on-forest-800)', cursor: 'pointer' }}>
                   <Check size={15} />{t('shapeNamingConfirmButton')}
                 </button>
               </div>
@@ -4173,8 +4213,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               </div>
               <input value={wpName} onChange={(e) => setWpName(e.target.value)} autoFocus
                 placeholder={t('waterPointNamingPlaceholder')}
-                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
-                style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] mb-3"
+                style={{ fontSize: 15, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
               <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{t('waterPointNamingTypeHeader')}</div>
               <div className="flex flex-wrap gap-2 mb-4">
                 {WATER_POINT_CATEGORIES.map((c) => {
@@ -4231,9 +4271,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 </span>
               </div>
               <input value={elName} onChange={(e) => setElName(e.target.value)} autoFocus
-                placeholder={`e.g. ${getElementMeta(elementEditing.type).label}`}
-                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
-                style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                placeholder={t('elementEditingNamePlaceholder').replace('{label}', getElementMeta(elementEditing.type).label)}
+                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] mb-3"
+                style={{ fontSize: 15, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
 
               {elementEditing.type === 'jojo_tank' && (
                 <div className="mb-3">
@@ -4241,22 +4281,22 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                     {TANK_SIZE_OPTIONS_L.map((l) => (
                       <button key={l} type="button" onClick={() => { setElLitres(l); setElTankCustomOpen(false); }}
                         className="px-3 py-1.5 rounded-full font-sans font-semibold"
-                        style={elLitres === l ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
+                        style={elLitres === l ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
                         {numberLabel(l)} L
                       </button>
                     ))}
                     <button type="button" onClick={() => setElTankCustomOpen((o) => !o)}
                       className="px-3 py-1.5 rounded-full font-sans font-semibold"
-                      style={elTankCustomOpen ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
-                      Custom
+                      style={elTankCustomOpen ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
+                      {t('elementEditingCustomButton')}
                     </button>
                   </div>
                   {elTankCustomOpen && (
                     <input type="number" min={0} step={100} value={elLitres ?? ''}
                       onChange={(e) => setElLitres(Math.max(0, parseInt(e.target.value, 10) || 0))}
-                      placeholder="litres" autoFocus
-                      className="w-full font-sans rounded-xl px-3 py-2 outline-none"
-                      style={{ fontSize: 14, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                      placeholder={t('elementEditingLitresPlaceholder')} autoFocus
+                      className="w-full font-sans rounded-xl px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
+                      style={{ fontSize: 14, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
                   )}
                 </div>
               )}
@@ -4267,24 +4307,24 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                     {TREE_SPECIES_OPTIONS.map((s) => (
                       <button key={s} type="button" onClick={() => { setElSpecies(s); setElTreeCustomOpen(false); }}
                         className="px-3 py-1.5 rounded-full font-sans font-semibold"
-                        style={elSpecies === s ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
+                        style={elSpecies === s ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
                         {s}
                       </button>
                     ))}
                     <button type="button" onClick={() => { setElTreeCustomOpen((o) => !o); setElSpecies(''); }}
                       className="px-3 py-1.5 rounded-full font-sans font-semibold"
-                      style={elTreeCustomOpen ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
-                      Other
+                      style={elTreeCustomOpen ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
+                      {t('elementEditingOtherButton')}
                     </button>
                   </div>
                   {elTreeCustomOpen && (
                     <input type="text" value={elSpecies} onChange={(e) => setElSpecies(e.target.value)}
-                      placeholder="species name" autoFocus
-                      className="w-full font-sans rounded-xl px-3 py-2 outline-none mb-1.5"
-                      style={{ fontSize: 14, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                      placeholder={t('elementEditingSpeciesPlaceholder')} autoFocus
+                      className="w-full font-sans rounded-xl px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] mb-1.5"
+                      style={{ fontSize: 14, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
                   )}
                   <div className="flex items-center justify-between px-0.5">
-                    <span className="font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>how many</span>
+                    <span className="font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{t('elementEditingHowMany')}</span>
                     <div className="flex items-center gap-2">
                       <button type="button" onClick={() => setElCount((c) => Math.max(1, c - 1))}
                         aria-label={lang === 'zu'
@@ -4309,19 +4349,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               )}
 
               <input value={elNote} onChange={(e) => setElNote(e.target.value)}
-                placeholder="Note — e.g. leaking, needs new tap"
-                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-4"
-                style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                placeholder={t('elementEditingNotePlaceholder')}
+                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] mb-4"
+                style={{ fontSize: 15, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
               <div className="flex gap-2">
                 <button onClick={() => requestDeleteElement(elementEditing.id)}
                   className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={pendingDeleteElement === elementEditing.id
                     ? { fontSize: 14, background: MAP_COLOR_ALERT, border: '1px solid ${MAP_COLOR_ALERT}', color: '#fff', cursor: 'pointer' }
                     : { fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: MAP_COLOR_ALERT, cursor: 'pointer' }}>
-                  {pendingDeleteElement === elementEditing.id ? 'Sure?' : 'Delete'}
+                  {pendingDeleteElement === elementEditing.id ? t('mapDeleteConfirmShort') : t('mapDeleteButton')}
                 </button>
                 <button onClick={() => { setElementEditing(null); setPendingDeleteElement(null); }}
                   className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}>
-                  Skip
+                  {t('waterPointNamingSkipButton')}
                 </button>
                 <button onClick={() => {
                   const updated: SiteElement = {
@@ -4398,7 +4438,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
               <button onClick={() => setGuideOpen(false)}
                 className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-sans font-semibold"
-                style={{ fontSize: 15, background: '#1F4D2B', border: 'none', color: '#F7F2E9', cursor: 'pointer' }}>
+                style={{ fontSize: 15, background: 'var(--color-forest-800)', border: 'none', color: 'var(--on-forest-800)', cursor: 'pointer' }}>
                 <Check size={15} />{t('mapGuideClose')}
               </button>
             </div>

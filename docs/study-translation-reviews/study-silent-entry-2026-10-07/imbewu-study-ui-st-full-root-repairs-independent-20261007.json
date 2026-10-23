@@ -1,0 +1,98 @@
+{
+  "sourcePacket": "/tmp/imbewu-study-ui-st-full-root-reviewed-20261007.json",
+  "head": "25f6baaefc56e82a4fae5f679a43aa5f605d66f0",
+  "scope": "Independent text-only check of the six rows marked REPAIR_PENDING_INDEPENDENT_CHECK. No fluency approval.",
+  "rows": [
+    {
+      "key": "studentPortalBody",
+      "englishSource": "It's set up for students — not your role. Head back to your own home to keep going.",
+      "file": "app/student/page.tsx",
+      "line": 793,
+      "displayCondition": "!loading && user && isLive && role && !STUDENT_ALLOWED_ROLES.has(role)",
+      "rootCandidate": "E etseditswe baithuti — eseng role ya hao. Kgutlela leqepheng la hao la lapeng hore o tswele pele.",
+      "verdict": "ACCEPT",
+      "approvedCandidate": "E etseditswe baithuti — eseng role ya hao. Kgutlela leqepheng la hao la lapeng hore o tswele pele.",
+      "backTranslation": "This is set up for students — not your role. Return to your own home page to continue.",
+      "semanticCheck": "“Role” as a loan preserves the account permission/role meaning; “mosebetsi” could suggest a job. The return-home instruction and continuation remain.",
+      "uncertainty": "Check whether “role” loan is understood in this UI context.",
+      "placeholdersPreserved": true
+    },
+    {
+      "key": "studentCapstoneComplete",
+      "englishSource": "You have finished every module. Build your final design plan-set in the Design Studio — that is your completion artifact for the course.",
+      "file": "app/student/page.tsx",
+      "line": 1376,
+      "displayCondition": "capstoneUnlocked",
+      "rootCandidate": "O qetile dimojule tsohle. Haha sephuthelo sa hao sa ho qetela sa meralo ho Design Studio — ke sona mosebetsi wa hao wa ho phethela thupelo.",
+      "verdict": "ACCEPT_WITH_REVIEW",
+      "approvedCandidate": "O qetile dimojule tsohle. Haha sephuthelo sa hao sa ho qetela sa meralo ho Design Studio — ke sona mosebetsi wa hao wa ho phethela thupelo.",
+      "backTranslation": "You finished all modules. Build your final design plan-set in Design Studio — that is your work for completing the course.",
+      "semanticCheck": "Removing “ya polasi” avoids adding farm-specific scope. The final design plan-set and Design Studio remain. “Mosebetsi wa hao” conveys completion work, though it is less explicit than “completion artifact”; retain “plan-set” as technical meaning for reviewer if needed.",
+      "uncertainty": "The exact “artifact” nuance is compressed to work/deliverable; speaker should confirm this is sufficient.",
+      "placeholdersPreserved": true
+    },
+    {
+      "key": "studentCompletionMessage",
+      "englishSource": "You have completed the full ImbewuField permaculture curriculum. If you have a mentor, they will see this progress next time they check in.",
+      "file": "app/student/page.tsx",
+      "line": 1473,
+      "displayCondition": "pct === 100",
+      "rootCandidate": "O phethile kharikhulamo yohle ya ImbewuField ya permaculture. Haeba o na le moeletsi, o tla bona tsoelo-pele ena ha a boela a sheba.",
+      "verdict": "ACCEPT",
+      "approvedCandidate": "O phethile kharikhulamo yohle ya ImbewuField ya permaculture. Haeba o na le moeletsi, o tla bona tsoelo-pele ena ha a boela a sheba.",
+      "backTranslation": "You completed the full ImbewuField permaculture curriculum. If you have a mentor, they will see this progress the next time they check.",
+      "semanticCheck": "Haeba makes the mentor clause explicitly conditional, avoiding a possible imperative reading; if the learner has a mentor, the mentor sees progress on next check-in.",
+      "uncertainty": "“Kharikhulamo” is a borrowed term; semantics match the source.",
+      "placeholdersPreserved": true
+    },
+    {
+      "key": "courseDeckOpenImageAria",
+      "englishSource": "Open still image for {title} at full size",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 725,
+      "displayCondition": "fullSizeImageUrl && (!expanded || !showReflowedSlide)",
+      "rootCandidate": "Bula setshwantsho se sa sisinyeheng sa {title} ka boholo bo felletseng",
+      "verdict": "ACCEPT_WITH_REVIEW",
+      "approvedCandidate": "Bula setshwantsho se sa sisinyeheng sa {title} ka boholo bo felletseng",
+      "backTranslation": "Open the non-moving still image for {title} at full size.",
+      "semanticCheck": "“Se sa sisinyeheng” explicitly distinguishes a still image from a moving animation/video; full-size and {title} remain.",
+      "uncertainty": "Clunky but meaning-preserving; verify whether this phrase is natural in Sesotho.",
+      "placeholdersPreserved": true
+    },
+    {
+      "key": "courseDeckOpenImage",
+      "englishSource": "View slide image · zoom",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 739,
+      "displayCondition": "fullSizeImageUrl && (!expanded || !showReflowedSlide)",
+      "rootCandidate": "Sheba setshwantsho sa selaete · atamisa",
+      "verdict": "ACCEPT",
+      "approvedCandidate": "Sheba setshwantsho sa selaete · atamisa",
+      "backTranslation": "View slide image · zoom.",
+      "semanticCheck": "Atamisa is the existing locale’s zoom verb and keeps the slide-image/zoom action.",
+      "uncertainty": "Keep the established locale verb.",
+      "placeholdersPreserved": true
+    },
+    {
+      "key": "offlineRegionalPackChoice",
+      "englishSource": "Regional deck download contents",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 238,
+      "displayCondition": "regionalSlidePack && !busy",
+      "rootCandidate": "Dintho tse jarollwang bakeng sa diselaete tsa puo eo o e kgethileng",
+      "verdict": "ACCEPT",
+      "approvedCandidate": "Dintho tse jarollwang bakeng sa diselaete tsa puo eo o e kgethileng",
+      "backTranslation": "Downloadable contents for slides in the language you selected.",
+      "semanticCheck": "Names downloadable contents for slides in the selected language, avoiding the misleading implication of a geographic region.",
+      "uncertainty": "Phrase is longer than source but scope is accurate.",
+      "placeholdersPreserved": true
+    }
+  ],
+  "broaderCheck": {
+    "result": "No omitted ordinary clause found in the original 66 proposals. The facilitator video row was included.",
+    "key": "studentFacilitatorVideo",
+    "source": "Facilitator training video — for in-person sessions, not for streaming here.",
+    "candidate": "Video ya thupelo ya batsamaisi — ke ya mananeo a shebaneng ka seqo; ha e shebellwe ka inthanete mona.",
+    "note": "The source content is represented: facilitator training video, face-to-face sessions, and not streamed here. “Ha e shebellwe ka inthanete” reads as “not watched online,” which shifts streaming into viewing; consider revising to “ha e haswe ka inthanete mona” (“it is not streamed online here”) after a Sesotho reviewer confirms the broadcast verb and “mananeo” for sessions."
+  }
+}

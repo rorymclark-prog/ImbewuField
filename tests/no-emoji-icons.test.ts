@@ -37,6 +37,28 @@ const ROUTES = [
   'app/exchange/page.tsx',
   'app/prices/page.tsx',
   'app/vision/page.tsx',
+  // code-11 (wave 15): MyRecords' 🌱 fallback prop and BrandLogo's ✦ icon prop are gone.
+  'components/MyRecords.tsx',
+  'components/BrandLogo.tsx',
+  // code-11 (wave 16): the remaining tick glyphs / emoji fallbacks became Lucide icons.
+  'app/ngo/page.tsx',
+  'app/funder/page.tsx',
+  'app/student/page.tsx',
+  'app/updates/page.tsx',
+  'components/NgoDashboard.tsx',
+  'components/ReportView.tsx',
+  'components/design/DesignCanvas.tsx',
+  'components/report/CompletionScore.tsx',
+  'components/report/ReportChapterGraphics.tsx',
+  'components/report/ReportCropPlan.tsx',
+  'components/report/ReportMapStocktake.tsx',
+  'components/report/ReportPreparation.tsx',
+  'components/report/ReportReadingGuide.tsx',
+  'components/report/ReportVersionDetails.tsx',
+  'components/report/ReportVisualOverview.tsx',
+  'components/report/SavedReportsList.tsx',
+  'components/report/SidewaysScroller.tsx',
+  'components/report/SiteCropPlanPreview.tsx',
 ];
 
 /**
@@ -82,13 +104,6 @@ const RATCHET: Record<string, { reason: string; budget: number }> = {
     budget: 11,
   },
   'lib/water-points.ts': { reason: 'water-feature markers on the Design Studio map', budget: 7 },
-  'lib/field-journal.ts': {
-    reason: 'the seven journal kinds. Every one of them resolves to drawn art via '
-      + 'lib/element-art-2.ts at all three render sites, so none currently reaches a screen — but '
-      + 'unlike the crop catalog there is no test proving that, so they are counted, not skipped.',
-    budget: 7,
-  },
-  'lib/evidence-catalogue.ts': { reason: 'the NGO evidence library\'s category icons', budget: 7 },
   'lib/network-demo.ts': { reason: 'two glyphs in the network showcase\'s demo data', budget: 2 },
   'lib/forward-harvests.ts': { reason: 'one glyph in a harvest projection label', budget: 1 },
   'lib/crop-plan.ts': { reason: 'one CropIcon fallback, same shape as the catalog\'s', budget: 1 },

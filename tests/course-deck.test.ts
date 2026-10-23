@@ -1,23 +1,65 @@
+import { nativeOrdinaryPresentationBeforeFinalBatch } from './native-ordinary-final-history-checks.ts';
+import { readingBodyBeforeComparison } from './reading-comparison-history-checks.ts';
 import assert from 'node:assert/strict';
 import { existsSync, statSync, readFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
 import { createElement } from 'react';
-import { act, create, type ReactTestRenderer } from 'react-test-renderer';
+import { act, create, type ReactTestInstance, type ReactTestRenderer } from 'react-test-renderer';
 import ts from 'typescript';
 import test from 'node:test';
 
 import {
   COURSE_DECKS, animationUrls, deckAnimationBytes, deckFor, deckSlideCount, formatBytes,
-  hasDeck, resolveDeckLang, slideAudioUrl, slideImageFor, slideImageUrl,
+  hasDeck, resolveDeckLang, silentDraftSlideImageFor, slideAudioUrl, slideImageFor, slideImageUrl,
 } from '@/lib/course-deck';
+import { isiZuluDeckReviewHold } from '@/lib/course-deck-review-holds';
 import { COURSE_NARRATION } from '@/lib/course-audio';
+import { COURSE_MODULES } from '@/lib/course-modules';
+import { resolveLearnerLessonPresentation } from '@/lib/course-localization';
 import { COURSE_TRANSCRIPTS } from '@/lib/course-transcripts';
+import { ISIZULU_DECK_SOURCE_BINDINGS } from '@/lib/course-deck-source-bindings';
+import { createIsiZuluSilentDeckDraftRegistry, resolveIsiZuluSilentDeckDraft } from '@/lib/course-deck-silent-drafts';
+import { resolveIsiZuluSilentDeckDraft as resolveRegisteredSilentDeckDraft } from '@/lib/course-deck-silent-drafts-registry';
 import { collectTranscripts } from '../scripts/gen-course-transcripts.mjs';
+
+const readingFullDeckProof = JSON.parse(readFileSync(
+  new URL('../docs/study-translation-reviews/READING-FULL-DECK-APPLIED-CANDIDATES-2026-10-05.json', import.meta.url), 'utf8'));
+const readingFullLearnerProof = JSON.parse(readFileSync(
+  new URL('../docs/study-translation-reviews/READING-FULL-LEARNER-APPLIED-CANDIDATES-2026-10-05.json', import.meta.url), 'utf8'));
+
+function learnerProofField(lesson: any, field: string): { source: string; target: string } | null {
+  if (field === 'body') return { source: lesson.body, target: lesson.body };
+  const keyPoint = field.match(/^keyPoints\[(\d+)\]$/);
+  if (keyPoint) return { source: lesson.keyPoints[Number(keyPoint[1])], target: lesson.keyPoints[Number(keyPoint[1])] };
+  const quizField = field.match(/^quiz\[(\d+)\]\.(question|rationale|options\[(\d+)\])$/);
+  if (!quizField) return null;
+  const question = lesson.quiz[Number(quizField[1])];
+  const selected = quizField[2] === 'question' ? question.q
+    : quizField[2] === 'rationale' ? question.rationale
+      : question.options[Number(quizField[3])];
+  return { source: selected, target: selected };
+}
 
 const PUBLIC = new URL('../public/', import.meta.url);
 const DECK_PLAYER_CSS_URL = new URL('../components/course/DeckPlayer.module.css', import.meta.url).href;
 const DECK_PLAYER_CSS_STUB = "export default { controlStrip: 'controlStrip', playControl: 'playControl', backControl: 'backControl', nextControl: 'nextControl', progress: 'progress', slideStage: 'slideStage' };";
 const onDisk = (url: string) => existsSync(new URL(url.replace(/^\//, ''), PUBLIC));
+
+test('phone full-screen slide image stays below the lesson and exit controls', () => {
+  const css = readFileSync(new URL(DECK_PLAYER_CSS_URL), 'utf8');
+  const rule = (selector: string) => {
+    const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return css.match(new RegExp(`${escaped}\\s*\\{([^}]*)\\}`))?.[1] ?? '';
+  };
+  const stage = rule('.expanded .slideStage');
+  const controls = rule('.expanded .controlStrip');
+
+  assert.match(stage, /z-index:\s*0\s*;/,
+    'the full-viewport slide must form a lower stacking layer so it cannot intercept phone taps');
+  assert.match(controls, /z-index:\s*5\s*;/, 'Play lesson remains above the slide');
+  assert.match(css, /\.expanded \.playerHeader,[\s\S]*?\.expanded \.controlStrip\s*\{[^}]*z-index:\s*5\s*;/,
+    'Exit full screen remains in the same higher layer as Play lesson');
+});
 
 test('sound-off learners get the complete current script, including its final instruction', () => {
   // A beautiful picture cannot replace words a learner cannot hear. This fails on a missing
@@ -71,6 +113,93 @@ test('every promised slide image exists on disk', () => {
   }
 });
 
+test('regional Reading the Landscape decks expose all 21 paired WebPs with English source audio', () => {
+  const deck = deckFor('reading-landscape')!;
+  assert.deepEqual(deck.slideLanguages, ['en', 'zu', 'st', 've', 'ts']);
+  assert.equal(COURSE_NARRATION['reading-landscape'].languages.includes('en'), true);
+  assert.equal(COURSE_NARRATION['reading-landscape'].languages.includes('st'), false);
+  assert.equal(COURSE_NARRATION['reading-landscape'].languages.includes('ve'), false);
+  assert.equal(COURSE_NARRATION['reading-landscape'].languages.includes('ts'), false);
+
+  for (const lang of ['st', 've', 'ts']) {
+    assert.equal(deck.slideFormatsByLanguage?.[lang], 'webp');
+    for (let slide = 1; slide <= 21; slide++) {
+      const url = slideImageFor('reading-landscape', lang, slide);
+      assert.ok(url?.exact, `${lang} slide ${slide} must stay on its paired regional still`);
+      assert.ok(url.url.endsWith('.webp'), `${lang} slide ${slide} should use the supplied WebP`);
+      assert.ok(onDisk(url.url), `missing offline still: ${url.url}`);
+    }
+  }
+});
+
+test('silent Small Livestock review decks keep every paired frame visible and claim no regional voice', () => {
+  const deck = deckFor('small-livestock')!;
+  for (const lang of ['st', 've', 'ts']) {
+    assert.ok(deck.slideLanguages.includes(lang));
+    assert.equal(deck.slideFormatsByLanguage?.[lang], 'webp');
+    assert.equal(COURSE_NARRATION['small-livestock'].languages.includes(lang), false);
+    for (let slide = 1; slide <= 20; slide++) {
+      const selected = slideImageFor('small-livestock', lang, slide);
+      assert.ok(selected?.exact, `${lang} slide ${slide} must show its source-paired still`);
+      assert.ok(onDisk(selected.url), `${lang} slide ${slide} must be downloadable offline`);
+    }
+    for (const slide of [4, 7, 9]) {
+      assert.equal(animationUrls('small-livestock', slide, lang), null,
+        'an English animation poster would hide the source-paired review text');
+    }
+  }
+});
+
+test('Market regional seed-sharing stills remain readable instead of opening the English film poster', () => {
+  for (const language of ['st', 've', 'ts']) {
+    const still = slideImageFor('market-community', language, 15);
+    assert.ok(still?.exact);
+    assert.equal(still.url, `/course-decks/market-community/${language}/slide-15.webp`);
+    assert.ok(onDisk(still.url));
+    assert.equal(animationUrls('market-community', 15, language), null,
+      'an animation poster would hide the unreviewed draft and exact English source in the player and zoom');
+  }
+  for (const language of ['en', 'zu']) {
+    assert.ok(animationUrls('market-community', 15, language), 'existing source-language film remains available');
+  }
+});
+
+test('Water Harvesting regional review decks register all 24 silent paired frames and only English narration', () => {
+  const deck = deckFor('water-harvesting')!;
+  assert.deepEqual(deck.slideLanguages, ['en', 'zu', 'st', 've', 'ts']);
+  for (const lang of ['st', 've', 'ts']) {
+    assert.equal(deck.slideFormatsByLanguage?.[lang], 'webp');
+    assert.equal(deck.slideAspectRatioByLanguage?.[lang], 1440 / 5400);
+    assert.equal(COURSE_NARRATION['water-harvesting'].languages.includes(lang), false,
+      `${lang} paired stills must not imply a regional recording`);
+    for (let slide = 1; slide <= 24; slide++) {
+      const selected = slideImageFor('water-harvesting', lang, slide);
+      assert.ok(selected?.exact, `${lang} slide ${slide} must stay on its paired review frame`);
+      assert.ok(selected.url.endsWith('.webp'));
+      assert.ok(onDisk(selected.url), `missing silent review frame: ${selected.url}`);
+    }
+    assert.equal(animationUrls('water-harvesting', 14, lang), null,
+      'the English animation poster must not cover the paired review text');
+  }
+  assert.equal(COURSE_NARRATION['water-harvesting'].languages.includes('en'), true,
+    'English source narration remains available as an explicit choice');
+});
+
+test('Sesotho, Tshivenda and Xitsonga Plant Guilds expose paired stills without claiming regional voices', () => {
+  const deck = deckFor('plant-guilds')!;
+  for (const language of ['st', 've', 'ts']) {
+    assert.ok(deck.slideLanguages.includes(language));
+    assert.equal(COURSE_NARRATION['plant-guilds'].languages.includes(language), false,
+      `${language} still has no claimed regional voice`);
+    for (let slide = 1; slide <= 51; slide++) {
+      const selected = slideImageFor('plant-guilds', language, slide);
+      assert.ok(selected?.exact, `slide ${slide} should keep its source-paired ${language} frame`);
+      assert.ok(selected.url.endsWith('.webp'));
+      assert.ok(onDisk(selected.url), `offline frame missing: ${selected.url}`);
+    }
+  }
+});
+
 test('a declared-missing slide is really absent, and nothing else is', () => {
   // Guards the manifest against drifting from the folder in either direction: a slide declared
   // missing that later gets exported would stay hidden behind an English fallback forever, and a
@@ -78,8 +207,9 @@ test('a declared-missing slide is really absent, and nothing else is', () => {
   const deck = deckFor('seeds-sovereignty')!;
   for (const lang of deck.slideLanguages) {
     const declared = new Set(deck.missingSlides?.[lang] ?? []);
+    const format = deck.slideFormatsByLanguage?.[lang] ?? 'jpg';
     for (const s of deck.slides) {
-      const path = `/course-decks/seeds-sovereignty/${lang}/slide-${String(s.slide).padStart(2, '0')}.jpg`;
+      const path = `/course-decks/seeds-sovereignty/${lang}/slide-${String(s.slide).padStart(2, '0')}.${format}`;
       assert.equal(
         onDisk(path), !declared.has(s.slide),
         declared.has(s.slide)
@@ -109,6 +239,174 @@ test('a slide with no animation offers none — the still is the lesson', () => 
   assert.ok(animationUrls('seeds-sovereignty', 5));
 });
 
+test('regional paired frames stay visible while English and isiZulu keep their registered films', () => {
+  const cases: Array<{
+    moduleId: string;
+    slide: number;
+    newlySuppressed: string[];
+    englishPoster: string;
+    zuluPoster: string | null;
+  }> = [
+    {
+      moduleId: 'food-forest', slide: 16, newlySuppressed: ['ve', 'ts'],
+      englishPoster: '/course-animations/food-forest/posters/flow-sheet-mulching-closeup.jpg',
+      zuluPoster: '/course-animations/food-forest/posters/flow-sheet-mulching-closeup.jpg',
+    },
+    {
+      moduleId: 'vegetables-staples', slide: 6, newlySuppressed: ['ve', 'ts'],
+      englishPoster: '/course-animations/vegetables-staples/posters/flow-transplant-root-plug.jpg',
+      zuluPoster: '/course-animations/vegetables-staples/posters/flow-transplant-root-plug.jpg',
+    },
+    {
+      moduleId: 'soil-health', slide: 10, newlySuppressed: ['ve', 'ts'],
+      englishPoster: '/course-animations/soil-health/posters/flow-build-compost-heap.jpg',
+      zuluPoster: null,
+    },
+    {
+      moduleId: 'soil-health', slide: 11, newlySuppressed: ['ve', 'ts'],
+      englishPoster: '/course-animations/soil-health/posters/flow-compost-materials.jpg',
+      zuluPoster: null,
+    },
+    {
+      moduleId: 'reading-landscape', slide: 6, newlySuppressed: ['st', 've', 'ts'],
+      englishPoster: '/course-animations/reading-landscape/posters/flow-a-frame.jpg',
+      zuluPoster: '/course-animations/reading-landscape/posters/flow-a-frame.jpg',
+    },
+    {
+      moduleId: 'plant-guilds', slide: 15, newlySuppressed: ['st', 've', 'ts'],
+      englishPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-03-Pigeon-pea-food.jpg',
+      zuluPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-03-Pigeon-pea-food-zu.jpg',
+    },
+    {
+      moduleId: 'plant-guilds', slide: 23, newlySuppressed: ['st', 've', 'ts'],
+      englishPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-09-Labelled.jpg',
+      zuluPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-09-Labelled-zu.jpg',
+    },
+    {
+      moduleId: 'plant-guilds', slide: 27, newlySuppressed: ['st', 've', 'ts'],
+      englishPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-02-Pruning-trimmed.jpg',
+      zuluPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-02-Pruning-trimmed-zu.jpg',
+    },
+    {
+      moduleId: 'plant-guilds', slide: 29, newlySuppressed: ['st', 've', 'ts'],
+      englishPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-01-Mulch-ring.jpg',
+      zuluPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-01-Mulch-ring-zu.jpg',
+    },
+    {
+      moduleId: 'plant-guilds', slide: 33, newlySuppressed: ['st', 've', 'ts'],
+      englishPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-04-Helpful-insects.jpg',
+      zuluPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-04-Helpful-insects-zu.jpg',
+    },
+    {
+      moduleId: 'plant-guilds', slide: 37, newlySuppressed: ['st', 've', 'ts'],
+      englishPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-05-Guild-overview.jpg',
+      zuluPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-05-Guild-overview-zu.jpg',
+    },
+    {
+      moduleId: 'plant-guilds', slide: 41, newlySuppressed: ['st', 've', 'ts'],
+      englishPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-06-Succession-establish.jpg',
+      zuluPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-06-Succession-establish-zu.jpg',
+    },
+    {
+      moduleId: 'plant-guilds', slide: 45, newlySuppressed: ['st', 've', 'ts'],
+      englishPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-08-Succession-carry-mulch.jpg',
+      zuluPoster: '/course-animations/plant-guilds/posters/Imbewu-Guilds-08-Succession-carry-mulch-zu.jpg',
+    },
+  ];
+  assert.equal(cases.reduce((count, item) => count + item.newlySuppressed.length, 0), 35,
+    'the reviewed change covers only the 35 registered regional poster overlaps');
+
+  for (const item of cases) {
+    const deckSlide = deckFor(item.moduleId)?.slides.find((slide) => slide.slide === item.slide);
+    assert.ok(deckSlide, `${item.moduleId} slide ${item.slide} remains registered`);
+
+    for (const lang of ['st', 've', 'ts']) {
+      const imageUrl = slideImageUrl(item.moduleId, lang, item.slide);
+      assert.equal(imageUrl, `/course-decks/${item.moduleId}/${lang}/slide-${String(item.slide).padStart(2, '0')}.webp`);
+      assert.ok(onDisk(imageUrl!), `paired ${lang} still exists for ${item.moduleId} slide ${item.slide}`);
+      assert.equal(animationUrls(item.moduleId, item.slide, lang), null,
+        `${lang} must see its source-paired still instead of the film poster`);
+      assert.equal(slideAudioUrl(item.moduleId, lang, item.slide), null,
+        `${lang} has no own narration track for ${item.moduleId} slide ${item.slide}`);
+
+      const pairedPath = new URL(`../docs/narration/${item.moduleId}.${lang}.paired-draft.json`, import.meta.url);
+      assert.ok(existsSync(pairedPath), `missing paired source record: ${pairedPath.pathname}`);
+      const paired = JSON.parse(readFileSync(pairedPath, 'utf8')) as {
+        language: string;
+        reviewStatus: string;
+        slides: Array<{
+          n: number;
+          english: { n?: number; heading: string; body: string[] };
+          target: {
+            heading: { status: string; text?: string; segments?: Array<{ sourceEnglish: string; status: string; text?: string }> };
+            body: Array<{ status: string; text?: string; segments?: Array<{ sourceEnglish: string; status: string; text?: string }> }>;
+          };
+        }>;
+      };
+      assert.equal(paired.language, lang);
+      assert.equal(paired.reviewStatus, 'unreviewed');
+      const sourcePair = paired.slides.find((slide) => slide.n === item.slide);
+      assert.ok(sourcePair, `${lang} source pair exists for ${item.moduleId} slide ${item.slide}`);
+      if (sourcePair.english.n !== undefined) assert.equal(sourcePair.english.n, item.slide);
+      assert.equal(sourcePair.english.heading, deckSlide.title,
+        'the paired source remains bound to the narration slide title');
+      assert.ok(sourcePair.english.body.length > 0 && sourcePair.english.body.every((line) => line.trim()));
+      assert.equal(sourcePair.target.body.length, sourcePair.english.body.length,
+        'the displayed draft/hold lines stay aligned with the complete English source');
+      for (const [partIndex, part] of [sourcePair.target.heading, ...sourcePair.target.body].entries()) {
+        assert.ok(['draft', 'english-hold', 'mixed'].includes(part.status),
+          'regional text keeps its visible unreviewed draft or English-hold status');
+        if (part.status === 'draft') assert.ok(part.text?.trim(), 'draft text must be present');
+        if (part.status === 'mixed') {
+          assert.ok(partIndex > 0, 'a heading cannot contain mixed body segments');
+          const sourceText: string = sourcePair.english.body[partIndex - 1];
+          assert.ok(part.segments && part.segments.length > 1, 'mixed text retains draft/hold boundaries');
+          assert.equal(part.segments.map(segment => segment.sourceEnglish).join(''), sourceText,
+            'mixed draft and holds still cover the exact displayed source in order');
+          for (const segment of part.segments) {
+            assert.ok(['draft', 'english-hold'].includes(segment.status));
+            if (segment.status === 'draft') assert.ok(segment.text?.trim());
+            else assert.equal(segment.text, undefined, 'held wording renders directly from its English source');
+          }
+        }
+      }
+    }
+
+    const english = animationUrls(item.moduleId, item.slide, 'en');
+    assert.equal(english?.poster, item.englishPoster,
+      'English retains its registered film and poster');
+    assert.ok(onDisk(item.englishPoster));
+    const zulu = animationUrls(item.moduleId, item.slide, 'zu');
+    if (item.zuluPoster) {
+      assert.equal(zulu?.poster, item.zuluPoster,
+        'isiZulu retains its existing film, including a labelled variant where registered');
+      assert.ok(onDisk(item.zuluPoster));
+    } else {
+      assert.equal(zulu, null, 'pre-existing isiZulu unavailability stays in force');
+    }
+  }
+});
+
+test('regional poster holds preserve the Market film split and archived Introduction clips without offering mismatched speech', () => {
+  for (const lang of ['st', 've', 'ts']) {
+    assert.equal(animationUrls('market-community', 15, lang), null,
+      'the existing Market paired-card protection remains in force');
+  }
+  for (const lang of ['en', 'zu']) {
+    assert.equal(animationUrls('market-community', 15, lang)?.poster,
+      '/course-animations/market-community/posters/flow-seed-sharing.jpg');
+  }
+
+  const introTracks = COURSE_NARRATION['intro-permaculture']!.tracks;
+  assert.equal(introTracks.length, 22);
+  for (const track of introTracks) {
+    // The 2026-10-06 silent release has new text; archived speech must remain on disk,
+    // but must not be offered against that different paired edition.
+    assert.ok(onDisk(`/course-audio/intro-permaculture/st/slide-${String(track.slide).padStart(2, '0')}.mp3`));
+    assert.equal(slideAudioUrl('intro-permaculture', 'st', track.slide), null);
+  }
+});
+
 test('food forest sheet mulching plays the reviewed Flow hand action once and holds its final layer order', () => {
   const clip = animationUrls('food-forest', 16);
   assert.ok(clip);
@@ -127,6 +425,8 @@ test('vegetable lesson 1 offers the reviewed Flow transplant and holds its plant
   assert.equal(clip.poster, '/course-animations/vegetables-staples/posters/flow-transplant-root-plug.jpg');
   assert.equal(clip.seconds, 8);
   assert.equal(clip.playOnce, true);
+  assert.equal(animationUrls('vegetables-staples', 6, 'st'), null,
+    'the English poster must not cover the paired Sesotho slide and its exact English source');
 });
 
 test('vegetable pest lesson keeps its still while the unapproved decision animation stays out of the player', () => {
@@ -187,10 +487,29 @@ test('Soil isiZulu uses localized stills instead of mismatched English Flow scen
     assert.equal(animationUrls('soil-health', slide, 'zu'), null,
       `isiZulu slide ${slide} must use the localized still while its Flow scene is visually mismatched`);
     assert.deepEqual(slideImageFor('soil-health', 'zu', slide), {
-      url: `/course-decks/soil-health/zu/slide-${String(slide).padStart(2, '0')}.jpg`,
+      url: `/course-decks/soil-health/zu/slide-${String(slide).padStart(2, '0')}.webp`,
       lang: 'zu', exact: true,
     });
   }
+});
+
+test('Sesotho Soil Health keeps every paired still visible and suppresses English compost posters', () => {
+  for (let slide = 1; slide <= 20; slide++) {
+    const selected = slideImageFor('soil-health', 'st', slide);
+    assert.deepEqual(selected, {
+      url: `/course-decks/soil-health/st/slide-${String(slide).padStart(2, '0')}.webp`,
+      lang: 'st', exact: true,
+    });
+    assert.ok(onDisk(selected!.url), `paired Sesotho slide ${slide} must be present`);
+  }
+  for (const slide of [10, 11]) {
+    assert.ok(animationUrls('soil-health', slide, 'en'), 'English learners keep the reviewed compost film');
+    assert.equal(animationUrls('soil-health', slide, 'st'), null,
+      'the English poster must not cover the Sesotho source-paired frame');
+  }
+  assert.equal(slideAudioUrl('soil-health', 'st', 1), null,
+    'Sesotho stills remain silent until narration is reviewed');
+  assert.ok(slideAudioUrl('soil-health', 'en', 1), 'English narration remains available by choice');
 });
 
 test('the isiZulu fallback is PER SLIDE, not per module', () => {
@@ -204,7 +523,7 @@ test('the isiZulu fallback is PER SLIDE, not per module', () => {
   // gap would have quietly deleted the only coverage of per-slide fallback, right before the next
   // module arrives with a gap of its own.
   const zu5 = slideImageFor('seeds-sovereignty', 'zu', 5);
-  assert.deepEqual(zu5, { url: '/course-decks/seeds-sovereignty/zu/slide-05.jpg', lang: 'zu', exact: true });
+  assert.deepEqual(zu5, { url: '/course-decks/seeds-sovereignty/zu/slide-05.webp', lang: 'zu', exact: true });
 
   const deck = deckFor('seeds-sovereignty')!;
   const saved = deck.missingSlides;
@@ -212,7 +531,7 @@ test('the isiZulu fallback is PER SLIDE, not per module', () => {
     deck.missingSlides = { zu: [13] };
     assert.deepEqual(
       slideImageFor('seeds-sovereignty', 'zu', 13),
-      { url: '/course-decks/seeds-sovereignty/en/slide-13.jpg', lang: 'en', exact: false },
+      { url: '/course-decks/seeds-sovereignty/en/slide-13.webp', lang: 'en', exact: false },
       'a declared gap must fall back to English for THAT slide',
     );
     // Every OTHER slide stays exact, or the note would appear where it does not belong.
@@ -220,22 +539,79 @@ test('the isiZulu fallback is PER SLIDE, not per module', () => {
       .map((s) => ({ n: s.slide, r: slideImageFor('seeds-sovereignty', 'zu', s.slide) }))
       .filter((x) => x.r && !x.r.exact)
       .map((x) => x.n);
-    assert.deepEqual(inexact, [13], 'only the declared slide falls back');
+    // A checked silent correction may display its own new still while narration stays held;
+    // other held rows and the synthetic gap still use English until a correction is registered.
+    const heldWithoutSilentDraft = deck.slides
+      .filter(s => isiZuluDeckReviewHold('seeds-sovereignty', s.slide) &&
+        !resolveRegisteredSilentDeckDraft('seeds-sovereignty', s.slide))
+      .map(s => s.slide);
+    assert.deepEqual(inexact, [...heldWithoutSilentDraft, 13].sort((a, b) => a - b),
+      'only held rows without a checked still and the declared gap fall back');
   } finally {
     deck.missingSlides = saved;
   }
 
-  // With nothing declared missing, which is the state Seeds is actually in, nothing falls back.
+  // The source review now withholds specific faulty words even though every raw asset exists.
   const stillInexact = deck.slides
-    .map((s) => slideImageFor('seeds-sovereignty', 'zu', s.slide))
-    .filter((r) => r && !r.exact);
-  assert.deepEqual(stillInexact, [], 'Seeds is complete in isiZulu — no slide should fall back');
+    .filter(s => !slideImageFor('seeds-sovereignty', 'zu', s.slide)?.exact)
+    .map(s => s.slide);
+  const heldWithoutSilentDraft = deck.slides
+    .filter(s => isiZuluDeckReviewHold('seeds-sovereignty', s.slide) &&
+      !resolveRegisteredSilentDeckDraft('seeds-sovereignty', s.slide))
+    .map(s => s.slide);
+  assert.deepEqual(stillInexact, heldWithoutSilentDraft,
+    'without a synthetic gap, only held rows lacking their own checked visual correction fall back');
 
-  // A language with no deck at all still falls back wholesale, which is the right behaviour there.
-  assert.deepEqual(resolveDeckLang('seeds-sovereignty', 'st'), { lang: 'en', exact: false });
+  // The new regional files are source-paired review frames, so selection must not fall back to
+  // a bare English picture or let an animation poster obscure their comparison panels.
+  for (const lang of ['st', 've', 'ts']) {
+    assert.deepEqual(resolveDeckLang('seeds-sovereignty', lang), { lang, exact: true });
+    for (const { slide } of deck.slides) {
+      const still = slideImageFor('seeds-sovereignty', lang, slide);
+      assert.equal(still?.lang, lang);
+      assert.ok(still && onDisk(still.url), `${lang} slide ${slide} is missing`);
+      assert.equal(animationUrls('seeds-sovereignty', slide, lang), null,
+        `${lang} slide ${slide} must keep its paired source text visible`);
+    }
+  }
 
   // The narration is isiZulu on every slide, including the one whose picture is English.
   assert.equal(slideAudioUrl('seeds-sovereignty', 'zu', 13), '/course-audio/seeds-sovereignty/zu/slide-13.mp3');
+});
+
+test('a checked silent draft can supply a held isiZulu still while voice and animation stay unavailable', () => {
+  const binding = ISIZULU_DECK_SOURCE_BINDINGS.find((row) => isiZuluDeckReviewHold(row.moduleId, row.slide));
+  assert.ok(binding, 'fixture uses an actually audio-held isiZulu row');
+  const registry = createIsiZuluSilentDeckDraftRegistry([{
+    moduleId: binding.moduleId,
+    slide: binding.slide,
+    sourceHeading: binding.sourceHeading,
+    sourceEnglish: [...binding.source],
+    correctedTitle: 'Umbhalo ongakabuyekezwa',
+    correctedTarget: ['Umusho olungisiwe ongakabuyekezwa.'],
+    sourceHash: binding.sourceHash,
+    targetHash: '1'.repeat(64),
+    imageUrl: `/course-decks/${binding.moduleId}/zu-silent/slide-${String(binding.slide).padStart(2, '0')}.webp`,
+    imageSha256: '2'.repeat(64),
+    imageBytes: 12345,
+    width: 1440,
+    height: 5400,
+    reviewStatus: 'unreviewed',
+    audioBinding: 'none',
+  }]);
+  const draft = resolveIsiZuluSilentDeckDraft(registry, binding.moduleId, binding.slide);
+  assert.ok(draft);
+  assert.deepEqual(silentDraftSlideImageFor(binding.moduleId, 'zu', binding.slide,
+    (moduleId, slide) => resolveIsiZuluSilentDeckDraft(registry, moduleId, slide)), {
+    url: draft.imageUrl,
+    lang: 'zu',
+    exact: true,
+    aspectRatio: 1440 / 5400,
+  });
+  assert.equal(slideAudioUrl(binding.moduleId, 'zu', binding.slide), null,
+    'a replacement still does not make the superseded recording playable');
+  assert.equal(animationUrls(binding.moduleId, binding.slide, 'zu'), null,
+    'a poster or clip cannot hide the silent source-paired card');
 });
 
 test('unknown modules and slides produce no url rather than a broken one', () => {
@@ -247,7 +623,7 @@ test('unknown modules and slides produce no url rather than a broken one', () =>
   assert.equal(slideImageUrl('seeds-sovereignty', 'zu', 99), null);
   // Slide 13 used to be asserted null here — the gap the PowerPoint repair left. It has been
   // rebuilt, so the honest assertion is now the opposite one.
-  assert.equal(slideImageUrl('seeds-sovereignty', 'zu', 13), '/course-decks/seeds-sovereignty/zu/slide-13.jpg');
+  assert.equal(slideImageUrl('seeds-sovereignty', 'zu', 13), '/course-decks/seeds-sovereignty/zu/slide-13.webp');
 });
 
 test('slides partition by lesson exactly as the narration does', () => {
@@ -345,7 +721,12 @@ test('carried prunings play with the slide that describes carrying them, after t
 test('isiZulu guild slides, audio and labelled video are delivered in the selected language', () => {
   for (const slide of deckFor('plant-guilds')!.slides) {
     assert.ok(onDisk(slideImageUrl('plant-guilds', 'zu', slide.slide)!));
-    assert.ok(onDisk(slideAudioUrl('plant-guilds', 'zu', slide.slide)!));
+    const held = isiZuluDeckReviewHold('plant-guilds', slide.slide);
+    const audio = slideAudioUrl('plant-guilds', 'zu', slide.slide);
+    if (held) assert.equal(audio, null, 'a known instruction error must not be spoken');
+    else assert.ok(audio && onDisk(audio));
+    assert.ok(onDisk(`/course-audio/plant-guilds/zu/slide-${String(slide.slide).padStart(2, '0')}.mp3`),
+      'withholding playback preserves the recorded asset for later review');
     const animation = animationUrls('plant-guilds', slide.slide, 'zu');
     if (animation) {
       assert.ok(onDisk(animation.video));
@@ -386,13 +767,16 @@ test('Water playback respects language gaps, download choice and the whole clear
       createNodeMock: element => element.type === 'video' ? videoDevice : element.type === 'audio' ? audioDevice : null,
     }); });
     try {
+      // Since 2026-10-05 the separate image dialog also renders a source heading while closed.
+      // Playback-title assertions belong to the lesson player dialog, which owns slide changes.
+      const playerHeading = () => view.root.findAllByType('dialog')[0].findByType('h3');
       assert.match(view.root.findByType('audio').props.src, /water-harvesting\/zu\/slide-01.mp3$/);
       const messages = view.root.findAllByType('p').map(p => p.children.join('')).join(' ');
       assert.match(messages, /isiZulu narration is awaiting review by a fluent speaker/);
       assert.doesNotMatch(messages, /Narration is in English/);
       assert.doesNotMatch(messages, /isiZulu narration is not available/);
       for (let i = 0; i < 13; i++) act(() => view.root.findAllByType('button').find(b => b.children.join('') === 'Next ›')!.props.onClick());
-      assert.equal(view.root.findByType('h3').children.join(''), 'Uphahla Lwakho Lungavuna Amanzi');
+      assert.equal(playerHeading().children.join(''), 'Uphahla Lwakho Lungavuna Amanzi');
       assert.equal(view.root.findAllByType('video').length, 0, 'opening a Watch slide must not download video');
       const watch = view.root.findAllByType('button').find(b => b.findAllByType('span').some(s => s.children.join('').startsWith('Watch · ')))!;
       assert.ok(watch);
@@ -403,14 +787,14 @@ test('Water playback respects language gaps, download choice and the whole clear
       // manifest's ratio so a future portrait clip is not forced into this video's frame.
       assert.equal(clip.parent!.props.style.aspectRatio, animationUrls('water-harvesting', 14)?.aspectRatio ?? 16 / 9);
       assert.equal(clip.props.loop, false, 'a selected animation must be able to finish under play-through');
-      const title = view.root.findByType('h3').children.join('');
+      const title = playerHeading().children.join('');
       if (videoFirst) {
         videoDevice.ended = true;
         act(() => clip.props.onEnded());
       } else {
         act(() => view.root.findByType('audio').props.onEnded());
       }
-      assert.equal(view.root.findByType('h3').children.join(''), title, 'wait for both teaching streams');
+      assert.equal(playerHeading().children.join(''), title, 'wait for both teaching streams');
       if (videoFirst) act(() => view.root.findByType('audio').props.onEnded());
       else { videoDevice.ended = true; act(() => clip.props.onEnded()); }
       assert.match(view.root.findByType('audio').props.src, /slide-15.mp3$/, 'advance exactly one slide once both finish');
@@ -418,24 +802,47 @@ test('Water playback respects language gaps, download choice and the whole clear
   }
 });
 
-test('new regional orientation and ethics stills stay visible while unauthored Introduction frames use English', () => {
+test('regional Introduction chooses every registered still and falls back only for declared gaps', () => {
   for (const lang of ['ve', 'ts']) {
     const deck = COURSE_DECKS['intro-permaculture'];
     assert.ok(deck.slideLanguages.includes(lang));
     assert.equal(deck.slideAspectRatioByLanguage?.[lang], 1440 / 5400);
-    for (const slide of [1, 2, 3, 4, 5, 6]) {
-      assert.ok(onDisk(slideImageUrl('intro-permaculture', lang, slide)!));
-      assert.match(slideImageFor('intro-permaculture', lang, slide)!.url, new RegExp(`/${lang}/slide-0${slide}\\.webp$`));
+    const declaredMissing = new Set(deck.missingSlides?.[lang] ?? []);
+    for (const { slide } of deck.slides) {
+      const own = slideImageUrl('intro-permaculture', lang, slide);
+      const selected = slideImageFor('intro-permaculture', lang, slide);
+      assert.ok(selected, `${lang} slide ${slide} must have either its frame or the English source`);
+      if (declaredMissing.has(slide)) {
+        assert.equal(own, null, `${lang} slide ${slide} is declared missing and must use its English source`);
+        assert.equal(selected.lang, 'en');
+        assert.equal(selected.exact, false);
+        assert.ok(onDisk(selected.url));
+      } else {
+        assert.ok(own, `${lang} slide ${slide} has a regional frame in the manifest`);
+        assert.equal(selected.lang, lang);
+        assert.equal(selected.exact, true);
+        assert.ok(onDisk(own!));
+      }
     }
     assert.equal(animationUrls('intro-permaculture', 4, lang), null,
       'the old animation poster must not hide the paired ethics slide');
-    assert.match(slideImageFor('intro-permaculture', lang, 7)!.url, /intro-permaculture\/en\/slide-07\.jpg$/);
+    assert.equal(COURSE_NARRATION['intro-permaculture'].languages.includes(lang), false,
+      `${lang} stills must not promise an unreviewed narration track`);
+  }
+  // The Tshivenda concepts and exact-English holds each have their own paired frame.
+  for (const slide of [7, 8, 9, 10, 11, 12, 13, 14]) {
+    assert.ok(onDisk(slideImageUrl('intro-permaculture', 've', slide)!));
+    assert.equal(slideImageFor('intro-permaculture', 've', slide)?.exact, true);
+  }
+  for (let slide = 15; slide <= 22; slide++) {
+    assert.ok(onDisk(slideImageUrl('intro-permaculture', 've', slide)!));
+    assert.equal(slideImageFor('intro-permaculture', 've', slide)?.exact, true);
   }
 });
 
-test('Sesotho slides remain Sesotho when English source narration is chosen', async () => {
-  // Every frame has a source-paired portrait. A single language state used to switch both image
-  // and voice to English on this path, so opting into English voice must keep the draft pictures.
+test('Sesotho silent draft starts without speech and optional English keeps its current paired slides', async () => {
+  // The fuller 2026-10-06 pair no longer matches archived speech. Start silent;
+  // an explicit English choice must keep the new regional picture and its source.
   const deck = COURSE_DECKS['intro-permaculture'];
   assert.ok(deck.slideLanguages.includes('st'));
   assert.equal(deck.slideAspectRatioByLanguage?.st, 1440 / 5400);
@@ -459,18 +866,16 @@ test('Sesotho slides remain Sesotho when English source narration is chosen', as
   try {
     const picture = () => view.root.findAllByType('img')[0];
     const imageCanvas = () => picture().parent!;
-    assert.match(picture().props.src, /intro-permaculture\/st\/slide-01\.webp$/);
+    assert.match(picture().props.src, /intro-permaculture\/st-silent\/slide-01\.webp$/);
     assert.equal(imageCanvas().props.style.aspectRatio, 1440 / 5400, 'portrait text must not be shrunk into a widescreen frame');
     const stage = view.root.findByProps({ className: 'slideStage' });
     assert.equal(stage.props.style.overflow, 'auto', 'a tall paired slide needs its own scroll area so controls stay visible');
     assert.equal(stage.props.style.maxHeight, 'min(65vh, 600px)');
     assert.equal(view.root.findAllByType('img')[1].props.style.maxHeight, undefined,
       'the full-image viewer must allow a portrait slide to scroll at readable width');
-    assert.equal(view.root.findAllByType('audio').length, 0, 'English narration must wait for an explicit choice');
-    assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true,
-      'play-through must wait until the learner chooses a source voice');
-    assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /No Sesotho narration available/);
-    assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /Sesotho AI draft.*Ha ho modumo wa Sesotho/);
+    assert.equal(view.root.findAllByType('audio').length, 0, 'a silent edition must not mount mismatched archived speech');
+    assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true);
+    assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /No narration will play/);
     const english = view.root.findAllByType('button').find(button => button.children.join('').includes('English source narration'))!;
     assert.equal(english.props['aria-pressed'], false);
 
@@ -478,47 +883,126 @@ test('Sesotho slides remain Sesotho when English source narration is chosen', as
     assert.equal(english.props['aria-pressed'], true);
     assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, false);
     assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/en\/slide-01\.mp3$/);
-    assert.match(picture().props.src, /intro-permaculture\/st\/slide-01\.webp$/, 'choosing a voice must not replace the picture');
+    assert.match(picture().props.src, /intro-permaculture\/st-silent\/slide-01\.webp$/, 'choosing a voice must not replace the picture');
     assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /English source narration selected/);
 
     act(() => view.root.findAllByType('button').find(button => button.children.join('') === 'Next ›')!.props.onClick());
-    assert.match(picture().props.src, /intro-permaculture\/st\/slide-02\.webp$/, 'page turns keep the selected slide language');
+    assert.match(picture().props.src, /intro-permaculture\/st-silent\/slide-02\.webp$/, 'page turns keep the selected slide language');
     assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/en\/slide-02\.mp3$/);
   } finally { act(() => view.unmount()); }
+
+  for (const language of ['ve', 'ts']) {
+    const audioDevice = { currentTime: 0, paused: true, pause() { this.paused = true; }, play() { this.paused = false; return Promise.resolve(); } };
+    act(() => { view = create(createElement(DeckPlayer, { moduleId: 'intro-permaculture', lang: language }), {
+      createNodeMock: element => element.type === 'audio' ? audioDevice : null,
+    }); });
+    try {
+      const picture = () => view.root.findAllByType('img')[0];
+      assert.match(picture().props.src, new RegExp(`intro-permaculture/${language}/slide-01\\.webp$`));
+      assert.equal(view.root.findAllByType('audio').length, 0,
+        `${language} learners should not hear English before choosing it`);
+      assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true);
+      const voiceButtons = view.root.findByProps({ role: 'group', 'aria-label': 'Narration language' }).findAllByType('button');
+      assert.deepEqual(voiceButtons.map(button => button.children.join('')), ['English source narration', 'No narration'],
+        'regional learners can choose English source narration or silence');
+      assert.equal(voiceButtons[1].props['aria-pressed'], true, 'regional slides open in silent mode');
+      assert.match(view.root.findByProps({ role: 'status' }).children.join(''),
+        /No narration will play/);
+      const silent = voiceButtons[1];
+      assert.equal(view.root.findAllByType('audio').length, 0, 'silence must not mount an English audio element');
+      assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true,
+        'the narration play control stays disabled in silent mode');
+      assert.match(picture().props.src, new RegExp(`intro-permaculture/${language}/slide-01\\.webp$`),
+        'choosing silence must keep the regional slide visible');
+      const english = voiceButtons[0];
+      act(() => english.props.onClick());
+      assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/en\/slide-01\.mp3$/);
+      assert.match(picture().props.src, new RegExp(`intro-permaculture/${language}/slide-01\\.webp$`),
+        'choosing English source audio must leave the regional paired slide visible');
+      assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, false);
+      act(() => view.root.findByProps({ className: 'playControl' }).props.onClick());
+      assert.equal(audioDevice.paused, false, 'the learner can opt into English source narration');
+      audioDevice.currentTime = 12;
+      act(() => silent.props.onClick());
+      assert.equal(audioDevice.paused, true, 'switching to silence pauses the current audio immediately');
+      assert.equal(audioDevice.currentTime, 0, 'switching to silence rewinds the interrupted audio');
+      assert.equal(view.root.findAllByType('audio').length, 0, 'switching to silence removes the audio element');
+      assert.equal(view.root.findByProps({ className: 'playControl' }).props['aria-label'], 'Play the lesson',
+        'switching to silence stops audio-driven play-through');
+      assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /No narration will play/);
+      assert.match(picture().props.src, new RegExp(`intro-permaculture/${language}/slide-01\\.webp$`));
+      act(() => view.root.findAllByType('button').find(button => button.children.join('') === 'Next ›')!.props.onClick());
+      assert.match(picture().props.src, new RegExp(`intro-permaculture/${language}/slide-02\\.webp$`),
+        'manual page turns remain available with no narration');
+      assert.equal(view.root.findAllByType('audio').length, 0);
+    } finally { act(() => view.unmount()); }
+  }
+
+  // Soil Health is the exact small-screen Study case that exposed the selector problem: its
+  // regional slides have no matching voice. They open silent, with English source audio as an
+  // explicit option that must not replace the paired slide.
+  for (const language of ['st', 'ts', 've']) {
+    act(() => { view = create(createElement(DeckPlayer, { moduleId: 'soil-health', lang: language })); });
+    try {
+      const picture = () => view.root.findAllByType('img')[0];
+      assert.match(picture().props.src, new RegExp(`soil-health/${language}/slide-01\\.webp$`));
+      assert.equal(view.root.findAllByType('audio').length, 0,
+        `${language} Soil Health learners should choose before English narration starts`);
+      assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true);
+      const voiceButtons = view.root.findByProps({ role: 'group', 'aria-label': 'Narration language' }).findAllByType('button');
+      assert.deepEqual(voiceButtons.map(button => button.children.join('')),
+        [language === 'st' ? 'Modumo wa Senyesemane · English source narration' : 'English source narration', 'No narration']);
+      assert.equal(voiceButtons[1].props['aria-pressed'], true, `${language} Soil Health opens without narration`);
+      assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /No narration will play/);
+      if (language === 'st' || language === 've') {
+        assert.equal(slideImageFor('soil-health', language, 20)?.exact, true,
+          `the last ${language} source-paired frame is available, with no English slide fallback`);
+        assert.equal(view.root.findAllByType('img')[0].parent!.props.style.aspectRatio, 1440 / 5400,
+          'the full source-paired slide keeps its portrait ratio on a phone');
+        assert.equal(view.root.findByProps({ className: 'slideStage' }).props.style.maxHeight, 'min(65vh, 600px)',
+          'the portrait slide scrolls while the phone navigation controls stay on screen');
+      }
+      assert.equal(view.root.findAllByType('audio').length, 0, `${language} silent choice must not create an audio element`);
+      assert.match(picture().props.src, new RegExp(`soil-health/${language}/slide-01\\.webp$`),
+        'silent mode must retain the selected regional Soil Health still');
+      act(() => voiceButtons[0].props.onClick());
+      assert.match(view.root.findByType('audio').props.src, /soil-health\/en\/slide-01\.mp3$/);
+      assert.match(picture().props.src, new RegExp(`soil-health/${language}/slide-01\\.webp$`),
+        'choosing English narration must keep the selected Soil Health slides');
+      assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, false);
+      const choiceStatus = view.root.findByProps({ role: 'status' }).children.join('');
+      assert.match(choiceStatus, /English source narration selected/i);
+      if (language === 'ts') assert.match(choiceStatus, /itsonga narration is not available/i);
+    } finally { act(() => view.unmount()); }
+  }
 
   act(() => { view = create(createElement(DeckPlayer, { moduleId: 'intro-permaculture', lang: 'en' })); });
   try {
     const zulu = view.root.findAllByType('button').find(button => button.children.join('') === 'isiZulu')!;
     act(() => zulu.props.onClick());
-    assert.match(view.root.findAllByType('img')[0].props.src, /intro-permaculture\/zu\/slide-01\.jpg$/,
+    assert.match(view.root.findAllByType('img')[0].props.src, /intro-permaculture\/zu\/slide-01\.webp$/,
       'the existing English and isiZulu switch still changes the slides');
     assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/zu\/slide-01\.mp3$/,
       'the existing English and isiZulu switch still changes the narration');
     assert.equal(view.root.findAllByType('img')[0].parent!.props.style.aspectRatio, 16 / 9);
+    act(() => view.root.findByProps({ className: 'playControl' }).props.onClick());
+    assert.equal(view.root.findByProps({ className: 'playControl' }).props['aria-label'], 'Stop the lesson');
+    act(() => view.update(createElement(DeckPlayer, { moduleId: 'intro-permaculture', lang: 'ts' })));
+    assert.match(view.root.findAllByType('img')[0].props.src, /intro-permaculture\/ts\/slide-01\.webp$/);
+    assert.equal(view.root.findAllByType('audio').length, 0,
+      'changing the app language must stop the old voice and require a new source choice');
+    assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true);
   } finally { act(() => view.unmount()); }
 });
 
-test('only source-paired Xitsonga Food Forest frames replace the English slide', () => {
-  const deck = COURSE_DECKS['food-forest'];
-  assert.ok(deck.slideLanguages.includes('ts'));
-  for (const slide of deck.slides) {
-    const selected = slideImageFor('food-forest', 'ts', slide.slide);
-    assert.ok(selected);
-    if (slide.slide === 4 || slide.slide === 8) {
-      assert.equal(selected.lang, 'ts');
-      assert.match(selected.url, /\/food-forest\/ts\/slide-(04|08)\.webp$/);
-      assert.ok(onDisk(selected.url));
-    } else {
-      assert.equal(selected.lang, 'en', `slide ${slide.slide} must show English until paired copy exists`);
-    }
-  }
-});
-
-test('regional Food Forest and Xitsonga vegetables decks expose only authored paired frames', () => {
+test('regional Food Forest and Vegetables decks expose their complete paired still sets', () => {
   const cases: [string, string, number[]][] = [
-    ['food-forest', 'st', [4, 8]],
-    ['food-forest', 've', [4, 6]],
-    ['vegetables-staples', 'ts', [13, 14]],
+    ['food-forest', 'st', COURSE_DECKS['food-forest'].slides.map(({ slide }) => slide)],
+    ['food-forest', 've', COURSE_DECKS['food-forest'].slides.map(({ slide }) => slide)],
+    ['food-forest', 'ts', COURSE_DECKS['food-forest'].slides.map(({ slide }) => slide)],
+    ['vegetables-staples', 'st', COURSE_DECKS['vegetables-staples'].slides.map(({ slide }) => slide)],
+    ['vegetables-staples', 've', COURSE_DECKS['vegetables-staples'].slides.map(({ slide }) => slide)],
+    ['vegetables-staples', 'ts', COURSE_DECKS['vegetables-staples'].slides.map(({ slide }) => slide)],
   ];
   for (const [moduleId, language, authored] of cases) {
     const deck = COURSE_DECKS[moduleId];
@@ -537,14 +1021,21 @@ test('regional Food Forest and Xitsonga vegetables decks expose only authored pa
   }
 });
 
-test('regional Market and Tshivenda vegetables decks fall back to English for every unauthored frame', () => {
+test('Sesotho Food Forest keeps its paired still visible instead of the English Watch poster', () => {
+  assert.equal(animationUrls('food-forest', 16, 'st'), null,
+    'the English sheet-mulching poster would cover the paired Sesotho source and draft panels');
+  const still = slideImageFor('food-forest', 'st', 16);
+  assert.deepEqual(still, {
+    url: '/course-decks/food-forest/st/slide-16.webp', lang: 'st', exact: true,
+  });
+});
+
+test('regional Study decks show every paired frame and fall back for each missing frame', () => {
   const cases: [string, string, number[]][] = [
-    ['market-community', 'st', [2, 5, 6]],
-    ['market-community', 've', [2, 3]],
-    ['market-community', 'ts', [2, 18]],
-    ['vegetables-staples', 'st', [1, 2, 8, 9]],
-    ['vegetables-staples', 've', [12, 14]],
-    ['soil-health', 'ts', [1, 2]],
+    ['market-community', 'st', Array.from({ length: 20 }, (_, i) => i + 1)],
+    ['market-community', 've', Array.from({ length: 20 }, (_, i) => i + 1)],
+    ['market-community', 'ts', Array.from({ length: 20 }, (_, i) => i + 1)],
+    ['soil-health', 'ts', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]],
   ];
   for (const [moduleId, language, authored] of cases) {
     const deck = COURSE_DECKS[moduleId];
@@ -560,6 +1051,138 @@ test('regional Market and Tshivenda vegetables decks fall back to English for ev
         assert.equal(selected.lang, 'en', `${language} slide ${slide.slide} needs full English fallback`);
       }
     }
+  }
+});
+
+test('Reading slide 16 reuses only its mapped learner sentences and keeps the following source paragraph', () => {
+  const bodyRows = [
+    { lang: 'st', index: 0, source: 'A site map needs paper, a tape measure, a compass, and time to walk your land.', previous: 'Ho etsa site map ho hloka paper, a tape measure, a compass, and time to walk your land.', text: 'Mmapa wa setsha (site map) o hloka pampiri, tepi e methang (tape measure), khampase (compass), le nako ya ho tsamaya lefatsheng la hao.' },
+    { lang: 'st', index: 1, source: 'Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.', previous: 'Tsamaea moeling, ebe u etsa sketch ya pele. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.', text: "Tsamaya moeding mme o etse setshwantsho sa pele sa letsoho (sketch). Se tshwaye 'not to scale' ho fihlela o hlahlobile bohole ba sona. Tshwaya leboya. Kenya ntlo, difate, metsi, ditsela, diterata.", condition: /not to scale.*ho fihlela.*bohole/i },
+    { lang: 've', index: 0, source: 'A site map needs paper, a tape measure, a compass, and time to walk your land.', previous: 'U ita site map zwi ṱoḓa paper, a tape measure, a compass, and time to walk your land.', learnerText: 'Mmapa wa tshitentsi (site map) u ṱoḓa bapha, theiphi yo kalaho (tape measure), khamphasi (compass), na tshifhinga tsha u tshimbila muvuni waṋu.', text: 'Mmapa wa tshitentsi (site map) u ṱoḓa bapha, theiphi yo kalaho (tape measure), khamphasi (compass), na tshifhinga tsha u tshimbila kha land yaṋu.' },
+    { lang: 've', index: 1, source: 'Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.', previous: 'Tshimbilani kha boundary ni ite sketch ya u thoma. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.', learnerText: "Tshimbilani mukanoni nahone ni ite nyolo ya u thoma. I swayeni 'not to scale' u swikela ni tshi tola vhukule hayo. Swayani devhula (north). Engedzani nnḓu, miri, maḓi, bada, mitsheto.", text: "Tshimbilani mukanoni nahone ni ite nyolo ya u thoma. I swayeni 'not to scale' u swikela ni tshi tola vhukule hayo. Swayani devhula (north). Engedzani nnḓu, miri, maḓi, bada, fences.", condition: /not to scale.*u swikela.*vhukule/i },
+    { lang: 'ts', index: 0, source: 'A site map needs paper, a tape measure, a compass, and time to walk your land.', previous: 'Ku endla mepe wa ndhawu swi lava paper, a tape measure, a compass, and time to walk your land.', text: 'Mepe wa ndhawu wu lava phepha, thepi yo pima, khompasi, na nkarhi wo fambafamba eka misava ya wena.' },
+  ];
+  const unchangedBody2 = {
+    st: 'Joale taka the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.',
+    ve: 'Nga murahu olani the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.',
+    ts: 'Kutani dirowa the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.',
+  };
+  const lesson = COURSE_MODULES.flatMap((module) => module.lessons).find((item) => item.id === 'reading-landscape-l4');
+  assert.ok(lesson);
+
+  assert.equal(readingFullLearnerProof.status.startsWith('learner fields applied'), true);
+  assert.equal(readingFullLearnerProof.entries.length, 47);
+  for (const entry of readingFullLearnerProof.entries) {
+    const sourceLesson = COURSE_MODULES.flatMap((module) => module.lessons)
+      .find((item) => item.id === entry.lessonId);
+    assert.ok(sourceLesson, `${entry.lessonId}: learner proof lesson exists`);
+    const sourceField = learnerProofField(sourceLesson, entry.field);
+    assert.ok(sourceField, `${entry.lessonId}/${entry.field}: supported learner field is identified`);
+    assert.equal(sourceField.source, entry.exactSource,
+      `${entry.languageCode}/${entry.lessonId}/${entry.field}: learner field stays bound to its exact canonical source`);
+    const liveLesson = resolveLearnerLessonPresentation(sourceLesson, entry.languageCode);
+    // The later ordinary-prose batch changes exact listed fields. Its complete
+    // registry/source/index guard must pass before the dated 47-field proof is read.
+    const currentLesson = nativeOrdinaryPresentationBeforeFinalBatch(liveLesson, sourceLesson.id, entry.languageCode);
+    assert.equal(currentLesson.status, 'draft');
+    const currentField = learnerProofField(currentLesson.content, entry.field);
+    assert.ok(currentField, `${entry.lessonId}/${entry.field}: resolved learner field exists`);
+    // 2026-10-06: the source-identical ST comparison removed only an invented
+    // intensity word. Validate the complete accepted current registry/canonical
+    // snapshot first, then rewind that one clause for the older 47-field proof.
+    const reviewedHistoricalTarget = entry.languageCode === 'st'
+      && entry.lessonId === 'reading-landscape-l3' && entry.field === 'body'
+      ? readingBodyBeforeComparison(learnerProofField(liveLesson.content, entry.field)!.target) : currentField.target;
+    assert.equal(reviewedHistoricalTarget, entry.appliedTarget,
+      `${entry.languageCode}/${entry.lessonId}/${entry.field}: verified current layer preserves the historical applied target after only the accepted comparison rewind`);
+    assert.match(entry.reviewStatus, /unreviewed/i,
+      `${entry.languageCode}/${entry.lessonId}/${entry.field}: the review draft remains visibly unreviewed`);
+  }
+
+  for (const item of bodyRows) {
+    const pairedPath = new URL(`../docs/narration/reading-landscape.${item.lang}.paired-draft.json`, import.meta.url);
+    const paired = JSON.parse(readFileSync(pairedPath, 'utf8')) as {
+      reviewStatus: string;
+      slides: Array<{ n: number; english: { body: string[] }; target: { body: Array<{ status: string; text: string }> } }>;
+    };
+    const slide = paired.slides.find((row) => row.n === 16);
+    assert.ok(slide);
+    assert.equal(paired.reviewStatus, 'unreviewed');
+    assert.equal(slide.english.body[item.index], item.source,
+      `${item.lang} slide 16 body ${item.index} must stay bound to its exact source paragraph`);
+    assert.equal(slide.target.body[item.index].status, 'draft');
+    assert.equal(slide.target.body[item.index].text, item.text);
+    const canonicalSource = item.index === 0
+      ? 'A site map needs paper, a tape measure, a compass, and time to walk your land.'
+      : "Walk the boundary and make a first sketch. Mark it 'not to scale' until you have checked its distances. Mark north. Add the house, trees, water, roads, fences.";
+    assert.ok(lesson.body.includes(canonicalSource),
+      'the canonical source keeps the map materials, checked-distance condition, north marker and ordered objects');
+    if (item.index === 1) assert.match(item.source, /roads, and fences\.$/,
+      'the paired narration uses “and” before fences; canonical source omits only that conjunction');
+
+    const resolved: ReturnType<typeof resolveLearnerLessonPresentation> = nativeOrdinaryPresentationBeforeFinalBatch(
+      resolveLearnerLessonPresentation(lesson, item.lang), lesson.id, item.lang);
+    assert.equal(resolved.status, 'draft');
+    const learnerChange = readingFullLearnerProof.entries.find((entry: any) =>
+      entry.lessonId === 'reading-landscape-l4' && entry.languageCode === item.lang && entry.field === 'body');
+    assert.ok(learnerChange, `${item.lang}: the full-deck learner proof records this exact body`);
+    assert.equal(learnerChange.exactSource, lesson.body,
+      `${item.lang}: learner proof remains bound to the complete canonical lesson body`);
+    assert.equal(resolved.content.body, learnerChange.appliedTarget,
+      `${item.lang}: current learner output matches the independently checked applied field`);
+    assert.ok(learnerChange.currentTarget.includes(item.learnerText ?? item.text),
+      'the earlier localized clauses are checked against the learner before-state recorded by the applied proof');
+    if (item.lang === 've' && item.index === 0) {
+      assert.ok(item.learnerText);
+      assert.equal(item.text, item.learnerText.replace('tsha u tshimbila muvuni waṋu.', 'tsha u tshimbila kha land yaṋu.'),
+        'retain land in English where the learner draft term could narrow the source');
+    } else if (item.index === 1 && (item.lang === 've' || item.lang === 'ts')) {
+      assert.ok(item.learnerText);
+      assert.equal(item.text, item.learnerText.replace(/mitsheto\.$/, 'fences.'),
+        'retain fences in English where the learner-draft noun is ambiguous');
+    }
+    if (item.index === 1) {
+      const firstSentence = bodyRows.find((row) => row.lang === item.lang && row.index === 0)!.text;
+      assert.ok(!item.text.includes(firstSentence), 'the map-materials sentence must not be duplicated in body 1');
+      assert.ok(item.condition);
+      assert.match(item.text, item.condition,
+        'the checked-distance condition must survive the reuse');
+      const body2Change = readingFullDeckProof.records.find((record: any) =>
+        record.identity.language === item.lang && record.identity.slide === 16
+          && record.identity.field === 'body' && record.identity.index === 2);
+      assert.ok(body2Change, `${item.lang}: the full-deck proof records the following paragraph update`);
+      const expectedBody2 = unchangedBody2[item.lang as keyof typeof unchangedBody2];
+      assert.equal(body2Change.sourceEnglish, slide.english.body[2]);
+      assert.deepEqual(body2Change.before, { status: 'draft', text: expectedBody2 },
+        'the recorded before-state preserves the paragraph that this earlier test expected');
+      assert.deepEqual(slide.target.body[2], body2Change.after,
+        'the later full-deck pass translates the ordinary map-design framing in the following paragraph');
+      assert.equal(slide.target.body[2].status, body2Change.after.status,
+        'the follow-up keeps its recorded draft or mixed review state');
+      assert.equal(slide.english.body[2], 'Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.');
+    }
+  }
+});
+
+test('Sesotho Reading spelling corrections change only the independently checked forms', () => {
+  const rows = [
+    { slide: 1, index: 1, source: 'Read the land before you change it. Find where water moves, where sunlight falls, where wind travels, and where cold air settles.', previous: 'Bala naha pele o e fetola. Fumana moo metsi a phallang teng, moo letsatsi le chabang teng, moo moea o fokang teng, le moo moea o batang o bokellanang teng.', current: 'Bala naha pele o e fetola. Fumana moo metsi a phallang teng, moo letsatsi le chabang teng, moo moya o fokang teng, le moo moya o batang o bokellanang teng.', oldForm: 'moea', newForm: 'moya' },
+    { slide: 3, index: 2, source: 'You will use an A-frame level to trace contours.', previous: 'U tla sebelisa A-frame level ho latela contours.', current: 'U tla sebedisa A-frame level ho latela contours.', oldForm: 'sebelisa', newForm: 'sebedisa' },
+    { slide: 17, index: 0, source: 'Use the picture as a guide: boundary, buildings, roads, water, slopes, and direction arrows. Draw what already exists before planning changes.', previous: 'Sebelisa setšoantšo e le motataisi: moeli, meaho, litsela, metsi, matsoapo, le metsu ea tataiso. Thala se seng se ntse se le teng pele o rera liphetoho.', current: 'Sebedisa setšoantšo e le motataisi: moeli, meaho, litsela, metsi, matsoapo, le metsu ea tataiso. Thala se seng se ntse se le teng pele o rera liphetoho.', oldForm: 'Sebelisa', newForm: 'Sebedisa' },
+  ];
+  for (const item of rows) {
+    const paired = JSON.parse(readFileSync(new URL('../docs/narration/reading-landscape.st.paired-draft.json', import.meta.url), 'utf8')) as {
+      reviewStatus: string;
+      slides: Array<{ n: number; english: { body: string[] }; target: { body: Array<{ status: string; text: string }> } }>;
+    };
+    const slide = paired.slides.find((row) => row.n === item.slide);
+    assert.ok(slide);
+    assert.equal(paired.reviewStatus, 'unreviewed');
+    assert.equal(slide.english.body[item.index], item.source);
+    assert.equal(slide.target.body[item.index].status, 'draft');
+    assert.equal(slide.target.body[item.index].text, item.current);
+    assert.equal(item.previous.replaceAll(item.oldForm, item.newForm), item.current,
+      'the review-approved orthographic form changes without altering surrounding prose');
   }
 });
 
@@ -686,5 +1309,81 @@ test('a timed tour follows the voice after late loading, pause and seeking, then
     video.ended = true;
     act(() => clip.props.onEnded());
     assert.equal(view.root.findByType('h3').children.join(''), 'Prepare a Manageable First Area');
+  } finally { act(() => view.unmount()); }
+});
+
+// A voice selection must not hide the language draft being compared; a known
+// instruction error must stop narration rather than masquerade as a missing file.
+test('isiZulu deck source remains visible with English voice and withheld recordings stay silent', async () => {
+  const slide11Draft = resolveRegisteredSilentDeckDraft('seeds-sovereignty', 11);
+  const slide01Pair = ISIZULU_DECK_SOURCE_BINDINGS.find(row => row.moduleId === 'seeds-sovereignty' && row.slide === 1);
+  assert.ok(slide01Pair, 'slide 1 has an exact registered source pair');
+  const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
+  const hooks = registerHooks({ load(url, context, nextLoad) {
+    if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
+      fileName: 'DeckPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
+    }).outputText };
+    if (url === DECK_PLAYER_CSS_URL) return { format: 'module', shortCircuit: true, source: DECK_PLAYER_CSS_STUB };
+    return nextLoad(url, context);
+  } });
+  const { default: DeckPlayer } = await import('../components/course/DeckPlayer.tsx');
+  hooks.deregister();
+  const audioDevice = { currentTime: 0, pause() {}, play: () => Promise.resolve() };
+  let view!: ReactTestRenderer;
+  act(() => { view = create(createElement(DeckPlayer, { moduleId: 'seeds-sovereignty', lang: 'zu' }), {
+    createNodeMock: element => element.type === 'audio' ? audioDevice : null,
+  }); });
+  try {
+    // The player and mounted (closed) image dialog are distinct source-reading surfaces.
+    // Since 2026-10-05 both intentionally render the exact same current-slide pair.
+    const dialogs = () => view.root.findAllByType('dialog');
+    const player = () => dialogs()[0];
+    const imageViewer = () => dialogs()[1];
+    const assertPairText = (surface: ReactTestInstance, targetLabel: string,
+      targetTitle: string, targetParagraphs: readonly string[], sourceTitle: string,
+      sourceParagraphs: readonly string[]) => {
+      const target = surface.findByProps({ 'aria-label': targetLabel });
+      const source = surface.findByProps({ 'aria-label': 'Exact English source' });
+      assert.equal(target.findByType('h5').children.join(''), targetTitle);
+      assert.deepEqual(target.findAllByType('p').map(paragraph => paragraph.children.join('')), targetParagraphs);
+      assert.equal(source.findByType('h5').children.join(''), sourceTitle);
+      assert.deepEqual(source.findAllByType('p').map(paragraph => paragraph.children.join('')), sourceParagraphs);
+    };
+    assertPairText(player(), 'Unreviewed isiZulu draft', slide01Pair.registeredZuluTitle,
+      slide01Pair.recordedTarget, slide01Pair.sourceHeading, slide01Pair.source);
+    assertPairText(imageViewer(), 'Unreviewed isiZulu draft', slide01Pair.registeredZuluTitle,
+      slide01Pair.recordedTarget, slide01Pair.sourceHeading, slide01Pair.source);
+    const picture = () => view.root.findAllByType('img')[0];
+    const voices = () => view.root.findByProps({ role: 'group', 'aria-label': 'Narration language' }).findAllByType('button');
+    act(() => voices().find(button => button.children.join('') === 'English')!.props.onClick());
+    assert.match(picture().props.src, /seeds-sovereignty\/zu\/slide-01.webp$/);
+    assertPairText(player(), 'Unreviewed isiZulu draft', slide01Pair.registeredZuluTitle,
+      slide01Pair.recordedTarget, slide01Pair.sourceHeading, slide01Pair.source);
+    assertPairText(imageViewer(), 'Unreviewed isiZulu draft', slide01Pair.registeredZuluTitle,
+      slide01Pair.recordedTarget, slide01Pair.sourceHeading, slide01Pair.source);
+    assert.match(view.root.findByType('audio').props.src, /seeds-sovereignty\/en\/slide-01.mp3$/);
+    act(() => voices().find(button => button.children.join('') === 'isiZulu')!.props.onClick());
+    for (let index = 0; index < 10; index++) {
+      act(() => view.root.findAllByType('button').find(button => button.children.join('') === 'Next ›')!.props.onClick());
+    }
+    assert.equal(picture().props.src, slide11Draft?.imageUrl ?? '/course-decks/seeds-sovereignty/en/slide-11.webp');
+    assert.equal(view.root.findAllByType('audio').length, 0, 'boil-versus-ferment recording cannot play');
+    assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true);
+    assert.ok(isiZuluDeckReviewHold('seeds-sovereignty', 11), 'the incorrect recorded instruction stays held');
+    assert.ok(slide11Draft, 'the held slide has a corrected silent draft registered');
+    for (const surface of [player(), imageViewer()]) {
+      assertPairText(surface, 'Unreviewed corrected isiZulu slide draft', slide11Draft.correctedTitle,
+        slide11Draft.correctedTarget, slide11Draft.sourceHeading, slide11Draft.sourceEnglish);
+    }
+    const notice = view.root.findAllByType('p').map(p => p.children.join('')).join(' ');
+    assert.match(notice, /previous isiZulu recording remains unavailable/);
+    act(() => voices().find(button => button.children.join('') === 'English')!.props.onClick());
+    assert.match(view.root.findByType('audio').props.src, /seeds-sovereignty\/en\/slide-11.mp3$/);
+    assert.equal(picture().props.src, slide11Draft?.imageUrl ?? '/course-decks/seeds-sovereignty/en/slide-11.webp',
+      'explicit English audio does not replace the corrected isiZulu silent card');
+    for (const surface of [player(), imageViewer()]) {
+      assertPairText(surface, 'Unreviewed corrected isiZulu slide draft', slide11Draft.correctedTitle,
+        slide11Draft.correctedTarget, slide11Draft.sourceHeading, slide11Draft.sourceEnglish);
+    }
   } finally { act(() => view.unmount()); }
 });

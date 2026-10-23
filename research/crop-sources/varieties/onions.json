@@ -1,0 +1,91 @@
+{
+  "key": "onions",
+  "varieties": [
+    {
+      "name": "Short-day type",
+      "zones": ["highveld", "lowveld-bushveld", "subtropical-coast", "midlands-mistbelt", "karoo-arid"],
+      "maturity": null,
+      "season": "Highveld / northern & central interior",
+      "traits": "Fairly short day-length requirement for bulbing",
+      "type": null,
+      "note": "Kept from the existing crop-catalog.ts entry. This pass names the actual short-day cultivars behind this category (Texas Grano 502 PPR, Granex 33, Pyramid) and sources the underlying photoperiod science below.",
+      "evidence": [{ "quote": "Highveld / northern & central interior", "url": null, "page": null, "doc": "Existing ImbewuField lib/crop-catalog.ts onions entry" }]
+    },
+    {
+      "name": "Intermediate-day type",
+      "zones": ["western-cape", "southern-cape"],
+      "maturity": null,
+      "season": "Central & southern regions, coastal areas",
+      "traits": "Longer day-length requirement",
+      "type": null,
+      "note": "Kept from the existing crop-catalog.ts entry, but this pass sharpens the boundary: KZN DARD gives an explicit latitude cutoff of 28°S, south of which alone the day length is long enough to trigger bulbing in these cultivars — this makes 'coastal areas' too broad as originally written (the subtropical KZN coast, north of 28°S, is NOT suitable, per the same source), so this entry's zones are narrowed to western-cape and southern-cape only.",
+      "evidence": [{ "quote": "Others, such as Australian Brown and Caledon Globe, have a longer day-length requirement which can be met only in areas south of latitude 28°S. These are known as late or intermediate-day cultivars, and are grown commercially, mainly in the Eastern and Western Provinces. While they can theoretically be grown in KZN for maturity in mid-summer, quality would tend to be poor because of the normal summer rains.", "url": null, "page": 1, "doc": "Onion chapter, KwaZulu-Natal Department of Agriculture and Rural Development (KZN DARD) vegetable production guide, chapter 27 (PDF, page numbered 162 in source document; fetched and read in full)" }]
+    },
+    {
+      "name": "Texas Grano 502 PPR",
+      "zones": ["midlands-mistbelt", "highveld", "lowveld-bushveld", "subtropical-coast"],
+      "maturity": "early",
+      "season": "Sown Feb-Apr, transplanted May-Jun, harvested early Sep-early Nov (KZN seedbed method)",
+      "traits": "Short-day cultivar; one of the most popular in KZN",
+      "type": null,
+      "note": "Named explicitly by KZN DARD as one of the three most popular short-day cultivars grown in the province — the strongest-sourced short-day cultivar name found. Zoned to KZN's midlands-mistbelt zone directly from the source, and extended (with lower confidence) to the other summer-rainfall interior/hot zones since the short-day requirement 'is met in all areas of South Africa'.",
+      "evidence": [{ "quote": "Cultivars such as Texas Grano, Granex 33 and Pyramid have a fairly short day length requirement and are referred to as early or short-day cultivars. For these types the daylight hours in all areas of South Africa become long enough to initiate bulbing.", "url": null, "page": 1, "doc": "Onion chapter, KZN DARD vegetable production guide, chapter 27 (PDF, page 162 in source, fetched and read in full)" }, { "quote": "Early cultivars are preferred for planting in KZN. Texas Grano 502 PPR, Granex 33 and Pyramid are the most popular cultivars, with the latter two possibly the most important for potential commercial growers.", "url": null, "page": 2, "doc": "Onion chapter, KZN DARD vegetable production guide, chapter 27 (PDF, page 163 in source, fetched and read in full)" }]
+    },
+    {
+      "name": "Granex 33",
+      "zones": ["midlands-mistbelt", "highveld", "lowveld-bushveld", "subtropical-coast"],
+      "maturity": "early",
+      "season": "Same seedbed timing as Texas Grano 502 PPR",
+      "traits": "Short-day cultivar; rated by KZN DARD as one of the two most important for potential commercial growers in the province",
+      "type": null,
+      "note": "Same source and reasoning as Texas Grano 502 PPR above.",
+      "evidence": [{ "quote": "Early cultivars are preferred for planting in KZN. Texas Grano 502 PPR, Granex 33 and Pyramid are the most popular cultivars, with the latter two possibly the most important for potential commercial growers.", "url": null, "page": 2, "doc": "Onion chapter, KZN DARD vegetable production guide, chapter 27 (PDF, page 163 in source, fetched and read in full)" }]
+    },
+    {
+      "name": "Pyramid",
+      "zones": ["midlands-mistbelt", "highveld", "lowveld-bushveld", "subtropical-coast"],
+      "maturity": "early",
+      "season": "Also the standard cultivar used for growing onion 'sets' (sown Aug-Sep, harvested ~December, replanted the following February)",
+      "traits": "Short-day cultivar; dual-purpose — normal bulb crop or grown for sets",
+      "type": null,
+      "note": "The only cultivar KZN DARD names specifically for the 'sets' production method, in addition to being one of the three main short-day cultivars.",
+      "evidence": [{ "quote": "The cultivar Pyramid is often used for this purpose, although other cultivars may be suitable. Seed is sown in the normal fashion in open seedbeds, but in August or September rather than the February to March period.", "url": null, "page": 3, "doc": "Onion chapter, KZN DARD vegetable production guide, chapter 27 (PDF, page 164 in source, fetched and read in full)" }]
+    },
+    {
+      "name": "Australian Brown",
+      "zones": ["western-cape", "southern-cape"],
+      "maturity": "late",
+      "season": "Matures December-January; source explicitly says NOT generally recommended for KZN",
+      "traits": "Intermediate-day cultivar; better keeping quality than early cultivars, but source calls it not generally recommended even where day-length allows it, because it matures during the rainy season in summer-rainfall regions",
+      "type": null,
+      "note": "Named by KZN DARD as an intermediate-day type restricted to south of 28°S — placed here only in western-cape/southern-cape, matching the source's own latitude rule and its explicit caution against growing it in a summer-rainfall province even where theoretically possible.",
+      "evidence": [{ "quote": "Late cultivars such as Australian Brown and Caledon Globe are not generally recommended. They have inherently better keeping-quality than most early cultivars, but rains in November to January, when they would be maturing, or being harvested or cured, would detrimentally affect this.", "url": null, "page": 2, "doc": "Onion chapter, KZN DARD vegetable production guide, chapter 27 (PDF, page 163 in source, fetched and read in full)" }]
+    },
+    {
+      "name": "Caledon Globe",
+      "zones": ["western-cape", "southern-cape"],
+      "maturity": "late",
+      "season": "Matures December-January",
+      "traits": "Intermediate-day cultivar; better keeping quality than early cultivars",
+      "type": null,
+      "note": "Same source and reasoning as Australian Brown above — its name ('Caledon' being a Western Cape town) is also consistent with the Eastern/Western Cape commercial growing area the source names for intermediate-day types.",
+      "evidence": [{ "quote": "Others, such as Australian Brown and Caledon Globe, have a longer day-length requirement which can be met only in areas south of latitude 28°S... grown commercially, mainly in the Eastern and Western Provinces.", "url": null, "page": 1, "doc": "Onion chapter, KZN DARD vegetable production guide, chapter 27 (PDF, page 162 in source, fetched and read in full)" }]
+    }
+  ],
+  "zoneAdvice": {
+    "midlands-mistbelt": { "text": "This is the actual KZN DARD source zone: short-day cultivars (Texas Grano 502 PPR, Granex 33, Pyramid) are preferred; intermediate-day types are explicitly discouraged here even though day-length may permit them, because summer rains during maturation/curing spoil bulb quality. High humidity and hail are also flagged as extra local risks.", "evidence": [{ "quote": "The climate of most of KZN is not really suitable for large-scale commercial production of onions. Production for own use, or for limited local sales, is, however, viable.", "url": null, "page": 1, "doc": "Onion chapter, KZN DARD vegetable production guide, chapter 27 (PDF, page 162 in source, fetched and read in full)" }] },
+    "western-cape": { "text": "South of the 28°S latitude threshold the source gives for intermediate-day bulbing — Australian Brown and Caledon Globe are the named fits, alongside the short-day types which will bulb everywhere in South Africa regardless of latitude.", "evidence": [] },
+    "southern-cape": { "text": "Also south of 28°S — same intermediate-day fit as western-cape.", "evidence": [] },
+    "highveld": { "text": "North of 28°S — short-day cultivars only (Texas Grano 502 PPR, Granex 33, Pyramid); intermediate-day types will not reliably bulb this far north per the source's latitude rule. No highveld-specific onion trial was found, so this is the general short-day rule applied to the zone's latitude, not a zone-specific recommendation.", "evidence": [] },
+    "lowveld-bushveld": { "text": "North of 28°S and hot — short-day cultivars only, same reasoning as highveld.", "evidence": [] },
+    "subtropical-coast": { "text": "North of 28°S (KZN's subtropical coast) — short-day cultivars only; no zone-specific trial found beyond the general KZN chapter.", "evidence": [] },
+    "karoo-arid": { "text": "Mostly north of 28°S depending on exact location — short-day cultivars are the safer default; the source separately names Oxyfluorfen (Goal) herbicide timing as specific to 'the Karoo region', which at least confirms onions are grown there, but does not name a Karoo-specific cultivar.", "evidence": [{ "quote": "Oxyfluorfen (Goal) as a pre-emergent in the Karoo region at the 3 to 4 leaf stage and a post-emergent in the summer-rainfall regions at the 2 leaf stage.", "url": null, "page": 4, "doc": "Onion chapter, KZN DARD vegetable production guide, chapter 27 (PDF, page 165 in source, fetched and read in full)" }] },
+    "high-mountain": { "text": "Not sourced — the KZN DARD chapter does not address high-altitude/frost-prone areas specifically, and no other source was found for this zone.", "evidence": [] }
+  },
+  "gaps": [
+    "The 28°S latitude rule and the six named cultivars all come from one KZN DARD source; no ARC or Western/Eastern Cape provincial source was opened to independently corroborate the intermediate-day zone assignment or to name additional intermediate-day cultivars beyond Australian Brown and Caledon Globe.",
+    "highveld, lowveld-bushveld, subtropical-coast and karoo-arid zone assignments for the three short-day cultivars are inferred from the source's general statement that short-day types bulb 'in all areas of South Africa', not from a zone-specific trial — flagged as lower-confidence than the midlands-mistbelt (KZN) assignment, which is the source's own home zone.",
+    "high-mountain has no source at all for onions and is left with no cultivar recommendation.",
+    "No maturity-in-days figures were given by the source for any cultivar; 'maturity' above is a coarse early/late label taken directly from the source's own early/late terminology, not a numeric value."
+  ]
+}

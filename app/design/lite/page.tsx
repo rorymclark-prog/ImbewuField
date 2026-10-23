@@ -36,13 +36,13 @@ function LiteInner() {
       href={href}
       style={{
         display: 'block', padding: '14px 16px', borderRadius: 14, textDecoration: 'none',
-        background: primary ? 'linear-gradient(135deg, #1F4D2B, #2D6B3C)' : '#FBF6EC',
-        border: primary ? '1px solid rgba(31,77,43,0.6)' : '1px solid #E2D8C4',
-        color: primary ? '#FFFFFF' : '#20190F',
+        background: primary ? 'linear-gradient(135deg, #1F4D2B, #2D6B3C)' : 'var(--bg-1)',
+        border: primary ? '1px solid rgba(31,77,43,0.6)' : '1px solid var(--border)',
+        color: primary ? 'var(--on-forest)' : 'var(--text-primary)',
       }}
     >
       <span style={{ display: 'block', fontWeight: 700, fontSize: 15 }}>{label}</span>
-      <span style={{ display: 'block', fontSize: 12.5, marginTop: 2, color: primary ? 'rgba(255,255,255,0.85)' : '#5C5040' }}>
+      <span style={{ display: 'block', fontSize: 12.5, marginTop: 2, color: primary ? 'rgba(255,255,255,0.85)' : 'var(--text-secondary)' }}>
         {sub}
       </span>
     </a>
@@ -61,13 +61,13 @@ function LiteInner() {
   const reports = link('/farmer?panel=Reports&full=1', 'My reports', 'Saved reports, photos and evidence');
 
   return (
-    <main style={{ minHeight: '100dvh', background: '#E4DCC6', padding: '28px 20px', fontFamily: 'var(--font-sans)' }}>
+    <main style={{ minHeight: '100dvh', background: 'var(--bg-0)', padding: '28px 20px', fontFamily: 'var(--font-sans)' }}>
       <div style={{ maxWidth: 460, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <div style={{ padding: '16px 18px', borderRadius: 16, background: '#FDF4E3', border: '1px solid #E8D5A8' }}>
-          <h1 style={{ margin: 0, fontWeight: 700, fontSize: 17, color: '#20190F', fontFamily: 'var(--font-display)' }}>
+        <div style={{ padding: '16px 18px', borderRadius: 16, background: 'var(--warn-soft)', border: '1px solid color-mix(in srgb, var(--warn) 35%, transparent)' }}>
+          <h1 style={{ margin: 0, fontWeight: 700, fontSize: 17, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>
             {title}
           </h1>
-          <div style={{ fontSize: 13.5, color: '#5C5040', marginTop: 6, lineHeight: 1.5 }}>
+          <div style={{ fontSize: 13.5, color: 'var(--text-secondary)', marginTop: 6, lineHeight: 1.5 }}>
             {body}
           </div>
         </div>
@@ -88,7 +88,7 @@ function LiteInner() {
           </>
         )}
 
-        <div style={{ fontSize: 11.5, color: '#755942', textAlign: 'center', marginTop: 8 }}>
+        <div style={{ fontSize: 12, color: 'var(--text-muted)', textAlign: 'center', marginTop: 8 }}>
           Closing other tabs and apps frees memory for the full experience.
         </div>
       </div>
@@ -99,7 +99,7 @@ function LiteInner() {
 export default function DesignLitePage() {
   // useSearchParams needs a Suspense boundary in the app router; the fallback is the page shell.
   return (
-    <Suspense fallback={<main style={{ minHeight: '100dvh', background: '#E4DCC6' }} />}>
+    <Suspense fallback={<main style={{ minHeight: '100dvh', background: 'var(--bg-0)' }} />}>
       <LiteInner />
     </Suspense>
   );

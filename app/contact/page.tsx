@@ -4,21 +4,18 @@ import workspace from '@/components/layout/Workspace.module.css';
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { MessageCircle, Phone, Mail, Users, Building2, Send, CheckCircle, ChevronLeft, MailOpen, ChevronDown, ChevronUp } from 'lucide-react';
-import Link from 'next/link';
+import { MessageCircle, Phone, Mail, Users, Building2, Send, CheckCircle, MailOpen, ChevronDown, ChevronUp } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
 import { isBackendConfigured, getFirebase } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
-import { getMyProfile } from '@/lib/db/queries';
+import { getMyProfile, withWriteTimeout } from '@/lib/db/queries';
 import { addDoc, collection, getDocs, query, where, orderBy, serverTimestamp } from 'firebase/firestore';
 import TabBar from '@/components/TabBar';
-import BrandLogo from '@/components/BrandLogo';
 import type { Profile } from '@/lib/db/types';
 import LessonLink from '@/components/design/LessonLink';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
+import AppHeader from '@/components/layout/AppHeader';
 import motion from './ContactMotion.module.css';
 
 interface ContactReply {
@@ -138,7 +135,10 @@ export default function ContactPage() {
           ));
           return;
         }
-        await addDoc(collection(fb.db, 'contact_messages'), {
+        // bug-04: a weak-signal write with no timeout could hang this screen on "Sending…"
+        // indefinitely instead of failing into the catch below, where the typed message is
+        // still sitting safely in `body` (handleSend never clears it before this resolves).
+        await withWriteTimeout(addDoc(collection(fb.db, 'contact_messages'), {
           from_uid: user.uid,
           from_name: prof?.full_name ?? user.displayName ?? user.email,
           // The org whose inbox this message belongs in — firestore.rules scopes the mentor and
@@ -149,7 +149,7 @@ export default function ContactPage() {
           body: body.trim(),
           status: 'unread',
           created_at: serverTimestamp(),
-        });
+        }));
       }
       setSent(true);
     } catch {
@@ -171,22 +171,10 @@ export default function ContactPage() {
       style={{ background: 'var(--bg-0)', color: 'var(--text-primary)' }}
     >
       {/* Header */}
-      <header
-        className="flex-shrink-0 flex items-center gap-3 px-4"
-        style={{ height: 56, borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}
-      >
-        <MenuButton /><BackButton fallback="/home" />
-        <Link
-          href="/home"
-          style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text-secondary)', textDecoration: 'none' }}
-        >
-          <ChevronLeft size={18} strokeWidth={1.7} />
-        </Link>
-        <BrandLogo />
-        <div style={{ flex: 1 }} />
-        <LessonLink id="contact:overview" label={ui('Learn', 'Funda')} />
-        <h1 className="font-display font-semibold m-0" style={{ fontSize: 15, color: 'var(--text-primary)' }}>{ui('Contact', 'Xhumana')}</h1>
-      </header>
+      <AppHeader
+        title={ui('Contact', 'Xhumana')}
+        right={<LessonLink id="contact:overview" label={ui('Learn', 'Funda')} />}
+      />
 
       {/* Content */}
       <main
@@ -243,7 +231,7 @@ export default function ContactPage() {
                   <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
                     {ui('Replies from your team', 'Izimpendulo eziphuma kwithimba lakho')}
                   </span>
-                  <span className="font-mono rounded-full" style={{ fontSize: 10, padding: '1px 6px', background: 'var(--color-forest-800)', color: 'var(--color-canvas)' }}>
+                  <span className="font-sans rounded-full" style={{ fontSize: 12, padding: '1px 6px', background: 'var(--color-forest-800)', color: 'var(--color-canvas)' }}>
                     {replies.length}
                   </span>
                 </div>
@@ -265,7 +253,7 @@ export default function ContactPage() {
                             <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
                               {r.replied_by_name ?? 'Your mentor'}
                             </span>
-                            <span className="font-sans flex-shrink-0" style={{ fontSize: 11, color: 'var(--text-muted)' }}>
+                            <span className="font-sans flex-shrink-0" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
                               {timeAgo(r.replied_at)}
                             </span>
                           </div>
@@ -284,7 +272,7 @@ export default function ContactPage() {
                           <p className="font-sans leading-relaxed whitespace-pre-wrap" style={{ fontSize: 14, color: 'var(--text-primary)' }}>
                             {r.reply_body}
                           </p>
-                          <div className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 10, textTransform: 'capitalize' }}>
+                          <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, textTransform: 'capitalize' }}>
                             {ui('Via', 'Nge-')} {r.recipient_label}
                           </div>
                         </div>
@@ -299,13 +287,14 @@ export default function ContactPage() {
             <div style={{ marginBottom: 24 }}>
               <div
                 className="font-sans uppercase tracking-widest"
-                style={{ fontSize: 10, color: 'var(--gold-dim)', letterSpacing: '0.12em', marginBottom: 4 }}
+                style={{ fontSize: 12, color: 'var(--gold-dim)', letterSpacing: '0.1em', marginBottom: 4 }}
               >
                 {ui('Get in touch', 'Xhumana nathi')}
               </div>
-              <div className="font-display font-bold" style={{ fontSize: 22, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
+              {/* nav-17: AppHeader's title is a <span> — this is the page's real, visible h1. */}
+              <h1 className="font-display font-bold m-0" style={{ fontSize: 22, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
                 {ui('Contact', 'Xhumana')}
-              </div>
+              </h1>
               <p className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4, lineHeight: 1.5 }}>
                 {ui('Reach your mentor, organisation, or ImbewuField support.', 'Fikelela kumeluleki wakho, inhlangano yakho, noma usizo lwe-ImbewuField.')}
               </p>
@@ -366,7 +355,7 @@ export default function ContactPage() {
 
               {/* Recipient selector */}
               <div>
-                <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 8 }}>
+                <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.1em', marginBottom: 8 }}>
                   {ui('Send to', 'Thumela ku')}
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -402,7 +391,7 @@ export default function ContactPage() {
                         <div className="font-display font-semibold" style={{ fontSize: 13.5, color: recipient === value ? 'var(--color-forest-800)' : 'var(--text-primary)' }}>
                           {label}
                         </div>
-                        <div className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)', marginTop: 1 }}>{sub}</div>
+                        <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 1 }}>{sub}</div>
                       </div>
                       <div style={{
                         width: 16, height: 16, borderRadius: 8, border: `2px solid ${recipient === value ? 'var(--color-forest-800)' : 'var(--border-strong)'}`,
@@ -423,10 +412,11 @@ export default function ContactPage() {
               {/* Subject — Simple hides this behind "Add a subject" until asked for; All tools shows it plainly. */}
               {(!simple || showSubject) ? (
                 <div>
-                  <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
+                  <label htmlFor="contact-subject" className="block font-sans uppercase tracking-widest" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
                     {ui('Subject (optional)', 'Isihloko (akuphoqelekile)')}
-                  </div>
+                  </label>
                   <input
+                    id="contact-subject"
                     type="text"
                     placeholder={ui('e.g. Farm visit request', 'isib. Isicelo sokuvakashela ipulazi')}
                     value={subject}
@@ -444,7 +434,7 @@ export default function ContactPage() {
                   type="button"
                   onClick={() => setShowSubject(true)}
                   className="font-sans font-semibold text-left"
-                  style={{ fontSize: 13, color: 'var(--color-forest-800)', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
+                  style={{ fontSize: 13, color: 'var(--color-forest-800)', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0, minHeight: 44 }}
                 >
                   + {ui('Add a subject', 'Engeza isihloko')}
                 </button>
@@ -452,10 +442,11 @@ export default function ContactPage() {
 
               {/* Message body */}
               <div>
-                <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
+                <label htmlFor="contact-message" className="block font-sans uppercase tracking-widest" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
                   {ui('Message', 'Umlayezo')}
-                </div>
+                </label>
                 <textarea
+                  id="contact-message"
                   rows={5}
                   placeholder={ui('Write your message here…', 'Bhala umlayezo wakho lapha…')}
                   value={body}
@@ -475,7 +466,9 @@ export default function ContactPage() {
 
               {!isLive && (
                 <p className="font-sans rounded-xl px-3 py-2.5" style={{ fontSize: 12.5, color: 'var(--text-muted)', background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-                  {ui('Backend not connected — messages will be logged locally only. Connect Firebase to enable delivery.', 'Isistimu engemuva ayixhunyiwe — imilayezo izogcinwa kuphela ngokwasendaweni. Xhuma i-Firebase ukuze kusebenze ukulethwa.')}
+                  {/* ux-03/nav-04: was developer vocabulary ("backend", "Firebase") on a
+                      farmer-facing screen — rewritten in plain words below. */}
+                  {ui('Practice version: your message is kept on this phone and is not sent yet.', 'Inguqulo yokuzilolonga: umlayezo wakho ugcinwa kule foni futhi awukathunyelwa.')}
                 </p>
               )}
 
@@ -503,7 +496,7 @@ export default function ContactPage() {
         )}
       </main>
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

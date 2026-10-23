@@ -1,0 +1,77 @@
+{
+  "title": "Reading body frost wording asset preservation proof",
+  "date": "2026-10-05",
+  "assetsBeforePath": "/tmp/imbewu-reading-body-sync-assets-before-20261005.json",
+  "assetsAfterPath": "/tmp/imbewu-reading-body-sync-assets-after-inline-20261005.json",
+  "onlyChangedRegionalWebPs": [
+    {
+      "path": "public/course-decks/reading-landscape/st/slide-11.webp",
+      "before": {
+        "sha256": "1f36734ea2550559bd951a30dcaa8c2418bebc9d54dbed4e3e60d2e9bab3b21b",
+        "bytes": 197870
+      },
+      "after": {
+        "sha256": "045729fd00fce45b8f3b89110de3113cabd705e982e0b8e0f006202c36bba019",
+        "bytes": 198942
+      }
+    },
+    {
+      "path": "public/course-decks/reading-landscape/ts/slide-14.webp",
+      "before": {
+        "sha256": "d72f6bcc8b09823a5a27080653ee350869920102bc24a360c3a32ce7880be292",
+        "bytes": 458320
+      },
+      "after": {
+        "sha256": "4f3c6c41b71b9b234f2bac9c4859d3b146302dcf2fb84b4f4f38b5fdaeab39a5",
+        "bytes": 471742
+      }
+    },
+    {
+      "path": "public/course-decks/reading-landscape/ve/slide-14.webp",
+      "before": {
+        "sha256": "afa430935b5eab446b3f8546ef9d97f3bcb7e2da42d5335ae6777c4fdc872c4d",
+        "bytes": 455556
+      },
+      "after": {
+        "sha256": "c316ffafc2cdb311ab319c44e5ca414d00f0769247ee0d496c9940199d71ed51",
+        "bytes": 456620
+      }
+    },
+    {
+      "path": "public/course-decks/reading-landscape/ve/slide-18.webp",
+      "before": {
+        "sha256": "941899300ccbeef9d253089135d338ef70f02a23cf7ef39d570f236074de235c",
+        "bytes": 590054
+      },
+      "after": {
+        "sha256": "57d2799158eb15a8f7c02eab2a80793bc8f27f2724012f519e0e7a35e301b1f0",
+        "bytes": 589456
+      }
+    }
+  ],
+  "unlistedReadingRegionalAssetsUnchanged": 101,
+  "assetSizeManifestChanges": {
+    "/course-decks/reading-landscape/st/slide-11.webp": {
+      "before": 197870,
+      "after": 198942
+    },
+    "/course-decks/reading-landscape/ts/slide-14.webp": {
+      "before": 458320,
+      "after": 471742
+    },
+    "/course-decks/reading-landscape/ve/slide-14.webp": {
+      "before": 455556,
+      "after": 456620
+    },
+    "/course-decks/reading-landscape/ve/slide-18.webp": {
+      "before": 590054,
+      "after": 589456
+    }
+  },
+  "assetSizeManifestEntriesChanged": 4,
+  "canonicalEnglishFileUnchanged": true,
+  "STIntroAudioAndPair": "No ST Introduction pair or audio path was edited; no audio file was changed.",
+  "PLAN_VERSION": "Unchanged.",
+  "inlineMixedFlow": true,
+  "finalRootContactSheet": "/tmp/imbewu-reading-body-sync-inline-final-contact-20261005.jpg"
+}

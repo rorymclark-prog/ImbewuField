@@ -1,0 +1,73 @@
+{
+  "speciesId": "searsia-undulata",
+  "commonName": "Kuni bush / koeniebos",
+  "botanicalName": "Searsia undulata",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No food-production pollination classification verified in the checked primary source."
+  },
+  "harvestProduct": "ripe dried fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Named traditional dried-fruit food use",
+      "quote": "S. undulata (kunibush)",
+      "url": "https://pza.sanbi.org/searsia-burchellii",
+      "doc": "SANBI PlantZAfrica: Searsia burchellii, food-use discussion naming S. undulata",
+      "page": null,
+      "note": "The discussion explicitly includes S. undulata among edible dried ripe currant fruits and traditional fermentation uses. Its host article species calendar is not transferred to S. undulata."
+    },
+    {
+      "title": "Exact species and habitat",
+      "quote": "Searsia undulata",
+      "url": "https://redlist.sanbi.org/species.php?species=5522-153",
+      "doc": "SANBI Red List: Searsia undulata",
+      "page": null,
+      "note": "Assessment identifies the catalogue species and Northern/Western Cape distribution; it does not provide a harvest calendar or food yield."
+    }
+  ],
+  "productionGuidance": {
+    "products": "ripe dried fruit",
+    "care": [
+      "Record ripe fruit picking and drying separately. No storage duration or fermentation recipe is assigned."
+    ],
+    "purchase": [
+      "Confirm the exact species and local provenance; the SANBI assessment places it on stony fynbos/karroid slopes of the Northern and Western Cape."
+    ]
+  },
+  "householdFoodStatus": "confirmed-food",
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/searsia-burchellii",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary article text retrieved through the search index; the direct PlantZAfrica endpoint returned 403 during this session."
+    },
+    {
+      "url": "https://redlist.sanbi.org/species.php?species=5522-153",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified primary page, institutional abstract or downloaded primary PDF; product, region, age and native-unit limits retained."
+    }
+  ],
+  "gaps": []
+}

@@ -27,8 +27,8 @@ test('the month cards carry no hand-typed crop lists', () => {
     'a hand-typed plant/harvest list came back — derive it from CROPS instead',
   );
   assert.ok(
-    PAGE.includes('plant: CROPS.filter(') && PAGE.includes('harvest: CROPS.filter('),
-    'the month cards stopped deriving their crops from the catalog-backed CROPS array',
+    PAGE.includes('plant: crops.filter(') && PAGE.includes('harvest: crops.filter('),
+    'the month cards stopped deriving their crops from the catalog-backed crop rows (CROP_BASE via cropsForPattern)',
   );
 });
 
@@ -71,7 +71,10 @@ test('January no longer invites a maize harvest or a sweet-potato planting', () 
   const maize = PAGE_CROPS.find((crop) => crop.name === 'Maize')!;
   assert.ok(!maize.harvestMonths.includes(0), 'maize must not be harvestable in January');
 
-  const sweetPotato = PAGE_CROPS.find((crop) => crop.name === 'Sweet Potato')!;
+  // ux-18 (wave 14): the page's own CROP_BASE literal moved from Title Case ('Sweet Potato') to
+  // sentence case ('Sweet potato'), matching the catalog name every other screen already used —
+  // the casing mismatch itself was one of the audit's findings.
+  const sweetPotato = PAGE_CROPS.find((crop) => crop.name === 'Sweet potato')!;
   assert.equal(
     sowMarksForPattern(sweetPotato.key, 'summer')[0], '',
     'sweet potato must not be offered for planting in January',
@@ -89,7 +92,7 @@ test('the grid explains itself when none of the farmer\'s planned crops are trac
     'the empty-filter case must be handled explicitly, not left to render a header-only table',
   );
   assert.match(
-    PAGE, /This grid tracks \{CROPS\.map/,
+    PAGE, /This grid tracks \{crops\.map/,
     'the empty state must name what this calendar DOES cover, derived from CROPS — not a second, hand-typed crop list that can drift from it',
   );
 });

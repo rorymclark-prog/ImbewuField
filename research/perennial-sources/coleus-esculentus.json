@@ -1,0 +1,70 @@
+{
+  "speciesId": "coleus-esculentus",
+  "commonName": "Livingstone potato / umbondwe",
+  "botanicalName": "Coleus esculentus",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No food-production pollination classification verified in the checked primary source."
+  },
+  "harvestProduct": "edible tubers",
+  "supplementaryReferences": [
+    {
+      "title": "Edible tuber product and warm-season habitat",
+      "quote": "has edible tubers",
+      "url": "https://pza.sanbi.org/coleus-esculentus",
+      "doc": "SANBI PlantZAfrica: Coleus esculentus",
+      "page": null,
+      "note": "The food product is a tuber, not a potato-family fruit. Warm summer-rainfall cultivation with little frost is described; winter/spring flowering after leaf loss is not a dated tuber-digging calendar."
+    },
+    {
+      "title": "Tuber planting and harvest cycle",
+      "quote": "4 to 6 months after planting",
+      "url": "https://pza.sanbi.org/coleus-esculentus",
+      "doc": "SANBI PlantZAfrica: Coleus esculentus, Harvesting and storage of tubers",
+      "page": null,
+      "note": "Tubers can be harvested 4–6 months after planting, depending on rainfall, soil and situation. Source planting context is the onset of early spring rains, late August–early September in South African summer-rainfall areas. This is a tuber planting cycle, not tree first-bearing age; it does not establish universal picking months. Shelf life is described as relatively short without a numeric duration."
+    }
+  ],
+  "productionGuidance": {
+    "products": "edible tubers",
+    "care": [
+      "Use loose, well-drained soil in full sun under suitably warm conditions.",
+      "Record tuber harvest by planting batch and bed area, rather than a generic fruit-tree maturity curve.",
+      "The SANBI tuber-cycle reference is 4–6 months after planting, dependent on water, soil and position. Record the actual planting date and mature tuber harvest."
+    ],
+    "purchase": [
+      "Obtain correctly identified planting tubers or pieces. A local named selection and food kg/plant benchmark remain unverified."
+    ]
+  },
+  "householdFoodStatus": "confirmed-food",
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/coleus-esculentus",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary article text retrieved through the search index; the direct PlantZAfrica endpoint returned 403 during this session."
+    }
+  ],
+  "gaps": []
+}

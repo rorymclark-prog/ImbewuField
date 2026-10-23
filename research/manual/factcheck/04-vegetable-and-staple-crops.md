@@ -54,3 +54,29 @@ Note on method: in this session WebFetch was blocked for most government and res
 - "Cowpea and jugo bean cope with heat and drought better than dry beans" and "saved seed from a hybrid does not grow true" are standard agronomy, not re-checked against a specific URL this session.
 - Western Kenya bean consumption — no reliable figure found; dropped.
 - No income or price figures appear in this chapter of the source, so none needed dating.
+
+## Second pass (27 Sep 2026)
+
+Rewrite to REWRITE.md (2,303 → 1,786 words). Cassava Safety box turned into one plain line inside the Cassava paragraph; "ask your extension officer which variety" moved to `research/manual/rewrite/04-vegetable-and-staple-crops-endnote.md`.
+
+### Verified
+
+| Claim | Result | Source |
+|---|---|---|
+| Mielie in-row spacing ≈50 cm (dry) and ≈30 cm (wetter) in 90 cm rows | Verified against SA dryland populations: 15 000–20 000 plants/ha on low-potential soils, up to about 36 000 on better soils; 90 cm × 55 cm ≈ 20 000/ha and 90 cm × 30 cm ≈ 37 000/ha. Semi-arid SA trial (Haarhoff & Swanepoel 2022) tested 20 000–60 000/ha. 0.9 m is the standard SA row width. Kept. | https://www.grainsa.co.za/the-how-s-and-why-s-of-yield-estimation ; https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2022.761121/full |
+| Seed saved from hybrid maize yields less | Verified and **made concrete**: farmer-recycled hybrid seed loses about 32% yield on average (OPVs about 5%), so the text now says "about a third less". | https://repository.cimmyt.org/entities/publication/025ae55d-8285-41e0-a407-aee2d8ee74e1 |
+| Cowpea and jugo bean (Bambara groundnut) cope well with drought | Verified that both are drought-tolerant smallholder legumes; no source directly compared them with dry beans, so the comparison was **generalised** to "which handle drought well". | https://www.cgiar.org/news-events/news/harnessing-cowpea-and-bambara-groundnut-for-a-resilient-future/ ; http://www.fwr.org/wrcsa/944104.htm |
+| Sorghum more heat- and drought-tolerant than maize | Confirmed (SAJS 2022 review title and abstract). | https://scielo.org.za/scielo.php?script=sci_arttext&pid=S0038-23532022000600014 |
+| Cassava cyanide; soaking and cooking reduce it; drought raises it | Titles and content confirmed for both first-pass sources (Osman et al. 2025; Nyaika et al. 2024). | https://www.frontiersin.org/journals/sustainable-food-systems/articles/10.3389/fsufs.2025.1636177/full ; https://onlinelibrary.wiley.com/doi/full/10.1002/fes3.573 |
+
+### Cut
+
+- Rwanda/Burundi bean-consumption Note (verified in the first pass, but a fun fact rather than a field method; cut for length).
+- The "4–8 m" kitchen-garden distance stays out; the Try it uses "10 steps from the kitchen door" as a mapping exercise, not a rule.
+- "4 times the density" and "60–100% direct sales" stay out (first pass).
+
+### Changed
+
+- Hybrid seed: "yields less" → "yields about a third less" (CIMMYT review).
+- Cowpea/jugo bean: "cope with heat and drought better than dry beans" → "handle drought well".
+- Cassava areas: "parts of KwaZulu-Natal, the Mpumalanga and Limpopo lowveld" → "the KwaZulu-Natal coast and the lowveld" (same areas, shorter).

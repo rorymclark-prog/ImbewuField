@@ -1,0 +1,36 @@
+{
+  "key": "swiss-chard",
+  "varieties": [
+    {
+      "name": "Fordhook Giant",
+      "zones": ["highveld", "lowveld-bushveld", "subtropical-coast", "midlands-mistbelt", "western-cape", "southern-cape", "karoo-arid", "high-mountain"],
+      "maturity": "early",
+      "season": "Year-round; \"plant on beds or ridges in the summer if possible\"",
+      "traits": "Dark glossy green, deeply savoyed leaf, broad white stems; wide adaptability; \"the most used variety in South Africa\"",
+      "type": "OP",
+      "note": "The default, nationally-dominant chard/'spinach' variety in SA home and market gardens — sold as open-pollinated by both Starke Ayres and Sakata, so seed can be saved.",
+      "evidence": [
+        { "quote": "Fordhook Giant has a dark glossy green leaf colour. Fordhook Giant takes 58 days to mature after seedling transplant... This swiss chard variety is the most used variety in South Africa.", "url": "https://sakata.co.za/shop/vegetables/swiss-chard/fordhook-giant-open-pollinated-swiss-chard/", "page": null, "doc": "Fordhook Giant, Sakata product page (fetched directly, verbatim)" },
+        { "quote": "Outstanding Qualities Good colour High yield potential Harvest ready as soon as 58 days after transplant Wide adaptability", "url": "https://sakata.co.za/shop/vegetables/swiss-chard/fordhook-giant-open-pollinated-swiss-chard/", "page": null, "doc": "Fordhook Giant, Sakata product page (fetched directly, verbatim)" }
+      ]
+    },
+    {
+      "name": "Bright Lights",
+      "zones": ["highveld", "lowveld-bushveld", "subtropical-coast", "midlands-mistbelt", "western-cape", "southern-cape", "karoo-arid", "high-mountain"],
+      "maturity": "early",
+      "season": "Year-round, full sun or semi-shade",
+      "traits": "Ornamental multi-coloured (yellow/red/white) stems on large green leaves; 40-60 day maturity per search snippet",
+      "type": null,
+      "note": "A decorative/edible dual-purpose chard sold nationally by Starke Ayres alongside Fordhook Giant; not restricted to a particular zone in the source found.",
+      "evidence": [
+        { "quote": "produces large green leaves with a mix of yellow, red and white stems... germinates in 10-14 days with maturity in 40-60 days, and can be grown year-round in full sunlight or semi-shade", "url": "https://www.starkeayres.com/products/home-gardening-seed/swiss-chard-1/swiss-chard-bright-lights", "page": null, "doc": "Bright Lights, Starke Ayres product page (via search snippet — JS-rendered page, not directly fetchable for a verbatim on-page quote)" }
+      ]
+    }
+  ],
+  "zoneAdvice": {},
+  "gaps": [
+    "Both varieties are marketed as nationally adapted with only a sowing season attached (matching crop-catalog.ts's own near-year-round sow windows for this crop), not a growing zone — zoneAdvice is therefore left empty rather than invented.",
+    "Sakata also sells 'Eldorado', 'Rhubarb' and 'Silverado' swiss chard (seen in its product catalogue listing) but these were not individually opened/quoted in this pass; listed here only as a lead for a follow-up pass, not as sourced entries.",
+    "OP/hybrid status for Bright Lights is not stated in the (unverifiable, JS-rendered) source found — left null rather than assumed."
+  ]
+}

@@ -1,0 +1,241 @@
+{
+  "title": "Supplemental duration and Market semantic disposition for native ordinary proposals",
+  "createdAt": "2026-10-06",
+  "supplements": [
+    "/tmp/imbewu-study-final-native-ordinary-independent-check-20261006.json",
+    "/tmp/imbewu-study-final-native-ordinary-independent-check-supplement-20261006.json"
+  ],
+  "reviewedCommit": "2731fe76f2e8e7d1bc9a0be0dce66be497904401",
+  "readOnly": true,
+  "repositoryWrites": false,
+  "renderingOrTests": false,
+  "authority": "Rory authorized regional ordinary translation with canonical English unchanged. This record makes no fluency claim and requires no prepublication human approval.",
+  "registryAuthority": "lib/course-localization.ts assembles source-paired learner drafts against lib/course-modules.ts. CandidateIndex binds triage and inventory fields; the one VE body row is read directly from lib/course-translation-drafts-ve-reading-landscape.ts because that field was not in the candidate rows.",
+  "summary": {
+    "exactFields": 12,
+    "dispositionCounts": {
+      "accept": 5,
+      "repair": 2,
+      "hold": 5
+    },
+    "scope": "Only the exact Reading/Market fields listed below receive this supplemental disposition. All unlisted fields remain as in earlier reports."
+  },
+  "fieldDispositions": [
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "st",
+        "lessonId": "reading-landscape-l3",
+        "fieldLocator": "body.paragraph[1]",
+        "candidateIndex": 15
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-st-reading-landscape.ts",
+      "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "currentTarget": "Bosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona through the local frost season. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.",
+      "previousProposal": "Bosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona ho pholletsa le sehla sa frost sa sebakeng seo. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.",
+      "disposition": "accept",
+      "reason": "“Ho pholletsa le sehla” explicitly spans the entire local frost season, preserving the source’s through-duration. Backtranslation confirms that the comparison covers the season, not a point or unspecified moment within it.",
+      "supplementalTarget": "Bosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona ho pholletsa le sehla sa frost sa sebakeng seo. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.",
+      "backTranslation": "Compare candidate places throughout the local frost season."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "st",
+        "lessonId": "reading-landscape-l3",
+        "fieldLocator": "quiz[0].rationale",
+        "candidateIndex": 16
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-st-reading-landscape.ts",
+      "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "currentTarget": "Moya o batang o ka dula dibakeng tse tlase masiu a hlakileng, a kgutsitseng. Bapisa dibaka tsa kereche tseo e ka bang tsona through the local frost season. Hlahloba ditlaleho tsa motjheso o tlase-tlase tsa lehae kapa o botse moeletsi wa temo wa lehae pele o etsa qeto ya nako e telele. Serame se bonwang hase sesupo se le seng feela sa tshenyo ya serame, mme ha ho na sebaka sa lehlakoreng la leralla se tiisang ho se be le serame.",
+      "previousProposal": "Moya o batang o ka dula dibakeng tse tlase masiu a hlakileng, a kgutsitseng. Bapisa dibaka tsa kereche tseo e ka bang tsona ho pholletsa le sehla sa frost sa sebakeng seo. Hlahloba ditlaleho tsa motjheso o tlase-tlase tsa lehae kapa o botse moeletsi wa temo wa lehae pele o etsa qeto ya nako e telele. Serame se bonwang hase sesupo se le seng feela sa tshenyo ya serame, mme ha ho na sebaka sa lehlakoreng la leralla se tiisang ho se be le serame.",
+      "disposition": "accept",
+      "reason": "“Ho pholletsa le sehla” explicitly spans the entire local frost season, preserving the source’s through-duration. Backtranslation confirms that the comparison covers the season, not a point or unspecified moment within it.",
+      "supplementalTarget": "Moya o batang o ka dula dibakeng tse tlase masiu a hlakileng, a kgutsitseng. Bapisa dibaka tsa kereche tseo e ka bang tsona ho pholletsa le sehla sa frost sa sebakeng seo. Hlahloba ditlaleho tsa motjheso o tlase-tlase tsa lehae kapa o botse moeletsi wa temo wa lehae pele o etsa qeto ya nako e telele. Serame se bonwang hase sesupo se le seng feela sa tshenyo ya serame, mme ha ho na sebaka sa lehlakoreng la leralla se tiisang ho se be le serame.",
+      "backTranslation": "Compare candidate places throughout the local frost season."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "ve",
+        "lessonId": "reading-landscape-l3",
+        "fieldLocator": "body.paragraph[1]",
+        "candidateIndex": null,
+        "sourceBinding": "current source-paired native registry"
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-reading-landscape.ts",
+      "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "currentTarget": "Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Maitele a frost na one a ya nga fhethu. Vhambedzani candidate places through the local frost season. Ṱolani rekhodo dza minimum temperatures dza henefho hune dza wanala hone. Arali dzi sa wanali, bvelani phanḓa ni tshi sedza nga vhusiku vhu rotholaho, ni vhudzise mueletshedzi wa zwa vhulimi wa henefho musi ni sa athu nanga fhethu ha tshifhinga tshilapfu ha tender seedlings.",
+      "previousProposal": null,
+      "disposition": "hold",
+      "reason": "The current native body keeps the exact source duration phrase in English. Keep it intact until the complete local-season span has a precise Tshivenda construction. This exact field is source-bound in the registry but was not a triage candidate row.",
+      "supplementalTarget": "Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Maitele a frost na one a ya nga fhethu. Vhambedzani candidate places through the local frost season. Ṱolani rekhodo dza minimum temperatures dza henefho hune dza wanala hone. Arali dzi sa wanali, bvelani phanḓa ni tshi sedza nga vhusiku vhu rotholaho, ni vhudzise mueletshedzi wa zwa vhulimi wa henefho musi ni sa athu nanga fhethu ha tshifhinga tshilapfu ha tender seedlings."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "ve",
+        "lessonId": "reading-landscape-l3",
+        "fieldLocator": "quiz[0].rationale",
+        "candidateIndex": 17
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-reading-landscape.ts",
+      "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "currentTarget": "Muya wo rotholaho u nga kuvhangana fhethu ho tsaho kha vhusiku vhu sa na makole, hu si na muya. Vhambedzani fhethu hune nursery ya nga vhewa hone through the local frost season. Ṱolani matsalwa a minimum temperatures a henefho kana ni vhudzise mueletshedzi wa zwa vhulimi wa henefho musi ni sa athu dzhia tsheo ya fhethu ha tshifhinga tshilapfu. Frost ine ya vhonala a si yone fhedzi tswayo ya frost damage; a hu na fhethu ha kha thavha hune ha fulufhedzisa uri a hu nga vhi na frost.",
+      "previousProposal": "Muya wo rothalaho u nga kuvhangana fhethu ho tsaho kha vhusiku vhu sa na makole, hu si na muya. Vhambedzani fhethu hune nursery ya nga vhewa hone kha tshifhinga tsha frost tsha henefho. Ṱolani matsalwa a minimum temperatures a henefho kana ni vhudzise mueletshedzi wa zwa vhulimi wa henefho musi ni sa athu dzhia tsheo ya fhethu ha tshifhinga tshilapfu. Frost ine ya vhonala a si yone fhedzi tswayo ya frost damage; a hu na fhethu ha kha thavha hune ha fulufhedzisa uri a hu nga vhi na frost.",
+      "disposition": "hold",
+      "reason": "The translated phrase can read as “in/during the local frost season”; the source requires comparison through its duration. Keep the exact English anchor until that duration is explicit. Also restore the existing “rotholaho” prefix byte-for-byte; the proposal changed it gratuitously to “rothalaho”.",
+      "supplementalTarget": "Muya wo rotholaho u nga kuvhangana fhethu ho tsaho kha vhusiku vhu sa na makole, hu si na muya. Vhambedzani fhethu hune nursery ya nga vhewa hone through the local frost season. Ṱolani matsalwa a minimum temperatures a henefho kana ni vhudzise mueletshedzi wa zwa vhulimi wa henefho musi ni sa athu dzhia tsheo ya fhethu ha tshifhinga tshilapfu. Frost ine ya vhonala a si yone fhedzi tswayo ya frost damage; a hu na fhethu ha kha thavha hune ha fulufhedzisa uri a hu nga vhi na frost.",
+      "backTranslation": "The retained English clause reads “through the local frost season,” explicitly covering the full season."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "ts",
+        "lessonId": "reading-landscape-l3",
+        "fieldLocator": "body.paragraph[1]",
+        "candidateIndex": 18
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts.ts",
+      "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "currentTarget": "Eka vusiku byo tenga ni byo rhula, moya wo titimela wu nga khulukela ehansi wu tlhela wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti nga titimela ku tlurisa tindhawu to rhelela leti nga ekusuhi. Maendlelo ya frost na wona ya ya hi ndhawu. Pimanisa tindhawu leti nga hlawuriwaka through the local frost season. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya loko ma kumeka. Loko ma nga ri kona, yana mahlweni u ri karhi u languta eka vusiku byo titimela, u tlhela u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga si hlawula ndhawu ya nkarhi wo leha ya tender seedlings.",
+      "previousProposal": "Eka vusiku byo tenga ni byo rhula, moya wo titimela wu nga khulukela ehansi wu tlhela wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti nga titimela ku tlurisa tindhawu to rhelela leti nga ekusuhi. Maendlelo ya frost na wona ya ya hi ndhawu. Pimanisa tindhawu leti nga hlawuriwaka eka nguva ya frost ya ndhawu yoleyo. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya loko ma kumeka. Loko ma nga ri kona, yana mahlweni u ri karhi u languta eka vusiku byo titimela, u tlhela u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga si hlawula ndhawu ya nkarhi wo leha ya tender seedlings.",
+      "disposition": "hold",
+      "reason": "The translated phrase can read as “in/during the local frost season”; the source requires comparison through its duration. Keep the exact English anchor until that duration is explicit.",
+      "supplementalTarget": "Eka vusiku byo tenga ni byo rhula, moya wo titimela wu nga khulukela ehansi wu tlhela wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti nga titimela ku tlurisa tindhawu to rhelela leti nga ekusuhi. Maendlelo ya frost na wona ya ya hi ndhawu. Pimanisa tindhawu leti nga hlawuriwaka through the local frost season. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya loko ma kumeka. Loko ma nga ri kona, yana mahlweni u ri karhi u languta eka vusiku byo titimela, u tlhela u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga si hlawula ndhawu ya nkarhi wo leha ya tender seedlings.",
+      "backTranslation": "The retained English clause reads “through the local frost season,” explicitly covering the full season."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "ts",
+        "lessonId": "reading-landscape-l3",
+        "fieldLocator": "quiz[0].rationale",
+        "candidateIndex": 19
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts.ts",
+      "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "currentTarget": "Moya wo titimela wu nga hlengeletana etindhawini ta le hansi hi vusiku byo tenga ni byo rhula. Pimanisa tindhawu leti nga tirhisiwaka ku veka nursery through the local frost season. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya kumbe u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga se teka xiboho xa ndhawu ya nkarhi wo leha. Frost leyi vonakaka a hi yona ntsena mhaka leyi kombisaka frost damage, naswona a ku na ndhawu ya le xintshabyanini leyi tiyisekisaka leswaku a ku nge vi na frost.",
+      "previousProposal": "Moya wo titimela wu nga hlengeletana etindhawini ta le hansi hi vusiku byo tenga ni byo rhula. Pimanisa tindhawu leti nga tirhisiwaka ku veka nursery eka nguva ya frost ya ndhawu yoleyo. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya kumbe u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga se teka xiboho xa ndhawu ya nkarhi wo leha. Frost leyi vonakaka a hi yona ntsena mhaka leyi kombisaka frost damage, naswona a ku na ndhawu ya le xintshabyanini leyi tiyisekisaka leswaku a ku nge vi na frost.",
+      "disposition": "hold",
+      "reason": "The translated phrase can read as “in/during the local frost season”; the source requires comparison through its duration. Keep the exact English anchor until that duration is explicit.",
+      "supplementalTarget": "Moya wo titimela wu nga hlengeletana etindhawini ta le hansi hi vusiku byo tenga ni byo rhula. Pimanisa tindhawu leti nga tirhisiwaka ku veka nursery through the local frost season. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya kumbe u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga se teka xiboho xa ndhawu ya nkarhi wo leha. Frost leyi vonakaka a hi yona ntsena mhaka leyi kombisaka frost damage, naswona a ku na ndhawu ya le xintshabyanini leyi tiyisekisaka leswaku a ku nge vi na frost.",
+      "backTranslation": "The retained English clause reads “through the local frost season,” explicitly covering the full season."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "st",
+        "lessonId": "market-community-l2",
+        "fieldLocator": "body.paragraph[3]",
+        "candidateIndex": 68
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-st-market-community.ts",
+      "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "currentTarget": "Ho rekisa ka kotloloho ho ka retain more of the sale price, empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki.",
+      "previousProposal": "Ho rekisa ka kotloloho ho ka boloka karolo e kgolo ya sale price, empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki.",
+      "disposition": "repair",
+      "reason": "The source is comparative (“more of the sale price”), while “karolo e kgolo” can mean an absolutely large part. The repair makes the comparison explicit; all cost and contrast wording stays unchanged.",
+      "supplementalTarget": "Ho rekisa ka kotloloho ho ka boloka karolo e kgolwanyane ya sale price, empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki.",
+      "backTranslation": "Direct selling can keep a larger share of the sale price."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ve",
+        "lessonId": "market-community-l2",
+        "fieldLocator": "body.paragraph[3]",
+        "candidateIndex": 69
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-market-community.ts",
+      "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "currentTarget": "U rengisa nga ho livhisa kha vharengi zwi nga retain more of the sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, u paka, transport na u ṱhogomela vharengi.",
+      "previousProposal": "U rengisa nga ho livhisa kha vharengi zwi nga ita uri ni sale na tshipiḓa tshihulwane tsha sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, u paka, transport na u ṱhogomela vharengi.",
+      "disposition": "accept",
+      "reason": "“Tshipiḓa tshihulwane” explicitly means a larger share, preserving the source comparative. The modal “can” and the listed time, packing, transport, and customer-care costs remain.",
+      "supplementalTarget": "U rengisa nga ho livhisa kha vharengi zwi nga ita uri ni sale na tshipiḓa tshihulwane tsha sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, u paka, transport na u ṱhogomela vharengi.",
+      "backTranslation": "Direct selling can leave you with a larger share of the sale price."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l2",
+        "fieldLocator": "body.paragraph[3]",
+        "candidateIndex": 70
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "currentTarget": "Ku xavisa hi ku kongoma swi nga retain more of the sale price, kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi.",
+      "previousProposal": "Ku xavisa hi ku kongoma swi nga endla leswaku u sala na xiphemu lexikulu xa sale price, kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi.",
+      "disposition": "hold",
+      "reason": "“Xiphemu lexikulu” can mean a large share and does not independently establish “more”. Preserve the exact source comparative until a precise Xitsonga comparative is available.",
+      "supplementalTarget": "Ku xavisa hi ku kongoma swi nga retain more of the sale price, kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi.",
+      "backTranslation": "The retained phrase says “retain more of the sale price.”"
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ve",
+        "lessonId": "market-community-l3",
+        "fieldLocator": "quiz[0].rationale",
+        "candidateIndex": 72
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-market-community.ts",
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "currentTarget": "Kwalithi ya mbeu i ḓitika nga crop-specific isolation, selection, labelling, storage na germination checks. Dzi check idzi a dzi sumbedzi permission to exchange a protected variety; ṱolani applicable rights ni sa athu u kovhelana.",
+      "previousProposal": "Kwalithi ya mbeu i ḓitika nga crop-specific isolation, selection, labelling, storage na germination checks. Dzi check idzi a dzi sumbedzi uri ni na thendelo ya u kovhelana protected variety; ṱolani applicable rights ni sa athu u kovhelana.",
+      "disposition": "repair",
+      "reason": "“U kovhelana” broadens the exact legal action from exchange to sharing. Retain the source-bound technical clause verbatim; keep the check-before-sharing order and the separate applicable-rights instruction.",
+      "supplementalTarget": "Kwalithi ya mbeu i ḓitika nga crop-specific isolation, selection, labelling, storage na germination checks. Dzi check idzi a dzi sumbedzi permission to exchange a protected variety; ṱolani applicable rights ni sa athu u kovhelana.",
+      "backTranslation": "These checks do not establish permission to exchange a protected variety; check applicable rights before sharing."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l3",
+        "fieldLocator": "quiz[0].rationale",
+        "candidateIndex": 74
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "currentTarget": "Khwalithi ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage ni germination checks. Ticheki teto a ti tiyisisi permission to exchange a protected variety; kambisisa applicable rights u nga si avelana.",
+      "previousProposal": "Khwalithi ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage ni germination checks. Ticheki teto a ti tiyisisi mpfumelelo wo cincana hi protected variety; kambisisa applicable rights u nga si avelana.",
+      "disposition": "accept",
+      "reason": "“Cincana” back-translates as exchange; the draft preserves that legal action, protected-variety status, the checks-do-not-establish-permission clause, and the order to check rights before sharing.",
+      "supplementalTarget": "Khwalithi ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage ni germination checks. Ticheki teto a ti tiyisisi mpfumelelo wo cincana hi protected variety; kambisisa applicable rights u nga si avelana.",
+      "backTranslation": "Those checks do not confirm permission to exchange a protected variety; check applicable rights before sharing."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l3",
+        "fieldLocator": "quiz[1].option[0]",
+        "candidateIndex": 75
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "sourceEnglish": "Always choose the highest headline price",
+      "currentTarget": "Nkarhi hinkwawu hlawula the highest headline price.",
+      "previousProposal": "Nkarhi hinkwawu hlawula headline price leyi tlakukeke swinene.",
+      "disposition": "accept",
+      "reason": "“Nkarhi hinkwawu” preserves always, and “leyi tlakukeke swinene” carries the superlative highest. The financial label remains exact.",
+      "supplementalTarget": "Nkarhi hinkwawu hlawula headline price leyi tlakukeke swinene.",
+      "backTranslation": "Always choose the highest headline price."
+    }
+  ]
+}

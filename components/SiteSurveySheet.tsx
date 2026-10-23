@@ -7,6 +7,8 @@ import { useLanguage } from '@/lib/i18n';
 import { useAppConfirm } from '@/components/AppConfirm';
 import {
   saveSurvey,
+  readSurveyDraft, writeSurveyDraft, clearSurveyDraft, surveyDraftScope, surveyDraftScopeIsActive, surveyRevision,
+  type SiteSurveyDraft,
   loadSurvey,
   reportedFoodGroups,
   toggleSurveyChoice,
@@ -15,6 +17,8 @@ import {
   type ProductionCategory,
   type ReportedProduction,
   type SiteSurvey,
+  type SiteProductionConditions,
+  type PoultryManagement,
 } from '@/lib/site-survey';
 import { loadPlaces } from '@/lib/saved-places';
 import { designSiteIdFromLocation, computeTracedAreaTotals } from '@/lib/design-studio';
@@ -166,6 +170,68 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   return <div className={`${styles.questionLabel} font-sans font-semibold mb-2`} style={{ fontSize: 13, color: 'var(--text-2)' }}>{children}</div>;
 }
 
+// New observation questions stay in English until first-language reviewers supply drafts.
+// They are optional and cannot borrow a translated label with a different farming meaning.
+function ObservationChoices<T extends string>({ label, value, options, onChange }: {
+  label: string;
+  value: T | undefined;
+  options: readonly { value: T; label: string }[];
+  onChange: (value: T) => void;
+}) {
+  return <div lang="en">
+    <SectionLabel>{label}</SectionLabel>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+      {options.map(option => <Radio key={option.value} label={option.label} on={value === option.value} onClick={() => onChange(option.value)}/>)}
+    </div>
+  </div>;
+}
+
+const FROST_OPTIONS = [
+  { value: 'yes', label: 'Yes, we have seen frost here' },
+  { value: 'no', label: 'We have not seen frost here' },
+  { value: 'unknown', label: 'Not sure' },
+] as const;
+const DRAINAGE_OPTIONS = [
+  { value: 'drains-well', label: 'Water drains away' },
+  { value: 'stays-wet', label: 'Ground stays wet or water stands' },
+  { value: 'unknown', label: 'Not sure' },
+] as const;
+const SUNLIGHT_OPTIONS = [
+  { value: 'full-sun', label: 'Sun through most of the day' },
+  { value: 'part-shade', label: 'Sun for part of the day' },
+  { value: 'mostly-shade', label: 'Mostly shaded' },
+  { value: 'unknown', label: 'Not sure' },
+] as const;
+const DRY_WATER_OPTIONS = [
+  { value: 'reliable', label: 'Enough water throughout the dry season' },
+  { value: 'limited', label: 'Some water, but not always enough' },
+  { value: 'rain-only', label: 'Rain-fed only' },
+  { value: 'unknown', label: 'Not sure' },
+] as const;
+const POULTRY_PURPOSE_OPTIONS = [
+  { value: 'eggs', label: 'Eggs' }, { value: 'meat', label: 'Meat' },
+  { value: 'both', label: 'Eggs and meat' }, { value: 'unknown', label: 'Not sure' },
+] as const;
+const POULTRY_WATER_OPTIONS = [
+  { value: 'always', label: 'Every day' }, { value: 'sometimes', label: 'Sometimes unavailable' },
+  { value: 'unknown', label: 'Not sure' },
+] as const;
+const POULTRY_FEED_OPTIONS = [
+  { value: 'balanced-feed', label: 'Balanced poultry feed' },
+  { value: 'mixed-feed', label: 'Mixed feeds and household or garden food' },
+  { value: 'mostly-scavenging', label: 'Mostly finding their own food' },
+  { value: 'unknown', label: 'Not sure' },
+] as const;
+const POULTRY_PROTECTION_OPTIONS = [
+  { value: 'enclosed', label: 'Closed, protected housing at night' },
+  { value: 'partial', label: 'Partly protected' }, { value: 'none', label: 'No night protection' },
+  { value: 'unknown', label: 'Not sure' },
+] as const;
+
+function observationLabel(value: string | undefined, options: readonly { value: string; label: string }[]): string {
+  return options.find(option => option.value === value)?.label ?? 'Not recorded';
+}
+
 function Toggle({ label, sub, ariaLabel, on, onChange }: { label: ReactNode; sub?: ReactNode; ariaLabel: string; on: boolean; onChange: (v: boolean) => void }) {
   return (
     <div className="flex items-center justify-between" style={{ background: 'var(--surface-2)', borderRadius: 12, padding: '12px 14px', border: '1px solid var(--border)' }}>
@@ -187,7 +253,7 @@ function NumInput({ value, onChange, placeholder, placeholderEnglish, hint, labe
   return (
     <>
       <input type="number" min="0" step="any" aria-label={label} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder ?? t('surveyNumInputDefaultPlaceholder')}
-        className="w-full font-sans"
+        className="w-full font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
         style={{ padding: '10px 14px', borderRadius: 11, background: 'var(--surface)', border: '1px solid var(--border)', fontSize: 14, color: 'var(--text)', outline: 'none' }} />
       {lang === 'zu' && placeholderEnglish && <small>English: {placeholderEnglish}</small>}
       {hint && <div className="font-sans mt-1" style={{ fontSize: 12, color: 'var(--text-2)' }}>{hint}</div>}
@@ -217,7 +283,52 @@ function AutoFillNote({ areaM2, english }: { areaM2: number; english?: string })
   );
 }
 
-export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onSaved, onClose }: Props) {
+export default function SiteSurveySheet(props: Props) {
+  const place = loadPlaces().find(p => p.id === props.placeId);
+  const loc = props.coords ?? (place ? { lat: place.lat, lon: place.lon } : null);
+  const siteId = designSiteIdFromLocation(loc as LocationData | null);
+  const scope = surveyDraftScope(siteId);
+  return <SurveyRecoverySession key={scope} {...props} siteId={siteId} scope={scope}/>;
+}
+
+function SurveyRecoverySession(props: Props & { siteId: string; scope: string }) {
+  const [stored] = useState(() => readSurveyDraft(props.scope));
+  const [choice, setChoice] = useState<'resume' | 'discard' | null>(null);
+  const [discardError, setDiscardError] = useState(false);
+  const dialog = useRef<HTMLDialogElement>(null);
+  const pending = choice === null && (!!stored.draft || stored.error);
+  useEffect(() => {
+    if (!pending) return;
+    const prior = document.activeElement as HTMLElement | null;
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    dialog.current?.showModal();
+    return () => { document.body.style.overflow = overflow; prior?.focus(); };
+  }, [pending]);
+  if (pending) return typeof document === 'undefined' ? null : createPortal(
+    <dialog ref={dialog} className={styles.recovery} aria-labelledby="survey-recovery-title" lang="en"
+      onCancel={event => { event.preventDefault(); props.onClose(); }}>
+      <h1 id="survey-recovery-title">Continue your unfinished survey?</h1>
+      <p>Your unfinished answers are kept on this browser. They are separate from your saved survey and report.</p>
+      {stored.error && <p role="alert">This browser could not read the draft. Close this screen to keep it, or discard it to use your saved answers.</p>}
+      {stored.draft && stored.draft.baseRevision !== surveyRevision(loadSurvey(props.siteId)) && <p role="note">Your saved survey has changed since this draft began. Check the answers carefully before saving a resumed draft.</p>}
+      {discardError && <p role="alert">The draft could not be discarded, or changed in another tab. Close this screen and reopen the survey to try again.</p>}
+      <div className={styles.recoveryActions}>
+        {stored.draft && <button className={styles.primary} onClick={() => setChoice('resume')}>Resume draft</button>}
+        <button className={styles.back} onClick={() => {
+          if (clearSurveyDraft(props.scope, props.siteId, stored.token)) setChoice('discard');
+          else setDiscardError(true);
+        }}>Discard draft and use saved answers</button>
+        <button className={styles.back} aria-label="Close and keep draft" onClick={props.onClose}>Close and keep draft</button>
+      </div>
+    </dialog>, document.body);
+  return <SurveyEditor {...props} initialDraft={choice === 'resume' ? stored.draft : null}
+    initialDraftToken={choice === 'resume' ? stored.token : null}/>;
+}
+
+function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, scope, initialDraft, initialDraftToken }: Props & {
+  scope: string; initialDraft: SiteSurveyDraft | null; initialDraftToken: string | null;
+}) {
   const { lang, t } = useLanguage();
   const paired = (key: string, english: string): ReactNode => {
     const zulu = t(key);
@@ -233,7 +344,13 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
   // Prefer the live pin's coords (per-site canonical key); fall back to the place lookup.
   const siteLoc = coords ?? (place ? { lat: place.lat, lon: place.lon } : null);
   const siteId = designSiteIdFromLocation(siteLoc ? ({ lat: siteLoc.lat, lon: siteLoc.lon } as LocationData) : null);
-  const [existing] = useState(() => loadSurvey(siteId));
+  const [savedSurvey] = useState(() => loadSurvey(siteId));
+  const [existing] = useState(() => initialDraft?.answers ?? savedSurvey);
+  const savedRevision = useRef(surveyRevision(savedSurvey));
+  const draftToken = useRef(initialDraftToken);
+  const completed = useRef(false);
+  const [draftError, setDraftError] = useState(false);
+  const [saveConflict, setSaveConflict] = useState(false);
   const tracedAreas = computeTracedAreaTotals(siteId, siteLoc?.lat ?? null, siteLoc?.lon ?? null);
   // computeTracedAreaTotals can only see main-map shapes and the legacy design blob, so a roof
   // traced in the Design Studio left this field empty while the Water sheet was already sizing a
@@ -244,9 +361,9 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
   // Every building beyond the largest — the store room, the shed — sums into "Secondary roofs".
   const secondaryRoofM2 = studioRoofAreasM2(studioCanvas).secondaryM2;
 
-  const [step, setStep] = useState(0);
-  const [mode, setMode] = useState<'short' | 'full'>('short');
-  const [started, setStarted] = useState(false);
+  const [step, setStep] = useState(initialDraft?.step ?? 0);
+  const [mode, setMode] = useState<'short' | 'full'>(initialDraft?.mode ?? 'short');
+  const [started, setStarted] = useState(initialDraft?.started ?? false);
   const [saveError, setSaveError] = useState(false);
   const [openProduction, setOpenProduction] = useState<ProductionCategory | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -279,12 +396,13 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
     (existing.roofAreaSource == null && (((existing.roofMainM2 ?? 0) !== 0) || ((existing.roofSecondaryM2 ?? 0) !== 0)))
   );
   const [roofMain, setRoofMain] = useState(() => {
+    if (initialDraft) return initialDraft.inputs.roofMain;
     if (existing?.roofMainM2 != null && roofAreaSourceIsManual) return existing.roofMainM2.toString();
     if (roofAreaM2 > 0) return String(Math.round(roofAreaM2));
     return existing?.roofMainM2?.toString() ?? '';
   });
   const [roofSource, setRoofSource] = useState<'auto' | 'manual' | undefined>(() =>
-    roofAreaSourceIsManual ? 'manual' : (roofAreaM2 > 0 ? 'auto' : undefined)
+    initialDraft ? existing?.roofAreaSource : roofAreaSourceIsManual ? 'manual' : (roofAreaM2 > 0 ? 'auto' : undefined)
   );
   // Same manual-first contract as the main roof: a figure the farmer typed (or any pre-source
   // saved value) is never clobbered by auto-fill.
@@ -293,12 +411,13 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
     (existing.roofSecondarySource == null && ((existing.roofSecondaryM2 ?? 0) !== 0))
   );
   const [roofSecondary, setRoofSecondary] = useState(() => {
+    if (initialDraft) return initialDraft.inputs.roofSecondary;
     if (existing?.roofSecondaryM2 != null && roofSecondarySourceIsManual) return existing.roofSecondaryM2.toString();
     if (secondaryRoofM2 > 0) return String(Math.round(secondaryRoofM2));
     return existing?.roofSecondaryM2?.toString() ?? '';
   });
   const [roofSecondarySource, setRoofSecondarySource] = useState<'auto' | 'manual' | undefined>(() =>
-    roofSecondarySourceIsManual ? 'manual' : (secondaryRoofM2 > 0 ? 'auto' : undefined)
+    initialDraft ? existing?.roofSecondarySource : roofSecondarySourceIsManual ? 'manual' : (secondaryRoofM2 > 0 ? 'auto' : undefined)
   );
   const [hasGutters, setHasGutters] = useState(existing?.hasGutters ?? false);
 
@@ -307,20 +426,25 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
   const [soilCondition, setSoilCondition] = useState(existing?.soilCondition ?? '');
   const [soilAmendments, setSoilAmendments] = useState<string[]>(existing?.soilAmendments ?? []);
   const [fencing, setFencing] = useState(existing?.hasFencing ?? '');
+  const [productionConditions, setProductionConditions] = useState<SiteProductionConditions>(existing?.productionConditions ?? {});
 
   // Step 4 — What exists
   const [crops, setCrops] = useState<string[]>(existing?.existingCrops ?? []);
   const [existingGrowingArea, setExistingGrowingArea] = useState(() => {
+    if (initialDraft) return initialDraft.inputs.growingArea;
     if (existing?.existingGrowingAreaM2 != null && existing.existingGrowingAreaSource === 'manual') return existing.existingGrowingAreaM2.toString();
     if (tracedAreas.cultivationAreaM2 > 0) return String(Math.round(tracedAreas.cultivationAreaM2));
     return existing?.existingGrowingAreaM2?.toString() ?? '';
   });
   const [growingAreaSource, setGrowingAreaSource] = useState<'auto' | 'manual' | undefined>(() =>
-    (existing?.existingGrowingAreaSource === 'manual' || (existing?.existingGrowingAreaSource == null && existing?.existingGrowingAreaM2 != null)) ? 'manual' : (tracedAreas.cultivationAreaM2 > 0 ? 'auto' : undefined)
+    initialDraft ? existing?.existingGrowingAreaSource : (existing?.existingGrowingAreaSource === 'manual' || (existing?.existingGrowingAreaSource == null && existing?.existingGrowingAreaM2 != null)) ? 'manual' : (tracedAreas.cultivationAreaM2 > 0 ? 'auto' : undefined)
   );
   const [livestock, setLivestock] = useState<string[]>(existing?.livestock ?? []);
+  const [poultryManagement, setPoultryManagement] = useState<PoultryManagement>(existing?.poultryManagement ?? {});
+  const [layingHens, setLayingHens] = useState(initialDraft?.inputs.layingHens ?? existing?.poultryManagement?.layingHens?.toString() ?? '');
   const [otherInfra, setOtherInfra] = useState<string[]>(existing?.otherInfra ?? []);
   const [reportedProduction, setReportedProduction] = useState<ReportedProduction[]>(existing?.reportedProduction ?? []);
+  const [productionYear, setProductionYear] = useState(initialDraft?.inputs.productionYear ?? existing?.productionYear?.toString() ?? '');
   const productionRow = (category: ProductionCategory): ReportedProduction =>
     reportedProduction.find((row) => row.category === category) ?? {
       category,
@@ -393,35 +517,76 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
         || row.sold !== null || row.incomeZar !== null || (row.harvestMonths?.length ?? 0) > 0
         || !!row.foodGroup,
       ),
+      productionYear: productionYear === '' ? undefined : Number(productionYear),
+      productionConditions: Object.keys(productionConditions).length ? productionConditions : undefined,
+      poultryManagement: Object.keys(poultryManagement).length || layingHens !== '' ? {
+        ...poultryManagement,
+        layingHens: layingHens === '' ? null : Number(layingHens),
+      } : undefined,
       notes,
     };
   const fingerprint = JSON.stringify(survey);
-  const initialFingerprint = useRef(fingerprint);
+  const initialFingerprint = useRef(initialDraft ? '' : fingerprint);
+  const draft: SiteSurveyDraft = {
+    version: 1, answers: { ...survey, memberCount, marketType, reportedProduction },
+    inputs: { roofMain, roofSecondary, growingArea: existingGrowingArea, layingHens, productionYear },
+    mode, step, started, baseRevision: savedRevision.current,
+  };
+  const draftFingerprint = JSON.stringify(draft);
+  // Preserve raw inputs too: an unfinished or invalid number still belongs to the farmer.
+  const initialDraftFingerprint = useRef(initialDraft ? '' : JSON.stringify({ ...draft, mode: 'short', step: 0, started: false }));
+  const draftDirty = JSON.stringify({ ...draft, mode: 'short', step: 0, started: false }) !== initialDraftFingerprint.current;
+  useEffect(() => {
+    if (completed.current) return;
+    if (draftDirty) {
+      const token = writeSurveyDraft(scope, JSON.parse(draftFingerprint), draftToken.current);
+      if (token !== null) draftToken.current = token;
+      setDraftError(token === null);
+    } else if (draftToken.current !== null) {
+      const cleared = clearSurveyDraft(scope, siteId, draftToken.current);
+      if (cleared) draftToken.current = null;
+      setDraftError(!cleared);
+    }
+  }, [draftFingerprint, draftDirty, scope, siteId]);
   const dirty = fingerprint !== initialFingerprint.current;
   const invalidProduction = survey.reportedProduction?.filter(productionNeedsReview) ?? [];
   const invalidArea = [roofMain, roofSecondary, existingGrowingArea].some(value =>
     value !== '' && (!Number.isFinite(Number(value)) || Number(value) < 0));
+  const invalidLayingHens = layingHens !== '' && (!Number.isSafeInteger(Number(layingHens)) || Number(layingHens) < 0);
+  const invalidProductionYear = productionYear !== '' && (!Number.isInteger(Number(productionYear)) || Number(productionYear) < 1900 || Number(productionYear) > new Date().getFullYear());
   const missingSections = [
     { step: 0, missing: goals.length === 0 },
     { step: 1, missing: !landPrep || !soilCondition },
     { step: 5, missing: waterSource.length === 0 || waterDelivery.length === 0 },
     { step: 6, missing: !practice || challenges.length === 0 },
   ].filter(item => item.missing);
-  const canSave = !invalidArea && invalidProduction.length === 0 && missingSections.length === 0;
+  const canSave = !invalidArea && !invalidLayingHens && !invalidProductionYear && invalidProduction.length === 0 && missingSections.length === 0;
   const handleSave = () => {
     if (!canSave) return;
+    if (!surveyDraftScopeIsActive(scope, siteId) || surveyRevision(loadSurvey(siteId)) !== savedRevision.current) {
+      setSaveConflict(true); return;
+    }
     const saved = saveSurvey({ ...survey, savedAt: new Date().toISOString() });
-    if (saved) { initialFingerprint.current = fingerprint; onSaved(saved); }
+    if (saved) {
+      completed.current = true;
+      clearSurveyDraft(scope, siteId, draftToken.current);
+      initialFingerprint.current = fingerprint;
+      onSaved(saved);
+    }
     else setSaveError(true);
   };
   const closeWithConfirm = useCallback(async () => {
-    if (dirty && !(await appConfirm({
+    if ((dirty || draftDirty) && !(await appConfirm({
       message: lang === 'zu' ? surveyZuluConfirmDraft(t('surveyDiscardConfirm'), SURVEY_DISCARD_CONFIRM_ENGLISH) : t('surveyDiscardConfirm'),
       confirmLabel: lang === 'zu' ? surveyZuluConfirmDraft(t('surveyDiscardBtn'), SURVEY_DISCARD_BUTTON_ENGLISH) : t('surveyDiscardBtn'),
       cancelLabel: t('cancelBtn'), destructive: true,
     }))) return;
+    if (dirty || draftDirty) {
+      if (!clearSurveyDraft(scope, siteId, draftToken.current)) { setDraftError(true); return; }
+      completed.current = true;
+    }
     onClose();
-  }, [dirty, onClose, t, appConfirm]);
+  }, [dirty, draftDirty, scope, siteId, onClose, t, appConfirm]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -437,11 +602,11 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
       }
     };
-    const beforeUnload = (e: BeforeUnloadEvent) => { if (dirty) { e.preventDefault(); e.returnValue = ''; } };
+    const beforeUnload = (e: BeforeUnloadEvent) => { if (dirty || draftDirty) { e.preventDefault(); e.returnValue = ''; } };
     window.addEventListener('keydown', onKey);
     window.addEventListener('beforeunload', beforeUnload);
     return () => { window.removeEventListener('keydown', onKey); window.removeEventListener('beforeunload', beforeUnload); };
-  }, [closeWithConfirm, dirty]);
+  }, [closeWithConfirm, dirty, draftDirty]);
   useEffect(() => {
     scrollRef.current?.scrollTo(0, 0);
     headingRef.current?.focus({ preventScroll: true });
@@ -480,7 +645,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
         {started && <nav className={styles.navigation} aria-label={t('surveySections')}>
           <span className={styles.eyebrow}><RegionalWelcomeCopy language={lang} field="fieldNotebook">{t('surveyFieldNotebook')}</RegionalWelcomeCopy></span>
             {route.map((id, index) => { const StepIcon = STEP_ICONS[id]; return <button key={id} aria-current={step === id ? 'step' : undefined} onClick={() => goTo(id)}>
-            <span className={styles.stepNumber}>{index + 1}</span><StepIcon size={18}/><span>{id === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : id === 2 ? paired('surveyStepCurrentProduction', 'Current Production') : id === 4 ? paired('surveyStepIncomeSales', 'Income & Sales') : id === 5 ? paired('surveyStepResourcesInputs', 'Resources & Inputs') : id === 6 ? paired('stepChallenges', 'Challenges & Priorities') : STEPS[id]}</span>
+            <span className={styles.stepNumber}>{index + 1}</span><StepIcon size={18}/><span>{id === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : id === 2 ? paired('surveyStepCurrentProduction', 'Current production') : id === 4 ? paired('surveyStepIncomeSales', 'Income & sales') : id === 5 ? paired('surveyStepResourcesInputs', 'Resources & inputs') : id === 6 ? paired('stepChallenges', 'Challenges & Priorities') : STEPS[id]}</span>
           </button>; })}
           <p className={styles.navNote}><Info size={16}/>{lang === 'zu' ? <SurveyZuluDraftPair english="Answers are saved when you finish and tap Save.">{t('surveySaveReminder')}</SurveyZuluDraftPair> : t('surveySaveReminder')}</p>
         </nav>}
@@ -506,12 +671,38 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
           <main className={styles.main}>
             <div className={styles.stepHeading}><div className={styles.stepIcon}><Icon size={26}/></div><div>
               <span className={styles.eyebrow}>{t('stepOfSteps').replace('{n}', String(routeIndex + 1)).replace('{total}', String(route.length))}</span>
-              <h2 ref={headingRef} tabIndex={-1}>{step === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : step === 2 ? paired('surveyStepCurrentProduction', 'Current Production') : step === 4 ? paired('surveyStepIncomeSales', 'Income & Sales') : step === 5 ? paired('surveyStepResourcesInputs', 'Resources & Inputs') : step === 6 ? paired('stepChallenges', 'Challenges & Priorities') : step === 7 ? paired('surveyReviewTitle', 'Review your survey') : STEPS[step]}</h2>
+              <h2 ref={headingRef} tabIndex={-1}>{step === 2 && mode === 'short' ? paired('surveyGrowingResources', 'Growing & resources') : step === 2 ? paired('surveyStepCurrentProduction', 'Current production') : step === 4 ? paired('surveyStepIncomeSales', 'Income & sales') : step === 5 ? paired('surveyStepResourcesInputs', 'Resources & inputs') : step === 6 ? paired('stepChallenges', 'Challenges & Priorities') : step === 7 ? paired('surveyReviewTitle', 'Review your survey') : STEPS[step]}</h2>
             </div></div>
             <p className={styles.intro}>{step === 2 && lang === 'zu' ? <SurveyZuluDraftPair english="Record what you already grow. In the comprehensive survey, open only the production categories you want to record.">{tips[step]}</SurveyZuluDraftPair> : tips[step]}</p>
             {step < 7 && <details className={styles.mobileGuide}><summary><Info size={16}/>{step === 5 ? paired('surveyFieldGuide', 'Along the way') : step === 6 ? paired('surveyFieldGuide', 'Field guide') : t('surveyFieldGuide')}</summary><p>{step === 2 && lang === 'zu' ? <SurveyZuluDraftPair english="A notebook, harvest record or sales record can help. Do not add kilograms to bunches. Leave figures blank when your records do not cover a full year.">{fieldGuides[step]}</SurveyZuluDraftPair> : fieldGuides[step]}</p></details>}
             {step === 7 && missingSections.length > 0 && <div className={styles.missing}><strong>{t('surveyMissingEssentials')}</strong><p>{lang === 'zu' ? SURVEY_MISSING_HINT_ENGLISH : t('surveyMissingHint')}</p>{missingSections.map(item => <button key={item.step} onClick={() => goTo(item.step)}>{STEPS[item.step]}<ArrowRight size={16}/></button>)}</div>}
             {step === 7 && <SiteSurveyReview survey={survey} onEdit={id => goTo(mode === 'short' && (id === 3 || id === 4) ? 2 : id)} onEditProduction={() => { setMode('full'); goTo(2); }} productionLabels={PRODUCTION_ROWS} months={MONTH_LABELS}/>}
+            {step === 7 && ((survey.reportedProduction?.length ?? 0) > 0 || productionYear !== '') && <div lang="en" className="text-sm mb-5" style={{ padding: '14px 16px', borderRadius: 14, border: '1px solid var(--border)', background: 'var(--surface-2)' }}>
+              <strong>Year for reported production: {productionYear || 'Not recorded'}</strong>
+              <p style={{ color: 'var(--text-2)' }}>These are past or recorded results, separate from future production forecasts.</p>
+              <button type="button" className={styles.detailLink} onClick={() => { setMode('full'); goTo(2); }}><Pencil size={16}/>Edit reporting year</button>
+            </div>}
+            {step === 7 && (survey.productionConditions || survey.poultryManagement) && <div lang="en" className="space-y-3 mb-5" style={{ padding: '14px 16px', borderRadius: 14, border: '1px solid var(--border)', background: 'var(--surface-2)' }}>
+              <strong>Production observations to check</strong>
+              <p className="text-sm" style={{ color: 'var(--text-2)' }}>These describe this site and the birds here now. They do not promise a harvest or egg yield.</p>
+              {survey.productionConditions && <div className="text-sm space-y-1">
+                <p>Frost: {observationLabel(productionConditions.frost, FROST_OPTIONS)}{productionConditions.frost === 'yes' && (productionConditions.frostMonths?.length ?? 0) > 0 ? ` · ${productionConditions.frostMonths!.map(month => MONTH_ENGLISH[month - 1]).join(', ')}` : ''}.</p>
+                <p>Drainage: {observationLabel(productionConditions.drainage, DRAINAGE_OPTIONS)}.</p>
+                <p>Sunlight: {observationLabel(productionConditions.sunlight, SUNLIGHT_OPTIONS)}.</p>
+                <button type="button" className={styles.detailLink} onClick={() => goTo(1)}><Pencil size={16}/>Edit local growing conditions</button>
+                <p>Dry-season water: {observationLabel(productionConditions.drySeasonWater, DRY_WATER_OPTIONS)}.</p>
+                <button type="button" className={styles.detailLink} onClick={() => goTo(5)}><Pencil size={16}/>Edit water observation</button>
+              </div>}
+              {survey.poultryManagement && <div className="text-sm space-y-1">
+                <p>Current chicken purpose: {observationLabel(poultryManagement.purpose, POULTRY_PURPOSE_OPTIONS)}.</p>
+                <p>Recorded breed or strain: {poultryManagement.recordedBreed?.trim() || 'Not recorded'}.</p>
+                <p>Hens laying now: {layingHens === '' ? 'Not recorded' : layingHens}.</p>
+                <p>Clean drinking water: {observationLabel(poultryManagement.drinkingWater, POULTRY_WATER_OPTIONS)}.</p>
+                <p>Feeding: {observationLabel(poultryManagement.feeding, POULTRY_FEED_OPTIONS)}.</p>
+                <p>Night protection: {observationLabel(poultryManagement.nightProtection, POULTRY_PROTECTION_OPTIONS)}.</p>
+                <button type="button" className={styles.detailLink} onClick={() => goTo(mode === 'short' ? 2 : 3)}><Pencil size={16}/>Edit chicken observations</button>
+              </div>}
+            </div>}
             <div className={styles.questions}>
         {/* ── Step 0: Site & Goals ── */}
         {step === 0 && (
@@ -637,6 +828,13 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
                 ))}
               </div>
             </div>
+            <details lang="en" style={{ padding: '8px 14px', borderRadius: 12, border: '1px solid var(--border)', background: 'var(--surface-2)' }}>
+              <summary className="font-sans font-semibold" style={{ minHeight: 48, cursor: 'pointer', paddingTop: 12 }}>Water for the production plan (optional)</summary>
+              <div className="space-y-3 pb-3">
+                <p className="text-sm" style={{ color: 'var(--text-2)' }}>Record what happens here in the dry season. A tap, tank or irrigation pipe alone does not tell us whether water lasts.</p>
+                <ObservationChoices label="Can you water the growing area through the dry season?" value={productionConditions.drySeasonWater} options={DRY_WATER_OPTIONS} onChange={drySeasonWater => setProductionConditions(previous => ({ ...previous, drySeasonWater }))}/>
+              </div>
+            </details>
           </div>
         )}
 
@@ -753,6 +951,21 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
                 ))}
               </div>
             </div>
+            <details lang="en" style={{ padding: '8px 14px', borderRadius: 12, border: '1px solid var(--border)', background: 'var(--surface-2)' }}>
+              <summary className="font-sans font-semibold" style={{ minHeight: 48, cursor: 'pointer', paddingTop: 12 }}>Local growing conditions (optional)</summary>
+              <div className="space-y-4 pb-3">
+                <p className="text-sm" style={{ color: 'var(--text-2)' }}>Your observations help us check the production plan for this growing area. Leave a question blank or choose Not sure when you do not know.</p>
+                <ObservationChoices label="Have you seen frost in this growing area?" value={productionConditions.frost} options={FROST_OPTIONS} onChange={frost => setProductionConditions(previous => ({ ...previous, frost, frostMonths: frost === 'yes' ? previous.frostMonths : undefined }))}/>
+                {productionConditions.frost === 'yes' && <div>
+                  <SectionLabel>Which months have you seen frost? (optional)</SectionLabel>
+                  <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
+                    {MONTH_ENGLISH.map((month, index) => { const monthNumber = index + 1; const selected = productionConditions.frostMonths?.includes(monthNumber) ?? false; return <button key={month} type="button" aria-label={`Frost observed in ${month}`} aria-pressed={selected} onClick={() => setProductionConditions(previous => ({ ...previous, frostMonths: selected ? previous.frostMonths?.filter(value => value !== monthNumber) : [...(previous.frostMonths ?? []), monthNumber].sort((a, b) => a - b) }))} style={{ minHeight: 48, borderRadius: 8, border: `1px solid ${selected ? 'var(--brand)' : 'var(--border)'}`, background: selected ? 'var(--brand)' : 'var(--surface)', color: selected ? 'var(--survey-on-brand)' : 'var(--text-2)' }}>{month}</button>; })}
+                  </div>
+                </div>}
+                <ObservationChoices label="What happens to water after rain in the growing area?" value={productionConditions.drainage} options={DRAINAGE_OPTIONS} onChange={drainage => setProductionConditions(previous => ({ ...previous, drainage }))}/>
+                <ObservationChoices label="How much sun reaches the growing area?" value={productionConditions.sunlight} options={SUNLIGHT_OPTIONS} onChange={sunlight => setProductionConditions(previous => ({ ...previous, sunlight }))}/>
+              </div>
+            </details>
           </div>
         )}
 
@@ -787,6 +1000,11 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
               <div className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-2)', lineHeight: 1.45 }}>
                 {lang === 'zu' ? <SurveyZuluDraftPair english="Report what you know — leave anything blank if you are not sure. This helps us measure progress over time.">{t('surveyReportWhatYouKnow')}</SurveyZuluDraftPair> : t('surveyReportWhatYouKnow')} {lang === 'zu' ? <SurveyZuluDraftPair english="Use the same year and unit for quantity, household use and sales. Income is for that same year.">{t('surveySameYearUnit')}</SurveyZuluDraftPair> : t('surveySameYearUnit')}
               </div>
+              <label lang="en" className="font-sans block mb-4 text-sm">Which year do these production figures describe? (optional)
+                <input type="number" min="1900" max={new Date().getFullYear()} step="1" value={productionYear} onChange={event => setProductionYear(event.target.value)} placeholder="Leave blank if not known" aria-invalid={invalidProductionYear} className="w-full mt-2" style={{ minHeight: 48, padding: '10px 14px', borderRadius: 11, background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)' }}/>
+                <small className="block mt-1" style={{ color: 'var(--text-2)' }}>Use the same year for quantity, household use, sales and income. The date you save this survey does not fill in this year.</small>
+                {invalidProductionYear && <small role="alert" className="block mt-1">Enter a whole year from 1900 to {new Date().getFullYear()}, or leave it blank.</small>}
+              </label>
               <div className="space-y-3">
                 {PRODUCTION_ROWS.map(({ category, label, hint, englishLabel, englishHint }) => {
                   const row = productionRow(category);
@@ -893,6 +1111,24 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
                 ))}
               </div>
             </div>
+            {(livestock.includes('chickens') || Object.keys(poultryManagement).length > 0 || layingHens !== '') && <details lang="en" style={{ padding: '8px 14px', borderRadius: 12, border: '1px solid var(--border)', background: 'var(--surface-2)' }}>
+              <summary className="font-sans font-semibold" style={{ minHeight: 48, cursor: 'pointer', paddingTop: 12 }}>Current chicken details (optional)</summary>
+              <div className="space-y-4 pb-3">
+                <p className="text-sm" style={{ color: 'var(--text-2)' }}>Describe the birds you keep now. A coop is a building; it does not tell us how many hens are laying.{lang === 'zu' && ' These questions are shown in English until reviewed translations are available.'}</p>
+                <ObservationChoices label="What are these chickens kept for?" value={poultryManagement.purpose} options={POULTRY_PURPOSE_OPTIONS} onChange={purpose => setPoultryManagement(previous => ({ ...previous, purpose }))}/>
+                <label className="font-sans block text-sm">Breed or strain, if you know it (optional)
+                  <input type="text" value={poultryManagement.recordedBreed ?? ''} maxLength={120} onChange={event => setPoultryManagement(previous => ({ ...previous, recordedBreed: event.target.value }))} placeholder="Name on your bird supplier's record" className="w-full mt-2" style={{ minHeight: 48, padding: '10px 14px', borderRadius: 11, background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)' }}/>
+                </label>
+                <label className="font-sans block text-sm">How many hens are laying now? (optional)
+                  <input type="number" min="0" step="1" value={layingHens} onChange={event => setLayingHens(event.target.value)} placeholder="Leave blank if not known" className="w-full mt-2" aria-invalid={invalidLayingHens} style={{ minHeight: 48, padding: '10px 14px', borderRadius: 11, background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)' }}/>
+                  <small className="block mt-1" style={{ color: 'var(--text-2)' }}>Count hens laying now, not coops, chicks or all birds.</small>
+                  {invalidLayingHens && <small role="alert" className="block mt-1">Enter a whole number of hens, zero, or leave it blank.</small>}
+                </label>
+                <ObservationChoices label="Do the birds have clean drinking water every day?" value={poultryManagement.drinkingWater} options={POULTRY_WATER_OPTIONS} onChange={drinkingWater => setPoultryManagement(previous => ({ ...previous, drinkingWater }))}/>
+                <ObservationChoices label="What do these chickens mainly eat?" value={poultryManagement.feeding} options={POULTRY_FEED_OPTIONS} onChange={feeding => setPoultryManagement(previous => ({ ...previous, feeding }))}/>
+                <ObservationChoices label="How are the birds protected at night?" value={poultryManagement.nightProtection} options={POULTRY_PROTECTION_OPTIONS} onChange={nightProtection => setPoultryManagement(previous => ({ ...previous, nightProtection }))}/>
+              </div>
+            </details>}
           </div>
         )}
 
@@ -970,7 +1206,7 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
               </div>
               <textarea aria-label={t('sectionAnythingElseLimaShouldKnow')} value={notes} onChange={e => setNotes(e.target.value)}
                 placeholder={lang === 'zu' ? 'e.g. North slope gets afternoon shade from the ridge. We had a tree removed and the soil there is very hard…' : t('notesPlaceholder')}
-                rows={4} className="w-full font-sans"
+                rows={4} className="w-full font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                 style={{ padding: '10px 14px', borderRadius: 11, background: 'var(--surface)', border: '1px solid var(--border)', fontSize: 14, color: 'var(--text)', outline: 'none', resize: 'none', lineHeight: 1.5 }} />
             </div>
           </div>
@@ -996,8 +1232,23 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
       </div>
 
       <footer className={styles.footer}>
+        {draftError && <p lang="en" role="alert" className={styles.warning}>Your unfinished answers could not be kept on this browser, or changed in another tab. Keep this screen open. <button onClick={() => {
+          const token = writeSurveyDraft(scope, draft, draftToken.current);
+          if (token !== null) draftToken.current = token;
+          setDraftError(token === null);
+        }}>Try keeping the draft again</button></p>}
+        {saveConflict && <p lang="en" role="alert" className={styles.warning}>Your saved survey changed while this screen was open. Your draft is separate. Close and reopen the survey to check the newer saved answers before saving.</p>}
+        {draftDirty && !draftError && <p lang="en" role="status" className={styles.smallNote}>Unfinished answers kept on this browser. Your report changes only after Save &amp; continue. <button className={styles.back} aria-label="Close and keep draft" onClick={() => {
+          const token = writeSurveyDraft(scope, draft, draftToken.current);
+          if (token === null) { setDraftError(true); return; }
+          draftToken.current = token;
+          completed.current = true;
+          onClose();
+        }}>Close and keep draft</button></p>}
         {!started && <div className={styles.footerInner}><span className={styles.saveReminder}>{t('surveySwitchHint')}</span><button className={styles.primary} onClick={() => { if (!route.includes(step)) setStep(2); setStarted(true); }}><RegionalWelcomeCopy language={lang} field={dirty || existing ? 'continue' : 'begin'}>{dirty || existing ? t('surveyContinue') : t('surveyBegin')}</RegionalWelcomeCopy><ArrowRight size={18}/></button></div>}
         {saveError && <p role="alert" className={styles.warning}>{lang === 'zu' ? <SurveyZuluDraftPair english="Your survey could not be saved. Keep this screen open and try again.">{t('surveySaveError')}</SurveyZuluDraftPair> : t('surveySaveError')}</p>}
+        {started && invalidLayingHens && <p lang="en" role="alert" className={styles.warning}>Check the laying-hen count before saving. Enter a whole number, zero, or leave it blank.</p>}
+        {started && invalidProductionYear && <p lang="en" role="alert" className={styles.warning}>Check the production reporting year before saving. Use a recorded year up to {new Date().getFullYear()}, or leave it blank.</p>}
         {started && (invalidArea || invalidProduction.length > 0) && <p role="alert" className={styles.warning}>{lang === 'zu' ? <SurveyZuluDraftPair english="Check the production entries and areas before saving. Use positive numbers or zero; leave unknowns blank.">{t('surveyFixBeforeSave')}</SurveyZuluDraftPair> : t('surveyFixBeforeSave')}</p>}
         {started && <div className={styles.footerInner}>
           <button className={styles.back} onClick={() => routeIndex > 0 ? goTo(route[routeIndex - 1]) : setStarted(false)}><ChevronLeft size={17}/>{t('buttonBack')}</button>

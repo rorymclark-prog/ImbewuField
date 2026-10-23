@@ -1,0 +1,62 @@
+{
+  "title": "Independent semantic check of four supplemental isiZulu technical-anchor candidates",
+  "date": "2026-10-05",
+  "readOnly": true,
+  "repository": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "worktreeHead": "ee4afe0d05acdb4f22ea0de046cb1e63d47fd79a",
+  "inputSha256": {
+    "/tmp/imbewu-zu-live-fields-20261005.jsonl": "2dc5ad5d1c66dbf6cdf693680d7a76484a9a6371bacfb736528a1134adb42886",
+    "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/lib/course-modules.ts": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+    "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/lib/course-localization.ts": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae"
+  },
+  "fields": [
+    {
+      "id": "water-harvesting-l1.body[0]",
+      "source": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.",
+      "fullSourceParagraph": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.",
+      "currentTarget": "Olunye uhlobo lwe-swale luwumsele osendaweni elinganayo, ulandele umugqa we-contour. Lubambezela amanzi agelezayo bese luwasabalalisa, ukuze amanye amanzi akwazi ukungena emhlabathini ofanele. Amanye ama-swale aklanywa abe nomthambeka omncane olawulwayo, ohambisa amanzi amaningi kancane aye endaweni ephephile yokuphuma. Ukuthi iyiphi indlela efanele umhlaba wakho kuncike emhlabathini, emthambekeni, ekugelezeni kwamanzi nasekugelezeni kwamanzi ezikhukhula zemvula. Ngaphambi kokumba, cela umeluleki wendawo oqeqeshiwe ahlole umugqa, indlela yokuchichima nendawo ezokwamukela amanzi.",
+      "candidate": "One kind of swale is a level trench on contour. Lubambezela amanzi agelezayo bese luwasabalalisa, ukuze amanye amanzi akwazi ukungena emhlabathini ofanele. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Ukuthi iyiphi indlela efanele umhlaba wakho kuncike emhlabathini, emthambekeni, drainage kanye storm flow. Ngaphambi kokumba, cela umeluleki wendawo oqeqeshiwe ahlole umugqa, overflow and receiving point.",
+      "decision": "accept-as-source-bound-mixed-draft",
+      "reason": "Retains the source level-contour geometry, second-design option and its slight/controlled grade, excess flow, slow movement, safe outlet, all four suitability factors as distinct (soil, slope, drainage, storm flow), and trained-adviser check of line, overflow and receiver before digging. The exact English anchors protect the uncertain technical vocabulary. The local continuation “Lubambezela...” is anaphoric to the preceding swale/trench; other original localized text around grade/outlet and suitability is preserved. This is semantic backcheck only, not fluent-speaker approval.",
+      "risk": "Mixed grammar around retained terms should be reviewed for idiomatic Zulu; no instruction or condition was weakened.",
+      "sourceConcatenationCheck": "The recorded source is copied exactly from the current canonical lesson field; the proposed mixed target preserves all source propositions and constraints in order."
+    },
+    {
+      "id": "water-harvesting-l2.body[7]",
+      "source": "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
+      "currentTarget": "Gcina i-spillway ingenamfucumfucu, futhi unakekele izitshalo ezimboze ibhange ngendlela eshiwo emklamweni. Ungatshali izihlahla odongeni lwedamu lomhlabathi.",
+      "candidate": "Keep the spillway clear, futhi unakekele the bank cover specified in the design. Ungatshali izihlahla odongeni lwedamu lomhlabathi.",
+      "decision": "accept-as-source-bound-mixed-draft",
+      "reason": "“Keep ... clear” preserves unobstructed status without narrowing to removal of rubbish; retained “the bank cover specified in the design” preserves the designed physical-bank protection; final Zulu sentence correctly retains the prohibition on planting trees on the earth-dam wall. All three source sentences/conditions remain in order.",
+      "risk": "Mixed-language morphology/idiom merits normal facilitator review; no semantic hold is required because the exact technical anchor remains.",
+      "sourceConcatenationCheck": "The recorded source is copied exactly from the current canonical lesson field; the proposed mixed target preserves all source propositions and constraints in order."
+    },
+    {
+      "id": "small-livestock-l2.body[1].sentence[0]",
+      "source": "South Africa has two native honeybee subspecies.",
+      "currentTarget": "INingizimu Afrika inezinhlobo ezimbili zezinyosi zoju zomdabu ezingaphansi kohlobo olulodwa.",
+      "candidate": "South Africa has two native honeybee subspecies.",
+      "decision": "accept-exact-English-technical-hold",
+      "reason": "Candidate is exact canonical source. It preserves country, count two, native status, honeybee identity, and the taxonomic rank without an uncertain paraphrase. Remaining paragraph clauses about ranges, demarcation and pre-movement Department/experienced-beekeeper checks are not changed.",
+      "risk": "None identified in this sentence; keep subsequent movement restrictions/source order intact.",
+      "sourceConcatenationCheck": "The recorded source is copied exactly from the current canonical lesson field; the proposed mixed target preserves all source propositions and constraints in order."
+    },
+    {
+      "id": "soil-health-l3.title",
+      "source": "Mulching and Cover Crops: Protecting and Building Soil",
+      "currentTarget": "I-Mulch Nezitshalo Zokumboza Umhlabathi: Ukuvikela Nokwakha Umhlabathi",
+      "candidate": "I-Mulch Nezitshalo Zokumboza Umhlabathi: Ukuvikela Umhlabathi kanye Building Soil",
+      "decision": "accept-as-source-bound-mixed-title-draft",
+      "reason": "Localizes “Mulching and Cover Crops” and “Protecting Soil” while preserving exact “Building Soil” to avoid possible physical-construction sense in “Ukwakha Umhlabathi.” The technical English is source-exact and visible as draft, so meaning/scope is retained.",
+      "risk": "Mixed title may need idiomatic word-order polishing by a Zulu speaker; no title scope or soil meaning is lost.",
+      "sourceConcatenationCheck": "The recorded source is copied exactly from the current canonical lesson field; the proposed mixed target preserves all source propositions and constraints in order."
+    }
+  ],
+  "aggregate": {
+    "accepted": 4,
+    "repair": 0,
+    "hold": 0,
+    "publicationStatus": "Machine-draft wording can be published with the existing unreviewed label under user authorization; these findings do not certify fluency or approve the wording as final.",
+    "scope": "Only the four requested fields were checked; surrounding source-bound clauses and metadata remain unchanged."
+  }
+}

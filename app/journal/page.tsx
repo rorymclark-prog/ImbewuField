@@ -3,40 +3,30 @@
 import FieldJournal from '@/components/journal/FieldJournal';
 import TabBar from '@/components/TabBar';
 import LimaBar from '@/components/LimaBar';
-import SettingsButton from '@/components/SettingsButton';
-import BrandLogo from '@/components/BrandLogo';
-import BackButton from '@/components/BackButton';
 import LessonLink from '@/components/design/LessonLink';
-import MenuButton from '@/components/MenuButton';
+import AppHeader from '@/components/layout/AppHeader';
 import { useLanguage } from '@/lib/i18n';
-import { APP_HEADER_INSET } from '@/lib/app-header';
 
 export default function JournalPage() {
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const isZulu = lang === 'zu';
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+    <div className="flex flex-col overflow-hidden h-[100dvh] lg:h-auto lg:min-h-0 lg:overflow-visible" style={{ background: 'var(--bg-0)' }}>
       {/* Header */}
-      {/* The in-header BackButton is what keeps the global floating back pill
-          away (see lib/back-routes.ts and components/BackControl): without it
-          the pill rendered on top of the brand logo and clipped the title, so
-          the page read "ield Journal". Suppressing the pill instead would
-          strand the page — tests/back-control.test.ts defends that. */}
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ ...APP_HEADER_INSET, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
-        <MenuButton />
-        <BackButton fallback="/home" />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--text-secondary)' }}>{isZulu ? 'Ijenali Yasensimini' : 'Field Journal'}</h1>
-        <div className="flex-1" />
-        <LessonLink id="journal:overview" label={isZulu ? 'Funda' : 'Learn'} />
-        <SettingsButton />
-      </header>
+      <AppHeader
+        title={t('navFieldJournal')}
+        right={<LessonLink id="journal:overview" label={isZulu ? 'Funda' : 'Learn'} />}
+      />
+      {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own
+          real, visible <h1> now that the old header's h1 is gone. */}
+      <h1 className="font-display px-3 sm:px-4 pt-3 m-0" style={{ fontSize: 15, color: 'var(--text-primary)' }}>
+        {t('navFieldJournal')}
+      </h1>
 
       {/* Body — the dated record of what actually happened on the land. Harvest
           weights and sales stay in /records and /finances, where the ledger, the
           harvest reconciliation and the CSV export already live. */}
-      <main className="flex-1 overflow-y-auto" style={{ background: 'var(--bg-0)' }}>
+      <main className="flex-1 overflow-y-auto lg:flex-none lg:overflow-visible" style={{ background: 'var(--bg-0)' }}>
         <FieldJournal />
       </main>
 

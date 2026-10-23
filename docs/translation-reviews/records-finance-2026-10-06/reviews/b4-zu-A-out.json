@@ -1,0 +1,20 @@
+[
+ {"id":"I001","back":"Selling directly/at the farm about R{price}/kg","flags":["'ngqo/epulazini' slash form is terse but readable"]},
+ {"id":"I002","back":"Enter a quantity above 0. Eggs and things need whole numbers.","flags":["'kudinga' wrong subject concord for plural 'amaqanda nezinto' (should be 'zidinga'/'adinga')","'nezinto' = 'and things' is vague; unclear which items","'Faka' is fine for enter"]},
+ {"id":"I003","back":"Estimated; confirm in your area.","flags":["'qinisekisa' reads as an instruction to verify locally; ok"]},
+ {"id":"I004","back":"Keep the product, quantity, unit and total that are recorded when the invoice for this sale is written.","flags":["'okurekhodiwe' agreement awkward after a list of nouns","'lokhu kuthengisa' (this selling) is stiff","does not say these cannot be changed, only 'keep'"]},
+ {"id":"I005","back":"Reference of the first paper invoice","flags":["'yokuqala' means 'first', not clearly 'original'; ambiguous","'ye-invoyisi yephepha' concord questionable"]},
+ {"id":"I006","back":"Recommended price (average of prices found); confirm in your area.","flags":["'enconyiwe' means recommended/advised, may sound like a promise or advice rather than a guide","'isilinganiso' could mean estimate or average"]},
+ {"id":"I007","back":"Shops/in bulk about R{price}/kg","flags":["'Izitolo/ngobuningi' mixes noun and adverbial; no verb 'selling'"]},
+ {"id":"I008","back":"Guide from the source.","flags":["'Isiqondiso' (guide/direction) used, not 'umhlahlandlela'","'emthonjeni' = at the spring/source, ambiguous"]},
+ {"id":"I009","back":"selling directly/at the farm about R{price}/kg","flags":[]},
+ {"id":"I010","back":"the guide price as of {date}.","flags":["'yesiqondiso' used for 'guide' instead of 'yomhlahlandlela'","'yango-{date}' concord/prefix odd with a date placeholder"]},
+ {"id":"I011","back":"shops/in bulk about R{price}/kg","flags":[]},
+ {"id":"I153","back":"The invoice is saved and linked to an existing sale. Its amount and money received are counted once only.","flags":["'inani' amount vs 'imali engenile' money in; fine","'kubalwa' concord singular for two subjects"]},
+ {"id":"I154","back":"Choose an available sale that has an amount and a unit recorded in your own records.","flags":["'okurekhodiwe' agreement awkward","'siqu' ok"]},
+ {"id":"I155","back":"Save the invoice, payment and amount together.","flags":["'inkokhelo' = payment; 'inani' amount: unclear what amount"]},
+ {"id":"I156","back":"Choose a sale with a recorded amount and unit. An invoice that already exists must be reopened under Saved.","flags":["'kokuthi Okulondoloziwe' odd; 'kokuthi' is not a normal 'under/in' preposition","'vulwa kabusha' = reopened"]},
+ {"id":"I157","back":"The product, quantity, unit, total and payment date that are recorded stay together. This invoice records this sale without adding it again.","flags":["'kokuthi' pattern","'okurekhodiwe' agreement"]},
+ {"id":"I158","back":"Paid invoices add money received and product amounts to My Records in their recorded units. Unpaid invoices remain unpaid.","flags":["'Amarekhodi Ami' used instead of 'Okurekhodiwe Kwami' (the page's existing term)","'kokuthi' used as 'to' - odd","'Ama-invoyisi' spelling variant vs 'I-invoyisi'","'asala engakakhokhwa' ok"]},
+ {"id":"I159","back":"Marking the invoice as paid adds its product amounts to My Records in their recorded units.","flags":["'Amarekhodi Ami' used instead of 'Okurekhodiwe Kwami'","'kokuthi' odd"]}
+]

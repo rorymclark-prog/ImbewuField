@@ -1,0 +1,62 @@
+[
+  {
+    "url": "/course-decks/soil-health/st/slide-18.webp",
+    "bytes": 505246,
+    "sha256": "491aa902657aff3b5144fcb2ebb42d780241db89ebb9fcd7a526c3d8bf678953",
+    "beforeSHA256": "ffbde828b00402b9af88a878cf11d14ba9cce4e2c744d770520ce5ae30af6f27",
+    "dimensions": [
+      1440,
+      5400
+    ]
+  },
+  {
+    "url": "/course-decks/soil-health/ve/slide-04.webp",
+    "bytes": 223870,
+    "sha256": "4a2b4c36b097ab3cc8656ec50b7c0f85b5ccef4c6d846ef9fd9b7a80eae25cc6",
+    "beforeSHA256": "31d4c2708f51440b228cd8a407da299c55a587bae6bcbfe7a9ff80eecbd40a03",
+    "dimensions": [
+      1440,
+      5400
+    ]
+  },
+  {
+    "url": "/course-decks/soil-health/ve/slide-08.webp",
+    "bytes": 575278,
+    "sha256": "a5430d9a80bc7ace17577b161893988595cafebb9487ae4ef2ca096958190a8e",
+    "beforeSHA256": "aacd0e2492f0044ca01f3b965859ee5a4dff2173ba59970d623bbd7eb55de8c2",
+    "dimensions": [
+      1440,
+      5400
+    ]
+  },
+  {
+    "url": "/course-decks/soil-health/ts/slide-08.webp",
+    "bytes": 577128,
+    "sha256": "007de27c0afa03991de395f89b4ba0bd7e0c9bcf3b14d19d9ccf2ddf4079cba1",
+    "beforeSHA256": "e0fb04baa111fb194a6f22f3388ad805e6d402103503c754801dad5be5acacb0",
+    "dimensions": [
+      1440,
+      5400
+    ]
+  },
+  {
+    "url": "/course-decks/soil-health/ts/slide-13.webp",
+    "bytes": 275758,
+    "sha256": "99f7ecb459d6fc25c4e383e960e26f334bad5fbcaa7f957a6f65195d0ffabf8a",
+    "beforeSHA256": "588113380085db9ab6e9a9fa9c4bea6174e31b76284bbfec6d31998a859946ab",
+    "dimensions": [
+      1440,
+      5400
+    ]
+  },
+  {
+    "url": "/course-decks/soil-health/ts/slide-18.webp",
+    "bytes": 525032,
+    "sha256": "8d1d7346b292eee47b1c3c76c07428331e8b9432a9faaed0824269703ad1d330",
+    "beforeSHA256": "73f06004d0850d07abe7257f79c92d7face0a67355d5954bf25020a51c72eed6",
+    "dimensions": [
+      1440,
+      5400
+    ]
+  }
+]

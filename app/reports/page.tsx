@@ -5,9 +5,8 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FileText, MapPin, Plus, ArrowRight } from 'lucide-react';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
-import SettingsButton from '@/components/SettingsButton';
+import AppHeader from '@/components/layout/AppHeader';
+import TabBar from '@/components/TabBar';
 import SiteCropPlanPreview from '@/components/report/SiteCropPlanPreview';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
@@ -59,10 +58,31 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
   const dateLocale = lang === 'zu' ? 'zu-ZA' : 'en-ZA';
   const hasEnglishSavedReport = reports.some(report => report.lang === 'en');
   if (opened) return <ReportView locationData={opened.location} siteData={opened.siteData} waterData={opened.waterData} savedPlaces={places} savedReport={opened} activePlaceId={places.find(p => designSiteIdFromLocation(p) === designSiteIdFromLocation(opened.location))?.id} onClose={() => setOpened(null)} />;
-  return <main className={styles.root} style={{ height: '100dvh' }}><div className={styles.wrap}>
-    <header className={styles.row}><MenuButton /><BackButton fallback="/home" /><SettingsButton /></header>
+  // sdesk-04: /reports used to be three floating Menu/Back/Settings pills over the hero, with no
+  // brand header, no title and no bottom nav — the one staff route that didn't share the
+  // mentor/ngo/funder/assessments chrome. Same header shell + TabBar as those routes now.
+  return <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+    <AppHeader title={t('reportsTitle')} />
+    {/* staff-04/sdesk-06: styles.root (components/MelDashboard.module.css, shared with the
+        staff-dark track — not edited here) carries a 180px padding-bottom sized for a bar this
+        page didn't use to have, which left a long blank tail below short content. TabBar now
+        supplies its own clearance (and hides entirely at lg+), so this page only needs enough
+        padding to clear it on phone. */}
+    <main className={styles.root} style={{ flex: 1, paddingBottom: 32 }}><div className={styles.wrap}>
     <div className={styles.hero} style={{ marginTop: 20 }}><h1>{t('reportsTitle')}</h1><p>{t('reportsIntro')}</p></div>
-    {!allowed ? <p>{t('reportsFunderNotice')} <Link href="/funder">{t('reportsOpenFunderView')}</Link></p> : !ready ? <p role="status" aria-live="polite">{t('reportsLoading')}</p> : <>
+    {!allowed ? (
+      // staff-15: this used to read as one sentence with a plain inline Link at the end —
+      // now a proper card with a button-styled action to the funder workspace.
+      <div className={styles.card} style={{ textAlign: 'center' }}>
+        <p>{t('reportsFunderNotice')}</p>
+        <Link
+          href="/funder"
+          style={{ display: 'inline-flex', minHeight: 44, alignItems: 'center', justifyContent: 'center', gap: 8, fontWeight: 600, padding: '10px 20px', borderRadius: 12, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', textDecoration: 'none', marginTop: 8 }}
+        >
+          {t('reportsOpenFunderView')}
+        </Link>
+      </div>
+    ) : !ready ? <p role="status" aria-live="polite">{t('reportsLoading')}</p> : <>
       {sample && <p className={styles.notice}>{t('reportsSampleWorkspaceNotice')}</p>}
       {lang === 'zu' && hasEnglishSavedReport && <p className={styles.notice} role="note">Eminye imibiko egciniwe inombhalo ophelele wesiNgisi. Izilawuli zalapha zisesiZulu.</p>}
       <div className={styles.row} role="group" aria-label={t('reportsChooseSitesOrReports')}><button aria-pressed={view==='sites'} onClick={()=>setView('sites')}>{t('reportsSavedSites')} · {choices.filter(c=>c.place).length}</button><button aria-pressed={view==='reports'} onClick={()=>setView('reports')}>{t('reportsSavedReports')} · {reports.length}</button></div>
@@ -79,5 +99,7 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
       </article>; })}</div></>}
       {view==='reports'&&<><h2>{t('reportsSavedReports')}</h2><p>{t('reportsEarlierReportsDescription')}</p>{!reports.length&&<p>{t('reportsNoSavedReports')}</p>}{choices.filter(c=>c.reports.length).map(choice=><section className={styles.card} style={{marginBottom:16}} key={choice.siteId}><h3>{choice.place?.name??t('reportsUnlinkedSiteHeading')}</h3>{!choice.place&&<p>{t('reportsRemovedPinNote')}</p>}{choice.reports.map(report=><p key={report.id}><button disabled={opening} onClick={()=>void openSaved(report)}>{report.name} · {new Date(report.savedAt).toLocaleString(dateLocale)}</button></p>)}</section>)}</>}
     </>}
-  </div></main>;
+  </div></main>
+    <TabBar hideAtDesktop />
+  </div>;
 }

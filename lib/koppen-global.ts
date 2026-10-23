@@ -231,19 +231,54 @@ export function classifyKoppen(c: MonthlyClimate): KoppenResult {
  */
 export type AtlasRainPattern = 'summer' | 'winter' | 'all-year' | 'mild-frost';
 
+/*
+ * FROST FIRST, RAIN SECOND (2026-09-27 crop-plan audit).
+ *
+ * The catalog's four columns are FROST regimes before they are rainfall regimes
+ * (lib/crop-catalog.ts header): 'summer' is the hard-frost interior, 'mild-frost' is
+ * KZN DARD's "warm areas / light frosts" column, 'all-year' the frost-free coast and
+ * 'winter' the mild Mediterranean Cape. This bridge used to choose by rain share alone
+ * and tested temperature once, backwards: a coldest month under 4 °C — the harshest
+ * frost in the country — was sent to the LIGHT-frost calendar, while frost-free lowveld
+ * and coast (the Mkuze demo farm, Durban, Mbombela, and the catalog's own light-frost
+ * example, the Upper Highway) could only ever reach the hard-frost windows, and
+ * Sutherland-type hard-frost sites with bimodal rain reached the frost-free column.
+ *
+ * Coldest-month MEAN is the one temperature every caller has, so the thresholds are
+ * stated on it. They lean cold on purpose: a site near a line lands in the COLDER
+ * column, whose windows wait for frost to pass.
+ *   < 7 °C   hard frost (Lesotho border, Sutherland, high Karoo) — frost column always.
+ *   < 11 °C  regular frost (Bloemfontein ~8, Johannesburg ~10) — frost column unless the
+ *            rain is winter-dominant (the Cape's own column already waits out winter).
+ *   >= 13 °C with summer-dominant rain, not arid — light frost in low pockets at most (Upper
+ *            Highway, Mbombela ~14, Mkuze ~17, Durban ~17): KZN DARD's warm-area column,
+ *            the only one of the four checked crop by crop. A frost-free site loses
+ *            little on a light-frost calendar; a frost-prone site on a frost-free one
+ *            loses its crops.
+ */
+export const HARD_FROST_COLDEST_MONTH_C = 7;
+export const FROST_COLDEST_MONTH_C = 11;
+export const LIGHT_FROST_COLDEST_MONTH_C = 13;
+
 export function rainPatternFor(c: MonthlyClimate, koppen: KoppenResult): AtlasRainPattern {
   const map = c.precipMm.reduce((s, p) => s + p, 0);
   const summer = summerMonthIndices(c.lat);
   const pSummer = summer.reduce((s, m) => s + c.precipMm[m], 0);
   const tCold = Math.min(...c.tempC);
+  // Tropical (group A) means a coldest month >= 18 °C — never a frost climate, even
+  // when a coarse grid cell puts the number on the wrong side of a threshold above.
+  const tropical = koppen.group === 'A';
 
-  // A cold month below ~4 °C mean implies frost nights around it. The planner's
-  // 'mild-frost' pattern exists for exactly that: rain is not the binding constraint,
-  // the frost window is.
-  if (tCold < 4 && koppen.group !== 'A') return 'mild-frost';
-  if (map <= 0) return 'summer';
-  const summerShare = pSummer / map;
-  if (summerShare >= 0.65) return 'summer';
+  if (!tropical && tCold < HARD_FROST_COLDEST_MONTH_C) return 'summer';
+  const summerShare = map > 0 ? pSummer / map : 1;
+  if (summerShare >= 0.65) {
+    // Arid (group B) is excluded: a desert's clear winter nights fall far below its
+    // monthly mean (Upington frosts with a coldest month near 11-13 °C), so the mean
+    // alone cannot clear it of frost.
+    const lightFrostAtMost = tropical || (koppen.group !== 'B' && tCold >= LIGHT_FROST_COLDEST_MONTH_C);
+    return lightFrostAtMost ? 'mild-frost' : 'summer';
+  }
   if (summerShare <= 0.35) return 'winter';
+  if (!tropical && tCold < FROST_COLDEST_MONTH_C) return 'summer';
   return 'all-year';
 }

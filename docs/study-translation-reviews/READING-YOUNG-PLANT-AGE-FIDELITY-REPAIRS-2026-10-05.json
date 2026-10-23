@@ -1,0 +1,133 @@
+{
+  "packetSha256": "9db4729351160906655e53a1bd5b528008fcb6902764413798ee5cdeda084427",
+  "reviewStatus": "machine-draft-unreviewed",
+  "entries": [
+    {
+      "entryIndex": 21,
+      "languageCode": "st",
+      "lessonId": "reading-landscape-l2",
+      "field": "keyPoints[3]",
+      "status": "repair",
+      "exactSource": "Check local frost before placing tender pawpaw or young citrus",
+      "currentTarget": "Hlahloba serame (frost) sa lehae pele o beha pawpaw e bonolo kapa citrus e nyane",
+      "candidateTarget": "Hlahloba serame (frost) sa lehae pele o beha pawpaw e bonolo kapa citrus e nyane",
+      "repairedTarget": "Hlahloba serame (frost) sa lehae pele o beha pawpaw e bonolo kapa young citrus",
+      "reason": "Existing small-citrus wording does not preserve age. Retain exact age phrase narrowly.",
+      "sourceBound": true,
+      "reviewStatus": "machine-draft-unreviewed",
+      "paragraphSourcePairs": null,
+      "orderAndIndexEvidence": {
+        "keyPointIndex": 3,
+        "keyPointCount": 4,
+        "orderPreserved": true
+      }
+    },
+    {
+      "entryIndex": 22,
+      "languageCode": "st",
+      "lessonId": "reading-landscape-l2",
+      "field": "quiz[0].question",
+      "status": "repair",
+      "exactSource": "Where should a farmer first look for a frost-tender young pawpaw on a Highveld smallholding?",
+      "currentTarget": "Molemi o lokela ho qala ka ho batla hokae bakeng sa pawpaw e nyane e kotsing ya serame (frost-tender) polasing e nyane Highveld?",
+      "candidateTarget": "Molemi o lokela ho qala ka ho batla hokae bakeng sa pawpaw e nyane e kotsing ya serame (frost-tender) polasing e nyane Highveld?",
+      "repairedTarget": "Molemi o lokela ho qala ka ho batla hokae bakeng sa young pawpaw e kotsing ya serame (frost-tender) polasing e nyane Highveld?",
+      "reason": "Existing small-pawpaw wording does not preserve age. Retain exact age phrase narrowly.",
+      "sourceBound": true,
+      "reviewStatus": "machine-draft-unreviewed",
+      "paragraphSourcePairs": null,
+      "orderAndIndexEvidence": {
+        "quizIndex": 0,
+        "quizCount": 2,
+        "sourceCorrectIndex": 2,
+        "draftSourceCorrectIndex": 2,
+        "correctIndexMatches": true
+      }
+    },
+    {
+      "entryIndex": 89,
+      "languageCode": "ve",
+      "lessonId": "reading-landscape-l2",
+      "field": "keyPoints[3]",
+      "status": "repair",
+      "exactSource": "Check local frost before placing tender pawpaw or young citrus",
+      "currentTarget": "Tolani tshando (frost) tsha henefho musi ni sa athu vhea pawpaw i sa konḓeleliho kana citrus ṱhukhu",
+      "candidateTarget": "Tolani tshando (frost) tsha henefho musi ni sa athu vhea pawpaw i sa konḓeleliho kana citrus ṱhukhu",
+      "repairedTarget": "Tolani tshando (frost) tsha henefho musi ni sa athu vhea pawpaw i sa konḓeleliho kana young citrus",
+      "reason": "Existing small-citrus wording does not preserve age.",
+      "sourceBound": true,
+      "reviewStatus": "machine-draft-unreviewed",
+      "paragraphSourcePairs": null,
+      "orderAndIndexEvidence": {
+        "keyPointIndex": 3,
+        "keyPointCount": 4,
+        "orderPreserved": true
+      }
+    },
+    {
+      "entryIndex": 90,
+      "languageCode": "ve",
+      "lessonId": "reading-landscape-l2",
+      "field": "quiz[0].question",
+      "status": "repair",
+      "exactSource": "Where should a farmer first look for a frost-tender young pawpaw on a Highveld smallholding?",
+      "currentTarget": "Mulimi u fanela u thoma u sedza ngafhi u itela pawpaw ṱhukhu i sa konḓeleliho tshando (frost-tender) kha tshitentsi tshiṱuku tsha Highveld?",
+      "candidateTarget": "Mulimi u fanela u thoma u sedza ngafhi u itela pawpaw ṱhukhu i sa konḓeleliho tshando (frost-tender) kha tshitentsi tshiṱuku tsha Highveld?",
+      "repairedTarget": "Mulimi u fanela u thoma u sedza ngafhi u itela young pawpaw i sa konḓeleliho tshando (frost-tender) kha tshitentsi tshiṱuku tsha Highveld?",
+      "reason": "Existing small-pawpaw wording does not preserve age.",
+      "sourceBound": true,
+      "reviewStatus": "machine-draft-unreviewed",
+      "paragraphSourcePairs": null,
+      "orderAndIndexEvidence": {
+        "quizIndex": 0,
+        "quizCount": 2,
+        "sourceCorrectIndex": 2,
+        "draftSourceCorrectIndex": 2,
+        "correctIndexMatches": true
+      }
+    },
+    {
+      "entryIndex": 157,
+      "languageCode": "ts",
+      "lessonId": "reading-landscape-l2",
+      "field": "keyPoints[3]",
+      "status": "repair",
+      "exactSource": "Check local frost before placing tender pawpaw or young citrus",
+      "currentTarget": "Kambela xirhami xa laha kaya u nga se veka pawpaw leyi tsaneke kumbe citrus leyitsongo",
+      "candidateTarget": "Kambela xirhami xa laha kaya u nga se veka pawpaw leyi tsaneke kumbe citrus leyitsongo",
+      "repairedTarget": "Kambela xirhami xa laha kaya u nga se veka pawpaw leyi tsaneke kumbe young citrus",
+      "reason": "Existing small-citrus wording does not preserve age.",
+      "sourceBound": true,
+      "reviewStatus": "machine-draft-unreviewed",
+      "paragraphSourcePairs": null,
+      "orderAndIndexEvidence": {
+        "keyPointIndex": 3,
+        "keyPointCount": 4,
+        "orderPreserved": true
+      }
+    },
+    {
+      "entryIndex": 158,
+      "languageCode": "ts",
+      "lessonId": "reading-landscape-l2",
+      "field": "quiz[0].question",
+      "status": "repair",
+      "exactSource": "Where should a farmer first look for a frost-tender young pawpaw on a Highveld smallholding?",
+      "currentTarget": "Hi kwihi laha murimi a faneleke ku rhanga a languta kona pawpaw leyitsongo leyi tsaneke eka xirhami eka purasi leritsongo ra Highveld?",
+      "candidateTarget": "Hi kwihi laha murimi a faneleke ku rhanga a languta kona pawpaw leyitsongo leyi tsaneke eka xirhami eka purasi leritsongo ra Highveld?",
+      "repairedTarget": "Hi kwihi laha murimi a faneleke ku rhanga a languta kona young pawpaw leyi tsaneke eka xirhami eka purasi leritsongo ra Highveld?",
+      "reason": "Existing small-pawpaw wording does not preserve age.",
+      "sourceBound": true,
+      "reviewStatus": "machine-draft-unreviewed",
+      "paragraphSourcePairs": null,
+      "orderAndIndexEvidence": {
+        "quizIndex": 0,
+        "quizCount": 2,
+        "sourceCorrectIndex": 2,
+        "draftSourceCorrectIndex": 2,
+        "correctIndexMatches": true
+      }
+    }
+  ],
+  "implementationStatus": "Six narrow regional learner target repairs applied in current broad Reading branch; not published; full batch gates pending"
+}

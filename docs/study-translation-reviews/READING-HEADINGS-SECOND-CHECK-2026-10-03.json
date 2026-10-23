@@ -1,0 +1,50 @@
+{
+  "title": "Independent second check of repaired Reading the Landscape headings",
+  "date": "2026-10-03",
+  "scope": "Read-only semantic check against exact English slide headings. This is not fluent-speaker approval.",
+  "sourceRevision": "a961b2d305522907fbfb7cabca9cad597dba10e5",
+  "sourceEnglish": "docs/narration/reading-landscape.en.md",
+  "entries": [
+    {
+      "language": "st",
+      "slide": 13,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Watch: See Wind and Cold Air on the Map",
+      "candidate": "Shebella: See Wind and Cold Air on the Map",
+      "verdict": "semantically sound conservative draft",
+      "concreteRepair": null,
+      "reason": "Shebella preserves the source directive Watch; the English remainder preserves the complete wind/cold-air/map relation, including on the map."
+    },
+    {
+      "language": "st",
+      "slide": 18,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Let Plants Help You Read Soil",
+      "candidate": "Lumella dimela di u thuse ho bala Soil",
+      "verdict": "semantically sound conservative draft",
+      "concreteRepair": null,
+      "reason": "Lumella keeps the let/allow directive; dimela remains the subject and u the second-person object. ho bala Soil retains the soil-reading action and its technical English anchor. The u form is consistent with Southern Sesotho rather than the flagged go form."
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Let Plants Help You Read Soil",
+      "candidate": "Tendelani zwilimela zwi ni thuse u read Soil",
+      "verdict": "directive meaning preserved; conservative unreviewed mixed draft",
+      "concreteRepair": null,
+      "reason": "Tendelani supplies an imperative allow/let frame, with plants as the subject of help and ni as the addressee. The English read Soil technical anchor is explicitly permitted; no shift to can/may or loss of the directive is apparent. A fluent Tshivenda reviewer should still check idiom and agreement."
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Let Plants Help You Read Soil",
+      "candidate": "Pfumelela swimilani swi ku pfuna ku read Soil",
+      "verdict": "directive meaning preserved; conservative unreviewed mixed draft",
+      "concreteRepair": null,
+      "reason": "Pfumelela supplies the imperative allow/let frame, keeping plants as the subject that helps the addressee. ku read Soil retains the source action with its difficult English technical anchor; no shift from directive to possibility is apparent. A fluent Xitsonga reviewer should still check idiom and agreement."
+    }
+  ],
+  "overall": "No concrete semantic repair is indicated for these four proposed headings. Keep their unreviewed-draft marking and facilitator review."
+}

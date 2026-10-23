@@ -116,17 +116,15 @@ test('UI strings: English complete, translated languages complete, placeholders 
   }
 });
 
-test('paused Xitsonga manual drafts stay on disk but are excluded from public routes and pickers', () => {
-  assert.deepEqual(MANUAL_LANGS, ['en', 'zu', 'st', 've']);
+test('all four home languages Rory asked for are public: isiZulu, Sesotho, Tshivenḓa and Xitsonga', () => {
+  assert.deepEqual(MANUAL_LANGS, ['en', 'zu', 'st', 've', 'ts']);
   assert.deepEqual(Object.keys(MANUAL_LANG_NAMES), MANUAL_LANGS);
-  assert.equal(isManualLang('ts'), false, 'the route guard must reject /manual/ts');
+  for (const lang of ['zu', 'st', 've', 'ts']) {
+    assert.equal(isManualLang(lang), true, `/manual/${lang} must be served`);
+    for (const slug of MANUAL_CHAPTERS) assert.ok(existsSync(file(lang, slug)), `${lang}/${slug} is missing`);
+  }
 
-  const pausedDrafts = readdirSync(path.join(ROOT, 'content', 'manual', 'ts')).filter(name => name.endsWith('.md'));
-  assert.ok(pausedDrafts.length >= 12, 'the existing Xitsonga chapter drafts remain on disk');
-  assert.ok(existsSync(file('ts', '00-introduction')), 'the introduction draft remains available for later review');
-  assert.ok(existsSync(path.join(ROOT, 'content', 'manual', 'ts', 'ui.json')));
-
-  // Both dynamic routes use this allowlist for static params and reject unknown languages.
+  // Both dynamic routes build every language in MANUAL_LANGS and reject unknown ones.
   const contentsRoute = readFileSync(path.join(ROOT, 'app', 'manual', '[lang]', 'page.tsx'), 'utf8');
   const chapterRoute = readFileSync(path.join(ROOT, 'app', 'manual', '[lang]', '[slug]', 'page.tsx'), 'utf8');
   assert.match(contentsRoute, /dynamicParams = false/);

@@ -3,11 +3,14 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   CROP_ENTRY_OPTIONS,
+  ANIMAL_PRODUCT_ENTRY_OPTIONS,
   PERENNIAL_ENTRY_GROUPS,
   produceEntryOption,
   loadCustomCropNames,
   saveCustomCropName,
 } from '@/lib/crop-entry';
+import { useLanguage } from '@/lib/i18n';
+import { recordsFill } from '@/lib/records-regional-drafts';
 
 interface CropSelectProps {
   value: string;
@@ -54,7 +57,8 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
     if (next.startsWith('catalogue:')) {
       const key = next.slice('catalogue:'.length);
       const crop = CROP_ENTRY_OPTIONS.find((option) => option.key === key)
-        ?? PERENNIAL_ENTRY_GROUPS.flatMap((entry) => entry.options).find((option) => option.key === key);
+        ?? PERENNIAL_ENTRY_GROUPS.flatMap((entry) => entry.options).find((option) => option.key === key)
+        ?? ANIMAL_PRODUCT_ENTRY_OPTIONS.find((option) => option.key === key);
       if (crop) onChange(crop.label, crop.key);
       return;
     }
@@ -77,7 +81,10 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
     onChange(catalogue?.label ?? saved, catalogue?.key ?? null);
   }
 
-  const label = (english: string, isiZulu: string) => language === 'zu' ? isiZulu : english;
+  // isiZulu keeps its existing wording; Sesotho, Tshivenda and Xitsonga read the money book's
+  // source-keyed drafts, and the crop names themselves are never translated or respelled.
+  const { lang } = useLanguage();
+  const label = (english: string, isiZulu: string) => language === 'zu' ? isiZulu : recordsFill(lang, english);
 
   return (
     <div className="space-y-2">
@@ -85,10 +92,10 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
         aria-label={ariaLabel}
         value={adding ? '__add__' : selected}
         onChange={(event) => choose(event.target.value)}
-        className="dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
-        style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
+        className="dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
+        style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', colorScheme: 'light dark' }}
       >
-        <option value="">{label('Choose a crop', 'Khetha isilimo')}</option>
+        <option value="">{recordsFill(lang, 'Choose produce / product')}</option>
         <optgroup label={label('Crop list', 'Uhlu lwezitshalo')}>
           {CROP_ENTRY_OPTIONS.map((crop) => (
             <option key={crop.key} value={`catalogue:${crop.key}`}>{crop.label}</option>
@@ -109,21 +116,24 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
             ))}
           </optgroup>
         ))}
+        <optgroup label={recordsFill(lang, 'Animal products')}>
+          {ANIMAL_PRODUCT_ENTRY_OPTIONS.map((product) => <option key={product.key} value={`catalogue:${product.key}`}>{product.label}</option>)}
+        </optgroup>
         {savedNames.length > 0 && (
-          <optgroup label={label('Crops you added', 'Izitshalo ozifakile')}>
+          <optgroup label={recordsFill(lang, 'Products you added')}>
             {savedNames.map((name, index) => (
               <option key={name.toLocaleLowerCase('en-ZA')} value={`custom:${index}`}>{name}</option>
             ))}
           </optgroup>
         )}
-        <option value="__add__">{label('＋ Add another crop…', '＋ Engeza esinye isilimo…')}</option>
+        <option value="__add__">＋ {recordsFill(lang, 'Add another product…')}</option>
       </select>
 
       {adding && (
         <div className="flex gap-2">
           <input
             autoFocus
-            aria-label={label('New crop name', 'Igama lesilimo esisha')}
+            aria-label={recordsFill(lang, 'New product name')}
             value={newName}
             onChange={(event) => setNewName(event.target.value)}
             onKeyDown={(event) => {
@@ -132,9 +142,9 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
                 addCrop();
               }
             }}
-            placeholder={label('Type the crop name', 'Thayipha igama lesilimo')}
-            className="dark-input flex-1 min-w-0 rounded-lg px-3 py-2 text-sm font-display outline-none"
-            style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
+            placeholder={recordsFill(lang, 'Type the product name')}
+            className="dark-input flex-1 min-w-0 rounded-lg px-3 py-2 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
+            style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', colorScheme: 'light dark' }}
           />
           <button
             type="button"
@@ -142,12 +152,12 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
             disabled={!newName.trim()}
             className="rounded-lg px-3 py-2 text-xs font-display font-semibold"
             style={{
-              background: newName.trim() ? '#1F4D2B' : '#E2D8C4',
-              border: 'none', color: newName.trim() ? '#fff' : '#755942',
+              background: newName.trim() ? 'var(--color-forest-800)' : 'var(--bg-2)',
+              border: 'none', color: newName.trim() ? 'var(--on-forest-800)' : 'var(--text-muted)',
               cursor: newName.trim() ? 'pointer' : 'not-allowed',
             }}
           >
-            {label('Save crop', 'Londoloza isilimo')}
+            {recordsFill(lang, 'Save product')}
           </button>
         </div>
       )}

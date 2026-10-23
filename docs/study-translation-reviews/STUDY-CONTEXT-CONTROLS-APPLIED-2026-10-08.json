@@ -1,0 +1,134 @@
+{
+  "base": "c8c27502ec38255eee16c20bcb40aa9a1827741e",
+  "status": "Applied unreviewed drafts; facilitator review remains pending",
+  "scope": "18 previously English Study controls; no canonical or media changes",
+  "rows": [
+    {
+      "language": "st",
+      "key": "studentReadinessCompleteDetail",
+      "sourceEnglish": "All {lessons} lessons are illustrated, narrated in {languages} languages, and have slides and animations.",
+      "candidate": "Dithuto tsohle tse {lessons} di na le ditshwantsho, tlhaloso e buuwang ka dipuo tse {languages}, diselaete le di-animation.",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessNarratedDetail",
+      "sourceEnglish": "Illustrated slides and narration are ready in {languages} languages. Translation review is still outstanding.",
+      "candidate": "Diselaete tse nang le ditshwantsho le tlhaloso e buuwang di se di lokile ka dipuo tse {languages}. Tlhahlobo ya phetolelo e ntse e lokela ho etswa.",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessLessonsDetail",
+      "sourceEnglish": "Reading and pictures are ready. Narration and slides are still being made.",
+      "candidate": "Dithuto tsa ho bala le ditshwantsho di se di lokile. Tlhaloso e buuwang le diselaete di sa ntse di etswa.",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessComplete",
+      "sourceEnglish": "Fully built",
+      "candidate": "E hahilwe ka botlalo",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessNarrated",
+      "sourceEnglish": "Narrated slides",
+      "candidate": "Diselaete tse nang le tlhaloso e buuwang",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessCompleteDetail",
+      "sourceEnglish": "All {lessons} lessons are illustrated, narrated in {languages} languages, and have slides and animations.",
+      "candidate": "Tidyondzo hinkwato ta {lessons} ti na swifaniso, ti na nhlamuselo hi rito hi tindzimi ta {languages}, naswona ti na slides ni ti-animation.",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessNarratedDetail",
+      "sourceEnglish": "Illustrated slides and narration are ready in {languages} languages. Translation review is still outstanding.",
+      "candidate": "Slides leti nga ni swifaniso ni nhlamuselo hi rito ti lunghekile hi tindzimi ta {languages}. Ku kambela vuhundzuluxi ka ha laveka.",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessLessonsDetail",
+      "sourceEnglish": "Reading and pictures are ready. Narration and slides are still being made.",
+      "candidate": "Ku hlaya ni swifaniso swi lunghekile. Nhlamuselo hi rito ni slides swa ha endliwa.",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessComplete",
+      "sourceEnglish": "Fully built",
+      "candidate": "Yi akiwile hi ku helela",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessNarrated",
+      "sourceEnglish": "Narrated slides",
+      "candidate": "Slides leti nga ni nhlamuselo hi rito",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessLessons",
+      "sourceEnglish": "Lessons only",
+      "candidate": "Tidyondzo ntsena",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentListenModule",
+      "sourceEnglish": "Listen to the whole module",
+      "candidate": "Yingisela module hi ku helela",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentProgressError",
+      "sourceEnglish": "Progress could not be loaded or saved. Check your connection or account access.",
+      "candidate": "Mvelaphanḓa a yo ngo kona u laisiwa kana u vhulungwa. Ṱolani vhuṱumani haṋu kana account access yaṋu.",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalFullMedia",
+      "sourceEnglish": "Slides + English narration and clips",
+      "candidate": "Slides + ṱhalutshedzo nga ipfi ya English source na clips",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentCheckUnderstanding",
+      "sourceEnglish": "Check your understanding",
+      "candidate": "Ṱolani u pfesesa haṋu",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkDone",
+      "sourceEnglish": "Mark done",
+      "candidate": "Swayani uri modulu iyi yo fhela",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkNotDone",
+      "sourceEnglish": "Mark as not done",
+      "candidate": "Swayani uri modulu iyi a yo ngo fhela",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkComplete",
+      "sourceEnglish": "Mark as complete",
+      "candidate": "Swayani uri modulu iyi yo fhela",
+      "status": "unreviewed-machine-draft"
+    }
+  ],
+  "reviewAuthority": "Committed context packets, including corrected Swayani and TS ready-versus-exists checks"
+}

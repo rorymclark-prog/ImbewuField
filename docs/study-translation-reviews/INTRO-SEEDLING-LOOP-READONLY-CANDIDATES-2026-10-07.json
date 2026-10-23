@@ -1,0 +1,37 @@
+{
+  "base": "ca30ea2155f7fa28b544a03b9a75b46e4bf3bf37",
+  "scope": "Three bounded alt candidates, separate from current fairness batch",
+  "fluentApproval": false,
+  "rows": [
+    {
+      "language": "st",
+      "lessonId": "intro-permaculture-l2",
+      "field": "infographicAlt",
+      "sourceEnglish": "Twelve design principles arranged as segments around a central seedling, each shown as a simple picture — an eye for observing, a droplet for catching water, a sun for energy, a loop for returning waste.",
+      "currentDraft": "Melao-motheo ya moralo e leshome le metso e mmedi e hlophisitsweng e le dikarolo ho potoloha semela se senyenyane se bohareng, e nngwe le e nngwe e bontshitswe e le setshwantsho se bonolo — leihlo bakeng sa ho shebella, lerothodi bakeng sa ho tshwara metsi, letsatsi bakeng sa matla, le sedikadikwe bakeng sa ho kgutlisetsa ditshila.",
+      "candidate": "Melao-motheo ya moralo e leshome le metso e mmedi e hlophisitsweng e le dikarolo ho potoloha seedling e bohareng, e nngwe le e nngwe e bontshitswe e le setshwantsho se bonolo — leihlo bakeng sa ho shebella, lerothodi bakeng sa ho tshwara metsi, letsatsi bakeng sa matla, le sedikadikwe bakeng sa ho kgutlisetsa ditshila.",
+      "status": "read-only candidate, NOT approved or wired",
+      "checksNeeded": "Independent noun concord and loop meaning review; ordinary rest preserved. If concord unsafe retain larger exact English source phrase."
+    },
+    {
+      "language": "ve",
+      "lessonId": "intro-permaculture-l2",
+      "field": "infographicAlt",
+      "sourceEnglish": "Twelve design principles arranged as segments around a central seedling, each shown as a simple picture — an eye for observing, a droplet for catching water, a sun for energy, a loop for returning waste.",
+      "currentDraft": "Maitele a fumi na mavhili a mufhaṱo o vhekanywaho sa zwipiḓa u monymona na tshimela tshiṱuku tsha vhukati, tshiṅwe na tshiṅwe tsho sumbedzwa sa tshifanyiso tsho leluwaho — iṱo ḽa u sedza, ḓoḓi ḽa u fara maḓi, ḓuvha ḽa maanḓa, na mudzinginyo wa u vhuedzedza mitshelo na malaṱwa.",
+      "candidate": "Maitele a fumi na mavhili a mufhaṱo o vhekanywaho sa zwipiḓa u monymona na seedling tsha vhukati, tshiṅwe na tshiṅwe tsho sumbedzwa sa tshifanyiso tsho leluwaho — iṱo ḽa u sedza, ḓoḓi ḽa u fara maḓi, ḓuvha ḽa maanḓa, na loop for returning waste.",
+      "status": "read-only candidate, NOT approved or wired",
+      "checksNeeded": "Independent noun concord and loop meaning review; ordinary rest preserved. If concord unsafe retain larger exact English source phrase."
+    },
+    {
+      "language": "ts",
+      "lessonId": "intro-permaculture-l2",
+      "field": "infographicAlt",
+      "sourceEnglish": "Twelve design principles arranged as segments around a central seedling, each shown as a simple picture — an eye for observing, a droplet for catching water, a sun for energy, a loop for returning waste.",
+      "currentDraft": "Misinya ya milawu ya dizayini ya khume-mbirhi yi vekiwile hi swiphemu leswi rhendzeleke ximilana lexi nga exikarhini. Xiphemu xin’wana ni xin’wana xi kombisiwa hi xifaniso xo olova — tihlo ra ku xiyisisa, thonsi ra ku khoma mati, dyambu ra eneji, na xirhendzevutana lexi kombisaka ku vuyisa thyaka.",
+      "candidate": "Misinya ya milawu ya dizayini ya khume-mbirhi yi vekiwile hi swiphemu leswi rhendzeleke seedling leyi nga exikarhini. Xiphemu xin’wana ni xin’wana xi kombisiwa hi xifaniso xo olova — tihlo ra ku xiyisisa, thonsi ra ku khoma mati, dyambu ra eneji, na xirhendzevutana lexi kombisaka ku vuyisa thyaka.",
+      "status": "read-only candidate, NOT approved or wired",
+      "checksNeeded": "Independent noun concord and loop meaning review; ordinary rest preserved. If concord unsafe retain larger exact English source phrase."
+    }
+  ]
+}

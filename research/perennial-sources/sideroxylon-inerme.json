@@ -1,0 +1,75 @@
+{
+  "speciesId": "sideroxylon-inerme",
+  "commonName": "White milkwood",
+  "botanicalName": "Sideroxylon inerme",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "ripe berries",
+  "supplementaryReferences": [
+    {
+      "title": "Edible part and local use",
+      "quote": "Ripe purple-black berries are said to be edible",
+      "url": "https://pza.sanbi.org/sideroxylon-inerme",
+      "doc": "SANBI PlantZAfrica, sideroxylon-inerme",
+      "page": null,
+      "note": "SANBI qualifies the food statement; it is about ripe berries, not latex, bark or roots. Fruit presence February–September does not establish ripe picking throughout."
+    },
+    {
+      "title": "Species identification in KwaZulu-Natal",
+      "quote": "they both contain black, berry-like edible fruits",
+      "url": "https://researchspace.ukzn.ac.za/server/api/core/bitstreams/ee2eb137-9aa4-43b9-ae69-392311b96970/content",
+      "doc": "University of KwaZulu-Natal, Phytochemical and elemental studies of two indigenous medicinal plants",
+      "page": null,
+      "note": "The primary study records confusion with Bridelia micrantha. It does not supply a safe harvest calendar or kg/tree."
+    }
+  ],
+  "productionGuidance": {
+    "products": "ripe berries",
+    "care": [
+      "Shelter this coastal tree from direct salt-laden sea wind; SANBI reports salt burn despite its coastal habitat."
+    ],
+    "purchase": [
+      "Ask a nursery to confirm the species and lawful provenance. Check current collection requirements before taking plants or products from existing trees."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/sideroxylon-inerme",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    },
+    {
+      "url": "https://researchspace.ukzn.ac.za/server/api/core/bitstreams/ee2eb137-9aa4-43b9-ae69-392311b96970/content",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary institutional source content checked; context and limits retained."
+    }
+  ],
+  "gaps": [
+    "No verified ripe-picking interval. Current protected-tree requirements need a separate site check."
+  ]
+}

@@ -1,0 +1,9 @@
+# Market Gardening L1/L2 fuller learner wording — 3 October 2026
+
+Applied 18 source-bound body paragraph updates to the Sesotho, Tshivenda and Xitsonga Market Gardening drafts: 13 paragraphs in L1 and five in L2. Thirteen use the independently accepted deck wording; five use the reviewed repairs for planning language and the distinctions between crops and plants, and costs and amounts. The Xitsonga L2 customer-needs sentence was excluded because its proposed change did not materially improve the existing wording.
+
+The original candidate and independent-check packets are preserved beside the applied mapping. The candidate packet's title and slide list call the work L1, but its slide 10 rows map to `market-community-l2`; the applied mapping and this report record the actual L1/L2 scope. Each changed body paragraph stays paired to its existing canonical English source and remains `machine-draft`. No source English, quiz wording, option order, correct index, or other field was changed. The worked R18/kg production cost and R15/kg sale example remains exact English.
+
+Regression coverage compares all paragraphs in the six affected lesson/language bodies with a saved pre-change snapshot, while checking the 18 exact replacements, canonical source text, paragraph order, costs versus price, sale guarantees, crop wording, planting conditions and failure qualifiers. It also verifies that a changed English source withdraws the paired learner draft. Existing stale wording assertions were updated to preserve their meaning checks against the accepted text.
+
+Verification: `npx tsc --noEmit` passed. The full `npm test` command exited successfully with 4,537 passing tests, zero failures and one existing TODO (`shape-sync-loss`). `git diff --check` passed. The drafts remain unreviewed; this is not fluent-speaker or local-language approval.

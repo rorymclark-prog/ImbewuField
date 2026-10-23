@@ -13,7 +13,7 @@ import { getLesson } from '@/lib/lesson-registry';
 import { useLanguage } from '@/lib/i18n';
 import { LessonPanel } from './LessonPanel';
 
-const GREEN = '#1F4D2B';
+const GREEN = 'var(--color-forest-800)'; // text, icon and border on the page ground: follows the theme (leaf in dark)
 
 export default function LessonLink({
   id,

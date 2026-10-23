@@ -1,0 +1,326 @@
+{
+  "packetId": "imbewu-ve-vegetables-l1-additional-candidates-20261002",
+  "status": "source-bound independently checked unreviewed learner draft",
+  "language": "Tshivenda (ve)",
+  "moduleId": "vegetables-staples",
+  "lessonId": "vegetables-staples-l1",
+  "sourceRevision": "5225ec5d8c630203f37d5941cc2e96c64e80a37b",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "currentRegistryPath": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+  "registryFinding": "The wired Tshivenda module currently contains only Vegetables & Staples L3. There is no L1 entry, so the L1 learner text currently uses the canonical English body.",
+  "sourceParagraphCount": 20,
+  "quizCorrectIndexes": [
+    1,
+    2
+  ],
+  "combinedCandidateBody": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.\n\nTsireledzo ndi yo leluwaho. Permanent paths, and a bed narrow enough to reach into from both sides.\n\nOne metre to one point two metres wide. Wonoyo ndi mpimo une wa shumiswa. At that width you can reach the centre from either path, and your feet never touch the growing area.\n\nZwino humbulani nga ha beds dzaṋu. Ni nga swikelela vhukati without stepping inside? Iyani ni lingedze zwenezwo ni sa athu ṱavha tshiṅwe tshithu.\n\nA hu na tshivhumbeo tshithihi tsha bed tshine tsha tea fhethu hoṱhe.\n\nThomani nga least disturbance that solves your problem.\n\nNo-dig suits most garden soils. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility on top.\n\nDo not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.\n\nRaised beds suit wet ground, hune maḓi a ṱoḓa fhethu ha u bva hone.\n\nSunken beds suit dry ground, hune na ṱoḓa u catch and hold mvula ine na i wana.\n\nMusi heavy rain yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a run off ngafhi? Ṱanganyisani zwe na vhona na soil and drainage advice u sa athu khetha bed.\n\nZwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. They do better sown straight where they'll grow. Beans, carrots na maize zwi wela kha tshigwada itsho.\n\nZwimela zwiṅwe zwi ita zwavhuḓi arali zwi thoma zwi tshi tsireledzwa nursery, then transplanting. Tomatoes na brassicas zwi wela henefho.\n\nShumisani spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Sedzani crowding musi zwimela zwi tshi aluwa.\n\nNi sa athu ṱavha, swayani bed.\n\nOne point two metres wide. Three metres long. Bed nthihi ya vhuḓowedzi (practice bed).\n\nShumisani zwipiki na thambo. Swayani rectangle, and mark both access paths.\n\nThen prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.\n\nString line i shandula muhumbulo wa vha tsheo. Musi paths dzi no vha hone, ni dzi litshe dzi dzule hone. Musi growing area i no vha hone, ni i tsireledze.\n\nBed yeneyo i a leluwa u khwinifhadza khalaṅwaha iṅwe na iṅwe, ngauri no litsha u tshimbila khayo.",
+  "heldAssessmentIndices": [
+    1,
+    2
+  ],
+  "constraintsPreserved": [
+    "Do not dig wet clay; when compaction or poor drainage is severe, identify the cause with local advice before deeper cultivation.",
+    "No-dig suits most garden soils; no-dig first and deeper cultivation only if genuinely needed.",
+    "Raised beds correspond to wet ground and drainage; sunken beds correspond to dry ground and catching/holding available rain.",
+    "Direct-sown versus nursery/transplanted groups remain distinct: beans, carrots and maize versus tomatoes and brassicas.",
+    "Keep “One metre to one point two metres wide”, “One point two metres wide”, and “Three metres long” spelled exactly as source.",
+    "Add no numbers, crops, geometry, spacing rules, or guarantees."
+  ],
+  "reviewStatus": "Machine-draft; requires independent Tshivenda review before any wiring or learner release.",
+  "repositoryEditsMade": false,
+  "fluencyReviewClaim": false,
+  "notReusedRejectedCandidate": "steadyflow candidate not used",
+  "scope": "Twenty aligned paragraphs: seventeen contain draft wording; three are exact English holds. Assessment and title remain English.",
+  "entries": [
+    {
+      "fieldPath": "lessons[0].body.paragraphs[0]",
+      "paragraphIndex": 0,
+      "exactSourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "conditions": "Preserves all source dimensions, crop identities, timings, comparatives, and conditional constraints; only listed ordinary framing is drafted.",
+      "heldClauses": [
+        "Compacted soil loses its air spaces.",
+        "Water soaks in differently.",
+        "The bed gets harder to work every season."
+      ],
+      "uncertainty": "The compacted-soil mechanism, different water infiltration, and comparative worsening each season remain exact English. Only the ordinary root-growth sentence is drafted; verify that it clearly means root growth slows.",
+      "initialCandidateBackTranslation": "Compacted soil loses its air spaces. Roots grow more slowly. Water soaks in differently. The bed gets harder to work every season.",
+      "rootRepair": "Retain precise source English for unresolved lexical or scope ambiguity; independently checked.",
+      "reviewStatus": "hold"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[1]",
+      "paragraphIndex": 1,
+      "exactSourceEnglish": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "Tsireledzo ndi yo leluwaho. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "conditions": "Preserves permanent paths and reachability from both sides. Retains the technical garden term bed; does not introduce dimensions or a bed method.",
+      "uncertainty": "Moderate: ‘paths’ and ‘bed’ are retained in English because the Tshivenda equivalents may imply a different garden feature.",
+      "rootRepair": "Exact English retained for geometric reachability, foot traffic, least disturbance or layout clause; source meaning unchanged.",
+      "initialCandidateBackTranslation": "The protection is simple. Have permanent paths and a bed that is narrow enough for you to reach from both sides.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[2]",
+      "paragraphIndex": 2,
+      "exactSourceEnglish": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "One metre to one point two metres wide. Wonoyo ndi mpimo une wa shumiswa. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "conditions": "Preserves all exact English clauses/terms listed in heldClauses. No numbers, species, methods, or conditions are changed.",
+      "heldClauses": [
+        "One metre to one point two metres wide.",
+        "At that width you can reach the centre from either path, and your feet never touch the growing area."
+      ],
+      "uncertainty": "Both measurements and the complete reach-from-either-path/no-foot-traffic geometry remain exact English. Verify “working measurement” phrasing.",
+      "initialCandidateBackTranslation": "One metre to one point two metres wide. That is the working measurement. At that width, you can reach the centre from either path, and your feet never touch the growing area.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[3]",
+      "paragraphIndex": 3,
+      "exactSourceEnglish": "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "Zwino humbulani nga ha beds dzaṋu. Ni nga swikelela vhukati without stepping inside? Iyani ni lingedze zwenezwo ni sa athu ṱavha tshiṅwe tshithu.",
+      "conditions": "Retains the self-check, physical access question, and before-planting timing. ‘Beds’ retained as a technical term.",
+      "uncertainty": "Low to moderate: direct instruction is clear; ‘bed’ remains English.",
+      "rootRepair": "Exact English retained for geometric reachability, foot traffic, least disturbance or layout clause; source meaning unchanged.",
+      "initialCandidateBackTranslation": "Now think about your beds. Can you reach the middle without going inside? Go and try that before planting anything else.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[4]",
+      "paragraphIndex": 4,
+      "exactSourceEnglish": "There's no single bed shape that's right everywhere.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "A hu na tshivhumbeo tshithihi tsha bed tshine tsha tea fhethu hoṱhe.",
+      "conditions": "Preserves that no single shape is universally suitable; does not imply all bed shapes are suitable at every site.",
+      "uncertainty": "Moderate: ‘bed’ retained in English; ‘fhethu hoṱhe’ means everywhere.",
+      "initialCandidateBackTranslation": "There is no single bed shape that is suitable everywhere.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[5]",
+      "paragraphIndex": 5,
+      "exactSourceEnglish": "Start with the least disturbance that solves your problem.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "Thomani nga least disturbance that solves your problem.",
+      "conditions": "Keeps the least-disturbance principle tied to solving the problem; no method or depth added.",
+      "uncertainty": "Moderate: ‘disturbance’ is rendered as disturbing soil, inferred from the immediate bed-preparation context.",
+      "rootRepair": "Exact English retained for geometric reachability, foot traffic, least disturbance or layout clause; source meaning unchanged.",
+      "initialCandidateBackTranslation": "Start by disturbing the soil as little as possible in a way that solves your problem.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[6]",
+      "paragraphIndex": 6,
+      "exactSourceEnglish": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "No-dig suits most garden soils. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility on top.",
+      "conditions": "Preserves all exact English clauses/terms listed in heldClauses. No numbers, species, methods, or conditions are changed.",
+      "heldClauses": [
+        "No-dig suits most garden soils.",
+        "structure",
+        "fertility on top"
+      ],
+      "uncertainty": "The quantifier “most” and no-dig suitability claim remain exact. “Structure” and “fertility” remain English technical terms; no method for adding fertility is introduced.",
+      "initialCandidateBackTranslation": "No-dig suits most garden soils. Leave the soil structure unchanged and build fertility on top.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[7]",
+      "paragraphIndex": 7,
+      "exactSourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "conditions": "“Do not dig” remains a prohibition. The wet-clay clause, severe-compaction/poor-drainage condition, cause identification, local advice, and before-deeper-cultivation order remain exact.",
+      "heldClauses": [
+        "wet clay",
+        "If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation."
+      ],
+      "uncertainty": "The prohibition, severity qualifier, cause-identification step, local-advice prerequisite, and timing before deeper cultivation are retained. Fluent review should confirm the Xitsonga force of “Ni songo.”",
+      "initialCandidateBackTranslation": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "rootRepair": "Retain precise source English for unresolved lexical or scope ambiguity; independently checked.",
+      "reviewStatus": "hold"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[8]",
+      "paragraphIndex": 8,
+      "exactSourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "Raised beds suit wet ground, hune maḓi a ṱoḓa fhethu ha u bva hone.",
+      "conditions": "Preserves all source dimensions, crop identities, timings, comparatives, and conditional constraints; only listed ordinary framing is drafted.",
+      "heldClauses": [
+        "Raised beds suit wet ground"
+      ],
+      "uncertainty": "The bed type and wet-ground suitability relation remain exact English. The drainage condition is localized; verify it means water needs a place to drain away.",
+      "initialCandidateBackTranslation": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[9]",
+      "paragraphIndex": 9,
+      "exactSourceEnglish": "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "Sunken beds suit dry ground, hune na ṱoḓa u catch and hold mvula ine na i wana.",
+      "conditions": "Preserves all source dimensions, crop identities, timings, comparatives, and conditional constraints; only listed ordinary framing is drafted.",
+      "heldClauses": [
+        "Sunken beds suit dry ground",
+        "catch and hold"
+      ],
+      "uncertainty": "The bed type and dry-ground suitability relation remain exact English. Catch/hold remains exact English while available rainfall is kept as the source condition.",
+      "initialCandidateBackTranslation": "Sunken beds suit dry ground, where you want to catch and hold the rain you get.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[10]",
+      "paragraphIndex": 10,
+      "exactSourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "Musi heavy rain yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a run off ngafhi? Ṱanganyisani zwe na vhona na soil and drainage advice u sa athu khetha bed.",
+      "conditions": "Preserves the after-heavy-rain timing, the two water behaviours (sitting and run-off), combination with soil/drainage advice, and the before-choosing order.",
+      "heldClauses": [
+        "heavy rain",
+        "run off",
+        "soil and drainage advice",
+        "bed"
+      ],
+      "uncertainty": "The after-heavy-rain timing, both water behaviours, and requirement to combine observation with soil/drainage advice before bed choice remain explicit. Verify the mixed phrasing and question order.",
+      "initialCandidateBackTranslation": "After heavy rain, observe. Where does water sit or run off? Combine what you observed with soil and drainage advice before choosing the bed.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[11]",
+      "paragraphIndex": 11,
+      "exactSourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. They do better sown straight where they'll grow. Beans, carrots na maize zwi wela kha tshigwada itsho.",
+      "conditions": "Preserves the direct-sown group and exact crops Beans, carrots and maize; does not add a crop or change the root-disturbance condition.",
+      "heldClauses": [
+        "Beans",
+        "carrots",
+        "maize"
+      ],
+      "uncertainty": "The direct-sown group and all three named crops are preserved. A fluent reviewer should check crop-class agreement and that the wording means sowing in the final growing place.",
+      "initialCandidateBackTranslation": "Some crops do not tolerate having their roots disturbed. They do better when sown where they will grow. Beans, carrots and maize belong to that group.",
+      "rootRepair": "Retain precise source English for unresolved lexical or scope ambiguity; independently checked.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[12]",
+      "paragraphIndex": 12,
+      "exactSourceEnglish": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "Zwimela zwiṅwe zwi ita zwavhuḓi arali zwi thoma zwi tshi tsireledzwa nursery, then transplanting. Tomatoes na brassicas zwi wela henefho.",
+      "conditions": "Preserves all source dimensions, crop identities, timings, comparatives, and conditional constraints; only listed ordinary framing is drafted.",
+      "heldClauses": [
+        "nursery",
+        "transplantiwa",
+        "Tomatoes",
+        "brassicas"
+      ],
+      "uncertainty": "The nursery-start then transplant sequence and crop group are explicit. Verify the Tshivenda syntax preserves this order and does not merge these crops with the direct-sown group.",
+      "initialCandidateBackTranslation": "Some other crops do better if they begin protected in a nursery, then are transplanted. Tomatoes and brassicas belong there.",
+      "rootRepair": "Retain precise source English for unresolved lexical or scope ambiguity; independently checked.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[13]",
+      "paragraphIndex": 13,
+      "exactSourceEnglish": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "Shumisani spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Sedzani crowding musi zwimela zwi tshi aluwa.",
+      "conditions": "Preserves all source dimensions, crop identities, timings, comparatives, and conditional constraints; only listed ordinary framing is drafted.",
+      "heldClauses": [
+        "spacing guidance for the crop, variety and local conditions",
+        "packet",
+        "crowding"
+      ],
+      "uncertainty": "No spacing figure is added. Verify the mixed wording preserves crop/variety/local-condition guidance, packet and local-grower checks, and crowding as plants develop.",
+      "initialCandidateBackTranslation": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "rootRepair": "Retain precise source English for unresolved lexical or scope ambiguity; independently checked.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[14]",
+      "paragraphIndex": 14,
+      "exactSourceEnglish": "Before you plant, mark the bed out.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "Ni sa athu ṱavha, swayani bed.",
+      "conditions": "Preserves sequence and marking instruction; keeps the technical term bed in English.",
+      "uncertainty": "Low: only bed terminology is retained.",
+      "rootRepair": "Exact English retained for geometric reachability, foot traffic, least disturbance or layout clause; source meaning unchanged.",
+      "initialCandidateBackTranslation": "Before you plant, mark the bed.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[15]",
+      "paragraphIndex": 15,
+      "exactSourceEnglish": "One point two metres wide. Three metres long. One practice bed.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "One point two metres wide. Three metres long. Bed nthihi ya vhuḓowedzi (practice bed).",
+      "conditions": "Both dimensions remain spelled exactly as the English source; “one practice bed” is the only localized part.",
+      "heldClauses": [
+        "One point two metres wide.",
+        "Three metres long."
+      ],
+      "uncertainty": "Both measurements remain spelled exactly as the English source. Check whether “bed nthihi ya vhuḓowedzi” clearly means one practice bed.",
+      "initialCandidateBackTranslation": "One point two metres wide. Three metres long. One practice bed.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[16]",
+      "paragraphIndex": 16,
+      "exactSourceEnglish": "Use pegs and string. Mark the rectangle, and mark both access paths.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "Shumisani zwipiki na thambo. Swayani rectangle, and mark both access paths.",
+      "conditions": "Preserves pegs, string, rectangle, and both paths. Does not specify measurements or layout beyond the source.",
+      "uncertainty": "Moderate: ‘access paths’ retained partly in English to avoid ambiguity about whether these are walking paths.",
+      "rootRepair": "Exact English retained for geometric reachability, foot traffic, least disturbance or layout clause; source meaning unchanged.",
+      "initialCandidateBackTranslation": "Use pegs and string. Mark the rectangle, and also mark the two access paths.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[17]",
+      "paragraphIndex": 17,
+      "exactSourceEnglish": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "conditions": "Preserves no-dig-first and deeper cultivation only if the ground genuinely needs it; no optional deeper digging is implied.",
+      "heldClauses": [
+        "no-dig first, and dig deeper only if your ground genuinely needs it"
+      ],
+      "uncertainty": "Sequence, no-dig-first priority, and genuine-need condition remain exact English. Do not broaden “only if genuinely needs it” into optional deeper digging.",
+      "initialCandidateBackTranslation": "Then prepare your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "rootRepair": "Retain precise source English for unresolved lexical or scope ambiguity; independently checked.",
+      "reviewStatus": "hold"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[18]",
+      "paragraphIndex": 18,
+      "exactSourceEnglish": "A string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "String line i shandula muhumbulo wa vha tsheo. Musi paths dzi no vha hone, ni dzi litshe dzi dzule hone. Musi growing area i no vha hone, ni i tsireledze.",
+      "conditions": "Preserves all exact English clauses/terms listed in heldClauses. No numbers, species, methods, or conditions are changed.",
+      "heldClauses": [
+        "String line",
+        "paths",
+        "growing area"
+      ],
+      "uncertainty": "The once-established paths and growing-area conditions and actions are preserved. Verify Tshivenda agreement across the mixed English layout terms.",
+      "initialCandidateBackTranslation": "A string line turns an idea into a decision. Once the paths exist, leave them in place. Once the growing area exists, protect it.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[0].body.paragraphs[19]",
+      "paragraphIndex": 19,
+      "exactSourceEnglish": "That bed gets easier to improve every season, because you stopped walking on it.",
+      "currentRegistry": "No Tshivenda L1 lesson entry exists; current learner text falls back to canonical English.",
+      "newTshivendaDraft": "Bed yeneyo i a leluwa u khwinifhadza khalaṅwaha iṅwe na iṅwe, ngauri no litsha u tshimbila khayo.",
+      "conditions": "Preserves repeated seasonal improvement and the stated reason (stopping foot traffic). Retains bed as a technical term.",
+      "uncertainty": "Moderate: literal wording preserves the source’s causal claim without adding a soil mechanism.",
+      "initialCandidateBackTranslation": "That bed becomes easier to improve each season because you have stopped walking on it.",
+      "reviewStatus": "machine-draft"
+    }
+  ]
+}

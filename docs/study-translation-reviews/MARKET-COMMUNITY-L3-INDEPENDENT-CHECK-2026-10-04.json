@@ -1,0 +1,409 @@
+{
+  "title": "Independent semantic/source check — Market Gardening & Community L3 remaining candidates",
+  "date": "2026-10-04",
+  "repositoryHead": "beec49d41db081017a83acbe641a56e025530bb1",
+  "inputPacket": "/tmp/imbewu-market-remaining-substantive-candidates-20261004.json",
+  "readOnly": true,
+  "repositoryEdits": false,
+  "provenance": "Independently compared each candidate to live canonical COURSE_MODULES and actual current ST/VE/TS market lesson registry fields at beec49d4. Proposed wording remains an unreviewed draft for facilitator feedback, not fluent approval.",
+  "bindingAudit": {
+    "moduleSourceExact": true,
+    "allCurrentCandidateBodyTargetsExactAgainstLiveRegistry": true,
+    "allCurrentAssessmentTargetsExactAgainstLiveRegistry": true,
+    "allRegistryHashesMatchPacket": true,
+    "sourceCorrectIndex": 1,
+    "quizOptionOrderUnchanged": true,
+    "changedBodySegmentsEachConcatenateToExactSource": true,
+    "noAddedSafetyGuaranteeOrCostClaim": true,
+    "bodyParagraphCountsAndOrderPreserved": true,
+    "liveRegistryHashes": {
+      "st": {
+        "path": "lib/course-translation-drafts-st-market-community.ts",
+        "sha256": "06eabb43c5c8497104129b150347085127aa8e86bc26bb620dd1d9a919c20553",
+        "matchesPacket": true
+      },
+      "ve": {
+        "path": "lib/course-translation-drafts-ve-market-community.ts",
+        "sha256": "c0c7cda3edf0c35f521a52c56f5f4d6a11e44a93bf71e75e5a6716f5a0ef42d7",
+        "matchesPacket": true
+      },
+      "ts": {
+        "path": "lib/course-translation-drafts-ts-market-community.ts",
+        "sha256": "fbc683bf3803c6a818d13923a192b40d746f37fa22b047e2ae3cf6a859630608",
+        "matchesPacket": true
+      }
+    }
+  },
+  "bodyFieldChecks": [
+    {
+      "language": "st",
+      "field": "body",
+      "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "currentTarget": "Baahisani ba ka arolelana mefuta e fapaneng ya dijalo le mosebetsi wa ho boloka peo.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nHo arolelana lisebelisoa ho etsa hore sehlopha se khone ho sebelisa lisebelisoa tse turang.\n\nPompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.\n\nHo sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.\n\nTshwarang dihlahiswa ka bonolo, mme le boloke suitable shade, packaging and storage through delivery.\n\nMoreki wa haufi a ka fokotsa leeto, empa losses le selling costs di sa ntse di lokela ho lekanngwa.\n\nBapisa money received after fees, transport and spoilage bakeng sa kgetho ka nngwe. O se ke wa nka hore moreki ya haufi ka ho fetisisa kamehla o fana ka best return.\n\nBaahisani ba ka bontsha bokgoni bo molemo mme ba bapisa se etsahetseng mapolasing a bona.\n\nNgolang method, conditions le result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+      "packetCandidateBody": "Baahisani ba ka arolelana mefuta e fapaneng ya dijalo le mosebetsi wa ho boloka peo.\n\nNgola crop, variety, source le collection date. Rera suitable isolation, selection, drying le storage bakeng sa crop e nngwe le e nngwe.\n\nHo arolelana ha ho bolele hore diversity e tla eketseha kapa quality e ntlafale ka bo yona. Hlahloba identity le germination pele o itshetleha ka shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nHo arolelana lisebelisoa ho etsa hore sehlopha se khone ho sebelisa lisebelisoa tse turang.\n\nPompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.\n\nHo sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.\n\nTshwarang dihlahiswa ka bonolo, mme le boloke suitable shade, packaging and storage through delivery.\n\nMoreki wa haufi a ka fokotsa leeto, empa losses le selling costs di sa ntse di lokela ho lekanngwa.\n\nBapisa money received after fees, transport and spoilage bakeng sa kgetho ka nngwe. O se ke wa nka hore moreki ya haufi ka ho fetisisa kamehla o fana ka best return.\n\nBaahisani ba ka bontsha bokgoni bo molemo mme ba bapisa se etsahetseng mapolasing a bona.\n\nNgolang method, conditions le result so others can judge whether it may suit their land.\n\nBatla keletso ya specialist bakeng sa unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+      "reviewedCandidateBody": "Baahisani ba ka arolelana mefuta e fapaneng ya dijalo le mosebetsi wa ho boloka peo.\n\nNgola crop, variety, source le collection date. Rera suitable isolation, selection, drying le storage bakeng sa crop e nngwe le e nngwe.\n\nHo arolelana ha ho bolele hore diversity e tla eketseha kapa quality e ntlafale ka bo yona. Hlahloba identity le germination pele o itshetleha ka shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nHo arolelana lisebelisoa ho etsa hore sehlopha se khone ho sebelisa lisebelisoa tse turang.\n\nPompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.\n\nHo sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.\n\nTshwarang dihlahiswa ka bonolo, mme le boloke suitable shade, packaging and storage through delivery.\n\nMoreki wa haufi a ka fokotsa leeto, empa losses le selling costs di sa ntse di lokela ho lekanngwa.\n\nBapisa money received after fees, transport and spoilage bakeng sa kgetho ka nngwe. O se ke wa nka hore moreki ya haufi ka ho fetisisa kamehla o fana ka best return.\n\nBaahisani ba ka bontsha bokgoni bo molemo mme ba bapisa se etsahetseng mapolasing a bona.\n\nNgolang method, conditions le result so others can judge whether it may suit their land.\n\nBatla qualified advice bakeng sa unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+      "sourceParagraphCount": 12,
+      "changedParagraphChecks": [
+        {
+          "paragraphIndex": 1,
+          "sourceEnglish": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+          "currentTarget": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+          "packetCandidateTarget": "Ngola crop, variety, source le collection date. Rera suitable isolation, selection, drying le storage bakeng sa crop e nngwe le e nngwe.",
+          "finalCandidateTarget": "Ngola crop, variety, source le collection date. Rera suitable isolation, selection, drying le storage bakeng sa crop e nngwe le e nngwe.",
+          "segments": [
+            {
+              "sourceEnglish": "Record the crop, variety, source and collection date.",
+              "targetText": "Ngola crop, variety, source le collection date.",
+              "segmentStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": " Plan suitable isolation, selection, drying and storage for each crop.",
+              "targetText": " Rera suitable isolation, selection, drying le storage bakeng sa crop e nngwe le e nngwe.",
+              "segmentStatus": "machine-draft"
+            }
+          ],
+          "sourceSegmentsConcatenateExactly": true,
+          "disposition": "accept",
+          "rationale": "Record, plan, collection date, and every crop-specific seed handling operation remain represented. Suitable remains explicit; isolation, selection, drying, storage, crop, variety and source stay as exact technical anchors."
+        },
+        {
+          "paragraphIndex": 2,
+          "sourceEnglish": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "currentTarget": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "packetCandidateTarget": "Ho arolelana ha ho bolele hore diversity e tla eketseha kapa quality e ntlafale ka bo yona. Hlahloba identity le germination pele o itshetleha ka shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "finalCandidateTarget": "Ho arolelana ha ho bolele hore diversity e tla eketseha kapa quality e ntlafale ka bo yona. Hlahloba identity le germination pele o itshetleha ka shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "segments": [
+            {
+              "sourceEnglish": "Sharing does not automatically multiply diversity or improve quality.",
+              "targetText": "Ho arolelana ha ho bolele hore diversity e tla eketseha kapa quality e ntlafale ka bo yona.",
+              "segmentStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": " Check identity and germination before relying on shared seed.",
+              "targetText": " Hlahloba identity le germination pele o itshetleha ka shared seed.",
+              "segmentStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": " Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+              "targetText": " Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+              "segmentStatus": "hold"
+            }
+          ],
+          "sourceSegmentsConcatenateExactly": true,
+          "disposition": "accept_with_legal_clause_exact_english",
+          "rationale": "The first two sentences preserve the non-automatic diversity/quality claim and identity/germination checks before reliance. The complete protected-variety/permission-before-exchange sentence remains exact English."
+        },
+        {
+          "paragraphIndex": 11,
+          "sourceEnglish": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+          "currentTarget": "Seek qualified advice for unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+          "packetCandidateTarget": "Batla keletso ya specialist bakeng sa unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+          "finalCandidateTarget": "Batla qualified advice bakeng sa unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+          "segments": [
+            {
+              "sourceEnglish": "Seek qualified advice for unfamiliar disease or technical problems.",
+              "targetText": "Batla keletso ya specialist bakeng sa unfamiliar disease or technical problems.",
+              "segmentStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": " Shared experience and specialist help can work together.",
+              "targetText": " Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+              "segmentStatus": "machine-draft"
+            }
+          ],
+          "sourceSegmentsConcatenateExactly": true,
+          "disposition": "repair_and_accept_with_qualified_preserved",
+          "rationale": "“Seek” is localized, while qualified remains an explicit source anchor. The disease/technical problem terms stay exact; the following shared-experience/specialist-help clause remains unchanged and preserves can/may possibility."
+        }
+      ],
+      "preservedParagraphIndexes": [
+        0,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "sourceAndCurrentBodyBindingsExact": true
+    },
+    {
+      "language": "ve",
+      "field": "body",
+      "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "currentTarget": "Vhahura vha nga kovhelana mifuda yo fhambanaho na mushumo wa u vhulunga mbeu.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nU kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.\n\nPhampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.\n\nU zwi shumisa roṱhe zwi phaḓaladza ndeme yazwo kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽi si kone u u ita ḽoṱhe.\n\nFarani zwibveledzwa nga vhulenda. Keep suitable shade, packaging and storage through delivery.\n\nMukengi wa tsini a nga fhungudza lwendo, fhedzi losses and selling costs still need measuring.\n\nVhambedzani money received after fees, transport and spoilage kha option iṅwe na iṅwe. Ni songo humbula uri the nearest buyer always gives the best return.\n\nVhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.\n\nṄwalani method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "packetCandidateBody": "Vhahura vha nga kovhelana mifuda yo fhambanaho na mushumo wa u vhulunga mbeu.\n\nṄwalani crop, variety, source na datumu ya u kuvhanganya. Pulani suitable isolation, selection, drying and storage kha crop iṅwe na iṅwe.\n\nU kovhekana a zwi ambi uri diversity i ḓo engedzea kana quality i khwinifhale nga u tou ḓiṋea. Ṱolani identity na germination ni sa athu ḓitika nga shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nU kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.\n\nPhampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.\n\nU zwi shumisa roṱhe zwi phaḓaladza ndeme yazwo kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽi si kone u u ita ḽoṱhe.\n\nFarani zwibveledzwa nga vhulenda. Keep suitable shade, packaging and storage through delivery.\n\nMukengi wa tsini a nga fhungudza lwendo, fhedzi losses and selling costs still need measuring.\n\nVhambedzani money received after fees, transport and spoilage kha option iṅwe na iṅwe. Ni songo humbula uri the nearest buyer always gives the best return.\n\nVhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.\n\nṄwalani method, conditions and result so others can judge whether it may suit their land.\n\nṰoḓani nyeletshedzo ya specialist nga ha unfamiliar disease or technical problems. Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
+      "reviewedCandidateBody": "Vhahura vha nga kovhelana mifuda yo fhambanaho na mushumo wa u vhulunga mbeu.\n\nṄwalani crop, variety, source na datumu ya u kuvhanganya. Pulani suitable isolation, selection, drying and storage kha crop iṅwe na iṅwe.\n\nU kovhekana a zwi ambi uri diversity i ḓo engedzea kana quality i khwinifhale nga u tou ḓiṋea. Ṱolani identity na germination ni sa athu ḓitika nga shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nU kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.\n\nPhampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.\n\nU zwi shumisa roṱhe zwi phaḓaladza ndeme yazwo kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽi si kone u u ita ḽoṱhe.\n\nFarani zwibveledzwa nga vhulenda. Keep suitable shade, packaging and storage through delivery.\n\nMukengi wa tsini a nga fhungudza lwendo, fhedzi losses and selling costs still need measuring.\n\nVhambedzani money received after fees, transport and spoilage kha option iṅwe na iṅwe. Ni songo humbula uri the nearest buyer always gives the best return.\n\nVhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.\n\nṄwalani method, conditions and result so others can judge whether it may suit their land.\n\nṰoḓani qualified advice nga ha unfamiliar disease or technical problems. Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
+      "sourceParagraphCount": 12,
+      "changedParagraphChecks": [
+        {
+          "paragraphIndex": 1,
+          "sourceEnglish": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+          "currentTarget": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+          "packetCandidateTarget": "Ṅwalani crop, variety, source na datumu ya u kuvhanganya. Pulani suitable isolation, selection, drying and storage kha crop iṅwe na iṅwe.",
+          "finalCandidateTarget": "Ṅwalani crop, variety, source na datumu ya u kuvhanganya. Pulani suitable isolation, selection, drying and storage kha crop iṅwe na iṅwe.",
+          "segments": [
+            {
+              "sourceEnglish": "Record the crop, variety, source and collection date.",
+              "targetText": "Ṅwalani crop, variety, source na datumu ya u kuvhanganya.",
+              "segmentStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": " Plan suitable isolation, selection, drying and storage for each crop.",
+              "targetText": " Pulani suitable isolation, selection, drying and storage kha crop iṅwe na iṅwe.",
+              "segmentStatus": "machine-draft"
+            }
+          ],
+          "sourceSegmentsConcatenateExactly": true,
+          "disposition": "accept",
+          "rationale": "Record, plan, collection date, and every crop-specific seed handling operation remain represented. Suitable remains explicit; isolation, selection, drying, storage, crop, variety and source stay as exact technical anchors."
+        },
+        {
+          "paragraphIndex": 2,
+          "sourceEnglish": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "currentTarget": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "packetCandidateTarget": "U kovhekana a zwi ambi uri diversity i ḓo engedzea kana quality i khwinifhale nga u tou ḓiṋea. Ṱolani identity na germination ni sa athu ḓitika nga shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "finalCandidateTarget": "U kovhekana a zwi ambi uri diversity i ḓo engedzea kana quality i khwinifhale nga u tou ḓiṋea. Ṱolani identity na germination ni sa athu ḓitika nga shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "segments": [
+            {
+              "sourceEnglish": "Sharing does not automatically multiply diversity or improve quality.",
+              "targetText": "U kovhekana a zwi ambi uri diversity i ḓo engedzea kana quality i khwinifhale nga u tou ḓiṋea.",
+              "segmentStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": " Check identity and germination before relying on shared seed.",
+              "targetText": " Ṱolani identity na germination ni sa athu ḓitika nga shared seed.",
+              "segmentStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": " Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+              "targetText": " Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+              "segmentStatus": "hold"
+            }
+          ],
+          "sourceSegmentsConcatenateExactly": true,
+          "disposition": "accept_with_legal_clause_exact_english",
+          "rationale": "The first two sentences preserve the non-automatic diversity/quality claim and identity/germination checks before reliance. The complete protected-variety/permission-before-exchange sentence remains exact English."
+        },
+        {
+          "paragraphIndex": 11,
+          "sourceEnglish": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+          "currentTarget": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+          "packetCandidateTarget": "Ṱoḓani nyeletshedzo ya specialist nga ha unfamiliar disease or technical problems. Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
+          "finalCandidateTarget": "Ṱoḓani qualified advice nga ha unfamiliar disease or technical problems. Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
+          "segments": [
+            {
+              "sourceEnglish": "Seek qualified advice for unfamiliar disease or technical problems.",
+              "targetText": "Ṱoḓani nyeletshedzo ya specialist nga ha unfamiliar disease or technical problems.",
+              "segmentStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": " Shared experience and specialist help can work together.",
+              "targetText": " Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
+              "segmentStatus": "machine-draft"
+            }
+          ],
+          "sourceSegmentsConcatenateExactly": true,
+          "disposition": "repair_and_accept_with_qualified_preserved",
+          "rationale": "“Seek” is localized, while qualified remains an explicit source anchor. The disease/technical problem terms stay exact; the following shared-experience/specialist-help clause remains unchanged and preserves can/may possibility."
+        }
+      ],
+      "preservedParagraphIndexes": [
+        0,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "sourceAndCurrentBodyBindingsExact": true
+    },
+    {
+      "language": "ts",
+      "field": "body",
+      "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "currentTarget": "Vaakelani va nga avelana different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nKu avelana switirhisiwa swo durha swi endla leswaku ntlawa wu swi kota ku swi tirhisa.\n\nPompo ya mati kumbe muchini wo sila mavele swi nga ha durha ngopfu leswaku ndyangu wun’we wu swi xava.\n\nKu tirhisa switirhisiwa swin’we swi endla leswaku ntlawa wu vuyeriwaka hi swona, naswona swi pfuna purasi rin’wana ni rin’wana ku endla mintirho leyi a ri nga ta yi kota ri ri roxe.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nMuxavi wa le kusuhi a nga ha hunguta riendzo, kambe losses and selling costs still need measuring.\n\nPimanisa money received after fees, transport and spoilage eka ndlela yin’wana ni yin’wana. Do not assume the nearest buyer always gives the best return.\n\nVaakelani va nga komba vuswikoti bya nkoka naswona va pimanisa leswi humeleleke emapurasi ya vona.\n\nTsala method, conditions na result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "packetCandidateBody": "Vaakelani va nga avelana different varieties and the work of saving seed.\n\nTsala crop, variety, source ni siku ra ku hlengeleta. Pulana suitable isolation, selection, drying and storage eka crop yin’wana ni yin’wana.\n\nKu avelana a swi vuli leswaku diversity yi ta engeteleka kumbe quality yi ta antswa hi yoxe. Kambisisa identity ni germination u nga si titshega hi shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nKu avelana switirhisiwa swo durha swi endla leswaku ntlawa wu swi kota ku swi tirhisa.\n\nPompo ya mati kumbe muchini wo sila mavele swi nga ha durha ngopfu leswaku ndyangu wun’we wu swi xava.\n\nKu tirhisa switirhisiwa swin’we swi endla leswaku ntlawa wu vuyeriwaka hi swona, naswona swi pfuna purasi rin’wana ni rin’wana ku endla mintirho leyi a ri nga ta yi kota ri ri roxe.\n\nKhoma produce hi vukheta, u hlayisa shade, packaging ni storage leswi faneleke ku fikela loko yi yisiwa.\n\nMuxavi wa le kusuhi a nga ha hunguta riendzo, kambe losses and selling costs still need measuring.\n\nPimanisa money received after fees, transport and spoilage eka ndlela yin’wana ni yin’wana. Do not assume the nearest buyer always gives the best return.\n\nVaakelani va nga komba vuswikoti bya nkoka naswona va pimanisa leswi humeleleke emapurasi ya vona.\n\nTsala method, conditions na result so others can judge whether it may suit their land.\n\nLavani xitsundzuxo xa specialist eka unfamiliar disease or technical problems. Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we.",
+      "reviewedCandidateBody": "Vaakelani va nga avelana different varieties and the work of saving seed.\n\nTsala crop, variety, source ni siku ra ku hlengeleta. Pulana suitable isolation, selection, drying and storage eka crop yin’wana ni yin’wana.\n\nKu avelana a swi vuli leswaku diversity yi ta engeteleka kumbe quality yi ta antswa hi yoxe. Kambisisa identity ni germination u nga si titshega hi shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nKu avelana switirhisiwa swo durha swi endla leswaku ntlawa wu swi kota ku swi tirhisa.\n\nPompo ya mati kumbe muchini wo sila mavele swi nga ha durha ngopfu leswaku ndyangu wun’we wu swi xava.\n\nKu tirhisa switirhisiwa swin’we swi endla leswaku ntlawa wu vuyeriwaka hi swona, naswona swi pfuna purasi rin’wana ni rin’wana ku endla mintirho leyi a ri nga ta yi kota ri ri roxe.\n\nKhoma produce hi vukheta, u hlayisa shade, packaging ni storage leswi faneleke ku fikela loko yi yisiwa.\n\nMuxavi wa le kusuhi a nga ha hunguta riendzo, kambe losses and selling costs still need measuring.\n\nPimanisa money received after fees, transport and spoilage eka ndlela yin’wana ni yin’wana. Do not assume the nearest buyer always gives the best return.\n\nVaakelani va nga komba vuswikoti bya nkoka naswona va pimanisa leswi humeleleke emapurasi ya vona.\n\nTsala method, conditions na result so others can judge whether it may suit their land.\n\nLavani qualified advice eka unfamiliar disease or technical problems. Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we.",
+      "sourceParagraphCount": 12,
+      "changedParagraphChecks": [
+        {
+          "paragraphIndex": 1,
+          "sourceEnglish": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+          "currentTarget": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+          "packetCandidateTarget": "Tsala crop, variety, source ni siku ra ku hlengeleta. Pulana suitable isolation, selection, drying and storage eka crop yin’wana ni yin’wana.",
+          "finalCandidateTarget": "Tsala crop, variety, source ni siku ra ku hlengeleta. Pulana suitable isolation, selection, drying and storage eka crop yin’wana ni yin’wana.",
+          "segments": [
+            {
+              "sourceEnglish": "Record the crop, variety, source and collection date.",
+              "targetText": "Tsala crop, variety, source ni siku ra ku hlengeleta.",
+              "segmentStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": " Plan suitable isolation, selection, drying and storage for each crop.",
+              "targetText": " Pulana suitable isolation, selection, drying and storage eka crop yin’wana ni yin’wana.",
+              "segmentStatus": "machine-draft"
+            }
+          ],
+          "sourceSegmentsConcatenateExactly": true,
+          "disposition": "accept",
+          "rationale": "Record, plan, collection date, and every crop-specific seed handling operation remain represented. Suitable remains explicit; isolation, selection, drying, storage, crop, variety and source stay as exact technical anchors."
+        },
+        {
+          "paragraphIndex": 2,
+          "sourceEnglish": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "currentTarget": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "packetCandidateTarget": "Ku avelana a swi vuli leswaku diversity yi ta engeteleka kumbe quality yi ta antswa hi yoxe. Kambisisa identity ni germination u nga si titshega hi shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "finalCandidateTarget": "Ku avelana a swi vuli leswaku diversity yi ta engeteleka kumbe quality yi ta antswa hi yoxe. Kambisisa identity ni germination u nga si titshega hi shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "segments": [
+            {
+              "sourceEnglish": "Sharing does not automatically multiply diversity or improve quality.",
+              "targetText": "Ku avelana a swi vuli leswaku diversity yi ta engeteleka kumbe quality yi ta antswa hi yoxe.",
+              "segmentStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": " Check identity and germination before relying on shared seed.",
+              "targetText": " Kambisisa identity ni germination u nga si titshega hi shared seed.",
+              "segmentStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": " Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+              "targetText": " Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+              "segmentStatus": "hold"
+            }
+          ],
+          "sourceSegmentsConcatenateExactly": true,
+          "disposition": "accept_with_legal_clause_exact_english",
+          "rationale": "The first two sentences preserve the non-automatic diversity/quality claim and identity/germination checks before reliance. The complete protected-variety/permission-before-exchange sentence remains exact English."
+        },
+        {
+          "paragraphIndex": 6,
+          "sourceEnglish": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+          "currentTarget": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+          "packetCandidateTarget": "Khoma produce hi vukheta, u hlayisa shade, packaging ni storage leswi faneleke ku fikela loko yi yisiwa.",
+          "finalCandidateTarget": "Khoma produce hi vukheta, u hlayisa shade, packaging ni storage leswi faneleke ku fikela loko yi yisiwa.",
+          "segments": [
+            {
+              "sourceEnglish": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+              "targetText": "Khoma produce hi vukheta, u hlayisa shade, packaging ni storage leswi faneleke ku fikela loko yi yisiwa.",
+              "segmentStatus": "machine-draft"
+            }
+          ],
+          "sourceSegmentsConcatenateExactly": true,
+          "disposition": "accept",
+          "rationale": "Handle gently and maintain suitable shade, packaging and storage through delivery remain present; technical logistics terms are retained exactly."
+        },
+        {
+          "paragraphIndex": 11,
+          "sourceEnglish": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+          "currentTarget": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+          "packetCandidateTarget": "Lavani xitsundzuxo xa specialist eka unfamiliar disease or technical problems. Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we.",
+          "finalCandidateTarget": "Lavani qualified advice eka unfamiliar disease or technical problems. Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we.",
+          "segments": [
+            {
+              "sourceEnglish": "Seek qualified advice for unfamiliar disease or technical problems.",
+              "targetText": "Lavani xitsundzuxo xa specialist eka unfamiliar disease or technical problems.",
+              "segmentStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": " Shared experience and specialist help can work together.",
+              "targetText": " Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we.",
+              "segmentStatus": "machine-draft"
+            }
+          ],
+          "sourceSegmentsConcatenateExactly": true,
+          "disposition": "repair_and_accept_with_qualified_preserved",
+          "rationale": "“Seek” is localized, while qualified remains an explicit source anchor. The disease/technical problem terms stay exact; the following shared-experience/specialist-help clause remains unchanged and preserves can/may possibility."
+        }
+      ],
+      "preservedParagraphIndexes": [
+        0,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10
+      ],
+      "sourceAndCurrentBodyBindingsExact": true
+    }
+  ],
+  "assessmentFieldChecks": [
+    {
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "currentTarget": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "candidateTarget": "Boleng ba peo bo itshetlehile ka crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "sourceCorrectIndex": 1,
+      "disposition": "accept_technical_clause_plus_exact_permission_hold",
+      "rationale": "Candidate localizes only the opening claim that seed quality depends on the stated technical checks; the full protected-variety permission-rights clause remains exact English. Quiz options/index are unchanged. No safety or permission guarantee is implied."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "currentTarget": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "candidateTarget": "Kwalithi ya mbeu i ḓitika nga crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "sourceCorrectIndex": 1,
+      "disposition": "accept_technical_clause_plus_exact_permission_hold",
+      "rationale": "Candidate localizes only the opening claim that seed quality depends on the stated technical checks; the full protected-variety permission-rights clause remains exact English. Quiz options/index are unchanged. No safety or permission guarantee is implied."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "currentTarget": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "candidateTarget": "Quality ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "sourceCorrectIndex": 1,
+      "disposition": "accept_technical_clause_plus_exact_permission_hold",
+      "rationale": "Candidate localizes only the opening claim that seed quality depends on the stated technical checks; the full protected-variety permission-rights clause remains exact English. Quiz options/index are unchanged. No safety or permission guarantee is implied."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "field": "keyPoints[1]",
+      "sourceEnglish": "Agree care, booking and repair responsibilities for shared tools",
+      "currentTarget": "Agree care, booking and repair responsibilities for shared tools",
+      "candidateTarget": "Tendelani nga vhuḓifhinduleli ha u ṱhogomela zwishumiswa zwine zwa kovhekanywa, booking yazwo, na u zwi lugisa.",
+      "disposition": "accept",
+      "rationale": "Care, booking, and repair duties all remain assigned to shared-tool users; booking stays as an English anchor. No additional cost, access guarantee, or safety claim is added."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "field": "keyPoints[1]",
+      "sourceEnglish": "Agree care, booking and repair responsibilities for shared tools",
+      "currentTarget": "Agree care, booking and repair responsibilities for shared tools",
+      "candidateTarget": "Pfumelelanani hi vutihlamuleri byo hlayisa switirhisiwa leswi avelaniwaka, booking ya swona ni ku swi lunghisa.",
+      "disposition": "accept",
+      "rationale": "Care, booking, and repair duties all remain assigned to shared-tool users; booking stays as an English anchor. No additional cost, access guarantee, or safety claim is added."
+    }
+  ],
+  "protectedMeaningChecks": {
+    "seedRights": "Protected-variety and permission-before-exchange sentence held exactly in all three body drafts and all three quiz rationales.",
+    "seedQuality": "No claim that sharing automatically multiplies diversity or improves quality; crop-specific checks remain explicit; identity/germination precede reliance on shared seed.",
+    "sharedToolResponsibility": "Care, booking and repair remain all three responsibilities for the group; no added guarantee of equipment availability or safety.",
+    "consent": "No added consent, legal permission, or rights outcome. Exact permission clause remains in English.",
+    "time": "Collection date retained. Suitable isolation/drying/storage per crop retained. Produce handling and through-delivery timing retained.",
+    "quizIndex": "Correct option index 1 and all option order unchanged.",
+    "cost": "Existing nearby-buyer and selling-cost paragraphs unchanged; no added cost claim."
+  },
+  "counts": {
+    "bodyLanguageFields": 3,
+    "changedBodyParagraphs": 10,
+    "assessmentFields": 5,
+    "acceptedBodyParagraphs": 7,
+    "repairedBodyParagraphs": 3,
+    "acceptedAssessmentFields": 5
+  }
+}

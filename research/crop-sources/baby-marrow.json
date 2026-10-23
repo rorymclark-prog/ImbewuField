@@ -1,0 +1,129 @@
+{
+  "key": "baby-marrow",
+  "name": "Baby Marrow (Courgette/Zucchini)",
+  "localNames": ["courgette", "zucchini"],
+  "botanicalName": "Cucurbita pepo",
+  "family": "Cucurbitaceae",
+  "role": "vegetable",
+  "foodGroup": "fruiting-vegetable",
+  "harvestProduct": "immature fruit",
+  "frostTender": {
+    "value": true,
+    "evidence": {
+      "quote": "2. Very Tender (very sensitive to low temperatures)\nChili Okra Sweet pepper\nCucumber Pumpkin Sweet potato\nEggplant Squash Vegetable marrow\nLima bean Sweet melon Watermelon",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/climatic_requirements.pdf",
+      "page": 2,
+      "doc": "KZN DARD, 'Climatic Requirements' (Vegetable Production series), Table 1 ('Vegetable marrow')"
+    },
+    "notes": "Corroborated: Starke Ayres' Marrow and Scallop Production Guideline states 'They are sensitive to frost and cold conditions result in slow growth and low production.'"
+  },
+  "transplant": {
+    "value": false,
+    "evidence": {
+      "quote": "Most marrows are direct-sown, that is the seed is planted directly into the soil.",
+      "url": "https://www.starkeayres.com/uploads/files/Marrow-and-Scallop-Production-Guideline-2019.pdf",
+      "page": 2,
+      "doc": "Starke Ayres, 'Marrow and Scallop Production Guideline', 2019"
+    }
+  },
+  "sowMonths": {
+    "summer": {
+      "months": [9, 10, 11, 12, 1],
+      "evidence": {
+        "quote": "Cucurbits Sept - Dec/Jan Aug - Jan/Feb Mar - May, Jul - Oct",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 7,
+        "doc": "KZN DARD, 'Plant Establishment' (Vegetable Production series), Table 6, generic 'Cucurbits' row, 'Cold areas' column"
+      },
+      "notes": "No dedicated marrow sowing-calendar row exists; the generic 'Cucurbits' row is used as the regional proxy (same approach as the catalog's 'pumpkin' entry)."
+    },
+    "winter": {
+      "months": [],
+      "evidence": null
+    },
+    "all-year": {
+      "months": [3, 4, 5, 7, 8, 9, 10],
+      "evidence": {
+        "quote": "Cucurbits Sept - Dec/Jan Aug - Jan/Feb Mar - May, Jul - Oct",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 7,
+        "doc": "KZN DARD, 'Plant Establishment' (Vegetable Production series), Table 6, generic 'Cucurbits' row, 'Hot areas' column"
+      }
+    },
+    "mild-frost": {
+      "months": [8, 9, 10, 11, 12, 1, 2],
+      "evidence": {
+        "quote": "Cucurbits Sept - Dec/Jan Aug - Jan/Feb Mar - May, Jul - Oct",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 7,
+        "doc": "KZN DARD, 'Plant Establishment' (Vegetable Production series), Table 6, generic 'Cucurbits' row, 'Warm areas' column"
+      }
+    }
+  },
+  "daysToHarvestRange": {
+    "value": [40, 50],
+    "evidence": {
+      "quote": "Marrow, baby 40 - 50 6 - 9 weeks",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/length_of_growing_period.pdf",
+      "page": 3,
+      "doc": "KZN DARD, 'Length of Growing Period' (Vegetable Production series), Table 4, 'Marrow, baby' row"
+    },
+    "notes": "This row specifically names 'Marrow, baby', matching this catalog entry directly (as distinct from the 'Marrow, large' row used for bulk storage marrow)."
+  },
+  "harvestPeriodWeeksOrMonths": "6-9 weeks",
+  "rowSpacingRangeCm": [80, 120],
+  "inRowSpacingRangeCm": [35, 50],
+  "sowDepthRangeCm": [2.0, 3.0],
+  "seedRateKgPerHaRange": [4, 6],
+  "yield": {
+    "tPerHaRange": [7, 15],
+    "product": "immature fruit",
+    "conditions": "Conservative 7-8 t/ha, likely 12 t/ha, target 15 t/ha (KZN)",
+    "evidence": {
+      "quote": "Marrow, baby 7 - 8 12 15",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/expected_yields.pdf",
+      "page": 2,
+      "doc": "KZN DARD, 'Expected Yields' (Vegetable Production series), Table 8"
+    }
+  },
+  "ecocrop": {
+    "row": "Cucurbita pepo",
+    "TOPMN": 17,
+    "TOPMX": 30,
+    "TMIN": 6,
+    "TMAX": 40,
+    "GMIN": 40,
+    "GMAX": 100
+  },
+  "coverCrop": false,
+  "varieties": [
+    {
+      "name": "Everglade",
+      "supplier": "Starke Ayres",
+      "maturity": null,
+      "zones": [],
+      "notes": "Named in Starke Ayres' zucchini/marrow product range listing; page was JS-rendered and did not expose per-variety maturity or zone text to this session's fetch."
+    },
+    {
+      "name": "Monitor",
+      "supplier": "Starke Ayres",
+      "maturity": null,
+      "zones": [],
+      "notes": "Named in Starke Ayres' zucchini/marrow product range listing; details not retrievable (see Everglade note)."
+    },
+    {
+      "name": "Mira",
+      "supplier": "Starke Ayres",
+      "maturity": null,
+      "zones": [],
+      "notes": "Named in Starke Ayres' zucchini/marrow product range listing; details not retrievable (see Everglade note)."
+    }
+  ],
+  "zoneNotes": "Starke Ayres' commercial guideline (titled 'Marrow and Scallop Production Guideline') describes 'the dark green, cylindrical type' marrow as 'the commonest [type] in South Africa' and gives a commercial in-row/row spacing of 40cm x 1.5m for a target population of about 16,000 plants/ha — slightly wider row spacing than KZN DARD's Table 5 range (80-120cm) but the same order of magnitude.",
+  "gaps": [
+    "Winter/Western Cape sowMonths not sourced, for the same reason as gem-squash: KZN DARD's sowing calendar has no Western Cape column, and no Western Cape-specific cucurbit sowing source was found this session.",
+    "Individual variety maturity/zone data for Starke Ayres' zucchini/marrow cultivars (Everglade, Monitor, Mira, and others named on the same page: STAR 8024, STAR 8023, Green Tiger) could not be retrieved — only the cultivar names themselves were confirmed from a product-range listing page."
+  ],
+  "verdict": "partial",
+  "summary": "Frost tenderness, transplant status, days-to-harvest (using the 'Marrow, baby' row, a direct match), row/in-row spacing, seed rate and yield are all sourced (KZN DARD Tables 4/5/8, corroborated by Starke Ayres' Marrow and Scallop Production Guideline). Verdict held to 'partial' solely because winter/Western Cape sowMonths could not be sourced."
+}

@@ -11,21 +11,50 @@
 import { numberLabel } from '@/lib/format-figures';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
-import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
+import { Fragment, Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { LucideIcon } from 'lucide-react';
-import { Search, X, ChevronDown, Home, Shovel, Sprout, Trees, Droplets, ShoppingBasket, Scissors, Leaf, Bug, Ruler, Wheat, Sun, CloudRain, CloudSun, Cloud, Sparkles, Trash2, ClipboardList, Share2, Salad, BookOpen, Compass, UtensilsCrossed, Coins, SearchCheck, RefreshCw, Undo2, Circle, Grape, TriangleAlert, Star, Grid2x2, Plus } from 'lucide-react';
+import { Search, X, ChevronDown, Home, Shovel, Sprout, Trees, Droplets, ShoppingBasket, Scissors, Leaf, Bug, Ruler, Wheat, Sun, CloudRain, CloudSun, Cloud, Sparkles, Trash2, ClipboardList, Share2, Salad, BookOpen, Compass, UtensilsCrossed, Coins, SearchCheck, RefreshCw, Undo2, Circle, Grape, TriangleAlert, Star, Grid2x2, Plus, PawPrint, Save, Check } from 'lucide-react';
 import MenuButton from '@/components/MenuButton';
 import LimaBar from '@/components/LimaBar';
 import { useRegisterBackControl } from '@/components/BackControl';
 import LessonLink from '@/components/design/LessonLink';
 import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
+import ProductionAvailabilityGraphs from '@/components/crops/ProductionAvailabilityGraphs';
+import ProductionRecordsEditor from '@/components/crops/ProductionRecordsEditor';
+import ProductionGuideCard from '@/components/crops/ProductionGuideCard';
+import PoultryGuidanceCard from '@/components/crops/PoultryGuidanceCard';
+import SiteSurveySheet from '@/components/SiteSurveySheet';
+import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
+import { canonicalCoordinateSiteId } from '@/lib/site-id';
 import CropIcon from '@/components/CropIcon';
 import MiniPlanPlate from '@/components/MiniPlanPlate';
 import { planValue } from '@/lib/plan-value';
 import { miniPlanFromCanvas, miniPlanFromFacilitator, type MiniPlan } from '@/lib/mini-plan';
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
+import { bananaCirclesIn, buildTreeAvailability, confirmedTreeMonths, formatMonthSpan, formatRange, isHouseholdFoodHarvest, loadTreeSeasonChoices, placedTreeGroups, saveTreeSeasonChoices, sourcedSeasonMonths, treePickingByMonth, treePickingPhrase, unidentifiedPlantGroups, type PlacedTreeGroup, type TreeAvailabilityItem, type TreePickingLine, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
+import { DEFAULT_INCLUDE_PERENNIALS, loadIncludePerennials, saveIncludePerennials } from '@/lib/produce-scope';
+import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, animalReferenceQualifier, formatAmountRange, DEFAULT_INCLUDE_ANIMALS, PRODUCT_LABEL, buildAnimalAvailability, loadAnimalSeasonChoices, loadEnterpriseChoices, loadIncludeAnimals, placedAnimalGroups, poultryGuidance, saveAnimalSeasonChoices, saveEnterpriseChoices, saveIncludeAnimals, sourcedProductMonths, type AnimalAvailabilityItem, type AnimalKind, type AnimalSeasonChoices, type HousingKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
+import AnimalEnterprisesCard, { PRODUCT_ICON } from '@/components/crops/AnimalEnterprisesCard';
+import { HOUSING_ANIMALS } from '@/lib/animal-enterprises';
+import TreeSeasonsCard from '@/components/crops/TreeSeasonsCard';
+import ProductionProjectionCard from '@/components/crops/ProductionProjectionCard';
+import { buildProductionProjection, treeAgeCalendarNote } from '@/lib/production-projection';
+import YearOfFoodCard from '@/components/crops/YearOfFoodCard';
+import { monthAxisSlots, type MonthAxisSlot } from '@/lib/month-axis';
+import { planningTreeSeasons, type ExpectedSeason } from '@/lib/production-product-guidance';
+import { buildProductionAvailabilityGraphs, printableAvailability, type ProductionKgGraphInput } from '@/lib/crop-export-availability';
+import { productionRecordsForSite, preservedFoodRecordsForSite, replaceProductionRecordsForSite,
+  replacePreservedFoodRecordsForSite, sanitiseProductionRecords, sanitisePreservedFoodRecords,
+  type DatedProductionRecord, type PreservedFoodRecord } from '@/lib/production-records';
+import { resolveAvailability } from '@/lib/crop-export-pdf';
+import { animalProductArtUrl, enterpriseProductArtUrl } from '@/lib/animal-art';
+import { isStapleCropKey } from '@/lib/staple-crops';
+import { speciesFruitArtworkUrl } from '@/lib/species-art';
+import { animalLineText, animalsNotShownNote, calendarProduceByMonth, flowRecordText, produceLanes, treeLineText, unmarkedAnimalLines, unmarkedLineText, type CalendarAnimalLine, type CalendarProduceMonth, type CalendarTreeLine, type CalendarUnmarkedLine, type ProduceLane } from '@/lib/calendar-produce';
+import { buildYearOfFood, suggestGapFills, type GapFillSuggestion } from '@/lib/year-of-food';
+import { climateGateFrom } from '@/lib/crop-climate-gate';
 import { bedsFromDesignCanvas, canvasSiteIdForPlace, studioPlanChoices, type StudioPlanChoice } from '@/lib/design-beds-bridge';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import type { FacilitatorDesignState } from '@/lib/facilitator-design';
@@ -35,17 +64,20 @@ import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall } from '@/lib/water-calc';
 import { driestMonths, resolveSiteClimate, type SiteClimate } from '@/lib/site-climate';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
+import { growingZonesForClimate, type GrowingZoneId } from '@/lib/growing-zones';
+import { VarietyGuidance } from '@/components/crops/VarietyGuidance';
 import { CROPS, cropByKey, hasAutomaticPlanningBasis, hasPlanningYield, hasVerifiedSchedule, MONTHS_SHORT } from '@/lib/crop-catalog';
 import type { PlanBed, Planting, CropPlanState, FoodAvailabilityItem, PlanYieldBenchmark, CashflowSettings, BedOverlapWarning, CropTask } from '@/lib/crop-plan';
 import {
   loadCropPlan, saveCropPlan, bedEntryMonth, latestBedEntryMonth, plannedBedEntryMonth, harvestEndMonthForCrop, harvestMonthForCrop, tasksForPlan, taskMonthsFromNow, estimatedYieldKgAdjusted, nextValidSowMonth,
   isSpaceHungry, bedOverlapWarning, benchmarkAreaConflictDetails, bedHasUnverifiedTiming, buildYearReport, buildFoodAvailability, buildPlanYieldBenchmark,
-  buildFieldUtilizationByMonth, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
+  buildFieldUtilizationByMonth, totalGrowingAreaM2, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
   loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, planNotesDateLabel,
-  restampEditedOnce,
+  restampEditedOnce, confirmOnceSowing,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META, foodGroupOf, ROTATION_FAMILY_META, rotationFamilyOf } from '@/lib/crop-groups';
+import { clearCropMix, loadCropMix, saveCropMix, type CropMix } from '@/lib/crop-mix-preference';
 import type { AutoSuggestAnswers, AutoSuggestResult, GardenGoal, HarvestRhythm, PlanNote } from '@/lib/crop-autosuggest';
 import { autoSuggestPlan, PLAN_NOTES_PANEL_COPY } from '@/lib/crop-autosuggest';
 import type { IdealYearPlan, PlanTiming } from '@/lib/crop-plan-ideal';
@@ -61,11 +93,16 @@ import { PRICE_SNAPSHOT_MONTHS } from '@/components/prices/CropPriceGuide.format
 // and three copies of that sentence is how they stop doing so.
 import type { BuyingMonth } from '@/lib/crop-export-schedule';
 import {
-  buildBuyingSchedule, positionRangeLabel, sowingInstruction, SUCCESSION_TIMING_GUIDANCE,
-  taskSentence, groupTasksByAction, TRANSPLANT_NURSERY_GUIDANCE,
+  buildBuyingSchedule, buildProductionGuide, MONTH_NAMES, positionRangeLabel, sowingInstruction, SUCCESSION_TIMING_GUIDANCE,
+  taskSentence, groupTasksByAction, TRANSPLANT_NURSERY_GUIDANCE, weightRangeLabel,
 } from '@/lib/crop-export-schedule';
 
-const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium_aromatic', 'fruiting_veg', 'staple_grain'];
+/** Same ticked tiles and exact crops, ignoring order. */
+function sameMix(a: CropMix, b: CropMix): boolean {
+  const same = (x: readonly string[], y: readonly string[]) => x.length === y.length && x.every((v) => y.includes(v));
+  return same(a.groups, b.groups) && same(a.cropKeys, b.cropKeys);
+}
+const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium', 'herb', 'fruiting_veg', 'squash_melon', 'staple_grain', 'less_common', 'cover_crop'];
 
 // This route has sourced crop timing, climate, price and task claims mixed with
 // ordinary controls. Only pass interface labels through this helper; keep the
@@ -173,6 +210,31 @@ function HarvestShareRow({
  * stated once. taskSentence() stays for the WhatsApp share and the PDF, where a
  * flat line is the right shape.
  */
+/**
+ * Standing trees in their sourced SA picking season this month. Not a bed task — no bed, no
+ * sowing date — so it sits under the month's jobs rather than inside TaskList's action groups.
+ */
+function TreePickingList({ lines }: { lines: TreePickingLine[] }) {
+  const { lang } = useLanguage();
+  if (lines.length === 0) return null;
+  return (
+    <div className="rounded-xl mt-2" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', padding: '7px 9px' }}>
+      <div className="flex items-baseline gap-1.5">
+        <Trees size={14} aria-hidden style={{ flexShrink: 0, color: 'var(--emerald)' }} />
+        <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{cropUi(lang, 'From your trees', 'Ezihlahleni zakho')}</span>
+      </div>
+      <div className="space-y-0.5 mt-1">
+        {lines.map((line) => (
+          <div key={line.speciesId} className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.45 }}>{treePickingPhrase(line)}</div>
+        ))}
+      </div>
+      <div className="font-sans mt-1" style={{ fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>
+        {cropUi(lang, 'Sourced South African seasons, all regions together — your own trees may start or finish a month either side.', 'Izikhathi zaseNingizimu Afrika ezicashunwe emithonjeni, zonke izifunda ndawonye — izihlahla zakho zingaqala noma ziphele ngenyanga ngaphambili noma ngemuva.')}
+      </div>
+    </div>
+  );
+}
+
 function TaskList({ tasks }: { tasks: CropTask[] }) {
   const { lang } = useLanguage();
   const groups = groupTasksByAction(tasks);
@@ -362,6 +424,8 @@ function BuyingMonthBlock({ monthGroup, isNow }: { monthGroup: BuyingMonth; isNo
                   ? 'confirm spacing first'
                   : item.quantityStatus === 'packet-rate-required'
                     ? 'packet rate needed'
+                    : item.quantityStatus === 'sourced-weight-range' && item.countRange
+                      ? weightRangeLabel(item.countRange)
                     : item.quantityStatus === 'counted-piece-range' && item.countRange
                       ? `~${positionRangeLabel(item.countRange)} ${item.unit} positions`
                       : item.count === null
@@ -669,6 +733,26 @@ function FacilitatorCropsPageInner() {
   const [design, setDesign] = useState<FacilitatorDesignState | null | undefined>(undefined);
   // Beds read from the Design Studio canvas when arriving via ?canvasSite.
   const [canvasBeds, setCanvasBeds] = useState<PlanBed[]>([]);
+  // The design's fruit trees, for the availability chart's own row. Read from the same canvas
+  // as the beds and refreshed on the same event, so a tree placed in the Studio shows up here.
+  const [bananaCircles, setBananaCircles] = useState(0);
+  const [canvasTrees, setCanvasTrees] = useState<PlacedTreeGroup[]>([]);
+  const [unidentifiedPlants, setUnidentifiedPlants] = useState<UnidentifiedPlantGroup[]>([]);
+  const [treeSeasons, setTreeSeasons] = useState<TreeSeasonChoices>({});
+  const [treeSaveFailed, setTreeSaveFailed] = useState(false);
+  // The same orchard switch as Money and Records (lib/produce-scope.ts) — one preference, so
+  // turning the orchard off in one place is not quietly undone in another.
+  const [includeTrees, setIncludeTrees] = useState(DEFAULT_INCLUDE_PERENNIALS);
+  useEffect(() => { setIncludeTrees(loadIncludePerennials()); }, []);
+  // The design's coops, pens, hutches and hives (lib/animal-enterprises.ts), what the farmer says
+  // each kind is kept for, and the animals' own switch. A coop is housing, not a head count, and
+  // not an enterprise either — so nothing is charted for a kind until the farmer picks one.
+  const [canvasAnimals, setCanvasAnimals] = useState<PlacedAnimalGroup[]>([]);
+  const [animalChoices, setAnimalChoices] = useState<Partial<Record<HousingKind, string>>>({});
+  const [animalSeasons, setAnimalSeasons] = useState<AnimalSeasonChoices>({});
+  const [animalSaveFailed, setAnimalSaveFailed] = useState(false);
+  const [includeAnimals, setIncludeAnimals] = useState(DEFAULT_INCLUDE_ANIMALS);
+  useEffect(() => { setIncludeAnimals(loadIncludeAnimals()); }, []);
   const [plan, setPlan] = useState<CropPlanState | null>(null);
   // One-level-per-action undo, mirroring FacilitatorCanvas's own pushHistory
   // pattern — mainly for undoing a whole auto-suggested batch in one tap
@@ -679,6 +763,7 @@ function FacilitatorCropsPageInner() {
   const PLAN_HISTORY_LIMIT = 10;
   const [mounted, setMounted] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(1);
+  const [currentYear, setCurrentYear] = useState(2026);
   const [useVirtual, setUseVirtual] = useState(false);
 
   const [pickerBedId, setPickerBedId] = useState<string | null>(null);
@@ -704,6 +789,9 @@ function FacilitatorCropsPageInner() {
   const [aFocusCount, setAFocusCount] = useState(1);
   const [aGroups, setAGroups] = useState<FoodGroup[]>(ALL_GROUPS);
   const [aCropKeys, setACropKeys] = useState<string[]>([]);
+  // The farmer's saved crop mix for this map and goal (lib/crop-mix-preference.ts), or null when
+  // they have not saved one and the recommended mix applies.
+  const [savedMix, setSavedMix] = useState<CropMix | null>(null);
   const [aRhythm, setARhythm] = useState<HarvestRhythm>('steady');
   // Default on — prevents an immediate repeat of the same botanical family.
   // This one-year plan does not claim to hold a complete multi-year history.
@@ -733,10 +821,10 @@ function FacilitatorCropsPageInner() {
   const [autoGenerating, setAutoGenerating] = useState(false);
 
   function openAutoSuggest() {
+    if (beds.length === 0) return;
     setAGoal('family');
     setAFocusCount(1);
-    setAGroups(ALL_GROUPS); // family default = all checked (diversify); commercial flips this on toggle
-    setACropKeys([]);
+    applyGoalMix('family');
     setARhythm('steady');
     setARotateCrops(true);
     setAAllowVinesInBeds(false);
@@ -750,7 +838,25 @@ function FacilitatorCropsPageInner() {
   }
   function chooseGoal(g: GardenGoal) {
     setAGoal(g);
-    setAGroups(g === 'commercial' ? [] : ALL_GROUPS); // commercial starts empty — must actively concentrate
+    applyGoalMix(g);
+  }
+  // A saved mix for this map and goal wins; otherwise family and hybrid start with every tile
+  // on (diversify) and commercial starts empty (must actively concentrate).
+  function applyGoalMix(g: GardenGoal) {
+    const saved = mixSiteKey ? loadCropMix(mixSiteKey, g) : null;
+    setSavedMix(saved);
+    setAGroups(saved?.groups ?? (g === 'commercial' ? [] : ALL_GROUPS));
+    setACropKeys(saved?.cropKeys ?? []);
+  }
+  function saveMix() {
+    if (!mixSiteKey) return;
+    saveCropMix(mixSiteKey, aGoal, { groups: aGroups, cropKeys: aCropKeys });
+    setSavedMix(loadCropMix(mixSiteKey, aGoal));
+  }
+  function resetMix() {
+    if (mixSiteKey) clearCropMix(mixSiteKey, aGoal);
+    setSavedMix(null);
+    setAGroups(aGoal === 'commercial' ? [] : ALL_GROUPS);
     setACropKeys([]);
   }
   function toggleGroup(g: FoodGroup) {
@@ -760,6 +866,7 @@ function FacilitatorCropsPageInner() {
     setACropKeys((prev) => prev.includes(cropKey) ? prev.filter((key) => key !== cropKey) : [...prev, cropKey]);
   }
   function runAutoSuggest() {
+    if (beds.length === 0) return;
     const answers: AutoSuggestAnswers = {
       goal: aGoal,
       focusCropCount: aGoal !== 'family' ? aFocusCount : undefined,
@@ -770,6 +877,13 @@ function FacilitatorCropsPageInner() {
       allowVinesInBeds: aAllowVinesInBeds,
       allowMixedCropsInBed: aAllowMixedCropsInBed,
       reliableIrrigation: aReliableIrrigation,
+      // The site's own monthly climate: the heat check always reads the
+      // temperatures; rainfall and latitude matter only for a rain-fed plan
+      // (irrigation off). Absent when the site climate did not resolve.
+      siteMonthlyTempC: siteClimate?.monthlyTempC,
+      siteMonthlyRainMm: siteClimate?.monthlyRainMm,
+      siteLatitude: siteClimate && hasSiteCoords ? siteLat : undefined,
+      observedFrostMonths: siteSurvey?.productionConditions?.frost === 'yes' ? siteSurvey.productionConditions.frostMonths : undefined,
     };
     // Say WHERE the climate came from, not just what it is — a satellite-derived
     // per-site profile and a reference city 250 km away are different claims.
@@ -822,7 +936,7 @@ function FacilitatorCropsPageInner() {
     setPlanHistory((prev) => prev.slice(0, -1));
   }
   function acceptAutoSuggest() {
-    if (!autoResult) return;
+    if (!autoResult || beds.length === 0) return;
     pushPlanHistory();
     setPlan((prev) => {
       const base = prev ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
@@ -852,6 +966,8 @@ function FacilitatorCropsPageInner() {
   // local design, same as before this feature existed).
   const [myDesignsList, setMyDesignsList] = useState<Design[] | null>(null);
   const [chosenDesignId, setChosenDesignId] = useState<string | null>(null);
+  // Which map a saved crop mix belongs to: the Design Studio site, or the chosen facilitator design.
+  const mixSiteKey = canvasSite ?? (chosenDesignId ? `design:${chosenDesignId}` : null);
   // Reopened on demand (e.g. "switch site") so the picker acts as a proper
   // crop-planning landing page you can always get back to, not just a
   // one-time gate on first load.
@@ -1012,6 +1128,7 @@ function FacilitatorCropsPageInner() {
     setDesign(loadFacilitatorState());
     setPlan(loadCropPlan());
     setCurrentMonth(new Date().getMonth() + 1);
+    setCurrentYear(new Date().getFullYear());
     setFavouriteCropKeys(loadFavouriteCropKeys());
     setAllowBedSharing(loadAllowBedSharing());
     setPriceOverrides(loadCropPriceOverrides());
@@ -1028,8 +1145,20 @@ function FacilitatorCropsPageInner() {
   // reloads facilitator state), so placing another bed in the Studio (another
   // tab) refreshes the bed list here without a reload.
   useEffect(() => {
-    if (!canvasSite) return;
-    const refresh = () => setCanvasBeds(bedsFromDesignCanvas(loadCanvasState(canvasSite)));
+    setTreeSaveFailed(false);
+    setAnimalSaveFailed(false);
+    if (!canvasSite) { setBananaCircles(0); setCanvasTrees([]); setUnidentifiedPlants([]); setTreeSeasons({}); setCanvasAnimals([]); setAnimalChoices({}); setAnimalSeasons({}); return; }
+    setAnimalChoices(loadEnterpriseChoices(canvasSite));
+    setTreeSeasons(loadTreeSeasonChoices(canvasSite));
+    setAnimalSeasons(loadAnimalSeasonChoices(canvasSite));
+    const refresh = () => {
+      const state = loadCanvasState(canvasSite);
+      setCanvasBeds(bedsFromDesignCanvas(state));
+      setCanvasTrees(placedTreeGroups(state?.items ?? []));
+      setBananaCircles(bananaCirclesIn(state?.items ?? []));
+      setUnidentifiedPlants(unidentifiedPlantGroups(state?.items ?? []));
+      setCanvasAnimals(placedAnimalGroups(state?.items ?? []));
+    };
     refresh();
     window.addEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh);
     return () => window.removeEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh);
@@ -1038,7 +1167,9 @@ function FacilitatorCropsPageInner() {
   function chooseSite(id: string) {
     setChosenDesignId(id);
     setSwitchingSite(false);
-    if (id === 'local') return; // keep the device's local design already loaded above
+    // A cloud choice replaced the in-memory design. Returning to local must restore its
+    // map too, or local quantities are printed against the previous cloud farm's beds.
+    if (id === 'local') { setDesign(loadFacilitatorState()); return; }
     const row = myDesignsList?.find((d) => d.id === id);
     if (row) setDesign(designStateFromCloudRow(row));
   }
@@ -1089,18 +1220,35 @@ function FacilitatorCropsPageInner() {
   const siteLat = canvasLatLon?.lat ?? design?.bgSite?.lat;
   const siteLon = canvasLatLon?.lon ?? design?.bgSite?.lon;
   const hasSiteCoords = typeof siteLat === 'number' && typeof siteLon === 'number';
-  const [siteClimate, setSiteClimate] = useState<SiteClimate | null>(null);
+  const surveySiteId = hasSiteCoords ? canonicalCoordinateSiteId(`site:${siteLat!.toFixed(5)},${siteLon!.toFixed(5)}`) : null;
+  const [surveySnapshot, setSurveySnapshot] = useState<{ siteId: string; survey: SiteSurvey | null } | null>(null);
+  const siteSurvey = surveySnapshot?.siteId === surveySiteId ? surveySnapshot?.survey ?? null : null;
+  const [siteSurveyOpen, setSiteSurveyOpen] = useState(false);
   useEffect(() => {
-    if (!hasSiteCoords) { setSiteClimate(null); return; }
+    setSiteSurveyOpen(false);
+    if (!surveySiteId) { setSurveySnapshot(null); return; }
+    const refresh = () => setSurveySnapshot({ siteId: surveySiteId, survey: loadSurvey(surveySiteId) });
+    refresh();
+    window.addEventListener('imbewu-surveys-changed', refresh);
+    window.addEventListener('storage', refresh);
+    return () => {
+      window.removeEventListener('imbewu-surveys-changed', refresh);
+      window.removeEventListener('storage', refresh);
+    };
+  }, [surveySiteId]);
+  const climateSiteKey = hasSiteCoords ? `${siteLat},${siteLon}` : null;
+  const [climateSnapshot, setClimateSnapshot] = useState<{ siteKey: string; climate: SiteClimate | null } | null>(null);
+  const siteClimate = climateSnapshot?.siteKey === climateSiteKey ? climateSnapshot?.climate ?? null : null;
+  useEffect(() => {
+    if (!climateSiteKey) { setClimateSnapshot(null); return; }
     let cancelled = false;
-    // Reset immediately so a site switch can never keep the previous site's pattern
-    // on screen while the new site's climate is still resolving.
-    setSiteClimate(null);
+    // The render guard also blocks the old site's climate before this effect runs.
+    setClimateSnapshot(null);
     resolveSiteClimate(siteLat!, siteLon!).then((sc) => {
-      if (!cancelled) setSiteClimate(sc);
+      if (!cancelled) setClimateSnapshot({ siteKey: climateSiteKey, climate: sc });
     });
     return () => { cancelled = true; };
-  }, [hasSiteCoords, siteLat, siteLon]);
+  }, [climateSiteKey, siteLat, siteLon]);
 
   // ?canvasSite&auto=1 → open the auto-suggest questionnaire once, as soon as at
   // least one bed has loaded. Ref-guarded so a bed refresh (canvas-change event)
@@ -1133,6 +1281,12 @@ function FacilitatorCropsPageInner() {
   const pattern: RainPattern = siteClimate?.pattern ?? mapPattern;
   const climateSource: 'site' | 'reference' | 'none' = siteClimate ? 'site' : (region ? 'reference' : 'none');
   const patternMeta = PATTERN_META[pattern];
+  // Which of the eight growing zones this site's own climate points to — for the picker's
+  // variety guidance only. Empty without a site climate: a reference city is not the site.
+  const growingZones = useMemo<GrowingZoneId[]>(
+    () => (siteClimate && hasSiteCoords ? growingZonesForClimate(siteClimate.monthlyTempC, siteClimate.monthlyRainMm, siteLat!) : []),
+    [siteClimate, hasSiteCoords, siteLat],
+  );
   const designTitle = design?.title || design?.bgSite?.name || 'Garden design';
 
   // Plantings whose bed no longer exists in the current design (a bed was
@@ -1146,6 +1300,12 @@ function FacilitatorCropsPageInner() {
     const bedIds = new Set(beds.map((b) => b.id));
     return (plan?.plantings ?? []).filter((p) => bedIds.has(p.bedId));
   }, [plan, beds]);
+  const productionGuide = useMemo(() => buildProductionGuide(siteSurvey, plantings, growingZones, currentMonth, { bananaCircles, trees: includeTrees ? canvasTrees : [], animals: includeAnimals ? canvasAnimals : [], animalChoices }), [siteSurvey, plantings, growingZones, currentMonth, bananaCircles, canvasTrees, canvasAnimals, animalChoices, includeTrees, includeAnimals]);
+  const chickenGuide = useMemo(() => {
+    const coop = canvasAnimals.find((group) => group.housing === 'chicken');
+    if (!coop && !siteSurvey?.livestock.includes('chickens') && !siteSurvey?.poultryManagement) return undefined;
+    return poultryGuidance(siteSurvey?.poultryManagement, siteSurvey?.productionConditions, coop ? animalChoices[coop.housing] : undefined);
+  }, [canvasAnimals, animalChoices, siteSurvey]);
   const bedAreaFor = (bedId: string) => beds.find((b) => b.id === bedId)?.areaM2 ?? 0;
 
   function addPlanting(bedId: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean, variety: string) {
@@ -1190,6 +1350,10 @@ function FacilitatorCropsPageInner() {
       return { ...prev, version: 1, plantings: prev.plantings.filter((p) => p.id !== id), updatedAt: Date.now() };
     });
   }
+  function confirmPastSowing(id: string) {
+    pushPlanHistory();
+    setPlan((prev) => prev ? { ...prev, plantings: prev.plantings.map((p) => p.id === id ? confirmOnceSowing(p, currentYear, currentMonth) : p), updatedAt: Date.now() } : prev);
+  }
   // Only drops plantings on beds actually shown right now (matches the
   // `plantings` derived read below) — never touches plantings parked under a
   // bed id that no longer exists in this design, same care as removePlanting.
@@ -1226,8 +1390,15 @@ function FacilitatorCropsPageInner() {
   // months before anything useful starts. Scrollable out to a full 2 years
   // ahead rather than a hard 12-month wall.
   const monthOrder = useMemo(() => Array.from({ length: DISPLAY_MONTHS }, (_, i) => wrapMonth(currentMonth + i)), [currentMonth]);
+  const monthAxis = useMemo(() => monthAxisSlots(currentMonth, currentYear, DISPLAY_MONTHS), [currentMonth, currentYear]);
   // Keep the task list concise; the charts use monthOrder to align with the beds.
   const lookAheadMonthOrder = useMemo(() => Array.from({ length: LOOK_AHEAD_MONTHS }, (_, i) => wrapMonth(currentMonth + i)), [currentMonth]);
+  // Tree picking by look-ahead slot, only for the first twelve: a season repeats every year, so
+  // "(next year)" slots would only say the same thing again. Follows the chart's food-forest switch.
+  const treePicking = useMemo(
+    () => (includeTrees ? treePickingByMonth(canvasTrees, lookAheadMonthOrder.slice(0, 12), treeSeasons) : []),
+    [includeTrees, canvasTrees, lookAheadMonthOrder, treeSeasons],
+  );
 
   const benchmarkPlantings = useMemo(
     () => plantings.filter((planting) => plantingIsActiveOrPlanned(planting, currentMonth)),
@@ -1294,16 +1465,15 @@ function FacilitatorCropsPageInner() {
     () => (mounted ? buildBuyingSchedule(plantings, beds, currentMonth) : []),
     [mounted, plantings, beds, currentMonth],
   );
-  const yearReport = useMemo(() => buildYearReport(plantings, beds), [plantings, beds]);
-  // TWO honest years, one chart (2026-08-04, Rory: "i want to show what a full years season
-  // will look like... i am tired of not seeing a full ideal planting").
-  // 'established' omits nowMonth, so the builders fold every planting mod-12 — the plan
-  // repeated every year, the steady state a garden grows into. It is the DEFAULT because it
-  // is the picture the plan is FOR; a garden starting today inevitably shows near-empty
-  // early months, which reads as a broken plan rather than a young one.
-  // 'fromToday' uses the same absolute occurrences as the bed timeline. A
-  // repeated month name must not repeat an existing or one-time planting.
-  const [yearMode, setYearMode] = useState<'established' | 'fromToday'>('established');
+  // Existing crops can be ready while new sowings are still growing. Only the selected food
+  // chart answers which months have food; this comparison must not declare a separate gap.
+  const yearReport = useMemo(
+    () => buildYearReport(plantings, beds, { includeCalendarNarrative: false }),
+    [plantings, beds],
+  );
+  // A dated field plan must not wrap a future crop into an earlier month. Start from today;
+  // the established-year option remains an explicitly chosen recurring-cycle reference.
+  const [yearMode, setYearMode] = useState<'established' | 'fromToday'>('fromToday');
   const chartNowMonth = yearMode === 'fromToday' ? currentMonth : undefined;
   const chartPlantings = useMemo(
     () => yearMode === 'established' ? recurringPlanPlantings(plantings) : plantings,
@@ -1314,11 +1484,99 @@ function FacilitatorCropsPageInner() {
     const annual = buildFoodAvailability(chartPlantings, beds);
     return monthOrder.map((month) => annual[month]);
   }, [chartPlantings, beds, chartNowMonth, monthOrder]);
+  // Trees get their own row, never a share of the bars: the bars count planned bed crops, and
+  // a mango tree is not a bed crop (lib/perennial-produce.ts). "From today" leaves out proposed
+  // trees, which are years from a first crop; the established year shows the whole design.
+  const treeAvailability = useMemo(
+    () => buildTreeAvailability(canvasTrees, monthOrder, yearMode === 'fromToday', treeSeasons),
+    [canvasTrees, monthOrder, yearMode, treeSeasons],
+  );
+  // Animals get their own row too, by the same rule: a coop drawn as proposed has no hens yet.
+  const animalAvailability = useMemo(
+    () => buildAnimalAvailability(canvasAnimals, animalChoices, monthOrder, yearMode === 'fromToday', animalSeasons),
+    [canvasAnimals, animalChoices, monthOrder, yearMode, animalSeasons],
+  );
+  // The bed calendar's own food-forest and animal rows: the whole design, proposed kept apart
+  // (lib/calendar-produce.ts), over the same rolling columns as the beds above them.
+  const planningTrees = useMemo(() => planningTreeSeasons(canvasTrees, growingZones, siteSurvey?.productionConditions, treeSeasons), [canvasTrees, growingZones, siteSurvey, treeSeasons]);
+  const calendarProduce = useMemo(
+    () => calendarProduceByMonth(canvasTrees, canvasAnimals, animalChoices, monthOrder, treeSeasons, animalSeasons, planningTrees, monthAxis),
+    [canvasTrees, canvasAnimals, animalChoices, monthOrder, treeSeasons, animalSeasons, planningTrees, monthAxis],
+  );
+  const productionProjection = useMemo(() => buildProductionProjection({ plantings, beds, trees: includeTrees ? canvasTrees : [], choices: treeSeasons, now: new Date(currentYear, currentMonth - 1, 1) }), [plantings, beds, includeTrees, canvasTrees, treeSeasons, currentYear, currentMonth]);
+  const ageCalendarNotes = canvasTrees.flatMap(g => { const note = treeAgeCalendarNote(g, treeSeasons[g.harvest.speciesId], currentYear * 12 + currentMonth - 1); return note ? [`${g.harvest.name}: ${note}.`] : []; });
+  // Plants on the map whose harvest record has no sourced picking month yet: named under the row,
+  // so a pawpaw that never appears is explained rather than silently missing.
+  const treesWithoutSeason = useMemo(
+    () => [...canvasTrees.filter((g) => confirmedTreeMonths(g.harvest, treeSeasons).length === 0).map((g) => g.harvest.name), ...unidentifiedPlants.map((g) => g.label)],
+    [canvasTrees, treeSeasons, unidentifiedPlants],
+  );
+  const animalsNotShown = useMemo(() => animalsNotShownNote(canvasAnimals, animalChoices, animalSeasons), [canvasAnimals, animalChoices, animalSeasons]);
+  // Honey: on the map, but no source puts it in months — a line with no bar (see unmarkedAnimalLines).
+  const animalsUnmarked = useMemo(() => unmarkedAnimalLines(canvasAnimals, animalChoices, animalSeasons), [canvasAnimals, animalChoices, animalSeasons]);
+  // The year of food folds the chart's own first twelve slots into one verdict per month, so it
+  // follows the year mode and the orchard/animal switches exactly as the chart does.
+  const yearOfFood = useMemo(
+    () => buildYearOfFood(
+      monthOrder, foodAvailability,
+      includeTrees ? treeAvailability : undefined,
+      includeAnimals ? animalAvailability : undefined,
+    ),
+    [monthOrder, foodAvailability, includeTrees, treeAvailability, includeAnimals, animalAvailability],
+  );
+  // The same climate gate auto-suggest applies: temperatures always, rainfall only when the
+  // plan is rain-fed. Null when the site climate has not resolved, and then only the region's
+  // sowing windows filter the suggestions.
+  const yearGate = useMemo(() => climateGateFrom({
+    siteMonthlyTempC: siteClimate?.monthlyTempC,
+    siteMonthlyRainMm: siteClimate?.monthlyRainMm,
+    siteLatitude: siteClimate && hasSiteCoords ? siteLat : undefined,
+  }, !aReliableIrrigation), [siteClimate, hasSiteCoords, siteLat, aReliableIrrigation]);
+  const gapFills = useMemo(
+    () => suggestGapFills({ year: yearOfFood, beds, plantings, pattern, currentMonth, gate: yearGate, observedFrostMonths: siteSurvey?.productionConditions?.frost === 'yes' ? siteSurvey.productionConditions.frostMonths : undefined }),
+    [yearOfFood, beds, plantings, pattern, currentMonth, yearGate, siteSurvey],
+  );
+  function chooseAnimalEnterprise(housing: HousingKind, enterpriseId: string | null) {
+    if (!canvasSite) return;
+    const next = { ...animalChoices };
+    if (enterpriseId) next[housing] = enterpriseId; else delete next[housing];
+    setAnimalChoices(next);
+    const enterpriseSaved = saveEnterpriseChoices(canvasSite, next);
+    const nextSeasons = { ...animalSeasons };
+    delete nextSeasons[housing];
+    setAnimalSeasons(nextSeasons);
+    const seasonsSaved = saveAnimalSeasonChoices(canvasSite, nextSeasons);
+    setAnimalSaveFailed(!enterpriseSaved || !seasonsSaved);
+  }
+  function chooseTreeSeason(speciesId: string, choice: NonNullable<TreeSeasonChoices[string]>) {
+    if (!canvasSite) return;
+    const next = { ...treeSeasons, [speciesId]: choice };
+    setTreeSeasons(next);
+    setTreeSaveFailed(!saveTreeSeasonChoices(canvasSite, next));
+  }
+  function chooseAnimalSeason(housing: HousingKind, enterpriseId: string, months: number[]) {
+    if (!canvasSite) return;
+    const next = { ...animalSeasons, [housing]: { enterpriseId, months } };
+    setAnimalSeasons(next);
+    const enterpriseSaved = saveEnterpriseChoices(canvasSite, animalChoices);
+    const seasonsSaved = saveAnimalSeasonChoices(canvasSite, next);
+    setAnimalSaveFailed(!enterpriseSaved || !seasonsSaved);
+  }
   const fieldUtilization = useMemo(() => {
     if (chartNowMonth !== undefined) return buildFieldUtilizationByMonth(chartPlantings, beds, chartNowMonth, DISPLAY_MONTHS);
     const annual = buildFieldUtilizationByMonth(chartPlantings, beds);
     return monthOrder.map((month) => annual[month]);
   }, [chartPlantings, beds, chartNowMonth, monthOrder]);
+
+  // The printed "Food availability" page: the first twelve columns of the chart above, with the
+  // tree and animal rows only when the farmer has them switched on there.
+  const printAvailability = useMemo(() => printableAvailability({
+    now: new Date(currentYear, currentMonth - 1, 1),
+    yearMode: 'fromToday', veg: buildFoodAvailability(plantings, beds, currentMonth, 12), utilization: buildFieldUtilizationByMonth(plantings, beds, currentMonth, 12),
+    trees: buildTreeAvailability(canvasTrees, monthOrder, true, treeSeasons), animals: buildAnimalAvailability(canvasAnimals, animalChoices, monthOrder, true, animalSeasons), includeTrees, includeAnimals,
+    treeGroups: canvasTrees, unidentifiedPlants, treeSeasons, animalGroups: canvasAnimals, animalChoices, animalSeasons,
+    planning: { months: monthOrder, trees: planningTrees, dates: monthAxis },
+  }), [plantings, beds, currentYear, currentMonth, monthOrder, monthAxis, canvasTrees, treeSeasons, canvasAnimals, animalChoices, animalSeasons, includeTrees, includeAnimals, unidentifiedPlants, planningTrees]);
 
   // Cover-page facts for the printed plan and the calendar's name. Built from
   // the same values the header and the bed-check strip already show, so the
@@ -1340,6 +1598,8 @@ function FacilitatorCropsPageInner() {
       // them by splitting siteLine printed "Climate: Not set" for every region in the country.
       locationLine,
       climateLine: climateSource === 'none' ? `Assuming ${patternMeta.label.toLowerCase()}` : patternMeta.label,
+      // Lets the PDF flag frost-tender harvest windows that run into Jun–Jul at a light-frost site.
+      rainPattern: pattern,
       bedsSummary: `${bedCount} bed${bedCount === 1 ? '' : 's'}`
         + `${plotCount ? ` · ${plotCount} staple plot${plotCount === 1 ? '' : 's'}` : ''}`
         + ` · ${beds.reduce((s, b) => s + b.areaM2, 0).toFixed(1)} m² of growing space`,
@@ -1348,10 +1608,58 @@ function FacilitatorCropsPageInner() {
       lossPercent: cashflowSettings.lossPercent,
       lossAllowanceConfirmed: cashflowSettings.confirmed === true,
     };
-  }, [beds, canvasSite, placeName, designTitle, region, patternMeta, climateSource, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
+  }, [beds, canvasSite, placeName, designTitle, region, pattern, patternMeta, climateSource, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
+
+  // One account holds several maps. A shared food name and month cannot tell us which
+  // farm produced it; records without a site remain saved outside this site's totals.
+  const productionSiteId = canvasSite ?? (chosenDesignId && chosenDesignId !== 'local' ? `design:${chosenDesignId}`
+    : surveySiteId ?? (design ? 'design:local' : useVirtual ? 'virtual-bed' : null));
+  const siteProductionRecords = useMemo(() => productionRecordsForSite(plan?.productionRecords, productionSiteId), [plan?.productionRecords, productionSiteId]);
+  const sitePreservedProducts = useMemo(() => preservedFoodRecordsForSite(plan?.preservedProducts, productionSiteId), [plan?.preservedProducts, productionSiteId]);
+  const unassignedProductionRecords = useMemo(() => sanitiseProductionRecords(plan?.productionRecords).filter(record => !record.siteId), [plan?.productionRecords]);
+  const unassignedPreservedProducts = useMemo(() => sanitisePreservedFoodRecords(plan?.preservedProducts).filter(record => !record.siteId), [plan?.preservedProducts]);
+
+  // The first dated year matches the print; reference trees cannot fill a real food gap.
+  const productionGraphInput = useMemo<ProductionKgGraphInput>(() => ({
+    availability: resolveAvailability({ plantings, beds, tasks: allTasks, meta: exportMeta,
+      now: new Date(currentYear, currentMonth - 1, 1), availability: printAvailability }, currentMonth),
+    dates: Array.from({ length: 12 }, (_, i) => ({
+      year: currentYear + Math.floor((currentMonth - 1 + i) / 12), month: wrapMonth(currentMonth + i),
+    })),
+    growingAreaM2: totalGrowingAreaM2(beds),
+    now: new Date(currentYear, currentMonth - 1, 1), plantings, beds,
+    treeGroups: includeTrees ? canvasTrees : undefined, treeSeasons,
+    includeTrees, includeAnimals,
+    productionRecords: siteProductionRecords, preservedProducts: sitePreservedProducts,
+  }), [plantings, beds, allTasks, exportMeta, currentYear, currentMonth, printAvailability, includeTrees, includeAnimals, canvasTrees, treeSeasons, siteProductionRecords, sitePreservedProducts]);
+  const productionAvailabilityGraphs = useMemo(() => buildProductionAvailabilityGraphs(productionGraphInput), [productionGraphInput]);
+  const recordProducts = useMemo(() => {
+    const options = new Map<string, { iconKey: string; label: string }>();
+    for (const planting of plantings) {
+      const crop = cropByKey(planting.cropKey);
+      if (crop && crop.yieldKgPerM2 !== 0) options.set(`crop:${crop.key}`, { iconKey: `crop:${crop.key}`, label: crop.name });
+    }
+    for (const tree of canvasTrees) if (isHouseholdFoodHarvest(tree.harvest)) options.set(`tree:${tree.harvest.speciesId}`, { iconKey: `tree:${tree.harvest.speciesId}`, label: tree.harvest.name });
+    for (const group of canvasAnimals) {
+      const enterprise = ANIMAL_ENTERPRISES[animalChoices[group.housing] ?? ''];
+      if (enterprise && HOUSING_ANIMALS[group.housing].includes(enterprise.animal) && enterprise.product !== 'wool') options.set(`animal:${enterprise.enterpriseId}`, { iconKey: `animal:${enterprise.enterpriseId}`, label: `${enterprise.name} · ${PRODUCT_LABEL[enterprise.product]}` });
+    }
+    return [...options.values()];
+  }, [plantings, canvasTrees, canvasAnimals, animalChoices]);
+  function updateProductionRecords(productionRecords: DatedProductionRecord[]) {
+    if (!productionSiteId) return;
+    pushPlanHistory();
+    setPlan(previous => ({ ...(previous ?? { version: 1 as const, plantings: [] }), productionRecords: replaceProductionRecordsForSite(previous?.productionRecords, productionSiteId, productionRecords), updatedAt: Date.now() }));
+  }
+  function updatePreservedProducts(preservedProducts: PreservedFoodRecord[]) {
+    if (!productionSiteId) return;
+    pushPlanHistory();
+    setPlan(previous => ({ ...(previous ?? { version: 1 as const, plantings: [] }), preservedProducts: replacePreservedFoodRecordsForSite(previous?.preservedProducts, productionSiteId, preservedProducts), updatedAt: Date.now() }));
+  }
 
   function shareTasks() {
-    const text = `🌱 Crop plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}`;
+    const picking = (i: number) => (treePicking[i] ?? []).map((line) => `\n  ${treePickingPhrase(line)}`).join('');
+    const text = `🌱 Production plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}${picking(0)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}${picking(1)}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   }
 
@@ -1380,6 +1688,14 @@ function FacilitatorCropsPageInner() {
     setPickerFraction(p.areaFraction ?? 1);
     setPickerExisting(!!p.existing);
     setPickerVariety(p.variety ?? '');
+  }
+  // A gap-fill suggestion opens the ordinary picker already filled in, so the farmer sees the
+  // same sowing-window note and overlap warning as any other planting before it is added.
+  function planGapFill(s: GapFillSuggestion) {
+    openPicker(s.bed.id);
+    setPickerCrop(s.crop);
+    setPickerMonth(s.sowMonth);
+    setPickerFraction(s.areaFraction);
   }
   function closePicker() {
     setPickerBedId(null);
@@ -1450,7 +1766,7 @@ function FacilitatorCropsPageInner() {
           className="flex-shrink-0 px-3 md:px-5 py-2"
           style={{ background: '#9A3412', color: '#FDF3EC', fontSize: 12.5, lineHeight: 1.35 }}
         >
-          <strong>Not saving.</strong> This phone has no space left, so changes to your crop plan
+          <strong>Not saving.</strong> This phone has no space left, so changes to your production plan
           are not being kept. Free up space — your plan is still on screen until you close it.
         </div>
       )}
@@ -1482,9 +1798,9 @@ function FacilitatorCropsPageInner() {
             onClick={() => setSwitchingSite(true)}
             className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
             style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer' }}
-            title={cropUi(lang, "Switch to a different design's crop plan", 'Shintshela ohlelweni lwezitshalo lomunye umklamo')}
+            title={cropUi(lang, "Switch to a different design's production plan", 'Shintshela ohlelweni lokukhiqiza lomunye umklamo')}
           >
-            ‹ {cropUi(lang, 'All crop plans', 'Zonke izinhlelo zezitshalo')}
+            ‹ {cropUi(lang, 'All production plans', 'Zonke izinhlelo zokukhiqiza')}
           </button>
         )}
         {canvasSite && ((myDesignsList?.length ?? 0) + studioChoices.length > 1) && (
@@ -1495,9 +1811,9 @@ function FacilitatorCropsPageInner() {
             href="/facilitator/crops?switch=1"
             className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
             style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-primary)', textDecoration: 'none' }}
-            title={cropUi(lang, "Switch to a different design's crop plan", 'Shintshela ohlelweni lwezitshalo lomunye umklamo')}
+            title={cropUi(lang, "Switch to a different design's production plan", 'Shintshela ohlelweni lokukhiqiza lomunye umklamo')}
           >
-            ‹ {cropUi(lang, 'All crop plans', 'Zonke izinhlelo zezitshalo')}
+            ‹ {cropUi(lang, 'All production plans', 'Zonke izinhlelo zokukhiqiza')}
           </Link>
         )}
         <div className="w-px h-5 flex-shrink-0" style={{ background: 'var(--border)' }} />
@@ -1508,16 +1824,16 @@ function FacilitatorCropsPageInner() {
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, textAlign: 'left' }}
           >
             <div className="flex flex-col min-w-0">
-              <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Crop plan', 'Uhlelo lwezitshalo')}</span>
+              <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Production plan', 'Uhlelo lokukhiqiza')}</span>
               <span className="font-sans truncate" style={{ fontSize: 11, color: 'var(--text-muted)', maxWidth: 220 }}>{designTitle}</span>
             </div>
             <ChevronDown size={13} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
           </button>
         ) : (
           <div className="flex flex-col min-w-0 flex-shrink-0">
-            <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Crop plan', 'Uhlelo lwezitshalo')}</span>
+            <span className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 18px)', color: 'var(--text-primary)' }}>{cropUi(lang, 'Production plan', 'Uhlelo lokukhiqiza')}</span>
             <span className="font-sans truncate" style={{ fontSize: 11, color: 'var(--text-muted)', maxWidth: 220 }}>
-              {canvasSite ? cropUi(lang, 'Beds from your Design Studio map', 'Imibhede esemephini ye-Design Studio') : designTitle}
+              {canvasSite ? cropUi(lang, 'Plants and housing from your map', 'Izitshalo nezindlu zezilwane ezisemephini yakho') : designTitle}
             </span>
           </div>
         )}
@@ -1561,6 +1877,10 @@ function FacilitatorCropsPageInner() {
         ))}
       </header>
 
+      <div className="flex-shrink-0 px-3 md:px-5 py-2 font-sans" style={{ fontSize: 12, lineHeight: 1.45, color: 'var(--text-secondary)', background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
+        Vegetables and staples · Fruit, nuts &amp; berries · Animal products. Housing is listed. Use the site survey for animal numbers and care checks.
+      </div>
+
       {lang === 'zu' && (
         <div role="note" className="flex-shrink-0 px-3 md:px-5 py-2" style={{ background: 'rgba(192,122,30,0.08)', borderBottom: '1px solid rgba(154,96,24,0.3)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.45 }}>
           <strong>IsiZulu draft · Isaziso senguqulo yesiZulu esalungiswa.</strong> This interface draft has not been reviewed by a fluent isiZulu speaker. Crop names, planting times, climate and price assumptions, and task instructions remain in English pending source and local farming review. Amagama ezitshalo, izikhathi zokutshala, isimo sezulu, amanani nemiyalelo yemisebenzi kuseNgisini kuze kubuyekezwe imithombo nolwazi lwezolimo lwendawo.
@@ -1598,7 +1918,7 @@ function FacilitatorCropsPageInner() {
 
       {loading ? (
         <div className="flex-1 flex items-center justify-center">
-          <span className="font-display text-sm" style={{ color: 'var(--text-muted)' }}>{cropUi(lang, 'Loading crop plan…', 'Kulayishwa uhlelo lwezitshalo…')}</span>
+          <span className="font-display text-sm" style={{ color: 'var(--text-muted)' }}>{cropUi(lang, 'Loading production plan…', 'Kulayishwa uhlelo lokukhiqiza…')}</span>
         </div>
       ) : needsSitePicker ? (
         <div className="flex-1 overflow-y-auto py-7 px-4">
@@ -1666,7 +1986,9 @@ function FacilitatorCropsPageInner() {
             </button>
           </div>
         </div>
-      ) : beds.length === 0 ? (
+      // An orchard, unresolved food layout or animal housing is still a production plan.
+      // Requiring a crop bed here hid its confirmation controls and printed inventory.
+      ) : beds.length === 0 && canvasTrees.length === 0 && unidentifiedPlants.length === 0 && canvasAnimals.length === 0 ? (
         <EmptyState onVirtual={() => setUseVirtual(true)} designHref={designHref} />
       ) : (
         <div className="flex-1 overflow-y-auto">
@@ -1705,8 +2027,10 @@ function FacilitatorCropsPageInner() {
             <div className="flex gap-2 mb-3">
               <button
                 onClick={openAutoSuggest}
+                disabled={beds.length === 0}
+                title={beds.length === 0 ? 'Add a vegetable bed or staple plot to auto-suggest crops.' : undefined}
                 className="flex-1 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
-                style={{ fontSize: 14, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#F7F2E9', cursor: 'pointer' }}
+                style={{ fontSize: 14, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#F7F2E9', cursor: beds.length === 0 ? 'not-allowed' : 'pointer', opacity: beds.length === 0 ? 0.55 : 1 }}
               >
                 <Sparkles size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Auto-suggest a plan', 'Phakamisa uhlelo ngokuzenzakalelayo')}
               </button>
@@ -1732,6 +2056,9 @@ function FacilitatorCropsPageInner() {
               )}
             </div>
             )}
+            {beds.length === 0 && <p className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+              Your mapped plants and animal housing are listed below. To plan vegetable or staple crops, <Link href={designHref} style={{ color: 'var(--color-forest-800)', textDecoration: 'underline' }}>add a bed or plot in the Design Studio</Link>.
+            </p>}
 
             {/* Timeline. The month header and the bed-rows body are TWO
                 separate horizontal-scroll regions kept in sync by JS
@@ -1824,9 +2151,10 @@ function FacilitatorCropsPageInner() {
                           // year) reading as the same column.
                           borderLeft: i === 12 ? '2px solid #C4A46A' : undefined,
                         }}
-                        title={i >= 12 ? `${MONTHS_SHORT[m - 1]}, next year` : undefined}
+                        title={monthAxisTitle(monthAxis[i], m)}
                       >
                         {i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}
+                        <MonthAxisTag slot={monthAxis[i]} />
                       </div>
                     ))}
                     </div>
@@ -1842,17 +2170,60 @@ function FacilitatorCropsPageInner() {
                 style={{ overflowX: 'auto' }}
               >
                 <div style={{ minWidth: GRID_MIN_WIDTH }}>
-                  {beds.map((bed) => (
-                    <BedRow
-                      key={bed.id}
-                      bed={bed}
-                      plantings={plantings.filter((p) => p.bedId === bed.id)}
-                      currentMonth={currentMonth}
-                      onAddCrop={() => openPicker(bed.id)}
-                      onTapPlanting={(p) => setActivePlanting(p)}
-                      simple={simple}
-                    />
+                  {/* Four fixed sections, each with its place whether or not anything is in
+                      it yet. Rory, 2026-10-01: "veg staple crops fruit nuts and berries and
+                      animal products must all have their place". */}
+                  {([['veg', beds.filter((b) => b.kind !== 'plot')], ['staple', beds.filter((b) => b.kind === 'plot')]] as const).map(([section, sectionBeds]) => (
+                    <Fragment key={section}>
+                      <CalendarSectionHeader section={section} />
+                      {sectionBeds.length === 0 ? (
+                        <CalendarSectionNote>
+                          {section === 'veg'
+                            ? 'No vegetable beds on your map yet. Draw beds in the Design Studio and they show here.'
+                            : 'No staple plots on your map yet. Draw a plot in the Design Studio for maize, beans, pumpkins or sweet potato.'}
+                        </CalendarSectionNote>
+                      ) : sectionBeds.map((bed) => (
+                        <BedRow
+                          key={bed.id}
+                          bed={bed}
+                          plantings={plantings.filter((p) => p.bedId === bed.id)}
+                          currentMonth={currentMonth}
+                          onAddCrop={() => openPicker(bed.id)}
+                          onTapPlanting={(p) => setActivePlanting(p)}
+                          simple={simple}
+                        />
+                      ))}
+                    </Fragment>
                   ))}
+                  <CalendarSectionHeader section="trees" />
+                  {includeTrees ? (
+                    <ProduceCalendarRow
+                      kind="trees"
+                      months={calendarProduce}
+                      axis={monthAxis}
+                      emptyText="No locally confirmed picking months yet. Plants on your map are listed below; confirm when they already give food here."
+                      footnote={[...(treesWithoutSeason.length ? [`On your map, with picking months to confirm: ${treesWithoutSeason.join(', ')}. They stay listed on the printed plan.`] : []), ...ageCalendarNotes].join(' ') || null}
+                    />
+                  ) : (
+                    <CalendarSectionNote action={{ label: 'Show fruit, nuts & berries', onClick: () => { setIncludeTrees(true); saveIncludePerennials(true); } }}>
+                      Hidden: the orchard switch is off. It is the same switch as on Money and Records, so showing them here counts the orchard there too.
+                    </CalendarSectionNote>
+                  )}
+                  <CalendarSectionHeader section="animals" />
+                  {includeAnimals ? (
+                    <ProduceCalendarRow
+                      kind="animals"
+                      months={calendarProduce}
+                      axis={monthAxis}
+                      emptyText="No locally confirmed production months yet. Hives, coops and pens on your map stay listed below and on the printed plan."
+                      footnote={animalsNotShown}
+                      unmarked={animalsUnmarked}
+                    />
+                  ) : (
+                    <CalendarSectionNote action={{ label: 'Show animal products', onClick: () => { setIncludeAnimals(true); saveIncludeAnimals(true); } }}>
+                      Hidden: the animals switch is off.
+                    </CalendarSectionNote>
+                  )}
                 </div>
               </div>
             </div>
@@ -1873,6 +2244,52 @@ function FacilitatorCropsPageInner() {
                 </button>
               </div>
             )}
+
+            {/* Simple mode's own compact conflict warning — the full
+                bed×crop breakdown lives in the advanced Harvest total card
+                below (inside !simple), so this stays a plain-language
+                summary rather than a duplicate of it. */}
+            {simple && hasAreaConflict && (
+              <div className="mb-5 rounded-xl px-3 py-2.5" style={{ background: 'rgba(184,58,40,0.06)', border: '1px solid rgba(184,58,40,0.25)' }}>
+                <div className="font-display font-semibold mb-1 inline-flex items-center gap-1.5" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
+                  <TriangleAlert size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} />
+                  {cropUi(lang, 'Some beds are double-booked', 'Eminye imibhede ibhukhwe kabili')}
+                </div>
+                <div className="font-sans space-y-1" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.45 }}>
+                  {areaConflictDetails.map((conflict) => {
+                    const names = listNames([...new Set(conflict.plantings.map((p) => p.cropName))]);
+                    const months = [...new Set(conflict.plantings.flatMap((p) => p.months))].sort((a, b) => a - b);
+                    const span = months.length > 0 ? ` (${monthSpanLabel(months)})` : '';
+                    return (
+                      <div key={conflict.bedId}>
+                        <strong style={{ color: 'var(--text-primary)' }}>{conflict.bedLabel}</strong>: {names}{span}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {(plan?.plantings ?? []).some((p) => p.awaitingSowingConfirmation && beds.some((b) => b.id === p.bedId)) && <div className="rounded-2xl p-4 mt-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--gold)' }} data-sowing-confirmation>
+              <div className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>Were these crops planted?</div>
+              <p className="font-sans mt-1 mb-3" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>Their one-time sowing month has passed. Confirm what happened before the plan counts their harvest or field work.</p>
+              {(plan?.plantings ?? []).filter((p) => p.awaitingSowingConfirmation && beds.some((b) => b.id === p.bedId)).map((p) => <div key={p.id} className="font-sans flex flex-wrap items-center justify-between gap-2 py-2" style={{ fontSize: 13, borderTop: '1px solid var(--border)', color: 'var(--text-primary)' }}>
+                <span><strong>{cropByKey(p.cropKey)?.name ?? p.cropKey}</strong> · {beds.find((b) => b.id === p.bedId)?.label} · {p.once}</span>
+                <div className="flex gap-2"><button type="button" onClick={() => confirmPastSowing(p.id)} className="rounded-lg px-3 py-2" style={{ background: 'var(--bg-2)', border: '1px solid var(--emerald)', cursor: 'pointer' }}>Already planted</button><button type="button" onClick={() => removePlanting(p.id)} className="rounded-lg px-3 py-2" style={{ background: 'transparent', border: '1px solid var(--border)', cursor: 'pointer' }}>Not planted</button></div>
+              </div>)}
+            </div>}
+
+            <TreeSeasonsCard groups={canvasTrees} unidentified={unidentifiedPlants} choices={treeSeasons} onChoose={chooseTreeSeason} />
+            {treeSaveFailed && <p role="alert" className="font-sans mt-2" style={{ color: 'var(--gold)', fontSize: 13 }}>Plant ages and picking months could not be saved on this device. Keep this page open and download the plan before leaving.</p>}
+            <ProductionProjectionCard projection={productionProjection} />
+            <ProductionGuideCard guide={productionGuide} canSurvey={!!surveySiteId} onSurvey={() => setSiteSurveyOpen(true)} />
+            {chickenGuide && <PoultryGuidanceCard guidance={chickenGuide} />}
+            <AnimalEnterprisesCard groups={canvasAnimals} choices={animalChoices} onChoose={chooseAnimalEnterprise} seasons={animalSeasons} onSeasonsChange={chooseAnimalSeason} compact={simple} />
+            {animalSaveFailed && <p role="alert" className="font-sans mt-2" style={{ color: 'var(--gold)', fontSize: 13 }}>Animal products and production months could not be saved on this device. Keep this page open and download the plan before leaving.</p>}
+            <details className="rounded-2xl p-4 mt-4" style={{ border: '1px solid var(--border)', background: 'var(--bg-1)' }}><summary className="font-display font-semibold" style={{ cursor: 'pointer', minHeight: 32 }}>Food, production kg and growing space graphs</summary><ProductionAvailabilityGraphs series={productionAvailabilityGraphs} input={productionGraphInput} preservedProducts={sitePreservedProducts} /><p className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>The map supplies growing areas and plant counts. Record monthly quantities below. For crop R/m², use All tools → Food, field &amp; value → Plan-cycle value and review prices, losses and the amount sold.</p></details>
+            {(unassignedProductionRecords.length > 0 || unassignedPreservedProducts.length > 0) && <p className="font-sans text-sm mt-3" style={{ color: 'var(--text-muted)' }}>Earlier records without a site are retained outside this site's totals: {unassignedProductionRecords.length} production records and {unassignedPreservedProducts.length} stock records.</p>}
+            <ProductionRecordsEditor key={productionSiteId ?? 'no-site'} products={productionSiteId ? recordProducts : []} dates={productionGraphInput.dates} productionRecords={siteProductionRecords} preservedProducts={sitePreservedProducts} onProductionRecordsChange={updateProductionRecords} onPreservedProductsChange={updatePreservedProducts} />
+            {simple && <CropPlanExportCard plantings={plantings} beds={beds} tasks={allTasks} yearReport={yearReport} planNotes={plan?.planNotes} planNotesAt={plan?.planNotesAt} meta={exportMeta} availability={printAvailability} treeGroups={includeTrees ? canvasTrees : undefined} treeSeasons={treeSeasons} productionGuide={productionGuide} productionProjection={productionProjection} poultryGuidance={includeAnimals ? chickenGuide : undefined} productionRecords={siteProductionRecords} preservedProducts={sitePreservedProducts} />}
 
             {!simple && (
             <>
@@ -1907,6 +2324,7 @@ function FacilitatorCropsPageInner() {
                 covered month to month" at a glance. */}
             <FoodAvailabilityChart
               monthOrder={monthOrder}
+              axis={monthAxis}
               availability={foodAvailability}
               yieldBenchmark={planYieldBenchmark}
               utilization={fieldUtilization}
@@ -1919,6 +2337,21 @@ function FacilitatorCropsPageInner() {
               onCashflowSettingsChange={updateCashflowSettings}
               yearMode={yearMode}
               onYearModeChange={setYearMode}
+              treeGroups={canvasTrees}
+              treeAvailability={treeAvailability}
+              includeTrees={includeTrees}
+              onIncludeTreesChange={(next) => { setIncludeTrees(next); saveIncludePerennials(next); }}
+              animalAvailability={animalAvailability}
+              includeAnimals={includeAnimals}
+              onIncludeAnimalsChange={(next) => { setIncludeAnimals(next); saveIncludeAnimals(next); }}
+            />
+            <YearOfFoodCard
+              year={yearOfFood}
+              gapFills={gapFills}
+              yearMode={yearMode}
+              hasBeds={beds.some((b) => b.kind !== 'plot')}
+              climateKnown={!!yearGate?.tempC}
+              onPlan={planGapFill}
             />
 
             {/* Tasks + harvest */}
@@ -1934,6 +2367,7 @@ function FacilitatorCropsPageInner() {
                       </span>
                     </div>
                     <TaskList tasks={t} />
+                    <TreePickingList lines={treePicking[idx] ?? []} />
                   </div>
                 ))}
                 <div className="font-sans rounded-lg px-2.5 py-2 mb-3" style={{ fontSize: 11.5, color: 'var(--gold-dim)', lineHeight: 1.45, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(154,96,24,0.3)' }}>
@@ -1961,13 +2395,15 @@ function FacilitatorCropsPageInner() {
                       {lookAheadMonthOrder.map((m, i) => {
                         if (i < 2) return null;
                         const t = allTasks.filter((task) => taskMonthsFromNow(task, currentMonth) === i);
-                        if (t.length === 0) return null;
+                        const picking = treePicking[i] ?? [];
+                        if (t.length === 0 && picking.length === 0) return null;
                         return (
                           <div key={i} className="mb-2">
                             <div className="font-display font-semibold mb-1" style={{ fontSize: 12.5, color: 'var(--text-primary)' }}>
                               {monthLabel(m)}{i >= 12 ? ' (next year)' : ''}
                             </div>
-                            <TaskList tasks={t} />
+                            {t.length > 0 && <TaskList tasks={t} />}
+                            <TreePickingList lines={picking} />
                           </div>
                         );
                       })}
@@ -2157,6 +2593,14 @@ function FacilitatorCropsPageInner() {
               planNotes={plan?.planNotes}
               planNotesAt={plan?.planNotesAt}
               meta={exportMeta}
+              availability={printAvailability}
+              treeGroups={includeTrees ? canvasTrees : undefined}
+              treeSeasons={treeSeasons}
+              productionGuide={productionGuide}
+              productionProjection={productionProjection}
+              poultryGuidance={includeAnimals ? chickenGuide : undefined}
+              productionRecords={siteProductionRecords}
+              preservedProducts={sitePreservedProducts}
             />
 
             {/* Seed BOQ + year-ahead report */}
@@ -2214,7 +2658,10 @@ function FacilitatorCropsPageInner() {
               </div>
 
               <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-                <div className="font-display font-semibold mb-2" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}><BookOpen size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {cropUi(lang, 'Year ahead', 'Unyaka ozayo')}</div>
+                <div className="font-display font-semibold mb-2" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}><BookOpen size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Planned crop comparison</div>
+                <p className="font-sans mb-2" style={{ fontSize: 12.5, color: 'var(--text-muted)', lineHeight: 1.5 }}>
+                  New vegetable and staple crop cycles, using published yield benchmarks. See Year of food above for picking months and gaps.
+                </p>
                 {yearReport.length > 0 ? (
                   <div className="space-y-2">
                     {yearReport.map((line, i) => (
@@ -2222,7 +2669,7 @@ function FacilitatorCropsPageInner() {
                     ))}
                   </div>
                 ) : (
-                  <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>Add some plantings to see a year-ahead summary.</div>
+                  <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>Add a planned bed or plot sowing to see its crop-cycle comparison.</div>
                 )}
               </div>
             </div>
@@ -2295,6 +2742,7 @@ function FacilitatorCropsPageInner() {
           onFraction={setPickerFraction}
           variety={pickerVariety}
           onVariety={setPickerVariety}
+          growingZones={growingZones}
           existing={pickerExisting}
           onExisting={setPickerExisting}
           overlapWarning={pickerOverlapWarning}
@@ -2314,6 +2762,14 @@ function FacilitatorCropsPageInner() {
       )}
 
       {/* Planting popover */}
+      {siteSurveyOpen && surveySiteId && <SiteSurveySheet
+        key={surveySiteId}
+        placeId={siteSurvey?.placeId || surveySiteId}
+        coords={{ lat: siteLat!, lon: siteLon! }}
+        annualRainfallMm={siteClimate?.annualMm}
+        onSaved={(survey) => { setSurveySnapshot({ siteId: surveySiteId, survey }); setSiteSurveyOpen(false); }}
+        onClose={() => setSiteSurveyOpen(false)}
+      />}
       {activePlanting && (
         <PlantingPopover
           planting={activePlanting}
@@ -2326,13 +2782,15 @@ function FacilitatorCropsPageInner() {
       )}
 
       {/* Auto-suggest: questionnaire + review */}
-      {autoPhase !== 'idle' && (
+      {autoPhase !== 'idle' && beds.length > 0 && (
         <AutoSuggestModal
           phase={autoPhase}
           goal={aGoal} onGoal={chooseGoal}
           focusCount={aFocusCount} onFocusCount={setAFocusCount}
           groups={aGroups} onToggleGroup={toggleGroup}
           cropKeys={aCropKeys} onToggleCrop={toggleAutoCrop} onSetCrops={setACropKeys}
+          mixState={!mixSiteKey ? 'unavailable' : !savedMix ? 'none' : sameMix(savedMix, { groups: aGroups, cropKeys: aCropKeys }) ? 'saved' : 'changed'}
+          onSaveMix={saveMix} onResetMix={resetMix}
           rhythm={aRhythm} onRhythm={setARhythm}
           planTiming={aPlanTiming} onPlanTiming={setAPlanTiming}
           generating={autoGenerating} idealMeta={idealMeta}
@@ -2343,6 +2801,8 @@ function FacilitatorCropsPageInner() {
           allowMixedCropsInBed={aAllowMixedCropsInBed} onAllowMixedCropsInBed={setAAllowMixedCropsInBed}
           reliableIrrigation={aReliableIrrigation} onReliableIrrigation={setAReliableIrrigation}
           siteClimate={siteClimate}
+          siteObservationNotes={productionGuide.siteObservations.slice(0, 2).flatMap((item) => item.lines)}
+          beds={beds}
           result={autoResult}
           onGenerate={runAutoSuggest}
           onAccept={acceptAutoSuggest}
@@ -2443,10 +2903,13 @@ function CropStorageLine({ crop }: { crop: CropDef }) {
  * what make a "stored" square mean anything.
  */
 function MonthAvailabilityDetail({
-  month, items, onClose,
+  month, items, trees = [], treeGroups = [], animals = [], onClose,
 }: {
   month: number;
   items: FoodAvailabilityItem[];
+  trees?: TreeAvailabilityItem[];
+  treeGroups?: PlacedTreeGroup[];
+  animals?: AnimalAvailabilityItem[];
   onClose: () => void;
 }) {
   const { lang } = useLanguage();
@@ -2465,7 +2928,45 @@ function MonthAvailabilityDetail({
           other crop this panel knows nothing — it must not claim the pantry
           is empty, only that it has nothing sourced to report. */}
       {items.length === 0 && (
-        <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>Nothing is scheduled for picking, and nothing with a sourced shelf life is still in store.</div>
+        <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>Nothing is scheduled for picking in the beds, and nothing with a sourced shelf life is still in store.</div>
+      )}
+      {trees.length > 0 && (
+        <div className="mb-2 mt-1.5">
+          <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 9.5, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>From your trees (local picking months)</div>
+          {trees.map((tree) => {
+            const harvest = treeGroups.find((g) => g.harvest.speciesId === tree.speciesId)?.harvest;
+            const first = harvest?.yearsToFirstCrop;
+            return (
+              <div key={tree.speciesId} className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                <span className="inline-flex items-center gap-1.5"><Trees size={12} aria-hidden style={{ color: 'var(--emerald)' }} /> {tree.name} × {tree.trees}</span>
+                {harvest && (
+                  <span style={{ color: 'var(--text-muted)' }}>
+                    {' '}— reference across SA: {formatMonthSpan(sourcedSeasonMonths(harvest))}{first ? `; first crop ${formatRange(first.value)} yrs after planting` : ''}
+                  </span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+      {animals.length > 0 && (
+        <div className="mb-2 mt-1.5">
+          <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 9.5, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>From your animals (local production months)</div>
+          {animals.map((a) => {
+            const e = ANIMAL_ENTERPRISES[a.enterpriseId];
+            const Icon = PRODUCT_ICON[a.product];
+            return (
+              <div key={a.enterpriseId} className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                <span className="inline-flex items-center gap-1.5"><TrayArt src={enterpriseProductArtUrl(a.enterpriseId) ?? animalProductArtUrl(a.product)} label={PRODUCT_LABEL[a.product]} Fallback={Icon} color="var(--gold-dim)" /> {PRODUCT_LABEL[a.product]} · {e?.name ?? ANIMAL_LABEL[a.animal]}</span>
+                {e && (
+                  <span style={{ color: 'var(--text-muted)' }}>
+                    {' '}— source reference: {formatMonthSpan(sourcedProductMonths(e))}{e.outputPerAnimal ? `; ${formatAmountRange(e.outputPerAnimal.value)} ${e.outputUnit}. ${animalReferenceQualifier(e, 'outputPerAnimal') ?? e.outputPerAnimal.note ?? ''}` : ''}
+                  </span>
+                )}
+              </div>
+            );
+          })}
+        </div>
       )}
       {fresh.length > 0 && (
         <div className="mb-2">
@@ -2609,19 +3110,50 @@ function CropMonthViewport({ children, registerScroll, onMonthScroll }: {
       role="region" aria-label={cropUi(lang, 'Crop chart months, scroll to match the planting calendar', 'Izinyanga zeshadi lezitshalo; skrola ukuze zihambisane nekhalenda lokutshala')} tabIndex={0}
       data-crop-chart-scroll style={{ overflowX: 'auto', marginInline: -16 }}>
       {/* Undo the card padding and reserve the same bed-label gutter. The
-          plot, labels and calendar then have identical edges and scroll range. */}
-      <div style={{ display: 'flex', minWidth: GRID_MIN_WIDTH }}>
-        <div aria-hidden="true" style={{ width: BED_LABEL_WIDTH, flexShrink: 0, position: 'sticky', left: 0, zIndex: 1, background: 'var(--bg-1)' }} />
+          plot, labels and calendar then have identical edges and scroll range.
+          On a phone the gutter shrinks to a margin (globals.css .crop-chart-gutter):
+          Rory, 2026-10-01, "just for the phone can we get rid of that blank space on
+          the left it would give more space to show the crops". The months keep their
+          width, so the shared scroll still lands on the same columns. */}
+      <div className="crop-chart-track" style={{ display: 'flex', minWidth: `calc(${GRID_MIN_WIDTH}px - var(--crop-chart-gutter-cut, 0px))` }}>
+        <div aria-hidden="true" className="crop-chart-gutter" style={{ width: `calc(${BED_LABEL_WIDTH}px - var(--crop-chart-gutter-cut, 0px))`, flexShrink: 0, position: 'sticky', left: 0, zIndex: 1, background: 'var(--bg-1)' }} />
         <div style={{ flex: 1, minWidth: 0 }}>{children}</div>
       </div>
     </div>
   );
 }
 
+/**
+ * The line under a month name that says WHICH month it is: a "Now" pill on the first column and
+ * the calendar year on every January. Always the same height, so a column with no tag keeps its
+ * neighbours' baseline. See lib/month-axis.ts for why.
+ */
+function MonthAxisTag({ slot, fontSize = 9.5 }: { slot?: MonthAxisSlot; fontSize?: number }) {
+  const tag = !slot ? null : slot.isNow ? (
+    <span
+      className="font-sans font-bold uppercase"
+      style={{ fontSize, letterSpacing: '0.06em', padding: '0 5px', borderRadius: 999, background: 'var(--color-forest-800)', color: 'var(--bg-1)' }}
+    >
+      Now
+    </span>
+  ) : slot.showYear ? (
+    <span className="font-sans font-semibold" style={{ fontSize, color: 'var(--text-secondary)' }}>{slot.year}</span>
+  ) : null;
+  return <div aria-hidden style={{ height: fontSize + 5, lineHeight: `${fontSize + 5}px`, whiteSpace: 'nowrap' }}>{tag}</div>;
+}
+
+/** "September 2026 (now)" — the words a screen reader and a hover tooltip get for one column. */
+function monthAxisTitle(slot: MonthAxisSlot | undefined, m: number): string {
+  if (!slot) return MONTHS_SHORT[m - 1];
+  return `${MONTH_NAMES[slot.month - 1]} ${slot.year}${slot.isNow ? ' (now)' : ''}`;
+}
+
 function MonthLineChart({
-  monthOrder, values, max, color, formatLabel, labelColor, dotColor, referenceValue, tooltipFor,
+  monthOrder, axis, values, max, color, formatLabel, labelColor, dotColor, referenceValue, tooltipFor,
 }: {
   monthOrder: number[];
+  /** Calendar tags per column (lib/month-axis.ts); absent = month names only. */
+  axis?: MonthAxisSlot[];
   values: number[];
   max: number;
   color: string;
@@ -2670,10 +3202,11 @@ function MonthLineChart({
         </svg>
         <div style={MONTH_COLUMNS} data-crop-chart-labels>
           {monthOrder.map((m, i) => (
-            <div key={i} style={{ minWidth: 0, textAlign: 'center', borderLeft: i === 12 ? '2px solid #C4A46A' : undefined }} title={i >= 12 ? `${MONTHS_SHORT[m - 1]}, next year` : undefined}>
+            <div key={i} style={{ minWidth: 0, textAlign: 'center', borderLeft: i === 12 ? '2px solid #C4A46A' : undefined }} title={monthAxisTitle(axis?.[i], m)}>
               <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)', marginTop: 4 }}>
                 {i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}
               </div>
+              <MonthAxisTag slot={axis?.[i]} fontSize={9} />
               <div className="font-mono font-semibold" style={{ fontSize: 11, color: labelColor ? labelColor(values[i]) : 'var(--text-primary)', marginTop: 2 }}>
                 {formatLabel(values[i])}
               </div>
@@ -2684,14 +3217,191 @@ function MonthLineChart({
   );
 }
 
+const TRAY_COLS = 2;
+const TRAY_ICON = 18;
+const TRAY_GAP = 4;
+
+/** The bounded, tinted box one month's icons sit in — two to a row, so a month's picture can't
+ * run into the next column. `rows` is the tallest month's row count, so every tray in a row of
+ * the chart starts and ends on the same line. */
+function IconTray({ count, tint, rows, dashed = false, children }: { count: number; tint: string; rows: number; dashed?: boolean; children?: ReactNode }) {
+  if (rows === 0) return null;
+  return (
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: `repeat(${TRAY_COLS}, ${TRAY_ICON}px)`,
+      gridAutoRows: TRAY_ICON,
+      gap: TRAY_GAP,
+      justifyContent: 'center',
+      alignContent: count === 0 ? 'center' : 'start',
+      minHeight: rows * TRAY_ICON + (rows - 1) * TRAY_GAP + 8,
+      margin: '4px 4px 0',
+      padding: 4,
+      borderRadius: 6,
+      background: count === 0 ? 'transparent' : `rgba(${tint},0.14)`,
+      border: count === 0 || dashed ? '1px dashed var(--border)' : `1px solid rgba(${tint},0.4)`,
+    }}>
+      {children}
+    </div>
+  );
+}
+
+function AvailabilityIconTray({ items, tint, rows }: { items: FoodAvailabilityItem[]; tint: string; rows: number }) {
+  return (
+    <IconTray count={items.length} tint={tint} rows={rows}>
+      {items.map((item, idx) => (
+        <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={TRAY_ICON} />
+      ))}
+    </IconTray>
+  );
+}
+
+function AvailabilityRowLabel({ children }: { children: ReactNode }) {
+  return <div className="font-sans" style={{ gridColumn: '1 / -1', fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)', margin: '8px 4px 2px' }}>{children}</div>;
+}
+
+// A named row stops field staples disappearing among fresh vegetables. Both
+// use the same crop artwork and retain their sourced fresh/storage status.
+function CropAvailabilityRow({ label, slots, axis, openMonth, onToggleMonth }: {
+  label: string; slots: FoodAvailabilityItem[][]; axis: MonthAxisSlot[];
+  openMonth: number | null; onToggleMonth: (index: number) => void;
+}) {
+  const fresh = slots.map(slot => slot.filter(item => item.status === 'fresh'));
+  const stored = slots.map(slot => slot.filter(item => item.status === 'stored'));
+  const freshRows = Math.max(1, Math.ceil(Math.max(0, ...fresh.map(slot => slot.length)) / TRAY_COLS));
+  const storedRows = Math.ceil(Math.max(0, ...stored.map(slot => slot.length)) / TRAY_COLS);
+  return <div style={{ ...MONTH_COLUMNS, marginTop: 6 }} data-crop-food-row={label}>
+    <AvailabilityRowLabel>{label}</AvailabilityRowLabel>
+    {slots.map((slot, i) => <button key={i} type="button"
+      onClick={() => onToggleMonth(i)} aria-expanded={openMonth === i}
+      aria-label={`${monthAxisTitle(axis[i], axis[i]?.month ?? 1)}: ${label} — ${slot.length ? slot.map(item => `${item.name}, ${item.status}`).join('; ') : 'nothing scheduled'}, tap for detail`}
+      style={{ minWidth: 0, minHeight: 44, border: 'none', borderLeft: i === 12 ? '2px solid #C4A46A' : undefined, borderRadius: 6, background: openMonth === i ? 'var(--bg-2)' : 'none', padding: '0 0 2px', cursor: 'pointer' }}>
+      <AvailabilityIconTray items={fresh[i]} tint="127,174,110" rows={freshRows} />
+      {storedRows > 0 && <AvailabilityIconTray items={stored[i]} tint="212,160,23" rows={storedRows} />}
+    </button>)}
+  </div>;
+}
+
+/** One picture in a tree or animal tray: the studio's own artwork, or a Lucide stand-in when a
+ * kind has none yet (never an emoji — CLAUDE.md). */
+function TrayArt({ src, label, Fallback, color }: { src: string | null; label: string; Fallback: LucideIcon; color: string }) {
+  return src ? (
+    // eslint-disable-next-line @next/next/no-img-element -- 18px sprite, next/image adds nothing here
+    <img src={src} alt="" title={label} width={TRAY_ICON} height={TRAY_ICON} style={{ width: TRAY_ICON, height: TRAY_ICON, objectFit: 'contain' }} />
+  ) : (
+    <span title={label} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: TRAY_ICON, height: TRAY_ICON }}>
+      <Fallback size={14} aria-hidden style={{ color }} />
+    </span>
+  );
+}
+
+/** A month's animal items, one per enterprise: a layer flock giving eggs AND meat is one hen in
+ * the tray (the detail panel lists both products), not two identical pictures. */
+function animalTrayItems(slot: AnimalAvailabilityItem[]): AnimalAvailabilityItem[][] {
+  const byEnterprise = new Map<string, AnimalAvailabilityItem[]>();
+  for (const item of slot) byEnterprise.set(item.enterpriseId, [...(byEnterprise.get(item.enterpriseId) ?? []), item]);
+  return [...byEnterprise.values()];
+}
+
+/**
+ * The food forest's tray under each month, a third box after the veg's fresh and stored ones.
+ *
+ * Rory, 2026-09-29: "i would prefer icons of fruit and berries just like the others so a 3rd, 4th
+ * little box … food forest products etc with icons". It used to be a count of tree kinds beside a
+ * Lucide tree, which said how many but not which. Each kind in season now shows what it gives —
+ * the fruit, nut or berry (lib/species-art.ts speciesFruitArtworkUrl), not the tree: "instead of
+ * fruit trees as the icons make them actual fruit" (Rory, 2026-09-29). Still no kilograms: the
+ * sources give a picking span, not a monthly curve, the same reason the bars above carry none.
+ * The tray is a button onto the same month detail as its bar.
+ */
+function TreeAvailabilityRow({ slots, axis, openMonth, onToggleMonth }: {
+  slots: TreeAvailabilityItem[][];
+  axis: MonthAxisSlot[];
+  openMonth: number | null;
+  onToggleMonth: (index: number) => void;
+}) {
+  const rows = Math.max(1, Math.ceil(Math.max(0, ...slots.map((slot) => slot.length)) / TRAY_COLS));
+  return (
+    <div style={{ ...MONTH_COLUMNS, marginTop: 6 }} data-crop-tree-availability>
+      <AvailabilityRowLabel>Fruit, nuts &amp; berries</AvailabilityRowLabel>
+      {slots.map((slot, i) => (
+        <div key={i} style={{ minWidth: 0, textAlign: 'center', borderLeft: i === 12 ? '2px solid #C4A46A' : undefined }}>
+          <button
+            type="button"
+            onClick={() => onToggleMonth(i)}
+            aria-expanded={openMonth === i}
+            aria-label={`${monthAxisTitle(axis[i], axis[i]?.month ?? 1)}: ${slot.length === 0 ? 'no tree season' : `${slot.map((t) => t.name).join(', ')} in season`}, tap for detail`}
+            style={{ display: 'block', width: '100%', minHeight: 44, background: openMonth === i ? 'var(--bg-2)' : 'none', border: 'none', borderRadius: 6, padding: '0 0 2px', cursor: 'pointer' }}
+          >
+            <IconTray count={slot.length} tint="46,107,58" rows={rows}>
+              {slot.map((tree) => (
+                <TrayArt key={tree.speciesId} src={speciesFruitArtworkUrl(tree.speciesId)} label={`${tree.name} × ${tree.trees}`} Fallback={Trees} color="var(--emerald)" />
+              ))}
+            </IconTray>
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Chosen enterprises show their food product; unassigned housing never enters this tray. */
+function AnimalAvailabilityRow({ slots, axis, openMonth, onToggleMonth }: {
+  slots: AnimalAvailabilityItem[][];
+  axis: MonthAxisSlot[];
+  openMonth: number | null;
+  onToggleMonth: (index: number) => void;
+}) {
+  const grouped = slots.map(animalTrayItems);
+  const rows = Math.max(1, Math.ceil(Math.max(0, ...grouped.map((g) => g.length)) / TRAY_COLS));
+  return (
+    <div style={{ ...MONTH_COLUMNS, marginTop: 6 }} data-crop-animal-availability>
+      <AvailabilityRowLabel>Animal products</AvailabilityRowLabel>
+      {grouped.map((groups, i) => (
+        <div key={i} style={{ minWidth: 0, textAlign: 'center', borderLeft: i === 12 ? '2px solid #C4A46A' : undefined }}>
+          <button
+            type="button"
+            onClick={() => onToggleMonth(i)}
+            aria-expanded={openMonth === i}
+            aria-label={`${monthAxisTitle(axis[i], axis[i]?.month ?? 1)}: ${groups.length === 0 ? 'no animal product' : slots[i].map((a) => `${PRODUCT_LABEL[a.product]} from ${ANIMAL_LABEL[a.animal].toLowerCase()}`).join(', ')}, tap for detail`}
+            style={{ display: 'block', width: '100%', minHeight: 44, background: openMonth === i ? 'var(--bg-2)' : 'none', border: 'none', borderRadius: 6, padding: '0 0 2px', cursor: 'pointer' }}
+          >
+            <IconTray count={groups.length} tint="192,122,30" rows={rows}>
+              {groups.map((items) => (
+                <TrayArt
+                  key={items[0].enterpriseId}
+                  src={enterpriseProductArtUrl(items[0].enterpriseId) ?? animalProductArtUrl(items[0].product)}
+                  label={`${ANIMAL_LABEL[items[0].animal]}: ${items.map((a) => PRODUCT_LABEL[a.product].toLowerCase()).join(', ')}`}
+                  Fallback={PRODUCT_ICON[items[0].product]}
+                  color="var(--gold-dim)"
+                />
+              ))}
+            </IconTray>
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 type FoodValueMode = 'availability' | 'utilization' | 'value';
 
 function FoodAvailabilityChart({
-  monthOrder, availability, yieldBenchmark, utilization, plantings, priceOverrides, onPriceOverrideChange,
+  monthOrder, axis, availability, yieldBenchmark, utilization, plantings, priceOverrides, onPriceOverrideChange,
   cashflowSettings, onCashflowSettingsChange, yearMode, onYearModeChange, registerScroll, onMonthScroll,
+  treeGroups, treeAvailability, includeTrees, onIncludeTreesChange,
+  animalAvailability, includeAnimals, onIncludeAnimalsChange,
 }: {
   monthOrder: number[];
+  axis: MonthAxisSlot[];
   availability: FoodAvailabilityItem[][];
+  treeGroups: PlacedTreeGroup[];
+  treeAvailability: TreeAvailabilityItem[][];
+  includeTrees: boolean;
+  onIncludeTreesChange: (next: boolean) => void;
+  animalAvailability: AnimalAvailabilityItem[][];
+  includeAnimals: boolean;
+  onIncludeAnimalsChange: (next: boolean) => void;
   yieldBenchmark: PlanYieldBenchmark;
   utilization: number[];
   registerScroll: (node: HTMLDivElement | null) => void;
@@ -2724,7 +3434,15 @@ function FoodAvailabilityChart({
   });
   const maxTotal = Math.max(1, ...cols.map((c) => c.fresh.length + c.stored.length));
   const hasStoredItems = cols.some((c) => c.stored.length > 0);
-  const isAvailabilityEmpty = cols.every((c) => c.fresh.length + c.stored.length === 0);
+  const vegetableSlots = availability.map(slot => slot.filter(item => !isStapleCropKey(item.cropKey)));
+  const stapleSlots = availability.map(slot => slot.filter(item => isStapleCropKey(item.cropKey)));
+  const showTreeRow = includeTrees && treeAvailability.some((slot) => slot.length > 0);
+  // Only kinds with a chosen enterprise AND sourced months can put anything on the chart; a
+  // switch for the rest would be a dead control (their card still says "When: not sourced").
+  const chartableAnimals = (Object.keys(ANIMAL_LABEL) as AnimalKind[])
+    .filter((a) => animalAvailability.some((slot) => slot.some((it) => it.animal === a)));
+  const showAnimalRow = includeAnimals && chartableAnimals.length > 0;
+  const isAvailabilityEmpty = cols.every((c) => c.fresh.length + c.stored.length === 0) && !showTreeRow && !showAnimalRow;
   const utilMax = Math.max(1, ...utilization);
   const pricedCropKeys = [...new Set(plantings.map((p) => p.cropKey))].filter((key) => !UNPRICED_CROPS.has(key)).sort();
   const unpricedBenchmarkCrops = yieldBenchmark.byCrop.filter((row) => !priceFor(row.cropKey, priceOverrides)).map((row) => row.name);
@@ -2779,18 +3497,61 @@ function FoodAvailabilityChart({
 
       {mode === 'availability' && (
         <>
+          {(treeGroups.length > 0 || chartableAnimals.length > 0) && (
+          <div className="flex flex-wrap gap-2 mb-3">
+          {treeGroups.length > 0 && (
+            <button
+              type="button"
+              onClick={() => onIncludeTreesChange(!includeTrees)}
+              aria-pressed={includeTrees}
+              className="font-sans rounded-full inline-flex items-center gap-1"
+              style={{ fontSize: 12, fontWeight: includeTrees ? 600 : 400, padding: '4px 10px', cursor: 'pointer', border: `1px solid ${includeTrees ? 'var(--emerald)' : 'var(--border)'}`, background: includeTrees ? 'var(--bg-2)' : 'transparent', color: includeTrees ? 'var(--text-primary)' : 'var(--text-muted)' }}
+            >
+              <Trees size={12} aria-hidden strokeWidth={includeTrees ? 2.2 : 1.6} />
+              {/* Named for what it shows. "Orchard out" read as a status, not a switch, and
+                  left a farmer asking where their fruit had gone. */}
+              {includeTrees ? `Fruit, nuts & berries shown · ${treeGroups.length} kind${treeGroups.length === 1 ? '' : 's'} on your map` : 'Fruit, nuts & berries hidden · tap to show'}
+            </button>
+          )}
+          {chartableAnimals.length > 0 && (
+            <button
+              type="button"
+              onClick={() => onIncludeAnimalsChange(!includeAnimals)}
+              aria-pressed={includeAnimals}
+              className="font-sans rounded-full inline-flex items-center gap-1"
+              style={{ fontSize: 12, fontWeight: includeAnimals ? 600 : 400, padding: '4px 10px', cursor: 'pointer', border: `1px solid ${includeAnimals ? 'var(--gold)' : 'var(--border)'}`, background: includeAnimals ? 'var(--bg-2)' : 'transparent', color: includeAnimals ? 'var(--text-primary)' : 'var(--text-muted)' }}
+            >
+              <PawPrint size={12} aria-hidden strokeWidth={includeAnimals ? 2.2 : 1.6} />
+              {includeAnimals ? `Animal products shown · ${chartableAnimals.map((a) => ANIMAL_LABEL[a].toLowerCase()).join(', ')}` : 'Animal products hidden · tap to show'}
+            </button>
+          )}
+          </div>
+          )}
           <p className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.4 }}>
-            Fresh-picking windows only. Storage appears only with sourced conditions. The source does not provide a within-window kg curve, so this chart deliberately shows no monthly kilograms or money.
+            Vegetables and staple crops are shown in separate rows. Green means ready to pick; gold means stored under sourced conditions. The source does not provide a within-window kg curve, so this chart deliberately shows no monthly kilograms or money.
           </p>
           {isAvailabilityEmpty ? (
             <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>Add a planting with verified timing to see availability.</div>
           ) : (
             <>
-              <div className="flex items-center gap-4 mb-3 font-sans" style={{ fontSize: 11, color: 'var(--text-secondary)' }}>
-                <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: '#7FAE6E', display: 'inline-block' }} /> Fresh</span>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-3 font-sans" style={{ fontSize: 11, color: 'var(--text-secondary)' }}>
+                <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: '#7FAE6E', display: 'inline-block' }} /> Ready to pick</span>
                 {hasStoredItems && <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: '#D4A017', display: 'inline-block' }} /> Stored under named conditions</span>}
+                {showTreeRow && <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: 'rgba(46,107,58,0.3)', border: '1px solid rgba(46,107,58,0.6)', display: 'inline-block' }} /> Fruit, nuts &amp; berries: local picking months</span>}
+                {showAnimalRow && <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: 'rgba(192,122,30,0.3)', border: '1px solid rgba(192,122,30,0.6)', display: 'inline-block' }} /> Animal products: local production months</span>}
               </div>
+              {showTreeRow && (
+                <p className="font-sans mb-3" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.45 }}>
+                  Tree months are confirmed for this farm under Fruit, nuts &amp; berries on your map{yearMode === 'fromToday' ? '; proposed plants are left out' : ''}. Regional source windows remain references until you confirm the local season and that plants already give food.
+                </p>
+              )}
+              {showAnimalRow && (
+                <p className="font-sans mb-3" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.45 }}>
+                  Animal months are confirmed for this farm under Animals on your map{yearMode === 'fromToday' ? '; proposed housing is left out' : ''}. Choosing layers does not promise year-round eggs. Animals are never added to the bed bars or any per-m² figure.
+                </p>
+              )}
               <CropMonthViewport registerScroll={registerScroll} onMonthScroll={onMonthScroll}>
+                <>
                 <div style={MONTH_COLUMNS} data-crop-availability-columns>
                   {cols.map(({ m, fresh, stored }, i) => {
                     const total = fresh.length + stored.length;
@@ -2817,17 +3578,15 @@ function FoodAvailabilityChart({
                           type="button"
                           onClick={() => setOpenMonth(openMonth === i ? null : i)}
                           aria-expanded={openMonth === i}
-                          aria-label={`${MONTHS_SHORT[m - 1]}${i >= 12 ? ', next year' : ''} — ${total === 0 ? 'nothing scheduled' : `${total} crop${total === 1 ? '' : 's'}`}, tap for detail`}
+                          aria-label={`${monthAxisTitle(axis[i], m)} — ${total === 0 ? 'nothing scheduled' : `${total} crop${total === 1 ? '' : 's'}`}, tap for detail`}
                           className="crop-availability-month"
                           style={{ display: 'block', width: '100%', background: openMonth === i ? 'var(--bg-2)' : 'none', border: 'none', borderRadius: 6, padding: '2px 0', cursor: 'pointer' }}
                         >
-                          {/* The bar's own number, on the bar. The icon rows
-                              below say WHICH crops; without this you had to
-                              count them to learn how many, which is the one
-                              thing the bar height is there to tell you. */}
-                          <div className="font-mono" style={{ fontSize: 12, fontWeight: 700, height: 16, color: total === 0 ? 'var(--text-muted)' : 'var(--text-primary)' }}>
-                            {total === 0 ? '–' : total}
-                          </div>
+                          {/* Month on top, count under the bar. Rory, 2026-10-01: "change the
+                              number of products with the month just switch them". The month
+                              heads the column the way it heads the calendar's. */}
+                          <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)' }}>{i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}</div>
+                          <MonthAxisTag slot={axis[i]} />
                           <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
                             {total === 0 ? <div style={{ width: '68%', height: 3, background: 'var(--border)', borderRadius: 2 }} /> : (
                               <div title={[...stored, ...fresh].map((item) => `${item.icon} ${item.name} — ${item.status}`).join('\n')} style={{ width: '68%', display: 'flex', flexDirection: 'column', gap: split ? GAP : 0 }}>
@@ -2838,28 +3597,35 @@ function FoodAvailabilityChart({
                               </div>
                             )}
                           </div>
-                          <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)', marginTop: 6 }}>{i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}</div>
-                          <div style={{ fontSize: 18, minHeight: 22, display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', marginTop: 2 }}>
-                            {fresh.map((item, idx) => (
-                              <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={18} />
-                            ))}
-                          </div>
-                          <div style={{ fontSize: 18, minHeight: 22, opacity: 0.6, display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center' }}>
-                            {stored.map((item, idx) => (
-                              <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={18} />
-                            ))}
+                          {/* The bar's own number. The icon rows below say WHICH crops;
+                              without this you had to count them to learn how many, which is
+                              the one thing the bar height is there to tell you. */}
+                          <div className="font-mono" style={{ fontSize: 12, fontWeight: 700, height: 16, marginTop: 4, marginBottom: 2, color: total === 0 ? 'var(--text-muted)' : 'var(--text-primary)' }}>
+                            {total === 0 ? '–' : total}
                           </div>
                         </button>
                       </div>
                     );
                   })}
                 </div>
+                <CropAvailabilityRow label="Vegetables" slots={vegetableSlots} axis={axis} openMonth={openMonth} onToggleMonth={(i) => setOpenMonth(openMonth === i ? null : i)} />
+                <CropAvailabilityRow label="Staple crops" slots={stapleSlots} axis={axis} openMonth={openMonth} onToggleMonth={(i) => setOpenMonth(openMonth === i ? null : i)} />
+                {showTreeRow && (
+                  <TreeAvailabilityRow slots={treeAvailability} axis={axis} openMonth={openMonth} onToggleMonth={(i) => setOpenMonth(openMonth === i ? null : i)} />
+                )}
+                {showAnimalRow && (
+                  <AnimalAvailabilityRow slots={animalAvailability} axis={axis} openMonth={openMonth} onToggleMonth={(i) => setOpenMonth(openMonth === i ? null : i)} />
+                )}
+                </>
               </CropMonthViewport>
               {openMonth !== null && (
                 <div key={openMonth} className="crop-availability-detail">
                   <MonthAvailabilityDetail
                     month={monthOrder[openMonth]}
                     items={availability[openMonth] ?? []}
+                    trees={showTreeRow ? (treeAvailability[openMonth] ?? []) : []}
+                    treeGroups={treeGroups}
+                    animals={showAnimalRow ? (animalAvailability[openMonth] ?? []) : []}
                     onClose={() => setOpenMonth(null)}
                   />
                 </div>
@@ -2875,7 +3641,7 @@ function FoodAvailabilityChart({
             Share of mapped growing area occupied each month. The planner reserves each crop through the upper end of its supported maturity and picking range to avoid double-booking; finish a crop earlier only after checking the bed.
           </p>
           <CropMonthViewport registerScroll={registerScroll} onMonthScroll={onMonthScroll}>
-            <MonthLineChart monthOrder={monthOrder} values={utilization} max={utilMax} color="#5C7FA6" referenceValue={1} dotColor={(value) => (value <= 0 ? '#D8CFBC' : value > 1 ? '#B33A3A' : '#5C7FA6')} labelColor={(value) => (value > 1 ? '#B33A3A' : 'var(--text-primary)')} formatLabel={(value) => `${Math.round(value * 100)}%`} />
+            <MonthLineChart monthOrder={monthOrder} axis={axis} values={utilization} max={utilMax} color="#5C7FA6" referenceValue={1} dotColor={(value) => (value <= 0 ? '#D8CFBC' : value > 1 ? '#B33A3A' : '#5C7FA6')} labelColor={(value) => (value > 1 ? '#B33A3A' : 'var(--text-primary)')} formatLabel={(value) => `${Math.round(value * 100)}%`} />
           </CropMonthViewport>
         </>
       )}
@@ -3073,7 +3839,7 @@ function FoodAvailabilityChart({
                 const price = priceFor(cropKey, priceOverrides);
                 if (!crop || !price) return null;
                 return <div key={cropKey} className="font-sans rounded-lg p-2" style={{ fontSize: 12, color: 'var(--text-secondary)', background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-                  <div className="flex items-center justify-between mb-1"><span><CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name}</span><span style={{ fontSize: 10, color: price.confidence === 'sourced' ? '#1F4D2B' : 'var(--gold)' }}>{price.confidence === 'sourced' ? 'dated source snapshot' : 'rough estimate'}</span></div>
+                  <div className="flex items-center justify-between mb-1"><span><CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name}</span><span style={{ fontSize: 10, color: price.confidence === 'sourced' ? '#1F4D2B' : price.confidence === 'recommended' ? 'var(--blue)' : 'var(--gold)' }}>{price.confidence === 'sourced' ? 'dated source snapshot' : price.confidence === 'recommended' ? 'recommended price (average of prices found)' : 'rough estimate'}</span></div>
                   <div className="flex flex-wrap gap-2">
                     <label>Retail R <input type="number" min="0.01" step="0.01" value={price.retailPerKg} onChange={(event) => onPriceOverrideChange(cropKey, { ...price, retailPerKg: Number(event.target.value), confidence: 'estimated' })} style={{ width: 62, padding: '2px 4px', border: '1px solid var(--border)', borderRadius: 4 }} /> /kg</label>
                     <label>Wholesale R <input type="number" min="0.01" step="0.01" value={price.wholesalePerKg} onChange={(event) => onPriceOverrideChange(cropKey, { ...price, wholesalePerKg: Number(event.target.value), confidence: 'estimated' })} style={{ width: 62, padding: '2px 4px', border: '1px solid var(--border)', borderRadius: 4 }} /> /kg</label>
@@ -3208,6 +3974,336 @@ function OrganicGuideCard() {
 }
 
 // ── Bed row + planting bars ─────────────────────────────────────────────
+
+/**
+ * The food forest's and the animals' rows in the bed calendar, under the beds.
+ *
+ * Rory, 2026-09-29: "include fruit and nuts and berries (also add for animal products) into this
+ * calendar … instead of fruit trees as the icons make them actual fruit and if you hover … it opens
+ * up as a written version of what's in that month." Each month shows what is picked — the fruit,
+ * nut, berry or pod, or the egg, milk or honey — never the tree or the animal. Hover, focus or tap a
+ * month for the written list. A plant or coop drawn as PROPOSED is shown faded and said to be
+ * proposed: it is in the plan, but it is not cropping this year.
+ */
+// Rory, 2026-09-30: "I want the avocado like a cabbage planting … this makes it more clearly
+// visible." Each tree kind and each animal product is its own lane of bars across the months it
+// is picked, drawn like a bed's planting bars. Hover, focus or tap a bar for the written line.
+const PRODUCE_ICON = 22;
+// Fills under white type, fixed like the bed bars' colours: mid-green for the food forest, the
+// deep ochre fill for animals.
+const PRODUCE_FILL = { trees: '#2E6B3A', animals: 'var(--color-ochre-dark)' } as const;
+
+const CALENDAR_SECTIONS = {
+  veg: { label: 'Vegetables', Icon: Salad, color: 'var(--emerald)' },
+  staple: { label: 'Staple crops', Icon: Wheat, color: 'var(--gold-dim)' },
+  trees: { label: 'Fruit, nuts & berries', Icon: Grape, color: 'var(--emerald)' },
+  animals: { label: 'Animal products', Icon: PawPrint, color: 'var(--gold-dim)' },
+} as const;
+
+/** The band that opens each of the calendar's four sections. The label sticks to the left edge,
+ * so it stays readable however far the months are scrolled. */
+function CalendarSectionHeader({ section }: { section: keyof typeof CALENDAR_SECTIONS }) {
+  const { label, Icon, color } = CALENDAR_SECTIONS[section];
+  return (
+    <div data-crop-calendar-section={section} style={{ background: 'var(--bg-2)', borderBottom: '1px solid var(--border)' }}>
+      <div
+        className="font-sans font-semibold uppercase"
+        style={{ position: 'sticky', left: 0, display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 10px', fontSize: 'clamp(10.5px, 0.8vw, 12px)', letterSpacing: '0.08em', color: 'var(--text-secondary)' }}
+      >
+        <Icon size={13} aria-hidden style={{ color, flexShrink: 0 }} />
+        {label}
+      </div>
+    </div>
+  );
+}
+
+/** A section with nothing to draw still keeps its place: one line saying why, and the one tap
+ * that fills it when a switch is all that is hiding it. */
+function CalendarSectionNote({ children, action }: { children: ReactNode; action?: { label: string; onClick: () => void } }) {
+  return (
+    <div style={{ borderBottom: '1px solid var(--border)' }}>
+      <div className="font-sans" style={{ position: 'sticky', left: 0, maxWidth: 'min(100vw - 32px, 560px)', padding: '10px 12px', fontSize: 12.5, lineHeight: 1.4, color: 'var(--text-muted)' }}>
+        {children}
+        {action && (
+          <button
+            type="button"
+            onClick={action.onClick}
+            className="font-sans font-semibold rounded-full"
+            style={{ display: 'block', marginTop: 8, fontSize: 12.5, padding: '6px 12px', cursor: 'pointer', border: '1px solid var(--border)', background: 'var(--bg-1)', color: 'var(--text-primary)' }}
+          >
+            {action.label}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked = [] }: {
+  kind: 'trees' | 'animals';
+  months: CalendarProduceMonth[];
+  axis: MonthAxisSlot[];
+  emptyText: string;
+  footnote: string | null;
+  /** Products shown as a line with no month bar — honey, whose flows the sources tie to plants and rain. */
+  unmarked?: CalendarUnmarkedLine[];
+}) {
+  const [open, setOpen] = useState<{ id: string; left: number; top: number; above: boolean } | null>(null);
+  const pinned = useRef(false);
+  useEffect(() => {
+    if (!open) return;
+    const close = () => { pinned.current = false; setOpen(null); };
+    window.addEventListener('scroll', close, true);
+    window.addEventListener('resize', close);
+    return () => { window.removeEventListener('scroll', close, true); window.removeEventListener('resize', close); };
+  }, [open]);
+
+  const lanes: { key: string; name: string; text: string; standing: number; planning?: ExpectedSeason; runs: { start: number; end: number }[]; art: ReactNode }[] =
+    kind === 'trees'
+      ? (produceLanes(months, 'trees') as ProduceLane<CalendarTreeLine>[]).map(({ key, line, runs }) => {
+        const src = speciesFruitArtworkUrl(line.speciesId);
+        return {
+          key, runs, name: line.name, text: treeLineText(line), standing: line.standing, planning: line.planning,
+          art: src
+            // eslint-disable-next-line @next/next/no-img-element -- 18px sprite
+            ? <img src={src} alt="" width={PRODUCE_ICON} height={PRODUCE_ICON} style={{ width: PRODUCE_ICON, height: PRODUCE_ICON, flexShrink: 0 }} />
+            : <Grape size={14} aria-hidden style={{ flexShrink: 0 }} />,
+        };
+      })
+      : (produceLanes(months, 'animals') as ProduceLane<CalendarAnimalLine>[]).map(({ key, line, runs }) => {
+        const Icon = PRODUCT_ICON[line.product];
+        return {
+          key, runs, name: `${PRODUCT_LABEL[line.product]} · ${line.name}`, text: animalLineText(line), standing: line.standing,
+          art: <TrayArt src={enterpriseProductArtUrl(line.enterpriseId) ?? animalProductArtUrl(line.product)} label={PRODUCT_LABEL[line.product]} Fallback={Icon} color="var(--gold-dim)" />,
+        };
+      });
+  const show = (id: string, el: HTMLElement) => {
+    const r = el.getBoundingClientRect();
+    const width = 280;
+    const above = r.bottom + 180 > window.innerHeight && r.top > 200;
+    setOpen({ id, left: Math.max(8, Math.min(r.left, window.innerWidth - width - 8)), top: above ? r.top - 6 : r.bottom + 6, above });
+  };
+  const hide = () => { if (!pinned.current) setOpen(null); };
+  // The section band above already says "Fruit, nuts & berries" / "Animal products".
+  const title = kind === 'trees' ? 'Your trees & bushes' : 'Your animals';
+  const LabelIcon = kind === 'trees' ? Grape : PawPrint;
+  const monthName = (col: number) => monthAxisTitle(axis[col], axis[col]?.month ?? 1);
+  const span = (run: { start: number; end: number }) =>
+    run.start === run.end ? monthName(run.start) : `${monthName(run.start)} to ${monthName(run.end)}`;
+  const openLane = open ? lanes.find((l) => open.id.startsWith(`${l.key}@`)) : undefined;
+  const openRun = openLane?.runs[Number(open!.id.split('@')[1])];
+
+  return (
+    <div className="flex" style={{ borderBottom: '1px solid var(--border)' }} data-crop-calendar-produce={kind}>
+      <div style={{ position: 'sticky', left: 0, zIndex: 2, width: BED_LABEL_WIDTH, flexShrink: 0, background: 'var(--bg-1)', borderRight: '1px solid var(--border)', padding: '10px 10px' }}>
+        <div className="font-display font-semibold" style={{ fontSize: 'clamp(13px, 1vw, 15px)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 5, lineHeight: 1.2 }}>
+          <LabelIcon size={14} aria-hidden style={{ color: kind === 'trees' ? 'var(--emerald)' : 'var(--gold-dim)', flexShrink: 0 }} />
+          {title}
+        </div>
+        <div className="font-sans" style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 3, lineHeight: 1.3 }}>
+          From your map · hover or tap a bar
+        </div>
+      </div>
+      <div style={{ flex: '1 1 auto', minWidth: 0, position: 'relative' }}>
+        {kind === 'trees' && lanes.some(lane => lane.planning) && <p className="font-sans" style={{ padding: '8px 12px 2px', fontSize: 11, color: 'var(--text-secondary)', position: 'sticky', left: BED_LABEL_WIDTH, width: `min(560px, calc(100vw - ${BED_LABEL_WIDTH + 40}px))` }}>Outlined bars: sourced planning references when established. Solid bars: locally confirmed picking months. New plants need time; references do not count towards food totals.</p>}
+        {lanes.length > 0 ? (
+          <div style={{ position: 'relative', padding: '6px 0' }}>
+            <div style={{ ...MONTH_COLUMNS, position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+              {Array.from({ length: DISPLAY_MONTHS }, (_, i) => i).map((i) => (
+                <div
+                  key={i}
+                  style={{
+                    minWidth: 0,
+                    borderRight: i < DISPLAY_MONTHS - 1 ? '1px solid var(--bg-2)' : 'none',
+                    borderLeft: i === 12 ? '2px solid #C4A46A' : undefined,
+                    background: i === 0 ? 'rgba(31,77,43,0.05)' : i >= 12 ? 'rgba(196,164,106,0.07)' : 'transparent',
+                  }}
+                />
+              ))}
+            </div>
+            {lanes.map((lane) => (
+              <div key={lane.key} style={{ position: 'relative', height: 34, marginBottom: 4 }}>
+                {lane.runs.map((run, r) => {
+                  const id = `${lane.key}@${r}`;
+                  // Proposed plants are faded, as the month list did; year two is quieter, as a bed's is.
+                  const opacity = lane.planning ? (run.start >= 12 ? 0.85 : 1) : lane.standing === 0 ? (run.start >= 12 ? 0.35 : 0.45) : run.start >= 12 ? 0.55 : 1;
+                  return (
+                    <button
+                      key={id}
+                      type="button"
+                      className="font-sans"
+                      aria-label={`${lane.text} · ${span(run)}`}
+                      aria-expanded={open?.id === id}
+                      onMouseEnter={(e) => { if (!pinned.current) show(id, e.currentTarget); }}
+                      onMouseLeave={hide}
+                      onFocus={(e) => show(id, e.currentTarget)}
+                      onBlur={() => { pinned.current = false; setOpen(null); }}
+                      onClick={(e) => {
+                        if (open?.id === id && pinned.current) { pinned.current = false; setOpen(null); return; }
+                        pinned.current = true;
+                        show(id, e.currentTarget);
+                      }}
+                      style={{
+                        position: 'absolute', left: `${leftPct(run.start)}%`, width: `${(run.end - run.start + 1) * COL_PCT}%`, top: 2, bottom: 2,
+                        background: lane.planning ? 'var(--bg-2)' : PRODUCE_FILL[kind], color: lane.planning ? 'var(--text-primary)' : '#fff', border: lane.planning ? '1.5px dashed var(--gold-dim)' : 'none', borderRadius: 6, opacity,
+                        fontSize: 11, fontWeight: 600, textAlign: 'left', padding: '0 4px 0 5px', cursor: 'pointer',
+                        // clip-path, not overflow: an overflow-hidden button would become the scroll
+                        // box and stop the name below from sticking.
+                        display: 'flex', alignItems: 'center', clipPath: 'inset(0 round 6px)', whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {/* The name sticks just right of the bed labels, so a bar that starts
+                          off-screen to the left still says what it is. */}
+                      <span style={{ position: 'sticky', left: BED_LABEL_WIDTH + 4, display: 'inline-flex', alignItems: 'center', gap: 4, maxWidth: '100%', minWidth: 0, overflow: 'hidden' }}>
+                      {kind === 'trees' ? (
+                        // A light chip, so a small fruit picture still reads on the dark bar.
+                        <span style={{ width: 26, height: 26, borderRadius: 7, background: 'rgba(255,255,255,0.96)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: 'var(--emerald)' }}>
+                          {lane.art}
+                        </span>
+                      ) : lane.art}
+                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        {lane.name}{lane.planning ? ' · reference' : ''}{lane.standing === 0 ? ' (proposed)' : ''}
+                      </span>
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        ) : unmarked.length ? null : (
+          <div className="font-sans" style={{ padding: '12px 12px', fontSize: 12.5, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 560 }}>
+            {emptyText}
+          </div>
+        )}
+        {unmarked.map((line) => <UnmarkedProduceLine key={line.enterpriseId} line={line} />)}
+        {footnote && (
+          <div className="font-sans" style={{ padding: '0 12px 6px', fontSize: 11, color: 'var(--text-muted)', position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 560 }}>
+            {footnote}
+          </div>
+        )}
+      </div>
+      {open && openLane && openRun && (
+        <div
+          role="tooltip"
+          className="font-sans"
+          style={{
+            position: 'fixed', left: open.left, top: open.top, transform: open.above ? 'translateY(-100%)' : undefined,
+            width: 280, zIndex: 60, background: 'var(--bg-1)', color: 'var(--text-primary)', border: '1px solid var(--border-strong)',
+            borderRadius: 10, boxShadow: '0 8px 24px rgba(32,25,15,0.18)', padding: '10px 12px', pointerEvents: 'none',
+          }}
+        >
+          <div className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.1vw, 16px)', marginBottom: 2 }}>{span(openRun)}</div>
+          <div style={{ fontSize: 10.5, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 6 }}>
+            {openLane.planning ? 'Planning reference - when established' : kind === 'trees' ? 'In season from your food forest' : 'From your animals'}
+          </div>
+          <div style={{ display: 'flex', gap: 7, alignItems: 'flex-start', fontSize: 12.5, lineHeight: 1.35, color: openLane.standing === 0 ? 'var(--text-secondary)' : 'var(--text-primary)' }}>
+            <span style={{ color: kind === 'trees' ? 'var(--emerald)' : 'var(--gold-dim)', display: 'inline-flex' }}>{openLane.art}</span>
+            <span>{openLane.text}</span>
+          </div>
+          <div style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 7, lineHeight: 1.35 }}>
+            {openLane.planning ? 'Confirm local picking dates. This reference is excluded from food totals and scheduled picking jobs.' : 'Locally confirmed months for this farm. No monthly quantities are assumed.'}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Honey's line in the Animal products row: what is on the map, the rain note in place of a month
+ * bar, and the recorded flows — each with its region, timing words and source — on hover, focus
+ * or tap. Rory, 2026-09-30, option 1. No month is drawn, because every record is one plant's flow
+ * in one place and year, not a region's honey season.
+ */
+function UnmarkedProduceLine({ line }: { line: CalendarUnmarkedLine }) {
+  const [open, setOpen] = useState<{ left: number; top: number; above: boolean } | null>(null);
+  const pinned = useRef(false);
+  useEffect(() => {
+    if (!open) return;
+    const close = () => { pinned.current = false; setOpen(null); };
+    window.addEventListener('scroll', close, true);
+    window.addEventListener('resize', close);
+    return () => { window.removeEventListener('scroll', close, true); window.removeEventListener('resize', close); };
+  }, [open]);
+  const width = 320;
+  const show = (el: HTMLElement) => {
+    const r = el.getBoundingClientRect();
+    const above = r.bottom + 320 > window.innerHeight && r.top > 340;
+    setOpen({ left: Math.max(8, Math.min(r.left, window.innerWidth - width - 8)), top: above ? r.top - 6 : r.bottom + 6, above });
+  };
+  const Icon = PRODUCT_ICON[line.product];
+  const docs = [...new Set(line.records.map((r) => r.source.doc))];
+  const noteText = line.note?.text ?? 'Local production months are not confirmed, so no months are marked.';
+
+  return (
+    <div
+      className="font-sans"
+      data-crop-calendar-unmarked={line.enterpriseId}
+      style={{ position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 640, padding: '8px 12px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 10px', borderTop: '1px dashed var(--border)' }}
+    >
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12.5, fontWeight: 600, color: line.standing === 0 ? 'var(--text-secondary)' : 'var(--text-primary)' }}>
+        <TrayArt src={enterpriseProductArtUrl(line.enterpriseId) ?? animalProductArtUrl(line.product)} label={PRODUCT_LABEL[line.product]} Fallback={Icon} color="var(--gold-dim)" />
+        {unmarkedLineText(line)}
+      </span>
+      <span style={{ fontSize: 11.5, color: 'var(--text-muted)' }}>{noteText}</span>
+      {line.records.length > 0 && (
+        <button
+          type="button"
+          aria-expanded={!!open}
+          onMouseEnter={(e) => { if (!pinned.current) show(e.currentTarget); }}
+          onMouseLeave={() => { if (!pinned.current) setOpen(null); }}
+          onFocus={(e) => show(e.currentTarget)}
+          onBlur={() => { pinned.current = false; setOpen(null); }}
+          onClick={(e) => {
+            if (open && pinned.current) { pinned.current = false; setOpen(null); return; }
+            pinned.current = true;
+            show(e.currentTarget);
+          }}
+          className="font-sans"
+          style={{ fontSize: 11.5, fontWeight: 600, color: 'var(--gold-dim)', background: 'none', border: 'none', padding: 0, cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: 2 }}
+        >
+          {line.records.length} recorded flow{line.records.length === 1 ? '' : 's'}
+        </button>
+      )}
+      {open && (
+        <div
+          role="tooltip"
+          className="font-sans"
+          style={{
+            position: 'fixed', left: open.left, top: open.top, transform: open.above ? 'translateY(-100%)' : undefined,
+            width, maxHeight: '60vh', overflowY: 'auto', zIndex: 60, background: 'var(--bg-1)', color: 'var(--text-primary)', border: '1px solid var(--border-strong)',
+            borderRadius: 10, boxShadow: '0 8px 24px rgba(32,25,15,0.18)', padding: '10px 12px', pointerEvents: 'none',
+          }}
+        >
+          <div className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.1vw, 16px)', marginBottom: 2 }}>Recorded honey flows</div>
+          <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 7, lineHeight: 1.35 }}>
+            Each is one plant&apos;s flow in one place, not a season for your area, so no months are marked.
+          </div>
+          <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 8 }}>
+            {line.records.map((r) => (
+              <li key={`${r.region}-${r.source.page}`} style={{ fontSize: 12.5, lineHeight: 1.35 }}>
+                <div style={{ fontWeight: 600 }}>{flowRecordText(r)}</div>
+                <div style={{ fontSize: 11, color: 'var(--text-secondary)', fontStyle: 'italic', marginTop: 2 }}>
+                  &ldquo;{r.source.quote}&rdquo;{r.source.page !== null ? ` (p. ${r.source.page})` : ''}
+                </div>
+                {docs.length > 1 && <div style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 2 }}>{r.source.doc}</div>}
+              </li>
+            ))}
+          </ul>
+          {docs.length === 1 && (
+            <div style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 8, lineHeight: 1.35 }}>Source: {docs[0]}</div>
+          )}
+          {line.note && (
+            <div style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 4, lineHeight: 1.35 }}>
+              &ldquo;{line.note.source.quote}&rdquo;{line.note.source.page !== null ? ` (p. ${line.note.source.page})` : ''}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple }: {
   bed: PlanBed;
@@ -3451,7 +4547,7 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
 // ── Crop picker modal ────────────────────────────────────────────────────
 
 function CropPickerModal({
-  search, onSearch, crop, month, pattern, fraction, onFraction, existing, onExisting, variety, onVariety, overlapWarning, hasUnverifiedTiming,
+  search, onSearch, crop, month, pattern, fraction, onFraction, existing, onExisting, variety, onVariety, growingZones, overlapWarning, hasUnverifiedTiming,
   isEditing, favouriteCropKeys, onToggleFavourite, allowBedSharing, onEnableBedSharing, onPick, onBack, onMonth, onConfirm, onClose,
   isPlot,
 }: {
@@ -3466,6 +4562,8 @@ function CropPickerModal({
   onExisting: (v: boolean) => void;
   variety: string;
   onVariety: (v: string) => void;
+  /** The site's growing zone(s), most likely first; empty when the site climate is unknown. */
+  growingZones: GrowingZoneId[];
   /** Null when the bed can carry this planting alongside what is already there. */
   overlapWarning: BedOverlapWarning | null;
   hasUnverifiedTiming: boolean;
@@ -3609,20 +4707,7 @@ function CropPickerModal({
               <input value={variety} onChange={e => onVariety(e.target.value)} maxLength={120} placeholder="Name on your seed packet" className="block w-full mt-2 rounded-lg border p-3" style={{ background: 'var(--bg-1)', color: 'var(--text-primary)' }} />
               <span className="block mt-1">Leave blank if you have not chosen one. Timing remains the crop’s general guidance.</span>
             </label>
-            {crop.varieties && crop.varieties.length > 0 && (
-              <div className="mb-3">
-                <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>Variety guidance</div>
-                <div className="space-y-1.5">
-                  {crop.varieties.map((v, i) => (
-                    <div key={i} className="px-2.5 py-2 rounded-lg" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
-                      <div className="font-sans font-semibold" style={{ fontSize: 12.5, color: 'var(--text-primary)' }}>{v.name}</div>
-                      <div className="font-mono" style={{ fontSize: 10.5, color: 'var(--text-muted)', marginBottom: 2 }}>Best for: {v.bestFor}</div>
-                      <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{v.note}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            <VarietyGuidance crop={crop} zones={growingZones} />
             {crop.timingVerified === false && (
               <div className="font-sans mb-3 px-2.5 py-2 rounded-lg" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--gold)' }}>
                 This legacy record can be kept or removed, but it cannot be rescheduled until a source-backed local duration is available.
@@ -3915,17 +5000,20 @@ const TIMING_OPTIONS: { key: PlanTiming; label: string; blurb: string }[] = [
 ];
 function AutoSuggestModal({
   phase, goal, onGoal, focusCount, onFocusCount,
-  groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, rhythm, onRhythm,
+  groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, mixState, onSaveMix, onResetMix, rhythm, onRhythm,
   planTiming, onPlanTiming, generating, idealMeta, hasCurrentPlantings,
   pattern, climateSource, referenceName, rotateCrops, onRotateCrops,
   allowVinesInBeds, onAllowVinesInBeds, allowMixedCropsInBed, onAllowMixedCropsInBed, reliableIrrigation, onReliableIrrigation,
-  siteClimate, result, onGenerate, onAccept, onBackToQuestions, onClose,
+  siteClimate, siteObservationNotes, beds, result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
   phase: 'questions' | 'review';
   goal: GardenGoal; onGoal: (g: GardenGoal) => void;
   focusCount: number; onFocusCount: (n: number) => void;
   groups: FoodGroup[]; onToggleGroup: (g: FoodGroup) => void;
   cropKeys: string[]; onToggleCrop: (cropKey: string) => void; onSetCrops: (cropKeys: string[]) => void;
+  /** 'unavailable' when no map is chosen to save against; 'changed' = saved mix exists but the tiles differ. */
+  mixState: 'unavailable' | 'none' | 'saved' | 'changed';
+  onSaveMix: () => void; onResetMix: () => void;
   rhythm: HarvestRhythm; onRhythm: (r: HarvestRhythm) => void;
   planTiming: PlanTiming; onPlanTiming: (t: PlanTiming) => void;
   /** True while the whole-year sweep runs — the Suggest button shows its busy label. */
@@ -3945,6 +5033,9 @@ function AutoSuggestModal({
   /** The site's own monthly climate, when it resolved. Null keeps the irrigation
    * question generic rather than quoting a reference region's rain as this site's. */
   siteClimate: SiteClimate | null;
+  siteObservationNotes?: string[];
+  /** Beds in the parent's scope, used to label each suggested planting with its bed. */
+  beds: PlanBed[];
   result: AutoSuggestResult | null;
   onGenerate: () => void; onAccept: () => void; onBackToQuestions: () => void; onClose: () => void;
 }) {
@@ -4003,7 +5094,9 @@ function AutoSuggestModal({
 
             <details className="rounded-xl px-3 py-2.5" style={{ border: '1px solid var(--border)', background: 'var(--bg-1)' }}>
               <summary className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--color-forest-800)', cursor: 'pointer' }}>
-                Optional: change the recommended crop mix
+                {mixState === 'saved' || mixState === 'changed'
+                  ? 'Crop mix: your saved mix for this map'
+                  : 'Optional: change the recommended crop mix'}
               </summary>
               <div className="mt-3 space-y-3">
             <div>
@@ -4080,7 +5173,27 @@ function AutoSuggestModal({
                     : 'Only these crops will be used. The planner balances supported sowing slots, variety and your harvest rhythm; it will not substitute an unchosen crop or claim a guaranteed maximum.')
                   : 'No exact list selected: the family plan will use a diverse supported mix, including the mapped staple plots. Open this section only when you want to exclude crops or name exact household choices.'}
               </p>
+            </div>
+
+            {mixState !== 'unavailable' && (
+              <div className="flex flex-wrap items-center gap-2 pt-2" style={{ borderTop: '1px solid var(--border)' }}>
+                {mixState !== 'saved' && (
+                  <button type="button" onClick={onSaveMix} className="font-sans font-semibold rounded-lg px-2.5 py-1.5 inline-flex items-center gap-1.5" style={{ fontSize: 12, color: 'var(--color-forest-800)', background: 'var(--brand-soft)', border: '1px solid var(--brand-soft-2)', cursor: 'pointer' }}>
+                    <Save size={13} aria-hidden /> {mixState === 'changed' ? 'Save changes to my crop mix' : 'Save this crop mix for this map'}
+                  </button>
+                )}
+                {mixState === 'saved' && (
+                  <span className="font-sans inline-flex items-center gap-1.5" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
+                    <Check size={13} aria-hidden /> Saved for this map. Used every time you plan here.
+                  </span>
+                )}
+                {mixState !== 'none' && (
+                  <button type="button" onClick={onResetMix} className="font-sans rounded-lg px-2 py-1" style={{ fontSize: 11, color: 'var(--text-secondary)', background: 'var(--bg-1)', border: '1px solid var(--border)', cursor: 'pointer' }}>
+                    Reset to recommended
+                  </button>
+                )}
               </div>
+            )}
               </div>
             </details>
 
@@ -4173,6 +5286,11 @@ function AutoSuggestModal({
               </span>
             </button>
 
+            {!!siteObservationNotes?.length && <div className="rounded-xl px-3 py-2.5" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+              <p className="font-sans font-semibold" style={{ fontSize: 12, color: 'var(--text-primary)' }}>Site survey: water and frost</p>
+              {siteObservationNotes.map((note) => <p key={note} className="font-sans mt-1" style={{ fontSize: 11.5, lineHeight: 1.45, color: 'var(--text-secondary)' }}>{note}</p>)}
+              <p className="font-sans mt-1" style={{ fontSize: 11.5, lineHeight: 1.45, color: 'var(--text-secondary)' }}>Confirm your current water supply before switching irrigation on. Observed frost months are checked when the plan is suggested.</p>
+            </div>}
             <button
               onClick={() => onReliableIrrigation(!reliableIrrigation)}
               className="w-full text-left px-3 py-2.5 rounded-xl transition-all flex items-start gap-2.5"
@@ -4180,10 +5298,15 @@ function AutoSuggestModal({
             >
               <span style={{ display: 'inline-flex', alignItems: 'center' }}>{reliableIrrigation ? <Droplets size={16} aria-hidden /> : <Circle size={16} aria-hidden />}</span>
               <span>
-                <div className="font-display font-semibold" style={{ fontSize: 12.5 }}>Reliable irrigation for every crop cycle (required)</div>
+                <div className="font-display font-semibold" style={{ fontSize: 12.5 }}>
+                  Reliable irrigation for every crop cycle{siteClimate ? '' : ' (required)'}
+                </div>
                 <div className="font-mono" style={{ fontSize: 10.5, opacity: 0.85 }}>
                   This automatic plan deliberately packs successive crop cycles. A rainfall region does not
                   prove farm water, so it stays off unless you can irrigate throughout every suggested cycle.
+                  {siteClimate && !reliableIrrigation
+                    ? ' Left off, you get a rain-fed plan: crops only in the months this site’s own rain can carry them.'
+                    : ''}
                 </div>
               </span>
             </button>
@@ -4224,9 +5347,9 @@ function AutoSuggestModal({
               const needsCrops = goal !== 'family' && cropKeys.length === 0;
               const blockers = [
                 needsCrops ? 'Pick at least one crop above before the planner can suggest anything.' : null,
-                reliableIrrigation
+                reliableIrrigation || siteClimate
                   ? null
-                  : 'Turn on “Reliable irrigation for every crop cycle” above to generate a plan. This plan packs crop cycles back to back, so it only holds if you can water them through.',
+                  : 'Turn on “Reliable irrigation for every crop cycle” above to generate a plan. This plan packs crop cycles back to back, so it only holds if you can water them through. Or map this farm’s location, and a rain-fed plan can use its own rainfall.',
               ].filter((line): line is string => line !== null);
               const canGenerate = blockers.length === 0 && !generating;
               return (
@@ -4327,10 +5450,16 @@ function AutoSuggestModal({
                     if (!crop) return null;
                     const h = harvestMonthForCrop(p.sowMonth, crop);
                     const fieldEntry = plannedBedEntryMonth(p.sowMonth, crop);
+                    const bedLabel = beds.find((b) => b.id === p.bedId)?.label ?? null;
                     return (
                       <div key={p.id} className="flex items-center justify-between px-3 py-2 rounded-lg font-sans" style={{ fontSize: 12.5, background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, flexWrap: 'wrap' }}>
                           <CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name} ({fractionLabel(p.areaFraction ?? 1)} bed)
+                          {bedLabel && (
+                            <span className="font-sans" style={{ fontSize: 10.5, color: 'var(--text-muted)' }}>
+                              {bedLabel}
+                            </span>
+                          )}
                           {typeof p.once === 'string' && (
                             <span className="font-sans uppercase" style={{ fontSize: 8.5, letterSpacing: '0.06em', color: 'var(--color-forest-800)', background: 'var(--brand-soft)', border: '1px solid var(--brand-soft-2)', borderRadius: 6, padding: '1px 5px' }}>
                               {IDEAL_PLAN_COPY.starterBadge}

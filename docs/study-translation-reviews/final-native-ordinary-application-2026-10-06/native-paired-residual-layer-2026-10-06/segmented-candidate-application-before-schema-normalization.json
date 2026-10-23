@@ -1,0 +1,1253 @@
+{
+  "title": "Accepted native and paired residual implementation layer",
+  "date": "2026-10-06",
+  "readOnlyAuthority": {
+    "path": "/tmp/imbewu-native-paired-13-root-final-accepted-candidates-20261006.json",
+    "sha256": "384e275beca6a12e71065feef19e9b8b7c8792e5c52c2ac2cf8e7878394b2a9b"
+  },
+  "parentPacketChain": {
+    "sourceMap": "/tmp/imbewu-native-paired-current-field-map-20261006.json",
+    "rootRepair": "/tmp/imbewu-native-paired-13-root-repaired-integration-20261006.json",
+    "rootFinalAcceptedCandidate": "/tmp/imbewu-native-paired-13-root-final-accepted-candidates-20261006.json",
+    "rootRejectionReason": "Root rejected the prior packet’s whole-sentence safety holds because they regressed accepted localized native targets, and rejected e ntle/yavhuḓi/yo antswa plus e ngata/nnzhi/yo tala because these mean good/better and many rather than best and most."
+  },
+  "status": "unreviewed machine draft; no fluency or publication approval",
+  "counts": {
+    "pairedTargetCells": 13,
+    "nativeTargetFields": 3,
+    "nativeOnlyNoopBindings": 10,
+    "pairedFiles": 6,
+    "nativeRegistryModules": 6
+  },
+  "fields": [
+    {
+      "order": 25,
+      "moduleId": "vegetables-staples",
+      "language": "st",
+      "sourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "native": {
+        "path": "lib/course-translation-drafts-st-vegetables-staples.ts",
+        "registryExport": "SESOTHO_VEGETABLES_STAPLES_DRAFT",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "body.paragraph[8]",
+        "currentTarget": "Raised beds di loketse mobu o metsi, where water needs somewhere to drain away to.",
+        "appliedTarget": "Raised beds di loketse mobu o metsi, moo metsi a hlokang sebaka sa ho phallela teng.",
+        "reviewStatus": "machine-draft",
+        "changed": true
+      },
+      "paired": {
+        "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+        "slide": 5,
+        "bodyIndex": 4,
+        "currentTarget": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Raised beds",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " suit ",
+              "status": "draft",
+              "text": " di loketse "
+            },
+            {
+              "sourceEnglish": "wet ground",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ", where water needs ",
+              "status": "draft",
+              "text": ", moo metsi a hlokang "
+            },
+            {
+              "sourceEnglish": "somewhere to drain away to",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": "."
+            }
+          ]
+        },
+        "appliedTarget": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Raised beds",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " suit ",
+              "status": "draft",
+              "text": " di loketse "
+            },
+            {
+              "sourceEnglish": "wet ground",
+              "status": "draft",
+              "text": "mobu o metsi"
+            },
+            {
+              "sourceEnglish": ", where water needs ",
+              "status": "draft",
+              "text": ", moo metsi a hlokang "
+            },
+            {
+              "sourceEnglish": "somewhere to drain away to",
+              "status": "draft",
+              "text": "sebaka sa ho phallela teng"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": "."
+            }
+          ],
+          "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
+        },
+        "status": "mixed",
+        "sourceJoin": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+        "renderedTarget": "Raised beds di loketse mobu o metsi, moo metsi a hlokang sebaka sa ho phallela teng.",
+        "sourceJoinExact": true,
+        "renderedEqualsNative": true,
+        "sourceJoinSha256": "1ba06191a6bbc24d4e5cc54482ee14da8072570e74cbe28b02c8d3b60473d889",
+        "renderedTargetSha256": "e261afef975e7d01ae3447f400eb312591b76f21e2086810f6af1b733b2137f3"
+      },
+      "verdict": "repair-native-and-paired",
+      "rootAcceptedReason": "Repairs ordinary English while preserving the already localized “moo metsi a hlokang” clause. Keeps suitability, wet-ground scope and the need for somewhere water can drain to."
+    },
+    {
+      "order": 26,
+      "moduleId": "vegetables-staples",
+      "language": "ve",
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "native": {
+        "path": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+        "registryExport": "TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "body.paragraph[10]",
+        "currentTarget": "Nga murahu ha mvula khulu, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na nyeletshedzo nga ha soil and drainage ni sa athu khetha bed.",
+        "appliedTarget": "Nga murahu ha mvula khulu, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na nyeletshedzo nga ha soil and drainage ni sa athu khetha bed.",
+        "reviewStatus": "machine-draft",
+        "changed": false
+      },
+      "paired": {
+        "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "slide": 5,
+        "bodyIndex": 6,
+        "currentTarget": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Look after ",
+              "status": "draft",
+              "text": "Musi "
+            },
+            {
+              "sourceEnglish": "heavy rain",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ". Where does water sit or run off? Combine that observation with ",
+              "status": "draft",
+              "text": " yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na "
+            },
+            {
+              "sourceEnglish": "soil and drainage advice",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " before choosing the bed.",
+              "status": "draft",
+              "text": " ni sa athu khetha bed."
+            }
+          ]
+        },
+        "appliedTarget": {
+          "status": "draft",
+          "segments": [
+            {
+              "sourceEnglish": "Look after ",
+              "status": "draft",
+              "text": "Nga murahu ha "
+            },
+            {
+              "sourceEnglish": "heavy rain",
+              "status": "draft",
+              "text": "mvula khulu, ṱhogomelani"
+            },
+            {
+              "sourceEnglish": ". Where does water sit or run off? Combine that observation with ",
+              "status": "draft",
+              "text": ". Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na nyeletshedzo nga ha "
+            },
+            {
+              "sourceEnglish": "soil and drainage advice",
+              "status": "draft",
+              "text": "soil and drainage",
+              "retainedEnglishSourceSubstrings": [
+                "soil and drainage"
+              ],
+              "segmentAlignmentNote": "“advice” is translated in the preceding target chunk so the target language order stays readable; exact source phrase remains bound."
+            },
+            {
+              "sourceEnglish": " before choosing the bed.",
+              "status": "draft",
+              "text": " ni sa athu khetha bed."
+            }
+          ],
+          "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
+        },
+        "status": "draft",
+        "sourceJoin": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+        "renderedTarget": "Nga murahu ha mvula khulu, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na nyeletshedzo nga ha soil and drainage ni sa athu khetha bed.",
+        "sourceJoinExact": true,
+        "renderedEqualsNative": true,
+        "sourceJoinSha256": "fb06f73ce10b01a4862118fc1d46ebcec5df84f3e601c91e3846678e0887c4df",
+        "renderedTargetSha256": "719ff1fac1d8a8266b3a0919245608a2a4e80622862a7ff08bb9d5d041907e0b"
+      },
+      "verdict": "repair-paired-only",
+      "rootAcceptedReason": "Localizes ordinary timing and weather wording, preserves where water sits or runs off and the instruction to combine that observation with advice before choosing the bed. Retains the technical phrase “soil and drainage” inside localized advice wording."
+    },
+    {
+      "order": 28,
+      "moduleId": "vegetables-staples",
+      "language": "ts",
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "native": {
+        "path": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+        "registryExport": "XITSONGA_VEGETABLES_STAPLES_DRAFT",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "body.paragraph[10]",
+        "currentTarget": "Endzhaku ka mpfula leyikulu, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni switsundzuxo swa misava ni drainage u nga si hlawula bed.",
+        "appliedTarget": "Endzhaku ka mpfula leyikulu, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni switsundzuxo swa misava ni drainage u nga si hlawula bed.",
+        "reviewStatus": "machine-draft",
+        "changed": false
+      },
+      "paired": {
+        "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "slide": 5,
+        "bodyIndex": 6,
+        "currentTarget": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Look after ",
+              "status": "draft",
+              "text": "Endzhaku ka "
+            },
+            {
+              "sourceEnglish": "heavy rain",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ". Where does water sit or run off? Combine that observation with ",
+              "status": "draft",
+              "text": ", kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni "
+            },
+            {
+              "sourceEnglish": "soil and drainage advice",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " before choosing the bed.",
+              "status": "draft",
+              "text": " u nga si hlawula bed."
+            }
+          ]
+        },
+        "appliedTarget": {
+          "status": "draft",
+          "segments": [
+            {
+              "sourceEnglish": "Look after ",
+              "status": "draft",
+              "text": "Endzhaku ka "
+            },
+            {
+              "sourceEnglish": "heavy rain",
+              "status": "draft",
+              "text": "mpfula leyikulu"
+            },
+            {
+              "sourceEnglish": ". Where does water sit or run off? Combine that observation with ",
+              "status": "draft",
+              "text": ", kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni switsundzuxo swa misava ni "
+            },
+            {
+              "sourceEnglish": "soil and drainage advice",
+              "status": "draft",
+              "text": "drainage",
+              "retainedEnglishSourceSubstrings": [
+                "drainage"
+              ],
+              "segmentAlignmentNote": "“soil” and “advice” are localized around the retained exact technical word; this target chunk reorders those ordinary words."
+            },
+            {
+              "sourceEnglish": " before choosing the bed.",
+              "status": "draft",
+              "text": " u nga si hlawula bed."
+            }
+          ],
+          "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
+        },
+        "status": "draft",
+        "sourceJoin": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+        "renderedTarget": "Endzhaku ka mpfula leyikulu, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni switsundzuxo swa misava ni drainage u nga si hlawula bed.",
+        "sourceJoinExact": true,
+        "renderedEqualsNative": true,
+        "sourceJoinSha256": "fb06f73ce10b01a4862118fc1d46ebcec5df84f3e601c91e3846678e0887c4df",
+        "renderedTargetSha256": "23c81f2210df8f845af5acd235965a7a79141b2b7a5e3b71289e1de8052e71c2"
+      },
+      "verdict": "repair-paired-only",
+      "rootAcceptedReason": "Translates ordinary “heavy rain”; preserves both water-location alternatives and the requirement to combine observation with soil/drainage advice before choosing the bed. Retains “drainage” as a technical term."
+    },
+    {
+      "order": 43,
+      "moduleId": "vegetables-staples",
+      "language": "st",
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "native": {
+        "path": "lib/course-translation-drafts-st-vegetables-staples.ts",
+        "registryExport": "SESOTHO_VEGETABLES_STAPLES_DRAFT",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "body.paragraph[10]",
+        "currentTarget": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. O se ke wa itirela metswako kapa stronger doses.",
+        "appliedTarget": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. O se ke wa itirela metswako kapa stronger doses.",
+        "reviewStatus": "machine-draft",
+        "changed": false
+      },
+      "paired": {
+        "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+        "slide": 16,
+        "bodyIndex": 5,
+        "currentTarget": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "If a ",
+              "status": "draft",
+              "text": "Ha "
+            },
+            {
+              "sourceEnglish": "treatment",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " is needed, use a ",
+              "status": "draft",
+              "text": " e hlokahala, sebedisa "
+            },
+            {
+              "sourceEnglish": "product registered for that crop and pest",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ", and follow its ",
+              "status": "draft",
+              "text": ", mme o latele "
+            },
+            {
+              "sourceEnglish": "label",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": " ya yona."
+            },
+            {
+              "sourceEnglish": " This includes ",
+              "status": "draft",
+              "text": " Sena se kenyeletsa "
+            },
+            {
+              "sourceEnglish": "neem products.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Check ",
+              "status": "draft",
+              "text": " Hlahloba "
+            },
+            {
+              "sourceEnglish": "protection and harvest waiting instructions.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Do not improvise mixtures or stronger doses.",
+              "status": "english-hold"
+            }
+          ]
+        },
+        "appliedTarget": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "If a ",
+              "status": "draft",
+              "text": "Ha "
+            },
+            {
+              "sourceEnglish": "treatment",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " is needed, use a ",
+              "status": "draft",
+              "text": " e hlokahala, sebedisa "
+            },
+            {
+              "sourceEnglish": "product registered for that crop and pest",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ", and follow its ",
+              "status": "draft",
+              "text": ", mme o latele "
+            },
+            {
+              "sourceEnglish": "label",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": " ya yona."
+            },
+            {
+              "sourceEnglish": " This includes ",
+              "status": "draft",
+              "text": " Sena se kenyeletsa "
+            },
+            {
+              "sourceEnglish": "neem products.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Check ",
+              "status": "draft",
+              "text": " Hlahloba "
+            },
+            {
+              "sourceEnglish": "protection and harvest waiting instructions.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Do not improvise ",
+              "status": "draft",
+              "text": " O se ke wa itirela "
+            },
+            {
+              "sourceEnglish": "mixtures",
+              "status": "draft",
+              "text": "metswako"
+            },
+            {
+              "sourceEnglish": " or ",
+              "status": "draft",
+              "text": " kapa "
+            },
+            {
+              "sourceEnglish": "stronger doses",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": "."
+            }
+          ],
+          "provenance": "unreviewed independent draft; bounded exact stronger-doses hold; ordinary negative and mixtures clause translated; exact source partition verified"
+        },
+        "status": "mixed",
+        "sourceJoin": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+        "renderedTarget": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. O se ke wa itirela metswako kapa stronger doses.",
+        "sourceJoinExact": true,
+        "renderedEqualsNative": true,
+        "sourceJoinSha256": "01d12b240fedfd7271cb99e2eaa4f058ad5062110c2e1d6637beb2c79542f7ce",
+        "renderedTargetSha256": "788c48ebcfac8ba86365279177cf5edf921ae653e90fdb7a4726e4e4e10a1984"
+      },
+      "verdict": "repair-paired-only",
+      "rootAcceptedReason": "Restore the accepted native wording verbatim. Pair composition translates the ordinary negative and the mixtures object, keeps stronger doses as an exact English hold, and binds both objects to improvise without adding a separate use prohibition."
+    },
+    {
+      "order": 48,
+      "moduleId": "vegetables-staples",
+      "language": "ve",
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "native": {
+        "path": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+        "registryExport": "TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "body.paragraph[10]",
+        "currentTarget": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Ni songo ḓiitela misanganedzo kana stronger doses.",
+        "appliedTarget": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Ni songo ḓiitela misanganedzo kana stronger doses.",
+        "reviewStatus": "machine-draft",
+        "changed": false
+      },
+      "paired": {
+        "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "slide": 16,
+        "bodyIndex": 5,
+        "currentTarget": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "If a ",
+              "status": "draft",
+              "text": "Arali "
+            },
+            {
+              "sourceEnglish": "treatment",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " is needed, use a ",
+              "status": "draft",
+              "text": " i tshi ṱoḓea, shumisani "
+            },
+            {
+              "sourceEnglish": "product registered for that crop and pest",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ", and follow its ",
+              "status": "draft",
+              "text": ", nahone ni tevhele "
+            },
+            {
+              "sourceEnglish": "label",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": " yayo."
+            },
+            {
+              "sourceEnglish": " This includes ",
+              "status": "draft",
+              "text": " Hezwi zwi katela "
+            },
+            {
+              "sourceEnglish": "neem products.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Check ",
+              "status": "draft",
+              "text": " Ṱolani "
+            },
+            {
+              "sourceEnglish": "protection and harvest waiting instructions.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Do not improvise mixtures or stronger doses.",
+              "status": "english-hold"
+            }
+          ]
+        },
+        "appliedTarget": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "If a ",
+              "status": "draft",
+              "text": "Arali "
+            },
+            {
+              "sourceEnglish": "treatment",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " is needed, use a ",
+              "status": "draft",
+              "text": " i tshi ṱoḓea, shumisani "
+            },
+            {
+              "sourceEnglish": "product registered for that crop and pest",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ", and follow its ",
+              "status": "draft",
+              "text": ", nahone ni tevhele "
+            },
+            {
+              "sourceEnglish": "label",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": " yayo."
+            },
+            {
+              "sourceEnglish": " This includes ",
+              "status": "draft",
+              "text": " Hezwi zwi katela "
+            },
+            {
+              "sourceEnglish": "neem products.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Check ",
+              "status": "draft",
+              "text": " Ṱolani "
+            },
+            {
+              "sourceEnglish": "protection and harvest waiting instructions.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Do not improvise ",
+              "status": "draft",
+              "text": " Ni songo ḓiitela "
+            },
+            {
+              "sourceEnglish": "mixtures",
+              "status": "draft",
+              "text": "misanganedzo"
+            },
+            {
+              "sourceEnglish": " or ",
+              "status": "draft",
+              "text": " kana "
+            },
+            {
+              "sourceEnglish": "stronger doses",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": "."
+            }
+          ],
+          "provenance": "unreviewed independent draft; bounded exact stronger-doses hold; ordinary negative and mixtures clause translated; exact source partition verified"
+        },
+        "status": "mixed",
+        "sourceJoin": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+        "renderedTarget": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Ni songo ḓiitela misanganedzo kana stronger doses.",
+        "sourceJoinExact": true,
+        "renderedEqualsNative": true,
+        "sourceJoinSha256": "01d12b240fedfd7271cb99e2eaa4f058ad5062110c2e1d6637beb2c79542f7ce",
+        "renderedTargetSha256": "4f4a85ba74d8f5bd26e595c9372fe09e50f152ebdc8aa9039661f3e570a357ea"
+      },
+      "verdict": "repair-paired-only",
+      "rootAcceptedReason": "Restore the accepted native wording verbatim. Pair composition translates the ordinary negative and the mixtures object, keeps stronger doses as an exact English hold, and binds both objects to improvise without adding a separate use prohibition."
+    },
+    {
+      "order": 56,
+      "moduleId": "vegetables-staples",
+      "language": "ts",
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "native": {
+        "path": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+        "registryExport": "XITSONGA_VEGETABLES_STAPLES_DRAFT",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "body.paragraph[10]",
+        "currentTarget": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. U nga tiendleli swihlanganisi kumbe stronger doses.",
+        "appliedTarget": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. U nga tiendleli swihlanganisi kumbe stronger doses.",
+        "reviewStatus": "machine-draft",
+        "changed": false
+      },
+      "paired": {
+        "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "slide": 16,
+        "bodyIndex": 5,
+        "currentTarget": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "If a ",
+              "status": "draft",
+              "text": "Loko "
+            },
+            {
+              "sourceEnglish": "treatment",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " is needed, use a ",
+              "status": "draft",
+              "text": " yi laveka, tirhisa "
+            },
+            {
+              "sourceEnglish": "product registered for that crop and pest",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ", and follow its ",
+              "status": "draft",
+              "text": ", kutani u landzelela "
+            },
+            {
+              "sourceEnglish": "label",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": " ya yona."
+            },
+            {
+              "sourceEnglish": " This includes ",
+              "status": "draft",
+              "text": " Leswi swi katsa "
+            },
+            {
+              "sourceEnglish": "neem products.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Check ",
+              "status": "draft",
+              "text": " Kambela "
+            },
+            {
+              "sourceEnglish": "protection and harvest waiting instructions.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Do not improvise mixtures or stronger doses.",
+              "status": "english-hold"
+            }
+          ]
+        },
+        "appliedTarget": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "If a ",
+              "status": "draft",
+              "text": "Loko "
+            },
+            {
+              "sourceEnglish": "treatment",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " is needed, use a ",
+              "status": "draft",
+              "text": " yi laveka, tirhisa "
+            },
+            {
+              "sourceEnglish": "product registered for that crop and pest",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ", and follow its ",
+              "status": "draft",
+              "text": ", kutani u landzelela "
+            },
+            {
+              "sourceEnglish": "label",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": " ya yona."
+            },
+            {
+              "sourceEnglish": " This includes ",
+              "status": "draft",
+              "text": " Leswi swi katsa "
+            },
+            {
+              "sourceEnglish": "neem products.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Check ",
+              "status": "draft",
+              "text": " Kambela "
+            },
+            {
+              "sourceEnglish": "protection and harvest waiting instructions.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Do not improvise ",
+              "status": "draft",
+              "text": " U nga tiendleli "
+            },
+            {
+              "sourceEnglish": "mixtures",
+              "status": "draft",
+              "text": "swihlanganisi"
+            },
+            {
+              "sourceEnglish": " or ",
+              "status": "draft",
+              "text": " kumbe "
+            },
+            {
+              "sourceEnglish": "stronger doses",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": "."
+            }
+          ],
+          "provenance": "unreviewed independent draft; bounded exact stronger-doses hold; ordinary negative and mixtures clause translated; exact source partition verified"
+        },
+        "status": "mixed",
+        "sourceJoin": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+        "renderedTarget": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. U nga tiendleli swihlanganisi kumbe stronger doses.",
+        "sourceJoinExact": true,
+        "renderedEqualsNative": true,
+        "sourceJoinSha256": "01d12b240fedfd7271cb99e2eaa4f058ad5062110c2e1d6637beb2c79542f7ce",
+        "renderedTargetSha256": "4b28ea434f7f55ed3b7afaa9901bfdc0dee64a784498ca567dc16b0b524b78c1"
+      },
+      "verdict": "repair-paired-only",
+      "rootAcceptedReason": "Restore the accepted native wording verbatim. Pair composition translates the ordinary negative and the mixtures object, keeps stronger doses as an exact English hold, and binds both objects to improvise without adding a separate use prohibition."
+    },
+    {
+      "order": 65,
+      "moduleId": "market-community",
+      "language": "st",
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "native": {
+        "path": "lib/course-translation-drafts-st-market-community.ts",
+        "registryExport": "SESOTHO_MARKET_COMMUNITY_DRAFT",
+        "lessonId": "market-community-l1",
+        "fieldLocator": "body.paragraph[8]",
+        "currentTarget": "Ke dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return bakeng sa hora e nngwe le e nngwe ya mosebetsi?",
+        "appliedTarget": "Ke dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return bakeng sa hora e nngwe le e nngwe ya mosebetsi?",
+        "reviewStatus": "machine-draft",
+        "changed": false
+      },
+      "paired": {
+        "path": "docs/narration/market-community.st.paired-draft.json",
+        "slide": 6,
+        "bodyIndex": 1,
+        "currentTarget": {
+          "status": "draft",
+          "text": "Ke dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return for each hour of work?",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "appliedTarget": {
+          "status": "draft",
+          "segments": [
+            {
+              "sourceEnglish": "Which crops give the best yield per bed?",
+              "status": "draft",
+              "text": "Ke dijalo dife tse fanang ka best yield per bed?",
+              "retainedEnglishTargetPhrases": [
+                "best yield per bed"
+              ],
+              "loanEnglishReviewReason": "Exact accepted native wording restored verbatim. Source orders “return the most” while the established loan phrase is “the most return”; retain the accepted complete draft segment instead of inventing reordered English or a new predicate. Not wholly translated and not fluent reviewed."
+            },
+            {
+              "sourceEnglish": " Which return the most for each hour of work?",
+              "status": "draft",
+              "text": " Ke dife tse fanang ka the most return bakeng sa hora e nngwe le e nngwe ya mosebetsi?",
+              "retainedEnglishTargetPhrases": [
+                "the most return"
+              ],
+              "loanEnglishReviewReason": "The exact source clause says “return the most”; the accepted native target loan phrase is “the most return.” Keep the accepted target verbatim rather than invent a translated return predicate or reorder source English. This draft remains mixed-language and unreviewed."
+            }
+          ],
+          "provenance": "unreviewed accepted native wording paired to exact source; metric loan terms retained; no fluent approval"
+        },
+        "status": "draft",
+        "sourceJoin": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+        "renderedTarget": "Ke dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return bakeng sa hora e nngwe le e nngwe ya mosebetsi?",
+        "sourceJoinExact": true,
+        "renderedEqualsNative": true,
+        "sourceJoinSha256": "cd3871f7de848f1e5b0146bffde97c1e0ccc9b30f8e4308bbf59ee5a4f11cdec",
+        "renderedTargetSha256": "a5086a0eef2344b7f215cdf9daa83aa91a9b574440b5fc2eb762d61732d6625a"
+      },
+      "verdict": "repair-paired-only",
+      "rootAcceptedReason": "Exact accepted native wording restored verbatim. Source orders “return the most” while the established loan phrase is “the most return”; retain the accepted complete draft segment instead of inventing reordered English or a new predicate. Not wholly translated and not fluent reviewed."
+    },
+    {
+      "order": 66,
+      "moduleId": "market-community",
+      "language": "ve",
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "native": {
+        "path": "lib/course-translation-drafts-ve-market-community.ts",
+        "registryExport": "TSHIVENDA_MARKET_COMMUNITY_DRAFT",
+        "lessonId": "market-community-l1",
+        "fieldLocator": "body.paragraph[8]",
+        "currentTarget": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwifhio zwine zwa vhuisa the most return nga awara iṅwe na iṅwe ya mushumo?",
+        "appliedTarget": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwifhio zwine zwa vhuisa the most return nga awara iṅwe na iṅwe ya mushumo?",
+        "reviewStatus": "machine-draft",
+        "changed": false
+      },
+      "paired": {
+        "path": "docs/narration/market-community.ve.paired-draft.json",
+        "slide": 6,
+        "bodyIndex": 1,
+        "currentTarget": {
+          "status": "draft",
+          "text": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwimela zwifhio zwine zwa vhuisa the most return for each hour of work?",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "appliedTarget": {
+          "status": "draft",
+          "segments": [
+            {
+              "sourceEnglish": "Which crops give the best yield per bed?",
+              "status": "draft",
+              "text": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed?",
+              "retainedEnglishTargetPhrases": [
+                "best yield per bed"
+              ],
+              "loanEnglishReviewReason": "Exact accepted native wording restored verbatim. Source orders “return the most” while the established loan phrase is “the most return”; retain the accepted complete draft segment instead of inventing reordered English or a new predicate. Not wholly translated and not fluent reviewed."
+            },
+            {
+              "sourceEnglish": " Which return the most for each hour of work?",
+              "status": "draft",
+              "text": " Ndi zwifhio zwine zwa vhuisa the most return nga awara iṅwe na iṅwe ya mushumo?",
+              "retainedEnglishTargetPhrases": [
+                "the most return"
+              ],
+              "loanEnglishReviewReason": "The exact source clause says “return the most”; the accepted native target loan phrase is “the most return.” Keep the accepted target verbatim rather than invent a translated return predicate or reorder source English. This draft remains mixed-language and unreviewed."
+            }
+          ],
+          "provenance": "unreviewed accepted native wording paired to exact source; metric loan terms retained; no fluent approval"
+        },
+        "status": "draft",
+        "sourceJoin": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+        "renderedTarget": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwifhio zwine zwa vhuisa the most return nga awara iṅwe na iṅwe ya mushumo?",
+        "sourceJoinExact": true,
+        "renderedEqualsNative": true,
+        "sourceJoinSha256": "cd3871f7de848f1e5b0146bffde97c1e0ccc9b30f8e4308bbf59ee5a4f11cdec",
+        "renderedTargetSha256": "094eee1c7d1471a71bb0a9d3370240975ff3908c9083c568e9621bc47bf818e8"
+      },
+      "verdict": "repair-paired-only",
+      "rootAcceptedReason": "Exact accepted native wording restored verbatim. Source orders “return the most” while the established loan phrase is “the most return”; retain the accepted complete draft segment instead of inventing reordered English or a new predicate. Not wholly translated and not fluent reviewed."
+    },
+    {
+      "order": 67,
+      "moduleId": "market-community",
+      "language": "ts",
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "native": {
+        "path": "lib/course-translation-drafts-ts-market-community.ts",
+        "registryExport": "XITSONGA_MARKET_COMMUNITY_DRAFT",
+        "lessonId": "market-community-l1",
+        "fieldLocator": "body.paragraph[8]",
+        "currentTarget": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return hi awara yin'wana na yin'wana ya ku tirha?",
+        "appliedTarget": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return hi awara yin'wana na yin'wana ya ku tirha?",
+        "reviewStatus": "machine-draft",
+        "changed": false
+      },
+      "paired": {
+        "path": "docs/narration/market-community.ts.paired-draft.json",
+        "slide": 6,
+        "bodyIndex": 1,
+        "currentTarget": {
+          "status": "draft",
+          "text": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return for each hour of work?",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "appliedTarget": {
+          "status": "draft",
+          "segments": [
+            {
+              "sourceEnglish": "Which crops give the best yield per bed?",
+              "status": "draft",
+              "text": "Hi swihi swibyariwa leswi nyikaka best yield per bed?",
+              "retainedEnglishTargetPhrases": [
+                "best yield per bed"
+              ],
+              "loanEnglishReviewReason": "Exact accepted native wording restored verbatim. Source orders “return the most” while the established loan phrase is “the most return”; retain the accepted complete draft segment instead of inventing reordered English or a new predicate. Not wholly translated and not fluent reviewed."
+            },
+            {
+              "sourceEnglish": " Which return the most for each hour of work?",
+              "status": "draft",
+              "text": " Hi swihi leswi vuyisaka the most return hi awara yin'wana na yin'wana ya ku tirha?",
+              "retainedEnglishTargetPhrases": [
+                "the most return"
+              ],
+              "loanEnglishReviewReason": "The exact source clause says “return the most”; the accepted native target loan phrase is “the most return.” Keep the accepted target verbatim rather than invent a translated return predicate or reorder source English. This draft remains mixed-language and unreviewed."
+            }
+          ],
+          "provenance": "unreviewed accepted native wording paired to exact source; metric loan terms retained; no fluent approval"
+        },
+        "status": "draft",
+        "sourceJoin": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+        "renderedTarget": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return hi awara yin'wana na yin'wana ya ku tirha?",
+        "sourceJoinExact": true,
+        "renderedEqualsNative": true,
+        "sourceJoinSha256": "cd3871f7de848f1e5b0146bffde97c1e0ccc9b30f8e4308bbf59ee5a4f11cdec",
+        "renderedTargetSha256": "a2922956149e003affd659e003dc1f2a952911294581ca4fe7f30b8da049a3b7"
+      },
+      "verdict": "repair-paired-only",
+      "rootAcceptedReason": "Exact accepted native wording restored verbatim. Source orders “return the most” while the established loan phrase is “the most return”; retain the accepted complete draft segment instead of inventing reordered English or a new predicate. Not wholly translated and not fluent reviewed."
+    },
+    {
+      "order": 68,
+      "moduleId": "market-community",
+      "language": "st",
+      "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "native": {
+        "path": "lib/course-translation-drafts-st-market-community.ts",
+        "registryExport": "SESOTHO_MARKET_COMMUNITY_DRAFT",
+        "lessonId": "market-community-l2",
+        "fieldLocator": "body.paragraph[3]",
+        "currentTarget": "Ho rekisa ka kotloloho ho ka boloka karolo e kgolwanyane ya sale price, empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki.",
+        "appliedTarget": "Ho rekisa ka kotloloho ho ka boloka karolo e kgolwanyane ya sale price, empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki.",
+        "reviewStatus": "machine-draft",
+        "changed": false
+      },
+      "paired": {
+        "path": "docs/narration/market-community.st.paired-draft.json",
+        "slide": 11,
+        "bodyIndex": 0,
+        "currentTarget": {
+          "status": "draft",
+          "text": "Ho rekisa ka kotloloho ho ka retain more of the sale price, empa ho boetse ho nka nako, ho paka, dipalangoang le ho hlokomela bareki.",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "appliedTarget": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Direct selling can retain more of the ",
+              "status": "draft",
+              "text": "Ho rekisa ka kotloloho ho ka boloka karolo e kgolwanyane ya "
+            },
+            {
+              "sourceEnglish": "sale price",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ", but it also takes time, packing, transport and customer care.",
+              "status": "draft",
+              "text": ", empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki."
+            }
+          ],
+          "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
+        },
+        "status": "mixed",
+        "sourceJoin": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+        "renderedTarget": "Ho rekisa ka kotloloho ho ka boloka karolo e kgolwanyane ya sale price, empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki.",
+        "sourceJoinExact": true,
+        "renderedEqualsNative": true,
+        "sourceJoinSha256": "e037dd6cfa3b6d2ac107842aa77099a2f30bb0cfb7bce763ab1f06643caf7e30",
+        "renderedTargetSha256": "0d7d75cbe52725214dd61645a9121664590a0b3f46168b9bfa191317e2207dca"
+      },
+      "verdict": "repair-paired-only",
+      "rootAcceptedReason": "Preserves the current native clause’s conditional can/more meaning and the time, packing, transport and customer-care costs. Retains “sale price” as a business anchor; makes no guaranteed-profit claim."
+    },
+    {
+      "order": 69,
+      "moduleId": "market-community",
+      "language": "ve",
+      "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "native": {
+        "path": "lib/course-translation-drafts-ve-market-community.ts",
+        "registryExport": "TSHIVENDA_MARKET_COMMUNITY_DRAFT",
+        "lessonId": "market-community-l2",
+        "fieldLocator": "body.paragraph[3]",
+        "currentTarget": "U rengisa nga ho livhisa kha vharengi zwi nga ita uri ni sale na tshipiḓa tshihulwane tsha sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, u paka, transport na u ṱhogomela vharengi.",
+        "appliedTarget": "U rengisa nga ho livhisa kha vharengi zwi nga ita uri ni sale na tshipiḓa tshihulwane tsha sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, u paka, transport na u ṱhogomela vharengi.",
+        "reviewStatus": "machine-draft",
+        "changed": false
+      },
+      "paired": {
+        "path": "docs/narration/market-community.ve.paired-draft.json",
+        "slide": 11,
+        "bodyIndex": 0,
+        "currentTarget": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Direct selling can retain more of the sale price",
+              "status": "english-hold",
+              "reason": "Source-exact can/more sale-price retention; no profit guarantee."
+            },
+            {
+              "sourceEnglish": ", but it also takes time, packing, ",
+              "status": "draft",
+              "text": ", fhedzi zwi dzhia tshifhinga, u paka, ",
+              "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+            },
+            {
+              "sourceEnglish": "transport",
+              "status": "english-hold",
+              "reason": "Exact English technical or business precision retained; not fluent reviewed."
+            },
+            {
+              "sourceEnglish": " and customer care.",
+              "status": "draft",
+              "text": " na u ṱhogomela vharengi.",
+              "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+            }
+          ],
+          "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+        },
+        "appliedTarget": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Direct selling can retain more of the ",
+              "status": "draft",
+              "text": "U rengisa nga ho livhisa kha vharengi zwi nga ita uri ni sale na tshipiḓa tshihulwane tsha "
+            },
+            {
+              "sourceEnglish": "sale price",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ", but it also takes time, packing, ",
+              "status": "draft",
+              "text": ", fhedzi zwi dovha zwa ṱoḓa tshifhinga, u paka, "
+            },
+            {
+              "sourceEnglish": "transport",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " and customer care.",
+              "status": "draft",
+              "text": " na u ṱhogomela vharengi."
+            }
+          ],
+          "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
+        },
+        "status": "mixed",
+        "sourceJoin": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+        "renderedTarget": "U rengisa nga ho livhisa kha vharengi zwi nga ita uri ni sale na tshipiḓa tshihulwane tsha sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, u paka, transport na u ṱhogomela vharengi.",
+        "sourceJoinExact": true,
+        "renderedEqualsNative": true,
+        "sourceJoinSha256": "e037dd6cfa3b6d2ac107842aa77099a2f30bb0cfb7bce763ab1f06643caf7e30",
+        "renderedTargetSha256": "e16768271540d507fb64fbf8f7dd33e8e13fc6a44a8b9cb155f4b0f8d268d7cb"
+      },
+      "verdict": "repair-paired-only",
+      "rootAcceptedReason": "Preserves the conditional can/more meaning and all time, packing, transport and customer-care costs. Retains sale price and transport anchors; makes no guaranteed-profit claim."
+    },
+    {
+      "order": 71,
+      "moduleId": "market-community",
+      "language": "ts",
+      "sourceEnglish": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+      "native": {
+        "path": "lib/course-translation-drafts-ts-market-community.ts",
+        "registryExport": "XITSONGA_MARKET_COMMUNITY_DRAFT",
+        "lessonId": "market-community-l2",
+        "fieldLocator": "body.paragraph[8]",
+        "currentTarget": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbeli income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke.",
+        "appliedTarget": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbeli mali leyi nghenaka. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke.",
+        "reviewStatus": "machine-draft",
+        "changed": true
+      },
+      "paired": {
+        "path": "docs/narration/market-community.ts.paired-draft.json",
+        "slide": 12,
+        "bodyIndex": 2,
+        "currentTarget": {
+          "status": "draft",
+          "text": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbi mali leyi nghenaka. Ringeta manageable arrangement leyi u nga kotaka ku yi lawula, kutani u tsala vuyelo.",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "appliedTarget": {
+          "status": "draft",
+          "segments": [
+            {
+              "sourceEnglish": "Garden area or customer count alone does not predict ",
+              "status": "draft",
+              "text": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbeli "
+            },
+            {
+              "sourceEnglish": "income",
+              "status": "draft",
+              "text": "mali leyi nghenaka"
+            },
+            {
+              "sourceEnglish": ". Try a manageable arrangement and record the results.",
+              "status": "draft",
+              "text": ". Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke."
+            }
+          ],
+          "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
+        },
+        "status": "draft",
+        "sourceJoin": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+        "renderedTarget": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbeli mali leyi nghenaka. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke.",
+        "sourceJoinExact": true,
+        "renderedEqualsNative": true,
+        "sourceJoinSha256": "736653e7642bde9c212352669c0b972198502af5c0eebdee05630ba98fff2e4b",
+        "renderedTargetSha256": "ab190cf1bb956254b6a839a18b80bd92b11a5e2e0f85a557872eaf5abdb5246d"
+      },
+      "verdict": "repair-native-and-paired",
+      "rootAcceptedReason": "Uses the already-localized “mali leyi nghenaka” in both native and paired full target; preserves alone/not-predict, manageable arrangement and record-the-results."
+    },
+    {
+      "order": 73,
+      "moduleId": "market-community",
+      "language": "ts",
+      "sourceEnglish": "Record the method, conditions and result so others can judge whether it may suit their land.",
+      "native": {
+        "path": "lib/course-translation-drafts-ts-market-community.ts",
+        "registryExport": "XITSONGA_MARKET_COMMUNITY_DRAFT",
+        "lessonId": "market-community-l3",
+        "fieldLocator": "body.paragraph[10]",
+        "currentTarget": "Tsala maendlelo, swiyimo ni mbuyelo leswaku van’wana va kota ku kambela loko swi nga ha faneleka eka land ya vona.",
+        "appliedTarget": "Tsala maendlelo, swiyimo ni mbuyelo leswaku van’wana va kota ku kambela whether swi nga ha faneleka eka land ya vona.",
+        "reviewStatus": "machine-draft",
+        "changed": true
+      },
+      "paired": {
+        "path": "docs/narration/market-community.ts.paired-draft.json",
+        "slide": 18,
+        "bodyIndex": 1,
+        "currentTarget": {
+          "status": "draft",
+          "text": "Tsala ndlela leyi tirhisiweke, swiyimo ni mbuyelo leswaku van’wana va kota ku kambisisa loko swi nga va fanelerile eka misava ya vona.",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "appliedTarget": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Record the method, conditions and result so others can judge ",
+              "status": "draft",
+              "text": "Tsala maendlelo, swiyimo ni mbuyelo leswaku van’wana va kota ku kambela "
+            },
+            {
+              "sourceEnglish": "whether",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " it may suit their ",
+              "status": "draft",
+              "text": " swi nga ha faneleka eka "
+            },
+            {
+              "sourceEnglish": "land",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": " ya vona."
+            }
+          ],
+          "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
+        },
+        "status": "mixed",
+        "sourceJoin": "Record the method, conditions and result so others can judge whether it may suit their land.",
+        "renderedTarget": "Tsala maendlelo, swiyimo ni mbuyelo leswaku van’wana va kota ku kambela whether swi nga ha faneleka eka land ya vona.",
+        "sourceJoinExact": true,
+        "renderedEqualsNative": true,
+        "sourceJoinSha256": "4d7f504c5b56d0bc9f4fa24f4019de59b5fbde0d99e0782434294e403c49a540",
+        "renderedTargetSha256": "8d9ebfda0e6dfeea92c281abf393e551838145c754ac7595090efba6298ede1b"
+      },
+      "verdict": "repair-native-and-paired",
+      "rootAcceptedReason": "Keeps localized method, conditions, result, assessment framing and may-suit predicate. Exact “whether” and “land” are held to avoid an unverified if/whether shift and narrowing to soil."
+    }
+  ]
+}

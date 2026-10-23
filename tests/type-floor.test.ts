@@ -56,6 +56,14 @@ const ROUTES = [
   'app/journal/page.tsx',
   'app/calendar/page.tsx',
   'app/cropplan/page.tsx',
+  // Added with wave 15 (code-10): the exchange, community, contact and prices captions sat at
+  // 10-11.5px because none of these routes was scanned.
+  'app/exchange/page.tsx',
+  'app/community/page.tsx',
+  'app/community/profile/page.tsx',
+  'app/community/messages/[threadId]/page.tsx',
+  'app/contact/page.tsx',
+  'app/prices/page.tsx',
 ];
 
 // The NGO, funder and public-showcase routes — added 29 August after the same audit found
@@ -73,10 +81,37 @@ const STAFF_ROUTES = [
   'app/funder/page.tsx',
   'app/ngo/page.tsx',
   'app/partners/page.tsx',
+  // Added with the wave-13 visual-ux audit (code-02): /network is the funder/NGO portfolio map,
+  // the same laptop-first audience as /funder and /ngo, and was not swept by this file at all —
+  // which is how FarmerPanel.tsx's EXPERT_SURFACES ratchet quietly let a 12px caption regress to
+  // 9px with nothing here to catch it.
+  'app/network/page.tsx',
+  // Added with wave 16 (w16-05): the worked-example farm. A farmer opens it from /samples.
+  'app/samples/production/page.tsx',
 ];
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  // Added with wave 15 (code-10): the exchange, community, contact and prices captions.
+  'app/community/messages/[threadId]/page.tsx': 'wave 15 code-10: the community message thread; no sub-12px type',
+  'app/community/page.tsx': 'wave 15 code-10: the community board; no sub-12px type',
+  'app/community/profile/page.tsx': 'wave 15 code-10: the community profile; no sub-12px type',
+  'app/contact/page.tsx': 'wave 15 code-10: the contact page; no sub-12px type',
+  'app/exchange/page.tsx': 'wave 15 code-10: the exchange route; no sub-12px type',
+  'app/prices/page.tsx': 'wave 15 code-10: the crop prices route; no sub-12px type',
+  'components/community/NearbyMap.tsx': 'wave 15 code-10: the nearby-farmers map popup; no sub-12px type',
+  'components/exchange/ExchangeBoard.tsx': 'wave 15 code-10: the seed and produce exchange board; no sub-12px type',
+  'components/exchange/ExchangeCopy.tsx': 'wave 15 code-10: exchange disclaimers; no sub-12px type',
+  'components/exchange/ExchangeGuide.tsx': 'wave 15 code-10: the exchange how-to guide; no sub-12px type',
+  'components/exchange/ExchangeHeader.tsx': 'wave 15 code-10: the exchange header; no sub-12px type',
+  'components/exchange/ExchangeLede.tsx': 'wave 15 code-10: the exchange lede; no sub-12px type',
+  'components/exchange/ListingCard.tsx': 'wave 15 code-10: an exchange listing card; no sub-12px type',
+  'components/exchange/NewListingForm.tsx': 'wave 15 code-10: the new-listing form; no sub-12px type',
+  'components/exchange/ShareListingButton.tsx': 'wave 15 code-10: the share-a-listing menu; no sub-12px type',
+  'components/prices/CropPriceGuide.tsx': 'wave 15 code-10: the crop price guide; no sub-12px type',
+  'components/LanguageDraftNote.tsx': 'the shared isiZulu-draft notice (wave 14, zu-04) is read on farmer-facing phones',
+  'components/records/RecordQuantityFields.tsx': 'a farmer must read the production quantity and its unit before saving',
+  'components/records/RecordQuantitySummary.tsx': 'eggs and packages need readable separate totals beside weighed harvests',
   'components/SiteSurveySheet.tsx': 'the field survey now has no sub-12px labels; keep that gain',
   'components/SiteSurveyReview.tsx': 'farmers must read their own survey answers before saving',
   'components/SurveyZuluDraftPair.tsx': 'paired draft translations and English sources must stay readable on phones',
@@ -115,6 +150,7 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/report/SidewaysScroller.tsx': 'the words that tell a farmer a wide report picture slides sideways on a phone',
   'components/ProgrammeReports.tsx': 'organisation and funder reporting',
   'components/DashboardTabs.tsx': 'touch and keyboard navigation across staff sections',
+  'components/layout/AppHeader.tsx': 'the shared header title and desktop nav links on /reports and other farmer-reachable routes; no sub-12px type (title is 12px, desktop nav links are 16px)',
   'components/SampleProgramme.tsx': 'NGO and funder sample analysis and access controls',
   'components/AreaReturnCards.tsx': 'farmers compare the recorded return from their growing space',
   'components/ProductionAreas.tsx': 'staff record and read checked production areas',
@@ -188,8 +224,15 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
     budget: 23,
   },
   'components/DataPanel.tsx': {
-    reason: 'the site analysis panel — dense climate and soil figures read at a laptop',
-    budget: 32,
+    reason: 'the site analysis panel — dense climate and soil figures read at a laptop. '
+      + 'a11y-12 (2026-10-10) raised its three sub-11px attribution/legend captions to a '
+      + 'clamp(12px, …) floor, down from 32. Wave 13 (code-09, swarm/w13-farmer-dark) raised '
+      + 'every other sub-12px fontSize/font-shorthand declaration in the file to 12px, down to '
+      + '29. The remaining 5 are the climate-calendar month strip (12 single-letter labels at '
+      + '7.5px in a tight flex row) and the wind-compass rose\'s four N/E/S/W labels (tests/'
+      + 'wind-compass-rose.test.ts owns that SVG\'s layout) — both need a layout change, not a '
+      + 'number, to raise further.',
+    budget: 5,
   },
 
   'components/ReportView.tsx': {
@@ -198,7 +241,7 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
   },
   'components/report/CompletionScore.tsx': {
     reason: 'the report scorecard, same print scale',
-    budget: 1,
+    budget: 0,
   },
   'components/design/LessonPanel.tsx': { reason: 'design studio, laptop tool', budget: 3 },
   'components/AreaPanel.tsx': { reason: 'the drawing tool\'s measurement readout', budget: 0 },
@@ -219,6 +262,14 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
       + '(no auth check, not linked from TabBar or NavDrawer)',
     budget: 0,
   },
+  'app/network/page.tsx': {
+    reason: 'the funder/NGO portfolio map shell — a coordinator or funder at a laptop. code-02 '
+      + '(wave 13) raised the regressed 9.5-10.5px captions to 12px; the remaining declarations '
+      + 'are 11-11.5px secondary text (error banners, chip labels, roster meta), within the '
+      + '11px floor CLAUDE.md sets for non-farmer screens generally, just not this file\'s own '
+      + 'zero-tolerance 12px floor yet.',
+    budget: 0,
+  },
   'components/NgoDashboard.tsx': {
     reason: 'the NGO/funder gardens-and-gardeners dashboard (PR #371). Its two sub-floor lines '
       + '(the produce-photo crop-name label, the 26px avatar initials) were fixed outright rather '
@@ -230,9 +281,23 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
   'components/network/FarmerPanel.tsx': {
     reason: 'a funder/NGO\'s drill-down into one farmer\'s record, reached from the cohort '
       + 'dashboard — dense metrics read at a laptop by staff, not the farmer\'s own screen. '
-      + 'Pre-existing debt, not fixed here: out of this change\'s scope.',
-    budget: 39,
+      + 'code-02 (wave 13): raised the 9–11px captions a11y-12 had already marked implemented '
+      + 'back to 12px, now that /network is in STAFF_ROUTES to catch a future regression.',
+    budget: 0,
   },
+  'components/network/NetworkMap.tsx': {
+    reason: 'the funder/NGO portfolio map canvas, legend and chip controls — laptop-first staff '
+      + 'tool. Owned by a different swarm track (map fallback / chrome-and-states) this wave, so '
+      + 'its sub-floor captions were raised to 12px in wave 16 (w16-06).',
+    budget: 0,
+  },
+  // w16-05: the worked-example farm at /samples/production mounts Codex-owned crop components.
+  // They are classified at their current counts so the ratchet holds; this track does not edit them.
+  'app/samples/production/page.tsx': { reason: 'the worked-example farm page; no sub-12px type', budget: 0 },
+  'components/crops/CropPlanExportCard.tsx': { reason: 'crop-plan export card mounted on the example (Codex-owned)', budget: 2 },
+  'components/crops/ProductArtworkGallery.tsx': { reason: 'product artwork gallery on the example (Codex-owned)', budget: 0 },
+  'components/crops/ProductionAvailabilityGraphs.tsx': { reason: 'availability graphs on the example (Codex-owned)', budget: 0 },
+  'components/crops/ProductionRecordsEditor.tsx': { reason: 'production records editor on the example (Codex-owned)', budget: 0 },
   'components/partners/Screenshot.tsx': {
     reason: 'a captioned screenshot tile on the public /partners showcase',
     budget: 0,
@@ -240,7 +305,7 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
   'components/ContactInbox.tsx': {
     reason: 'the mentor/org side of the farmer contact inbox, mounted on /ngo — staff reading and '
       + 'replying, not the farmer\'s own /contact screen',
-    budget: 2,
+    budget: 0,
   },
 };
 

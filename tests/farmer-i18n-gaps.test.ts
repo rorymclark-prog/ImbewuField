@@ -114,7 +114,13 @@ test('farmer-facing English source stays present while only isiZulu gains marked
       );
     }
   }
-  assert.match(farmerPageSource, /t\('designStudioZuluDraftBadge'\)/, 'the Design Studio draft is not visibly marked');
+  // zu-04 (wave 14): the draft marker used to live as a second line inside the "Design Studio"
+  // nav pill itself (`t('designStudioZuluDraftBadge')` right there in app/farmer/page.tsx),
+  // which grew the pill to two lines. It now lives once, under the header, in the shared
+  // <LanguageDraftNote> DataPanel renders — so the pill stays a single-line label and the draft
+  // is marked by the page-level note instead of inside the pill.
+  assert.doesNotMatch(farmerPageSource, /designStudioZuluDraftBadge['")][\s\S]{0,40}English: Design Studio/, 'the Design Studio draft marker must not grow the nav pill to two lines any more');
+  assert.match(dataPanelSource, /<LanguageDraftNote lang=\{lang\} scope="farmer" \/>/, 'the Design Studio draft is not visibly marked');
   assert.match(dataPanelSource, /translate\('en', imp\.key\)/, 'soil advice must retain the English source even if a draft is added');
   const zu = blocks.find((b) => b.locale === 'zu')!.block;
   for (const key of ENGLISH_SOURCE_KEYS.filter((key) => key.startsWith('soilImprovement'))) {
@@ -159,7 +165,13 @@ test('the remaining 29 English UI sources have marked isiZulu drafts and keep th
     'Tips now drafts the instructions as well as the page labels, so the notice must describe both');
   assert.match(tipsSource, /English source: \{g\.en\.text\}/,
     'record and money guides must keep their exact English instructions beside the isiZulu draft');
-  assert.match(recordsSource, /Unreviewed isiZulu tab-label drafts/);
+  // zu-04 (wave 14): the tab-label draft notice used to sit between the tabs and the form,
+  // English-first ('Uhlaka olungakabuyekezwa — Unreviewed isiZulu tab-label drafts...'). It now
+  // lives once, under the header, in the shared <LanguageDraftNote>; the separate regional
+  // (Sesotho/Tshivenda/Xitsonga) tab-label notice stays, since it covers languages this shared
+  // component doesn't.
+  assert.match(recordsSource, /<LanguageDraftNote lang=\{lang\} scope="records" \/>/);
+  assert.doesNotMatch(recordsSource, /Unreviewed isiZulu tab-label drafts/);
 });
 
 const SESOTHO_STUDY_DRAFT_KEYS = [
@@ -315,4 +327,40 @@ test('soil "Priority improvements" advice is built from translated fixed phrases
   assert.doesNotMatch(dataPanelSource, /is acidic — add agricultural lime/, 'soil advice regressed to a hard-coded template literal');
   assert.doesNotMatch(dataPanelSource, /is low — layer compost 5 cm deep/, 'soil advice regressed to a hard-coded template literal');
   assert.doesNotMatch(dataPanelSource, /suggests compaction — deep-rooted cover crops/, 'soil advice regressed to a hard-coded template literal');
+});
+
+// copy-07 (wave 13 audit): nav*/tab*/home* English values were Title Case ("Farm Tools", "Task
+// Planner"...) against the rest of the UI's sentence-case convention. Most were fixed in that
+// wave; this guards against new ones creeping back in. A handful of pre-existing keys are left
+// out deliberately rather than fixed, because their exact string is pinned by another, unowned
+// test or by a reviewed-translation pairing — see the wave-13 PR body for the list.
+const TITLE_CASE_NAV_TAB_HOME_ALLOWLIST = new Set([
+  'navPlantingCalendar', // tests/nav-menu-links.test.ts asserts the literal 'Planting Calendar'
+  'homeQuickMyRecords', // "My Records" is the deliberately-chosen name (copy-04)
+  'homeRoleNGOLabel', 'navNGOLabel', // "NGO" is an initialism, not a Title Case violation
+  'homeQuickContactDesc', // 'Mentor · Organisation' — a role list, each word a proper role name
+  'homeLimaVisionLabel', // 'Lima Vision' — Lima is the product's AI assistant, a proper noun
+]);
+
+test('new nav*/tab*/home* English keys stay sentence case, not Title Case', () => {
+  const en = localeBlocks().find((b) => b.locale === 'en')!.block;
+  const re = /^  (nav|tab|home)[A-Za-z0-9_]*: '([^']*)',$/gm;
+  const offenders: string[] = [];
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(en))) {
+    const [full, , value] = m;
+    const key = full.slice(2, full.indexOf(':'));
+    if (TITLE_CASE_NAV_TAB_HOME_ALLOWLIST.has(key)) continue;
+    // A short label with two or more capitalised words (and no sentence punctuation) reads as
+    // Title Case; proper nouns (Lima, ImbewuField, NGO, isiZulu names) stay capitalised, so this
+    // only flags when capitalised words make up most of a short phrase.
+    const words = value.split(/\s+/).filter((w) => /^[A-Za-z]/.test(w));
+    if (words.length < 2 || words.length > 4 || /[.!?]/.test(value)) continue;
+    const capRatio = words.filter((w) => {
+      const bare = w.replace(/[^A-Za-z]/g, '');
+      return bare.length > 0 && bare[0] === bare[0].toUpperCase() && bare[0] !== bare[0].toLowerCase();
+    }).length;
+    if (capRatio >= 2 && capRatio === words.length) offenders.push(`${key}: '${value}'`);
+  }
+  assert.deepEqual(offenders, [], 'new nav/tab/home keys must use sentence case (one capital letter, proper nouns aside) — see CLAUDE.md');
 });

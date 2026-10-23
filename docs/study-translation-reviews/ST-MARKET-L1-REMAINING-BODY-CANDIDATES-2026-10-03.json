@@ -1,0 +1,545 @@
+{
+  "packetId": "IMBEWU-ST-MARKET-L1-L2-REMAINING-ORDINARY-CANDIDATES-2026-10-03",
+  "sourceRevision": "5b6ab5d8823c9f5f9c195d170792b34fdc898453",
+  "liveCheckoutHead": "5b6ab5d8823c9f5f9c195d170792b34fdc898453",
+  "languageCode": "st",
+  "languageName": "Sesotho",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-st-market-community.ts",
+  "fieldPath": "lesson body paragraphs only",
+  "provenance": "Read-only full-paragraph source-paired candidates from live main Market L1/L2 body and Sesotho registry. No repo files changed.",
+  "reviewStatus": "unreviewed machine candidates for independent semantic/local-language review",
+  "scope": "L1 held ordinary paragraphs 6,9,10,12,13,14,16,17 (1-based) receive candidates; L1 numerical teaching example paragraph 13 (1-based) remains exact English; L2 full body supplied as unchanged current source-paired mixed draft because ordinary framing is already localized around exact business/supply/compliance conditions.",
+  "lessonData": [
+    {
+      "lessonId": "market-community-l1",
+      "exactSourceParagraphs": [
+        "A harvest can feed the household, be sold, be shared, or be lost.",
+        "Recording these different uses helps you see what the farm produces and what reaches customers.",
+        "Use that information to protect household food and make better business decisions.",
+        "Write down every harvest as it happens.",
+        "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+        "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+        "Do not rely on memory at the end of the season.",
+        "One season of records answers practical questions.",
+        "Which crops give the best yield per bed? Which return the most for each hour of work?",
+        "Which crops use more seeds, water, and compost than they return?",
+        "The record also shows which months leave the household buying food.",
+        "Before setting a price, record production, packing and selling costs, including labour and transport.",
+        "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+        "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+        "Use your record to find when household food runs short.",
+        "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+        "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail."
+      ],
+      "currentRegionalParagraphs": [
+        "Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha).",
+        "Ho rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.",
+        "Sebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.",
+        "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.",
+        "Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.",
+        "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+        "O se ke wa itshetleha ka mohopolo qetellong ya sehla.",
+        "Sehla se le seng sa direkoto se araba dipotso tse sebetsang.",
+        "Which crops give the best yield per bed? Which return the most for each hour of work?",
+        "Which crops use more seeds, water, and compost than they return?",
+        "Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.",
+        "Before setting a price, record production, packing and selling costs, including labour and transport.",
+        "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+        "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+        "Sebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.",
+        "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+        "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail."
+      ],
+      "candidateParagraphs": [
+        "Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha).",
+        "Ho rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.",
+        "Sebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.",
+        "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.",
+        "Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.",
+        "Sebelisa mokgwa o tshwanang o bonolo bakeng sa food kept at home, produce sold, produce gifted, le produce composted.",
+        "O se ke wa itshetleha ka mohopolo qetellong ya sehla.",
+        "Sehla se le seng sa direkoto se araba dipotso tse sebetsang.",
+        "Ke crops dife tse fanang ka best yield per bed? Ke dife tse fanang ka highest return for each hour of work?",
+        "Ke crops dife tse sebedisang more seeds, water and compost than they return?",
+        "Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.",
+        "Pele o beha price, rekota production, packing and selling costs, ho kenyeletsa labour le transport.",
+        "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+        "Hlahloba price, costs le next planting. Lekola seo bareki ba tla se reka e le kannete; a higher asking price is not a guaranteed sale.",
+        "Sebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.",
+        "Khetha crops tse loketseng sebaka sa heno, mme o work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+        "Letsatsi le sebetsang polasing e nngwe le ka nna la se ke la sebetsa mona. Kenya leano la backup ha pula, metsi kapa crops di hloleha."
+      ],
+      "sourceStatus": "machine-draft",
+      "sourceEnglishPairMatches": true
+    },
+    {
+      "lessonId": "market-community-l2",
+      "exactSourceParagraphs": [
+        "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+        "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+        "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+        "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+        "A box scheme supplies a regular selection to agreed customers.",
+        "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+        "Start from what you can reliably supply and what customers want.",
+        "Check the costs and household food needs before promising regular boxes.",
+        "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+        "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+        "Offer the surplus you have and agree clear terms with customers.",
+        "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label."
+      ],
+      "currentRegionalParagraphs": [
+        "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
+        "Bapisa market fees, transport, packing le unsold produce hammoho le theko ya thekiso.",
+        "Hlahloba market rules le ditlhoko tsa lehae tsa trading le food. Informal stall ha e bolele ka boyona hore ha ho na rules kapa costs.",
+        "Direct selling can retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.",
+        "Mokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.",
+        "Dumellanang ka contents, price, payment le what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+        "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+        "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes.",
+        "Garden area or customer count alone does not predict income. Leka mokgwa o ka laolehang mme o ngole diphetho.",
+        "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.",
+        "Fana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.",
+        "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang pele o sebedisa label."
+      ],
+      "candidateParagraphs": [
+        "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
+        "Bapisa market fees, transport, packing le unsold produce hammoho le theko ya thekiso.",
+        "Hlahloba market rules le ditlhoko tsa lehae tsa trading le food. Informal stall ha e bolele ka boyona hore ha ho na rules kapa costs.",
+        "Direct selling can retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.",
+        "Mokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.",
+        "Dumellanang ka contents, price, payment le what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+        "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+        "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes.",
+        "Garden area or customer count alone does not predict income. Leka mokgwa o ka laolehang mme o ngole diphetho.",
+        "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.",
+        "Fana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.",
+        "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang pele o sebedisa label."
+      ],
+      "sourceStatus": "machine-draft",
+      "sourceEnglishPairMatches": true
+    }
+  ],
+  "entries": [
+    {
+      "lessonId": "market-community-l1",
+      "paragraphIndex": 5,
+      "paragraphNumber": 6,
+      "fieldPath": "lessons.market-community-l1.body.sesothoDraft[5]",
+      "exactSourceEnglish": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+      "currentSesothoText": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+      "candidate": "Sebelisa mokgwa o tshwanang o bonolo bakeng sa food kept at home, produce sold, produce gifted, le produce composted.",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Use the same simple habit for food kept at home, produce sold, produce gifted and produce composted.",
+      "retainedEnglishTerms": [
+        "food kept at home",
+        "produce sold",
+        "produce gifted",
+        "produce composted"
+      ],
+      "uncertainty": "Same habit framing translated; all four record-destination categories remain exact English.",
+      "changed": true
+    },
+    {
+      "lessonId": "market-community-l1",
+      "paragraphIndex": 8,
+      "paragraphNumber": 9,
+      "fieldPath": "lessons.market-community-l1.body.sesothoDraft[8]",
+      "exactSourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "currentSesothoText": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "candidate": "Ke crops dife tse fanang ka best yield per bed? Ke dife tse fanang ka highest return for each hour of work?",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Which crops give the best yield per bed? Which give the highest return for each hour of work?",
+      "retainedEnglishTerms": [
+        "crops",
+        "best yield per bed",
+        "highest return for each hour of work"
+      ],
+      "uncertainty": "Question framing is localized while retaining the yield and time comparisons exactly; confirm mixed Sesotho syntax.",
+      "changed": true
+    },
+    {
+      "lessonId": "market-community-l1",
+      "paragraphIndex": 9,
+      "paragraphNumber": 10,
+      "fieldPath": "lessons.market-community-l1.body.sesothoDraft[9]",
+      "exactSourceEnglish": "Which crops use more seeds, water, and compost than they return?",
+      "currentSesothoText": "Which crops use more seeds, water, and compost than they return?",
+      "candidate": "Ke crops dife tse sebedisang more seeds, water and compost than they return?",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Which crops use more seeds, water and compost than they return?",
+      "retainedEnglishTerms": [
+        "crops",
+        "more seeds, water and compost than they return"
+      ],
+      "uncertainty": "Question framing localized; input/output comparison retained exact English.",
+      "changed": true
+    },
+    {
+      "lessonId": "market-community-l1",
+      "paragraphIndex": 11,
+      "paragraphNumber": 12,
+      "fieldPath": "lessons.market-community-l1.body.sesothoDraft[11]",
+      "exactSourceEnglish": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+      "currentSesothoText": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+      "candidate": "Pele o beha price, rekota production, packing and selling costs, ho kenyeletsa labour le transport.",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+      "retainedEnglishTerms": [
+        "price",
+        "production, packing and selling costs",
+        "labour",
+        "transport"
+      ],
+      "uncertainty": "Translate before/record/include framing; retain all business cost categories.",
+      "changed": true
+    },
+    {
+      "lessonId": "market-community-l1",
+      "paragraphIndex": 12,
+      "paragraphNumber": 13,
+      "fieldPath": "lessons.market-community-l1.body.sesothoDraft[12]",
+      "exactSourceEnglish": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+      "currentSesothoText": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+      "candidate": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+      "candidateStatus": "english-hold",
+      "backTranslation": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+      "retainedEnglishTerms": [
+        "whole paragraph including R18/kg and R15/kg teaching example disclaimer"
+      ],
+      "uncertainty": "Keep the complete numerical teaching example and explicit not-a-market-price disclaimer unchanged.",
+      "changed": false
+    },
+    {
+      "lessonId": "market-community-l1",
+      "paragraphIndex": 13,
+      "paragraphNumber": 14,
+      "fieldPath": "lessons.market-community-l1.body.sesothoDraft[13]",
+      "exactSourceEnglish": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+      "currentSesothoText": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+      "candidate": "Hlahloba price, costs le next planting. Lekola seo bareki ba tla se reka e le kannete; a higher asking price is not a guaranteed sale.",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Review price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+      "retainedEnglishTerms": [
+        "price",
+        "costs",
+        "next planting",
+        "what customers will actually buy",
+        "a higher asking price is not a guaranteed sale"
+      ],
+      "uncertainty": "Review and customer-check framing translated; actual-purchase qualifier and no-guaranteed-sale clause stay exact.",
+      "changed": true
+    },
+    {
+      "lessonId": "market-community-l1",
+      "paragraphIndex": 15,
+      "paragraphNumber": 16,
+      "fieldPath": "lessons.market-community-l1.body.sesothoDraft[15]",
+      "exactSourceEnglish": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+      "currentSesothoText": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+      "candidate": "Khetha crops tse loketseng sebaka sa heno, mme o work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Choose crops suitable for your local area, and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+      "retainedEnglishTerms": [
+        "crops",
+        "work backwards from the harvest you need",
+        "planting conditions",
+        "expected time to harvest"
+      ],
+      "uncertainty": "Translate the choice/local-area frame; retain the planning direction, harvest need and planting/timing conditions exact English.",
+      "changed": true
+    },
+    {
+      "lessonId": "market-community-l1",
+      "paragraphIndex": 16,
+      "paragraphNumber": 17,
+      "fieldPath": "lessons.market-community-l1.body.sesothoDraft[16]",
+      "exactSourceEnglish": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "currentSesothoText": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "candidate": "Letsatsi le sebetsang polasing e nngwe le ka nna la se ke la sebetsa mona. Kenya leano la backup ha pula, metsi kapa crops di hloleha.",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "retainedEnglishTerms": [
+        "may not work here",
+        "backup plan",
+        "when rain, water or crops fail"
+      ],
+      "uncertainty": "Farm-to-farm limitation and backup/failure conditions retained; only ordinary date/farm frame localized.",
+      "changed": true
+    },
+    {
+      "lessonId": "market-community-l2",
+      "paragraphIndex": 0,
+      "paragraphNumber": 1,
+      "fieldPath": "lessons.market-community-l2.body.sesothoDraft[0]",
+      "exactSourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+      "currentSesothoText": "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
+      "candidate": "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
+      "candidateStatus": "preserved-current-machine-draft",
+      "backTranslation": "Current source-paired candidate retained without change.",
+      "retainedEnglishTerms": [
+        "Existing precise business, supply, price, promise and compliance clauses remain as authored."
+      ],
+      "uncertainty": "No L2 change proposed: the current mixed draft already localizes ordinary framing around clauses where qualifiers or business meaning need the English source retained.",
+      "changed": false
+    },
+    {
+      "lessonId": "market-community-l2",
+      "paragraphIndex": 1,
+      "paragraphNumber": 2,
+      "fieldPath": "lessons.market-community-l2.body.sesothoDraft[1]",
+      "exactSourceEnglish": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+      "currentSesothoText": "Bapisa market fees, transport, packing le unsold produce hammoho le theko ya thekiso.",
+      "candidate": "Bapisa market fees, transport, packing le unsold produce hammoho le theko ya thekiso.",
+      "candidateStatus": "preserved-current-machine-draft",
+      "backTranslation": "Current source-paired candidate retained without change.",
+      "retainedEnglishTerms": [
+        "Existing precise business, supply, price, promise and compliance clauses remain as authored."
+      ],
+      "uncertainty": "No L2 change proposed: the current mixed draft already localizes ordinary framing around clauses where qualifiers or business meaning need the English source retained.",
+      "changed": false
+    },
+    {
+      "lessonId": "market-community-l2",
+      "paragraphIndex": 2,
+      "paragraphNumber": 3,
+      "fieldPath": "lessons.market-community-l2.body.sesothoDraft[2]",
+      "exactSourceEnglish": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "currentSesothoText": "Hlahloba market rules le ditlhoko tsa lehae tsa trading le food. Informal stall ha e bolele ka boyona hore ha ho na rules kapa costs.",
+      "candidate": "Hlahloba market rules le ditlhoko tsa lehae tsa trading le food. Informal stall ha e bolele ka boyona hore ha ho na rules kapa costs.",
+      "candidateStatus": "preserved-current-machine-draft",
+      "backTranslation": "Current source-paired candidate retained without change.",
+      "retainedEnglishTerms": [
+        "Existing precise business, supply, price, promise and compliance clauses remain as authored."
+      ],
+      "uncertainty": "No L2 change proposed: the current mixed draft already localizes ordinary framing around clauses where qualifiers or business meaning need the English source retained.",
+      "changed": false
+    },
+    {
+      "lessonId": "market-community-l2",
+      "paragraphIndex": 3,
+      "paragraphNumber": 4,
+      "fieldPath": "lessons.market-community-l2.body.sesothoDraft[3]",
+      "exactSourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "currentSesothoText": "Direct selling can retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.",
+      "candidate": "Direct selling can retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.",
+      "candidateStatus": "preserved-current-machine-draft",
+      "backTranslation": "Current source-paired candidate retained without change.",
+      "retainedEnglishTerms": [
+        "Existing precise business, supply, price, promise and compliance clauses remain as authored."
+      ],
+      "uncertainty": "No L2 change proposed: the current mixed draft already localizes ordinary framing around clauses where qualifiers or business meaning need the English source retained.",
+      "changed": false
+    },
+    {
+      "lessonId": "market-community-l2",
+      "paragraphIndex": 4,
+      "paragraphNumber": 5,
+      "fieldPath": "lessons.market-community-l2.body.sesothoDraft[4]",
+      "exactSourceEnglish": "A box scheme supplies a regular selection to agreed customers.",
+      "currentSesothoText": "Mokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.",
+      "candidate": "Mokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.",
+      "candidateStatus": "preserved-current-machine-draft",
+      "backTranslation": "Current source-paired candidate retained without change.",
+      "retainedEnglishTerms": [
+        "Existing precise business, supply, price, promise and compliance clauses remain as authored."
+      ],
+      "uncertainty": "No L2 change proposed: the current mixed draft already localizes ordinary framing around clauses where qualifiers or business meaning need the English source retained.",
+      "changed": false
+    },
+    {
+      "lessonId": "market-community-l2",
+      "paragraphIndex": 5,
+      "paragraphNumber": 6,
+      "fieldPath": "lessons.market-community-l2.body.sesothoDraft[5]",
+      "exactSourceEnglish": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "currentSesothoText": "Dumellanang ka contents, price, payment le what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "candidate": "Dumellanang ka contents, price, payment le what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "candidateStatus": "preserved-current-machine-draft",
+      "backTranslation": "Current source-paired candidate retained without change.",
+      "retainedEnglishTerms": [
+        "Existing precise business, supply, price, promise and compliance clauses remain as authored."
+      ],
+      "uncertainty": "No L2 change proposed: the current mixed draft already localizes ordinary framing around clauses where qualifiers or business meaning need the English source retained.",
+      "changed": false
+    },
+    {
+      "lessonId": "market-community-l2",
+      "paragraphIndex": 6,
+      "paragraphNumber": 7,
+      "fieldPath": "lessons.market-community-l2.body.sesothoDraft[6]",
+      "exactSourceEnglish": "Start from what you can reliably supply and what customers want.",
+      "currentSesothoText": "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+      "candidate": "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+      "candidateStatus": "preserved-current-machine-draft",
+      "backTranslation": "Current source-paired candidate retained without change.",
+      "retainedEnglishTerms": [
+        "Existing precise business, supply, price, promise and compliance clauses remain as authored."
+      ],
+      "uncertainty": "No L2 change proposed: the current mixed draft already localizes ordinary framing around clauses where qualifiers or business meaning need the English source retained.",
+      "changed": false
+    },
+    {
+      "lessonId": "market-community-l2",
+      "paragraphIndex": 7,
+      "paragraphNumber": 8,
+      "fieldPath": "lessons.market-community-l2.body.sesothoDraft[7]",
+      "exactSourceEnglish": "Check the costs and household food needs before promising regular boxes.",
+      "currentSesothoText": "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes.",
+      "candidate": "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes.",
+      "candidateStatus": "preserved-current-machine-draft",
+      "backTranslation": "Current source-paired candidate retained without change.",
+      "retainedEnglishTerms": [
+        "Existing precise business, supply, price, promise and compliance clauses remain as authored."
+      ],
+      "uncertainty": "No L2 change proposed: the current mixed draft already localizes ordinary framing around clauses where qualifiers or business meaning need the English source retained.",
+      "changed": false
+    },
+    {
+      "lessonId": "market-community-l2",
+      "paragraphIndex": 8,
+      "paragraphNumber": 9,
+      "fieldPath": "lessons.market-community-l2.body.sesothoDraft[8]",
+      "exactSourceEnglish": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+      "currentSesothoText": "Garden area or customer count alone does not predict income. Leka mokgwa o ka laolehang mme o ngole diphetho.",
+      "candidate": "Garden area or customer count alone does not predict income. Leka mokgwa o ka laolehang mme o ngole diphetho.",
+      "candidateStatus": "preserved-current-machine-draft",
+      "backTranslation": "Current source-paired candidate retained without change.",
+      "retainedEnglishTerms": [
+        "Existing precise business, supply, price, promise and compliance clauses remain as authored."
+      ],
+      "uncertainty": "No L2 change proposed: the current mixed draft already localizes ordinary framing around clauses where qualifiers or business meaning need the English source retained.",
+      "changed": false
+    },
+    {
+      "lessonId": "market-community-l2",
+      "paragraphIndex": 9,
+      "paragraphNumber": 10,
+      "fieldPath": "lessons.market-community-l2.body.sesothoDraft[9]",
+      "exactSourceEnglish": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+      "currentSesothoText": "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.",
+      "candidate": "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.",
+      "candidateStatus": "preserved-current-machine-draft",
+      "backTranslation": "Current source-paired candidate retained without change.",
+      "retainedEnglishTerms": [
+        "Existing precise business, supply, price, promise and compliance clauses remain as authored."
+      ],
+      "uncertainty": "No L2 change proposed: the current mixed draft already localizes ordinary framing around clauses where qualifiers or business meaning need the English source retained.",
+      "changed": false
+    },
+    {
+      "lessonId": "market-community-l2",
+      "paragraphIndex": 10,
+      "paragraphNumber": 11,
+      "fieldPath": "lessons.market-community-l2.body.sesothoDraft[10]",
+      "exactSourceEnglish": "Offer the surplus you have and agree clear terms with customers.",
+      "currentSesothoText": "Fana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.",
+      "candidate": "Fana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.",
+      "candidateStatus": "preserved-current-machine-draft",
+      "backTranslation": "Current source-paired candidate retained without change.",
+      "retainedEnglishTerms": [
+        "Existing precise business, supply, price, promise and compliance clauses remain as authored."
+      ],
+      "uncertainty": "No L2 change proposed: the current mixed draft already localizes ordinary framing around clauses where qualifiers or business meaning need the English source retained.",
+      "changed": false
+    },
+    {
+      "lessonId": "market-community-l2",
+      "paragraphIndex": 11,
+      "paragraphNumber": 12,
+      "fieldPath": "lessons.market-community-l2.body.sesothoDraft[11]",
+      "exactSourceEnglish": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "currentSesothoText": "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang pele o sebedisa label.",
+      "candidate": "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang pele o sebedisa label.",
+      "candidateStatus": "preserved-current-machine-draft",
+      "backTranslation": "Current source-paired candidate retained without change.",
+      "retainedEnglishTerms": [
+        "Existing precise business, supply, price, promise and compliance clauses remain as authored."
+      ],
+      "uncertainty": "No L2 change proposed: the current mixed draft already localizes ordinary framing around clauses where qualifiers or business meaning need the English source retained.",
+      "changed": false
+    }
+  ],
+  "changedParagraphs": [
+    {
+      "lessonId": "market-community-l1",
+      "paragraphNumber": 6
+    },
+    {
+      "lessonId": "market-community-l1",
+      "paragraphNumber": 9
+    },
+    {
+      "lessonId": "market-community-l1",
+      "paragraphNumber": 10
+    },
+    {
+      "lessonId": "market-community-l1",
+      "paragraphNumber": 12
+    },
+    {
+      "lessonId": "market-community-l1",
+      "paragraphNumber": 14
+    },
+    {
+      "lessonId": "market-community-l1",
+      "paragraphNumber": 16
+    },
+    {
+      "lessonId": "market-community-l1",
+      "paragraphNumber": 17
+    }
+  ],
+  "preservedL1ExistingLocalizedIndices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    6,
+    7,
+    10,
+    14
+  ],
+  "preservedL2Indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "answerIndices": [
+    {
+      "lessonId": "market-community-l1",
+      "correct": [
+        2,
+        1
+      ]
+    },
+    {
+      "lessonId": "market-community-l2",
+      "correct": [
+        2,
+        2
+      ]
+    }
+  ],
+  "constraints": [
+    "Preserve source and paragraph order; retain every number and species/crop wording exactly.",
+    "Keep L1 R18/kg and R15/kg example plus not-a-market-price disclaimer exact.",
+    "Preserve yield-per-bed, per-hour return, input/output comparison and locally-suitable/timing/backup conditions as recorded.",
+    "No sale, income, yield or price guarantee.",
+    "L2 current mixed source-paired prose is unchanged in this packet.",
+    "Assessment indices unchanged; no title, quiz, key point or media candidate.",
+    "Sesotho prose remains unreviewed; no fluent approval claim."
+  ],
+  "sourceBodySha256": "5c6fd91f2072374ac92f1f2c53a2695a98cdaf9ad3b97c1bfdef88673cb99278"
+}

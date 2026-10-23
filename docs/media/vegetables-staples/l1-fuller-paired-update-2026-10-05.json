@@ -1,0 +1,701 @@
+{
+  "title": "Vegetables L1 fuller source-paired regional deck update",
+  "date": "2026-10-05",
+  "status": "unreviewed machine draft",
+  "scope": "Exactly 39 learner-accepted body rows with exact complete source-row binding across ST, VE and TS; only slides 4–7 in those languages were rerendered.",
+  "humanLanguageReview": false,
+  "localFarmingReview": false,
+  "renderReview": "Root inspected all 12 compressed WebPs; no clipping observed.",
+  "renderer": "scripts/make-lesson-slides.mjs, paired draft mode",
+  "conversion": "WebP 1440x5400 quality 88 method 6",
+  "pairedDrafts": [
+    "docs/narration/vegetables-staples.st.paired-draft.json",
+    "docs/narration/vegetables-staples.ve.paired-draft.json",
+    "docs/narration/vegetables-staples.ts.paired-draft.json"
+  ],
+  "rows": [
+    {
+      "language": "st",
+      "slide": 4,
+      "kind": "body",
+      "bodyIndex": 1,
+      "fieldPath": "body.paragraphs.1",
+      "sourceEnglish": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "target": "Tshireletso e bonolo. Permanent paths, le bethe e tshesane hoo o ka fihlang ka hare ho yona ho tswa mahlakoreng ka bobedi.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Tshireletso e bonolo."
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 4,
+      "kind": "body",
+      "bodyIndex": 2,
+      "fieldPath": "body.paragraphs.2",
+      "sourceEnglish": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "target": "One metre to one point two metres wide. Ke yona working number. Ka bophara boo, o ka fihla bohareng o tswa tseleng efe kapa efe, mme maoto a hao ha a ame sebaka se lemwang le ka mohla.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Ke yona",
+        "."
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 5,
+      "kind": "body",
+      "bodyIndex": 1,
+      "fieldPath": "body.paragraphs.5",
+      "sourceEnglish": "Start with the least disturbance that solves your problem.",
+      "target": "Qala ka least disturbance e rarollang bothata ba hao.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Qala ka",
+        "."
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 5,
+      "kind": "body",
+      "bodyIndex": 2,
+      "fieldPath": "body.paragraphs.6",
+      "sourceEnglish": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "target": "No-dig e loketse boholo ba mobu wa dirapa. Tlohela structure e le jwalo, mme o hahe fertility hodimo.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "e loketse boholo ba mobu wa dirapa. Tlohela structure e le jwalo, mme",
+        "."
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 5,
+      "kind": "body",
+      "bodyIndex": 3,
+      "fieldPath": "body.paragraphs.7",
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "target": "U se ke ua cheka wet clay. Ha compaction kapa poor drainage e le matla haholo, fumana sesosa ka keletso ya sebaka sa heno pele o kgetha deeper cultivation.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "U se ke ua cheka",
+        "."
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 5,
+      "kind": "body",
+      "bodyIndex": 4,
+      "fieldPath": "body.paragraphs.8",
+      "sourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "target": "Raised beds di loketse wet ground, moo metsi a hlokang somewhere to drain away to.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "di loketse",
+        ", moo",
+        "."
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 5,
+      "kind": "body",
+      "bodyIndex": 5,
+      "fieldPath": "body.paragraphs.9",
+      "sourceEnglish": "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+      "target": "Sunken beds di loketse dry ground, moo o batlang ho tshwara le ho boloka pula eo o e fumanang.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "di loketse",
+        ", moo",
+        "."
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "kind": "body",
+      "bodyIndex": 0,
+      "fieldPath": "body.paragraphs.11",
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "target": "Dijalo tse ding ha di rate hore metso ya tsona e tshwenngwe. They do better ha di jalwa ka kotloloho moo di tla hola teng. Beans, carrots le maize ke tsa sehlopha seo.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Dijalo tse ding ha di rate hore metso ya tsona e tshwenngwe."
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "kind": "body",
+      "bodyIndex": 1,
+      "fieldPath": "body.paragraphs.12",
+      "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "target": "Tse ding do better ka qalo e sireletsehileng ho nursery, ebe transplanting. Tomatoes le brassicas ke tsa sehlopha seo.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "le",
+        "ke tsa sehlopha seo."
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "kind": "body",
+      "bodyIndex": 2,
+      "fieldPath": "body.paragraphs.13",
+      "sourceEnglish": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "target": "Sebedisa spacing guidance bakeng sa crop, variety le local conditions. Hlahloba packet le local grower advice. Sheba crowding ha plants di ntse di hola.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Sebedisa",
+        ". Hlahloba packet le",
+        ". Sheba crowding ha plants di ntse di hola."
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "kind": "body",
+      "bodyIndex": 0,
+      "fieldPath": "body.paragraphs.14",
+      "sourceEnglish": "Before you plant, mark the bed out.",
+      "target": "Pele o lema, tshwaya bethe.",
+      "targetStatus": "draft",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Pele o lema,",
+        "."
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "kind": "body",
+      "bodyIndex": 2,
+      "fieldPath": "body.paragraphs.16",
+      "sourceEnglish": "Use pegs and string. Mark the rectangle, and mark both access paths.",
+      "target": "Sebedisa pegs le string. Tshwaya rectangle, le ho tshwaya ditsela ka bobedi tsa ho kena.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Sebedisa pegs le string. Tshwaya",
+        ", le",
+        "."
+      ]
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "kind": "body",
+      "bodyIndex": 3,
+      "fieldPath": "body.paragraphs.17",
+      "sourceEnglish": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "target": "Jwale lokisetsa ho ya ka mobu wa hao — qala ka no-dig, mme o cheke ho teba feela ha mobu wa hao o hlile o ho hloka.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Jwale lokisetsa ho ya ka mobu wa hao —",
+        "."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "kind": "body",
+      "bodyIndex": 1,
+      "fieldPath": "body.paragraphs.1",
+      "sourceEnglish": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "target": "Tsireledzo ndi yo leluwaho. Permanent paths, na bed ine ya vha tsekene lune na nga swikelela nga ngomu ni tshi bva kha masia oṱhe mavhili.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Tsireledzo ndi yo leluwaho."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "kind": "body",
+      "bodyIndex": 2,
+      "fieldPath": "body.paragraphs.2",
+      "sourceEnglish": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "target": "One metre to one point two metres wide. Wonoyo ndi mpimo une wa shumiswa. Kha honoho vhuphara ni nga swikelela vhukati ni tshi bva kha iṅwe na iṅwe ya paths mbili, nahone milenzhe yaṋu a i kwami growing area na luthihi.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Wonoyo ndi mpimo une wa shumiswa."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "kind": "body",
+      "bodyIndex": 3,
+      "fieldPath": "body.paragraphs.3",
+      "sourceEnglish": "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.",
+      "target": "Zwino humbulani nga ha beds dzaṋu. Ni nga swikelela vhukati ni sa kande nga ngomu? Iyani ni lingedze zwenezwo ni sa athu ṱavha tshiṅwe tshithu.",
+      "targetStatus": "draft",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Zwino humbulani nga ha beds dzaṋu. Ni nga swikelela vhukati",
+        "? Iyani ni lingedze zwenezwo ni sa athu ṱavha tshiṅwe tshithu."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 5,
+      "kind": "body",
+      "bodyIndex": 1,
+      "fieldPath": "body.paragraphs.5",
+      "sourceEnglish": "Start with the least disturbance that solves your problem.",
+      "target": "Thomani nga least disturbance ine ya tandulula thaidzo yaṋu.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Thomani nga",
+        "."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 5,
+      "kind": "body",
+      "bodyIndex": 2,
+      "fieldPath": "body.paragraphs.6",
+      "sourceEnglish": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "target": "No-dig suits most garden soils. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe",
+        "."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 5,
+      "kind": "body",
+      "bodyIndex": 3,
+      "fieldPath": "body.paragraphs.7",
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "target": "Ni songo bwa wet clay. Arali compaction kana poor drainage zwi tshi vha severe, wanani tshiitisi nga nyeletshedzo ya henefho ni sa athu khetha deeper cultivation.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Ni songo bwa",
+        "."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 5,
+      "kind": "body",
+      "bodyIndex": 4,
+      "fieldPath": "body.paragraphs.8",
+      "sourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "target": "Raised beds dzi tea wet ground, hune maḓi a ṱoḓa fhethu ha u bva hone.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        ", hune maḓi a ṱoḓa fhethu ha u bva hone."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 5,
+      "kind": "body",
+      "bodyIndex": 5,
+      "fieldPath": "body.paragraphs.9",
+      "sourceEnglish": "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+      "target": "Sunken beds dzi tea dry ground, hune na ṱoḓa u fara na u vhulunga mvula ine na i wana.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        ", hune na ṱoḓa u",
+        "mvula ine na i wana."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 5,
+      "kind": "body",
+      "bodyIndex": 6,
+      "fieldPath": "body.paragraphs.10",
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "target": "Musi heavy rain yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na soil and drainage advice ni sa athu khetha bed.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Musi",
+        "yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a",
+        "ngafhi? Ṱanganyisani zwe na vhona na"
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "kind": "body",
+      "bodyIndex": 0,
+      "fieldPath": "body.paragraphs.11",
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "target": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. They do better musi zwi tshi zwaliwa nga ho livhaho hune zwa ḓo aluwa hone. Beans, carrots na maize zwi wela kha tshigwada itsho.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa.",
+        "na",
+        "zwi wela kha tshigwada itsho."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "kind": "body",
+      "bodyIndex": 1,
+      "fieldPath": "body.paragraphs.12",
+      "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "target": "Others do better with a protected start in a nursery, then transplanting. Tomatoes na brassicas zwi wela henefho.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "na",
+        "zwi wela henefho."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "kind": "body",
+      "bodyIndex": 2,
+      "fieldPath": "body.paragraphs.13",
+      "sourceEnglish": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "target": "Shumisani spacing guidance ya crop, variety na local conditions. Sedzani packet na local grower advice. Sedzani crowding musi zwimela zwi tshi aluwa.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Shumisani",
+        ".",
+        "Sedzani crowding musi zwimela zwi tshi aluwa."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "kind": "body",
+      "bodyIndex": 2,
+      "fieldPath": "body.paragraphs.16",
+      "sourceEnglish": "Use pegs and string. Mark the rectangle, and mark both access paths.",
+      "target": "Shumisani zwipiki na thambo. Swayani rectangle, nahone ni swaye paths dzoṱhe mbili dza u swikelela bed.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Shumisani zwipiki na thambo. Swayani",
+        "."
+      ]
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "kind": "body",
+      "bodyIndex": 3,
+      "fieldPath": "body.paragraphs.17",
+      "sourceEnglish": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "target": "Nga murahu ni lugiselele u ya nga mavu aṋu — thomani nga no-dig, nahone ni bwe u tsa fhedzi arali mavu aṋu a tshi zwi ṱoḓa vhukuma.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Nga murahu ni lugiselele u ya nga mavu aṋu —",
+        "."
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "kind": "body",
+      "bodyIndex": 0,
+      "fieldPath": "body.paragraphs.0",
+      "sourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "target": "Compacted soil yi lahlekeriwa hi swikhala swa yona swa moya. Timitsu ti nonoka. Mati ma tswonga hi ndlela yo hambana. Bed yi ya tika ku tirha eka nguva yin'wana ni yin'wana.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Mati ma tswonga hi ndlela yo hambana. Bed yi ya tika ku tirha eka nguva yin'wana ni yin'wana."
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "kind": "body",
+      "bodyIndex": 1,
+      "fieldPath": "body.paragraphs.1",
+      "sourceEnglish": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "target": "Nsirhelelo wu olova. Permanent paths, ni bed leyi nga anamangiki ngopfu leswaku u ta kota ku fika endzeni ka yona ku suka ematlhelweni haswimbirhi.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Nsirhelelo wu olova."
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "kind": "body",
+      "bodyIndex": 2,
+      "fieldPath": "body.paragraphs.2",
+      "sourceEnglish": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "target": "One metre to one point two metres hi ku anama. Lowu hi wona mpimo lowu tirhaka. Hi ku anama koloko u nga fika exikarhini ku suka eka ndlela yin'wana ni yin'wana ya letimbirhi, naswona milenge ya wena a yi khumbi growing area nikatsongo.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "hi ku anama. Lowu hi wona mpimo lowu tirhaka."
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 5,
+      "kind": "body",
+      "bodyIndex": 1,
+      "fieldPath": "body.paragraphs.5",
+      "sourceEnglish": "Start with the least disturbance that solves your problem.",
+      "target": "Sungula hi least disturbance leyi lulamisaka xiphiqo xa wena.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Sungula hi",
+        "."
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 5,
+      "kind": "body",
+      "bodyIndex": 3,
+      "fieldPath": "body.paragraphs.7",
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "target": "U nga keli wet clay. Loko compaction kumbe poor drainage swi ri severe, kuma xivangelo hi switsundzuxo swa le ndhawini u nga si hlawula deeper cultivation.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "U nga keli",
+        "."
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 5,
+      "kind": "body",
+      "bodyIndex": 6,
+      "fieldPath": "body.paragraphs.10",
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "target": "Endzhaku ka heavy rain, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni soil and drainage advice u nga si hlawula bed.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Endzhaku ka",
+        ", kambisisa."
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "kind": "body",
+      "bodyIndex": 0,
+      "fieldPath": "body.paragraphs.11",
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "target": "Swibyariwa swin'wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. They do better loko swi byariwa hi ku kongoma laha swi nga ta kula kona. Beans, carrots na maize swi wela eka ntlawa wolowo.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Swibyariwa swin'wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona."
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "kind": "body",
+      "bodyIndex": 1,
+      "fieldPath": "body.paragraphs.12",
+      "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "target": "Swin'wana do better loko swi sungula swi sirhelelekile eka nursery, kutani transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "na",
+        "swi wela eka ntlawa wolowo."
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "kind": "body",
+      "bodyIndex": 2,
+      "fieldPath": "body.paragraphs.13",
+      "sourceEnglish": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "target": "Landzelela spacing guidance ya crop, variety na local conditions. Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Landzelela",
+        ". Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula."
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "kind": "body",
+      "bodyIndex": 0,
+      "fieldPath": "body.paragraphs.14",
+      "sourceEnglish": "Before you plant, mark the bed out.",
+      "target": "Loko u nga si byala, fungha bed.",
+      "targetStatus": "draft",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Loko u nga si byala,",
+        "."
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "kind": "body",
+      "bodyIndex": 2,
+      "fieldPath": "body.paragraphs.16",
+      "sourceEnglish": "Use pegs and string. Mark the rectangle, and mark both access paths.",
+      "target": "Tirhisa pegs na string. Fungha rectangle, kutani u fungha tindlela hatimbirhi to nghena.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Tirhisa",
+        "."
+      ]
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "kind": "body",
+      "bodyIndex": 3,
+      "fieldPath": "body.paragraphs.17",
+      "sourceEnglish": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "target": "Kutani lulamisa hi ku ya hi misava ya wena — sungula hi no-dig, kutani u cela ku enta ntsena loko misava ya wena hakunene yi swi lava.",
+      "targetStatus": "mixed",
+      "sourceMatch": "exact complete English row equals the learner field canonical source",
+      "preservedCurrentLocalizedSegments": [
+        "Kutani lulamisa hi ku ya hi misava ya wena — sungula hi",
+        ", kutani u",
+        "ntsena loko misava ya wena hakunene yi swi lava."
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "language": "st",
+      "slide": 4,
+      "path": "public/course-decks/vegetables-staples/st/slide-04.webp",
+      "pixels": "1440x5400",
+      "bytes": 705574,
+      "sha256": "87ff48c696791e274a5aa628fba319a473f792824441b7615a4ec9d4a6bc7b58"
+    },
+    {
+      "language": "st",
+      "slide": 5,
+      "path": "public/course-decks/vegetables-staples/st/slide-05.webp",
+      "pixels": "1440x5400",
+      "bytes": 423868,
+      "sha256": "4ef4bdc325c677badd9c2d2c9e2b9f2e6eea4f98af27732c84acde6bac818770"
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "path": "public/course-decks/vegetables-staples/st/slide-06.webp",
+      "pixels": "1440x5400",
+      "bytes": 589958,
+      "sha256": "00d4f4dff32b779f7aa91ce38060b38d1bdd882739e15cf14ca0f58fa64d69d3"
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "path": "public/course-decks/vegetables-staples/st/slide-07.webp",
+      "pixels": "1440x5400",
+      "bytes": 689852,
+      "sha256": "e6c73d9201ee06765f4ca967eb6256ba8624bf81d15ff8173c578da6eebf8be9"
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "path": "public/course-decks/vegetables-staples/ve/slide-04.webp",
+      "pixels": "1440x5400",
+      "bytes": 714532,
+      "sha256": "a8a7fdb934a521121d7dde7fe4fe240ebecca2a393db81c979244d9d1fa3694e"
+    },
+    {
+      "language": "ve",
+      "slide": 5,
+      "path": "public/course-decks/vegetables-staples/ve/slide-05.webp",
+      "pixels": "1440x5400",
+      "bytes": 422062,
+      "sha256": "469ae00392d7a2bcb03a86877d253957849513ab00a2486e9ad20db9ecf22d48"
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "path": "public/course-decks/vegetables-staples/ve/slide-06.webp",
+      "pixels": "1440x5400",
+      "bytes": 599526,
+      "sha256": "9d316da77fe3afb8c7256848ec3100ac64f5459b2b6f70517aab3e959b588b4b"
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "path": "public/course-decks/vegetables-staples/ve/slide-07.webp",
+      "pixels": "1440x5400",
+      "bytes": 701816,
+      "sha256": "5b8fb4d02f499f7b17f4911bb511077cc2b0b85b3a90bcf3616bfccaf7cbc4e1"
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "path": "public/course-decks/vegetables-staples/ts/slide-04.webp",
+      "pixels": "1440x5400",
+      "bytes": 727924,
+      "sha256": "f16438bb4765c452573c56e8da5f7c07465085c8075156fe1af86b8131b77971"
+    },
+    {
+      "language": "ts",
+      "slide": 5,
+      "path": "public/course-decks/vegetables-staples/ts/slide-05.webp",
+      "pixels": "1440x5400",
+      "bytes": 418732,
+      "sha256": "31f24655c4de1b2e52bb96456b791b324e1186fa94628b05eb74a6144b8f5624"
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "path": "public/course-decks/vegetables-staples/ts/slide-06.webp",
+      "pixels": "1440x5400",
+      "bytes": 614190,
+      "sha256": "dd236aad3b2a840888e9a30bd667e4ec21e9725a9479eccd4393ae436c07d8e5"
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "path": "public/course-decks/vegetables-staples/ts/slide-07.webp",
+      "pixels": "1440x5400",
+      "bytes": 689922,
+      "sha256": "c7b23020d45cafc542245d428277267fd1c5e64f19afb1911c173eabf0952fb6"
+    }
+  ],
+  "cacheMigration": "One-time selective eviction of exactly these 12 still paths (including query variants), preserving other slides, audio and animations."
+}

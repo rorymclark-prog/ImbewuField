@@ -22,6 +22,9 @@ const body: CSSProperties = {
   lineHeight: 1.7,
   color: 'var(--text-primary)',
   margin: '0 0 16px',
+  // A long web address in the references (chapter 13) has no spaces to break at. Without this it
+  // runs off a phone screen, and in the printed book Chrome shrinks every page to fit it.
+  overflowWrap: 'anywhere',
 };
 
 const cell: CSSProperties = {

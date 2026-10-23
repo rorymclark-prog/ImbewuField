@@ -1,0 +1,87 @@
+{
+  "speciesId": "zingiber-officinale",
+  "commonName": "Ginger",
+  "botanicalName": "Zingiber officinale",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No food-production pollination classification verified in the checked primary source."
+  },
+  "harvestProduct": "fresh rhizomes; dried ginger recorded separately",
+  "supplementaryReferences": [
+    {
+      "title": "South African trial harvest duration and native yields",
+      "quote": "seven to eight months after planting",
+      "url": "https://repository.up.ac.za/bitstream/handle/2263/91386/Gatabazi_Effect_2022.pdf?sequence=1",
+      "doc": "Gatabazi et al. (2022), Scientia Horticulturae 304:111353",
+      "page": 17,
+      "note": "Pretoria Hillcrest rain-shelter trial, 2015/16 and 2016/17, drip irrigation on sandy clay loam. Commercial ginger Z. officinale at eight months: 38.3 t/ha fresh and 8.8 t/ha dry rhizomes in the well-watered treatment; African ginger was a different species with different values. No matched plant density is supplied, so no kg/plant or household drying conversion is derived. The abstract says open field, while Methods specifies rain shelter; conditions are retained."
+    },
+    {
+      "title": "Confirmed culinary species and product",
+      "quote": "Edible ginger (Zingiber officinale",
+      "url": "https://ask.ifas.ufl.edu/publication/EP638",
+      "doc": "UF/IFAS: Ginger, Galangal, and Turmeric Production in Florida",
+      "page": null,
+      "note": "Extension identifies culinary ginger rhizomes used as spice, preserves and beverages. Florida planting and harvest months are not imported into the South African calendar."
+    },
+    {
+      "title": "Harvest recommendation",
+      "quote": "seven to eight months after planting",
+      "url": "https://repository.up.ac.za/items/00edc5cf-b651-48d9-832f-f0b8b1d53c33",
+      "doc": "University of Pretoria author manuscript: Gatabazi et al. (2022)",
+      "page": null,
+      "note": "The author abstract recommends harvest seven to eight months after planting; it is a rhizome crop-cycle duration, not a full-bearing tree age."
+    }
+  ],
+  "productionGuidance": {
+    "products": "fresh rhizomes; dried ginger recorded separately",
+    "care": [
+      "Use the planting date to record the rhizome harvest cycle. The Pretoria trial reference is conditional, not a fixed calendar across climates.",
+      "Record fresh rhizome and dried spice weights separately; keep edible ginger distinct from ornamental or African ginger species."
+    ],
+    "purchase": [
+      "Ask a local supplier for healthy, identified Zingiber officinale planting rhizomes; no South African cultivar-specific yield curve is verified."
+    ]
+  },
+  "householdFoodStatus": "confirmed-food",
+  "sourceChecks": [
+    {
+      "url": "https://repository.up.ac.za/bitstream/handle/2263/91386/Gatabazi_Effect_2022.pdf?sequence=1",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified primary page, institutional abstract or downloaded primary PDF; product, region, age and native-unit limits retained."
+    },
+    {
+      "url": "https://ask.ifas.ufl.edu/publication/EP638",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified primary page, institutional abstract or downloaded primary PDF; product, region, age and native-unit limits retained."
+    },
+    {
+      "url": "https://repository.up.ac.za/items/00edc5cf-b651-48d9-832f-f0b8b1d53c33",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified primary page, institutional abstract or downloaded primary PDF; product, region, age and native-unit limits retained."
+    }
+  ],
+  "gaps": []
+}

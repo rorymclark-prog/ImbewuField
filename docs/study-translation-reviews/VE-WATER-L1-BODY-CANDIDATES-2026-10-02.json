@@ -1,0 +1,111 @@
+{
+  "lessonId": "water-harvesting-l1",
+  "sourceMainSha": "1a84ddbc5b4fe69f37c0e34fbc88661ad25bac55",
+  "currentSourceCheckedAt": "2026-10-02T09:00:50Z",
+  "status": "wired-machine-draft",
+  "language": "ve",
+  "scopeNote": "Full eight-paragraph Tshivenda candidate body for Water Harvesting L1, source-paired to the actual canonical lesson and current VE registry at main 1a84ddbc5b4fe69f37c0e34fbc88661ad25bac55. Existing registry body is an exact-English hold in all paragraphs; no localized body paragraph was overwritten. Geometry, controlled-grade and safe-outlet design, routing, receiving capacity and trained-adviser checks remain English where precision is consequential. Candidate only; no repository edits and no fluent-speaker approval.",
+  "paragraphs": [
+    {
+      "index": 1,
+      "sourceEnglish": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.",
+      "currentDraft": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.",
+      "currentStatus": "hold",
+      "candidateStatus": "machine-draft",
+      "draft": "One kind of swale is a level trench on contour. I fhungudza luvhilo na u phaḓaladza runoff, uri maḓi maṅwe a kone u dzhena kha suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.",
+      "literalBacktranslation": "One kind of swale is a level trench on contour. It reduces speed and spreads runoff so some water can enter suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.",
+      "uncertainty": "Retains the swale type, level trench-on-contour geometry, alternate controlled grade and safe outlet in English. The localized sentence keeps runoff, some water and the suitable-soil qualification. Land selection factors and the trained-adviser check of line, overflow and receiving point before digging stay exact English because they are safety-critical."
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "The excavated soil forms a berm on the downhill side, where trees can be planted when the site design is suitable.",
+      "currentDraft": "The excavated soil forms a berm on the downhill side, where trees can be planted when the site design is suitable.",
+      "currentStatus": "hold",
+      "candidateStatus": "machine-draft",
+      "draft": "Mavu o excavated a vhumba berm on the downhill side, hune trees can be planted when the site design is suitable.",
+      "literalBacktranslation": "Excavated soil forms a berm on the downhill side, where trees can be planted when the site design is suitable.",
+      "uncertainty": "Keeps excavated soil, berm, downhill side, trees and suitability conditional in English where a translation could alter placement. The locative phrase connects the place where trees may be planted."
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "Trees planted there may draw on moisture stored in the soil after rain, depending on the site.",
+      "currentDraft": "Trees planted there may draw on moisture stored in the soil after rain, depending on the site.",
+      "currentStatus": "hold",
+      "candidateStatus": "machine-draft",
+      "draft": "Miri yo ṱavhiwaho henefho may draw on moisture stored in the soil after rain, depending on the site.",
+      "literalBacktranslation": "Trees planted there may draw on moisture stored in the soil after rain, depending on the site.",
+      "uncertainty": "The source subject “Trees planted there” is rendered as “Miri yo ṱavhiwaho henefho”; ṱavha is used in the existing Tshivenda materials for planting and henefho means there. The modal may, stored-soil moisture, after-rain timing and site dependence remain exact English. Confirm agreement and naturalness with a fluent speaker."
+    },
+    {
+      "index": 4,
+      "sourceEnglish": "Heavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.",
+      "currentDraft": "Heavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.",
+      "currentStatus": "hold",
+      "candidateStatus": "machine-draft",
+      "draft": "Pula khulwane i nga ḓadza swale nga u ṱavhanya u fhira u dzhena ha maḓi mavuni. Plan a safe overflow before digging.",
+      "literalBacktranslation": "Heavy rain can fill a swale faster than water enters the soil. Plan a safe overflow before digging.",
+      "uncertainty": "Heavy rain and can remain explicit. “Faster than” is localized while the safe-overflow plan and before-digging sequence stay exact English. Check the comparative in fluent review."
+    },
+    {
+      "index": 5,
+      "sourceEnglish": "The route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.",
+      "currentDraft": "The route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.",
+      "currentStatus": "hold",
+      "candidateStatus": "machine-draft",
+      "draft": "Route a i tei u erode slope kana u rumela damaging water kha neighbour. A downstream swale or dam must be able to receive it safely.",
+      "literalBacktranslation": "The route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.",
+      "uncertainty": "The prohibition, neighbour-impact condition and downstream receiving capacity remain explicit. Technical routing terms stay English to avoid changing the direction or safety requirement."
+    },
+    {
+      "index": 6,
+      "sourceEnglish": "Ask a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.",
+      "currentDraft": "Ask a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.",
+      "currentStatus": "hold",
+      "candidateStatus": "machine-draft",
+      "draft": "Ask a trained local adviser to assess the soil, slope and storm flow. Tshifanyiso a si construction design.",
+      "literalBacktranslation": "Ask a trained local adviser to assess soil, slope and storm flow. A picture is not a construction design.",
+      "uncertainty": "Removed wrong-language Kombelani after root caught it and independent check confirmed. Adviser assessment request stays exact English; picture sentence is an unreviewed Tshivenda draft with technical construction design retained."
+    },
+    {
+      "index": 7,
+      "sourceEnglish": "Slope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.",
+      "currentDraft": "Slope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.",
+      "currentStatus": "hold",
+      "candidateStatus": "machine-draft",
+      "draft": "Slope fhedzi a i sumbedzi arali swale i suitable. Soil, drainage, unstable ground na maḓi ane a bva upslope zwoṱhe zwi na ndeme.",
+      "literalBacktranslation": "Slope alone does not show whether a swale is suitable. Soil, drainage, unstable ground and water arriving from upslope all matter.",
+      "uncertainty": "Slope alone is not enough; soil, drainage, unstable ground and upslope-arriving water remain all relevant factors. Swale/site suitability terms remain English."
+    },
+    {
+      "index": 8,
+      "sourceEnglish": "Keep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
+      "currentDraft": "Keep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
+      "currentStatus": "hold",
+      "candidateStatus": "machine-draft",
+      "draft": "Keep good ground cover. Wanani local assessment before digging on steep, wet or unstable land. Grass barriers na terraces na zwone zwi ṱoḓa a design suited to the site.",
+      "literalBacktranslation": "Keep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
+      "uncertainty": "Keeps the ground-cover imperative exact English because the prior Hlayisani form may be wrong-language. The translated remainder preserves local assessment before digging on every listed land condition and the site-suited design requirement for both grass barriers and terraces."
+    }
+  ],
+  "draftBody": "One kind of swale is a level trench on contour. I fhungudza luvhilo na u phaḓaladza runoff, uri maḓi maṅwe a kone u dzhena kha suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.\n\nMavu o excavated a vhumba berm on the downhill side, hune trees can be planted when the site design is suitable.\n\nMiri yo ṱavhiwaho henefho may draw on moisture stored in the soil after rain, depending on the site.\n\nPula khulwane i nga ḓadza swale nga u ṱavhanya u fhira u dzhena ha maḓi mavuni. Plan a safe overflow before digging.\n\nRoute a i tei u erode slope kana u rumela damaging water kha neighbour. A downstream swale or dam must be able to receive it safely.\n\nAsk a trained local adviser to assess the soil, slope and storm flow. Tshifanyiso a si construction design.\n\nSlope fhedzi a i sumbedzi arali swale i suitable. Soil, drainage, unstable ground na maḓi ane a bva upslope zwoṱhe zwi na ndeme.\n\nKeep good ground cover. Wanani local assessment before digging on steep, wet or unstable land. Grass barriers na terraces na zwone zwi ṱoḓa a design suited to the site.",
+  "semanticChecks": [
+    "All eight source paragraphs remain in order and paired to exact current English; current registry body is an exact-English hold throughout.",
+    "The first paragraph preserves a level trench on contour, runoff slowed and spread so some water can enter suitable soil, the alternative slight controlled grade to a safe outlet, site factors, and trained local adviser check of line/overflow/receiving point before digging.",
+    "Berm placement remains on the downhill side; planting remains conditional on suitable site design. Paragraph 3 renders “Trees planted there” as “Miri yo ṱavhiwaho henefho” (trees planted there), while may, stored soil moisture, after-rain timing and site dependence remain exact English.",
+    "Heavy-rain filling remains possible and faster than infiltration; safe overflow is planned before digging.",
+    "The route must not erode the slope or send damaging water to a neighbour; a downstream swale or dam must be able to receive water safely.",
+    "Keep good ground cover remains an imperative (retained exact English); the local assessment still precedes digging on steep, wet or unstable land, and grass barriers and terraces both require site-suited design.",
+    "Grass barriers and terraces retain their site-suited design condition; no dimensions, grades, capacities or construction steps were added.",
+    "Root caught residual likely Xitsonga Kombelani in paragraph 6; independent check confirmed and request now holds exact English. Paragraph 4 dental spelling repaired to ṱavhanya. No fluent approval."
+  ],
+  "uncertaintySummary": "Machine-draft proposal only, not fluent Tshivenda or engineering approval. Technical geometry and safety language remains English where local wording could change design meaning. Paragraph 3 uses a tentative localized “Trees planted there” phrase with the modal and conditions kept English; confirm agreement in fluent review.",
+  "independentReview": {
+    "result": "accepted for source-paired learner wiring",
+    "scope": "Tshivenda prose meaning and source alignment; no fluent-speaker or local engineering approval",
+    "checks": [
+      "all eight body paragraphs match the canonical English in order and the previous registry body was an exact-English hold",
+      "conditional claims, direction-sensitive terms and pre-dig safety checks were retained or left exact English",
+      "the trained local adviser request in paragraph 6 remains exact English; paragraph 8 retains the cover imperative in English"
+    ]
+  }
+}

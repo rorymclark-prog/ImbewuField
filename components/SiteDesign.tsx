@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { PenLine, Sprout, GraduationCap, Loader2, Check, PencilRuler } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { networkFailureMessage } from '@/lib/network-failure';
+import { useLanguage } from '@/lib/i18n';
 
 interface Props {
   locationData: LocationData | null;
@@ -64,6 +66,7 @@ function renderDesign(text: string) {
 }
 
 export default function SiteDesign({ locationData, photoAnalysis, appLang, placeName }: Props) {
+  const { t } = useLanguage();
   const [preview, setPreview] = useState<string>('');
   const [imageData, setImageData] = useState<{ data: string; mediaType: string } | null>(null);
   const [design, setDesign] = useState('');
@@ -103,7 +106,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
         headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
         body: JSON.stringify({ images: [imageData], locationData, photoAnalysis, language, tone }),
       });
-      if (!res.ok) throw new Error(`Server error ${res.status}`);
+      if (!res.ok) { setError(networkFailureMessage(t, { status: res.status })); return; }
       const reader = res.body!.getReader();
       const dec = new TextDecoder();
       let text = '';
@@ -113,8 +116,8 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
         text += dec.decode(value, { stream: true });
         setDesign(text);
       }
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Design failed');
+    } catch {
+      setError(networkFailureMessage(t));
     } finally {
       setLoading(false);
     }
@@ -130,31 +133,31 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
         <Link
           href={`/design?lat=${locationData.lat.toFixed(5)}&lon=${locationData.lon.toFixed(5)}${placeName ? `&name=${encodeURIComponent(placeName)}` : ''}`}
           className="block rounded-2xl p-4 transition-all"
-          style={{ background: 'linear-gradient(135deg, #1F4D2B, #2D6B3C)', border: '1px solid rgba(31,77,43,0.5)', color: '#FBF6EC', textDecoration: 'none' }}
+          style={{ background: 'linear-gradient(135deg, #1F4D2B, #2D6B3C)', border: '1px solid rgba(31,77,43,0.5)', color: 'var(--on-forest)', textDecoration: 'none' }}
         >
           <span className="flex items-center gap-2 font-display font-semibold" style={{ fontSize: 15 }}>
-            <PencilRuler size={18} /> Open the Design Studio
+            <PencilRuler size={18} /> {t('siteDesignOpenStudio')}
           </span>
           <p className="font-display leading-relaxed mt-1.5" style={{ fontSize: 12.5, color: '#F7C97E' }}>
-            Place tanks, trees &amp; zones on your land at real scale — step-by-step guidance, or one-tap auto-design.
+            {t('siteDesignStudioDesc')}
           </p>
-          <span className="inline-flex items-center gap-1 font-sans mt-2" style={{ fontSize: 12, color: '#FBF6EC', opacity: 0.85 }}>
-            Start designing this site →
+          <span className="inline-flex items-center gap-1 font-sans mt-2" style={{ fontSize: 12, color: 'var(--on-forest)', opacity: 0.85 }}>
+            {t('siteDesignStartDesigning')}
           </span>
         </Link>
       )}
 
       {!locationData && (
         <p className="text-xs font-display text-center rounded-xl p-3" style={{ color: 'var(--text-muted)', background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
-          Select a location on the map to open the Design Studio for it.
+          {t('siteDesignSelectLocation')}
         </p>
       )}
 
-      <div className="text-xs font-mono uppercase tracking-wider pt-2" style={{ color: 'var(--text-muted)', borderTop: '1px solid var(--border)' }}>
-        Sketch → AI Design
+      <div className="text-xs uppercase tracking-wider pt-2" style={{ color: 'var(--text-muted)', borderTop: '1px solid var(--border)' }}>
+        {t('siteDesignSketchHeader')}
       </div>
       <p className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-        Upload a hand-drawn plan of your land (or a photo of one). Claude reads it and lays out a permaculture design on your sketch, using this site&apos;s climate, soil, sun and wind.
+        {t('siteDesignUploadIntro')}
       </p>
 
       {/* Upload zone */}
@@ -163,17 +166,21 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => { e.preventDefault(); processFile(e.dataTransfer.files[0]); }}
         className="rounded-xl p-4 text-center cursor-pointer transition-all"
-        style={{ background: 'var(--bg-2)', border: `1px dashed ${preview ? 'rgba(158,92,8,0.5)' : '#E2D8C4'}` }}
+        style={{ background: 'var(--bg-2)', border: `1px dashed ${preview ? 'rgba(158,92,8,0.5)' : 'var(--border)'}` }}
       >
         <input ref={inputRef} type="file" accept="image/*" className="hidden"
           onChange={(e) => processFile(e.target.files?.[0])} />
         {preview ? (
-          <img src={preview} alt="sketch" className="max-h-40 mx-auto rounded-lg" style={{ border: '1px solid var(--border)' }} />
+          // code-20: a fixed height (not max-h, which only caps a size the browser cannot know
+          // before decode) reserves this box before the sketch loads, so the upload zone does
+          // not resize under the farmer's cursor once it has. object-fit: contain, not cover —
+          // unlike a cropped photo preview, a sketch's shape is the content being reviewed.
+          <img src={preview} alt="sketch" height={160} width={240} className="mx-auto rounded-lg" style={{ height: 160, objectFit: 'contain', border: '1px solid var(--border)' }} />
         ) : (
           <div>
             <PenLine size={22} className="mx-auto mb-1.5" style={{ color: 'var(--color-forest-800)' }} />
-            <p className="text-xs font-display" style={{ color: 'var(--text-muted)' }}>Drop your site sketch here or click to upload</p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>a hand drawing, plan, or photo of one</p>
+            <p className="text-xs font-display" style={{ color: 'var(--text-muted)' }}>{t('siteDesignDropSketch')}</p>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>{t('siteDesignSketchHint')}</p>
           </div>
         )}
       </div>
@@ -182,14 +189,14 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
       {imageData && (
         <div className="flex gap-2">
           <select value={language} onChange={(e) => setLanguage(e.target.value)}
-            className="flex-1 text-xs font-display rounded-lg px-2 py-1.5 outline-none cursor-pointer"
+            className="flex-1 text-xs font-display rounded-lg px-2 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] cursor-pointer"
             style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}>
             {LANGS.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
           </select>
           <button onClick={() => setTone(tone === 'simple' ? 'professional' : 'simple')}
             className="px-2.5 py-1.5 rounded-lg text-xs font-display transition-all flex items-center gap-1.5"
             style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
-            {tone === 'simple' ? <><Sprout size={14} /> Simple</> : <><GraduationCap size={14} /> Detailed</>}
+            {tone === 'simple' ? <><Sprout size={14} /> {t('siteDesignToneSimple')}</> : <><GraduationCap size={14} /> {t('siteDesignToneDetailed')}</>}
           </button>
         </div>
       )}
@@ -201,17 +208,17 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
           style={loading
             ? { background: '#E2D8CB', border: '1px solid var(--border)', color: 'var(--text-muted)' }
             : { background: 'rgba(158,92,8,0.12)', border: '1px solid rgba(158,92,8,0.4)', color: 'var(--gold)' }}>
-          {loading ? <span className="flex items-center justify-center gap-1.5"><Loader2 size={14} className="animate-spin" /> Designing your site…</span> : <span className="flex items-center justify-center gap-1.5"><PencilRuler size={14} /> Generate design</span>}
+          {loading ? <span className="flex items-center justify-center gap-1.5"><Loader2 size={14} className="animate-spin" /> {t('siteDesignGenerating')}</span> : <span className="flex items-center justify-center gap-1.5"><PencilRuler size={14} /> {t('siteDesignGenerateButton')}</span>}
         </button>
       )}
 
       {photoAnalysis && (
-        <div className="text-xs font-mono px-2.5 py-1.5 rounded-lg flex items-center gap-1.5" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)', color: 'var(--text-secondary)' }}>
-          <Check size={13} /> Your photo analysis will be used in the design
+        <div className="text-xs px-2.5 py-1.5 rounded-lg flex items-center gap-1.5" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)', color: 'var(--text-secondary)' }}>
+          <Check size={13} /> {t('siteDesignPhotoAnalysisNote')}
         </div>
       )}
 
-      {error && <p className="text-xs font-mono" style={{ color: '#C0531E' }}>{error}</p>}
+      {error && <p className="text-xs" style={{ color: '#C0531E' }}>{error}</p>}
 
       {/* Design output */}
       {design && (

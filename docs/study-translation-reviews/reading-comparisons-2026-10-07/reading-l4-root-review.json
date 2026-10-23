@@ -1,0 +1,67 @@
+{
+  "sourcePacket": "/tmp/imbewu-agy-reading-l4-all-language-source-20261007.json",
+  "sourceRevision": "869f1d5c2063b3cbfd72802e222dd8d3fc6d7c23",
+  "sourceSha256": "5ea6c1fb41a2db78c829bd8a843e2584c3223fd9367cb1dc31fd260784d1b483",
+  "observedAt": "2026-10-07T03:56:44.307741+00:00",
+  "scope": "Root read-only source/target review; hypotheses, not fluent findings",
+  "flags": [
+    {
+      "language": "zu",
+      "field": "body.paragraph2",
+      "sourceClause": "longest",
+      "currentClause": "isikhathi eside",
+      "reason": "Long duration lacks explicit longest. Same issue as Reading L3; compare repairs together.",
+      "status": "independent check required"
+    },
+    {
+      "language": "ts",
+      "field": "body.paragraph2",
+      "sourceClause": "longest",
+      "currentClause": "nkarhi wo leha ngopfu",
+      "reason": "Intensive long versus longest needs independent semantic proof.",
+      "status": "independent check required"
+    },
+    {
+      "language": "zu",
+      "field": "quiz.1.options.1",
+      "sourceClause": "tender crops",
+      "currentClause": "izitshalo ezizwela umoya",
+      "reason": "Narrows tender crops to wind-sensitive plants. Needs a general sensitivity term or retained technical English.",
+      "status": "independent check required"
+    },
+    {
+      "language": "st",
+      "field": "body.paragraph3",
+      "sourceClause": "a perfect one drawn once",
+      "currentClause": "se setle haholo se takilweng hanngwe feela",
+      "reason": "Beautiful/very good may not retain perfect; actual-use clause and once-only preserved.",
+      "status": "independent check required"
+    },
+    {
+      "language": "ve",
+      "field": "body.paragraph3",
+      "sourceClause": "a perfect one drawn once",
+      "currentClause": "yo nakiswaho yo olwaho luthihi fhedzi",
+      "reason": "Beautified versus perfect requires independent check.",
+      "status": "independent check required"
+    },
+    {
+      "language": "ts",
+      "field": "body.paragraph3",
+      "sourceClause": "you actually use",
+      "currentClause": "lexi u xi tirhisaka kahle",
+      "reason": "Adds well to use; source asks actual use, not quality of use.",
+      "status": "independent check required"
+    }
+  ],
+  "answerIndicesMatch": true,
+  "learnerEdits": false,
+  "fluentApproval": false,
+  "preserve": [
+    "species khakibos/blackjack",
+    "before soil check; presence alone no compaction diagnosis",
+    "not to scale until distances checked",
+    "same sketch and seasonal updates",
+    "quiz order and correct indices2,1"
+  ]
+}

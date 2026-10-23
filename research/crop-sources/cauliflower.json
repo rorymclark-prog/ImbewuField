@@ -1,0 +1,188 @@
+{
+  "key": "cauliflower",
+  "name": "Cauliflower",
+  "localNames": null,
+  "botanicalName": "Brassica oleracea var. botrytis",
+  "family": "Brassicaceae",
+  "role": "food",
+  "foodGroup": "leafy_green",
+  "harvestProduct": "curd (immature flower head)",
+  "frostTender": {
+    "value": false,
+    "evidence": [
+      {
+        "quote": "The brassica family is quite cold resistant, making them well adapted to cool season production. ... Young, hardened cauliflower plants can withstand temperatures of 0 °C for less than 36 hours. The minimum and maximum growing temperatures for cauliflower are 0 and 30 °C, with the optimum growing temperature for this crop between 15 and 22 °C.",
+        "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cauliflower.pdf",
+        "page": 10,
+        "doc": "Production Guidelines for Cauliflower, DAFF (South Africa), n.d."
+      }
+    ],
+    "notes": "Not a frost-killed warm-season crop, so the catalog's 'frost-tender' gate does not apply — but it is also not fully frost-hardy like cabbage: KZN DARD's Cole Crops chapter warns 'Mature curds, if not protected by leaves, can be easily damaged by only a few degrees of frost. Heavy frosts can cause serious damage to the crop' (kzndard.gov.za, Cole Crops, p.2). Curd protection near frost season is a real farmer-facing caveat even though value=false."
+  },
+  "transplant": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "there is another group which transplant comparatively easily and successfully, even at a more advanced age. These include crops such as brinjal, broccoli, Brussels sprouts, cabbage, cauliflower, celery, chilli, leek, lettuce, onion, sweet pepper and tomato.",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 2,
+        "doc": "KZN DARD, 'Plant Establishment' (Vegetable Production Guidelines, Horticulture/Veg_prod)"
+      }
+    ]
+  },
+  "sowMonths": {
+    "summer": { "months": [8, 9, 12, 1, 2, 3], "evidence": [{"quote": "Cauliflower ... Cold areas Heavy frost: December - Feb/March [and] August - September", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/cole_crops.pdf", "page": 3, "doc": "KZN DARD, 'Cole Crops', Table 14 'Sowing times'"}, {"quote": "Cauliflower Aug - Sept, Dec - Feb/Mar", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 7, "doc": "KZN DARD, 'Plant Establishment', Table 6 'Sowing times for certain selected vegetable crops' — Cold areas / Moderate frosts column"}] },
+    "winter": { "months": [8, 9, 12, 1, 2, 3], "evidence": [], "notes": "Both KZN sources give a national/summer-rainfall-province 3-tier frost table (Cold/Warm/Hot areas), not a Western-Cape winter-rainfall-specific calendar. Winter is set equal to summer's 'Cold areas' window as the closest documented cool-climate analogue, following this catalog's existing cabbage/broccoli precedent — flagged as inference, not a direct Western Cape quote." },
+    "all-year": { "months": [2, 3, 4], "evidence": [{"quote": "Cauliflower ... Hot areas Frost free: Feb - Mar/Apr", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/cole_crops.pdf", "page": 3, "doc": "KZN DARD, 'Cole Crops', Table 14"}, {"quote": "Cauliflower ... Feb - Mar/Apr", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 7, "doc": "KZN DARD, 'Plant Establishment', Table 6 — Hot areas / Frost-free column"}] },
+    "mild-frost": { "months": [7, 8, 9, 1, 2, 3, 4], "evidence": [{"quote": "Cauliflower ... Warm areas Light Frost: August - September, January - April", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/cole_crops.pdf", "page": 3, "doc": "KZN DARD, 'Cole Crops', Table 14"}, {"quote": "Cauliflower ... Jul - Sept, Jan - Apr", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 7, "doc": "KZN DARD, 'Plant Establishment', Table 6 — Warm areas / Light frosts column"}] }
+  },
+  "daysToHarvestRange": {
+    "value": [60, 130],
+    "evidence": [
+      {
+        "quote": "Cauliflower 60 - 130 *",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/length_of_growing_period.pdf",
+        "page": 2,
+        "doc": "KZN DARD, 'Length of Growing Period', Table 4 (* = from transplanting)"
+      },
+      {
+        "quote": "Synergy Summer 85-110 ... Sabadel Early summer 70-80 ... TSX C40 Summer 75-80 ... Lagardo Autumn, Winter, Spring 90-120 ... Arano Winter 90-20[0] ... Huntsmen Year round 90-120 ... Juneau Year round 90-120 ... TSX C22 Year round 70-75 ... White Gold Year round 75-80",
+        "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cauliflower.pdf",
+        "page": 9,
+        "doc": "Production Guidelines for Cauliflower, DAFF, n.d., variety table"
+      }
+    ],
+    "notes": "From transplanting, per both sources. KZN's 60-130 range is the widest published span; DAFF's per-cultivar table (70-120) sits inside it."
+  },
+  "harvestPeriodWeeksOrMonths": {
+    "value": "2-4 weeks",
+    "evidence": [
+      {
+        "quote": "Cauliflower 60 - 130 * ... 2 - 4 weeks",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/length_of_growing_period.pdf",
+        "page": 2,
+        "doc": "KZN DARD, 'Length of Growing Period', Table 4"
+      },
+      {
+        "quote": "Harvesting should be done regularly, at least twice a week ... The cauliflower harvest season begins in late July and ends in late October, depending on the weather.",
+        "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cauliflower.pdf",
+        "page": 36,
+        "doc": "Production Guidelines for Cauliflower, DAFF, n.d."
+      }
+    ]
+  },
+  "rowSpacingRangeCm": {
+    "value": [60, 90],
+    "evidence": [
+      {
+        "quote": "Place seeds 12 mm deep and 35 to 50 cm apart, in rows that are 60 to 90 cm apart.",
+        "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cauliflower.pdf",
+        "page": 11,
+        "doc": "Production Guidelines for Cauliflower, DAFF, n.d."
+      },
+      {
+        "quote": "Cauliflower 200-400 [seed/g] ... 15-20 [sow depth mm] 400-500 [plant mm] 600-700 [rows mm]",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 5,
+        "doc": "KZN DARD, 'Plant Establishment', seed/spacing table"
+      }
+    ],
+    "notes": "DAFF's direct-seed row spacing (60-90cm) and KZN's transplant row spacing (60-70cm) overlap; DAFF separately quotes a wider 91-102cm row for early greenhouse-transplant production ('Spacing between rows should be 91 or 102 cm', p.11) — recorded as an alternate figure for early/mechanised plantings, not folded into the range."
+  },
+  "inRowSpacingRangeCm": {
+    "value": [35, 50],
+    "evidence": [
+      {
+        "quote": "Place seeds 12 mm deep and 35 to 50 cm apart ... Plant spacings that are more square (i.e. 50 cm x 60 cm) will aid in providing a more uniform crop.",
+        "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cauliflower.pdf",
+        "page": 11,
+        "doc": "Production Guidelines for Cauliflower, DAFF, n.d."
+      },
+      {
+        "quote": "Cauliflower ... 400-500 [plant mm]",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 5,
+        "doc": "KZN DARD, 'Plant Establishment', seed/spacing table"
+      }
+    ]
+  },
+  "sowDepthRangeCm": {
+    "value": [1.2, 2],
+    "evidence": [
+      {
+        "quote": "Place seeds 12 mm deep",
+        "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cauliflower.pdf",
+        "page": 11,
+        "doc": "Production Guidelines for Cauliflower, DAFF, n.d."
+      },
+      {
+        "quote": "Cauliflower ... 15-20 [Sowing depth mm]",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 5,
+        "doc": "KZN DARD, 'Plant Establishment', seed/spacing table"
+      }
+    ]
+  },
+  "seedRateKgPerHaRange": null,
+  "seedRateNotes": "DAFF: 'Normally 300 g of seed will produce enough plants for one hectare' (transplants) vs 'When direct seeding, 1 kg of seed is required per hectare' (p.11-12). KZN's 120-200g (seedtray) / 250-500g (seedbed) figures are per-hectare-of-transplants seedbed quantities, not a field broadcast rate, so no single seedRateKgPerHaRange is recorded — the two DAFF figures (0.3kg/ha via transplants, 1kg/ha direct-seeded) are kept as prose rather than merged into a misleading range.",
+  "yield": {
+    "tPerHaRange": [7, 20],
+    "product": "curds (excluding wrapper leaves), fresh market",
+    "conditions": "commercial, South Africa — conservative to target yield spread",
+    "evidence": [
+      {
+        "quote": "Cauliflower 7 - 8 [Conservative] 10 - 12 [Likely] 15 - 20 [Target]",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/expected_yields.pdf",
+        "page": 2,
+        "doc": "KZN DARD, 'Expected Yields', Table 8"
+      },
+      {
+        "quote": "Yields of curds, excluding the protective leaves, generally average 10 to 15 tons for early maturing varieties and 15 to 20 tons for later varieties. Good crops may yield 50% higher.",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/cole_crops.pdf",
+        "page": 26,
+        "doc": "KZN DARD, 'Cole Crops'"
+      }
+    ]
+  },
+  "ecocrop": {
+    "row": "Brassica oleracea var. botrytis",
+    "TOPMN": 10,
+    "TOPMX": 25,
+    "TMIN": 5,
+    "TMAX": 30,
+    "GMIN": 60,
+    "GMAX": 120,
+    "KTMP": -5
+  },
+  "ecocropNotes": "EcoCrop_DB.csv row 'Brassica oleracea var. botrytis' used directly (cauliflower-specific cultivar group, not a generic Brassica oleracea species row).",
+  "coverCrop": null,
+  "varieties": [
+    { "name": "Sabadel", "zones": ["highveld", "midlands-mistbelt"], "maturity": "early", "season": "Early summer sowing", "note": "Large plant, big white dome head; fresh market and industry.", "evidence": [{"quote": "Sabadel Early summer 70-80 Large Big White Dome Fresh market and industry", "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cauliflower.pdf", "page": 9, "doc": "Production Guidelines for Cauliflower, DAFF, n.d."}] },
+    { "name": "TSX C22", "zones": ["lowveld-bushveld", "subtropical-coast"], "maturity": "early", "season": "Year round", "note": "Ideal for prepack and freezing, blackrot tolerant.", "evidence": [{"quote": "TSX C22 Year round 70-75 Medium to large 0,6-1,2 White Dome Ideal for prepack and freezing, Blackrot tolerant", "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cauliflower.pdf", "page": 9, "doc": "Production Guidelines for Cauliflower, DAFF, n.d."}] },
+    { "name": "Synergy", "zones": ["highveld", "midlands-mistbelt"], "maturity": "medium", "season": "Summer", "note": "Reasonable heat and cold tolerance; processing (freezing) and fresh market.", "evidence": [{"quote": "Synergy Summer 85-110 Medium to large 0,8-1,5 kg White Deep round Reasonable heat and cold tolerance, processing (freezing) and fresh market", "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cauliflower.pdf", "page": 9, "doc": "Production Guidelines for Cauliflower, DAFF, n.d."}] },
+    { "name": "Lagardo", "zones": ["western-cape", "southern-cape"], "maturity": "medium", "season": "Autumn, Winter, Spring", "note": "Fresh market, freezing and prepack.", "evidence": [{"quote": "Lagardo Autumn, Winter, Spring 90-120 Medium 0,8-1,5 Cream white Ball to dome Fresh market, freezing and prepack", "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cauliflower.pdf", "page": 9, "doc": "Production Guidelines for Cauliflower, DAFF, n.d."}] },
+    { "name": "Arano", "zones": ["western-cape", "southern-cape"], "maturity": "late", "season": "Winter", "note": "Ideal for prepack and freezing.", "evidence": [{"quote": "Arano Winter 90-120 Medium to large 0,8-1,5 White Deep round Ideal for prepack and freezing", "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cauliflower.pdf", "page": 9, "doc": "Production Guidelines for Cauliflower, DAFF, n.d. (table shows '90-20' for this row, almost certainly a scan/OCR artefact of '90-120' given the neighbouring Huntsmen/Juneau rows — recorded as printed with this caveat)"}] },
+    { "name": "Huntsmen", "zones": ["subtropical-coast", "midlands-mistbelt"], "maturity": "medium", "season": "Year round", "note": "Standard for mild summers and winters.", "evidence": [{"quote": "Huntsmen Year round 90-120 Medium 1-1,7 Cream white Ball to dome Standard for mild summers and winters", "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cauliflower.pdf", "page": 9, "doc": "Production Guidelines for Cauliflower, DAFF, n.d."}] },
+    { "name": "White Gold", "zones": ["lowveld-bushveld", "subtropical-coast"], "maturity": "early", "season": "Year round", "note": "Good standing ability, strong against riceyness and red discolouration.", "evidence": [{"quote": "White Gold Year round 75-80 Medium 0,5-8 Fresh green Triangular Good standing ability, strong against riceyness and red discolouration", "url": "https://web.archive.org/web/2026id_/https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Production%20Guidelines%20%20Cauliflower.pdf", "page": 9, "doc": "Production Guidelines for Cauliflower, DAFF, n.d."}] },
+    { "name": "Incline / Glacier / Arizona / Fremont / Siria / Star 4403 / Star 4405 / Tenere", "zones": ["midlands-mistbelt"], "maturity": null, "season": null, "note": "Named as popular cauliflower cultivars grown in KwaZulu-Natal, without individual season/zone/maturity breakdown in the source.", "evidence": [{"quote": "Popular cultivars include Incline, Glacier, Arizona, Fremont, Siria, Star 4403, Star 4405 and Tenere.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/cole_crops.pdf", "page": 3, "doc": "KZN DARD, 'Cole Crops'"}] }
+  ],
+  "varietiesNotes": "Zone assignments above are this research pass's placement of DAFF's quoted 'Season' values (Summer/Winter/Year round/etc.) onto the catalog's 8 SA growing zones — neither DAFF nor KZN DARD map these cultivars to named zones directly, so treat zones as a reasonable inference, not a sourced claim, distinct from the directly-quoted days-to-maturity and season text.",
+  "zoneNotes": {
+    "highveld": "Cool-season crop matches this zone's climate; DAFF's Cold-areas/heavy-frost sowing window (Aug-Sep, Dec-Mar) applies, but curds need leaf protection against heavy frost near maturity (KZN DARD, Cole Crops, p.2).",
+    "lowveld-bushveld": "DAFF: cauliflower 'will also seldom give an acceptable yield or quality if it matures during hotter weather' (Cole Crops p.2) — workable with careful season timing (winter window) rather than as a summer crop.",
+    "subtropical-coast": "KZN DARD's 'Hot areas / Frost-free' sowing window (Feb-Apr) applies; several 'Year round' cultivars (Huntsmen, Juneau, TSX C22, White Gold) are suited here.",
+    "midlands-mistbelt": "KZN DARD's own 'Cole Crops' chapter is written primarily for this zone; most named KZN cultivars (Incline, Glacier, Arizona, etc.) and the moderate-frost sowing window apply directly.",
+    "western-cape": "Not covered by a Western-Cape-specific source in this pass; DAFF's Autumn/Winter/Spring cultivars (Lagardo, Arano) fit a winter-rainfall cool season by inference only — flagged as a gap.",
+    "southern-cape": "Same gap as western-cape — no Southern Cape-specific source found; winter/autumn cultivars inferred to fit this all-year-rainfall mild coast.",
+    "karoo-arid": "DAFF's 0-30°C growing range and poor performance in hot weather make this zone's extreme heat and aridity a poor fit; not listed as a production area by either source.",
+    "high-mountain": "Not addressed by source; DAFF/KZN DARD both warn that heavy frost damages unprotected mature curds, which is a concern in a severe-frost zone even though the plant itself is cold-tolerant."
+  },
+  "gaps": [
+    "No Western Cape / Southern Cape-specific sowing calendar found — the sourced 3-tier sowing table (Cold/Warm/Hot areas) is a summer-rainfall-oriented national/KZN table, not a winter-rainfall-specific one; 'winter' sowMonths are set equal to 'summer' by inference, following this catalog's cabbage/broccoli precedent, not a direct quote.",
+    "Arano's DAFF table entry prints '90-20' for days-to-maturity — very likely an OCR/scan artefact of '90-120' (its head-mass, colour and use match the neighbouring rows) but recorded with that caveat rather than silently 'corrected'.",
+    "Named KZN cultivars (Incline, Glacier, Arizona, Fremont, Siria, Star 4403/4405, Tenere) have no individual season, maturity or zone data in the source beyond 'popular in KwaZulu-Natal'.",
+    "No single seedRateKgPerHaRange recorded — DAFF gives two different figures (0.3 kg/ha via transplants, 1 kg/ha direct-seeded) that describe different establishment methods rather than a single range."
+  ],
+  "verdict": "ready",
+  "summary": "Sourced from DAFF's Cauliflower production guideline plus four KZN DARD 'Vegetable Production Guidelines' chapters (Plant Establishment, Cole Crops, Expected Yields, Length of Growing Period). SowMonths (summer/mild-frost/all-year), row/in-row spacing, sow depth, days-to-harvest (60-130d from transplant) and yield (7-20 t/ha, conservative-to-target) are all directly quoted, and eight named SA seed-trade cultivars span early-to-late maturity. The main gap is a Western Cape/Southern Cape-specific sowing calendar — the sourced 3-tier table is frost-severity-based rather than rainfall-pattern-based, so 'winter' is inferred equal to 'summer' rather than independently sourced."
+}

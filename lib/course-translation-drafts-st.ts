@@ -75,7 +75,7 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
       ),
       body: pair(
         "Permaculture rests on three ethics. Earth Care means treating soil, water, plants and animals as living systems to protect, not resources to use up. People Care means your family's needs come first, then your community's. Fair Share means taking only what you need and returning the surplus — seeds, food, water, knowledge — back into the system.\n\nThese aren't abstract ideas. A farmer who sells every egg and vegetable but keeps nothing back for the family table is skipping People Care. A community that fences off a shared spring is breaking Fair Share.\n\nEthics matter because they help you decide when there's no rulebook — a neighbour asking to graze cattle after a drought, a flood damaging your swales. Build these three into how you think before you build anything on the ground.",
-        "Permaculture e itshetlehile ka melao e meraro ya boitshwaro. Tlhokomelo ya Lefatshe (Earth Care) e bolela ho nka mobu, metsi, dimela le diphoofolo e le ditsamaiso tse phelang tse lokelang ho sireletswa, eseng mehlodi eo re ka e sebedisang ho fihlela e fela. Tlhokomelo ya Batho (People Care) e bolela hore ditlhoko tsa lelapa la hao di tla pele, ebe ho latela tsa setjhaba sa heno. Fair Share means taking only what you need and returning the surplus — seeds, food, water, knowledge — back into the system.\n\nThese aren't abstract ideas. A farmer who sells every egg and vegetable but keeps nothing back for the family table is skipping People Care. A community that fences off a shared spring is breaking Fair Share.\n\nEthics matter because they help you decide when there's no rulebook — a neighbour asking to graze cattle after a drought, a flood damaging your swales. Build these three into how you think before you build anything on the ground.",
+        "Permaculture e itshetlehile ka melao e meraro ya boitshwaro. Tlhokomelo ya Lefatshe (Earth Care) e bolela ho nka mobu, metsi, dimela le diphoofolo e le ditsamaiso tse phelang tse lokelang ho sireletswa, eseng mehlodi eo re ka e sebedisang ho fihlela e fela. Tlhokomelo ya Batho (People Care) e bolela hore ditlhoko tsa lelapa la hao di tla pele, ebe ho latela tsa setjhaba sa heno. Karolelano e Lokileng (Fair Share) e bolela ho nka feela seo o se hlokang le ho kgutlisetsa tse setseng (surplus) — dipeo, dijo, metsi, tsebo — hape tsamaisong.\n\nTsena ha se mehopolo feela. Molemi ya rekisang lehe le leng le le leng le moroho o mong le o mong empa a sa boloke letho bakeng sa dijo tsa lelapa o hlokomoloha Tlhokomelo ya Batho (People Care). Setjhaba se kwalang sediba seo se sebedisanang ka sona (shared spring) ka terata se tlola Karolelano e Lokileng (Fair Share).\n\nMelao ya boitshwaro e bohlokwa hobane e o thusa ho etsa diqeto ha ho se na buka ya melao — moahisani ya kopang ho fulisa dikgomo ka mora komello, kapa morwallo o senyang swales tsa hao. Etsa hore melao ena e meraro e be karolo ya tsela eo o nahanang ka yona pele o haha eng kapa eng fatshe.",
       ),
       keyPoints: [
         pair(
@@ -166,90 +166,48 @@ export const SESOTHO_INTRO_PERMACULTURE_DRAFT: SesothoCourseModuleDraft = {
         "Twelve Principles: Designing with Nature",
         "Melao-motheo e Leshome le Metso e Mmedi: Ho Rala le Tlhaho",
       ),
-      body: hold(
+      body: pair(
         "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+        "David Holmgren o hlalositse melao-motheo e leshome le metso e mmedi ya moralo ka hara Essence of Permaculture. Bill Mollison le David Holmgren ba thehile mohopolo wa permaculture mmoho. Melao-motheo e meraro e ka o thusang ho qala thutong ena ke ena: observe and interact — shebella setsha sa hao sehleng sohle pele o qala earthworks tse kgolo; catch and store energy — hlokomela pula, letsatsi le biomass pele di tloha setsheng sa hao; le use edges and value the marginal — mola wa terata kapa sebaka se moqotetsane se pela tsela e ka ba sebaka se molemo sa ho shebella.\n\nMelao-motheo e meng eo ho leng molemo ho e tseba ke ena: produce no waste, e le hore masalla (scraps) e be compost mme compost e be mobu; use small and slow solutions — bakete e ka nosetsa bethe ya dimela (bed) ntle le motlakase; le use and value diversity. Tšenyo ya sefako pooneng (maize) e itshetlehile ka sefefo le boemo ba kgolo ya sejwalo.\n\nKgetha melao-motheo e mmedi kapa e meraro e amanang le bothata bo boholo ba hao, mme o e sebedise ka tieo. E meng e tla hlaka ha o ntse o tswela pele.",
       ),
       keyPoints: [
-        pair(
-          "Observe your land for a full season before major earthworks",
-          "Shebella naha ya hao sehla se feletseng pele o etsa mesebetsi e meholo ya mobu",
-        ),
-        pair(
-          "Catch and store rain, sun, and biomass before they leave your property",
-          "Tshwara le ho boloka pula, letsatsi, le biomass pele di tloha setsheng sa hao",
-        ),
-        pair(
-          "Edges and margins can be useful places to observe what grows well",
-          "Mathoko le dibaka tse ka thoko e ka ba dibaka tse sebetsang tsa ho shebella se melang hantle",
-        ),
-        pair(
-          "Hail injury to maize depends on the storm and the crop’s growth stage",
-          "Tshenyo ya sefako hodima poone (maize) e itshetlehile ka sefefo le boemo ba kgolo ya dijalo",
-        ),
+        pair("Observe your land for a full season before major earthworks", "Shebella setsha sa hao sehleng sohle pele o qala earthworks tse kgolo."),
+        pair("Catch and store rain, sun, and biomass before they leave your property", "Bokella mme o boloke pula, letsatsi le biomass pele di tloha setsheng sa hao."),
+        pair("Edges and margins can be useful places to observe what grows well", "Edges le margins di ka ba dibaka tse molemo tsa ho shebella se melang hantle."),
+        pair("Hail injury to maize depends on the storm and the crop’s growth stage", "Tšenyo ya sefako pooneng (maize) e itshetlehile ka sefefo le boemo ba kgolo ya sejwalo."),
       ],
       quiz: [
         {
-          question: pair(
-            "A farmer wants to dig swales to harvest rainwater. What should she do first, following 'observe and interact'?",
-            "Molemi o batla ho tjheka mekero (swales) ho kotula metsi a pula. O lokela ho etsa eng pele, a latela 'sheba mme o sebedisane' (observe and interact)?",
-          ),
+          question: pair("A farmer wants to dig swales to harvest rainwater. What should she do first, following 'observe and interact'?", "Molemi o batla ho cheka swales hore a bokelle metsi a pula. O lokela ho qala ka ho etsa eng, a latela molao-motheo wa observe and interact?"),
           options: [
-            pair(
-              "Dig immediately after the first good rain",
-              "Tjheka hang-hang ka mora pula ya pele e ntle",
-            ),
-            pair(
-              "Watch where water flows and pools across at least one wet season",
-              "Shebella moo metsi a phallang teng le moo a bokellanang teng bonyane nakong ya sehla se le seng sa dipula",
-            ),
-            pair(
-              "Copy a neighbour's swale layout",
-              "Kopitsa moralo wa mekero ya moahelani",
-            ),
-            pair(
-              "Assume the same swale design fits every site",
-              "Nka hore moralo o tshwanang wa mokero (swale) o lekana sebaka se seng le se seng",
-            ),
+            pair("Dig immediately after the first good rain", "Cheka hang ka mora pula ya pele e ntle."),
+            pair("Watch where water flows and pools across at least one wet season", "Shebella moo metsi a phallang le moo a bokellanang teng nakong ya sehla se le seng sa dipula bonyane."),
+            pair("Copy a neighbour's swale layout", "Kopitsa moralo wa swales wa moahisani."),
+            pair("Assume the same swale design fits every site", "Nka hore moralo o tshwanang wa swales o loketse setsha se seng le se seng."),
           ],
           sourceCorrectIndex: 1,
-          rationale: hold(
-            "A wet season shows more than one storm, but observation is only a first step. Check the soil, slope, drainage and safe overflow route with a trained local adviser before digging.",
-          ),
+          rationale: pair("A wet season shows more than one storm, but observation is only a first step. Check the soil, slope, drainage and safe overflow route with a trained local adviser before digging.", "Sehla sa dipula se bontsha difefo tse fetang se le seng, empa ho shebella ke mohato wa pele feela. Pele o cheka, hlahloba mobu, moepa, drainage le safe overflow route. Etsa sena le moeletsi wa lehae ya kwetlisitsweng."),
         },
         {
-          question: pair(
-            "Which layout best applies 'integrate rather than segregate'?",
-            "Ke moralo ofe o sebedisang hantle 'kopanya ho e na le ho arola' (integrate rather than segregate)?",
-          ),
+          question: pair("Which layout best applies 'integrate rather than segregate'?", "Ke tlhophiso efe e bontshang hantle molao-motheo wa integrate rather than segregate?"),
           options: [
-            pair(
-              "Chickens penned far from the garden",
-              "Dikgoho tse kwaletsweng hole le serapa",
-            ),
-            hold(
-              "Garden, fruit trees and a chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return",
-            ),
-            pair(
-              "Separate paddocks for each crop",
-              "Dikotwana tse arohaneng bakeng sa sejalo ka seng",
-            ),
-            pair(
-              "All animals kept off the cultivated zone",
-              "Diphoofolo tsohle di behellwa ka thoko ho sebaka se lengwang",
-            ),
+            pair("Chickens penned far from the garden", "Dikgoho tse kwalletsweng lesakeng hole le serapa."),
+            pair("Garden, fruit trees and a chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return", "Serapa, difate tsa ditholwana le chicken run di hlophisitswe ka tsela eo dikgoho di sebedisang planting bed e se nang dijwalo ka mora kotulo; ebe molemi o hlahloba safe management pele edible crops di kgutla."),
+            pair("Separate paddocks for each crop", "Paddocks tse arohaneng bakeng sa sejwalo ka seng."),
+            pair("All animals kept off the cultivated zone", "Diphoofolo tsohle di thibelwa ho kena cultivated zone."),
           ],
           sourceCorrectIndex: 1,
-          rationale: pair(
-            "Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops return.",
-            "Kopanyo e etsa hore karolo ka nngwe e sebeletse baahisani ba yona — mona, dikgoho di hlwekisa dikokwanyana mme di eketsa menontsha ho e na le ho dula feela ka lesakeng le sa sisinyeheng. Manyolo a matjha a ka jara dikokwana-hloko, kahoo hlahloba tsamaiso e bolokehileng pele dijalo tse jewang di kgutla.",
-          ),
+          rationale: pair("Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops return.", "Integration e etsa hore karolo ka nngwe e thuse tse haufi le yona — mona, dikgoho di clean up pests mme di eketsa fertility ho e-na le ho dula di sa sebetse ka fixed pen. Fresh manure e ka jara germs, kahoo hlahloba safe management pele edible crops di kgutla."),
         },
       ],
     },
     {
       id: "intro-permaculture-l3",
       // The earlier draft described rings that the replacement picture does not show.
-      infographicAlt: hold("Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances."),
+      infographicAlt: pair(
+        "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
+        "Polasi ea mohlala e takiloeng: matšoao a nang le linomoro 0 ho isa ho 5 a latela tsela e kobehileng ea maoto ho tloha ntlong le serapeng se haufi, a feta likhohong le tšimong, a lebile lifateng le sebakeng se hlaha haholoanyane pela noka. Matšoao ke mehlala; ha a bolele meeli e tsitsitseng kapa bohole bo itseng.",
+      ),
       title: pair(
         "Zones and Sectors: Organising Your Farm by Energy",
         "Dibaka (Zones) le Makala (Sectors): Ho Hlophisa Polasi ya Hao ka Matla",

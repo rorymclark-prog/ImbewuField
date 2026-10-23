@@ -1,0 +1,71 @@
+{
+  "schema": "reading-title-lightest-main985-composition-v1",
+  "purpose": "Exact source-history composition after PR985 main integration; newest four-card A layer projects to main837, then PR985 exact predecessor, before older dated claims.",
+  "main837": "83759bbdf67754acdb323a9f7250247e2fce25f5",
+  "currentBaseBeforeA": "29b6ef1",
+  "compositionOrder": [
+    "reading-title-lightest-four-card current \u2192 exact main837 predecessor",
+    "PR985 st-intro-runtime-residual ten-card exact current \u2192 exact pre-PR985 predecessor",
+    "older existing immutable proof owners"
+  ],
+  "owners": {
+    "readingTitleLightestAppliedProofSha256": "64bbf9d3875662a58e8b74b5a5a0b717266d66bd557eaf485f2716bae2210ab1",
+    "pr985RuntimeLayerProofSha256": "3f5439f84e3828bb889bc1750dba57811a4a8727bff03ad1bff17f3ac1663480",
+    "pr985AppliedPacketSha256": "8973dbe47d45c0e0229c63148c824fe7e9d04da39b17450fd71ecc493a2e116b"
+  },
+  "files": {
+    "app/sw.js/route.ts": {
+      "beforePath": "docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/main-985-composition/before-main837/app-sw-route.ts.txt",
+      "beforeBytes": 128882,
+      "beforeSha256": "ed8af1ea07af33f8936a0c0a8cb8909338ae4ec4e8fa898810bf84a46b173615",
+      "afterPath": "docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/main-985-composition/after-composed/app-sw-route.ts.txt",
+      "afterBytes": 129815,
+      "afterSha256": "4dd252fd1e8c3b77868243113499478286ea9006d775c31340dd939aa95f3196",
+      "pr985BeforePath": "docs/study-translation-reviews/st-intro-runtime-residual-2026-10-08/before/app-sw-route.ts.txt",
+      "pr985BeforeBytes": 127541,
+      "pr985BeforeSha256": "91b01455f2068a5d112d14ec37c783531018af15ad26516d2ae08058e94f2e2c",
+      "main837AfterSha256": "ed8af1ea07af33f8936a0c0a8cb8909338ae4ec4e8fa898810bf84a46b173615",
+      "main837AfterBytes": 128882,
+      "sequence": [
+        "this branch current \u2192 exact main837/PR985-after snapshot",
+        "exact main837/PR985-after snapshot \u2192 immutable PR985-before snapshot"
+      ]
+    },
+    "lib/course-asset-sizes.ts": {
+      "beforePath": "docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/main-985-composition/before-main837/course-asset-sizes.ts.txt",
+      "beforeBytes": 117011,
+      "beforeSha256": "8d2c26f50a202e27cdeaaa764a1a6c22ac991f60f21f8c0e60a7ff6183d1f991",
+      "afterPath": "docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/main-985-composition/after-composed/course-asset-sizes.ts.txt",
+      "afterBytes": 117011,
+      "afterSha256": "21b04b97dff9093d75c4c1bbe3d53003f61166d85bcfe922816c19135c49bf8a",
+      "pr985BeforePath": "docs/study-translation-reviews/st-intro-runtime-residual-2026-10-08/before/course-asset-sizes.ts.txt",
+      "pr985BeforeBytes": 117011,
+      "pr985BeforeSha256": "0cbd25e386ef8619736374ce18b9a1869f3c53b4d499ad7e3eda1c71b71b104d",
+      "main837AfterSha256": "8d2c26f50a202e27cdeaaa764a1a6c22ac991f60f21f8c0e60a7ff6183d1f991",
+      "main837AfterBytes": 117011,
+      "sequence": [
+        "this branch current \u2192 exact main837/PR985-after snapshot",
+        "exact main837/PR985-after snapshot \u2192 immutable PR985-before snapshot"
+      ]
+    }
+  },
+  "preservation": {
+    "pairedSourcesAndTargets": "no paired source or target edits in this branch integration; A and PR985 exact proofs remain separately immutable",
+    "sourceBindings": "release binding registry matches complete main837 bytes and digest",
+    "assets": "four A outputs and ten PR985 outputs retain their recorded hashes and distinct URLs",
+    "recordedStIntroPairAndAudio": "unchanged from PR985 proof",
+    "unlistedManifestRows": "whole-file before/after snapshots and digest bind all rows and aggregate"
+  },
+  "unchangedMainInputs": {
+    "lib/course-deck-release-bindings-data.ts": {
+      "bytes": 35344,
+      "sha256": "f6ceaa3788cea69e0ad0f7623205208d3388c8496c930a4242aee9deef36a9c7",
+      "path": "current complete file; exact main837 bytes; no leaf filtering"
+    },
+    "docs/narration/intro-permaculture.st.silent-draft.json": {
+      "bytes": 42731,
+      "sha256": "e476474a58deab53f4d360524a53fb214d7aab19b10dd0b43aaff490ea63a310",
+      "path": "current accepted runtime pair; protected by immutable PR985 source-bound proof"
+    }
+  }
+}

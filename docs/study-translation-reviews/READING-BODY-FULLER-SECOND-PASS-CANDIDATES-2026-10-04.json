@@ -1,0 +1,778 @@
+{
+  "title": "Source-bound Reading body residual fuller second-pass candidates",
+  "readOnly": true,
+  "reviewedHead": "432a99174819a303424404473ee54a08081ff2b4",
+  "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "sourceBinding": {
+    "liveFileHashes": {
+      "lib/course-modules.ts": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "lib/course-localization.ts": "503f628a1c0679c5247558887e7438260fead024b67ac5112626e6e52bb1ff9f",
+      "lib/course-translation-drafts-ve-reading-landscape.ts": "c0ccae7750bf548fa6846bfc56745e076806d845b0a17cad5ab49b9919ad730e",
+      "lib/course-translation-drafts-ts.ts": "3840e780aa731695807c197eed90420be6bfc6599a0a1fe0bc5394680015e0a0"
+    },
+    "TSRegistryNote": "The shared TS registry has unrelated Intro edits; exact Reading source/current clauses were inspected via the live resolver and confirmed in the Reading export.",
+    "runtimeSnapshot": "/tmp/imbewu-reading-body-live-snapshot-20261004.json",
+    "runtimeSnapshotSha256": "69054ac35b8a8bdb89ab0f66e4995fbf098d638ba42991fc9afa30ba68f2b80f"
+  },
+  "scope": {
+    "moduleId": "reading-landscape",
+    "lessonId": "reading-landscape-l3",
+    "candidateClauseCount": 11,
+    "languages": [
+      "ve",
+      "ts"
+    ],
+    "distinctBodyParagraphs": 4
+  },
+  "paragraphs": [
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglishParagraph": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "currentTargetParagraph": "On a clear, still night, cold air can flow downhill and collect in low places. Tindhawu leti can be colder than nearby slopes. Frost patterns na tona ti ya hi site. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records where available. Loko records ti nga ri kona, yana mahlweni u ri karhi u languta across cold nights, u tlhela u vutisa local agriculture adviser u nga si hlawula permanent home for tender seedlings.",
+      "proposedFullTargetParagraph": "Hi vusiku byo basa, byo miyela, cold air can flow downhill and collect in low places. Tindhawu leti ti nga va colder than nearby slopes. Frost patterns na tona ti ya hi site. Pimanisa candidate places u ri karhi u landzelela local frost season. Kambela local minimum-temperature records loko ti kumeka. Loko records ti nga ri kona, yana mahlweni u ri karhi u languta across cold nights, u tlhela u vutisa local agriculture adviser u nga si hlawula permanent home for tender seedlings.",
+      "candidateChanges": [
+        {
+          "sourceClause": "On a clear, still night, cold air can flow downhill and collect in low places.",
+          "currentTargetSpan": "On a clear, still night, cold air can flow downhill and collect in low places.",
+          "candidateTargetSpan": "Hi vusiku byo basa, byo miyela, cold air can flow downhill and collect in low places.",
+          "segments": [
+            {
+              "source": "On a clear, still night,",
+              "target": "Hi vusiku byo basa, byo miyela,",
+              "status": "draft",
+              "reason": "Localizes clear/still night conditions while keeping both conditions."
+            },
+            {
+              "source": " cold air can flow downhill and collect in low places.",
+              "target": " cold air can flow downhill and collect in low places.",
+              "status": "english-hold",
+              "reason": "Retains exact cold-air subject, can, downhill direction and low-place collection."
+            }
+          ],
+          "semanticRisk": "Check that “clear” means clear sky and “still” means calm/no wind; the complete airflow and direction remain exact English."
+        },
+        {
+          "sourceClause": "These places can be colder than nearby slopes.",
+          "currentTargetSpan": "Tindhawu leti can be colder than nearby slopes.",
+          "candidateTargetSpan": "Tindhawu leti ti nga va colder than nearby slopes.",
+          "segments": [
+            {
+              "source": "These places can be",
+              "target": "Tindhawu leti ti nga va",
+              "status": "draft",
+              "reason": "Localizes the demonstrative and preserves the modal “can”."
+            },
+            {
+              "source": " colder than nearby slopes.",
+              "target": " colder than nearby slopes.",
+              "status": "english-hold",
+              "reason": "Retains the complete comparative and geographic referent."
+            }
+          ],
+          "semanticRisk": "The comparison and nearby-slope scope remain exact; confirm Xitsonga concord in fluent review."
+        },
+        {
+          "sourceClause": "Compare candidate places through the local frost season.",
+          "currentTargetSpan": "Pimanisa candidate places through the local frost season.",
+          "candidateTargetSpan": "Pimanisa candidate places u ri karhi u landzelela local frost season.",
+          "segments": [
+            {
+              "source": "Compare ",
+              "target": "Pimanisa ",
+              "status": "draft",
+              "reason": "Keeps the established localized action."
+            },
+            {
+              "source": "candidate places",
+              "target": "candidate places",
+              "status": "english-hold",
+              "reason": "Retains the selected-place object."
+            },
+            {
+              "source": " through the local frost season.",
+              "target": " u ri karhi u landzelela local frost season.",
+              "status": "draft",
+              "reason": "Localizes the “through” relation while retaining the season anchor."
+            }
+          ],
+          "semanticRisk": "Confirm this means comparison through the frost season rather than at one point; no site is selected."
+        },
+        {
+          "sourceClause": "Check local minimum-temperature records where available.",
+          "currentTargetSpan": "Kambela local minimum-temperature records where available.",
+          "candidateTargetSpan": "Kambela local minimum-temperature records loko ti kumeka.",
+          "segments": [
+            {
+              "source": "Check ",
+              "target": "Kambela ",
+              "status": "draft",
+              "reason": "Localizes the checking action."
+            },
+            {
+              "source": "local minimum-temperature records",
+              "target": "local minimum-temperature records",
+              "status": "english-hold",
+              "reason": "Retains the exact evidence type and measure."
+            },
+            {
+              "source": " where available.",
+              "target": " loko ti kumeka.",
+              "status": "draft",
+              "reason": "Preserves the availability condition."
+            }
+          ],
+          "semanticRisk": "Availability condition remains conditional; verify agreement and “where available” idiom with fluent reviewer."
+        }
+      ],
+      "paragraphChangeRule": "Only listed spans change; all other current localized text and English holds remain verbatim."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglishParagraph": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "currentTargetParagraph": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu where cold or damage lasts longest. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.",
+      "proposedFullTargetParagraph": "Frost i ice that forms on a cold surface. Mist ntsena a yi kombisi leswaku ice has formed, naswona frost damage can happen without visible ice. Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu laha cold or damage swi tshamaka kona nkarhi wo leha ngopfu. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.",
+      "candidateChanges": [
+        {
+          "sourceClause": "Frost is ice that forms on a cold surface.",
+          "currentTargetSpan": "Frost is ice that forms on a cold surface.",
+          "candidateTargetSpan": "Frost i ice that forms on a cold surface.",
+          "segments": [
+            {
+              "source": "Frost",
+              "target": "Frost",
+              "status": "english-hold",
+              "reason": "Retains the exact named phenomenon."
+            },
+            {
+              "source": " is ",
+              "target": " i ",
+              "status": "draft",
+              "reason": "Localizes the ordinary definition link."
+            },
+            {
+              "source": "ice that forms on a cold surface.",
+              "target": "ice that forms on a cold surface.",
+              "status": "english-hold",
+              "reason": "Retains the exact physical definition and location."
+            }
+          ],
+          "semanticRisk": "Only the copula is localized; the definition and cold-surface condition remain exact English pending fluent confirmation."
+        },
+        {
+          "sourceClause": "Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+          "currentTargetSpan": "Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+          "candidateTargetSpan": "Mist ntsena a yi kombisi leswaku ice has formed, naswona frost damage can happen without visible ice.",
+          "segments": [
+            {
+              "source": "Mist",
+              "target": "Mist",
+              "status": "english-hold",
+              "reason": "Retains the meteorological term."
+            },
+            {
+              "source": " alone",
+              "target": " ntsena",
+              "status": "draft",
+              "reason": "Localizes the “alone” limitation."
+            },
+            {
+              "source": " does not show that ",
+              "target": " a yi kombisi leswaku ",
+              "status": "draft",
+              "reason": "Retains the full negative diagnostic relation."
+            },
+            {
+              "source": "ice has formed",
+              "target": "ice has formed",
+              "status": "english-hold",
+              "reason": "Retains the exact observed-ice condition."
+            },
+            {
+              "source": ", and",
+              "target": ", naswona",
+              "status": "draft",
+              "reason": "Preserves the link to the second statement."
+            },
+            {
+              "source": " frost damage can happen without visible ice.",
+              "target": " frost damage can happen without visible ice.",
+              "status": "english-hold",
+              "reason": "Retains the complete modal damage condition and visibility limit."
+            }
+          ],
+          "semanticRisk": "Both “alone” and the negative remain explicit; the second statement’s “can” and visibility limit stay exact. Confirm concord/idiom in fluent review."
+        },
+        {
+          "sourceClause": "Mark places where cold or damage lasts longest.",
+          "currentTargetSpan": "Fungha tindhawu where cold or damage lasts longest.",
+          "candidateTargetSpan": "Fungha tindhawu laha cold or damage swi tshamaka kona nkarhi wo leha ngopfu.",
+          "segments": [
+            {
+              "source": "Mark places ",
+              "target": "Fungha tindhawu ",
+              "status": "draft",
+              "reason": "Preserves the marking action and object."
+            },
+            {
+              "source": "where ",
+              "target": "laha ",
+              "status": "draft",
+              "reason": "Localizes the location relation."
+            },
+            {
+              "source": "cold or damage",
+              "target": "cold or damage",
+              "status": "english-hold",
+              "reason": "Preserves the exact disjunctive criterion."
+            },
+            {
+              "source": " lasts longest.",
+              "target": " swi tshamaka kona nkarhi wo leha ngopfu.",
+              "status": "draft",
+              "reason": "Translates the longest-duration comparison using a pattern already present in the current Reading draft."
+            }
+          ],
+          "semanticRisk": "The criterion remains exactly “cold or damage”; duration comparison remains superlative. Fluency review needed for agreement with the held English subject."
+        }
+      ],
+      "paragraphChangeRule": "Only listed spans change; all other current localized text and English holds remain verbatim."
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceEnglishParagraph": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "currentTargetParagraph": "Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Frost patterns zwi dovha zwa ya nga site. Vhambedzani candidate places through the local frost season. Sedzani local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "proposedFullTargetParagraph": "Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Frost patterns zwi dovha zwa ya nga site. Vhambedzani candidate places ni tshi tevhela local frost season. Ṱolani local minimum-temperature records hune dzi wanala hone. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "candidateChanges": [
+        {
+          "sourceClause": "Compare candidate places through the local frost season.",
+          "currentTargetSpan": "Vhambedzani candidate places through the local frost season.",
+          "candidateTargetSpan": "Vhambedzani candidate places ni tshi tevhela local frost season.",
+          "segments": [
+            {
+              "source": "Compare ",
+              "target": "Vhambedzani ",
+              "status": "draft",
+              "reason": "Keeps the established localized action."
+            },
+            {
+              "source": "candidate places",
+              "target": "candidate places",
+              "status": "english-hold",
+              "reason": "Retains the selected-place object."
+            },
+            {
+              "source": " through the local frost season.",
+              "target": " ni tshi tevhela local frost season.",
+              "status": "draft",
+              "reason": "Localizes the “through” relation while retaining the local frost-season concept."
+            }
+          ],
+          "semanticRisk": "The intended duration is across the local frost season; `ni tshi tevhela` should be checked for that full-period sense. No site choice is prescribed."
+        },
+        {
+          "sourceClause": "Check local minimum-temperature records where available.",
+          "currentTargetSpan": "Sedzani local minimum-temperature records where available.",
+          "candidateTargetSpan": "Ṱolani local minimum-temperature records hune dzi wanala hone.",
+          "segments": [
+            {
+              "source": "Check ",
+              "target": "Ṱolani ",
+              "status": "draft",
+              "reason": "Localizes the checking action."
+            },
+            {
+              "source": "local minimum-temperature records",
+              "target": "local minimum-temperature records",
+              "status": "english-hold",
+              "reason": "Retains the exact evidence type and measure."
+            },
+            {
+              "source": " where available.",
+              "target": " hune dzi wanala hone.",
+              "status": "draft",
+              "reason": "Preserves the availability condition."
+            }
+          ],
+          "semanticRisk": "The records and minimum-temperature qualifier stay exact; confirm plural concord for records."
+        }
+      ],
+      "paragraphChangeRule": "Only listed spans change; all other current localized text and English holds remain verbatim."
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceEnglishParagraph": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "currentTargetParagraph": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Ṱolani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Keep sensitive plants away from the cold pockets you observe.",
+      "proposedFullTargetParagraph": "Frost ndi ice that forms on a cold surface. Mist fhedzi a i sumbedzi uri ice has formed, nahone frost damage can happen without visible ice. Ṱolani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Keep sensitive plants away from the cold pockets you observe.",
+      "candidateChanges": [
+        {
+          "sourceClause": "Frost is ice that forms on a cold surface.",
+          "currentTargetSpan": "Frost is ice that forms on a cold surface.",
+          "candidateTargetSpan": "Frost ndi ice that forms on a cold surface.",
+          "segments": [
+            {
+              "source": "Frost",
+              "target": "Frost",
+              "status": "english-hold",
+              "reason": "Retains the exact named phenomenon."
+            },
+            {
+              "source": " is ",
+              "target": " ndi ",
+              "status": "draft",
+              "reason": "Localizes the ordinary definition link."
+            },
+            {
+              "source": "ice that forms on a cold surface.",
+              "target": "ice that forms on a cold surface.",
+              "status": "english-hold",
+              "reason": "Retains the exact physical definition and location."
+            }
+          ],
+          "semanticRisk": "Only the copula is localized; the definition and cold-surface condition remain exact English pending fluent confirmation."
+        },
+        {
+          "sourceClause": "Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+          "currentTargetSpan": "Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+          "candidateTargetSpan": "Mist fhedzi a i sumbedzi uri ice has formed, nahone frost damage can happen without visible ice.",
+          "segments": [
+            {
+              "source": "Mist",
+              "target": "Mist",
+              "status": "english-hold",
+              "reason": "Retains the meteorological term."
+            },
+            {
+              "source": " alone",
+              "target": " fhedzi",
+              "status": "draft",
+              "reason": "Localizes the “alone” limitation."
+            },
+            {
+              "source": " does not show that ",
+              "target": " a i sumbedzi uri ",
+              "status": "draft",
+              "reason": "Retains the full negative diagnostic relation."
+            },
+            {
+              "source": "ice has formed",
+              "target": "ice has formed",
+              "status": "english-hold",
+              "reason": "Retains the exact observed-ice condition."
+            },
+            {
+              "source": ", and",
+              "target": ", nahone",
+              "status": "draft",
+              "reason": "Preserves the link to the second statement."
+            },
+            {
+              "source": " frost damage can happen without visible ice.",
+              "target": " frost damage can happen without visible ice.",
+              "status": "english-hold",
+              "reason": "Retains the complete modal damage condition and visibility limit."
+            }
+          ],
+          "semanticRisk": "Both “alone” and the negative remain explicit; the second statement’s “can” and “without visible ice” condition stay exact. Confirm syntax in fluent review."
+        }
+      ],
+      "paragraphChangeRule": "Only listed spans change; all other current localized text and English holds remain verbatim."
+    }
+  ],
+  "fieldCandidates": [
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceClause": "On a clear, still night, cold air can flow downhill and collect in low places.",
+      "currentTargetSpan": "On a clear, still night, cold air can flow downhill and collect in low places.",
+      "candidateTargetSpan": "Hi vusiku byo basa, byo miyela, cold air can flow downhill and collect in low places.",
+      "segments": [
+        {
+          "source": "On a clear, still night,",
+          "target": "Hi vusiku byo basa, byo miyela,",
+          "status": "draft",
+          "reason": "Localizes clear/still night conditions while keeping both conditions."
+        },
+        {
+          "source": " cold air can flow downhill and collect in low places.",
+          "target": " cold air can flow downhill and collect in low places.",
+          "status": "english-hold",
+          "reason": "Retains exact cold-air subject, can, downhill direction and low-place collection."
+        }
+      ],
+      "semanticRisk": "Check that “clear” means clear sky and “still” means calm/no wind; the complete airflow and direction remain exact English."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceClause": "These places can be colder than nearby slopes.",
+      "currentTargetSpan": "Tindhawu leti can be colder than nearby slopes.",
+      "candidateTargetSpan": "Tindhawu leti ti nga va colder than nearby slopes.",
+      "segments": [
+        {
+          "source": "These places can be",
+          "target": "Tindhawu leti ti nga va",
+          "status": "draft",
+          "reason": "Localizes the demonstrative and preserves the modal “can”."
+        },
+        {
+          "source": " colder than nearby slopes.",
+          "target": " colder than nearby slopes.",
+          "status": "english-hold",
+          "reason": "Retains the complete comparative and geographic referent."
+        }
+      ],
+      "semanticRisk": "The comparison and nearby-slope scope remain exact; confirm Xitsonga concord in fluent review."
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceClause": "Compare candidate places through the local frost season.",
+      "currentTargetSpan": "Vhambedzani candidate places through the local frost season.",
+      "candidateTargetSpan": "Vhambedzani candidate places ni tshi tevhela local frost season.",
+      "segments": [
+        {
+          "source": "Compare ",
+          "target": "Vhambedzani ",
+          "status": "draft",
+          "reason": "Keeps the established localized action."
+        },
+        {
+          "source": "candidate places",
+          "target": "candidate places",
+          "status": "english-hold",
+          "reason": "Retains the selected-place object."
+        },
+        {
+          "source": " through the local frost season.",
+          "target": " ni tshi tevhela local frost season.",
+          "status": "draft",
+          "reason": "Localizes the “through” relation while retaining the local frost-season concept."
+        }
+      ],
+      "semanticRisk": "The intended duration is across the local frost season; `ni tshi tevhela` should be checked for that full-period sense. No site choice is prescribed."
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceClause": "Check local minimum-temperature records where available.",
+      "currentTargetSpan": "Sedzani local minimum-temperature records where available.",
+      "candidateTargetSpan": "Ṱolani local minimum-temperature records hune dzi wanala hone.",
+      "segments": [
+        {
+          "source": "Check ",
+          "target": "Ṱolani ",
+          "status": "draft",
+          "reason": "Localizes the checking action."
+        },
+        {
+          "source": "local minimum-temperature records",
+          "target": "local minimum-temperature records",
+          "status": "english-hold",
+          "reason": "Retains the exact evidence type and measure."
+        },
+        {
+          "source": " where available.",
+          "target": " hune dzi wanala hone.",
+          "status": "draft",
+          "reason": "Preserves the availability condition."
+        }
+      ],
+      "semanticRisk": "The records and minimum-temperature qualifier stay exact; confirm plural concord for records."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceClause": "Compare candidate places through the local frost season.",
+      "currentTargetSpan": "Pimanisa candidate places through the local frost season.",
+      "candidateTargetSpan": "Pimanisa candidate places u ri karhi u landzelela local frost season.",
+      "segments": [
+        {
+          "source": "Compare ",
+          "target": "Pimanisa ",
+          "status": "draft",
+          "reason": "Keeps the established localized action."
+        },
+        {
+          "source": "candidate places",
+          "target": "candidate places",
+          "status": "english-hold",
+          "reason": "Retains the selected-place object."
+        },
+        {
+          "source": " through the local frost season.",
+          "target": " u ri karhi u landzelela local frost season.",
+          "status": "draft",
+          "reason": "Localizes the “through” relation while retaining the season anchor."
+        }
+      ],
+      "semanticRisk": "Confirm this means comparison through the frost season rather than at one point; no site is selected."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "bodyParagraphIndexZeroBased": 1,
+      "sourceClause": "Check local minimum-temperature records where available.",
+      "currentTargetSpan": "Kambela local minimum-temperature records where available.",
+      "candidateTargetSpan": "Kambela local minimum-temperature records loko ti kumeka.",
+      "segments": [
+        {
+          "source": "Check ",
+          "target": "Kambela ",
+          "status": "draft",
+          "reason": "Localizes the checking action."
+        },
+        {
+          "source": "local minimum-temperature records",
+          "target": "local minimum-temperature records",
+          "status": "english-hold",
+          "reason": "Retains the exact evidence type and measure."
+        },
+        {
+          "source": " where available.",
+          "target": " loko ti kumeka.",
+          "status": "draft",
+          "reason": "Preserves the availability condition."
+        }
+      ],
+      "semanticRisk": "Availability condition remains conditional; verify agreement and “where available” idiom with fluent reviewer."
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceClause": "Frost is ice that forms on a cold surface.",
+      "currentTargetSpan": "Frost is ice that forms on a cold surface.",
+      "candidateTargetSpan": "Frost ndi ice that forms on a cold surface.",
+      "segments": [
+        {
+          "source": "Frost",
+          "target": "Frost",
+          "status": "english-hold",
+          "reason": "Retains the exact named phenomenon."
+        },
+        {
+          "source": " is ",
+          "target": " ndi ",
+          "status": "draft",
+          "reason": "Localizes the ordinary definition link."
+        },
+        {
+          "source": "ice that forms on a cold surface.",
+          "target": "ice that forms on a cold surface.",
+          "status": "english-hold",
+          "reason": "Retains the exact physical definition and location."
+        }
+      ],
+      "semanticRisk": "Only the copula is localized; the definition and cold-surface condition remain exact English pending fluent confirmation."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceClause": "Frost is ice that forms on a cold surface.",
+      "currentTargetSpan": "Frost is ice that forms on a cold surface.",
+      "candidateTargetSpan": "Frost i ice that forms on a cold surface.",
+      "segments": [
+        {
+          "source": "Frost",
+          "target": "Frost",
+          "status": "english-hold",
+          "reason": "Retains the exact named phenomenon."
+        },
+        {
+          "source": " is ",
+          "target": " i ",
+          "status": "draft",
+          "reason": "Localizes the ordinary definition link."
+        },
+        {
+          "source": "ice that forms on a cold surface.",
+          "target": "ice that forms on a cold surface.",
+          "status": "english-hold",
+          "reason": "Retains the exact physical definition and location."
+        }
+      ],
+      "semanticRisk": "Only the copula is localized; the definition and cold-surface condition remain exact English pending fluent confirmation."
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceClause": "Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "currentTargetSpan": "Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "candidateTargetSpan": "Mist fhedzi a i sumbedzi uri ice has formed, nahone frost damage can happen without visible ice.",
+      "segments": [
+        {
+          "source": "Mist",
+          "target": "Mist",
+          "status": "english-hold",
+          "reason": "Retains the meteorological term."
+        },
+        {
+          "source": " alone",
+          "target": " fhedzi",
+          "status": "draft",
+          "reason": "Localizes the “alone” limitation."
+        },
+        {
+          "source": " does not show that ",
+          "target": " a i sumbedzi uri ",
+          "status": "draft",
+          "reason": "Retains the full negative diagnostic relation."
+        },
+        {
+          "source": "ice has formed",
+          "target": "ice has formed",
+          "status": "english-hold",
+          "reason": "Retains the exact observed-ice condition."
+        },
+        {
+          "source": ", and",
+          "target": ", nahone",
+          "status": "draft",
+          "reason": "Preserves the link to the second statement."
+        },
+        {
+          "source": " frost damage can happen without visible ice.",
+          "target": " frost damage can happen without visible ice.",
+          "status": "english-hold",
+          "reason": "Retains the complete modal damage condition and visibility limit."
+        }
+      ],
+      "semanticRisk": "Both “alone” and the negative remain explicit; the second statement’s “can” and “without visible ice” condition stay exact. Confirm syntax in fluent review."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceClause": "Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "currentTargetSpan": "Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "candidateTargetSpan": "Mist ntsena a yi kombisi leswaku ice has formed, naswona frost damage can happen without visible ice.",
+      "segments": [
+        {
+          "source": "Mist",
+          "target": "Mist",
+          "status": "english-hold",
+          "reason": "Retains the meteorological term."
+        },
+        {
+          "source": " alone",
+          "target": " ntsena",
+          "status": "draft",
+          "reason": "Localizes the “alone” limitation."
+        },
+        {
+          "source": " does not show that ",
+          "target": " a yi kombisi leswaku ",
+          "status": "draft",
+          "reason": "Retains the full negative diagnostic relation."
+        },
+        {
+          "source": "ice has formed",
+          "target": "ice has formed",
+          "status": "english-hold",
+          "reason": "Retains the exact observed-ice condition."
+        },
+        {
+          "source": ", and",
+          "target": ", naswona",
+          "status": "draft",
+          "reason": "Preserves the link to the second statement."
+        },
+        {
+          "source": " frost damage can happen without visible ice.",
+          "target": " frost damage can happen without visible ice.",
+          "status": "english-hold",
+          "reason": "Retains the complete modal damage condition and visibility limit."
+        }
+      ],
+      "semanticRisk": "Both “alone” and the negative remain explicit; the second statement’s “can” and visibility limit stay exact. Confirm concord/idiom in fluent review."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "bodyParagraphIndexZeroBased": 2,
+      "sourceClause": "Mark places where cold or damage lasts longest.",
+      "currentTargetSpan": "Fungha tindhawu where cold or damage lasts longest.",
+      "candidateTargetSpan": "Fungha tindhawu laha cold or damage swi tshamaka kona nkarhi wo leha ngopfu.",
+      "segments": [
+        {
+          "source": "Mark places ",
+          "target": "Fungha tindhawu ",
+          "status": "draft",
+          "reason": "Preserves the marking action and object."
+        },
+        {
+          "source": "where ",
+          "target": "laha ",
+          "status": "draft",
+          "reason": "Localizes the location relation."
+        },
+        {
+          "source": "cold or damage",
+          "target": "cold or damage",
+          "status": "english-hold",
+          "reason": "Preserves the exact disjunctive criterion."
+        },
+        {
+          "source": " lasts longest.",
+          "target": " swi tshamaka kona nkarhi wo leha ngopfu.",
+          "status": "draft",
+          "reason": "Translates the longest-duration comparison using a pattern already present in the current Reading draft."
+        }
+      ],
+      "semanticRisk": "The criterion remains exactly “cold or damage”; duration comparison remains superlative. Fluency review needed for agreement with the held English subject."
+    }
+  ],
+  "exclusions": [
+    {
+      "field": "Eight root-accepted Reading changes from prior packet",
+      "reason": "No accepted prior replacement is repeated or changed."
+    },
+    {
+      "field": "VE/TS L2 frost-sensitivity paragraphs",
+      "reason": "Outside this L3 batch and prior exact-English holds remain."
+    },
+    {
+      "field": "VE/TS L3 frost-pattern clauses already localized",
+      "reason": "Their ordinary relation is translated and technical terms are held."
+    },
+    {
+      "field": "Water observation, dig-before-assessment, adviser, patch/soil, season-by-season and plant-identity clauses",
+      "reason": "Already localized or held accurately; not altered."
+    },
+    {
+      "field": "VE L3 mark/keep-away clauses and all ST body fields",
+      "reason": "Already handled or localized; excluded to avoid duplication."
+    }
+  ],
+  "validation": {
+    "allSourcesExactCanonicalSpans": true,
+    "allCurrentTargetSpansExistInLiveRuntimeAndRegistry": true,
+    "allTargetSegmentsReconstructExactly": true,
+    "allEnglishHoldSpansByteExact": true,
+    "paragraphsComposedFromCurrentTargets": true,
+    "unchangedPrefixesAndSuffixesPreserved": true,
+    "noDoubleSpaces": true,
+    "canMayAndConditionClausesRetained": true,
+    "noNewSpeciesNumbersInstructionsOrGuarantees": true
+  },
+  "limitations": [
+    "Machine candidates are unreviewed and not fluent-speaker approvals.",
+    "Naturalness and concord require fluent Tshivenda/Xitsonga review.",
+    "No repository files were edited, rendered, committed, or pushed."
+  ]
+}

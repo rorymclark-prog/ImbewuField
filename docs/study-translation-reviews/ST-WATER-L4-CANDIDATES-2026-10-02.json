@@ -1,0 +1,131 @@
+{
+  "task": "Read-only candidate translation packet; do not wire into learner copy",
+  "locale": "st",
+  "lessonId": "water-harvesting-l4",
+  "moduleId": "water-harvesting",
+  "source": {
+    "path": "lib/course-modules.ts",
+    "branch": "codex/regional-greywater-completion-20261002",
+    "base": "main 1ed35873",
+    "lessonIndex": 3,
+    "title": "Greywater: Check Before Reuse",
+    "body": "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way. South African guidance differs on kitchen water and laundry water.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nA generic picture is not a farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
+    "keyPoints": [
+      "Water sources and greywater guidance can differ",
+      "Check the source, service status, intended use and site locally before any reuse",
+      "Soil and mulch do not disinfect wastewater",
+      "Prevent contact, spray, pooling, runoff and drinking-water cross-connections"
+    ],
+    "quiz": [
+      {
+        "q": "What should happen before any household washwater is reused?",
+        "options": [
+          "Direct it below mulch around a tree",
+          "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
+          "Use it if it looks clear",
+          "Use it only on plants that are not eaten raw"
+        ],
+        "correct": 1,
+        "rationale": "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed."
+      },
+      {
+        "q": "Why check the exact water source and cleaning products before considering reuse?",
+        "options": [
+          "All cleaning products are safe if the water is diluted",
+          "Water composition and product effects vary, so the actual source and products need assessment",
+          "The water can be reused when it has no smell",
+          "Mulch removes every harmful substance"
+        ],
+        "correct": 1,
+        "rationale": "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable."
+      }
+    ]
+  },
+  "registry": {
+    "path": "lib/course-translation-drafts-st-water-harvesting.ts",
+    "lessonIndex": 3,
+    "current": "Existing ST record has body reviewStatus=hold and exact English body; title/keypoints/quiz are machine-draft Sesotho candidates. Registry shape includes title/body/keyPoints/quiz; RegionalPair status is machine-draft or hold."
+  },
+  "candidate": {
+    "title": "Metsi a Ditshila a Malapeng (Greywater): Hlahloba Pele o Sebedisa Hape",
+    "body": "Metsi a sebedisitsweng a lapeng a ka ba le dikokwana-hloko, matswai, dihlahiswa tsa ho hlwekisa le dintho tse ding. Ditaelo ha di hlalose mohlodi o mong le o mong ka mokgwa o tshwanang. Ditaelo tsa Afrika Borwa di fapana mabapi le kitchen water le laundry water.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nSetshwantsho se akaretsang ha se moralo wa polasi. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nHaeba reuse system e se e sebetsa and the water smells bad, pools or harms plants, emisa ho e sebedisa mme seek qualified local advice.",
+    "keyPoints": [
+      {
+        "index": 0,
+        "source": "Water sources and greywater guidance can differ",
+        "draft": "Mehlodi ya metsi le ditaelo tsa metsi a ditshila (greywater) di ka fapana"
+      },
+      {
+        "index": 1,
+        "source": "Check the source, service status, intended use and site locally before any reuse",
+        "draft": "Check the source, service status, intended use and site locally before any reuse"
+      },
+      {
+        "index": 2,
+        "source": "Soil and mulch do not disinfect wastewater",
+        "draft": "Soil and mulch do not disinfect wastewater"
+      },
+      {
+        "index": 3,
+        "source": "Prevent contact, spray, pooling, runoff and drinking-water cross-connections",
+        "draft": "Prevent contact, spray, pooling, runoff and drinking-water cross-connections"
+      }
+    ],
+    "quiz": [
+      {
+        "index": 0,
+        "sourceCorrectIndex": 1,
+        "q": "Ho lokela ho etsahala eng pele metsi afe kapa afe a ho hlatswa a lapeng a sebediswa hape?",
+        "options": [
+          "A ise ka tlase ho mulch ho potoloha sefate",
+          "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
+          "Use it if it looks clear",
+          "A sebedise feela dimeleng tse sa jeweng di le tala"
+        ],
+        "correct": 1,
+        "rationale": "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed."
+      },
+      {
+        "index": 1,
+        "sourceCorrectIndex": 1,
+        "q": "Hobaneng ho lokela ho hlahlojwa mohlodi o tobileng wa metsi le dihlahiswa tsa ho hlwekisa pele ho nahanwa ka ho a sebedisa hape?",
+        "options": [
+          "Dihlahiswa tsohle tsa ho hlwekisa di bolokehile haeba metsi a hlapolotswe",
+          "Sebopeho sa metsi le ditlamorao tsa dihlahiswa di a fapana, kahoo mohlodi wa sebele le dihlahiswa di hloka tlhahlobo",
+          "Metsi a ka sebediswa hape ha a se na monko",
+          "Mulch e tlosa ntho e nngwe le e nngwe e kotsi"
+        ],
+        "correct": 1,
+        "rationale": "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable."
+      }
+    ]
+  },
+  "backTranslation": {
+    "title": "Household dirty water (greywater): check before using again.",
+    "body": [
+      "Used household water can contain germs, salts, cleaning products and other things. Directions do not describe every source in the same way. South African directions differ about kitchen water and laundry water.",
+      "Safety prohibitions and intervention conditions remain exact English source sentences.",
+      "Before any water is used again, ask the municipality and a knowledgeable local sanitation adviser to check the exact source, household water and sanitation services, intended use and site.",
+      "A general picture is not a farm plan. Safety sentences are retained exactly in English.",
+      "If an operating reuse system has bad-smelling water, water collecting on the ground, or plant damage, stop using it and seek local expert advice."
+    ],
+    "keyPoints": [
+      "Water sources and greywater directions can differ.",
+      "Before any reuse, check the source, service condition, intended use and site locally.",
+      "The disinfection claim is kept in exact English.",
+      "The prevention list is kept in exact English."
+    ],
+    "quiz": "Question 1 asks what must happen before any household washwater reuse; its correct option stays exact English so municipality, qualified sanitation adviser, source, service status, intended use and site are unambiguous. Question 2 asks why to check the source and cleaning products; the selected response explains that composition and product effects vary. All correct indexes remain 1."
+  },
+  "uncertainty": [
+    "This is a draft, not human-reviewed Sesotho. The ordinary prose draws on the existing ST machine-draft language for this lesson, with spelling and inflection still needing fluent review.",
+    "Keep technical terms sanitation, wastewater, greywater, service status, cross-connections, runoff, watercourse and harm-to-plants condition in exact English if a Sesotho reviewer cannot confirm a clear equivalent.",
+    "The local adviser clause is translated in the prose but retained in English in the correct quiz option and rationale. A fluent reviewer should verify that ‘sanitation’ and ‘qualified’ carry the intended meaning.",
+    "No reuse permission is inferred. The packet preserves the no-advice/unclear means no reuse rule and all listed excluded sources.",
+    "The existing ST key point 2 wording may narrow the source or condition; candidate replaces it with the exact English source. In quiz 0, the existing “clean” translation of the clear-looking distractor may imply actual cleanliness; candidate keeps the exact English distractor."
+  ],
+  "rootRepairs": [
+    "Laundry water exact scope retained English; qualified adviser paragraph exact English; pooling OR-symptom conditional and qualified advice retained English in mixed paragraph; keypoint1 normalized exact English."
+  ],
+  "independentCheck": "Independent semantic checker accepted source fidelity after root repairs; not fluent/local approval."
+}

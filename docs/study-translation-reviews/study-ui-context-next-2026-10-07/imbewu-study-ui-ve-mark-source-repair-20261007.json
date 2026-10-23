@@ -1,0 +1,96 @@
+{
+  "title": "Independent source repair check: Tshivenda completion controls",
+  "date": "2026-10-07",
+  "status": "READ_ONLY_SEMANTIC_REVIEW; NO_FLUENT_APPROVAL",
+  "worktree": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField",
+  "currentHead": "fe3cb3c1437c60e8659d3c82b073f63c78b1ef63",
+  "sourcePacketBase": "25f6baaefc56e82a4fae5f679a43aa5f605d66f0",
+  "inputPacket": "/tmp/imbewu-study-ui-ve-held-context-candidates-20261007.json",
+  "lexicalEvidence": [
+    {
+      "source": "Current Tshivenda locale",
+      "citation": "lib/locales/ve.ts:150-151, 219",
+      "evidence": "Swayani khona ... — imperative used for marking corners."
+    },
+    {
+      "source": "DBE Grade 2 Tshivenda HL Exemplar Questions, printed page 9 (PDF page 10)",
+      "file": "/tmp/imbewu-dbe-tshivenda-grade2-exemplar.pdf",
+      "sha256": "a67f216a913db89ec6b21fe52acacad15c35a4ce49090aba34bd1cab648e3af7",
+      "evidence": "“Swayani nga (x) kha tshibogisi tsini na phindulo yone.” This supports the imperative lexeme only, not fluent UI approval."
+    },
+    {
+      "source": "Current approved Tshivenda Study labels",
+      "citation": "lib/locales/ve.ts:804, 807",
+      "evidence": "studentComplete “Yo fhela”; studentDone “Zwo fhela”."
+    }
+  ],
+  "counts": {
+    "total": 3,
+    "semanticallySupportedDrafts": 3
+  },
+  "rows": [
+    {
+      "language": "ve",
+      "key": "studentMarkDone",
+      "exactSource": "Mark done",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 1250,
+        "displayCondition": "button visible text when module is not done"
+      },
+      "previousCandidate": "Tshwayani uri modulu iyi yo fhela",
+      "correctedCandidate": "Swayani uri modulu iyi yo fhela",
+      "literalBackTranslation": "Mark that this module is finished/complete.",
+      "decision": "ACCEPT_DRAFT_SEMANTICALLY",
+      "reason": "The exact respectful imperative “Swayani” occurs in current Tshivenda locale instructions for marking each corner (lib/locales/ve.ts:150-151, 219), and the external Grade 2 Tshivenda exemplar supplied by the root independently shows “Swayani nga (x) kha tshibogisi…”. The predicate “yo fhela” matches the approved Tshivenda status labels “Yo fhela” (Complete) and “Zwo fhela” (Done). Thus the clause explicitly marks the module completion state.",
+      "priorRationaleCorrection": "Remove the earlier claim that Tshwaya/Tshwayani was present in the locale. The actual local imperative is Swayani; the corrected candidate uses it.",
+      "remainingRisk": "This checks semantic composition only. Confirm the module-subject agreement, the negative toggle wording, and the naturalness of the whole UI clause with a fluent Tshivenda reviewer; the word evidence does not approve interface fluency.",
+      "placeholders": {
+        "source": [],
+        "candidate": []
+      }
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkNotDone",
+      "exactSource": "Mark as not done",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 1235,
+        "displayCondition": "aria-label when done=true; toggles completion off"
+      },
+      "previousCandidate": "Tshwayani uri modulu iyi a yo ngo fhela",
+      "correctedCandidate": "Swayani uri modulu iyi a yo ngo fhela",
+      "literalBackTranslation": "Mark that this module is not finished/complete.",
+      "decision": "ACCEPT_DRAFT_SEMANTICALLY",
+      "reason": "The source is shown only when the module is currently marked done and the action reverses that state. It uses the same locally anchored mark imperative and completion predicate, with explicit negation. The `a yo ngo` pattern is also present in current Tshivenda wording such as “Phindulo a yo ngo luga”.",
+      "priorRationaleCorrection": "Remove the earlier claim that Tshwaya/Tshwayani was present in the locale. The actual local imperative is Swayani; the corrected candidate uses it.",
+      "remainingRisk": "This checks semantic composition only. Confirm the module-subject agreement, the negative toggle wording, and the naturalness of the whole UI clause with a fluent Tshivenda reviewer; the word evidence does not approve interface fluency.",
+      "placeholders": {
+        "source": [],
+        "candidate": []
+      }
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkComplete",
+      "exactSource": "Mark as complete",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 1235,
+        "displayCondition": "aria-label when done=false; toggles completion on"
+      },
+      "previousCandidate": "Tshwayani uri modulu iyi yo fhela",
+      "correctedCandidate": "Swayani uri modulu iyi yo fhela",
+      "literalBackTranslation": "Mark that this module is finished/complete.",
+      "decision": "ACCEPT_DRAFT_SEMANTICALLY",
+      "reason": "The exact respectful imperative “Swayani” occurs in current Tshivenda locale instructions for marking each corner (lib/locales/ve.ts:150-151, 219), and the external Grade 2 Tshivenda exemplar supplied by the root independently shows “Swayani nga (x) kha tshibogisi…”. The predicate “yo fhela” matches the approved Tshivenda status labels “Yo fhela” (Complete) and “Zwo fhela” (Done). Thus the clause explicitly marks the module completion state.",
+      "priorRationaleCorrection": "Remove the earlier claim that Tshwaya/Tshwayani was present in the locale. The actual local imperative is Swayani; the corrected candidate uses it.",
+      "remainingRisk": "This checks semantic composition only. Confirm the module-subject agreement, the negative toggle wording, and the naturalness of the whole UI clause with a fluent Tshivenda reviewer; the word evidence does not approve interface fluency.",
+      "placeholders": {
+        "source": [],
+        "candidate": []
+      }
+    }
+  ]
+}

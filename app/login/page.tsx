@@ -7,8 +7,10 @@ import { useAuth, isEmbeddedBrowser } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import type { UserRole } from '@/lib/db/types';
 import { translate, useLanguage } from '@/lib/i18n';
+import { safeLoginRedirect } from '@/lib/safe-redirect';
 
 import Illustration from '@/components/Illustration';
+import LanguageDraftNote from '@/components/LanguageDraftNote';
 
 type Mode = 'signin' | 'create' | 'reset';
 
@@ -91,16 +93,16 @@ export default function LoginPage() {
 
 function LoginPageInner() {
   const { t, lang } = useLanguage();
-  const authLabel = (key: string, keepEnglish = false) => {
-    const translated = t(key);
-    return lang === 'zu' && keepEnglish ? `${translated} · ${translate('en', key)}` : translated;
-  };
+  // zu-09: this form used to mix conventions — some labels bilingual ('Ngena · Sign in'), others
+  // isiZulu-only ('Ikheli le-imeyili' with no English), which also wrapped the sign-in/create
+  // toggle to two lines. Picked isiZulu-only for every label, with the one draft note already
+  // shown above (loginZuluDraftNotice) as the single place English is kept.
+  const authLabel = (key: string) => t(key);
   const router = useRouter();
   const searchParams = useSearchParams();
   // Deep-link target to return to after sign-in (e.g. /farmer?panel=Water). Only
   // honour it when it's a same-app relative path — never an absolute/external URL.
-  const fromParam = searchParams.get('from');
-  const from = fromParam && fromParam.startsWith('/') ? fromParam : null;
+  const from = safeLoginRedirect(searchParams.get('from'));
   const { signIn, signUp, signInWithGoogle, resetPassword } = useAuth();
 
   const [mode, setMode] = useState<Mode>('signin');
@@ -204,11 +206,7 @@ function LoginPageInner() {
       <div className="w-full max-w-sm p-6 my-auto" style={{ background: 'var(--color-surface)', border: '1px solid var(--border)', borderRadius: 20, boxShadow: 'var(--shadow-panel)' }}>
         <Illustration name="login-hero" className="w-full h-32 mb-6" />
 
-        {lang === 'zu' && (
-          <p role="note" className="rounded-xl px-3 py-2 mb-4 font-sans" style={{ fontSize: 12, lineHeight: 1.45, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--color-ochre)' }}>
-            {t('loginZuluDraftNotice')}
-          </p>
-        )}
+        <div className="mb-4"><LanguageDraftNote lang={lang} scope="login" /></div>
 
         {/* Logo */}
         <div className="text-center mb-5">
@@ -220,14 +218,17 @@ function LoginPageInner() {
               </svg>
             </div>
           </div>
-          <h1 className="u-display-md" style={{ margin: 0, color: 'var(--color-ink)', marginBottom: 6 }}>ImbewuField</h1>
+          <p className="u-display-md" style={{ margin: 0, color: 'var(--color-ink)', marginBottom: 2 }}>ImbewuField</p>
+          <h1 className="font-sans font-semibold" style={{ margin: 0, marginBottom: 6, fontSize: 16, color: 'var(--color-ink)' }}>
+            {mode === 'create' ? t('loginCreateAccount') : mode === 'reset' ? t('loginForgotPassword') : t('loginSignIn')}
+          </h1>
           <div className="font-sans text-sm" style={{ color: 'var(--color-muted-strong)' }}>
             {mode === 'signin' && t('loginSubtitleSignIn')}
             {mode === 'create' && t('loginSubtitleCreate')}
             {mode === 'reset' && t('loginSubtitleReset')}
           </div>
           {from && (
-            <div className="font-sans text-xs mt-1" style={{ color: 'var(--color-ink-faint)' }}>
+            <div className="font-sans text-xs mt-1" style={{ color: 'var(--text-secondary)' }}>
               {t('loginContinueToMap')}
             </div>
           )}
@@ -235,7 +236,7 @@ function LoginPageInner() {
 
         {/* Backend not configured notice */}
         {!backendReady && (
-          <div className="rounded-xl px-3 py-2.5 mb-4 font-sans" style={{ fontSize: 13, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--color-ochre)' }}>
+          <div className="rounded-xl px-3 py-2.5 mb-4 font-sans" style={{ fontSize: 13, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--gold-dim)' }}>
             {t('loginBackendUnavailableNotice')}
           </div>
         )}
@@ -249,7 +250,7 @@ function LoginPageInner() {
                 style={mode === m
                   ? { background: 'var(--color-forest-800)', color: 'var(--color-canvas)', fontSize: 13 }
                   : { color: 'var(--color-muted-strong)', fontSize: 13, border: '1px solid transparent' }}>
-                {authLabel(m === 'signin' ? 'loginSignIn' : 'loginCreateAccount', true)}
+                {authLabel(m === 'signin' ? 'loginSignIn' : 'loginCreateAccount')}
               </button>
             ))}
           </div>
@@ -263,8 +264,8 @@ function LoginPageInner() {
                 <Check size={20} style={{ color: 'var(--color-forest-800)' }} />
               </div>
             </div>
-            <p className="font-display text-sm" style={{ color: 'var(--color-ink)' }}>{authLabel('loginResetEmailSent', true)} <strong>{email}</strong>.</p>
-            <p className="font-sans text-xs" style={{ color: 'var(--color-muted-strong)' }}>{authLabel('loginResetCheckInbox', true)}</p>
+            <p className="font-display text-sm" style={{ color: 'var(--color-ink)' }}>{authLabel('loginResetEmailSent')} <strong>{email}</strong>.</p>
+            <p className="font-sans text-xs" style={{ color: 'var(--color-muted-strong)' }}>{authLabel('loginResetCheckInbox')}</p>
             <button type="button" onClick={() => switchMode('signin')}
               className="font-sans text-sm font-semibold"
               style={{ color: 'var(--color-forest-800)', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
@@ -300,7 +301,7 @@ function LoginPageInner() {
             {mode !== 'reset' && (
               <>
                 <label className="font-sans text-xs font-semibold" style={{ color: 'var(--color-muted-strong)' }} htmlFor="password">
-                  {authLabel('loginPassword', true)}
+                  {authLabel('loginPassword')}
                 </label>
                 <input id="password" type="password" value={password}
                 onChange={(e) => { setPassword(e.target.value); setError(null); }}
@@ -325,7 +326,7 @@ function LoginPageInner() {
               </>
             )}
 
-            {error && <p ref={errorRef} tabIndex={-1} role="alert" className="font-sans outline-none" style={{ fontSize: 13, color: 'var(--gold-dim)' }}>{displayAuthError(error)}{lang === 'zu' && AUTH_ERROR_KEYS[error] ? <span className="block mt-1">{translate('en', AUTH_ERROR_KEYS[error])}</span> : null}</p>}
+            {error && <p ref={errorRef} tabIndex={-1} role="alert" className="font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]" style={{ fontSize: 13, color: 'var(--gold-dim)' }}>{displayAuthError(error)}{lang === 'zu' && AUTH_ERROR_KEYS[error] ? <span className="block mt-1">{translate('en', AUTH_ERROR_KEYS[error])}</span> : null}</p>}
 
             <button type="submit"
               disabled={loading || !backendReady || !email || (mode !== 'reset' && !password) || (mode === 'create' && !fullName.trim())}
@@ -333,7 +334,7 @@ function LoginPageInner() {
                 loading || !backendReady ? 'py-2.5 rounded-xl' : 'u-btn-primary'
               }`}
               style={loading || !backendReady
-                ? { minHeight: 44, background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--color-ink-faint)', cursor: 'not-allowed', fontSize: 15 }
+                ? { minHeight: 44, background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'not-allowed', fontSize: 15 }
                 : undefined}>
               {loading ? (
                 mode === 'signin' ? t('loginSigningIn') :
@@ -342,7 +343,7 @@ function LoginPageInner() {
                 <span className="flex items-center justify-center gap-1.5"><Mail size={15} />{t('loginSendResetEmail')}</span>
               ) : (
                 <span className="flex items-center justify-center gap-1.5">
-                  {authLabel(mode === 'signin' ? 'loginSignIn' : 'loginCreateAccount', true)}<ArrowRight size={15} />
+                  {authLabel(mode === 'signin' ? 'loginSignIn' : 'loginCreateAccount')}<ArrowRight size={15} />
                 </span>
               )}
             </button>
@@ -351,15 +352,15 @@ function LoginPageInner() {
             {mode === 'signin' && (
               <button type="button" onClick={() => switchMode('reset')}
                 className="font-sans text-center transition-opacity hover:opacity-80"
-                style={{ fontSize: 13, color: 'var(--color-muted-strong)', background: 'none', border: 'none', cursor: 'pointer', marginTop: 2 }}>
-                {authLabel('loginForgotPassword', true)}
+                style={{ fontSize: 13, color: 'var(--color-muted-strong)', background: 'none', border: 'none', cursor: 'pointer', marginTop: 2, minHeight: 44 }}>
+                {authLabel('loginForgotPassword')}
               </button>
             )}
 
             {mode === 'reset' && (
               <button type="button" onClick={() => switchMode('signin')}
                 className="font-sans text-center transition-opacity hover:opacity-80"
-                style={{ fontSize: 13, color: 'var(--color-muted-strong)', background: 'none', border: 'none', cursor: 'pointer', marginTop: 2 }}>
+                style={{ fontSize: 13, color: 'var(--color-muted-strong)', background: 'none', border: 'none', cursor: 'pointer', marginTop: 2, minHeight: 44 }}>
                 <span className="flex items-center justify-center gap-1"><ChevronLeft size={12} />{t('loginBackToSignIn')}</span>
               </button>
             )}
@@ -371,7 +372,7 @@ function LoginPageInner() {
           <>
             <div className="flex items-center gap-3 my-4">
               <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
-              <span className="font-sans text-xs" style={{ color: 'var(--color-ink-faint)' }}>{t('loginOr')}</span>
+              <span className="font-sans text-xs" style={{ color: 'var(--text-secondary)' }}>{t('loginOr')}</span>
               <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
             </div>
             <button type="button" onClick={handleGoogle} disabled={googleLoading || embedded}
@@ -386,12 +387,12 @@ function LoginPageInner() {
                 opacity: googleLoading || embedded ? 0.55 : 1,
               }}>
               <GoogleIcon />
-              {googleLoading ? t('loginConnecting') : authLabel('loginContinueWithGoogle', true)}
+              {googleLoading ? t('loginConnecting') : authLabel('loginContinueWithGoogle')}
             </button>
 
             {/* In-app browsers can't run Google's OAuth screen — steer to a real one */}
             {embedded && (
-              <div className="rounded-xl px-3 py-2.5 mt-2 font-sans" style={{ fontSize: 12.5, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--color-ochre)' }}>
+              <div className="rounded-xl px-3 py-2.5 mt-2 font-sans" style={{ fontSize: 12.5, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--gold-dim)' }}>
                 {t('loginGoogleEmbeddedHelp')}
                 <button type="button" onClick={copyAppLink}
                   className="mt-2 w-full flex items-center justify-center gap-1.5 py-1.5 rounded-lg font-semibold"
@@ -405,14 +406,14 @@ function LoginPageInner() {
 
         {/* Back link */}
         <div className="text-center mt-4">
-          <a href="/home" className="font-sans transition-opacity hover:opacity-80" style={{ fontSize: 13, color: 'var(--color-muted-strong)' }}>
+          <a href="/home" className="font-sans transition-opacity hover:opacity-80" style={{ minHeight: 44, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: 'var(--color-muted-strong)' }}>
             <span className="flex items-center justify-center gap-1"><ChevronLeft size={12} />{t('loginBackToApp')}</span>
           </a>
         </div>
 
         {/* Trust footer */}
         <div className="text-center mt-3">
-          <p className="font-sans" style={{ fontSize: 11.5, color: 'var(--color-ink-faint)', letterSpacing: '0.01em' }}>
+          <p className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', letterSpacing: '0.01em' }}>
             {t('loginTrustFooter')}
           </p>
         </div>

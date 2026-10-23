@@ -1,5 +1,6 @@
 import type { Lesson, QuizQuestion } from './course-modules';
 import { COURSE_TRANSLATION_DRAFTS } from './course-translation-drafts.ts';
+import { ISIZULU_REVIEW_DRAFT_SOURCE_SNAPSHOTS } from './course-translation-draft-sources-zu.ts';
 import { SESOTHO_INTRO_PERMACULTURE_DRAFT } from './course-translation-drafts-st.ts';
 import { SESOTHO_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-st-reading-landscape.ts';
 import { SESOTHO_WATER_HARVESTING_DRAFT } from './course-translation-drafts-st-water-harvesting.ts';
@@ -18,15 +19,18 @@ import { XITSONGA_VEGETABLES_STAPLES_DRAFT } from './course-translation-drafts-t
 import { XITSONGA_MARKET_COMMUNITY_DRAFT } from './course-translation-drafts-ts-market-community.ts';
 import { XITSONGA_FOOD_FOREST_DRAFT } from './course-translation-drafts-ts-food-forest.ts';
 import { XITSONGA_PLANT_GUILDS_DRAFT } from './course-translation-drafts-ts-plant-guilds.ts';
+import { XITSONGA_SEEDS_SOVEREIGNTY_DRAFT } from './course-translation-drafts-ts-seeds-sovereignty.ts';
 import { XITSONGA_VEGETABLES_STAPLES_L2_DRAFT } from './course-translation-drafts-ts-vegetables-staples-l2.ts';
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from './course-translation-drafts-ve.ts';
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from './course-translation-drafts-ve-reading-landscape.ts';
 import { TSHIVENDA_WATER_HARVESTING_DRAFT } from './course-translation-drafts-ve-water-harvesting.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT } from './course-translation-drafts-ve-vegetables-staples.ts';
 import { TSHIVENDA_FOOD_FOREST_DRAFT } from './course-translation-drafts-ve-food-forest.ts';
+import { TSHIVENDA_PLANT_GUILDS_DRAFT } from './course-translation-drafts-ve-plant-guilds.ts';
 import { TSHIVENDA_SOIL_HEALTH_DRAFT } from './course-translation-drafts-ve-soil-health.ts';
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from './course-translation-drafts-ve-market-community.ts';
 import { TSHIVENDA_SEEDS_SOVEREIGNTY_DRAFT } from './course-translation-drafts-ve-seeds-sovereignty.ts';
+import { TSHIVENDA_SMALL_LIVESTOCK_DRAFT } from './course-translation-drafts-ve-small-livestock.ts';
 
 export type CourseLanguage = 'en' | 'zu' | 'st' | 'ts' | 've';
 export type CourseTranslationStatus =
@@ -134,6 +138,36 @@ function hasCompleteLessonShape(source: Lesson, translated: LocalizedLessonConte
     });
 }
 
+function matchesIsiZuluDraftSource(source: Lesson): boolean {
+  const snapshot = ISIZULU_REVIEW_DRAFT_SOURCE_SNAPSHOTS[source.id];
+  if (!snapshot || snapshot.lessonId !== source.id) return false;
+  if (snapshot.title !== source.title || snapshot.body !== source.body ||
+    snapshot.infographicAlt !== (source.infographicAlt ?? null) ||
+    snapshot.keyPoints.length !== source.keyPoints.length ||
+    snapshot.keyPoints.some((point, index) => point !== source.keyPoints[index]) ||
+    snapshot.quiz.length !== source.quiz.length) return false;
+
+  return snapshot.quiz.every((question, index) => {
+    const current = source.quiz[index];
+    return question.q === current.q && question.correct === current.correct &&
+      question.rationale === current.rationale && question.options.length === current.options.length &&
+      question.options.every((option, optionIndex) => option === current.options[optionIndex]);
+  });
+}
+
+function sameLocalizedLessonContent(left: LocalizedLessonContent, right: LocalizedLessonContent): boolean {
+  return left.title === right.title && left.body === right.body &&
+    left.infographicAlt === right.infographicAlt &&
+    left.keyPoints.length === right.keyPoints.length &&
+    left.keyPoints.every((point, index) => point === right.keyPoints[index]) &&
+    left.quiz.length === right.quiz.length && left.quiz.every((question, index) => {
+      const other = right.quiz[index];
+      return question.q === other.q && question.correct === other.correct &&
+        question.rationale === other.rationale && question.options.length === other.options.length &&
+        question.options.every((option, optionIndex) => option === other.options[optionIndex]);
+    });
+}
+
 /** Returns only learner-approved translation records; review drafts are available via the separate metadata API. */
 export function learnerLessonForLanguage(
   lesson: Lesson,
@@ -182,13 +216,14 @@ type RegionalLessonDraft = {
 
 const REGIONAL_LESSON_DRAFTS: Record<RegionalLanguage, Array<{ lessons: RegionalLessonDraft[] }>> = {
   st: [SESOTHO_INTRO_PERMACULTURE_DRAFT, SESOTHO_READING_LANDSCAPE_DRAFT, SESOTHO_WATER_HARVESTING_DRAFT, SESOTHO_SOIL_HEALTH_DRAFT, SESOTHO_VEGETABLES_STAPLES_DRAFT, SESOTHO_FOOD_FOREST_DRAFT, SESOTHO_PLANT_GUILDS_DRAFT, SESOTHO_MARKET_COMMUNITY_DRAFT, SESOTHO_SMALL_LIVESTOCK_DRAFT, SESOTHO_SEEDS_SOVEREIGNTY_DRAFT],
-  // Release one source-paired Water lesson at a time; the remaining review data is not learner copy yet.
+  // Only source-paired Water lessons with reviewed machine-draft bodies appear in learner copy.
   ts: [XITSONGA_INTRO_PERMACULTURE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT,
-    { lessons: XITSONGA_WATER_HARVESTING_DRAFT.lessons.slice(0, 1) }, XITSONGA_SOIL_HEALTH_DRAFT, XITSONGA_SMALL_LIVESTOCK_DRAFT,
+    { lessons: XITSONGA_WATER_HARVESTING_DRAFT.lessons.slice(0, 4) }, XITSONGA_SOIL_HEALTH_DRAFT, XITSONGA_SMALL_LIVESTOCK_DRAFT,
     XITSONGA_VEGETABLES_STAPLES_DRAFT,
     XITSONGA_FOOD_FOREST_DRAFT,
-    XITSONGA_MARKET_COMMUNITY_DRAFT, XITSONGA_PLANT_GUILDS_DRAFT, XITSONGA_VEGETABLES_STAPLES_L2_DRAFT],
-  ve: [TSHIVENDA_INTRO_PERMACULTURE_DRAFT, TSHIVENDA_READING_LANDSCAPE_DRAFT, TSHIVENDA_WATER_HARVESTING_DRAFT, TSHIVENDA_SOIL_HEALTH_DRAFT, TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT, TSHIVENDA_FOOD_FOREST_DRAFT, TSHIVENDA_MARKET_COMMUNITY_DRAFT, TSHIVENDA_SEEDS_SOVEREIGNTY_DRAFT],
+    XITSONGA_MARKET_COMMUNITY_DRAFT, XITSONGA_PLANT_GUILDS_DRAFT, XITSONGA_VEGETABLES_STAPLES_L2_DRAFT,
+    XITSONGA_SEEDS_SOVEREIGNTY_DRAFT],
+  ve: [TSHIVENDA_INTRO_PERMACULTURE_DRAFT, TSHIVENDA_READING_LANDSCAPE_DRAFT, TSHIVENDA_WATER_HARVESTING_DRAFT, TSHIVENDA_SOIL_HEALTH_DRAFT, TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT, TSHIVENDA_FOOD_FOREST_DRAFT, TSHIVENDA_PLANT_GUILDS_DRAFT, TSHIVENDA_MARKET_COMMUNITY_DRAFT, TSHIVENDA_SEEDS_SOVEREIGNTY_DRAFT, TSHIVENDA_SMALL_LIVESTOCK_DRAFT],
 };
 
 function regionalPair(pair: RegionalPair, source: string, language: RegionalLanguage): string | null {
@@ -266,9 +301,17 @@ export function resolveLearnerLessonPresentation(
   }
 
   if (REVIEW_STATE_BY_LESSON[lesson.id]?.status === 'review-draft') {
-    const draft = translation?.lessonId === lesson.id && translation.status === 'review-draft'
+    if (!matchesIsiZuluDraftSource(lesson)) return { content: source, status: 'english-fallback' };
+    const registeredDraft = COURSE_TRANSLATION_DRAFTS[lesson.id];
+    const suppliedDraft = translation?.lessonId === lesson.id && translation.status === 'review-draft'
       ? translation.draft
-      : COURSE_TRANSLATION_DRAFTS[lesson.id];
+      : undefined;
+    if (translation?.lessonId === lesson.id && translation.status === 'review-draft' &&
+      (!suppliedDraft || !registeredDraft || !hasCompleteLessonShape(lesson, suppliedDraft) ||
+        !sameLocalizedLessonContent(suppliedDraft, registeredDraft))) {
+      return { content: source, status: 'english-fallback' };
+    }
+    const draft = suppliedDraft ?? registeredDraft;
     if (draft && hasCompleteLessonShape(lesson, draft)) {
       return { content: draft, status: 'draft' };
     }

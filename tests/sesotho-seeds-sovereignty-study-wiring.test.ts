@@ -6,73 +6,60 @@ import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { SESOTHO_SEEDS_SOVEREIGNTY_DRAFT } from '../lib/course-translation-drafts-st-seeds-sovereignty.ts';
+import { XITSONGA_SEEDS_SOVEREIGNTY_DRAFT } from '../lib/course-translation-drafts-ts-seeds-sovereignty.ts';
+import { assertKeeps, checkCompleteLessonDraft, checkCompleteModuleDraft, draftText, FORBIDDEN_WORDS } from './regional-full-draft-checks.ts';
 
 const STUDENT_PAGE = readFileSync(new URL('../app/student/page.tsx', import.meta.url), 'utf8');
 
-test('Sesotho seed lesson labels are paired drafts and every teaching field stays exact English', () => {
+test('Seeds lesson 3 drafts translate storage and germination guidance and keep every storage condition', () => {
+  const sourceLesson = COURSE_MODULES.find(module => module.id === 'seeds-sovereignty')!.lessons.find(lesson => lesson.id === 'seeds-sovereignty-l3')!;
+  // 2 October 2026: the storage and germination paragraphs held in exact English are now translated after a
+  // blind back-translation and an independent semantic check. Each draft must still say: never direct sun,
+  // seed fully dry before sealing, a sealed container, a cool and dark place.
+  const check = (language: 'st' | 'ts', paired: Parameters<typeof checkCompleteLessonDraft>[1], conditions: string[]) => {
+    checkCompleteLessonDraft(sourceLesson, paired, language);
+    assertKeeps(draftText(paired.body, language), conditions, `${language} seed storage conditions`);
+  };
+  check('st', SESOTHO_SEEDS_SOVEREIGNTY_DRAFT.lessons.find(lesson => lesson.id === sourceLesson.id)!,
+    ['o se ke wa e beha letsatsing', 'e omileng ka botlalo', 'setshelong se kwetsweng', 'se phodileng', 'se lefifi']);
+  check('ts', XITSONGA_SEEDS_SOVEREIGNTY_DRAFT.lessons.find(lesson => lesson.id === sourceLesson.id)!,
+    ['u nga tshuki u yi veka eka dyambu', 'leyi omeke hi ku helela', 'lexi pfaleke', 'yo titimela', 'yo munyama']);
+});
+
+test('Sesotho Seeds learner prose is paired, visibly unreviewed, and source changes withdraw it', () => {
   const draft = SESOTHO_SEEDS_SOVEREIGNTY_DRAFT;
   const module = COURSE_MODULES.find(candidate => candidate.id === draft.id);
   assert.ok(module, 'the canonical Seeds and Seed Sovereignty module must remain available');
-
-  assert.equal(draft.title.sourceEnglish, module.title, 'the card title stays paired to its exact English source');
-  assert.equal(draft.title.reviewStatus, 'hold', 'Seed Sovereignty stays exact English');
-  assert.equal(draft.title.sesothoDraft, module.title, 'the module title remains exact English');
-  assert.equal(draft.description.sourceEnglish, module.description, 'the card description stays paired to its exact English source');
-  assert.equal(draft.description.reviewStatus, 'hold', 'uncertain storage wording remains held');
-  assert.equal(draft.description.sesothoDraft, module.description, 'the module description remains exact English');
-  const modulePresentation = resolveCourseModulePresentation(module, 'st');
-  assert.equal(modulePresentation.status, 'english-fallback', 'an all-English card must not claim to be translated');
-  assert.equal(modulePresentation.title, module.title);
-  assert.equal(modulePresentation.description, module.description);
-  assert.equal(draft.lessons.length, 3, 'all three lesson headings are available');
-  assert.equal(draft.lessons[0].title.sesothoDraft, 'Bohlokoa ba ho Boloka Lipeo', 'L1 keeps the checked generic heading draft');
-  assert.equal(draft.lessons[1].title.reviewStatus, 'hold', 'the technical methods title stays held');
-  assert.equal(draft.lessons[1].title.sesothoDraft, module.lessons[1].title, 'the L2 title remains exact English');
-  assert.equal(draft.lessons[2].title.sesothoDraft, 'Ho Omisa, ho Boloka le ho Arolelana Lipeo', 'L3 keeps the checked generic heading draft');
-  assert.equal(draft.lessons[0].title.reviewStatus, 'machine-draft');
-  assert.equal(draft.lessons[2].title.reviewStatus, 'machine-draft');
-
+  // 2 October 2026: the quizzes, key points and held genetics paragraphs are now complete machine drafts with
+  // canonical answer indices; until now the quizzes stayed exact English.
+  checkCompleteModuleDraft(module, draft, 'st', FORBIDDEN_WORDS.st);
   for (const lesson of module.lessons) {
-    const sourceDraft = draft.lessons.find(candidate => candidate.id === lesson.id);
-    assert.ok(sourceDraft, `${lesson.id}: matching paired draft must exist`);
-    const presentation = resolveLearnerLessonPresentation(lesson, 'st');
-    assert.equal(presentation.status, sourceDraft.title.reviewStatus === 'machine-draft' ? 'draft' : 'english-fallback',
-      `${lesson.id}: only lessons with translated headings are marked as drafts`);
-    assert.equal(sourceDraft.title.sourceEnglish, lesson.title, `${lesson.id}: preserve the exact English title`);
-    assert.equal(presentation.content.title,
-      sourceDraft.title.reviewStatus === 'hold' ? lesson.title : sourceDraft.title.sesothoDraft,
-      `${lesson.id}: held technical title stays English and generic headings remain drafts`);
-
-    assert.equal(sourceDraft.body.reviewStatus, 'hold', `${lesson.id}: teaching copy stays held`);
-    assert.equal(sourceDraft.body.sourceEnglish, lesson.body, `${lesson.id}: preserve the exact English body source`);
-    assert.equal(sourceDraft.body.sesothoDraft, lesson.body, `${lesson.id}: do not translate lesson advice`);
-    assert.equal(presentation.content.body, lesson.body, `${lesson.id}: learners receive exact English teaching copy`);
-    assert.deepEqual(presentation.content.keyPoints, lesson.keyPoints, `${lesson.id}: key points remain exact English`);
-    assert.deepEqual(presentation.content.quiz, lesson.quiz, `${lesson.id}: questions, choices and rationales remain exact English`);
-
-    if (lesson.infographicAlt) {
-      assert.equal(sourceDraft.infographicAlt?.reviewStatus, 'hold', `${lesson.id}: image description stays held`);
-      assert.equal(presentation.content.infographicAlt, lesson.infographicAlt, `${lesson.id}: image description remains exact English`);
-    }
-
+    const sourceDraft = draft.lessons.find(candidate => candidate.id === lesson.id)!;
+    if (lesson.infographicAlt) assert.equal(resolveLearnerLessonPresentation(lesson, 'st').content.infographicAlt,
+      sourceDraft.infographicAlt?.sesothoDraft, `${lesson.id}: the learner sees the paired illustration description`);
     const changedTitle = { ...lesson, title: `${lesson.title} changed` };
     assert.equal(resolveLearnerLessonPresentation(changedTitle, 'st').status, 'english-fallback',
-      `${lesson.id}: changed source title withdraws the paired draft`);
+      `${lesson.id}: changed English source withdraws the paired draft`);
   }
-
-  const changedDescription = { ...module, description: `${module.description} changed` };
-  assert.equal(resolveCourseModulePresentation(changedDescription, 'st').status, 'english-fallback',
-    'changed English module description withdraws the paired card draft');
-
   assert.match(STUDENT_PAGE, /regionalDraft && <span[\s\S]*?AI draft · review pending/,
-    'the lesson label remains visibly marked as pending review');
-  assert.match(STUDENT_PAGE, /Unreviewed \{lang === 'st' \? 'Sesotho'[\s\S]*?Exact English source is shown alongside the lesson and answers\. Slides and narration remain in English\./,
-    'learners are told the English lesson and media are still the reference');
-  // Seeds is wholly English; the Vegetables card alone names its single drafted lesson.
-  assert.ok(STUDENT_PAGE.includes("mod.id === 'vegetables-staples' ? 'English module · one Tshivenda lesson draft' : 'English module'"),
-    'other all-English cards, including Seeds, retain the English module badge');
-  assert.equal(STUDENT_PAGE.split("mod.id === 'vegetables-staples' ? 'English module · one Tshivenda lesson draft' : 'English module'").length - 1, 2,
-    'locked and unlocked cards both describe the one Tshivenda lesson draft narrowly');
-  assert.match(STUDENT_PAGE, /<p className="font-semibold">Exact English source<\/p>\s*<p><span className="font-semibold">Title:<\/span> \{lesson\.title\}<\/p>/,
-    'the lesson title appears with its exact English source');
+    'the visible review-pending learner label remains in place');
+  assert.ok(STUDENT_PAGE.includes('<p className="font-semibold">Exact English source</p>') &&
+    STUDENT_PAGE.includes('<p><span className="font-semibold">Title:</span> {lesson.title}</p>'),
+    'learners can see the exact English title beside the draft');
+});
+
+test('the Xitsonga Seeds edition translates the genetics quizzes and keeps the technical terms in English', () => {
+  const source = COURSE_MODULES.find(module => module.id === 'seeds-sovereignty');
+  assert.ok(source);
+  // 2 October 2026: the genetics quizzes were exact English; they are now machine drafts in the same order with
+  // the same correct answers, and the seed-genetics terms stay English inside the translated sentences.
+  checkCompleteModuleDraft(source, XITSONGA_SEEDS_SOVEREIGNTY_DRAFT, 'ts', FORBIDDEN_WORDS.ts);
+  assert.deepEqual(XITSONGA_SEEDS_SOVEREIGNTY_DRAFT.holds, [], 'no English holds remain');
+  const shown = resolveLearnerLessonPresentation(source.lessons[0], 'ts');
+  for (const term of ['open-pollinated', 'stable variety', 'F1 hybrid', 'pollination']) {
+    assert.ok(shown.content.body.includes(term), `${term} remains English`);
+  }
+  assert.ok(!shown.content.body.includes('thyakisa'), 'pollination must not read as pollution');
+  const quiz = shown.content.quiz.flatMap(question => [question.q, ...question.options, question.rationale]).join(' ');
+  assert.match(quiz, /\bF1\b/, 'the F1 distinction stays explicit in the translated quiz');
 });

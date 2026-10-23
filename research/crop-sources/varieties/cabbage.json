@@ -1,0 +1,71 @@
+{
+  "key": "cabbage",
+  "varieties": [
+    {
+      "name": "Accord F1 (or similar cold-tolerant hybrid)",
+      "zones": [],
+      "maturity": null,
+      "season": "Apr-Aug (winter) sowings",
+      "traits": "Bred for the winter slot",
+      "type": "hybrid",
+      "note": "Kept from the existing crop-catalog.ts entry (2026-07-14 research pass) — not independently re-verified in this pass.",
+      "evidence": [{ "quote": "Bred for the winter slot — avoid growing a summer-type variety over winter, heads form poorly and bolt risk rises.", "url": null, "page": null, "doc": "Existing ImbewuField lib/crop-catalog.ts cabbage entry (2026-07-14 audit note)" }]
+    },
+    {
+      "name": "Optima F1 (or similar summer-bred hybrid)",
+      "zones": [],
+      "maturity": null,
+      "season": "Sep-Mar (summer) sowings",
+      "traits": "Selected for summer production",
+      "type": "hybrid",
+      "note": "Kept from the existing crop-catalog.ts entry — not independently re-verified in this pass.",
+      "evidence": [{ "quote": "Selected for summer production; the reverse mistake — a winter-bred variety sown in summer — tends to bolt before heading.", "url": null, "page": null, "doc": "Existing ImbewuField lib/crop-catalog.ts cabbage entry (2026-07-14 audit note)" }]
+    },
+    {
+      "name": "Conquistador",
+      "zones": ["highveld", "high-mountain", "midlands-mistbelt", "karoo-arid", "subtropical-coast", "lowveld-bushveld"],
+      "maturity": "medium",
+      "season": "\"Should ideally mature into autumn and early winter in cool areas and through winter in frost-free areas\"",
+      "traits": "Excellent uniformity; widely adapted; high yield potential; good heat AND cold tolerance; very good holding ability; intermediate resistance to Fusarium yellows (Foc); deep blue-green heads",
+      "type": "hybrid",
+      "note": "This entry already existed in crop-catalog.ts as 'or similar dual-season type' — independently re-verified and upgraded in this pass with the actual Sakata product page, which confirms it by name and gives the frost/overwintering detail the catalog's original note only implied.",
+      "evidence": [
+        { "quote": "Over the years, Conquistador has developed a remarkable track record of superb performance becoming one of the leading varieties in Southern Africa... Field holding ability after maturity is exceptional, making it perfectly suited to be used as an overwintering variety in many areas... Conquistador has intermediate resistance to Fusarium yellows (Foc).", "url": "https://sakata.co.za/shop/vegetables/cabbage/large-fresh-market-cabbage/conquistador-f1-hybrid-fresh-market-cabbage/", "page": null, "doc": "Conquistador F1 Hybrid Fresh Market Cabbage, Sakata product page (fetched directly, verbatim)" },
+        { "quote": "Conquistador can tolerate both heat in summer and cold throughout the winter months well. Highly suited to the cooler times of the year – should ideally mature into autumn and early winter in cool areas and through winter in frost-free areas.", "url": "https://sakata.co.za/shop/vegetables/cabbage/large-fresh-market-cabbage/conquistador-f1-hybrid-fresh-market-cabbage/", "page": null, "doc": "Conquistador F1 Hybrid Fresh Market Cabbage, Sakata product page (fetched directly, verbatim)" }
+      ]
+    },
+    {
+      "name": "STAR 3316",
+      "zones": [],
+      "maturity": "medium",
+      "season": "90-110 days from transplant in summer; 10-20 days longer in mid-winter plantings",
+      "traits": "Large-framed, upright leaf habit with excellent head protection; firm round to semi-globe heads 3-5kg; intermediate resistance to black rot; \"adapted to year round production in areas with moderate winters\"",
+      "type": "hybrid",
+      "note": "New addition — a Starke Ayres commercial hybrid explicitly pitched at year-round production but only 'in areas with moderate winters', i.e. it is a poor fit for the hard-frost highveld/high-mountain zones without more caution than the source itself gives; left with no zones assigned rather than guessing which named zones count as 'moderate winters'.",
+      "evidence": [
+        { "quote": "A large framed hybrid adapted to year round production in areas with moderate winters.", "url": "https://www.starkeayres.com/uploads/files/STAR-3316-2020.pdf", "page": 1, "doc": "STAR 3316 cabbage technical bulletin, Starke Ayres, October 2020" },
+        { "quote": "Medium to late maturing. Approximately 90 - 110 days from transplant to maturity in summer. Maturity will vary by as much as 10 - 20 days between mid summer to mid winter plantings.", "url": "https://www.starkeayres.com/uploads/files/STAR-3316-2020.pdf", "page": 1, "doc": "STAR 3316 cabbage technical bulletin, Starke Ayres, October 2020" }
+      ]
+    },
+    {
+      "name": "Copenhagen Market",
+      "zones": [],
+      "maturity": "early",
+      "season": "70-80 days",
+      "traits": "Solid, uniform round heads; classic early OP heirloom",
+      "type": "OP",
+      "note": "New addition — the standard fast, open-pollinated (seed-saveable) choice for a short season or a quick early crop; no SA source found tying it to a specific zone.",
+      "evidence": [{ "quote": "This reliable, early-maturing variety (70-80 days) produces solid, uniform round heads.", "url": "https://www.starkeayres.com/products/home-gardening-seed/vegetable-seed/copenhagen-market", "page": null, "doc": "Copenhagen Market Cabbage, Starke Ayres product page (via search snippet — JS-rendered page, not directly fetchable for a verbatim on-page quote)" }]
+    }
+  ],
+  "zoneAdvice": {
+    "highveld": { "text": "Hard-frost interior — favour Accord F1 (winter-bred) or Conquistador (explicit cold tolerance and overwintering ability) over a summer-only type for any cool-season planting.", "evidence": [] },
+    "high-mountain": { "text": "Severe frost, short season — Conquistador's stated cold tolerance and overwintering habit is the best-sourced fit found; STAR 3316 is NOT recommended here since its own source limits year-round use to 'areas with moderate winters'.", "evidence": [] },
+    "subtropical-coast": { "text": "Frost-free — Conquistador's source explicitly covers 'through winter in frost-free areas' as a valid maturity window; Optima F1 (summer-bred) is also a reasonable fit given the mild climate.", "evidence": [] }
+  },
+  "gaps": [
+    "Accord F1 and Optima F1 zone lists remain empty because the original crop-catalog.ts entries (kept here per the task's instruction) describe them by SEASON, not by zone, and this pass did not find an external source that adds a zone dimension to either.",
+    "STAR 3316's own source explicitly limits year-round suitability to 'areas with moderate winters' but does not name which SA zones qualify, so no zones list was assigned rather than guessing.",
+    "Copenhagen Market's zone was not sourced at all — added purely as an OP/seed-saving early alternative to the hybrids already in the catalog."
+  ]
+}

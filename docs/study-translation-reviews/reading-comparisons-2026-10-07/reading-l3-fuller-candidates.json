@@ -1,0 +1,289 @@
+{
+  "sourceRevision": "647fca3391c8bc816d008058167c7cb10eabd7e0",
+  "sourceEnglish": {
+    "id": "reading-landscape-l3",
+    "infographicUrl": "/course-images/reading-landscape/reading-landscape-l3.jpg",
+    "infographicAlt": "A farm from above with arrows showing wind direction, cold air draining downhill into a frost hollow, and the direction of the slope.",
+    "title": "Wind, Frost, and Topography: Reading the Invisible Forces",
+    "body": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+    "keyPoints": [
+      "Observe damaging wind direction on your site before placing shelter",
+      "Cold air can drain downhill on clear, still nights and collect in low ground",
+      "Compare cold-night plant damage and temperatures across your site; visible frost is not the only sign",
+      "Airflow and drying may help reduce wet leaves, but do not alone control late blight"
+    ],
+    "quiz": [
+      {
+        "q": "Where should a farmer first look when placing a frost-sensitive seedling nursery on a Highveld smallholding?",
+        "options": [
+          "A known frost hollow at the valley bottom",
+          "An exposed ridgeline without checking the wind",
+          "A sunny, sheltered place outside an observed frost hollow, after checking the site's cold-night pattern",
+          "The place with the most shade, without checking frost"
+        ],
+        "correct": 2,
+        "rationale": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost."
+      },
+      {
+        "q": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Which bed position may help leaves dry, alongside local crop-health advice?",
+        "options": [
+          "A sealed, unventilated tunnel",
+          "A place with good airflow and morning sun",
+          "A low spot near a dam",
+          "A shaded south wall"
+        ],
+        "correct": 1,
+        "rationale": "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan."
+      }
+    ]
+  },
+  "sourceSha256": "24ee06e7c7fd498d2895f928135d4567a7a0dc35a410fda4115e3b203df8735b",
+  "candidates": [
+    {
+      "language": "zu",
+      "lessonId": "reading-landscape-l3",
+      "field": "body.paragraph2",
+      "before": "Isithwathwa siyizinhlayiya zeqhwa ezakheka phezu kwendawo ebandayo. Inkungu iyodwa ayisho ukuthi sekwakheke lezo zinhlayiya zeqhwa, futhi isithwathwa singalimaza izitshalo kungabonakali iqhwa. Bheka iqhwa nomonakalo ezitshalweni, uqhathanise izindawo eziphansi nemithambeka, futhi uhlole amazinga okushisa aphansi lapho ukwazi khona. Maka izindawo lapho amakhaza noma umonakalo kuhlala khona isikhathi eside. Gcina izitshalo ezizwela amakhaza zikude nezindawo ezibandayo ozibonile.",
+      "candidate": "Isithwathwa siyizinhlayiya zeqhwa ezakheka phezu kwendawo ebandayo. Inkungu iyodwa ayisho ukuthi sekwakheke lezo zinhlayiya zeqhwa, futhi isithwathwa singalimaza izitshalo kungabonakali iqhwa. Bheka iqhwa nomonakalo ezitshalweni, uqhathanise izindawo eziphansi nemithambeka, futhi uhlole amazinga okushisa aphansi lapho ukwazi khona. Maka izindawo lapho amakhaza noma umonakalo kuhlala khona isikhathi eside kunazo zonke. Gcina izitshalo ezizwela amakhaza zikude nezindawo ezibandayo ozibonile.",
+      "sourceEnglish": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "provenance": "Native Agy conversation48686326-d31a-4a61-a252-ae3bc13ca69c, completed5:53 response; Codex minimal composition/repair below",
+      "rootReview": "Independent full-source meaning check accepted; root implementation/source and UI gates still required.",
+      "learnerWired": true,
+      "independentReview": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "verdict": "accept",
+        "fluentApproval": false
+      },
+      "repairBackcheck": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "terminalObserved": true,
+        "verdict": "not-required",
+        "fluentApproval": false
+      }
+    },
+    {
+      "language": "zu",
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz.0.options.3",
+      "before": "Indawo enomthunzi omkhulu, ngaphandle kokuhlola isithwathwa",
+      "candidate": "Indawo enomthunzi omningi kunazo zonke, ngaphandle kokuhlola isithwathwa",
+      "sourceEnglish": "The place with the most shade, without checking frost",
+      "provenance": "Native Agy conversation48686326-d31a-4a61-a252-ae3bc13ca69c, completed5:53 response; Codex minimal composition/repair below",
+      "rootReview": "Independent full-source meaning check accepted; root implementation/source and UI gates still required.",
+      "learnerWired": true,
+      "independentReview": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "verdict": "accept",
+        "fluentApproval": false
+      },
+      "repairBackcheck": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "terminalObserved": true,
+        "verdict": "not-required",
+        "fluentApproval": false
+      }
+    },
+    {
+      "language": "zu",
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz.1.rationale",
+      "before": "Ukuhamba komoya nelanga lasekuseni kungasiza amaqabunga ome. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+      "candidate": "Ukuhamba komoya nelanga lasekuseni kungasiza amaqabunga ome. I-late blight ithandwa yisimo sezulu esipholile nesinomswakama esiqhubeka isikhathi eside, kanti ukususa umbhede uwuyise kwenye indawo kukodwa akusona isu eliphelele lokulawula lesi sifo.",
+      "sourceEnglish": "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+      "provenance": "Native Agy conversation48686326-d31a-4a61-a252-ae3bc13ca69c, completed5:53 response; Codex minimal composition/repair below",
+      "rootReview": "Independent full-source meaning check accepted; root implementation/source and UI gates still required.",
+      "learnerWired": true,
+      "independentReview": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "verdict": "accept",
+        "fluentApproval": false
+      },
+      "repairBackcheck": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "terminalObserved": true,
+        "verdict": "not-required",
+        "fluentApproval": false
+      }
+    },
+    {
+      "language": "zu",
+      "lessonId": "reading-landscape-l3",
+      "field": "infographicAlt",
+      "before": "Umfanekiso wepulazi ulibuka phezulu, nemicibisholo ekhombisa indlela yomoya, cold air draining downhill into a frost hollow, nendlela yomthambeka.",
+      "candidate": "Umfanekiso wepulazi ulibuka phezulu, nemicibisholo ekhombisa indlela yomoya, umoya obandayo owehla ngomthambeka uya emgodini wesithwathwa (frost hollow), nendlela yomthambeka.",
+      "sourceEnglish": "A farm from above with arrows showing wind direction, cold air draining downhill into a frost hollow, and the direction of the slope.",
+      "provenance": "Native Agy conversation48686326-d31a-4a61-a252-ae3bc13ca69c, completed5:53 response; Codex minimal composition/repair below",
+      "rootReview": "Independent full-source meaning check accepted; root implementation/source and UI gates still required.",
+      "learnerWired": true,
+      "independentReview": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "verdict": "accept",
+        "fluentApproval": false
+      },
+      "repairBackcheck": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "terminalObserved": true,
+        "verdict": "not-required",
+        "fluentApproval": false
+      }
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "field": "body.paragraph0",
+      "before": "Muya u nga tshinyadza zwimela kha shamba ḽiṱuku. Thungo na maanḓa a muya wa tshinyadzaho zwi shanduka u ya nga vhupo, khalaṅwaha, na your site's ridges and gaps. Tshimbilani kha land nga maḓuvha a re na muya. Ṅwalani hune muya wa bva hone na zwine wa kwama. Sedzani rekhodo dza mutsho wa henefho musi ni sa athu dzhia tsheo ya hune tsireledzo ya ṱoḓea hone.",
+      "candidate": "Muya u nga tshinyadza zwimela kha shamba ḽiṱuku. Thungo na maanḓa a muya une wa tshinyadza zwi shanduka u ya nga vhupo, khalaṅwaha, na dzi-ridges and gaps dza tshitentsi tshaṋu. Tshimbilani kha land nga maḓuvha a re na muya. Ṅwalani hune muya wa bva hone na zwine wa kwama. Sedzani rekhodo dza mutsho wa henefho musi ni sa athu dzhia tsheo ya hune tsireledzo ya ṱoḓea hone.",
+      "sourceEnglish": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.",
+      "provenance": "Native Agy conversation48686326-d31a-4a61-a252-ae3bc13ca69c, completed5:53 response; Codex minimal composition/repair below",
+      "rootReview": "Minimal reviewer repair saved data-only; separate repair backcheck required.",
+      "learnerWired": true,
+      "independentReview": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "verdict": "repair",
+        "fluentApproval": false
+      },
+      "repairBackcheck": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "terminalObserved": true,
+        "verdict": "accept",
+        "fluentApproval": false
+      }
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "field": "body.paragraph2",
+      "before": "Frost ndi ice ine ya vhumbwa kha surface yo rotholaho. Mist fhedzi a i sumbedzi uri ice yo vhumbwa, nahone frost damage i nga itea hu si na ice ine ya vhonala. Sedzani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Keep sensitive plants away from the cold pockets dzine na dzi vhona.",
+      "candidate": "Frost ndi ice ine ya vhumbwa kha surface yo rotholaho. Mist fhedzi a i sumbedzi uri ice yo vhumbwa, nahone frost damage i nga itea hu si na ice ine ya vhonala. Sedzani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Vhetshelani zwimela zwi sa konḓeleliho kule na cold pockets dzine na dzi vhona.",
+      "sourceEnglish": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "provenance": "Native Agy conversation48686326-d31a-4a61-a252-ae3bc13ca69c, completed5:53 response; Codex minimal composition/repair below",
+      "rootReview": "Minimal reviewer repair saved data-only; separate repair backcheck required.",
+      "learnerWired": true,
+      "independentReview": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "verdict": "repair",
+        "fluentApproval": false
+      },
+      "repairBackcheck": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "terminalObserved": true,
+        "verdict": "accept",
+        "fluentApproval": false
+      }
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz.0.rationale",
+      "before": "Muya wo rotholaho u nga kuvhangana fhethu ho tsaho kha vhusiku vhu sa na makole, hu si na muya. Vhambedzani fhethu hune nursery ya nga vhewa hone through the local frost season. Ṱolani matsalwa a minimum temperatures a henefho kana ni vhudzise mueletshedzi wa zwa vhulimi wa henefho musi ni sa athu dzhia tsheo ya fhethu ha tshifhinga tshilapfu. Frost ine ya vhonala a si yone fhedzi tswayo ya frost damage; a hu na fhethu ha kha thavha hune ha fulufhedzisa uri a hu nga vhi na frost.",
+      "candidate": "Muya wo rotholaho u nga kuvhangana fhethu ho tsaho kha vhusiku vhu sa na makole, hu si na muya. Vhambedzani fhethu hune nursery ya nga vhewa hone kha khalaṅwaha yoṱhe ya tshando ya henefho. Ṱolani matsalwa a minimum temperatures a henefho kana ni vhudzise mueletshedzi wa zwa vhulimi wa henefho musi ni sa athu dzhia tsheo ya fhethu ha tshifhinga tshilapfu. Frost ine ya vhonala a si yone fhedzi tswayo ya frost damage; a hu na fhethu ha kha thavha hune ha fulufhedzisa uri a hu nga vhi na frost.",
+      "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "provenance": "Native Agy conversation48686326-d31a-4a61-a252-ae3bc13ca69c, completed5:53 response; Codex minimal composition/repair below",
+      "rootReview": "Minimal reviewer repair saved data-only; separate repair backcheck required.",
+      "learnerWired": true,
+      "independentReview": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "verdict": "repair",
+        "fluentApproval": false
+      },
+      "repairBackcheck": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "terminalObserved": true,
+        "verdict": "accept",
+        "fluentApproval": false
+      }
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "field": "body.paragraph0",
+      "before": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matla ya moya lowu onhaka swi cinca hi muganga, nguva na your site's ridges and gaps. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona ni leswi wu swi khumbaka. Kambela matsalwa ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.",
+      "candidate": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matla ya moya lowu onhaka swi cinca hi muganga, nguva na ti-ridges and gaps ta ndhawu ya wena. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona ni leswi wu swi khumbaka. Kambela matsalwa ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.",
+      "sourceEnglish": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.",
+      "provenance": "Native Agy conversation48686326-d31a-4a61-a252-ae3bc13ca69c, completed5:53 response; Codex minimal composition/repair below",
+      "rootReview": "Independent full-source meaning check accepted; root implementation/source and UI gates still required.",
+      "learnerWired": true,
+      "independentReview": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "verdict": "accept",
+        "fluentApproval": false
+      },
+      "repairBackcheck": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "terminalObserved": true,
+        "verdict": "not-required",
+        "fluentApproval": false
+      }
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "field": "body.paragraph1",
+      "before": "Eka vusiku byo tenga ni byo rhula, moya wo titimela wu nga khulukela ehansi wu tlhela wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti nga titimela ku tlurisa tindhawu to rhelela leti nga ekusuhi. Maendlelo ya frost na wona ya ya hi ndhawu. Pimanisa tindhawu leti nga hlawuriwaka through the local frost season. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya loko ma kumeka. Loko ma nga ri kona, yana mahlweni u ri karhi u languta eka vusiku byo titimela, u tlhela u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga si hlawula ndhawu ya nkarhi wo leha ya tender seedlings.",
+      "candidate": "Eka vusiku byo tenga ni byo rhula, moya wo titimela wu nga khulukela ehansi wu tlhela wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti nga titimela ku tlurisa tindhawu to rhelela leti nga ekusuhi. Maendlelo ya frost na wona ya ya hi ndhawu. Pimanisa tindhawu leti nga hlawuriwaka eka nguva hinkwayo ya xirhami ya laha kaya. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya loko ma kumeka. Loko ma nga ri kona, yana mahlweni u ri karhi u languta eka vusiku byo titimela, u tlhela u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga si hlawula ndhawu ya nkarhi wo leha ya tender seedlings.",
+      "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "provenance": "Native Agy conversation48686326-d31a-4a61-a252-ae3bc13ca69c, completed5:53 response; Codex minimal composition/repair below",
+      "rootReview": "Independent full-source meaning check accepted; root implementation/source and UI gates still required.",
+      "learnerWired": true,
+      "independentReview": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "verdict": "accept",
+        "fluentApproval": false
+      },
+      "repairBackcheck": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "terminalObserved": true,
+        "verdict": "not-required",
+        "fluentApproval": false
+      }
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz.0.rationale",
+      "before": "Moya wo titimela wu nga hlengeletana etindhawini ta le hansi hi vusiku byo tenga ni byo rhula. Pimanisa tindhawu leti nga tirhisiwaka ku veka nursery through the local frost season. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya kumbe u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga se teka xiboho xa ndhawu ya nkarhi wo leha. Frost leyi vonakaka a hi yona ntsena mhaka leyi kombisaka frost damage, naswona a ku na ndhawu ya le xintshabyanini leyi tiyisekisaka leswaku a ku nge vi na frost.",
+      "candidate": "Moya wo titimela wu nga hlengeletana etindhawini ta le hansi hi vusiku byo tenga ni byo rhula. Pimanisa tindhawu leti nga tirhisiwaka ku veka nursery eka nguva hinkwayo ya xirhami ya laha kaya. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya kumbe u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga se teka xiboho xa ndhawu ya nkarhi wo leha. Frost leyi vonakaka a hi yona ntsena mhaka leyi kombisaka frost damage, naswona a ku na ndhawu ya le xintshabyanini leyi tiyisekisaka leswaku a ku nge vi na frost.",
+      "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "provenance": "Native Agy conversation48686326-d31a-4a61-a252-ae3bc13ca69c, completed5:53 response; Codex minimal composition/repair below",
+      "rootReview": "Independent full-source meaning check accepted; root implementation/source and UI gates still required.",
+      "learnerWired": true,
+      "independentReview": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "verdict": "accept",
+        "fluentApproval": false
+      },
+      "repairBackcheck": {
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "terminalObserved": true,
+        "verdict": "not-required",
+        "fluentApproval": false
+      }
+    },
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "field": "body.paragraph1",
+      "before": "Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Maitele a frost na one a ya nga fhethu. Vhambedzani candidate places through the local frost season. Ṱolani rekhodo dza minimum temperatures dza henefho hune dza wanala hone. Arali dzi sa wanali, bvelani phanḓa ni tshi sedza nga vhusiku vhu rotholaho, ni vhudzise mueletshedzi wa zwa vhulimi wa henefho musi ni sa athu nanga fhethu ha tshifhinga tshilapfu ha tender seedlings.",
+      "candidate": "Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Maitele a frost na one a ya nga fhethu. Vhambedzani fhethu hune ha nga nangiwa hone kha khalaṅwaha yoṱhe ya tshando ya henefho. Ṱolani rekhodo dza minimum temperatures dza henefho hune dza wanala hone. Arali dzi sa wanali, bvelani phanḓa ni tshi sedza nga vhusiku vhu rotholaho, ni vhudzise mueletshedzi wa zwa vhulimi wa henefho musi ni sa athu nanga fhethu ha tshifhinga tshilapfu ha tender seedlings.",
+      "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "learnerWired": true,
+      "independentReview": {
+        "tool": "Antigravity desktop",
+        "model": "Gemini 3.8 Flash Medium",
+        "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+        "observedResponseTime": "6:22",
+        "verdict": "ACCEPT",
+        "checked": [
+          "candidate places",
+          "entire local frost season",
+          "records where available",
+          "if no records: continue observing AND consult local adviser before permanent choice"
+        ],
+        "fluentApproval": false
+      },
+      "rootReview": "Exact before/source bound; only candidate-place/full-local-season sentence changes. Other paragraph bytes preserved; fluent review pending."
+    }
+  ],
+  "fluentApproval": false,
+  "status": "Applied ten exact-before-bound learner candidates; publication gates pending, not live."
+}

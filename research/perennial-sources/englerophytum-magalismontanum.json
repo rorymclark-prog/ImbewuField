@@ -1,0 +1,54 @@
+{
+  "speciesId": "englerophytum-magalismontanum",
+  "commonName": "Transvaal milkplum (stamvrug)",
+  "botanicalName": "Englerophytum magalismontanum",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general; SA distribution given as Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West)",
+      "months": [12, 1, 2],
+      "evidence": {
+        "quote": "These trees flower from June to December and sometimes flowers and fruits can be found on the plant at the same time... The fruit is bright red when ripe and ripens from December to February.",
+        "url": "https://pza.sanbi.org/englerophytum-magalismontanum",
+        "doc": "Englerophytum magalismontanum | PlantZAfrica (SANBI)",
+        "page": null
+      },
+      "notes": "Corroborated by ICRAF Agroforestree Database 4.0 (Orwa et al. 2009) fact sheet, BIOLOGY section: 'E. magalismontanum is a hermaphrodite plant flowering June to December. Fruits develop soon after flowering but at times flowers and fruits can be found on the plant at the same time.' (same flowering window; ICRAF does not give a separate numeric ripening month range beyond 'soon after flowering')."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in SANBI PlantZAfrica or the ICRAF Agroforestree Database 4.0 fact sheet, the two sources fetched for this species."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in any fetched source."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in any fetched source. ICRAF notes fruit-set loss qualitatively ('much less fruits mature compared to the abundance of flowers produced each season; many of these flowers and young fruits are aborted before they mature') but gives no numeric yield figure."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source states a chilling requirement or explicitly says the (evergreen) species has none."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": {
+      "quote": "E. magalismontanum is a hermaphrodite plant flowering June to December.",
+      "url": "https://apps.worldagroforestry.org/treedb2/AFTPDFS/Englerophytum_magalismontanum.PDF",
+      "doc": "Agroforestree Database 4.0 (Orwa et al. 2009), Englerophytum magalismontanum fact sheet, BIOLOGY section",
+      "page": 1
+    },
+    "notes": "Source confirms the plant is hermaphrodite (bisexual/perfect flowers on every plant, i.e. NOT dioecious/separate-male-female-plants), but 'hermaphrodite' describes flower morphology only and is not the same as a stated self-fertility/self-compatibility claim -- no source found explicitly says the species is self-fertile, partly-self-fertile, or requires a cross-pollinator, so the enum value is left null rather than inferred from 'hermaphrodite' alone. No pollinating agent (insect/wind) is named by either source; SANBI does note the flowers are 'strongly, unpleasantly scented', consistent with (but not proof of) insect (e.g. fly/beetle) pollination."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "yearsToFirstCrop, yearsToFullBearing, yieldKgPerTreeMature: none found in either fetched source (SANBI PlantZAfrica, ICRAF Agroforestree Database 4.0 PDF fact sheet).",
+    "chillUnits: not stated by any source found.",
+    "Self-fertility/cross-pollination requirement: only flower morphology ('hermaphrodite') is confirmed; no source states whether individual plants can self-pollinate/self-fruit or need a pollinator partner, and no pollinating agent (insect species, wind) is named."
+  ]
+}

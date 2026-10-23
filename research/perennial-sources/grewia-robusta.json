@@ -1,0 +1,62 @@
+{
+  "speciesId": "grewia-robusta",
+  "commonName": "Karoo crossberry / kruisbessie",
+  "botanicalName": "Grewia robusta",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "edible fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Edible part and local use",
+      "quote": "The fruit is eaten either raw or cooked",
+      "url": "https://pza.sanbi.org/grewia-robusta",
+      "doc": "SANBI PlantZAfrica, grewia-robusta",
+      "page": null,
+      "note": "This exact Grewia species is recorded as food. August–December is flowering and cannot be copied into fruit-picking cells."
+    }
+  ],
+  "productionGuidance": {
+    "products": "edible fruit",
+    "care": [
+      "SANBI records it in arid Karoo and Eastern Cape scrub, with frost and drought tolerance. It can grow in sun or semi-shade."
+    ],
+    "purchase": [
+      "Ask for Grewia robusta, not the unrelated Grevillea robusta. The checked source gives no named fruit cultivar."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/grewia-robusta",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    }
+  ],
+  "gaps": [
+    "No explicit ripe-picking dates, bearing ages or measured food kg."
+  ]
+}

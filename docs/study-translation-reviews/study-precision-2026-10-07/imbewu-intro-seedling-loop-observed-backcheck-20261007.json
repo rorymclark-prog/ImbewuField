@@ -1,0 +1,19 @@
+{
+  "conversation": "48686326-d31a-4a61-a252-ae3bc13ca69c",
+  "observedCompleted": true,
+  "learnerEdits": false,
+  "fluentApproval": false,
+  "modelRejectedCandidates": [
+    "st",
+    "ve",
+    "ts"
+  ],
+  "modelFlaggedVE": [
+    "mufhaṱo design/building mismatch",
+    "mudzinginyo loop/tremor mismatch",
+    "mitshelo adds fruit absent from source",
+    "seedling tsha concord uncertain"
+  ],
+  "rootDecision": "Do not wire any original candidate as-is. Model replacement pulane/tshitendeledzi requires separate lexical and semantic evidence. English technical holds are authorized, so rejection solely for English is not accepted. ST small-plant versus seedling and TS diminutive age remain unresolved despite model confidence.",
+  "nextAction": "Repair VE design/loop clauses with independently checked wording; assess exact seedling specificity without losing current ordinary translated prose."
+}

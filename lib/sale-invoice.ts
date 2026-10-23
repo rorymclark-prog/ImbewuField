@@ -1,5 +1,6 @@
 import { activeAccountLocalStorageKey } from './account-local-storage';
 import type { SalesLog } from './db/types';
+import { recordQuantity, recordUnit } from './farm-records';
 import { invoiceId, loadNextInvoiceNumber, saveInvoice, saveNextInvoiceNumber, type SavedInvoice } from './invoices';
 
 /** A quick cash sale uses the same invoice ledger as the full invoice editor. */
@@ -8,18 +9,19 @@ export async function saveSaleInvoice(
   sync: (invoice: SavedInvoice) => Promise<void>,
 ): Promise<SavedInvoice> {
   const crop = row.crop?.trim();
-  const kg = row.kg ?? NaN;
+  const quantity = recordQuantity(row);
+  const unit = recordUnit(row);
   const amount = row.amount ?? NaN;
   const dateISO = row.sold_at ?? new Date().toISOString();
-  if (!crop || !Number.isFinite(kg) || kg <= 0 || !Number.isFinite(amount) || amount < 0
-    || !Number.isFinite(Date.parse(dateISO))) throw Error('Check the crop, kilograms, amount and date.');
+  if (!crop || quantity === null || !unit || !Number.isFinite(amount) || amount < 0
+    || !Number.isFinite(Date.parse(dateISO))) throw Error('Check the produce, quantity, unit, amount and date.');
   const scope = activeAccountLocalStorageKey('imbewu_invoices');
   const sample = typeof window !== 'undefined' && window.sessionStorage.getItem('imbewu_sample_mode') === '1';
   const sameAccount = () => activeAccountLocalStorageKey('imbewu_invoices') === scope
     && (typeof window !== 'undefined' && window.sessionStorage.getItem('imbewu_sample_mode') === '1') === sample;
   const invoice: SavedInvoice = {
     id: invoiceId(), no: loadNextInvoiceNumber(), billTo: row.buyer?.trim() || 'Walk-in customer',
-    items: [{ desc: crop, qty: kg, unit: 'kg', price: amount / kg }],
+    items: [{ desc: crop, qty: quantity, unit, price: amount / quantity }],
     total: amount, dateISO, status: 'paid', paidAt: dateISO,
     enterprise: row.enterprise, salesSyncPending: true,
   };

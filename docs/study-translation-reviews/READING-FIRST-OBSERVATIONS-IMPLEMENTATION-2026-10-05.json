@@ -1,0 +1,655 @@
+{
+  "schemaVersion": 1,
+  "title": "Reading Landscape first observations — source-bound silent draft application",
+  "date": "2026-10-05",
+  "mode": "unreviewed paired draft for facilitator feedback; not fluent-speaker approval",
+  "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "branch": "codex/regional-reading-first-observations-20261005",
+  "baseHead": "0ccd242e7c5ab9255980f328bf69d75de9ca5913",
+  "independentBackcheckPath": "/tmp/imbewu-regional-reading-first-observations-independent-backcheck-20261005.json",
+  "independentBackcheckSha256": "52387e36ad500bf5fed3555f284cbfe9763cf370ce0af7cf83a8303e6b08e086",
+  "correctedCandidatePath": "/tmp/imbewu-regional-reading-first-observations-corrected-20261005.json",
+  "correctedCandidateSha256": "067c57a08057a932e8300fb9a14c0d3110664c88ff15373ea57c78d10ece2b70",
+  "canonicalEnglishFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.en.md",
+  "canonicalEnglishSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+  "pairedFilesBefore": {
+    "st": {
+      "sha256": "9f5697d64ea1d17d65e6d01836c228ecc8ffaa1718dc44bbf943ea189fef3f8a"
+    },
+    "ve": {
+      "sha256": "9e1fcdc7e176acc66ecc923a3a51791eecad0d3e26508b265a10259ee387dcf3"
+    },
+    "ts": {
+      "sha256": "21772676299309bb51e8a6f99332674ba0dc8b539893b66d4df07fb265a99b82"
+    }
+  },
+  "pairedFieldsApplied": [
+    {
+      "language": "st",
+      "slide": 2,
+      "field": "body",
+      "index": 1,
+      "sourceEnglish": "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "segments": [
+        {
+          "sourceEnglish": "Rain already follows lines across the land.",
+          "status": "draft",
+          "text": "Pula e se e latela mela ho pholletsa le land."
+        },
+        {
+          "sourceEnglish": " The sun already warms some places more than others.",
+          "status": "draft",
+          "text": " Letsatsi le se le futhumatsa libaka tse ling ho feta tse ling."
+        },
+        {
+          "sourceEnglish": " Wind already finds ",
+          "status": "draft",
+          "text": " Moya o se o fumana "
+        },
+        {
+          "sourceEnglish": "gaps and ridges.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " Cold air already settles in ",
+          "status": "draft",
+          "text": " Moya o batang o se o bokellana ka "
+        },
+        {
+          "sourceEnglish": "hollows.",
+          "status": "english-hold"
+        }
+      ],
+      "target": "Pula e se e latela mela ho pholletsa le land. Letsatsi le se le futhumatsa libaka tse ling ho feta tse ling. Moya o se o fumana gaps and ridges. Moya o batang o se o bokellana ka hollows.",
+      "disposition": "accept",
+      "independentReason": "Sesotho `moya` is supported as “wind” in the South African Multilingual Natural Sciences & Technology dictionary (SADiLaR, PDF p.243); `Moya o se o` preserves the repeated already-aspect. Land is explicitly retained in English; gaps/ridges/hollows remain exact English. Rain and sun comparative/source ordering preserved."
+    },
+    {
+      "language": "st",
+      "slide": 5,
+      "field": "body",
+      "index": 0,
+      "sourceEnglish": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "segments": [
+        {
+          "sourceEnglish": "The picture shows rain",
+          "status": "draft",
+          "text": "Setšoantšo se bontša pula"
+        },
+        {
+          "sourceEnglish": " moving downhill.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " Follow where it ",
+          "status": "draft",
+          "text": " Latela moo e "
+        },
+        {
+          "sourceEnglish": "speeds up, ",
+          "status": "draft",
+          "text": "potlakang, "
+        },
+        {
+          "sourceEnglish": "spreads, ",
+          "status": "draft",
+          "text": "hasanang, "
+        },
+        {
+          "sourceEnglish": "sinks",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": ", gathers, and leaves the land.",
+          "status": "draft",
+          "text": ", bokellanang, le moo e tlohang land."
+        }
+      ],
+      "target": "Setšoantšo se bontša pula moving downhill. Latela moo e potlakang, hasanang, sinks, bokellanang, le moo e tlohang land.",
+      "disposition": "accept",
+      "independentReason": "Corrected exact-English `moving downhill` hold removes the prior unsupported valley destination. Speeds up, spreads, exact `sinks`, gathers, and leaves land remain in source order; no decrease or constructed route is added."
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "field": "body",
+      "index": 0,
+      "sourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "segments": [
+        {
+          "sourceEnglish": "Build ",
+          "status": "draft",
+          "text": "Haha "
+        },
+        {
+          "sourceEnglish": "an A-frame level from three poles and a weighted string.",
+          "status": "english-hold"
+        }
+      ],
+      "target": "Haha an A-frame level from three poles and a weighted string.",
+      "disposition": "accept",
+      "independentReason": "Only the ordinary Build imperative is localized. The whole A-frame/three-poles/weighted-string construction specification remains exact English; no dimensions or construction permissions are added."
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "field": "body",
+      "index": 1,
+      "sourceEnglish": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "segments": [
+        {
+          "sourceEnglish": "Walk it across the land to find ",
+          "status": "draft",
+          "text": "E tsamaiseng ho pholletsa le land ho fumana "
+        },
+        {
+          "sourceEnglish": "points at the same height.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " Join ",
+          "status": "draft",
+          "text": " Kopanya "
+        },
+        {
+          "sourceEnglish": "these points",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " to trace a contour line.",
+          "status": "english-hold"
+        }
+      ],
+      "target": "E tsamaiseng ho pholletsa le land ho fumana points at the same height. Kopanya these points to trace a contour line.",
+      "disposition": "repair",
+      "independentReason": "The preceding sentence gives a physical measuring referent, but “lintlha tsena” can also read as abstract points/details. Keep the precise physical object phrase “these points” in English, translate Join, and keep the contour-line purpose exact."
+    },
+    {
+      "language": "ve",
+      "slide": 5,
+      "field": "body",
+      "index": 0,
+      "sourceEnglish": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "segments": [
+        {
+          "sourceEnglish": "The picture shows rain moving downhill.",
+          "status": "draft",
+          "text": "Tshifanyiso tshi sumbedza mvula i tshi khou tsela nga fhasi."
+        },
+        {
+          "sourceEnglish": " Follow where it ",
+          "status": "draft",
+          "text": " Tevhelani hune ya "
+        },
+        {
+          "sourceEnglish": "speeds up, ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "spreads, ",
+          "status": "draft",
+          "text": "ya phaḓalala, "
+        },
+        {
+          "sourceEnglish": "sinks",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": ", gathers, and leaves the land.",
+          "status": "draft",
+          "text": ", ya kuvhangana, na hune ya bva hone kha land."
+        }
+      ],
+      "target": "Tshifanyiso tshi sumbedza mvula i tshi khou tsela nga fhasi. Tevhelani hune ya speeds up, ya phaḓalala, sinks, ya kuvhangana, na hune ya bva hone kha land.",
+      "disposition": "repair",
+      "independentReason": "`ya ya nga luvhilo` does not clearly express an increase in speed. Hold the exact comparative motion phrase `speeds up,`; retain the remaining source-ordered motions, including the existing exact `sinks` hold."
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "field": "body",
+      "index": 0,
+      "sourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "segments": [
+        {
+          "sourceEnglish": "Build ",
+          "status": "draft",
+          "text": "Fhaṱani "
+        },
+        {
+          "sourceEnglish": "an A-frame level from three poles and a weighted string.",
+          "status": "english-hold"
+        }
+      ],
+      "target": "Fhaṱani an A-frame level from three poles and a weighted string.",
+      "disposition": "accept",
+      "independentReason": "Ordinary traversal/finding framing is localized. Exact same-height geometry, A-frame tool specification, and contour purpose stay English; the separate safety/adviser paragraph remains untouched."
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "field": "body",
+      "index": 1,
+      "sourceEnglish": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "segments": [
+        {
+          "sourceEnglish": "Walk it across the land to find ",
+          "status": "draft",
+          "text": "Tshimbidzani nayo kha land u wana "
+        },
+        {
+          "sourceEnglish": "points at the same height.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " Join ",
+          "status": "draft",
+          "text": " Ṱanganyisani "
+        },
+        {
+          "sourceEnglish": "these points",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " to trace a contour line.",
+          "status": "english-hold"
+        }
+      ],
+      "target": "Tshimbidzani nayo kha land u wana points at the same height. Ṱanganyisani these points to trace a contour line.",
+      "disposition": "repair",
+      "independentReason": "Keep “these points” as an exact physical-measurement anchor rather than relying on loan-word concord. Localize the joining action; retain the exact contour-line purpose."
+    },
+    {
+      "language": "ts",
+      "slide": 2,
+      "field": "body",
+      "index": 1,
+      "sourceEnglish": "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "segments": [
+        {
+          "sourceEnglish": "Rain already follows lines across the land.",
+          "status": "draft",
+          "text": "Mpfula se yi landzelela milayeni ehenhla ka land."
+        },
+        {
+          "sourceEnglish": " The sun already warms some places more than others.",
+          "status": "draft",
+          "text": " Dyambu se ri kufumeta tindhawu tin’wana ku tlula tin’wana."
+        },
+        {
+          "sourceEnglish": " Wind already finds ",
+          "status": "draft",
+          "text": " Moya se wu kuma "
+        },
+        {
+          "sourceEnglish": "gaps and ridges.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " Cold air already settles in ",
+          "status": "draft",
+          "text": " Moya wo titimela se wu hlengeletana eka "
+        },
+        {
+          "sourceEnglish": "hollows.",
+          "status": "english-hold"
+        }
+      ],
+      "target": "Mpfula se yi landzelela milayeni ehenhla ka land. Dyambu se ri kufumeta tindhawu tin’wana ku tlula tin’wana. Moya se wu kuma gaps and ridges. Moya wo titimela se wu hlengeletana eka hollows.",
+      "disposition": "repair",
+      "independentReason": "The source repeats “already” for rain, sun, wind and cold air. Candidate has `se` in the sun/wind clauses but omits it for rain and cold air. Add the same already marker to those two clauses; preserve source order and all exact landform holds."
+    },
+    {
+      "language": "ts",
+      "slide": 5,
+      "field": "body",
+      "index": 0,
+      "sourceEnglish": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "segments": [
+        {
+          "sourceEnglish": "The picture shows rain moving downhill.",
+          "status": "draft",
+          "text": "Xifaniso xi komba mpfula yi ri karhi yi rhelela yi ya ehansi."
+        },
+        {
+          "sourceEnglish": " Follow where it ",
+          "status": "draft",
+          "text": " Landzelela laha yi "
+        },
+        {
+          "sourceEnglish": "speeds up, ",
+          "status": "draft",
+          "text": "hatlisaka, "
+        },
+        {
+          "sourceEnglish": "spreads, ",
+          "status": "draft",
+          "text": "hangalaka, "
+        },
+        {
+          "sourceEnglish": "sinks",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": ", gathers, and leaves the land.",
+          "status": "draft",
+          "text": ", yi hlengeletanaka, naswona yi suka ehenhla ka land."
+        }
+      ],
+      "target": "Xifaniso xi komba mpfula yi ri karhi yi rhelela yi ya ehansi. Landzelela laha yi hatlisaka, hangalaka, sinks, yi hlengeletanaka, naswona yi suka ehenhla ka land.",
+      "disposition": "accept",
+      "independentReason": "Rain direction is localized as moving downhill, without naming a valley or adding a route. All five motion steps retain their source order; `sinks` remains exact English and no decrease is introduced."
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "field": "body",
+      "index": 0,
+      "sourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "segments": [
+        {
+          "sourceEnglish": "Build ",
+          "status": "draft",
+          "text": "Aka "
+        },
+        {
+          "sourceEnglish": "an A-frame level from three poles and a weighted string.",
+          "status": "english-hold"
+        }
+      ],
+      "target": "Aka an A-frame level from three poles and a weighted string.",
+      "disposition": "accept",
+      "independentReason": "Only Build is localized; all construction specifications remain exact English."
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "field": "body",
+      "index": 1,
+      "sourceEnglish": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "currentTargetRecord": {
+        "status": "english-hold"
+      },
+      "segments": [
+        {
+          "sourceEnglish": "Walk it across the land to find ",
+          "status": "draft",
+          "text": "Famba nayo ehenhla ka land leswaku u kuma "
+        },
+        {
+          "sourceEnglish": "points at the same height.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " Join these points",
+          "status": "draft",
+          "text": " Hlanganisa tipoyinti leti"
+        },
+        {
+          "sourceEnglish": " to trace a contour line.",
+          "status": "english-hold"
+        }
+      ],
+      "target": "Famba nayo ehenhla ka land leswaku u kuma points at the same height. Hlanganisa tipoyinti leti to trace a contour line.",
+      "disposition": "accept",
+      "independentReason": "`tipoyinti leti` refers back to the immediately preceding exact “points at the same height” measurement phrase. The action remains join/connect; contour-line purpose remains exact English. Retain the English physical-point anchor if a facilitator reports the loan is unclear."
+    }
+  ],
+  "pairedFilesAfter": {
+    "st": {
+      "path": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.st.paired-draft.json",
+      "sha256": "91b8190862c55d9a02339e80bd466ac91bc489dcf1e5396df0cc81cea7e12902"
+    },
+    "ve": {
+      "path": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.ve.paired-draft.json",
+      "sha256": "759fda604c4dcd2efbdb28eaa7e83256ad8815fd380a9be4a6fbb2453bf76bbd"
+    },
+    "ts": {
+      "path": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.ts.paired-draft.json",
+      "sha256": "477b29b6662fc8e6b3b412dfafe30403eeca25bdb79c45b177b6664a0eaf0e42"
+    }
+  },
+  "preservation": {
+    "scope": "ST/TS slide2 body[1]; ST/VE/TS slides5 body[0] and 6 body[0:2], except VE slide2 body[1] explicitly excluded.",
+    "excludedUnchanged": [
+      {
+        "language": "ve",
+        "slide": 2,
+        "field": "body",
+        "index": 1,
+        "status": "english-hold",
+        "reason": "Independent backcheck held the complete paragraph; unresolved ordinary aspect wording was not guessed."
+      },
+      {
+        "language": "st",
+        "slide": 6,
+        "field": "body",
+        "index": 2,
+        "status": "english-hold",
+        "reason": "Safety, site assessment, earthworks approval and trained-adviser conditions remain exact English."
+      }
+    ],
+    "allEnglishSlideSourcesAndHeadingsUnchanged": true,
+    "allUnselectedTargetFieldsUnchanged": true,
+    "STIntroAudioAndMediaUntouched": true
+  },
+  "semanticConstraints": [
+    "Keep land scope; do not narrow to soil or a field.",
+    "Keep speeds up → spreads → sinks → gathers → leaves, with sinks exact English and no decline/decrease substitution.",
+    "No added valley, channel, property boundary, measurement, or design instruction.",
+    "Keep A-frame, three poles, weighted string, same-height points and contour-line purpose source-bound.",
+    "Slide6 body[2] adviser, assessment, approval and overflow/safety wording remains exact English."
+  ],
+  "renders": {
+    "renderer": "scripts/make-lesson-slides.mjs paired-draft CLI; selected source slides retained original numbering; source image mapping unchanged",
+    "selectedRenderCommand": "node scripts/make-lesson-slides.mjs reading-landscape <st|ve|ts> /tmp/imbewu-reading-first-observations-final/<lang> --paired-draft docs/narration/reading-landscape.<lang>.paired-draft.json --slides <selected original slide numbers>",
+    "format": "Pillow PNG-to-WebP, quality 88, method 6; no crop or resize",
+    "visualReview": "Root reviewed the 8-frame contact sheet and accepted the images for clipping, source visibility, held safeguards and layout.",
+    "frames": [
+      {
+        "language": "st",
+        "slide": "slide-02",
+        "png": "/tmp/imbewu-reading-first-observations-final/st/slide-02.png",
+        "webp": "/tmp/imbewu-reading-first-observations-final/webp/st/slide-02.webp",
+        "dimensions": [
+          1440,
+          5400
+        ],
+        "pngSha256": "b8be8742a3681fc4a7846841d6aaa80e0d5b037cc66b4f10a55ec6de1997ee34",
+        "webpSha256": "47762e8bb86c050a5df39d4f760a78299213e80ba930eed85343b67475d0cacf",
+        "webpBytes": 260674,
+        "publicPath": "public/course-decks/reading-landscape/st/slide-02.webp",
+        "publicSha256": "47762e8bb86c050a5df39d4f760a78299213e80ba930eed85343b67475d0cacf",
+        "publicBytes": 260674,
+        "copiedFromRendererWebp": true
+      },
+      {
+        "language": "st",
+        "slide": "slide-05",
+        "png": "/tmp/imbewu-reading-first-observations-final/st/slide-05.png",
+        "webp": "/tmp/imbewu-reading-first-observations-final/webp/st/slide-05.webp",
+        "dimensions": [
+          1440,
+          5400
+        ],
+        "pngSha256": "4f863995d9d939cd66184ecfd9d58e01901c89ae2740983c49d912826a076885",
+        "webpSha256": "5ae3defa8d612a995b73d870655a431828744b9f72429b956aaeb422785ad7e3",
+        "webpBytes": 187146,
+        "publicPath": "public/course-decks/reading-landscape/st/slide-05.webp",
+        "publicSha256": "5ae3defa8d612a995b73d870655a431828744b9f72429b956aaeb422785ad7e3",
+        "publicBytes": 187146,
+        "copiedFromRendererWebp": true
+      },
+      {
+        "language": "st",
+        "slide": "slide-06",
+        "png": "/tmp/imbewu-reading-first-observations-final/st/slide-06.png",
+        "webp": "/tmp/imbewu-reading-first-observations-final/webp/st/slide-06.webp",
+        "dimensions": [
+          1440,
+          5400
+        ],
+        "pngSha256": "264ff4b74f018b879c45e5078bd7ef5262aecd613949be9762fa0411832d208f",
+        "webpSha256": "f1808041cfdac3c96404b61dd13b35030f66aed821aa52eefeac60d8ea697bce",
+        "webpBytes": 619528,
+        "publicPath": "public/course-decks/reading-landscape/st/slide-06.webp",
+        "publicSha256": "f1808041cfdac3c96404b61dd13b35030f66aed821aa52eefeac60d8ea697bce",
+        "publicBytes": 619528,
+        "copiedFromRendererWebp": true
+      },
+      {
+        "language": "ts",
+        "slide": "slide-02",
+        "png": "/tmp/imbewu-reading-first-observations-final/ts/slide-02.png",
+        "webp": "/tmp/imbewu-reading-first-observations-final/webp/ts/slide-02.webp",
+        "dimensions": [
+          1440,
+          5400
+        ],
+        "pngSha256": "d3fd2d0eb5637f9a9f46fc2e3bda72fcadbb155a496454d778d9f4084da856b8",
+        "webpSha256": "4cd6a7fa8621ab0c1f52486708191fc8f414779ecb1b4de693a3f80aedfc03c4",
+        "webpBytes": 279626,
+        "publicPath": "public/course-decks/reading-landscape/ts/slide-02.webp",
+        "publicSha256": "4cd6a7fa8621ab0c1f52486708191fc8f414779ecb1b4de693a3f80aedfc03c4",
+        "publicBytes": 279626,
+        "copiedFromRendererWebp": true
+      },
+      {
+        "language": "ts",
+        "slide": "slide-05",
+        "png": "/tmp/imbewu-reading-first-observations-final/ts/slide-05.png",
+        "webp": "/tmp/imbewu-reading-first-observations-final/webp/ts/slide-05.webp",
+        "dimensions": [
+          1440,
+          5400
+        ],
+        "pngSha256": "ed51b1bdb97294cc2a57f70c50f2ff07a84277887d1813141463b754f5594b73",
+        "webpSha256": "ff3af93a6c5447e9bc9921ec2dedda5ea7377a7e35c7dd787bbeaf13f0efb2c3",
+        "webpBytes": 193612,
+        "publicPath": "public/course-decks/reading-landscape/ts/slide-05.webp",
+        "publicSha256": "ff3af93a6c5447e9bc9921ec2dedda5ea7377a7e35c7dd787bbeaf13f0efb2c3",
+        "publicBytes": 193612,
+        "copiedFromRendererWebp": true
+      },
+      {
+        "language": "ts",
+        "slide": "slide-06",
+        "png": "/tmp/imbewu-reading-first-observations-final/ts/slide-06.png",
+        "webp": "/tmp/imbewu-reading-first-observations-final/webp/ts/slide-06.webp",
+        "dimensions": [
+          1440,
+          5400
+        ],
+        "pngSha256": "0d6fa1ea9a043da108d3aa597394d61b551e34c7b7a23b6f2644b7e80b0e9ed8",
+        "webpSha256": "78ff7ef3bec734fa52fb8841f7f5e333795ae19ee5b508ea9d21fc47e5f3813c",
+        "webpBytes": 619198,
+        "publicPath": "public/course-decks/reading-landscape/ts/slide-06.webp",
+        "publicSha256": "78ff7ef3bec734fa52fb8841f7f5e333795ae19ee5b508ea9d21fc47e5f3813c",
+        "publicBytes": 619198,
+        "copiedFromRendererWebp": true
+      },
+      {
+        "language": "ve",
+        "slide": "slide-05",
+        "png": "/tmp/imbewu-reading-first-observations-final/ve/slide-05.png",
+        "webp": "/tmp/imbewu-reading-first-observations-final/webp/ve/slide-05.webp",
+        "dimensions": [
+          1440,
+          5400
+        ],
+        "pngSha256": "9bba6a240287621b52b848632230b905dfc7eac401311456f729bb0b0be62bf0",
+        "webpSha256": "abde581b7804c2915e27b805fb90d40c96d308a8246c055ef5bda798c9726c2b",
+        "webpBytes": 194744,
+        "publicPath": "public/course-decks/reading-landscape/ve/slide-05.webp",
+        "publicSha256": "abde581b7804c2915e27b805fb90d40c96d308a8246c055ef5bda798c9726c2b",
+        "publicBytes": 194744,
+        "copiedFromRendererWebp": true
+      },
+      {
+        "language": "ve",
+        "slide": "slide-06",
+        "png": "/tmp/imbewu-reading-first-observations-final/ve/slide-06.png",
+        "webp": "/tmp/imbewu-reading-first-observations-final/webp/ve/slide-06.webp",
+        "dimensions": [
+          1440,
+          5400
+        ],
+        "pngSha256": "fe87c7574794de81a5bb8cb247e97e8bd875c59c8121a7b71655f23e0b42ef59",
+        "webpSha256": "dd593b75aec5d6f413ce44141c3c781ea29bff9bd72f7f1f6b4a7a3cff505402",
+        "webpBytes": 621500,
+        "publicPath": "public/course-decks/reading-landscape/ve/slide-06.webp",
+        "publicSha256": "dd593b75aec5d6f413ce44141c3c781ea29bff9bd72f7f1f6b4a7a3cff505402",
+        "publicBytes": 621500,
+        "copiedFromRendererWebp": true
+      }
+    ]
+  },
+  "workerCacheRefresh": {
+    "file": "app/sw.js/route.ts",
+    "function": "migrateReadingLandscapeFirstObservationStills",
+    "marker": "/course-decks/reading-landscape/.regional-first-observation-stills-20261005",
+    "changedUrls": [
+      "/course-decks/reading-landscape/st/slide-02.webp",
+      "/course-decks/reading-landscape/st/slide-05.webp",
+      "/course-decks/reading-landscape/st/slide-06.webp",
+      "/course-decks/reading-landscape/ve/slide-05.webp",
+      "/course-decks/reading-landscape/ve/slide-06.webp",
+      "/course-decks/reading-landscape/ts/slide-02.webp",
+      "/course-decks/reading-landscape/ts/slide-05.webp",
+      "/course-decks/reading-landscape/ts/slide-06.webp"
+    ],
+    "behavior": "One-time removal by exact pathname, including cached query variants; no replacement fetch, audio, animation, or unrelated slide deletion."
+  },
+  "assetSizeManifest": {
+    "file": "lib/course-asset-sizes.ts",
+    "regeneratedWith": "npm run assets:sizes",
+    "changedFrameEntries": 8,
+    "otherManifestEntryChanges": [
+      "Aggregate total comment reflects new 1905-file corpus size."
+    ]
+  },
+  "protectedBaseline": {
+    "baselineFile": "/tmp/imbewu-reading-first-observations-baseline-20261005.json",
+    "protectedFileCount": 59,
+    "verification": "All 59 baseline-protected tracked files outside this approved scope retained their baseline SHA-256. Among scoped source/target records, only the eleven listed target body fields changed; all slide headings and English source records are unchanged."
+  },
+  "testsAddedOrUpdated": [
+    "tests/course-translation-drafts-reading-landscape-remaining.test.ts: exact 11-field source binding, ordered motion source, no valley/decrease, A-frame specification, same-height/contour anchors, VE2 and slide6body2 holds.",
+    "tests/studies-media-migration.test.ts: exact eight frame/query variants retire once, unrelated slides/languages/audio/animation preserved, no fetch and later selected replacement preserved; prior Study ordering claim now accounts for this migration."
+  ],
+  "excludedProseProof": {
+    "path": "docs/study-translation-reviews/READING-FIRST-OBSERVATIONS-VE2-EXCLUSION-2026-10-05.json",
+    "sha256": "d3969a1c255db34ec3425ce18b6905668502befcbfc19308514ad6c635d4f64b",
+    "field": "VE Reading slide 2 body[1] remains an exact English hold after independent aspect/language-identity rejection."
+  }
+}

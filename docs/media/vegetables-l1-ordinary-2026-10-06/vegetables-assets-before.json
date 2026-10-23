@@ -1,0 +1,462 @@
+[
+  {
+    "path": "/course-decks/vegetables-staples/en/slide-01.jpg",
+    "bytes": 198301,
+    "sha256": "f664b5141f8380c2dbaa947affa08943663843071685578c89d365eac5d3f95c"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/en/slide-02.jpg",
+    "bytes": 93326,
+    "sha256": "876af8e930fd444783749533c1457d028ef69e52b89dbe6213978f81cca83396"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/en/slide-03.jpg",
+    "bytes": 128091,
+    "sha256": "ac1dea8fd12b23c7dcc034a3b71155ec35ee80b94327a402101c1ce8cd691972"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/en/slide-04.jpg",
+    "bytes": 972260,
+    "sha256": "007df396b8b5b58f6b4a27b264cf58e2e3f4c6082f6bd4029201bd3e2d256b8c"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/en/slide-05.jpg",
+    "bytes": 120541,
+    "sha256": "44fe5e80dea8ddaa27db20a8d329d9dc3df2c2d3d3425b5454ab631f98978c34"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/en/slide-06.jpg",
+    "bytes": 890647,
+    "sha256": "5bf0d4af19f4b4005ce0fcd498e3263ab7dacd5a4b64267e5a787abb7759e130"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/en/slide-07.jpg",
+    "bytes": 1024099,
+    "sha256": "bb330db3139edc64c0c6322e8a1b5100252755b5554667e786970319ceae9735"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/en/slide-08.jpg",
+    "bytes": 251134,
+    "sha256": "6203d7ad24e90ffc78ebd3215453ad44d4ba5ce7eb1f78f38fdc7cc3096e1f9b"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/en/slide-09.jpg",
+    "bytes": 244029,
+    "sha256": "bcae1eaba6e1b198d1f4e15a51c9b15914afe7d72104993a761ca155671232e7"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/en/slide-10.jpg",
+    "bytes": 1044467,
+    "sha256": "655e2ff9f14f399ae762abfbb243d800b924367e4272cf51deeae46505cd3a57"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/en/slide-11.jpg",
+    "bytes": 261180,
+    "sha256": "b2bb6092e21bb29c5d91bf817240181efed1301059b3465a2aacfc0c9dee4601"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/en/slide-12.jpg",
+    "bytes": 489787,
+    "sha256": "98995e84b772c95cd1b2157d763c7d0736f1f3addc91209e0c17b4af7e9fcc31"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/en/slide-13.jpg",
+    "bytes": 182433,
+    "sha256": "557b3dec511b95c8013d22dce1dff40e94aabf61cf58aa40b0e521f674bc4b01"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/en/slide-14.jpg",
+    "bytes": 118941,
+    "sha256": "23078d19ef9124fd3775a8b2acac81b02e9ed204fc0cca660c459b03bb90b5a7"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/en/slide-15.jpg",
+    "bytes": 728993,
+    "sha256": "7580e2e9ed75c9c430a99fde96c3cc26fee5309ba7e9b8ebfd8a4baa300abda0"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/en/slide-16.jpg",
+    "bytes": 443907,
+    "sha256": "8f919c5d6595f00b8e5fe926d42f7e9bc5b4a111d06a51b1cd25ddbd8cc8e95f"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/en/slide-17.jpg",
+    "bytes": 101251,
+    "sha256": "3d3f03c9908328c93ba54ec9ec627536fb413ecc131a4c5dd59fa1b0059d58a6"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/en/slide-18.jpg",
+    "bytes": 84363,
+    "sha256": "7d0c0cb09e09d338cd40b9a75c1806de380d67692b3ee082e4cba902fab0da41"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/st/slide-01.webp",
+    "bytes": 318552,
+    "sha256": "c97c79c0f5c80fea9b14d9e64e7c863adf45ca90fd1ed76722a1e3bc7a6a5d10"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/st/slide-02.webp",
+    "bytes": 340230,
+    "sha256": "dd383bdc78e0f881e64aed2a86d6471741ce41783fbf353ba88c6b864f39ff77"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/st/slide-03.webp",
+    "bytes": 354184,
+    "sha256": "98de999b3e0602518134136f5b4b0f93030d714f1819d0097d787873e7c63bb8"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/st/slide-04.webp",
+    "bytes": 705574,
+    "sha256": "87ff48c696791e274a5aa628fba319a473f792824441b7615a4ec9d4a6bc7b58"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/st/slide-05.webp",
+    "bytes": 423868,
+    "sha256": "4ef4bdc325c677badd9c2d2c9e2b9f2e6eea4f98af27732c84acde6bac818770"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/st/slide-06.webp",
+    "bytes": 589958,
+    "sha256": "00d4f4dff32b779f7aa91ce38060b38d1bdd882739e15cf14ca0f58fa64d69d3"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/st/slide-07.webp",
+    "bytes": 689852,
+    "sha256": "e6c73d9201ee06765f4ca967eb6256ba8624bf81d15ff8173c578da6eebf8be9"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/st/slide-08.webp",
+    "bytes": 363718,
+    "sha256": "6d30593d48f6573278506c83f3e8cf2ae3e79e9baa5a8e9d434024b708830586"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/st/slide-09.webp",
+    "bytes": 294378,
+    "sha256": "3b199e38ccf288d6845bbc9fa6aa50a9264a0c1e3a70a7fcaa4d0a79c2c78278"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/st/slide-10.webp",
+    "bytes": 785054,
+    "sha256": "b84ed3e0e5e4a2cd46ad634118785f5ae39a226e5fd145e9dfd032e254a38d73"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/st/slide-11.webp",
+    "bytes": 322910,
+    "sha256": "ca8ab801336a3aa955988680dacccbce14ac54f5cac72440a10cfa3e0f5839f6"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/st/slide-12.webp",
+    "bytes": 453456,
+    "sha256": "af5332669355af72435e160b49ccc046aa1ca7cabd7e267327bff13cad1bf805"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/st/slide-13.webp",
+    "bytes": 431282,
+    "sha256": "d60e8bec4aae5b5fa35a7057985eb7c6313d9f2bc763a0f0bf5be9df1f118a09"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/st/slide-14.webp",
+    "bytes": 257240,
+    "sha256": "96282645ac021097034fd560484afa976d77fcc1c9b37f3f792622a6dfebfaff"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/st/slide-15.webp",
+    "bytes": 573684,
+    "sha256": "c6e362ef53e745a398e43cb2eb5bcee15d67881d4bbbcc3c00520f28304336c2"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/st/slide-16.webp",
+    "bytes": 571682,
+    "sha256": "47b7d410aca5a2f8a6959400f3213e01c0343d16192e226f0982cb0900c34f31"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/st/slide-17.webp",
+    "bytes": 366550,
+    "sha256": "95da51ecaed6362ebd56239c84a1a4a00bf91279b0b870189d1b30eb7a57b6c5"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/st/slide-18.webp",
+    "bytes": 323864,
+    "sha256": "75d50f81b13a756dd76aa3d7be55ba3c4b1a13282c212e0bdd117d36ee640e93"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ts/slide-01.webp",
+    "bytes": 316442,
+    "sha256": "97a7ca4c1bb360c08dc93d0d08d6ce34910e8a515888525ea1148d1596b3c2fc"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ts/slide-02.webp",
+    "bytes": 325786,
+    "sha256": "8fbba211e001e20f1237c9ecd6b645363b01bbe27b1f9b79c6882be4c5716aa2"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ts/slide-03.webp",
+    "bytes": 370094,
+    "sha256": "35c7cd0889d7714233f1e948f48c4d1daa35fb4e459baed6ffdbe6b90ddf436d"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ts/slide-04.webp",
+    "bytes": 727924,
+    "sha256": "f16438bb4765c452573c56e8da5f7c07465085c8075156fe1af86b8131b77971"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ts/slide-05.webp",
+    "bytes": 418732,
+    "sha256": "31f24655c4de1b2e52bb96456b791b324e1186fa94628b05eb74a6144b8f5624"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ts/slide-06.webp",
+    "bytes": 614190,
+    "sha256": "dd236aad3b2a840888e9a30bd667e4ec21e9725a9479eccd4393ae436c07d8e5"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ts/slide-07.webp",
+    "bytes": 689922,
+    "sha256": "c7b23020d45cafc542245d428277267fd1c5e64f19afb1911c173eabf0952fb6"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ts/slide-08.webp",
+    "bytes": 480940,
+    "sha256": "3579561edd9c41d9ad73eb18d05795a7dbff8ddd82b7a9e17d10120b4bf11a2d"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ts/slide-09.webp",
+    "bytes": 357254,
+    "sha256": "fc88b427bc6791b5fe3a4194a1e06a35d0fe0f6dbb41594a89e472e269485948"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ts/slide-10.webp",
+    "bytes": 804770,
+    "sha256": "aae210b9209e610e55f5ddff65d1e78dc34f8cb45308ee019283641ac2550f72"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ts/slide-11.webp",
+    "bytes": 391148,
+    "sha256": "bf0ff87ae50e032aa0f0f2e30915169df3fa70fdeacd71510e3854643a7ff7cc"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ts/slide-12.webp",
+    "bytes": 459056,
+    "sha256": "68787536fa97df39a1ef9dad92f56e933f8568fe077361082dee8ac982073272"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ts/slide-13.webp",
+    "bytes": 439406,
+    "sha256": "f4e51b345e96882643991391e94e82c1162098f3ed8b247a8c0455ba6cc82076"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ts/slide-14.webp",
+    "bytes": 272646,
+    "sha256": "6b8a8af05def93db1ce43f77badd30fa987314628a115a41e797eae93a7d24d5"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ts/slide-15.webp",
+    "bytes": 577910,
+    "sha256": "73b347d2b33a78a6e3444a13f44ab1e91403e1cb61028cdd6bbbf17228e45ca3"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ts/slide-16.webp",
+    "bytes": 564290,
+    "sha256": "d8b7172f2f8fca16c3e8e5bf66f5d6d1b9dee72955aead8035c9c8933a428496"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ts/slide-17.webp",
+    "bytes": 370800,
+    "sha256": "06a595f71cc80467e9f6b0a818ec2ee2f17b3c889323590ab6ffbca4fcce346f"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ts/slide-18.webp",
+    "bytes": 332478,
+    "sha256": "04684efc1071afc3de70f21b2a46104c1d82c76c2420d0f1014ae44cb18e8d02"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ve/slide-01.webp",
+    "bytes": 322960,
+    "sha256": "c1e11fc841d12c48f45450b920f634a02cf7daa53ab438cd1a3c1dc7109fb712"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ve/slide-02.webp",
+    "bytes": 339676,
+    "sha256": "7652815641b73d276f5e2dc0eb3abd54edd2b6f5091bf77c7b0168950edb9605"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ve/slide-03.webp",
+    "bytes": 362984,
+    "sha256": "7c6c8b408453108067b09bcc5f1cc6c21ca6a8255ad883828321bff7419112e8"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ve/slide-04.webp",
+    "bytes": 714532,
+    "sha256": "a8a7fdb934a521121d7dde7fe4fe240ebecca2a393db81c979244d9d1fa3694e"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ve/slide-05.webp",
+    "bytes": 422062,
+    "sha256": "469ae00392d7a2bcb03a86877d253957849513ab00a2486e9ad20db9ecf22d48"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ve/slide-06.webp",
+    "bytes": 599526,
+    "sha256": "9d316da77fe3afb8c7256848ec3100ac64f5459b2b6f70517aab3e959b588b4b"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ve/slide-07.webp",
+    "bytes": 701816,
+    "sha256": "5b8fb4d02f499f7b17f4911bb511077cc2b0b85b3a90bcf3616bfccaf7cbc4e1"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ve/slide-08.webp",
+    "bytes": 474094,
+    "sha256": "2328199b1a0c29556e9d85bd6a39223f207c38eab7f2c788fd769cd7e061a839"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ve/slide-09.webp",
+    "bytes": 347296,
+    "sha256": "4aa046f19962ec2d9855b9b4270386f4e37822179620195f3ba27cae1acae577"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ve/slide-10.webp",
+    "bytes": 780116,
+    "sha256": "16356e7c2c100b8e5d782edbe6af2e817c5e08523f4f2ff53a920db4e4ad4a3a"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ve/slide-11.webp",
+    "bytes": 400706,
+    "sha256": "da45da4cecc04a8a89b86c7ea46dc0b5c590f12adafd778fb2038777e152c808"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ve/slide-12.webp",
+    "bytes": 491110,
+    "sha256": "2c2e3deb25583a20ad1689c2dc8f2ddce9240070769a03184829db4fd57ad703"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ve/slide-13.webp",
+    "bytes": 458762,
+    "sha256": "11c83f46f1b2b98ecd3b6beaad3dec84be16c76d84b0a7435328b26ce016a276"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ve/slide-14.webp",
+    "bytes": 231284,
+    "sha256": "d042c892c876ee7f20d5d7e96a7f7e8d2ba5720f7d965775e44a57140fb1b67d"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ve/slide-15.webp",
+    "bytes": 575078,
+    "sha256": "5cf7c3592a00404a553df7f11914e511a71fd953e36e0d41582b6f50d7109c1e"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ve/slide-16.webp",
+    "bytes": 568224,
+    "sha256": "aec14eeca9001a9ff0b3cb830796d3413181b6866c89f6522dc4da7640df2b7c"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ve/slide-17.webp",
+    "bytes": 365210,
+    "sha256": "7ff52939fe87b0daa584fd448ccc737439075c9e610e6d6ca40ffe4c1e4d31aa"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/ve/slide-18.webp",
+    "bytes": 336718,
+    "sha256": "ec3ee26087869d57989e0cbb0070c5c1673d666bd7bf43bee8ac9a6e73c9d8a9"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu/slide-01.jpg",
+    "bytes": 93804,
+    "sha256": "107c4e2d2c3a46adc2234e30d2e05e2d6cf5e094231df00379edac606b756be4"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu/slide-02.jpg",
+    "bytes": 93317,
+    "sha256": "0066fd8dd45839a8e55bfb863dad8625e307b6f76a3b6ea17b6a64bb1648101f"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu/slide-03.jpg",
+    "bytes": 63601,
+    "sha256": "bba565891e656257b6cad02f5a0e06425ee9338ebd654708c46fb8bda3e91d4c"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu/slide-04.jpg",
+    "bytes": 593672,
+    "sha256": "1c52e3879d3a7481ec9ca70cd0a6b1ed9fd73229faceed2d22ae531c0902fcd7"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu/slide-05.jpg",
+    "bytes": 97331,
+    "sha256": "473285046e2668faaa35594f4e19148dc3604b5bbd215e5355a5c79fd93a16f9"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu/slide-06.jpg",
+    "bytes": 537499,
+    "sha256": "30f39adc7709aef39f94921592c7c5c0fee9c3fde9dc05f546ef12520a4a10c8"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu/slide-07.jpg",
+    "bytes": 617044,
+    "sha256": "a9698b857ba236ac52bb5d9b313567364a3e083079e141fdbe6dbac32dd185b4"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu/slide-08.jpg",
+    "bytes": 161455,
+    "sha256": "6ce9f3931ae7099be2e375c972eb30afe93ffcb3e9b89f0bd2c32f59b398cdab"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu/slide-09.jpg",
+    "bytes": 89029,
+    "sha256": "8e6399322b5360aabf53891dcda1bca68b559c8ecb11fd2625a069a0552ae750"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu/slide-10.jpg",
+    "bytes": 633799,
+    "sha256": "74a47759c0ababaec2051549b691e3c0e63d39ec8820c8527ffb70df63601d51"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu/slide-11.jpg",
+    "bytes": 111581,
+    "sha256": "9307e0f18ab96711890de25e7b786a55199c65cac1a47a4c8a38cc7ec610e3a0"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu/slide-12.jpg",
+    "bytes": 301322,
+    "sha256": "727ce77fe810e36bbbd9faabf60ca366ef016e82da9bc859d307eafb43c77d7e"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu/slide-13.jpg",
+    "bytes": 195912,
+    "sha256": "1368022830d05d0a7a6f76179c861f5d11bccf8d79029c803b81494e3ee67e50"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu/slide-14.jpg",
+    "bytes": 112988,
+    "sha256": "eba73f80acd23f297b56dc7cbdc96216fb5af3b6abf8ccafbaeb8afb432ecf11"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu/slide-15.jpg",
+    "bytes": 445155,
+    "sha256": "1cbd2fe2a69f01ea4c406c7e321a662c175b83e275465322b18036a1e9bd9161"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu/slide-16.jpg",
+    "bytes": 122857,
+    "sha256": "fed229945cc4f826f779d5104ea1162bf36ec6dcfcfbc7f4c1749669ce335cb0"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu/slide-17.jpg",
+    "bytes": 83212,
+    "sha256": "8d6c0b86e337a0b6a306fa28ec2a7402a483d49d7d6e50dee80abd473501f762"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu/slide-18.jpg",
+    "bytes": 74156,
+    "sha256": "df0445384e7f1733f06bed7e1d0ddd61d6a38c1c61201fe184706e81934dcfbe"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu-silent/slide-16.webp",
+    "bytes": 596598,
+    "sha256": "15d67d3ec1c477d69fd9a687a00619b2fd1422c47c30845e084b7a0bc1869524"
+  },
+  {
+    "path": "/course-decks/vegetables-staples/zu-silent/slide-18.webp",
+    "bytes": 322322,
+    "sha256": "5063c7c1d81a50ae56e6e1eec29757c33922811f249acc9fb9cff9351a029b63"
+  }
+]

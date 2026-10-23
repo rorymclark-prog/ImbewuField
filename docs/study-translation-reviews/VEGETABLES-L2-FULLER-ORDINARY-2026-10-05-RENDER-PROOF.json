@@ -1,0 +1,143 @@
+{
+  "date": "2026-10-05",
+  "candidatePacket": "/tmp/imbewu-vegetables-l2-final-coherent-deck-candidates-20261005.json",
+  "candidatePacketSha256": "3977d86d605b068c5809699c720c8f4bcf84dca508c6319362084fe5dfce6007",
+  "learnerPacket": "/tmp/imbewu-vegetables-l2-final-coherent-candidates-20261005.json",
+  "learnerPacketSha256": "a0e272bb22e51213049614b6548ed1501579a4e3b5c4682d4e9b802390347d3d",
+  "renderCommand": "scripts/make-lesson-slides.mjs vegetables-staples {language} {fresh-output-dir} --paired-draft docs/narration/vegetables-staples.{language}.paired-draft.json --slides {selected-slide-numbers}",
+  "renderedFrames": [
+    {
+      "language": "st",
+      "slide": 10,
+      "sourcePng": "/tmp/imbewu-vegetables-l2-final-st-gd7BV2/slide-10.png",
+      "sourcePngSha256": "db47ca215209f0b609bfab95b32c20ae891d3501494a317f936c36a87fa03096",
+      "sourcePngBytes": 2608458,
+      "sourceDimensions": [
+        1440,
+        5400
+      ],
+      "resize": "none",
+      "webpTemp": "/tmp/imbewu-vegetables-l2-final-webp/st/slide-10.webp",
+      "assetPath": "/public/course-decks/vegetables-staples/st/slide-10.webp",
+      "assetSha256": "b84ed3e0e5e4a2cd46ad634118785f5ae39a226e5fd145e9dfd032e254a38d73",
+      "assetBytes": 785054,
+      "assetDimensions": [
+        1440,
+        5400
+      ],
+      "encoding": "Pillow WebP quality 88, method 6"
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "sourcePng": "/tmp/imbewu-vegetables-l2-final-ve-hnBXr5/slide-08.png",
+      "sourcePngSha256": "979e3ad9942e492db46a9cdc635406aca2dbf52bdaffafd424a0f690a7c58232",
+      "sourcePngBytes": 992798,
+      "sourceDimensions": [
+        1440,
+        5454
+      ],
+      "resize": "vertical Lanczos to 1440x5400",
+      "webpTemp": "/tmp/imbewu-vegetables-l2-final-webp/ve/slide-08.webp",
+      "assetPath": "/public/course-decks/vegetables-staples/ve/slide-08.webp",
+      "assetSha256": "2328199b1a0c29556e9d85bd6a39223f207c38eab7f2c788fd769cd7e061a839",
+      "assetBytes": 474094,
+      "assetDimensions": [
+        1440,
+        5400
+      ],
+      "encoding": "Pillow WebP quality 88, method 6"
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "sourcePng": "/tmp/imbewu-vegetables-l2-final-ve-hnBXr5/slide-10.png",
+      "sourcePngSha256": "3df7d26f3403b887701ebe8a9dd57ff066d16e255d9b4a88a73d14cbed35ce50",
+      "sourcePngBytes": 2606208,
+      "sourceDimensions": [
+        1440,
+        5400
+      ],
+      "resize": "none",
+      "webpTemp": "/tmp/imbewu-vegetables-l2-final-webp/ve/slide-10.webp",
+      "assetPath": "/public/course-decks/vegetables-staples/ve/slide-10.webp",
+      "assetSha256": "16356e7c2c100b8e5d782edbe6af2e817c5e08523f4f2ff53a920db4e4ad4a3a",
+      "assetBytes": 780116,
+      "assetDimensions": [
+        1440,
+        5400
+      ],
+      "encoding": "Pillow WebP quality 88, method 6"
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "sourcePng": "/tmp/imbewu-vegetables-l2-final-ts-dDrvea/slide-08.png",
+      "sourcePngSha256": "851c6570e7cfda1bb7dc228cbcc6476233e2a8cc8b8af613595bbff059b4d075",
+      "sourcePngBytes": 1004006,
+      "sourceDimensions": [
+        1440,
+        5466
+      ],
+      "resize": "vertical Lanczos to 1440x5400",
+      "webpTemp": "/tmp/imbewu-vegetables-l2-final-webp/ts/slide-08.webp",
+      "assetPath": "/public/course-decks/vegetables-staples/ts/slide-08.webp",
+      "assetSha256": "3579561edd9c41d9ad73eb18d05795a7dbff8ddd82b7a9e17d10120b4bf11a2d",
+      "assetBytes": 480940,
+      "assetDimensions": [
+        1440,
+        5400
+      ],
+      "encoding": "Pillow WebP quality 88, method 6"
+    },
+    {
+      "language": "ts",
+      "slide": 9,
+      "sourcePng": "/tmp/imbewu-vegetables-l2-final-ts-dDrvea/slide-09.png",
+      "sourcePngSha256": "19429e3993781e18c5425e04cbcc26e3bce3620928441a0a88474bb6b27a32b4",
+      "sourcePngBytes": 662059,
+      "sourceDimensions": [
+        1440,
+        5400
+      ],
+      "resize": "none",
+      "webpTemp": "/tmp/imbewu-vegetables-l2-final-webp/ts/slide-09.webp",
+      "assetPath": "/public/course-decks/vegetables-staples/ts/slide-09.webp",
+      "assetSha256": "fc88b427bc6791b5fe3a4194a1e06a35d0fe0f6dbb41594a89e472e269485948",
+      "assetBytes": 357254,
+      "assetDimensions": [
+        1440,
+        5400
+      ],
+      "encoding": "Pillow WebP quality 88, method 6"
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "sourcePng": "/tmp/imbewu-vegetables-l2-final-ts-dDrvea/slide-10.png",
+      "sourcePngSha256": "e59036a0cfc3f6a8db904f8067ae77d17460394726a1314a7cc0fb945cd87d67",
+      "sourcePngBytes": 2629636,
+      "sourceDimensions": [
+        1440,
+        5426
+      ],
+      "resize": "vertical Lanczos to 1440x5400",
+      "webpTemp": "/tmp/imbewu-vegetables-l2-final-webp/ts/slide-10.webp",
+      "assetPath": "/public/course-decks/vegetables-staples/ts/slide-10.webp",
+      "assetSha256": "aae210b9209e610e55f5ddff65d1e78dc34f8cb45308ee019283641ac2550f72",
+      "assetBytes": 804770,
+      "assetDimensions": [
+        1440,
+        5400
+      ],
+      "encoding": "Pillow WebP quality 88, method 6"
+    }
+  ],
+  "contactSheets": [
+    "/tmp/imbewu-vegetables-l2-final-contact-st.png",
+    "/tmp/imbewu-vegetables-l2-final-contact-ve.png",
+    "/tmp/imbewu-vegetables-l2-final-contact-ts.png"
+  ],
+  "claims": "Only these six selected deck frames were rendered and converted. Resizing only reduced renderer-added vertical extensions; no crop or content edits. Visual readability requires root review of these compressed outputs.",
+  "visualReview": "The six actual compressed outputs were inspected through the language contact sheets. Source and target panels, draft labels, counters and text flow are visible without clipping at contact-sheet review scale; root review remains recorded separately."
+}

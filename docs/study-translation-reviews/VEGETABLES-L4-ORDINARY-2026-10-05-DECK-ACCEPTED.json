@@ -1,0 +1,929 @@
+{
+  "title": "Vegetables L4 paired-deck exact-source reuse map",
+  "date": "2026-10-05",
+  "baseHead": "4fd25b1025ba474bc4a5825aef36b306dd8e171c",
+  "status": "root-accepted-12-exact-source-joins-for-diff-review",
+  "authority": "The accepted learner target is the complete field target. Reuse only listed exact-source rows. Segment source concatenation must equal the exact deck English body; visible target concatenation must equal the accepted learner field. Other 26 changed learner fields have no exact full English deck body match and are not copied.",
+  "sourcePacket": "/tmp/imbewu-vegetables-l4-ordinary-deck-reuse-candidates-20261005.json",
+  "counts": {
+    "finalFieldRows": 40,
+    "changedLearnerFields": 38,
+    "unchangedEnglishOptionRows": 2,
+    "exactFullEnglishDeckMatches": 12,
+    "noExactFullEnglishDeckMatch": 26,
+    "matchesByLanguage": {
+      "st": 3,
+      "ve": 6,
+      "ts": 3
+    },
+    "rootRepairCompositionConfirmed": true,
+    "allMatchedSourceSegmentsCoverExactEnglishRow": true,
+    "allMatchedTargetReassemblyEqualsFinalLearnerTarget": true,
+    "repoEdits": false,
+    "mediaRender": false
+  },
+  "matches": [
+    {
+      "language": "st",
+      "lessonField": "body.paragraphs.1",
+      "deckFile": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "slide": 15,
+      "englishBodyIndexZeroBased": 1,
+      "exactEnglishSource": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "currentDeckTarget": {
+        "status": "draft",
+        "text": "Dimela tse nang le stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you."
+      },
+      "finalLearnerCandidateTarget": "Dimela tse nang le stress. One crop dominating the ground. Kapa broad chemical use e seng e tlositse predators tse neng di o thusa.",
+      "proposedDeckTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plants under ",
+            "status": "draft",
+            "text": "Dimela tse nang le "
+          },
+          {
+            "sourceEnglish": "stress.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " One crop dominating the ground.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Or ",
+            "status": "draft",
+            "text": " Kapa "
+          },
+          {
+            "sourceEnglish": "broad chemical use",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that has already removed the ",
+            "status": "draft",
+            "text": " e seng e tlositse "
+          },
+          {
+            "sourceEnglish": "predators",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that were helping you.",
+            "status": "draft",
+            "text": " tse neng di o thusa."
+          }
+        ]
+      },
+      "sourceSegmentCoverageExact": true,
+      "reassembledDeckTargetEqualsFinalLearnerCandidate": true,
+      "existingTextHandling": "Uses final learner target as authority. Existing localized phrase at the front of the matched current deck row is retained where the final field retains it; VE paragraph 4 water clause uses root-approved exact English hold; current treatment row is an English hold and is expanded only around exact held terms."
+    },
+    {
+      "language": "ve",
+      "lessonField": "body.paragraphs.1",
+      "deckFile": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 15,
+      "englishBodyIndexZeroBased": 1,
+      "exactEnglishSource": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "currentDeckTarget": {
+        "status": "draft",
+        "text": "Zwimela zwi re na stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you."
+      },
+      "finalLearnerCandidateTarget": "Zwimela zwi re na stress. One crop dominating the ground. Kana broad chemical use yo no bvisa predators dze dza vha dzi tshi ni thusa.",
+      "proposedDeckTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plants under ",
+            "status": "draft",
+            "text": "Zwimela zwi re na "
+          },
+          {
+            "sourceEnglish": "stress.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " One crop dominating the ground.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Or ",
+            "status": "draft",
+            "text": " Kana "
+          },
+          {
+            "sourceEnglish": "broad chemical use",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that has already removed the ",
+            "status": "draft",
+            "text": " yo no bvisa "
+          },
+          {
+            "sourceEnglish": "predators",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that were helping you.",
+            "status": "draft",
+            "text": " dze dza vha dzi tshi ni thusa."
+          }
+        ]
+      },
+      "sourceSegmentCoverageExact": true,
+      "reassembledDeckTargetEqualsFinalLearnerCandidate": true,
+      "existingTextHandling": "Uses final learner target as authority. Existing localized phrase at the front of the matched current deck row is retained where the final field retains it; VE paragraph 4 water clause uses root-approved exact English hold; current treatment row is an English hold and is expanded only around exact held terms."
+    },
+    {
+      "language": "ts",
+      "lessonField": "body.paragraphs.1",
+      "deckFile": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "slide": 15,
+      "englishBodyIndexZeroBased": 1,
+      "exactEnglishSource": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "currentDeckTarget": {
+        "status": "draft",
+        "text": "Swibyariwa leswi nga na stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you."
+      },
+      "finalLearnerCandidateTarget": "Swibyariwa leswi nga na stress. One crop dominating the ground. Kumbe broad chemical use leyi se yi suseke predators leti a ti ku pfuna.",
+      "proposedDeckTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plants under ",
+            "status": "draft",
+            "text": "Swibyariwa leswi nga na "
+          },
+          {
+            "sourceEnglish": "stress.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " One crop dominating the ground.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Or ",
+            "status": "draft",
+            "text": " Kumbe "
+          },
+          {
+            "sourceEnglish": "broad chemical use",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that has already removed the ",
+            "status": "draft",
+            "text": " leyi se yi suseke "
+          },
+          {
+            "sourceEnglish": "predators",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that were helping you.",
+            "status": "draft",
+            "text": " leti a ti ku pfuna."
+          }
+        ]
+      },
+      "sourceSegmentCoverageExact": true,
+      "reassembledDeckTargetEqualsFinalLearnerCandidate": true,
+      "existingTextHandling": "Uses final learner target as authority. Existing localized phrase at the front of the matched current deck row is retained where the final field retains it; VE paragraph 4 water clause uses root-approved exact English hold; current treatment row is an English hold and is expanded only around exact held terms."
+    },
+    {
+      "language": "ve",
+      "lessonField": "body.paragraphs.2",
+      "deckFile": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 15,
+      "englishBodyIndexZeroBased": 2,
+      "exactEnglishSource": "So before you treat anything, look at the whole system.",
+      "currentDeckTarget": {
+        "status": "draft",
+        "text": "So before you treat anything, sedzani system yoṱhe."
+      },
+      "finalLearnerCandidateTarget": "Ngazwenezwo, before you treat anything, sedzani system yoṱhe.",
+      "proposedDeckTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "So ",
+            "status": "draft",
+            "text": "Ngazwenezwo, "
+          },
+          {
+            "sourceEnglish": "before you treat anything, ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "look at the whole system.",
+            "status": "draft",
+            "text": "sedzani system yoṱhe."
+          }
+        ]
+      },
+      "sourceSegmentCoverageExact": true,
+      "reassembledDeckTargetEqualsFinalLearnerCandidate": true,
+      "existingTextHandling": "Uses final learner target as authority. Existing localized phrase at the front of the matched current deck row is retained where the final field retains it; VE paragraph 4 water clause uses root-approved exact English hold; current treatment row is an English hold and is expanded only around exact held terms."
+    },
+    {
+      "language": "ve",
+      "lessonField": "body.paragraphs.3",
+      "deckFile": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 15,
+      "englishBodyIndexZeroBased": 3,
+      "exactEnglishSource": "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+      "currentDeckTarget": {
+        "status": "draft",
+        "text": "Tshimela tshi khou shaya water? Soil yo compacted kana yo “hungry”? Are predators already working on the problem for you?"
+      },
+      "finalLearnerCandidateTarget": "Is the plant short of water? Soil yo compacted kana yo “hungry”? Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?",
+      "proposedDeckTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Is the plant short of water?",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Is the soil ",
+            "status": "draft",
+            "text": " Soil yo "
+          },
+          {
+            "sourceEnglish": "compacted",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", or ",
+            "status": "draft",
+            "text": " kana yo “"
+          },
+          {
+            "sourceEnglish": "hungry",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "?",
+            "status": "draft",
+            "text": "”?"
+          },
+          {
+            "sourceEnglish": " Are predators already working on the problem for you?",
+            "status": "draft",
+            "text": " Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?"
+          }
+        ]
+      },
+      "sourceSegmentCoverageExact": true,
+      "reassembledDeckTargetEqualsFinalLearnerCandidate": true,
+      "existingTextHandling": "Uses final learner target as authority. Existing localized phrase at the front of the matched current deck row is retained where the final field retains it; VE paragraph 4 water clause uses root-approved exact English hold; current treatment row is an English hold and is expanded only around exact held terms."
+    },
+    {
+      "language": "ve",
+      "lessonField": "body.paragraphs.6",
+      "deckFile": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 16,
+      "englishBodyIndexZeroBased": 1,
+      "exactEnglishSource": "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+      "currentDeckTarget": {
+        "status": "draft",
+        "text": "Tsha u thoma. Sedzani. Sedzani the damage pattern, the underside of the leaf, the stem, and the plants nearby."
+      },
+      "finalLearnerCandidateTarget": "Tsha u thoma. Sedzani. Sedzani damage pattern, tlhelo ḽa fhasi ḽa ḽiṱari, tsinde, na zwimela zwi re tsini.",
+      "proposedDeckTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "One. Observe. Look at the ",
+            "status": "draft",
+            "text": "Tsha u thoma. Sedzani. Sedzani "
+          },
+          {
+            "sourceEnglish": "damage pattern",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", the underside of the leaf, the stem, and the plants nearby.",
+            "status": "draft",
+            "text": ", tlhelo ḽa fhasi ḽa ḽiṱari, tsinde, na zwimela zwi re tsini."
+          }
+        ]
+      },
+      "sourceSegmentCoverageExact": true,
+      "reassembledDeckTargetEqualsFinalLearnerCandidate": true,
+      "existingTextHandling": "Uses final learner target as authority. Existing localized phrase at the front of the matched current deck row is retained where the final field retains it; VE paragraph 4 water clause uses root-approved exact English hold; current treatment row is an English hold and is expanded only around exact held terms."
+    },
+    {
+      "language": "st",
+      "lessonField": "body.paragraphs.9",
+      "deckFile": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "slide": 16,
+      "englishBodyIndexZeroBased": 4,
+      "exactEnglishSource": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "currentDeckTarget": {
+        "status": "draft",
+        "text": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong."
+      },
+      "finalLearnerCandidateTarget": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — qala ka the lightest thing that works. Physical removal, barriers kapa diphetoho ho crop care di ka thusa. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong.",
+      "proposedDeckTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four.",
+            "status": "draft",
+            "text": "Ntlha ya bone."
+          },
+          {
+            "sourceEnglish": " Only then, act — and start with ",
+            "status": "draft",
+            "text": " Ke ka morao feela moo o nkang kgato — qala ka "
+          },
+          {
+            "sourceEnglish": "the lightest thing that works.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Physical removal",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", barriers",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " or changes in ",
+            "status": "draft",
+            "text": " kapa diphetoho ho "
+          },
+          {
+            "sourceEnglish": "crop care",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " may help.",
+            "status": "draft",
+            "text": " di ka thusa."
+          },
+          {
+            "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+            "status": "draft",
+            "text": " Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong."
+          }
+        ]
+      },
+      "sourceSegmentCoverageExact": true,
+      "reassembledDeckTargetEqualsFinalLearnerCandidate": true,
+      "existingTextHandling": "Uses final learner target as authority. Existing localized phrase at the front of the matched current deck row is retained where the final field retains it; VE paragraph 4 water clause uses root-approved exact English hold; current treatment row is an English hold and is expanded only around exact held terms."
+    },
+    {
+      "language": "ve",
+      "lessonField": "body.paragraphs.9",
+      "deckFile": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 16,
+      "englishBodyIndexZeroBased": 4,
+      "exactEnglishSource": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "currentDeckTarget": {
+        "status": "draft",
+        "text": "Tsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo."
+      },
+      "finalLearnerCandidateTarget": "Tsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga the lightest thing that works. Physical removal, barriers kana tshanduko kha crop care zwi nga thusa. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo.",
+      "proposedDeckTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four.",
+            "status": "draft",
+            "text": "Tsha vhuṋa."
+          },
+          {
+            "sourceEnglish": " Only then, act — and start with ",
+            "status": "draft",
+            "text": " Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga "
+          },
+          {
+            "sourceEnglish": "the lightest thing that works.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Physical removal",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", barriers",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " or changes in ",
+            "status": "draft",
+            "text": " kana tshanduko kha "
+          },
+          {
+            "sourceEnglish": "crop care",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " may help.",
+            "status": "draft",
+            "text": " zwi nga thusa."
+          },
+          {
+            "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+            "status": "draft",
+            "text": " Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo."
+          }
+        ]
+      },
+      "sourceSegmentCoverageExact": true,
+      "reassembledDeckTargetEqualsFinalLearnerCandidate": true,
+      "existingTextHandling": "Uses final learner target as authority. Existing localized phrase at the front of the matched current deck row is retained where the final field retains it; VE paragraph 4 water clause uses root-approved exact English hold; current treatment row is an English hold and is expanded only around exact held terms."
+    },
+    {
+      "language": "ts",
+      "lessonField": "body.paragraphs.9",
+      "deckFile": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "slide": 16,
+      "englishBodyIndexZeroBased": 4,
+      "exactEnglishSource": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "currentDeckTarget": {
+        "status": "draft",
+        "text": "Vumune. Hi kona ntsena u tekaka goza — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Kambela leswaku goza ri fambisana ni xiphiqo, and monitor the result."
+      },
+      "finalLearnerCandidateTarget": "Vumune. Hi kona ntsena u tekaka goza — sungula hi the lightest thing that works. Physical removal, barriers kumbe ku cinca crop care swi nga pfuna. Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo.",
+      "proposedDeckTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four.",
+            "status": "draft",
+            "text": "Vumune."
+          },
+          {
+            "sourceEnglish": " Only then, act — and start with ",
+            "status": "draft",
+            "text": " Hi kona ntsena u tekaka goza — sungula hi "
+          },
+          {
+            "sourceEnglish": "the lightest thing that works.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Physical removal",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", barriers",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " or changes in ",
+            "status": "draft",
+            "text": " kumbe ku cinca "
+          },
+          {
+            "sourceEnglish": "crop care",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " may help.",
+            "status": "draft",
+            "text": " swi nga pfuna."
+          },
+          {
+            "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+            "status": "draft",
+            "text": " Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo."
+          }
+        ]
+      },
+      "sourceSegmentCoverageExact": true,
+      "reassembledDeckTargetEqualsFinalLearnerCandidate": true,
+      "existingTextHandling": "Uses final learner target as authority. Existing localized phrase at the front of the matched current deck row is retained where the final field retains it; VE paragraph 4 water clause uses root-approved exact English hold; current treatment row is an English hold and is expanded only around exact held terms."
+    },
+    {
+      "language": "st",
+      "lessonField": "body.paragraphs.10",
+      "deckFile": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "slide": 16,
+      "englishBodyIndexZeroBased": 5,
+      "exactEnglishSource": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentDeckTarget": {
+        "status": "english-hold"
+      },
+      "finalLearnerCandidateTarget": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "proposedDeckTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "If a ",
+            "status": "draft",
+            "text": "Ha "
+          },
+          {
+            "sourceEnglish": "treatment",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " is needed, use a ",
+            "status": "draft",
+            "text": " e hlokahala, sebedisa "
+          },
+          {
+            "sourceEnglish": "product registered for that crop and pest",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and follow its ",
+            "status": "draft",
+            "text": ", mme o latele "
+          },
+          {
+            "sourceEnglish": "label",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": " ya yona."
+          },
+          {
+            "sourceEnglish": " This includes ",
+            "status": "draft",
+            "text": " Sena se kenyeletsa "
+          },
+          {
+            "sourceEnglish": "neem products.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Check ",
+            "status": "draft",
+            "text": " Hlahloba "
+          },
+          {
+            "sourceEnglish": "protection and harvest waiting instructions.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Do not improvise mixtures or stronger doses.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "sourceSegmentCoverageExact": true,
+      "reassembledDeckTargetEqualsFinalLearnerCandidate": true,
+      "existingTextHandling": "Uses final learner target as authority. Existing localized phrase at the front of the matched current deck row is retained where the final field retains it; VE paragraph 4 water clause uses root-approved exact English hold; current treatment row is an English hold and is expanded only around exact held terms."
+    },
+    {
+      "language": "ve",
+      "lessonField": "body.paragraphs.10",
+      "deckFile": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 16,
+      "englishBodyIndexZeroBased": 5,
+      "exactEnglishSource": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentDeckTarget": {
+        "status": "english-hold"
+      },
+      "finalLearnerCandidateTarget": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "proposedDeckTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "If a ",
+            "status": "draft",
+            "text": "Arali "
+          },
+          {
+            "sourceEnglish": "treatment",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " is needed, use a ",
+            "status": "draft",
+            "text": " i tshi ṱoḓea, shumisani "
+          },
+          {
+            "sourceEnglish": "product registered for that crop and pest",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and follow its ",
+            "status": "draft",
+            "text": ", nahone ni tevhele "
+          },
+          {
+            "sourceEnglish": "label",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": " yayo."
+          },
+          {
+            "sourceEnglish": " This includes ",
+            "status": "draft",
+            "text": " Hezwi zwi katela "
+          },
+          {
+            "sourceEnglish": "neem products.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Check ",
+            "status": "draft",
+            "text": " Ṱolani "
+          },
+          {
+            "sourceEnglish": "protection and harvest waiting instructions.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Do not improvise mixtures or stronger doses.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "sourceSegmentCoverageExact": true,
+      "reassembledDeckTargetEqualsFinalLearnerCandidate": true,
+      "existingTextHandling": "Uses final learner target as authority. Existing localized phrase at the front of the matched current deck row is retained where the final field retains it; VE paragraph 4 water clause uses root-approved exact English hold; current treatment row is an English hold and is expanded only around exact held terms."
+    },
+    {
+      "language": "ts",
+      "lessonField": "body.paragraphs.10",
+      "deckFile": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "slide": 16,
+      "englishBodyIndexZeroBased": 5,
+      "exactEnglishSource": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentDeckTarget": {
+        "status": "english-hold"
+      },
+      "finalLearnerCandidateTarget": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "proposedDeckTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "If a ",
+            "status": "draft",
+            "text": "Loko "
+          },
+          {
+            "sourceEnglish": "treatment",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " is needed, use a ",
+            "status": "draft",
+            "text": " yi laveka, tirhisa "
+          },
+          {
+            "sourceEnglish": "product registered for that crop and pest",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and follow its ",
+            "status": "draft",
+            "text": ", kutani u landzelela "
+          },
+          {
+            "sourceEnglish": "label",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": " ya yona."
+          },
+          {
+            "sourceEnglish": " This includes ",
+            "status": "draft",
+            "text": " Leswi swi katsa "
+          },
+          {
+            "sourceEnglish": "neem products.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Check ",
+            "status": "draft",
+            "text": " Kambela "
+          },
+          {
+            "sourceEnglish": "protection and harvest waiting instructions.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Do not improvise mixtures or stronger doses.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "sourceSegmentCoverageExact": true,
+      "reassembledDeckTargetEqualsFinalLearnerCandidate": true,
+      "existingTextHandling": "Uses final learner target as authority. Existing localized phrase at the front of the matched current deck row is retained where the final field retains it; VE paragraph 4 water clause uses root-approved exact English hold; current treatment row is an English hold and is expanded only around exact held terms."
+    }
+  ],
+  "unmatchedChangedFields": [
+    {
+      "language": "st",
+      "lessonField": "quiz.0.options.1",
+      "exactEnglishSource": "A product registered for the crop and pest, used according to its label",
+      "finalLearnerCandidateTarget": "Product registered for the crop and pest, e sebediswang ho ya ka label ya yona",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "st",
+      "lessonField": "quiz.0.rationale",
+      "exactEnglishSource": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "finalLearnerCandidateTarget": "Crop, pest, dose, protection and harvest waiting instructions di bohlokwa. Natural origin ha e etse hore improvised treatment e be safe or suitable.",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ve",
+      "lessonField": "keyPoints.0",
+      "exactEnglishSource": "Identify the cause before treating damage",
+      "finalLearnerCandidateTarget": "Wanani tshiitisi tsha damage ni sa athu u ita treatment.",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ve",
+      "lessonField": "keyPoints.2",
+      "exactEnglishSource": "Use suitable physical or crop-care measures and monitor results",
+      "finalLearnerCandidateTarget": "Shumisani physical kana crop-care measures zwo teaho, nahone ni bvele phanḓa ni tshi sedza mvelelo.",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ve",
+      "lessonField": "keyPoints.3",
+      "exactEnglishSource": "If treatment is needed, use a registered product for the crop and pest and follow the label",
+      "finalLearnerCandidateTarget": "Arali treatment i tshi ṱoḓea, shumisani registered product for the crop and pest nahone ni tevhele label.",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ve",
+      "lessonField": "quiz.0.options.1",
+      "exactEnglishSource": "A product registered for the crop and pest, used according to its label",
+      "finalLearnerCandidateTarget": "Product registered for the crop and pest, yo shumiswaho u ya nga label yayo",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ve",
+      "lessonField": "quiz.0.options.3",
+      "exactEnglishSource": "A neighbour’s dose for a different crop",
+      "finalLearnerCandidateTarget": "Dose ya muhura ya crop yo fhambanaho",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ve",
+      "lessonField": "quiz.0.rationale",
+      "exactEnglishSource": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "finalLearnerCandidateTarget": "Crop, pest, dose, protection and harvest waiting instructions ndi zwa ndeme. Natural origin a i iti uri improvised treatment i vhe safe or suitable.",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ve",
+      "lessonField": "quiz.1.options.1",
+      "exactEnglishSource": "Whether the moon phase is right for treatment",
+      "finalLearnerCandidateTarget": "Arali moon phase i tshi tea treatment",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ve",
+      "lessonField": "quiz.1.options.3",
+      "exactEnglishSource": "Whether it's aphids specifically",
+      "finalLearnerCandidateTarget": "Arali hu aphids specifically",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ve",
+      "lessonField": "quiz.1.rationale",
+      "exactEnglishSource": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment.",
+      "finalLearnerCandidateTarget": "Yellowing i na zwivhangi zwo vhalaho zwo ḓoweleaho, nahone soil or watering issue i ṱoḓa fix yo fhambanaho nga hoṱhe na ya pest — u ṱola u thoma zwi thivhela wasted treatment.",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ts",
+      "lessonField": "keyPoints.0",
+      "exactEnglishSource": "Identify the cause before treating damage",
+      "finalLearnerCandidateTarget": "Kuma xivangelo u nga si endla treatment ya damage",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ts",
+      "lessonField": "keyPoints.1",
+      "exactEnglishSource": "Check water, roots, nutrition and beneficial insects",
+      "finalLearnerCandidateTarget": "Kambela mati, timitsu, nutrition na beneficial insects",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ts",
+      "lessonField": "keyPoints.2",
+      "exactEnglishSource": "Use suitable physical or crop-care measures and monitor results",
+      "finalLearnerCandidateTarget": "Tirhisa physical kumbe crop-care measures leswi faneleke, kutani u ya mahlweni u kambela vuyelo",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ts",
+      "lessonField": "keyPoints.3",
+      "exactEnglishSource": "If treatment is needed, use a registered product for the crop and pest and follow the label",
+      "finalLearnerCandidateTarget": "Loko treatment yi laveka, tirhisa registered product for the crop and pest kutani u landzelela label",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ts",
+      "lessonField": "quiz.0.q",
+      "exactEnglishSource": "If a pest problem needs a treatment product, what should guide its use?",
+      "finalLearnerCandidateTarget": "Loko pest problem yi lava treatment product, i yini lexi faneleke ku kongomisa ku tirhisiwa ka yona?",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ts",
+      "lessonField": "quiz.0.options.1",
+      "exactEnglishSource": "A product registered for the crop and pest, used according to its label",
+      "finalLearnerCandidateTarget": "Product registered for the crop and pest, leyi tirhisiwaka hi ku landza label ya yona",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ts",
+      "lessonField": "quiz.0.options.2",
+      "exactEnglishSource": "Any product described as natural",
+      "finalLearnerCandidateTarget": "Product yin'wana ni yin'wana leyi hlamuseriwaka yi ri natural",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ts",
+      "lessonField": "quiz.0.options.3",
+      "exactEnglishSource": "A neighbour’s dose for a different crop",
+      "finalLearnerCandidateTarget": "Dose ya muakelani ya crop yo hambana",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ts",
+      "lessonField": "quiz.0.rationale",
+      "exactEnglishSource": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "finalLearnerCandidateTarget": "Crop, pest, dose, protection and harvest waiting instructions i swa nkoka. Natural origin a yi endli leswaku improvised treatment yi va safe or suitable.",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ts",
+      "lessonField": "quiz.1.q",
+      "exactEnglishSource": "A farmer's brassica leaves are turning yellow. Before assuming pests, what should she check first?",
+      "finalLearnerCandidateTarget": "Matluka ya brassica ya murimi ma ri karhi ma hundzuka yellow. Loko a nga si ehleketa leswaku i pests, u fanele a kambela yini ku sungula?",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ts",
+      "lessonField": "quiz.1.options.0",
+      "exactEnglishSource": "Whether it's actually a soil nutrient or watering issue",
+      "finalLearnerCandidateTarget": "Loko hakunene ku ri soil nutrient or watering issue",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ts",
+      "lessonField": "quiz.1.options.1",
+      "exactEnglishSource": "Whether the moon phase is right for treatment",
+      "finalLearnerCandidateTarget": "Loko moon phase yi fanele treatment",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ts",
+      "lessonField": "quiz.1.options.2",
+      "exactEnglishSource": "Whether her neighbour has the same problem",
+      "finalLearnerCandidateTarget": "Loko muakelani wa yena a ri ni xiphiqo lexi fanaka",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ts",
+      "lessonField": "quiz.1.options.3",
+      "exactEnglishSource": "Whether it's aphids specifically",
+      "finalLearnerCandidateTarget": "Loko ku ri aphids specifically",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    },
+    {
+      "language": "ts",
+      "lessonField": "quiz.1.rationale",
+      "exactEnglishSource": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment.",
+      "finalLearnerCandidateTarget": "Yellowing yi ni swivangelo swo hlayanyana leswi tolovelekeke, naswona soil or watering issue yi lava fix leyi hambaneke hi ku helela ni leyi lavekaka eka pest — ku kambela ku sungula ku papalata wasted treatment.",
+      "deckReuse": "no exact full-English deck body row; do not fuzzy match or add a deck change"
+    }
+  ],
+  "unchangedRows": [
+    {
+      "language": "ve",
+      "fieldPath": "quiz.0.options.0",
+      "sourceEnglish": "An improvised stronger mixture",
+      "target": "An improvised stronger mixture",
+      "reason": "Unchanged English incorrect-answer option; intentionally unchanged."
+    },
+    {
+      "language": "ts",
+      "fieldPath": "quiz.0.options.0",
+      "sourceEnglish": "An improvised stronger mixture",
+      "target": "An improvised stronger mixture",
+      "reason": "Unchanged English incorrect-answer option; intentionally unchanged."
+    }
+  ]
+}

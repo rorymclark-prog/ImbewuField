@@ -1,0 +1,23 @@
+{
+  "key": "peppers",
+  "varieties": [
+    {
+      "name": "California Wonder",
+      "zones": [],
+      "maturity": "medium",
+      "season": "Spring & Summer",
+      "traits": "Sweet-tasting blocky fruit, green ripening to red; full sunlight",
+      "type": "OP",
+      "note": "The classic, widely-sold, open-pollinated (seed-saveable) bell/sweet pepper in South Africa — a genuine addition since crop-catalog.ts had no prior varieties array for peppers. Directly fetched and confirmed by name, unlike most other Starke Ayres pages checked in this task which returned only a JS-rendered shell.",
+      "evidence": [{ "quote": "California Wonder This vegetable seed produces sweet-tasting blocky fruit turning from green to red when mature. Planting Season Spring & Summer Location Full Sunlight Germination 10 - 14 Days Maturity 75 - 80 Days", "url": "https://www.starkeayres.com/products/home-gardening-seed/general/pepper-california-wonder", "page": null, "doc": "California Wonder, Starke Ayres product page (fetched directly, verbatim — page content, not just the nav shell, was recovered on this attempt)" }]
+    }
+  ],
+  "zoneAdvice": {},
+  "gaps": [
+    "Only one variety was found and independently verified with a direct source in this pass. Sakata's own site navigation (seen while fetching other pages) also lists a 'Sweet Pepper Jupiter' line under Starke Ayres' Superfoods range, but this was not individually opened/quoted in this pass — listed only as a lead for a follow-up.",
+    "No zone-by-zone recommendation was found for pepper varieties: Starke Ayres' own 'Sweet & Hot Peppers Production Guideline' (fetched and read in full, https://www.starkeayres.com/uploads/files/Sweet-Hot-Peppers-Production-Guideline.pdf — via the internal filename swtpepper_guide.pdf) is generic agronomy covering both sweet and hot Capsicum types together and names NO specific cultivars at all, matching the pattern already found for butternut and pumpkin.",
+    "Sakata's category pages for peppers and chillies (guessed URLs) both returned 404, so no Sakata pepper product could be directly checked in this pass.",
+    "No ARC or DAFF/DALRRD pepper cultivar guide was found or opened.",
+    "crop-catalog.ts's own note that 'the timing, yield and spacing basis is sweet pepper' (KZN DARD Table 6, Capsicum row) was not independently re-verified in this pass — carried over as the catalog's existing basis."
+  ]
+}

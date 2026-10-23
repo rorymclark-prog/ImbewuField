@@ -1,0 +1,199 @@
+{
+  "packetId": "imbewu-ts-reading-l2-l4-assessment-next-20261002",
+  "date": "2026-10-02",
+  "status": "implemented unreviewed source-paired regional draft; publication gates pending",
+  "language": "standard written Xitsonga (ts), provisional for Shangani speakers",
+  "sourceRevision": "4896d38be5716fc9a4ee7b43566b0f60f182394d",
+  "canonicalSource": "lib/course-modules.ts",
+  "regionalRegistry": "lib/course-translation-drafts-ts.ts — XITSONGA_READING_LANDSCAPE_DRAFT",
+  "scope": {
+    "lessonIds": [
+      "reading-landscape-l2",
+      "reading-landscape-l3",
+      "reading-landscape-l4"
+    ],
+    "fields": [
+      "quiz[0].rationale",
+      "quiz[1].rationale",
+      "quiz[0].rationale",
+      "quiz[1].question",
+      "quiz[1].options[0]",
+      "quiz[1].rationale",
+      "quiz[0].rationale",
+      "quiz[1].rationale"
+    ],
+    "canonicalEnglishChanged": false,
+    "questionOrderChanged": false,
+    "answerIndexesChanged": false,
+    "repositoryEdits": true
+  },
+  "entries": [
+    {
+      "lessonId": "reading-landscape-l2",
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "Cold air can collect in low places. A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.",
+      "currentRegionalDraft": "Cold air can collect in low places. A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.",
+      "candidateRegionalDraft": "Moya wo titimela wu nga hlengeletana eka tindhawu ta le hansi. A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Cold air can collect in low places. A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.",
+      "uncertainty": "Translate only the ordinary cold-air observation. Keep the possible-risk-reduction wording, known frost pocket, and requirement that local frost observations guide the final position exact; do not imply a frost-free guarantee.",
+      "sourceQuestion": "Where should a farmer first look for a frost-tender young pawpaw on a Highveld smallholding?",
+      "sourceCorrectIndex": 2,
+      "rootReview": "Independent semantic check and root review; exact technical timing/choice/wrong-placement clauses retained after repairs. No fluent/local farming approval."
+    },
+    {
+      "lessonId": "reading-landscape-l2",
+      "field": "quiz[1].rationale",
+      "sourceEnglish": "Winter sun is lower and farther north. Shade cloth can change the hours of sun on a bed. Check the actual shadows at 8am, midday, and 4pm before fixing it in place.",
+      "currentRegionalDraft": "Winter sun is lower and farther north. Shade cloth can change the hours of sun on a bed. Check the actual shadows at 8am, midday, and 4pm before fixing it in place.",
+      "candidateRegionalDraft": "Winter sun is lower and farther north. Shade cloth can change the hours of sun on a bed. Kambela the actual shadows at 8am, midday, and 4pm before fixing it in place.",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Winter sun is lower and farther north. Shade cloth can change the hours of sun on a bed. Check the actual shadows at 8am, midday, and 4pm before fixing it in place.",
+      "uncertainty": "Only the check/before framing is localized. Preserve the sun and shade claims, the exact 8am/midday/4pm sequence, and the instruction to check before fixing it in place.",
+      "sourceQuestion": "A farmer plans shade cloth on the north side of her garden. What should she check before fixing it in place?",
+      "sourceCorrectIndex": 0,
+      "rootReview": "Independent semantic check and root review; exact technical timing/choice/wrong-placement clauses retained after repairs. No fluent/local farming approval."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "currentRegionalDraft": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "candidateRegionalDraft": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Kambela local minimum-temperature records kumbe u vutisa a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "uncertainty": "Translate only the ordinary check/or/ask/before-making-a-choice framing. Keep the clear/still-night condition, candidate sites, local frost season, records/adviser alternatives, permanence, visible-frost limitation, and no-guarantee clause exact.",
+      "sourceQuestion": "Where should a farmer first look when placing a frost-sensitive seedling nursery on a Highveld smallholding?",
+      "sourceCorrectIndex": 2,
+      "rootReview": "Independent semantic check and root review; exact technical timing/choice/wrong-placement clauses retained after repairs. No fluent/local farming approval."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[1].question",
+      "sourceEnglish": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Which bed position may help leaves dry, alongside local crop-health advice?",
+      "currentRegionalDraft": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Which bed position may help leaves dry, alongside local crop-health advice?",
+      "candidateRegionalDraft": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Hi yihi bed position leyi yi nga pfunaka leswaku matluka ma oma, alongside local crop-health advice?",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Which bed position may help leaves dry, alongside local crop-health advice?",
+      "uncertainty": "Retain the KZN/tomato/late-blight/cool-damp context exactly. Localize only the question framing and possible leaf-drying benefit; preserve “may help” rather than guarantee, and keep the local crop-health-advice context.",
+      "sourceQuestion": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Which bed position may help leaves dry, alongside local crop-health advice?",
+      "sourceCorrectIndex": 1,
+      "rootReview": "Independent semantic check and root review; exact technical timing/choice/wrong-placement clauses retained after repairs. No fluent/local farming approval."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[1].options[0]",
+      "sourceEnglish": "A sealed, unventilated tunnel",
+      "currentRegionalDraft": "A sealed, unventilated tunnel",
+      "candidateRegionalDraft": "A sealed, unventilated tunnel",
+      "candidateStatus": "hold",
+      "backTranslation": "A sealed, unventilated tunnel.",
+      "uncertainty": "Keep the technical distractor exactly English; do not weaken sealed/unventilated wording.",
+      "sourceQuestion": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Which bed position may help leaves dry, alongside local crop-health advice?",
+      "sourceCorrectIndex": 1,
+      "rootReview": "Independent semantic check and root review; exact technical timing/choice/wrong-placement clauses retained after repairs. No fluent/local farming approval."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[1].rationale",
+      "sourceEnglish": "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+      "currentRegionalDraft": "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+      "candidateRegionalDraft": "Airflow and morning sun swi nga pfuna leswaku matluka ma oma. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+      "uncertainty": "Translate only the qualified can-help drying benefit while retaining airflow and morning sun as technical phrases. Keep prolonged cool/damp spread conditions and the limitation that moving the bed alone is not a complete control plan exact.",
+      "sourceQuestion": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Which bed position may help leaves dry, alongside local crop-health advice?",
+      "sourceCorrectIndex": 1,
+      "rootReview": "Independent semantic check and root review; exact technical timing/choice/wrong-placement clauses retained after repairs. No fluent/local farming approval."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction. Observe and check the soil before deciding what the patch means for your design.",
+      "currentRegionalDraft": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction. Observe and check the soil before deciding what the patch means for your design.",
+      "candidateRegionalDraft": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction. Xiya u tlhela u kambela misava u nga se teka xiboho hi leswi ndhawu yoleyo yi vulaka swona eka design ya wena.",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction. Observe and check the soil before deciding what that patch means for your design.",
+      "uncertainty": "Keep the species name, disturbed-ground condition, and non-diagnosis of compaction exact. Translate only observe/check/before deciding framing; do not turn the plant into a diagnosis.",
+      "sourceQuestion": "You notice thick blackjack growing in one corner every year. What should you do next?",
+      "sourceCorrectIndex": 2,
+      "rootReview": "Independent semantic check and root review; exact technical timing/choice/wrong-placement clauses retained after repairs. No fluent/local farming approval."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "quiz[1].rationale",
+      "sourceEnglish": "Seasonal wind shifts mean a windbreak or crop placement that works for one season can be wrong for the other — so both need marking separately.",
+      "currentRegionalDraft": "Seasonal wind shifts mean a windbreak or crop placement that works for one season can be wrong for the other — so both need marking separately.",
+      "candidateRegionalDraft": "Seasonal wind shifts mean a windbreak or crop placement that works for one season can be wrong for the other — kutani fungha moya wa ximumu na wa vuxika hi ku hambana.",
+      "candidateStatus": "machine-draft",
+      "backTranslation": "Seasonal wind shifts mean a windbreak or crop placement that works for one season can be wrong for the other — so mark summer and winter wind separately.",
+      "uncertainty": "Keep windbreak/crop placement technical terms in English. Preserve that one season’s placement may be wrong for the other (not that it always fails); the final instruction explicitly refers to marking summer and winter wind separately.",
+      "sourceQuestion": "Why mark summer and winter wind separately on your site map?",
+      "sourceCorrectIndex": 1,
+      "rootReview": "Independent semantic check and root review; exact technical timing/choice/wrong-placement clauses retained after repairs. No fluent/local farming approval."
+    }
+  ],
+  "sourceCorrectIndexes": {
+    "reading-landscape-l2": [
+      2,
+      0
+    ],
+    "reading-landscape-l3": [
+      2,
+      1
+    ],
+    "reading-landscape-l4": [
+      2,
+      1
+    ]
+  },
+  "preservedConditions": [
+    "All option ordering and correct-answer indexes remain source values.",
+    "Frost risk remains possible rather than guaranteed; local frost observations guide final placement.",
+    "Winter shade checks retain 8am, midday, and 4pm and occur before fixing shade cloth in place.",
+    "Nursery rationale retains clear/still-night conditions, local frost-season comparison, records-or-adviser choice, permanent-choice timing, visible-frost limitation, and no-hillside-guarantee.",
+    "Late-blight question retains KZN/tomato/disease/cool-damp framing, may-help modality, local crop-health advice, prolonged cool-damp spread condition, and no-control-alone warning.",
+    "Blackjack remains a named species; disturbed-ground presence alone does not diagnose compaction.",
+    "Seasonal wind rationale retains may/wrong-next-season modality and only instructs marking summer/winter wind separately; no placement advice added.",
+    "No new species, numbers, positions, measurements, timing, or agronomic advice added."
+  ],
+  "reviewNote": "Independent semantic and exact-source/index checks completed; root retained awkward before-fixing/permanent-choice phrases and the can-be-wrong clause exact English. Machine drafts remain unreviewed by fluent/local farming reviewers.",
+  "implementation": {
+    "baseRevision": "4896d38be5716fc9a4ee7b43566b0f60f182394d",
+    "implementedFields": [
+      {
+        "lessonId": "reading-landscape-l2",
+        "field": "quiz[0].rationale"
+      },
+      {
+        "lessonId": "reading-landscape-l2",
+        "field": "quiz[1].rationale"
+      },
+      {
+        "lessonId": "reading-landscape-l3",
+        "field": "quiz[0].rationale"
+      },
+      {
+        "lessonId": "reading-landscape-l3",
+        "field": "quiz[1].question"
+      },
+      {
+        "lessonId": "reading-landscape-l3",
+        "field": "quiz[1].rationale"
+      },
+      {
+        "lessonId": "reading-landscape-l4",
+        "field": "quiz[0].rationale"
+      },
+      {
+        "lessonId": "reading-landscape-l4",
+        "field": "quiz[1].rationale"
+      }
+    ],
+    "registryPath": "lib/course-translation-drafts-ts.ts",
+    "canonicalEnglishChanged": false,
+    "mediaChanged": false,
+    "fluentOrLocalFarmingApproval": false,
+    "note": "Current-registry values above record the pre-implementation baseline; exact source pairs are retained in learner registry. Remaining hold entries were not changed."
+  }
+}

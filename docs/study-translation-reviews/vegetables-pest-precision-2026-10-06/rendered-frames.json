@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-06",
+  "module": "vegetables-staples",
+  "slides": [
+    15,
+    16
+  ],
+  "reviewStatus": "unreviewed-machine-draft",
+  "humanLanguageReview": false,
+  "localFarmingReview": false,
+  "renderer": "scripts/make-lesson-slides.mjs --paired-draft --slides 15,16; Pillow WebP quality 88 method 6",
+  "frames": [
+    {
+      "language": "st",
+      "slide": 15,
+      "path": "public/course-decks/vegetables-staples/st/slide-15.webp",
+      "pixels": "1440x5400",
+      "bytes": 573684,
+      "sha256": "c6e362ef53e745a398e43cb2eb5bcee15d67881d4bbbcc3c00520f28304336c2",
+      "webp": "quality=88,method=6",
+      "phoneSample": "/tmp/vegetables-pest-precision-qa-20261006/st-slide-15-390.jpg"
+    },
+    {
+      "language": "st",
+      "slide": 16,
+      "path": "public/course-decks/vegetables-staples/st/slide-16.webp",
+      "pixels": "1440x5576",
+      "bytes": 571682,
+      "sha256": "47b7d410aca5a2f8a6959400f3213e01c0343d16192e226f0982cb0900c34f31",
+      "webp": "quality=88,method=6",
+      "phoneSample": "/tmp/vegetables-pest-precision-qa-20261006/st-slide-16-390.jpg"
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "path": "public/course-decks/vegetables-staples/ve/slide-15.webp",
+      "pixels": "1440x5400",
+      "bytes": 575078,
+      "sha256": "5cf7c3592a00404a553df7f11914e511a71fd953e36e0d41582b6f50d7109c1e",
+      "webp": "quality=88,method=6",
+      "phoneSample": "/tmp/vegetables-pest-precision-qa-20261006/ve-slide-15-390.jpg"
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "path": "public/course-decks/vegetables-staples/ve/slide-16.webp",
+      "pixels": "1440x5734",
+      "bytes": 568224,
+      "sha256": "aec14eeca9001a9ff0b3cb830796d3413181b6866c89f6522dc4da7640df2b7c",
+      "webp": "quality=88,method=6",
+      "phoneSample": "/tmp/vegetables-pest-precision-qa-20261006/ve-slide-16-390.jpg"
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "path": "public/course-decks/vegetables-staples/ts/slide-15.webp",
+      "pixels": "1440x5400",
+      "bytes": 577910,
+      "sha256": "73b347d2b33a78a6e3444a13f44ab1e91403e1cb61028cdd6bbbf17228e45ca3",
+      "webp": "quality=88,method=6",
+      "phoneSample": "/tmp/vegetables-pest-precision-qa-20261006/ts-slide-15-390.jpg"
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "path": "public/course-decks/vegetables-staples/ts/slide-16.webp",
+      "pixels": "1440x5642",
+      "bytes": 564290,
+      "sha256": "d8b7172f2f8fca16c3e8e5bf66f5d6d1b9dee72955aead8035c9c8933a428496",
+      "webp": "quality=88,method=6",
+      "phoneSample": "/tmp/vegetables-pest-precision-qa-20261006/ts-slide-16-390.jpg"
+    }
+  ],
+  "contactSheet": "/tmp/vegetables-pest-precision-qa-20261006/six-frame-contact.jpg"
+}

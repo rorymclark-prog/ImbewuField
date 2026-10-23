@@ -1,12 +1,16 @@
 // Auto-split from the former monolithic lib/i18n.tsx (bundle diet, task #6) — mechanical
 // extraction of this locale's existing key/value pairs, no translated text touched. Loaded
 // on demand via loadLocale() in lib/i18n.tsx, not bundled into every page's initial JS.
-import { DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
+import { CHAT_PANEL_ENGLISH_PENDING, DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, NETWORK_FAILURE_ENGLISH_PENDING, PHOTO_UPLOAD_ENGLISH_PENDING, PROFILE_SHEET_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
 
 const dict: Dict = {
   ...DESIGN_STUDIO_ENGLISH_PENDING,
   ...JOURNAL_ENGLISH_PENDING,
   ...LIMA_ENGLISH_PENDING,
+  ...CHAT_PANEL_ENGLISH_PENDING,
+  ...PHOTO_UPLOAD_ENGLISH_PENDING,
+  ...PROFILE_SHEET_ENGLISH_PENDING,
+  ...NETWORK_FAILURE_ENGLISH_PENDING,
   ...MENTOR_ENGLISH_PENDING,
   tagline: 'Permakultuur-Intelligensie',
   welcomeTitle: 'Welkom by ImbewuField',
@@ -20,7 +24,6 @@ const dict: Dict = {
   language: 'Taal',
   tabHome: 'Tuis',
   tabMap: 'Kaart',
-  tabFinance: 'Finansies',
   tabAccount: 'Rekening',
   toolbarMinButton: 'Vind jou grond',
   toolbarHeader: 'Vind jou grond',
@@ -105,7 +108,7 @@ const dict: Dict = {
   drawGpsButton: 'GPS',
   drawGpsTitle: "Staan op 'n hoek van jou grond en tik om dit hier neer te sit",
   drawAddCornerButton: 'Voeg hoek by',
-  drawFinishButton: 'Voltooi',
+  drawFinishButton: 'Klaar',
   waterDropHint: 'Skuif na die plek en tik dan Sit hier neer',
   waterDropCancelButton: 'Kanselleer',
   waterDropPlaceButton: 'Sit hier neer',
@@ -231,7 +234,7 @@ const dict: Dict = {
   organicCarbonOk: 'Aanvaarbaar',
   statBulkDensity: 'Bulkdigtheid',
   bulkDensityCompacted: 'Verdig',
-  bulkDensityOk: 'Reg',
+  bulkDensityOk: 'Verstaan',
   textureCompositionHeader: 'Tekstuursamestelling',
   textureSand: 'Sand',
   textureSilt: 'Slik',
@@ -622,8 +625,6 @@ const dict: Dict = {
   homeSurveyNew: 'Opname van nuwe terrein',
   homeSurveyDesc: 'Plaas \'n speld en Lima sal die klimaat, grond en water lees.',
   homeOpenMap: 'Maak die kaart oop',
-  homeQuickFinance: 'Finansies',
-  homeQuickFinanceDesc: 'Inkomste en kostes',
   homeQuickStudy: 'Studie',
   homeQuickStudyDesc: 'Permakulturkursus',
   homeQuickContact: 'Kontak',
@@ -660,11 +661,10 @@ const dict: Dict = {
   navTaskPlanner: 'Taakbeplanner',
   navGardenSurvey: 'Tuinopname',
   navNGODashboard: 'NRO-paneelbord',
-  navFacilitator: 'Ontwerp',
   navMyAccount: 'My rekening',
   navCloseMenu: 'Sluit kieslys',
   myRecordsTitle: 'My Rekords',
-  myRecordsSubtitle: 'Wat jy kweek · wat jy verkoop · ontwerpe van jou toesighouer',
+  myRecordsSubtitle: 'Wat jy kweek · wat jy verkoop · ontwerpe van jou mentor',
   myRecordsSignInTitle: 'Teken in om jou eie rekords te hou',
   myRecordsSignInBody: 'Spoor wat jy kweek en verkoop na — jou data bly by jou.',
   myRecordsSignInButton: 'Gaan na intekening',

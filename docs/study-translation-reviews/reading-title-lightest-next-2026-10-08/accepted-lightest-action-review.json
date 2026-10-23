@@ -1,0 +1,144 @@
+{
+  "date": "2026-10-08",
+  "reviewedHead": "81174107268ec951ac3b1deb8dd57a3b36268d43",
+  "language": "st",
+  "module": "vegetables-staples",
+  "lesson": "vegetables-staples-l4",
+  "sourceKey": "Only then, act — and start with the lightest thing that works.",
+  "status": "semantic candidate reconciled; source-bound machine wording only; not fluent or local-farming approval",
+  "canonicalSource": {
+    "path": "docs/narration/vegetables-staples.en.md",
+    "sentence": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+    "meaningConstraint": "Choose the least intensive intervention that is effective. It is not an instruction to choose the easiest action regardless of impact or effectiveness."
+  },
+  "currentLearnerBinding": {
+    "path": "lib/course-translation-drafts-st-vegetables-staples.ts",
+    "lesson": "vegetables-staples-l4",
+    "field": "body.sourceEnglish / body.sesothoDraft; fourth-step paragraph",
+    "sourceParagraph": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+    "currentTargetParagraph": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — qala ka the lightest thing that works. Physical removal, barriers kapa diphetoho tlhokomelong ya dijalo di ka thusa. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong.",
+    "replaceOnly": "the lightest thing that works.",
+    "preservePrefix": "Ke ka morao feela moo o nkang kgato — qala ka",
+    "preserveFollowingContent": "Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result; all following product registration, label, protection, harvest-waiting, mixture and dose cautions."
+  },
+  "currentPairedRuntimeBinding": {
+    "resolver": "lib/course-deck.ts slideImageUrl(moduleId, lang, slide)",
+    "module": "vegetables-staples",
+    "language": "st",
+    "slide": 16,
+    "imageUrl": "/course-decks/vegetables-staples/st/slide-16.webp",
+    "imageFile": "public/course-decks/vegetables-staples/st/slide-16.webp",
+    "pairedTextFile": "docs/narration/vegetables-staples.st.paired-draft.json",
+    "pairedField": "slides[15].target.body[4].segments[2]",
+    "currentPairedStatus": "english-hold",
+    "exactSourceSegment": "the lightest thing that works.",
+    "nextSourceSegment": " Physical removal",
+    "releaseRegistryFinding": "No ST Vegetables silent release-text row was found in lib/course-deck-release-bindings-data.ts; the standard ST slide image path is the deck image binding. The paired JSON is source-paired review evidence, not a separate release text binding. No image was rendered or inspected for this follow-up."
+  },
+  "candidate": {
+    "sourceSpan": "the lightest thing that works.",
+    "recommendedSesotho": "ketso e bobebe ka ho fetisisa e sebetsang.",
+    "backTranslation": "the lightest effective action",
+    "whyThisResolvesTheConflict": "bobebe is the lexical choice supported for light in the sense ‘not heavy’; bonolo is glossed as easy/soft and can shift the instruction toward ease. The phrase explicitly retains effectiveness through e sebetsang. In this pest-management sequence, bobebe is the more defensible source-bound ordinary wording for least intensive while preserving ‘works’.",
+    "scope": "Replace only the English predicate following the existing ‘Only then, act — and start with’ prefix. Do not translate the following methods list as part of this replacement and do not alter the safety cautions.",
+    "pairedBeforeSegments": [
+      {
+        "source": "Four.",
+        "target": "Ntlha ya bone."
+      },
+      {
+        "source": " Only then, act — and start with ",
+        "target": " Ke ka morao feela moo o nkang kgato — qala ka "
+      },
+      {
+        "source": "the lightest thing that works.",
+        "target": "english-hold"
+      },
+      {
+        "source": " Physical removal",
+        "target": "english-hold"
+      },
+      {
+        "source": ", barriers",
+        "target": ", mekoallo"
+      },
+      {
+        "source": " or changes in ",
+        "target": " kapa diphetoho "
+      },
+      {
+        "source": "crop care",
+        "target": "tlhokomelong ya dijalo"
+      },
+      {
+        "source": " may help.",
+        "target": " di ka thusa."
+      },
+      {
+        "source": " Check that the action suits the problem and monitor the result.",
+        "target": " Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong."
+      }
+    ],
+    "pairedAfterSegments": [
+      {
+        "source": "Four.",
+        "target": "Ntlha ya bone. (preserve)"
+      },
+      {
+        "source": " Only then, act — and start with ",
+        "target": " Ke ka morao feela moo o nkang kgato — qala ka  (preserve)"
+      },
+      {
+        "source": "the lightest thing that works.",
+        "target": "ketso e bobebe ka ho fetisisa e sebetsang."
+      },
+      {
+        "source": " Physical removal",
+        "target": "english-hold (preserve)"
+      },
+      {
+        "source": ", barriers",
+        "target": ", mekoallo (preserve)"
+      },
+      {
+        "source": " or changes in ",
+        "target": " kapa diphetoho  (preserve)"
+      },
+      {
+        "source": "crop care",
+        "target": "tlhokomelong ya dijalo (preserve)"
+      },
+      {
+        "source": " may help.",
+        "target": " di ka thusa. (preserve)"
+      },
+      {
+        "source": " Check that the action suits the problem and monitor the result.",
+        "target": " Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong. (preserve)"
+      }
+    ]
+  },
+  "priorDecisionReconciliation": {
+    "priorFile": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/imbewu-core-remaining-ordinary-independent-check-20261007.json",
+    "findingId": "VS-ST-LIGHTEST-ACTION-01",
+    "semanticVerdict": "ACCEPT",
+    "priorProposedTarget": "ketso e bobebe ka ho fetisisa e sebetsang.",
+    "conflictingCompositionProofTarget": "ketso e bonolo ka ho fetisisa e sebetsang.",
+    "resolution": "Keep the semantic ACCEPT and reconcile its internal wording inconsistency in favor of bobebe. The cited glossary evidence distinguishes bobebe as light (not heavy) and bonolo as easy/soft, aligning bobebe more closely with the source contrast. This chooses the source-bound text string; it does not certify local idiom or fluency."
+  },
+  "lexicalEvidence": {
+    "source": "A Beginner's Tutorial in Sesotho for Peace Corps Volunteers, SESOTHO–ENGLISH glossary.",
+    "url": "https://theswissbay.ch/pdf/Books/Linguistics/Mega%20linguistics%20pack/African/Niger-Congo/Bantu/Sotho;%20A%20Beginner's%20Tutorial%20in%20Sesotho%20for%20Peace%20Corps%20Volunteers%20(Hoag).pdf",
+    "glossaryEntries": "Glossary entries distinguish bobebe as ‘light (i.e. not heavy)’/‘lightness’ from bonolo as ‘easy’/‘soft’/‘smart’ (PDF text lines 3905–3932; printed glossary pages 129–130).",
+    "limit": "This lexical evidence supports choosing bobebe over bonolo for the source contrast but does not prove the whole phrase is idiomatic to Sesotho-speaking farmers. A fluent/local review remains necessary before any approval."
+  },
+  "rootLexicalReview": {
+    "sourceOpened": "https://www.livelingua.com/peace-corps/Sesotho/Peace%20Corps-%20A%20Beginner%27s%20Tutorial%20in%20Sesotho.pdf",
+    "sourceType": "Peace Corps authored tutorial hosted by LiveLingua",
+    "pdfPageZeroBased": 135,
+    "printedPage": 129,
+    "evidence": "Glossary distinguishes bobebe (light, not heavy) from bonolo (easy, soft). Adjective explanation page72 also distinguishes these meanings.",
+    "decision": "Internal transcription conflict resolved in favor of the prior semantically accepted bobebe candidate. Source-bound metaphor remains visibly unreviewed; no fluent or farming approval. Not applied to learner or rendered deck.",
+    "limit": "Lexical evidence does not independently establish local idiomatic use for least intensive intervention."
+  }
+}

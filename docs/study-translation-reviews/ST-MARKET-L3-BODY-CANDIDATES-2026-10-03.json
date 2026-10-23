@@ -1,0 +1,277 @@
+{
+  "packetId": "IMBEWU-ST-MARKET-L3-BODY-NEXT-CANDIDATES-2026-10-03",
+  "sourceRevision": "18734826c631798ebbec7c0f3f37ea2f9ab6a386",
+  "languageCode": "st",
+  "languageName": "Sesotho",
+  "lessonId": "market-community-l3",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-st-market-community.ts",
+  "fieldPath": "body.sesothoDraft",
+  "reviewStatus": "unreviewed-machine-draft-for-facilitator-review",
+  "provenance": "Read-only candidate draft sourced from the live Market Community L3 canonical body and current Sesotho registry. No source, lesson, quiz, or media fields changed. Verified against the live canonical and registry at 18734826c631798ebbec7c0f3f37ea2f9ab6a386. Candidate remains an unreviewed machine draft for facilitator review.",
+  "sourceParagraphCount": 12,
+  "sourceEnglishBody": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+  "currentRegionalBody": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nHo arolelana lisebelisoa ho etsa hore sehlopha se khone ho sebelisa lisebelisoa tse turang.\n\nPompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.\n\nHo sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+  "candidateBody": "Baahisani ba ka arolelana mefuta e fapaneng ya dijalo le mosebetsi wa ho boloka peo.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nHo arolelana lisebelisoa ho etsa hore sehlopha se khone ho sebelisa lisebelisoa tse turang.\n\nPompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.\n\nHo sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.\n\nTshwarang dihlahiswa ka bonolo, mme le boloke suitable shade, packaging and storage through delivery.\n\nMoreki wa haufi a ka fokotsa leeto, empa losses le selling costs di sa ntse di lokela ho lekanngwa.\n\nBapisa money received after fees, transport and spoilage bakeng sa kgetho ka nngwe. O se ke wa nka hore moreki ya haufi ka ho fetisisa kamehla o fana ka best return.\n\nBaahisani ba ka bontsha bokgoni bo molemo mme ba bapisa se etsahetseng mapolasing a bona.\n\nNgolang method, conditions le result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+  "exactSourceParagraphs": [
+    "Neighbours can share different varieties and the work of saving seed.",
+    "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+    "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+    "Tool sharing puts expensive equipment within reach of the group.",
+    "A water pump or grain mill may be beyond one household’s budget.",
+    "Shared use spreads the value across the group and helps each farm do work it could not do alone.",
+    "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+    "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+    "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.",
+    "Neighbours can demonstrate useful skills and compare what happened on their own farms.",
+    "Record the method, conditions and result so others can judge whether it may suit their land.",
+    "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together."
+  ],
+  "currentRegistryParagraphs": [
+    "Neighbours can share different varieties and the work of saving seed.",
+    "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+    "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+    "Ho arolelana lisebelisoa ho etsa hore sehlopha se khone ho sebelisa lisebelisoa tse turang.",
+    "Pompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.",
+    "Ho sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.",
+    "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+    "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+    "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.",
+    "Neighbours can demonstrate useful skills and compare what happened on their own farms.",
+    "Record the method, conditions and result so others can judge whether it may suit their land.",
+    "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together."
+  ],
+  "candidateParagraphs": [
+    "Baahisani ba ka arolelana mefuta e fapaneng ya dijalo le mosebetsi wa ho boloka peo.",
+    "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+    "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+    "Ho arolelana lisebelisoa ho etsa hore sehlopha se khone ho sebelisa lisebelisoa tse turang.",
+    "Pompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.",
+    "Ho sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.",
+    "Tshwarang dihlahiswa ka bonolo, mme le boloke suitable shade, packaging and storage through delivery.",
+    "Moreki wa haufi a ka fokotsa leeto, empa losses le selling costs di sa ntse di lokela ho lekanngwa.",
+    "Bapisa money received after fees, transport and spoilage bakeng sa kgetho ka nngwe. O se ke wa nka hore moreki ya haufi ka ho fetisisa kamehla o fana ka best return.",
+    "Baahisani ba ka bontsha bokgoni bo molemo mme ba bapisa se etsahetseng mapolasing a bona.",
+    "Ngolang method, conditions le result so others can judge whether it may suit their land.",
+    "Seek qualified advice for unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho."
+  ],
+  "initialState": [
+    {
+      "paragraphIndex": 0,
+      "state": "exact-English-hold",
+      "source": "Neighbours can share different varieties and the work of saving seed.",
+      "currentRegional": "Neighbours can share different varieties and the work of saving seed.",
+      "candidate": "Baahisani ba ka arolelana mefuta e fapaneng ya dijalo le mosebetsi wa ho boloka peo.",
+      "preservedExistingRegionalText": false
+    },
+    {
+      "paragraphIndex": 1,
+      "state": "exact-English-hold",
+      "source": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+      "currentRegional": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+      "candidate": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+      "preservedExistingRegionalText": false
+    },
+    {
+      "paragraphIndex": 2,
+      "state": "exact-English-hold",
+      "source": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "currentRegional": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "candidate": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "preservedExistingRegionalText": false
+    },
+    {
+      "paragraphIndex": 3,
+      "state": "existing-localized-or-mixed",
+      "source": "Tool sharing puts expensive equipment within reach of the group.",
+      "currentRegional": "Ho arolelana lisebelisoa ho etsa hore sehlopha se khone ho sebelisa lisebelisoa tse turang.",
+      "candidate": "Ho arolelana lisebelisoa ho etsa hore sehlopha se khone ho sebelisa lisebelisoa tse turang.",
+      "preservedExistingRegionalText": true
+    },
+    {
+      "paragraphIndex": 4,
+      "state": "existing-localized-or-mixed",
+      "source": "A water pump or grain mill may be beyond one household’s budget.",
+      "currentRegional": "Pompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.",
+      "candidate": "Pompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.",
+      "preservedExistingRegionalText": true
+    },
+    {
+      "paragraphIndex": 5,
+      "state": "existing-localized-or-mixed",
+      "source": "Shared use spreads the value across the group and helps each farm do work it could not do alone.",
+      "currentRegional": "Ho sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.",
+      "candidate": "Ho sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.",
+      "preservedExistingRegionalText": true
+    },
+    {
+      "paragraphIndex": 6,
+      "state": "exact-English-hold",
+      "source": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+      "currentRegional": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+      "candidate": "Tshwarang dihlahiswa ka bonolo, mme le boloke suitable shade, packaging and storage through delivery.",
+      "preservedExistingRegionalText": false
+    },
+    {
+      "paragraphIndex": 7,
+      "state": "exact-English-hold",
+      "source": "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+      "currentRegional": "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+      "candidate": "Moreki wa haufi a ka fokotsa leeto, empa losses le selling costs di sa ntse di lokela ho lekanngwa.",
+      "preservedExistingRegionalText": false
+    },
+    {
+      "paragraphIndex": 8,
+      "state": "exact-English-hold",
+      "source": "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.",
+      "currentRegional": "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.",
+      "candidate": "Bapisa money received after fees, transport and spoilage bakeng sa kgetho ka nngwe. O se ke wa nka hore moreki ya haufi ka ho fetisisa kamehla o fana ka best return.",
+      "preservedExistingRegionalText": false
+    },
+    {
+      "paragraphIndex": 9,
+      "state": "exact-English-hold",
+      "source": "Neighbours can demonstrate useful skills and compare what happened on their own farms.",
+      "currentRegional": "Neighbours can demonstrate useful skills and compare what happened on their own farms.",
+      "candidate": "Baahisani ba ka bontsha bokgoni bo molemo mme ba bapisa se etsahetseng mapolasing a bona.",
+      "preservedExistingRegionalText": false
+    },
+    {
+      "paragraphIndex": 10,
+      "state": "exact-English-hold",
+      "source": "Record the method, conditions and result so others can judge whether it may suit their land.",
+      "currentRegional": "Record the method, conditions and result so others can judge whether it may suit their land.",
+      "candidate": "Ngolang method, conditions le result so others can judge whether it may suit their land.",
+      "preservedExistingRegionalText": false
+    },
+    {
+      "paragraphIndex": 11,
+      "state": "exact-English-hold",
+      "source": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "currentRegional": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "candidate": "Seek qualified advice for unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+      "preservedExistingRegionalText": false
+    }
+  ],
+  "changedParagraphIndices": [
+    0,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "preservedParagraphIndices": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "preservedExistingLocalizedParagraphIndices": [
+    3,
+    4,
+    5
+  ],
+  "exactEnglishTechnicalHolds": [
+    1,
+    2
+  ],
+  "partialEnglishSafetyHold": {
+    "paragraphIndex": 11,
+    "exactSentence": "Seek qualified advice for unfamiliar disease or technical problems.",
+    "reason": "qualified advice for unfamiliar disease or technical problems is retained exactly"
+  },
+  "entries": [
+    {
+      "paragraphIndex": 0,
+      "source": "Neighbours can share different varieties and the work of saving seed.",
+      "currentRegional": "Neighbours can share different varieties and the work of saving seed.",
+      "candidate": "Baahisani ba ka arolelana mefuta e fapaneng ya dijalo le mosebetsi wa ho boloka peo.",
+      "backTranslation": "Neighbours can share different crop varieties and the work of saving seed.",
+      "retainedEnglishTerms": [],
+      "uncertainty": "Ordinary sharing and seed-saving framing translated; Sesotho naturalness remains unreviewed."
+    },
+    {
+      "paragraphIndex": 6,
+      "source": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+      "currentRegional": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+      "candidate": "Tshwarang dihlahiswa ka bonolo, mme le boloke suitable shade, packaging and storage through delivery.",
+      "backTranslation": "Handle produce gently, and keep suitable shade, packaging and storage through delivery.",
+      "retainedEnglishTerms": [
+        "suitable shade",
+        "packaging",
+        "storage",
+        "through delivery"
+      ],
+      "uncertainty": "Preservation terms and the through-delivery condition remain exact English; verify the short Sesotho handling imperative in facilitator review."
+    },
+    {
+      "paragraphIndex": 7,
+      "source": "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+      "currentRegional": "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+      "candidate": "Moreki wa haufi a ka fokotsa leeto, empa losses le selling costs di sa ntse di lokela ho lekanngwa.",
+      "backTranslation": "A nearby buyer may reduce the journey, but losses and selling costs still need to be measured.",
+      "retainedEnglishTerms": [
+        "losses",
+        "selling costs"
+      ],
+      "uncertainty": "Losses and selling costs remain recognizable English business terms; verify the ordinary clause is idiomatic Sesotho."
+    },
+    {
+      "paragraphIndex": 8,
+      "source": "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.",
+      "currentRegional": "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.",
+      "candidate": "Bapisa money received after fees, transport and spoilage bakeng sa kgetho ka nngwe. O se ke wa nka hore moreki ya haufi ka ho fetisisa kamehla o fana ka best return.",
+      "backTranslation": "Compare money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.",
+      "retainedEnglishTerms": [
+        "money received after fees, transport and spoilage",
+        "best return"
+      ],
+      "uncertainty": "Business calculation and best-return comparison remain exact English; only compare/option framing and the negated assumption are localized. Verify this mixed construction."
+    },
+    {
+      "paragraphIndex": 9,
+      "source": "Neighbours can demonstrate useful skills and compare what happened on their own farms.",
+      "currentRegional": "Neighbours can demonstrate useful skills and compare what happened on their own farms.",
+      "candidate": "Baahisani ba ka bontsha bokgoni bo molemo mme ba bapisa se etsahetseng mapolasing a bona.",
+      "backTranslation": "Neighbours can show useful skills and compare what happened on their own farms.",
+      "retainedEnglishTerms": [],
+      "uncertainty": "Ordinary skill and experience comparison translated; no new lesson claim."
+    },
+    {
+      "paragraphIndex": 10,
+      "source": "Record the method, conditions and result so others can judge whether it may suit their land.",
+      "currentRegional": "Record the method, conditions and result so others can judge whether it may suit their land.",
+      "candidate": "Ngolang method, conditions le result so others can judge whether it may suit their land.",
+      "backTranslation": "Record the method, conditions and result so others can judge whether it may suit their land.",
+      "retainedEnglishTerms": [
+        "method",
+        "conditions",
+        "result",
+        "whether it may suit their land"
+      ],
+      "uncertainty": "Method, conditions, result and suitability judgment remain exact English; only record framing translated. Verify this mixed construction."
+    },
+    {
+      "paragraphIndex": 11,
+      "source": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "currentRegional": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "candidate": "Seek qualified advice for unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+      "backTranslation": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "retainedEnglishTerms": [
+        "Seek qualified advice for unfamiliar disease or technical problems.",
+        "specialist"
+      ],
+      "uncertainty": "Qualified-advice safety sentence is held exactly. Only the following sentence is localized; specialist remains an English technical term."
+    }
+  ],
+  "constraints": [
+    "Exact source paragraph text/order retained.",
+    "Existing localized paragraphs 3–5 retained byte-for-byte.",
+    "No quiz, title, media, species, number, or instruction added.",
+    "Business calculation, buyer comparison, seed isolation/rights, and qualified-advice clauses are held in English where meaning is technical or safety-sensitive.",
+    "Ordinary language proposals remain unreviewed; this packet does not claim fluent approval."
+  ]
+}

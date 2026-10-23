@@ -1,0 +1,27 @@
+{
+  "task": "Read-only semantic review of Xitsonga soil-health slide 18 wording",
+  "source": "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+  "current": "Cover crops, mulch na organic matter swi nga pfuna ku khoma misava yi nga susiwi ni ku yi pfuna yi hambeta yi hanya.",
+  "proposed": "Swibyariwa swo sirhelela misava (cover crops), mulch na organic matter swi nga pfuna ku khoma misava yi nga susiwi ni ku yi pfuna yi hambeta yi hanya.",
+  "proposed_change": "Only the prefix 'Cover crops,' is replaced by 'Swibyariwa swo sirhelela misava (cover crops),'; every character after that prefix is retained.",
+  "blind_backtranslation": "Plants for protecting the soil (cover crops), mulch and organic matter can help hold the soil so it is not removed, and help it continue living.",
+  "verdict": "ACCEPT WITH SCOPE NOTE",
+  "reason": "The gloss identifies cover crops as plants grown to protect soil, then keeps the English term in parentheses for recognition. It remains the first item in the existing three-part list. The existing plural agreement 'swi' still agrees with the coordinated list. 'swi nga pfuna' preserves can help, and the rest of the proposed wording is unchanged, so it does not turn a qualified benefit into a guarantee. The back-translation retains holding soil in place and helping soil life continue. This is a semantic check, not approval of fluency or full Xitsonga grammar.",
+  "repository_observation": "In the checked repo at /Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField, lib/course-translation-drafts-ts-soil-health.ts already has the prefixed gloss in l3DraftParagraphs[12], with a different remainder: 'Swibyariwa swo sirhelela misava (cover crops), mulch ni organic matter swi nga pfuna ku khoma misava endhawini ya yona ni ku yi pfuna leswaku yi ya mahlweni yi hanya.' The requested exact-current string appears in docs/narration/soil-health.ts.paired-draft.json. The prefix proposal is also present as acceptedTarget in docs/study-translation-reviews/soil-ordinary-ts-2026-10-06/root-accepted-packet.json. No repo files were edited.",
+  "alt_text_review": [
+    {
+      "source": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+      "translation_phrase_under_review": "yi tshamisa yi endla swiphemu swinharhu",
+      "verdict": "RETAIN 'settles into three layers' in English unless a reviewer can confirm a precise Xitsonga equivalent.",
+      "reason": "The source describes sediment settling into distinct layers in a jar. A literal reading of the supplied phrase can sound like it merely sits/forms three sections and may not preserve the settling process. The English phrase is technically specific; retaining it is safer than a wording that could misdescribe the physical demonstration. The sand, silt and clay names must remain attached to the three layers."
+    },
+    {
+      "source": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+      "translation_phrase_under_review": "merely opened to show inside",
+      "verdict": "RETAIN 'cut open' in English unless a reviewer can confirm a precise Xitsonga equivalent.",
+      "reason": "The diagram depicts a cutaway/cross-section exposing the heap's internal alternating layers. 'Opened' alone could suggest the heap was simply opened up and does not reliably specify the cut surface shown. Retaining 'cut open' preserves the diagram's physical depiction."
+    }
+  ],
+  "fluency_approval": false,
+  "repo_modified": false
+}

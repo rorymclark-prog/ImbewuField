@@ -77,7 +77,8 @@ export interface GardenMember {
 }
 
 export interface ProductionLog {
-  id: string; profile_id: string; garden_id: string | null; crop: string; kg: number;
+  id: string; profile_id: string; garden_id: string | null; crop: string; kg: number | null;
+  quantity?: number; unit?: import('../farm-records').RecordUnit;
   photo_url: string | null; logged_at: string; created_at: string;
 }
 
@@ -85,7 +86,8 @@ export interface SalesLog {
   /** An existing manual sale documented by invoice, whose original financial fields stay intact. */
   invoice_source_sale?: boolean;
   enterprise?: import('../area-returns').GrowingEnterprise | null;
-  id: string; profile_id: string; garden_id: string | null; crop: string; kg: number;
+  id: string; profile_id: string; garden_id: string | null; crop: string; kg: number | null;
+  quantity?: number; unit?: import('../farm-records').RecordUnit;
   amount: number; buyer: string | null; sold_at: string; created_at: string;
   /** Present when this crop-sale row was generated from a paid invoice. */
   invoice_id?: string | null;

@@ -1,0 +1,45 @@
+{
+  "title": "Reading body fuller batch preservation proof",
+  "baseHead": "68719a788e0041da32eccfbbf36ca821eadfd321",
+  "changedTargetFields": 8,
+  "excludedUnchangedRows": [
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body.paragraph[2]",
+      "reason": "Candidate equals current target; no edit made."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body.paragraph[2]",
+      "reason": "Candidate equals current target; no edit made."
+    }
+  ],
+  "files": [
+    {
+      "path": "lib/course-translation-drafts-st-reading-landscape.ts",
+      "changedParagraphs": 1,
+      "baseSha256": "c715838def50a0cea744281255f7a5c93cf7812d6e306aae86d63f1ba1ef0360",
+      "currentSha256": "77333a434341b09859625e47763242eb524882912463e1c611cc8a9b3daef44f",
+      "restoringOnlyApprovedTargetsRecreatesBase": true
+    },
+    {
+      "path": "lib/course-translation-drafts-ve-reading-landscape.ts",
+      "changedParagraphs": 4,
+      "baseSha256": "1d5ba0f9651d4cc9a82ec79857269005b02714fd5f32e2df219e30c762b96d49",
+      "currentSha256": "c0ccae7750bf548fa6846bfc56745e076806d845b0a17cad5ab49b9919ad730e",
+      "restoringOnlyApprovedTargetsRecreatesBase": true
+    },
+    {
+      "path": "lib/course-translation-drafts-ts.ts",
+      "changedParagraphs": 3,
+      "baseSha256": "d705f2726d0fa204e6c4ef4ee231d6e333a406b89dd07cc7956e1ee5cba9305d",
+      "currentSha256": "3840e780aa731695807c197eed90420be6bfc6599a0a1fe0bc5394680015e0a0",
+      "restoringOnlyApprovedTargetsRecreatesBase": true
+    }
+  ],
+  "canonicalEnglishPath": "lib/course-modules.ts",
+  "canonicalEnglishSha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+  "canonicalEnglishUnchanged": true
+}

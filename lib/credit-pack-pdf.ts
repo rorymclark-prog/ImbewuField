@@ -16,6 +16,7 @@
  */
 
 import { isSampleMode } from './sample-mode';
+import { recordQuantityLabel, recordQuantityPayload, type RecordUnit } from './farm-records';
 import { deliverFile, type FileDelivery } from './file-delivery';
 import { layoutTableColumns } from './report-pdf';
 import { formatInvoiceZar, formatQuantity } from './invoice-document';
@@ -248,11 +249,12 @@ async function buildCreditPackDocument(input: CreditPackDocumentInput, preview: 
     snapshot.push(`${months.length} month${months.length === 1 ? '' : 's'} of records, income logged in ${consistency.monthsWithIncome} of them`);
     snapshot.push(`Total income in this period: ${formatInvoiceZar(cashFlow.totalIncomeZar)} · total costs: ${formatInvoiceZar(cashFlow.totalExpensesZar)}`);
   }
+  const quantityList = (totals: Array<{ unit: RecordUnit; quantity: number }>) => totals.length ? totals.map(total => recordQuantityLabel(recordQuantityPayload(total.quantity, total.unit))).join(', ') : 'quantity not recorded';
   if (track.saleEntryCount > 0) {
-    snapshot.push(`${track.saleEntryCount} sale${track.saleEntryCount === 1 ? '' : 's'} logged, ${formatQuantity(track.totalSoldKg)} kg sold in total`);
+    snapshot.push(`${track.saleEntryCount} sale${track.saleEntryCount === 1 ? '' : 's'} logged, ${quantityList(track.soldQuantities)} sold in total`);
   }
   if (track.harvestEntryCount > 0) {
-    snapshot.push(`${track.harvestEntryCount} harvest${track.harvestEntryCount === 1 ? '' : 's'} logged, ${formatQuantity(track.totalHarvestedKg)} kg harvested in total`);
+    snapshot.push(`${track.harvestEntryCount} harvest${track.harvestEntryCount === 1 ? '' : 's'} logged, ${quantityList(track.harvestQuantities)} harvested in total`);
   }
   doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5); setInk(INK.text);
   for (const line of snapshot) {
@@ -324,19 +326,25 @@ async function buildCreditPackDocument(input: CreditPackDocumentInput, preview: 
   } else {
     paragraph(
       `${track.harvestEntryCount} harvest${track.harvestEntryCount === 1 ? '' : 's'} logged, `
-      + `${formatQuantity(track.totalHarvestedKg)} kg in total, from ${dateLabel(track.firstHarvestIso)} to ${dateLabel(track.lastHarvestIso)}.`,
+      + `${quantityList(track.harvestQuantities)} in total, from ${dateLabel(track.firstHarvestIso)} to ${dateLabel(track.lastHarvestIso)}.`,
       10, 14, INK.text,
     );
   }
   if (!hasSalesHistory(track)) {
-    emptyNote('No crop sales with recorded kilograms have been logged yet.');
+    emptyNote('No produce sales have been logged yet.');
   } else {
     paragraph(
       `${track.saleEntryCount} sale${track.saleEntryCount === 1 ? '' : 's'} logged, `
-      + `${formatQuantity(track.totalSoldKg)} kg sold for ${formatInvoiceZar(track.totalRevenueZar)} in total, `
+      + `${quantityList(track.soldQuantities)} sold for ${formatInvoiceZar(track.totalRevenueZar)} in total, `
       + `from ${dateLabel(track.firstSaleIso)} to ${dateLabel(track.lastSaleIso)}.`,
       10, 14, INK.text,
     );
+  }
+  if (track.countedProduce.length > 0) {
+    paragraph('Counts and packages retain their recorded units. Their weight is unknown; they are separate from the kilogram table.', 10, 14, INK.text);
+    drawTable(['Produce', 'Harvested', 'Sold', 'Revenue'], track.countedProduce.map(row => [
+      row.crop, row.harvested.length ? quantityList(row.harvested) : 'Not recorded', row.sold.length ? quantityList(row.sold) : 'Not recorded', formatInvoiceZar(row.revenueZar),
+    ]), new Set([1, 2, 3]));
   }
   if (track.topCrops.length > 0) {
     y += 4;

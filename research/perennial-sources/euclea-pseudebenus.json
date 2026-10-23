@@ -1,0 +1,83 @@
+{
+  "speciesId": "euclea-pseudebenus",
+  "commonName": "Gariep ebony / ebbehout",
+  "botanicalName": "Euclea pseudebenus",
+  "harvestMonths": [
+    {
+      "region": "Arid western South Africa / Namibia — SANBI species reference",
+      "months": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "evidence": {
+        "url": "https://pza.sanbi.org/euclea-pseudebenus",
+        "doc": "SANBI PlantZAfrica: Euclea pseudebenus",
+        "page": null,
+        "quote": "around February to May"
+      },
+      "notes": "Ripe-fruit interval, not flowering dates or a forecast for a humid eastern site."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": "separate-male-female-plants",
+    "evidence": {
+      "url": "https://pza.sanbi.org/euclea-pseudebenus",
+      "doc": "SANBI PlantZAfrica: Euclea pseudebenus",
+      "page": null,
+      "quote": "Male and female flowers are on different trees."
+    },
+    "notes": "Obtain correctly sexed planting material and confirm local pollen provision; this source gives no male-to-female planting ratio."
+  },
+  "harvestProduct": "ripe fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Ripe fruit and arid-region phenology",
+      "quote": "edible when ripe",
+      "url": "https://pza.sanbi.org/euclea-pseudebenus",
+      "doc": "SANBI PlantZAfrica: Euclea pseudebenus",
+      "page": null,
+      "note": "The sweet, astringent ripe fruit is documented as edible, ripening February–May. This very slow-growing arid western tree has no quantified first crop age or food kg benchmark."
+    }
+  ],
+  "productionGuidance": {
+    "products": "ripe fruit",
+    "care": [
+      "Use a hot, dry, well-drained position and allow for slow growth.",
+      "Confirm male and female planting material when fruit production is the aim."
+    ],
+    "purchase": [
+      "Ask an indigenous nursery for exact species, local provenance and sex information; no quantified food-yield cultivar is established."
+    ]
+  },
+  "householdFoodStatus": "confirmed-food",
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/euclea-pseudebenus",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary article text retrieved through the search index; the direct PlantZAfrica endpoint returned 403 during this session."
+    }
+  ],
+  "gaps": []
+}

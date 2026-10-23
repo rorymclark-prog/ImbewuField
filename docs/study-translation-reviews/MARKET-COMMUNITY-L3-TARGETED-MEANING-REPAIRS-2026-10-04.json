@@ -1,0 +1,74 @@
+{
+  "title": "Targeted independent meaning recheck — Market L3",
+  "date": "2026-10-04",
+  "repositoryHead": "beec49d41db081017a83acbe641a56e025530bb1",
+  "inputPacket": "/tmp/imbewu-market-remaining-substantive-candidates-20261004.json",
+  "readOnly": true,
+  "repositoryEdits": false,
+  "bindingAudit": {
+    "canonicalSourceHashStillMatchesPacket": true,
+    "canonicalBodyParagraphsCheckedAgainstLiveCOURSE_MODULES": true,
+    "currentTargetParagraphsCheckedAgainstLiveRegistries": true,
+    "bothTargetedCurrentParagraphsRemainExactEnglish": true,
+    "sourceSegmentConcatenationExact": true,
+    "currentRegistryFilesHaveConcurrentEditsOutsideTheseTargetedParagraphs": true,
+    "currentLiveFileHashes": {
+      "lib/course-modules.ts": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "lib/course-translation-drafts-st-market-community.ts": "4b97656a2584264a5e061fbdecc119e781b26ddd9fd94fb29e402b65864948e5",
+      "lib/course-translation-drafts-ve-market-community.ts": "d30c4f66bc95d9b3cc6c4a3dc89415e973335b0e45446617a14f4986ef151edb",
+      "lib/course-translation-drafts-ts-market-community.ts": "d6241d9af6f2df3b2d6affebda4c985fb0e5c668e00ee5eec840996cd9727426"
+    }
+  },
+  "targetedRows": [
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "body.tshivendaDraft paragraph[2]",
+      "sourceEnglishParagraph": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "liveCurrentTargetParagraph": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "reviewDisposition": "repair_candidate",
+      "reviewedTargetParagraph": "U kovhekana a zwi ambi uri diversity i ḓo engedzea automatically kana quality i khwinifhale automatically. Ṱolani identity na germination ni sa athu ḓitika nga shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "sourceAlignedSegments": [
+        {
+          "sourceEnglish": "Sharing does not automatically multiply diversity or improve quality.",
+          "targetText": "U kovhekana a zwi ambi uri diversity i ḓo engedzea automatically kana quality i khwinifhale automatically.",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": " Check identity and germination before relying on shared seed.",
+          "targetText": " Ṱolani identity na germination ni sa athu ḓitika nga shared seed.",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": " Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "targetText": " Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "status": "english-hold"
+        }
+      ],
+      "meaningCheck": "Keeps automatically explicit rather than the possibly self-giving idiom. Preserves the negative claim that sharing does not automatically multiply diversity or improve quality. Identity/germination checks precede reliance, and protected-variety/permission-before-exchange remains exact."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "body.xitsongaDraft paragraph[6]",
+      "sourceEnglishParagraph": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+      "liveCurrentTargetParagraph": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+      "reviewDisposition": "repair_candidate",
+      "reviewedTargetParagraph": "Khoma produce gently, u hlayisa shade, packaging ni storage leswi faneleke ku fikela loko yi yisiwa.",
+      "sourceAlignedSegments": [
+        {
+          "sourceEnglish": "Handle produce gently",
+          "targetText": "Khoma produce gently,",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": " and keep suitable shade, packaging and storage through delivery.",
+          "targetText": " u hlayisa shade, packaging ni storage leswi faneleke ku fikela loko yi yisiwa.",
+          "status": "draft"
+        }
+      ],
+      "meaningCheck": "Gently is retained exact English so the handling instruction stays explicit. Suitable shade, packaging and storage through delivery remain represented."
+    }
+  ],
+  "status": "Unreviewed candidate wording for facilitator feedback; not fluent approval."
+}

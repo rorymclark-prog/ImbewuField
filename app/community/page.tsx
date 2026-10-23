@@ -4,9 +4,10 @@ import workspace from '@/components/layout/Workspace.module.css';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import {
-  ChevronLeft, Loader2, MapPin, Plus, MessageCircle, User, Camera, X,
+  Loader2, MapPin, Plus, MessageCircle, User, Camera, X,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
@@ -19,12 +20,19 @@ import {
   closeBoardPost, deleteBoardPost, listMyThreads, getOrCreateThread,
 } from '@/lib/db/community-queries';
 import type { CommunityProfile, BoardPost, BoardCategory, BoardKind, MessageThread } from '@/lib/db/types';
-import NearbyMap from '@/components/community/NearbyMap';
-import BrandLogo from '@/components/BrandLogo';
+// perf-06: mapbox only loads once the Nearby tab actually renders a map, not with the rest of
+// Community (Board/Messages never touch it).
+const NearbyMap = dynamic(() => import('@/components/community/NearbyMap'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center rounded-2xl" style={{ background: 'var(--bg-1)' }}>
+      <Loader2 size={24} className="animate-spin" style={{ color: 'var(--text-secondary)' }} />
+    </div>
+  ),
+});
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
+import AppHeader from '@/components/layout/AppHeader';
 
 type Tab = 'nearby' | 'board' | 'messages';
 
@@ -156,21 +164,23 @@ export default function CommunityHubPage() {
 
   return (
     <div className="h-[100dvh] flex flex-col font-sans" style={{ background: 'var(--bg-0)', color: 'var(--text-primary)' }}>
-      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}>
-        <MenuButton /><BackButton fallback="/home" />
-        <Link href="/home" style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text-secondary)', textDecoration: 'none' }}>
-          <ChevronLeft size={18} strokeWidth={1.7} />
-        </Link>
-        <BrandLogo />
-        <div style={{ flex: 1 }} />
-        <LessonLink id="community:overview" label={copyCommunity('Learn', lang)} />
-        <Link href="/community/profile" style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--color-forest-800)', textDecoration: 'none' }}>
-          <User size={16} strokeWidth={1.8} />
-          <span className="font-sans font-semibold" style={{ fontSize: 13 }}>
-            {copyCommunity(myProfile ? 'My profile' : 'Set up profile', lang)}
-          </span>
-        </Link>
-      </header>
+      <AppHeader
+        title={copyCommunity('Community', lang)}
+        right={
+          <>
+            <LessonLink id="community:overview" label={copyCommunity('Learn', lang)} />
+            <Link href="/community/profile" style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--color-forest-800)', textDecoration: 'none' }}>
+              <User size={16} strokeWidth={1.8} />
+              <span className="font-sans font-semibold" style={{ fontSize: 13 }}>
+                {copyCommunity(myProfile ? 'My profile' : 'Set up profile', lang)}
+              </span>
+            </Link>
+          </>
+        }
+      />
+      {/* nav-17: AppHeader's title is a <span>, not a heading — this page had no h1 before
+          either (the tabs below carried no accessible page name), so give it one now. */}
+      <h1 className="sr-only">{copyCommunity('Community', lang)}</h1>
 
       <div className="flex-shrink-0 flex" role="tablist" aria-label={copyCommunity('Community', lang)} style={{ borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}>
         {TABS.map((tb) => (
@@ -234,7 +244,7 @@ export default function CommunityHubPage() {
         )}
       </main>
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }
@@ -320,15 +330,19 @@ function BoardTab({
           {posts.map((p) => (
             <div key={p.id} className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
               <div className="flex items-center gap-2" style={{ marginBottom: 6 }}>
-                <span className="font-sans font-bold" style={{ fontSize: 10.5, padding: '2px 8px', borderRadius: 100, background: KIND_COLOR[p.kind], color: '#fff', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                <span className="font-sans font-bold" style={{ fontSize: 12, padding: '2px 8px', borderRadius: 100, background: KIND_COLOR[p.kind], color: '#fff', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                   {kindLabel(p.kind, lang)}
                 </span>
-                <span className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-muted)' }}>{categoryLabel(p.category, lang)}</span>
+                <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{categoryLabel(p.category, lang)}</span>
                 <div style={{ flex: 1 }} />
-                <span className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)' }}>{timeAgo(p.created_at, lang)}</span>
+                <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{timeAgo(p.created_at, lang)}</span>
               </div>
+              {/* copy-15: a board photo carries the post's own content — alt="" read nothing to a
+                  screen-reader user. Kept English-only (not routed through copyCommunity/zuCopy)
+                  since this is assistive-tech-only text, not a visible label this file's own
+                  isiZulu review process has vetted. */}
               {p.photo_url && (
-                <img data-photo-preview src={p.photo_url} alt="" style={{ width: '100%', maxHeight: 160, objectFit: 'cover', borderRadius: 10, marginBottom: 8 }} />
+                <img data-photo-preview src={p.photo_url} alt={`Photo posted by ${p.owner_name}`} style={{ width: '100%', maxHeight: 160, objectFit: 'cover', borderRadius: 10, marginBottom: 8 }} />
               )}
               <p className="font-sans" style={{ fontSize: 14, color: 'var(--text-primary)', lineHeight: 1.5, marginBottom: 6 }}>{p.description}</p>
               <div className="flex items-center gap-1.5" style={{ marginBottom: 10 }}>
@@ -415,7 +429,7 @@ function NewBoardPostForm({ myAreaText, simple, onPosted, onCancel }: { myAreaTe
     <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', marginBottom: 14, display: 'flex', flexDirection: 'column', gap: 12 }}>
       {optionsExpanded && (
         <div>
-          <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityBoardKind')}</div>
+          <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.1em', marginBottom: 6 }}>{tr('communityBoardKind')}</div>
           <div className="flex gap-2">
             {(['have', 'want', 'free'] as BoardKind[]).map((k) => (
               <button key={k} onClick={() => setKind(k)} aria-pressed={kind === k} className="font-sans font-semibold" style={{ flex: 1, padding: '8px', borderRadius: 10, fontSize: 12.5, cursor: 'pointer', background: kind === k ? KIND_COLOR[k] : 'rgba(226,216,196,0.5)', color: kind === k ? '#fff' : 'var(--text-secondary)', border: `1px solid ${kind === k ? KIND_COLOR[k] : 'var(--border)'}` }}>
@@ -427,7 +441,7 @@ function NewBoardPostForm({ myAreaText, simple, onPosted, onCancel }: { myAreaTe
       )}
       {optionsExpanded && (
         <div>
-          <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityBoardCategory')}</div>
+          <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.1em', marginBottom: 6 }}>{tr('communityBoardCategory')}</div>
           <select
             value={category}
             aria-label={tr('communityBoardCategory')}
@@ -440,27 +454,27 @@ function NewBoardPostForm({ myAreaText, simple, onPosted, onCancel }: { myAreaTe
         </div>
       )}
       <div>
-        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityBoardDescription')}</div>
+        <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.1em', marginBottom: 6 }}>{tr('communityBoardDescription')}</div>
         <textarea
           value={description}
           aria-label={tr('communityBoardDescription')}
           onChange={(e) => setDescription(e.target.value.slice(0, 300))}
           placeholder={tr('communityBoardDescriptionPlaceholder')}
           rows={3}
-          className="w-full rounded-xl px-3 py-2.5 font-sans"
+          className="w-full rounded-xl px-3 py-2.5 font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
           style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)', outline: 'none', resize: 'none', lineHeight: 1.5 }}
         />
       </div>
       {optionsExpanded && (
         <div>
-          <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>{tr('communityAreaLabel')}</div>
+          <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.1em', marginBottom: 6 }}>{tr('communityAreaLabel')}</div>
           <input
             type="text"
             value={areaText}
             aria-label={tr('communityAreaLabel')}
             onChange={(e) => setAreaText(e.target.value)}
             placeholder={tr('communityAreaPlaceholder')}
-            className="w-full rounded-xl px-3 py-2.5 font-sans"
+            className="w-full rounded-xl px-3 py-2.5 font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
             style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)', outline: 'none' }}
           />
         </div>
@@ -478,7 +492,7 @@ function NewBoardPostForm({ myAreaText, simple, onPosted, onCancel }: { myAreaTe
       <div>
         {photoUrl ? (
           <div style={{ position: 'relative', width: 80, height: 80 }}>
-            <img data-photo-preview src={photoUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 10 }} />
+            <img data-photo-preview src={photoUrl} alt="Selected photo preview" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 10 }} />
             <button onClick={() => setPhotoUrl(null)} aria-label={copyCommunity('Remove photo', lang)} style={{ position: 'absolute', top: 2, right: 2, background: 'rgba(0,0,0,0.55)', border: 'none', borderRadius: '50%', width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
               <X size={12} color="#fff" />
             </button>
@@ -535,7 +549,7 @@ function MessagesTab({ threads, myUid, onOpen }: { threads: MessageThread[]; myU
             <div style={{ flex: 1, minWidth: 0 }}>
               <div className="flex items-baseline justify-between gap-2">
                 <span className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>{otherName}</span>
-                <span className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)', flexShrink: 0 }}>{timeAgo(th.last_message_at, lang)}</span>
+                <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', flexShrink: 0 }}>{timeAgo(th.last_message_at, lang)}</span>
               </div>
               <div className="font-sans truncate" style={{ fontSize: 12.5, color: 'var(--text-secondary)' }}>{th.last_message || copyCommunity('Say hello…', lang)}</div>
             </div>

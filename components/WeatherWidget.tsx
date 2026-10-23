@@ -4,11 +4,19 @@ import { useEffect, useState } from 'react';
 import { Wind, Snowflake, Flame, CloudRain, Droplets } from 'lucide-react';
 import { fetchWeatherForecast, describeWeatherCode, type WeatherForecast } from '@/lib/weather';
 import { getElementArt2 } from '@/lib/element-art-2';
+import { useLanguage } from '@/lib/i18n';
+import IsiZuluDraftSource from './IsiZuluDraftSource';
 
 interface Props {
   lat: number;
   lon: number;
   compact?: boolean; // tighter spacing + shorter forecast strip for the home-hub mount
+  /**
+   * ux-15: Home has nothing climate-related below this card, so its fallback can't promise "site
+   * climate data below instead" — only the /farmer site-report mount (DataPanel, the default) has
+   * that content following it.
+   */
+  context?: 'home' | 'report';
 }
 
 const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -21,7 +29,8 @@ function dayLabel(isoDate: string, index: number): string {
   return DAY_LABELS[new Date(y, m - 1, d).getDay()];
 }
 
-export default function WeatherWidget({ lat, lon, compact = false }: Props) {
+export default function WeatherWidget({ lat, lon, compact = false, context = 'report' }: Props) {
+  const { lang } = useLanguage();
   const [forecast, setForecast] = useState<WeatherForecast | null>(null);
   const [status, setStatus] = useState<'loading' | 'ok' | 'error'>('loading');
 
@@ -43,12 +52,18 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
   }, [lat, lon]);
 
   if (status === 'error') {
+    const english = context === 'home'
+      ? 'Weather is not available right now.'
+      : 'Weather unavailable right now — showing site climate data below instead.';
+    const zulu = context === 'home'
+      ? 'Isimo sezulu asitholakali okwamanje.'
+      : 'Isimo sezulu asitholakali okwamanje — imininingwane yesimo sezulu yendawo iboniswa ngezansi.';
     return (
       <div
         className="font-sans rounded-2xl px-3.5 py-2.5"
         style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', fontSize: 12, color: 'var(--text-muted)' }}
       >
-        Weather unavailable right now — showing site climate data below instead.
+        <IsiZuluDraftSource lang={lang} zulu={zulu} english={english} />
       </div>
     );
   }

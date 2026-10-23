@@ -1,0 +1,61 @@
+{
+  "sourceBase": "5b994189bd7981bc8776d0e13cf502d6d9d27b2b",
+  "provider": "Agy desktop",
+  "model": "Gemini3.8FlashMedium",
+  "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+  "completedResponseTimeShown": "7:27",
+  "scope": "Agy claimed all four VE Reading lessons; this is root triage of reported findings, not exhaustive approval or no-other-errors proof.",
+  "fluentApproval": false,
+  "followup": "not submitted: native controls stale; last action noWindowsAvailable",
+  "flags": [
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz.0.options.0",
+      "disposition": "Hold unchanged: intentional technical contour/elevation English. Agy translation vhuimoni is not independently accepted as height.",
+      "exactSource": "Points at the same height along a contour",
+      "actualCurrentDraft": "Points at the same height along a contour"
+    },
+    {
+      "lessonId": "reading-landscape-l2",
+      "field": "body.paragraph2",
+      "disposition": "Missing locative flagged. Minimal kha insertion is unwired pending independent backcheck; do not copy broad replacement or alter species/frost conditions.",
+      "exactSource": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+      "actualCurrentDraft": "Pawpaw na young citrus zwi a kwamea nga frost nga u leluwa. Ni songo vhea zwimela zwi sa konḓeleliho known low frost pockets. Sedzani frost ya henefho musi ni sa athu ṱavha."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body.paragraph3",
+      "disposition": "Intentional technical bed loan remains; proposed ndima scope not independently checked.",
+      "exactSource": "For tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "actualCurrentDraft": "Kha matamatisi a re na thaidzo ya late blight, u elela ha muya na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome. Late blight i nga bvela phanḓa u phaḓalala musi hu tshi dzula ho rothola nahone hu na vhunyisi lwa tshifhinga tshilapfu. U sudzisa bed fhedzi a zwi nga i langi; ṱoḓani na nyeletshedzo ya mutakalo wa zwimela ya henefho."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz.1.rationale",
+      "disposition": "Can increase versus is favoured flagged; proposed anthropomorphic i takalela and ndima not accepted. Requires independent review.",
+      "exactSource": "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+      "actualCurrentDraft": "U elela ha muya na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome. Late blight i nga engedzea kha mutsho wa u rothola na vhunyisi ha tshifhinga tshilapfu, nahone u sudzula bed fhedzi a si pulane yo fhelelaho ya u langa vhulwadze."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "body.paragraph1",
+      "disposition": "Intentional patch/design loans retain spatial/design meaning; proposed pulane not accepted solely for removing English.",
+      "exactSource": "Note where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.",
+      "actualCurrentDraft": "Ṱhogomelani hune tshando tsha dzula tshifhinga tshilapfusesa, hune mavu a nunukha vhunyisi kha miṅwedzi yo omaho, na hune khakibos kana blackjack zwa mela zwo tsitsikana. Zwimela izwi zwi nga mela fhethu ho vhilinganywaho (disturbed places), fhedzi u vha hone hazwo fhedzi a zwi sumbedzi arali mavu o tsitsikana (compacted). Ṱolani mavu ni sa athu dzhia tsheo ya zwine patch ya amba kha design yaṋu."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "body.paragraph2",
+      "disposition": "Perfect versus beautified accepted separately in three-row scope. Agy full audit quotes pre-repair wording; current scoped candidate authoritative, unpublished.",
+      "exactSource": "Overlay your zones and sectors on the same sketch. Update it season by season. A pencil sketch you actually use is worth more than a perfect one drawn once.",
+      "actualCurrentDraft": "Vheani dzi-zone na dzi-sector dzaṋu kha yeneyo nyolo ya u thoma. I vusuluseni khalaṅwaha nga khalaṅwaha. Nyolo ya penisela ine na i shumisa vhukuma i na ndeme khulwane u fhira yo fhelelaho yo olwaho luthihi fhedzi."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "quiz.0.rationale",
+      "disposition": "Intentional patch/design loans; no automatic English removal or source instruction rewrite.",
+      "exactSource": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction. Observe and check the soil before deciding what the patch means for your design.",
+      "actualCurrentDraft": "Blackjack i nga mela kha mavu o vhilinganywaho, fhedzi u vha hone hayo hu hoṱhe a zwi sumbedzi u tsitsikana ha mavu (compaction). Ṱhogomelani nahone ni tole mavu musi ni sa athu dzhia tsheo ya uri patch i amba mini kha design yaṋu."
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "key": "carrots",
+  "varieties": [
+    {
+      "name": "Nantes type",
+      "zones": [],
+      "maturity": null,
+      "season": "Either season",
+      "traits": "Cylindrical, blunt-tipped, sweet",
+      "type": "OP",
+      "note": "Kept from the existing crop-catalog.ts entry — this pass confirms and sharpens it below with Sakata's own Scarlet Nantes page, which restricts a Nantes-type carrot to cool-season growing specifically (not truly 'either season' as the catalog's original note implies).",
+      "evidence": [{ "quote": "Cylindrical, blunt-tipped, sweet", "url": null, "page": null, "doc": "Existing ImbewuField lib/crop-catalog.ts carrots entry" }]
+    },
+    {
+      "name": "Allyance F1 (or similar season-tuned hybrid)",
+      "zones": [],
+      "maturity": null,
+      "season": "Timing awareness",
+      "traits": "Season-tuned hybrid",
+      "type": "hybrid",
+      "note": "Kept from the existing crop-catalog.ts entry — not independently re-verified in this pass.",
+      "evidence": [{ "quote": "Timing awareness", "url": null, "page": null, "doc": "Existing ImbewuField lib/crop-catalog.ts carrots entry" }]
+    },
+    {
+      "name": "Chantenay Karoo",
+      "zones": ["karoo-arid", "highveld", "lowveld-bushveld", "subtropical-coast"],
+      "maturity": "medium",
+      "season": "Frost-free, warmer growing conditions; associated by name with the Karoo",
+      "traits": "Short, broad-shouldered, conical root; good for heavier/shallower soils; heat tolerant",
+      "type": "OP",
+      "note": "Its Sakata name and description directly tie it to hot, frost-free conditions — the best-sourced fit for the Karoo and other hot zones among the carrots checked in this pass.",
+      "evidence": [{ "quote": "Chantenay Karoo is a short, broad-shouldered, conical-rooted carrot bred for frost-free, warmer growing conditions... well suited to heavier soils.", "url": "https://sakata.co.za/shop/vegetables/carrots/chantenay-karoo-open-pollinated-carrot/", "page": null, "doc": "Chantenay Karoo, Sakata product page (fetched directly, verbatim)" }]
+    },
+    {
+      "name": "Kuroda",
+      "zones": ["lowveld-bushveld", "subtropical-coast", "karoo-arid"],
+      "maturity": "medium",
+      "season": "Warm-season only",
+      "traits": "Long, wedge-shaped, deep orange root; heat-tolerant Japanese type; widely grown in warmer regions of SA and the tropics",
+      "type": "OP",
+      "note": "Sakata's own description restricts Kuroda to warm-season growing, unlike the Nantes/Scarlet Nantes types below which are restricted the other way (cool-season) — this is the clearest hot/cold split found for carrots in this pass.",
+      "evidence": [{ "quote": "Kuroda is a warm season carrot, producing a long, wedge-shaped root with a deep orange colour... popular in tropical and sub-tropical growing regions.", "url": "https://sakata.co.za/shop/vegetables/carrots/kuroda-open-pollinated-carrot/", "page": null, "doc": "Kuroda, Sakata product page (fetched directly, verbatim)" }]
+    },
+    {
+      "name": "Scarlet Nantes",
+      "zones": ["highveld", "midlands-mistbelt", "high-mountain", "western-cape", "southern-cape"],
+      "maturity": "medium",
+      "season": "Cool-season only",
+      "traits": "Cylindrical, blunt-tipped, smooth, sweet, coreless; classic Nantes type",
+      "type": "OP",
+      "note": "The classic Nantes-type, seed-saveable OP carrot, explicitly restricted by Sakata to cool-season growing — the direct opposite constraint to Kuroda above, and the source this file uses to sharpen the existing catalog's generic 'Nantes type / either season' entry.",
+      "evidence": [{ "quote": "Scarlet Nantes is a cool season carrot variety producing cylindrical, blunt-tipped roots with a smooth skin and sweet flavour.", "url": "https://sakata.co.za/shop/vegetables/carrots/scarlet-nantes-open-pollinated-carrot/", "page": null, "doc": "Scarlet Nantes, Sakata product page (fetched directly, verbatim)" }]
+    }
+  ],
+  "zoneAdvice": {
+    "karoo-arid": { "text": "Hot, frost-free interior — Chantenay Karoo (by name and description) and Kuroda (explicitly a warm-season type) are the two best-sourced fits; the classic Nantes/Scarlet Nantes types are a cool-season crop here, sown for a cooler window rather than mid-summer.", "evidence": [] },
+    "lowveld-bushveld": { "text": "Hot, frost-free — same warm-season logic as karoo-arid: Kuroda and Chantenay Karoo are the sourced fits; Scarlet Nantes should be timed to the cooler months.", "evidence": [] },
+    "subtropical-coast": { "text": "Warm, frost-free coast — Kuroda and Chantenay Karoo again fit the warm-season description; Scarlet Nantes needs a cooler-month sowing window here too.", "evidence": [] },
+    "highveld": { "text": "Cool to cold interior — Scarlet Nantes' cool-season description fits the highveld's climate for most of the growing calendar.", "evidence": [] },
+    "midlands-mistbelt": { "text": "Cool, high-rainfall — Scarlet Nantes' cool-season description is a good match.", "evidence": [] },
+    "high-mountain": { "text": "Cold, short season — Scarlet Nantes' cool-season description fits, though no source addresses frost tolerance specifically for this zone.", "evidence": [] },
+    "western-cape": { "text": "Winter-rainfall, cool-to-mild — Scarlet Nantes' cool-season description fits the Mediterranean climate.", "evidence": [] },
+    "southern-cape": { "text": "Mild, year-round rainfall — Scarlet Nantes' cool-season description is the closer fit of the two Sakata types checked.", "evidence": [] }
+  },
+  "gaps": [
+    "No source was found giving carrot varieties specifically for the Karoo, lowveld, or coastal zones beyond the general 'warm-season' vs 'cool-season' distinction Sakata gives on its own product pages — the zoneAdvice above extrapolates that hot/cold split onto the 8 named zones rather than citing a zone-specific SA trial or guide.",
+    "Maturity days-to-harvest were not stated by Sakata for any of the three new varieties, so 'maturity' is left as a coarse early/medium/late judgement rather than a sourced number.",
+    "The existing catalog's Allyance F1 entry was not independently re-verified — no product page for it was found/opened in this pass."
+  ]
+}

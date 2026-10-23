@@ -1,0 +1,84 @@
+{
+  "lessonId": "intro-permaculture-l2",
+  "sourceMainSha": "02d8682e6d15efc1ebbb4b03b7be292a44b290d4",
+  "status": "learner-wired-machine-draft",
+  "keyPoints": [
+    {
+      "sourceEnglish": "Observe your land for a full season before major earthworks",
+      "draft": "Sedzani land yaṋu kha khalaṅwaha yoṱhe ni sa athu ita major earthworks"
+    },
+    {
+      "sourceEnglish": "Catch and store rain, sun, and biomass before they leave your property",
+      "draft": "Farani nahone ni vhulunge mvula, ḓuvha na biomass zwi sa athu bva kha ndaka yaṋu"
+    },
+    {
+      "sourceEnglish": "Edges and margins can be useful places to observe what grows well",
+      "draft": "Edges na margins zwi nga vha fhethu hu vhuedzaho ha u sedza zwine zwa aluwa zwavhuḓi"
+    },
+    {
+      "sourceEnglish": "Hail injury to maize depends on the storm and the crop’s growth stage",
+      "draft": "Hail injury kha maize i ya nga storm na growth stage ya crop"
+    }
+  ],
+  "quiz": [
+    {
+      "question": {
+        "sourceEnglish": "A farmer wants to dig swales to harvest rainwater. What should she do first, following 'observe and interact'?",
+        "draft": "Mulimi u ṱoḓa u bwa swales u itela u kuvhanganya maḓi a mvula. Ndi mini zwine a fanela u ranga u zwi ita a tshi tevhedza observe and interact?"
+      },
+      "options": [
+        {
+          "sourceEnglish": "Dig immediately after the first good rain",
+          "draft": "Bwani nga u ṱavhanya nga murahu ha mvula ya u ranga yavhuḓi"
+        },
+        {
+          "sourceEnglish": "Watch where water flows and pools across at least one wet season",
+          "draft": "Sedzani hune maḓi a elela hone na hune a kuvhangana hone kha at least one wet season"
+        },
+        {
+          "sourceEnglish": "Copy a neighbour's swale layout",
+          "draft": "Kopisani kuitele kwa swale ya muhura"
+        },
+        {
+          "sourceEnglish": "Assume the same swale design fits every site",
+          "draft": "Humbulani uri design nthihi ya swale i lingana na site iṅwe na iṅwe"
+        }
+      ],
+      "sourceCorrectIndex": 1,
+      "rationale": {
+        "sourceEnglish": "A wet season shows more than one storm, but observation is only a first step. Check the soil, slope, drainage and safe overflow route with a trained local adviser before digging.",
+        "draft": "Khalaṅwaha ya mvula i sumbedza madumbu a no fhira ḽithihi, fhedzi u sedza ndi vhukando ha u ranga fhedzi. Musi ni sa athu bwa, na mueletshedzi wa henefho o gudedzwaho, tolani mavu, slope, drainage na safe overflow route."
+      }
+    },
+    {
+      "question": {
+        "sourceEnglish": "Which layout best applies 'integrate rather than segregate'?",
+        "draft": "Ndi layout ifhio ine ya shumisa zwavhuḓi integrate rather than segregate?"
+      },
+      "options": [
+        {
+          "sourceEnglish": "Chickens penned far from the garden",
+          "draft": "Khuhu dzo valelwaho kule na tsimu"
+        },
+        {
+          "sourceEnglish": "Garden, fruit trees and a chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return",
+          "draft": "Tsimu, miri ya mitshelo na chicken run zwo vhekanywa nga nḓila ine khuhu dza shumisa planting bed i si na zwimela nga murahu ha harvest; nga murahu mulimi u tola safe management musi edible crops dzi sa athu vhuya"
+        },
+        {
+          "sourceEnglish": "Separate paddocks for each crop",
+          "draft": "Paddocks dzo fhambanaho dza crop iṅwe na iṅwe"
+        },
+        {
+          "sourceEnglish": "All animals kept off the cultivated zone",
+          "draft": "Zwifuwo zwoṱhe zwi dzule nnḓa ha cultivated zone"
+        }
+      ],
+      "sourceCorrectIndex": 1,
+      "rationale": {
+        "sourceEnglish": "Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops return.",
+        "draft": "Integration i ita uri element iṅwe na iṅwe i shumele zwine zwa vha tsini nayo — hafha, khuhu dzi clean up pests na u engedza fertility, nṱhani ha u dzula dzi sa shumi kha fixed pen. Fresh manure i nga hwalela germs, ngauralo tola safe management musi edible crops dzi sa athu vhuya."
+      }
+    }
+  ],
+  "review": "Independent semantic backcheck accepted the wet-season/pooling observation, trained local adviser before digging, post-harvest safety check before edible crops return, and manure/germ condition. Unreviewed machine draft; not fluent-speaker or local-farming approval."
+}

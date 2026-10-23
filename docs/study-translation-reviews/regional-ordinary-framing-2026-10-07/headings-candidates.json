@@ -1,0 +1,1256 @@
+{
+  "title": "Bounded regional ordinary-heading and framing candidates",
+  "date": "2026-10-07",
+  "inventoryFile": "output/playwright/core-remnant-inventory-20261007.json",
+  "inventoryHead": "94c9ec530722c483667d590cbfdaa29a5408a163",
+  "scope": "Only exact outstanding full English headings for Vegetables slides 4, 5, 10, 15 (ST/VE/TS rows present in inventory) and TS slide 16, plus the indexed VE perfect-map comparison fragment. Data-only candidates for independent root review; no fluent approval.",
+  "structuralNotes": {
+    "headingBinding": "Each heading proposal is bound to the actual full field object currently status=english-hold; heading fields have no segment array or segment index.",
+    "comparisonBinding": "The perfect-map phrase is body[2].segments[2], exact source checked against the remnant row. Composition replaces only that index and retains all neighboring segment text/sourceEnglish exactly.",
+    "noApproval": "Every candidate is explicitly unreviewed. None are represented as accepted, fluent-approved, or applied.",
+    "technicalHolds": "Pest names/category, insect, loose soil, bed, rainfall, soil/map terms retained in English where translation could narrow technical or physical scope."
+  },
+  "candidates": [
+    {
+      "id": "vegetables-staples:ve:slide-4:heading",
+      "disposition": "candidate-draft",
+      "status": "unreviewed; not accepted or approved",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "language": "ve",
+      "slide": 4,
+      "field": "heading",
+      "sourceEnglish": "Roots Need Loose Soil, Paths Need Your Feet",
+      "sourceContextEnglish": [
+        "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+        "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+        "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+        "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else."
+      ],
+      "currentTargetBinding": {
+        "status": "english-hold"
+      },
+      "bindingKind": "paired-full-hold",
+      "segmentIndex": null,
+      "currentTargetComposition": "Full-field English hold; no translated target text is present.",
+      "proposedText": "Midzi i ṱoḓa loose soil; paths dzi ṱoḓa milenzhe yaṋu.",
+      "completeComposedTarget": "Midzi i ṱoḓa loose soil; paths dzi ṱoḓa milenzhe yaṋu.",
+      "backTranslation": "Roots need loose soil; paths need your feet.",
+      "semanticReasoning": "Keeps the technical soil-condition phrase and physical path term in English; translates both ordinary clauses and keeps the parallel “need” construction. The slide body confirms this is about loose soil under roots and foot traffic confined to permanent paths, not roots literally requiring soil looseness as an abstract property.",
+      "uncertainty": "Unverified Tshivenda concord for the English plural “paths” and whether the mixed construction “paths dzi ṱoḓa” reads naturally. Draft only; facilitator/fluent-speaker review needed.",
+      "completeCurrentSourceField": "Roots Need Loose Soil, Paths Need Your Feet",
+      "completeCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "targetContextCurrent": [
+        {
+          "status": "draft",
+          "text": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe."
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "The protection is simple. ",
+              "status": "draft",
+              "text": "Tsireledzo ndi yo leluwaho. "
+            },
+            {
+              "sourceEnglish": "Permanent paths",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ", and a bed narrow enough to reach into from both sides.",
+              "status": "draft",
+              "text": ", na bed ine ya vha tsekene lune na nga swikelela nga ngomu ni tshi bva kha masia oṱhe mavhili."
+            }
+          ]
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "One metre to one point two metres wide.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " That's the working number. At that width you can reach the centre from either path, and your feet never touch the ",
+              "status": "draft",
+              "text": " Wonoyo ndi mpimo une wa shumiswa. Kha honoho vhuphara ni nga swikelela vhukati ni tshi bva kha iṅwe na iṅwe ya paths mbili, nahone milenzhe yaṋu a i kwami "
+            },
+            {
+              "sourceEnglish": "growing area",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": " na luthihi."
+            }
+          ]
+        },
+        {
+          "status": "draft",
+          "text": "Zwino humbulani nga ha beds dzaṋu. Ni nga swikelela vhukati ni sa kande nga ngomu? Iyani ni lingedze zwenezwo ni sa athu ṱavha tshiṅwe tshithu."
+        }
+      ]
+    },
+    {
+      "id": "vegetables-staples:ve:slide-5:heading",
+      "disposition": "candidate-draft",
+      "status": "unreviewed; not accepted or approved",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "language": "ve",
+      "slide": 5,
+      "field": "heading",
+      "sourceEnglish": "Choose the Bed for the Soil and Rainfall",
+      "sourceContextEnglish": [
+        "There's no single bed shape that's right everywhere.",
+        "Start with the least disturbance that solves your problem.",
+        "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+        "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+        "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+        "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+        "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed."
+      ],
+      "currentTargetBinding": {
+        "status": "english-hold"
+      },
+      "bindingKind": "paired-full-hold",
+      "segmentIndex": null,
+      "currentTargetComposition": "Full-field English hold; no translated target text is present.",
+      "proposedText": "Khethani bed u ya nga soil na rainfall.",
+      "completeComposedTarget": "Khethani bed u ya nga soil na rainfall.",
+      "backTranslation": "Choose the bed according to soil and rainfall.",
+      "semanticReasoning": "Preserves the instruction to choose a bed with both soil and rainfall as the criteria. Retains the physical bed term and technical soil/rainfall terms; translates the directive and “according to” frame. The body compares bed shapes against soil and rainfall conditions.",
+      "uncertainty": "Unverified whether “u ya nga” is the idiomatic Tshivenda relation for “according to” here and whether bed requires local agreement. No claim of fluent approval.",
+      "completeCurrentSourceField": "Choose the Bed for the Soil and Rainfall",
+      "completeCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "targetContextCurrent": [
+        {
+          "status": "draft",
+          "text": "A hu na tshivhumbeo tshithihi tsha bed tshine tsha tea fhethu hoṱhe."
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Start with the ",
+              "status": "draft",
+              "text": "Thomani nga "
+            },
+            {
+              "sourceEnglish": "least disturbance",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " that solves your problem.",
+              "status": "draft",
+              "text": " ine ya tandulula thaidzo yaṋu."
+            }
+          ]
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "No-dig",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " suits most garden soils.",
+              "status": "draft",
+              "text": " i tea kha vhunzhi ha mavu a ngade."
+            },
+            {
+              "sourceEnglish": " Leave the structure alone and build fertility on top.",
+              "status": "draft",
+              "text": " Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha."
+            }
+          ]
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Do not dig ",
+              "status": "draft",
+              "text": "Ni songo bwa "
+            },
+            {
+              "sourceEnglish": "wet clay",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ". If ",
+              "status": "draft",
+              "text": ". Arali "
+            },
+            {
+              "sourceEnglish": "compaction",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " or ",
+              "status": "draft",
+              "text": " kana "
+            },
+            {
+              "sourceEnglish": "poor drainage",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " is severe, identify the cause with local advice before choosing ",
+              "status": "draft",
+              "text": " zwi tshi vha severe, wanani tshiitisi nga nyeletshedzo ya henefho ni sa athu khetha "
+            },
+            {
+              "sourceEnglish": "deeper cultivation",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": "."
+            }
+          ]
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Raised beds",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " suit ",
+              "status": "draft",
+              "text": " dzi tea "
+            },
+            {
+              "sourceEnglish": "wet ground",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ", where water needs somewhere to drain away to.",
+              "status": "draft",
+              "text": ", hune maḓi a ṱoḓa fhethu ha u bva hone."
+            }
+          ]
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Sunken beds",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " suit ",
+              "status": "draft",
+              "text": " dzi tea "
+            },
+            {
+              "sourceEnglish": "dry ground",
+              "status": "draft",
+              "text": "mavu o omaho",
+              "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07."
+            },
+            {
+              "sourceEnglish": ", where you want to catch and hold what rain you get.",
+              "status": "draft",
+              "text": ", hune na ṱoḓa u fara na u vhulunga mvula ine na i wana."
+            }
+          ]
+        },
+        {
+          "status": "draft",
+          "text": "Nga murahu ha mvula khulu, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na nyeletshedzo nga ha soil and drainage ni sa athu khetha bed.",
+          "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
+        }
+      ]
+    },
+    {
+      "id": "vegetables-staples:ve:slide-10:heading",
+      "disposition": "candidate-draft",
+      "status": "unreviewed; not accepted or approved",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "language": "ve",
+      "slide": 10,
+      "field": "heading",
+      "sourceEnglish": "Each Crop Earns Its Place",
+      "sourceContextEnglish": [
+        "Intercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.",
+        "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+        "Maize gives height and structure.",
+        "Beans climb the maize, and store as protein.",
+        "Pumpkin spreads across the ground, shading the soil and holding moisture.",
+        "Timing matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
+        "The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
+      ],
+      "currentTargetBinding": {
+        "status": "english-hold"
+      },
+      "bindingKind": "paired-full-hold",
+      "segmentIndex": null,
+      "currentTargetComposition": "Full-field English hold; no translated target text is present.",
+      "proposedText": "Crop iṅwe na iṅwe i tea u vha na mushumo wayo.",
+      "completeComposedTarget": "Crop iṅwe na iṅwe i tea u vha na mushumo wayo.",
+      "backTranslation": "Each crop should have its own job/role.",
+      "semanticReasoning": "Carries the headline metaphor through its explicit function in the following sentence: each plant needs a job and enough space to do it. It does not claim every crop is equally productive or add a yield promise.",
+      "uncertainty": "“Earns its place” implies that a crop justifies the space it occupies; “should have its own job” conveys the role but may weaken the value/justification metaphor. English Crop retained as a technical category. Draft only.",
+      "completeCurrentSourceField": "Each Crop Earns Its Place",
+      "completeCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "targetContextCurrent": [
+        {
+          "status": "draft",
+          "text": "U ṱavha zwimela zwo fhambanaho fhethu huthihi a si u tou zwi kuvhanganya fhedzi. Tshimela tshiṅwe na tshiṅwe tshi ṱoḓa mushumo watsho, na fhethu ho eḓanaho uri tshi kone u ita wonoyo mushumo."
+        },
+        {
+          "status": "draft",
+          "text": "The Three Sisters ndi tsumbo ya Indigenous farming traditions in the Americas."
+        },
+        {
+          "status": "draft",
+          "text": "Maize i ṋea vhulapfu na tshivhumbeo."
+        },
+        {
+          "status": "draft",
+          "text": "Beans dzi gonya maize, and store as protein."
+        },
+        {
+          "status": "draft",
+          "text": "Pumpkin i phadalala fhasi, i ita murunzi kha mavu na u vhulunga moisture."
+        },
+        {
+          "status": "draft",
+          "text": "Tshifhinga tshi a vha tsha ndeme. Thomani nga u ita uri maize i khwaṱhe, u itela uri i kone u tikedza beans musi dzi tshi thoma u gonya."
+        },
+        {
+          "status": "draft",
+          "text": "Zwimela zwi nga kha ḓi konkurisana. Ni zwi fhe fhethu ho teaho, maḓi na tshedza. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
+        }
+      ]
+    },
+    {
+      "id": "vegetables-staples:ve:slide-15:heading",
+      "disposition": "candidate-draft",
+      "status": "unreviewed; not accepted or approved",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "language": "ve",
+      "slide": 15,
+      "field": "heading",
+      "sourceEnglish": "Pests Are Messengers Before They Are Enemies",
+      "sourceContextEnglish": [
+        "Pest pressure usually rises for a reason.",
+        "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+        "So before you treat anything, look at the whole system.",
+        "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+        "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act."
+      ],
+      "currentTargetBinding": {
+        "status": "english-hold"
+      },
+      "bindingKind": "paired-full-hold",
+      "segmentIndex": null,
+      "currentTargetComposition": "Full-field English hold; no translated target text is present.",
+      "proposedText": "Pests ndi zwiga zwine zwa sumbedza uri hu na thaidzo, ri sa athu zwi dzhia sa maswina.",
+      "completeComposedTarget": "Pests ndi zwiga zwine zwa sumbedza uri hu na thaidzo, ri sa athu zwi dzhia sa maswina.",
+      "backTranslation": "Pests are signs that show there is a problem, before we regard them as enemies.",
+      "semanticReasoning": "Keeps broad “Pests” in English, avoiding an insects-only substitution. Recasts messenger as a diagnostic sign, consistent with the slide body’s instruction to inspect the whole system before treating anything, while preserving the enemy contrast.",
+      "uncertainty": "“Sign” is an interpretation of “messenger,” not a literal translation; the pronoun/concord referring to the English plural Pests is unverified. Review whether this preserves the intended metaphor and is natural Tshivenda.",
+      "completeCurrentSourceField": "Pests Are Messengers Before They Are Enemies",
+      "completeCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "targetContextCurrent": [
+        {
+          "status": "draft",
+          "text": "Pest pressure i anzela u engedzea nga tshiitisi."
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Plants under ",
+              "status": "draft",
+              "text": "Zwimela zwi re na "
+            },
+            {
+              "sourceEnglish": "stress.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " One crop dominating the ground.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Or ",
+              "status": "draft",
+              "text": " Kana "
+            },
+            {
+              "sourceEnglish": "broad chemical use",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " that has already removed the ",
+              "status": "draft",
+              "text": " yo no bvisa "
+            },
+            {
+              "sourceEnglish": "predators",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " that were helping you.",
+              "status": "draft",
+              "text": " dze dza vha dzi tshi ni thusa."
+            }
+          ]
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "So ",
+              "status": "draft",
+              "text": "Ngazwenezwo, "
+            },
+            {
+              "sourceEnglish": "before you treat anything, ",
+              "status": "draft",
+              "text": "ni sa athu u thoma u lafha tshithu, "
+            },
+            {
+              "sourceEnglish": "look at the whole system.",
+              "status": "draft",
+              "text": "sedzani system yoṱhe."
+            }
+          ]
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Is the plant short of water?",
+              "status": "draft",
+              "text": "Naa tshimela tshi khou shaya maḓi?"
+            },
+            {
+              "sourceEnglish": " Is the soil ",
+              "status": "draft",
+              "text": " Mavu o "
+            },
+            {
+              "sourceEnglish": "compacted",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ", or ",
+              "status": "draft",
+              "text": " kana "
+            },
+            {
+              "sourceEnglish": "hungry",
+              "status": "draft",
+              "text": "a si na pfushi"
+            },
+            {
+              "sourceEnglish": "?",
+              "status": "draft",
+              "text": "?"
+            },
+            {
+              "sourceEnglish": " Are predators already working on the problem for you?",
+              "status": "draft",
+              "text": " Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?"
+            }
+          ]
+        },
+        {
+          "status": "draft",
+          "text": "Yellow leaf a i ambi automatically uri ndi insect. Zwenezwo zwi nga vha maḓi, nutrition, kana u vhaisala ha midzi. Wanani uri ndi zwifhio ni sa athu dzhia vhukando."
+        }
+      ]
+    },
+    {
+      "id": "vegetables-staples:st:slide-15:heading",
+      "disposition": "candidate-draft",
+      "status": "unreviewed; not accepted or approved",
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "language": "st",
+      "slide": 15,
+      "field": "heading",
+      "sourceEnglish": "Pests Are Messengers Before They Are Enemies",
+      "sourceContextEnglish": [
+        "Pest pressure usually rises for a reason.",
+        "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+        "So before you treat anything, look at the whole system.",
+        "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+        "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act."
+      ],
+      "currentTargetBinding": {
+        "status": "english-hold"
+      },
+      "bindingKind": "paired-full-hold",
+      "segmentIndex": null,
+      "currentTargetComposition": "Full-field English hold; no translated target text is present.",
+      "proposedText": "Pests ke matshwao a bothata pele di nkuwa e le dira.",
+      "completeComposedTarget": "Pests ke matshwao a bothata pele di nkuwa e le dira.",
+      "backTranslation": "Pests are signs of a problem before they are regarded as enemies.",
+      "semanticReasoning": "Keeps the broad technical category Pests unchanged rather than narrowing to insects. “Signs of a problem” carries the diagnostic messenger function supported by the following body, and “before they are regarded as enemies” preserves the contrast.",
+      "uncertainty": "This recasts rather than literally translates “messengers”; Sesotho concord with the English loan Pests and the passive “di nkuwa” need a fluent check. Draft only.",
+      "completeCurrentSourceField": "Pests Are Messengers Before They Are Enemies",
+      "completeCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "targetContextCurrent": [
+        {
+          "status": "draft",
+          "text": "Pest pressure hangata e a eketseha ka lebaka le itseng."
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Plants under ",
+              "status": "draft",
+              "text": "Dimela tse nang le "
+            },
+            {
+              "sourceEnglish": "stress.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " One crop dominating the ground.",
+              "status": "draft",
+              "text": " Sejalo se le seng se laolang sebaka."
+            },
+            {
+              "sourceEnglish": " Or ",
+              "status": "draft",
+              "text": " Kapa "
+            },
+            {
+              "sourceEnglish": "broad chemical use",
+              "status": "draft",
+              "text": "tshebediso e pharalletseng ya dikhemikhale"
+            },
+            {
+              "sourceEnglish": " that has already removed the ",
+              "status": "draft",
+              "text": " e seng e tlositse "
+            },
+            {
+              "sourceEnglish": "predators",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " that were helping you.",
+              "status": "draft",
+              "text": " tse neng di o thusa."
+            }
+          ],
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
+        },
+        {
+          "status": "draft",
+          "text": "Ka hona, pele o phekola eng kapa eng, sheba system yohle."
+        },
+        {
+          "status": "draft",
+          "text": "Na semela se haellwa ke metsi? Na mobu o petetsane kapa ha o na phepo e lekaneng? Na dibatana tsa disenyi di se di thusa ho rarolla bothata?"
+        },
+        {
+          "status": "draft",
+          "text": "Lekhasi le lesehla ha le bolele ka boyona hore ho na le disenyi. Bothata e ka ba metsi, phepo ya semela kapa tshenyo ya metso. Fumana hore na ke efe pele o nka kgato."
+        }
+      ]
+    },
+    {
+      "id": "vegetables-staples:ts:slide-4:heading",
+      "disposition": "candidate-draft",
+      "status": "unreviewed; not accepted or approved",
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "language": "ts",
+      "slide": 4,
+      "field": "heading",
+      "sourceEnglish": "Roots Need Loose Soil, Paths Need Your Feet",
+      "sourceContextEnglish": [
+        "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+        "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+        "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+        "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else."
+      ],
+      "currentTargetBinding": {
+        "status": "english-hold"
+      },
+      "bindingKind": "paired-full-hold",
+      "segmentIndex": null,
+      "currentTargetComposition": "Full-field English hold; no translated target text is present.",
+      "proposedText": "Timitsu ti lava loose soil; paths ti lava milenge ya wena.",
+      "completeComposedTarget": "Timitsu ti lava loose soil; paths ti lava milenge ya wena.",
+      "backTranslation": "Roots need loose soil; paths need your feet.",
+      "semanticReasoning": "Retains loose soil and paths as domain/physical terms; translates roots, need, and your feet. Preserves the paired headline structure and the distinction that feet belong on paths, not the crop bed, which the slide body explains.",
+      "uncertainty": "Unverified concord with English “paths” and whether “paths need your feet” sounds natural rather than overly literal in Tsonga. Draft only.",
+      "completeCurrentSourceField": "Roots Need Loose Soil, Paths Need Your Feet",
+      "completeCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "targetContextCurrent": [
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Compacted soil",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+              "status": "draft",
+              "text": " yi lahlekeriwa hi swikhala swa yona swa moya. Timitsu ti nonoka. Mati ma tswonga hi ndlela yo hambana. Bed yi ya tika ku tirha eka nguva yin'wana ni yin'wana."
+            }
+          ]
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "The protection is simple. ",
+              "status": "draft",
+              "text": "Nsirhelelo wu olova. "
+            },
+            {
+              "sourceEnglish": "Permanent paths",
+              "status": "draft",
+              "text": "Tindlela leti tshamaka ti ri kona",
+              "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+            },
+            {
+              "sourceEnglish": ", and a bed narrow enough to reach into from both sides.",
+              "status": "draft",
+              "text": ", ni bed leyi nga anamangiki ngopfu leswaku u ta kota ku fika endzeni ka yona ku suka ematlhelweni haswimbirhi."
+            }
+          ],
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "One metre to one point two metres",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the ",
+              "status": "draft",
+              "text": " hi ku anama. Lowu hi wona mpimo lowu tirhaka. Hi ku anama koloko u nga fika exikarhini ku suka eka ndlela yin'wana ni yin'wana ya letimbirhi, naswona milenge ya wena a yi khumbi "
+            },
+            {
+              "sourceEnglish": "growing area",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": " nikatsongo."
+            }
+          ]
+        },
+        {
+          "status": "draft",
+          "text": "Sweswi ehleketa hi mabedhe ya wena. Xana u nga swi kota ku fika exikarhini handle ko kandziya endzeni? Famba u ya ringeta leswi u nga si byala swin'wana."
+        }
+      ]
+    },
+    {
+      "id": "vegetables-staples:ts:slide-5:heading",
+      "disposition": "candidate-draft",
+      "status": "unreviewed; not accepted or approved",
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "language": "ts",
+      "slide": 5,
+      "field": "heading",
+      "sourceEnglish": "Choose the Bed for the Soil and Rainfall",
+      "sourceContextEnglish": [
+        "There's no single bed shape that's right everywhere.",
+        "Start with the least disturbance that solves your problem.",
+        "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+        "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+        "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+        "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+        "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed."
+      ],
+      "currentTargetBinding": {
+        "status": "english-hold"
+      },
+      "bindingKind": "paired-full-hold",
+      "segmentIndex": null,
+      "currentTargetComposition": "Full-field English hold; no translated target text is present.",
+      "proposedText": "Hlawula bed hi ku ya hi soil ni rainfall.",
+      "completeComposedTarget": "Hlawula bed hi ku ya hi soil ni rainfall.",
+      "backTranslation": "Choose the bed according to soil and rainfall.",
+      "semanticReasoning": "Translates the choice and criterion frame while retaining the physical bed and technical soil/rainfall terms. The body’s examples tie raised/sunken/no-dig beds to wet ground, dry ground, and soil/drainage conditions.",
+      "uncertainty": "Unverified idiom for “hi ku ya hi” and grammar around retained English terms. Draft only.",
+      "completeCurrentSourceField": "Choose the Bed for the Soil and Rainfall",
+      "completeCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "targetContextCurrent": [
+        {
+          "status": "draft",
+          "text": "A ku na xivumbeko xa bed lexi lulameke eka tindhawu hinkwato."
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Start with the ",
+              "status": "draft",
+              "text": "Sungula hi "
+            },
+            {
+              "sourceEnglish": "least disturbance",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " that solves your problem.",
+              "status": "draft",
+              "text": " leyi lulamisaka xiphiqo xa wena."
+            }
+          ]
+        },
+        {
+          "status": "draft",
+          "text": "No-dig yi lulamela most garden soils. Tshika soil structure yi ri tano, kutani u aka fertility ehenhla."
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Do not dig ",
+              "status": "draft",
+              "text": "U nga keli "
+            },
+            {
+              "sourceEnglish": "wet clay",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ". If ",
+              "status": "draft",
+              "text": ". Loko "
+            },
+            {
+              "sourceEnglish": "compaction",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " or ",
+              "status": "draft",
+              "text": " kumbe "
+            },
+            {
+              "sourceEnglish": "poor drainage",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " is severe, identify the cause with local advice before choosing ",
+              "status": "draft",
+              "text": " swi ri severe, kuma xivangelo hi switsundzuxo swa le ndhawini u nga si hlawula "
+            },
+            {
+              "sourceEnglish": "deeper cultivation",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": "."
+            }
+          ]
+        },
+        {
+          "status": "draft",
+          "text": "Raised beds ti lulamela wet ground, laha mati ma faneleke ku kuma ndhawu yo huma ma ya kona."
+        },
+        {
+          "status": "draft",
+          "text": "Sunken beds ti lulamela dry ground, laha u lavaka ku khoma ni ku hlayisa mpfula leyi u yi kumaka."
+        },
+        {
+          "status": "draft",
+          "text": "Endzhaku ka mpfula leyikulu, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni switsundzuxo swa misava ni drainage u nga si hlawula bed.",
+          "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
+        }
+      ]
+    },
+    {
+      "id": "vegetables-staples:ts:slide-10:heading",
+      "disposition": "candidate-draft",
+      "status": "unreviewed; not accepted or approved",
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "language": "ts",
+      "slide": 10,
+      "field": "heading",
+      "sourceEnglish": "Each Crop Earns Its Place",
+      "sourceContextEnglish": [
+        "Intercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.",
+        "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+        "Maize gives height and structure.",
+        "Beans climb the maize, and store as protein.",
+        "Pumpkin spreads across the ground, shading the soil and holding moisture.",
+        "Timing matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
+        "The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
+      ],
+      "currentTargetBinding": {
+        "status": "english-hold"
+      },
+      "bindingKind": "paired-full-hold",
+      "segmentIndex": null,
+      "currentTargetComposition": "Full-field English hold; no translated target text is present.",
+      "proposedText": "Crop yin’wana ni yin’wana yi fanele yi va ni xiave xa yona.",
+      "completeComposedTarget": "Crop yin’wana ni yin’wana yi fanele yi va ni xiave xa yona.",
+      "backTranslation": "Each crop should have its own contribution/role.",
+      "semanticReasoning": "Expresses the headline’s “earns its place” function as a contribution/role, anchored by the next line that each plant needs a job and room to do it. Does not add a production or yield claim.",
+      "uncertainty": "“Contribution/role” may weaken the metaphor of justifying its place; “xiave” choice and agreement with retained Crop need review. Draft only.",
+      "completeCurrentSourceField": "Each Crop Earns Its Place",
+      "completeCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "targetContextCurrent": [
+        {
+          "status": "draft",
+          "text": "Intercropping a hi crowding ntsena ka swibyariwa swo hambana endhawini yin’we. Xibyariwa xin'wana ni xin'wana xi lava role ya xona, ni space leyi eneleke ku yi endla."
+        },
+        {
+          "status": "draft",
+          "text": "The Three Sisters i xifaniso lexi humaka eka Indigenous farming traditions in the Americas."
+        },
+        {
+          "status": "draft",
+          "text": "Maize yi nyika ku leha ni structure."
+        },
+        {
+          "status": "draft",
+          "text": "Beans ti khandziya maize, and store as protein."
+        },
+        {
+          "status": "draft",
+          "text": "Pumpkin yi hangalaka ehenhla ka misava, yi endla ndzhuti ehenhla ka misava, yi tlhela yi hlayisa moisture."
+        },
+        {
+          "status": "draft",
+          "text": "Nkarhi wu ni nkoka. Sungulani hi ku byala maize yi rhanga, leswaku yi tiya ku ringana ku rhwala beans loko ti sungula ku khandziya."
+        },
+        {
+          "status": "draft",
+          "text": "Swibyariwa swi nga ha phikizana. Nyika swibyariwa ndhawu leyi faneleke, mati ni ku vonakala. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
+        }
+      ]
+    },
+    {
+      "id": "vegetables-staples:ts:slide-15:heading",
+      "disposition": "candidate-draft",
+      "status": "unreviewed; not accepted or approved",
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "language": "ts",
+      "slide": 15,
+      "field": "heading",
+      "sourceEnglish": "Pests Are Messengers Before They Are Enemies",
+      "sourceContextEnglish": [
+        "Pest pressure usually rises for a reason.",
+        "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+        "So before you treat anything, look at the whole system.",
+        "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+        "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act."
+      ],
+      "currentTargetBinding": {
+        "status": "english-hold"
+      },
+      "bindingKind": "paired-full-hold",
+      "segmentIndex": null,
+      "currentTargetComposition": "Full-field English hold; no translated target text is present.",
+      "proposedText": "Pests i swikombiso leswi hi byelaka leswaku ku ni xiphiqo, hi nga si swi teka swi ri valala.",
+      "completeComposedTarget": "Pests i swikombiso leswi hi byelaka leswaku ku ni xiphiqo, hi nga si swi teka swi ri valala.",
+      "backTranslation": "Pests are signs that tell us there is a problem before we regard them as enemies.",
+      "semanticReasoning": "Preserves the broad pest category in English, not “insects.” Interprets messenger function as a diagnostic sign, consistent with the instruction to inspect conditions before treatment, and retains the enemy contrast.",
+      "uncertainty": "“Signs that tell us” is an interpretive rendering of messenger; unverified concord and naturalness around retained Pests. Draft only.",
+      "completeCurrentSourceField": "Pests Are Messengers Before They Are Enemies",
+      "completeCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "targetContextCurrent": [
+        {
+          "status": "draft",
+          "text": "Pest pressure hi ntolovelo yi engetseka hi xivangelo."
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Plants under ",
+              "status": "draft",
+              "text": "Swibyariwa leswi nga na "
+            },
+            {
+              "sourceEnglish": "stress.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " One crop dominating the ground.",
+              "status": "draft",
+              "text": " Xibyariwa xin’we lexi lawulaka ndhawu."
+            },
+            {
+              "sourceEnglish": " Or ",
+              "status": "draft",
+              "text": " Kumbe "
+            },
+            {
+              "sourceEnglish": "broad chemical use",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " that has already removed the ",
+              "status": "draft",
+              "text": " leyi se yi suseke "
+            },
+            {
+              "sourceEnglish": "predators",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " that were helping you.",
+              "status": "draft",
+              "text": " leti a ti ku pfuna."
+            }
+          ]
+        },
+        {
+          "status": "draft",
+          "text": "Kutani, loko u nga si tshungula xin'wana ni xin'wana, languta system hinkwawu."
+        },
+        {
+          "status": "draft",
+          "text": "Xana xibyariwa xi pfumala mati? Misava yi compacted kumbe yi pfumala swakudya? Xana predators se ti ku pfuna hi ku tirha eka xiphiqo lexi?"
+        },
+        {
+          "status": "draft",
+          "text": "A yellow leaf a swi vuli automatically leswaku ku ni insect. Xivangelo xi nga va mati, nutrition, kumbe ku onhaka ka timitsu. Kuma leswaku i yini u nga si teka goza."
+        }
+      ]
+    },
+    {
+      "id": "vegetables-staples:ts:slide-16:heading",
+      "disposition": "candidate-draft",
+      "status": "unreviewed; not accepted or approved",
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "language": "ts",
+      "slide": 16,
+      "field": "heading",
+      "sourceEnglish": "Treat the Cause Before the Insect",
+      "sourceContextEnglish": [
+        "Work through four steps, in order.",
+        "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+        "Two. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.",
+        "Three. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.",
+        "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+        "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+        "Be honest with yourself about which step you usually skip."
+      ],
+      "currentTargetBinding": {
+        "status": "english-hold"
+      },
+      "bindingKind": "paired-full-hold",
+      "segmentIndex": null,
+      "currentTargetComposition": "Full-field English hold; no translated target text is present.",
+      "proposedText": "Tshungula xivangelo u nga si thoma u tshungula insect.",
+      "completeComposedTarget": "Tshungula xivangelo u nga si thoma u tshungula insect.",
+      "backTranslation": "Treat the cause before you start treating the insect.",
+      "semanticReasoning": "Retains “insect” exactly as the source, avoiding widening it to all pests or changing it to pesticide/product. Translates the instruction frame and keeps cause-first order. The slide body begins with ordered observation and stress checks before any action.",
+      "uncertainty": "Unverified whether repeating the same verb for cause/insect is idiomatic; “tshungula” may imply treatment more narrowly than the source’s broader address-the-cause framing. Draft only.",
+      "completeCurrentSourceField": "Treat the Cause Before the Insect",
+      "completeCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "targetContextCurrent": [
+        {
+          "status": "draft",
+          "text": "Tirha hi magoza ya mune, hi ku landzelelana."
+        },
+        {
+          "status": "draft",
+          "text": "Xo sungula. Languta pattern ya ku onhaka, tlhelo ra le hansi ra tluka, tsinde, ni swibyariwa leswi nga ekusuhi."
+        },
+        {
+          "status": "draft",
+          "text": "Vumbirhi. Kambela stress. Ndzhongo wa misava, timitsu, mpfhuka wa swimilani, nutrition na drainage."
+        },
+        {
+          "status": "draft",
+          "text": "Vunharhu. Sirhelela leswi swi ku pfunaka. Beneficial insects (switsotswana leswi pfunaka) swi endla ntirho lowu wena a wu ta wu endla hi wexe."
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Four.",
+              "status": "draft",
+              "text": "Vumune."
+            },
+            {
+              "sourceEnglish": " Only then, act — and start with ",
+              "status": "draft",
+              "text": " Hi kona ntsena u tekaka goza — sungula hi "
+            },
+            {
+              "sourceEnglish": "the lightest thing that works.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Physical removal",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ", barriers",
+              "status": "draft",
+              "text": ", swisirhelelo",
+              "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+            },
+            {
+              "sourceEnglish": " or changes in ",
+              "status": "draft",
+              "text": " kumbe ku cinca ndlela yo hlayisa "
+            },
+            {
+              "sourceEnglish": "crop care",
+              "status": "draft",
+              "text": "swibyariwa"
+            },
+            {
+              "sourceEnglish": " may help.",
+              "status": "draft",
+              "text": " swi nga pfuna."
+            },
+            {
+              "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+              "status": "draft",
+              "text": " Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo."
+            }
+          ],
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "If a ",
+              "status": "draft",
+              "text": "Loko "
+            },
+            {
+              "sourceEnglish": "treatment",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " is needed, use a ",
+              "status": "draft",
+              "text": " yi laveka, tirhisa "
+            },
+            {
+              "sourceEnglish": "product registered for that crop and pest",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ", and follow its ",
+              "status": "draft",
+              "text": ", kutani u landzelela "
+            },
+            {
+              "sourceEnglish": "label",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": " ya yona."
+            },
+            {
+              "sourceEnglish": " This includes ",
+              "status": "draft",
+              "text": " Leswi swi katsa "
+            },
+            {
+              "sourceEnglish": "neem products.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Check ",
+              "status": "draft",
+              "text": " Kambela "
+            },
+            {
+              "sourceEnglish": "protection and harvest waiting instructions.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Do not improvise ",
+              "status": "draft",
+              "text": " U nga tiendleli "
+            },
+            {
+              "sourceEnglish": "mixtures",
+              "status": "draft",
+              "text": "swihlanganisi"
+            },
+            {
+              "sourceEnglish": " or ",
+              "status": "draft",
+              "text": " kumbe "
+            },
+            {
+              "sourceEnglish": "stronger doses",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": "."
+            }
+          ],
+          "provenance": "unreviewed independent draft; bounded exact stronger-doses hold; ordinary negative and mixtures clause translated; exact source partition verified"
+        },
+        {
+          "status": "draft",
+          "text": "Tshembeka eka wena n'winyi mayelana na goza leri u talaka ku ri tlula."
+        }
+      ]
+    },
+    {
+      "id": "reading-landscape:ve:slide-19:body[2]:segment-2",
+      "disposition": "candidate-draft",
+      "status": "unreviewed; not accepted or approved",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "language": "ve",
+      "slide": 19,
+      "field": "body[2]",
+      "bindingKind": "paired-segment-hold",
+      "segmentIndex": 2,
+      "sourceEnglish": "Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once.",
+      "sourceSegmentEnglish": "a perfect map drawn once.",
+      "currentTargetBinding": {
+        "sourceEnglish": "a perfect map drawn once.",
+        "status": "english-hold"
+      },
+      "currentTargetCompositionWithHoldPlaceholder": "I vusuluseni khalaṅwaha nga khalaṅwaha. Pencil map ine na shumisaho zwa vhukuma i na ndeme u fhira a perfect map drawn once.",
+      "proposedSegmentText": "perfect map ine ya olwa luthihi fhedzi",
+      "completeComposedTarget": "I vusuluseni khalaṅwaha nga khalaṅwaha. Pencil map ine na shumisaho zwa vhukuma i na ndeme u fhira perfect map ine ya olwa luthihi fhedzi",
+      "backTranslation": "Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once.",
+      "semanticReasoning": "Only indexed segment 2 is replaced in the in-memory composition; the other two actual segments are retained exactly. “once only” is localized while physical “map” and uncertain quality adjective “perfect” stay English. This maintains the comparison and avoids asserting that “perfect” means complete/finished.",
+      "uncertainty": "The source fragment includes both the evaluative adjective “perfect” and the completed passive “drawn once”; keeping perfect in English is a deliberate unresolved ordinary-language hold, so this is a mixed draft rather than a full translation. Check Tshivenda agreement for “map ine ya olwa” and confirm “luthihi fhedzi” means once only in this context.",
+      "completeCurrentSourceField": "Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once.",
+      "completeCurrentTargetField": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Update the sketch season by season. ",
+            "status": "draft",
+            "text": "I vusuluseni khalaṅwaha nga khalaṅwaha. "
+          },
+          {
+            "sourceEnglish": "A pencil map you actually use is worth more than ",
+            "status": "draft",
+            "text": "Pencil map ine na shumisaho zwa vhukuma i na ndeme u fhira "
+          },
+          {
+            "sourceEnglish": "a perfect map drawn once.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "sourceContextEnglish": [
+        "Mark summer and winter wind separately. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.",
+        "Overlay your zones and sectors on the same base map.",
+        "Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once."
+      ],
+      "targetContextCurrent": [
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Mark summer and winter wind separately. They can come from different directions, so a ",
+              "text": "Swayani muya wa tshilimo na wa vhuria nga u fhambanya. I nga bva thungo dzi sa fani, zwino ",
+              "status": "draft"
+            },
+            {
+              "sourceEnglish": "windbreak",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " or crop position that works in one season may be wrong in the other.",
+              "text": " kana fhethu ha zwimela hune ha shuma kha khalaṅwaha nthihi hu nga si shume kha iṅwe.",
+              "status": "draft"
+            }
+          ],
+          "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Overlay your zones and sectors on ",
+              "text": "Vheani dzi-zone na dzi-sector dzaṋu nṱha ha ",
+              "status": "draft"
+            },
+            {
+              "sourceEnglish": "the same base map",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "text": ".",
+              "status": "draft"
+            }
+          ],
+          "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+        },
+        {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Update the sketch season by season. ",
+              "status": "draft",
+              "text": "I vusuluseni khalaṅwaha nga khalaṅwaha. "
+            },
+            {
+              "sourceEnglish": "A pencil map you actually use is worth more than ",
+              "status": "draft",
+              "text": "Pencil map ine na shumisaho zwa vhukuma i na ndeme u fhira "
+            },
+            {
+              "sourceEnglish": "a perfect map drawn once.",
+              "status": "english-hold"
+            }
+          ],
+          "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+        }
+      ],
+      "exactSegmentSchema": {
+        "field": "body[2]",
+        "segmentCount": 3,
+        "index": 2,
+        "sourceEnglishAtIndex": "a perfect map drawn once.",
+        "targetObjectAtIndex": {
+          "sourceEnglish": "a perfect map drawn once.",
+          "status": "english-hold"
+        }
+      }
+    }
+  ]
+}

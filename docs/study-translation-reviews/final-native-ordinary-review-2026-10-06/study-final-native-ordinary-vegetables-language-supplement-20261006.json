@@ -1,0 +1,321 @@
+{
+  "title": "Supplemental independent language and semantic check: Vegetables L1–L3",
+  "createdAt": "2026-10-06",
+  "supplements": [
+    "/tmp/imbewu-study-final-native-ordinary-independent-check-20261006.json",
+    "/tmp/imbewu-study-final-native-ordinary-independent-check-supplement-20261006.json",
+    "/tmp/imbewu-study-final-native-ordinary-duration-market-supplement-20261006.json"
+  ],
+  "reviewedCommit": "2731fe76f2e8e7d1bc9a0be0dce66be497904401",
+  "readOnly": true,
+  "repositoryWrites": false,
+  "renderingOrTests": false,
+  "authority": "Rory authorized regional ordinary translation with canonical English unchanged. This check makes no fluency claim and imposes no prepublication human approval.",
+  "registryAuthority": "lib/course-localization.ts assembles source-paired regional learner drafts against lib/course-modules.ts. CandidateIndex binds triage and inventory rows to the exact lessonId and fieldLocator; native registry files are recorded per field.",
+  "summary": {
+    "uniqueFields": 15,
+    "dispositionCounts": {
+      "hold": 8,
+      "repair": 4,
+      "accept": 3
+    },
+    "scope": "All 15 unique native Vegetables L1–L3 fields represented by triage candidate rows 25–41, deduplicated by module/language/lesson/field. L4 and non-Vegetables fields are excluded.",
+    "visualLimit": "Infographic alt text was checked as text for language identity and meaning. No diagram was opened or visually inspected; Rory/root must complete any requested diagram-specific review before application.",
+    "limits": [
+      "No language fluency claim.",
+      "No audio, learner usability, or visual diagram review was performed.",
+      "No repository edits, rendering, tests, or completion-percentage claim."
+    ]
+  },
+  "fieldDispositions": [
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "st",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "body.paragraph[8]",
+        "candidateIndexes": [
+          25
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "sourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "currentTarget": "Raised beds di loketse wet ground, moo metsi a hlokang somewhere to drain away to.",
+      "previousProposal": "Raised beds di loketse mobu o metsi, moo metsi a hlokang sebaka sa ho phallela teng.",
+      "disposition": "hold",
+      "supplementalTarget": "Raised beds di loketse mobu o metsi, where water needs somewhere to drain away to.",
+      "reason": "“Metsi a hlokang sebaka sa ho phallela teng” may say water needs a place to flow, but the source specifically requires a destination for drainage away. Preserve the exact drainage clause until its direction is unambiguous."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "body.paragraph[10]",
+        "candidateIndexes": [
+          26
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "currentTarget": "Musi heavy rain yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na soil and drainage advice ni sa athu khetha bed.",
+      "previousProposal": "Musi ho na mvula khulu, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na nyeletshedzo nga ha soil and drainage ni sa athu khetha bed.",
+      "disposition": "repair",
+      "supplementalTarget": "Nga murahu ha mvula khulu, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na nyeletshedzo nga ha soil and drainage ni sa athu khetha bed.",
+      "reason": "The proposal opener “Musi ho na” is not Tshivenda. This correction says to observe after heavy rain; it changes only the opener and preserves the water-location questions and before-choosing condition."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "infographicAlt",
+        "candidateIndexes": [
+          27
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "currentTarget": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "previousProposal": "A raised bed ine ya vha na vhuphara ha about 1.2 metres, i re na paths nga matungo mavhili, uri muthu a swike vhukati a tshi bva kha thungo iṅwe na iṅwe a sa athu u vhuya a ima kha mavu ane a khou limiwa.",
+      "disposition": "repair",
+      "supplementalTarget": "A raised bed ine ya vha na vhuphara ha about 1.2 metres, i re na paths nga matungo mavhili, uri muthu a swike vhukati a tshi bva kha thungo iṅwe na iṅwe a sa vhuye a ima kha mavu ane a khou limiwa.",
+      "reason": "The proposal “a sa athu u vhuya a ima” can read as “before the person ever stands,” which weakens the source’s never-standing constraint. “A sa vhuye a ima” makes the prohibition continuous; the approximate width, two-sided access, and growing-soil reference remain.",
+      "backTranslation": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "body.paragraph[10]",
+        "candidateIndexes": [
+          28
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "currentTarget": "Endzhaku ka heavy rain, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni soil and drainage advice u nga si hlawula bed.",
+      "previousProposal": "Endzhaku ka heavy rain, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni switsundzuxo swa misava ni drainage u nga si hlawula bed.",
+      "disposition": "repair",
+      "supplementalTarget": "Endzhaku ka mpfula leyikulu, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni switsundzuxo swa misava ni drainage u nga si hlawula bed.",
+      "reason": "The proposal leaves the ordinary weather phrase “heavy rain” in English. This localizes that phrase and keeps the water observation, soil/drainage advice, and before-bed-choice sequence."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "infographicAlt",
+        "candidateIndexes": [
+          29
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "currentTarget": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "previousProposal": "Raised bed leyi nga kwalomu ka 1.2 metres hi ku anama, yi ri ni tindlela ematlhelo hamambirhi, leswaku munhu a kota ku fika exikarhini hi tlhelo rin'wana na rin'wana a nga tshuki a yima ehenhla ka misava leyi ku byariwaka eka yona.",
+      "disposition": "accept",
+      "supplementalTarget": "Raised bed leyi nga kwalomu ka 1.2 metres hi ku anama, yi ri ni tindlela ematlhelo hamambirhi, leswaku munhu a kota ku fika exikarhini hi tlhelo rin'wana na rin'wana a nga tshuki a yima ehenhla ka misava leyi ku byariwaka eka yona.",
+      "reason": "The Xitsonga proposal preserves the approximate 1.2-metre width, paths on both sides, reach to the middle from either side, and never-standing constraint. It adds no dimension or farming instruction."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "body.paragraph[14]",
+        "candidateIndexes": [
+          30
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "Beans climb the maize, and store as protein.",
+      "currentTarget": "Beans dzi gonya maize, and store as protein.",
+      "previousProposal": "Beans dzi gonya maize, nahone dzi vhulunga protein.",
+      "disposition": "hold",
+      "supplementalTarget": "Beans dzi gonya maize, and store as protein.",
+      "reason": "The source wording “store as protein” is ambiguous: translating it as “store protein” can turn a storable protein source into a claim that the beans themselves store protein. Preserve the exact source phrase pending a defensible reading."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "body.paragraph[17]",
+        "candidateIndexes": [
+          31
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "currentTarget": "Zwimela zwi nga kha ḓi konkurisana. Ni zwi fhe fhethu ho teaho, maḓi na tshedza. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "previousProposal": "Zwimela zwi nga kha ḓi konkurisana. Ni zwi fhe fhethu ho teaho, maḓi na tshedza. Beans fix nitrogen with root bacteria, fhedzi ni songo humbula uri dzi ṋea maize nutrients nga u ṱavhanya; nutrients in residues are released during decomposition.",
+      "disposition": "hold",
+      "supplementalTarget": "Zwimela zwi nga kha ḓi konkurisana. Ni zwi fhe fhethu ho teaho, maḓi na tshedza. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "reason": "The proposal changes “immediately feed” to “give nutrients quickly.” That risks weakening the timing and interpreting “feed” more narrowly. Preserve the exact source-bound biological clause; earlier localized competition and resource-allocation sentences remain."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "infographicAlt",
+        "candidateIndexes": [
+          32
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "currentTarget": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "previousProposal": "One bed eka tinguva tinharhu: ximilana lexi hatlisaka ku kula xa tshoveriwa, kutani ku byariwa swin'wana kusuhi na ximilana lexi kulaka hi ku nonoka lexi ha ka xi ya xi kula, leswaku bed yi nga tshuki yi sala yi nga ri na swimilana.",
+      "disposition": "hold",
+      "supplementalTarget": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "reason": "The proposed alt text is Xitsonga rather than Tshivenda (“eka tinguva…”, “ximilana…swimilana”). Keep the current exact English description until a Tshivenda proposal is available; do not expose the wrong language as a learner label."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "quiz[1].question",
+        "candidateIndexes": [
+          33
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "When can nitrogen in bean crop residues become available to other plants?",
+      "currentTarget": "Ndi lini nitrogen in bean crop residues i nga become available kha zwimela zwiṅwe?",
+      "previousProposal": null,
+      "disposition": "hold",
+      "supplementalTarget": "Ndi lini nitrogen in bean crop residues i nga become available kha zwimela zwiṅwe?",
+      "reason": "This is already a precision hold, not a full-target translation proposal. Keep the exact current source-paired wording: the nitrogen-in-residues availability question contains technical terminology and a timing relation that this pass does not independently translate."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "quiz[1].rationale",
+        "candidateIndexes": [
+          34,
+          35
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+      "currentTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; u alusa beans tsini na maize does not guarantee immediate feeding.",
+      "previousProposal": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; u alusa beans tsini na maize a zwi khwaṱhisedzi uri maize i wana nutrients nga u ṱavhanya.",
+      "disposition": "accept",
+      "supplementalTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; u alusa beans tsini na maize a zwi khwaṱhisedzi uri maize i wana nutrients nga u ṱavhanya.",
+      "reason": "The Tshivenda rationale keeps the nitrogen-fixation, root-bacteria, residues, and decomposition statements verbatim, and translates the final proposition with the no-guarantee force and quick/immediate timing intact. Duplicate candidate rows 34 and 35 are one field."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "body.paragraph[14]",
+        "candidateIndexes": [
+          36
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples-l2.ts",
+      "sourceEnglish": "Beans climb the maize, and store as protein.",
+      "currentTarget": "Beans ti khandziya maize, and store as protein.",
+      "previousProposal": "Beans ti khandziya maize, naswona ti hlayisa protein.",
+      "disposition": "hold",
+      "supplementalTarget": "Beans ti khandziya maize, and store as protein.",
+      "reason": "As with the paired Tshivenda field, “store as protein” is ambiguous and “store protein” risks asserting a different biological/storage mechanism. Preserve the exact source phrase pending a defensible reading."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "body.paragraph[17]",
+        "candidateIndexes": [
+          37
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples-l2.ts",
+      "sourceEnglish": "The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "currentTarget": "Swibyariwa swi nga ha phikizana. Nyika swibyariwa ndhawu leyi faneleke, mati ni ku vonakala. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "previousProposal": "Swibyariwa swi nga ha phikizana. Nyika swibyariwa ndhawu leyi faneleke, mati ni ku vonakala. Beans fix nitrogen with root bacteria, kambe u nga ehleketi leswaku ti nyika maize nutrients hi ku hatlisa; nutrients in residues are released during decomposition.",
+      "disposition": "hold",
+      "supplementalTarget": "Swibyariwa swi nga ha phikizana. Nyika swibyariwa ndhawu leyi faneleke, mati ni ku vonakala. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "reason": "The proposal changes “immediately feed” to “give nutrients quickly,” risking a weaker timing claim and a narrower interpretation. Preserve the exact biological clause while keeping the preceding localized sentences."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "infographicAlt",
+        "candidateIndexes": [
+          38
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples-l2.ts",
+      "sourceEnglish": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "currentTarget": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "previousProposal": "Bed nthihi eka misimu yinharhu: ximilana lexi hatlisaka ku kula xa tshoveriwa, kutani ku byariwa swin'wana kusuhi na ximilana lexi kulaka hi ku nonoka lexi ha ka xi kula, leswaku bed yi nga tshuki yi sala yi nga ri na swimilana.",
+      "disposition": "repair",
+      "supplementalTarget": "Bed yin’we over three seasons: ximilana lexi hatlisaka ku kula xa tshoveriwa, kutani ku byariwa swin'wana kusuhi na ximilana lexi kulaka hi ku nonoka lexi ha ka xi kula, leswaku bed yi nga tshuki yi sala yi nga ri na swimilana.",
+      "reason": "Replace the Tshivenda “nthihi” with Xitsonga “yin’we”. Keep “over three seasons” in exact English because “misimu” alone does not make the crop-season duration unambiguous. The sequence, beside relation, continued growth, and never-empty condition are retained.",
+      "backTranslation": "One bed over three seasons: the fast-growing crop is harvested, then something is planted beside the slower crop that is still growing, so the bed is never left without plants."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "quiz[1].rationale",
+        "candidateIndexes": [
+          39,
+          40
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples-l2.ts",
+      "sourceEnglish": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+      "currentTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; ku byala beans ekusuhi na maize does not guarantee immediate feeding.",
+      "previousProposal": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; ku byala beans ekusuhi na maize a swi tiyisekisi leswaku maize yi kuma nutrients hi ku hatlisa.",
+      "disposition": "accept",
+      "supplementalTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; ku byala beans ekusuhi na maize a swi tiyisekisi leswaku maize yi kuma nutrients hi ku hatlisa.",
+      "reason": "The Xitsonga rationale keeps all nitrogen-fixation, root-bacteria, residues, and decomposition claims verbatim and translates the final proposition with “does not guarantee” and the immediate timing relation intact. Duplicate candidate rows 39 and 40 are one field."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l3",
+        "fieldLocator": "title",
+        "candidateIndexes": [
+          41
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "Staple Crops: Maize, Beans, and Root Vegetables",
+      "currentTarget": "Staple Crops: Maize, Beans, and Root Vegetables",
+      "previousProposal": "Zwibyariwa zwa swakudya swa nkoka: Maize, Beans, and Root Vegetables",
+      "disposition": "hold",
+      "supplementalTarget": "Staple Crops: Maize, Beans, and Root Vegetables",
+      "reason": "The proposed Tshivenda title begins with Xitsonga (“Zwibyariwa zwa swakudya zwa nkoka”). The current exact English title safely preserves the crop-category wording and named crops; retain it until a Tshivenda title is available."
+    }
+  ]
+}

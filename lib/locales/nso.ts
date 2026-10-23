@@ -1,12 +1,16 @@
 // Auto-split from the former monolithic lib/i18n.tsx (bundle diet, task #6) — mechanical
 // extraction of this locale's existing key/value pairs, no translated text touched. Loaded
 // on demand via loadLocale() in lib/i18n.tsx, not bundled into every page's initial JS.
-import { DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
+import { CHAT_PANEL_ENGLISH_PENDING, DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, NETWORK_FAILURE_ENGLISH_PENDING, PHOTO_UPLOAD_ENGLISH_PENDING, PROFILE_SHEET_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
 
 const dict: Dict = {
   ...DESIGN_STUDIO_ENGLISH_PENDING,
   ...JOURNAL_ENGLISH_PENDING,
   ...LIMA_ENGLISH_PENDING,
+  ...CHAT_PANEL_ENGLISH_PENDING,
+  ...PHOTO_UPLOAD_ENGLISH_PENDING,
+  ...PROFILE_SHEET_ENGLISH_PENDING,
+  ...NETWORK_FAILURE_ENGLISH_PENDING,
   ...MENTOR_ENGLISH_PENDING,
   tagline: 'Bohlale bja Permaculture',
   welcomeTitle: 'O amogetšwe go ImbewuField',
@@ -20,7 +24,6 @@ const dict: Dict = {
   language: 'Leleme',
   tabHome: 'Gae',
   tabMap: 'Mmapa',
-  tabFinance: 'Ditšhelete',
   tabAccount: 'Akhaonto',
   toolbarMinButton: 'Hwetša naga ya gago',
   toolbarHeader: 'Hwetša naga ya gago',
@@ -105,7 +108,7 @@ const dict: Dict = {
   drawGpsButton: 'GPS',
   drawGpsTitle: 'Ema khutlong ya naga ya gago ke moka o kgotle go e bea mo',
   drawAddCornerButton: 'Oketša khutlo',
-  drawFinishButton: 'Fetša',
+  drawFinishButton: 'Go phethilwe',
   waterDropHint: 'Šuthela lefelong, ke moka o kgotle Bea mo',
   waterDropCancelButton: 'Khansela',
   waterDropPlaceButton: 'Bea mo',
@@ -231,7 +234,7 @@ const dict: Dict = {
   organicCarbonOk: 'E a amogelega',
   statBulkDensity: 'Bokoto bja mmu',
   bulkDensityCompacted: 'E gateletšwe',
-  bulkDensityOk: 'E lokile',
+  bulkDensityOk: 'Ke kwele',
   textureCompositionHeader: 'Sebopego sa mohuta wa mmu',
   textureSand: 'Santa',
   textureSilt: 'Leraga',
@@ -622,8 +625,6 @@ const dict: Dict = {
   homeSurveyNew: 'Nyakišiša lefelo le letjha',
   homeSurveyDesc: 'Bea pin gomme Lima e tla bala boemo bja leholimo, mobu le meetse.',
   homeOpenMap: 'Bula kharikhathi',
-  homeQuickFinance: 'Matlotlo',
-  homeQuickFinanceDesc: 'Lekeno le ditshenyegelo',
   homeQuickStudy: 'Ithuta',
   homeQuickStudyDesc: 'Koše ya permaculture',
   homeQuickContact: 'Ikopanya',
@@ -660,11 +661,10 @@ const dict: Dict = {
   navTaskPlanner: 'Mohlophiši wa Mešomo',
   navGardenSurvey: 'Patlišišo ya Serapa',
   navNGODashboard: 'Boto ya NGO',
-  navFacilitator: 'Tlhamo',
   navMyAccount: 'Akhaonto ya Ka',
   navCloseMenu: 'Koalela lenaneo',
   myRecordsTitle: 'Direkoto Tša Ka',
-  myRecordsSubtitle: 'Se o bjaleago · se o rekišago · merero go tšwa go molaodi wa gago',
+  myRecordsSubtitle: 'Se o bjaleago · se o rekišago · merero go tšwa go moeletši wa gago',
   myRecordsSignInTitle: 'Tsena go boloka direkoto tša gago',
   myRecordsSignInBody: 'Latela se o bjaleago le se o rekišago — data ya gago e dula le wena.',
   myRecordsSignInButton: 'Ya go tsena',

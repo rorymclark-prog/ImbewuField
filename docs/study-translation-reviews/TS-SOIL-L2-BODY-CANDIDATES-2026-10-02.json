@@ -1,0 +1,125 @@
+{
+  "lessonId": "soil-health-l2",
+  "sourceMainSha": "3143c07e047ad3f2cc8bc1e1481a307167942f65",
+  "status": "unwired-machine-draft",
+  "scopeNote": "Text-only Xitsonga candidate for all 12 paragraphs of canonical Soil L2 in lib/course-modules.ts. The current lib/course-translation-drafts-ts-soil-health.ts has Soil L1 and L3 but no Soil L2 entry, so there are no existing L2 body paragraphs to preserve. Difficult compost and safety terms remain in English where a precise Xitsonga rendering is uncertain. These are unreviewed, unwired candidates; no repository files were changed.",
+  "sourceBody": "Compost is organic matter broken down under managed conditions.\n\nFinished compost can improve soil structure and contribute nutrients.\n\nTime to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.\n\nMix dry browns with fresh greens. Avoid thick, wet layers that keep air out.\n\nIf the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.\n\nCheck moisture and air as the heap changes; one recipe does not suit every mix of materials.\n\nA hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.\n\nKeep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.\n\nDo not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.\n\nKeep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.\n\nUse only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.\n\nCheck the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+  "paragraphs": [
+    {
+      "index": 0,
+      "sourceEnglish": "Compost is organic matter broken down under managed conditions.",
+      "currentStatus": "No Soil L2 body pair exists in the current Xitsonga registry.",
+      "draft": "Compost i organic matter leyi broken down ehansi ka managed conditions.",
+      "literalBacktranslation": "Compost is organic matter broken down under managed conditions.",
+      "uncertainty": "Retains the source state/phrase broken down and the managed-conditions qualification in English; it does not imply a ready finished product or add a decomposition process claim."
+    },
+    {
+      "index": 1,
+      "sourceEnglish": "Finished compost can improve soil structure and contribute nutrients.",
+      "currentStatus": "No Soil L2 body pair exists in the current Xitsonga registry.",
+      "draft": "Finished compost yi nga antswisa xivumbeko xa misava ni ku contribute nutrients.",
+      "literalBacktranslation": "Finished compost can improve soil structure and contribute nutrients.",
+      "uncertainty": "Keeps finished compost distinct from compost that is merely ready. Yi nga preserves can as a possibility; soil structure is translated and contribute nutrients remains in English."
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "Time to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.",
+      "currentStatus": "No Soil L2 body pair exists in the current Xitsonga registry.",
+      "draft": "Nkarhi wo lungheka wa hambana hi materials, moisture, air na temperature. Vito ra province kumbe nhlayo leyi vekiweke ya mavhiki a hi readiness test.",
+      "literalBacktranslation": "The time to become ready varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.",
+      "uncertainty": "Retains the technical variables and readiness test wording in English. Preserves both source conditions: time varies with the listed factors, and neither a province name nor fixed weeks tests readiness."
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "Mix dry browns with fresh greens. Avoid thick, wet layers that keep air out.",
+      "currentStatus": "No Soil L2 body pair exists in the current Xitsonga registry.",
+      "draft": "Hlanganisa dry browns na fresh greens. Papalata thick, wet layers leti sivelaka air ku nghena.",
+      "literalBacktranslation": "Mix dry browns with fresh greens. Avoid thick, wet layers that prevent air from entering.",
+      "uncertainty": "Retains the brown/green categories and keeps thick, wet in English so the warning cannot shift to hard layers. The air-exclusion effect remains explicit."
+    },
+    {
+      "index": 4,
+      "sourceEnglish": "If the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.",
+      "currentStatus": "No Soil L2 body pair exists in the current Xitsonga registry.",
+      "draft": "Loko heap yi va slimy kumbe yi nun'hwa ammonia swinene, engetela dry browns kutani u yi turn.",
+      "literalBacktranslation": "If the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.",
+      "uncertainty": "Preserves the 'if' condition, either symptom, strong smell, dry-browns action and turning action. Retains heap, slimy, ammonia, dry browns and turn in English to avoid uncertain concord or compost-action wording."
+    },
+    {
+      "index": 5,
+      "sourceEnglish": "Check moisture and air as the heap changes; one recipe does not suit every mix of materials.",
+      "currentStatus": "No Soil L2 body pair exists in the current Xitsonga registry.",
+      "draft": "Kambela moisture na air loko heap yi ri karhi yi cinca; recipe yin'we a yi ringani eka nkatsakanyo wun'wana ni wun'wana wa materials.",
+      "literalBacktranslation": "Check moisture and air while the heap is changing; one recipe does not fit every mix of materials.",
+      "uncertainty": "Retains moisture, air, heap, recipe and materials in English. The instruction remains ongoing as the heap changes, and it does not prescribe one universal mixture."
+    },
+    {
+      "index": 6,
+      "sourceEnglish": "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+      "currentStatus": "No Soil L2 body pair exists in the current Xitsonga registry.",
+      "draft": "Hot centre ya heap a yi tiyisisi leswaku every part ya heap yi treated. Time, temperature and management all matter.",
+      "literalBacktranslation": "A hot centre of the heap does not prove every part has been treated. Time, temperature and management all matter.",
+      "uncertainty": "Keeps hot centre exact in English to avoid confusing centre with time. Every part and the failure of proof remain explicit; treated is not expanded to sanitised. Root retains exact technical English all-matter, seed non-viability or bark breakdown wording as applicable."
+    },
+    {
+      "index": 7,
+      "sourceEnglish": "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+      "currentStatus": "No Soil L2 body pair exists in the current Xitsonga registry.",
+      "draft": "Hlayisani meat, dairy, diseased plants, pet waste na contaminated materials swi ri ehandle ka simple household system.",
+      "literalBacktranslation": "Keep meat, dairy, diseased plants, pet waste and contaminated materials outside the simple household system.",
+      "uncertainty": "Retains all five excluded categories and the simple-household-system scope. Keeps technical categories in English; no extra exclusion is added."
+    },
+    {
+      "index": 8,
+      "sourceEnglish": "Do not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.",
+      "currentStatus": "No Soil L2 body pair exists in the current Xitsonga registry.",
+      "draft": "U nga teki leswaku home composting yi lovisa weed seed yin'wana ni yin'wana kumbe disease organism yin'wana ni yin'wana. Tirhisa recognised process laha sanitation yi lavekaka.",
+      "literalBacktranslation": "Do not assume home composting destroys every weed seed or every disease organism. Use a recognised process where sanitation is required.",
+      "uncertainty": "Makes the every qualifier apply to both weed seeds and disease organisms. The recognised-process instruction remains conditional on sanitation being required; no sanitation guarantee is claimed."
+    },
+    {
+      "index": 9,
+      "sourceEnglish": "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+      "currentStatus": "No Soil L2 body pair exists in the current Xitsonga registry.",
+      "draft": "Hlayisani wattle seed pods ehandle ka compost heap. An ordinary heap may not make every seed non-viable.",
+      "literalBacktranslation": "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+      "uncertainty": "Preserves the exclusion, may not and every-seed limits. It does not say all seeds survive or that an ordinary heap never makes any seed non-viable; non-viable remains English. Root retains exact technical English all-matter, seed non-viability or bark breakdown wording as applicable."
+    },
+    {
+      "index": 10,
+      "sourceEnglish": "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+      "currentStatus": "No Soil L2 body pair exists in the current Xitsonga registry.",
+      "draft": "Tirhisa clean, untreated materials ntsena. Bark breaks down slowly; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.",
+      "literalBacktranslation": "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it has no contamination.",
+      "uncertainty": "Retains clean, untreated materials and contamination terms to avoid weakening the constraint. The warning does not imply bark is contaminated; it says its name alone is insufficient proof. Root retains exact technical English all-matter, seed non-viability or bark breakdown wording as applicable."
+    },
+    {
+      "index": 11,
+      "sourceEnglish": "Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+      "currentStatus": "No Soil L2 body pair exists in the current Xitsonga registry.",
+      "draft": "Kambela heap kutani u yi turn loko yi lava air yo tala kumbe mixing. Yi hlayise yi ri moist, ku nga ri waterlogged.",
+      "literalBacktranslation": "Check the heap and turn it when it needs more air or mixing. Keep it moist, not waterlogged.",
+      "uncertainty": "Preserves the conditional timing of turning, the two possible needs (more air or mixing), and the moist-not-waterlogged limit. Retains technical process and moisture terms in English."
+    }
+  ],
+  "draftBody": "Compost i organic matter leyi broken down ehansi ka managed conditions.\n\nFinished compost yi nga antswisa xivumbeko xa misava ni ku contribute nutrients.\n\nNkarhi wo lungheka wa hambana hi materials, moisture, air na temperature. Vito ra province kumbe nhlayo leyi vekiweke ya mavhiki a hi readiness test.\n\nHlanganisa dry browns na fresh greens. Papalata thick, wet layers leti sivelaka air ku nghena.\n\nLoko heap yi va slimy kumbe yi nun'hwa ammonia swinene, engetela dry browns kutani u yi turn.\n\nKambela moisture na air loko heap yi ri karhi yi cinca; recipe yin'we a yi ringani eka nkatsakanyo wun'wana ni wun'wana wa materials.\n\nHot centre ya heap a yi tiyisisi leswaku every part ya heap yi treated. Time, temperature and management all matter.\n\nHlayisani meat, dairy, diseased plants, pet waste na contaminated materials swi ri ehandle ka simple household system.\n\nU nga teki leswaku home composting yi lovisa weed seed yin'wana ni yin'wana kumbe disease organism yin'wana ni yin'wana. Tirhisa recognised process laha sanitation yi lavekaka.\n\nHlayisani wattle seed pods ehandle ka compost heap. An ordinary heap may not make every seed non-viable.\n\nTirhisa clean, untreated materials ntsena. Bark breaks down slowly; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.\n\nKambela heap kutani u yi turn loko yi lava air yo tala kumbe mixing. Yi hlayise yi ri moist, ku nga ri waterlogged.",
+  "preservation": {
+    "sourceParagraphCount": 12,
+    "candidateParagraphCount": 12,
+    "existingL2ParagraphsFound": 0,
+    "existingParagraphsPreserved": 0,
+    "canonicalSourceUnchanged": true,
+    "noRepositoryEdits": true
+  },
+  "semanticChecks": [
+    "All 12 source paragraphs were compared in order with canonical Soil L2 at current origin/main 3143c07; the Xitsonga registry has no L2 body entry.",
+    "Paragraphs 1–2 preserve broken down under managed conditions and finished compost; improvement remains can, not a guarantee, and contributes nutrients is not changed to a finished-product readiness claim.",
+    "The wet-layer warning says thick, wet layers and retains the air-blocking effect; slimy/strong-ammonia remains conditional and calls for dry browns and turning.",
+    "Hot centre, every part, the non-proof qualification, treated, and time/temperature/management are kept in scope; heat is not called a sanitation guarantee.",
+    "All five prohibited inputs stay excluded from the simple household system. The disease-organism every qualifier is explicit alongside every weed seed; recognised process remains conditional on sanitation being required.",
+    "Wattle pods remain excluded and ordinary heap may not make every seed non-viable; clean and untreated materials, bark timing, name-not-proof caveat and contamination remain intact.",
+    "Final turning remains conditional on more air OR mixing; moist is distinct from waterlogged.",
+    "No quantities, timing, species, safety guarantee, or new compost instruction was added."
+  ],
+  "uncertaintySummary": "Unreviewed machine draft, not fluent-speaker approval. Technical compost, treatment and safety terms remain in English where needed. Paragraphs 1, 3, 6, 7, 8 and 9 were tightened to avoid shifts in process/state, layer thickness, centre/time, exclusion wording, every-disease-organism scope, and seed viability modality. Mixed-language grammar still needs independent Xitsonga review."
+}

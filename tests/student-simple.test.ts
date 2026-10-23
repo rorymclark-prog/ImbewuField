@@ -10,7 +10,8 @@ import { readFileSync } from 'node:fs';
 
 const STUDENT_SOURCE = readFileSync(new URL('../app/student/page.tsx', import.meta.url), 'utf8');
 const OFFLINE_DOWNLOAD_SOURCE = readFileSync(new URL('../components/course/OfflineDownload.tsx', import.meta.url), 'utf8');
-const COURSE_MODULES_SOURCE = readFileSync(new URL('../lib/course-modules.ts', import.meta.url), 'utf8');
+const CATEGORY_TEXT_SOURCE = readFileSync(new URL('../lib/category-text-colors.ts', import.meta.url), 'utf8');
+const GLOBALS_CSS_SOURCE = readFileSync(new URL('../app/globals.css', import.meta.url), 'utf8');
 const COURSE_GATING_SOURCE = readFileSync(new URL('../lib/course-gating.ts', import.meta.url), 'utf8');
 const COURSE_ASSIGNMENTS_SOURCE = readFileSync(new URL('../lib/course-assignments.ts', import.meta.url), 'utf8');
 const DESIGN_SOURCE = readFileSync(new URL('../app/student/design/page.tsx', import.meta.url), 'utf8');
@@ -76,19 +77,22 @@ test('Simple shows the Design/Finance companion previews as two plain links', ()
   );
 });
 
-test('regional Study infographic machine drafts show their English source beside the image', () => {
+test('source-paired Study infographic machine drafts show their English source beside the image', () => {
   const start = STUDENT_SOURCE.indexOf('{hasInfographic && (');
   const end = STUDENT_SOURCE.indexOf('{/* Body */}', start);
   assert.ok(start >= 0 && end > start, 'the infographic block must remain present before the lesson body');
   const infographic = STUDENT_SOURCE.slice(start, end);
 
+  // isiZulu now uses the same source panels; retaining a regional-only gate would hide its source.
+  assert.match(STUDENT_SOURCE, /const sourcePairedDraft = regionalDraft \|\| isiZuluDraft;/,
+    'the source gate preserves the other regional drafts and includes isiZulu');
   assert.match(STUDENT_SOURCE,
-    /const infographicAltDraft = regionalDraft && lessonContent\.infographicAlt &&\s+lessonContent\.infographicAlt !== lesson\.infographicAlt/,
-    'only a regional draft that differs from the exact source needs a visible caption');
+    /const infographicAltDraft = sourcePairedDraft && lessonContent\.infographicAlt &&\s+lessonContent\.infographicAlt !== lesson\.infographicAlt/,
+    'only a source-paired draft that differs from exact English needs a translated caption');
   assert.match(infographic,
     /LessonInfographic url=\{lesson\.infographicUrl!\} alt=\{lessonContent\.infographicAlt \?\? lesson\.infographicAlt!\}/,
     'the translated description must remain the image alt text');
-  assert.match(infographic, /Machine draft · \{lang === 'st' \? 'Sesotho' : lang === 'ts' \? 'X[^']*' : 'Tshivenda'\} image description/,
+  assert.match(infographic, /Machine draft · \{lang === 'st' \? 'Sesotho' : lang === 'ts' \? 'X[^']*' : lang === 'zu' \? 'isiZulu' : 'Tshivenda'\} image description/,
     'the visible caption must identify the unreviewed language draft');
   assert.match(infographic, /<p lang=\{lang\} className="text-sm">\{infographicAltDraft\}<\/p>/,
     'the translated description must also be visible to sighted learners');
@@ -110,12 +114,16 @@ test('Simple labels each companion link clearly, with its one-line description a
 
 test('the companion link labels are real i18n keys, placed next to their related preview strings', () => {
   assert.match(I18N_SOURCE, /studentDesignPreviewSimpleLabel: 'Design course',/);
-  assert.match(I18N_SOURCE, /studentFinancePreviewSimpleLabel: 'Farm Finance course',/);
+  assert.match(I18N_SOURCE, /studentFinancePreviewSimpleLabel: 'Farm finance course',/);
 });
 
 test('ochre is never painted as readable text: the due-soon tone and the category text-colour variant', () => {
-  assert.match(STUDENT_SOURCE, /'due-soon':\s*\{ fg: '#7A4408'/, 'ASSIGNMENT_TONE due-soon.fg must be the text-safe ochre');
-  assert.match(COURSE_MODULES_SOURCE, /CATEGORY_TEXT_COLORS[\s\S]*?design: "#7A4408"/, 'CATEGORY_TEXT_COLORS.design must be the text-safe ochre');
+  // swarm/w13-student (code-01/dark-02) routed this literal through var(--gold-dim) — the same
+  // text-safe ochre value (#7A4408), now theme-token-based so it keeps 4.5:1 contrast in dark mode
+  // too instead of staying the fixed earth-light hex.
+  assert.match(STUDENT_SOURCE, /'due-soon':\s*\{ fg: 'var\(--gold-dim\)'/, 'ASSIGNMENT_TONE due-soon.fg must be the text-safe ochre');
+  assert.match(CATEGORY_TEXT_SOURCE, /CATEGORY_TEXT_COLORS[\s\S]*?design:\s*"var\(--cat-design-text\)"/, 'CATEGORY_TEXT_COLORS.design must be the text-safe ochre token');
+  assert.match(GLOBALS_CSS_SOURCE, /--cat-design-text: #7A4408;/, 'the earth-light design text token keeps the text-safe ochre');
   // Every site that paints the category colour as text (not a fill/border/icon) must use the
   // text-safe variant, not the raw CATEGORY_COLORS/`color` fill value.
   assert.match(STUDENT_SOURCE, /style=\{\{ color: textColor \}\}>\{t\('studentKeyPoints'\)\}/);
@@ -177,7 +185,11 @@ test('/student/design and /student/finance hide their sources/further-reading li
 test('tips page routes its hero, section headings and controls through the translation pattern', () => {
   assert.match(TIPS_SOURCE, /useLanguage/);
   assert.match(TIPS_SOURCE, /t\('tipsTitle'\)/);
-  assert.match(TIPS_SOURCE, /t\('tipsVideoGuidesTitle'\)/);
   assert.match(TIPS_SOURCE, /t\('navTour'\)/);
   assert.doesNotMatch(TIPS_SOURCE, /<h1>Tips &amp; help<\/h1>/, 'the hero title must no longer be a hard-coded literal');
+  // ux-19 (2026-10-16 visual/UX audit): the "Video guides" section this used to pin was a
+  // placeholder ending in "will be added here when published" with only a generic YouTube
+  // search link — removed until there is at least one real video, so t('tipsVideoGuidesTitle')
+  // is deliberately no longer rendered.
+  assert.doesNotMatch(TIPS_SOURCE, /t\('tipsVideoGuidesTitle'\)/, 'the video-guides placeholder was removed on purpose — this assertion is inverted, not deleted');
 });

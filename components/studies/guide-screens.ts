@@ -24,10 +24,10 @@ export const GUIDE_SCREENS: Record<string, readonly GuideScreen[]> = {
   ],
   design: [
     screen('design', 'Design Studio', 'Review the saved layout and its layers.', 232813),
-    screen('crop-plan', 'Crop plan', 'Open the crop plan from the reviewed design.', 99389),
+    screen('crop-plan', 'Production plan', 'Open the production plan from the reviewed design.', 99389),
   ],
   'crop-planning': [
-    screen('crop-plan', 'Crop plan', 'Read the beds, crops and months on the calendar.', 99389),
+    screen('crop-plan', 'Production plan', 'Read the beds, crops and months on the calendar.', 99389),
     screen('design', 'Design Studio', 'Return to the map when a bed or plot needs checking.', 232813),
   ],
   harvest: [

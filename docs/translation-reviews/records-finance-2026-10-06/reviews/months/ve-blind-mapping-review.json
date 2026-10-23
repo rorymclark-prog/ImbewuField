@@ -1,0 +1,17 @@
+{
+ "items": [
+  {"n": 1, "name": "Ṱhangule", "month": 8, "confidence": "high", "flag": "Requires correct Unicode Ṱ (T with line below); plain 'Th' would be a different letter. Unrelated to Ṱhafamuhwe despite shared prefix."},
+  {"n": 2, "name": "Shundunthule", "month": 5, "confidence": "medium", "flag": "Long, easily misspelled (Shundunthule vs Shundunthule variants); less commonly seen than other names. Some sources vary the spelling."},
+  {"n": 3, "name": "Ṱhafamuhwe", "month": 3, "confidence": "high", "flag": "Shares Ṱha- prefix with Ṱhangule (Aug); confusable by short form if diacritic is dropped. Requires Ṱ."},
+  {"n": 4, "name": "Fulwi", "month": 6, "confidence": "medium", "flag": "Easily confused with Fulwana (July); short form 'Fulw' collides with Fulwana's stem. Also evokes winter/cold, so could be read as a season."},
+  {"n": 5, "name": "Nyendavhusiku", "month": 12, "confidence": "medium", "flag": "Long name, easily misspelled; some sources spell it differently. Low-frequency form."},
+  {"n": 6, "name": "Tshimedzi", "month": 10, "confidence": "high", "flag": "Similar ending to Khubvumedzi (Sept); confusable if abbreviated or skimmed."},
+  {"n": 7, "name": "Ḽara", "month": 11, "confidence": "medium", "flag": "Requires correct Unicode Ḽ (L with circumflex below); a plain 'Lara' would look like a personal name. Short and easily confused."},
+  {"n": 8, "name": "Fulwana", "month": 7, "confidence": "medium", "flag": "Diminutive of Fulwi; confusable with Fulwi (June). Short form 'Fwan' is not the first four letters (those would collide with Fulwi), so it is a deliberate disambiguation."},
+  {"n": 9, "name": "Luhuhi", "month": 2, "confidence": "medium", "flag": "Less commonly attested; some sources differ on the Feb/March assignment."},
+  {"n": 10, "name": "Phando", "month": 1, "confidence": "high", "flag": ""},
+  {"n": 11, "name": "Lambamai", "month": 4, "confidence": "high", "flag": "Looks like a loan from 'Lamba' plus 'Mai' (May); a reader might wrongly map it to May. It is April."},
+  {"n": 12, "name": "Khubvumedzi", "month": 9, "confidence": "high", "flag": "Similar ending to Tshimedzi (Oct); confusable if abbreviated."}
+ ],
+ "summary": "Machine-generated review from model knowledge only, not a fluent-speaker or native-linguist approval. All 12 names map to distinct months, consistent with the standard South African Tshivenda calendar (Phando=Jan ... Nyendavhusiku=Dec). No outright misspellings found, and none look like non-South-African-only forms. Main risks: (1) Fulwi (Jun) vs Fulwana (Jul) near-collision, with Fulwi also suggesting a winter season; (2) Tshimedzi vs Khubvumedzi share an ending; (3) Ṱhangule vs Ṱhafamuhwe share a prefix and depend on the Ṱ diacritic, as does Ḽara on Ḽ; (4) Lambamai superficially resembles 'May' but is April. The less common names (Shundunthule, Luhuhi, Nyendavhusiku, Ḽara) have medium confidence and should get a native-speaker check."
+}

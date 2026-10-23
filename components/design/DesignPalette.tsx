@@ -138,12 +138,8 @@ export type { WaterInfrastructureLayer } from '@/lib/design-layer-membership';
 export type WaterInfrastructureVisibility = Record<WaterInfrastructureLayer, boolean>;
 export type PlantingSublayerVisibility = Record<PlantingSublayer, boolean>;
 
-// PRO mode was removed (see DesignWizard.tsx) — 'guided' is the only mode left reachable.
-export type DesignMode = 'guided';
-
 export interface DesignPaletteProps {
   step: WizardStep;
-  mode?: DesignMode;
   tool: ToolKind;
   setTool: (t: ToolKind) => void;
   placeDefId: string | null;

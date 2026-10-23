@@ -1,0 +1,2183 @@
+{
+  "title": "Independent semantic and binding check: Intro post-PR966 ordinary remainders",
+  "date": "2026-10-06",
+  "readOnly": true,
+  "noRepoEdits": true,
+  "noFluencyApproval": true,
+  "authority": {
+    "checkedWorktree": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField",
+    "checkedHead": "2731fe76f2e8e7d1bc9a0be0dce66be497904401",
+    "inputPacket": "/tmp/imbewu-intro-final-post966-ordinary-remaining-rebound-20261006.json",
+    "inputPacketSha256": "5553d22ad2b2bfa5f1939fda2663cda0304f8ef5e97ba0006971c937a578fd2c",
+    "packetExpectedHead": "9bf95baafeeea745037d5d973b286350ed0027de",
+    "packetAuthorityNote": "Although the rebound packet records 9bf95ba as its original final preview/content authority, every one of its seven declared current relevant file hashes is byte-identical in the specified 2731fe76 checkout. This is the post-966 checkout binding used here."
+  },
+  "bindingAudit": {
+    "actualDeltaCount": 60,
+    "allRelevantFilesMatchPacketHashes": true,
+    "files": [
+      {
+        "path": "lib/course-modules.ts",
+        "packetSha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "currentSha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "matches": true
+      },
+      {
+        "path": "lib/course-translation-drafts-st.ts",
+        "packetSha256": "259c32040f8af912df4b87ef134d6c35cc29ee0c24bcd89f654a1d39706f51a8",
+        "currentSha256": "259c32040f8af912df4b87ef134d6c35cc29ee0c24bcd89f654a1d39706f51a8",
+        "matches": true
+      },
+      {
+        "path": "lib/course-translation-drafts-ve.ts",
+        "packetSha256": "0358e790c699fa047101cbae939bbf0410deb7cd2eea2c3bdc0f2ae5d482d818",
+        "currentSha256": "0358e790c699fa047101cbae939bbf0410deb7cd2eea2c3bdc0f2ae5d482d818",
+        "matches": true
+      },
+      {
+        "path": "lib/course-translation-drafts-ts.ts",
+        "packetSha256": "28e45acf80a96956885e227f55716ac84549bd129019deb23874ffea51396c4e",
+        "currentSha256": "28e45acf80a96956885e227f55716ac84549bd129019deb23874ffea51396c4e",
+        "matches": true
+      },
+      {
+        "path": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/st-paired-after.json",
+        "packetSha256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+        "currentSha256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+        "matches": true
+      },
+      {
+        "path": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/ve-paired-after.json",
+        "packetSha256": "8f0b681a7661804affd9038bdd8ba09a080f7eaf9509a740070db5ac4005e80b",
+        "currentSha256": "8f0b681a7661804affd9038bdd8ba09a080f7eaf9509a740070db5ac4005e80b",
+        "matches": true
+      },
+      {
+        "path": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/ts-paired-after.json",
+        "packetSha256": "2773290f06d9d9e48c638cd63e2c29d01281a666a6f42294c06b71db0e053e3d",
+        "currentSha256": "2773290f06d9d9e48c638cd63e2c29d01281a666a6f42294c06b71db0e053e3d",
+        "matches": true
+      }
+    ],
+    "allRowsExactSourceAndCurrentTargetBound": true,
+    "excludedRowsPreserved": 23,
+    "excludedRows": [
+      {
+        "row": 6,
+        "language": "ts",
+        "fieldLocator": "lessons/2/quiz/0/question",
+        "fieldType": "quizQuestion",
+        "sourceEnglish": "You plant herbs in Zone 3, the main field far from the house. What problem does this create?",
+        "currentTarget": "U byala herbs eka Zone 3, main field leyi nga ekule na yindlu. Xana leswi swi vanga xiphiqo xihi?",
+        "originalAuditCurrentTarget": "U byala herbs eka Zone 3, main field leyi nga ekule na yindlu. Xana leswi swi vanga xiphiqo xihi?",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "native",
+          "path": "lib/course-translation-drafts-ts.ts",
+          "nativeReviewStatus": "machine-draft",
+          "sourceCorrectIndex": null
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "Keep “main field” as the exact source category; do not let the existing Tshivenda “main” idea become size without review.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "Keep “main field” as the exact source category; do not let the existing Tshivenda “main” idea become size without review."
+      },
+      {
+        "row": 7,
+        "language": "ve",
+        "fieldLocator": "lessons/2/quiz/0/options/1",
+        "fieldType": "quizOption",
+        "sourceEnglish": "The extra walk may mean you pick or check them less often",
+        "currentTarget": "Lwendo lwo engedzeaho lu nga amba uri ni nga ka kana u sedza herbs less often",
+        "originalAuditCurrentTarget": "Lwendo lwo engedzeaho lu nga amba uri ni nga ka kana u sedza herbs less often",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "native",
+          "path": "lib/course-translation-drafts-ve.ts",
+          "nativeReviewStatus": "machine-draft",
+          "sourceCorrectIndex": null
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "Hold only “less often”; may and pick-or-check scope stay localized.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "Hold only “less often”; may and pick-or-check scope stay localized."
+      },
+      {
+        "row": 8,
+        "language": "ve",
+        "fieldLocator": "lessons/2/quiz/0/rationale",
+        "fieldType": "quizRationale",
+        "sourceEnglish": "Put a crop you pick often near a daily path. A distant bed adds walking and may be checked less often.",
+        "currentTarget": "Vheani tshimela tshine na tshi ka lunzhi tsini ha nḓila ya ḓuvha ḽiṅwe na ḽiṅwe. Bed i re kule i engedza u tshimbila nahone i nga tolwa less often.",
+        "originalAuditCurrentTarget": "Vheani tshimela tshine na tshi ka lunzhi tsini ha nḓila ya ḓuvha ḽiṅwe na ḽiṅwe. Bed i re kule i engedza u tshimbila nahone i nga tolwa less often.",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "native",
+          "path": "lib/course-translation-drafts-ve.ts",
+          "nativeReviewStatus": "machine-draft",
+          "sourceCorrectIndex": null
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "Hold only “less often”; distance, added walking, and may-be-checked scope are already localized.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "Hold only “less often”; distance, added walking, and may-be-checked scope are already localized."
+      },
+      {
+        "row": 9,
+        "language": "ve",
+        "fieldLocator": "pairedSlides/ve/slides[n=7]/target/body[1]",
+        "fieldType": "body",
+        "sourceEnglish": "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+        "currentTarget": "Thomani nga u wana arali u kovhelana ho tendelwa. Ṱolani arali borehole i nga kona u shumela vhashumisi vhoṱhe hu si na u dzhia maḓi manzhi lwo kalaho. Arali u kovhelana ho tendelwa nahone hu na maḓi o eḓanaho, tendelanani uri ni kovhelane nga ndinganyo ni dzule ni tshi sedza vhuimo ha maḓi. People Care na Fair Share zwi livhisa u tendelana. Earth Care zwi amba u tsireledza tshiko. U sedza vhuimo ha maḓi fhedzi a zwi ambi uri u shumisa maḓi o engedzeaho zwi safe kana zwo tendelwa.",
+        "originalAuditCurrentTarget": "Thomani nga u wana arali u kovhelana ho tendelwa. Ṱolani arali borehole i nga kona u shumela vhashumisi vhoṱhe hu si na u dzhia maḓi manzhi lwo kalaho. Arali u kovhelana ho tendelwa nahone hu na maḓi o eḓanaho, tendelanani uri ni kovhelane nga ndinganyo ni dzule ni tshi sedza vhuimo ha maḓi. People Care na Fair Share zwi livhisa u tendelana. Earth Care zwi amba u tsireledza tshiko. U sedza vhuimo ha maḓi fhedzi a zwi ambi uri u shumisa maḓi o engedzeaho zwi safe kana zwo tendelwa.",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.ve.paired-draft.json",
+          "slide": 7,
+          "field": "body[1]",
+          "targetObject": {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "First find out if sharing is allowed.",
+                "text": "Thomani nga u wana arali u kovhelana ho tendelwa."
+              },
+              {
+                "sourceEnglish": " Check whether the ",
+                "status": "draft",
+                "text": " Ṱolani arali ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "borehole",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " can serve all users without taking too much. ",
+                "status": "draft",
+                "text": " i nga kona u shumela vhashumisi vhoṱhe hu si na u dzhia maḓi manzhi lwo kalaho. ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. ",
+                "status": "draft",
+                "text": "Arali u kovhelana ho tendelwa nahone hu na maḓi o eḓanaho, tendelanani uri ni kovhelane nga ndinganyo ni dzule ni tshi sedza vhuimo ha maḓi. ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "People Care",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " and ",
+                "status": "draft",
+                "text": " na ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "Fair Share",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " guide the agreement. ",
+                "status": "draft",
+                "text": " zwi livhisa u tendelana. ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "Earth Care",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " means protecting the source. ",
+                "status": "draft",
+                "text": " zwi amba u tsireledza tshiko. ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "Watching the level alone does not make extra use ",
+                "status": "draft",
+                "text": "U sedza vhuimo ha maḓi fhedzi a zwi ambi uri u shumisa maḓi o engedzeaho zwi ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "safe",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " or allowed.",
+                "status": "draft",
+                "text": " kana zwo tendelwa.",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              }
+            ]
+          },
+          "targetStatus": "mixed",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/ve-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.ve.paired-draft.json",
+          "liveRegistrySha256": "8f0b681a7661804affd9038bdd8ba09a080f7eaf9509a740070db5ac4005e80b",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "mixed",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "repair",
+        "priorIndependentFullTarget": "Thomani nga u wana arali u kovhelana ho tendelwa. Ṱolani arali borehole i nga kona u shumela vhashumisi vhoṱhe hu si na u dzhia maḓi manzhi lwo kalaho. Arali u kovhelana ho tendelwa nahone hu na maḓi o eḓanaho, tendelanani uri ni kovhelane nga ndinganyo ni dzule ni tshi sedza vhuimo ha maḓi. People Care na Fair Share zwi livhisa u tendelana. Earth Care zwi amba u tsireledza tshiko. U sedza vhuimo ha maḓi fhedzi a zwi ambi uri u shumisa maḓi o engedzeaho zwi safe kana zwo tendelwa.",
+        "independentFullTarget": "Thomani nga u wana arali u kovhelana ho tendelwa. Ṱolani arali borehole i nga kona u shumela vhashumisi vhoṱhe hu si na u dzhia maḓi manzhi lwo kalaho. Arali u kovhelana ho tendelwa nahone hu na maḓi o eḓanaho, tendelanani uri ni kovhelane nga ndinganyo ni dzule ni tshi sedza vhuimo ha maḓi. People Care na Fair Share zwi livhisa u tendelana. Earth Care zwi amba u tsireledza tshiko. U sedza vhuimo ha maḓi fhedzi a zwi ambi uri u shumisa maḓi o engedzeaho zwi safe kana zwo tendelwa.",
+        "independentReason": "Tshivenda “tsireledzea” can convey protected; the source adjective is safe. Keep only “safe” exact-English while preserving the localized negation, extra-use scope, and separate allowed condition.",
+        "exclusion": "already-applied-or-no-op",
+        "exclusionReason": "Independent full target exactly equals current post-966 target; no change to emit."
+      },
+      {
+        "row": 11,
+        "language": "ve",
+        "fieldLocator": "pairedSlides/ve/slides[n=11]/target/body[0]",
+        "fieldType": "body",
+        "sourceEnglish": "Harvest rain, sun and biomass before they leave your property.",
+        "currentTarget": "Harvest mvula, ḓuvha na biomass before they leave your property.",
+        "originalAuditCurrentTarget": "Harvest mvula, ḓuvha na biomass before they leave your property.",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.ve.paired-draft.json",
+          "slide": 11,
+          "field": "body[0]",
+          "targetObject": {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Harvest",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " rain, sun and ",
+                "status": "draft",
+                "text": " mvula, ḓuvha na ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "biomass",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " ",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              },
+              {
+                "sourceEnglish": "before they leave your property.",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              }
+            ]
+          },
+          "targetStatus": "mixed",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/ve-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.ve.paired-draft.json",
+          "liveRegistrySha256": "8f0b681a7661804affd9038bdd8ba09a080f7eaf9509a740070db5ac4005e80b",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "mixed",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "The metaphorical “Harvest rain, sun and biomass before they leave your property” clause lacks a verified Tshivenda verb preserving the same objects and timing. Keep this bounded sentence source-exact; it is not a blanket hold on other ordinary clauses.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "The metaphorical “Harvest rain, sun and biomass before they leave your property” clause lacks a verified Tshivenda verb preserving the same objects and timing. Keep this bounded sentence source-exact; it is not a blanket hold on other ordinary clauses."
+      },
+      {
+        "row": 12,
+        "language": "ts",
+        "fieldLocator": "pairedSlides/ts/slides[n=11]/target/body[0]",
+        "fieldType": "body",
+        "sourceEnglish": "Harvest rain, sun and biomass before they leave your property.",
+        "currentTarget": "Harvest mpfula, dyambu na biomass before they leave your property.",
+        "originalAuditCurrentTarget": "Harvest mpfula, dyambu na biomass before they leave your property.",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.ts.paired-draft.json",
+          "slide": 11,
+          "field": "body[0]",
+          "targetObject": {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Harvest",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " rain, sun and ",
+                "status": "draft",
+                "text": " mpfula, dyambu na ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "biomass",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " ",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              },
+              {
+                "sourceEnglish": "before they leave your property.",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              }
+            ]
+          },
+          "targetStatus": "mixed",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/ts-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.ts.paired-draft.json",
+          "liveRegistrySha256": "2773290f06d9d9e48c638cd63e2c29d01281a666a6f42294c06b71db0e053e3d",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "mixed",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "The metaphorical “Harvest rain, sun and biomass before they leave your property” clause lacks a verified Xitsonga verb preserving the same objects and timing. Keep this bounded sentence source-exact; it is not a blanket hold on other ordinary clauses.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "The metaphorical “Harvest rain, sun and biomass before they leave your property” clause lacks a verified Xitsonga verb preserving the same objects and timing. Keep this bounded sentence source-exact; it is not a blanket hold on other ordinary clauses."
+      },
+      {
+        "row": 14,
+        "language": "ts",
+        "fieldLocator": "pairedSlides/ts/slides[n=11]/target/body[2]",
+        "fieldType": "body",
+        "sourceEnglish": "Compare the cost and work with the benefit on your own farm.",
+        "currentTarget": "Pimanisa  cost na ntirho ni mbuyelo epurasini ra wena.",
+        "originalAuditCurrentTarget": "Pimanisa  cost na ntirho ni mbuyelo epurasini ra wena.",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.ts.paired-draft.json",
+          "slide": 11,
+          "field": "body[2]",
+          "targetObject": {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Compare",
+                "status": "draft",
+                "text": "Pimanisa "
+              },
+              {
+                "sourceEnglish": " the cost and work with the benefit",
+                "status": "draft",
+                "text": " cost na ntirho ni mbuyelo",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": " on your own farm.",
+                "status": "draft",
+                "text": " epurasini ra wena."
+              }
+            ]
+          },
+          "targetStatus": "mixed",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/ts-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.ts.paired-draft.json",
+          "liveRegistrySha256": "2773290f06d9d9e48c638cd63e2c29d01281a666a6f42294c06b71db0e053e3d",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "mixed",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "Keep “cost” as the narrow economic term; comparison/work/benefit/farm relation is already localized.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "Keep “cost” as the narrow economic term; comparison/work/benefit/farm relation is already localized."
+      },
+      {
+        "row": 15,
+        "language": "ve",
+        "fieldLocator": "pairedSlides/ve/slides[n=12]/target/body[1]",
+        "fieldType": "body",
+        "sourceEnglish": "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+        "currentTarget": "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza. Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu. That is the land telling you something.",
+        "originalAuditCurrentTarget": "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza. Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu. That is the land telling you something.",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.ve.paired-draft.json",
+          "slide": 12,
+          "field": "body[1]",
+          "targetObject": {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "These can be useful places to observe. Look at what already grows well along yours.",
+                "status": "draft",
+                "text": "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza. Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu."
+              },
+              {
+                "sourceEnglish": " That is the land telling you something.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          "targetStatus": "mixed",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/ve-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.ve.paired-draft.json",
+          "liveRegistrySha256": "8f0b681a7661804affd9038bdd8ba09a080f7eaf9509a740070db5ac4005e80b",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "mixed",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "Keep only “That is the land telling you something”; site/soil metaphor scope is unresolved. Prior observation instruction remains localized.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "Keep only “That is the land telling you something”; site/soil metaphor scope is unresolved. Prior observation instruction remains localized."
+      },
+      {
+        "row": 17,
+        "language": "ve",
+        "fieldLocator": "pairedSlides/ve/slides[n=14]/target/body[1]",
+        "fieldType": "body",
+        "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+        "currentTarget": "Serapa, miri ya mitshelo na chicken run zwi nga dzudzanywa uri khuhu dzi rotate through the beds nga murahu ha harvest; izwi ndi integration. Ni songo tendela khuhu dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe. Fresh manure i nga hwalela germs. Vhudzisani mueletshedzi wa extension uri bed i langulwe hani safely, crops dzine dza ḽiwa dzi sa athu vhuya. Khuhu dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha pen yo dzulaho fhethu huthihi.",
+        "originalAuditCurrentTarget": "Serapa, miri ya mitshelo na chicken run zwi nga dzudzanywa uri khuhu dzi rotate through the beds nga murahu ha harvest; izwi ndi integration. Ni songo tendela khuhu dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe. Fresh manure i nga hwalela germs. Vhudzisani mueletshedzi wa extension uri bed i langulwe hani safely, crops dzine dza ḽiwa dzi sa athu vhuya. Khuhu dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha pen yo dzulaho fhethu huthihi.",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.ve.paired-draft.json",
+          "slide": 14,
+          "field": "body[1]",
+          "targetObject": {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "A garden, fruit trees and a ",
+                "status": "draft",
+                "text": "Serapa, miri ya mitshelo na ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "chicken run",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " arranged so the chickens ",
+                "status": "draft",
+                "text": " zwi nga dzudzanywa uri khuhu dzi ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "rotate through the beds",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " after ",
+                "status": "draft",
+                "text": " nga murahu ha ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "harvest",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " is ",
+                "status": "draft",
+                "text": "; izwi ndi ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "integration",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": ". ",
+                "status": "english-hold",
+                "reason": "Complete unchanged source sentence; no text key."
+              },
+              {
+                "sourceEnglish": "Keep chickens away from ",
+                "status": "draft",
+                "text": "Ni songo tendela khuhu dzi tshi swika kha ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "crops",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " being harvested for food. ",
+                "status": "draft",
+                "text": " dzine dza khou harvestiwa uri dzi ḽiwe. ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "Fresh manure",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " can carry ",
+                "status": "draft",
+                "text": " i nga hwalela ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "germs",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": ". ",
+                "status": "english-hold",
+                "reason": "Complete unchanged source sentence; no text key."
+              },
+              {
+                "sourceEnglish": "Ask ",
+                "status": "draft",
+                "text": "Vhudzisani ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "an extension adviser",
+                "status": "draft",
+                "text": "mueletshedzi wa extension",
+                "reason": "Role noun precedes retained extension modifier in target grammar; no trained/local qualifier substituted. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": " ",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              },
+              {
+                "sourceEnglish": "how to manage the bed safely before edible crops return",
+                "status": "draft",
+                "text": "uri bed i langulwe hani safely, crops dzine dza ḽiwa dzi sa athu vhuya",
+                "reason": "Question and before-return subject order require the whole management/timing clause; precise bed/safely/crops labels remain English, return is not replanting. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": ". ",
+                "status": "english-hold",
+                "reason": "Complete unchanged source sentence; no text key."
+              },
+              {
+                "sourceEnglish": "The chickens can clean up ",
+                "status": "draft",
+                "text": "Khuhu dzi nga thusa u bvisa ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "pests",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " and add ",
+                "status": "draft",
+                "text": " na u engedza ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "fertility",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " instead of sitting idle in ",
+                "status": "draft",
+                "text": ", nṱhani ha uri dzi dzule dzi sa shumi kha ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "a fixed pen",
+                "status": "draft",
+                "text": "pen yo dzulaho fhethu huthihi",
+                "reason": "Fixed-location qualifier follows retained pen; source noun phrase preserved as a whole. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              }
+            ]
+          },
+          "targetStatus": "mixed",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/ve-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.ve.paired-draft.json",
+          "liveRegistrySha256": "8f0b681a7661804affd9038bdd8ba09a080f7eaf9509a740070db5ac4005e80b",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "mixed",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "repair",
+        "priorIndependentFullTarget": "Serapa, miri ya mitshelo na chicken run zwi nga dzudzanywa uri khuhu dzi rotate through the beds after harvest; izwi ndi integration. Ni songo tendela khuhu dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe. Fresh manure i nga hwalela germs. Vhudzisani mueletshedzi wa extension uri bed i langulwe hani safely, crops dzine dza ḽiwa dzi sa athu vhuya. Khuhu dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha pen yo dzulaho fhethu huthihi.",
+        "independentFullTarget": "Serapa, miri ya mitshelo na chicken run zwi nga dzudzanywa uri khuhu dzi rotate through the beds after harvest; izwi ndi integration. Ni songo tendela khuhu dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe. Fresh manure i nga hwalela germs. Vhudzisani mueletshedzi wa extension uri bed i langulwe hani safely, crops dzine dza ḽiwa dzi sa athu vhuya. Khuhu dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha pen yo dzulaho fhethu huthihi.",
+        "independentReason": "The exact bound source says “rotate through the beds after harvest”; the candidate changes this to one empty bed, which is source-absent. This repair keeps that difficult action phrase exact-English, while preserving all following exclusion, manure/germ, adviser/safety-before-edible-crops, and may-help clauses.",
+        "exclusion": "regressive-target",
+        "exclusionReason": "Current post-966 target already expresses “after harvest” locally (“nga murahu ha harvest” / “endzhaku ka harvest”) while retaining the source’s plural-bed rotation. The proposed full target changes that localized span to more English; preserve current post-966 target."
+      },
+      {
+        "row": 18,
+        "language": "ts",
+        "fieldLocator": "pairedSlides/ts/slides[n=14]/target/body[1]",
+        "fieldType": "body",
+        "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+        "currentTarget": "Ntanga, mirhi ya mihandzu na chicken run swi nga veketeriwa leswaku tihuku ti rotate through the beds endzhaku ka harvest; leswi i integration. U nga pfumeleli tihuku ti tshinela eka crops leti ku tshoveriwaka swakudya. Fresh manure yi nga rhwala germs. Kombela mutsundzuxi wa extension a ku hlamusela ndlela yo hlayisa bed yi ri safe loko crops leti dyiwaka ti nga si vuya. Tihuku ti nga basisa pests ti tlhela ti engetela fertility, ematshan’weni yo tshama ti nga endli swo karhi eka pen leyi nga endhawini yin’we.",
+        "originalAuditCurrentTarget": "Ntanga, mirhi ya mihandzu na chicken run swi nga veketeriwa leswaku tihuku ti rotate through the beds endzhaku ka harvest; leswi i integration. U nga pfumeleli tihuku ti tshinela eka crops leti ku tshoveriwaka swakudya. Fresh manure yi nga rhwala germs. Kombela mutsundzuxi wa extension a ku hlamusela ndlela yo hlayisa bed yi ri safe loko crops leti dyiwaka ti nga si vuya. Tihuku ti nga basisa pests ti tlhela ti engetela fertility, ematshan’weni yo tshama ti nga endli swo karhi eka pen leyi nga endhawini yin’we.",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.ts.paired-draft.json",
+          "slide": 14,
+          "field": "body[1]",
+          "targetObject": {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "A garden, fruit trees and a ",
+                "status": "draft",
+                "text": "Ntanga, mirhi ya mihandzu na ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "chicken run",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " arranged so the chickens ",
+                "status": "draft",
+                "text": " swi nga veketeriwa leswaku tihuku ti ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "rotate through the beds",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " after ",
+                "status": "draft",
+                "text": " endzhaku ka ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "harvest",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " is ",
+                "status": "draft",
+                "text": "; leswi i ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "integration",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": ". ",
+                "status": "english-hold",
+                "reason": "Complete unchanged source sentence; no text key."
+              },
+              {
+                "sourceEnglish": "Keep chickens away from ",
+                "status": "draft",
+                "text": "U nga pfumeleli tihuku ti tshinela eka ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "crops",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " being harvested for food. ",
+                "status": "draft",
+                "text": " leti ku tshoveriwaka swakudya. ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "Fresh manure",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " can carry ",
+                "status": "draft",
+                "text": " yi nga rhwala ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "germs",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": ". ",
+                "status": "english-hold",
+                "reason": "Complete unchanged source sentence; no text key."
+              },
+              {
+                "sourceEnglish": "Ask ",
+                "status": "draft",
+                "text": "Kombela ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "an extension adviser",
+                "status": "draft",
+                "text": "mutsundzuxi wa extension",
+                "reason": "Role noun precedes retained extension modifier in target grammar; no trained/local qualifier substituted. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": " ",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              },
+              {
+                "sourceEnglish": "how to manage the bed safely before edible crops return",
+                "status": "draft",
+                "text": "a ku hlamusela ndlela yo hlayisa bed yi ri safe loko crops leti dyiwaka ti nga si vuya",
+                "reason": "Whole management/timing clause preserves safely and before edible crops return. Target safe adjective corresponds to source safely; it cannot be a source-only safe hold at that source position. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": ". ",
+                "status": "english-hold",
+                "reason": "Complete unchanged source sentence; no text key."
+              },
+              {
+                "sourceEnglish": "The chickens can clean up ",
+                "status": "draft",
+                "text": "Tihuku ti nga basisa ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "pests",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " and add ",
+                "status": "draft",
+                "text": " ti tlhela ti engetela ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "fertility",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " instead of sitting idle in ",
+                "status": "draft",
+                "text": ", ematshan’weni yo tshama ti nga endli swo karhi eka ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "a fixed pen",
+                "status": "draft",
+                "text": "pen leyi nga endhawini yin’we",
+                "reason": "Fixed-location qualifier follows retained pen; source noun phrase preserved as a whole. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              }
+            ]
+          },
+          "targetStatus": "mixed",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/ts-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.ts.paired-draft.json",
+          "liveRegistrySha256": "2773290f06d9d9e48c638cd63e2c29d01281a666a6f42294c06b71db0e053e3d",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "mixed",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "repair",
+        "priorIndependentFullTarget": "Ntanga, mirhi ya mihandzu na chicken run swi nga veketeriwa leswaku tihuku ti rotate through the beds after harvest; leswi i integration. U nga pfumeleli tihuku ti tshinela eka crops leti ku tshoveriwaka swakudya. Fresh manure yi nga rhwala germs. Kombela mutsundzuxi wa extension a ku hlamusela ndlela yo hlayisa bed yi ri safe loko crops leti dyiwaka ti nga si vuya. Tihuku ti nga basisa pests ti tlhela ti engetela fertility, ematshan’weni yo tshama ti nga endli swo karhi eka pen leyi nga endhawini yin’we.",
+        "independentFullTarget": "Ntanga, mirhi ya mihandzu na chicken run swi nga veketeriwa leswaku tihuku ti rotate through the beds after harvest; leswi i integration. U nga pfumeleli tihuku ti tshinela eka crops leti ku tshoveriwaka swakudya. Fresh manure yi nga rhwala germs. Kombela mutsundzuxi wa extension a ku hlamusela ndlela yo hlayisa bed yi ri safe loko crops leti dyiwaka ti nga si vuya. Tihuku ti nga basisa pests ti tlhela ti engetela fertility, ematshan’weni yo tshama ti nga endli swo karhi eka pen leyi nga endhawini yin’we.",
+        "independentReason": "The exact bound source says “rotate through the beds after harvest”; the candidate changes this to one empty bed, which is source-absent. This repair keeps that difficult action phrase exact-English, while preserving all following exclusion, manure/germ, adviser/safety-before-edible-crops, and can-help clauses.",
+        "exclusion": "regressive-target",
+        "exclusionReason": "Current post-966 target already expresses “after harvest” locally (“nga murahu ha harvest” / “endzhaku ka harvest”) while retaining the source’s plural-bed rotation. The proposed full target changes that localized span to more English; preserve current post-966 target."
+      },
+      {
+        "row": 19,
+        "language": "ve",
+        "fieldLocator": "pairedSlides/ve/slides[n=15]/target/body[2]",
+        "fieldType": "body",
+        "sourceEnglish": "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+        "currentTarget": "Zone 2 ndi main garden na chicken run, ni zwi dalela luthihi kana luvhili nga ḓuvha. Zone 3 ndi main field, ni i dalela vhege iṅwe na iṅwe.",
+        "originalAuditCurrentTarget": "Zone 2 ndi main garden na chicken run, ni zwi dalela luthihi kana luvhili nga ḓuvha. Zone 3 ndi main field, ni i dalela vhege iṅwe na iṅwe.",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.ve.paired-draft.json",
+          "slide": 15,
+          "field": "body[2]",
+          "targetObject": {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Zone 2",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " is the ",
+                "status": "draft",
+                "text": " ndi ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "main garden",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " and the ",
+                "status": "draft",
+                "text": " na ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "chicken run",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": ", visited once or twice a day. ",
+                "status": "draft",
+                "text": ", ni zwi dalela luthihi kana luvhili nga ḓuvha. ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "Zone 3",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " is the ",
+                "status": "draft",
+                "text": " ndi ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "main field",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": ", visited weekly.",
+                "status": "draft",
+                "text": ", ni i dalela vhege iṅwe na iṅwe.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ],
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06."
+          },
+          "targetStatus": "mixed",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/ve-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.ve.paired-draft.json",
+          "liveRegistrySha256": "8f0b681a7661804affd9038bdd8ba09a080f7eaf9509a740070db5ac4005e80b",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "mixed",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "Hold only “main garden” and “main field” as category labels; exact daily/weekly visits remain localized.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "Hold only “main garden” and “main field” as category labels; exact daily/weekly visits remain localized."
+      },
+      {
+        "row": 20,
+        "language": "ts",
+        "fieldLocator": "pairedSlides/ts/slides[n=15]/target/body[2]",
+        "fieldType": "body",
+        "sourceEnglish": "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+        "currentTarget": "Zone 2 i main ntanga ni chicken run, u ya eka swona kan’we kumbe kambirhi hi siku. Zone 3 i main nsimu, u ya kona vhiki na vhiki.",
+        "originalAuditCurrentTarget": "Zone 2 i main ntanga ni chicken run, u ya eka swona kan’we kumbe kambirhi hi siku. Zone 3 i main nsimu, u ya kona vhiki na vhiki.",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.ts.paired-draft.json",
+          "slide": 15,
+          "field": "body[2]",
+          "targetObject": {
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Zone 2",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " is the ",
+                "status": "draft",
+                "text": " i ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "main",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " garden",
+                "status": "draft",
+                "text": " ntanga",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": " and the ",
+                "status": "draft",
+                "text": " ni ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "chicken run",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": ", visited once or twice a day. ",
+                "status": "draft",
+                "text": ", u ya eka swona kan’we kumbe kambirhi hi siku. ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "Zone 3",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " is the ",
+                "status": "draft",
+                "text": " i ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "main",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " field",
+                "status": "draft",
+                "text": " nsimu",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": ", visited weekly.",
+                "status": "draft",
+                "text": ", u ya kona vhiki na vhiki.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ]
+          },
+          "targetStatus": "mixed",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/ts-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.ts.paired-draft.json",
+          "liveRegistrySha256": "2773290f06d9d9e48c638cd63e2c29d01281a666a6f42294c06b71db0e053e3d",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "mixed",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "Hold only “main garden” and “main field”; preserve the once-or-twice-daily and weekly clauses.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "Hold only “main garden” and “main field”; preserve the once-or-twice-daily and weekly clauses."
+      },
+      {
+        "row": 21,
+        "language": "ve",
+        "fieldLocator": "pairedSlides/ve/slides[n=18]/target/body[1]",
+        "fieldType": "body",
+        "sourceEnglish": "Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.",
+        "currentTarget": "Ḓuvha, muya, mvula, flood na mulilo zwi pfuka boundary yaṋu hu sa londwi arali ni tshi zwi pulanela kana hai.",
+        "originalAuditCurrentTarget": "Ḓuvha, muya, mvula, flood na mulilo zwi pfuka boundary yaṋu hu sa londwi arali ni tshi zwi pulanela kana hai.",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.ve.paired-draft.json",
+          "slide": 18,
+          "field": "body[1]",
+          "targetObject": {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Sun, wind, rain, ",
+                "status": "draft",
+                "text": "Ḓuvha, muya, mvula, ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "flood",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " and fire all arrive across your ",
+                "status": "draft",
+                "text": " na mulilo zwi pfuka ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "boundary",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " whether you plan for them or not.",
+                "status": "draft",
+                "text": " yaṋu hu sa londwi arali ni tshi zwi pulanela kana hai.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ],
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06."
+          },
+          "targetStatus": "mixed",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/ve-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.ve.paired-draft.json",
+          "liveRegistrySha256": "8f0b681a7661804affd9038bdd8ba09a080f7eaf9509a740070db5ac4005e80b",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "mixed",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "Hold “flood” and “boundary” only until local category/site-scope equivalents are checked; keep all coordinated elements and whether-planned-or-not relation.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "Hold “flood” and “boundary” only until local category/site-scope equivalents are checked; keep all coordinated elements and whether-planned-or-not relation."
+      },
+      {
+        "row": 22,
+        "language": "ve",
+        "fieldLocator": "pairedSlides/ve/slides[n=22]/target/body[2]",
+        "fieldType": "body",
+        "sourceEnglish": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+        "currentTarget": "Wanani tshithu tshithihi tsho ṱavhiwaho further away than how often you use it, ni ṅwale hune tsha tea u pfuluselwa hone.",
+        "originalAuditCurrentTarget": "Wanani tshithu tshithihi tsho ṱavhiwaho further away than how often you use it, ni ṅwale hune tsha tea u pfuluselwa hone.",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.ve.paired-draft.json",
+          "slide": 22,
+          "field": "body[2]",
+          "targetObject": {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Find one thing ",
+                "status": "draft",
+                "text": "Wanani tshithu tshithihi "
+              },
+              {
+                "sourceEnglish": "planted ",
+                "status": "draft",
+                "text": "tsho ṱavhiwaho "
+              },
+              {
+                "sourceEnglish": "further away than how often you use it, ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "and write down where it should move to.",
+                "status": "draft",
+                "text": "ni ṅwale hune tsha tea u pfuluselwa hone."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          "targetStatus": "mixed",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/ve-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.ve.paired-draft.json",
+          "liveRegistrySha256": "8f0b681a7661804affd9038bdd8ba09a080f7eaf9509a740070db5ac4005e80b",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "mixed",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "Keep exact comparison “further away than how often you use it”; do not turn it into too far/used less. Surrounding instruction stays in current localized target.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "Keep exact comparison “further away than how often you use it”; do not turn it into too far/used less. Surrounding instruction stays in current localized target."
+      },
+      {
+        "row": 23,
+        "language": "ts",
+        "fieldLocator": "pairedSlides/ts/slides[n=22]/target/body[2]",
+        "fieldType": "body",
+        "sourceEnglish": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+        "currentTarget": "Kuma xilo xin’we lexi byariweke further away than how often you use it, u tsala laha xi faneleke ku rhurhiseriwa kona.",
+        "originalAuditCurrentTarget": "Kuma xilo xin’we lexi byariweke further away than how often you use it, u tsala laha xi faneleke ku rhurhiseriwa kona.",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.ts.paired-draft.json",
+          "slide": 22,
+          "field": "body[2]",
+          "targetObject": {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Find one thing ",
+                "status": "draft",
+                "text": "Kuma xilo xin’we lexi "
+              },
+              {
+                "sourceEnglish": "planted ",
+                "status": "draft",
+                "text": "byariweke "
+              },
+              {
+                "sourceEnglish": "further away than how often you use it, ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "and write down where it should move to.",
+                "status": "draft",
+                "text": "u tsala laha xi faneleke ku rhurhiseriwa kona."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          "targetStatus": "mixed",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/ts-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.ts.paired-draft.json",
+          "liveRegistrySha256": "2773290f06d9d9e48c638cd63e2c29d01281a666a6f42294c06b71db0e053e3d",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "mixed",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "Same exact source comparison as row 22; retain it, without broadening to “too far” or “used less”.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "Same exact source comparison as row 22; retain it, without broadening to “too far” or “used less”."
+      },
+      {
+        "row": 24,
+        "language": "ve",
+        "fieldLocator": "pairedSlides/ve/slides[n=22]/target/body[3]",
+        "fieldType": "body",
+        "sourceEnglish": "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow.",
+        "currentTarget": "Nga murahu ni humbele older neighbour muthihi uri a ni vhudze sia ine worst wind ya bva ngaḽo, ni vhambedze phindulo yawe na musevhe waṋu.",
+        "originalAuditCurrentTarget": "Nga murahu ni humbele older neighbour muthihi uri a ni vhudze sia ine worst wind ya bva ngaḽo, ni vhambedze phindulo yawe na musevhe waṋu.",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.ve.paired-draft.json",
+          "slide": 22,
+          "field": "body[3]",
+          "targetObject": {
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Then ask ",
+                "status": "draft",
+                "text": "Nga murahu ni humbele ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "one older neighbour",
+                "status": "draft",
+                "text": "older neighbour muthihi",
+                "reason": "Count follows the retained age-comparative noun phrase; one/older both remain semantically bound. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": " which direction",
+                "status": "draft",
+                "text": " uri a ni vhudze sia",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": " the ",
+                "status": "draft",
+                "text": " ine ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "worst wind",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " comes from, and compare their answer with your arrow.",
+                "status": "draft",
+                "text": " ya bva ngaḽo, ni vhambedze phindulo yawe na musevhe waṋu.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ]
+          },
+          "targetStatus": "mixed",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/ve-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.ve.paired-draft.json",
+          "liveRegistrySha256": "8f0b681a7661804affd9038bdd8ba09a080f7eaf9509a740070db5ac4005e80b",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "mixed",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "Keep “older neighbour” and “worst wind” exact; do not infer experience or a measured severity. Comparison to learner arrow stays localized.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "Keep “older neighbour” and “worst wind” exact; do not infer experience or a measured severity. Comparison to learner arrow stays localized."
+      },
+      {
+        "row": 25,
+        "language": "ts",
+        "fieldLocator": "pairedSlides/ts/slides[n=22]/target/body[3]",
+        "fieldType": "body",
+        "sourceEnglish": "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow.",
+        "currentTarget": "Endzhaku kombela older neighbour un’we a ku hlamusela tlhelo leri worst wind yi humaka hi yona, u ringanisa nhlamulo ya yena ni museve wa wena.",
+        "originalAuditCurrentTarget": "Endzhaku kombela older neighbour un’we a ku hlamusela tlhelo leri worst wind yi humaka hi yona, u ringanisa nhlamulo ya yena ni museve wa wena.",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.ts.paired-draft.json",
+          "slide": 22,
+          "field": "body[3]",
+          "targetObject": {
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Then ask ",
+                "status": "draft",
+                "text": "Endzhaku kombela ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "one older neighbour",
+                "status": "draft",
+                "text": "older neighbour un’we",
+                "reason": "Count follows the retained age-comparative noun phrase; one/older both remain semantically bound. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": " which direction the ",
+                "status": "draft",
+                "text": " a ku hlamusela tlhelo leri ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "worst wind",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " comes from, and compare their answer with your arrow.",
+                "status": "draft",
+                "text": " yi humaka hi yona, u ringanisa nhlamulo ya yena ni museve wa wena.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ]
+          },
+          "targetStatus": "mixed",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/ts-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.ts.paired-draft.json",
+          "liveRegistrySha256": "2773290f06d9d9e48c638cd63e2c29d01281a666a6f42294c06b71db0e053e3d",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "mixed",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "Keep “older neighbour” and “worst wind” exact; do not infer experience or a measured severity. Comparison to learner arrow stays localized.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "Keep “older neighbour” and “worst wind” exact; do not infer experience or a measured severity. Comparison to learner arrow stays localized."
+      },
+      {
+        "row": 70,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=10]/target/heading",
+        "fieldType": "heading",
+        "sourceEnglish": "Observe and Interact",
+        "currentTarget": "Observe and Interact",
+        "originalAuditCurrentTarget": "Observe and Interact",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.st.paired-draft.json",
+          "slide": 10,
+          "field": "heading",
+          "targetObject": {
+            "status": "english-hold"
+          },
+          "targetStatus": "english-hold",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/st-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.st.paired-draft.json",
+          "liveRegistrySha256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "english-hold",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "Exact named permaculture principle “Observe and Interact”; retain as the bounded official name.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "Exact named permaculture principle “Observe and Interact”; retain as the bounded official name."
+      },
+      {
+        "row": 71,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=11]/target/heading",
+        "fieldType": "heading",
+        "sourceEnglish": "Catch and Store Energy",
+        "currentTarget": "Catch and Store Energy",
+        "originalAuditCurrentTarget": "Catch and Store Energy",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.st.paired-draft.json",
+          "slide": 11,
+          "field": "heading",
+          "targetObject": {
+            "status": "english-hold"
+          },
+          "targetStatus": "english-hold",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/st-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.st.paired-draft.json",
+          "liveRegistrySha256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "english-hold",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "Exact named permaculture principle “Catch and Store Energy”; retain as the bounded official name.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "Exact named permaculture principle “Catch and Store Energy”; retain as the bounded official name."
+      },
+      {
+        "row": 72,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=12]/target/heading",
+        "fieldType": "heading",
+        "sourceEnglish": "Use Edges and Value the Marginal",
+        "currentTarget": "Use Edges and Value the Marginal",
+        "originalAuditCurrentTarget": "Use Edges and Value the Marginal",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.st.paired-draft.json",
+          "slide": 12,
+          "field": "heading",
+          "targetObject": {
+            "status": "english-hold"
+          },
+          "targetStatus": "english-hold",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/st-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.st.paired-draft.json",
+          "liveRegistrySha256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "english-hold",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "Exact named permaculture principle “Use Edges and Value the Marginal”; retain as the bounded official name.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "Exact named permaculture principle “Use Edges and Value the Marginal”; retain as the bounded official name."
+      },
+      {
+        "row": 73,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=13]/target/heading",
+        "fieldType": "heading",
+        "sourceEnglish": "Use and Value Diversity",
+        "currentTarget": "Use and Value Diversity",
+        "originalAuditCurrentTarget": "Use and Value Diversity",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.st.paired-draft.json",
+          "slide": 13,
+          "field": "heading",
+          "targetObject": {
+            "status": "english-hold"
+          },
+          "targetStatus": "english-hold",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/st-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.st.paired-draft.json",
+          "liveRegistrySha256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "english-hold",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "Exact named permaculture principle “Use and Value Diversity”; retain as the bounded official name.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "Exact named permaculture principle “Use and Value Diversity”; retain as the bounded official name."
+      },
+      {
+        "row": 74,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=14]/target/heading",
+        "fieldType": "heading",
+        "sourceEnglish": "Integrate Rather Than Segregate",
+        "currentTarget": "Integrate Rather Than Segregate",
+        "originalAuditCurrentTarget": "Integrate Rather Than Segregate",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.st.paired-draft.json",
+          "slide": 14,
+          "field": "heading",
+          "targetObject": {
+            "status": "english-hold"
+          },
+          "targetStatus": "english-hold",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/st-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.st.paired-draft.json",
+          "liveRegistrySha256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "english-hold",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "hold",
+        "priorIndependentFullTarget": null,
+        "independentFullTarget": null,
+        "independentReason": "Exact named permaculture principle “Integrate Rather Than Segregate”; retain as the bounded official name.",
+        "exclusion": "bounded-hold",
+        "exclusionReason": "Exact named permaculture principle “Integrate Rather Than Segregate”; retain as the bounded official name."
+      },
+      {
+        "row": 83,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=15]/target/body[2]",
+        "fieldType": "body",
+        "sourceEnglish": "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+        "currentTarget": "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+        "originalAuditCurrentTarget": "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+        "sourceExactInCurrentRegistry": true,
+        "currentTargetExactInOriginalAudit": true,
+        "currentStatusBinding": {
+          "surface": "paired",
+          "path": "docs/narration/intro-permaculture.st.paired-draft.json",
+          "slide": 15,
+          "field": "body[2]",
+          "targetObject": {
+            "status": "english-hold"
+          },
+          "targetStatus": "english-hold",
+          "deckReviewStatus": "unreviewed",
+          "inspectedSnapshotPath": "docs/study-translation-reviews/intro-full-ordinary-completion-2026-10-06/st-paired-after.json",
+          "actualCurrentPairedRegistryPath": "docs/narration/intro-permaculture.st.paired-draft.json",
+          "liveRegistrySha256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+          "liveSourceExact": true,
+          "liveCurrentTargetExact": true,
+          "liveStatus": "english-hold",
+          "liveDeckReviewStatus": "unreviewed"
+        },
+        "priorIndependentVerdict": "repair",
+        "priorIndependentFullTarget": "Zone 2 ke main garden le chicken run, tse etelwang hang kapa habedi ka letsatsi. Zone 3 ke main field, e etelwang beke le beke.",
+        "independentFullTarget": "Zone 2 ke main garden le chicken run, tse etelwang hang kapa habedi ka letsatsi. Zone 3 ke main field, e etelwang beke le beke.",
+        "independentReason": "Duplicate hold row for the exact same Sesotho slide-15 body field as row 51. Reuse row 51’s checked target byte-for-byte, hold only main garden/main field, and translate the visit-frequency clauses once.",
+        "exclusion": "duplicate-field",
+        "exclusionReason": "Duplicate of row 51; row 51 owns the one source-bound full target. Do not emit another update."
+      }
+    ],
+    "noSourceCanonicalIndicesOrStatusEditsMade": true
+  },
+  "reviewSummary": {
+    "reviewedDeltas": 60,
+    "semanticRepairsRecommended": [
+      57,
+      63,
+      65,
+      67
+    ],
+    "meaningPreservedButCoverageIncomplete": [
+      47,
+      81,
+      82
+    ],
+    "otherTargetedChecksAcceptedOnMeaning": [
+      26,
+      37,
+      55,
+      60,
+      10,
+      16
+    ],
+    "notBlanketApproval": true
+  },
+  "rows": [
+    {
+      "row": 1,
+      "language": "ve",
+      "fieldLocator": "lessons/0/keyPoints/1",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 2,
+      "language": "ts",
+      "fieldLocator": "lessons/0/keyPoints/1",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 3,
+      "language": "ts",
+      "fieldLocator": "lessons/0/quiz/0/question",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 4,
+      "language": "ve",
+      "fieldLocator": "lessons/1/quiz/1/options/3",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "mostly preserves the option; slight strengthening",
+      "coverageNote": "`kule na` can read as far away from the cultivated zone, stronger than simply kept off that zone. Keep only if the local target is intended as “kept away”; otherwise retain exact English “kept off” until the distance nuance is checked.",
+      "repair": null
+    },
+    {
+      "row": 5,
+      "language": "ve",
+      "fieldLocator": "lessons/2/quiz/0/question",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 10,
+      "language": "ts",
+      "fieldLocator": "pairedSlides/ts/slides[n=7]/target/body[1]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "accept on meaning",
+      "coverageNote": "Permission-before-check, enough water/all users/without taking too much, conditional agreement, ongoing level monitoring and the rule that level alone does not make extra use safe or allowed remain present. “Borehole” and ethic names remain technical anchors.",
+      "repair": null
+    },
+    {
+      "row": 13,
+      "language": "ve",
+      "fieldLocator": "pairedSlides/ve/slides[n=11]/target/body[2]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 16,
+      "language": "ts",
+      "fieldLocator": "pairedSlides/ts/slides[n=12]/target/body[1]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "accept on meaning",
+      "coverageNote": "The “land telling you something” metaphor is rendered as the place telling you something; antecedent is a useful place to observe what already grows well beside your edge. No source condition is lost.",
+      "repair": null
+    },
+    {
+      "row": 26,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=4]/target/body[2]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "accept on meaning",
+      "coverageNote": "`ha e sa o tswela molemo` / `e tswela pele ho o tswela molemo` conveys stops/continues benefiting you; the source’s “paying you” is a returns metaphor and is not necessarily cash. The system/use-up object and contrast are intact.",
+      "repair": null
+    },
+    {
+      "row": 27,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=5]/target/body[2]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 28,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=6]/target/body[1]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 29,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=6]/target/body[2]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 30,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=6]/target/body[3]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 31,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=7]/target/body[0]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 32,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=7]/target/body[1]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 33,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=8]/target/body[1]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 34,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=8]/target/body[2]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 35,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=8]/target/body[3]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 36,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=9]/target/body[1]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 37,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=10]/target/body[0]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "accept on meaning",
+      "coverageNote": "`sehleng sohle` preserves through a full season; `pele` preserves before commitment. `major earthworks` remains exact English.",
+      "repair": null
+    },
+    {
+      "row": 38,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=10]/target/body[1]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 39,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=10]/target/body[2]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 40,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=10]/target/body[3]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 41,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=11]/target/body[0]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 42,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=11]/target/body[2]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 43,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=13]/target/body[0]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 44,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=13]/target/body[1]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 45,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=13]/target/body[2]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 46,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=14]/target/body[0]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 47,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=14]/target/body[1]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "meaning preserved, translation coverage incomplete",
+      "coverageNote": "The English “rotate through the beds after harvest” is retained exactly, so the bed-rotation action, timing and object remain intact; it is still ordinary-English residue. Fresh manure can carry germs retains can/freshness. The extension adviser must be asked how to manage safely before edible crops return; order and scope remain exact. Other technical/ordinary holds (`chicken run`, pests, fertility, pen) should not be represented as fully localized.",
+      "repair": null
+    },
+    {
+      "row": 48,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=14]/target/body[3]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 49,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=15]/target/body[0]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 50,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=15]/target/body[1]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 51,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=15]/target/body[2]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 52,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=15]/target/body[3]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 53,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=16]/target/body[0]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 54,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=16]/target/body[1]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 55,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=17]/target/body[2]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "accept on meaning",
+      "coverageNote": "Comparative frequency/closer relation is preserved; `can` remains possible rather than guaranteed; walking and work can be saved over the full season.",
+      "repair": null
+    },
+    {
+      "row": 56,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=18]/target/body[1]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 57,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=18]/target/body[2]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "repair for wind-direction referent",
+      "coverageNote": "`moo moya o lebileng teng` can denote where the wind is headed. Weather-station “wind direction” is reported by the direction it comes from; the previous/current target already uses `moya o tswang teng` to express origin. Use that origin relation to avoid reversal.",
+      "repair": {
+        "fullTarget": "Shebella moo moya o matla o tswang teng polasing ya hao. Direkoto tsa weather station e haufi di ka o thusa ho lekola moo moya o tswang teng. Shebella moo metsi a pula a kenang teng le moo a phallang teng setsheng sa hao.",
+        "reason": "Replaces only the potentially directional “where wind is headed” phrase with the same source-direction wording used in the adjacent clause; nearby records still can help check, and rain entry/flow remain unchanged."
+      }
+    },
+    {
+      "row": 58,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=19]/target/body[0]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 59,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=19]/target/body[1]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 60,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=19]/target/body[2]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "accept with exact relation retained",
+      "coverageNote": "The target distinguishes air going through the windbreak from other air going over it or around its ends. Preserve all three paths; “windbreak” remains exact English.",
+      "repair": null
+    },
+    {
+      "row": 61,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=19]/target/body[3]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 62,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=19]/target/body[4]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 63,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=20]/target/body[0]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "repair action mismatch",
+      "coverageNote": "Source says mark the house; `Taka ntlo` means draw the house, which changes the requested mapping action and could imply drawing the whole structure. Keep the exact action or use a locally verified equivalent.",
+      "repair": {
+        "fullTarget": "Thala moedi wa hao. Mark the house. Thala rings ho ya kantle ho latela hore na o etela hangata hakae.",
+        "reason": "Narrow English hold preserves “mark” versus “draw”; the boundary and outward visit-frequency rings stay localized and unchanged."
+      }
+    },
+    {
+      "row": 64,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=21]/target/body[0]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 65,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=21]/target/body[1]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "repair action mismatch",
+      "coverageNote": "Source says mark Zone 0 and Zone 1 first; `Taka` again changes mark to draw. This repeats the same action distinction as row 63.",
+      "repair": {
+        "fullTarget": "Mark Zone 0 le Zone 1 pele, ebe o tswela kantle ho fihlela moo setsha sa hao se fellang teng.",
+        "reason": "Retains the exact action as an English hold while preserving the first-before-outward order and land extent."
+      }
+    },
+    {
+      "row": 66,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=21]/target/body[2]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 67,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=22]/target/body[0]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "repair object narrowing risk",
+      "coverageNote": "“Ground” here means compare the sketch with what is actually on the site; `mobu wa sebele` can narrow that to actual soil.",
+      "repair": {
+        "fullTarget": "Tsamaya ka ntle mme o bapise sketch ya hao le ground ya sebele.",
+        "reason": "Keeps the exact object “ground” in English pending a safe local term; walk outside and compare remain translated."
+      }
+    },
+    {
+      "row": 68,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=22]/target/body[1]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 69,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=8]/target/heading",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 75,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=15]/target/heading",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 76,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=16]/target/heading",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 77,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=17]/target/heading",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 78,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=18]/target/heading",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 79,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=19]/target/heading",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 80,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=20]/target/heading",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "reviewed; no material action/object/qualifier/modality/count/safety shift found",
+      "coverageNote": null,
+      "repair": null
+    },
+    {
+      "row": 81,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=22]/target/body[2]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "meaning preserved; ordinary-English residue",
+      "coverageNote": "The complete frequency-versus-distance comparison is retained exactly in English. No semantic change, but do not count the clause as localized.",
+      "repair": null
+    },
+    {
+      "row": 82,
+      "language": "st",
+      "fieldLocator": "pairedSlides/st/slides[n=22]/target/body[3]",
+      "binding": "exact source/current target confirmed by unchanged current file SHA and prior exact field binding",
+      "meaningVerdict": "meaning preserved; ordinary-English residue",
+      "coverageNote": "The English anchors “older neighbour” and “worst wind” keep one, older, worst and source-direction scope intact; `e tswa ka lehlakoreng lefe` preserves which direction it comes from, and the answer is compared with the arrow. This is not fully localized.",
+      "repair": null
+    }
+  ],
+  "overall": [
+    "Row 26’s use-up/stops-benefiting and protect/continues-benefiting contrast is semantically intact; “paying you” is a returns metaphor, not necessarily cash.",
+    "Row 37 correctly preserves a full season and before commitment.",
+    "Row 47 preserves rotate-through-beds-after-harvest exactly in English, plus fresh manure can carry germs and adviser-before-edible-return; it remains a mixed/partly English target, not a complete localization.",
+    "Row 55 preserves the comparative and can-modality across a season.",
+    "Row 57 risks converting meteorological source direction (“where wind comes from”) to travel direction (“where wind is headed”). Recommended minimal repair reuses the proposal’s adjacent source-direction wording.",
+    "Rows 63 and 65 change “mark” into “draw” (`Taka`); retain only those exact English action fragments until a verified equivalent is available.",
+    "Row 67 translates ground as soil (`mobu`), risking narrowing the object from the actual site surface/layout to soil. Keep the narrow exact-English anchor pending a defensible local term.",
+    "Row 60’s through/over/around-the-ends relation is intact; keep all three airflow paths distinct.",
+    "Rows 10 and 16 (TS source/permission and land-place framing) retain the relevant conditions and referent on a reading of the full target.",
+    "The excluded 23 candidate rows remain excluded; this review does not add, remove or rewrite them."
+  ]
+}

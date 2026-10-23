@@ -1,0 +1,103 @@
+{
+  "speciesId": "macadamia-integrifolia",
+  "commonName": "Macadamia",
+  "botanicalName": "Macadamia integrifolia",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general — Mpumalanga, KwaZulu-Natal, Limpopo)",
+      "months": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "evidence": {
+        "quote": "Macadamia trees typically take 7-9 years to reach maturity, with yields increasing for the next 15-20 years. Flowering begins in July, and nuts begin to develop by October, with harvest season running from March through June/July (see Table 2).",
+        "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=South+Africa%27s+Macadamia+Industry+Grows+Despite+Export+Uncertainty_Pretoria_South+Africa+-+Republic+of_SF2025-0023.pdf",
+        "doc": "USDA Foreign Agricultural Service (FAS), GAIN Report SF2025-0023, 'South Africa's Macadamia Industry Grows Despite Export Uncertainty', FAS Pretoria Post, 2025",
+        "page": 5
+      },
+      "notes": "The report's own 'Table 2: Typical Macadamia Marketing Year in South Africa' (same page) shades 'Harvesting' across Mar-Jun with a lighter continuation into Jul, matching the text's 'March through June/July'. This is a USDA attaché (FAS) report compiling local industry (SAMAC-sourced) data, not a South African government or grower-body document itself, but was used because SAMAC's and ARC-ITSC's own cultivation pages (samac.org.za technical library, arc.agric.za/arc-itsc/Pages/Macadamia.aspx, nda.agric.za) were unreachable (503/404/membership-gated) during this research pass — see gaps."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": [
+      4,
+      5
+    ],
+    "evidence": {
+      "quote": "Bearing starts at 4 or 5 years, with full production in year 12.",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN, Macadamia bearing age",
+      "page": 24
+    },
+    "notes": "KZN establishment reference; this source also describes later bearing at higher elevations. Not a promise for all cultivars or every SA site."
+  },
+  "yearsToFullBearing": {
+    "value": [
+      7,
+      9
+    ],
+    "evidence": {
+      "quote": "Macadamia trees typically take 7-9 years to reach maturity, with yields increasing for the next 15-20 years.",
+      "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=South+Africa%27s+Macadamia+Industry+Grows+Despite+Export+Uncertainty_Pretoria_South+Africa+-+Republic+of_SF2025-0023.pdf",
+      "doc": "USDA Foreign Agricultural Service (FAS), GAIN Report SF2025-0023, 'South Africa's Macadamia Industry Grows Despite Export Uncertainty', FAS Pretoria Post, 2025",
+      "page": 5
+    },
+    "notes": "USDA FAS describes commercial maturity at 7–9 years while yields can continue increasing for a further 15–20 years. This does not establish a stable maximum-yield age."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": {
+      "quote": "between 2 kg and 10 kg of nuts (Wet In Shell; WIS)",
+      "url": "https://samac.org.za/https-samac-org-za-information-hubnew/",
+      "doc": "SAMAC Information Hub, FAQs: potential yield at different ages",
+      "page": null
+    },
+    "notes": "SAMAC publishes approximate age-specific output: Beaumont year 4 about 0.6–0.8 kg/tree; year 5 about 2–10 kg/tree WIS; year 8 about 16 kg/tree; possible maximum year 13–14 up to 35 kg/tree WIS. SAMAC explicitly warns these rough indicators differ between areas. Year 4 basis is not stated separately; none of these values establishes edible kernel kg or a species-wide mature forecast. Keep generic mature kg/tree null and preserve the source-specific reference."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "Macadamia is a subtropical evergreen with no documented winter-chill requirement for flowering; frost (not lack of chill) is the main cold-related limiting factor noted in South African sources (e.g. SAMAC's climate-modelling article notes an expected 'decreased frost risk, a key limiting factor for growing macadamia trees' under warming scenarios), but no source explicitly states 'no chill requirement', so left null per the rule rather than asserting it."
+  },
+  "pollination": {
+    "value": "partly-self-fertile",
+    "evidence": {
+      "quote": "Cross-pollination increases yields by 52% when compared with open pollination. ... Cross-pollination increases yields by 48.5% and improves nut quality (size and kernel weight). ... Genotyping of macadamia kernel to determine pollen parents: A4 was highly outcrossing (97%), 695 was 64% outcrossed, 816 41% outcrossed and 814 showed 10% outcrossing. ... Results demonstrated the critical role of honeybee colonies in macadamia orchards, with the absence of bees resulting in only 30% production in both cultivars.",
+      "url": "https://samac.org.za/wp-content/uploads/2024/05/SAMAC-What-have-we-learned-2024.pdf",
+      "doc": "SAMAC (South African Macadamia Growers' Association), 'What have we learned 2024' research summary newsletter",
+      "page": 13
+    },
+    "notes": "Changed from needs-cross-pollinator to partly-self-fertile in editor review: the same SAMAC summary measures 10-97% outcrossing by kernel genotyping (so some nuts are selfed) and says cross-pollination RAISES yield by about half, which is a partly self-fertile tree, not one that needs a pollinator to bear. SAMAC's own research summaries show macadamia is capable of self/open pollination (a cultivar-dependent 10-97% outcrossing rate was measured by kernel genotyping, and orchards without managed bee colonies still achieved 30% of full production) but that yield is substantially higher (48.5-52% more) with cross-pollination (interplanted cultivars) and managed honeybee colonies (industry recommends at least two hives/ha). This mixed picture — fruit set possible alone, but commercially reliant on cross-pollination/bee activity — is why 'needs-cross-pollinator' (the industry-recommended practice) rather than 'self-fertile' was chosen, though 'partly-self-fertile' is also defensible given the cultivar-dependent self/open-pollination yield floor; see this nuance rather than treating the choice as clear-cut."
+  },
+  "supplementaryReferences": [
+    {
+      "title": "Macadamia output at named ages — approximate WIS references",
+      "quote": "These are rough indicators",
+      "url": "https://samac.org.za/https-samac-org-za-information-hubnew/",
+      "doc": "SAMAC Information Hub, FAQs: potential yield at different ages",
+      "page": null,
+      "note": "Year 4 Beaumont: approximately 0.6–0.8 kg/tree (the year-4 basis is not explicit); year 5: 2–10 kg/tree Wet In Shell (WIS); year 8: about 16 kg/tree; year 13–14: up to 35 kg/tree WIS. SAMAC says area differences are guaranteed. This is a source reference, not a validated local schedule; it cannot seed edible kernel kg or a universal interpolated curve."
+    },
+    {
+      "title": "Macadamia establishment depends on propagation",
+      "quote": "Grafted trees start bearing fruit as early as 3 to 5 years",
+      "url": "https://samac.org.za/https-samac-org-za-information-hubnew/",
+      "doc": "SAMAC Information Hub, FAQs: time to produce nuts",
+      "page": null,
+      "note": "Grafted stock: first nuts around 3–5 years, depending on variety; seedlings usually 10–12 years and sometimes longer. SAMAC recommends removing flowers until year 3 during establishment. The existing KZN guide 4–5-year first-bearing reference remains qualified; nursery propagation must be recorded before applying it."
+    }
+  ],
+  "harvestProduct": "nut in shell",
+  "gaps": [
+    "SAMAC's own technical library ('Technical info – orchard establishment', likely containing exact years-to-bearing and per-tree yield curves) is behind a members-only login (samac.org.za/membership-login/) and could not be accessed.",
+    "ARC-ITSC's macadamia page (arc.agric.za/arc-itsc/Pages/Macadamia.aspx) returned HTTP 503 on every attempt.",
+    "nda.agric.za/DALRRD macadamia cultivation info-paks (two URL variants found via search) both failed: one returned HTTP 503 via WebFetch, the other failed at the network/proxy level via curl ('tunnel to the egress proxy closed').",
+    "No explicit chill-unit or 'no chill requirement' statement found for macadamia in any SA source fetched; only frost-sensitivity commentary.",
+    "Editor review 2026-09-28: pollination changed from needs-cross-pollinator to partly-self-fertile to match the quoted outcrossing and yield figures.",
+    "2026-10-04: First-bearing reference recovered from the retrieved KZN DARD guide. Earlier full-bearing references use differing maturity definitions; no uniform age/yield forecast is claimed.",
+    "11 October 2026: public SAMAC FAQ now directly verified and approximate age-specific kg/tree references recovered. WIS, dry-in-shell and edible kernel output remain different products; no generic kernel-yield curve is assigned."
+  ]
+}

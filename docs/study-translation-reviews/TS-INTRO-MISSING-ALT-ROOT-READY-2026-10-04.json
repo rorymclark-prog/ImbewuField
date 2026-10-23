@@ -1,0 +1,224 @@
+{
+  "title": "Source-bound Xitsonga candidates for missing Introduction infographic alt text",
+  "createdFor": "Independent semantic drafting; read-only review packet",
+  "reviewedHead": "4c10484c02db2c429c660981b92d2f98ae562e26",
+  "originMain": "4c10484c02db2c429c660981b92d2f98ae562e26",
+  "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "snapshotEvidence": {
+    "residualFallbackPacket": "/tmp/imbewu-study-residual-fallback-fields-20261004.json",
+    "canonicalPath": "lib/course-modules.ts",
+    "canonicalSha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+    "resolverPath": "lib/course-localization.ts",
+    "resolverSha256": "503f628a1c0679c5247558887e7438260fead024b67ac5112626e6e52bb1ff9f",
+    "registryPath": "lib/course-translation-drafts-ts.ts",
+    "registryExport": "XITSONGA_INTRO_PERMACULTURE_DRAFT",
+    "registrySha256": "ec64834836fcd239f88b51c5f903cb39510fd9d92805a8b8462e73e71a68cd83",
+    "registryHashesFromResidualSnapshot": {
+      "lib/course-translation-drafts-st-food-forest.ts": "c5bb1edad2d1cfde21ad2ccb8ad56f7979ee5ef66f8daf15070cc06c1c694a08",
+      "lib/course-translation-drafts-st-market-community.ts": "4b97656a2584264a5e061fbdecc119e781b26ddd9fd94fb29e402b65864948e5",
+      "lib/course-translation-drafts-st-plant-guilds.ts": "8ece1c0e1b04fcbe3fbf72596c0969a82ee78377eead5c8c4fbcf8fb88735c94",
+      "lib/course-translation-drafts-st-reading-landscape.ts": "c715838def50a0cea744281255f7a5c93cf7812d6e306aae86d63f1ba1ef0360",
+      "lib/course-translation-drafts-st-seeds-sovereignty.ts": "6d5eec4a72ecd0c6cb1795aca977018befbe565012dd95deb8028cb401e7736b",
+      "lib/course-translation-drafts-st-small-livestock.ts": "d6bd73ffbaa9e5afd6c0f1bad0a90d04152b5173a92952eb1cadfce0b6b797cd",
+      "lib/course-translation-drafts-st-soil-health.ts": "9aa4a61bb01b3a5bb2d922dfc06915d1df7f120d926f2e9d2b6169e74f119542",
+      "lib/course-translation-drafts-st-vegetables-staples.ts": "c5be563cbefe33b70554dd3da99c8cdf71932bd947a88f2b34dfc6a59b043b6c",
+      "lib/course-translation-drafts-st-water-harvesting.ts": "840ea57aeafa6c396f30b164903c21809134ca2278295e7dc4e167144515fd33",
+      "lib/course-translation-drafts-st.ts": "259c32040f8af912df4b87ef134d6c35cc29ee0c24bcd89f654a1d39706f51a8",
+      "lib/course-translation-drafts-ts-food-forest.ts": "728f2bf83d0191373587fd219ea3d7bdcd16b5d4e56543cce7330bbcd1bde430",
+      "lib/course-translation-drafts-ts-market-community.ts": "4aac6d74452ff242d0ce4c27c901fb8f21056a9114f59dc33669f118f10d3be7",
+      "lib/course-translation-drafts-ts-plant-guilds.ts": "88006cabdc4f09272524c1f36856f9ae265c83b979905c77ee002b491e92ecf3",
+      "lib/course-translation-drafts-ts-seeds-sovereignty.ts": "500ca01389567d1ff146ba0089a191a8a09dc19e8b18e3b27b5a1d4e4688ee8e",
+      "lib/course-translation-drafts-ts-small-livestock.ts": "fbd651cfe42cf1c559120c2a7f4621d444d102ff452351bdf4c0af4fa4b0e2b3",
+      "lib/course-translation-drafts-ts-soil-health.ts": "fd133a58be88461a9b2c01ab2c6b8e3328c7f79db97efe86bec49aa61206286a",
+      "lib/course-translation-drafts-ts-vegetables-staples-l2.ts": "5094ffa78b76c461f71e2f3d07cebec99853148665e8a78e7b81f4c0608cec95",
+      "lib/course-translation-drafts-ts-vegetables-staples.ts": "b0ccda00f4fa25658d3bb9a38bae3ea5203a7332dedfb22737d65f92b16058e4",
+      "lib/course-translation-drafts-ts-water-harvesting.ts": "7510075296d0a76d1da99d3ac7de5126d1340e0162ee8a098530956053353f22",
+      "lib/course-translation-drafts-ts.ts": "ec64834836fcd239f88b51c5f903cb39510fd9d92805a8b8462e73e71a68cd83",
+      "lib/course-translation-drafts-ve-food-forest.ts": "0a0bba6aa6e0456cca47cd21bda8e72cb49b0689332ff9e8316937b3a4bf3dfc",
+      "lib/course-translation-drafts-ve-market-community.ts": "a32726787acb097c0dbdc986f24273dfd9df6f8b53316d9e1ab89c885d69b94e",
+      "lib/course-translation-drafts-ve-plant-guilds.ts": "1cfb6d416650bb30f4ea14d49322351fbfe8f8647df36986607472b1105826de",
+      "lib/course-translation-drafts-ve-reading-landscape.ts": "1d5ba0f9651d4cc9a82ec79857269005b02714fd5f32e2df219e30c762b96d49",
+      "lib/course-translation-drafts-ve-seeds-sovereignty.ts": "e410ad8fe64a776eb21f6113193132be7c888519002e4255ea1b866eda46d3d1",
+      "lib/course-translation-drafts-ve-small-livestock.ts": "4e9ff324b75c63fa0daf22ff31cf7c050115ff2d9971424336228183dd239958",
+      "lib/course-translation-drafts-ve-soil-health.ts": "0ce3283a7f22df66e579107d9d641ade78bd17bc6fb64b64b201fcfc8733848f",
+      "lib/course-translation-drafts-ve-vegetables-staples.ts": "ab59043d3a8113b7002c655942b07d47b914bdc47de1bdb7c40e2aa66b275302",
+      "lib/course-translation-drafts-ve-water-harvesting.ts": "7d57d0d5841ce4cf63f844f28bddff5f1679baf3fd996b0db4cefaebec3de8e3",
+      "lib/course-translation-drafts-ve.ts": "748b93af41a1c8ac9b7b85131c31f0aa74e49a8723862b1aaf34c7761332b729"
+    }
+  },
+  "count": 3,
+  "candidateFields": [
+    {
+      "moduleId": "intro-permaculture",
+      "lessonId": "intro-permaculture-l1",
+      "language": "ts",
+      "fieldPath": "infographicAlt",
+      "canonicalSourceEnglish": "The three ethics as three linked circles of equal size: a hand holding soil for Earth Care, two people for People Care, and a basket passing between hands for Fair Share.",
+      "registeredSourceEnglish": null,
+      "currentTargetText": null,
+      "currentReviewStatus": null,
+      "currentResolverStatus": "draft",
+      "currentResolvedText": null,
+      "registryPath": "lib/course-translation-drafts-ts.ts",
+      "registryExport": "XITSONGA_INTRO_PERMACULTURE_DRAFT",
+      "candidateStatus": "draft",
+      "proposedTargetText": "Mahanyelo lawa manharhu ma kombisiwa hi swirhendzevutana swinharhu leswi hlanganisiweke, leswi ringanaka hi vukulu: voko leri khomeke misava ra Ku Hlayisa Misava; vanhu vambirhi va Ku Hlayisa Vanhu; na baskiti leri hundziseriwaka hi mavoko ra Ku Avelana hi Ku Ringana.",
+      "proposedSegments": [
+        {
+          "status": "draft",
+          "text": "Mahanyelo lawa manharhu ma kombisiwa hi swirhendzevutana swinharhu leswi hlanganisiweke, leswi ringanaka hi vukulu: voko leri khomeke misava ra Ku Hlayisa Misava; vanhu vambirhi va Ku Hlayisa Vanhu; na baskiti leri hundziseriwaka hi mavoko ra Ku Avelana hi Ku Ringana."
+        }
+      ],
+      "semanticPreservation": "“baskiti” is a loanword; the action must remain a basket passed between hands, not merely a basket held. Ethics labels follow the existing same-language lesson title. Machine draft; fluent review still needed.",
+      "sourceBinding": {
+        "canonicalPath": "lib/course-modules.ts",
+        "canonicalFieldPath": "lessons[].infographicAlt",
+        "canonicalFileSha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "resolverPath": "lib/course-localization.ts",
+        "resolverFileSha256": "503f628a1c0679c5247558887e7438260fead024b67ac5112626e6e52bb1ff9f",
+        "translationRegistryPath": "lib/course-translation-drafts-ts.ts",
+        "translationRegistryExport": "XITSONGA_INTRO_PERMACULTURE_DRAFT",
+        "translationRegistryFileSha256": "ec64834836fcd239f88b51c5f903cb39510fd9d92805a8b8462e73e71a68cd83",
+        "registeredSourcePairPresent": false,
+        "registryAbsenceVerifiedAgainstResidualSnapshot": true
+      },
+      "imageEvidence": {
+        "path": "public/course-images/intro-permaculture/intro-permaculture-l1.jpg",
+        "sha256": "88f45d7e5aeaeaf7b1a0ae54388794de9e0a70180527f80676d25c2764826dfb",
+        "dimensions": "1200x800",
+        "visualCheck": "Three linked equal-size circles: hand holding soil/sprout, two people together, and produce basket being passed between hands."
+      },
+      "reviewLimit": "Semantic proposal only. Not fluent approval and not authorization to wire or publish without root and independent review.",
+      "rootReadyTargetText": "Mahanyelo lawa manharhu ma kombisiwa hi swirhendzevutana swinharhu leswi hlanganisiweke, leswi ringanaka hi vukulu: voko leri khomeke misava ra Ku Hlayisa Misava; vanhu vambirhi va Ku Hlayisa Vanhu; na baskiti leri hundziseriwaka hi mavoko ra Ku Avelana hi Ku Ringana.",
+      "rootReadySegments": [
+        {
+          "status": "draft",
+          "text": "Mahanyelo lawa manharhu ma kombisiwa hi swirhendzevutana swinharhu leswi hlanganisiweke, leswi ringanaka hi vukulu: voko leri khomeke misava ra Ku Hlayisa Misava; vanhu vambirhi va Ku Hlayisa Vanhu; na baskiti leri hundziseriwaka hi mavoko ra Ku Avelana hi Ku Ringana."
+        }
+      ]
+    },
+    {
+      "moduleId": "intro-permaculture",
+      "lessonId": "intro-permaculture-l2",
+      "language": "ts",
+      "fieldPath": "infographicAlt",
+      "canonicalSourceEnglish": "Twelve design principles arranged as segments around a central seedling, each shown as a simple picture — an eye for observing, a droplet for catching water, a sun for energy, a loop for returning waste.",
+      "registeredSourceEnglish": null,
+      "currentTargetText": null,
+      "currentReviewStatus": null,
+      "currentResolverStatus": "draft",
+      "currentResolvedText": null,
+      "registryPath": "lib/course-translation-drafts-ts.ts",
+      "registryExport": "XITSONGA_INTRO_PERMACULTURE_DRAFT",
+      "candidateStatus": "draft",
+      "proposedTargetText": "Misinya ya milawu ya dizayini ya khume-mbirhi yi vekiwile hi swiphemu leswi rhendzeleke ximilana lexi nga exikarhini. Xiphemu xin’wana ni xin’wana xi kombisiwa hi xifaniso xo olova — tihlo ra ku xiyisisa, thonsi ra ku khoma mati, dyambu ra eneji, na xirhendzevutana lexi kombisaka ku vuyisa thyaka.",
+      "proposedSegments": [
+        {
+          "status": "draft",
+          "text": "Misinya ya milawu ya dizayini ya khume-mbirhi yi vekiwile hi swiphemu leswi rhendzeleke ximilana lexi nga exikarhini. Xiphemu xin’wana ni xin’wana xi kombisiwa hi xifaniso xo olova — tihlo ra ku xiyisisa, thonsi ra ku khoma mati, dyambu ra eneji, na xirhendzevutana lexi kombisaka ku vuyisa thyaka."
+        }
+      ],
+      "semanticPreservation": "“design” is retained as a familiar technical loan in “dizayini”; the source examples and their order are preserved. “Loop” is rendered as a circular loop without adding a broader recycling claim. Machine draft; fluent review still needed.",
+      "sourceBinding": {
+        "canonicalPath": "lib/course-modules.ts",
+        "canonicalFieldPath": "lessons[].infographicAlt",
+        "canonicalFileSha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "resolverPath": "lib/course-localization.ts",
+        "resolverFileSha256": "503f628a1c0679c5247558887e7438260fead024b67ac5112626e6e52bb1ff9f",
+        "translationRegistryPath": "lib/course-translation-drafts-ts.ts",
+        "translationRegistryExport": "XITSONGA_INTRO_PERMACULTURE_DRAFT",
+        "translationRegistryFileSha256": "ec64834836fcd239f88b51c5f903cb39510fd9d92805a8b8462e73e71a68cd83",
+        "registeredSourcePairPresent": false,
+        "registryAbsenceVerifiedAgainstResidualSnapshot": true
+      },
+      "imageEvidence": {
+        "path": "public/course-images/intro-permaculture/intro-permaculture-l2.jpg",
+        "sha256": "1d6c59707d2b5e971b8c65fe670acde04304483401b759cd9c7693a248d0328a",
+        "dimensions": "1200x800",
+        "visualCheck": "A twelve-segment wheel around a central seedling. The eye, droplet, sun, and circular loop examples are visible; no additional segment meanings are asserted."
+      },
+      "reviewLimit": "Semantic proposal only. Not fluent approval and not authorization to wire or publish without root and independent review.",
+      "rootReadyTargetText": "Misinya ya milawu ya dizayini ya khume-mbirhi yi vekiwile hi swiphemu leswi rhendzeleke ximilana lexi nga exikarhini. Xiphemu xin’wana ni xin’wana xi kombisiwa hi xifaniso xo olova — tihlo ra ku xiyisisa, thonsi ra ku khoma mati, dyambu ra eneji, na xirhendzevutana lexi kombisaka ku vuyisa thyaka.",
+      "rootReadySegments": [
+        {
+          "status": "draft",
+          "text": "Misinya ya milawu ya dizayini ya khume-mbirhi yi vekiwile hi swiphemu leswi rhendzeleke ximilana lexi nga exikarhini. Xiphemu xin’wana ni xin’wana xi kombisiwa hi xifaniso xo olova — tihlo ra ku xiyisisa, thonsi ra ku khoma mati, dyambu ra eneji, na xirhendzevutana lexi kombisaka ku vuyisa thyaka."
+        }
+      ]
+    },
+    {
+      "moduleId": "intro-permaculture",
+      "lessonId": "intro-permaculture-l3",
+      "language": "ts",
+      "fieldPath": "infographicAlt",
+      "canonicalSourceEnglish": "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
+      "registeredSourceEnglish": null,
+      "currentTargetText": null,
+      "currentReviewStatus": null,
+      "currentResolverStatus": "draft",
+      "currentResolvedText": null,
+      "registryPath": "lib/course-translation-drafts-ts.ts",
+      "registryExport": "XITSONGA_INTRO_PERMACULTURE_DRAFT",
+      "candidateStatus": "draft",
+      "proposedTargetText": "Xikombiso xa purasi lexi kombisiweke hi swifaniso: tinomboro ta 0 ku ya eka 5 ti landzelela ndlela yo famba hi milenge leyi jikajikaka ku suka endlwini ni le xirhapeni xa le kusuhi, ti hundza tihuku ni nsimu, ti ya eka mirhi ni le ndhawini ya le ribuweni ra nambu leyi nga ya ntumbuluko swinene. Tinomboro leti i swikombiso ntsena; a hi mindzilakano leyi tiyisiweke kumbe mipfhuka leyi tiyisiweke.",
+      "proposedSegments": [
+        {
+          "status": "draft",
+          "text": "Xikombiso xa purasi lexi kombisiweke hi swifaniso: tinomboro ta 0 ku ya eka 5 ti landzelela ndlela yo famba hi milenge leyi jikajikaka ku suka endlwini ni le xirhapeni xa le kusuhi, ti hundza tihuku ni nsimu, ti ya eka mirhi ni le ndhawini ya le ribuweni ra nambu leyi nga ya ntumbuluko swinene. Tinomboro leti i swikombiso ntsena; a hi mindzilakano leyi tiyisiweke kumbe mipfhuka leyi tiyisiweke."
+        }
+      ],
+      "semanticPreservation": "The six markers, route order, objects, and example-only qualification are preserved. “Near garden” is rendered as xirhapa (garden), while “field” stays nsimu. The final clause explicitly keeps both boundaries and distances unfixed; “more natural” conveys wilder without inventing a named habitat. Machine draft; fluent review still needed.",
+      "sourceBinding": {
+        "canonicalPath": "lib/course-modules.ts",
+        "canonicalFieldPath": "lessons[].infographicAlt",
+        "canonicalFileSha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "resolverPath": "lib/course-localization.ts",
+        "resolverFileSha256": "503f628a1c0679c5247558887e7438260fead024b67ac5112626e6e52bb1ff9f",
+        "translationRegistryPath": "lib/course-translation-drafts-ts.ts",
+        "translationRegistryExport": "XITSONGA_INTRO_PERMACULTURE_DRAFT",
+        "translationRegistryFileSha256": "ec64834836fcd239f88b51c5f903cb39510fd9d92805a8b8462e73e71a68cd83",
+        "registeredSourcePairPresent": false,
+        "registryAbsenceVerifiedAgainstResidualSnapshot": true
+      },
+      "imageEvidence": {
+        "path": "public/course-images/intro-permaculture/intro-permaculture-l3-footpath.jpg",
+        "sha256": "938a4d4ec42559eb1fd62d90999f214d8a2695ddba23e4766c7fde20b74eac3f",
+        "dimensions": "1200x675",
+        "visualCheck": "Winding path from house/near garden past chickens and field toward trees and riverside; visible markers 0, 1, 2, 3, 4, 5."
+      },
+      "reviewLimit": "Semantic proposal only. Not fluent approval and not authorization to wire or publish without root and independent review.",
+      "rootReadyTargetText": "Xikombiso xa purasi lexi kombisiweke hi swifaniso: tinomboro ta 0 ku ya eka 5 ti landzelela ndlela yo famba hi milenge leyi jikajikaka ku suka endlwini ni le xirhapeni xa le kusuhi, ti hundza tihuku ni nsimu, ti ya eka mirhi ni a wilder riverside area. Tinomboro leti i swikombiso ntsena; a hi mindzilakano leyi tiyisiweke kumbe mipfhuka leyi tiyisiweke.",
+      "rootRepairReason": "Preserve the exact comparative habitat anchor rather than equating wilder with more natural.",
+      "rootReadySegments": [
+        {
+          "status": "draft",
+          "text": "Xikombiso xa purasi lexi kombisiweke hi swifaniso: tinomboro ta 0 ku ya eka 5 ti landzelela ndlela yo famba hi milenge leyi jikajikaka ku suka endlwini ni le xirhapeni xa le kusuhi, ti hundza tihuku ni nsimu, ti ya eka mirhi ni a wilder riverside area. Tinomboro leti i swikombiso ntsena; a hi mindzilakano leyi tiyisiweke kumbe mipfhuka leyi tiyisiweke."
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "draft": 3,
+    "mixed": 0,
+    "englishHold": 0,
+    "excluded": 0,
+    "readOnly": true,
+    "meaningChecks": [
+      "ethics objects and equal linked circles",
+      "12 segments and central seedling plus four named pictogram examples in source order",
+      "markers 0–5 and route object/order",
+      "example not fixed boundaries or distances"
+    ],
+    "limitations": [
+      "Machine semantic drafting only; no fluent-speaker approval.",
+      "The visual inspection confirms the listed picture elements only; no extra instructional meaning is inferred.",
+      "No repository files or resolver registrations were modified."
+    ]
+  },
+  "rootReview": {
+    "rootViewedAllThreeImages": true,
+    "independentCheck": "/tmp/imbewu-ts-intro-missing-alt-independent-check-20261004.json",
+    "fluentApproval": false,
+    "learnerWired": false
+  }
+}

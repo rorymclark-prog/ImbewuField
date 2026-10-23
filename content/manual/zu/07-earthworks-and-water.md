@@ -1,645 +1,433 @@
 # Imisebenzi yomhlabathi namanzi
 
-Ku-permaculture, imisebenzi yomhlabathi (earthworks) iwuhlaka, noma amathambo, epulazi. Imisebenzi yomhlabathi kusho ukulolonga umhlaba: ukumba, ukuhambisa nokunqwabelanisa umhlabathi ukuze amanzi aye lapho sifuna khona. Izingadi zethu zemifino, izihlahla nezinhlelo zezilwane bese zakhiwa phezu kwalolu hlaka.
+Imvula iyisivuno esisodwa esiwela kuwo wonke amapulazi mahhala. Emhlabeni wethu omningi igeleza ngokushesha ihambe, ithwale **i-topsoil** (ungqimba olungaphezulu olumnyama, oluphilayo). Isiphepho esifanayo esikhukhula umgwaqo sishiya insimu yomile ngemva kwesonto.
 
-Imisebenzi yomhlabathi emihle ihlelwa ngokuya ngendawo nangesimo sezulu. Imvula nomthambeka yikho okunquma ukuthi uzosebenzisa yiphi indlela. Isibonelo, endaweni eyomile kakhulu ubungeke wenze imibhede yemifino ephakanyisiwe. Lapho kungcono imibhede ecwile phansi, emise okwezitsha ezingashoni, ngoba ibamba lonke iconsi lemvula.
+**Imisebenzi yomhlabathi** (earthworks) iyakushintsha lokho. Ngokulolonga umhlaba ngefosholo, ngekhuba noma ngomshini, sinciphisa ijubane lamanzi, siwasabalalise futhi siwavumele ashone. Imisebenzi yomhlabathi ingamathambo epulazi. Izingadi, izihlahla nezilwane konke kulenga kuwo.
+
+**Ekupheleni kwalesi sahluko uzokwazi:**
+
+- Ukulinganisa uphahla lwakho nokubala ukuthi lungabamba imvula engakanani, nokuthi udinga ithangi elingakanani
+- Ukwakha i-A-frame, ukubethela i-contour ngezikhonkwane nokumba i-swale ebangeni elifanele ukusuka kwelandelayo
+- Ukukhetha indlela yokulungisa umhlabathi ephazamisa umhlabathi wakho kancane kakhulu
+- Ukuhlela imibhede nokukhetha indlela yokunisela ehambisana namanzi akho
+- Ukusebenzisa amanzi ombhavu neshawa ezihlahleni ngokuphepha
 
 ## Lokho imisebenzi yomhlabathi engakwenza
 
-Imisebenzi yomhlabathi ehlelwe kahle ingakwazi:
+Amanzi agijima esuka emhlabeni ongenalutho athwala umhlabathi. Amanzi ahlala emi emhlabeni ayangena futhi ondle izimpande amasonto. Imisebenzi yomhlabathi inquma ukuthi yikuphi kulokhu okubili okwenzekayo.
 
-- ukusiza imvula ingene emhlabathini esikhundleni sokugeleza ihambe
-- ukugcwalisa kabusha amanzi angaphansi komhlaba (amanzi agcinwe ekujuleni emhlabathini nasematsheni)
-- ukumisa **i-erosion** (lapho umhlabathi ukhukhulwa amanzi noma uphephulwa umoya)
-- ukunisela izihlahla ngokwemvelo, ungadingi ukuthwala amanzi
-- ukuhambisa amanzi aqonde ngqo ezitshalweni
-- ukwakha **i-habitat** (ikhaya lemvelo) yezinyoni, amaxoxo nezinambuzane
+Imisebenzi yomhlabathi emihle:
 
-Imisebenzi yomhlabathi ingenza nomonakalo omkhulu uma ihlelwe kabi noma yakhiwe kabi. Amanzi aqoqwe endaweni eyodwa bese ephunyuka angagubha umsele omkhulu wokuguguleka (donga) esiphephweni esisodwa nje. Ngakho njalo **hlela ucabangela isiphepho esikhulu kunazo zonke**: yonke imisebenzi yomhlabathi idinga indlela yokuchichima ephephile, ukuze amanzi eqile aphume kancane ngaphandle kokudiliza izindonga noma amabhange omhlabathi.
+- ivumela imvula ingene emhlabathini esikhundleni sokugeleza ihambe
+- igcwalisa kabusha amanzi angaphansi komhlaba, amanzi agcinwe ekujuleni komhlabathi namatshe
+- ivimba **i-erosion**, ukukhukhuleka noma ukuphephuka komhlabathi
+- inisela izihlahla kungekho muntu othwala ibhakede
+- iholela amanzi ezitshalweni
+- yenza amakhaya amaxoxo, izinyoni nezinambuzane
 
-Ungaqali imisebenzi yomhlabathi emikhulu, njengamadamu noma **ama-swale** amade (imisele esezingeni elilodwa ebamba amanzi emvula) ambiwa ngomshini, ngaphandle kokuthola iseluleko kumuntu onolwazi. Imisebenzi yomhlabathi ku-permaculture iyisifundo esikhulu, esivame ukufundiswa njengesifundo esizimele. Lesi sahluko sichaza izindlela eziyinhloko, sigxile ekuqoqeni imvula **ne-runoff** (amanzi emvula ageleza phezu komhlaba).
+Imisebenzi yomhlabathi ingadala nomonakalo omkhulu. Amanzi aqoqwe endaweni eyodwa bese ekhululwa angagubha iziwa ngesiphepho esisodwa. Ngakho **siklamela isiphepho esikhulu kakhulu**. Wonke umsebenzi womhlabathi uthola indlela yokuchichima ephephile, ukuze amanzi eqile aphume kancane angaphuli udonga.
 
-### Imisebenzi yomhlabathi evamile ku-permaculture
+Imisebenzi yomhlabathi esiyisebenzisa kakhulu:
 
-- **Ama-swale:** imisele esezingeni elilinganayo embiwa ngokulandela umugqa **we-contour** (umugqa ohamba ezingeni elifanayo emthambekeni). Umhlabathi owembiwe unqwatshelwa ube yibhange ngezansi komsele. Abamba i-runoff bese eyiyeka ingene emhlabathini.
-- **Amachibi:** izindawo ezincane zokugcina amanzi avulekile, ngokuvamile agcwaliswa nge-runoff noma ngamanzi achichima emathangini.
-- **Amadamu:** izindawo ezinkulu zokugcina amanzi ezakhiwe ngodonga lomhlabathi noma lwamatshe. ENingizimu Afrika anemithetho (bheka ingxenye ethi "Umthetho wamanzi eNingizimu Afrika" ngezansi).
-- **I-hügelkultur:** izinqwaba eziphakeme ezakhiwe phezu kwezingodo namagatsha agqitshiwe. Izingodo ezibolayo zibamba amanzi njengesipontshi.
-- **Izinhlelo ze-net-and-pan (inetha nezitsha):** uxhaxha lwemisele emincane (inetha) oluhambisa i-runoff luyiyise emigodini yokutshala (izitsha).
-- **Izitsha ze-infiltration** (izitsha zokungenisa amanzi emhlabathini): imigodi engashoni enezansi elilinganayo, egcwala i-runoff bese iyiyeka ingene emhlabathini.
-- **Imisele nezindunduma zokuphambukisa amanzi:** imisele emincane noma izindunduma eziphansi eziphambukisa i-runoff evela emgwaqeni, endleleni noma ophahleni, ziyiqondise ku-swale, esitsheni noma echibini.
+- **Ama-swale:** imisele esezingeni elilodwa enqamula umthambeka, umhlabathi unqwabelaniswe udonga ngezansi kwayo.
+- **Izitsha ze-infiltration:** imigodi engajulile esezingeni elilodwa egcwala **i-runoff** (imvula egeleza phezu komhlabathi esikhundleni sokungena) futhi iyivumele ishone.
+- **Amachibi namadamu:** izindawo ezivulekile zokugcina amanzi ezigcwaliswa yi-runoff noma amanzi achichima ethangini.
+- **Imisele nezindunduma zokuphambukisa amanzi:** imisele emincane noma imigqa ephansi ephambukisa amanzi emgwaqweni noma endleleni iwayise ku-swale, esitsheni noma echibini.
+- **Izinhlelo ze-net-and-pan:** imisele emincane (inetha) ehola i-runoff iyise ezitsheni zokutshala (ama-pan).
+- **I-hügelkultur:** izindunduma ezakhiwe phezu kwezingodo namagatsha agqitshiwe, amunca amanzi njengesipontshi njengoba ebola.
 
-> **Ukuphepha:** Umsele noma umgodi ungawa noma ngabe ujule kangakanani, futhi umhlabathi omanzi ungambela umuntu ngemizuzwana nje. Ungalokothi usebenze wedwa emgodini. Kunoma yimuphi umgodi ojule ngaphezu kwamadolo, yenza izinhlangothi zitshekele ngemuva noma uzisekele ngaphambi kokuthi kungene noma ubani. Umhlabathi owembiwe uwubeke okungenani ibanga elingu-1 m kude nomphetho. Ungangeni emgodini ngemva kokuna kwemvula. Ngaphambi kokuthi umbe, thola ukuthi amapayipi amanzi, izintambo zikagesi namapayipi e-septic kudlula kuphi. Abantu, ikakhulukazi izingane, bagcine kude nemishini esebenzayo, njenge-TLB (ugandaganda onefosholo nesimbela). Biyela noma umboze imigodi evulekile ekupheleni kwalo lonke usuku.
+Imvula nomthambeka kunquma ukuthi yikuphi kulokhu okufanele umhlaba wakho.
 
-## Ukuqoqa nokugcina amanzi emvula
+## Ukuvuna nokugcina amanzi emvula
 
-Ukuqoqa amanzi emvula kusho ukubamba imvula evela ophahleni, emigwaqeni, ezindleleni nasemhlabeni, bese uyigcina. Ungayigcina emigqonyeni, emathangini, emachibini nasemadamini, noma emhlabathini nasemanzini angaphansi komhlaba.
+Amanzi athuthwa ngamapayipi evela kude angama nganoma yisiphi isikhathi. Amanzi owabambe ngokwakho akhona lapho uwadinga. Ngakho umthetho ulula: **bamba imvula eduze ngangokunokwenzeka nalapho iwela khona**, bese uyigcina.
 
-Umthetho uthi **bamba ugcine imvula eduze ngangokunokwenzeka nalapho iwela khona**. Lokhu kukunika ukuphepha kwamanzi, futhi kusiza ipulazi lakho ukuthi likwazi ukumelana nesomiso **ne-climate change** (ukushintsha kwesimo sezulu). Futhi kuthembeke kakhulu kunokuletha amanzi ngamapayipi evela kude, ngoba ipayipi elide lingaphuka noma amanzi angama ukufika.
+Siyigcina ezigubhini, emathangini, emachibini nasemadamu. Kodwa indawo enkulu kakhulu yokugcina ngumhlabathi uqobo. Umhlabathi onothe nge-**organic matter** (izinto zezitshalo nezilwane ezibolayo), ombozwe ngezitshalo ne-**mulch** (ingubo yotshani obomile, amaqabunga noma amahlanga), umunca imvula futhi uyibambe kangcono kakhulu kunomhlabathi ongenalutho, oqinile. I-permaculture ibiza lo mhlabathi ngokuthi **isipontshi esiphilayo**.
 
-Umhlaba uqobo uyindawo enkulu kunazo zonke yokugcina amanzi. Umhlabathi onothe **nge-organic matter** (izinto eziphilayo ezibolayo), ombozwe izitshalo **ne-mulch** (isembozo somhlabathi), umunca imvula futhi uyibambe kangcono kakhulu kunomhlabathi ongenalutho noqinile. I-permaculture ibiza lo mhlabathi ngokuthi **isipontshi esiphilayo**.
+### Izimiso eziyisishiyagalombili zokuvuna amanzi emvula
 
-Amanzi emvula aqoqiwe angasetshenziselwa:
+Incwadi kaBrad Lancaster ethi *Rainwater Harvesting for Drylands and Beyond* ibeka izimiso eziyisishiyagalombili. Ngamazwi ethu:
 
-- ukuphuza nokupheka, ngemva kokuwahlanza (bheka ibhokisi elithi Ukuphepha ngezansi)
-- ukugeza, inhlanzeko nokuthuthwa kwendle
-- ukunisela izitshalo, izihlahla nemifino
-- ukuphuzisa imfuyo
-- ukulawula i-erosion
-- ukwakha umhlabathi nokukhulisa **ama-groundcover** (izitshalo eziphansi ezimboza umhlabathi)
+1. **Buka isikhathi eside.** Hamba umhlaba lapho kuna. Bona lapho amanzi egeleza khona nalapho ema khona. Yakha phezu kwalokho osekuvele kusebenza.
+2. **Qala phezulu wehle.** Esiqongweni somthambeka amanzi mancane futhi ahamba kancane, ngakho kulula ukuwabamba. Ukusuka lapho angageleza ehle aye lapho uwadinga khona.
+3. **Qala kancane futhi kalula.** Imisebenzi emincane eminingi ongayakha futhi uyilungise ngokwakho ingcono kunowodwa omkhulu.
+4. **Wanciphise ijubane, uwasabalalise, uwashonise.** Ungalokothi uvumele amanzi agijime aphume emhlabeni.
+5. **Hlela ukuchichima, futhi ukusebenzise.** Hola amanzi eqile uwayise lapho engenza khona okuhle okwengeziwe.
+6. **Gcina umhlabathi umbozekile** ngezitshalo ne-mulch, ukuze isipontshi sikhule unyaka nonyaka.
+7. **Yenza umsebenzi ngamunye wenze imisebenzi eminingana.** Udonga lwe-swale lungaba nendlela eyomile; izihlahla eziniselwa yisitsha zingenza umthunzi endlini.
+8. **Qhubeka ubuka futhi ulungisa.** Inkathi yemvula ngayinye ikufundisa okuthile, okukubuyisela esimisweni 1.
 
-### Izimiso eziyisishiyagalombili zokuqoqa amanzi emvula
+### Ukuvuna amanzi ophahleni
 
-Lezi zimiso zivela encwadini kaBrad Lancaster ethi *Rainwater Harvesting for Drylands and Beyond*. Lapha zibhalwe ngamazwi ethu.
+Uphahla oluqinile olubushelelezi lunika amanzi amaningi. Uthayela, amashidi e-IBR nezingcwecwe zophahla kunika amanzi amaningi kakhulu kunotshani bokufulela.
 
-1. **Qala ngokubheka, isikhathi eside.** Bona ukuthi amanzi ageleza kuphi uma lina, nokuthi ame kuphi ngemva kwalokho. Yakha phezu kwalokho osekuvele kusebenza.
-2. **Qala phezulu emhlabeni wakho usebenze wehle.** Amanzi ageleza ehlela phansi. Phezulu emthambekeni amanzi mancane futhi ahamba kancane, ngakho kulula ukuwabamba. Amanzi abanjwe phezulu angabuye ageleze aye ezindaweni eziphansi ngamandla awo (ngamandla adonsela phansi).
-3. **Qala ngokuncane nokulula.** Sebenza ngobukhulu ongabakha futhi ubulungise wena ngokwakho. Imisebenzi eminingi emincane yokubamba amanzi yenza kangcono kunowodwa omkhulu.
-4. **Nciphisa ijubane lamanzi, uwasabalalise, uwangenise emhlabathini.** Ungavumeli amanzi agijime aphume emhlabeni wakho ethwele umhlabathi. Anciphise ijubane, awasabalalise bese uwayeka angene emhlabathini.
-5. **Njalo hlela indlela yokuchichima, bese usebenzisa amanzi achichimayo njengensiza.** Wonke amathangi, izitsha, ama-swale namachibi adinga indlela ephephile yokuthi amanzi eqile aphume ngesikhathi sesiphepho esikhulu. Lawo manzi achichimayo wahole uwayise lapho engenza khona okuhle okwengeziwe.
-6. **Gcina umhlabathi umbozwe izitshalo ne-mulch.** Lokhu kwakha isipontshi esiphilayo, ukuze umhlabathi ubambe amanzi amaningi unyaka nonyaka.
-7. **Yenza ingxenye ngayinye yenze imisebenzi eminingana.** Isibonelo, ibhange le-swale lingaba futhi yindlela eyomile, futhi izihlahla ezitshalwe ukuze zisebenzise amanzi aqoqiwe zingaphinde zithunzise indlu zinike nezithelo.
-8. **Qhubeka uhlola futhi uthuthukisa.** Bheka ukuthi umsebenzi wakho wenza kanjani ngenkathi yemvula ngayinye, bese uwushintsha lapho kudingeka khona. Lokhu kukubuyisela esimisweni 1.
+1. Faka ama-gutter emaphethelweni aphansi ophahla, athambekele kancane ngasethangini ukuze amanzi angalokothi eme kuwo.
+2. Beka inetha lokuvimba amaqabunga phezu kwe-gutter noma lapho amanzi engena khona ethangini.
+3. Faka **i-first-flush diverter** ngaphambi kwethangi. Leli yipayipi noma isitsha esibamba amanzi okuqala angcole kakhulu emvula ngayinye, anothuli, indle yezinyoni namaqabunga. Yithulule ngemva kwemvula ngayinye.
+4. Faka indlela yokuchichima eduze kwaphezulu kwethangi bese uyiholela kwelinye ithangi, echibini, ku-swale noma esitsheni sesihlahla, ungalokothi uyiqondise odongeni.
+5. Xhumanisa amathangi amabili noma ngaphezulu ngepayipi eduze kwaphansi, ukuze agcwale futhi aphele ndawonye.
 
-### Ukuqoqa amanzi ophahleni
+Amaqabunga afika ethangini ayabola futhi azalanise amagciwane, ngakho gcina ama-gutter namanetha ehlanzekile. Gcina wonke amathangi evaliwe ngesivalo esiqinile esinenetha, ukuze izingane, izilwane nomiyane zingakwazi ukungena. Amanzi ophahleni awahlanzekile ngokwanele ukuba aphuzwe njengoba enjalo: waqale uwabilise.
 
-Ungaqoqa imvula cishe kuzo zonke izinhlobo zophahla. Uma uphahla luqinile futhi lubushelelezi, uthola amanzi amaningi. Uthayela namashidi ensimbi (uthayela wamagagasi noma i-IBR) kunika amanzi amaningi kakhulu kunotshani bokufulela.
+### Ungabamba amanzi angakanani?
 
-Hlela uhlelo lwakho lophahla kanje:
+Imvula engu-1 mm emithini-skwele engu-1 inika **ilitha elilodwa** lamanzi. Ngakho:
 
-1. Faka ama-gutter emaphethelweni aphansi ophahla. Ama-gutter kufanele atshekele kancane ebheke ethangini ukuze amanzi angami kuwo.
-2. Faka inetha lokuvimba amaqabunga phezu kwe-gutter noma lapho amanzi engena khona ethangini.
-3. Faka **i-first-flush diverter** ngaphambi kwethangi. Lena ipayipi noma isitsha esibamba amanzi okuqala, angcole kakhulu, avela ophahleni ngayo yonke imvula, enothuli, indle yezinyoni namaqabunga, bese siwavimba ukuthi angangeni ethangini. Ungayithenga noma uyenze. Yithulule ngemva kwemvula ngayinye.
-4. Faka ipayipi lokuchichima eduze nengxenye ephezulu yethangi. Amanzi achichimayo wahole uwayise ethangini lesibili, echibini, ku-swale noma esitsheni sesihlahla, hhayi odongeni noma endleleni.
-5. Uma unamathangi angaphezu kwelilodwa, ungawaxhuma ngepayipi eduze nezansi ukuze agcwale futhi aphele ndawonye.
+**Amanzi abanjiwe (amalitha) = indawo (m²) × imvula (mm) × isilinganiso se-runoff**
 
-Amaqabunga nokungcola okungena ethangini kuyabola, futhi kuvumela amagciwane ayingozi ukuthi akhule. Gcina ama-gutter, amanetha ne-first-flush diverter kuhlanzekile.
+**Isilinganiso se-runoff** (runoff coefficient) yingxenye yemvula egelezayo, njengenombolo ephakathi kuka-0 no-1. Isilinganiso esingu-0.8 sisho ukuthi u-80% uyageleza; okusele kumanzisa uphahla, kuchaphazele kudlule i-gutter noma kuye ku-first-flush diverter.
 
-> **Ukuphepha:** Amanzi emvula awaphephile ukuthi aphuzwe ngokuzenzakalela. Ngaphambi kokuwaphuza, wabilise (aze abile aphuphume) noma uwahlanze ngendlela eyelulekwa umtholampilo wakho noma isikhulu sezempilo sendawo. Ungaqoqi amanzi okuphuza ophahleni olupendwe ngopende onomthofu (lead paint), noma olwenziwe ngamapulangwe afakwe amakhemikhali, noma olugcwele indle yezinyoni. Gcina onke amathangi evaliwe ngesivalo esiqinile, futhi zonke izimbobo uzimboze ngenetha, ukuze kungangeni izingane, izilwane nemiyane. Ingane ingaminza emanzini amancane nje, ngakho khiya noma ubeke into esindayo phezu kwezivalo zamathangi nezimbobo zokuhlola.
+Linganisa uphahla **ubheka phezulu**, kuhlanganise nemiphetho ephumele ngaphandle. Imvula iwa iqonde phansi, ngakho uphahla oluthambeke kakhulu alubambi okungaphezu koluyisicaba phezu kwendawo efanayo.
 
-### Ungawaqoqa amanzi angakanani?
+**Isibonelo esibaliwe: uphahla endaweni enemvula engu-750 mm**
 
-Imvula engu-millimetre eyodwa (1 mm) ewela ku-square metre eyodwa (1 m²) inika **ilitha elingu-1** lamanzi. Ngakho:
+1. Uphahla lulinganisa u-12 m × 10 m ubhekwa phezulu = **120 m²**.
+2. Imvula ewela kulo ngonyaka ojwayelekile = 120 × 750 = amalitha angu-90 000.
+3. Uphahla lukathayela olunama-gutter amahle lunesilinganiso esingu-0.8 kuya ku-0.9. Hlela ngo-**0.8**.
+4. Amanzi ongawavuna = 120 × 750 × 0.8 = **amalitha angu-72 000 ngonyaka**.
 
-**Amanzi avela endaweni (amalitha) = ubukhulu bendawo (m²) × imvula (mm) × isilinganiso se-runoff**
+Uphahla olusha olunama-gutter aphelele lungafinyelela ku-0.95 (amalitha angu-85 500), kodwa hlela ngo-0.8. Unyaka owomile unika amanzi amancane kakhulu.
 
-**Isilinganiso se-runoff** (runoff coefficient) yingxenye yemvula egeleza ngempela futhi engaqoqwa. Yinombolo ephakathi kuka-0 no-1. Isilinganiso esingu-0.8 sisho ukuthi u-80% wemvula uyageleza. Okusele kumanzisa uphahla, kuyahwamuka, kuchaphazeleka kweqe ama-gutter, noma kungena ku-first-flush diverter.
-
-Linganisa uphahla njengoba lubukeka **uma ulubheka usuphezulu**, kuhlanganise nezingxenye ezingaphandle kwezindonga. Ungalinganisi ulandela ukutshekela kophahla. Imvula iwa iqonde ngqo phansi, ngakho uphahla olutshekele kakhulu alubambi imvula eningi kunophahla oluyisicaba olumboze indawo efanayo phansi.
-
-**Isibonelo esisebenzayo: uphahla endaweni ethola imvula engu-750 mm**
-
-1. Uphahla lulinganiselwa ku-12 m ngo-10 m uma ulubheka usuphezulu. Ubukhulu = 12 m × 10 m = **120 m²**.
-2. Indawo yakho ithola imvula engaba ngu-750 mm onyakeni ojwayelekile.
-3. Imvula ewela ophahleni ngonyaka = 120 × 750 = **amalitha angu-90 000**.
-4. Uphahla lwensimbi olunama-gutter amahle lunesilinganiso se-runoff esingaba ngu-0.8 kuya ku-0.9. Sebenzisa u-**0.8** ukuze uphephe.
-5. Amanzi ongawaqoqa = 120 × 750 × 0.8 = **amalitha angu-72 000 ngonyaka**.
-
-Uma usebenzisa u-0.95, inani liba ngu-120 × 750 × 0.95 = amalitha angu-85 500. Leli yinani eliphezulu kakhulu ongalilindela ophahleni olusha, oluhlanzekile olunama-gutter aphelele. Kuphephile ukuhlela usebenzisa u-0.8.
-
-Khumbula ukuthi lokhu kungunyaka ojwayelekile. Ngonyaka owomile ungathola amanzi ambalwa kakhulu.
-
-### Izilinganiso ze-runoff ezindaweni ezahlukene
-
-Ungasebenzisa le fomula efanayo kunoma iyiphi indawo, njengegceke, umgwaqo noma insimu. Yisilinganiso kuphela esishintshayo. Izinombolo ezingezansi ziyisiqondiso nje esilinganiselwayo. I-runoff iningi emithambekeni ewumqansa, emhlabathini wobumba nangezikhathi zeziphepho ezinamandla. Incane endaweni eyisicaba, enesihlabathi nemboze kahle izitshalo.
+Le fomula efanayo isebenza kunoma iyiphi indawo. Kushintsha isilinganiso kuphela. I-runoff iphezulu emithambekeni ewumqansa, obumbeni nasezivunguvungwini ezinamandla.
 
 | Indawo | Isilinganiso se-runoff |
 |---|---|
-| Uphahla lwensimbi (uthayela wamagagasi, i-IBR) | 0.8 kuya ku-0.9 |
-| Uphahla lukathayela wobumba noma kakhonkolo | 0.6 kuya ku-0.9 |
-| Uphahla lotshani | cishe 0.2 |
-| Indawo egandayiwe ngokhonkolo noma ngetiyela | 0.7 kuya ku-0.95 |
-| Umgwaqo wamatshe amancane (gravel) | 0.5 kuya ku-0.7 |
+| Uphahla lukathayela | 0.8 kuya ku-0.9 |
+| Uphahla lwezingcwecwe (tiles) | 0.6 kuya ku-0.9 |
+| Uphahla lotshani | cishe u-0.2 |
+| Ukhonkolo noma itiyela | 0.7 kuya ku-0.95 |
+| Umgwaqo wamatshana | 0.5 kuya ku-0.7 |
 | Umhlabathi ongenalutho, oqinile | 0.3 kuya ku-0.6 |
-| Utshani noma idlelo lemvelo (veld) | 0.05 kuya ku-0.35 |
-| Umbhede wengadi one-mulch | ngaphansi kuka-0.1 |
+| Utshani noma idlelo | 0.05 kuya ku-0.35 |
 
-Umbhede one-mulch noma **i-food forest** (ihlathi lokudla) ivumela cishe yonke imvula ingene emhlabathini. Yilokho kanye esikufunayo emhlabeni otshaliwe. Izindawo eziqinile njengophahla, izindawo ezigandayiwe nemigwaqo yizo esiqoqa kuzo i-runoff.
+Umhlabathi ombozekile uvumela iningi lemvula ingene, okuyikho esikufunayo emhlabeni okhula kuwo izitshalo. Izindawo eziqinile yilapho sivuna khona.
 
-### Ithangi lakho kufanele libe likhulu kangakanani?
+### Ithangi kufanele libe likhulu kangakanani?
 
-Awudingi ithangi eligcina yonke imvula yonyaka, ngoba usebenzisa amanzi unyaka wonke. Ithangi lidinga kuphela ukukudlulisa ezinyangeni ezomile.
+Usebenzisa amanzi unyaka wonke, ngakho ithangi alidingi ukuphatha imvula yonyaka wonke. Lidinga kuphela ukukudlulisa ezinyangeni ezomile.
 
-**Isibonelo esisebenzayo: ithangi lokusetshenziswa ekhaya**
+**Isibonelo esibaliwe: ithangi lomuzi**
 
-1. Umndeni wabantu abangu-5 uhlela ukusebenzisa amalitha angu-25 umuntu ngamunye ngosuku ukuze aphuze, apheke futhi agezise okuyisisekelo. Lokho kungu-5 × 25 = **amalitha angu-125 ngosuku**.
-2. Amanzi adingekayo ngonyaka = 125 × 365 = **amalitha angu-45 625**. Uphahla olungu-120 m² esibonelweni esingenhla lunika cishe amalitha angu-72 000 onyakeni ojwayelekile, ngakho uphahla lukhulu ngokwanele.
-3. Engaphakathi yeNingizimu Afrika ethola imvula ehlobo, inkathi eyomile icishe isuke ngoMeyi iye kuSepthemba, okuyizinsuku ezingaba **ngu-150**. (ENtshonalanga Kapa ethola imvula ebusika, inkathi eyomile yihlobo.)
-4. Amanzi adingekayo ukudlula inkathi eyomile = 125 × 150 = **amalitha angu-18 750**.
-5. Ngakho umndeni udinga indawo yokugcina amanzi ecishe ibe **ngamalitha angu-20 000**, isibonelo amathangi amabili angamalitha angu-10 000 ngalinye. Lokhu kucabanga ukuthi amathangi agcwele lapho imvula iyeka.
+1. Abantu abahlanu bahlela amalitha angu-25 umuntu ngamunye ngosuku okuphuza, ukupheka nokugeza: **amalitha angu-125 ngosuku**.
+2. Ngonyaka lokho kungu-125 × 365 = amalitha angu-45 625. Uphahla lwe-120 m² olungenhla lunika cishe amalitha angu-72 000, ngakho uphahla lukhulu ngokwanele.
+3. Phakathi nezwe elithola imvula ehlobo, inkathi eyomile iqala cishe kuNhlaba iye kuMandulo: cishe **izinsuku ezingu-150**. (ENtshonalanga Kapa inkathi eyomile yihlobo.)
+4. Amanzi adingekayo ukuyidlula = 125 × 150 = **amalitha angu-18 750**.
+5. Ngakho umuzi udinga indawo yokugcina cishe **amalitha angu-20 000**, isibonelo amathangi amabili amalitha angu-10 000, agcwele lapho imvula iyeka.
 
-Ukuze uthole isilinganiso esingcono, dweba ithebula lezinyanga ezingu-12. Enyangeni ngayinye, bala ukuthi uphahla lunika amanzi angakanani (ubukhulu bophahla × imvula yaleyo nyanga × isilinganiso) nokuthi usebenzisa angakanani. Qhubeka ubhala inani lalokho okusele ethangini. Ukuntuleka okukhulu kunakho konke okufinyelela kukho ngenkathi eyomile yibona bukhulu bendawo yokugcina amanzi obudingayo. Cela amanani emvula yenyanga ngayinye endaweni yakho esiteshini sezulu esiseduze noma ehhovisi lezolimo.
+Ukuze uthole impendulo ecacile, bhala izinyanga eziyi-12. Enyangeni ngayinye, bala lokho uphahla olunikayo (indawo × imvula yaleyo nyanga × isilinganiso) nalokho okusebenzisayo, bese ugcina isamba esiqhubekayo salokho okusele ethangini. Ukushoda okukhulu kakhulu ngenkathi eyomile kuyindawo yokugcina oyidingayo.
 
-Amanzi engadi angaphezu kwalawa. Ingadi yemifino ngenkathi eyomile ingasebenzisa amanzi amaningi kakhulu kunomndeni. Yingakho sigcina namanzi emhlabathini, sisebenzisa i-mulch, ama-swale nezitsha.
+Amanzi engadi angokwengeziwe, futhi ingadi yemifino yenkathi eyomile iphuza okuningi kakhulu kunomuzi. Ngakho sigcina amanzi nasemhlabathini.
 
 ## Izitsha ze-infiltration
 
-Izitsha ze-infiltration yimigodi engashoni embiwa emhlabathini, enezansi elilinganayo. Zifanele imithambeka emincane. Zinhle ukubamba i-runoff evela emigwaqeni nasezindleleni, amanzi achichima emathangini nakuma-gutter, kanye **ne-greywater** (amanzi asetshenzisiwe okugeza nokuwasha) (bheka ingxenye ye-greywater ngezansi).
+**Isitsha se-infiltration** ngumgodi ongajulile onaphansi elilinganisile obamba i-runoff futhi uyivumele ingene (**i-infiltration** kusho amanzi ashona emhlabathini). Izitsha zifanele imithambeka emnene. Zibamba amanzi avela emigwaqweni, ezindleleni, emanzini achichima emathangini nase-greywater (amanzi asetshenzisiwe ombhavu neshawa).
 
-Indlela yokuzisebenzisa:
+1. Mba umgodi ongajulile onaphansi elilinganisile ngezansi kwalapho amanzi evela khona.
+2. Nika isitsha ngasinye indlela yokuchichimela kwesilandelayo, ukuze uchungechunge lwezitsha ludlulisele amanzi phansi emthambekeni bese ekugcineni ku-swale noma endaweni evulekile ephephile.
+3. Tshala emaphethelweni izihlahla zezithelo, zamantongomane noma zomdabu (izihlahla ezikhula ngokwemvelo esifundeni sethu).
+4. Faka i-mulch esitsheni kahle. I-mulch igcina umhlabathi uvulekile ukuze amanzi ashone ngokushesha.
 
-1. Mba umgodi ongashoni, onezansi elilinganayo, ngezansi kwalapho i-runoff ivela khona.
-2. Isitsha ngasinye sinike indlela yokuchichima, ukuze kuthi uma sesigcwele amanzi achichimele esitsheni esilandelayo. Uchungechunge lwezitsha lungadlulisa amanzi lwehlise emthambekeni, ekugcineni luwayise ku-swale noma endaweni evulekile ephephile.
-3. Emaphethelweni tshala izihlahla zezithelo, zamantongomane noma zomdabu, noma ezinye izitshalo eziwusizo.
-4. Gcina izitsha zine-mulch eningi. I-mulch igcina umhlabathi uvulekile ukuze amanzi angene ngokushesha.
-
-Gcina izitsha zingashoni: zingajuli ngaphezu kuka-50 cm. Amanzi kufanele angene emhlabathini aphele esikhathini esingaba amahora angu-12. Amanzi amile avimba izimpande ukuthi zithole umoya, futhi imiyane idinga izinsuku ezimbalwa zamanzi amile ukuze izalane. Uma isitsha sihlala simanzi isikhathi eside kunalokho, sinciphise ukujula, engeza i-mulch noma usabalalise amanzi ezitsheni eziningi.
+Gcina izitsha zingajuli ngaphezu kuka-50 cm, futhi uqiniseke ukuthi amanzi ayangena phakathi namahora angaba ngu-12. Izimpande zidinga umoya, futhi omiyane badinga izinsuku eziningana zamanzi amile ukuze bazalane. Uma isitsha sihlala simanzi isikhathi eside, sinciphise ukujula, wengeze i-mulch noma wabele amanzi ezitsheni eziningi.
 
 ## Amachibi namadamu
 
-Amanzi amaningi angagcinwa emachibini nasemadamini. Angagcwaliswa nge-runoff evela emhlabeni, emigwaqeni nasophahleni olukhulu, noma ngamanzi achichima emathangini.
+Ichibi liguqula isiphepho esisodwa sibe ngamasonto amanzi. Liphuzisa izilwane futhi linisele izitshalo, linciphise ijubane lamanzi esiphepho, lingafuya izinhlanzi, futhi liletha amaxoxo, izinyoni nozekamanzi abadla izinambuzane zethu ezilimazayo.
 
-Izinzuzo zamachibi namadamu:
+Hlela lokhu ngaphambi kokumba:
 
-- Anika amanzi okunisela.
-- Anika amanzi ezilwane.
-- Anciphisa ijubane lamanzi esiphepho.
-- Akha i-habitat yamaxoxo, izinyoni nojekamanzi (dragonflies), abadla izinambuzane ezilimaza izitshalo.
-- Angasetshenziselwa ukufuya izinhlanzi.
-
-Izinto okufanele uzihlelele:
-
-- **Thola iseluleko.** Amadamu namachibi aba nzima ukuwaklama nokuwakha njengoba umthambeka uqina. Kunoma yini enkulu kunechibi lasengadini, thola umklami oqeqeshiwe. Kwamanye amadamu lokhu kuyimfuneko yomthetho.
-- **Hlola umhlabathi.** Amanzi ayashona emhlabathini onesihlabathi. Ichibi libamba amanzi kuphela uma umhlabathi unobumba obanele, noma uma ulihlanganisa ngobumba olugxishiwe noma ngeplastiki lokuhlanganisa amachibi (pond liner).
-- **Qasha umshini ofanele** wechibi elikhulu noma wedamu, futhi ubheke umsebenzi uqobo.
-- **Yakha indlela yokuchichima (spillway).** Wonke amachibi namadamu adinga indlela yokuchichima ebanzi nevikelekile, ukuze amanzi angalokothi ageleze phezu kodonga.
-- **Lindela ukuhwamuka.** Iningi leNingizimu Afrika lilahlekelwa amanzi angaphezu kuka-1 400 mm ngonyaka ngokuhwamuka emanzini avulekile, futhi ingxenye enkulu yengaphakathi elomile ilahlekelwa ngu-2 000 mm noma ngaphezulu. Lokho kuvame ukudlula imvula. Ngosuku olushisayo ichibi lingalahlekelwa ukujula okungu-5 mm noma ngaphezulu. Ichibi elinobuso obungu-20 m² lingabe selilahlekelwa amalitha angaba ngu-100 ngosuku. Amachibi ajulile anobuso obuncane, nanomthunzi wezihlahla emaphethelweni, alahlekelwa amanzi amancane.
-- **Izinhlanzi.** Ngaphambi kokufaka izinhlanzi, hlola ukuthi yiziphi izinhlobo ovunyelwe ukuzifuya endaweni yakho. Ezinye izinhlanzi zangaphandle zisohlwini **lwama-invasive species** (izinhlobo zangaphandle ezisakazeka zingalawuleki) futhi zidinga imvume (permit). Ungalokothi udedele izinhlanzi emifuleni.
+- **Umhlabathi.** Amanzi ayaphuma esihlabathini. Ichibi libamba amanzi kuphela emhlabathini onobumba obanele, noma onongqimba lobumba olucindezelwe noma ipulasitiki yechibi.
+- **Umthambeka.** Uma umhlaba uwumqansa kakhulu, kuba nzima ukuklama nokwakha ichibi noma idamu. Idamu ngumsebenzi womklami onolwazi.
+- **Indlela yokuchichima.** Wonke amachibi namadamu adinga indlela ebanzi yokuchichima, evikelwe ngamatshe noma ngotshani obuminyene, ukuze amanzi angalokothi ageleze phezu kodonga.
+- **Ukuhwamuka.** Engxenyeni enkulu yeNingizimu Afrika amanzi avulekile alahlekelwa ngaphezu kuka-1 400 mm ngonyaka, kanti engxenyeni enkulu yangaphakathi nezwe elomile alahlekelwa u-2 000 mm noma ngaphezulu. Lokho kuvame ukuba ngaphezu kwemvula. Ngo-5 mm ngosuku, ichibi elinobuso obungu-20 m² lilahlekelwa amalitha ayi-100 ngosuku. Ichibi elijulile elinobuso obuncane, elinomthunzi wezihlahla, lilahlekelwa kancane.
+- **Abantu.** Thambekisa izinhlangothi njengoba umba ukuze zingadilizeki, futhi ugcine wonke umuntu kude nomshini osebenzayo. Biyela ichibi eseliphelile ngesango ingane engakwazi ukulivula, futhi wenze uhlangothi olulodwa luthambeke kancane ukuze umuntu noma isilwane esiwela kulo sikwazi ukuphuma. Lapho kukhona i-bilharzia (isichenene), ungawashi, ungabhukudi futhi ungami ungafake zicathulo emanzini echibi.
 
 ### Ukubala umthamo wechibi
 
-Echibini elinezinhlangothi ezitshekile:
+**Umthamo (m³) ≈ ubude × ububanzi × ukujula okulinganiselwe.** Echibini elimise okwesitsha, ukujula okulinganiselwe cishe kuyingxenye yendawo ejule kakhulu. Imitha-khyubhu eyodwa iphatha amalitha ayi-1 000.
 
-**Umthamo (m³) ≈ ubude (m) × ububanzi (m) × ukujula okumaphakathi (m)**
+**Isibonelo esibaliwe: ichibi elincane le-runoff**
 
-Echibini elimise okwesitsha, ukujula okumaphakathi kucishe kube yingxenye yokujula kwendawo ejule kakhulu. I-cubic metre eyodwa (1 m³) ithwala amalitha angu-1 000.
+1. Ichibi lingu-5 m ubude, u-4 m ububanzi no-1.2 m ukujula phakathi. Ukujula okulinganiselwe ≈ 0.6 m.
+2. Umthamo ≈ 5 × 4 × 0.6 = **12 m³**, noma amalitha angu-12 000.
+3. Ukuze uligcwalise ngemvula eyodwa engu-40 mm evela endaweni eqinile (isilinganiso esicishe sibe ngu-1), udinga u-12 000 ÷ 40 = **300 m²** wophahla noma wendawo egandayiwe.
+4. Kusukela edlelweni elidliwayo (isilinganiso esicishe sibe ngu-0.2), i-m² ngayinye inika u-40 × 0.2 = amalitha angu-8, ngakho udinga u-12 000 ÷ 8 = **1 500 m²**.
 
-**Isibonelo esisebenzayo: ichibi elincane le-runoff**
-
-1. Ichibi lingu-5 m ubude no-4 m ububanzi phezulu, futhi lijule ngo-1.2 m phakathi nendawo.
-2. Ukujula okumaphakathi ≈ 1.2 ÷ 2 = 0.6 m.
-3. Umthamo ≈ 5 × 4 × 0.6 = **12 m³**, okulingana **namalitha angu-12 000**.
-
-**I-catchment** (indawo yokuqoqa amanzi) kufanele ibe nkulu kangakanani ukuze igcwalise leli chibi ngemvula eyodwa engu-40 mm?
-
-1. I-square metre ngayinye ye-catchment inika amalitha angu-40 mm × isilinganiso se-runoff.
-2. Endaweni eqinile (isilinganiso esicishe sibe ngu-1): 12 000 ÷ 40 = **300 m²** wophahla, womgwaqo noma wendawo egandayiwe.
-3. Edlelweni lemvelo eliklabwayo (isilinganiso esicishe sibe ngu-0.2): i-m² ngayinye inika 40 × 0.2 = amalitha angu-8, ngakho udinga u-12 000 ÷ 8 = **1 500 m²** wedlelo.
-
-Ichibi elisha lingadinga imvula eningi kunalokhu, ngoba umhlabathi owomile olizungezile umunca amanzi kuqala.
-
-> **Ukuphepha:** Izingane zingaminza echibini, edamini, ethangini elivulekile noma ngisho ebhakedeni elijulile. Biyela amachibi namadamu ngothango olunesango izingane ezingakwazi ukulivula, noma umboze amachibi amancane ngenetha eliqinile. Yenza okungenani uhlangothi olulodwa lutshekele kancane, ukuze umuntu noma isilwane esiwele phakathi sikwazi ukuphuma. Fundisa izingane ukuthi zihlale kude. Ezindaweni ezine-bilharzia (isichenene, i-schistosomiasis), okuhlanganisa iLimpopo, iMpumalanga, inyakatho nempumalanga yeGauteng, izingxenye eziphansi zaKwaZulu-Natali nogu lweMpumalanga Kapa, ungabhukudi, ungagezi futhi ungemi ngezinyawo ezingafakile emanzini echibi noma edamu, ngoba isilwanyana esiyimbungu singena ngesikhumba.
-
-### Umthetho wamanzi eNingizimu Afrika
-
-Amanzi eNingizimu Afrika aphethwe ngaphansi kwe-**National Water Act (Act 36 of 1998)** (uMthetho kaZwelonke Wamanzi). Lokhu kuyisifinyezo esifushane, hhayi iseluleko somthetho. Ngaphambi kokuthi wakhe, buza ehhovisi eliseduze loMnyango Wamanzi Nokuthuthwa Kwendle (DWS).
-
-- **Amanzi ophahla:** I-Schedule 1 yalo Mthetho ikuvumela ukuthi ugcine futhi usebenzise i-runoff evela ophahleni lwakho ngaphandle kwelayisense.
-- **Ukusetshenziswa okuncane ekhaya:** I-Schedule 1 iphinde ivumele ukusetshenziswa okunengqondo ekhaya, ukulima okuncane kwengadi okungekhona okwebhizinisi nokuphuzisa izilwane (kodwa hhayi indawo yokukhuluphalisa imfuyo, i-feedlot) ngamanzi asemhlabeni wakho noma eduze nawo, inqobo nje uma ukusetshenziswa kungeqile.
-- **Ukugcina amanye amanzi:** Ukugcina amanzi edamini noma echibini kuwukusetshenziswa kwamanzi ngaphansi kwalo Mthetho. Amanzi amancane angase amboswe yi-**General Authorisation** (imvume ejwayelekile), okusho ukuthi awudingi ilayisense ephelele uma ulandela imibandela yayo. Ngaphansi kwe-General Authorisation ka-2016 yokuthatha nokugcina amanzi, noma ubani ogcina amanzi angaphezu kuka-10 000 m³ endaweni eyodwa kufanele abhalise lokho kusetshenziswa. Imibandela iyahlukahluka phakathi kwama-catchment, ngakho hlola ku-DWS.
-- **Ukwakha emzileni wamanzi:** Umzila wamanzi (watercourse) ngumfula, umfudlana, isiphethu, ixhaphozi noma umzila wemvelo wokugeleza kwamanzi, ngisho nalowo ogeleza kuphela ngemva kwemvula. Ukuvimba noma ukuphambukisa ukugeleza kwawo, noma ukushintsha izansi lawo noma izinhlangothi zawo, kuwukusetshenziswa kwamanzi okudinga imvume. Umsebenzi onengozi encane ungase umboswe yi-General Authorisation ngemva kokuhlolwa kwengozi. Omunye umsebenzi udinga ilayisense yokusebenzisa amanzi. Ukumba noma ukugcwalisa umhlabathi, isihlabathi noma amatshe angaphezu kuka-10 m³ emzileni wamanzi nakho kungadinga imvume yezemvelo ngaphansi kwe-National Environmental Management Act (NEMA) (uMthetho Wokuphathwa Kwemvelo).
-- **Ukuphepha kwamadamu:** Idamu elinodonga oluphakeme ngaphezu kuka-5 m, elingathwala amanzi angaphezu kuka-50 000 m³, "liyidamu elinengozi yokuphepha". Kufanele libhaliswe ehhovisi le-DWS Dam Safety Office (iHhovisi Lokuphepha Kwamadamu).
-
-Ngakho **ungambi ichibi, ungakhi idamu futhi ungakhi udonga olunqamula umfudlana noma ixhaphozi ngaphandle kokuthi uqale uhlole**. ELesotho, eSwatini naseZimbabwe, buza esiphathimandla samanzi sakuleyo ndawo, ngoba imithetho yehlukile.
+Ichibi elisha lidinga okungaphezu kwalokhu, ngoba umhlabathi owomile olizungezile uphuza kuqala.
 
 ## Amadamu esihlabathi
 
-Idamu lesihlabathi (sand dam) wudonga oluqinile lwamatshe akhiwe ngosimende oqiniswe ngensimbi noma lukakhonkolo, ngokuvamile oluphakeme ngo-1 kuya ku-5 m. Lwakhiwa lunqamule **umfula wesihlabathi ogeleza ngezinkathi ezithile**, okusho umfula ozansi lawo liyisihlabathi esomile ingxenye yonyaka.
+Ezweni elomile, imifula iyisihlabathi isikhathi esiningi sonyaka. Ngaphansi kwalesi sihlabathi, amanzi avame ukuqhubeka egeleza. **Idamu lesihlabathi** (sand dam) liwabamba lapho, kude nelanga.
 
-Indlela idamu lesihlabathi elisebenza ngayo:
+Idamu lesihlabathi wudonga oluqinile lwamatshe noma lukakhonkolo oluqiniswe ngensimbi, ngokuvamile olungu-1 kuya ku-5 m ukuphakama, olwakhiwe lunqamula **umfula wesihlabathi ogeleza ngezikhathi ezithile**.
 
-1. Uma umfula ugeleza, uthwala isihlabathi ne-silt (izinhlayiya ezincane kakhulu kunesihlabathi). Isihlabathi esisindayo sizika ngemuva kodonga, kanti i-silt elula ithwalwa amanzi iqhubeke nomfula.
-2. Ngemva kwezinkathi zemvula ezisuka kweyodwa kuya kwezine, indawo engemuva kodonga igcwala isihlabathi.
-3. Amanzi agcinwa ezikhaleni eziphakathi kwezinhlamvu zesihlabathi. Isihlabathi singathwala amanzi afinyelela cishe ku-40% womthamo waso.
-4. Iningi lamanzi omfula lisadlula phezu kodonga liqhubeke nomfula. I-Excellent Development, inhlangano esiza umphakathi esakhe amadamu esihlabathi amaningi e-Afrika, ilinganisela ukuthi u-97% kuya ku-99% uyaqhubeka.
-5. Abantu bafinyelela amanzi agciniwe ngomthombo owembiwe eceleni kwedamu, noma ngepayipi elidlula odongeni liye empompini noma epompini lesandla.
+1. Lapho umfula ugeleza, isihlabathi esisindayo sihlala ngemuva kodonga kanti udaka olulula luqhubeka luhamba nomfula.
+2. Phakathi kwenkathi yemvula eyodwa kuya kwezine, isihlabathi sigcwalisa isikhala esingemuva kodonga.
+3. Amanzi abanjwa ezikhaleni eziphakathi kwezinhlamvu zesihlabathi. Isihlabathi singaphatha amanzi afinyelela cishe ku-40% womthamo waso.
+4. Iningi lamanzi aqhubeka egeleza lisadlula phezu kodonga. I-Excellent Development, inhlangano esiza abantu esesakhe amadamu esihlabathi amaningi e-Afrika, ithi ngu-97% kuya ku-99%.
+5. Abantu bakha amanzi emthonjeni owembiwe eceleni kwedamu, noma ngepayipi elisodongeni eliya empompini noma epompini.
 
-I-Excellent Development ibika ukuthi idamu lesihlabathi elikhulu lingagcina amanzi afinyelela kumalitha ayizigidi ezingu-40, anele abantu abangaphezu kuka-1 000 unyaka wonke.
+Le nhlangano efanayo ibika ukuthi idamu lesihlabathi elikhulu lingaphatha amalitha afika ezigidini ezingu-40, anele abantu abangaphezu kuka-1 000 unyaka wonke. Ngaphansi kwesihlabathi, amanzi amancane ayahwamuka, futhi isihlabathi siyawahlunga futhi sivimbe izilwane nomiyane. Izinga lamanzi angaphansi komhlaba liyakhuphuka ezungeze idamu, bese izihlahla, izitshalo namadlelo kukhula kangcono.
 
-Izinzuzo zamadamu esihlabathi:
-
-- Amanzi angaphansi kwesihlabathi, ngakho alahleka kancane kakhulu ngokuhwamuka kunedamu elivulekile.
-- Isihlabathi sihluza amanzi futhi siwavikela ezilwaneni nasemiyaneni.
-- Izinga lamanzi angaphansi komhlaba liyakhuphuka emhlabeni ozungeze idamu, ngakho izihlahla, izitshalo namadlelo kukhula kangcono. Izitshalo eziningi zisho ukuthi amanzi amaningi angena emhlabathini, nomhlabathi omncane ukhukhulwa.
-
-Amadamu esihlabathi asebenza kuphela endaweni efanele. Udonga kufanele lume phezu kwedwala eliqinile elingaphansi (bedrock) (noma, kuyivelakancane, phezu komhlabathi ongaphansi oqinile kakhulu, ogxishiwe). Kufanele ludlule okungenani ngo-1.5 m ngale kobubanzi bomfula uma unezikhukhula, ohlangothini ngalunye, ukuze izikhukhula zingakwazi ukulujikeleza. Umfula kufanele uthwale isihlabathi esimahhadlahhadla, hhayi i-silt nobumba ikakhulukazi. Udonga kufanele luvumele umfula ugeleze njengoba wawugeleza ngaphambili. Amadamu esihlabathi adinga umklami onolwazi.
-
-Idamu lesihlabathi lakhiwa ezansi lomfula, okuwumzila wamanzi. **Ngakho eNingizimu Afrika lidinga imvume ngaphansi kwe-National Water Act, futhi mhlawumbe nangaphansi kwe-NEMA**, ngaphambi kokuthi kuqale noma yimuphi umsebenzi (bheka ingxenye ethi "Umthetho wamanzi eNingizimu Afrika" ngenhla). ELesotho, kwakhiwe idamu lesihlabathi e-Bethel Business and Community Development Centre njengesibonelo sokufundisa.
+Amadamu esihlabathi asebenza kuphela endaweni efanele. Udonga kufanele lume phezu kwedwala eliqinile elingaphansi (bedrock) futhi ludlule okungenani u-1.5 m ngaphesheya komphetho wezikhukhula osebeni ngalunye, ukuze izikhukhula zingakwazi ukugubha zizungeze. Umfula kufanele uthwale isihlabathi esimahhadlahhadla, hhayi ikakhulukazi udaka, futhi kufanele uqhubeke ugeleza njengangaphambili. Lo ngumsebenzi womklami onolwazi. ELesotho, i-Bethel Business and Community Development Centre yakha elilodwa njengesibonelo.
 
 ## Ama-swale
 
-I-swale (umsele wokubamba amanzi) ngumsele owembiwa ngqo **ngokulandela i-contour**. I-contour ngumugqa ocatshangwayo onqamula umthambeka, oxhuma amaphuzu asekuphakameni okufanayo. Ngenxa yokuthi i-swale isezingeni elilinganayo, amanzi awagelezi ngokulandela yona. Amanzi ayasabalala emseleni wonke bese engena kancane emhlabathini.
+**I-swale** ngumsele owembiwa ngqo ulandela **i-contour**, umugqa ocatshangwayo onqamula umthambeka oxhumanisa amaphuzu asekuphakameni okufanayo. Ngoba umsele ulinganisile, amanzi awagelezi ngawo. Ayasabalala futhi ashone, bese izihlahla ezingezansi zikhula izimpande ezijulile ziye kulawo manzi agciniwe.
 
-I-swale inezingxenye ezimbili:
+I-swale inezingxenye ezimbili: umsele, ne-**berm**, udonga lomhlabathi owembiwe olunqwabelaniswe ohlangothini olungezansi.
 
-- **i-swale**, okuwumsele uqobo
-- **i-berm** (udonga lomhlabathi), okuyibhange elenziwe ngomhlabathi owembiwe, elinqwabelaniswe ohlangothini olubheke ezansi
+### Ukuxhumanisa ama-swale namachibi
 
-Ama-swale anciphisa ijubane le-runoff, ayisabalalise, futhi ayingenise emhlabathini. Agcwalisa kabusha amanzi angaphansi komhlaba, futhi akhuthaza izihlahla nezinye izitshalo ukuthi zibe nezimpande ezijulile. Awusizo kakhulu ekutshaleni izihlahla.
+1. I-runoff igcwalisa i-swale bese isabalala ngayo iye echibini elisekugcineni kwayo.
+2. Lapho ichibi seligcwele, amanzi abuyela emuva agcwalise i-swale.
+3. Amanzi eqile aphuma ngendlela **yokuchichima** (spillway): ingxenye emfushane, elinganisile ye-berm ephansi kunezinye, evikelwe ngamatshe noma ngotshani obuminyene. Gcina ingaphezulu le-berm liphakeme okungenani ngobubanzi besandla kunendlela yokuchichima, ukuze amanzi angalokothi athululeke phezu kwe-berm.
+4. Indlela yokuchichima yondla i-swale elandelayo ngezansi, nelandelayo, kuze kube amanzi afika echibini eliphansi noma aphume emhlabeni.
 
-I-swale encane yasengadini ingajula cishe njengobude bezinsimbi zesipede ezimbili, futhi ibe banzi njengensimbi yesipede eyodwa. I-swale yasensimini ingaba nkulu kakhulu. Ubukhulu nebanga eliphakathi kwazo kuncike emvuleni, emthambekeni nasemhlabathini.
+Amanzi aphuma ohlelweni olunjengalolu ahamba kancane futhi acwebile, futhi athwala umhlabathi omncane kakhulu. **Indunduma yokuphambukisa amanzi** ephansi eyakhiwe ngokutsheka inqamula indlela yezimoto izophinde iphambukisele i-runoff yayo ku-swale.
 
-### Ukuxhuma ama-swale namachibi
+### Kufanele zibe zinkulu kangakanani futhi zihlukane ngebanga elingakanani?
 
-Ama-swale angaholela echibini. Isibonelo:
+I-swale encane yengadi ingajula cishe ngobude bamafosholo amabili futhi ibe banzi ngobubanzi bolilodwa. I-swale yasensimini ingaba nkulu kakhulu. I-swale ngayinye kufanele iphathe i-runoff evela emhlabeni ongaphezu kwayo ngesiphepho esikhulu, futhi ifomula yophahla ikutshela ukuthi lokho kungakanani.
 
-1. I-runoff igcwalisa i-swale bese igeleza ngayo iye echibini elisekugcineni kwayo.
-2. Uma ichibi seligcwele, amanzi abuyela emuva ku-swale ayigcwalise.
-3. Amanzi eqile aphuma ku-swale ngo-**spillway** (indlela yokuchichima). Lena yingxenye emfushane, esezingeni elilinganayo, yebhange ephansi kunayo yonke enye i-berm. Yivikele ngamatshe noma ngotshani obuminyene. Gcina phezulu kwe-berm kuphakeme okungenani ngobubanzi besandla kune-spillway, ukuze amanzi angalokothi ageleze phezu kwe-berm ayikhukhule.
-4. Amanzi e-spillway angagcwalisa i-swale elandelayo ngezansi, bese kuba eyodwa elandelayo, aze afike echibini eliphansi noma aphume endaweni yakho.
+**Isibonelo esibaliwe: ibanga phakathi kwama-swale**
 
-Amanzi aphuma ohlelweni olunjena ahamba kancane, ahlanzekile, futhi athwala umhlabathi omncane kakhulu.
+1. I-swale icishe ibe ngu-0.5 m ububanzi futhi iphatha amanzi ajule ngo-0.3 m ngaphansi kwendlela yokuchichima. Imitha ngayinye iphatha u-0.5 × 0.3 = 0.15 m³ = **amalitha ayi-150**.
+2. Hlelela isiphepho esikhulu esingu-**50 mm**.
+3. Umhlaba ongaphezulu yidlelo elidliwayo, isilinganiso esicishe sibe ngu-0.3. I-m² ngayinye inika u-50 × 0.3 = **amalitha angu-15**.
+4. Imitha ngayinye ye-swale ingathatha i-runoff evela ku-150 ÷ 15 = 10 m² womhlaba: umugqa ongu-1 m ububanzi nama-10 m ubude ukhuphuka umthambeka.
+5. Ngakho ama-swale ahlukana cishe **ngama-10 m**, kulinganiswa kwehla umthambeka. Esiphephweni esikhulu, izindlela zokuchichima zithwala okusele.
 
-Ama-swale angabamba ne-runoff evela endleleni yezimoto noma emgwaqeni. Yakha **indunduma yokuphambukisa amanzi** ephansi, enqamula indlela yezimoto ngokutsheka, ukuze iphambukisele amanzi ku-swale.
-
-### Zibe zinkulu kangakanani futhi zihlukaniswe ngebanga elingakanani?
-
-I-swale kufanele ikwazi ukuthwala i-runoff evela emhlabeni ongaphezulu kwayo ngesikhathi sesiphepho esikhulu. Ungakulinganisela lokhu ngefomula efanayo esiyisebenzisele uphahla.
-
-**Isibonelo esisebenzayo: ibanga phakathi kwama-swale**
-
-1. I-swale ibanzi ngo-0.5 m ngokwesilinganiso futhi ithwala amanzi ajule ngo-0.3 m ngaphansi kwe-spillway. Imitha ngayinye ye-swale ithwala u-0.5 × 0.3 = 0.15 m³, okulingana **namalitha angu-150**.
-2. Hlela isiphepho esikhulu esingu-**50 mm**.
-3. Umhlaba ongaphezu kwe-swale yidlelo lemvelo eliklabwayo elinesilinganiso se-runoff esingaba ngu-0.3. I-square metre ngayinye inika u-50 × 0.3 = **amalitha angu-15** e-runoff.
-4. Imitha ngayinye ye-swale ingathatha i-runoff evela ku-150 ÷ 15 = 10 m² womhlaba. Lokho kungumucu obanzi ngo-1 m nobude obungu-**10 m** ukhuphuka emthambekeni.
-5. Ngakho ama-swale kufanele ahlukaniswe ngebanga elingaba ngu-**10 m**, elilinganiswa wehla emthambekeni. Esiphephweni esikhulu kunalokhu, ama-spillway athwala amanzi eqile ngokuphephile.
-
-Ezindaweni ezomile kakhulu, noma lapho umhlabathi umbozwe kahle izitshalo, ama-swale angahlukaniswa ngebanga elide. Ezindaweni ezinemvula eningi, emhlabathini ongenalutho noma emithambekeni ewumqansa, wasondezelane.
+Lapho imvula incane noma umhlabathi umbozwe kahle, ama-swale angaqhelelana kakhulu. Emhlabathini ongenalutho, emithambekeni ewumqansa noma ezindaweni ezinemvula eningi, wasondeze.
 
 ### Lapho ungafanele umbe khona ama-swale
 
-- **Emithambekeni ewumqansa:** Ama-swale aphephile kakhulu emithambekeni engaphansi kuka-15% (ukwehla okungu-15 m ku-100 m). Emhlabeni onomqansa kunalokho, sebenzisa ama-terrace (izitebhisi zomhlabathi), izihlahla nama-groundcover. Umhlabathi ogcwele amanzi emthambekeni onomqansa ungashelela.
-- **Emhlabathini wobumba obusindayo noma ogcwele amanzi:** Uma amanzi engangeni emhlabathini, i-swale iba umsele wamanzi amile nje. Sebenzisa ichibi noma umsele wokuphambukisa amanzi esikhundleni sayo.
-- **Eduze kwezakhiwo:** Gcina ama-swale nezitsha okungenani ku-3 m kude nezindonga nezisekelo zezakhiwo, futhi ungalokothi uzifake ngaphezulu kwethangi le-septic, ithoyilethi lomgodi noma umgodi wokumunca amanzi angcolile (soak-away).
-- **Ezimweni zezulu ezimanzi kakhulu:** Lapho umhlabathi usuvele umanzi isikhathi esiningi sonyaka, ungadinga imisele ekhipha amanzi, hhayi ama-swale.
+- **Imithambeka ewumqansa.** Gcina ama-swale emithambekeni engaphansi kuka-15% (ukwehla kwe-15 m ku-100 m). Umhlabathi omanzi emhlabeni ongumqansa ungashelela. Lapho sebenzisa ama-terrace nezihlahla esikhundleni salokho.
+- **Ubumba obunzima noma umhlabathi ogcwele amanzi.** Uma amanzi engashoni, i-swale iba ngumsele wamanzi amile. Sebenzisa ichibi noma umsele wokuphambukisa amanzi.
+- **Eduze kwezakhiwo.** Gcina ama-swale nezitsha okungenani u-3 m kude nezindonga nezisekelo, futhi ungalokothi uzibeke ngaphezu kwendlu yangasese yomgodi, i-septic tank noma i-soak-away.
+- **Izindawo ezimanzi kakhulu.** Lapho umhlabathi umanzi isikhathi esiningi sonyaka, udinga imisele ekhipha amanzi.
 
-### Isinyathelo 1: Yakha i-A-frame
+### Ukumba i-swale
 
-I-A-frame (ithuluzi lokhuni elimise okuka-A lokumaka amaphuzu asezingeni elifanayo) iyithuluzi elilula lokuthola i-contour.
+Qala ubethele i-contour ngezikhonkwane usebenzisa i-A-frame (bheka "Zama lokhu" ekupheleni kwalesi sahluko). Bese:
 
-1. Thatha izigxobo ezimbili eziqondile ezilingana ngobude, ezingaba ngu-2 m ubude.
-2. Bopha iziqongo zazo ndawonye ngokuqinile ukuze zenze u-V obheke phansi. Imilenze kufanele ilingane ncamashi ngobude ngaphansi kwalapho ziboshwe khona.
-3. Bopha isigxobo sesithathu, esifushane, sinqamule phakathi nemilenze, ukuze wenze uhlamvu u-A. Sibophe ekuphakameni okufanayo emlenzeni ngamunye.
-4. Bopha intambo esiqongweni sika-A. Lengisa itshe entanjeni ukuze lijike ngokukhululeka lidlule induku ephambanayo.
-5. **Thola uphawu lwezinga.** Misa i-A-frame phansi bese umaka lapho intambo inqamula khona induku ephambanayo. Jikisa i-A-frame ukuze imilenze ishintshane izindawo, uyigcine ezindaweni ezimbili ezifanayo ncamashi. Phinda umake lapho intambo inqamula khona induku. Uphawu lwezinga luphakathi nendawo ncamashi phakathi kwalezi zimpawu ezimbili.
-
-### Isinyathelo 2: Maka i-contour
-
-1. Shayela isikhonkwane emhlabathini lapho ufuna khona ukuthi i-swale iqale khona. Beka umlenze owodwa we-A-frame eduze kwaso.
-2. Hambisa omunye umlenze ukhuphuke noma wehle emthambekeni kuze kube yilapho intambo ilenga ncamashi phezu kophawu lwezinga. Imilenze yomibili manje isekuphakameni okufanayo. Faka isikhonkwane noma itshe emlenzeni wesibili.
-3. Gcina umlenze wesibili ungashukumi. Jikisa umlenze wokuqala uwuse kolunye uhlangothi, uphinde uthole izinga, bese ufaka isikhonkwane esilandelayo.
-4. Qhubeka unqamula umthambeka. Umugqa wezikhonkwane yi-contour yakho.
-5. Hamba ngomugqa ulungise noma yiziphi izigwegwe ezibukhali.
-
-### Isinyathelo 3: Mba i-swale
-
-1. Mba umsele ngokulandela umugqa wezikhonkwane. Gcina izansi lomsele lisezingeni elilinganayo.
-2. Umhlabathi namatshe owembayo uwabeke ohlangothini **olubheke ezansi**, ukuze kwakheke i-berm.
-3. Qinisa i-berm ngokuyinyathela ngezingqimba.
-4. Vikela iziphetho ne-spillway ngamatshe noma ngotshani obuqinile, ukuze amanzi angakwazi ukuzungeza iziphetho abangele i-erosion.
-5. Tshala futhi ufake i-mulch ku-berm ngokushesha, ukuze imvula ingakwazi ukuyikhukhula.
+1. Mba umsele ulandela izikhonkwane, ugcine phansi kwawo kulinganisile.
+2. Nqwabelanisa umhlabathi namatshe ohlangothini **olungezansi** bese unyathela i-berm iqine ngezingqimba.
+3. Vikela imiphetho nendlela yokuchichima ngamatshe noma ngotshani obuqinile, ukuze amanzi angakwazi ukuzigubha azizungeze.
+4. Tshala futhi ufake i-mulch ku-berm ngalolo suku, ngaphambi kokuba imvula iyikhukhule.
 
 ### Ukutshala i-swale ne-berm
 
-Manje sekuqala okumnandi. Tshala izitshalo ezithanda amanzi emseleni, izihlahla nezihlahlana eziwusizo phezu nangezansi kwe-berm, nezitshalo ezithanda izimo ezomile phezulu ku-berm.
+Manje kuqala okumnandi! Izitshalo ezithanda amanzi ziya emseleni, izihlahla eziwusizo phezu nangezansi kwe-berm, nezitshalo ezithanda ukoma kancane phezulu.
 
-- **Ku-berm:** izihlahla nezihlahlana eziqala ukumila (pioneer plants) ezikhula ngokushesha, njengezihlahla zomdabu **eziyi-legume** (izitshalo zohlobo lukabhontshisi), ukuze zibambe ibhange futhi zengeze umvundo.
-- **Izitshalo ze-mulch ku-berm:** izitshalo ongazisika kaningi ukuze uthole i-mulch **ne-compost** (izinsalela zezitshalo ezibolile ezondla umhlabathi), njenge-comfrey, i-lemongrass, i-yarrow, i-nettle notshani be-vetiver obungatheli imbewu (sterile). Lapho-ke i-berm iba "yibhange le-mulch".
-- **Izitshalo ezakha umhlabathi:** i-clover, i-lucerne (alfalfa) ne-sunn hemp. Ukhula olunezimpande ezijulile njenge-dandelion ne-plantain lungayekwa lukhule, bese lusikelwa i-mulch.
-- **Emseleni:** ama-legume angama-groundcover njenge-cowpea noma i-lupin, nezitshalo ezithanda amanzi njengamadumbe (taro).
-- **Ngezansi kwe-swale:** izihlahla zezithelo eziphakathi nendawo ngobukhulu njengolamula nezinye izithelo ezisawolintshi, ubhanana ezindaweni ezingenaso isithwathwa, notamatisi. Cabanga ngomthunzi eziyowenza ezitshalweni eziseduze.
-- **Ngaphansi kwezihlahla:** ama-groundcover abekezelela umthunzi njengobhatata nesipinashi sase-New Zealand.
-
-> **Qaphela:** Amadumbe awekho ohlwini lwama-invasive species, kodwa asakazekela emaxhaphozini emvelo kwezinye izingxenye zeNingizimu Afrika. Watshale kuma-swale nasemibhedeni yasengadini, hhayi emifuleni, emifudlaneni noma emaxhaphozini, noma eduze kwawo.
+- **Ku-berm:** izihlahla nezihlahlana eziqala ukumila ezikhula ngokushesha, njengezihlahla zomdabu eziyi-**legume** (izitshalo zomndeni kabhontshisi, eziningi zazo ezifaka i-nitrogen emhlabathini) njengezinhlobo ze-*Vachellia*, ukubamba udonga nokwakha umvundo.
+- **Izitshalo ze-mulch ku-berm:** i-comfrey, i-lemongrass, i-yarrow, imbabazane notshani be-vetiver obungazali, obusikwa kaningi ukuze kwenziwe i-mulch **ne-compost** (izinsalela zezitshalo ezibole zaba ukudla komhlabathi okumnyama nokuhlakazekayo). I-berm iba yindawo yokutshala i-mulch.
+- **Izitshalo ezakha umhlabathi:** i-clover, i-lucerne ne-sunn hemp. Vumela i-dandelion ne-plantain zikhule bese uzisika zibe i-mulch.
+- **Emseleni:** i-cowpea noma i-lupin njengesembozo, nezitshalo ezithanda amanzi njengamadumbe (taro, *Colocasia esculenta*). Gcina amadumbe kuma-swale nasemibhedeni yengadi, kude nemifudlana namaxhaphozi, lapho engasabalala khona.
+- **Ngezansi kwe-swale:** ulamula namanye ama-citrus, ubhanana lapho kungekho sithwathwa, notamatisi. Cabanga ngomthunzi ezizowenza.
+- **Ngaphansi kwezihlahla:** **i-groundcover** (izitshalo eziphansi ezimboza umhlabathi) ekwazi umthunzi njengobhatata ne-New Zealand spinach.
 
 ## Ukulungisa umhlabathi
 
-Kunezindlela eziningana zokulungisa umhlaba ukuze utshalwe. Khetha ngokuya ngezinhloso zakho, isikhathi onaso, namathuluzi nezinsiza ezitholakalayo.
+Njalo lapho siphendula umhlabathi, siphula imigudu, isikhunta nezinhlayiya ezithathe iminyaka ukwakheka. Ngakho khetha indlela ephazamisa umhlabathi kancane kakhulu. Njengoba ipulazi likhula futhi lizenzela i-mulch ne-compost yalo, udinga ukuwuphazamisa kancane kancane.
 
-Ungahlanganisa izindlela. Isibonelo, ungaqala uyeke izilwane zidle utshani futhi zihlakaze indawo, bese uxegisa umhlabathi ngesandla noma nge-ripper (ithuluzi elixegisa umhlabathi ngaphandle kokuwuphendula).
+### Qala ngendlela efanayo njalo
 
-Njalo khetha indlela ephazamisa umhlabathi kancane kakhulu. Njengoba ipulazi lakho likhula, likhiqiza i-mulch ne-compost yalo eningi, futhi udinga ukuphazamisa umhlabathi kancane nangokwengeziwe.
+Noma yiliphi ithuluzi elilandelayo, qala kanje:
 
-### 1. Ukulungisa ngesandla
+1. Hlukula ukhula olusabalalayo olubi kakhulu, njengemicu ye-kikuyu notshani be-couch, obungandiswa wukumba.
+2. Sika izitshalo eduze nomhlabathi ngangokusemandleni akho.
+3. Nisela kahle, noma ulinde imvula, bese uvumela umhlabathi uphume amanzi kuze kube umanzi kodwa ungagcwele amanzi.
 
-Uma indawo incane noma iphakathi nendawo ngobukhulu, futhi ungenaso isikhathi sendlela yokungambi (no-dig) noma sikagandaganda, yilungise ngesandla. Sebenzisa ipiki (pikmatok), isipede nemfologo.
+### Ngezandla
 
-1. Thola bese ususa ukhula oluhlasela kakhulu, njengezimila zikakhikhuyu noma i-couch grass, olungasakazwa ukumba.
-2. Sika izitshalo eduze nomhlabathi ngangokunokwenzeka.
-3. Nisela kahle, noma ulinde imvula, bese uyeka umhlabathi uphume amanzi kuze kube yilapho unomswakama kodwa ungamanzi.
-4. Susa izitshalo ezisikiwe uzisebenzisele i-compost noma i-mulch.
-5. Xegisa **i-topsoil** (umhlabathi ongaphezulu) ngemfologo.
-6. Susa ngereki noma yimuphi udoti ongaphezulu bese ulinganisa phezulu.
+Endaweni encane noma emaphakathi, sebenzisa ikhuba, ifosholo nemfologo yengadi.
 
-### 2. Ukulungisa ngogandaganda wamasondo amane
+1. Susa okusikiwe kube yi-compost noma i-mulch.
+2. Xegisa i-topsoil ngemfologo.
+3. Qoqa noma yimuphi udoti ngereki bese ulinganisa ingaphezulu.
 
-Ukulima ngegeja kaningi kungesinye sezizathu eziyinhloko ze-erosion nokulahleka kwekhabhoni yomhlabathi emhlabeni wonke. Imishini esindayo iyawuminyanisa umhlabathi. Ukulima ngegeja minyaka yonke kuphula ukwakheka komhlabathi futhi kwakha ungqimba oluqinile olubizwa ngokuthi **i-plough pan** ngaphansi nje kokujula okulinywa kukho. Ukulima ngegeja kunika umvundo okhuphuka ngokushesha, ngoba kungenisa umoya emhlabathini futhi kusheshisa ukubola kwe-organic matter. Ngemva kwalokho, umvundo wehla isizini nesizini.
+### Ngogandaganda
 
-Ku-permaculture, uma sisebenzisa ugandaganda nhlobo, siwusebenzisela ikakhulukazi ukusungula ipulazi. Ogandaganda basenendawo yabo emapulazini amakhulu. **Ama-ripper nama-chisel plough** axegisa umhlabathi ominyene ngaphandle kokuwuphendula, futhi awusizo kakhulu ekulungiseni umhlaba owonakele. Kukhona namathuluzi okulima kancane (minimum-till) nawokungalimi (no-till) okutshala endaweni enkulu.
+Ukulima ngegeja kaningi kungenye yezimbangela ezinkulu ze-erosion yomhlabathi nokulahleka kwe-carbon yomhlabathi emhlabeni wonke. Imishini esindayo icindezela umhlabathi, futhi ukulima unyaka nonyaka kwakha ungqimba oluqinile ngaphansi nje kwegeja, olubizwa ngokuthi **i-plough pan**. Ukulima kunika umvundo osheshayo njengoba umoya ungena emhlabathini, bese umvundo wehla isizini ngesizini.
 
-1. Thola bese ususa ukhula oluhlasela kakhulu.
-2. Sika izitshalo eduze nomhlabathi ngangokunokwenzeka.
-3. Nisela kahle, noma ulinde imvula, bese uyeka umhlabathi uphume amanzi kuze kube yilapho unomswakama kodwa ungamanzi.
-4. Yeka izilwane zidle utshani buze bube bufushane, noma ubusike ubususe.
-5. Bheka umhlabathi. Khetha ithuluzi elilodwa noma inhlanganisela: i-ripper, i-subsoiler, i-chisel plough, i-disc noma igeja. Sebenzisa lawo aphendula umhlabathi kancane kakhulu.
-6. Dlula phezu kwendawo izikhathi ezimbalwa ngangokudingekayo kuphela.
+Ngakho uma sisebenzisa ugandaganda nhlobo, siwusebenzisa ikakhulu ukusungula ipulazi. **Ama-ripper nama-chisel plough** axegisa umhlabathi oqinile ngaphandle kokuwuphendula, futhi alungele ukulungisa umhlaba owonakele. Khetha amathuluzi aphendula umhlabathi kancane kakhulu, futhi udlule kancane ngangokunokwenzeka.
 
-### 3. Ukulungisa ngogandaganda wamasondo amabili
+**Ugandaganda wamasondo amabili** ngumshini ohanjwa ngemuva kwawo odonsa i-rotavator (izindwani ezijikelezayo eziphula umhlabathi), igeja elincane noma umshini wokusika utshani. Ubiza kancane kakhulu ukuwuthenga nokuwusebenzisa kunogandaganda omkhulu. Sebenzisa i-rotavator ngokuzithiba; ukusebenzisa i-rotavator kaningi nakho kuphula ukwakheka komhlabathi.
 
-Ugandaganda wamasondo amabili ngumshini ohanjiswa umuntu ohamba ngemuva kwawo, onenjini kaphethiloli noma kadizili. Uma kuxhunywe kuwo i-rotavator (isilimi esijikelezayo), izinsimbi ezisikayo ezijikelezayo ziphula umhlabathi zibe yizingcezu ezincane zokutshala. Izinhlobo eziningi zithatha namanye amathuluzi, njengegeja elincane, i-cultivator noma umshini wokugunda (flail mower). Ashibhile kakhulu kunogandaganda bamasondo amane futhi asebenzisa uphethiloli omncane, ngakho afanele amapulazi amancane asaqala.
+### Ama-animal tractor
 
-Sebenzisa i-rotavator kancane. Ukusebenzisa i-rotavator kaningi nakho kuphula ukwakheka komhlabathi.
+**I-animal tractor** isebenzisa izilwane ukuhlanza nokulungisa umhlaba (bheka iSahluko 5). Izinkukhu, amadada, izimvu, izimbuzi nezinkomo ziyawudla ufinyele; izingulube ziyamba futhi.
 
-1. Thola bese ususa ukhula oluhlasela kakhulu.
-2. Sika izitshalo eduze nomhlabathi ngangokunokwenzeka.
-3. Nisela kahle, noma ulinde imvula, bese uyeka umhlabathi uphume amanzi kuze kube yilapho unomswakama kodwa ungamanzi.
-4. Bulala utshani ngaphansi kwe-tarpaulin, susa izigaxa zotshani, noma uyeke izilwane zihlanze indawo.
-5. Dlula phezu komhlabathi nge-rotavator.
-6. Phinda udlule izikhathi ezimbalwa ngokudingekayo.
-7. Susa ngereki utshani obuxegayo phezulu.
+1. Sika izitshalo ezinkulu zifike phansi. Uma ufuna izingulube zimbe, qala unisele indawo.
+2. Zungeza indawo ngothango oluthuthekayo. Uthango lukagesi olusebenza ngomshini kagesi welanga lusebenza kahle.
+3. Nika izilwane indawo yokukhosela ngaphakathi uma ziyidinga, njengehhoko elithuthekayo lezinkukhu.
+4. Landelisa izinkomo noma izingulube ngezinkukhu. Zisakaza umquba futhi zidle izibungu zezimpukane ezikuwo.
+5. Xegisa umhlabathi ngemfologo noma nge-chisel plough, ngaphandle kokuwuphendula, bese ulinganisa ngereki.
 
-### 4. Ama-animal tractor
+### Ukulima ngaphandle kokumba nokumboza ngezingqimba
 
-**I-animal tractor** isebenzisa izilwane ukuhlanza nokulungisa umhlaba (bheka iSahluko 5, Izinhlelo zezilwane). Izinkukhu, amadada, izingulube, izimvu, izimbuzi nezinkomo zonke zingadla izitshalo zize zibe zifushane. Izingulube ziphinde zimbe umhlabathi.
+Ukulima ngaphandle kokumba (no-dig) kulingisa phansi ehlathini. Amaqabunga ayawa, abole futhi ondle umhlabathi, bese uba oxegayo futhi ube njengesipontshi ngaphandle kokumba nhlobo. Imisundu nesikhunta kwenza umsebenzi. Imbewu yokhula egqitshiwe ihlala ebumnyameni futhi ihlale ilele, okonga amahora okuhlakula. Inani lakho yizinto eziningi zemvelo ezibolayo.
 
-1. Sika izitshalo ezinkulu zize zifike phansi.
-2. Uma ufuna izingulube zimbe umhlabathi, qala unisele indawo ukuze ithambe.
-3. Faka uthango olunyakazisekayo luzungeze indawo ofuna ukuthi ihlanzwe. Uthango lukagesi olusebenza nge-energiser yelanga lusebenza kahle.
-4. Ngaphakathi othangweni, nika izilwane indawo yokukhosela uma ziyidinga, isibonelo ihhoko elihambayo lapho izinkukhu zingalala khona futhi zibekele khona amaqanda.
-5. Uma usebenzisa isibaya esinyakazisekayo esikhundleni sothango, sihambise kancane kancane unqamule indawo.
-6. Landelisa izinkukhu ngemuva kwezinkomo noma izingulube. Izinkukhu zisabalalisa umquba futhi zidle izibungu zezimpukane, lokhu kunqamula ukuzalana kwezimpukane.
-7. Uma kudingeka, xegisa umhlabathi nge-chisel plough noma ngemfologo ngaphandle kokuwuphendula.
-8. Linganisa indawo ngereki.
+**Ukumboza ngezingqimba** (sheet mulching, noma imibhede ye-lasagne) kwakha izingqimba zokungambi phezu komhlabathi. Kuminyanisa utshani futhi kondle impilo yomhlabathi kusuka phezulu, futhi kuyindlela esheshayo kakhulu yokuqala ingadi encane emhlabathini oqinile, ongenalutho.
 
-### 5. Ukulima ngaphandle kokumba (no-dig)
+1. Sika utshani nezihlahlana bese uzishiya lapho ziwela khona. Nisela kahle.
+2. Sakaza umquba wezilwane ujiye ngo-6 kuya ku-10 cm. Umquba omusha uya lapha kuphela, ngaphansi, ukuze uvuse impilo yomhlabathi.
+3. Kumboze ngekhadibhodi noma ngamaphephandaba, kugqagqane ukuze kungangeni ukukhanya. Kumanzise.
+4. Engeza amahlanga noma i-mulch eyomile engu-10 kuya ku-15 cm, bese kuba ungqimba lwe-compost.
+5. Engeza amanye amahlanga angenambewu angu-10 kuya ku-15 cm.
+6. Qeda nge-compost noma nge-topsoil enhle. Lokho otshala kukho kufanele kube yi-compost eyenziwe kahle noma umquba obole kahle, ungalokothi kube umquba omusha.
+7. Nisela, uvule izimbobo ezincane ezingqimbeni ezingaphezulu, utshale izithombo ku-compost, bese ufaka i-mulch ezizungeze.
 
-Indlela yokungambi (no-dig) ilingisa phansi ehlathini. Amaqabunga ayawa, abole kancane futhi ondle umhlabathi, obe mahhadlahhadla, onomvundo futhi ofana nesipontshi. Izindlela zokungambi zidinga izinto eziphilayo ezibolayo eziningi, futhi endaweni enkulu zingathatha umsebenzi omningi kunokusebenzisa umshini. Kodwa zinezinzuzo ezinkulu:
+### Ukushisisa ngelanga nokumboza nge-tarp
 
-- **Ukwakheka komhlabathi okungcono.** Izidalwa zomhlabathi zikumbela wena. Uma sondla umhlabathi nge-organic matter, imisundu, isikhunta nezidalwa ezincane kakhulu (micro-organisms) kuba matasa kakhulu futhi kwakhe ukwakheka komhlabathi okuhle.
-- **I-topsoil ejulile.** I-compost ne-mulch eningi phezu komhlabathi kwakha ngokushesha i-topsoil.
-- **Ukhula oluncane.** Imbewu eningi yokhula idinga ukukhanya ukuze ihlume. Uma singambi, imbewu egqitshiwe ihlala ebumnyameni futhi ilale. Lokhu konga isikhathi esiningi sokuhlakula.
+**Ukushisisa umhlabathi ngelanga** (solarisation) kupheka ukhula ngelanga. Nisela umhlabathi, uwumboze uqinise ngepulasitiki **ecwebile**, ugqibe imiphetho bese uyishiya okungenani amasonto angu-4 kuya kwayisi-6 esikhathini esishisa kakhulu. Kubulala nempilo ethile ewusizo yomhlabathi, ngakho kwenze lapho kufanele khona kuphela.
 
-### 6. Ukumboza umhlabathi ngezingqimba (sheet mulching, imibhede ye-lasagne)
+**Ukumboza nge-tarp** (tarping) kusebenzisa ipulasitiki **emnyama**. Kushisisa umhlabathi kancane futhi kusebenza ngokuvimba ukukhanya. Mboza indawo esikiwe neniselwe, ucindezele ishidi ngamatshe noma ngezikhwama zesihlabathi bese ulishiya amasonto ayisi-6 kuya kwayi-10. Bese uxegisa i-topsoil ngokunyakazisa imfologo iye phambili nangemuva, ngaphandle kokuyiphendula.
 
-Ukumboza umhlabathi ngezingqimba (sheet mulching) kusho ukwakha izingqimba zezinto eziphilayo ezibolayo phezu komhlabathi, njenge-lasagne. Kumboza kubulale utshani nokhula, futhi ngesikhathi esifanayo kondle izidalwa zomhlabathi zisuka phezulu. Awudingi ukuqala umbe noma uhlakule. Kuyindlela esheshayo yokuqala ingadi encane, futhi kuhle kakhulu emhlabathini oqinile ongenalutho.
+Abalimi bezingadi zezimakethe basebenzisa i-tarp ukwenza **umbhede ohlanzekile olindile** (stale seedbed): lungisa futhi unisele umbhede, uwumboze, uvumele imbewu yokhula ihlume bese ifa ebumnyameni, bese uphakamisa i-tarp ngemva kwamasonto ambalwa uhlwanyele embhedeni ohlanzekile.
 
-Udinga izinto eziphilayo ezibolayo eziningi, njengomquba wezilwane, i-compost, amakhadibhodi, amaphephandaba notshani obomile noma amahlanga. Sebenzisa lokho ongakuthola mahhala noma ngentengo ephansi endaweni yakho.
+## Ukwakha imibhede yemifino
 
-1. Gawula utshani nezihlahlana. Utshani obusikiwe namagatsha aqotshiwe kuyeke lapho kuwele khona.
-2. Nisela indawo kahle.
-3. Sabalalisa ungqimba lomquba wezilwane olujiyile ngo-6 kuya ku-10 cm. Ubulongwe obusha bezinkomo buhle lapha, ezansi, ngoba buvusa izidalwa zomhlabathi.
-4. Kumboze ngongqimba olujiyile lwamakhadibhodi noma amaphephandaba, ugqagqanise amaphethelo ukuze kungangeni ukukhanya. Kumanzise kahle.
-5. Engeza u-10 kuya ku-15 cm wotshani obomile noma enye i-mulch eyomile.
-6. Engeza ungqimba lwe-compost noma lomquba obole kahle.
-7. Engeza futhi u-10 kuya ku-15 cm wotshani obomile noma enye i-mulch eyomile engenambewu.
-8. Qedela ngongqimba lwe-compost noma le-topsoil enhle ozotshala kuyo.
-9. Nisela kahle. Yenza imbobo idlule ezingqimbeni ezingaphezulu bese utshala izithombo ku-compost, wengeze i-compost noma i-topsoil emgodini uma kudingeka.
-10. Faka i-mulch yotshani obomile uzungeze izithombo ukuze uvikele ungqimba olungaphezulu.
+Umbhede yilapho amanzi, umhlabathi nomhlane wakho kuhlangana khona. Wulolonge kahle, umhlabathi uzoba ngcono unyaka nonyaka. Lezi yiziqondiso, hhayi imithetho.
 
-> **Ukuphepha:** Umquba omusha ungathwala amagciwane agulisa abantu. Faka umquba omusha kuphela ongqimbeni olungezansi, ngaphansi kwamakhadibhodi. Ungqimba ozotshala kulo, nanoma yini ethinta izitshalo ezidliwa zingaphekiwe, kufanele kube yi-compost eyenziwe kahle noma umquba obole kahle.
+Imibhede ephakanyisiwe ifanele imvula emaphakathi nephezulu. Ezindaweni ezomile kakhulu yenza **imibhede ecwile phansi**, ephansi kancane kunezindlela, ukuze ibambe imvula njengezitsha.
 
-### 7. Ukushisisa umhlabathi ngelanga nokumboza nge-tarp
+Uma umthambeka ungaphezu kuka-3% (ukwehla kwama-3 m ku-100 m), hlela imibhede nezindlela **zilandele i-contour**, ukuze imvula enkulu ingakwazi ukugeleza yehle ngazo. Emhlabeni oyisicaba ukhululekile ukwenza imibuthano, ama-spiral nama-mandala.
 
-**Ukushisisa umhlabathi ngelanga** (soil solarisation) kusebenzisa ilanga ukushisisa umhlabathi ukuze kubulawe ukhula, imbewu yokhula nezinye izinambuzane ezilimaza izitshalo nezifo.
+### Imibhede ephakanyisiwe ye-double-reach
 
-1. Sika izitshalo, bese unisela umhlabathi kahle. Umhlabathi onomswakama uthwala ukushisa kangcono.
-2. Wumboze ngokuqinile ngeplastiki **elikhanyayo** (elibonisa ngale), ugqibe noma ubeke izinto ezisindayo phezu kwamaphethelo.
-3. Kuyeke okungenani amasonto angu-4 kuya ku-6 ngesikhathi sonyaka esishisa kakhulu, esinelanga kakhulu.
+**I-double-reach bed** incane ngokwanele ukuze ufinyelele maphakathi usendleleni ezinhlangothini zombili, ukuze ungalokothi uyinyathele ucindezele umhlabathi.
 
-Ukushisisa ngelanga kubulala nezinye izidalwa zomhlabathi eziwusizo, ngakho kusebenzise kuphela lapho kudingeka khona.
+- Imibhede engu-80 kuya ku-120 cm ububanzi. Izingadi zezimakethe zivame ukusebenzisa u-75 kuya ku-90 cm, okufanele amathuluzi esandla nogandaganda bamasondo amabili.
+- Izindlela ezingu-40 kuya ku-60 cm ububanzi.
+- Imibhede ecishe ibe ngu-8 m ubude engadini encane, kuze kube ngama-30 m kweyezohwebo.
 
-**Ukumboza nge-tarp** (tarping, noma i-occultation) kusebenzisa ishidi leplastiki **elimnyama** noma i-tarpaulin esikhundleni salokho. Akuwushisisi umhlabathi kangako. Kusebenza ngokuvimba ukukhanya, ngakho izitshalo ezingaphansi ziyafa. Ukuhlakula kuthatha isikhathi esiningi epulazini lemvelo (organic) lapho kungasetshenziswa izibulali-khula, ngakho ama-tarp amnyama asethandwa kakhulu abalimi bezingadi zezimakethe.
+Imibhede ephakanyisiwe iphakamisa izimpande ziphume emhlabathini ogcwele amanzi futhi ijulise i-topsoil ngomhlabathi ovela ezindleleni, futhi i-compost iya kuphela lapho izitshalo zikhula khona. Njengoba ingalokothi inyathelwe futhi ingambiwa kakhulu, umhlabathi uba ngcono unyaka nonyaka, kuze kube imfologo yengadi ishona ize ifike esibambweni.
 
-Abalimi basebenzisa ama-tarp ukwenza **umbhede ohlanzekile olindile** (stale seedbed):
+1. Maka i-contour ephezulu nge-A-frame. Uma kunendawo, beka i-swale encane ngaphezu kombhede ophezulu.
+2. Linganisa eminye imibhede nezindlela wehla umthambeka, bese umaka imiphetho ngomcako noma ngomlotha. Beka ipayipi emaphethelweni agobile.
+3. Uqala phezulu, mba umhlabathi endleleni engaphezu kombhede ngamunye bese uwuphonsa embhedeni ongezansi. Phakamisa umbhede ojwayelekile ngo-10 kuya ku-15 cm.
+4. Linganisa umbhede ngamunye ngereki bese wenza imiphetho ecocekile.
+5. Engeza noma yimuphi umcako noma i-gypsum ukuhlolwa komhlabathi wakho okukhombisa ukuthi uyakudinga, ne-compost ecishe ibe ngu-3 cm.
+6. Xegisa umbhede wonke ngemfologo ngaphandle kokuwuphendula, uwufake i-mulch ejiyile bese uyanisela.
+7. Phumuza umbhede amasonto ambalwa ngaphambi kokutshala.
 
-1. Lungisa umbhede bese uwunisela.
-2. Wumboze nge-tarp emnyama. Imbewu yokhula iyahluma ngaphansi kwe-tarp, kodwa ife ngenxa yokungabi nokukhanya.
-3. Ngemva kwamasonto ambalwa, susa i-tarp bese uhlwanyela isitshalo embhedeni ohlanzekile, "olindile".
+Ezingadini ezincane, biyela imibhede ngamatshe, amagatsha awugqinsi noma izingodo zamapalethi. Beka ikhadibhodi phezu kotshani ngaphakathi, ugcwalise nge-topsoil enhle bese umboza nge-compost. Lokhu kusebenza ngisho naphezu kukakhonkolo.
 
-Ukuhlanza utshani noma ukhula nge-tarp:
+### Imibhede yomsele
 
-1. Thola bese ususa ukhula oluhlasela kakhulu.
-2. Sika izitshalo eduze nomhlabathi ngangokunokwenzeka.
-3. Nisela kahle, noma ulinde imvula, bese uyeka umhlabathi uphume amanzi kuze kube yilapho unomswakama kodwa ungamanzi.
-4. Mboza indawo nge-tarp noma ngeplastiki elijiyile, elibanjwe phansi ngamatshe noma ngezikhwama zesihlabathi. Liyeke amasonto angu-6 kuya ku-10, noma kuze kufe izitshalo ezingaphansi.
-5. Xegisa i-topsoil ngemfologo. Ungawuphenduli umhlabathi. Shutheka imfologo bese uyinyakazisa uyiyise phambili nangemuva.
-6. Qoqa ngereki lokho okusele.
+**Umbhede womsele** (trench bed) ngumbhede ojulile ogcwaliswe ngezinto zemvelo ezibolayo. Uguqula umhlabathi onamatshe noma wobumba ube ngumhlabathi wokutshala futhi ubambe amanzi ezindaweni ezomile. Kunzima ukuwumba, kodwa uhlala iminyaka.
 
-## Ukwakha imibhede yokutshala imifino
+1. Maka umbhede ocishe ube ngu-**1 m ububanzi** no-2 kuya ku-5 m ubude, bese uwumba ujule cishe **ngo-60 cm**.
+2. Beka i-topsoil emnyama ohlangothini olulodwa nomhlabathi ongaphansi okhanyayo kolunye.
+3. Beka izinti noma izinto ezimahhadlahhadla phansi.
+4. Gcwalisa ngezingqimba: cishe u-20 cm wezinto zemvelo ezibolayo (amaqabunga omile, utshani, izinsalela zasekhishini, umquba), bese kuba cishe u-10 cm womhlabathi ongaphansi. Nisela ungqimba ngalunye.
+5. Qeda nge-topsoil, bese ufaka i-mulch.
 
-Lezi yiziqondiso, hhayi imithetho engaguquki. Thola lokho okusebenzayo endaweni yakho.
-
-Imibhede ephakanyisiwe engezansi ifanele izindawo ezinemvula ephakathi nendawo noma eningi. Ezindaweni ezomile kakhulu, yenza **imibhede ecwile phansi** esikhundleni salokho: imibhede ephansi kancane kunezindlela, esebenza njengezitsha futhi ibambe lonke iconsi lemvula.
-
-### Ukusebenzisana nomthambeka
-
-Uma umthambeka ungaphezu kuka-3% (ukwehla okungu-3 m ku-100 m), beka imibhede nezindlela **ngokulandela i-contour**. Lokhu kuvimbela imvula enamandla ukuthi igeleze yehle ngemibhede ibangele i-erosion. Izindlela ezilandela i-contour nazo zibamba imvula.
-
-Emhlabeni oyisicaba kakhulu ungaqamba izinto ezintsha. Ungenza izindilinga, izinhlobo ezijikayo (spirals) noma ingadi ye-mandala ethandwa kakhulu, inqobo nje uma ingadi ilula ukuyisebenza nokuyinakekela.
-
-### Ama-double-reach bed aphakanyisiwe
-
-"**Double reach**" (ukufinyelela ezinhlangothini zombili) kusho ukuthi ungafinyelela phakathi nendawo yombhede usezindleleni ezisezinhlangothini zombili, ngakho awulokothi unyathele embhedeni. Ukunyathela embhedeni kuminyanisa umhlabathi.
-
-- Imibhede ngokuvamile ibanzi ngo-80 kuya ku-120 cm. Izingadi zezimakethe zivame ukusebenzisa imibhede engu-75 kuya ku-90 cm, efanele iningi lamathuluzi esandla namathuluzi kagandaganda wamasondo amabili.
-- Izindlela ngokuvamile zibanzi ngo-40 kuya ku-60 cm.
-- Imibhede ingaba nobude obungaba ngu-8 m engadini encane, nokufika ku-30 m engadini yebhizinisi. Uma umbhede umude, uhamba ibanga elide kakhulu uwuzungeza.
-
-Izinzuzo zemibhede ephakanyisiwe:
-
-- Lapho izinga lamanzi angaphansi komhlaba liphezulu khona, iphakamisa izimpande izikhiphe emhlabathini ogcwele amanzi.
-- Ezindaweni ezinemvula eningi, amanzi eqile ayaphuma asuke emifinweni.
-- Umhlabathi ovela ezindleleni wengezwa emibhedeni, ngakho i-topsoil iyajula.
-- I-compost nomanyolo kufakwa emibhedeni kuphela, hhayi ezindleleni, lokhu konga imali.
-- Imibhede ayinyathelwa futhi cishe ayimbiwa, ngakho umhlabathi uba ngcono unyaka nonyaka. Kweminye imibhede ephakanyisiwe emidala ungashutheka imfologo ize ingene kuze kufike esibambweni.
-
-### Ukwakha imibhede ephakanyisiwe
-
-1. Maka i-contour nge-A-frame, ngendlela efanayo naleyo ye-swale. Qala phezulu endaweni. Uma kunesikhala, faka i-swale encane ngaphezulu kombhede ophezulu.
-2. Linganisa eminye imibhede nezindlela wehla emthambekeni ngetheyiphu yokulinganisa. Maka amaphethelo ngomugqa womcako (lime) noma womlotha. Emibhedeni egobile, beka ipayipi ngasemaphethelweni njengesiqondiso.
-3. Qala phezulu. Mba umhlabathi endaweni yendlela engaphezulu kombhede ngamunye bese uwuphonsa embhedeni ongezansi.
-4. Embhedeni ojwayelekile, wuphakamise ngo-10 kuya ku-15 cm. Emhlabeni oyisicaba kakhulu, engadini yokungambi, ungathatha nje u-2 kuya ku-3 cm womhlabathi ezindleleni bese umboza izindlela ngamazenge ezihlahla.
-5. Linganisa phezulu kombhede ngamunye ngereki bese wenza amaphethelo acocekile.
-6. Sabalalisa noma yiziphi izithuthukisi zomhlabathi ukuhlolwa komhlabathi okukhombisa ukuthi uyazidinga, njengomcako noma i-gypsum. Engeza i-compost ejiyile ngo-3 cm.
-7. Kulinganise ngereki. Bese usebenza ngobude bombhede ngemfologo uxegisa umhlabathi, ngaphandle kokuwuphendula.
-8. Mboza nge-mulch ejiyile bese uyinisela. Ungawumboza nombhede nge-tarp ukuze wenze umbhede ohlanzekile olindile.
-9. Yeka umbhede amasonto ambalwa ngaphambi kokutshala. Isikhathi sincike ekutheni wengeze ziphi izithuthukisi.
-
-### Imibhede enemiphetho nemibhede esheshayo
-
-Ezingadini ezincane ungabiyela imibhede ephakanyisiwe ngamatshe, ngamagatsha awugqinsi noma ngamapulangwe e-pallet. Lena ingaba izingadi ezisheshayo:
-
-1. Beka amakhadibhodi awugqinsi phezu kotshani ngaphakathi kwemiphetho.
-2. Gcwalisa umbhede nge-topsoil enhle.
-3. Qedela ngongqimba lwe-compost.
-
-Lokhu kusebenza kahle lapho kungekho mhlabathi omuhle, noma lapho kufanele wakhe phezu kukakhonkolo futhi ulethe wonke umhlabathi uwuthathe kwenye indawo.
-
-### Imibhede yemisele
-
-Umbhede womsele (trench bed) ngumbhede ojulile ogcwaliswe ngezinto eziphilayo ezibolayo. Kuyindlela enhle yokutshala imifino lapho umhlabathi unamatshe amaningi noma uwubumba obusindayo, futhi ubamba amanzi kahle ezindaweni ezomile. Ukuwumba kungumsebenzi onzima, kodwa umbhede uhlala iminyaka eminingana.
-
-1. Maka umbhede obanzi ngo-**1 m** nobude obungu-2 kuya ku-5 m.
-2. Wumbe uze ujule ngo-**60 cm**, noma ngaphezulu.
-3. I-topsoil (ungqimba olumnyama olungaphezulu) uyibeke ohlangothini olulodwa, bese umhlabathi ongaphansi (ungqimba olukhanyayo, oluvame ukuba bomvu, olungezansi) uwubeke kolunye uhlangothi.
-4. Beka izinduku noma izinto ezimahhadlahhadla ezansi uma unazo.
-5. Gcwalisa umsele ngezingqimba: izinto eziphilayo ezibolayo ezingaba ngu-20 cm (amaqabunga omile, utshani, izinsalela zasekhishini, umquba), bese kuba umhlabathi ongaphansi ongaba ngu-10 cm. Nisela ungqimba ngalunye kahle.
-6. Qhubeka wengeza izingqimba kuze kube umsele usucishe ugcwale.
-7. Qedela nge-topsoil phezulu, bese ufaka i-mulch.
-
-Umbhede uzocwila njengoba i-organic matter ibola. Wengeze i-compost isizini ngayinye.
+Umbhede uyashona njengoba ubola. Wengeze nge-compost isizini ngayinye.
 
 ### Imibhede esezitejini
 
-Emhlabeni onomqansa, ama-terrace (izitebhisi zomhlabathi) avimbela amanzi nomhlabathi ukuthi kukhukhuleke. I-terrace yisiteji esisezingeni elilinganayo esisikwe emthambekeni. Ibhange noma udonga olungaphambili kwe-terrace ngayinye lusebenza njenge-berm ye-swale.
-
-- Yakha izindonga zama-terrace ngamatshe, ngezingodo noma ngamathayi amadala. Sebenzisa noma yiziphi izinto onazo, ukuze unciphise ijubane le-runoff futhi wakhe umhlabathi onomvundo ngemuva kodonga ngalunye.
-- Lapho ama-wattle angama-invasive species ekhula aminyene khona, ungawasika bese uluka iziqu zawo zibe yizisefo ezibamba umhlabathi namanzi. Sebenzisa kuphela iziqu ezomile ezisikiwe ezingenawo amakhasi embewu, ukuze ungasabalalisi imbewu. Ungalokothi utshale ama-wattle.
-- Ezintabeni zaseNdiya naseNepal, nakwezinye izindawo eziningi, abalimi basika ama-terrace emagqumeni. Ama-terrace abamba imvula ye-monsoon (inkathi yemvula enkulu) futhi anisele amasimu erayisi.
+Emhlabeni ongumqansa, **i-terrace** yisiteji esilinganisile esisikwe emthambekeni. Udonga lwayo lwangaphambili lusebenza njenge-berm ye-swale, lubambe amanzi nomhlabathi. Yakha izindonga ngamatshe, izingodo noma amasondo amadala. Lapho uwatela esehlasele khona, iziqu ezisikiwe ezelukwe zaba izisefo zibamba umhlabathi kahle; sebenzisa iziqu ezomile ezingenawo amakhasi embewu kuphela, ukuze imbewu ingasabalali.
 
 ### Imibhede yemigodi nezindilinga zikabhanana
 
-Umbhede womgodi (pit bed) ngumgodi oyindilinga, ojule ngo-50 cm (kuze kufike ku-1 m) futhi obanzi ngo-1 kuya ku-2 m, ogcwaliswe ngezinto eziphilayo ezibolayo. Izitshalo zitshalwa emaphethelweni, lapho zidla khona izinto ezibolayo namanzi aqoqeka emgodini. **Indilinga kabhanana** (banana circle) wuhlobo olwaziwayo lombhede womgodi.
+**Umbhede womgodi** (pit bed) ngumgodi oyindilinga ojule cishe ngo-50 cm (kuze kube ngu-1 m) futhi ubanzi ngo-1 kuya ku-2 m, ogcwaliswe ngezinto zemvelo ezibolayo. Izitshalo zikhula ezungeze umphetho futhi zondleke ngokubolayo nangamanzi aphakathi. **Indilinga kabhanana** (banana circle) wuhlobo olwaziwa kakhulu.
 
-Konke izitshalo ezikudingayo kusendaweni eyodwa, ngakho umgodi wonga umsebenzi, amanzi nezakhamzimba. Ungawunisela nge-greywater, noma nge-runoff evela ophahleni noma endleleni yezimoto. Ungaze wakhe neshawa yangaphandle phezu kwawo: beka phansi amapulangwe anezikhala phezu komgodi ukuze amanzi eshawa angene ngqo emgodini.
+1. Khetha indawo lapho amanzi eza khona: ngezansi kompompi, eduze kwendawo amanzi aconsa kuyo emhlabathini, noma lapho i-greywater noma i-runoff igeleza khona.
+2. Phakamisa izigaxa zotshani ne-topsoil bese uzibeka eceleni.
+3. Mba umsele omncane oholela amanzi maphakathi, bese umba umgodi uwugcwalise ngezinto zemvelo ezibolayo.
+4. Buyisela umhlabathi njengendilinga ephansi ezungeze umphetho, uyitshale bese ufaka i-mulch kahle.
+5. Qhubeka wondla maphakathi ngezinto zemvelo ezibolayo.
 
-1. Khetha indawo eseduze nomthombo wamanzi, njengangezansi kwempompi, eduze kwendawo lapho amanzi aconsa khona emhlabathini, noma lapho i-greywater noma i-runoff idlula khona.
-2. Maka indilinga yomgodi.
-3. Susa utshani obungaphezulu noma izigaxa zotshani bese uzibeka eceleni.
-4. Mba i-topsoil bese uyibeka eceleni.
-5. Mba umsele omncane ozohola amanzi uwayise phakathi nendawo yomgodi.
-6. Mba umgodi ujule ngo-50 cm (kuze kufike ku-1 m) bese uwugcwalisa ngezinto eziphilayo ezibolayo.
-7. Buyisela umhlabathi emaphethelweni ube yindunduma ephansi emise okwendandatho, bese uyitshala.
-8. Faka i-mulch eningi.
-9. Qhubeka wengeza izinto eziphilayo ezibolayo phakathi nendawo yomgodi.
+Ubhanana, amadumbe, ubhatata, i-ginger nophopho kwenza kahle ezindaweni ezingenasithwathwa. Ungaze ubeke naphansi lwamapulangwe anezikhala phezu komgodi ugezele phezu kwalo.
 
-Tshala inhlanganisela yezihlahla, izihlahlana, amakhambi, izitshalo ezikhuphukayo nama-groundcover. Ubhanana, amadumbe, ubhatata, ujinja nophopho kuthandwa kakhulu ezindaweni ezingenaso isithwathwa.
+### Imibhede ye-mandala ne-keyhole
 
-### Imibhede ye-mandala nama-keyhole bed
-
-Imibhede emise okwesicathulo sehhashi, **ama-keyhole bed** (imibhede emise okwembobo kakhiye) nemibhede ye-mandala yimibhede yemifino eyindilinga noma egobile, ngokuvamile emhlabeni oyisicaba noma onomthambeka omncane. Imnandi futhi ibukeka kahle. Ithatha isikhathi esincane esengeziwe nezinto eziningi ukuyakha, ngakho inhle kakhulu ezingadini zezikole nasezindaweni zomphakathi.
-
-Sebenzisa indilinga njengesimo esiyinhloko. Iqembu lezindilinga likuvumela wenze amaphethini ngezindlela ezimfushane ezilandela umhlaba.
-
-Izinzuzo:
-
-- Yonke ingxenye yombhede kulula ukuyifinyelela uma utshala noma ukha.
-- Ungama endaweni eyodwa usebenze ingxenye enkulu yombhede.
-- Isimo sayo singabamba futhi sigcine amanzi.
-- Ungabeka izitshalo ozikha kaningi eduze nendlela, nalezo ezidinga ukunakekelwa okuncane zibe ngaphakathi.
-- Izitshalo ezinde ezingaphandle zivikela izitshalo ezingaphakathi emoyeni nasesithwathweni. Khumbula ukuthi ilanga lisenyakatho. Beka izitshalo ezinde ohlangothini oluseningizimu ukuze zingazithunzisi ezincane.
-- Zinhle ukuzibuka.
+Imibhede eyindilinga, **ama-keyhole bed** (umbhede oyindilinga onendlela esikwe yangena maphakathi) nama-mandala afanele umhlaba oyisicaba. Endaweni eyodwa ungafinyelela ingxenye enkulu yombhede, ngakho beka izitshalo ozikha kakhulu eduze kwendlela. Beka izitshalo ezinde ohlangothini oluseningizimu, ngoba ilanga lisenyakatho.
 
 ## Ukunisela
 
-Yonke indlela yokunisela ilahlekelwa amanye amanzi ngokuhwamuka, ngomoya nangokugeleza. Indlela engcono kakhulu ifaka amanzi kuphela lapho izimpande zikhona, ngejubane umhlabathi ongawamunca ngalo. Nisela ekuseni kakhulu noma ntambama sekuhlwa, lapho amanzi ahwamuka kancane. Faka i-mulch kukho konke okunisela.
+Lonke iconsi olithwalayo noma olipompayo likubiza okuthile. Ukunisela okungcono kakhulu kubeka amanzi ezimpandeni kuphela, ngokushesha okungadluli lokho umhlabathi ongakuphuza. Nisela ekuseni kakhulu noma ntambama sekushona ilanga, futhi ufake i-mulch kukho konke okunisela.
 
 ### Ukunisela ngesandla
 
-Ukunisela ngesandla ngepayipi noma ngokeni lokunisela kuyindlela evame kakhulu. Kulula, kodwa kuvame ukuchitha amanzi ezindleleni, futhi izitshalo zithola amanzi angalingani.
-
-Ukunisela ngesandla kusebenza kangcono kakhulu ezitsheni zokutshala nasezitshalweni ezizodwa. Indlela eyonga kakhulu wukwenza isitsha esincane noma umsele omncane eduze kwesitshalo ngasinye noma umugqa ngamunye. Kugcwalise, uyeke amanzi angene emhlabathini, bese udlulela kokulandelayo. Lokhu kusebenza kahle kakhulu ekuqaleni kwesizini, lapho izitshalo zisencane.
-
-Ezithombweni, sebenzisa ukeni lokunisela elinekhanda elinezimbobo ezincane, noma ibhodlela lokufafaza elinomlomo olungiseka. Amanzi abekade emi elangeni angcono ezithombweni kunamanzi abanda kakhulu avela ngqo emthonjeni ojulile (borehole).
+Ipayipi noma ukeni kuchitha amanzi ezindleleni futhi kunisela ngokungalingani. Esikhundleni salokho, yenza isitsha esincane noma umsele eceleni kwesitshalo ngasinye noma komugqa, usigcwalise, uvumele amanzi angene, bese uqhubeka. Ezithombweni sebenzisa ukeni onomlomo ofafaza kancane; amanzi abe emi elangeni azifanele kangcono kunamanzi abandayo omthombo ojulile.
 
 ### Ukunisela ngebhodlela
 
-Le ndlela elula yonga amanzi nesikhathi.
-
-1. Thatha ibhodlela leplastiki elidala bese usika ingxenye yalo engezansi.
-2. Yenza izimbobo ezimbalwa ezincane esivalweni, noma ezinhlangothini eduze nentamo.
-3. Gqiba ibhodlela liphenduke phansi eduze kwesitshalo, intamo isemhlabathini futhi uhlangothi oluvulekile olusikiwe lube ngaphezulu kancane komhlabathi.
-4. Gcwalisa ibhodlela ngohlangothi oluvulekile. Amanzi aconsa kancane eduze nezimpande.
+1. Sika phansi kwebhodlela elidala likapulasitiki.
+2. Yenza izimbobo ezimbalwa ezincane esivalweni.
+3. Gqiba ibhodlela umlomo ubheke phansi eceleni kwesitshalo, ingxenye evulekile ibe ngaphezu nje komhlabathi.
+4. Ligcwalise. Amanzi aconsa kancane aye ezimpandeni.
 
 ### I-drip irrigation
 
-**I-drip irrigation** (ukunisela ngamaconsi, noma i-trickle irrigation) ivumela amanzi aconse kancane emhlabathini ezimpandeni zezitshalo. Amanzi amancane alahleka ngokuhwamuka nangokugeleza, futhi izindlela zihlala zomile, ngakho kumila ukhula oluncane lapho. I-drip irrigation yindlela eyonga amanzi kakhulu: ngokuvamile cishe u-90% wamanzi ufika endaweni yezimpande, uma kuqhathaniswa nesilinganiso esingaba ngu-70% kuya ku-85% sezifafazi.
+**I-drip irrigation** ivumela amanzi aconse kancane emhlabathini ezimpandeni zesitshalo ngasinye. Izindlela zihlala zomile, ukhula oluncane luyakhula futhi amanzi amancane ayalahleka: cishe u-90% ufika ezimpandeni, uma kuqhathaniswa no-75% kuya ku-85% wezifafazi.
 
-- Amapayipi amaconsi ngokuvamile angamapayipi angu-16 mm noma angu-20 mm anezinconsi ezakhelwe ngaphakathi (drippers). Wabeke ngobude bemibhede, ngaphansi kwe-mulch.
-- Hlukanisa izinconsi ngebanga elingaba ngu-20 kuya ku-30 cm epayipini.
-- Hlukanisa amapayipi ngebanga elingaba ngu-30 kuya ku-50 cm. Emhlabathini onesihlabathi, amanzi asabalalela ezinhlangothini kancane, ngakho sondeza izinconsi namapayipi.
-- Umbhede obanzi ngo-1 m ngokuvamile udinga amapayipi angu-2. Umbhede ongu-1.5 m udinga angu-3.
-- Njalo faka **isihlungi** (filter), ngoba ukungcola kuvimba izinconsi. Ngezikhathi ezithile geza iziphetho zamapayipi ngokuvula amanzi ageleze.
+- Sebenzisa ipayipi le-drip elingu-16 mm noma ama-20 mm elinezinconsi ezakhelwe phakathi ezihlukene ngo-20 kuya ku-30 cm, elibekwe ngaphansi kwe-mulch.
+- Beka amapayipi ehlukene ngo-30 kuya ku-50 cm; eduze kakhulu esihlabathini, lapho amanzi esabalala kancane eceleni. Umbhede ongu-1 m udinga amapayipi ama-2, umbhede ongu-1.5 m udinga ama-3.
+- Njalo faka isihlungi, ngoba ukungcola kuvimba izinconsi, futhi ugeze imiphetho yamapayipi ngezikhathi ezithile.
 
-Ungathenga amasethi e-drip irrigation anamapayipi, izinconsi, izixhumi, kwesinye isikhathi nesikhathi sokuzivulela (timer), esitolo sezakhiwo (hardware) noma ku-co-op.
+**Amandla okucindezela avela ethangini:** wonke amamitha ayi-10 okuphakama phakathi kwamanzi asethangini nompompi anika cishe i-bar engu-1. Ithangi elisesitendeni esingu-1 m linika u-0.1 bar kuphela, okwanele i-drip kit esebenza ngamandla okudonsela phansi anengcindezi ephansi kodwa akwanele izinconsi ezijwayelekile noma izifafazi. Funda iphakethe ukuze wazi ingcindezi i-kit yakho eyidingayo.
 
-**Amandla amanzi avela ethangini.** Njalo ku-10 m wokuphakama phakathi kwezinga lamanzi ethangini nempompi kunika amandla (pressure) angaba ngu-1 bar. Ithangi elisesitendini esingu-1 m linika cishe u-0.1 bar kuphela. Lokho kwanele amasethi akhethekile e-drip irrigation asebenza ngamandla aphansi (gravity drip kits), kodwa akwaneli izinconsi ezijwayelekile noma izifafazi, ezidinga ithangi eliphakeme kakhulu noma iphampu. Hlola amandla uhlelo lwakho oludinga wona ephaketheni.
+### Izifafazi
 
-### Izifafazi ezincane (micro-sprinklers, micro-jets)
+**Izifafazi ezincane** (micro-sprinklers) zifanele **ama-Zone** 1 no-2, imibhede eseduze kakhulu nendlu oyivakashela nsuku zonke. Ikhanda ngalinye elincane limi esikhonkwaneni, lithola amanzi ngeshubhu elincane elivela epayipini elinengcindezi ephansi, bese limanzisa indilinga engamamitha ambalwa ububanzi. Zilahlekelwa amanzi amaningi emoyeni kune-drip.
 
-Ukunisela ngokufafaza okuncane (micro-jet) kufanele ama-Zone 1 no-2, izindawo ezisetshenzwa kakhulu eziseduze nendlu. Ikhanda ngalinye lesifafazi esincane lihlala phezu kwesikhonkwane noma kwepayipi elincane elishuthekwe emhlabathini, futhi linikezwa amanzi ngeshubhu elincane elivela epayipini le-poly elisebenza ngamandla aphansi.
-
-- Ikhanda ngalinye limanzisa indilinga ebanzi ngamamitha ambalwa. Hlola ephaketheni ubukhulu obuqondile namandla amanzi adingekayo.
-- Ukuthi ukufafaza kucolekile kangakanani kuncike emlonyeni wesifafazi nasemandleni amanzi. Imilomo efafaza ngenkungu ecoleke kakhulu ingeyezindawo zokukhulisela izithombo nezithombo.
-- Izifafazi ezincane zilahlekelwa amanzi amaningi ngomoya nangokuhwamuka kune-drip irrigation, ngakho nisela ekuseni noma ntambama.
-
-### Izifafazi ezijikelezayo ezishaya (impact sprinklers)
-
-Izifafazi ezijikelezayo ezishaya (impact sprinklers) yilezo ezenza umsindo othi "thikithi" njengoba zijikeleza. Ziphonsa amanzi ngendilinga ebanzi, evame ukuba ngu-10 m noma ngaphezulu, futhi zimanzisa indawo enkulu ngokushesha. Azibizi, kulula ukuzithola ezitolo zezingadi nakuma-co-op, futhi zingahanjiswa ngepayipi.
-
-Zidinga amandla amanzi amaningi kune-drip irrigation noma izifafazi ezincane. Ziphinde zilahlekelwe amanzi amaningi kunazo zonke ngomoya nangokuhwamuka, futhi zimanzisa izindlela namaqabunga, okungasabalalisa izifo zamaqabunga. Zisebenzise ezindaweni ezinkulu njengamadlelo, **i-green manure** (izitshalo ezimbelwa emhlabathini ukuze ziwondle) noma insimu enkulu, hhayi emibhedeni emincane.
-
-### Ukuqhathanisa izindlela zokunisela
-
-| Indlela | Ukonga amanzi | Ifanele kakhulu |
-|---|---|---|
-| Ukunisela ngesandla ezitsheni | Kuphezulu uma kwenziwa ngokucophelela | Izitshalo ezizodwa, izihlahla ezisencane, izitsha zokutshala |
-| Ukunisela ngebhodlela | Kuphezulu | Izitshalo ezizodwa ezindaweni ezomile |
-| I-drip irrigation | Kuphezulu kakhulu, cishe u-90% | Imibhede yemifino, izingadi zezihlahla zezithelo, izindawo ezomile |
-| Izifafazi ezincane | Kuphakathi kuya kokuphezulu | Imibhede yama-Zone 1 no-2, izindawo zokukhulisela izithombo |
-| Izifafazi ezijikelezayo ezishaya | Kuphansi kakhulu | Izindawo ezinkulu, amadlelo, i-green manure |
+**Izifafazi ezishayayo** (impact sprinklers), lezo ezikhala ngokuqhwakiza njengoba zijikeleza, ziphonsa amanzi endilingeni ebanzi. Zidinga ingcindezi enkulu, zilahlekelwa amanzi amaningi kakhulu emoyeni nasemlangeni, futhi zimanzisa amaqabunga, okusabalalisa izifo zamaqabunga. Zigcinele amadlelo namasimu amakhulu.
 
 ## Ukusebenzisa i-greywater ekuniseleni
 
-**I-greywater** ngamanzi asetshenzisiwe avela ebhavini, eshaweni, emasinki okugeza izandla nasemshinini wokuwasha. **I-blackwater** ngamanzi avela ezindlini zangasese. I-blackwater ithwala amagciwane amaningi futhi kufanele iye ohlelweni lokuthuthwa kwendle olufanele, ingalokothi iye engadini.
+Wonke ubhavu neshawa kuthumela amanzi amahle emseleni wokukhipha. Epulazini elomile, lawo manzi angagcina umugqa wezihlahla zezithelo uphila phakathi nenkathi eyomile.
 
-**Amanzi asinki yasekhishini** ayi-greywater engcole kakhulu. Agcwele amafutha, izinsalela zokudla namagciwane. Avimba umhlabathi namapayipi futhi aheha izimpukane. Ungawasebenzisi engadini ngaphandle kokuthi aqale adlule esicuphweni samafutha (grease trap). Nalapho, wasebenzise ezihlahleni nasezitshalweni ezingadliwa kuphela.
+**I-greywater** ngamanzi asetshenzisiwe avela kubhavu, eshaweni, esitsheni sokugeza izandla nasemshinini wokuwasha. **I-blackwater** ngamanzi avela ezindlini zangasese. I-blackwater namanzi okuwasha amanabukeni athwala amagciwane futhi awalokothi aye engadini. Amanzi esinki sasekhishini yi-greywater engcole kakhulu, egcwele amafutha nokudla; wasebenzise kuphela ngesicupho samafutha (grease trap), futhi ezihlahleni nasezimbalini kuphela.
 
-Amanzi okuwasha amanabukeni, noma okugeza noma ubani onohudo, kufanele aphathwe njenge-blackwater futhi **angasetshenziswa** engadini.
-
-### Yimaphi amanzi afanele?
-
-| Umthombo wamanzi | Asetshenziswe engadini? |
+| Lapho amanzi evela khona | Engadini? |
 |---|---|
-| Ishawa, ibhavu, isinki lokugeza izandla | Yebo, ngokucophelela |
-| Umshini wokuwasha (amanzi okuhlambulula ahlanzeke kakhulu) | Yebo, ngokucophelela; sebenzisa insipho yokuwasha enosawoti omncane nengalimazi ingadi |
-| Isinki lasekhishini, umshini wokugeza izitsha | Kuphela uma edlule esicuphweni samafutha, futhi kuphela ezihlahleni nasezitshalweni zokuhlobisa |
-| Ukuwasha amanabukeni | Cha |
-| Indlu yangasese (i-blackwater) | Cha |
+| Ishawa, ubhavu, isitsha sokugeza izandla | Yebo, ngokucophelela |
+| Umshini wokuwasha | Yebo, ngensipho yokuwasha ethambile enosawoti omncane |
+| Isinki sasekhishini | Kuphela ngesicupho samafutha, ezihlahleni nasezimbalini |
+| Ukuwasha amanabukeni noma indlu yangasese | Cha |
 
-### Imithetho yokusebenzisa i-greywater ngokuphephile
+### Imithetho
 
-1. **Yifake emhlabathini, ngaphansi kwe-mulch.** Yeka i-greywater igeleze iye esitsheni sesihlahla esine-mulch, ku-swale ene-mulch noma embhedeni womgodi, noma ngepayipi eliphelela ngaphansi kwe-mulch. Ungalokothi ufafaze i-greywater ngesifafazi.
-2. **Hhayi emifinweni edliwa ingaphekiwe.** Ungavumeli i-greywater ithinte imifino enamaqabunga njengolethisi noma isipinashi, noma izitshalo zezimpande njengezaqathe nama-radish. Yisebenzise ezihlahleni zezithelo, kubhanana, ezihlahlaneni, ezitshalweni zokuhlobisa, nasezitshalweni eziphekwayo noma ingxenye yazo edliwayo ekhula phezulu kakhulu kunomhlabathi.
-3. **Gwema ukuyithinta.** Gcina abantu, izingane nezilwane bengayithinti i-greywater. Kufanele ingene emhlabathini ngokushesha, ingenzi amachibi amancane.
-4. **Ungayigcini.** Sebenzisa i-greywater ngosuku olulodwa. I-greywater egciniwe iyonakala, inuke futhi izalanise amagciwane nemiyane.
-5. **Yigcine kude namanzi okuphuza.** Ungalokothi ufake i-greywater eduze, noma ngaphezulu emthambekeni, komthombo, umthombo ojulile (borehole) noma isiphethu okuphuzwa kuso. Ungayivumeli igeleze iye emfudlaneni noma iphume endaweni yakho.
-6. **Khetha izinsipho zakho.** Umhlabathi ungakwazi ukubhekana nensipho evamile encane, kodwa usawoti, i-bleach, i-borax (i-boron) namakhemikhali anamandla kuyanqwabelana futhi konakalise ukwakheka komhlabathi, izidalwa zomhlabathi nezitshalo. Sebenzisa izinsipho zokugeza nezokuwasha ezithambile, ezibolayo ngokwemvelo nezinosawoti omncane. Izinsipho zokuwasha eziwuketshezi ngokuvamile zinosawoti omncane kunempushana yokuwasha. Ungawathumeli engadini amanzi ane-bleach, amakhemikhali okuvula amapayipi avalekile, upende noma amanye amakhemikhali.
-7. **Yishintshanise izindawo.** Shintshanisa i-greywater phakathi kwezitsha ezahlukene. Yeka imvula noma amanzi ahlanzekile ahlambulule umhlabathi ngezikhathi ezithile, ukuze kuphume usawoti. Imiphetho yamaqabunga ephenduka ibe phuzi noma uqweqwe olumhlophe emhlabathini yizimpawu zokunqwabelana kukasawoti.
-8. **Hlola imithetho yendawo.** Emadolobheni, imithetho kamasipala (by-laws) ingase ilawule ukusetshenziswa kwe-greywater.
+1. **Emhlabathini, ngaphansi kwe-mulch.** Hola i-greywater uyise esitsheni sesihlahla esine-mulch, ku-swale noma embhedeni womgodi, ngepayipi eliphelela ngaphansi kwe-mulch. Ungalokothi uyifafaze.
+2. **Ungalokothi uyithele ekudleni okudliwa kuluhlaza.** Yigcine kude nemifino, ulethisi nezitshalo zezimpande njengezaqathe. Yisebenzise ezihlahleni zezithelo, kubhanana, ezihlahlaneni nasezimbalini.
+3. **Akukho zichibi.** Kufanele ingene ngokushesha, lapho abantu nezilwane zingeke ziyithinte khona.
+4. **Yisebenzise ngalolo suku.** I-greywater egciniwe iyabola futhi izalanise amagciwane nomiyane.
+5. **Kude namanzi okuphuza.** Ungalokothi uyibeke eduze, noma ngaphezulu, komthombo, umthombo ojulile noma isiphethu.
+6. **Insipho ethambile.** Usawoti, i-bleach, i-borax namakhemikhali anamandla kuyanqwabelana futhi kulimaze umhlabathi nezitshalo. Sebenzisa insipho ethambile, ebolayo, enosawoti omncane; insipho yokuwasha engamanzi ngokuvamile inosawoti omncane kunempuphu.
+7. **Yishintshanise.** Shintshanisa phakathi kwezitsha bese uvumela imvula igeze umhlabathi. Imiphetho ephuzi yamaqabunga noma uqweqwe olumhlophe kusho ukuthi usawoti uyanqwabelana.
 
 ### Uhlelo olulula lwe-greywater
 
-Izinhlelo ze-greywater zingabiza kakhulu futhi zidinge umkhandi wamapayipi (plumber), kodwa zingaba lula kakhulu futhi:
+1. Thola lapho umsele wokukhipha amanzi kabhavu, weshawa nowesitsha sokugeza izandla uphuma khona endlini, ngokuvamile ngasodongeni lwendlu yokugezela.
+2. Xhuma ipayipi le-PVC endaweni yokuphuma bese ulihambisa liye engadini, lithambekele kancane lehle yonke indlela.
+3. Faka ipayipi eligobekayo ekugcineni, ukuze ukwazi ukuhambisa lapho amanzi aphuma khona phakathi kwezitsha ezine-mulch.
+4. Gcina indawo yokuphuma igqitshwe ku-mulch.
 
-1. Thola lapho amanzi ebhavu, eshawa nesinki lokugeza izandla ephuma khona endlini. Ngokuvamile kuseduze nodonga lwangaphandle lwendlu yokugezela.
-2. Xhuma ipayipi le-PVC endaweni yokuphuma kwamanzi bese ulihola uliyisa engadini. Gcina ipayipi litshekele kancane lehla yonke indlela.
-3. Ekugcineni kwepayipi, faka ipayipi elithambile (hose), ukuze ukwazi ukuhambisa indawo yokuphuma kwamanzi phakathi kwezitsha ezahlukene ezine-mulch.
-4. Qiniseka ukuthi indawo yokuphuma kwamanzi imbozwe yi-mulch, ukuze kungabikho muntu othinta amanzi.
+Uma i-greywater isingene emhlabathini ophilile one-mulch, impilo yomhlabathi nezimpande kuhlakaza iningi lalokho ekuthwalayo.
 
-Izidalwa zomhlabathi nezimpande zezitshalo zihlakaza okuningi okukhona ku-greywater uma isingene emhlabathini onempilo one-mulch. Yingakho i-greywater kufanele iye emhlabathini, hhayi phezu komhlabathi noma ezitshalweni.
+## Zama lokhu
+
+Yakha **i-A-frame** (ithuluzi lokhuni elimise okuka-A lokumaka amaphuzu asezingeni elifanayo) bese ubethela i-contour yakho yokuqala ngezikhonkwane. Ayibizi lutho ngaphandle kwezigxobo ezintathu nantambama owodwa.
+
+1. Bophela iziqongo zezigxobo ezimbili eziqondile, ezicishe zibe ngu-2 m ubude futhi zilingane ngqo, zibe ngu-V obheke phansi.
+2. Bophela isigxobo esifushane sinqamule maphakathi kwayo yomibili imilenze, ekuphakameni okufanayo kuwo wonke, ukwenza u-A.
+3. Lengisa itshe entanjeni kusukela esiqongweni ukuze lizijikelezele ngokukhululeka lidlule phambi kwesigxobo esinqamulayo.
+4. Misa ifreyimu emthambekeni bese umaka lapho intambo inqamula khona isigxobo. Jikisa ifreyimu ukuze imilenze ishintshane izindawo ezindaweni ezimbili ezifanayo ngqo, bese uphinda umaka. **Uphawu lokulinganisa** luphakathi nendawo kwalezo zimpawu ezimbili.
+5. Shaya isikhonkwane lapho ufuna umugqa wakho uqale khona bese umisa umlenze owodwa eceleni kwaso.
+6. Hambisa omunye umlenze ukhuphuke noma wehle emthambekeni kuze kube intambo ilenga phezu kophawu lokulinganisa. Bethela leyo ndawo ngesikhonkwane.
+7. Gcina lowo mlenze ungahambi, ujikise umlenze wokuqala uwuyise ngale, uphinde uthole ukulinganisa bese ubethela. Qhubeka unqamula umthambeka.
+8. Hamba umugqa bese ulungisa ama-zigzag abukhali. Beka amatshe noma amagatsha kuwo, bese ubuka lokho imvula elandelayo ekwenzayo lapho.
 
 ## Amaphuzu amqoka
 
-- Hlela imisebenzi yomhlabathi ngokuya ngendawo yakho nesimo sezulu, qala phezulu emthambekeni, futhi njalo unike amanzi indlela yokuchichima ephephile yesiphepho esikhulu kunazo zonke.
-- Imvula engu-1 mm ku-1 m² inika ilitha elingu-1: amanzi aqoqiwe = ubukhulu bendawo × imvula × isilinganiso se-runoff. Uphahla lwensimbi olungu-120 m² endaweni ethola u-750 mm lunika cishe amalitha angu-72 000 ngonyaka.
-- Yenza ubukhulu bamathangi bukudlulise enkathini eyomile, hhayi ukuthi bugcine yonke imvula yonyaka.
-- Hlanza amanzi ophahla ngaphambi kokuwaphuza, futhi ugcine amathangi evaliwe futhi embozwe ngenetha.
-- Izitsha zokungenisa amanzi nama-swale kufanele aphele amanzi esikhathini esingaba amahora angu-12, futhi avikelwe nge-mulch nezitshalo.
-- Ama-swale alandela i-contour ncamashi. Wahlukanise ngebanga elenza ngayinye ikwazi ukuthwala isiphepho esikhulu, futhi ungawembi emithambekeni ewumqansa, emhlabathini wobumba noma ogcwele amanzi.
-- ENingizimu Afrika ungagcina amanzi ophahla ngokukhululeka, kodwa amadamu, nanoma yimuphi umsebenzi emfuleni, emfudlaneni noma exhaphozini, kudinga ukuthi uhlole ku-DWS futhi kungadinga imvume.
-- Amadamu esihlabathi agcina amanzi ngokuphephile ngaphansi kwesihlabathi emifuleni yesihlabathi egeleza ngezinkathi ezithile, kodwa adinga idwala eliqinile elingaphansi, umklamo omuhle nemvume.
-- Biyela noma umboze amachibi, amathangi nemigodi. Izingane zingaminza emanzini amancane kakhulu, futhi imisele ingawa.
-- Khetha indlela yokulungisa umhlabathi ephazamisa umhlabathi kancane kakhulu: ukungambi, ukumboza ngezingqimba, ukumboza nge-tarp, izilwane, bese kuba yimishini.
-- I-drip irrigation ngaphansi kwe-mulch isebenzisa amanzi amancane kakhulu. Nisela ekuseni noma ntambama.
-- Sebenzisa i-greywater evela ebhavini, eshaweni nasemasinki ngaphansi kwe-mulch, ungalokothi uyisebenzise emifinweni edliwa ingaphekiwe, ungalokothi uyigcine, futhi usebenzise izinsipho ezithambile ezinosawoti omncane.
+- Klamela isiphepho esikhulu kakhulu: qala phezulu, futhi unike wonke umsebenzi womhlabathi indlela yokuchichima ephephile.
+- Imvula ebanjiwe (amalitha) = indawo (m²) × imvula (mm) × isilinganiso se-runoff. Uphahla lukathayela olungu-120 m² endaweni enemvula engu-750 mm lunika cishe amalitha angu-72 000 ngonyaka.
+- Linganisa ithangi ngenkathi eyomile, hhayi ngemvula yonyaka wonke.
+- Ama-swale alandela i-contour ngqo; ahlukanise ukuze ngayinye iphathe isiphepho esikhulu.
+- Phazamisa umhlabathi kancane ngangokunokwenzeka, nisela ezimpandeni, futhi uthumele i-greywater ngaphansi kwe-mulch iye ezihlahleni.
+
+Hamba umhlaba wakho emvuleni enkulu elandelayo bese ubuka lapho amanzi eya khona. Asevele ekukhombisa lapho i-swale yokuqala okufanele ibe khona.

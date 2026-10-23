@@ -6,41 +6,30 @@
 // same way app/farmer does for components/Map (mapbox-gl needs window).
 
 import dynamic from 'next/dynamic';
-import BackButton from '@/components/BackButton';
-import BrandLogo from '@/components/BrandLogo';
-import SettingsButton from '@/components/SettingsButton';
+import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
-import MenuButton from '@/components/MenuButton';
-import { APP_HEADER_STYLE } from '@/lib/app-header';
 
 const AtlasExplorer = dynamic(() => import('@/components/atlas/AtlasExplorer'), {
   ssr: false,
   loading: () => (
     <div className="flex-1 flex items-center justify-center">
-      <span className="font-display" style={{ fontSize: 14, color: '#5C5040' }}>Loading the world…</span>
+      <span className="font-display" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>Loading the world…</span>
     </div>
   ),
 });
 
 export default function AtlasPage() {
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
-      <header
-        className="flex-shrink-0 flex items-center px-3 md:px-4 gap-2"
-        style={APP_HEADER_STYLE}
-      >
-        <MenuButton />
-        <BackButton fallback="/home" />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: '#5C5040' }}>Atlas · global garden explorer</h1>
-        <div className="flex-1" />
-        <SettingsButton />
-      </header>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+      <AppHeader title="Atlas · global garden explorer" />
+      {/* nav-17: AppHeader's title is a <span>, not a heading — keep a real (if visually
+          hidden) h1 now that the old header's own h1 is gone; the map fills the screen and
+          has no room for a visible heading above it. */}
+      <h1 className="sr-only">Atlas · global garden explorer</h1>
 
       <AtlasExplorer />
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

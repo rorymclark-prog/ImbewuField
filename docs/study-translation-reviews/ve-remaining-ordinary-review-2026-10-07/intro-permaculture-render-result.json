@@ -1,0 +1,16 @@
+{
+  "command": [
+    "node",
+    "scripts/make-lesson-slides.mjs",
+    "intro-permaculture",
+    "ve",
+    "/tmp/imbewu-ve-ordinary-render-20261007/intro-permaculture",
+    "--paired-draft",
+    "docs/narration/intro-permaculture.ve.paired-draft.json",
+    "--slides",
+    "6,7,10,11,14"
+  ],
+  "exitCode": 0,
+  "stdout": "\n  intro-permaculture \u00b7 ve \u2014 22 slides from /Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/docs/narration/intro-permaculture.en.md\n\n   6  Fair Share\n   7  Watch: One Decision, Three Ethics\n  10  Observe and Interact\n  11  Catch and Store Energy\n  14  Integrate Rather Than Segregate\n\n  \u2713 /tmp/imbewu-ve-ordinary-render-20261007/intro-permaculture\n\n",
+  "stderr": "(node:19036) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/lib/course-modules.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to /Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+}

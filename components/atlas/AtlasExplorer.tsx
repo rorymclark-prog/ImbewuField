@@ -18,13 +18,16 @@
  * screens and a right-hand column on md+.
  */
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import ReactMapGL, { Marker, type MapRef, type MapLayerMouseEvent } from 'react-map-gl';
+import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { Search, X, Loader2, Earth } from 'lucide-react';
+import { Search, X, Loader2, Earth, MapPinOff } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 import { useLanguage } from '@/lib/i18n';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { networkFailureMessage } from '@/lib/network-failure';
+import EmptyState from '@/components/EmptyState';
 import AtlasPanel from './AtlasPanel';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
@@ -38,9 +41,16 @@ type FetchState =
   | { status: 'error'; lat: number; lon: number; placeName?: string; message?: string };
 
 export default function AtlasExplorer() {
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const isZulu = lang === 'zu';
   const mapRef = useRef<MapRef>(null);
+  // sdesk-08/desk-10/nav-14: no WebGL used to leave this area empty under the search box, with
+  // no message, icon or next step — same fix as components/Map.tsx.
+  const [mapSupported, setMapSupported] = useState(true);
+  useEffect(() => {
+    try { if (!mapboxgl.supported()) setMapSupported(false); }
+    catch { setMapSupported(false); }
+  }, []);
   const [state, setState] = useState<FetchState>({ status: 'idle' });
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
@@ -58,19 +68,24 @@ export default function AtlasExplorer() {
       if (!res.ok) {
         // A 429 from the shared rate limit carries a farmer-readable message (lib/api-rate-
         // limit.ts) — show it instead of the generic failure so a busy Atlas visitor knows to
-        // wait rather than assuming the point itself is broken.
-        const message = res.status === 429
+        // wait rather than assuming the point itself is broken. Never the bare status otherwise
+        // (lang-08 + bug-10) — see lib/network-failure.ts.
+        const serverMessage = res.status === 429
           ? (await res.json().catch(() => null))?.error
           : undefined;
-        throw new Error(typeof message === 'string' ? message : `HTTP ${res.status}`);
+        if (requestSeq.current !== seq) return;
+        setState({
+          status: 'error', lat, lon, placeName,
+          message: networkFailureMessage(t, { status: res.status, serverMessage: typeof serverMessage === 'string' ? serverMessage : undefined }),
+        });
+        return;
       }
       const data = (await res.json()) as LocationData;
       if (requestSeq.current !== seq) return;
       setState({ status: 'ready', data, placeName });
-    } catch (err) {
+    } catch {
       if (requestSeq.current !== seq) return;
-      const message = err instanceof Error && !/^HTTP \d+$/.test(err.message) ? err.message : undefined;
-      setState({ status: 'error', lat, lon, placeName, message });
+      setState({ status: 'error', lat, lon, placeName, message: networkFailureMessage(t) });
     }
   }, []);
 
@@ -126,32 +141,46 @@ export default function AtlasExplorer() {
 
       {/* ── Map ── */}
       <div className="flex-1 relative min-w-0">
-        <ReactMapGL
-          ref={mapRef}
-          mapboxAccessToken={TOKEN}
-          initialViewState={{ latitude: 8, longitude: 22, zoom: 1.4 }}
-          mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
-          projection={{ name: 'globe' }}
-          style={{ width: '100%', height: '100%' }}
-          onClick={onMapClick}
-          cursor="crosshair"
-        >
-          {sel && (
-            <Marker latitude={sel.lat} longitude={sel.lon} anchor="center">
-              <div style={{ position: 'relative', width: 18, height: 18 }}>
-                <div className="animate-ping-slow" style={{
-                  position: 'absolute', inset: 0, borderRadius: '50%',
-                  background: 'rgba(31,77,43,0.35)',
-                }} />
-                <div style={{
-                  position: 'absolute', inset: 3, borderRadius: '50%',
-                  background: '#1F4D2B', border: '2px solid #F7F2E9',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.35)',
-                }} />
-              </div>
-            </Marker>
-          )}
-        </ReactMapGL>
+        {mapSupported ? (
+          <ReactMapGL
+            ref={mapRef}
+            mapboxAccessToken={TOKEN}
+            initialViewState={{ latitude: 8, longitude: 22, zoom: 1.4 }}
+            mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
+            projection={{ name: 'globe' }}
+            style={{ width: '100%', height: '100%' }}
+            onClick={onMapClick}
+            cursor="crosshair"
+          >
+            {sel && (
+              <Marker latitude={sel.lat} longitude={sel.lon} anchor="center">
+                <div style={{ position: 'relative', width: 18, height: 18 }}>
+                  <div className="animate-ping-slow" style={{
+                    position: 'absolute', inset: 0, borderRadius: '50%',
+                    background: 'rgba(31,77,43,0.35)',
+                  }} />
+                  <div style={{
+                    position: 'absolute', inset: 3, borderRadius: '50%',
+                    background: 'var(--color-forest-800)', border: '2px solid var(--on-forest-800, var(--on-forest))',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.35)',
+                  }} />
+                </div>
+              </Marker>
+            )}
+          </ReactMapGL>
+        ) : (
+          // sdesk-08/desk-10/nav-14: the globe cannot render, but the search box above still
+          // calls selectPoint() with real coordinates — the climate/rain/soil lookup needs no
+          // WebGL, so search keeps working even though there is nothing to tap.
+          <EmptyState
+            className="h-full"
+            icon={MapPinOff}
+            title={isZulu ? 'Imephu ayikwazi kuvuleka kule divayisi' : 'The map cannot open on this device'}
+            message={isZulu
+              ? 'Sebenzisa isibhokisi sokusesha ngenhla ukuze uthole isimo sezulu, imvula nomhlabathi yendawo.'
+              : 'Use the search box above to look up climate, rain and soil for a place by name.'}
+          />
+        )}
 
         {/* Search overlay */}
         <div className="absolute top-3 left-3 right-3 md:right-auto md:w-[340px] z-10">
@@ -169,7 +198,7 @@ export default function AtlasExplorer() {
                 onChange={(e) => { setQuery(e.target.value); fetchSuggestions(e.target.value); }}
                 placeholder={isZulu ? 'Sesha noma kuphi eMhlabeni…' : 'Search anywhere on Earth…'}
                 aria-label={isZulu ? 'Sesha noma kuphi eMhlabeni… / Search anywhere on Earth…' : 'Search anywhere on Earth…'}
-                className="flex-1 font-sans bg-transparent outline-none"
+                className="flex-1 font-sans bg-transparent outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
                 style={{ minWidth: 0, fontSize: 13.5, color: 'var(--text-primary)', border: 'none' }}
               />
               {query && (
@@ -207,16 +236,19 @@ export default function AtlasExplorer() {
         </div>
 
         {/* First-run hint */}
-        {state.status === 'idle' && (
+        {mapSupported && state.status === 'idle' && (
           <div
             className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 px-4 py-2.5"
             style={{
-              background: 'rgba(255,254,250,0.94)', border: '1px solid var(--border)',
+              // dark-03/staff-12: a hardcoded near-white fill stayed a bright card in dark mode,
+              // under this span's own var(--text-muted) — pale-on-dark's own pale colour — which
+              // made the English caption underneath effectively invisible (pale beige on white).
+              background: 'color-mix(in srgb, var(--bg-1) 94%, transparent)', border: '1px solid var(--border)',
               borderRadius: 14, boxShadow: '0 4px 16px rgba(32,25,15,0.14)',
               maxWidth: 'calc(100% - 24px)', textAlign: 'center',
             }}
           >
-            <Earth size={15} style={{ color: '#1F4D2B' }} />
+            <Earth size={15} style={{ color: 'var(--color-forest-800)' }} />
             <span className="font-display" style={{ fontSize: 13.5, color: 'var(--text-primary)' }}>
               {isZulu ? (
                 <>
@@ -260,7 +292,7 @@ export default function AtlasExplorer() {
           <div className="flex-1 overflow-y-auto px-3.5 pb-5 pt-1" style={{ minHeight: 0 }}>
             {state.status === 'loading' && (
               <div className="flex flex-col items-center justify-center gap-3 py-14">
-                <Loader2 size={22} className="animate-spin" style={{ color: '#1F4D2B' }} />
+                <Loader2 size={22} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
                 <span className="font-display" style={{ fontSize: 13.5, color: 'var(--text-secondary)' }}>
                   {isZulu
                     ? 'Kufundwa isimo sezulu, imvula nomhlabathi kule ndawo… / Reading climate, rain and soil for this point…'
@@ -278,7 +310,7 @@ export default function AtlasExplorer() {
                   onClick={() => selectPoint(state.lat, state.lon, state.placeName)}
                   className="font-display font-semibold"
                   style={{
-                    background: '#1F4D2B', color: '#F7F2E9', border: 'none', borderRadius: 999,
+                    background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', border: 'none', borderRadius: 999,
                     padding: '8px 18px', fontSize: 13, cursor: 'pointer',
                   }}
                 >

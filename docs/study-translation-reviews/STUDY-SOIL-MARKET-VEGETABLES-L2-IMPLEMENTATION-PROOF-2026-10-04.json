@@ -1,0 +1,256 @@
+{
+  "title": "Source-bound Soil, Market, and Vegetables L2 learner batch implementation proof",
+  "date": "2026-10-04",
+  "baseCommit": "4c10484c02db2c429c660981b92d2f98ae562e26",
+  "reviewStatus": "machine-draft; no fluent/local-farming approval implied",
+  "scope": {
+    "soilMarketMetadataPairs": 19,
+    "vegetablesStaplesL2FullBodies": 2,
+    "vegetablesPairedDeckBodyFields": 23,
+    "deckChangedClauses": 30,
+    "deckFramesAffected": 8,
+    "deckSlides": [
+      8,
+      9,
+      10,
+      11
+    ],
+    "languages": [
+      "st",
+      "ve",
+      "ts"
+    ]
+  },
+  "approvedSources": {
+    "metadataPacket": "docs/study-translation-reviews/STUDY-SOIL-MARKET-METADATA-ROOT-READY-2026-10-04.json",
+    "metadataPacketSha256": "c40f6d99393835cfcb2c3985edc9b886611ac237f4738ba87c3ef9298be27c84",
+    "bodyPacket": "docs/study-translation-reviews/VEGETABLES-L2-ORDINARY-COMPLETION-ROOT-READY-2026-10-04.json",
+    "bodyPacketSha256": "fdceb34da4a14966ea018596216b95f658906e0d4cb907afd80024b0cc2f9bf3",
+    "bodyPacketSourceFileSha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397"
+  },
+  "learnerRegistryPreservation": {
+    "proofSource": "docs/study-translation-reviews/REGIONAL-LEARNER-TEXT-ROOT-PRESERVATION-PROOF-2026-10-04.json",
+    "changedTargets": 21,
+    "reviewStatusChanges": 19,
+    "allOtherExportValuesIdentical": true,
+    "englishSourcesIdentical": true,
+    "derivedHoldListChange": [
+      {
+        "file": "lib/course-translation-drafts-ts-vegetables-staples-l2.ts",
+        "removed": [
+          {
+            "lessonId": "vegetables-staples-l2",
+            "field": "body[14]",
+            "sourceText": "Beans climb the maize, and store as protein.",
+            "reason": "Keep intercropping, Indigenous Three Sisters context, crop-specific species and timing, nitrogen/residue claims, and household crop-planning advice exact English."
+          }
+        ]
+      }
+    ],
+    "note": "The Xitsonga derived hold list drops body[14] because that paragraph now drafts the climbing action while retaining the exact English protein-storage clause."
+  },
+  "pairedDeckPreservation": [
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "approvedBodyFields": 12,
+      "allUnlistedJsonFieldsIdentical": true,
+      "allEnglishSlideRecordsIdentical": true,
+      "sha256": "5c9b8dd7fa4b759771290c35b939f0bf042eb6fe62c6ee07bf9d12cccc146ae9"
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "approvedBodyFields": 11,
+      "allUnlistedJsonFieldsIdentical": true,
+      "allEnglishSlideRecordsIdentical": true,
+      "sha256": "f88282ee1bd59b344267d01ed2773632dcea3f462ff230965b0624d2ab213a65"
+    }
+  ],
+  "canonicalAndMedia": "Canonical English, assessments, indices, audio, PLAN_VERSION and ST Introduction narration are unchanged. Exactly eight VE/TS slide assets (slides 8–11) were re-rendered; every other Vegetables deck asset is unchanged.",
+  "deckImpactAudit": "docs/study-translation-reviews/VEGETABLES-L2-DECK-SYNC-SOURCE-BINDINGS-2026-10-04.json",
+  "fluentApproval": false,
+  "renderVerification": {
+    "renderer": "scripts/make-lesson-slides.mjs vegetables-staples <language> <fresh-temp-dir> --paired-draft <language-packet>",
+    "languagesRenderedSequentially": [
+      "ve",
+      "ts"
+    ],
+    "reviewContacts": [
+      "docs/audits/2026-10-04/study-vegetables-l2-ve-contact.jpg",
+      "docs/audits/2026-10-04/study-vegetables-l2-ts-contact.jpg"
+    ],
+    "frames": [
+      {
+        "language": "ve",
+        "slide": 8,
+        "rendererOutputPng": "/tmp/imbewu-vegetables-l2-sync-ve-20261004/slide-08.png",
+        "pngDimensions": [
+          1440,
+          5442
+        ],
+        "pngSha256": "05208c76eabec50bd078f0148d0a42295780ed45423dcea8d1458657aff40515",
+        "publishedWebp": "public/course-decks/vegetables-staples/ve/slide-08.webp",
+        "webpDimensions": [
+          1440,
+          5442
+        ],
+        "webpBytes": 444256,
+        "webpSha256": "45e0444a4651908dc13a53a81604fa0831860bd49f7957885d309f792c779187",
+        "conversion": "Pillow WebP quality 88, method 6; native renderer dimensions retained"
+      },
+      {
+        "language": "ve",
+        "slide": 9,
+        "rendererOutputPng": "/tmp/imbewu-vegetables-l2-sync-ve-20261004/slide-09.png",
+        "pngDimensions": [
+          1440,
+          5400
+        ],
+        "pngSha256": "1e4ce7ff0a2d5da3cc14d74e7ad243677a9577ecfa24df00410588a135f7d978",
+        "publishedWebp": "public/course-decks/vegetables-staples/ve/slide-09.webp",
+        "webpDimensions": [
+          1440,
+          5400
+        ],
+        "webpBytes": 347296,
+        "webpSha256": "4aa046f19962ec2d9855b9b4270386f4e37822179620195f3ba27cae1acae577",
+        "conversion": "Pillow WebP quality 88, method 6; native renderer dimensions retained"
+      },
+      {
+        "language": "ve",
+        "slide": 10,
+        "rendererOutputPng": "/tmp/imbewu-vegetables-l2-sync-ve-20261004/slide-10.png",
+        "pngDimensions": [
+          1440,
+          5400
+        ],
+        "pngSha256": "bff88e29fae6d6f56b0b882db195ccca59a557dad0e5f44c9c12dab63c3f9651",
+        "publishedWebp": "public/course-decks/vegetables-staples/ve/slide-10.webp",
+        "webpDimensions": [
+          1440,
+          5400
+        ],
+        "webpBytes": 778674,
+        "webpSha256": "8eaef499525b50849bc1a6d96e82912de30a50b3edffecd998dc3b9ff02d28eb",
+        "conversion": "Pillow WebP quality 88, method 6; native renderer dimensions retained"
+      },
+      {
+        "language": "ve",
+        "slide": 11,
+        "rendererOutputPng": "/tmp/imbewu-vegetables-l2-sync-ve-20261004/slide-11.png",
+        "pngDimensions": [
+          1440,
+          5400
+        ],
+        "pngSha256": "49e1832b0eeefd36ef6b04bdc6b43756b235f0fa6dc816581ad2d203aeb34274",
+        "publishedWebp": "public/course-decks/vegetables-staples/ve/slide-11.webp",
+        "webpDimensions": [
+          1440,
+          5400
+        ],
+        "webpBytes": 400706,
+        "webpSha256": "da45da4cecc04a8a89b86c7ea46dc0b5c590f12adafd778fb2038777e152c808",
+        "conversion": "Pillow WebP quality 88, method 6; native renderer dimensions retained"
+      },
+      {
+        "language": "ts",
+        "slide": 8,
+        "rendererOutputPng": "/tmp/imbewu-vegetables-l2-sync-ts-20261004/slide-08.png",
+        "pngDimensions": [
+          1440,
+          5466
+        ],
+        "pngSha256": "d12b46f4df8c0a5164e70ba4ea85011c5592128bed4fc81c978207d104a07e41",
+        "publishedWebp": "public/course-decks/vegetables-staples/ts/slide-08.webp",
+        "webpDimensions": [
+          1440,
+          5466
+        ],
+        "webpBytes": 456730,
+        "webpSha256": "eef9330ca156abdc47f4dd461aa7b214491fd821cc0d67e1c0c20e38e0201764",
+        "conversion": "Pillow WebP quality 88, method 6; native renderer dimensions retained"
+      },
+      {
+        "language": "ts",
+        "slide": 9,
+        "rendererOutputPng": "/tmp/imbewu-vegetables-l2-sync-ts-20261004/slide-09.png",
+        "pngDimensions": [
+          1440,
+          5400
+        ],
+        "pngSha256": "f5528a2762d45d8720fd29bda82ddadae7a06acdade0eacb102015a1ef34db10",
+        "publishedWebp": "public/course-decks/vegetables-staples/ts/slide-09.webp",
+        "webpDimensions": [
+          1440,
+          5400
+        ],
+        "webpBytes": 358044,
+        "webpSha256": "f9c2a7ae06110f9b1fcc51f9047ccf7f03d67a643d8778d2f1b75f75402dcff3",
+        "conversion": "Pillow WebP quality 88, method 6; native renderer dimensions retained"
+      },
+      {
+        "language": "ts",
+        "slide": 10,
+        "rendererOutputPng": "/tmp/imbewu-vegetables-l2-sync-ts-20261004/slide-10.png",
+        "pngDimensions": [
+          1440,
+          5426
+        ],
+        "pngSha256": "eea86aa01d5bd759e02295ad5ad55ba68be3191e97e087c835a66eac456d6f26",
+        "publishedWebp": "public/course-decks/vegetables-staples/ts/slide-10.webp",
+        "webpDimensions": [
+          1440,
+          5426
+        ],
+        "webpBytes": 795946,
+        "webpSha256": "f2add666d378271915fbb4324969be5dce781cef5db348ea91841a5c21d3c31a",
+        "conversion": "Pillow WebP quality 88, method 6; native renderer dimensions retained"
+      },
+      {
+        "language": "ts",
+        "slide": 11,
+        "rendererOutputPng": "/tmp/imbewu-vegetables-l2-sync-ts-20261004/slide-11.png",
+        "pngDimensions": [
+          1440,
+          5400
+        ],
+        "pngSha256": "9a4fb26abbc4d52eb519c00007f161abd84312c099aeba7638880609858de6b0",
+        "publishedWebp": "public/course-decks/vegetables-staples/ts/slide-11.webp",
+        "webpDimensions": [
+          1440,
+          5400
+        ],
+        "webpBytes": 391148,
+        "webpSha256": "bf0ff87ae50e032aa0f0f2e30915169df3fa70fdeacd71510e3854643a7ff7cc",
+        "conversion": "Pillow WebP quality 88, method 6; native renderer dimensions retained"
+      }
+    ],
+    "manifest": "lib/course-asset-sizes.ts regenerated; exactly these eight asset-size rows changed and each matches published bytes",
+    "otherVegetablesAssetsChanged": 0
+  },
+  "cacheRefresh": {
+    "function": "migrateVegetablesL2OrdinaryPairedStills",
+    "marker": "/course-decks/vegetables-staples/.l2-ordinary-paired-stills-20261004",
+    "urls": [
+      "/course-decks/vegetables-staples/ve/slide-08.webp",
+      "/course-decks/vegetables-staples/ve/slide-09.webp",
+      "/course-decks/vegetables-staples/ve/slide-10.webp",
+      "/course-decks/vegetables-staples/ve/slide-11.webp",
+      "/course-decks/vegetables-staples/ts/slide-08.webp",
+      "/course-decks/vegetables-staples/ts/slide-09.webp",
+      "/course-decks/vegetables-staples/ts/slide-10.webp",
+      "/course-decks/vegetables-staples/ts/slide-11.webp"
+    ],
+    "behavior": "One-time pathname matching removes cached query variants for exactly eight URLs; no fetch; keeps ST, EN, ZU, audio, other stills, animations and later learner-selected replacement downloads.",
+    "focusedTest": "tests/studies-media-migration.test.ts — 55 passed, 0 failed"
+  },
+  "rootVisualReview": {
+    "actualCompressedContactsViewed": 8,
+    "originalCompressedFramesViewed": [
+      "ve/slide-09.webp",
+      "ts/slide-10.webp"
+    ],
+    "clippingObserved": false,
+    "phonePreviewReview": "pending",
+    "fluentApproval": false
+  }
+}

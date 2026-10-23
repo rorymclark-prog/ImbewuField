@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-06",
+  "baseCommit": "b2c81e32458f83cff951250e3b9065d2b1314206",
+  "packetSha256": "149618dd0be79b1f91b630c81541ba16b884502b534fed6b59fea6dd912ebf5d",
+  "originalCandidatePacketSha256": "c948918d5e0c2ad000f0e4888f9dbceda291ba73532258bc7ba54ee510f1938c",
+  "independentCheckSha256": "4e7eeecb01755e4f0582a908e7e0daa0b4efabaa28baa5d3610edcfd57aa0c1c",
+  "lexicalCheckSha256": "e755094c4b98543b894d8661fddb6a2fa8f548d55edc5c0ccde209aaa7b5040e",
+  "changedAtomicRows": 79,
+  "changedByLanguage": {
+    "st": 24,
+    "ve": 29,
+    "ts": 26
+  },
+  "totalAtomicRows": 291,
+  "exactNativeSnapshotSha256": {
+    "st": "c8cbb5b10a51796ab05e91133b6c6c0ac5a6d2a0643efe25d03b49a6805a0c6a",
+    "ve": "e4abf67ad68020921a0a0c94b2d4bb3787e653d9f69ef58a9b6747368a4d1057",
+    "ts": "5981ffce6c9d6d8e4263cd42fa082fcb4eef3eace03245f129697bb127fc3e39"
+  },
+  "finalRootPacketSnapshotSha256": {
+    "st": "79324b8c58ffcd6f2a62f01d872fceac623f48cfb3333132f20a1bd92c517d6e",
+    "ve": "aaebc2596f2546dfd47e9a0cf1f225cee59cbad747d7d107732afd4db4f90c6b",
+    "ts": "40fa1d15bf44b18435c5b14a207a53a108cdd9f35961a6b023d67ce5099fe16a"
+  },
+  "actualRegistriesEqualPacketProposalExceptExplicitOverride": true,
+  "appliedStatusOverride": {
+    "id": "ts:market-community-l3:quiz.0.options.2",
+    "from": "hold",
+    "to": "machine-draft",
+    "sourceEnglish": "Assume sharing automatically improves every seed lot",
+    "reason": "The reviewed target preserves the exact false automatic-improvement claim and is meant to be visible as an unreviewed draft."
+  },
+  "canonicalSnapshotMatches": true,
+  "bodyCompositionChecks": [
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "paragraphCount": 17,
+      "sourceParagraphJoinMatches": true,
+      "currentParagraphJoinMatches": true,
+      "finalParagraphJoinMatches": true,
+      "changedParagraphIndices": []
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "paragraphCount": 12,
+      "sourceParagraphJoinMatches": true,
+      "currentParagraphJoinMatches": true,
+      "finalParagraphJoinMatches": true,
+      "changedParagraphIndices": [
+        3,
+        5,
+        7,
+        8
+      ]
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "paragraphCount": 12,
+      "sourceParagraphJoinMatches": true,
+      "currentParagraphJoinMatches": true,
+      "finalParagraphJoinMatches": true,
+      "changedParagraphIndices": [
+        1,
+        6,
+        7,
+        8,
+        10
+      ]
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "paragraphCount": 17,
+      "sourceParagraphJoinMatches": true,
+      "currentParagraphJoinMatches": true,
+      "finalParagraphJoinMatches": true,
+      "changedParagraphIndices": [
+        12,
+        15
+      ]
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "paragraphCount": 12,
+      "sourceParagraphJoinMatches": true,
+      "currentParagraphJoinMatches": true,
+      "finalParagraphJoinMatches": true,
+      "changedParagraphIndices": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        11
+      ]
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "paragraphCount": 12,
+      "sourceParagraphJoinMatches": true,
+      "currentParagraphJoinMatches": true,
+      "finalParagraphJoinMatches": true,
+      "changedParagraphIndices": [
+        1,
+        2,
+        6,
+        7,
+        8,
+        10
+      ]
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "paragraphCount": 17,
+      "sourceParagraphJoinMatches": true,
+      "currentParagraphJoinMatches": true,
+      "finalParagraphJoinMatches": true,
+      "changedParagraphIndices": [
+        11
+      ]
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "paragraphCount": 12,
+      "sourceParagraphJoinMatches": true,
+      "currentParagraphJoinMatches": true,
+      "finalParagraphJoinMatches": true,
+      "changedParagraphIndices": [
+        0,
+        1,
+        3,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "paragraphCount": 12,
+      "sourceParagraphJoinMatches": true,
+      "currentParagraphJoinMatches": true,
+      "finalParagraphJoinMatches": true,
+      "changedParagraphIndices": [
+        6,
+        7,
+        8,
+        10
+      ]
+    }
+  ],
+  "quizIndexBindings": [
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "questionIndex": 0,
+      "sourceCorrectIndex": 2,
+      "currentCorrectIndex": 2,
+      "proposedCorrectIndex": 2
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "questionIndex": 1,
+      "sourceCorrectIndex": 1,
+      "currentCorrectIndex": 1,
+      "proposedCorrectIndex": 1
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "questionIndex": 0,
+      "sourceCorrectIndex": 2,
+      "currentCorrectIndex": 2,
+      "proposedCorrectIndex": 2
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "questionIndex": 1,
+      "sourceCorrectIndex": 2,
+      "currentCorrectIndex": 2,
+      "proposedCorrectIndex": 2
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "questionIndex": 0,
+      "sourceCorrectIndex": 1,
+      "currentCorrectIndex": 1,
+      "proposedCorrectIndex": 1
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "questionIndex": 1,
+      "sourceCorrectIndex": 2,
+      "currentCorrectIndex": 2,
+      "proposedCorrectIndex": 2
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "questionIndex": 0,
+      "sourceCorrectIndex": 2,
+      "currentCorrectIndex": 2,
+      "proposedCorrectIndex": 2
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "questionIndex": 1,
+      "sourceCorrectIndex": 1,
+      "currentCorrectIndex": 1,
+      "proposedCorrectIndex": 1
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "questionIndex": 0,
+      "sourceCorrectIndex": 2,
+      "currentCorrectIndex": 2,
+      "proposedCorrectIndex": 2
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "questionIndex": 1,
+      "sourceCorrectIndex": 2,
+      "currentCorrectIndex": 2,
+      "proposedCorrectIndex": 2
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "questionIndex": 0,
+      "sourceCorrectIndex": 1,
+      "currentCorrectIndex": 1,
+      "proposedCorrectIndex": 1
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "questionIndex": 1,
+      "sourceCorrectIndex": 2,
+      "currentCorrectIndex": 2,
+      "proposedCorrectIndex": 2
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "questionIndex": 0,
+      "sourceCorrectIndex": 2,
+      "currentCorrectIndex": 2,
+      "proposedCorrectIndex": 2
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "questionIndex": 1,
+      "sourceCorrectIndex": 1,
+      "currentCorrectIndex": 1,
+      "proposedCorrectIndex": 1
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "questionIndex": 0,
+      "sourceCorrectIndex": 2,
+      "currentCorrectIndex": 2,
+      "proposedCorrectIndex": 2
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "questionIndex": 1,
+      "sourceCorrectIndex": 2,
+      "currentCorrectIndex": 2,
+      "proposedCorrectIndex": 2
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "questionIndex": 0,
+      "sourceCorrectIndex": 1,
+      "currentCorrectIndex": 1,
+      "proposedCorrectIndex": 1
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "questionIndex": 1,
+      "sourceCorrectIndex": 2,
+      "currentCorrectIndex": 2,
+      "proposedCorrectIndex": 2
+    }
+  ],
+  "numericTokenValuesUnchanged": true,
+  "registryLessonOrders": {
+    "st": [
+      "market-community-l1",
+      "market-community-l2",
+      "market-community-l3"
+    ],
+    "ve": [
+      "market-community-l1",
+      "market-community-l3",
+      "market-community-l2"
+    ],
+    "ts": [
+      "market-community-l1",
+      "market-community-l2",
+      "market-community-l3"
+    ]
+  },
+  "unchangedAtomicRows": 212,
+  "status": "All 79 reviewed target strings and every other field equal the root-reviewed snapshot; the single separately authorized hold-to-machine-draft status override is recorded above."
+}

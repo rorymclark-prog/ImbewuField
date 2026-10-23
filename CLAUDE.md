@@ -10,6 +10,12 @@ TypeScript · Tailwind · Firebase/Firestore · Mapbox GL · Anthropic (`claude-
    Visual targets: `design/handoff/*.png` (33 frames), `design/mockups/`.
 
 ## Conventions (do not drift)
+For audit work, read **`docs/audits/README.md`** and the latest dated record for the
+area. Save new audits under `docs/audits/YYYY-MM-DD/` using the shared template,
+carry forward finding IDs, update the date index, and link the pushed record in
+issue #35. This is the shared archive for Claude and Codex; keep older audits as
+historical evidence rather than restarting from them.
+
 - **Roles:** farmer · mentor · student · ngo · funder (+admin). No "supervisor"/"trainer" — merged into **mentor**.
 - **Fonts:** Newsreader (`font-display`) for headings/numbers; Public Sans (`font-sans`) for everything else. **No JetBrains Mono** in UI (`--font-mono` is aliased to Public Sans). **No emoji as UI icons** — Lucide only. (Emoji ARE fine inside Claude prompt strings in `app/api/*`.)
 - **Palette:** Forest `#1F4D2B` · Mid-green `#2E6B3A` · Leaf `#A8D88A` · Ochre `#C07A1E` (primary CTA) ·

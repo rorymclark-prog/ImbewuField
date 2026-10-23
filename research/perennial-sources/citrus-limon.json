@@ -1,0 +1,99 @@
+{
+  "speciesId": "citrus-limon",
+  "commonName": "Lemon",
+  "botanicalName": "Citrus limon",
+  "harvestMonths": [
+    {
+      "region": "KZN (hot low-lying areas, e.g. Nkwaleni, Mkhuze vs. cooler KZN Midlands)",
+      "months": [
+        2,
+        3,
+        5,
+        6,
+        7
+      ],
+      "evidence": {
+        "quote": "Lemons – Grow well in warmer areas.  Adaptable to different areas.  HU 1100 to 1500. Main crop in hotter areas produced in February to March, while crop in cooler areas produced during May to July.",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+        "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes)",
+        "page": 11
+      },
+      "notes": "Two sub-regions in one source: hot areas (main crop Feb-Mar) and cooler KZN areas (main crop May-Jul). Months listed combine both: [2,3] hot area main crop, [5,6,7] cooler area main crop."
+    },
+    {
+      "region": "South Africa (general; main areas Eastern Cape, Limpopo, Western Cape)",
+      "months": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "evidence": {
+        "quote": "Eureka lemons can have as much as three fruit sets. This means that at the same time there can be as much as three lots of fruit on a tree that are at different stages of maturity. Because of this characteristic, trees can produce marketable fruit from as early as February in hotter areas, and to as late as mid-September in cooler regions.",
+        "url": "https://www.crw.org.za/home/document-home/learning-aids-and-resources/ca-citrus-av-series-learning-material/citrus-planting-management/5808-ca-av-series-cpm-lm-m02-citrus-types-and-cultivars-1/file",
+        "doc": "Citrus Growers' Association / Citrus Academy — 'Citrus Planting Management 2: Citrus Types and Cultivars' Learner Guide (1st edition), Citrus Resource Warehouse (crw.org.za)",
+        "page": 10
+      },
+      "notes": "Eureka is the dominant SA lemon cultivar ('accounting for about 85% of the planted hectares' per the same source). Same source states 'About half the lemons in South Africa is grown in the Eastern Cape, with the Limpopo province in second position. These two provinces together with the Western Cape account for 90% of lemon production.'"
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": [
+      3,
+      3
+    ],
+    "evidence": {
+      "quote": "First crop (years) [...] 3",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes) — Citrus Yields table",
+      "page": 11
+    },
+    "notes": "KZN citrus guide; first crop means initial fruit, not full production. The same table gives an expected orchard lifespan of 23 years."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not separately stated; source only gives 'first crop' age and overall expected orchard lifespan (23 years for lemons), not an age at full/mature bearing."
+  },
+  "yieldKgPerTreeMature": {
+    "value": [
+      79,
+      131
+    ],
+    "evidence": {
+      "quote": "Lemons [...] Potential production: Mature trees (tons/ha) [...] 65 [...] Likely production [...] 50 [...] Conservative production [...] 40",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes) — Citrus Yields table",
+      "page": 11
+    },
+    "notes": "Calculated orchard-average equivalent using the KZN guide's likely production of 50 t/ha and midpoint planting spacings: cool KZN Midlands, 5.75 x 2.75 m, about 79 kg/tree; hot areas, 7.5 x 3.5 m, about 131 kg/tree. Calculation: 50,000 kg/ha x m²/tree / 10,000 m²/ha. These values are derived, not measured individual-tree yields. The spread reflects spacing, not varieties or a production-by-age curve. Confirm local orchard yield and actual spacing before using this reference."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": {
+      "quote": "Lemons – Grow well in warmer areas.  Adaptable to different areas.  HU 1100 to 1500.",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes)",
+      "page": 11
+    },
+    "notes": "The source gives heat units for fruit ripening, not winter chill units. No directly stated winter chill requirement is retained."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No retained source states whether a single lemon tree sets fruit without another cultivar. Confirm the chosen cultivar with the nursery."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "No verbatim, lemon-specific SA-source quote found stating a pollination requirement (self-fertile) — value entered from general citrus knowledge, not a directly sourced quote naming lemon; treat with caution.",
+    "No classic 'chill unit'/'chill hour' figure found for lemon (only a heat-unit, HU, figure) — left null.",
+    "DALRRD/nda.gov.za citrus production guideline and 'Citrus profile.pdf' / 'Citrus Market Value Chain Profile 2020' could not be fetched — gov.za domains were unreachable (connection blocked) or returned 503 from this environment across repeated attempts.",
+    "Source-table review 11 October 2026: PDF p11 (printed p7) visually confirms the Lemons column as potential 65, likely 50 and conservative 40 t/ha. The former text-extraction uncertainty is resolved. The 79–131 kg/tree values remain approximate calculations using midpoint spacings from that page, not directly measured per-tree yields.",
+    "'Years to full bearing' (as distinct from 'first crop') not found for lemon in South Africa.",
+    "Editor review 2026-09-28: pollination withdrawn — the quoted sentence ('they are very sour') says nothing about pollination; the value was a general-knowledge inference."
+  ]
+}

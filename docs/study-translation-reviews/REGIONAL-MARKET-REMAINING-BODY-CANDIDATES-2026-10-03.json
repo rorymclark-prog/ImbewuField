@@ -1,0 +1,1413 @@
+{
+  "title": "Market Community next regional ordinary-prose candidate audit",
+  "sourceRevision": "5b6ab5d8823c9f5f9c195d170792b34fdc898453",
+  "workspace": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "provenance": "Read-only candidate packet. Canonical English and repository files were not changed. Candidates are unreviewed machine drafts; they are not learner-ready.",
+  "selection": "Market L1 body across ST/VE/TS plus the remaining exact-English prose in VE Market L2; selected as one coherent market-records/market-arrangements batch. L3 contributes its still-held shared-tool-responsibilities keypoint for VE and TS only. L3 quiz assessment fields were excluded to avoid duplicating the current Market L3 assessment batch.",
+  "audit": {
+    "lessonBodyExactEnglishParagraphIndices": {
+      "st": {
+        "l1": [
+          5,
+          8,
+          9,
+          11,
+          12,
+          13,
+          15,
+          16
+        ],
+        "l2": []
+      },
+      "ve": {
+        "l1": [
+          8,
+          9,
+          12
+        ],
+        "l2": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      "ts": {
+        "l1": [
+          5,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          15,
+          16
+        ],
+        "l2": [
+          4,
+          9
+        ]
+      }
+    },
+    "assessmentAudit": "L1 and L2 contain additional English-held keypoints, question stems, options and rationales. Most include exact prices, crop timing, conditions, negation or business-risk claims. This packet leaves every assessment field unchanged; no quiz source, option order or correct index was copied into a candidate.",
+    "counts": "Market L1 exact whole-paragraph holds at audit start: ST 8, VE 3, TS 9. Market L2: ST 0, VE 10, TS 2. Candidate changes after peer repairs: ST L1 four paragraphs; VE L1 none; TS L1 three paragraphs; VE L2 eight paragraphs. Exact English whole paragraphs remaining after candidates: ST L1 four, VE L1 three, TS L1 six, VE L2 two. L3 VE/TS each have one drafted shared-tool keypoint.",
+    "peerReview": "Greywater TS draft independently checked source/current arrays, order and indices. Its four VE L2 meaning repairs are applied; it flagged the TS L1 may-not-work-here modal, so that complete paragraph is now held exact English. Recheck of repaired VE strings requested.",
+    "lastVerifiedRevision": "a0cef0d0caca366fc865b30872b98b71b7e9ed4a",
+    "currentPairVerification": "After candidate preparation, each Market L1/L2 canonical source paragraph array and current ST/VE/TS registry paragraph array was re-imported at lastVerifiedRevision and compared byte-for-byte with the packet source/current arrays; all six arrays matched.",
+    "peerRecheck": "Second pass by greywater_ts_draft rechecked repaired VE L2 paragraph indices 1, 3, 4, 5 and 8 against actual source. It found no further material semantic repairs: full compare hold, retained-share clause hold with localized time/care continuation, regular-selection hold, crop-shortage and only-when agreement clauses held, manageable-arrangement and income statement held with record-results translated. Status remains unreviewed pending local language review.",
+    "peerCheckReportPath": "/tmp/imbewu-regional-market-next-backcheck-20261003.json"
+  },
+  "languages": [
+    {
+      "language": "st",
+      "bodyLessons": [
+        {
+          "lessonId": "market-community-l1",
+          "sourceParagraphCount": 17,
+          "sourceParagraphs": [
+            "A harvest can feed the household, be sold, be shared, or be lost.",
+            "Recording these different uses helps you see what the farm produces and what reaches customers.",
+            "Use that information to protect household food and make better business decisions.",
+            "Write down every harvest as it happens.",
+            "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+            "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+            "Do not rely on memory at the end of the season.",
+            "One season of records answers practical questions.",
+            "Which crops give the best yield per bed? Which return the most for each hour of work?",
+            "Which crops use more seeds, water, and compost than they return?",
+            "The record also shows which months leave the household buying food.",
+            "Before setting a price, record production, packing and selling costs, including labour and transport.",
+            "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+            "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+            "Use your record to find when household food runs short.",
+            "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+            "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail."
+          ],
+          "currentParagraphs": [
+            "Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha).",
+            "Ho rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.",
+            "Sebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.",
+            "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.",
+            "Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.",
+            "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+            "O se ke wa itshetleha ka mohopolo qetellong ya sehla.",
+            "Sehla se le seng sa direkoto se araba dipotso tse sebetsang.",
+            "Which crops give the best yield per bed? Which return the most for each hour of work?",
+            "Which crops use more seeds, water, and compost than they return?",
+            "Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.",
+            "Before setting a price, record production, packing and selling costs, including labour and transport.",
+            "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+            "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+            "Sebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.",
+            "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+            "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail."
+          ],
+          "candidateParagraphs": [
+            "Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha).",
+            "Ho rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.",
+            "Sebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.",
+            "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.",
+            "Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.",
+            "Sebelisa mokgwa ona o bonolo bakeng sa dijo tse bolokwang lapeng, dihlahiswa tse rekisitsweng, tse fanweng e le mpho, le tse entsweng compost.",
+            "O se ke wa itshetleha ka mohopolo qetellong ya sehla.",
+            "Sehla se le seng sa direkoto se araba dipotso tse sebetsang.",
+            "Which crops give the best yield per bed? Which return the most for each hour of work?",
+            "Which crops use more seeds, water, and compost than they return?",
+            "Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.",
+            "Pele o beha price, record production, packing and selling costs, including labour and transport.",
+            "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+            "Hlahloba price, costs le next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+            "Sebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.",
+            "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+            "Letsatsi le sebetsang polasing e nngwe le ka se sebetse mona. Include a backup plan when rain, water or crops fail."
+          ],
+          "changedIndices": [
+            5,
+            11,
+            13,
+            16
+          ],
+          "exactEnglishHoldIndices": [
+            8,
+            9,
+            12,
+            15
+          ],
+          "paragraphs": [
+            {
+              "index": 0,
+              "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.",
+              "currentDraft": "Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha).",
+              "candidate": "Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha).",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 1,
+              "sourceEnglish": "Recording these different uses helps you see what the farm produces and what reaches customers.",
+              "currentDraft": "Ho rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.",
+              "candidate": "Ho rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 2,
+              "sourceEnglish": "Use that information to protect household food and make better business decisions.",
+              "currentDraft": "Sebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.",
+              "candidate": "Sebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 3,
+              "sourceEnglish": "Write down every harvest as it happens.",
+              "currentDraft": "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.",
+              "candidate": "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 4,
+              "sourceEnglish": "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+              "currentDraft": "Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.",
+              "candidate": "Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 5,
+              "sourceEnglish": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+              "currentDraft": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+              "candidate": "Sebelisa mokgwa ona o bonolo bakeng sa dijo tse bolokwang lapeng, dihlahiswa tse rekisitsweng, tse fanweng e le mpho, le tse entsweng compost.",
+              "changed": true,
+              "currentWasExactHold": true,
+              "uncertainty": "Machine draft; mixed English retained for business, pricing, compliance, or supply clauses where a precise Tshivenda/Sesotho/Xitsonga equivalent is uncertain.",
+              "backtranslation": "Use this same simple habit for food kept at home, produce sold, produce given as gifts, and produce turned into compost."
+            },
+            {
+              "index": 6,
+              "sourceEnglish": "Do not rely on memory at the end of the season.",
+              "currentDraft": "O se ke wa itshetleha ka mohopolo qetellong ya sehla.",
+              "candidate": "O se ke wa itshetleha ka mohopolo qetellong ya sehla.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 7,
+              "sourceEnglish": "One season of records answers practical questions.",
+              "currentDraft": "Sehla se le seng sa direkoto se araba dipotso tse sebetsang.",
+              "candidate": "Sehla se le seng sa direkoto se araba dipotso tse sebetsang.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 8,
+              "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+              "currentDraft": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+              "candidate": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+              "changed": false,
+              "currentWasExactHold": true,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 9,
+              "sourceEnglish": "Which crops use more seeds, water, and compost than they return?",
+              "currentDraft": "Which crops use more seeds, water, and compost than they return?",
+              "candidate": "Which crops use more seeds, water, and compost than they return?",
+              "changed": false,
+              "currentWasExactHold": true,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 10,
+              "sourceEnglish": "The record also shows which months leave the household buying food.",
+              "currentDraft": "Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.",
+              "candidate": "Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 11,
+              "sourceEnglish": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+              "currentDraft": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+              "candidate": "Pele o beha price, record production, packing and selling costs, including labour and transport.",
+              "changed": true,
+              "currentWasExactHold": true,
+              "uncertainty": "Machine draft; mixed English retained for business, pricing, compliance, or supply clauses where a precise Tshivenda/Sesotho/Xitsonga equivalent is uncertain.",
+              "backtranslation": "Before setting a price, record production, packing and selling costs, including labour and transport."
+            },
+            {
+              "index": 12,
+              "sourceEnglish": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+              "currentDraft": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+              "candidate": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+              "changed": false,
+              "currentWasExactHold": true,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 13,
+              "sourceEnglish": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+              "currentDraft": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+              "candidate": "Hlahloba price, costs le next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+              "changed": true,
+              "currentWasExactHold": true,
+              "uncertainty": "Machine draft; mixed English retained for business, pricing, compliance, or supply clauses where a precise Tshivenda/Sesotho/Xitsonga equivalent is uncertain.",
+              "backtranslation": "Review the price, costs, and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale."
+            },
+            {
+              "index": 14,
+              "sourceEnglish": "Use your record to find when household food runs short.",
+              "currentDraft": "Sebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.",
+              "candidate": "Sebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 15,
+              "sourceEnglish": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+              "currentDraft": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+              "candidate": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+              "changed": false,
+              "currentWasExactHold": true,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 16,
+              "sourceEnglish": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+              "currentDraft": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+              "candidate": "Letsatsi le sebetsang polasing e nngwe le ka se sebetse mona. Include a backup plan when rain, water or crops fail.",
+              "changed": true,
+              "currentWasExactHold": true,
+              "uncertainty": "Machine draft; mixed English retained for business, pricing, compliance, or supply clauses where a precise Tshivenda/Sesotho/Xitsonga equivalent is uncertain.",
+              "backtranslation": "A date that works on another farm may not work here. Include a backup plan when rain, water, or crops fail."
+            }
+          ]
+        },
+        {
+          "lessonId": "market-community-l2",
+          "sourceParagraphCount": 12,
+          "sourceParagraphs": [
+            "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+            "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+            "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+            "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+            "A box scheme supplies a regular selection to agreed customers.",
+            "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+            "Start from what you can reliably supply and what customers want.",
+            "Check the costs and household food needs before promising regular boxes.",
+            "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+            "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+            "Offer the surplus you have and agree clear terms with customers.",
+            "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label."
+          ],
+          "currentParagraphs": [
+            "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
+            "Bapisa market fees, transport, packing le unsold produce hammoho le theko ya thekiso.",
+            "Hlahloba market rules le ditlhoko tsa lehae tsa trading le food. Informal stall ha e bolele ka boyona hore ha ho na rules kapa costs.",
+            "Direct selling can retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.",
+            "Mokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.",
+            "Dumellanang ka contents, price, payment le what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+            "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+            "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes.",
+            "Garden area or customer count alone does not predict income. Leka mokgwa o ka laolehang mme o ngole diphetho.",
+            "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.",
+            "Fana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.",
+            "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang pele o sebedisa label."
+          ],
+          "candidateParagraphs": [
+            "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
+            "Bapisa market fees, transport, packing le unsold produce hammoho le theko ya thekiso.",
+            "Hlahloba market rules le ditlhoko tsa lehae tsa trading le food. Informal stall ha e bolele ka boyona hore ha ho na rules kapa costs.",
+            "Direct selling can retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.",
+            "Mokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.",
+            "Dumellanang ka contents, price, payment le what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+            "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+            "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes.",
+            "Garden area or customer count alone does not predict income. Leka mokgwa o ka laolehang mme o ngole diphetho.",
+            "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.",
+            "Fana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.",
+            "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang pele o sebedisa label."
+          ],
+          "changedIndices": [],
+          "exactEnglishHoldIndices": [],
+          "paragraphs": [
+            {
+              "index": 0,
+              "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+              "currentDraft": "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
+              "candidate": "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 1,
+              "sourceEnglish": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+              "currentDraft": "Bapisa market fees, transport, packing le unsold produce hammoho le theko ya thekiso.",
+              "candidate": "Bapisa market fees, transport, packing le unsold produce hammoho le theko ya thekiso.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 2,
+              "sourceEnglish": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+              "currentDraft": "Hlahloba market rules le ditlhoko tsa lehae tsa trading le food. Informal stall ha e bolele ka boyona hore ha ho na rules kapa costs.",
+              "candidate": "Hlahloba market rules le ditlhoko tsa lehae tsa trading le food. Informal stall ha e bolele ka boyona hore ha ho na rules kapa costs.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 3,
+              "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+              "currentDraft": "Direct selling can retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.",
+              "candidate": "Direct selling can retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 4,
+              "sourceEnglish": "A box scheme supplies a regular selection to agreed customers.",
+              "currentDraft": "Mokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.",
+              "candidate": "Mokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 5,
+              "sourceEnglish": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+              "currentDraft": "Dumellanang ka contents, price, payment le what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+              "candidate": "Dumellanang ka contents, price, payment le what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 6,
+              "sourceEnglish": "Start from what you can reliably supply and what customers want.",
+              "currentDraft": "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+              "candidate": "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 7,
+              "sourceEnglish": "Check the costs and household food needs before promising regular boxes.",
+              "currentDraft": "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes.",
+              "candidate": "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa regular boxes.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 8,
+              "sourceEnglish": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+              "currentDraft": "Garden area or customer count alone does not predict income. Leka mokgwa o ka laolehang mme o ngole diphetho.",
+              "candidate": "Garden area or customer count alone does not predict income. Leka mokgwa o ka laolehang mme o ngole diphetho.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 9,
+              "sourceEnglish": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+              "currentDraft": "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.",
+              "candidate": "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 10,
+              "sourceEnglish": "Offer the surplus you have and agree clear terms with customers.",
+              "currentDraft": "Fana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.",
+              "candidate": "Fana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 11,
+              "sourceEnglish": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+              "currentDraft": "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang pele o sebedisa label.",
+              "candidate": "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang pele o sebedisa label.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "bodyLessons": [
+        {
+          "lessonId": "market-community-l1",
+          "sourceParagraphCount": 17,
+          "sourceParagraphs": [
+            "A harvest can feed the household, be sold, be shared, or be lost.",
+            "Recording these different uses helps you see what the farm produces and what reaches customers.",
+            "Use that information to protect household food and make better business decisions.",
+            "Write down every harvest as it happens.",
+            "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+            "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+            "Do not rely on memory at the end of the season.",
+            "One season of records answers practical questions.",
+            "Which crops give the best yield per bed? Which return the most for each hour of work?",
+            "Which crops use more seeds, water, and compost than they return?",
+            "The record also shows which months leave the household buying food.",
+            "Before setting a price, record production, packing and selling costs, including labour and transport.",
+            "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+            "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+            "Use your record to find when household food runs short.",
+            "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+            "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail."
+          ],
+          "currentParagraphs": [
+            "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.",
+            "U ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.",
+            "Shumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.",
+            "Ṅwalani khaṋo iṅwe na iṅwe musi i tshi itea.",
+            "Ṅwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.",
+            "Shumisani maitele a sa lemelaho a fanaho kha food kept at home, produce sold, produce gifted, and produce composted.",
+            "Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.",
+            "Rekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.",
+            "Which crops give the best yield per bed? Which return the most for each hour of work?",
+            "Which crops use more seeds, water, and compost than they return?",
+            "Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.",
+            "Musi ni sa athu vhea price, ṅwalani production, packing and selling costs, including labour and transport.",
+            "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+            "Sedzani price, costs na u ṱavha hu tevhelaho. Ṱolani zwine vharengi vha ḓo zwi renga zwa vhukuma; a higher asking price is not a guaranteed sale.",
+            "Shumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.",
+            "Nangani locally suitable crops and work backwards from the harvest you need. Ṱolani planting conditions and expected time to harvest.",
+            "A date that works on another farm may not work here. Engedzani a backup plan when rain, water or crops fail."
+          ],
+          "candidateParagraphs": [
+            "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.",
+            "U ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.",
+            "Shumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.",
+            "Ṅwalani khaṋo iṅwe na iṅwe musi i tshi itea.",
+            "Ṅwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.",
+            "Shumisani maitele a sa lemelaho a fanaho kha food kept at home, produce sold, produce gifted, and produce composted.",
+            "Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.",
+            "Rekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.",
+            "Which crops give the best yield per bed? Which return the most for each hour of work?",
+            "Which crops use more seeds, water, and compost than they return?",
+            "Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.",
+            "Musi ni sa athu vhea price, ṅwalani production, packing and selling costs, including labour and transport.",
+            "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+            "Sedzani price, costs na u ṱavha hu tevhelaho. Ṱolani zwine vharengi vha ḓo zwi renga zwa vhukuma; a higher asking price is not a guaranteed sale.",
+            "Shumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.",
+            "Nangani locally suitable crops and work backwards from the harvest you need. Ṱolani planting conditions and expected time to harvest.",
+            "A date that works on another farm may not work here. Engedzani a backup plan when rain, water or crops fail."
+          ],
+          "changedIndices": [],
+          "exactEnglishHoldIndices": [
+            8,
+            9,
+            12
+          ],
+          "paragraphs": [
+            {
+              "index": 0,
+              "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.",
+              "currentDraft": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.",
+              "candidate": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 1,
+              "sourceEnglish": "Recording these different uses helps you see what the farm produces and what reaches customers.",
+              "currentDraft": "U ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.",
+              "candidate": "U ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 2,
+              "sourceEnglish": "Use that information to protect household food and make better business decisions.",
+              "currentDraft": "Shumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.",
+              "candidate": "Shumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 3,
+              "sourceEnglish": "Write down every harvest as it happens.",
+              "currentDraft": "Ṅwalani khaṋo iṅwe na iṅwe musi i tshi itea.",
+              "candidate": "Ṅwalani khaṋo iṅwe na iṅwe musi i tshi itea.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 4,
+              "sourceEnglish": "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+              "currentDraft": "Ṅwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.",
+              "candidate": "Ṅwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 5,
+              "sourceEnglish": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+              "currentDraft": "Shumisani maitele a sa lemelaho a fanaho kha food kept at home, produce sold, produce gifted, and produce composted.",
+              "candidate": "Shumisani maitele a sa lemelaho a fanaho kha food kept at home, produce sold, produce gifted, and produce composted.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 6,
+              "sourceEnglish": "Do not rely on memory at the end of the season.",
+              "currentDraft": "Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.",
+              "candidate": "Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 7,
+              "sourceEnglish": "One season of records answers practical questions.",
+              "currentDraft": "Rekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.",
+              "candidate": "Rekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 8,
+              "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+              "currentDraft": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+              "candidate": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+              "changed": false,
+              "currentWasExactHold": true,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 9,
+              "sourceEnglish": "Which crops use more seeds, water, and compost than they return?",
+              "currentDraft": "Which crops use more seeds, water, and compost than they return?",
+              "candidate": "Which crops use more seeds, water, and compost than they return?",
+              "changed": false,
+              "currentWasExactHold": true,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 10,
+              "sourceEnglish": "The record also shows which months leave the household buying food.",
+              "currentDraft": "Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.",
+              "candidate": "Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 11,
+              "sourceEnglish": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+              "currentDraft": "Musi ni sa athu vhea price, ṅwalani production, packing and selling costs, including labour and transport.",
+              "candidate": "Musi ni sa athu vhea price, ṅwalani production, packing and selling costs, including labour and transport.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 12,
+              "sourceEnglish": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+              "currentDraft": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+              "candidate": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+              "changed": false,
+              "currentWasExactHold": true,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 13,
+              "sourceEnglish": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+              "currentDraft": "Sedzani price, costs na u ṱavha hu tevhelaho. Ṱolani zwine vharengi vha ḓo zwi renga zwa vhukuma; a higher asking price is not a guaranteed sale.",
+              "candidate": "Sedzani price, costs na u ṱavha hu tevhelaho. Ṱolani zwine vharengi vha ḓo zwi renga zwa vhukuma; a higher asking price is not a guaranteed sale.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 14,
+              "sourceEnglish": "Use your record to find when household food runs short.",
+              "currentDraft": "Shumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.",
+              "candidate": "Shumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 15,
+              "sourceEnglish": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+              "currentDraft": "Nangani locally suitable crops and work backwards from the harvest you need. Ṱolani planting conditions and expected time to harvest.",
+              "candidate": "Nangani locally suitable crops and work backwards from the harvest you need. Ṱolani planting conditions and expected time to harvest.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 16,
+              "sourceEnglish": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+              "currentDraft": "A date that works on another farm may not work here. Engedzani a backup plan when rain, water or crops fail.",
+              "candidate": "A date that works on another farm may not work here. Engedzani a backup plan when rain, water or crops fail.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            }
+          ]
+        },
+        {
+          "lessonId": "market-community-l2",
+          "sourceParagraphCount": 12,
+          "sourceParagraphs": [
+            "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+            "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+            "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+            "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+            "A box scheme supplies a regular selection to agreed customers.",
+            "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+            "Start from what you can reliably supply and what customers want.",
+            "Check the costs and household food needs before promising regular boxes.",
+            "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+            "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+            "Offer the surplus you have and agree clear terms with customers.",
+            "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label."
+          ],
+          "currentParagraphs": [
+            "Vhudzisani uri mutengi u ṱoḓa mini: product, tshivhalo, quality, delivery na ḓuvha ḽa payment.",
+            "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+            "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+            "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+            "A box scheme supplies a regular selection to agreed customers.",
+            "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+            "Thomani nga zwine na nga kona u tshi zwi ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.",
+            "Check the costs and household food needs before promising regular boxes.",
+            "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+            "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+            "Offer the surplus you have and agree clear terms with customers.",
+            "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label."
+          ],
+          "candidateParagraphs": [
+            "Vhudzisani uri mutengi u ṱoḓa mini: product, tshivhalo, quality, delivery na ḓuvha ḽa payment.",
+            "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+            "Sedzani market rules na local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+            "Direct selling can retain more of the sale price, fhedzi zwi dzhia tshifhinga, packing, transport na customer care.",
+            "Box scheme i ṋetshedza regular selection kha vharengi vho tendelanaho.",
+            "Tendelanani nga contents, price, payment, and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+            "Thomani nga zwine na nga kona u tshi zwi ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.",
+            "Check the costs and household food needs before promising regular boxes.",
+            "Garden area or customer count alone does not predict income. Try a manageable arrangement and ni rekhode results.",
+            "Arali production i tshi shanduka vhege nga vhege, avoid promising a fixed delivery you cannot supply.",
+            "Offer the surplus you have and tendelanani nga clear terms na vharengi.",
+            "Ṱalusani growing practices dzaṋu nga u fulufhedzea. Check any certification or claim the buyer requires before using a label."
+          ],
+          "changedIndices": [
+            2,
+            3,
+            4,
+            5,
+            8,
+            9,
+            10,
+            11
+          ],
+          "exactEnglishHoldIndices": [
+            1,
+            7
+          ],
+          "paragraphs": [
+            {
+              "index": 0,
+              "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+              "currentDraft": "Vhudzisani uri mutengi u ṱoḓa mini: product, tshivhalo, quality, delivery na ḓuvha ḽa payment.",
+              "candidate": "Vhudzisani uri mutengi u ṱoḓa mini: product, tshivhalo, quality, delivery na ḓuvha ḽa payment.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 1,
+              "sourceEnglish": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+              "currentDraft": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+              "candidate": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+              "changed": false,
+              "currentWasExactHold": true,
+              "uncertainty": "The verb and conjunction in the proposed mixed construction were unreliable; retain the exact full source sentence.",
+              "backtranslation": "Compare market fees, transport, packing and unsold produce as well as the selling price."
+            },
+            {
+              "index": 2,
+              "sourceEnglish": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+              "currentDraft": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+              "candidate": "Sedzani market rules na local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+              "changed": true,
+              "currentWasExactHold": true,
+              "uncertainty": "Machine draft; mixed English retained for business, pricing, compliance, or supply clauses where a precise Tshivenda/Sesotho/Xitsonga equivalent is uncertain.",
+              "backtranslation": "Check market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs."
+            },
+            {
+              "index": 3,
+              "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+              "currentDraft": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+              "candidate": "Direct selling can retain more of the sale price, fhedzi zwi dzhia tshifhinga, packing, transport na customer care.",
+              "changed": true,
+              "currentWasExactHold": true,
+              "uncertainty": "Keep the retained-share claim exact English; the continuation translates only that it takes time and preserves packing, transport and customer care.",
+              "backtranslation": "Direct selling can retain more of the sale price, but it takes time, packing, transport and customer care."
+            },
+            {
+              "index": 4,
+              "sourceEnglish": "A box scheme supplies a regular selection to agreed customers.",
+              "currentDraft": "A box scheme supplies a regular selection to agreed customers.",
+              "candidate": "Box scheme i ṋetshedza regular selection kha vharengi vho tendelanaho.",
+              "changed": true,
+              "currentWasExactHold": true,
+              "uncertainty": "Keep “regular selection” exact English to preserve frequency/selection meaning; translate the simple supply-to-agreed-customers frame.",
+              "backtranslation": "A box scheme supplies a regular selection to customers who agreed to it."
+            },
+            {
+              "index": 5,
+              "sourceEnglish": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+              "currentDraft": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+              "candidate": "Tendelanani nga contents, price, payment, and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+              "changed": true,
+              "currentWasExactHold": true,
+              "uncertainty": "Retain the crop-shortage clause and the full customer-and-grower condition exactly in English.",
+              "backtranslation": "Agree on contents, price, payment, and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement."
+            },
+            {
+              "index": 6,
+              "sourceEnglish": "Start from what you can reliably supply and what customers want.",
+              "currentDraft": "Thomani nga zwine na nga kona u tshi zwi ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.",
+              "candidate": "Thomani nga zwine na nga kona u tshi zwi ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 7,
+              "sourceEnglish": "Check the costs and household food needs before promising regular boxes.",
+              "currentDraft": "Check the costs and household food needs before promising regular boxes.",
+              "candidate": "Check the costs and household food needs before promising regular boxes.",
+              "changed": false,
+              "currentWasExactHold": true,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 8,
+              "sourceEnglish": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+              "currentDraft": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+              "candidate": "Garden area or customer count alone does not predict income. Try a manageable arrangement and ni rekhode results.",
+              "changed": true,
+              "currentWasExactHold": true,
+              "backtranslation": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+              "uncertainty": "Keep the income claim and “manageable arrangement” exact English; translate only the record-results instruction."
+            },
+            {
+              "index": 9,
+              "sourceEnglish": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+              "currentDraft": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+              "candidate": "Arali production i tshi shanduka vhege nga vhege, avoid promising a fixed delivery you cannot supply.",
+              "changed": true,
+              "currentWasExactHold": true,
+              "uncertainty": "Machine draft; mixed English retained for business, pricing, compliance, or supply clauses where a precise Tshivenda/Sesotho/Xitsonga equivalent is uncertain.",
+              "backtranslation": "If production changes from week to week, avoid promising a fixed delivery you cannot supply."
+            },
+            {
+              "index": 10,
+              "sourceEnglish": "Offer the surplus you have and agree clear terms with customers.",
+              "currentDraft": "Offer the surplus you have and agree clear terms with customers.",
+              "candidate": "Offer the surplus you have and tendelanani nga clear terms na vharengi.",
+              "changed": true,
+              "currentWasExactHold": true,
+              "uncertainty": "Machine draft; mixed English retained for business, pricing, compliance, or supply clauses where a precise Tshivenda/Sesotho/Xitsonga equivalent is uncertain.",
+              "backtranslation": "Offer the surplus you have and agree on clear terms with customers."
+            },
+            {
+              "index": 11,
+              "sourceEnglish": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+              "currentDraft": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+              "candidate": "Ṱalusani growing practices dzaṋu nga u fulufhedzea. Check any certification or claim the buyer requires before using a label.",
+              "changed": true,
+              "currentWasExactHold": true,
+              "uncertainty": "Machine draft; mixed English retained for business, pricing, compliance, or supply clauses where a precise Tshivenda/Sesotho/Xitsonga equivalent is uncertain.",
+              "backtranslation": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "bodyLessons": [
+        {
+          "lessonId": "market-community-l1",
+          "sourceParagraphCount": 17,
+          "sourceParagraphs": [
+            "A harvest can feed the household, be sold, be shared, or be lost.",
+            "Recording these different uses helps you see what the farm produces and what reaches customers.",
+            "Use that information to protect household food and make better business decisions.",
+            "Write down every harvest as it happens.",
+            "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+            "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+            "Do not rely on memory at the end of the season.",
+            "One season of records answers practical questions.",
+            "Which crops give the best yield per bed? Which return the most for each hour of work?",
+            "Which crops use more seeds, water, and compost than they return?",
+            "The record also shows which months leave the household buying food.",
+            "Before setting a price, record production, packing and selling costs, including labour and transport.",
+            "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+            "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+            "Use your record to find when household food runs short.",
+            "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+            "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail."
+          ],
+          "currentParagraphs": [
+            "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.",
+            "Ku tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.",
+            "Tirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.",
+            "Tsala ntshovelo wun'wana ni wun'wana loko wu humelela.",
+            "Tsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.",
+            "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+            "Loko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.",
+            "Matsalwa ya nguva yin’we ma nga hlamula swivutiso leswi pfunaka.",
+            "Which crops give the best yield per bed? Which return the most for each hour of work?",
+            "Which crops use more seeds, water, and compost than they return?",
+            "The record also shows which months leave the household buying food.",
+            "Before setting a price, record production, packing and selling costs, including labour and transport.",
+            "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+            "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+            "Tirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.",
+            "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+            "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail."
+          ],
+          "candidateParagraphs": [
+            "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.",
+            "Ku tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.",
+            "Tirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.",
+            "Tsala ntshovelo wun'wana ni wun'wana loko wu humelela.",
+            "Tsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.",
+            "Use the same simple habit eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.",
+            "Loko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.",
+            "Matsalwa ya nguva yin’we ma nga hlamula swivutiso leswi pfunaka.",
+            "Which crops give the best yield per bed? Which return the most for each hour of work?",
+            "Which crops use more seeds, water, and compost than they return?",
+            "Rekhodo yi tlhela yi komba leswaku muti wu xava swakudya hi tin’hweti tihi.",
+            "Before setting a price, record production, packing and selling costs, including labour and transport.",
+            "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+            "Languta price, costs na ku byala loku landzelaka. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+            "Tirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.",
+            "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+            "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail."
+          ],
+          "changedIndices": [
+            5,
+            10,
+            13
+          ],
+          "exactEnglishHoldIndices": [
+            8,
+            9,
+            11,
+            12,
+            15,
+            16
+          ],
+          "paragraphs": [
+            {
+              "index": 0,
+              "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.",
+              "currentDraft": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.",
+              "candidate": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 1,
+              "sourceEnglish": "Recording these different uses helps you see what the farm produces and what reaches customers.",
+              "currentDraft": "Ku tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.",
+              "candidate": "Ku tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 2,
+              "sourceEnglish": "Use that information to protect household food and make better business decisions.",
+              "currentDraft": "Tirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.",
+              "candidate": "Tirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 3,
+              "sourceEnglish": "Write down every harvest as it happens.",
+              "currentDraft": "Tsala ntshovelo wun'wana ni wun'wana loko wu humelela.",
+              "candidate": "Tsala ntshovelo wun'wana ni wun'wana loko wu humelela.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 4,
+              "sourceEnglish": "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+              "currentDraft": "Tsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.",
+              "candidate": "Tsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 5,
+              "sourceEnglish": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+              "currentDraft": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+              "candidate": "Tirhisa mukhuva lowu wo olova eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.",
+              "changed": true,
+              "currentWasExactHold": true,
+              "uncertainty": "Machine draft; mixed English retained for business, pricing, compliance, or supply clauses where a precise Tshivenda/Sesotho/Xitsonga equivalent is uncertain.",
+              "backtranslation": "Use this same simple habit for food stored at home, produce sold, produce given to others, and produce made into compost."
+            },
+            {
+              "index": 6,
+              "sourceEnglish": "Do not rely on memory at the end of the season.",
+              "currentDraft": "Loko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.",
+              "candidate": "Loko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 7,
+              "sourceEnglish": "One season of records answers practical questions.",
+              "currentDraft": "Matsalwa ya nguva yin’we ma nga hlamula swivutiso leswi pfunaka.",
+              "candidate": "Matsalwa ya nguva yin’we ma nga hlamula swivutiso leswi pfunaka.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 8,
+              "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+              "currentDraft": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+              "candidate": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+              "changed": false,
+              "currentWasExactHold": true,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 9,
+              "sourceEnglish": "Which crops use more seeds, water, and compost than they return?",
+              "currentDraft": "Which crops use more seeds, water, and compost than they return?",
+              "candidate": "Which crops use more seeds, water, and compost than they return?",
+              "changed": false,
+              "currentWasExactHold": true,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 10,
+              "sourceEnglish": "The record also shows which months leave the household buying food.",
+              "currentDraft": "The record also shows which months leave the household buying food.",
+              "candidate": "Rekhodo yi tlhela yi komba leswaku muti wu xava swakudya hi tin’hweti tihi.",
+              "changed": true,
+              "currentWasExactHold": true,
+              "uncertainty": "Machine draft; mixed English retained for business, pricing, compliance, or supply clauses where a precise Tshivenda/Sesotho/Xitsonga equivalent is uncertain.",
+              "backtranslation": "The record also shows which months the household buys food."
+            },
+            {
+              "index": 11,
+              "sourceEnglish": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+              "currentDraft": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+              "candidate": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+              "changed": false,
+              "currentWasExactHold": true,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 12,
+              "sourceEnglish": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+              "currentDraft": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+              "candidate": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+              "changed": false,
+              "currentWasExactHold": true,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 13,
+              "sourceEnglish": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+              "currentDraft": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+              "candidate": "Languta price, costs na ku byala loku landzelaka. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+              "changed": true,
+              "currentWasExactHold": true,
+              "uncertainty": "Machine draft; mixed English retained for business, pricing, compliance, or supply clauses where a precise Tshivenda/Sesotho/Xitsonga equivalent is uncertain.",
+              "backtranslation": "Review the price, costs, and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale."
+            },
+            {
+              "index": 14,
+              "sourceEnglish": "Use your record to find when household food runs short.",
+              "currentDraft": "Tirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.",
+              "candidate": "Tirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 15,
+              "sourceEnglish": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+              "currentDraft": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+              "candidate": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+              "changed": false,
+              "currentWasExactHold": true,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 16,
+              "sourceEnglish": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+              "currentDraft": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+              "candidate": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+              "changed": false,
+              "currentWasExactHold": true,
+              "uncertainty": "Hold the entire paragraph pending language review of the modal and backup-plan instruction.",
+              "backtranslation": "No change; retain the entire source paragraph in English because the may-not-work-here modal deserves local confirmation."
+            }
+          ]
+        },
+        {
+          "lessonId": "market-community-l2",
+          "sourceParagraphCount": 12,
+          "sourceParagraphs": [
+            "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+            "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+            "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+            "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+            "A box scheme supplies a regular selection to agreed customers.",
+            "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+            "Start from what you can reliably supply and what customers want.",
+            "Check the costs and household food needs before promising regular boxes.",
+            "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+            "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+            "Offer the surplus you have and agree clear terms with customers.",
+            "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label."
+          ],
+          "currentParagraphs": [
+            "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.",
+            "Pimanisa market fees, transport, packing and unsold produce ni selling price.",
+            "Kambisisa market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+            "Direct selling can retain more of the sale price, kambe swi tlhela swi teka nkarhi, packing, transport na ku khathalela vaxavi.",
+            "A box scheme supplies a regular selection to agreed customers.",
+            "Pfumelelanani hi contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+            "Sungula hi what you can reliably supply na leswi vaxavi va swi lavaka.",
+            "Kambisisa costs ni swilaveko swa swakudya swa ndyangu before promising regular boxes.",
+            "Garden area or customer count alone does not predict income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala results.",
+            "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+            "Offer surplus leyi u nga na yona kutani mi twanana hi terms leti nga erivaleni ni vaxavi.",
+            "Hlamusela maendlelo ya wena ya ku byala hi vutshembeki. Check any certification or claim the buyer requires before using a label."
+          ],
+          "candidateParagraphs": [
+            "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.",
+            "Pimanisa market fees, transport, packing and unsold produce ni selling price.",
+            "Kambisisa market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+            "Direct selling can retain more of the sale price, kambe swi tlhela swi teka nkarhi, packing, transport na ku khathalela vaxavi.",
+            "A box scheme supplies a regular selection to agreed customers.",
+            "Pfumelelanani hi contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+            "Sungula hi what you can reliably supply na leswi vaxavi va swi lavaka.",
+            "Kambisisa costs ni swilaveko swa swakudya swa ndyangu before promising regular boxes.",
+            "Garden area or customer count alone does not predict income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala results.",
+            "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+            "Offer surplus leyi u nga na yona kutani mi twanana hi terms leti nga erivaleni ni vaxavi.",
+            "Hlamusela maendlelo ya wena ya ku byala hi vutshembeki. Check any certification or claim the buyer requires before using a label."
+          ],
+          "changedIndices": [],
+          "exactEnglishHoldIndices": [
+            4,
+            9
+          ],
+          "paragraphs": [
+            {
+              "index": 0,
+              "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+              "currentDraft": "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.",
+              "candidate": "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 1,
+              "sourceEnglish": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+              "currentDraft": "Pimanisa market fees, transport, packing and unsold produce ni selling price.",
+              "candidate": "Pimanisa market fees, transport, packing and unsold produce ni selling price.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 2,
+              "sourceEnglish": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+              "currentDraft": "Kambisisa market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+              "candidate": "Kambisisa market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 3,
+              "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+              "currentDraft": "Direct selling can retain more of the sale price, kambe swi tlhela swi teka nkarhi, packing, transport na ku khathalela vaxavi.",
+              "candidate": "Direct selling can retain more of the sale price, kambe swi tlhela swi teka nkarhi, packing, transport na ku khathalela vaxavi.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 4,
+              "sourceEnglish": "A box scheme supplies a regular selection to agreed customers.",
+              "currentDraft": "A box scheme supplies a regular selection to agreed customers.",
+              "candidate": "A box scheme supplies a regular selection to agreed customers.",
+              "changed": false,
+              "currentWasExactHold": true,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 5,
+              "sourceEnglish": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+              "currentDraft": "Pfumelelanani hi contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+              "candidate": "Pfumelelanani hi contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 6,
+              "sourceEnglish": "Start from what you can reliably supply and what customers want.",
+              "currentDraft": "Sungula hi what you can reliably supply na leswi vaxavi va swi lavaka.",
+              "candidate": "Sungula hi what you can reliably supply na leswi vaxavi va swi lavaka.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 7,
+              "sourceEnglish": "Check the costs and household food needs before promising regular boxes.",
+              "currentDraft": "Kambisisa costs ni swilaveko swa swakudya swa ndyangu before promising regular boxes.",
+              "candidate": "Kambisisa costs ni swilaveko swa swakudya swa ndyangu before promising regular boxes.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 8,
+              "sourceEnglish": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+              "currentDraft": "Garden area or customer count alone does not predict income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala results.",
+              "candidate": "Garden area or customer count alone does not predict income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala results.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 9,
+              "sourceEnglish": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+              "currentDraft": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+              "candidate": "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+              "changed": false,
+              "currentWasExactHold": true,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 10,
+              "sourceEnglish": "Offer the surplus you have and agree clear terms with customers.",
+              "currentDraft": "Offer surplus leyi u nga na yona kutani mi twanana hi terms leti nga erivaleni ni vaxavi.",
+              "candidate": "Offer surplus leyi u nga na yona kutani mi twanana hi terms leti nga erivaleni ni vaxavi.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            },
+            {
+              "index": 11,
+              "sourceEnglish": "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+              "currentDraft": "Hlamusela maendlelo ya wena ya ku byala hi vutshembeki. Check any certification or claim the buyer requires before using a label.",
+              "candidate": "Hlamusela maendlelo ya wena ya ku byala hi vutshembeki. Check any certification or claim the buyer requires before using a label.",
+              "changed": false,
+              "currentWasExactHold": false,
+              "backtranslation": "No change; current learner wording preserved.",
+              "uncertainty": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "l3SharedToolKeypoints": [
+    {
+      "language": "ve",
+      "field": "lesson.keyPoints[1]",
+      "sourceEnglish": "Agree care, booking and repair responsibilities for shared tools",
+      "currentDraft": "Agree care, booking and repair responsibilities for shared tools",
+      "candidate": "Tendelani nga ha vhuḓifhinduleli ha u ṱhogomela, u vheha tshifhinga na u lugisa zwishumiswa zwine na kovhekana.",
+      "backtranslation": "Agree on the responsibilities for caring for, scheduling and repairing the tools you share.",
+      "uncertainty": "Machine draft, not fluent-reviewed. “Booking/scheduling” and the noun for shared tools should receive facilitator review."
+    },
+    {
+      "language": "ts",
+      "field": "lesson.keyPoints[1]",
+      "sourceEnglish": "Agree care, booking and repair responsibilities for shared tools",
+      "currentDraft": "Agree care, booking and repair responsibilities for shared tools",
+      "candidate": "Pfumelelanani hi vutihlamuleri byo hlayisa, ku booka nkarhi ni ku lunghisa switirhisiwa leswi mi swi avelanaka.",
+      "backtranslation": "Agree on responsibilities to care for, book time for, and repair the tools you share.",
+      "uncertainty": "Machine draft, not fluent-reviewed. “Booking/scheduling” and the noun for shared tools should receive facilitator review."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fields": [
+        {
+          "field": "title",
+          "sourceEnglish": "Building Community Food Networks: Strength in Numbers",
+          "currentDraft": "Building Community Food Networks: Strength in Numbers",
+          "candidate": "Building Community Food Networks: Strength in Numbers",
+          "status": "hold",
+          "reason": "Held for source/image-bound meaning review. The title phrase “Strength in Numbers” is idiomatic; the alt must preserve the exact count, arrow direction, central crate, and two tools as depicted. No wording changed without a source-linked regional verification."
+        },
+        {
+          "field": "infographicAlt",
+          "sourceEnglish": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+          "currentDraft": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+          "candidate": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+          "status": "hold",
+          "reason": "Held for source/image-bound meaning review. The title phrase “Strength in Numbers” is idiomatic; the alt must preserve the exact count, arrow direction, central crate, and two tools as depicted. No wording changed without a source-linked regional verification."
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fields": [
+        {
+          "field": "title",
+          "sourceEnglish": "Building Community Food Networks: Strength in Numbers",
+          "currentDraft": "Building Community Food Networks: Strength in Numbers",
+          "candidate": "Building Community Food Networks: Strength in Numbers",
+          "status": "hold",
+          "reason": "Held for source/image-bound meaning review. The title phrase “Strength in Numbers” is idiomatic; the alt must preserve the exact count, arrow direction, central crate, and two tools as depicted. No wording changed without a source-linked regional verification."
+        },
+        {
+          "field": "infographicAlt",
+          "sourceEnglish": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+          "currentDraft": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+          "candidate": "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
+          "status": "hold",
+          "reason": "Held for source/image-bound meaning review. The title phrase “Strength in Numbers” is idiomatic; the alt must preserve the exact count, arrow direction, central crate, and two tools as depicted. No wording changed without a source-linked regional verification."
+        }
+      ]
+    }
+  ],
+  "criticalPreservation": [
+    "All canonical English sources are embedded verbatim and remain untouched in the repository.",
+    "Candidate arrays preserve source paragraph order and existing localized paragraphs.",
+    "R18/kg and R15/kg teaching example, every price, unit, crop name and answer index remain unchanged; example paragraph stays English.",
+    "No sale, income, crop suitability, harvest timing, or compliance guarantee has been added.",
+    "Business terms and exact caution clauses remain English where reliable translation is uncertain.",
+    "The L2 offer sentence keeps “Offer” in English, preserving the distinction between making an offer and giving produce.",
+    "Market L3 title and image description are explicitly audited for VE/TS. They remain unchanged: the title contains an idiom, and alt wording must stay bound to the actual image count, direction, and objects."
+  ],
+  "rootRepair": "TS L1 paragraph 6 retains exact English Use the same simple habit to preserve continuity; other accepted regional clauses unchanged."
+}

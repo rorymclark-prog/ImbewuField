@@ -1,0 +1,881 @@
+{
+  "language": "ve",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "n": 1,
+        "heading": "Market Gardening & Community",
+        "body": [
+          "Your garden gives food, income, and useful knowledge.",
+          "This module shows how to keep records, sell surplus, and build local food networks.",
+          "The aim is a farm that feeds the household and works as a small, clear economy."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "U Ṱavha Zwimela U Itela Maraga na Vhadzulapo",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Tsimu yaṋu i ni ṋea zwiḽiwa, tshelede (income), na nḓivho ine ya thusa.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Modulu uyu u sumbedza nḓila ya u vhulunga rekhodo, u rengisa zwo salaho, na u fhaṱa vhukwamani ha zwiḽiwa ha henefho.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Tshipikwa ndi uri bulasi ḽiṋee muṱa zwiḽiwa, ḽi dovhe ḽi shume sa ikonomi ṱhukhu, i pfalaho.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "n": 2,
+        "heading": "Why This Matters",
+        "body": [
+          "A harvest can feed the household, be sold, be shared, or be lost.",
+          "Recording these different uses helps you see what the farm produces and what reaches customers.",
+          "Use that information to protect household food and make better business decisions."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ndi ngani hezwi zwi zwa ndeme",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.",
+            "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "U ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.",
+            "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Shumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "n": 3,
+        "heading": "Learning Outcomes",
+        "body": [
+          "By the end, you can record harvests and where they go.",
+          "You can work out the true cost of production before setting a price.",
+          "You can match surplus to a suitable customer or selling channel.",
+          "You can build a local network for seeds, tools, skills, and food."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Zwine na ḓo guda",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Musi ni tshi fhedza, ni ḓo kona u rekhoda khaṋo na hune ya ya hone.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Ni nga vhalela true cost of production, musi ni sa athu vhea mutengo wa u rengisa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Ni nga match surplus na murengi kana channel ya u rengisa yo teaho.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Ni nga fhaṱa netiweke ya henefho ya mbeu, zwishumiswa, vhukoni, na zwiḽiwa.",
+            "provenance": "new-machine-draft-proposal; not reused from learner draft"
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "n": 4,
+        "heading": "Watch: What the Farm Record Shows",
+        "body": [
+          "The record follows each harvest to family food, sales, gifts, or compost.",
+          "Read across the season to see the farm as an economy before making a business decision."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ṱolisisani: Zwine Rekhodo ya Bulasi ya Sumbedza",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Rekhodo i tevhela khaṋo iṅwe na iṅwe u swika kha zwiḽiwa zwa muṱa, zwo rengiswaho, zwifhiwa, kana compost.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Vhalani rekhodo u bva mathomoni u swika magumoni a khalaṅwaha u vhona bulasi sa ikonomi, musi ni sa athu dzhia tsheo ya bindu.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "n": 5,
+        "heading": "Record Every Harvest",
+        "body": [
+          "Write down every harvest as it happens.",
+          "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+          "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+          "Do not rely on memory at the end of the season."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Rekhodani Khaṋo Iṅwe na Iṅwe",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ṅwalani khaṋo iṅwe na iṅwe musi i tshi itea.",
+            "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Ṅwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Shumisani maitele a sa lemelaho a fanaho kha zwiḽiwa zwine zwa dzula hayani, zwibveledzwa zwo rengiswaho, zwo ṋewaho vhaṅwe nga mpho, na zwo itwaho compost.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.",
+            "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "n": 6,
+        "heading": "Let One Season Answer Questions",
+        "body": [
+          "One season of records answers practical questions.",
+          "Which crops give the best yield per bed? Which return the most for each hour of work?",
+          "Which crops use more seeds, water, and compost than they return?",
+          "The record also shows which months leave the household buying food."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khaḽaṅwaha Iṅwe I Nga Fhindula Mbudziso",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Rekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwimela zwifhio zwine zwa vhuisa the most return for each hour of work?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Ndi zwimela zwifhio zwine zwa shumisa mbeu, maḓi na compost zwinzhi u fhira zwine zwa vhuisa?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "n": 7,
+        "heading": "Find the True Cost",
+        "body": [
+          "Before setting a price, record production, packing and selling costs, including labour and transport.",
+          "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+          "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Wanani True Cost.",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Musi ni sa athu vhea mutengo, ṅwalani masheleni a u bveledza, u paka na u rengisa, hu tshi katelwa mushumo na transport.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. ",
+                "status": "draft",
+                "text": "Tsumbo iyi ndi ya u funza, a si mutengo wa makete: matamatisi a ḓura R18 nga kilogram u a bveledza fhedzi a rengiswa nga R15 nga kilogram. ",
+                "reason": "Teaching example and exact R18/R15 cost/sale comparison; kilogram is the existing borrowed measurement noun."
+              },
+              {
+                "sourceEnglish": "That price does not cover the stated cost.",
+                "status": "draft",
+                "text": "Mutengo wonoyo a u swikeli cost yo bulwaho.",
+                "reason": "Contextual English cost retained inside the complete stated-cost clause: target places yo bulwaho after cost, unlike source stated cost. Keep the semantic clause whole rather than misbind stated to punctuation."
+              }
+            ],
+            "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+          },
+          {
+            "status": "draft",
+            "text": "Sedzani mutengo, costs na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u khwaṱhisedzi uri zwi ḓo rengiswa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "n": 8,
+        "heading": "Plan for the Food Gap",
+        "body": [
+          "Use your record to find when household food runs short.",
+          "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+          "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Dzudzanyelani Tshifhinga Tshine Zwiḽiwa zwa Ṱhaela",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Shumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Nangani zwimela zwine zwa tea vhupo haṋu, ni dzudzanye ni tshi vhalela murahu u bva kha khaṋo ine na i ṱoḓa. Ṱolani nyimele dza u zwala na tshifhinga tsho lavhelelwaho tsha u kaṋa.",
+            "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+          },
+          {
+            "status": "draft",
+            "text": "Ḓuvha ḽine ḽa shuma bulasini ḽiṅwe ḽi nga kha ḽi sa shumi fhano. Katelani a backup plan arali mvula, maḓi kana zwimela zwa kundelwa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "n": 9,
+        "heading": "Watch: Where Surplus Can Go",
+        "body": [
+          "Surplus can leave the farm through a roadside stall, a group delivery to a shop, or a box delivered to a household.",
+          "The arrows show each route."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ṱolisisani: Hune Zwo Salaho (Surplus) zwa Nga Ya Hone",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Zwo salaho zwi nga bva bulasini nga stall ya tsini na bada, delivery ya tshigwada u ya shopuni, kana box ine ya ḓiswa muṱani.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Misevhe i sumbedza nzila iṅwe na iṅwe.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "n": 10,
+        "heading": "Know Your Customer",
+        "body": [
+          "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+          "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+          "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Dzulani Ni Tshi Ḓivha Murengi Waṋu",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Vhudzisani uri murengi u ṱoḓa mini: tshibveledzwa, tshivhalo, kwalithi, u isa na ḓuvha ḽa mbadelo.",
+            "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+          },
+          {
+            "status": "draft",
+            "text": "Vhambedzani market fees, transport, u paka na zwibveledzwa zwi sa rengiswi, na mutengo wa u rengisa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or ",
+                "status": "draft",
+                "text": "Sedzani milayo ya makete na ṱhoḓea dza henefho dza u rengisa na zwiḽiwa. Informal stall a zwi sokou amba uri a hu na milayo kana ",
+                "reason": "Preserve exact negation and OR; existing capitalized Informal stall remains a contextual borrowed business-classification noun within its complete negative clause."
+              },
+              {
+                "sourceEnglish": "costs.",
+                "status": "english-hold",
+                "reason": "Exact English technical or business precision retained; not fluent reviewed."
+              }
+            ],
+            "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "n": 11,
+        "heading": "Count the Work of Direct Selling",
+        "body": [
+          "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+          "A box scheme supplies a regular selection to agreed customers.",
+          "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Vhalani Mushumo Wa Direct Selling",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "body": [
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Direct selling can retain more of the sale price",
+                "status": "english-hold",
+                "reason": "Source-exact can/more sale-price retention; no profit guarantee."
+              },
+              {
+                "sourceEnglish": ", but it also takes time, packing, ",
+                "status": "draft",
+                "text": ", fhedzi zwi dzhia tshifhinga, u paka, ",
+                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+              },
+              {
+                "sourceEnglish": "transport",
+                "status": "english-hold",
+                "reason": "Exact English technical or business precision retained; not fluent reviewed."
+              },
+              {
+                "sourceEnglish": " and customer care.",
+                "status": "draft",
+                "text": " na u ṱhogomela vharengi.",
+                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+              }
+            ],
+            "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+          },
+          {
+            "status": "draft",
+            "text": "Box scheme i ṋea vharengi vho tendelanaho regular selection ya zwibveledzwa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Agree the contents, price, payment and ",
+                "status": "draft",
+                "text": "Tendelanani nga zwine zwa vha kha box, mutengo, mbadelo na ",
+                "reason": "Preserve existing Tendelanani prefix; box is retained contextual borrowed packaging noun."
+              },
+              {
+                "sourceEnglish": "what happens when crops are short. Regular orders",
+                "status": "english-hold",
+                "reason": "Crop-shortage predicate and regular-order frequency retained exact English, not narrowed to few plants or always."
+              },
+              {
+                "sourceEnglish": " help planning only when customers and growers can keep the agreement.",
+                "status": "draft",
+                "text": " dzi thusa u dzudzanya fhedzi musi vharengi na vhalimi vha tshi kona u tevhedza thendelano.",
+                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+              }
+            ],
+            "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "n": 12,
+        "heading": "Plan Around Real Orders",
+        "body": [
+          "Start from what you can reliably supply and what customers want.",
+          "Check the costs and household food needs before promising regular boxes.",
+          "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Dzudzanyani U Tshi Tevhela Order Dza Vhukuma",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Thomani nga what you can reliably supply na zwine vharengi vha zwi ṱoḓa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Sedzani costs na zwiḽiwa zwine muṱa wa zwi ṱoḓa musi ni sa athu fulufhedzisa regular boxes.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Tshikalo tsha ngade kana tshivhalo tsha vharengi, zwone fhedzi, a zwi anganyeli income. Ringetani arrangement ine na nga kona u i langula, ni ṅwale results.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "n": 13,
+        "heading": "Match the Channel to Your Supply",
+        "body": [
+          "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+          "Offer the surplus you have and agree clear terms with customers.",
+          "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Nangani Channel U Ya Nga Supply Yaṋu",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Arali production ya shanduka vhege nga vhege, ni songo fulufhedzisa delivery yo tiwaho ine na nga si kone u i ṋea.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Ṋeani zwo salaho zwine na vha nazwo, ni tendelane na vharengi nga clear terms.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Talusani nga ngoho maitele aṋu a u ṱavha. Musi ni sa athu shumisa label, sedzani certification kana claim ine murengi a i ṱoḓa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "n": 14,
+        "heading": "Watch: How Neighbours Strengthen a Harvest",
+        "body": [
+          "One farm can produce food.",
+          "A group can share seed, tools, skills, and transport.",
+          "Separate growers become a stronger local food network, with each household contributing what it can."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ṱolisisani: Nḓila Ine Vhahura Vha Khwaṱhisa Khaṋo Ngayo",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Bulasi ḽithihi ḽi nga bveledza zwiḽiwa.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Tshigwada tshi nga kovhekana mbeu, zwishumiswa, vhukoni na transport.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Vhalimi vho fhambanaho vha vhumba stronger local food network, muṱa muṅwe na muṅwe u tshi shela zwine wa kona.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "n": 15,
+        "heading": "Save Seed Together",
+        "body": [
+          "Neighbours can share different varieties and the work of saving seed.",
+          "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+          "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed.",
+          "Before exchanging seed, check whether the variety is protected and whether permission is needed."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Save Seed Roṱhe.",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Vhahura vha nga kovhekana mifuda yo fhambanaho na mushumo wa u vhulunga mbeu.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Record the crop, ",
+                "status": "draft",
+                "text": "Ṅwalani tshimela, ",
+                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+              },
+              {
+                "sourceEnglish": "variety",
+                "status": "english-hold",
+                "reason": "Exact English technical or business precision retained; not fluent reviewed."
+              },
+              {
+                "sourceEnglish": ", source and collection date. Plan ",
+                "status": "draft",
+                "text": ", vhubvo na datumu ya u kuvhanganya. Pulani ",
+                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+              },
+              {
+                "sourceEnglish": "suitable isolation, selection, drying and storage",
+                "status": "english-hold",
+                "reason": "Exact English technical or business precision retained; not fluent reviewed."
+              },
+              {
+                "sourceEnglish": " for each crop.",
+                "status": "draft",
+                "text": " kha tshimela tshiṅwe na tshiṅwe.",
+                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+              }
+            ],
+            "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+          },
+          {
+            "status": "draft",
+            "text": "U kovhekana a zwi ambi uri diversity i ḓo engedzea automatically kana quality i khwinifhale automatically. Ṱolani identity na germination ni sa athu ḓitika nga shared seed.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Before exchanging seed, check whether the ",
+                "status": "draft",
+                "text": "Ni sa athu u tshintshana mbeu, ṱolani arali ",
+                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+              },
+              {
+                "sourceEnglish": "variety",
+                "status": "english-hold",
+                "reason": "Exact English technical or business precision retained; not fluent reviewed."
+              },
+              {
+                "sourceEnglish": " is protected and whether ",
+                "status": "draft",
+                "text": " yo tsireledzwa na arali ",
+                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+              },
+              {
+                "sourceEnglish": "permission",
+                "status": "english-hold",
+                "reason": "Exact English technical or business precision retained; not fluent reviewed."
+              },
+              {
+                "sourceEnglish": " is needed.",
+                "status": "draft",
+                "text": " i tshi ṱoḓea.",
+                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+              }
+            ],
+            "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "n": 16,
+        "heading": "Share Expensive Tools",
+        "body": [
+          "Tool sharing puts expensive equipment within reach of the group.",
+          "A water pump or grain mill may be beyond one household’s budget.",
+          "Shared use spreads the value across the group and helps each farm do work it could not do alone."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kovhekani Zwishumiswa Zwi Dureaho",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "U kovhekana zwishumiswa zwi ita uri zwishumiswa zwi dureaho zwi swikele tshigwada.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Water pump kana grain mill i nga vha i nṱha ha budget ya muṱa muthihi.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "U shumisa ro kovhekana zwi phaḓaladza ndeme ya tshishumiswa kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽo vha ḽi sa ḓo kona u u ita ḽoṱhe.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "n": 17,
+        "heading": "Reduce Loss Between Harvest and Sale",
+        "body": [
+          "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+          "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+          "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Reduce Loss vhukati ha khaṋo na u rengisa.",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Farani zwibveledzwa nga vhulenda, ni zwi vhee murunzini wo teaho, kha packaging na fhethu ha u vhulunga zwo teaho u swika zwi tshi swika.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "A nearby buyer may reduce the journey, but losses and ",
+                "status": "draft",
+                "text": "Murengi wa tsini a nga fhungudza lwendo, fhedzi ndozwo na ",
+                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+              },
+              {
+                "sourceEnglish": "selling costs still need measuring.",
+                "status": "english-hold",
+                "reason": "Root-accepted independent repair: source-exact still need measuring, not should try/test."
+              }
+            ],
+            "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+          },
+          {
+            "status": "draft",
+            "text": "Vhambedzani tshelede yo tanganwaho nga murahu ha fees, transport na spoilage kha khetho iṅwe na iṅwe. Ni songo humbula uri murengi wa tsini u dzula a tshi ṋea the best return.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "n": 18,
+        "heading": "Share Skills and Check Results",
+        "body": [
+          "Neighbours can demonstrate useful skills and compare what happened on their own farms.",
+          "Record the method, conditions and result so others can judge whether it may suit their land.",
+          "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kovhelanani Vhukoni na U Sedza Mvelelo",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Vhahura vha nga sumbedza vhukoni vhu thusaho na u vhambedza zwe zwa bvelela kha mabulasini avho.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Ṅwalani maitele, nyimele na mvelelo uri vhaṅwe vha kone u vhona arali zwi tshi nga tea mavu avho.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Ṱoḓani qualified advice nga ha unfamiliar disease or technical problems. Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "n": 19,
+        "heading": "Field Assignment: Make a Farm Record",
+        "body": [
+          "Use headings for harvest, where it went, costs, and labour.",
+          "Record every kilogram, dozen, or bundle as it leaves the farm.",
+          "Include food kept by the household, produce sold, produce gifted, and produce composted.",
+          "At the end of one season, identify a crop that returns well and a month when the household buys food."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Mushumo wa Masimuni: Itani Rekhodo ya Bulasi",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Shumisani headings dza khaṋo, hune ya ya hone, costs na mushumo.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Rekhodani kilogram, dozen, kana bundle iṅwe na iṅwe musi zwi tshi bva bulasini.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Katelani zwiḽiwa zwe zwa vhulungelwa muṱani, zwibveledzwa zwo rengiswaho, zwe zwa fhiwa vhaṅwe, na zwibveledzwa zwo vhewa kha compost.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Musi khalaṅwaha nthihi yo fhela, wanani tshimela tshi vhuyedzaho zwavhuḓi na ṅwedzi une muṱa wa renga zwiḽiwa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "n": 20,
+        "heading": "Field Action: Use the Record",
+        "body": [
+          "Choose one real decision from your farm record.",
+          "Compare the cost and return of a crop or selling route, or plan for a household food gap using local growing conditions.",
+          "Then agree one practical seed swap, tool share, shared delivery or skills session with neighbours. Before a seed swap, check whether the variety is protected and whether permission is needed. Record responsibilities and review what happens."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Nyito ya Masimuni: Shumisani Rekhodo",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Nangani tsheo nthihi ya vhukuma ine ya bva kha rekhodo ya bulasi yaṋu.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Vhambedzani costs na return ya tshimela kana nḓila ya u rengisa, kana ni dzudzanye u shaya zwiḽiwa ha muṱa ni tshi shumisa nyimele dza u lima dza henefho.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Nga murahu tendelanani na vhahura nga one practical action: seed swap, u kovhekana tshishumiswa, delivery ya tshigwada kana dzulo ḽa u kovhekana vhukoni. Before a seed swap, check whether the variety is protected and whether permission is needed. Rekhodani vhudifhinduleli, ni dovhe ni sedze zwe zwa itea.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    }
+  ]
+}

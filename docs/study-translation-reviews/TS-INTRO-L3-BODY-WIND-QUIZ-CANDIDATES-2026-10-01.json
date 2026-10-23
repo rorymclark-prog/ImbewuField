@@ -1,0 +1,85 @@
+{
+  "lessonId": "intro-permaculture-l3",
+  "sourceMainSha": "570064a1170457aed7c515e19c89501552e4c563",
+  "status": "learner-wired-machine-draft",
+  "scopeNote": "Complete candidate for the incomplete three-paragraph body and fields held in the existing Xitsonga draft: keyPoints 0 and 2, Quiz 0, and Quiz 1 rationale. Quiz 1 question/options are included as existing source-paired context so the conditional observed NW/Highveld windbreak guidance can be checked with its rationale.",
+  "body": {
+    "sourceEnglish": "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
+    "draft": "Zones na sectors swi ku pfuna ku hunguta ntirho lowu tlangisiwaka. Zones ti sukela eka 0 ku ya eka 5 hi ku ya hi ku tala ka minkarhi leyi u endzelaka ha yona. Zone 0 i yindlu. Eka example leyi, Zone 1 yi le kusuhi na yindlu naswona yi na leswi u swi tshovelaka nkarhi na nkarhi — herbs na salad greens. Zone 2 i ntanga lowukulu na xivala xa tihuku, leswi u swi endzelaka kan’we kumbe kambirhi hi siku. Zone 3 i nsimu leyikulu, leyi u yi endzelaka vhiki na vhiki. Zone 4 yi le ka semi-wild — mirhi ya mihandzu na fodder leyi lavaka nyingiso minkarhi yin’wana. Zone 5 yi tshikiwile yi ri nhova.\n\nSectors i energy leyi nghenaka yi huma ehandle — dyambu, moya, mpfula, flood na fire. Xiya laha moya lowu tiyeke wu humaka kona epurasini ra wena. Matsalwa ya weather station ya le kusuhi ma nga ku pfuna ku kambela tlhelo leri moya wu humaka eka rona. Xiya laha mati ya mpfula ma nghenaka kona ni laha ma khulukaka kona eka ndhawu ya wena. Dirowa miseve ya leswi u swi vonaka.\n\nDirowa zones na sectors ephepheni kutani u va na motheo wa design ya wena."
+  },
+  "keyPoints": [
+    {
+      "sourceEnglish": "In this example, Zone 1 near the house holds often-picked herbs",
+      "draft": "Eka example leyi, Zone 1 leyi nga kusuhi na yindlu yi na herbs leti u ti tshovelaka nkarhi na nkarhi",
+      "index": 0
+    },
+    {
+      "sourceEnglish": "Sectors map incoming sun, wind, rainwater, flood and fire",
+      "draft": "Sectors ti komba energy leyi nghenaka: dyambu, moya, mati ya mpfula, flood na ndzilo",
+      "index": 2
+    }
+  ],
+  "quiz": [
+    {
+      "question": {
+        "sourceEnglish": "You plant herbs in Zone 3, the main field far from the house. What problem does this create?",
+        "draft": "U byala herbs eka Zone 3, main field leyi nga ekule na yindlu. Xana leswi swi vanga xiphiqo xihi?"
+      },
+      "options": [
+        {
+          "sourceEnglish": "Herbs grow too large",
+          "draft": "Herbs ti kula ngopfu"
+        },
+        {
+          "sourceEnglish": "The extra walk may mean you pick or check them less often",
+          "draft": "Ku famba mpfhuka wo engetela swi nga endla leswaku u tshovela kumbe u kambela herbs hi minkarhi yitsongo."
+        },
+        {
+          "sourceEnglish": "Herbs cross-pollinate with main crops",
+          "draft": "Herbs ti cross-pollinate na crops letikulu"
+        },
+        {
+          "sourceEnglish": "Zone 3 gets too much sun for herbs",
+          "draft": "Zone 3 yi kuma sun yo tala ngopfu eka herbs"
+        }
+      ],
+      "sourceCorrectIndex": 1,
+      "rationale": {
+        "sourceEnglish": "Put a crop you pick often near a daily path. A distant bed adds walking and may be checked less often.",
+        "draft": "Veka crop leyi u yi tshovelaka nkarhi na nkarhi ekusuhi na ndlela leyi u yi tirhisaka siku na siku. Bed leyi nga ekule yi engetela ku famba naswona yi nga endla leswaku u yi kambela hi minkarhi yitsongo."
+      },
+      "index": 0
+    },
+    {
+      "question": {
+        "sourceEnglish": "You observe damaging wind coming from the north-west on a Highveld farm. Where should a windbreak go?",
+        "draft": "U xiyisisa damaging wind coming from the North-west on a Highveld farm. Windbreak yi fanele ku ya kwihi?"
+      },
+      "options": [
+        {
+          "sourceEnglish": "South-east boundary",
+          "draft": "Ndzilakana wa South-east"
+        },
+        {
+          "sourceEnglish": "North-west boundary, between the wind and the crops",
+          "draft": "Ndzilakana wa North-west, vhukati ka moya na crops"
+        },
+        {
+          "sourceEnglish": "Centre of the property",
+          "draft": "Exikari ka property"
+        },
+        {
+          "sourceEnglish": "Windbreaks aren't needed since winds are seasonal",
+          "draft": "Swisivela-moya a swi laveki hikuva mimoya yi hunga hi tinguva"
+        }
+      ],
+      "sourceCorrectIndex": 1,
+      "rationale": {
+        "sourceEnglish": "A windbreak works by standing between the wind source and what it would damage — so it belongs on the side the wind actually comes from.",
+        "draft": "Windbreak yi tirha hi ku yima vhukati ka laha moya wu humaka kona ni leswi wu nga swi onhaka. Hikokwalaho yi fanele ku va eka tlhelo leri moya wu humaka eka rona hakunene."
+      },
+      "index": 1
+    }
+  ],
+  "reviewNote": "Unreviewed machine draft, learner-wired as a visibly marked candidate. Canonical sources and answer indices are paired; no fluent Xitsonga or local farming approval is claimed."
+}

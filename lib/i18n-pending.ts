@@ -43,11 +43,132 @@ export const LIMA_ENGLISH_PENDING: Dict = {
   limaPhotoButton: 'Photo',
 };
 
+/*
+ * The Ask tab's chat panel (components/ChatPanel.tsx) — wave 11, lang-01. The panel was entirely
+ * hard-coded English, including a developer test button ("Load Ubhejane farm data") that writes
+ * demo records straight to a real farmer's device. That button now only renders in sample mode
+ * (components/ChatPanel.tsx checks isSampleMode() from lib/sample-mode); it keeps its English-only
+ * copy since it is a tester tool, never shown to a farmer. Everything else here is genuinely
+ * farmer-facing and gets the same explicit-gap treatment as the blocks above.
+ */
+export const CHAT_PANEL_ENGLISH_PENDING: Dict = {
+  chatGreeting: "Hi — I'm Lima.",
+  chatIntro: 'Ask about your site, crops, soil & water, finances, or project. Tap the camera to photograph a plant or pest for a diagnosis. Organic & regenerative only.',
+  chatSampleDataLoaded: 'Ubhejane farm data loaded — tap to clear',
+  chatSampleDataLoad: 'Load Ubhejane farm data (to test finance questions)',
+  chatSuggestionPlant: 'What should I plant on my site this season?',
+  chatSuggestionBestCrop: 'Which of my crops makes the most money per kg?',
+  chatSuggestionContract: 'What are my contract obligations and am I on track?',
+  chatSuggestionPest: 'Natural ways to deal with pests & disease?',
+  chatSuggestionWater: 'How do I harvest and store rainwater here?',
+  chatPhotoAttached: 'Photo attached',
+  chatRemovePhoto: 'remove',
+  chatTakePhotoTitle: 'Take / attach a photo',
+  chatInputPlaceholder: 'Ask Lima anything...',
+  chatThinking: 'Thinking…',
+  chatDefaultPhotoQuestion: 'Please diagnose this photo.',
+  chatErrorMessage: 'Sorry, something went wrong. Please try again.',
+  chatPhotoOpenError: 'This photo could not be opened. Please try another photo or a JPEG image.',
+  chatZuluDraftNotice: 'The isiZulu wording in Lima chat is an unreviewed draft. A fluent isiZulu speaker and a local farming reviewer have not approved it yet.',
+};
+
+/*
+ * The Photos tab (components/PhotoUpload.tsx) — wave 11, lang-02. Was entirely hard-coded
+ * English, named the model "Claude Vision" instead of Lima, said "click" instead of "tap", and
+ * showed raw server/JS error text (a bare `Server error ${res.status}`, `err.message`) straight
+ * to the farmer. Decode failures keep a {file} placeholder so the farmer still knows which photo
+ * failed; everything the farmer would see goes through a translated key instead of the thrown
+ * Error's own message.
+ */
+export const PHOTO_UPLOAD_ENGLISH_PENDING: Dict = {
+  photoAnalysisHeading: 'Site photo analysis',
+  photoSatelliteViewTitle: 'Current satellite view',
+  photoSatelliteViewDesc: 'Captured from map — Lima will analyse what it sees',
+  photoAnalysingEllipsis: 'Analysing...',
+  photoAnalyseButton: 'Analyse',
+  photoAnalysingImagery: 'Lima is analysing the imagery...',
+  photoSendingToLima: 'Sending to Lima...',
+  photoReadsDesc: 'Reads vegetation, water, terrain & assets · ~15–30s',
+  photoDropOrTap: 'Drop site photos here or tap to add a photo',
+  photoUpToFive: 'Up to 5 photos · soil, vegetation, terrain, structures',
+  photoAnalysePhotosSingular: 'Analyse 1 photo',
+  photoAnalysePhotosPlural: 'Analyse {count} photos',
+  photoAnalysingPhotosButton: 'Analysing photos...',
+  photoClearButton: 'Clear',
+  photoSelectLocationFirst: 'Select a location on the map first',
+  photoAddedToReportPrefix: 'Added to your report — tap',
+  photoAddedToReportSuffix: 'above',
+  photoErrorUnreadable: 'Could not read {file}',
+  photoErrorUndecodable: '{file} could not be decoded — try JPEG or PNG',
+  photoErrorZeroDimensions: '{file} has zero dimensions',
+  photoErrorBlankHeic: '{file} appears blank after resize — try a JPEG or PNG instead of HEIC',
+  photoErrorGeneric: 'Photo {n} failed',
+  photoErrorBlankOrDark: 'Lima could not read the photo — it appears blank or very dark. Retake in good light or convert to JPEG/PNG first.',
+  photoErrorAnalysisFailed: 'Something went wrong analysing your photo. Please check your connection and try again.',
+  photoZuluDraftNotice: 'The isiZulu wording in Photos is an unreviewed draft. A fluent isiZulu speaker and a local farming reviewer have not approved it yet.',
+};
+
+/*
+ * The farmer's own profile sheet (components/ProfileSheet.tsx) — wave 11, lang-06. Was entirely
+ * hard-coded English. The location-sharing switch is translated first and gets a plain-language
+ * explanation it did not have before (it only had a bare label) — it is the one control here that
+ * tells other people in the programme where the farmer's land is.
+ */
+export const PROFILE_SHEET_ENGLISH_PENDING: Dict = {
+  profileZuluDraftNotice: 'The isiZulu wording in your profile is an unreviewed draft. A fluent isiZulu speaker and a local farming reviewer have not approved it yet.',
+  profileShowOnMapLabel: 'Show my location on the project map',
+  profileShowOnMapExplanation: 'Other people in your programme — mentors, NGO staff and other farmers — can see a pin at your farm on the shared map. You can turn this off again at any time.',
+  profileTitle: 'Your profile',
+  profileClose: 'Close',
+  profilePhotoAlt: 'Profile photo',
+  profileChangePhoto: 'Change photo',
+  profileFullNameLabel: 'Full name',
+  profileFullNamePlaceholder: 'Your name',
+  profileRoleLabel: 'Role',
+  profileRoleSetByAdmin: 'Roles are set by your programme admin',
+  profileRoleFarmer: 'Farmer',
+  profileRoleMentor: 'Mentor',
+  profileRoleStudent: 'Student',
+  profileRoleNgo: 'Organisation staff',
+  profileRoleFunder: 'Funder',
+  profileRoleAdmin: 'Admin',
+  profileAboutYouLabel: 'About you',
+  profileBioCharsLeft: '{n} left',
+  profileBioPlaceholder: 'A short introduction — your background, what you grow, what you love about permaculture…',
+  profileSkillsLabel: 'Skills & interests',
+  profileSkillSoilHealth: 'soil health',
+  profileSkillWaterHarvesting: 'water harvesting',
+  profileSkillAgroforestry: 'agroforestry',
+  profileSkillLivestock: 'livestock',
+  profileSkillComposting: 'composting',
+  profileSkillFoodForest: 'food forest',
+  profileSkillMarketGardening: 'market gardening',
+  profileSkillSeedSaving: 'seed saving',
+  profileMapVisibilityLabel: 'Map visibility',
+  profileLocationWillBePlaced: 'Your location will be placed at the current map view centre when you save.',
+  profilePanMapFirst: 'Pan the map to where you want to appear, then return here to save.',
+  profileSaveButton: 'Save',
+  profileSavedFlash: 'Saved!',
+};
+
+/*
+ * A shared translated network-failure message — wave 11, lang-08 + bug-10. See
+ * lib/network-failure.ts. Replaces bare '500', '429', 'Failed to fetch', 'API error 500' and
+ * 'HTTP 429' shown to the farmer in app/farmer/page.tsx's header pill, components/AreaPanel.tsx,
+ * components/atlas/AtlasExplorer.tsx and components/SiteDesign.tsx's design-generation call.
+ */
+export const NETWORK_FAILURE_ENGLISH_PENDING: Dict = {
+  networkOffline: "You're offline. Reconnect and try again.",
+  networkBusy: "That's a lot of requests right now. Please wait a moment and try again.",
+  networkFailed: 'Something went wrong. Please check your connection and try again.',
+  networkTapRefreshToRetry: ' — tap Refresh to retry.',
+};
+
 export const JOURNAL_ENGLISH_PENDING: Dict = {
   homeQuickJournalDesc: 'Notes & photos',
   journalLocalOnlyNote: 'Kept on this phone.',
   journalWeightsLiveElsewhere: 'Harvest weights and sales go in My Records.',
-  journalOpenRecords: 'Open My Records',
+  journalOpenRecords: 'Open my records',
 };
 
 export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
@@ -137,13 +258,18 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designPhotoAddScalePoint: 'Add scale point ({current}/{total})',
   designPhotoUndoPoint: 'Undo point',
   designPhotoScaleKept: 'Keeping your existing scale — re-measure only if it looks wrong.',
-  speciesPickerTitle: 'Plant Catalog',
+  speciesPickerTitle: 'Plant catalog',
   speciesPickerFilteredFor: 'Filtered for {biome} biome',
   speciesPickerBroadReach: 'Showing broad-reach species',
   speciesPickerBroadReachSection: 'Broad-reach species (site climate unknown)',
   speciesPickerNoteLabel: 'Note:',
   speciesPickerNoteBody: 'Not yet agronomist-reviewed. Use as a starting point.',
   speciesPickerFrostNote: 'Frost-tender trees and shrubs are hidden where the modeled minimum reaches freezing; check the planting spot for frost.',
+  // The harvest line under a fruit tree (lib/perennial-harvest.ts). "SA sources" is the point: the
+  // months are the span South African sources give across all regions, not this farm's weeks.
+  speciesPickerHarvest: 'Picking {months} in SA sources',
+  speciesPickerFirstCrop: 'first crop {years} yrs',
+  speciesPickerYield: 'about {kg} kg a mature tree',
   designAdvisorLayerWater: 'Water',
   designAdvisorLayerZones: 'Zones',
   designAdvisorLayerPlanting: 'Planting',
@@ -268,7 +394,7 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designPaletteFloatTitle: 'Float the element palette — drag it anywhere and scroll down through the chips',
   designPaletteFloatLabel: 'Float the element palette',
   designPaletteElements: 'Elements',
-  designPaletteElementsDragTitle: 'Drag Elements panel',
+  designPaletteElementsDragTitle: 'Drag elements panel',
   designPaletteLineFence: 'Fence',
   designPaletteLinePath: 'Path',
   designPaletteLinePipe: 'Pipe',
@@ -304,7 +430,7 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designPaletteLayerContours: 'Contours',
   designPaletteLayerSector: 'Sector energies',
   designPaletteShowAllElements: 'Show all',
-  designPrintTitle: 'Print / Export',
+  designPrintTitle: 'Print / export',
   designPrintSubtitle: '9-map plan set · exact · print-ready',
   designPrintSheets: 'Sheets (one page each)',
   designPrintNothingDrawn: 'Nothing drawn on this layer yet',
@@ -339,15 +465,15 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designPrintRetry: 'Try again',
   // On-screen sheet-picker names — kept separate from PrintLayer.label, the English text painted
   // onto the exported PDF/PNG title block, which must stay fixed regardless of app language.
-  designPrintSheetBase: 'Existing Site & Base',
-  designPrintSheetSector: 'Sector Analysis',
-  designPrintSheetZones: 'Permaculture Zones',
-  designPrintSheetWater: 'Water & Irrigation',
-  designPrintSheetEarthworks: 'Earthworks & Contour Setting-Out',
-  designPrintSheetPlanting: 'Planting & Agroforestry',
-  designPrintSheetStructures: 'Livestock & Infrastructure',
-  designPrintSheetAll: 'Integrated Masterplan',
-  designPrintSheetImplementation: 'Implementation & Phasing',
+  designPrintSheetBase: 'Existing site & base',
+  designPrintSheetSector: 'Sector analysis',
+  designPrintSheetZones: 'Permaculture zones',
+  designPrintSheetWater: 'Water & irrigation',
+  designPrintSheetEarthworks: 'Earthworks & contour setting-out',
+  designPrintSheetPlanting: 'Planting & agroforestry',
+  designPrintSheetStructures: 'Livestock & infrastructure',
+  designPrintSheetAll: 'Integrated masterplan',
+  designPrintSheetImplementation: 'Implementation & phasing',
   designLessonHeading: 'LESSON',
   designLessonClose: 'Close lesson',
   designLessonPrinciple: 'The principle',
@@ -430,14 +556,14 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designGlossyBeta: 'Beta — may need a re-try',
   designGlossyDownload: 'Download',
   designGlossySavedMaps: 'Saved maps ({count})',
-  designGlossyPreviewTitle: 'Preview & Export',
+  designGlossyPreviewTitle: 'Preview & export',
   designGlossyPreviewHelp: 'Review the map, choose its finish, then export the sheets you need.',
   designGlossyCurrentSettings: 'Current preview settings',
   designGlossyPlanSetShort: 'Plan set',
   designGlossyPlanSetValue: 'Design plan set',
   designGlossyChooseSheet: 'Choose a sheet',
   designGlossyOpenSaved: 'Open saved maps',
-  designGlossyExportShare: 'Export & Share',
+  designGlossyExportShare: 'Export & share',
   designGlossyMapPreview: 'Map preview',
   designGlossySeasonalSun: 'Seasonal sun',
   designGlossyPreviewScope: 'Preview scope',
@@ -467,13 +593,13 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designGlossyQualityLowSub: 'cheapest · for testing',
   designGlossyQualityNote: 'AI artwork can change or invent features. Source protections, labels and legend are applied afterwards, but compare positions and counts with your Exact Canvas map before using the illustration. Higher AI quality does not verify accuracy.',
   designGlossyFinishHeading: 'Map style',
-  designGlossyExactCanvas: 'Design Map',
+  designGlossyExactCanvas: 'Design map',
   designGlossyExactCanvasHint: 'Your saved layout · ready to print',
   // The KEY still says Hybrid because 'hybrid' is the internal stage name everywhere — in the render
   // queue, in stored provenance and in every gallery entry already saved. Only the words a farmer
   // reads changed: "AI Hybrid" described the plumbing, not the result. Renaming the key would
   // relabel sheets that have already been paid for.
-  designGlossyAiHybrid: 'AI Polished',
+  designGlossyAiHybrid: 'AI polished',
   designGlossyAiHybridHint: 'AI-painted artwork · your labels & legend on top · 1 paid render',
   designGlossyFullTreatment: 'Full Treatment (shelved)',
   designGlossyFullTreatmentHint: 'A 2nd AI pass over the finished sheet · 2 paid renders',
@@ -569,6 +695,56 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designSpeciesUseMedicinal: 'medicinal',
   designSpeciesUseTimber: 'timber',
   designSpeciesUseGroundcover: 'groundcover',
+};
+
+/*
+ * The printed/exported site report's climate footnote (components/ReportView.tsx, around the
+ * "Köppen climate class" line) interpolates values straight out of lib/koppen-global.ts and
+ * lib/nasa-power.ts — a fixed, small set of English strings — so a non-English report showed
+ * this jargon in English regardless of the report's own language setting. Each DESCRIPTIONS
+ * entry in lib/koppen-global.ts is keyed here by its Köppen code (reportKoppenDesc + code) so
+ * ReportView can look a translation up without duplicating the description text; the three
+ * rainfall-pattern words and the two non-range season labels (lib/nasa-power.ts) get their own
+ * keys. Month-range seasons (e.g. "Oct–Mar") are NOT duplicated here — ReportView builds those
+ * from the existing surveyMonth* keys already translated for isiZulu.
+ */
+export const REPORT_FOOTNOTE_ENGLISH_PENDING: Dict = {
+  reportKoppenDescAf: 'Tropical rainforest',
+  reportKoppenDescAm: 'Tropical monsoon',
+  reportKoppenDescAw: 'Tropical savanna, dry winter',
+  reportKoppenDescAs: 'Tropical savanna, dry summer',
+  reportKoppenDescBWh: 'Hot desert',
+  reportKoppenDescBWk: 'Cold desert',
+  reportKoppenDescBSh: 'Hot semi-arid steppe',
+  reportKoppenDescBSk: 'Cold semi-arid steppe',
+  reportKoppenDescCfa: 'Humid subtropical',
+  reportKoppenDescCfb: 'Temperate oceanic',
+  reportKoppenDescCfc: 'Subpolar oceanic',
+  reportKoppenDescCsa: 'Mediterranean, hot summer',
+  reportKoppenDescCsb: 'Mediterranean, warm summer',
+  reportKoppenDescCsc: 'Mediterranean, cold summer',
+  reportKoppenDescCwa: 'Humid subtropical, dry winter',
+  reportKoppenDescCwb: 'Subtropical highland, dry winter',
+  reportKoppenDescCwc: 'Subtropical highland, short summer',
+  reportKoppenDescDfa: 'Cold, no dry season, hot summer',
+  reportKoppenDescDfb: 'Cold, no dry season, warm summer',
+  reportKoppenDescDfc: 'Subarctic',
+  reportKoppenDescDfd: 'Extremely cold subarctic',
+  reportKoppenDescDwa: 'Cold, dry winter, hot summer',
+  reportKoppenDescDwb: 'Cold, dry winter, warm summer',
+  reportKoppenDescDwc: 'Subarctic, dry winter',
+  reportKoppenDescDwd: 'Extremely cold, dry winter',
+  reportKoppenDescDsa: 'Cold, dry summer, hot summer',
+  reportKoppenDescDsb: 'Cold, dry summer, warm summer',
+  reportKoppenDescDsc: 'Subarctic, dry summer',
+  reportKoppenDescDsd: 'Extremely cold, dry summer',
+  reportKoppenDescET: 'Tundra',
+  reportKoppenDescEF: 'Ice cap',
+  reportRainfallPatternSummer: 'summer',
+  reportRainfallPatternWinter: 'winter',
+  reportRainfallPatternYearRound: 'year-round',
+  reportSeasonYearRound: 'year-round',
+  reportSeasonNone: 'none',
 };
 
 /*
@@ -755,7 +931,7 @@ export const MENTOR_ENGLISH_PENDING: Dict = {
   mentorRoleFarmer: 'Farmer',
   mentorRoleMentor: 'Mentor',
   mentorRoleStudent: 'Student',
-  mentorRoleNgo: 'NGO Staff',
+  mentorRoleNgo: 'Organisation staff',
   mentorRoleFunder: 'Funder',
   mentorRoleAdmin: 'Admin',
   mentorVisibleOnMapAria: 'Visible on map',

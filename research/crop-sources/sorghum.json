@@ -1,0 +1,143 @@
+{
+  "key": "sorghum",
+  "name": "Sorghum",
+  "localNames": null,
+  "botanicalName": "Sorghum bicolor (L.) Moench",
+  "family": "Poaceae",
+  "role": "food",
+  "foodGroup": "staple_grain",
+  "harvestProduct": "dry grain",
+  "frostTender": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "Temperatures below freezing are detrimental to sorghum and may kill the plant.",
+        "url": "https://www.arc.agric.za/arc-gci/Fact%20Sheets%20Library/Sorghum%20Production.pdf",
+        "page": 6,
+        "doc": "Sorghum Production, ARC-Grain Crops Institute (fact sheet, based on Sorghum Production Guide)"
+      }
+    ]
+  },
+  "transplant": {
+    "value": false,
+    "evidence": [
+      {
+        "quote": "Sorghum is normally planted with maize planters.",
+        "url": "https://www.arc.agric.za/arc-gci/Fact%20Sheets%20Library/Sorghum%20Production.pdf",
+        "page": 10,
+        "doc": "Sorghum Production, ARC-Grain Crops Institute"
+      }
+    ]
+  },
+  "sowMonths": {
+    "summer": {
+      "months": [10, 11, 12],
+      "evidence": [
+        {
+          "quote": "Normally sorghum is planted in South Africa from mid-October to mid-December.",
+          "url": "https://www.arc.agric.za/arc-gci/Fact%20Sheets%20Library/Sorghum%20Production.pdf",
+          "page": 9,
+          "doc": "Sorghum Production, ARC-Grain Crops Institute"
+        }
+      ]
+    },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "daysToHarvestRange": {
+    "value": [120, 140],
+    "evidence": [
+      {
+        "quote": "temperate to warm weather (20 to 30 ºC) and a frost-free period of approximately 120 to 140 days",
+        "url": "https://www.arc.agric.za/arc-gci/Fact%20Sheets%20Library/Sorghum%20Production.pdf",
+        "page": 4,
+        "doc": "Sorghum Production, ARC-Grain Crops Institute"
+      }
+    ],
+    "notes": "Source gives this as the frost-free period the crop needs 'to exploit its inherit yield potential' (grain maturity), not a per-cultivar days-to-maturity table; early vs late hybrid maturity not broken out in this source (gap)."
+  },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": {
+    "value": [91, 230],
+    "evidence": [
+      {
+        "quote": "sorghum is planted in 0.91 m, 1,5 m or 2.3 m rows",
+        "url": "https://www.arc.agric.za/arc-gci/Fact%20Sheets%20Library/Sorghum%20Production.pdf",
+        "page": 9,
+        "doc": "Sorghum Production, ARC-Grain Crops Institute"
+      }
+    ]
+  },
+  "inRowSpacingRangeCm": {
+    "value": [1, 15],
+    "evidence": [
+      {
+        "quote": "Table 2. Plant population and seed requirements for different row widths and in-row spacing / In-row spacing (mm) ... 10 ... 150",
+        "url": "https://www.arc.agric.za/arc-gci/Fact%20Sheets%20Library/Sorghum%20Production.pdf",
+        "page": 10,
+        "doc": "Sorghum Production, ARC-Grain Crops Institute"
+      }
+    ]
+  },
+  "sowDepthRangeCm": {
+    "value": [2.5, 5],
+    "evidence": [
+      {
+        "quote": "A planting depth of 25 mm is satisfactory with sufficient water. Under drier conditions the seed should be planted deeper, but no more than 50 mm.",
+        "url": "https://www.arc.agric.za/arc-gci/Fact%20Sheets%20Library/Sorghum%20Production.pdf",
+        "page": 9,
+        "doc": "Sorghum Production, ARC-Grain Crops Institute"
+      }
+    ]
+  },
+  "seedRateKgPerHaRange": {
+    "value": [3.0, 7.0],
+    "evidence": [
+      {
+        "quote": "Recommendations therefore, vary from 3.0 to 7.0 kilogram seed per hectare.",
+        "url": "https://www.arc.agric.za/arc-gci/Fact%20Sheets%20Library/Sorghum%20Production.pdf",
+        "page": 10,
+        "doc": "Sorghum Production, ARC-Grain Crops Institute"
+      }
+    ]
+  },
+  "yield": {
+    "tPerHaRange": [0.77, 1.2],
+    "product": "dry grain",
+    "conditions": "national commercial average (mostly dryland, Free State & Mpumalanga), not a per-field target yield; smallholder/dryland yields likely lower",
+    "evidence": [
+      {
+        "quote": "The production of sorghum in South Africa varies from 100 000 tonnes (130 000 ha) to 180 000 tonnes (150 000 ha) per annum.",
+        "url": "https://www.arc.agric.za/arc-gci/Fact%20Sheets%20Library/Sorghum%20Production.pdf",
+        "page": 1,
+        "doc": "Sorghum Production, ARC-Grain Crops Institute"
+      }
+    ]
+  },
+  "ecocrop": {
+    "row": "Sorghum bicolor",
+    "TOPMN": 22,
+    "TOPMX": 35,
+    "TMIN": 8,
+    "TMAX": 40,
+    "GMIN": 90,
+    "GMAX": 300
+  },
+  "coverCrop": null,
+  "varieties": [],
+  "zoneNotes": {
+    "karoo-arid": "Source notes sorghum tolerates the drier, low-rainfall western production areas (~400 mm/yr) better than maize, but does not name Karoo-specific cultivars (gap).",
+    "highveld": "Free State and Mpumalanga (highveld/interior) are named as the largest sorghum production provinces.",
+    "lowveld-bushveld": "Source describes a general shift 'from the drier western production areas to the wetter eastern areas' and development of cold-tolerant cultivars, consistent with lowveld/bushveld conditions, but does not name specific zones or cultivars (gap)."
+  },
+  "gaps": [
+    "No SA production-guideline PDF for sorghum was recoverable via Wayback (only an HTML redirect snapshot exists for the DAFF 'Brochure Sorghum.pdf'); ARC-GCI fact sheet and DALRRD Market Value Chain Profile 2020 used instead.",
+    "No per-cultivar days-to-maturity (early/medium/late) figures found; only the 120-140 day frost-free requirement.",
+    "No named cultivars/varieties by zone found in the sources reviewed (Grain SA/ARC-GCI cultivar list not located in this pass) — varieties field is empty.",
+    "Winter-rainfall (Western Cape), all-year (subtropical/coastal) and mild-frost sowing windows not addressed by the source; left empty rather than assumed.",
+    "Yield figure is a derived national average (total tonnes / total hectares), not a stated per-hectare recommendation from an agronomy source."
+  ],
+  "verdict": "partial",
+  "summary": "ARC-GCI's Sorghum Production fact sheet (drawing on the DALRRD/DAFF Sorghum Production Guide) gives solid, quotable figures for SA planting window, row/in-row spacing, seed rate and sowing depth, and confirms frost kills the crop. Yield is only available as a derived national average, and no cultivar/variety list or per-cultivar maturity data was located, so verdict is partial rather than ready."
+}

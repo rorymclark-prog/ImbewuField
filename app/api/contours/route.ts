@@ -3,6 +3,7 @@ import { PNG } from 'pngjs';
 import { isoLines } from 'marchingsquares';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { TILE_ZOOM, TILE_SIZE, contourCacheKey } from '@/lib/contour-cache-key';
+import { buildThresholds } from '@/lib/contour-thresholds';
 
 // ── Fine-grained (5m) contour lines, generated on the fly from Mapbox's ──
 // terrain-RGB DEM (the same data already used for hillshade/3D terrain).
@@ -101,8 +102,14 @@ export async function GET(req: NextRequest) {
   if ([minLon, minLat, maxLon, maxLat].some((v) => isNaN(v)) || minLon >= maxLon || minLat >= maxLat) {
     return NextResponse.json({ error: 'Invalid bbox — need minLon,minLat,maxLon,maxLat' }, { status: 400 });
   }
-  if (!Number.isFinite(interval) || interval <= 0 || !Number.isFinite(major) || major <= 0) {
-    return NextResponse.json({ error: 'interval and major must be positive finite metres' }, { status: 400 });
+  // sec-01: a near-zero interval (e.g. 1e-9) is "positive and finite" but turns the threshold
+  // loop below into millions of iterations before anything caps it — an unauthenticated caller
+  // could run the server out of memory/CPU with one request. Clamp to a sane site-scale range.
+  if (!Number.isFinite(interval) || interval < 0.5 || interval > 100) {
+    return NextResponse.json({ error: 'interval must be a finite number of metres between 0.5 and 100' }, { status: 400 });
+  }
+  if (!Number.isFinite(major) || major <= 0) {
+    return NextResponse.json({ error: 'major must be a positive finite number of metres' }, { status: 400 });
   }
   if (maxLon - minLon > MAX_BBOX_DEG || maxLat - minLat > MAX_BBOX_DEG) {
     return NextResponse.json({ error: 'bbox too large for on-the-fly fine contours (site-scale only)' }, { status: 400 });
@@ -185,11 +192,7 @@ export async function GET(req: NextRequest) {
       if (v > max) max = v;
     }
   }
-  const startEle = Math.floor(min / interval) * interval;
-  const endEle = Math.ceil(max / interval) * interval;
-  const thresholds: number[] = [];
-  for (let t = startEle; t <= endEle; t += interval) thresholds.push(t);
-  const cappedThresholds = thresholds.slice(0, MAX_THRESHOLDS);
+  const thresholds = buildThresholds(min, max, interval, MAX_THRESHOLDS);
 
   const originTileX = tileXMin;
   const originTileY = tileYMin;
@@ -200,7 +203,7 @@ export async function GET(req: NextRequest) {
   };
 
   const features: ContourFeature[] = [];
-  for (const t of cappedThresholds) {
+  for (const t of thresholds) {
     // Snap to nearest multiple check with float-safe rounding.
     const isMajor = Math.abs(Math.round(t / major) * major - t) < 1e-6;
     const paths = isoLines(grid, t, { noQuadTree: true });

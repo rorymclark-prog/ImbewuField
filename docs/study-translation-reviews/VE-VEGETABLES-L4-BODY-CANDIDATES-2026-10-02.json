@@ -1,0 +1,158 @@
+{
+  "packetVersion": 1,
+  "created": "2026-10-02",
+  "language": "Tshivenda (VE)",
+  "moduleId": "vegetables-staples",
+  "lessonId": "vegetables-staples-l4",
+  "sourceRevision": "8a0728379a57256a78bbb207213f2953f7f1b943",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "currentRegistryPath": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+  "registryFinding": "Existing VE L1/L3 preserved; add missing L4 source-paired body. No title or assessment translation.",
+  "sourceParagraphCount": 12,
+  "paragraphSeparator": "\\n\\n",
+  "entries": [
+    {
+      "fieldPath": "lessons[3].body.paragraphs[0]",
+      "paragraphIndex": 0,
+      "exactSourceEnglish": "Pest pressure usually rises for a reason.",
+      "currentRegistry": "No VE L4 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "machine-draft-candidate",
+      "newTshivendaDraft": "Pest pressure i anzela u engedzea nga tshiitisi.",
+      "conditions": "Preserves ‘usually’ and the claim that there is a cause; keeps technical pest-pressure term exact.",
+      "uncertainty": "Moderate: ordinary framing translated; term retained English.",
+      "initialCandidateBackTranslation": "Pest pressure usually increases for a reason."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[1]",
+      "paragraphIndex": 1,
+      "exactSourceEnglish": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "currentRegistry": "No VE L4 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "exact-English hold",
+      "newTshivendaDraft": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "conditions": "Contains pest causes, diagnostic possibilities, stress indicators, beneficial-insect function, control choices, or treatment/product directions with important technical or conditional meaning; retain the complete paragraph in exact English pending review.",
+      "uncertainty": "Not drafted; preserving the full source paragraph avoids changing causal, diagnostic, conditional, label, protection, or dose meaning.",
+      "initialCandidateBackTranslation": ""
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[2]",
+      "paragraphIndex": 2,
+      "exactSourceEnglish": "So before you treat anything, look at the whole system.",
+      "currentRegistry": "No VE L4 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "machine-draft-candidate",
+      "newTshivendaDraft": "So before you treat anything, sedzani system yoṱhe.",
+      "conditions": "Preserves sequence before treatment/action and whole-system observation. Keeps system as a loan term.",
+      "uncertainty": "Moderate: ‘treat’ is rendered as treat/heal or take action; both are explicitly included to avoid a treatment-only reading.",
+      "initialCandidateBackTranslation": "So before treating or taking action, look at the whole system.",
+      "rootRepair": "Exact English retained for before-treatment scope or lightest effective action; independent check rejected broadened/easy meaning."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[3]",
+      "paragraphIndex": 3,
+      "exactSourceEnglish": "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+      "currentRegistry": "No VE L4 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "exact-English hold",
+      "newTshivendaDraft": "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+      "conditions": "Contains pest causes, diagnostic possibilities, stress indicators, beneficial-insect function, control choices, or treatment/product directions with important technical or conditional meaning; retain the complete paragraph in exact English pending review.",
+      "uncertainty": "Not drafted; preserving the full source paragraph avoids changing causal, diagnostic, conditional, label, protection, or dose meaning.",
+      "initialCandidateBackTranslation": ""
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[4]",
+      "paragraphIndex": 4,
+      "exactSourceEnglish": "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.",
+      "currentRegistry": "No VE L4 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "exact-English hold",
+      "newTshivendaDraft": "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.",
+      "conditions": "Contains pest causes, diagnostic possibilities, stress indicators, beneficial-insect function, control choices, or treatment/product directions with important technical or conditional meaning; retain the complete paragraph in exact English pending review.",
+      "uncertainty": "Not drafted; preserving the full source paragraph avoids changing causal, diagnostic, conditional, label, protection, or dose meaning.",
+      "initialCandidateBackTranslation": ""
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[5]",
+      "paragraphIndex": 5,
+      "exactSourceEnglish": "Work through four steps, in order.",
+      "currentRegistry": "No VE L4 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "machine-draft-candidate",
+      "newTshivendaDraft": "Tevhelani vhukando vhuṋa nga u tevhekana.",
+      "conditions": "Preserves the exact count and required order.",
+      "uncertainty": "Low.",
+      "initialCandidateBackTranslation": "Follow the four steps in order."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[6]",
+      "paragraphIndex": 6,
+      "exactSourceEnglish": "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+      "currentRegistry": "No VE L4 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "machine-draft-candidate",
+      "newTshivendaDraft": "Tsha u thoma. Sedzani zwavhuḓi. Damage pattern, the underside of the leaf, the stem, and nearby plants: sedzani hezwi.",
+      "conditions": "Keeps the observation step and all four exact inspection targets. Technical target phrases remain exact English.",
+      "uncertainty": "Moderate: reordered phrasing for a Tshivenda frame; list items remain source-exact.",
+      "initialCandidateBackTranslation": "First. Observe carefully. Look at the damage pattern, the underside of the leaf, the stem, and nearby plants."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[7]",
+      "paragraphIndex": 7,
+      "exactSourceEnglish": "Two. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.",
+      "currentRegistry": "No VE L4 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "exact-English hold",
+      "newTshivendaDraft": "Two. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.",
+      "conditions": "Contains pest causes, diagnostic possibilities, stress indicators, beneficial-insect function, control choices, or treatment/product directions with important technical or conditional meaning; retain the complete paragraph in exact English pending review.",
+      "uncertainty": "Not drafted; preserving the full source paragraph avoids changing causal, diagnostic, conditional, label, protection, or dose meaning.",
+      "initialCandidateBackTranslation": ""
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[8]",
+      "paragraphIndex": 8,
+      "exactSourceEnglish": "Three. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.",
+      "currentRegistry": "No VE L4 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "exact-English hold",
+      "newTshivendaDraft": "Three. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.",
+      "conditions": "Contains pest causes, diagnostic possibilities, stress indicators, beneficial-insect function, control choices, or treatment/product directions with important technical or conditional meaning; retain the complete paragraph in exact English pending review.",
+      "uncertainty": "Not drafted; preserving the full source paragraph avoids changing causal, diagnostic, conditional, label, protection, or dose meaning.",
+      "initialCandidateBackTranslation": ""
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[9]",
+      "paragraphIndex": 9,
+      "exactSourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "currentRegistry": "No VE L4 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "machine-draft-candidate",
+      "newTshivendaDraft": "Tsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "conditions": "Preserves the fourth-step order, ‘only then’, lightest effective action, and all conditional/suitability/monitoring clauses exactly in English. ‘May help’ is unchanged.",
+      "uncertainty": "Low to moderate: mixed-language instruction; all high-stakes control conditions remain exact source text.",
+      "initialCandidateBackTranslation": "Fourth. Only then take action—start with the lightest thing that works. Physical removal, barriers, or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "rootRepair": "Exact English retained for before-treatment scope or lightest effective action; independent check rejected broadened/easy meaning."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[10]",
+      "paragraphIndex": 10,
+      "exactSourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentRegistry": "No VE L4 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "exact-English hold",
+      "newTshivendaDraft": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "conditions": "Contains pest causes, diagnostic possibilities, stress indicators, beneficial-insect function, control choices, or treatment/product directions with important technical or conditional meaning; retain the complete paragraph in exact English pending review.",
+      "uncertainty": "Not drafted; preserving the full source paragraph avoids changing causal, diagnostic, conditional, label, protection, or dose meaning.",
+      "initialCandidateBackTranslation": ""
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[11]",
+      "paragraphIndex": 11,
+      "exactSourceEnglish": "Be honest with yourself about which step you usually skip.",
+      "currentRegistry": "No VE L4 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "machine-draft-candidate",
+      "newTshivendaDraft": "Ni ḓi ambele ngoho nga ha vhukando vhune na anzela u vhu pfuka.",
+      "conditions": "Preserves self-reflection and the usual/recurring qualification.",
+      "uncertainty": "Low to moderate: direct idiomatic phrasing.",
+      "initialCandidateBackTranslation": "Be honest with yourself about the step that you usually skip."
+    }
+  ],
+  "reviewStatus": "machine-draft; independent semantic check, no fluent/local approval",
+  "constraints": [
+    "Canonical English unchanged.",
+    "Paragraph order and zero-based indices follow canonical source exactly.",
+    "No crop identity, number, efficacy claim, or control method added.",
+    "Pest/disease terminology and strict control, treatment, product-label, dose, protection, and harvest-waiting instructions are retained exactly where uncertain.",
+    "No guarantee of pest or disease control is added."
+  ],
+  "rootReview": "Independent all12source/meaning backcheck completed; root repaired2/9 as recommended. Not learner wired; no fluent approval."
+}

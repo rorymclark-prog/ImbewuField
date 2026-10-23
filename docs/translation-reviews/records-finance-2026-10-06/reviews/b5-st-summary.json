@@ -1,0 +1,17 @@
+{
+ "lang": "st",
+ "counts": {"ok": 5, "repair": 0, "hold": 1, "total": 6},
+ "top_issues": [
+  "R319: 'di dule di balehe' cannot be confirmed as 'stay readable'; 'baleha' normally means flee. HOLD.",
+  "R319: 'kgaotswe' (cut off), 'ho letshwao' (at the mark) and 'kerafo' (chart) unconfirmed.",
+  "R282: 'Tjhelete ya matsoho' for Cash is a literal idiom, plausible but unconfirmed (ok, minor).",
+  "R284: 'Tjhelete ya fono' could be heard as 'money for a phone' rather than mobile money (ok, minor).",
+  "R296: 'gives you' loosely renders 'returns' (harvest vs money); matches English vagueness (ok, minor).",
+  "I103: 'seng' must be heard as relative of 'already'; moderate confidence it avoids the earlier 'another produce' misreading.",
+  "R275: 'sekgwa' for forest unconfirmed; ok only because R079 was accepted.",
+  "No wrong-language words, placeholders or negation errors found in the five ok rows.",
+  "R282 and R284 are distinct from each other, so Cash vs Mobile is not collapsed.",
+  "Nothing in the drafts adds advice, figures or promises."
+ ],
+ "confidence_limits": "I am a machine reviewer, not a fluent Sesotho speaker. The ok verdicts mean no problem was visible to me and the back-translations match the English; they are not native-speaker approval. Money-adjacent phrases (R282, R284, R296) and the idiom 'sekgwa sa dijo' rest on drafter-cited consistency with other rows, which I could not check. Sesotho vs Sepedi/Setswana spelling and vocabulary boundaries are the area where I am least reliable. A fluent Sesotho speaker should check all six, especially R282, R284, R296 and I103, before any is treated as final."
+}

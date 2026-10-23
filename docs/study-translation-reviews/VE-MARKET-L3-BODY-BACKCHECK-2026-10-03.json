@@ -1,0 +1,81 @@
+{
+  "packetId": "IMBEWU-VE-MARKET-L3-BODY-NEXT-BACKCHECK-2026-10-03",
+  "checkedAt": "2026-10-03",
+  "sourceRevision": "18734826c631798ebbec7c0f3f37ea2f9ab6a386",
+  "liveCheckoutHead": "18734826c631798ebbec7c0f3f37ea2f9ab6a386",
+  "languageCode": "ve",
+  "languageName": "Tshivenda",
+  "lessonId": "market-community-l3",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-ve-market-community.ts",
+  "decision": "accept with review flags; candidate remains an unreviewed machine draft",
+  "sourceAndRegistryVerification": {
+    "canonicalParagraphsMatchPacket": true,
+    "currentRegistryParagraphsMatchPacket": true,
+    "paragraphCount": 12,
+    "existingLocalizedParagraphs4to6And10PreservedByteForByte": true,
+    "seedProceduresAndRightsParagraphs2to3RemainExactEnglish": true,
+    "qualifiedAdviceParagraph12RemainsExactEnglish": true
+  },
+  "paragraphChecks": [
+    {
+      "paragraph": 1,
+      "decision": "accept with review flag",
+      "check": "Neighbor sharing, variety sharing and seed-saving frame retained; no added guarantee."
+    },
+    {
+      "paragraph": 2,
+      "decision": "preserve exact English",
+      "check": "Crop identity, source/date, isolation, selection, drying and storage instructions are verbatim."
+    },
+    {
+      "paragraph": 3,
+      "decision": "preserve exact English",
+      "check": "No diversity/quality guarantee; identity, germination, protected variety and permission checks are unchanged."
+    },
+    {
+      "paragraphs": "4–6",
+      "decision": "preserved",
+      "check": "Current Tshivenda tool-sharing paragraphs remain byte-for-byte unchanged."
+    },
+    {
+      "paragraph": 7,
+      "decision": "accept with technical clause held",
+      "check": "Handling gently is localized. Suitable shade, packaging, storage and through-delivery requirement remain exact English."
+    },
+    {
+      "paragraph": 8,
+      "decision": "accept with business clause held",
+      "check": "Nearby buyer may reduce journey retains may/possibility; losses and selling costs still require measuring exactly."
+    },
+    {
+      "paragraph": 9,
+      "decision": "accept with business clause held",
+      "check": "Compare-money-after-fees/transport/spoilage and per-option calculation remain exact English; negation and nearest-buyer/always/best-return warning remains exact."
+    },
+    {
+      "paragraph": 10,
+      "decision": "preserved",
+      "check": "Existing localized neighbors-demonstrate/compare-own-farms sentence is unchanged."
+    },
+    {
+      "paragraph": 11,
+      "decision": "accept with conditions held",
+      "check": "Recording imperative localized; method, conditions, result and whether-it-may-suit-their-land criterion remain verbatim."
+    },
+    {
+      "paragraph": 12,
+      "decision": "preserve exact English",
+      "check": "Qualified advice for unfamiliar disease/technical problems and the specialist cooperation sentence remain exact."
+    }
+  ],
+  "repairs": [],
+  "uncertainty": [
+    "Tshivenda idiom and agreement require facilitator review; no fluent approval is claimed.",
+    "Mixed business/preservation clauses remain English where translation could change action or calculation."
+  ],
+  "noClaims": [
+    "No new numbers, crop species, seed guarantees, business promises or advice."
+  ],
+  "packetSha256": "5d2e7416038e41686b402cad43c5cf91c19e8ebf636f814baf137baa61e8dfc7"
+}

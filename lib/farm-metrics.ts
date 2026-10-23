@@ -1,3 +1,4 @@
+import { recordWeightKg } from './farm-records';
 // Finance metrics are deliberately derived only from records that actually carry
 // the relationship they claim. A crop sale and harvest name their crop; a cost
 // does not unless the farmer chose to tag it. Never spread an untagged cost across
@@ -146,7 +147,7 @@ export function buildFarmMetrics(
     ...cashSales,
     ...paidInvoices.flatMap(invoiceSalesForPaidInvoice).map((sale) => ({ ...sale, garden_id: null })),
   ];
-  const rows = new Map<string, Omit<CropMetric, 'yieldKgPerM2' | 'turnoverZarPerM2' | 'priceZarPerKg' | 'taggedCostZarPerM2'>>();
+  const rows = new Map<string, Omit<CropMetric, 'yieldKgPerM2' | 'turnoverZarPerM2' | 'priceZarPerKg' | 'taggedCostZarPerM2'> & { weightSalesZar: number }>();
   const ensure = (identity: { key: string | null; label: string }) => {
     const key = cropIdentityMapKey(identity);
     const current = rows.get(key);
@@ -159,6 +160,7 @@ export function buildFarmMetrics(
       hasHarvest: false,
       turnoverZar: 0,
       soldKg: 0,
+      weightSalesZar: 0,
       hasSale: false,
       taggedCostsZar: 0,
       hasTaggedCost: false,
@@ -180,14 +182,20 @@ export function buildFarmMetrics(
   for (const harvest of production) {
     if (!isInFinancePeriod(dateFor(harvest), period, now)) continue;
     const row = ensure(cropIdentityOf(harvest.crop, aliases));
+    const kg = recordWeightKg(harvest);
+    if (kg === null) continue;
     row.hasHarvest = true;
-    row.harvestedKg += finiteNonNegative(harvest.kg);
+    row.harvestedKg += kg;
   }
   for (const sale of cropTurnoverSales) {
     if (!isInFinancePeriod(dateFor(sale), period, now)) continue;
     const row = ensure(cropIdentityOf(sale.crop, aliases));
     row.hasSale = true;
-    row.soldKg += finiteNonNegative(sale.kg);
+    const kg = recordWeightKg(sale);
+    if (kg !== null) {
+      row.soldKg += kg;
+      row.weightSalesZar += finiteNonNegative(sale.amount);
+    }
     row.turnoverZar += finiteNonNegative(sale.amount);
   }
 
@@ -249,7 +257,7 @@ export function buildFarmMetrics(
         // Guarded on soldKg rather than turnover: a giveaway logged as a sale of 0
         // rand over 20 kg is a real R0.00/kg, but 20 kg sold for R400 with the kg
         // left blank would divide by zero and print Infinity on the card.
-        priceZarPerKg: row.hasSale && row.soldKg > 0 ? row.turnoverZar / row.soldKg : null,
+        priceZarPerKg: row.hasSale && row.soldKg > 0 ? row.weightSalesZar / row.soldKg : null,
       }))
       .sort(byName),
     crops: bedRows
@@ -257,7 +265,7 @@ export function buildFarmMetrics(
         ...row,
         yieldKgPerM2: row.areaM2 !== null && row.hasHarvest ? row.harvestedKg / row.areaM2 : null,
         turnoverZarPerM2: row.areaM2 !== null && row.hasSale ? row.turnoverZar / row.areaM2 : null,
-        priceZarPerKg: row.hasSale && row.soldKg > 0 ? row.turnoverZar / row.soldKg : null,
+        priceZarPerKg: row.hasSale && row.soldKg > 0 ? row.weightSalesZar / row.soldKg : null,
         taggedCostZarPerM2: row.areaM2 !== null && row.hasTaggedCost ? row.taggedCostsZar / row.areaM2 : null,
       }))
       .sort((a, b) => a.cropName.localeCompare(b.cropName)),

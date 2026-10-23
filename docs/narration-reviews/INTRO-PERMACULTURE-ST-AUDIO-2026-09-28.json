@@ -1,0 +1,396 @@
+{
+  "module": "intro-permaculture",
+  "language": "st",
+  "reviewStatus": "unreviewed-machine-audio",
+  "voice": "Kore",
+  "model": "gemini-3.8-flash-tts",
+  "warning": "Machine voice and translation need fluent speaker and local farming review. English holds are read verbatim.",
+  "slides": [
+    {
+      "slide": 1,
+      "sourceEnglish": "Before you dig anything, it helps to know how the decisions get made.\n\nThis module is the foundation for everything else in the course. Three ethics, a set of design principles, and one simple way to organise your land.\n\nNone of it needs money. All of it changes where you put things, and how far you walk every day.\n\nThink about your own plot. Which part of it do you visit most often?",
+      "spokenText": "Pele o cheka ntho efe kapa efe, ho thusa ho tseba hore na diqeto di etswa jwang.\n\nThuto ena ke motheo wa tsohle tse ding thutong ena. E na le melao e meraro ya boitshwaro, melao-motheo ya moralo, le mokgwa o le mong o bonolo wa ho hlophisa mobu wa hao.\n\nHa ho le e nngwe ya dintho tsena e hlokang tjhelete. Tsona kaofela di fetola moo o behang dintho teng le hore o tsamaya sebaka se se kae letsatsi le leng le le leng.\n\nNahana ka tshimo ya hao. Ke karolo efe ya yona eo o e etelang hangata ho feta tse ding?",
+      "statuses": [
+        "draft",
+        "draft",
+        "draft",
+        "draft"
+      ],
+      "draftParagraphs": 4,
+      "englishHolds": 0,
+      "sourceSha256": "2843b85ee35e732179a45a8fee8ebb77443d4540da0ec067e86c36d4949e0a23",
+      "spokenSha256": "038eb524541eb0cb4a08c1961f3dded814e15934d756ea25f6f23425da13df51",
+      "seconds": 35.36,
+      "audioSha256": "e6126d03971fc957eb8465625e6c1cbad9653b8cfa9c06a8fc364b640eb426cb"
+    },
+    {
+      "slide": 2,
+      "sourceEnglish": "A good design saves work before you pick up a spade.\n\nMost of the effort on a smallholding is not planting or harvesting. It is walking, carrying and fixing what was put in the wrong place.\n\nPermaculture is a way of deciding where things go, so the land works with you instead of against you.\n\nThink of one job on your farm that takes longer than it should. Where does the time actually go?",
+      "spokenText": "Moralo o motle o fokotsa mosebetsi pele o nka garawe.\n\nMosebetsi o mongata polasing e nyenyane ha se ho lema kapa ho kotula. Ke ho tsamaya, ho rwala le ho lokisa se neng se behilwe sebakeng se fosahetseng.\n\nPermaculture ke mokgwa wa ho etsa qeto ya hore dintho di be hokae, e le hore mobu o sebetse mmoho le wena ho e-na le ho o sitisa.\n\nNahana ka mosebetsi o le mong polasing ya hao o nkang nako e telele ho feta kamoo o lokelang. Nako eo e ya hokae?",
+      "statuses": [
+        "draft",
+        "draft",
+        "draft",
+        "draft"
+      ],
+      "draftParagraphs": 4,
+      "englishHolds": 0,
+      "sourceSha256": "5c13c5c52eab0ed85d63268fbbfef630580522a8eeddefd9ef9e6085781d3fc9",
+      "spokenSha256": "2f1e7fd89611194ac1ea69151e6122f69b0851442ea9653da78cc2ed8166cb51",
+      "seconds": 31.92,
+      "audioSha256": "852d9d98894ba4466145433f620a8898450c2cdd5c813f5cb7956b722b9a783b"
+    },
+    {
+      "slide": 3,
+      "sourceEnglish": "By the end of this module you will be able to do three things.\n\nName the three ethics, and use them to settle a decision that has no obvious answer.\n\nName the design principles that matter most on your land, and say why.\n\nSketch your zones and your sectors on one sheet of paper.\n\nThat sketch is the skeleton of every plan you make after this.",
+      "spokenText": "Qetellong ya thuto ena o tla kgona ho etsa dintho tse tharo.\n\nBolela melao e meraro ya boitshwaro, mme o e sebedise ho rarolla qeto e se nang karabo e totobetseng.\n\nBolela melao-motheo ya moralo e leng bohlokwa haholo mobung wa hao, mme o bolele lebaka.\n\nRala zones le sectors tsa hao pampiring e le nngwe.\n\nSetshwantsho seo ke motheo wa moralo o mong le o mong oo o tla o etsa kamora moo.",
+      "statuses": [
+        "draft",
+        "draft",
+        "draft",
+        "draft",
+        "draft"
+      ],
+      "draftParagraphs": 5,
+      "englishHolds": 0,
+      "sourceSha256": "592212beedc9e777e43148ba974fde4b7e97c745b5b31e742702e88982307655",
+      "spokenSha256": "45f60e085c3ca99441c4ca30064384a56ef64cc09ce53de79e09b27f2338fe9e",
+      "seconds": 30.64,
+      "audioSha256": "4b870e2ea0eb2501ebc2e6f2c6ac9874edb3ed47c5b701287e36146f80ebe0f4"
+    },
+    {
+      "slide": 4,
+      "sourceEnglish": "The first ethic is Earth Care.\n\nIt means treating soil, water, plants and animals as living systems to protect, not resources to use up.\n\nA system you use up stops paying you. A system you protect keeps paying you.\n\nLook at one patch of bare soil on your land. Is anything protecting it right now?",
+      "spokenText": "Molao wa pele wa boitshwaro ke Tlhokomelo ya Lefatshe (Earth Care).\n\nHo bolela ho nka mobu, metsi, dimela le diphoofolo e le ditsamaiso tse phelang tse lokelang ho sireletswa, eseng mehlodi eo re ka e sebedisang ho fihlela e fela.\n\nA system you use up stops paying you. A system you protect keeps paying you.\n\nSheba karolo e le nngwe ya mobu o se nang dimela tshimong ya hao. Na ho na le ntho e o sireletsang hona jwale?",
+      "statuses": [
+        "draft",
+        "draft",
+        "english-hold",
+        "draft"
+      ],
+      "draftParagraphs": 3,
+      "englishHolds": 1,
+      "sourceSha256": "4169417cc3e393d7977aa547c4d5c031097a3a843458680a1f9f6bc47c50a5a2",
+      "spokenSha256": "c3f67b82fbaa2f8cd02ec74a0bb86ed5d43a7a7079c603e7c32192bfac205486",
+      "seconds": 29.88,
+      "audioSha256": "767a4f3a50ba255c7a468ae05986f9544e69dfab7bc35f5e571ddaa3017c3a2e"
+    },
+    {
+      "slide": 5,
+      "sourceEnglish": "The second ethic is People Care.\n\nYour family's needs come first, then your community's.\n\nA farmer who sells every egg and every vegetable, and keeps nothing back for the family table, is skipping People Care.\n\nThe farm is meant to feed the household that runs it.\n\nWhat comes off your land that your own family never eats?",
+      "spokenText": "Molao wa bobedi wa boitshwaro ke Tlhokomelo ya Batho (People Care).\n\nDitlhoko tsa lelapa la hao di tla pele, ebe ho latela tsa setjhaba sa heno.\n\nA farmer who sells every egg and every vegetable, and keeps nothing back for the family table, is skipping People Care.\n\nPolasi e reretswe ho fepa lelapa le e tsamaisang.\n\nKe eng e tswang mobung wa hao eo lelapa la hao le sa e jeng?",
+      "statuses": [
+        "draft",
+        "draft",
+        "english-hold",
+        "draft",
+        "draft"
+      ],
+      "draftParagraphs": 4,
+      "englishHolds": 1,
+      "sourceSha256": "dfd56e235901da8105e05937f0ea89fdadb58df28f7400e54fff659978e28b69",
+      "spokenSha256": "52e78844052ba8619142449eda67b7efaac5e3436b3133f37780aeac7b8a6e34",
+      "seconds": 28.16,
+      "audioSha256": "24f8a79fd1aa23799957968385c2e22d4202364fc9b8d9bb2b34100182a340b5"
+    },
+    {
+      "slide": 6,
+      "sourceEnglish": "The third ethic is Fair Share.\n\nTake only what you need, and return the surplus to the system — seeds, food, water, knowledge.\n\nA farmer who sells all his surplus mielies and keeps nothing back for compost or for seed is breaking this one. Nothing goes back.\n\nA community that fences off a shared spring is breaking it too.\n\nWhat does your land get back from you each season?",
+      "spokenText": "Molao wa boraro wa boitshwaro ke Karolelano e Lokileng (Fair Share).\n\nTake only what you need, and return the surplus to the system — seeds, food, water, knowledge.\n\nA farmer who sells all his surplus mielies and keeps nothing back for compost or for seed is breaking this one. Nothing goes back.\n\nA community that fences off a shared spring is breaking it too.\n\nMobu wa hao o fumana eng ho wena sehleng ka seng?",
+      "statuses": [
+        "draft",
+        "english-hold",
+        "english-hold",
+        "english-hold",
+        "draft"
+      ],
+      "draftParagraphs": 2,
+      "englishHolds": 3,
+      "sourceSha256": "f021070c5aae0ee3ae37c0839bdfa3c750d022a641c5cf24147436c5c4fd6718",
+      "spokenSha256": "3cc9326a303e252e9c5befa0fcccf1d87b8c1f8368cc32820fb2db170367e2ea",
+      "seconds": 28.88,
+      "audioSha256": "f0fe5f1c8b8700321a56aa5f081e1afe0ae28094926c6fcd56e7ac88e15a07cd"
+    },
+    {
+      "slide": 7,
+      "sourceEnglish": "A borehole serves your household. Neighbours ask for water too.\n\nFirst find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.\n\nWho could help you check the rules and the water supply?",
+      "spokenText": "A borehole serves your household. Neighbours ask for water too.\n\nFirst find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.\n\nKe mang ya ka o thusang ho sheba melao le phepelo ya metsi?",
+      "statuses": [
+        "english-hold",
+        "english-hold",
+        "draft"
+      ],
+      "draftParagraphs": 1,
+      "englishHolds": 2,
+      "sourceSha256": "3fdb8a8da1ef92364a663a936118ca197952f5f21a10ee17c727b349dddb8764",
+      "spokenSha256": "679cd82c9d14f4c9c4d4c7c7e6984b41ded9775ad98ce4ff7f2bb59dd34498c1",
+      "seconds": 32.12,
+      "audioSha256": "4908700e6b6b8b7ac1841716be0c9abd9da4b9d47e235f9bb96cd6459eaa2d35"
+    },
+    {
+      "slide": 8,
+      "sourceEnglish": "This is what the ethics are actually for.\n\nA neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.\n\nThe ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.\n\nBuild these three into how you think before you build anything on the ground.",
+      "spokenText": "Ke ka lebaka lena melao ya boitshwaro e leng teng.\n\nA neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.\n\nThe ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.\n\nBuild these three into how you think before you build anything on the ground.",
+      "statuses": [
+        "draft",
+        "english-hold",
+        "english-hold",
+        "english-hold"
+      ],
+      "draftParagraphs": 1,
+      "englishHolds": 3,
+      "sourceSha256": "2ec08a48d096e1f4fcbe572ad12cf0d61e8be745d22ef6524c6f721e8f240f61",
+      "spokenSha256": "f2a603a16fcac0eab241bac54fe3a2699dd29b670f40b3b9ef127705f2be1681",
+      "seconds": 24.8,
+      "audioSha256": "781e1107d13a46f1a75a0282b5f70275b1f4ef54fb5ce3f40b22ca1c390585f6"
+    },
+    {
+      "slide": 9,
+      "sourceEnglish": "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept.\n\nYou do not need all twelve to start. Three useful starting points for this lesson are: observe and interact, catch and store energy, and use edges and value the marginal.\n\nWe will take those three one at a time.",
+      "spokenText": "David Holmgren o hlalositse melao-motheo e leshome le metso e mmedi ya moralo bukeng ya *Essence of Permaculture*. Bill Mollison le David Holmgren ba thehile mohopolo wa permaculture mmoho.\n\nYou do not need all twelve to start. Three useful starting points for this lesson are: observe and interact, catch and store energy, and use edges and value the marginal.\n\nRe tla bua ka e nngwe le e nngwe ya melao-motheo eo e meraro ka bonngwe.",
+      "statuses": [
+        "draft",
+        "english-hold",
+        "draft"
+      ],
+      "draftParagraphs": 2,
+      "englishHolds": 1,
+      "sourceSha256": "9bc43ea01232fe95b59071bfc53da68eaac02b4d528388ef786d1372751c57d8",
+      "spokenSha256": "a4d3b8c25ae3a4695451ef0ad8c82c70f1332dc91751ca3e5aaa337bc475c58c",
+      "seconds": 31.8,
+      "audioSha256": "f7430be929f4244e796127abf7e01dc1741933395c957361fd6bf9f5ba9f8243"
+    },
+    {
+      "slide": 10,
+      "sourceEnglish": "Watch your land through a full season before you commit to major earthworks.\n\nOne storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.\n\nThis helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.\n\nWhere does water leave your land? Do you actually know, or are you guessing?",
+      "spokenText": "Watch your land through a full season before you commit to major earthworks.\n\nOne storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.\n\nThis helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.\n\nWhere does water leave your land? Do you actually know, or are you guessing?",
+      "statuses": [
+        "english-hold",
+        "english-hold",
+        "english-hold",
+        "english-hold"
+      ],
+      "draftParagraphs": 0,
+      "englishHolds": 4,
+      "sourceSha256": "0e2774060989cd0a45efbeb215b725da6fed1f8c7e186160df7e45589e7b310a",
+      "spokenSha256": "0e2774060989cd0a45efbeb215b725da6fed1f8c7e186160df7e45589e7b310a",
+      "seconds": 43.16,
+      "audioSha256": "d2f7359238379c1dbe8ee0f168f45c2802d76f3bb64f408dd719f7f70abee5e9"
+    },
+    {
+      "slide": 11,
+      "sourceEnglish": "Harvest rain, sun and biomass before they leave your property.\n\nEvery one of those arrives free and leaves free. Water runs off, leaves blow away, sun falls on bare ground.\n\nCompare the cost and work with the benefit on your own farm.\n\nName one thing that arrives on your land free and leaves again without being used.",
+      "spokenText": "Harvest rain, sun and biomass before they leave your property.\n\nE nngwe le e nngwe ya tsona e fihla e sa lefellwe mme e tsamaya e sa lefellwe. Metsi a phalla a tloha, makgasi a fefolwa ke moya, letsatsi le kganyetsa mobu o se nang dimela.\n\nCompare the cost and work with the benefit on your own farm.\n\nBolela ntho e le nngwe e fihlang mobung wa hao e sa lefellwe, ebe e boela e tsamaya e sa sebediswa.",
+      "statuses": [
+        "english-hold",
+        "draft",
+        "english-hold",
+        "draft"
+      ],
+      "draftParagraphs": 2,
+      "englishHolds": 2,
+      "sourceSha256": "76c812cff82637f4ab7cee229c0d4f1cad6588151bb535116be0402c4d15eaf6",
+      "spokenSha256": "3f752d286d3a9c34eb312f9f3510b8b258a6a9d27b7bc3768061a2b1c5a759fb",
+      "seconds": 30.44,
+      "audioSha256": "182c16cc99390ac6a6f4094540ad069cf871a2c469edda8d6cc74107afd7c279"
+    },
+    {
+      "slide": 12,
+      "sourceEnglish": "The edge is where two things meet — a fence line or the strip beside a path.\n\nThese can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.\n\nWhich edge on your plot is doing nothing at the moment?",
+      "spokenText": "Moeli ke moo lintho tse peli li kopanang teng — joalo ka mola oa terata kapa sebaka se pela tsela.\n\nLibaka tsena li ka ba molemo bakeng sa ho shebella. Sheba hore na ke eng e seng e mela hantle pela moeli oa hao. Seo ke tsela eo mobu o u bolellang ho hong ka eona.\n\nKe karolo efe ea moeli setšeng sa hao e sa etse letho hona joale?",
+      "statuses": [
+        "draft",
+        "draft",
+        "draft"
+      ],
+      "draftParagraphs": 3,
+      "englishHolds": 0,
+      "sourceSha256": "a4f4d0741b648f6c5d43d6fc4cb40c349fa9b7f9055302c01075ac90f1719b23",
+      "spokenSha256": "cded08f43c9b9becae155b95c64e70cbbff573d9c149f604729846274ea42300",
+      "seconds": 21.52,
+      "audioSha256": "bef2ab756beea6e941455389219dbe131d0a9da64ced8ff07ab72b2b424fe271"
+    },
+    {
+      "slide": 13,
+      "sourceEnglish": "Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.\n\nTwo others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.\n\nWhat would one bad day cost you right now?",
+      "spokenText": "Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.\n\nTwo others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.\n\nWhat would one bad day cost you right now?",
+      "statuses": [
+        "english-hold",
+        "english-hold",
+        "english-hold"
+      ],
+      "draftParagraphs": 0,
+      "englishHolds": 3,
+      "sourceSha256": "b9088d191d9b07eb1b3fbd2fb1bde1cf49b24923505eaae767a7aaf1b34d6ee1",
+      "spokenSha256": "b9088d191d9b07eb1b3fbd2fb1bde1cf49b24923505eaae767a7aaf1b34d6ee1",
+      "seconds": 28.32,
+      "audioSha256": "741918799e5ddd653ad0a4638d4edfe664aeaf40f8329e8f7bced856a94ce80e"
+    },
+    {
+      "slide": 14,
+      "sourceEnglish": "Put each element where it works for its neighbours.\n\nA garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.\n\nThe same three things, fenced apart, do only their own job.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+      "spokenText": "Put each element where it works for its neighbours.\n\nA garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.\n\nLintho tsona tseo tse tharo, ha li arotsoe ka terata, li etsa mosebetsi oa tsona feela.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+      "statuses": [
+        "english-hold",
+        "english-hold",
+        "draft",
+        "english-hold"
+      ],
+      "draftParagraphs": 1,
+      "englishHolds": 3,
+      "sourceSha256": "59740e3f792c8cb88f6c571e655c6f5069e30d8a3fe3562eaab239674befc39e",
+      "spokenSha256": "59ea5d057e898459b2e21cf3e470221bb883e0b18f71f0f094fc6b83891ac6a8",
+      "seconds": 41.4,
+      "audioSha256": "ee77bce0d1d64cb219771930cc6952794fe54566cd403c5c7e8cdc2ed3b83742"
+    },
+    {
+      "slide": 15,
+      "sourceEnglish": "Zones run from 0 to 5, and they are about your feet, not your fences.\n\nZone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.\n\nZone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.\n\nZone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild.",
+      "spokenText": "Zones run from 0 to 5, and they are about your feet, not your fences.\n\nZone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.\n\nZone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.\n\nZone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild.",
+      "statuses": [
+        "english-hold",
+        "english-hold",
+        "english-hold",
+        "english-hold"
+      ],
+      "draftParagraphs": 0,
+      "englishHolds": 4,
+      "sourceSha256": "65a0714425d997cc0122518856c83c37898d4353fccd735e1b0ae0b41ff1aa46",
+      "spokenSha256": "65a0714425d997cc0122518856c83c37898d4353fccd735e1b0ae0b41ff1aa46",
+      "seconds": 31.88,
+      "audioSha256": "e98f413d6e6875fdea5eb272bf89347ff95683efcd31aef2fde21c90bc319bd0"
+    },
+    {
+      "slide": 16,
+      "sourceEnglish": "Herbs you pick often are easier to tend near the house.\n\nPut them far away, and the long walk may mean you miss a visit. The herbs may be neglected.\n\nThink about the paths you walk each day.\n\nWhat do you visit often that could be closer?",
+      "spokenText": "Herbs you pick often are easier to tend near the house.\n\nPut them far away, and the long walk may mean you miss a visit. The herbs may be neglected.\n\nNahana ka litsela tseo u li tsamaeang letsatsi le letsatsi.\n\nKe eng eo u e etelang hangata e ka bang haufi le uena?",
+      "statuses": [
+        "english-hold",
+        "english-hold",
+        "draft",
+        "draft"
+      ],
+      "draftParagraphs": 2,
+      "englishHolds": 2,
+      "sourceSha256": "fff240a3a194ec41bf2df2ef05c21d5bf5c9e669746c8a0323167db3fa4e7d69",
+      "spokenSha256": "bfe347edeb0a3f5decaaa984015b70e579e65277760f659e9efcc4de41ad6d65",
+      "seconds": 20.12,
+      "audioSha256": "2d96297c2a3c073bfd12d95e1086bbf0c82b76396d0a00f4fd56dc54a86a4a10"
+    },
+    {
+      "slide": 17,
+      "sourceEnglish": "This is the point of the whole exercise.\n\nZones help organise space around your effort — the walking, the carrying and the checking that fills a real day.\n\nThe more often something needs you, the closer it lives. That can save walking and work over a season.\n\nStand at your kitchen door. What can you reach without thinking about it?",
+      "spokenText": "Ena ke ntlha ea boikoetliso bona kaofela.\n\nZones li thusa ho hlophisa sebaka ho potoloha boiteko ba hao — ho tsamaea, ho jara le ho lekola tse tlatsang letsatsi la sebele.\n\nThe more often something needs you, the closer it lives. That can save walking and work over a season.\n\nEma monyako oa kichine ea hao. Ke eng eo u ka e fihlelang u sa nahana ka eona?",
+      "statuses": [
+        "draft",
+        "draft",
+        "english-hold",
+        "draft"
+      ],
+      "draftParagraphs": 3,
+      "englishHolds": 1,
+      "sourceSha256": "bdd6a078df5bbb01daf184e62fd14dbbce4efa334a4c7c5aacb700715a23ed9b",
+      "spokenSha256": "bfc628a36e2c99c10d56079277e256554120fdab25bf35029aaaf76ba68b94e3",
+      "seconds": 26.84,
+      "audioSha256": "cfc2f59c05ed362256699ad8645f0546a1d5b3574fa65d023a57d10d2442a474"
+    },
+    {
+      "slide": 18,
+      "sourceEnglish": "Zones come from inside your land. Sectors come from outside it.\n\nSun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.\n\nWatch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land.\n\nWhich direction does the weather that damages you come from?",
+      "spokenText": "Zones li tsoa kahare ho naha ea hao. Sectors li tsoa kantle ho eona.\n\nSun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.\n\nWatch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land.\n\nBoemo ba leholimo bo u senyang bo tsoa ntlheng efe?",
+      "statuses": [
+        "draft",
+        "english-hold",
+        "english-hold",
+        "draft"
+      ],
+      "draftParagraphs": 2,
+      "englishHolds": 2,
+      "sourceSha256": "062da196f1bb411f69e91e177454bfee647266c145beb80745b8e71a314fdae2",
+      "spokenSha256": "94224a1f31648112a604c4a52290eac250c329c049566f4f24b960ade73e84cf",
+      "seconds": 29.28,
+      "audioSha256": "85ea7f16de208a83af15c423bbc0f3ca452c605194f621c557243dfd5b333f84"
+    },
+    {
+      "slide": 19,
+      "sourceEnglish": "Look at this example. The wind comes from the north-west.\n\nThe trees and shrubs stand between that wind and the crops.\n\nSome air passes through the windbreak. Other air moves over it or around its ends.\n\nThe shelter can reduce wind speed behind it. The design and care of the windbreak matter.\n\nOn your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan.",
+      "spokenText": "Look at this example. The wind comes from the north-west.\n\nThe trees and shrubs stand between that wind and the crops.\n\nSome air passes through the windbreak. Other air moves over it or around its ends.\n\nThe shelter can reduce wind speed behind it. The design and care of the windbreak matter.\n\nOn your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan.",
+      "statuses": [
+        "english-hold",
+        "english-hold",
+        "english-hold",
+        "english-hold",
+        "english-hold"
+      ],
+      "draftParagraphs": 0,
+      "englishHolds": 5,
+      "sourceSha256": "f0a865b78cc117333826610366406292b0c5a0f55c4726407497494e05e91d3b",
+      "spokenSha256": "f0a865b78cc117333826610366406292b0c5a0f55c4726407497494e05e91d3b",
+      "seconds": 28.24,
+      "audioSha256": "95988c9559a92e7fabe49d213f3d3dffdf1f416e3a938997d5430fa9b36781d3"
+    },
+    {
+      "slide": 20,
+      "sourceEnglish": "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.\n\nThen draw arrows in from outside for sun, wind, fire and water.\n\nThat sheet of paper is the skeleton of your design. Everything else in this course hangs on it.\n\nIt does not need to be neat. It needs to be true.",
+      "spokenText": "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.\n\nEbe o thala metsu e kenang ho tswa kantle bakeng sa letsatsi, moya, mollo le metsi.\n\nLeqephe leo la pampiri ke mokokotlo wa moralo wa hao. Ntho e nngwe le e nngwe khosong ena e itshetlehile hodima lona.\n\nHa ho hlokahale hore e be makhethe. E lokela ho bontša se leng teng ka ’nete.",
+      "statuses": [
+        "english-hold",
+        "draft",
+        "draft",
+        "draft"
+      ],
+      "draftParagraphs": 3,
+      "englishHolds": 1,
+      "sourceSha256": "168b5e0e36f75740d2261086093ae7266843c779757c0f4f7d39e088a8d39234",
+      "spokenSha256": "c91c70ac86d3baa0271f6cb775c5c625f5cdd600243dcbbf4ac1ba25c5113fa3",
+      "seconds": 30.24,
+      "audioSha256": "f281ce330f09951d197196df8d3c5d09219f32e2e77bba5f69c7f58adc8b37fb"
+    },
+    {
+      "slide": 21,
+      "sourceEnglish": "Sketch your own zones and sectors on one sheet of paper.\n\nMark Zone 0 and Zone 1 first, then work outward as far as your land goes.\n\nAdd an arrow for each energy that arrives from outside, and label where it comes from.\n\nPhotograph the sketch.",
+      "spokenText": "Sketch your own zones and sectors on one sheet of paper.\n\nMark Zone 0 and Zone 1 first, then work outward as far as your land goes.\n\nAdd an arrow for each energy that arrives from outside, and label where it comes from.\n\nNka senepe sa setshwantsho.",
+      "statuses": [
+        "english-hold",
+        "english-hold",
+        "english-hold",
+        "draft"
+      ],
+      "draftParagraphs": 1,
+      "englishHolds": 3,
+      "sourceSha256": "bd2f64e50542090e2e7968860e4c281874d670abcb826239c0cb22a7a23b3631",
+      "spokenSha256": "698acbb4be78c7c496e6a61cd7390f67167eda403ea240db5247316e17086919",
+      "seconds": 18.16,
+      "audioSha256": "91dd1d172982254fa040a0d2b9820226b98b1e016d292c7ef7f5c935ee985bcd"
+    },
+    {
+      "slide": 22,
+      "sourceEnglish": "Walk out and check your sketch against the ground.\n\nStand at the kitchen door and count what is really in Zone 1 today.\n\nFind one thing planted further away than how often you use it, and write down where it should move to.\n\nThen ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow.",
+      "spokenText": "Walk out and check your sketch against the ground.\n\nStand at the kitchen door and count what is really in Zone 1 today.\n\nFind one thing planted further away than how often you use it, and write down where it should move to.\n\nThen ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow.",
+      "statuses": [
+        "english-hold",
+        "english-hold",
+        "english-hold",
+        "english-hold"
+      ],
+      "draftParagraphs": 0,
+      "englishHolds": 4,
+      "sourceSha256": "ab7e0500a2f6287acefc960178344ce8a7131879fb89e0a6489b3099486816db",
+      "spokenSha256": "ab7e0500a2f6287acefc960178344ce8a7131879fb89e0a6489b3099486816db",
+      "seconds": 22.76,
+      "audioSha256": "38a4980a865fbde9541176d1d4d42eac0c4699448a7026c21c4fd8294d508cd6"
+    }
+  ],
+  "fullNarration": {
+    "seconds": 645.92,
+    "audioSha256": "c2411fd63e864a7bf158547a921ab9613ccd8d40d6d2cd09ec0974492ffe9510"
+  },
+  "sourcePair": "docs/narration/intro-permaculture.st.paired-draft.json",
+  "sourcePairSha256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+  "authorizedBy": "Rory Clark",
+  "authorizedOn": "2026-09-28",
+  "publicationStatus": "unreviewed mixed Sesotho and exact English, for facilitator feedback",
+  "listeningReview": "pending",
+  "fluentReview": "pending",
+  "localFarmingReview": "pending"
+}

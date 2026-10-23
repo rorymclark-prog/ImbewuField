@@ -12,6 +12,13 @@
 // player can be tested without a browser.
 
 import { COURSE_NARRATION, trackUrl, type NarrationTrack } from '@/lib/course-audio';
+import { ISIZULU_DECK_SOURCE_BINDINGS } from '@/lib/course-deck-source-bindings';
+import { resolveIsiZuluSilentDeckDraft } from '@/lib/course-deck-silent-drafts-registry';
+import type { IsiZuluSilentDeckDraft } from '@/lib/course-deck-silent-drafts';
+import { CURRENT_DECK_RELEASE_BINDINGS } from '@/lib/course-deck-release-bindings-registry';
+import type { CourseDeckReleaseBindings } from '@/lib/course-deck-release-bindings';
+import { COURSE_TRANSCRIPTS } from '@/lib/course-transcripts';
+import { trackTitle } from '@/lib/course-audio';
 
 export interface DeckAnimation {
   /** Silent clip — narration plays over it. Some clips contain labels in the deck language. */
@@ -87,14 +94,16 @@ const SEEDS_ANIMATIONS: Record<number, DeckAnimation> = {
   // fails on any difference. These were hand-rounded before, which meant re-encoding the clips
   // turned every play button into a wrong promise about somebody's data allowance — the one number
   // on this screen a farmer is asked to trust.
-  5:  { src: 'imbewu_isiZulu_video_01', poster: 'imbewu_isiZulu_video_01', bytes: 420_204,   seconds: 10 }, // uniform vs varied seedlings
-  7:  { src: 'imbewu_isiZulu_video_02', poster: 'imbewu_isiZulu_video_02', bytes: 738_328,   seconds: 10 }, // households exchanging packets
-  8:  { src: 'seed-selecting-parents', poster: 'seed-selecting-parents', bytes: 248_394, seconds: 5 }, // walking the rows, choosing, harvesting
-  10: { src: 'imbewu_isiZulu_video_03', poster: 'imbewu_isiZulu_video_03', bytes: 399_404,   seconds: 10 }, // maize tassels, crossing
-  13: { src: 'seed-dry-processing', poster: 'seed-dry-processing', bytes: 311_237,   seconds: 5 }, // threshing, winnowing, drying on the mat
-  15: { src: 'imbewu_isiZulu_video_05', poster: 'imbewu_isiZulu_video_05', bytes: 1_377_407, seconds: 20 }, // tomato in a jar — the long one
-  18: { src: 'new_seed-storage-jar-vs-bag', poster: 'new_seed-storage-jar-vs-bag', bytes: 474_949, seconds: 10 },
-  21: { src: 'imbewu_isiZulu_video_06', poster: 'imbewu_isiZulu_video_06', bytes: 439_958,   seconds: 10 }, // germination test on cloth
+  // The regional stills carry English sources beside drafts. An animation poster would cover
+  // those panels and make the learner lose the wording they need to compare.
+  5:  { src: 'imbewu_isiZulu_video_01', poster: 'imbewu_isiZulu_video_01', bytes: 420_204,   seconds: 10, unavailableLanguages: ['st', 've', 'ts'] }, // uniform vs varied seedlings
+  7:  { src: 'imbewu_isiZulu_video_02', poster: 'imbewu_isiZulu_video_02', bytes: 738_328,   seconds: 10, unavailableLanguages: ['st', 've', 'ts'] }, // households exchanging packets
+  8:  { src: 'seed-selecting-parents', poster: 'seed-selecting-parents', bytes: 248_394, seconds: 5, unavailableLanguages: ['st', 've', 'ts'] }, // walking the rows, choosing, harvesting
+  10: { src: 'imbewu_isiZulu_video_03', poster: 'imbewu_isiZulu_video_03', bytes: 399_404,   seconds: 10, unavailableLanguages: ['st', 've', 'ts'] }, // maize tassels, crossing
+  13: { src: 'seed-dry-processing', poster: 'seed-dry-processing', bytes: 311_237,   seconds: 5, unavailableLanguages: ['st', 've', 'ts'] }, // threshing, winnowing, drying on the mat
+  15: { src: 'imbewu_isiZulu_video_05', poster: 'imbewu_isiZulu_video_05', bytes: 1_377_407, seconds: 20, unavailableLanguages: ['st', 've', 'ts'] }, // tomato in a jar — the long one
+  18: { src: 'new_seed-storage-jar-vs-bag', poster: 'new_seed-storage-jar-vs-bag', bytes: 474_949, seconds: 10, unavailableLanguages: ['st', 've', 'ts'] },
+  21: { src: 'imbewu_isiZulu_video_06', poster: 'imbewu_isiZulu_video_06', bytes: 439_958,   seconds: 10, unavailableLanguages: ['st', 've', 'ts'] }, // germination test on cloth
 };
 
 /**
@@ -117,62 +126,72 @@ function slidesFromNarration(moduleId: string, animations: Record<number, DeckAn
 }
 
 // Approved guild clips each occupy one teaching slot; whole-plant thinning is slide 43.
+// The regional stills pair their unreviewed drafts with exact English. Keep these films for
+// English and isiZulu, but let ST/VE/TS learners read the paired frame instead of its poster.
 const GUILD_ANIMATIONS: Record<number, DeckAnimation> = {
   "15": {
     byLang: { zu: { src: "Imbewu-Guilds-03-Pigeon-pea-food", poster: "Imbewu-Guilds-03-Pigeon-pea-food-zu", bytes: 7277042, seconds: 8.0 } },
     "src": "Imbewu-Guilds-03-Pigeon-pea-food",
     "poster": "Imbewu-Guilds-03-Pigeon-pea-food",
     "bytes": 7277042,
-    "seconds": 8.0
+    "seconds": 8.0,
+    "unavailableLanguages": ["st", "ve", "ts"]
   },
   "23": {
     byLang: { zu: { src: "Imbewu-Guilds-09-Labelled-zu", poster: "Imbewu-Guilds-09-Labelled-zu", bytes: 3639293, seconds: 8 } },
     "src": "Imbewu-Guilds-09-Labelled",
     "poster": "Imbewu-Guilds-09-Labelled",
     "bytes": 4174276,
-    "seconds": 8.0
+    "seconds": 8.0,
+    "unavailableLanguages": ["st", "ve", "ts"]
   },
   "27": {
     byLang: { zu: { src: "Imbewu-Guilds-02-Pruning-trimmed", poster: "Imbewu-Guilds-02-Pruning-trimmed-zu", bytes: 3373640, seconds: 5.0 } },
     "src": "Imbewu-Guilds-02-Pruning-trimmed",
     "poster": "Imbewu-Guilds-02-Pruning-trimmed",
     "bytes": 3373640,
-    "seconds": 5.0
+    "seconds": 5.0,
+    "unavailableLanguages": ["st", "ve", "ts"]
   },
   "29": {
     byLang: { zu: { src: "Imbewu-Guilds-01-Mulch-ring", poster: "Imbewu-Guilds-01-Mulch-ring-zu", bytes: 3173759, seconds: 8.0 } },
     "src": "Imbewu-Guilds-01-Mulch-ring",
     "poster": "Imbewu-Guilds-01-Mulch-ring",
     "bytes": 3173759,
-    "seconds": 8.0
+    "seconds": 8.0,
+    "unavailableLanguages": ["st", "ve", "ts"]
   },
   "33": {
     byLang: { zu: { src: "Imbewu-Guilds-04-Helpful-insects", poster: "Imbewu-Guilds-04-Helpful-insects-zu", bytes: 3933234, seconds: 5.5 } },
     "src": "Imbewu-Guilds-04-Helpful-insects",
     "poster": "Imbewu-Guilds-04-Helpful-insects",
     "bytes": 3933234,
-    "seconds": 5.5
+    "seconds": 5.5,
+    "unavailableLanguages": ["st", "ve", "ts"]
   },
   "37": {
     byLang: { zu: { src: "Imbewu-Guilds-05-Guild-overview", poster: "Imbewu-Guilds-05-Guild-overview-zu", bytes: 9200096, seconds: 8.0 } },
     "src": "Imbewu-Guilds-05-Guild-overview",
     "poster": "Imbewu-Guilds-05-Guild-overview",
     "bytes": 9200096,
-    "seconds": 8.0
+    "seconds": 8.0,
+    "unavailableLanguages": ["st", "ve", "ts"]
   },
   "41": {
     byLang: { zu: { src: "Imbewu-Guilds-06-Succession-establish", poster: "Imbewu-Guilds-06-Succession-establish-zu", bytes: 3900208, seconds: 8.0 } },
     "src": "Imbewu-Guilds-06-Succession-establish",
     "poster": "Imbewu-Guilds-06-Succession-establish",
     "bytes": 3900208,
-    "seconds": 8.0
+    "seconds": 8.0,
+    "unavailableLanguages": ["st", "ve", "ts"]
   },
   "45": {
     byLang: { zu: { src: "Imbewu-Guilds-08-Succession-carry-mulch", poster: "Imbewu-Guilds-08-Succession-carry-mulch-zu", bytes: 8354154, seconds: 8.0 } },
     "src": "Imbewu-Guilds-08-Succession-carry-mulch",
     "poster": "Imbewu-Guilds-08-Succession-carry-mulch",
     "bytes": 8354154,
-    "seconds": 8.0
+    "seconds": 8.0,
+    "unavailableLanguages": ["st", "ve", "ts"]
   }
 };
 
@@ -181,7 +200,7 @@ const GUILD_ANIMATIONS: Record<number, DeckAnimation> = {
 const WATER_ANIMATIONS: Record<number, DeckAnimation> = {
   // The swale and overflow extracts on slides 4/7 imply site outcomes that their lesson cannot
   // establish. Keep their stills until the teaching and visual review are resolved together.
-  14: { src: 'flow-roof-rain', poster: 'flow-roof-rain', bytes: 3828056, seconds: 8 },
+  14: { src: 'flow-roof-rain', poster: 'flow-roof-rain', bytes: 3828056, seconds: 8, unavailableLanguages: ['st', 've', 'ts'] },
 };
 
 // The three locally drawn Introduction clips await Rory's visual clearance.
@@ -191,118 +210,150 @@ const INTRO_ANIMATIONS: Record<number, DeckAnimation> = {
   4: { src: 'flow-earth-care', poster: 'flow-earth-care', bytes: 5177501, seconds: 8, unavailableLanguages: ['st', 've', 'ts'] },
 };
 
-// Locally drawn Reading the Landscape scenes stay out of the player pending visual clearance.
+// The regional A-frame cards retain their paired source text while English/isiZulu can play this clip.
 const LANDSCAPE_ANIMATIONS: Record<number, DeckAnimation> = {
-  6: { src: 'flow-a-frame', poster: 'flow-a-frame', bytes: 1808880, seconds: 6 },
+  6: { src: 'flow-a-frame', poster: 'flow-a-frame', bytes: 1808880, seconds: 6, unavailableLanguages: ['st', 've', 'ts'] },
 };
 
 // Keep the reviewed Flow compost actions; the remaining locally authored soil clips await review.
 const SOIL_ANIMATIONS: Record<number, DeckAnimation> = {
   // The farmer visibly places dry leaves and straw over fresh green trimmings, then spreads them.
   // Moisture, decomposition and finished compost remain in the narration and later slides.
-  10: { src: 'flow-build-compost-heap', poster: 'flow-build-compost-heap', bytes: 7619537, seconds: 8, playOnce: true, unavailableLanguages: ['zu'] },
-  11: { src: 'flow-compost-materials', poster: 'flow-compost-materials', bytes: 4290981, seconds: 8, unavailableLanguages: ['zu'] },
+  10: { src: 'flow-build-compost-heap', poster: 'flow-build-compost-heap', bytes: 7619537, seconds: 8, playOnce: true, unavailableLanguages: ['zu', 'st', 've', 'ts'] },
+  11: { src: 'flow-compost-materials', poster: 'flow-compost-materials', bytes: 4290981, seconds: 8, unavailableLanguages: ['zu', 'st', 've', 'ts'] },
 };
 
 // Slide 6 keeps the direct-sowing-versus-transplanting still as its poster. The reviewed Flow
 // footage completes only the transplant action; the choice between methods stays in the
 // narration and still. The locally drawn diagrams remain held for Rory's visual clearance.
 const VEGETABLE_ANIMATIONS: Record<number, DeckAnimation> = {
-  6: { src: 'flow-transplant-root-plug', poster: 'flow-transplant-root-plug', bytes: 6707780, seconds: 8, playOnce: true },
+  // The English poster would cover the regional draft panel and its exact English source.
+  6: { src: 'flow-transplant-root-plug', poster: 'flow-transplant-root-plug', bytes: 6707780, seconds: 8, playOnce: true, unavailableLanguages: ['st', 've', 'ts'] },
 };
 
 // Keep the reviewed Flow hand action; the three locally authored scenes await visual clearance.
 const FOREST_ANIMATIONS: Record<number, DeckAnimation> = {
   // The close-up visibly moves mulch onto cardboard and holds the final layer order. The earlier
   // wide Flow film stopped before this action, and the authored composite awaits Rory's review.
-  16: { src: 'flow-sheet-mulching-closeup', poster: 'flow-sheet-mulching-closeup', bytes: 6248424, seconds: 8, playOnce: true },
+  16: { src: 'flow-sheet-mulching-closeup', poster: 'flow-sheet-mulching-closeup', bytes: 6248424, seconds: 8, playOnce: true, unavailableLanguages: ['st', 've', 'ts'] },
 };
 
 // Keep the real footage and Flow results. The bee close-up shows one continuous move between two
 // blossoms; the lesson still retains the wider hive-to-crops context. The nutrient diagram waits.
 const LIVESTOCK_ANIMATIONS: Record<number, DeckAnimation> = {
-  7: { src: 'flow-ducks-understorey', poster: 'flow-ducks-understorey', bytes: 7613902, seconds: 8 },
-  4: { src: 'hens-pecking-pexels-5563939', poster: 'hens-pecking-pexels-5563939', bytes: 5058477, seconds: 8 },
-  9: { src: 'flow-bee-between-blossoms', poster: 'flow-bee-between-blossoms', bytes: 2126645, seconds: 8, playOnce: true },
+  // Regional stills show each unreviewed draft beside its exact English source. An English
+  // animation poster would cover that comparison during a silent lesson.
+  7: { src: 'flow-ducks-understorey', poster: 'flow-ducks-understorey', bytes: 7613902, seconds: 8, unavailableLanguages: ['st', 've', 'ts'] },
+  4: { src: 'hens-pecking-pexels-5563939', poster: 'hens-pecking-pexels-5563939', bytes: 5058477, seconds: 8, unavailableLanguages: ['st', 've', 'ts'] },
+  9: { src: 'flow-bee-between-blossoms', poster: 'flow-bee-between-blossoms', bytes: 2126645, seconds: 8, playOnce: true, unavailableLanguages: ['st', 've', 'ts'] },
 };
 
 // Keep the Flow seed-sharing film; locally drawn market diagrams await visual clearance.
 const MARKET_ANIMATIONS: Record<number, DeckAnimation> = {
-  15: { src: 'flow-seed-sharing', poster: 'flow-seed-sharing', bytes: 3024675, seconds: 8 },
+  // Phone review found the film poster replaced both regional text panels, even in image zoom.
+  // The silent review deck must show its paired still; English/isiZulu keep the film.
+  15: { src: 'flow-seed-sharing', poster: 'flow-seed-sharing', bytes: 3024675, seconds: 8, unavailableLanguages: ['st', 've', 'ts'] },
 };
 
 export const COURSE_DECKS: Record<string, ModuleDeck> = {
   'market-community': {
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
-    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     missingSlides: {
-      st: [1, 3, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      ve: [1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      ts: [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20],
+      st: [],
+      ve: [],
+      ts: [],
     },
     slides: slidesFromNarration('market-community', MARKET_ANIMATIONS),
   },
   'small-livestock': {
-    slideLanguages: ['en', 'zu'],
+    slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ve: 'webp', ts: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
+    missingSlides: { st: [], ve: [], ts: [] },
     slides: slidesFromNarration('small-livestock', LIVESTOCK_ANIMATIONS),
   },
   'food-forest': {
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
-    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
-    // Unreviewed concept drafts only: every absent frame falls back to the full English slide.
+    // Regional frames are silent source-paired review drafts. Since 3 October 2026 every heading and
+    // paragraph on all 20 slides is an unreviewed machine draft beside its exact English source; terms
+    // such as canopy, mulch and support plant stay in English inside the translated sentences.
     missingSlides: {
-      st: [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      ve: [1, 2, 3, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      ts: [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      st: [],
+      ve: [],
+      ts: [],
     },
     slides: slidesFromNarration('food-forest', FOREST_ANIMATIONS),
   },
   'vegetables-staples': {
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
-    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
+    // Every Sesotho frame is a source-paired draft; uncertain farming guidance stays in English.
     missingSlides: {
-      st: [3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 16, 17, 18],
-      ve: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 16, 17, 18],
-      ts: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 16, 17, 18],
+      st: [],
+      ve: [],
+      ts: [],
     },
     slides: slidesFromNarration('vegetables-staples', VEGETABLE_ANIMATIONS),
   },
   'soil-health': {
-    slideLanguages: ['en', 'zu', 'ts'],
-    slideFormatsByLanguage: { ts: 'webp' },
-    slideAspectRatioByLanguage: { ts: 1440 / 5400 },
-    missingSlides: { ts: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] },
+    // Sesotho, Tshivenda and Xitsonga frames source-pair unreviewed drafts and exact English holds.
+    slideLanguages: ['en', 'zu', 'st', 'ts', 've'],
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ts: 'webp', ve: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400, ts: 1440 / 5400, ve: 1440 / 5400 },
+    missingSlides: {
+      st: [],
+      ts: [],
+    },
     slides: slidesFromNarration('soil-health', SOIL_ANIMATIONS),
   },
   'reading-landscape': {
-    slideLanguages: ['en', 'zu'],
+    // Every regional still is a source-paired draft. The artwork labels it unreviewed and keeps
+    // the exact English source beside any draft text or English hold; no translation is complete.
+    // Regional learners must choose the available English source narration explicitly.
+    slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ve: 'webp', ts: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     slides: slidesFromNarration('reading-landscape', LANDSCAPE_ANIMATIONS),
   },
   'intro-permaculture': {
     // Regional frames pair unreviewed drafts or explicit English holds with exact English.
-    // The narration remains English and needs a separate, explicit voice choice.
+    // The Xitsonga deck is a partial draft; its later source frames do not signal translated text.
+    // No Tshivenda or Xitsonga narration is registered; an existing voice needs an explicit choice.
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
-    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
-    missingSlides: {
-      ve: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
-      ts: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
-    },
     slides: slidesFromNarration('intro-permaculture', INTRO_ANIMATIONS),
   },
   'water-harvesting': {
-    slideLanguages: ['en', 'zu'],
+    // Regional frames keep every water and safety instruction in exact English. Only one
+    // ordinary rainfall sentence is an unreviewed language candidate; learners must choose the
+    // existing English source voice explicitly, and its animation poster cannot cover the pair.
+    slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ve: 'webp', ts: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     slides: slidesFromNarration('water-harvesting', WATER_ANIMATIONS),
   },
   'plant-guilds': {
-    slideLanguages: ['en', 'zu'],
+    // Regional frames are silent source-paired review drafts. Since 3 October 2026 every heading and
+    // paragraph on all 51 slides is an unreviewed machine draft beside its exact English source; terms
+    // such as guild, support plant and chop-and-drop stay in English inside the translated sentences.
+    slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ve: 'webp', ts: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     slides: slidesFromNarration('plant-guilds', GUILD_ANIMATIONS),
   },
   'seeds-sovereignty': {
-    slideLanguages: ['en', 'zu'],
+    // Regional frames are silent source-paired review drafts. Since 2 October 2026 every heading and
+    // paragraph on all 24 slides is an unreviewed machine draft beside its exact English source; terms
+    // such as F1 and open-pollinated stay in English inside the translated sentences.
+    slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ve: 'webp', ts: 'webp' },
+    slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     // ALL 24 SLIDES NOW EXIST IN BOTH LANGUAGES. The history is kept because the failure was
     // invisible and the next deck can fail the same way.
     //
@@ -358,6 +409,33 @@ export function slideImageUrl(moduleId: string, lang: string, slide: number): st
   return `/course-decks/${moduleId}/${lang}/slide-${String(slide).padStart(2, '0')}.${format}`;
 }
 
+/** The new silent pair supplies both pixels and reading text, independently of voice choice. */
+export function currentRegionalDeckSlide(moduleId: string, language: string, slide: number, bindings: CourseDeckReleaseBindings = CURRENT_DECK_RELEASE_BINDINGS) {
+  const release = bindings.resolve(moduleId, language, n => {
+    const track = COURSE_NARRATION[moduleId]?.tracks.find(row => row.slide === n);
+    const body = COURSE_TRANSCRIPTS[moduleId]?.en?.[n];
+    return track && body ? { heading: trackTitle(track, 'en'), body } : undefined;
+  });
+  return release?.slides.find(row => row.slide === slide) ?? null;
+}
+
+/** Image projection is independent of the narration hold; this is a silent visual draft only. */
+export function silentDraftSlideImageFor(
+  moduleId: string,
+  lang: string,
+  slide: number,
+  resolveDraft: (moduleId: string, slide: number) => IsiZuluSilentDeckDraft | null = resolveIsiZuluSilentDeckDraft,
+): { url: string; lang: 'zu'; exact: true; aspectRatio: number } | null {
+  if (lang !== 'zu') return null;
+  const draft = resolveDraft(moduleId, slide);
+  return draft ? {
+    url: draft.imageUrl,
+    lang: 'zu',
+    exact: true,
+    aspectRatio: draft.width / draft.height,
+  } : null;
+}
+
 /**
  * The image to show for one slide, and whether it is in the language asked for.
  *
@@ -369,8 +447,20 @@ export function slideImageFor(
   moduleId: string,
   lang: string,
   slide: number,
-): { url: string; lang: string; exact: boolean } | null {
-  const own = slideImageUrl(moduleId, lang, slide);
+  bindings: CourseDeckReleaseBindings = CURRENT_DECK_RELEASE_BINDINGS,
+): { url: string; lang: string; exact: boolean; aspectRatio?: number } | null {
+  if (bindings.has(moduleId, lang)) {
+    const current = currentRegionalDeckSlide(moduleId, lang, slide, bindings);
+    if (current) return { url: current.imageUrl, lang, exact: true, aspectRatio: current.width / current.height };
+    const fallback = slideImageUrl(moduleId, 'en', slide);
+    return fallback ? { url: fallback, lang: 'en', exact: false } : null;
+  }
+  const silentImage = silentDraftSlideImageFor(moduleId, lang, slide);
+  if (silentImage) return silentImage;
+  const hasIsiZuluSnapshot = lang === 'zu'
+    && ISIZULU_DECK_SOURCE_BINDINGS.some((binding) => binding.moduleId === moduleId);
+  const isiZuluPairUnavailable = hasIsiZuluSnapshot && trackUrl(moduleId, 'zu', slide) === null;
+  const own = isiZuluPairUnavailable ? null : slideImageUrl(moduleId, lang, slide);
   if (own) return { url: own, lang, exact: true };
   const fallback = lang === 'en' ? null : slideImageUrl(moduleId, 'en', slide);
   return fallback ? { url: fallback, lang: 'en', exact: false } : null;
@@ -378,6 +468,9 @@ export function slideImageFor(
 
 export function animationUrls(moduleId: string, slide: number, lang = 'en'): { video: string; poster: string; bytes: number; seconds: number; aspectRatio?: number; narrationTimed?: boolean; playOnce?: boolean } | null {
   const base = COURSE_DECKS[moduleId]?.slides.find((s) => s.slide === slide)?.animation;
+  const hasIsiZuluSnapshot = lang === 'zu'
+    && ISIZULU_DECK_SOURCE_BINDINGS.some((binding) => binding.moduleId === moduleId);
+  if (hasIsiZuluSnapshot && trackUrl(moduleId, 'zu', slide) === null) return null;
   if (!base || base.unavailableLanguages?.includes(lang)) return null;
   const a = base.byLang?.[lang] ?? base;
   return {

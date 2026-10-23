@@ -1,0 +1,29 @@
+{
+  "base": "ece319713ce4acee43951769303bc33286940dff",
+  "allFourEnglishSourceArraysIdentical": true,
+  "only15ListedAssetsChanged": true,
+  "canonicalAudioAndRecordedSesothoIntroUntouched": true,
+  "contactsViewed": [
+    "contact-1.jpg",
+    "contact-2.jpg",
+    "contact-3.jpg"
+  ],
+  "closeCompressedReview": "vegetables-staples/ve/slide-16.webp",
+  "phonePreviewAndFullGatesPending": true,
+  "noFluentApproval": true,
+  "naturalHeightCorrection": {
+    "intro14": [
+      1440,
+      5414
+    ],
+    "vegetables16": [
+      1440,
+      5734
+    ],
+    "reason": "Both were incorrectly compressed to5400px; regenerated directly from full natural-height renderer canvas and root re-viewed both final compressed images."
+  },
+  "finalCloseCompressedReview": [
+    "intro-permaculture/ve/slide-14.webp",
+    "vegetables-staples/ve/slide-16.webp"
+  ]
+}

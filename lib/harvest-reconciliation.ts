@@ -1,3 +1,4 @@
+import { recordWeightKg } from './farm-records';
 // Cross-references crop-plan cycle benchmarks (lib/crop-plan.ts) with what was
 // actually logged as harvested (ProductionLog) and sold (SalesLog). It never
 // turns a crop-cycle total into invented monthly production.
@@ -390,10 +391,10 @@ export function buildReconciliation(
   const cropKeys = new Set(plantings.map((p) => p.cropKey));
 
   const productionInPeriod = uniqueLogsById(
-    production.filter((p) => inPeriod(p.logged_at, period, now)),
+    production.filter((p) => inPeriod(p.logged_at, period, now) && recordWeightKg(p) !== null),
   );
   const salesInPeriod = uniqueLogsById(
-    sales.filter((s) => inPeriod(s.sold_at, period, now)),
+    sales.filter((s) => inPeriod(s.sold_at, period, now) && recordWeightKg(s) !== null),
   );
 
   const matched: CropRow[] = [];
@@ -429,8 +430,8 @@ export function buildReconciliation(
     harvestRows.forEach((r) => matchedProductionIds.add(r.id));
     saleRows.forEach((r) => matchedSalesIds.add(r.id));
 
-    const harvestedKg = safeKgTotal(harvestRows, (row) => row.kg);
-    const soldKg = safeKgTotal(saleRows, (row) => row.kg);
+    const harvestedKg = safeKgTotal(harvestRows, recordWeightKg);
+    const soldKg = safeKgTotal(saleRows, recordWeightKg);
 
     // SELLING MORE THAN YOU LOGGED PICKING MEANS THE HARVEST FIGURE IS NOT THE HARVEST.
     //
@@ -499,7 +500,7 @@ export function buildReconciliation(
     if (matchedProductionIds.has(p.id)) continue;
     const key = bucketKey(p.crop);
     const row = unplannedMap.get(key) ?? emptyRow(p.crop);
-    const next = row.harvestedKg + validLoggedKg(p.kg);
+    const next = row.harvestedKg + validLoggedKg(recordWeightKg(p));
     if (Number.isFinite(next)) row.harvestedKg = next;
     unplannedMap.set(key, row);
   }
@@ -507,7 +508,7 @@ export function buildReconciliation(
     if (matchedSalesIds.has(s.id)) continue;
     const key = bucketKey(s.crop);
     const row = unplannedMap.get(key) ?? emptyRow(s.crop);
-    const next = row.soldKg + validLoggedKg(s.kg);
+    const next = row.soldKg + validLoggedKg(recordWeightKg(s));
     if (Number.isFinite(next)) row.soldKg = next;
     unplannedMap.set(key, row);
   }

@@ -1,0 +1,107 @@
+{
+  "task": "Source-paired Xitsonga candidate for Reading Landscape L3 body, with selectively retained English clauses",
+  "language": "ts",
+  "source": {
+    "path": "lib/course-modules.ts",
+    "lessonId": "reading-landscape-l3",
+    "title": "Wind, Frost, and Topography: Reading the Invisible Forces",
+    "body": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too."
+  },
+  "currentRegistry": {
+    "path": "lib/course-translation-drafts-ts.ts",
+    "exportName": "XITSONGA_READING_LANDSCAPE_DRAFT",
+    "lessonId": "reading-landscape-l3",
+    "bodyReviewStatus": "machine-draft",
+    "sourceEnglish": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+    "currentBody": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matimba ya moya lowu onhaka swi cinca hi muganga, nguva na tinhlonge na minxaxamelo ya ndhawu ya wena. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona na leswi wu khumbaka swona. Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too."
+  },
+  "candidateBody": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matimba ya moya lowu onhaka swi cinca hi muganga, nguva na your site's ridges and gaps. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona na leswi wu khumbaka swona. Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records where available. Loko records ti nga ri kona, yana mahlweni u ri karhi u languta across cold nights, u tlhela u vutisa local agriculture adviser u nga si hlawula permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Mark places where cold or damage lasts longest. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.\n\nEka matamatisi lawa ya khomiweke hi late blight, ku famba ka moya na dyambu ra nimixo swi nga pfuna ku omisa matluka. Late blight can still spread during prolonged cool, damp weather. Ku rhurhisa bed ntsena a swi nge lawuli late blight; seek local crop-health guidance too.",
+  "paragraphs": [
+    {
+      "index": 0,
+      "sourceEnglish": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.",
+      "currentRegionalDraft": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matimba ya moya lowu onhaka swi cinca hi muganga, nguva na tinhlonge na minxaxamelo ya ndhawu ya wena. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona na leswi wu khumbaka swona. Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.",
+      "candidateRegionalDraft": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matimba ya moya lowu onhaka swi cinca hi muganga, nguva na your site's ridges and gaps. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona na leswi wu khumbaka swona. Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.",
+      "preserveCurrentExactly": false,
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change by region, season, and the site’s ridges and gaps. Walk the land on windy days. Record the wind direction and what it affects. Check local weather records before deciding where shelter is needed.",
+      "conditionsForBackcheck": [
+        "The uncertain existing ridges/gaps wording was replaced with the exact English source phrase. The other current localized wind sentences remain unchanged.",
+        "Back-check the ridge/gap vocabulary and the instruction to consult local weather records."
+      ]
+    },
+    {
+      "index": 1,
+      "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "currentRegionalDraft": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "candidateRegionalDraft": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records where available. Loko records ti nga ri kona, yana mahlweni u ri karhi u languta across cold nights, u tlhela u vutisa local agriculture adviser u nga si hlawula permanent home for tender seedlings.",
+      "preserveCurrentExactly": false,
+      "reviewStatus": "machine-draft",
+      "backTranslation": "On a clear, still night, cold air can flow downhill and gather in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, continue observing across cold nights, and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "conditionsForBackcheck": [
+        "The first three source sentences remain exact to retain the clear/still-night condition, downhill cold-air movement and accumulation, potential relative cold, and site dependence of frost patterns.",
+        "The ordinary compare/check/continue-observing/ask framing is drafted in Xitsonga. Retain exact technical phrases for candidate places/local frost season, local minimum-temperature records and availability, no-record observations across cold nights, adviser, and choosing a permanent home for tender seedlings."
+      ]
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "currentRegionalDraft": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "candidateRegionalDraft": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Mark places where cold or damage lasts longest. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.",
+      "preserveCurrentExactly": false,
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Frost is ice that forms on a cold surface. Mist alone does not prove ice has formed, and frost damage can occur without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where possible. Mark places where cold or damage lasts longest. Keep sensitive plants away from cold pockets you observe.",
+      "conditionsForBackcheck": [
+        "Keep the frost definition and the mist/visible-ice distinction exact in English.",
+        "Ordinary looking/comparing/checking and keep-away instructions are drafted in Xitsonga. Retain low ground, slopes, minimum temperatures where possible, and the exact longest-duration marking instruction in English; preserve the observed-cold-pocket qualifier."
+      ]
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "For tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "currentRegionalDraft": "For tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "candidateRegionalDraft": "Eka matamatisi lawa ya khomiweke hi late blight, ku famba ka moya na dyambu ra nimixo swi nga pfuna ku omisa matluka. Late blight can still spread during prolonged cool, damp weather. Ku rhurhisa bed ntsena a swi nge lawuli late blight; seek local crop-health guidance too.",
+      "preserveCurrentExactly": false,
+      "reviewStatus": "machine-draft",
+      "backTranslation": "For tomatoes affected by late blight, moving air and morning sun may help the leaves dry. Late blight may still spread during prolonged cool, damp weather. Moving a bed alone will not control late blight; also seek local crop-health guidance.",
+      "conditionsForBackcheck": [
+        "Ordinary Xitsonga wording covers tomatoes affected by late blight, airflow, morning sun, and drying leaves.",
+        "Keep the prolonged cool/damp spread condition exact in English. Preserve that moving a bed alone will not control the disease and retain local crop-health guidance."
+      ]
+    }
+  ],
+  "uncertainties": [
+    "This is an unreviewed Xitsonga candidate. English holds are recorded as exact retained clauses, not as whole-paragraph claims.",
+    "The exact English ridges/gaps phrase replaces an uncertain existing rendering. The longest-duration instruction remains exact English because lasts longest must not be weakened.",
+    "The frost definition, mist/visible-ice distinction, cold-air conditions, minimum-temperature terminology, and late-blight spread condition remain exact English where shown. No thresholds, species, or positions are added."
+  ],
+  "scope": {
+    "lessonId": "reading-landscape-l3",
+    "bodyParagraphIndexes": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "paragraphs0Based": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "preserveParagraphIndexes0Based": [],
+    "canonicalEnglishChanged": false,
+    "noRepositoryEdits": false,
+    "implementationNote": "No paragraph is wholly preserved unchanged: paragraph 0 retains its existing localized sentences except for the repaired exact-English ridges/gaps phrase; paragraphs 1–3 contain ordinary Xitsonga prose paired with only the exact English clauses documented in the hold registry."
+  },
+  "rootRepairs": [
+    "Replace uncertain existing ridges/gaps terms with exact English source phrase.",
+    "Retain lasts longest exactEnglish; very long time is not longest.",
+    "Existing wind walking statement retained; source land scope reviewed separately."
+  ],
+  "implementation": {
+    "registryPath": "lib/course-translation-drafts-ts.ts",
+    "testPath": "tests/course-translation-drafts-ts.test.ts",
+    "provenance": "candidateBody and exact source/currentRegistry fields carried from the checked packet; canonical English and lesson structure unchanged."
+  }
+}

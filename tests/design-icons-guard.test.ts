@@ -59,15 +59,11 @@ test('DesignPalette.tsx and DesignWizard.tsx render no emoji as UI icons', () =>
 });
 
 test('DesignCanvas.tsx renders no emoji as interactive UI-chrome icons', () => {
-  // The one line this track deliberately left: the adopted-AI-layer name pill drawn directly onto
-  // the canvas (a de-collided label pill, the same family as every other placed-item label pill
-  // rendered a few lines above it) — map-canvas content, not a toolbar/dialog control, so it is
-  // out of this track's "Lucide only" scope the same way DesignGlossy.tsx's printed-sheet glyphs
-  // are. If this line's own wording changes, update the allow-list rather than the assertion.
+  // w16 code-11: the adopted-layer pill's '✓' glyph is now a Lucide <Check aria-hidden />, so the
+  // canvas has no allow-listed emoji line left.
   const src = readFileSync('components/design/DesignCanvas.tsx', 'utf8');
-  const allowLineNo = src.split('\n').findIndex((l) => l.includes("adopted ? `✓ ${layer.name}`")) + 1;
-  assert.ok(allowLineNo > 0, 'the allowed adopted-layer-pill line has moved or been rewritten — update this test\'s allow-list');
-  const offences = emojiLines('components/design/DesignCanvas.tsx', new Set([allowLineNo]));
+  assert.match(src, /adopted && <Check /, 'the adopted-layer pill must draw its tick with Lucide Check');
+  const offences = emojiLines('components/design/DesignCanvas.tsx');
   assert.deepEqual(
     offences, [],
     `${offences.length} emoji found where a Lucide icon belongs (CLAUDE.md is Lucide-only):\n${offences.join('\n')}`,

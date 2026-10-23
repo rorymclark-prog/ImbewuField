@@ -3,7 +3,7 @@ import type { Species } from './species-palette';
 export const SPECIES: Species[] = [
   {
     "id": "dovyalis-afra",
-    "commonName": "Kei apple",
+    "commonName": "Kei apple / umqokolo",
     "botanicalName": "Dovyalis afra",
     "indigenous": true,
     "section": "Indigenous fruit",
@@ -13,7 +13,8 @@ export const SPECIES: Species[] = [
       "living fence",
       "fodder",
       "pollinator",
-      "habitat"
+      "habitat",
+      "windbreak"
     ],
     "matureHeightM": 5,
     "matureWidthM": 4,
@@ -28,10 +29,30 @@ export const SPECIES: Species[] = [
       {
         "biome": "IOCB",
         "rank": 2
+      },
+      {
+        "biome": "NAMA_KAROO",
+        "rank": 1
+      },
+      {
+        "biome": "SAVANNA",
+        "rank": 4
+      },
+      {
+        "biome": "GRASSLAND",
+        "rank": 5
+      },
+      {
+        "biome": "FYNBOS",
+        "rank": 3
+      },
+      {
+        "biome": "FOREST",
+        "rank": 4
       }
     ],
-    "why": "Named for the Kei River and native to exactly this valley-bushveld country, it is the one plant that is simultaneously a stock-proof hedge, a heavy vitamin-C fruit crop, bulk livestock fodder and bee forage — SANBI: 'usually 3-5 m in height, but sometimes reaches 8 m', 'drought- and frost-resistant' (recently renamed from D. caffra under Madrid Code Art. 61.6).",
-    "source": "https://pza.sanbi.org/dovyalis-afra",
+    "why": "Named for the Kei River and native to exactly this valley-bushveld country, it is the one plant that is simultaneously a stock-proof hedge, a heavy vitamin-C fruit crop, bulk livestock fodder and bee forage — SANBI: 'usually 3-5 m in height, but sometimes reaches 8 m', 'drought- and frost-resistant' (recently renamed from D. caffra under Madrid Code Art. 61.6). In the eastern Karoo plant it as the werf/kraal boundary where it gets some run-off, not on the open western plains.",
+    "source": "https://pza.sanbi.org/dovyalis-afra (SANBI: impenetrable hedge to keep out unwanted animals and people, leaves used as bulk fodder, edible fruit, bee forage; formerly listed separately as https://pza.sanbi.org/dovyalis-caffra)",
     "nemba": "none",
     "reviewed": false
   },
@@ -2128,53 +2149,6 @@ export const SPECIES: Species[] = [
     ],
     "why": "Only for the Orange River and Vaalharts irrigation corridor, where 80–90% of SA's pecans already grow: it actively NEEDS the Karoo's winter frost for budbreak, then the long hot low-humidity summer, and the low humidity keeps scab out — but SAPPA specifies 15 000 m³/ha/yr in the warm dry west (Prieska, Douglas, Upington), so do not plant it on a rainfed farm.",
     "source": "https://www.sappa.za.org/wp-content/uploads/2018/11/sappa-water-requirement-per-production-area.pdf (SAPPA: 15 000 m³/ha/yr for the warm dry west — Vaalharts, Douglas, Prieska, Upington, Augrabies; peak 460–800 L/tree/day) + ARC Climate-Smart module (winter frost June–August needed for budding; humidity below 55%)",
-    "nemba": "none",
-    "reviewed": false
-  },
-  {
-    "id": "dovyalis-caffra",
-    "commonName": "Kei apple / umqokolo",
-    "botanicalName": "Dovyalis caffra",
-    "indigenous": true,
-    "section": "Small trees & large shrubs",
-    "stratum": "shrub",
-    "uses": [
-      "living fence",
-      "food",
-      "fodder",
-      "pollinator",
-      "habitat",
-      "windbreak"
-    ],
-    "matureHeightM": 4,
-    "matureWidthM": 4,
-    "crownForm": "multi-stem",
-    "waterNeed": "moderate",
-    "frostTolerance": "moderate",
-    "biomes": [
-      {
-        "biome": "NAMA_KAROO",
-        "rank": 1
-      },
-      {
-        "biome": "SAVANNA",
-        "rank": 4
-      },
-      {
-        "biome": "GRASSLAND",
-        "rank": 5
-      },
-      {
-        "biome": "FYNBOS",
-        "rank": 3
-      },
-      {
-        "biome": "FOREST",
-        "rank": 4
-      }
-    ],
-    "why": "South Africa's best-documented stock-proof living fence — SANBI says it can be 'used to form an impenetrable hedge around a garden to keep unwanted animals and people out' — while also giving apricot-flavoured fruit, bulk leaf fodder and bee forage; in this biome plant it as the werf/kraal boundary in the eastern Karoo where it gets some run-off, not on the open western plains.",
-    "source": "https://pza.sanbi.org/dovyalis-caffra (SANBI: impenetrable hedge to keep out unwanted animals and people, leaves used as bulk fodder, edible fruit, bee forage; ranked among priority indigenous fruit for KZN domestication)",
     "nemba": "none",
     "reviewed": false
   },
@@ -6392,6 +6366,144 @@ export const SPECIES: Species[] = [
     "why": "Included only because it is genuinely universal practice in KZN and Eastern Cape homesteads and crops heavily in this warm, humid, high-rainfall climate — but the app must warn, because on most Forest-biome farms it is a Category 2 species and an unpermitted vine is treated as Category 1b under regulation 4(4), converting a normal garden plant into a compulsory-control obligation.",
     "source": "https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf (Notice 3, List 1 item 256) + https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/6.pdf",
     "nemba": "2",
+    "reviewed": false
+  },
+  {
+    "id": "fragaria-x-ananassa",
+    "commonName": "Strawberry",
+    "botanicalName": "Fragaria x ananassa",
+    "indigenous": false,
+    "section": "Groundcovers & herbaceous",
+    "stratum": "groundcover",
+    "uses": [
+      "food",
+      "groundcover"
+    ],
+    "matureHeightM": 0.25,
+    "matureWidthM": 0.4,
+    "crownForm": "mat",
+    "waterNeed": "high",
+    "frostTolerance": "moderate",
+    "biomes": [
+      {
+        "biome": "FYNBOS",
+        "rank": 5
+      },
+      {
+        "biome": "GRASSLAND",
+        "rank": 5
+      }
+    ],
+    "why": "A short-cycle food crop that fruits from winter to early summer, replanted from runners each autumn.",
+    "source": "Spacing 300 x 300-400 mm, frost-resistant plants and water-stress sensitivity: KZN DARD Fruit and Nut Production advisory notes, section 4.1 (https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf). Western Cape season Sept-Dec and annual culture: Acta Hort. 265, https://ishs.org/ishs-article/265_125/. National season June-Dec: https://strawberries.org.za/an-overview-of-strawberry-cultivation-in-south-africa/. NEMBA: not listed in GN 1003 of 18 Sept 2020 (https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf). Height, frost class and the biome/rank are editor placeholders — no primary source gave them, so they wait on agronomist review. GRASSLAND added from the same Acta Hort. 265 abstract (Transvaal tunnel crop, late May to mid-December) and the KZN light-frost window; that biome mapping is the editor's, not the sources'.",
+    "nemba": "none",
+    "reviewed": false
+  },
+  {
+    "id": "vaccinium-corymbosum",
+    "commonName": "Blueberry (southern highbush)",
+    "botanicalName": "Vaccinium corymbosum",
+    "indigenous": false,
+    "section": "Exotic fruit & nuts",
+    "stratum": "shrub",
+    "uses": [
+      "food",
+      "pollinator"
+    ],
+    "matureHeightM": 1.5,
+    "matureWidthM": 1.0,
+    "crownForm": "multi-stem",
+    "waterNeed": "high",
+    "frostTolerance": "moderate",
+    "biomes": [
+      {
+        "biome": "FYNBOS",
+        "rank": 5
+      }
+    ],
+    "why": "A cool-winter berry shrub that crops from August to November in the Western Cape and needs acid, moist soil.",
+    "source": "Western Cape harvest (Hex River, Wolseley): Steyn 2022 MSc, https://scholar.sun.ac.za/server/api/core/bitstreams/47824860-fa96-4626-b2b2-da6439d6a8f4/content. In-row spacing 0.75-1.0 m, acid soil pH 4.0-5.0, irrigation volumes: KZN DARD section 4.3 (https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf). Season Sept-Feb: USDA FAS GAIN 2017 blueberry report. NEMBA: Vaccinium not listed in GN 1003 of 18 Sept 2020 (https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf). Height, frost class and biome/rank are placeholders — no primary source gave them, so they wait on agronomist review.",
+    "nemba": "none",
+    "reviewed": false
+  },
+  {
+    "id": "physalis-peruviana",
+    "commonName": "Cape gooseberry",
+    "botanicalName": "Physalis peruviana",
+    "indigenous": false,
+    "section": "Shrubs",
+    "stratum": "shrub",
+    "uses": [
+      "food"
+    ],
+    "matureHeightM": 1.0,
+    "matureWidthM": 1.0,
+    "crownForm": "sprawling",
+    "waterNeed": "low",
+    "frostTolerance": "light",
+    "biomes": [
+      {
+        "biome": "GRASSLAND",
+        "rank": 5
+      },
+      {
+        "biome": "SAVANNA",
+        "rank": 5
+      },
+      {
+        "biome": "FYNBOS",
+        "rank": 5
+      },
+      {
+        "biome": "IOCB",
+        "rank": 5
+      },
+      {
+        "biome": "NAMA_KAROO",
+        "rank": 5
+      },
+      {
+        "biome": "SUCCULENT_KAROO",
+        "rank": 5
+      },
+      {
+        "biome": "ALBANY_THICKET",
+        "rank": 5
+      }
+    ],
+    "why": "A quick-cropping, short-lived soft shrub that gives fruit four to five months after planting and, per SA seed and nursery sources, can be harvested in most regions; it needs frost protection and replanting every one to three years.",
+    "source": "Size, water, frost and lifespan: SA sources, all seed-company, nursery, trade-press or portal pages (no government or peer-reviewed SA source gave these). Height and width about 1 m: ProAgri \"Cape gooseberry is a shrub that grows to a metre high ... up to a metre wide\" (https://www.proagrimedia.com/crops/fruit-production-part-5-the-cape-gooseberry-is-a-golden-crop/) and Kirchhoffs \"at least 1m high and wide\" (https://www.kirchhoffs.co.za/cape-gooseberries-easy-to-grow-tasty-treats/). Water: ProAgri \"water-wise plants\", Kirchhoffs \"prefer being on the dry side\" and \"Grows best in low waer conditions\"; mapped to low, but Berries for Africa and southafrica.co.za say consistent irrigation is needed to set a crop. Frost: sources conflict (ProAgri and Berries for Africa: survives about -4 C and regrows; Kirchhoffs: \"Frost tender\"; southafrica.co.za: \"highly sensitive to frost damage\"; Morton, non-SA: SA plants killed to the ground at -0.75 C), so light is an editor call. Lifespan 18 months to 2-3 years per the same seed-company pages; harvest months are NOT from these pages: they are one Stellenbosch University tunnel trial's picking dates (research/perennial-sources/physalis-peruviana.json); the seed company's sowing calendar is not used. Habit \"sprawling\" rests on The Gardener \"rather untidy growth habit\". Biomes are NOT stated by any source: they are the editor's mapping of Kirchhoffs' eight regions (all eight list a harvest window) and of the Keisie Valley Klein-Karoo commercial farm, at neutral rank 5. NEMBA: no Physalis entry in GN 1003 of 18 Sept 2020 (https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf); Nicandra physalodes (item 229) and Pereskia aculeata \"Barbados gooseberry\" (item 266) are listed 1b but are different species.",
+    "nemba": "none",
+    "reviewed": false
+  },
+  {
+    "id": "rubus-idaeus",
+    "commonName": "Raspberry",
+    "botanicalName": "Rubus idaeus",
+    "indigenous": false,
+    "section": "Shrubs",
+    "stratum": "shrub",
+    "uses": [
+      "food"
+    ],
+    "matureHeightM": 1.8,
+    "matureWidthM": 0.9,
+    "crownForm": "upright",
+    "waterNeed": "high",
+    "frostTolerance": "hardy",
+    "biomes": [
+      {
+        "biome": "FYNBOS",
+        "rank": 5
+      },
+      {
+        "biome": "GRASSLAND",
+        "rank": 5
+      }
+    ],
+    "why": "A cane fruit that crops from November to late January in cooler wet-summer areas and needs winter chill.",
+    "source": "KZN DARD Fruit and Nut Production section 4.2 (https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf): harvest 1st week November to late January, spacing 2.5-3.0 x 0.6-1.2 m, spring bearers high chill, autumn bearers 300-600 PCUs. Western Cape and Free State as production regions: https://southafrica.co.za/raspberries.html (portal page, not primary). NEMBA: Rubus idaeus not listed in GN 1003 of 18 Sept 2020 (https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf). Height, frost class and biome/rank are placeholders — no primary source gave them, so they wait on agronomist review.",
+    "nemba": "none",
     "reviewed": false
   }
 ];

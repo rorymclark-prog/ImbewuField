@@ -1,0 +1,76 @@
+{
+  "title": "Reading frost subset: final semantic backcheck",
+  "date": "2026-10-07",
+  "revision": "2d124076",
+  "scope": [
+    "VE-CG01",
+    "VE-CG02",
+    "VE-READING-L2-LOCATIVE"
+  ],
+  "authority": "Independent source-semantic review only. No fluent-speaker or local farming approval is claimed.",
+  "items": [
+    {
+      "id": "VE-CG01",
+      "disposition": "ACCEPT",
+      "binding": {
+        "source": "No hillside position guarantees freedom from frost.",
+        "location": "docs/narration/reading-landscape.ve.paired-draft.json, slide 15, body[0], final sentence; current target segment exactly repeats the English source and is marked english-hold.",
+        "candidate": "A hu na fhethu kha thavha hune ha khwaṱhisedza uri a hu nga vhi na frost."
+      },
+      "candidateBackTranslation": "There is no hillside position that guarantees there will be no frost.",
+      "checkedMixedOption": "A hu na hillside position ine ya khwaṱhisedza uri a hu nga vhi na frost.",
+      "mixedOptionBackTranslation": "There is no hillside position that guarantees there will be no frost.",
+      "reason": "The mixed option retains the exact landform phrase ‘hillside position’, avoiding the possible mountain reading of thavha. The scope remains no position can guarantee a frost-free result; it adds no certainty or universal claim. ‘a hu nga vhi na frost’ is within the guarantee complement, not a promise that frost will occur. The rest of slide 15 stays unchanged.",
+      "limit": "The Tshivenda modal and agreement remain unverified by a fluent reviewer."
+    },
+    {
+      "id": "VE-CG02",
+      "disposition": "ACCEPT_WITH_SEGMENT_BOUNDARY",
+      "binding": {
+        "source": "Keep sensitive plants away from the cold pockets you observe.",
+        "location": "docs/narration/reading-landscape.ve.paired-draft.json, slide 14, body[2].",
+        "currentSegments": [
+          {
+            "source": " Keep sensitive plants away from the cold pockets ",
+            "target": "same exact English; status english-hold"
+          },
+          {
+            "source": "you observe.",
+            "target": "dzine na dzi vhona."
+          }
+        ],
+        "existingLearnerReuse": "lib/course-translation-drafts-ve-reading-landscape.ts, lessons[0].body, source-bound draft: ‘Vhetshelani zwimela zwi sa konḓeleliho kule na cold pockets dzine na dzi vhona.’"
+      },
+      "fullSentenceBackTranslation": "Keep plants that do not tolerate it far from the cold pockets that you observe.",
+      "safeComposition": "Replace only the English-held segment with ‘ Vhetshelani zwimela zwi sa konḓeleliho kule na cold pockets ’ and retain the existing final segment ‘dzine na dzi vhona.’ The full composed sentence is ‘Vhetshelani zwimela zwi sa konḓeleliho kule na cold pockets dzine na dzi vhona.’",
+      "reason": "The exact learner reuse preserves sensitive plants, keep-away direction, cold pockets, and the observed-location qualifier. The paired field already localizes ‘you observe.’ Replacing the entire sentence with the learner wording while retaining the existing final segment would duplicate that qualifier; scope the replacement to the held segment only.",
+      "limit": "The retained landform anchor and sentence fluency remain unreviewed."
+    },
+    {
+      "id": "VE-READING-L2-LOCATIVE",
+      "disposition": "ACCEPT",
+      "binding": {
+        "source": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+        "location": "lib/course-translation-drafts-ve-reading-landscape.ts, lessons[1].body, paragraph 3.",
+        "currentTarget": "Pawpaw na young citrus zwi a kwamea nga frost nga u leluwa. Ni songo vhea zwimela zwi sa konḓeleliho known low frost pockets. Sedzani frost ya henefho musi ni sa athu ṱavha.",
+        "candidate": "Pawpaw na young citrus zwi a kwamea nga frost nga u leluwa. Ni songo vhea zwimela zwi sa konḓeleliho kha known low frost pockets. Sedzani frost ya henefho musi ni sa athu ṱavha."
+      },
+      "candidateBackTranslation": "Pawpaw and young citrus are easily affected by frost. Do not place sensitive plants in known low frost pockets. Observe local frost before planting.",
+      "sourceMeaningCheck": "‘Do not place sensitive plants in known low frost pockets’ is a clear negative placement instruction and preserves the source’s keep-out restriction. Its scope is prospective planting, reinforced by the following observe-before-planting clause. It does not tell the farmer to place plants in the pockets.",
+      "reason": "The ‘kha’ locative makes the target relation explicit while the existing ‘Ni songo vhea’ negative imperative stays intact. In this context, the negative placement and positive keep-out formulations carry the same instruction; there is no semantic basis to reject it solely because the surface polarity differs. The named species, frost sensitivity, ‘known low frost pockets’, and observation-before-planting instruction remain unchanged.",
+      "limit": "This is a source-semantic acceptance of a minimal candidate, not fluent approval."
+    }
+  ],
+  "summary": {
+    "accepted": [
+      "VE-CG01 mixed option",
+      "VE-READING-L2-LOCATIVE"
+    ],
+    "acceptedWithSegmentBoundary": [
+      "VE-CG02 exact learner reuse; replace only held source segment to avoid duplicating ‘you observe’"
+    ],
+    "noSourceRewrite": true,
+    "noSpeciesOrNumberChanges": true,
+    "fluentApproval": false
+  }
+}

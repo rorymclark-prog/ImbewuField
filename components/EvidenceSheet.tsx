@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { X, Camera, Upload, Trash2, FileText, AlertTriangle } from 'lucide-react';
 import type { EvidenceCatalogueGroup, EvidenceCatalogueItem } from '@/lib/evidence-catalogue';
 import { EVIDENCE_GROUP_ICON, QUICK_NUMBERS, LIMA_TIPS } from '@/lib/evidence-catalogue';
+import { useLanguage } from '@/lib/i18n';
 import { evidenceDocumentScope, saveEvidenceDocument, loadEvidenceDocument, removeEvidenceDocument } from '@/lib/evidence-documents';
 import {
   getEvidenceItems,
@@ -24,6 +25,7 @@ interface Props {
 }
 
 export default function EvidenceSheet({ siteId, group, item, onClose, onChanged }: Props) {
+  const { t } = useLanguage();
   const itemKey = item ? `${group.key}_${item.key}` : `${group.key}_site_photos`;
   const [evidenceItems, setEvidenceItems] = useState<EvidenceItem[]>([]);
   const [quickNums, setQuickNums] = useState<Record<string, string>>({});
@@ -40,14 +42,14 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
   const limaTip = LIMA_TIPS[group.key];
   const groupLabel = item?.label ?? group.label;
   const groupDesc = group.key === 'land_legal'
-    ? 'Documents that prove your right to farm this land'
+    ? t('evidenceSheetLandLegalDesc')
     : item?.docOnly
-    ? 'PDFs, scans and test reports'
+    ? t('evidenceSheetDocOnlyDesc')
     : group.key === 'water'
-    ? 'Borehole tests, usage & municipal bills'
+    ? t('evidenceSheetWaterDesc')
     : group.key === 'trees'
-    ? 'Snap canopy first, then base & trunk'
-    : 'Photos, scans and documents';
+    ? t('evidenceSheetTreesDesc')
+    : t('evidenceSheetDefaultDesc');
 
   useEffect(() => {
     setEvidenceItems(getEvidenceItems(siteId, itemKey));
@@ -62,15 +64,15 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
     const scope = evidenceDocumentScope(siteId);
     for (const file of Array.from(files)) {
       try {
-        if (isLab && getEvidenceItems(siteId,itemKey).length >= 4) throw Error('This test folder holds four entries. Remove an older entry before adding another.');
+        if (isLab && getEvidenceItems(siteId,itemKey).length >= 4) throw Error(t('evidenceSheetLabMaxEntries'));
         let saved: boolean;
         if (file.type.startsWith('image/')) {
           const dataUrl = await resizeForStorage(file);
-          if (scope !== evidenceDocumentScope(siteId)) throw Error('The account or workspace changed. Reopen the upload.');
+          if (scope !== evidenceDocumentScope(siteId)) throw Error(t('evidenceSheetAccountChanged'));
           saved = addEvidenceItem(siteId, itemKey, { type: 'photo', dataUrl, name: file.name, sizeBytes: file.size });
         } else if (isLab) {
           const documentId = await saveEvidenceDocument(scope, file);
-          if (scope !== evidenceDocumentScope(siteId)) { await removeEvidenceDocument(scope, documentId); throw Error('The account or workspace changed. Reopen the upload.'); }
+          if (scope !== evidenceDocumentScope(siteId)) { await removeEvidenceDocument(scope, documentId); throw Error(t('evidenceSheetAccountChanged')); }
           saved = addEvidenceItem(siteId, itemKey, { type:'pdf', name:file.name, sizeBytes:file.size, documentId });
           if (!saved) await removeEvidenceDocument(scope, documentId);
         } else {
@@ -82,7 +84,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
           break;
         }
       } catch (err) {
-        setFileError(err instanceof Error ? err.message : 'The file could not be saved. Please try again.');
+        setFileError(err instanceof Error ? err.message : t('evidenceSheetFileSaveFailed'));
         break;
       }
     }
@@ -102,11 +104,11 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
     setFileError('');
     try {
       const blob = await loadEvidenceDocument(siteId, id);
-      if (!blob) throw Error('This original PDF is unavailable here. Upload it again from your original copy.');
+      if (!blob) throw Error(t('evidenceSheetPdfUnavailable'));
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');link.href=url;link.download=evidenceItems.find(row=>row.documentId===id)?.name??'lab-result.pdf';link.click();
       setTimeout(()=>URL.revokeObjectURL(url),60000);
-    } catch (e) { setFileError(e instanceof Error ? e.message : 'The PDF could not be opened.'); }
+    } catch (e) { setFileError(e instanceof Error ? e.message : t('evidenceSheetPdfOpenFailed')); }
   }
 
   function startEditField(fieldKey: string) {
@@ -146,24 +148,24 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         aria-label={groupLabel}
         className="w-full max-w-md font-sans overflow-y-auto"
         style={{
-          background: '#FBF8F1', color: 'var(--text-primary)', borderRadius: '22px 22px 0 0',
+          background: 'var(--bg-1)', color: 'var(--text-primary)', borderRadius: '22px 22px 0 0',
           maxHeight: '92dvh', paddingBottom: 'calc(20px + env(safe-area-inset-bottom))',
         }}
       >
         {/* Header */}
-        <div style={{ padding: '18px 20px 14px', borderBottom: '1px solid #EFE7D6' }}>
+        <div style={{ padding: '18px 20px 14px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <div style={{
               width: 36, height: 36, borderRadius: 9,
               background: group.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
             }}>
-              <span style={{ fontSize: 18 }}>{EVIDENCE_GROUP_ICON[group.key] ?? '📄'}</span>
+              {(() => { const GroupIcon = EVIDENCE_GROUP_ICON[group.key] ?? FileText; return <GroupIcon size={18} />; })()}
             </div>
             <div style={{ flex: 1 }}>
               <div style={{ font: '600 17px Newsreader, Georgia, serif', color: 'var(--text-primary)' }}>{groupLabel}</div>
-              <div style={{ font: '400 13px/1.4 system-ui, sans-serif', color: '#665A47', marginTop: 1 }}>{groupDesc}</div>
+              <div style={{ font: '400 13px/1.4 var(--font-sans), sans-serif', color: 'var(--text-secondary)', marginTop: 1 }}>{groupDesc}</div>
             </div>
-            <button onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#665A47', minWidth: 44, minHeight: 44, display: 'grid', placeItems: 'center' }}>
+            <button onClick={onClose} aria-label={t('evidenceSheetClose')} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--text-secondary)', minWidth: 44, minHeight: 44, display: 'grid', placeItems: 'center' }}>
               <X size={20} />
             </button>
           </div>
@@ -177,27 +179,24 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
             budget fills. For a PTO this is often the ONLY proof a farmer has — they must not read
             "saved here" as "backed up here". Keep this ahead of the capture buttons, not below them. */}
         {isLab&&<div style={{padding:'16px 20px',fontSize:13,lineHeight:1.6}}>
-          <p>Upload the original test PDF (up to 10 MB) or a clear photograph. PDFs stay on this device and can be downloaded again here. Keep your original copy.</p>
-          <p>The report uses the results you enter below. PDF contents are not automatically read; a stored file alone does not establish a measured result.</p>
-          <label style={{display:'block',fontWeight:600}}>Results and sampling details<textarea value={resultNote} maxLength={1500} onChange={e=>setResultNote(e.target.value)} placeholder="Sampling date; sample location / ID; laboratory; each result with its unit and method; relevant laboratory comments." style={{display:'block',width:'100%',minHeight:110,padding:10,border:'1px solid #c9d6c9',borderRadius:8,fontSize:14,marginTop:6,background:'#fff',color:'var(--text-primary)'}}/></label>
+          <p>{t('evidenceSheetLabUploadInstructions')}</p>
+          <p>{t('evidenceSheetLabReadNote')}</p>
+          <label style={{display:'block',fontWeight:600}}>{t('evidenceSheetLabResultsLabel')}<textarea value={resultNote} maxLength={1500} onChange={e=>setResultNote(e.target.value)} placeholder={t('evidenceSheetLabResultsPlaceholder')} style={{display:'block',width:'100%',minHeight:110,padding:10,border:'1px solid var(--border)',borderRadius:8,fontSize:14,marginTop:6,background:'var(--input-bg)',color:'var(--text-primary)'}}/></label>
           <button disabled={uploading||!resultNote.trim()} onClick={()=>{
-            if(getEvidenceItems(siteId,itemKey).length>=4){setFileError('Remove an older entry before adding another.');return;}
-            if(!addEvidenceItem(siteId,itemKey,{type:'note',name:'Reported test results',note:resultNote.trim()})){setFileError('The results could not be saved. Keep a copy and try again.');return;}
+            if(getEvidenceItems(siteId,itemKey).length>=4){setFileError(t('evidenceSheetLabMaxEntries'));return;}
+            if(!addEvidenceItem(siteId,itemKey,{type:'note',name:t('evidenceSheetReportedResultsName'),note:resultNote.trim()})){setFileError(t('evidenceSheetResultsSaveFailed'));return;}
             setResultNote('');setEvidenceItems(getEvidenceItems(siteId,itemKey));onChanged();
-          }} style={{minHeight:44,marginTop:10,padding:'8px 14px',border:'1px solid #285c3e',borderRadius:8,background:'#eaf1e6',color:'#234b32'}}>Save test results</button>
+          }} style={{minHeight:44,marginTop:10,padding:'8px 14px',border:'1px solid var(--color-forest-700)',borderRadius:8,background:'var(--badge-bg)',color:'var(--color-forest-800)'}}>{t('evidenceSheetSaveTestResults')}</button>
         </div>}
-        {fileError&&<p role="alert" style={{margin:'12px 20px',fontSize:14,color:'#9d2a20'}}>{fileError}</p>}
+        {fileError&&<p role="alert" style={{margin:'12px 20px',fontSize:14,color:'var(--orange)'}}>{fileError}</p>}
         {group.key === 'land_legal' && (
           <div style={{
-            margin: '14px 20px 0', background: '#FFF6E5', border: '1.5px solid #EFC378',
+            margin: '14px 20px 0', background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', border: '1.5px solid color-mix(in srgb, var(--gold) 30%, transparent)',
             borderRadius: 12, padding: '12px 14px', display: 'flex', gap: 10, alignItems: 'flex-start',
           }}>
-            <AlertTriangle size={18} color="#8A5A0A" style={{ flexShrink: 0, marginTop: 1 }} />
-            <div style={{ font: '500 12.5px/1.5 system-ui, sans-serif', color: '#6B4A0E' }}>
-              <strong>This app is not a backup.</strong> A photo you scan here is shrunk small; a PDF
-              you upload keeps only its file name, not the document. Both live on this phone alone,
-              and old items can be deleted automatically to make room for new ones. Keep the real
-              papers safe too — with your mentor, at home, or wherever they were issued.
+            <AlertTriangle size={18} color="var(--gold-dim)" style={{ flexShrink: 0, marginTop: 1 }} />
+            <div style={{ font: '500 12.5px/1.5 var(--font-sans), sans-serif', color: 'var(--gold-dim)' }}>
+              <strong>{t('evidenceSheetLandLegalWarningTitle')}</strong> {t('evidenceSheetLandLegalWarningBody')}
             </div>
           </div>
         )}
@@ -208,25 +207,25 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
             onClick={() => fileInputRef.current?.click()}
             disabled={uploading}
             style={{
-              flex: 1, background: '#274D2C', color: '#fff', border: 'none', borderRadius: 11,
-              padding: '12px 10px', font: '600 13px/1 system-ui, sans-serif',
+              flex: 1, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: 'none', borderRadius: 11,
+              padding: '12px 10px', font: '600 13px/1 var(--font-sans), sans-serif',
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: 'pointer',
             }}
           >
-            <Camera size={20} color="#CDEBB6" />
-            Take / scan photo
+            <Camera size={20} color="var(--on-forest-800)" />
+            {t('evidenceSheetTakePhoto')}
           </button>
           <button
             onClick={() => { if (fileInputRef.current) { fileInputRef.current.accept = '.pdf,.jpg,.jpeg,.png,image/*'; fileInputRef.current.click(); } }}
             disabled={uploading}
             style={{
-              flex: 1, background: '#FBF8F1', color: 'var(--color-forest-700)', border: '1.5px solid #CFC4AC', borderRadius: 11,
-              padding: '12px 10px', font: '600 13px/1 system-ui, sans-serif',
+              flex: 1, background: 'var(--bg-1)', color: 'var(--color-forest-700)', border: '1.5px solid var(--border)', borderRadius: 11,
+              padding: '12px 10px', font: '600 13px/1 var(--font-sans), sans-serif',
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: 'pointer',
             }}
           >
-            <Upload size={20} color="#3C6B3F" />
-            Upload file / PDF
+            <Upload size={20} color="var(--color-forest-700)" />
+            {t('evidenceSheetUploadFile')}
           </button>
         </div>
 
@@ -243,17 +242,18 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         {/* Storage-full error banner */}
         {storageFull && (
           <div style={{
-            margin: '12px 20px 0', background: '#FEF2F2', border: '1px solid #FECACA',
+            margin: '12px 20px 0', background: 'color-mix(in srgb, var(--orange) 12%, var(--bg-1))', border: '1px solid color-mix(in srgb, var(--orange) 30%, transparent)',
             borderRadius: 10, padding: '10px 13px',
             display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10,
           }}>
-            <span style={{ font: '500 13px/1.4 system-ui, sans-serif', color: '#B91C1C' }}>
-              📵 Storage full — photo not saved. Delete some items to free space.
+            <span style={{ display: 'flex', alignItems: 'center', gap: 6, font: '500 13px/1.4 var(--font-sans), sans-serif', color: 'var(--orange)' }}>
+              <AlertTriangle size={14} style={{ flexShrink: 0 }} />
+              {t('evidenceSheetStorageFull')}
             </span>
             <button
               onClick={() => setStorageFull(false)}
-              aria-label="Dismiss"
-              style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#B91C1C', flexShrink: 0, padding: 2 }}
+              aria-label={t('evidenceSheetDismiss')}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--orange)', flexShrink: 0, padding: 2 }}
             >
               <X size={14} />
             </button>
@@ -263,18 +263,18 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         {/* Photo grid */}
         {photoItems.length > 0 && (
           <div style={{ padding: '15px 20px 0' }}>
-            <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 9 }}>
-              Photos · {photoItems.length}
+            <div style={{ font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 9 }}>
+              {t('evidenceSheetPhotosCount').replace('{n}', String(photoItems.length))}
             </div>
             <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap' }}>
               {photoItems.map((ev) => (
-                <div key={ev.id} style={{ position: 'relative', width: 70, height: 70, borderRadius: 9, overflow: 'hidden', background: '#E0D6C2' }}>
+                <div key={ev.id} style={{ position: 'relative', width: 70, height: 70, borderRadius: 9, overflow: 'hidden', background: 'var(--bg-2)' }}>
                   {ev.dataUrl && (
                     <img data-photo-preview src={ev.dataUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   )}
                   <button
                     onClick={() => handleRemove(ev.id)}
-                    aria-label={`Remove ${ev.name || 'photo'}`}
+                    aria-label={t('evidenceSheetRemoveItem').replace('{name}', ev.name || t('evidenceSheetRemovePhotoFallback'))}
                     className="u-tap-target"
                     style={{
                       position: 'absolute', top: 3, right: 3, background: 'rgba(45,37,25,0.75)',
@@ -298,32 +298,32 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         {/* Doc list */}
         {docItems.length > 0 && (
           <div style={{ padding: '15px 20px 0' }}>
-            <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 9 }}>
-              On file · {docItems.length}
+            <div style={{ font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 9 }}>
+              {t('evidenceSheetOnFileCount').replace('{n}', String(docItems.length))}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
               {docItems.map((ev) => (
                 <div key={ev.id} style={{
                   display: 'flex', alignItems: 'center', gap: 12,
-                  background: '#fff', border: '1px solid #EBE3D2', borderRadius: 11, padding: '10px 13px',
+                  background: 'var(--bg-1)', border: '1px solid var(--border)', borderRadius: 11, padding: '10px 13px',
                 }}>
                   <div style={{
-                    width: 38, height: 44, borderRadius: 6, background: '#F0F4F8', border: '1px solid #DCE5EC',
+                    width: 38, height: 44, borderRadius: 6, background: 'var(--bg-2)', border: '1px solid var(--border)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
                   }}>
-                    <FileText size={16} color="#C0392B" />
+                    <FileText size={16} color="var(--orange)" />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ font: '600 13px/1 system-ui, sans-serif', color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{ev.name}</div>
+                    <div style={{ font: '600 13px/1 var(--font-sans), sans-serif', color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{ev.name}</div>
                     {ev.note&&<p style={{fontSize:13,lineHeight:1.5,whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{ev.note}</p>}
-                    {ev.documentId?<button onClick={()=>void openDocument(ev.documentId!)} style={{minHeight:44,fontSize:13,textDecoration:'underline'}}>Download original PDF</button>:isLab&&ev.type==='pdf'&&<p style={{fontSize:13}}>Filename reference only. Upload the PDF again to retain its contents.</p>}
+                    {ev.documentId?<button onClick={()=>void openDocument(ev.documentId!)} style={{minHeight:44,fontSize:13,textDecoration:'underline'}}>{t('evidenceSheetDownloadOriginalPdf')}</button>:isLab&&ev.type==='pdf'&&<p style={{fontSize:13}}>{t('evidenceSheetFilenameOnly')}</p>}
                     {ev.sizeBytes && (
-                      <div style={{ font: '400 11px/1 system-ui, sans-serif', color: 'var(--text-muted)', marginTop: 3 }}>
+                      <div style={{ font: '400 12px/1 var(--font-sans), sans-serif', color: 'var(--text-muted)', marginTop: 3 }}>
                         {(ev.sizeBytes / 1024 / 1024).toFixed(1)} MB
                       </div>
                     )}
                   </div>
-                  <button onClick={() => handleRemove(ev.id)} aria-label={`Remove ${ev.name || 'document'}`} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', minWidth: 44, minHeight: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <button onClick={() => handleRemove(ev.id)} aria-label={t('evidenceSheetRemoveItem').replace('{name}', ev.name || t('evidenceSheetRemoveDocumentFallback'))} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', minWidth: 44, minHeight: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <Trash2 size={14} />
                   </button>
                 </div>
@@ -335,16 +335,16 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         {/* Quick numbers */}
         {quickFields.length > 0 && (
           <div style={{ padding: '16px 20px 0' }}>
-            <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 9 }}>
-              Quick numbers (optional)
+            <div style={{ font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 9 }}>
+              {t('evidenceSheetQuickNumbersOptional')}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {quickFields.map((f) => (
                 <div key={f.key}>
                   {editingField === f.key ? (
-                    <div style={{ display: 'flex', gap: 8, alignItems: 'center', background: '#fff', border: `1.5px solid ${group.color}`, borderRadius: 11, padding: '10px 13px' }}>
-                      <span style={{ font: '400 13px/1 system-ui, sans-serif', color: '#6B5D44', flex: 1 }}>{f.label}</span>
-                      <input
+                    <div style={{ display: 'flex', gap: 8, alignItems: 'center', background: 'var(--bg-1)', border: `1.5px solid ${group.color}`, borderRadius: 11, padding: '10px 13px' }}>
+                      <span style={{ font: '400 13px/1 var(--font-sans), sans-serif', color: 'var(--text-secondary)', flex: 1 }}>{f.label}</span>
+                      <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                         autoFocus
                         type="text"
                         inputMode="decimal"
@@ -352,22 +352,22 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
                         onChange={(e) => setEditValue(e.target.value)}
                         onKeyDown={(e) => { if (e.key === 'Enter') saveField(f.key); if (e.key === 'Escape') setEditingField(null); }}
                         placeholder={f.unit}
-                        style={{ width: 100, font: '600 13px/1 system-ui, sans-serif', color: 'var(--text-primary)', border: 'none', outline: 'none', background: 'transparent', textAlign: 'right' }}
+                        style={{ width: 100, font: '600 13px/1 var(--font-sans), sans-serif', color: 'var(--text-primary)', border: 'none', outline: 'none', background: 'transparent', textAlign: 'right' }}
                       />
-                      <button onClick={() => saveField(f.key)} style={{ font: '600 12px system-ui', color: group.color, background: 'none', border: 'none', cursor: 'pointer', padding: '2px 6px' }}>Save</button>
+                      <button onClick={() => saveField(f.key)} style={{ font: '600 12px var(--font-sans), sans-serif', color: group.color, background: 'none', border: 'none', cursor: 'pointer', padding: '2px 6px' }}>{t('evidenceSheetSave')}</button>
                     </div>
                   ) : (
                     <button
                       onClick={() => startEditField(f.key)}
                       style={{
-                        display: 'flex', alignItems: 'center', gap: 10, background: '#fff',
-                        border: '1px solid #EBE3D2', borderRadius: 11, padding: '10px 13px',
+                        display: 'flex', alignItems: 'center', gap: 10, background: 'var(--bg-1)',
+                        border: '1px solid var(--border)', borderRadius: 11, padding: '10px 13px',
                         width: '100%', cursor: 'pointer', textAlign: 'left',
                       }}
                     >
-                      <span style={{ font: '400 13px/1 system-ui, sans-serif', color: '#6B5D44', flex: 1 }}>{f.label}</span>
-                      <span style={{ font: quickNums[f.key] ? '600 13px/1 system-ui, sans-serif' : '400 13px/1 system-ui, sans-serif', color: quickNums[f.key] ? '#2D2519' : '#B89C6A' }}>
-                        {quickNums[f.key] ? `${quickNums[f.key]} ${f.unit}` : 'Tap to add'}
+                      <span style={{ font: '400 13px/1 var(--font-sans), sans-serif', color: 'var(--text-secondary)', flex: 1 }}>{f.label}</span>
+                      <span style={{ font: quickNums[f.key] ? '600 13px/1 var(--font-sans), sans-serif' : '400 13px/1 var(--font-sans), sans-serif', color: quickNums[f.key] ? 'var(--text-primary)' : 'var(--text-muted)' }}>
+                        {quickNums[f.key] ? `${quickNums[f.key]} ${f.unit}` : t('evidenceSheetTapToAdd')}
                       </span>
                     </button>
                   )}
@@ -379,17 +379,17 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
 
         {/* Lima tip */}
         {limaTip && (
-          <div style={{ margin: '16px 16px 0', background: '#274D2C', borderRadius: 13, padding: '14px 15px', display: 'flex', gap: 11, alignItems: 'flex-start' }}>
-            <div style={{ width: 30, height: 30, borderRadius: '50%', background: '#3C6B3F', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <div style={{ margin: '16px 16px 0', background: 'var(--color-forest-800)', borderRadius: 13, padding: '14px 15px', display: 'flex', gap: 11, alignItems: 'flex-start' }}>
+            <div style={{ width: 30, height: 30, borderRadius: '50%', background: 'var(--color-forest-700)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               {/* Lima sprout glyph */}
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#CDEBB6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--on-forest-800)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 21V11" /><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z" /><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
               </svg>
             </div>
             <div style={{ flex: 1 }}>
-              <div style={{ font: '400 13px/1.45 Newsreader, Georgia, serif', color: '#EAF2E2', fontStyle: 'italic' }}>{limaTip}</div>
-              <div style={{ font: '400 10.5px/1 system-ui, sans-serif', color: '#9DBE9D', marginTop: 5 }}>
-                {isLab ? 'Site evidence · keep your original documents' : 'Lima · reads bills & reports for you'}
+              <div style={{ font: '400 13px/1.45 Newsreader, Georgia, serif', color: 'var(--on-forest-800)', fontStyle: 'italic' }}>{limaTip}</div>
+              <div style={{ font: '400 12px/1 var(--font-sans), sans-serif', color: 'color-mix(in srgb, var(--on-forest-800) 70%, transparent)', marginTop: 5 }}>
+                {isLab ? t('evidenceSheetLimaLabNote') : t('evidenceSheetLimaDefaultNote')}
               </div>
             </div>
           </div>

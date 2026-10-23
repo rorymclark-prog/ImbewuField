@@ -1,0 +1,29 @@
+{
+  "sourceCandidateSHA256": "5fde16b4fbfb87051d46f09dc243dedde6603f73d1858560dfd01e1655356d6e",
+  "independentReportSHA256": "e15361f0122e58861f8c6c3d5ec6a3c4ff487a18e967f95791b344db3f597581",
+  "status": "root-accepted-for-fresh-source-bound-batch-unwired",
+  "changes": [
+    {
+      "unitId": "soil-health::soil-health-l1::st::infographicAlt",
+      "sourceEnglish": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+      "currentTarget": "Soil cross-section e bontsha dark topsoil ka hodima pale subsoil, e na le diboko tse pedi. Ka thoko, soil in a jar settles into three layers — sand, silt le clay.",
+      "proposedTarget": "Soil cross-section e bontsha dark topsoil ka hodima pale subsoil, e na le diboko tse pedi. Ka thoko, mobu o ka nkhong o settles into three layers — sand, silt le clay.",
+      "reason": "Bare lula does not explicitly carry particle sedimentation; mekhahlelo has not been independently established as physical sediment layers. Prior 955 repair deliberately retained layers. The exact settles into three layers clause preserves both physical process and category while localizing the jar framing."
+    },
+    {
+      "unitId": "soil-health::soil-health-l2::st::infographicAlt",
+      "sourceEnglish": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+      "currentTarget": "Heap ya compost cut open e bontsha alternating layers tsa dry brown material le fresh green material. Heat e nyoloha ho tswa bohareng; an arrow shows it being turned.",
+      "proposedTarget": "Heap ya compost e bontshwa e le cut open hore bokahare bo bonahale. E bontsha layers tse fapanyetsanang tsa dintho tse ommeng tse sootho le dintho tse foreshe tse tala. Mocheso o nyoloha ho tswa bohareng; motsu o bontsha hore qubu e a phetholwa.",
+      "reason": "Opening so the inside is visible does not explicitly preserve the source cut-open cross-section. Use exact cut open and layers; the dry/brown, fresh/green, alternating, heat-middle and turning-arrow descriptions are otherwise bounded and do not assert a guaranteed hot centre in practice."
+    },
+    {
+      "unitId": "soil-health::soil-health-l3::st::body::paragraph[12]",
+      "sourceEnglish": "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+      "currentTarget": "Cover crops, mulch le organic matter di ka thusa ho tshwara mobu sebakeng sa wona le ho o thusa hore o dule o phela.",
+      "proposedTarget": "Dijalo tse sireletsang mobu (cover crops), mulch le organic matter di ka thusa ho tshwara mobu sebakeng sa wona le ho o thusa hore o dule o phela.",
+      "reason": "The cover-crop category remains explicitly labelled in English. The added Sesotho gloss matches the existing module-description framing. di ka thusa preserves can help for the coordinated categories, with no new species, amount, promise, timing or mechanism. Every word after the replaced cover-crop label is unchanged."
+    }
+  ],
+  "limits": "Unreviewed draft; retain settles into three layers/cut open/layers; no fluent approval"
+}

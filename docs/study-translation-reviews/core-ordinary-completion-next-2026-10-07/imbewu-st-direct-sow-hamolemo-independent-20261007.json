@@ -1,0 +1,66 @@
+{
+  "title": "Independent check of Sesotho direct-sowing comparative proposal",
+  "date": "2026-10-07",
+  "reviewedHead": "0b611b93de9c998d601c15cbc9a9aa6476f25274",
+  "status": "Meaning check only; no fluency approval or repository changes.",
+  "sourceEnglish": "They do better sown straight where they’ll grow.",
+  "currentLearnerBinding": {
+    "file": "lib/course-translation-drafts-st-vegetables-staples.ts",
+    "lesson": "vegetables-staples-l1",
+    "currentComposedSentence": "They do better ha di jalwa ka kotloloho moo di tla hola teng."
+  },
+  "currentPairedBinding": {
+    "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+    "slide": 6,
+    "field": "target.body[0].segments[1] + segments[2]",
+    "segments": [
+      {
+        "sourceEnglish": "They do better",
+        "status": "draft",
+        "text": "Di hola hantle ho feta"
+      },
+      {
+        "sourceEnglish": " sown straight where they'll grow. ",
+        "status": "draft",
+        "text": " ha di jalwa ka kotloloho moo di tla hola teng. "
+      }
+    ]
+  },
+  "proposedTarget": "Di sebetsa hamolemo ha di jalwa ka kotloloho moo di tla hola teng.",
+  "backtranslation": "They perform/do better when they are sown directly where they will grow.",
+  "verdict": "ACCEPT_FOR_SEMANTIC_SCOPE",
+  "reason": "“Hamolemo” carries the comparative better, while “di sebetsa” expresses general performance rather than growth alone. “Ha di jalwa ka kotloloho moo di tla hola teng” preserves the condition and direct-sowing location. The proposal composes with the existing target prefix and leaves the crop-list suffix untouched.",
+  "composition": {
+    "existingPrefixPreserved": "Dijalo tse ding ha di rate hore metso ya tsona e tshwenngwe. ",
+    "predicateReplacement": {
+      "source": "They do better",
+      "current": "Di hola hantle ho feta",
+      "proposed": "Di sebetsa hamolemo"
+    },
+    "existingConditionPreserved": " ha di jalwa ka kotloloho moo di tla hola teng. ",
+    "speciesListSegmentsPreserved": [
+      {
+        "sourceEnglish": "Beans, carrots",
+        "status": "english-hold"
+      },
+      {
+        "sourceEnglish": " and ",
+        "status": "draft",
+        "text": " le "
+      },
+      {
+        "sourceEnglish": "maize",
+        "status": "english-hold"
+      },
+      {
+        "sourceEnglish": " belong in that group.",
+        "status": "draft",
+        "text": " ke tsa sehlopha seo."
+      }
+    ]
+  },
+  "limits": [
+    "This checks comparative/general-performance meaning and composition only. Sesotho idiom, spelling conventions, and learner comprehension still need fluent/local review.",
+    "Do not read this as growth-only: “di sebetsa” is work/perform, not “grow.”"
+  ]
+}

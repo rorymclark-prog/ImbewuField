@@ -1,0 +1,1126 @@
+{
+  "title": "Independent semantic and source backcheck: remaining VE/TS introduction candidates",
+  "date": "2026-10-04",
+  "input": "/tmp/imbewu-introduction-remaining-holds-candidates-20261004.json",
+  "scope": {
+    "candidatesReviewed": 65,
+    "languageCounts": {
+      "ve": 33,
+      "ts": 32
+    },
+    "repoEdits": 0,
+    "reviewNature": "Independent bilingual semantic review; draft proposals only; no fluent approval implied."
+  },
+  "bindingAudit": {
+    "inputDeclaredAll65CurrentPairedBindingsExact": true,
+    "inputDeclaredSourceConcatenationsExact": true,
+    "reviewRowsSourceConcatenationExact": true,
+    "currentPairedRecordBindingsMarkedExact": true,
+    "note": "The candidate packet reports current paired-file hashes changed after intake but says it rechecked each current paired binding. I reviewed the packet-level source text/translation pairings; source binding truth is attributed to that packet declaration."
+  },
+  "counts": {
+    "accept": 60,
+    "repair": 5,
+    "hold": 0,
+    "byLanguage": {
+      "ve": {
+        "accept": 30,
+        "repair": 3,
+        "hold": 0
+      },
+      "ts": {
+        "accept": 30,
+        "repair": 2,
+        "hold": 0
+      }
+    }
+  },
+  "focusedChecks": {
+    "technicalEnglishAnchorsMayRemainWhenDifficultOrExactSourceWordingCarriesTheMeaning": true,
+    "ordinaryEnglishOnlyInstructionsFlagged": 5,
+    "recentRepairsChecked": "Storm versus full wet season; across-boundary crossing; around windbreak ends; harvest before loss; chicken timing and exclusions; bare ground; borehole capacity check.",
+    "noNumbersOrSpeciesIntroduced": true,
+    "noBlanketLegalSafetyOrFarmingHoldApplied": true,
+    "ST22AudioAndPairBindingUntouched": true
+  },
+  "rootRepairSuggestions": [
+    {
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 1,
+      "issue": "The English-only borehole instruction is an ordinary actionable clause. The surrounding wording correctly preserves first check permission, all users, the no-overdraw limit, conditional sharing only when permitted and adequate, fair agreement, continued level monitoring, protection of the source, and the explicit no-safety/no-permission guarantee.",
+      "suggestion": "Thomani nga u wana arali u kovhelana ho tendelwa. Sedzani arali borehole i tshi nga thusa vhashumisi vhoṱhe hu sa dzhiiwi maḓi manzhi nga maanḓa. Arali u kovhelana ho tendelwa nahone hu na maḓi o eḓanaho, tendelanani uri ni kovhelane nga ndinganyo ni dzule ni tshi sedza water level. People Care na Fair Share zwi livhisa u tendelana. Earth Care zwi amba u tsireledza the source. U sedza water level fhedzi a zwi ambi uri u shumisa maḓi o engedzeaho zwi safe kana zwo tendelwa."
+    },
+    {
+      "language": "ve",
+      "slide": 22,
+      "bodyIndex": 2,
+      "issue": "The quoted English clause is ordinary task wording, not a technical anchor. It carries the key relation between distance and frequency of use; translate it rather than leaving that relation English-only.",
+      "suggestion": "Wanani tshithu tshithihi tsho limiwaho kule u ya nga lunzhi lune na tshi shumisa ngalo, ni ṅwale hune tsha tea u pfuluselwa hone."
+    },
+    {
+      "language": "ve",
+      "slide": 22,
+      "bodyIndex": 3,
+      "issue": "“one older neighbour” is ordinary wording and remains English-only. The direction question and comparison with the learner’s arrow are preserved.",
+      "suggestion": "Nga murahu humbelani muṅwe mudzulapo wa kale muthihi uri a ni vhudze hune muya u sa takadziho wa bva hone, ni vhambedze phindulo yawe na arrow yaṋu."
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 1,
+      "issue": "“across your boundary” is left in English inside the key direction claim. Translate the crossing relation explicitly; all five hazards and the regardless-of-planning condition are present.",
+      "suggestion": "Sun, wind, rain, flood na fire swi tsemakanya ndzilakana wa wena hambi u swi pulanile kumbe a wu swi pulananga."
+    },
+    {
+      "language": "ts",
+      "slide": 22,
+      "bodyIndex": 2,
+      "issue": "The quoted English task clause is ordinary wording and contains the central distance-versus-frequency condition. Translate that clause.",
+      "suggestion": "Kuma xilo xin’we lexi byariweke ekule ku hundza ndlela leyi u xi tirhisaka ha yona kangani, kutani u tsala laha xi faneleke ku rhurhiseriwa kona."
+    }
+  ],
+  "rows": [
+    {
+      "index": 1,
+      "language": "ve",
+      "slide": 2,
+      "bodyIndex": 0,
+      "decision": "accept",
+      "sourceEnglish": "A good design saves work before you pick up a spade.",
+      "candidateText": "Design yavhuḓi i fhungudza mushumo ni sa athu u fara spade.",
+      "review": "Work-saving claim and before-action timing retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Work-saving claim and before-action timing retained."
+      }
+    },
+    {
+      "index": 2,
+      "language": "ve",
+      "slide": 2,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "Permaculture is a way of deciding where things go, so the land works with you instead of against you.",
+      "candidateText": "Permaculture ndi nḓila ya u dzhia tsheo ya hune zwithu zwa tea u vha hone, uri mavu a shume na inwi, hu si u ni thivhela.",
+      "review": "Purpose and with-you versus against-you contrast retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Purpose and with-you versus against-you contrast retained."
+      }
+    },
+    {
+      "index": 3,
+      "language": "ve",
+      "slide": 3,
+      "bodyIndex": 1,
+      "decision": "accept",
+      "sourceEnglish": "Name the three ethics, and use them to settle a decision that has no obvious answer.",
+      "candidateText": "Bulani the three ethics, ni dzi shumise u dzhia tsheo ine ya si vhe na phindulo i vhonalaho.",
+      "review": "Names the three ethics and says use them to decide a case without an obvious answer.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Names the three ethics and says use them to decide a case without an obvious answer."
+      }
+    },
+    {
+      "index": 4,
+      "language": "ve",
+      "slide": 4,
+      "bodyIndex": 1,
+      "decision": "accept",
+      "sourceEnglish": "It means treating soil, water, plants and animals as living systems to protect, not resources to use up.",
+      "candidateText": "Zwi amba u dzhia soil, water, plants and animals sa “living systems to protect, not resources to use up.”",
+      "review": "All four living systems and protect-versus-use-up contrast retained verbatim as technical phrasing.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "All four living systems and protect-versus-use-up contrast retained verbatim as technical phrasing."
+      }
+    },
+    {
+      "index": 5,
+      "language": "ve",
+      "slide": 4,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "A system you use up stops paying you. A system you protect keeps paying you.",
+      "candidateText": "System ine na shumisa na fhedza i a ima: “stops paying you.” System ine na tsireledza i bvela phanda: “keeps paying you.”",
+      "review": "Both use-up/continued-benefit contrast halves retained; no narrowing to cash or yield.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Both use-up/continued-benefit contrast halves retained; no narrowing to cash or yield."
+      }
+    },
+    {
+      "index": 6,
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "A farmer who sells all his surplus mielies and keeps nothing back for compost or for seed is breaking this one. Nothing goes back.",
+      "candidateText": "Mulimi ane a rengisa mielies dzawe dzoṱhe dza surplus, a si vhulunge na tshithu tsha compost kana seed, u khou pfuka uyu mulayo. A hu na tshithu tshi vhuyelelaho.",
+      "review": "All surplus is sold; nothing kept for compost or seed; violation and nothing-returned consequence retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "All surplus is sold; nothing kept for compost or seed; violation and nothing-returned consequence retained."
+      }
+    },
+    {
+      "index": 7,
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 3,
+      "decision": "accept",
+      "sourceEnglish": "A community that fences off a shared spring is breaking it too.",
+      "candidateText": "Tshitshavha tshi vhofhaho tsime ḽine ḽa shumiswa nga vhoṱhe nga fence tshi khou pfuka Fair Share na tshone.",
+      "review": "Shared spring, fencing-off action, community actor and Fair Share violation retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Shared spring, fencing-off action, community actor and Fair Share violation retained."
+      }
+    },
+    {
+      "index": 8,
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 1,
+      "decision": "repair",
+      "sourceEnglish": "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+      "candidateText": "Thomani nga u wana arali u kovhelana ho tendelwa. Check whether the borehole can serve all users without taking too much. Arali u kovhelana ho tendelwa nahone hu na maḓi o eḓanaho, tendelanani uri ni kovhelane nga ndinganyo ni dzule ni tshi sedza water level. People Care na Fair Share zwi livhisa u tendelana. Earth Care zwi amba u tsireledza the source. U sedza water level fhedzi a zwi ambi uri u shumisa maḓi o engedzeaho zwi safe kana zwo tendelwa.",
+      "review": "The English-only borehole instruction is an ordinary actionable clause. The surrounding wording correctly preserves first check permission, all users, the no-overdraw limit, conditional sharing only when permitted and adequate, fair agreement, continued level monitoring, protection of the source, and the explicit no-safety/no-permission guarantee.",
+      "minimalRepair": "Thomani nga u wana arali u kovhelana ho tendelwa. Sedzani arali borehole i tshi nga thusa vhashumisi vhoṱhe hu sa dzhiiwi maḓi manzhi nga maanḓa. Arali u kovhelana ho tendelwa nahone hu na maḓi o eḓanaho, tendelanani uri ni kovhelane nga ndinganyo ni dzule ni tshi sedza water level. People Care na Fair Share zwi livhisa u tendelana. Earth Care zwi amba u tsireledza the source. U sedza water level fhedzi a zwi ambi uri u shumisa maḓi o engedzeaho zwi safe kana zwo tendelwa.",
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "The English-only borehole instruction is an ordinary actionable clause. The surrounding wording correctly preserves first check permission, all users, the no-overdraw limit, conditional sharing only when permitted and adequate, fair agreement, continued level monitoring, protection of the source, and the explicit no-safety/no-permission guarantee."
+      }
+    },
+    {
+      "index": 9,
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "Who could help you check the rules and the water supply?",
+      "candidateText": "Ndi nnyi ane a nga ni thusa u sedza milayo na water supply?",
+      "review": "Question keeps both checks; “water supply” technical phrase retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Question keeps both checks; “water supply” technical phrase retained."
+      }
+    },
+    {
+      "index": 10,
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 3,
+      "decision": "accept",
+      "sourceEnglish": "Build these three into how you think before you build anything on the ground.",
+      "candidateText": "Dzhiani ethics idzi tharu ni dzi ite tshipiḓa tsha nḓila ine na humbula ngayo, ni sa athu fhaṱa zwithu kha mavu.",
+      "review": "Three ethics become part of thinking before anything is built on the ground.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Three ethics become part of thinking before anything is built on the ground."
+      }
+    },
+    {
+      "index": 11,
+      "language": "ve",
+      "slide": 10,
+      "bodyIndex": 1,
+      "decision": "accept",
+      "sourceEnglish": "One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.",
+      "candidateText": "One storm i sumbedza tshifhinga tshithihi. Full wet season i sumbedza pattern: hune maḓi a elela, hune a kuvhangana, na hune a sa swike hone.",
+      "review": "Single storm versus full wet season and all three water-pattern locations retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Single storm versus full wet season and all three water-pattern locations retained."
+      }
+    },
+    {
+      "index": 12,
+      "language": "ve",
+      "slide": 10,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
+      "candidateText": "Izwi zwi thusa uri ni pfesese site. Fhedzi izwi fhedzi a zwi sumbedzi uri swale yo tea kana yo safe u fhaṱiwa. Ni sa athu cela, sedzani soil, slope, drainage na safe overflow route ine ya sa ise kha erosion kana u rumela maḓi a tshinyadzaho kha vhahura. Humbelani trained local adviser uri a sedze site.",
+      "review": "Site understanding is not a safety/suitability finding; pre-dig checks, safe overflow, erosion/neighbour harms, and trained local assessment retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Site understanding is not a safety/suitability finding; pre-dig checks, safe overflow, erosion/neighbour harms, and trained local assessment retained."
+      }
+    },
+    {
+      "index": 13,
+      "language": "ve",
+      "slide": 11,
+      "bodyIndex": 0,
+      "decision": "accept",
+      "sourceEnglish": "Harvest rain, sun and biomass before they leave your property.",
+      "candidateText": "Harvest rain, sun na biomass ni sa athu u zwi xedza kha property yaṋu.",
+      "review": "Harvest before departure/loss is preserved; no yield amount added.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Harvest before departure/loss is preserved; no yield amount added."
+      }
+    },
+    {
+      "index": 14,
+      "language": "ve",
+      "slide": 11,
+      "bodyIndex": 1,
+      "decision": "accept",
+      "sourceEnglish": "Every one of those arrives free and leaves free. Water runs off, leaves blow away, sun falls on bare ground.",
+      "candidateText": "Zwoṱhe izwi zwi swika mahala, zwa dovha zwa ṱuwa mahala. Water i a tsela, leaves dzi a fhufha, sun i wela kha mavu a songo fukedzwaho.",
+      "review": "Free arrival/departure and runoff, blown leaves, bare ground retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Free arrival/departure and runoff, blown leaves, bare ground retained."
+      }
+    },
+    {
+      "index": 15,
+      "language": "ve",
+      "slide": 11,
+      "bodyIndex": 3,
+      "decision": "accept",
+      "sourceEnglish": "Name one thing that arrives on your land free and leaves again without being used.",
+      "candidateText": "Bulani tshithu tshithihi tshine tsha swika kha mavu aṋu mahala tsha dovha tsha ṱuwa tshi songo shumiswa.",
+      "review": "One unused thing, free arrival and leaving again are all retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "One unused thing, free arrival and leaving again are all retained."
+      }
+    },
+    {
+      "index": 16,
+      "language": "ve",
+      "slide": 13,
+      "bodyIndex": 0,
+      "decision": "accept",
+      "sourceEnglish": "Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.",
+      "candidateText": "Shumisani diversity ni i dzhiele nṱha. Hail injury to maize depends on the storm and the crop’s growth stage. Principle iyi a i fulufhedzisi uri crop i ḓo ponyoka kha event iṅwe na iṅwe.",
+      "review": "Diversity plus exact technical hail/growth-stage clause and no-survival-guarantee clause retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Diversity plus exact technical hail/growth-stage clause and no-survival-guarantee clause retained."
+      }
+    },
+    {
+      "index": 17,
+      "language": "ve",
+      "slide": 13,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "What would one bad day cost you right now?",
+      "candidateText": "Ḓuvha ḽithihi ḽivhi ḽi nga ni durisa mini zwino?",
+      "review": "One bad day and present-time cost question retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "One bad day and present-time cost question retained."
+      }
+    },
+    {
+      "index": 18,
+      "language": "ve",
+      "slide": 14,
+      "bodyIndex": 1,
+      "decision": "accept",
+      "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+      "candidateText": "A garden, fruit trees na chicken run zwi nga dzudzanywa uri chickens dzi rotate through the beds after harvest; izwi ndi integration. Ni songo tendela chickens dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe. Fresh manure can carry germs. Vhudzisani extension adviser uri bed i langulwe hani safely, edible crops dzi sa athu dovha u hula. Chickens dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha fixed pen.",
+      "review": "Chicken rotation follows harvest; exclude chickens from food crops being harvested; germ warning; adviser before edible crops return; pest/fertility benefits versus idle pen retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Chicken rotation follows harvest; exclude chickens from food crops being harvested; germ warning; adviser before edible crops return; pest/fertility benefits versus idle pen retained."
+      }
+    },
+    {
+      "index": 19,
+      "language": "ve",
+      "slide": 14,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "The same three things, fenced apart, do only their own job.",
+      "candidateText": "Izwi zwithu zwiraru, zwo fhandekanywaho nga fence, zwi ita mushumo wa tshone tshithihi tshithihi fhedzi.",
+      "review": "Three elements fenced apart each perform only its own job.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Three elements fenced apart each perform only its own job."
+      }
+    },
+    {
+      "index": 20,
+      "language": "ve",
+      "slide": 14,
+      "bodyIndex": 3,
+      "decision": "accept",
+      "sourceEnglish": "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+      "candidateText": "Khethani principles mbili kana tharu dzine dza amba na thaidzo yaṋu khulwane ni dzi shumise nga maanḓa. Dziṅwe dzi ḓo tou vha khagala musi ni tshi bvela phanḓa.",
+      "review": "Select two or three principles for largest problem; apply strongly; others become clear over time.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Select two or three principles for largest problem; apply strongly; others become clear over time."
+      }
+    },
+    {
+      "index": 21,
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+      "candidateText": "Zone 2 ndi main garden na chicken run, ni zwi dalela once or twice a day. Zone 3 ndi main field, ni i dalela weekly.",
+      "review": "Zone 2 garden/run and once or twice daily; Zone 3 main field and weekly retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Zone 2 garden/run and once or twice daily; Zone 3 main field and weekly retained."
+      }
+    },
+    {
+      "index": 22,
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 3,
+      "decision": "accept",
+      "sourceEnglish": "Zone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild.",
+      "candidateText": "Zone 4 ndi semi-wild: fruit trees na fodder zwine zwa ṱoḓa attention from time to time. Zone 5 i sala i wild.",
+      "review": "Semi-wild Zone 4 examples and occasional attention; Zone 5 left wild retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Semi-wild Zone 4 examples and occasional attention; Zone 5 left wild retained."
+      }
+    },
+    {
+      "index": 23,
+      "language": "ve",
+      "slide": 18,
+      "bodyIndex": 1,
+      "decision": "accept",
+      "sourceEnglish": "Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.",
+      "candidateText": "Sun, wind, rain, flood na fire zwi pfuka boundary yaṋu hu sa londwi arali ni tshi zwi pulanela kana hai.",
+      "review": "All five incoming hazards cross the boundary regardless of planning.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "All five incoming hazards cross the boundary regardless of planning."
+      }
+    },
+    {
+      "index": 24,
+      "language": "ve",
+      "slide": 18,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land.",
+      "candidateText": "Sedzani hune strong wind ya bva hone kha farm yaṋu. Nearby weather-station records dzi nga ni thusa u sedza wind direction. Sedzani hune rainwater ya dzhena hone na hune ya elela hone kha mavu aṋu.",
+      "review": "Wind source, nearby station evidence for direction, and rainwater entry/flow retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Wind source, nearby station evidence for direction, and rainwater entry/flow retained."
+      }
+    },
+    {
+      "index": 25,
+      "language": "ve",
+      "slide": 19,
+      "bodyIndex": 0,
+      "decision": "accept",
+      "sourceEnglish": "Look at this example. The wind comes from the north-west.",
+      "candidateText": "Sedzani uyu tsumbo. Wind i bva north-west.",
+      "review": "Example wind direction remains north-west.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Example wind direction remains north-west."
+      }
+    },
+    {
+      "index": 26,
+      "language": "ve",
+      "slide": 19,
+      "bodyIndex": 1,
+      "decision": "accept",
+      "sourceEnglish": "The trees and shrubs stand between that wind and the crops.",
+      "candidateText": "Trees na shrubs dzi ima vhukati ha wind iyo na crops.",
+      "review": "Trees/shrubs between wind and crops retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Trees/shrubs between wind and crops retained."
+      }
+    },
+    {
+      "index": 27,
+      "language": "ve",
+      "slide": 19,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "Some air passes through the windbreak. Other air moves over it or around its ends.",
+      "candidateText": "Muṅwe muya u fhira nga ngomu ha windbreak. Muṅwe u ya nṱha ha yone kana u mona na magumo ayo.",
+      "review": "Through, over and around the windbreak ends retained; “ends” can mean ends here, though fluent review may prefer “sides.”",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Through, over and around the windbreak ends retained; “ends” can mean ends here, though fluent review may prefer “sides.”"
+      }
+    },
+    {
+      "index": 28,
+      "language": "ve",
+      "slide": 19,
+      "bodyIndex": 3,
+      "decision": "accept",
+      "sourceEnglish": "The shelter can reduce wind speed behind it. The design and care of the windbreak matter.",
+      "candidateText": "Shelter i nga fhungudza wind speed nga murahu hayo. Design na u ṱhogomela windbreak ndi zwa ndeme.",
+      "review": "Can reduce speed behind windbreak; design and care matter.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Can reduce speed behind windbreak; design and care matter."
+      }
+    },
+    {
+      "index": 29,
+      "language": "ve",
+      "slide": 19,
+      "bodyIndex": 4,
+      "decision": "accept",
+      "sourceEnglish": "On your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan.",
+      "candidateText": "Kha site yaṋu, ṱhogomelani damaging winds ni sa athu khetha hune na ḓo lima hone. Tshifanyiso itshi a si planting plan.",
+      "review": "Observe damaging winds before planting choice; illustration explicitly not a planting plan.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Observe damaging winds before planting choice; illustration explicitly not a planting plan."
+      }
+    },
+    {
+      "index": 30,
+      "language": "ve",
+      "slide": 20,
+      "bodyIndex": 0,
+      "decision": "accept",
+      "sourceEnglish": "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.",
+      "candidateText": "Olani boundary yaṋu. Maka nnḓu. Olani rings dzi tshi ya nnḓa u ya nga uri ni dalela hani lunzhi.",
+      "review": "Boundary, house, and outward rings based on visit frequency retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Boundary, house, and outward rings based on visit frequency retained."
+      }
+    },
+    {
+      "index": 31,
+      "language": "ve",
+      "slide": 21,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "Add an arrow for each energy that arrives from outside, and label where it comes from.",
+      "candidateText": "Engedzani arrow nthihi kha energy iṅwe na iṅwe ine ya swika i tshi bva nnḓa, ni ṅwale hune ya bva hone.",
+      "review": "One arrow per external energy and label its origin retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "One arrow per external energy and label its origin retained."
+      }
+    },
+    {
+      "index": 32,
+      "language": "ve",
+      "slide": 22,
+      "bodyIndex": 2,
+      "decision": "repair",
+      "sourceEnglish": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+      "candidateText": "Wanani tshithu tshithihi tsho limiwaho “planted further away than how often you use it,” ni ṅwale hune tsha tea u pfuluselwa hone.",
+      "review": "The quoted English clause is ordinary task wording, not a technical anchor. It carries the key relation between distance and frequency of use; translate it rather than leaving that relation English-only.",
+      "minimalRepair": "Wanani tshithu tshithihi tsho limiwaho kule u ya nga lunzhi lune na tshi shumisa ngalo, ni ṅwale hune tsha tea u pfuluselwa hone.",
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "The quoted English clause is ordinary task wording, not a technical anchor. It carries the key relation between distance and frequency of use; translate it rather than leaving that relation English-only."
+      }
+    },
+    {
+      "index": 33,
+      "language": "ve",
+      "slide": 22,
+      "bodyIndex": 3,
+      "decision": "repair",
+      "sourceEnglish": "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow.",
+      "candidateText": "Nga murahu ni humbele one older neighbour uri a ni vhudze direction ine worst wind ya bva ngaḽo, ni vhambedze phindulo yawe na arrow yaṋu.",
+      "review": "“one older neighbour” is ordinary wording and remains English-only. The direction question and comparison with the learner’s arrow are preserved.",
+      "minimalRepair": "Nga murahu humbelani muṅwe mudzulapo wa kale muthihi uri a ni vhudze hune muya u sa takadziho wa bva hone, ni vhambedze phindulo yawe na arrow yaṋu.",
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "“one older neighbour” is ordinary wording and remains English-only. The direction question and comparison with the learner’s arrow are preserved."
+      }
+    },
+    {
+      "index": 34,
+      "language": "ts",
+      "slide": 4,
+      "bodyIndex": 1,
+      "decision": "accept",
+      "sourceEnglish": "It means treating soil, water, plants and animals as living systems to protect, not resources to use up.",
+      "candidateText": "Swi vula ku teka soil, water, plants na animals tani hi “living systems to protect, not resources to use up.”",
+      "review": "Technical protect-versus-use-up contrast and all four subjects exact.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Technical protect-versus-use-up contrast and all four subjects exact."
+      }
+    },
+    {
+      "index": 35,
+      "language": "ts",
+      "slide": 4,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "A system you use up stops paying you. A system you protect keeps paying you.",
+      "candidateText": "System leyi u yi tirhisaka yi hela, kutani “stops paying you.” System leyi u yi sirhelelaka ya ya mahlweni, kutani “keeps paying you.”",
+      "review": "Both halves of the system benefit contrast retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Both halves of the system benefit contrast retained."
+      }
+    },
+    {
+      "index": 36,
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "A farmer who sells all his surplus mielies and keeps nothing back for compost or for seed is breaking this one. Nothing goes back.",
+      "candidateText": "Murimi loyi a xaviselaka mielies ya yena leyi saleke yi hundzaka leswi a swi lavaka hinkwaro, a nga hlayisi ni xin’we xa compost kumbe seed, u tshova nawu lowu. A ku na lexi tlheleleke.",
+      "review": "All surplus, compost/seed, rule-breaking and nothing-returned retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "All surplus, compost/seed, rule-breaking and nothing-returned retained."
+      }
+    },
+    {
+      "index": 37,
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 3,
+      "decision": "accept",
+      "sourceEnglish": "A community that fences off a shared spring is breaking it too.",
+      "candidateText": "Vaaki lava va pfangaka xihlovo lexi va xi tirhisaka swin’we hi fence na vona va tshova Fair Share.",
+      "review": "Shared spring, fencing off, community and Fair Share violation retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Shared spring, fencing off, community and Fair Share violation retained."
+      }
+    },
+    {
+      "index": 38,
+      "language": "ts",
+      "slide": 7,
+      "bodyIndex": 1,
+      "decision": "accept",
+      "sourceEnglish": "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+      "candidateText": "Sungula hi ku kuma leswaku ku avelana swa pfumeleriwa kumbe e-e. Kambela loko borehole yi nga tirhela vatirhisi hinkwavo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona ku ri na mati yo ringana, pfumelelani ndlela ya ku avelana hi ku ringana, mi ya mahlweni mi languta water level. People Care na Fair Share swi kongomisa ntwanano. Earth Care swi vula ku sirhelela the source. Ku languta water level ntsena a swi endli leswaku ku tirhisa mati yo engetela swi va safe kumbe swi pfumeleriwa.",
+      "review": "All permission, borehole capacity/all users/no overdraw, adequate-water condition, fair agreement, ongoing level check, values, source protection, and no-safety/no-permission guarantee retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "All permission, borehole capacity/all users/no overdraw, adequate-water condition, fair agreement, ongoing level check, values, source protection, and no-safety/no-permission guarantee retained."
+      }
+    },
+    {
+      "index": 39,
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 3,
+      "decision": "accept",
+      "sourceEnglish": "Build these three into how you think before you build anything on the ground.",
+      "candidateText": "Veka ethics leti tinharhu eka ndlela leyi u ehleketaka ha yona u nga si sungula ku aka ehandle.",
+      "review": "Three ethics inform thinking before building on the land.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Three ethics inform thinking before building on the land."
+      }
+    },
+    {
+      "index": 40,
+      "language": "ts",
+      "slide": 9,
+      "bodyIndex": 0,
+      "decision": "accept",
+      "sourceEnglish": "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept.",
+      "candidateText": "David Holmgren u hlamusele twelve design principles eka Essence of Permaculture. Bill Mollison na David Holmgren va sungula permaculture concept swin’we.",
+      "review": "Holmgren attribution, twelve principles, book title, and joint-origin claim retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Holmgren attribution, twelve principles, book title, and joint-origin claim retained."
+      }
+    },
+    {
+      "index": 41,
+      "language": "ts",
+      "slide": 10,
+      "bodyIndex": 1,
+      "decision": "accept",
+      "sourceEnglish": "One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.",
+      "candidateText": "Storm yin’we yi ku komba nkarhi wun’we. Full wet season yi ku komba pattern: laha mati ya khulukaka, laha ya hlengeletanaka kona, ni laha ma nga fiki kona nikatsongo.",
+      "review": "One storm versus full wet season and three water patterns retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "One storm versus full wet season and three water patterns retained."
+      }
+    },
+    {
+      "index": 42,
+      "language": "ts",
+      "slide": 10,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
+      "candidateText": "Leswi swi ku pfuna ku twisisa ndhawu. Kambe leswi ntsena a swi kombisi loko swale yi faneleka kumbe yi safe ku akiwa. U nga si cela, kambela soil, slope, drainage na safe overflow route leyi nga ta ka yi nga vangisi erosion kumbe ku rhumela mati lama onhaka eka vaakelani. Kombela trained local adviser a kambela ndhawu.",
+      "review": "Site understanding distinct from suitability/safety; before digging, soil/slope/drainage, safe overflow, erosion/neighbour harm, and trained local adviser all retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Site understanding distinct from suitability/safety; before digging, soil/slope/drainage, safe overflow, erosion/neighbour harm, and trained local adviser all retained."
+      }
+    },
+    {
+      "index": 43,
+      "language": "ts",
+      "slide": 11,
+      "bodyIndex": 0,
+      "decision": "accept",
+      "sourceEnglish": "Harvest rain, sun and biomass before they leave your property.",
+      "candidateText": "Harvest rain, sun na biomass u nga si swi lahla swi huma eka property ya wena.",
+      "review": "Harvest before rain/sun/biomass leaves property retained; “lose” is close to source sense.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Harvest before rain/sun/biomass leaves property retained; “lose” is close to source sense."
+      }
+    },
+    {
+      "index": 44,
+      "language": "ts",
+      "slide": 11,
+      "bodyIndex": 1,
+      "decision": "accept",
+      "sourceEnglish": "Every one of those arrives free and leaves free. Water runs off, leaves blow away, sun falls on bare ground.",
+      "candidateText": "Hinkwato swi fika mahala swi tlhela swi famba mahala. Water yi khuluka yi huma, leaves ti haha ti ya, sun yi wela eka bare ground.",
+      "review": "Free arrival/departure, runoff, blown leaves, bare ground retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Free arrival/departure, runoff, blown leaves, bare ground retained."
+      }
+    },
+    {
+      "index": 45,
+      "language": "ts",
+      "slide": 13,
+      "bodyIndex": 0,
+      "decision": "accept",
+      "sourceEnglish": "Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.",
+      "candidateText": "Tirhisa diversity u tlhela u yi teka yi ri ya nkoka. Hail injury to maize depends on the storm and the crop’s growth stage. Principle leyi a yi tiyisisi leswaku crop yi ta pona eka event yin’wana ni yin’wana.",
+      "review": "Diversity plus exact hail/growth-stage technical clause and no guarantee retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Diversity plus exact hail/growth-stage technical clause and no guarantee retained."
+      }
+    },
+    {
+      "index": 46,
+      "language": "ts",
+      "slide": 13,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "What would one bad day cost you right now?",
+      "candidateText": "Xana siku rin’we ro biha ri nga ku durhela yini sweswi?",
+      "review": "One bad day, cost, and right-now timing retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "One bad day, cost, and right-now timing retained."
+      }
+    },
+    {
+      "index": 47,
+      "language": "ts",
+      "slide": 14,
+      "bodyIndex": 0,
+      "decision": "accept",
+      "sourceEnglish": "Put each element where it works for its neighbours.",
+      "candidateText": "Veka element yin’wana ni yin’wana laha yi tirhaka kona na leswi nga ekusuhi na yona.",
+      "review": "Each element placed where it works with neighboring elements retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Each element placed where it works with neighboring elements retained."
+      }
+    },
+    {
+      "index": 48,
+      "language": "ts",
+      "slide": 14,
+      "bodyIndex": 1,
+      "decision": "accept",
+      "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+      "candidateText": "Garden, fruit trees na chicken run swi nga veketeriwa leswaku chickens ti rotate through the beds after harvest; leswi i integration. U nga pfumeleli chickens ti tshinela eka crops leti ku tshoveriwaka swakudya. Fresh manure can carry germs. Kombela extension adviser a ku hlamusela ndlela yo hlayisa bed yi ri safe loko edible crops ti nga si tlhela ti byariwa. Chickens ti nga basisa pests ti tlhela ti engetela fertility, ematshan’weni yo tshama ti nga endli swo karhi eka fixed pen.",
+      "review": "Chicken rotation after harvest, exclusion from crops being harvested for food, germ warning, adviser before edible crops return, and pest/fertility versus idle pen retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Chicken rotation after harvest, exclusion from crops being harvested for food, germ warning, adviser before edible crops return, and pest/fertility versus idle pen retained."
+      }
+    },
+    {
+      "index": 49,
+      "language": "ts",
+      "slide": 14,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "The same three things, fenced apart, do only their own job.",
+      "candidateText": "Swilo leswi swinharhu, loko swi pfariwe hi fence swi hambanisiwile, xin’wana ni xin’wana xi endla ntirho wa xona ntsena.",
+      "review": "Three elements fenced apart and each doing only its own job retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Three elements fenced apart and each doing only its own job retained."
+      }
+    },
+    {
+      "index": 50,
+      "language": "ts",
+      "slide": 14,
+      "bodyIndex": 3,
+      "decision": "accept",
+      "sourceEnglish": "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+      "candidateText": "Hlawula principles timbirhi kumbe tinharhu leti khumbaka xiphiqo xa wena lexikulu u ti tirhisa swinene. Letin’wana ti ta vonaka kahle loko u ya mahlweni.",
+      "review": "Choose two or three principles relevant to biggest problem, apply strongly, rest become apparent with progress.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Choose two or three principles relevant to biggest problem, apply strongly, rest become apparent with progress."
+      }
+    },
+    {
+      "index": 51,
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+      "candidateText": "Zone 2 i main garden ni chicken run, u ya eka swona once or twice a day. Zone 3 i main field, u ya kona weekly.",
+      "review": "Zone 2 garden/run visited once or twice daily; Zone 3 field visited weekly retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Zone 2 garden/run visited once or twice daily; Zone 3 field visited weekly retained."
+      }
+    },
+    {
+      "index": 52,
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 3,
+      "decision": "accept",
+      "sourceEnglish": "Zone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild.",
+      "candidateText": "Zone 4 i semi-wild: fruit trees na fodder leswi lavaka attention nkarhi wun’wana ni wun’wana. Zone 5 yi tshikiwa yi ri wild.",
+      "review": "Zone 4 semi-wild with fruit trees/fodder and occasional attention; Zone 5 left wild retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Zone 4 semi-wild with fruit trees/fodder and occasional attention; Zone 5 left wild retained."
+      }
+    },
+    {
+      "index": 53,
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 1,
+      "decision": "repair",
+      "sourceEnglish": "Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.",
+      "candidateText": "Sun, wind, rain, flood na fire swi fika across your boundary hambi u swi pulanile kumbe a wu swi pulananga.",
+      "review": "“across your boundary” is left in English inside the key direction claim. Translate the crossing relation explicitly; all five hazards and the regardless-of-planning condition are present.",
+      "minimalRepair": "Sun, wind, rain, flood na fire swi tsemakanya ndzilakana wa wena hambi u swi pulanile kumbe a wu swi pulananga.",
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "“across your boundary” is left in English inside the key direction claim. Translate the crossing relation explicitly; all five hazards and the regardless-of-planning condition are present."
+      }
+    },
+    {
+      "index": 54,
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land.",
+      "candidateText": "Languta laha strong wind yi humaka kona epurasini ra wena. Nearby weather-station records ti nga ku pfuna ku kambela wind direction. Languta laha rainwater yi nghenaka kona ni ndlela leyi yi khulukaka ha yona eka misava ya wena.",
+      "review": "Strong wind origin, nearby station records for direction, rainwater entry and flow retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Strong wind origin, nearby station records for direction, rainwater entry and flow retained."
+      }
+    },
+    {
+      "index": 55,
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 3,
+      "decision": "accept",
+      "sourceEnglish": "Which direction does the weather that damages you come from?",
+      "candidateText": "Xana weather leyi ku onhaka yi huma hi tlhelo rihi?",
+      "review": "Question asks the direction of damaging weather.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Question asks the direction of damaging weather."
+      }
+    },
+    {
+      "index": 56,
+      "language": "ts",
+      "slide": 19,
+      "bodyIndex": 0,
+      "decision": "accept",
+      "sourceEnglish": "Look at this example. The wind comes from the north-west.",
+      "candidateText": "Languta example leyi. Wind yi huma hi north-west.",
+      "review": "Example and north-west wind direction retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Example and north-west wind direction retained."
+      }
+    },
+    {
+      "index": 57,
+      "language": "ts",
+      "slide": 19,
+      "bodyIndex": 1,
+      "decision": "accept",
+      "sourceEnglish": "The trees and shrubs stand between that wind and the crops.",
+      "candidateText": "Trees na shrubs swi yima exikarhi ka wind yoleyo ni crops.",
+      "review": "Trees/shrubs between wind and crops retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Trees/shrubs between wind and crops retained."
+      }
+    },
+    {
+      "index": 58,
+      "language": "ts",
+      "slide": 19,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "Some air passes through the windbreak. Other air moves over it or around its ends.",
+      "candidateText": "Air yin’wana yi hundza hi le ka windbreak. Yin’wana yi ya ehenhla ka yona kumbe yi rhendzeleka ematlhelo ya yona.",
+      "review": "Air paths through, over, and around the windbreak sides/ends retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Air paths through, over, and around the windbreak sides/ends retained."
+      }
+    },
+    {
+      "index": 59,
+      "language": "ts",
+      "slide": 19,
+      "bodyIndex": 3,
+      "decision": "accept",
+      "sourceEnglish": "The shelter can reduce wind speed behind it. The design and care of the windbreak matter.",
+      "candidateText": "Shelter yi nga hunguta wind speed endzhaku ka yona. Design ni ku hlayisiwa ka windbreak swi na nkoka.",
+      "review": "Possible reduced speed behind shelter plus design/care importance retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Possible reduced speed behind shelter plus design/care importance retained."
+      }
+    },
+    {
+      "index": 60,
+      "language": "ts",
+      "slide": 19,
+      "bodyIndex": 4,
+      "decision": "accept",
+      "sourceEnglish": "On your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan.",
+      "candidateText": "Eka site ya wena, languta damaging winds u nga si hlawula laha u nga ta byala kona. Picture leyi a hi planting plan.",
+      "review": "Observe damaging winds before planting choice; illustration not a planting plan.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Observe damaging winds before planting choice; illustration not a planting plan."
+      }
+    },
+    {
+      "index": 61,
+      "language": "ts",
+      "slide": 20,
+      "bodyIndex": 0,
+      "decision": "accept",
+      "sourceEnglish": "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.",
+      "candidateText": "Dirowa boundary ya wena. Maka yindlu. Dirowa rings u ya ehandle hi ku ya hi leswaku u endzela ndhawu yin’wana ni yin’wana kangani.",
+      "review": "Boundary, house, outward rings and visit-frequency basis retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Boundary, house, outward rings and visit-frequency basis retained."
+      }
+    },
+    {
+      "index": 62,
+      "language": "ts",
+      "slide": 20,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "That sheet of paper is the skeleton of your design. Everything else in this course hangs on it.",
+      "candidateText": "Phepha leri ri khoma skeleton ya design ya wena. Hinkwaswo swin’wana eka khoso leyi swi titshege hi rona.",
+      "review": "Paper as design skeleton and course dependence retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "Paper as design skeleton and course dependence retained."
+      }
+    },
+    {
+      "index": 63,
+      "language": "ts",
+      "slide": 21,
+      "bodyIndex": 2,
+      "decision": "accept",
+      "sourceEnglish": "Add an arrow for each energy that arrives from outside, and label where it comes from.",
+      "candidateText": "Engetela arrow yin’we eka energy yin’wana ni yin’wana leyi fikaka yi huma ehandle, u tsala laha yi humaka kona.",
+      "review": "One arrow per external energy and label source retained.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "One arrow per external energy and label source retained."
+      }
+    },
+    {
+      "index": 64,
+      "language": "ts",
+      "slide": 22,
+      "bodyIndex": 2,
+      "decision": "repair",
+      "sourceEnglish": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+      "candidateText": "Kuma xilo xin’we lexi “planted further away than how often you use it,” kutani u tsala laha xi faneleke ku rhurhiseriwa kona.",
+      "review": "The quoted English task clause is ordinary wording and contains the central distance-versus-frequency condition. Translate that clause.",
+      "minimalRepair": "Kuma xilo xin’we lexi byariweke ekule ku hundza ndlela leyi u xi tirhisaka ha yona kangani, kutani u tsala laha xi faneleke ku rhurhiseriwa kona.",
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "The quoted English task clause is ordinary wording and contains the central distance-versus-frequency condition. Translate that clause."
+      }
+    },
+    {
+      "index": 65,
+      "language": "ts",
+      "slide": 22,
+      "bodyIndex": 3,
+      "decision": "accept",
+      "sourceEnglish": "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow.",
+      "candidateText": "Endzhaku kombela one older neighbour a ku hlamusela direction leyi worst wind yi humaka hi yona, u ringanisa nhlamulo ya yena ni arrow ya wena.",
+      "review": "One older neighbour, worst-wind direction, and comparison with learner’s arrow retained; translate “one older neighbour” at final localization pass if it is left as a draft.",
+      "minimalRepair": null,
+      "sourceChecks": {
+        "candidateSourceConcatenationExactlyMatchesSuppliedEnglish": true,
+        "pairedBindingMarkedExact": true,
+        "conditionsDirectionsQuantitiesAndNegatives": "One older neighbour, worst-wind direction, and comparison with learner’s arrow retained; translate “one older neighbour” at final localization pass if it is left as a draft."
+      }
+    }
+  ],
+  "limitation": "These are semantic/source checks by an AI reviewer, not fluent-speaker approval. Keep draft and unreviewed status; facilitator and fluent review remain required before publication."
+}

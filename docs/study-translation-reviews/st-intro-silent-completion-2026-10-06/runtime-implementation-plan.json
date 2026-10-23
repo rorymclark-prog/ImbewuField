@@ -1,0 +1,216 @@
+{
+  "date": "2026-10-06",
+  "mode": "read-only implementation plan; no repository edits",
+  "repository": {
+    "worktree": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField",
+    "HEAD": "2731fe76f2e8e7d1bc9a0be0dce66be497904401",
+    "trackedStatus": "?? docs/study-translation-reviews/st-intro-silent-completion-2026-10-06/"
+  },
+  "authorities": {
+    "/tmp/imbewu-st-intro-silent-completion-binding-plan-20261006.json": "b0abe8ff68e09e4ceba379a07c3ee292b7894efebae87837976a3e6a03fdac97",
+    "/tmp/imbewu-st-intro-silent-completion-root-design-review-20261006.json": "4bbfe10c0010c04631c7c493f6b1bca99a52ab7ac3a75ff696b6a25ee8f52c2d"
+  },
+  "verifiedCurrentRuntime": {
+    "resolveNarrationLang": {
+      "lang": "st",
+      "exact": true
+    },
+    "requiresExplicitNarrationChoice": false,
+    "track22": "/course-audio/intro-permaculture/st/slide-22.mp3",
+    "fullNarration": "/course-audio/intro-permaculture/st/full.mp3",
+    "defaultOfflinePackVariant": "full",
+    "defaultPackAudioCount": 22,
+    "slide22": "/course-decks/intro-permaculture/st/slide-22.webp"
+  },
+  "protected": [
+    {
+      "path": "docs/narration/intro-permaculture.st.paired-draft.json",
+      "sha256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+      "bytes": 25360
+    },
+    {
+      "path": "docs/narration-reviews/INTRO-PERMACULTURE-ST-AUDIO-2026-09-28.json",
+      "sha256": "af15028a91eec576917ec46f908aef39abb388c4ec42f7a8b4dbbe776dbb8ca8",
+      "bytes": 30100
+    },
+    {
+      "path": "lib/course-transcripts.ts",
+      "sha256": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+      "bytes": 204569
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/full.mp3",
+      "sha256": "c2411fd63e864a7bf158547a921ab9613ccd8d40d6d2cd09ec0974492ffe9510",
+      "bytes": 5168108
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-01.mp3",
+      "sha256": "e6126d03971fc957eb8465625e6c1cbad9653b8cfa9c06a8fc364b640eb426cb",
+      "bytes": 283628
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-02.mp3",
+      "sha256": "852d9d98894ba4466145433f620a8898450c2cdd5c813f5cb7956b722b9a783b",
+      "bytes": 255980
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-03.mp3",
+      "sha256": "4b870e2ea0eb2501ebc2e6f2c6ac9874edb3ed47c5b701287e36146f80ebe0f4",
+      "bytes": 245804
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-04.mp3",
+      "sha256": "767a4f3a50ba255c7a468ae05986f9544e69dfab7bc35f5e571ddaa3017c3a2e",
+      "bytes": 239660
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-05.mp3",
+      "sha256": "24f8a79fd1aa23799957968385c2e22d4202364fc9b8d9bb2b34100182a340b5",
+      "bytes": 226028
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-06.mp3",
+      "sha256": "f0fe5f1c8b8700321a56aa5f081e1afe0ae28094926c6fcd56e7ac88e15a07cd",
+      "bytes": 231788
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-07.mp3",
+      "sha256": "4908700e6b6b8b7ac1841716be0c9abd9da4b9d47e235f9bb96cd6459eaa2d35",
+      "bytes": 257708
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-08.mp3",
+      "sha256": "781e1107d13a46f1a75a0282b5f70275b1f4ef54fb5ce3f40b22ca1c390585f6",
+      "bytes": 199148
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-09.mp3",
+      "sha256": "f7430be929f4244e796127abf7e01dc1741933395c957361fd6bf9f5ba9f8243",
+      "bytes": 255020
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-10.mp3",
+      "sha256": "d2f7359238379c1dbe8ee0f168f45c2802d76f3bb64f408dd719f7f70abee5e9",
+      "bytes": 346028
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-11.mp3",
+      "sha256": "182c16cc99390ac6a6f4094540ad069cf871a2c469edda8d6cc74107afd7c279",
+      "bytes": 244268
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-12.mp3",
+      "sha256": "bef2ab756beea6e941455389219dbe131d0a9da64ced8ff07ab72b2b424fe271",
+      "bytes": 172844
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-13.mp3",
+      "sha256": "741918799e5ddd653ad0a4638d4edfe664aeaf40f8329e8f7bced856a94ce80e",
+      "bytes": 227180
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-14.mp3",
+      "sha256": "ee77bce0d1d64cb219771930cc6952794fe54566cd403c5c7e8cdc2ed3b83742",
+      "bytes": 331820
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-15.mp3",
+      "sha256": "e98f413d6e6875fdea5eb272bf89347ff95683efcd31aef2fde21c90bc319bd0",
+      "bytes": 255788
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-16.mp3",
+      "sha256": "2d96297c2a3c073bfd12d95e1086bbf0c82b76396d0a00f4fd56dc54a86a4a10",
+      "bytes": 161708
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-17.mp3",
+      "sha256": "cfc2f59c05ed362256699ad8645f0546a1d5b3574fa65d023a57d10d2442a474",
+      "bytes": 215468
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-18.mp3",
+      "sha256": "85ea7f16de208a83af15c423bbc0f3ca452c605194f621c557243dfd5b333f84",
+      "bytes": 234860
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-19.mp3",
+      "sha256": "95988c9559a92e7fabe49d213f3d3dffdf1f416e3a938997d5430fa9b36781d3",
+      "bytes": 226604
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-20.mp3",
+      "sha256": "f281ce330f09951d197196df8d3c5d09219f32e2e77bba5f69c7f58adc8b37fb",
+      "bytes": 242540
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-21.mp3",
+      "sha256": "91dd1d172982254fa040a0d2b9820226b98b1e016d292c7ef7f5c935ee985bcd",
+      "bytes": 145964
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-22.mp3",
+      "sha256": "38a4980a865fbde9541176d1d4d42eac0c4699448a7026c21c4fd8294d508cd6",
+      "bytes": 182828
+    }
+  ],
+  "design": {
+    "authority": "One small browser-safe lib/course-deck-release-bindings.ts plus generated/frozen release data. No import of course-audio/course-deck/fs/crypto from the pure authority, avoiding current silent-draft→audio cycle. course-audio remains the single public narration-selection owner and consults this release authority.",
+    "record": "Key intro-permaculture.st; new currentPair path/hash, exactly22 ordered slide numbers, literal English heading/body arrays and composed target arrays/semantic statuses, unreviewed state, imageURL/SHA/bytes/width/naturalheight, audioBinding:none. Archive audioPair path/hash remains50ac5543 and its record unchanged.",
+    "paths": "Use a distinct docs/narration/intro-permaculture.st.silent-draft.json and public/course-decks/intro-permaculture/st-silent/slide-NN.webp. Preserve old st pair and old st stills alongside all23 MP3s (22clips plus full). New URLs avoid falsely rebinding old visual/audio evidence or needing to evict archived audio.",
+    "runtimeValidation": "Pure factory validates nonempty source/target, semantic draft/hold contracts, unique contiguous22 ordered identities, expected module/language, exact current canonical English arrays/headings, approved ordered target snapshot, finite dimensions1440×>=5400, exact scoped URL, SHA syntax, unreviewed/audio-none. Return frozen branded registry. Resolver rechecks injected live canonical/pair input and returns unavailable on drift. Distinguish absent binding from registered-invalid binding: invalid active ST binding must not fall through to legacy ST URLs/audio.",
+    "hashValidation": "Build-time Node tests compute full pair SHA and exact joined source/target digests from real current JSON, compare generated data and frozen approval; hash actual WebP bytes, RIFF/WEBP signatures/dimensions/bytes. Runtime does not pretend to hash remote bytes; test/build guarantees manifest release identity. Raw pair import/direct ordered comparison or generated data validated against pair must prevent stale copied hashes passing.",
+    "compatibleNarration": "Pure matching predicate permits legacy/future recorded binding only when valid current pair digest equals immutable audio record sourcePair digest AND mode admits recorded audio. New audioBinding:none blocks old voice even if a malformed record reuses hash. Matching fixture remains playable in tests; no permanent ST-disable constant.",
+    "publicAudioAPI": "course-audio exposes availableNarrationLanguages filtered by release compatibility while COURSE_NARRATION/narrationFor/allTracks retain archival inventory. resolveNarrationLang falls back to en exactfalse for new ST pair. requiresExplicitNarrationChoice uses available own-language set, and trackUrl/fullNarrationUrl reject mismatch before generating ST URL; existing ZU per-slide semantic/source holds remain unchanged.",
+    "UI": "DeckPlayer and CourseAudioPlayer selectors use availableNarrationLanguages, not raw manifest languages. New ST defaultnone/English explicitly optional, no archived ST voice option even when interfaceEN. DeckPlayer uses current silent binding title/source/target/image independent of spoken transcript; do not show old ST transcript as current silent-deck prose. Existing playback-generation/reset guards must still stop stale language/source selection.",
+    "offline": "regionalPackNeedsNarrationChoice/defaultOfflinePackVariant already flow through resolver, so newST UI defaults slides. Explicit full ST request chooses fallbackEN audio only. Preserve oldMP3 manifest entries. downloadableModules currently calls offlinePack without variant (legacy defaultfull), so pass defaultOfflinePackVariant there for accurate default cost. Consider making omitted offlinePack variant derive default policy separately only if root accepts API scope; not necessary for current OfflineDownload which passes explicitvariant.",
+    "sourceDriftFallback": "Invalid active silent pair returns EN still exactfalse, never legacy ST target/image. Audio remains unavailable; source-pair UI discloses unavailable draft and shows actual canonicalEN, not frozen driftedEN. No source fallback suppression in test rewind.",
+    "render": "Only after accepted text/source shape review: existing make-lesson-slides pairedrenderer to fresh output with newpair; sequential1440wide PNG→RGBWebP q88/method6 preserve naturalheight; copy new st-silent frames only, measuredmanifest entries/header; actual contacts/closeviews before QA. No synthesis/transcriptregeneration."
+  },
+  "scopedRuntimeFiles": [
+    "lib/course-deck-release-bindings.ts (new pure authority)",
+    "lib/course-deck-release-bindings-data.ts (new generated binding data)",
+    "lib/course-audio.ts",
+    "lib/course-deck.ts",
+    "components/course/DeckPlayer.tsx",
+    "components/course/CourseAudioPlayer.tsx",
+    "lib/course-readiness.ts",
+    "lib/offline-pack.ts"
+  ],
+  "scopedDataAndProofFiles": [
+    "docs/narration/intro-permaculture.st.silent-draft.json (new)",
+    "public/course-decks/intro-permaculture/st-silent/slide-01..22.webp (new after render approval)",
+    "lib/course-asset-sizes.ts (new22entries + actual aggregate only)",
+    "docs/study-translation-reviews/st-intro-silent-completion-2026-10-06/ snapshots/accepted packets/proofs",
+    "docs/media/st-intro-silent-completion-2026-10-06/frames.json + renderproof",
+    "dated audit + dateindex; package registration once"
+  ],
+  "meaningfulTests": [
+    "Exact old matching pair permits ST clip22/full in injected fixture; one target/source/pair digest change, missing/duplicate/reordered slide or audio-none mode rejects both. Preserve all old23audio hashes and oldpair SHA.",
+    "Factory/resolver rejects source or target single-character drift, translated identity incorrectlydraft, competing holdtext, title/count/order/URL/language/status/dimensions corruption; source-only technicalholds and separators retain exactjoinedsource.",
+    "Actual new22 image bytes and headers/dimensions match acceptedpair/currentbinding; same-size single-byte image corruption and stale target hash fail. OldSTstill/audio/unlistedmanifest files remain exact.",
+    "All public audio APIs agree: newST resolvesENfallback but no defaultvoice; oldSTURL and full blocked; ownST selector absent; EN/ZU review holds unaffected. Table expected availability independent frozenfixture, not rawmanifest membership.",
+    "React state: defaultST nonepressed/Englishunpressed/disabled/no-src/no-load; explicitEN selection alone no fetch/play; Play then none/langchange clears src; stale promise/error/timeupdate/ended cannot resume; failed-source binding cannot restore archivedST.",
+    "Offline defaultST slides with new22stillURLs zeroaudio/animations; explicitly full pack has onlyENclipURLs, zeroSTclips/full duplicate. Language/module switches reset contentchoice; accurate library downloadable defaultcost. EN/ZU unchanged and existingreviewholds/source fallback still fail closed.",
+    "Deck normal/expanded sourcepanel title/text/image all derive same currentrelease; English voice does not swapSTslides or display oldSTtranscript. Invalid active binding visibly falls backEN; no nativecanonical source/index/status/metadata mutation.",
+    "Historical live-ST defaults in course-audio.test/course-deck-source-bindings.test become dated oldfixture comparisons only after full actualnewrelease validation; retain exactold hashes, matchingpositive/source-negative assertions and all existingmutation coverage."
+  ],
+  "hiddenCouplings": [
+    "Current IsiZulu silent factory imports course-audio and requires legacyZU bindings; do not naively generalize by importing it into course-audio or a cycle results. Reuse validation design, not its dependency graph.",
+    "CourseAudioPlayer raw manifest map still exposes oldST to EN/ZU reader even after defaultnone; selectors need available list as well as URL gates.",
+    "ST visible transcript currently follows spokenLang; choosingEN exposesENtranscript while no voice yields none. New silent currenttarget/source must bind independently; old generated STtranscript must remain archive.",
+    "gen-course-transcripts hashes narration sourcePair and reads wholebody draft/hold: retain old sourcePair and oldgeneratedtranscripts, never point it at newmixed silentobjects or auto regenerate audio.",
+    "COURSE_NARRATION creates deck tracks/order/title and manifest tests inventory everyMP3; do not removeST language to mute it or orphanbytes. Separate inventory from compatibleavailable list.",
+    "course-readiness counts rawlanguages; filter compatibleavailable list so archivedvoice is not advertised as ready. Student page regional notice already usesresolve and inheritsnewpolicy.",
+    "Introduction only animation4 already unavailable forST/VE/TS; no extraanimation change needed. Shared filmbytes stay protected.",
+    "offlinePack parameter defaultfull differs public OfflineDownload policy; downloadableModules currently overcounts full. Explicitfull can legitimately include optionalEN audio but must neveroldST.",
+    "scripts/course-status/narration inventory checks should retain archivedrecord counts; live readiness cannot infercompatiblevoice from inventory."
+  ],
+  "callersInventory": "/tmp/st-intro-audio-callers.txt",
+  "limits": [
+    "Read-only plan only, no code/media rendering or semantictext adopted.",
+    "Precise accepted ST candidate packet still required before any prose application.",
+    "No listening/fluency/farming/preview/offline approval.",
+    "Fresh queue read from origin/main; only this separate2731fe76 worktree inspected, no Soil/Water changes."
+  ]
+}

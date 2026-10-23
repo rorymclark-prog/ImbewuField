@@ -1,174 +1,133 @@
 # Ukwakha imvelo elinganayo nekhiqizayo
 
-## Ukufunda emvelweni
+Imvelo yalima lo mhlaba kudala ngaphambi kwethu, ngaphandle kwesikhwama somanyolo. Utshani bubamba ilanga nemvula. Izinkomo nezinyamazane zidla utshani. Ubulongwe bondla umhlabathi, bese umhlabathi wondla utshani. Akukho okuchithekayo, futhi akekho ofuthayo.
 
-Ku-permaculture inhloso ukwakha amapulazi nezingadi ezisebenza njengezinhlelo zemvelo: zikhiqiza ukudla, **i-fodder** (ukudla kwemfuyo), izinkuni namapulangwe, zihlala ziphilile, futhi zidinga izinto ezimbalwa ezivela ngaphandle njengoba isikhathi sihamba.
+Asidingi ukuba ososayensi ukuze silime kanje. Sidinga ukuqonda injini yemvelo ngokwanele ukuze sixhume ipulazi lethu emandleni ayo amahhala esikhundleni sokulwa nayo. Ithuluzi elingcono kakhulu lisewukuphela kwelidala kakhulu: isikhathi esisichitha sibuka.
 
-Awudingi ukuba usosayensi ukuze usebenzise ulwazi lwemvelo epulazini lakho. Kodwa kufanele uqonde ukuthi imvelo isebenza kanjani, futhi uqhubeke ubheka emvelweni ukuze uthole imibono nezixazululo. Ithuluzi elibaluleke kunawo wonke **ukubheka**: chitha isikhathi ubuka umhlaba wakho, idlelo lemvelo (veld) eliwuzungezile, nokuthi izitshalo, izilwane, amanzi nesimo sezulu kushintsha kanjani ngezinkathi zonyaka.
+**Ekupheleni kwalesi sahluko uzokwazi:**
 
-Uma siqonda okuqhuba imvelo, singaklama ipulazi lethu ukuze izingxenye zalo zilingane kahle futhi zixhumeke nemijikelezo yemvelo. Bese sisebenzisa amandla amahhala elanga, emvula, ezidalweni zomhlabathi nezilwane zasendle, esikhundleni sokulwa nazo.
+- Ukuchaza ukuthi iyini i-ecosystem nokuthi iphiramidi yempilo isebenza kanjani
+- Ukusebenzisa i-succession ukwelapha umhlaba ongenalutho noma okhathele
+- Ukwakha amakhaya epulazini lakho abasizi basendle njengamaxoxo, izibankwa nezikhova
+- Ukwengeza ukwehlukahlukana ukuze ipulazi lakho lisabalalise ingozi yalo futhi lilawule izinambuzane ezilimazayo
 
 ## Iyini i-ecosystem?
 
-**I-ecology** (isayensi yemvelo) yisifundo sokuthi izinto eziphilayo zihlobana kanjani phakathi kwazo nendawo ezizungezile.
+**I-ecology** (isayensi yemvelo) ukufunda ngokuthi izinto eziphilayo zihlobana kanjani zodwa nendawo ezizungezile. **I-ecosystem** iqembu lezitshalo, izilwane nezidalwa zomhlabathi ezihlala ndawonye nomhlabathi, amanzi, umoya nokukhanya kwelanga okuzizungezile. Ingaba ncane njengechibi noma inqwaba ye-compost, noma ibe nkulu njengamadlelo otshani bemvelo e-Highveld.
 
-**I-ecosystem** (uhlelo lwemvelo) yizo zonke izinto eziphilayo endaweni eyodwa, kanye nezinto ezingaphili ezizizungezile, nazo zonke izindlela ezithintana ngazo.
+Yonke i-ecosystem inamaqembu amathathu asebenzayo:
 
-- **Izinto eziphilayo** zifaka izitshalo, izilwane, izinambuzane, isikhunta nama-micro-organism (izinto eziphilayo ezincane kakhulu ukuba zibonwe ngeso).
-- **Izinto ezingaphili** zifaka umhlabathi, amanzi, umoya, ukukhanya kwelanga, amadwala nesimo sezulu.
+- **Abakhiqizi:** izitshalo eziluhlaza. Zibamba ukukhanya kwelanga futhi zondle konke okunye.
+- **Abadli:** izilwane, kusukela kuma-aphid kuya ezinkomeni kuya ebantwini. Zidla izitshalo noma ziyadlana.
+- **Ababolisi:** isikhunta, amagciwane, imisundu nezinye izidalwa zomhlabathi. Zihlakaza izitshalo ezifile, ubulongwe nezidumbu futhi zibuyisele izakhamzimba emhlabathini.
 
-Izingxenye eziphilayo nezingaphili zincike komunye nomunye. Ndawonye zakha imijikelezo nochungechunge lokudla (food chains). I-ecosystem ingaba incane njengechibi noma inqwaba **ye-compost** (izinsalela zezitshalo ezibolile ezondla umhlabathi), noma ibe nkulu njengamadlelo emvelo aseHighveld noma ulwandle. Onke ama-ecosystem eMhlabeni ndawonye akha **i-biosphere** (yonke impilo esemhlabeni).
+Izinqubo ezine ziyigcina isebenza:
 
-Yonke i-ecosystem inamaqembu amathathu amakhulu ezinto eziphilayo:
+- **Umjikelezo wamanzi.** Imvula iyangena noma iyageleza ihambe, izitshalo ziyasebenzisa, bese ibuyela emoyeni.
+- **Umjikelezo wezakhamzimba.** Izakhamzimba zisuka emhlabathini ziye esitshalweni ziye esilwaneni, bese zibuyela emhlabathini ngobulongwe nangokubola.
+- **Ukugeleza kwamandla.** Izitshalo zibamba amandla elanga bese ziwadlulisela phezulu **ochungechungeni lokudla** (food chain). Amandla awabuyiselwa: amaqabunga aluhlaza kufanele awabambe emasha nsuku zonke.
+- **Ushintsho ngokuhamba kwesikhathi.** Ingxube yezitshalo nezilwane iyashintsha unyaka nonyaka (bheka i-Succession ngezansi).
 
-- **Abakhiqizi:** izitshalo eziluhlaza. Zisebenzisa ukukhanya kwelanga ukuzenzela ukudla kwazo, futhi zondla konke okunye.
-- **Abadli:** izilwane, kusukela ezinambuzaneni kuya ezinyonini kuya ebantwini. Zidla izitshalo noma ezinye izilwane.
-- **Ababolisi:** isikhunta, amagciwane, imisundu nezinye izidalwa zomhlabathi. Zibolisa izitshalo ezifile, ubulongwe nezidumbu futhi zibuyisele izakhamzimba emhlabathini.
-
-Ukuze uhlelo lwe-permaculture lusebenze, kudingeka sisekele impilo kuwo wonke la mazinga. Isibonelo, uma sinika izinyoni ezidla izinambuzane indawo yokuhlala, zisiza ukunciphisa izinambuzane ezilimaza izitshalo.
+Lapho lokhu kusebenza kahle, umhlaba usinika amanzi ahlanzekile, umhlabathi ovundile, ukuthuthwa kwempova, ukulawulwa kwezinambuzane namadlelo mahhala.
 
 ## Uchungechunge lokudla nephiramidi yempilo
 
-Singadweba impilo ese-ecosystem njenge-**phiramidi**.
+Cabanga ngempilo esepulazini njengephiramidi.
 
-- Phansi kukhona **izitshalo**, ezibamba amandla elanga. Zime phezu **komhlabathi** nababolisi bawo, abaphinda basebenzise izakhamzimba ukuze izitshalo ziqhubeke zikhula.
-- Ngaphezu kwazo kunezilwane **ezidla izitshalo**, njengamacimbi, ama-aphid, amagundane nezinkomo.
-- Phezulu kakhulu **kunama-predator** (izilwane ezizingelayo) adla lezo, njengama-ladybird, izicabucabu, izinyoni nezibankwa.
-- Esiqongweni kunama-predator ambalwa **aphezulu kunawo wonke**, njengezikhova, izinkozi nezimpungushe.
+- Phansi kukhona **izitshalo**, ezibamba amandla elanga. Zime phezu **komhlabathi** nababolisi bawo.
+- Ngaphezu kwazo kunezilwane **ezidla izitshalo**, njengamacimbi, ama-aphid, izimpuku nezinkomo.
+- Phezulu kunama-**predator** (izilwane ezizingela futhi zidle ezinye) azidlayo, njengama-ladybird, izicabucabu, izinyoni nezibankwa.
+- Esiqongweni kunama-predator ambalwa **aphezulu**, njengezikhova, izinkozi nezimpungushe.
 
-Izinga ngalinye eliya phezulu linezinto eziphilayo ezimbalwa, ngoba amandla alahleka kuso sonke isinyathelo. Kudinga utshani obuningi ukondla inkomo eyodwa, namagundane amaningi ukondla isikhova esisodwa.
+Izinga ngalinye eliphezulu liphethe izinto eziphilayo ezimbalwa, ngoba amandla ayalahleka kuso sonke isinyathelo. Kudinga utshani obuningi ukondla inkomo eyodwa, nezimpuku eziningi ukondla isikhova esisodwa.
 
-Yingakho kungafanele sizame ukubulala zonke izinambuzane ezilimaza izitshalo. Uma sifaka ushevu kuwo wonke ama-aphid namacimbi, ama-ladybird nezinyoni ezikudlayo ziyalamba bese zihamba. Bese kuthi uma izinambuzane ezilimazayo zibuya, kungabi khona lutho olusele lokuzilawula, futhi ukuhlasela kwazo kube kubi nakakhulu.
+Lokhu kusho ukuthini epulazini:
 
-Ngoba yonke iphiramidi ime phezu kwezitshalo nomhlabathi, **impilo yomhlabathi inquma ukuthi umhlaba ungathwala impilo engakanani** nokuthi ungakhiqiza okungakanani.
-
-## Ama-ecosystem asebenza kanjani
-
-Izinqubo ezine zigcina yonke i-ecosystem isebenza:
-
-- **Umjikelezo wamanzi.** Imvula iyana, ingene emhlabathini noma igeleze, isetshenziswe yizitshalo, bese ibuyela emoyeni.
-- **Umjikelezo wamaminerali (izakhamzimba).** Izakhamzimba zisuka emhlabathini ziye ezitshalweni ziye ezilwaneni, bese zibuyela emhlabathini ngobulongwe nangokubola.
-- **Ukugeleza kwamandla.** Amandla elanga abanjwa yizitshalo bese edlulela phezulu ochungechungeni lokudla. Ngokungafani namanzi namaminerali, amandla awaphinde asetshenziswe. Kufanele aphinde abanjwe nsuku zonke ngamaqabunga aluhlaza.
-- **Ukushintsha komphakathi wezitshalo nezilwane.** Ingxube yezitshalo nezilwane iyashintsha ngokuhamba kwesikhathi. **I-succession** (ukulandelana kwezitshalo emvelweni, ngezansi) iyingxenye yalokhu.
-
-Uma lezi zinqubo zisebenza kahle, umhlaba usinika **izinsizakalo ze-ecosystem** (ecosystem services): amanzi ahlanzekile, umhlabathi onomvundo, ukuthuthwa kwempova, ukulawulwa kwezinambuzane, amadlelo, izinkuni, nesimo sezulu sendawo esizinzile.
-
-Kuso sonke lesi sahluko esisele sibheka imibono emithathu evela kwi-ecology esiza ekuklameni: **i-succession**, **i-habitat** (ikhaya lemvelo lesitshalo noma lesilwane) kanye **ne-biodiversity** (ukwehlukahlukana kwezinto eziphilayo). Kusebenzise ndawonye nezimiso ze-permaculture ezisesahlukweni sokuqala.
+1. Ungazami ukubulala zonke izinambuzane ezilimazayo. Faka ushevu kuwo wonke ama-aphid, bese ama-ladybird nezinyoni ezidla wona zilamba zihambe. Lapho ama-aphid ebuya, akukho okuwavimbayo.
+2. Yondla isisekelo. Iphiramidi yonke ime phezu kwezitshalo nomhlabathi, ngakho impilo yomhlabathi inquma ukuthi umhlaba wakho ungathwala impilo engakanani, nesivuno esingakanani.
+3. Nika ama-predator ikhaya (bheka i-Habitat ngezansi).
 
 ## I-succession
 
-### Indlela umhlaba ozelapha ngayo
+**I-succession** wushintsho, isinyathelo ngesinyathelo, lwezitshalo nezilwane zendawo ngokuhamba kwesikhathi. Yindlela umhlaba ophola ngayo. Ngemva kokulima ngegeja, ukudliwa ngokweqile yimfuyo, umlilo noma isikhukhula:
 
-Ngemva kokuba umhlaba uphazanyisiwe, isibonelo ngokulinywa ngegeja, ngokudliwa kakhulu yimfuyo, ngomlilo noma ngesikhukhula, imvelo iqala ukuwumboza nokuwulungisa. Umphakathi wezitshalo ushintsha kancane kancane ngokuhamba kwesikhathi. Lokhu kubizwa ngokuthi **i-succession**.
-
-1. **Izitshalo eziqala ukumila** (pioneer plants) ziza kuqala. Zivame ukuba wukhula **olungama-annual** (oluphila isizini eyodwa) olungathandwa ngabalimi. Zikhula ngokushesha, zimboze umhlabathi ongenalutho, futhi ziwubambe endaweni yawo. Uma zifa, izimpande namaqabunga azo kondla umhlabathi.
-2. **Izitshalo eziqinile ziyalandela.** Utshani **obungama-perennial** (obuphila iminyaka eminingi), amakhambi nezihlahlana kuyangena. Eziningi zazo **zingama-legume** (izitshalo zohlobo lukabhontshisi) engeza i-nitrogen emhlabathini. Zinika izitshalo ezincane indawo yokukhosela, futhi zinike izinambuzane, izinyoni nezinye izilwane ukudla namakhaya.
-3. **Umphakathi ohlala isikhathi eside** wakheka ekugcineni. Umhlabathi uyajula futhi uba nomvundo omningi, bese umhlaba usekela impilo eningi nezinhlobo eziningi zempilo.
-
-Isiphetho se-succession asifani yonke indawo. Kuncike emvuleni, esithwathweni, emhlabathini, emlilweni nasekudliweni yimfuyo.
+1. **Izitshalo eziqala ukumila** (pioneer plants) zifika kuqala, ngokuvamile ukhula lonyaka olungathandwa ngabalimi. Zikhula ngokushesha, zimboze umhlabathi ongenalutho futhi ziwubambe. Lapho zifa, ziyawondla.
+2. **Kulandela izitshalo eziqinile:** utshani, amakhambi nezihlahlana eziyi-**perennial**, eziningi zazo zingama-**legume** (umndeni kabhontshisi nophizi) afaka i-nitrogen emhlabathini. Zivikela izitshalo ezincane futhi zondle izinambuzane nezinyoni.
+3. **Umphakathi ophila isikhathi eside** uzinza ekugcineni. Umhlabathi uyajula futhi uvunde, bese umhlaba uthwala impilo eningi, nezinhlobo eziningi zempilo.
 
 ### Akuwona wonke umhlaba oba yihlathi
 
-Izincwadi eziningi, ezabhalwa emazweni anemvula eningi, zithi wonke umhlaba ngokwemvelo ukhula ube yihlathi. **ENingizimu ne-Afrika lokhu akulona iqiniso.**
+Izincwadi ezibhalwe emazweni anemvula eningi zithi wonke umhlaba ukhula ube yihlathi. ENingizimu ne-Afrika akunjalo. Ihlathi lemvelo limboza ngaphansi kuka-1% weNingizimu Afrika, eziqeshaneni ezincane lapho imvula iningi futhi isithwathwa siyivelakancane, njenge-Garden Route namawa asempumalanga amanzi. Iningi lomhlaba wethu lizinza libe yinto enye, endala ngokufanayo futhi enothe ngezinhlobo:
 
-Amahlathi emvelo amboza ngaphansi kuka-1% weNingizimu Afrika. Akhula kuphela ezindaweni ezincane lapho imvula iningi futhi isithwathwa singavamile, njenge-Garden Route nemiqansa emanzi esempumalanga. Iningi lomhlaba wethu ngokwemvelo limbozwe amanye ama-ecosystem amadala ngokufanayo, azinzile futhi anezinhlobo eziningi:
+- **Amadlelo otshani bemvelo** (grassland) amboza ingxenye enkulu ye-Highveld, iDrakensberg neLesotho. Isithwathwa, umlilo nokudla kwemfuyo kugcina izihlahla ngaphandle. Lawa madlelo asendulo aphethe izitshalo eziningi eziyivelakancane futhi abamba amanzi ondla imifula yethu emikhulu.
+- **I-savanna** (ihlanze, bushveld), utshani obunezihlahla ezisakazekile, imboza ingxenye enkulu yenyakatho nempumalanga. Umlilo, ukudla utshani nokuhlaba amahlamvu kugcina ukulingana phakathi kotshani nezihlahla.
+- **I-fynbos**, eNtshonalanga Kapa ethola imvula ebusika, idinga umlilo cishe njalo eminyakeni eyi-10 kuya kweyi-15. Izitshalo eziningi ze-fynbos, njengama-protea, zikhulula futhi zihlumise imbewu yazo kuphela ngemva komlilo.
+- I-**Karoo** eyomile ngokwemvelo iyizihlahlana (shrubland).
 
-- **Amadlelo otshani bemvelo** (grassland) amboza ingxenye enkulu yeHighveld, yoKhahlamba neLesotho. Isithwathwa, umlilo nokudla kwemfuyo kuvimba izihlahla. La madlelo otshani mdala kakhulu futhi anezitshalo eziningi ezingavamile. Aphinde abambe futhi agcine amanzi ondla imifula yethu emikhulu.
-- **I-savanna** (bushveld), utshani obunezihlahla ezisakazekile, imboza ingxenye enkulu yasenyakatho nasempumalanga. Umlilo, ukudla kwemfuyo nokuhluza kwezilwane ezidla amahlamvu kugcina ukulingana phakathi kotshani nezihlahla.
-- **I-fynbos**, eNtshonalanga Kapa ethola imvula ebusika, idinga umlilo cishe njalo ngemva kweminyaka eyi-10 kuya kweyi-15. Izitshalo eziningi ze-fynbos, njengama-protea, zikhulula futhi zihlumise imbewu yazo kuphela ngemva komlilo. Ngaphandle komlilo, i-fynbos ilahlekelwa izinhlobo zayo.
-- I-**Karoo** eyomile nezinye izindawo ezomile ngokwemvelo zimbozwe yizihlahlana ezincane (shrubland).
+Gcina umlilo ngaphandle futhi udlise ngokweqile, amadlelo ne-savanna kuminyana ngezihlahla zameva. Lokhu **kuminyana kwezihlahla zameva** (bush encroachment) sekumboza ngaphezu kwamahektha ayizigidi eziyi-7 eNingizimu Afrika futhi kulahlekisa amadlelo namanzi.
 
-Kulezi zindawo, umlilo nokudla kwemfuyo kuyingxenye yendlela i-ecosystem ehlala iphilile ngayo. Uma umlilo uvinjelwa futhi umhlaba udliwa kakhulu yimfuyo, amadlelo otshani ne-savanna kungaminyana izihlahla zameva. Lokhu kubizwa ngokuthi **ukuminyana kwezihlahla zameva** (bush encroachment). Sekusabalale emahektheni angaphezu kwezigidi ezi-7 eNingizimu Afrika futhi kunciphisa amadlelo namanzi.
-
-> **Qaphela:** Ukutshala izihlahla emadlelweni otshani bemvelo noma ku-fynbos akukuthuthukisi. Kubhubhisa i-ecosystem engavamile ekhiqiza amanzi. Tshala izihlahla ezungeze umuzi wakho **naku-food forest** (ihlathi lokudla) yakho, kodwa yekela idlelo lemvelo elisemhlabeni wakho lihlale lingamadlelo otshani, i-savanna noma i-fynbos.
+> **Qaphela:** Ukutshala izihlahla otshanini bemvelo noma ku-fynbos akukuthuthukisi. Kubhubhisa i-ecosystem eyivelakancane enikeza amanzi. Tshala izihlahla ezungeze umuzi naku-food forest, bese uvumela indle yakho ihlale iyidlelo, i-savanna noma i-fynbos.
 
 ### Ukusebenzisa i-succession epulazini lakho
 
-Epulazini, sisebenzisa umbono we-succession emiklamweni yethu:
+1. **Izitshalo eziqala ukumila kuqala.** Emhlabathini ongenalutho, ompofu, hlwanyela izitshalo zokumboza umhlabathi eziqinile nama-**green manure** (izitshalo ezitshalelwa ukondla umhlabathi), njenge-cowpea. Tshala izitshalo ezidinga okuningi ngemva kwazo.
+2. **Yakha i-food forest yakho ngezigaba.** Tshala izitshalo ezisekelayo ezikhula ngokushesha phakathi kwezihlahla zezithelo ezincane, bese uzisika zibe yi-mulch njengoba izihlahla zithatha izintambo.
+3. **Khetha izitshalo ezisekelayo ezihlala endaweni yazo.** Iningi "lezihlahla ezibopha i-nitrogen" ezincwadini zaphesheya, njengowatela omnyama (black wattle), i-*Leucaena* ne-red sesbania, lisabalala lingalawuleki eNingizimu Afrika. Tshala i-pigeon pea esikhundleni salokho, nomunga womdabu (*Vachellia karroo*) lapho ufanele khona. Umunga uyasabalala edlelweni elidliwe ngokweqile, ngakho wugcine ngaphakathi kwezindawo zakho ezitshaliwe.
+4. **Hlonipha isiphetho sendawo.** Ezweni lamadlelo otshani, i-zone yakho yasendle (i-Zone 5) kufanele ibe ngamadlelo aphilile, hhayi ihlathi elitshaliwe.
 
-- **Izitshalo eziqala ukumila kuqala.** Emhlabathini ongenalutho nompofu, qala ngezitshalo eziqinile eziqala ukumila, **i-green manure** (izitshalo ezimbelwa emhlabathini ukuze ziwondle) nama-legume **angama-nitrogen fixer** (athatha i-nitrogen emoyeni ayifake emhlabathini) ukuze kumbozwe futhi kondliwe umhlabathi. Bese utshala izitshalo ezidinga okuningi.
-- **Izigaba ku-food forest.** I-food forest etshalwe eduze nekhaya ilingisa izigaba ze-succession: izitshalo ezisekelayo ezikhula ngokushesha kuqala, bese kulandela izihlahla zezithelo namantongomane ezithatha indawo kancane kancane. Ama-legume akhula phakathi kwezihlahla ezincane ukuze kondliwe umhlabathi.
-- **Khetha izitshalo ezisekelayo ngokucophelela.** Eziningi "zezihlahla ezingama-nitrogen fixer" eziqala ukumila ezincwadini ze-permaculture zaphesheya, njengowatela (black wattle), i-*Leucaena* ne-red sesbania, zimenyezelwe **njengama-invasive species** (izitshalo zangaphandle ezisakazeka zingalawuleki) eNingizimu Afrika. Sebenzisa izitshalo ezifana ne-pigeon pea, nama-legume omdabu afana nomunga (sweet thorn, *Vachellia karroo*), lapho zifanele indawo. Umunga usabalala kalula edlelweni lemvelo elidliwe kakhulu yimfuyo, ngakho wugcine ezindaweni zakho ezitshaliwe.
-- **Hlonipha isiphetho sendawo yakho.** Endaweni yamadlelo otshani, i-zone yakho yasendle (i-Zone 5) kufanele ibe ngamadlelo otshani aphilile, hhayi ihlathi elitshaliwe.
+### Ukulima ulwa nemvelo, noma usebenzisana nayo
 
-### Ukulima ngokumelana nemvelo, noma ngokusebenzisana nayo
+Ukulima okuningi kwanamuhla kugcina umhlaba esigabeni sokuqala esingenalutho: lima, futha, faka umanyolo, isitshalo esisodwa, phinda. Imvelo imboza umhlabathi ongenalutho ngokhula ukuze iqale ukuphola, bese umlimi eyalufutha. Lokhu kubiza isikhathi, uphethiloli namakhemikhali, futhi kushiya umhlaba ongazinzile, ompofu ngempilo nolimala kalula yisomiso, izinambuzane ne-**erosion**.
 
-Ukulima okuningi kwanamuhla kusebenza ngokumelana ne-succession. Umhlabathi ulinywa ngegeja, ufafazwe ngezibulali-khula nezibulali-zinambuzane, wondliwe ngomanyolo wamakhemikhali futhi utshalwe isitshalo esisodwa, isizini nesizini. Imvelo iqhubeka izama ukumboza umhlabathi ongenalutho ngokhula ukuze iqale ukuwelapha, bese umlimi eqhubeka ekufafaza.
-
-Ukugcina umhlaba kulesi sigaba sokuqala esingenalutho kudla isikhathi esiningi, uphethiloli namakhemikhali. Uhlelo luhlala lungazinzile futhi lunokwehlukahlukana okuncane, futhi lulimala kalula yisomiso, izinambuzane ezilimazayo **ne-erosion** (ukukhukhuleka komhlabathi).
-
-Ku-permaculture sihlose okuphambene nalokho. Sifuna ukwakha umhlabathi nokwehlukahlukana, ukuze ipulazi lethu libe nomvundo omningi futhi lizinze kakhudlwana ngokuhamba kwesikhathi. Ohlelweni olunjalo, imijikelezo yezakhamzimba iyasebenza futhi kunempilo eyanele yokulawula izinambuzane nezifo. Lusashintsha ngaso sonke isikhathi, kodwa lunganikeza isivuno esihle ngezindleko eziphansi nangomzamo omncane.
+I-permaculture ihamba ngenye indlela. Sakha umhlabathi nokwehlukahlukana, ukuze ipulazi livunde futhi lizinze kakhulu unyaka nonyaka, linempilo eyanele ukulawula izinambuzane nezifo.
 
 ## I-habitat
 
-**I-habitat** yikhaya lesitshalo noma lesilwane. Yindawo esinika konke esikudingayo ukuze siphile: ukudla, amanzi, indawo yokukhosela, isikhala nendawo ephephile yokuzalela.
+**I-habitat** yikhaya lesitshalo noma lesilwane: indawo esinika ukudla, amanzi, indawo yokukhosela, indawo nendawo ephephile yokuzalela. Ixoxo lidinga amanzi amaqanda alo, utshani obude namatshe azungeze ichibi ukuze licashe ezinyonini nasezinyokeni, nezinambuzane zokudla. Lelo chibi yi-habitat yalo. Ukulahleka kwama-habitat kungesinye sezizathu ezinkulu ezenza izitshalo nezilwane zishabalale.
 
-### Isibonelo: i-habitat yexoxo
+Cabanga nge-habitat njengesikhangiso somsebenzi. Ipulazi linemisebenzi eminingi: ukudla izinambuzane ezilimazayo, ukuthutha impova ezimbalini, ukubolisa imfucuza. Esikhundleni sokuyikhokhela, sikhangisela abasizi basendle, futhi isikhangiso kufanele sinikeze ukudla, amanzi nombhede ophephile.
 
-- Amaxoxo amaningi abekela amaqanda awo emanzini, ngakho adinga ichibi, ixhaphozi noma umfudlana.
-- Adinga indawo yokucasha kuma-predator njengezinyoni nezinyoka. Utshani obude, amadwala nezitshalo ezilenga ezungeze ichibi kuwanika izindawo zokucasha.
-- Adinga ukudla: izinambuzane, kanti ezinye izinhlobo zidla neminenke.
-
-Le ndawo yechibi **iyi-habitat** yexoxo. Izitshalo nezilwane ezahlukene zidinga ama-habitat ahlukene. Ukulahlekelwa yi-habitat kungesinye sezizathu ezinkulu zokuthi izitshalo nezilwane zibe yivelakancane futhi ziphele nya.
-
-### I-habitat njengesikhangiso somsebenzi
-
-Singacabanga futhi nge-habitat njenge-**niche**: umsebenzi odinga ukwenziwa. Kunemisebenzi eminingi epulazini, njengokudla izinambuzane ezilimazayo, ukuthutha impova ezimbalini nokuphinda kusetshenziswe izinsalela. Uma bekufanele siyenze yonke ngokwethu, noma siyikhokhele, bekuzobiza kakhulu. Kuhlakaniphile ukwakha ama-habitat "akhangisa" ukuthi abasizi basendle beze bazohlanganyela emsebenzini. Isikhangiso kufanele sihehe: ukudla okwanele, amanzi nendawo ephephile yokuhlala.
-
-Nazi ezinye izindlela ezilula zokwakha i-habitat.
-
-**Nikeza amanzi.** Zonke izinto eziphilayo zidinga amanzi. Isitsha sokugeza izinyoni, ichibi elincane noma idamu kuheha ngokushesha izinyoni, amaxoxo, ozekamanzi (dragonflies) nabanye abasizi. Amaxoxo, amaselesele nozekamanzi badla izinambuzane eziningi kakhulu. Faka amatshe ambalwa noma izinti emanzini ukuze izinyosi nezinye izinambuzane zikwazi ukuhlala ziphuze zingaminzi.
-
-> **Ukuphepha:** Izingane ezincane zingaminza emanzini amancane kakhulu. Biyela amachibi noma uwagcine embozwe ngocingo oluqinile, bese umboza wonke amathangi nemithombo. Ukuvimba omiyane ukuthi bazalele khona, gcina amanzi ehlanzekile futhi uyeke amaxoxo, amashobana nezibungu zozekamanzi zidle izibungu zomiyane. Ungafaki i-mosquitofish (*Gambusia*) emachibini asengadini: iyinhlanzi eyi-invasive species esohlwini eNingizimu Afrika, futhi idla namashobana.
-
-**Shiya izindawo zasendle.** Uma unedlelo lemvelo, ihlathi noma ixhaphozi epulazini lakho, kugcine. Le **yi-Zone 5** yakho. Uma ungenayo, buyisela indawo encane, namanye amakhona angalinywa, ezitshalweni zomdabu. Lokhu mhlawumbe yinto ebaluleke kakhulu ongayenzela i-habitat. Izitshalo zomdabu zendawo zisekela izinambuzane, izinyoni nezinye izilwane zendawo eziningi kakhulu kunezitshalo zangaphandle. Phatha amadlelo otshani ngomlilo nangokudla kwemfuyo ngokwemithetho yendawo, futhi ugcine **ama-firebreak** (imizila ehlanziwe evimba umlilo) afanele.
-
-**Tshala uthango oluphilayo.** Tshala imigqa exubile yezihlahla, izihlahlana namakhambi eduze kwezintambo zothango, emaphethelweni amasimu nasezindleleni. Izitshalo zomdabu zothango oluphilayo zifaka i-Cape honeysuckle (*Tecoma capensis*), i-plumbago (*Plumbago auriculata*), i-sand olive (*Dodonaea viscosa*), umqokolo (kei apple, *Dovyalis caffra*) ne-karee nezinye izinhlobo ze-*Searsia*. Uthango oluphilayo lunikeza indawo yokukhosela, ukudla nezindawo zokwakha izidleke, futhi lusebenza **njenge-windbreak** (umugqa wezihlahla ovimba umoya).
-
-**Yenza izinqwaba zamatshe nezingodo.** Izinqwaba zamatshe zingamakhaya amahle ezibankwa. Izibankwa zethamela emadwaleni afudumele emini futhi zidla izinambuzane eziningi. Izinqwaba zezingodo zikhosela amabhungane, amaxoxo nesikhunta.
-
-> **Ukuphepha:** Izinyoka nofezela nabo bangakhosela ezinqwabeni zamatshe nezingodo. Zakhe kude nendlu, izindlela nezindawo lapho izingane zidlala khona, futhi ugqoke amagilavu namabhuzu uma uhambisa amatshe noma izingodo.
-
-**Beka amabhokisi ezikhova.** Izikhova (barn owls) zakha izidleke ezimgodini, futhi zizongena ebhokisini lezikhova lokhuni. Libophe esigxotsheni, esihlahleni noma esakhiweni okungenani u-3 m ngaphezu komhlabathi, lapho amakati nabantu bengeke balifinyelele khona. Umndeni wezikhova ungadla amagundane angu-1 000 noma ngaphezulu ngonyaka, ngakho izikhova ziwusizo olukhulu ekulawuleni amagundane nezimpuku.
-
-> **Isexwayiso:** Ushevu wamagundane ubulala izikhova. Izikhova, izinkozi, amakati nezinja kuyafa uma kudla amagundane nezimpuku ezidle ushevu. Uma ufuna izikhova zilawule amagundane, ungasebenzisi ushevu wamagundane. Kweminye imiphakathi izikhova zesatshwa njengophawu olubi. Khuluma nomakhelwane bakho ngokuthi izikhova zilisiza kanjani ipulazi.
+1. **Nikeza amanzi.** Isitsha sokugeza izinyoni noma ichibi elincane ngokushesha kuletha izinyoni, amaxoxo nozekamanzi, abadla izinambuzane eziningi kakhulu. Faka amatshe noma izinti emanzini ukuze izinyosi ziphuze zingaminzi. Biyela amachibi noma uwamboze ngenetha eliqinile ukuze izingane ezincane zingaweli kuwo. Amaxoxo, amashobana nezibungu zozekamanzi zidla izibungu zomiyane; ungafaki izinhlanzi ze-mosquitofish, ezidla namashobana.
+2. **Shiya izindawo zasendle.** Gcina noma iyiphi indle yemvelo noma ixhaphozi emhlabeni wakho. Le yi-**Zone 5** yakho. Uma ungenayo, buyisela ikhona elilodwa ezitshalweni zomdabu. Mhlawumbe yinto ebaluleke kakhulu ongayenzela ama-habitat, ngoba izitshalo zendawo zondla izinambuzane nezinyoni zendawo eziningi kakhulu kunezangaphandle.
+3. **Tshala uthango lwezitshalo.** Tshala imigqa exubile eceleni kothango nasemaphethelweni amasimu: uchwasha (Cape honeysuckle, *Tecoma capensis*), i-plumbago (*Plumbago auriculata*), i-sand olive (*Dodonaea viscosa*), umqokolo (Kei apple, *Dovyalis caffra*), ne-karee nezinye izinhlobo ze-*Searsia*. Zinika indawo yokukhosela, ukudla nezindawo zokwakha izidleke, futhi ziphula umoya.
+4. **Nqwabelanisa amatshe nezingodo** kude nendlu nalapho izingane zidlala khona. Izibankwa zithamela ematsheni afudumele futhi zidle izinambuzane eziningi. Izingodo zivikela amabhungane, amaxoxo nesikhunta.
+5. **Misa ibhokisi lezikhova** esigxotsheni, esihlahleni noma esakhiweni okungenani u-3 m ngaphezu komhlabathi, kude namakati. Umndeni wezikhova ze-barn owl ungadla amagundane nezimpuku eziyi-1 000 noma ngaphezulu ngonyaka. Izikhova ziyafa ngokudla amagundane afakwe ushevu, ngakho uma ufuna izikhova, yeka ukusebenzisa ushevu wamagundane. Lapho izikhova zesatshwa njengophawu olubi, khuluma nomakhelwane bakho ngomsebenzi ezenzayo.
 
 ## I-biodiversity
 
-**I-biodiversity** isho izinhlobonhlobo zempilo: izinhlobo eziningi ezahlukene zezitshalo, izilwane, izinambuzane, isikhunta nama-micro-organism endaweni, nokwehlukana phakathi kohlobo ngalunye.
+**I-biodiversity** ukwehlukahlukana kwempilo endaweni: izinhlobo eziningi zezitshalo, izilwane, izinambuzane, isikhunta nezidalwa zomhlabathi, nomehluko ngaphakathi kohlobo ngalunye. Hamba edlelweni eliphilile noma ku-fynbos uzokubona. Ihlathi likaphayini elitshaliwe likhombisa okuphambene: amahektha ngamahektha esihlahla esisodwa, kukhula okuncane kakhulu ngaphansi. Izinhlobo eziningana zikaphayini ziphinde zisabalale otshanini bemvelo naku-fynbos, futhi zisebenzise amanzi amaningi.
 
-Ukwehlukahlukana kuyisihluthulelo sepulazi le-permaculture eliphilile nelikhiqizayo. Kuphambene **nokulima uhlobo olulodwa** (i-monoculture), okungumugqa ngemva komugqa wesitshalo esisodwa kuphela.
+Ukwehlukahlukana kuyakhokhela:
 
-Ubona i-biodiversity yangempela uma uhamba edlelweni lemvelo eliphilile, ku-fynbos noma ehlathini lomdabu: izinhlobo eziningi zotshani, izimbali, izihlahla, izihlahlana, izinambuzane, izinyoni nesikhunta konke kuphila ndawonye.
+- **Kusabalalisa ingozi.** Uma isitshalo esisodwa sehluleka ngenxa yesomiso, izinambuzane noma isifo, ezinye zisanika isivuno.
+- **Kusiza ukulawula izinambuzane ezilimazayo.** Ingxube yezitshalo yondla futhi ivikele ama-predator adla izinambuzane ezilimazayo, futhi izinambuzane zikuthola kunzima ukuthola isitshalo ezisithandayo phakathi kweziningi. Izingadi ezinezinhlobo eziningi azivamile ukuhlaselwa kakhulu, nakuba zingalokothi zingabi nazo nhlobo izinambuzane.
+- **Kwakha umhlabathi ophilile.** Izimpande ezahlukene nezinsalela zezitshalo kondla izinhlobo eziningi zezidalwa zomhlabathi.
 
-### Uma ukwehlukahlukana kulahleka
+Ukuze ukwakhe:
 
-Ihlathi lophayini elitshaliwe liyisibonelo sokwehlukahlukana okuncane kakhulu. Kunophayini kuphela, ihektha ngemva kwehektha, futhi kukhula okuncane kakhulu ngaphansi kwawo. Abanye abantu babiza amahlathi anjalo ngokuthi "izingwadule eziluhlaza". ENingizimu Afrika, izinhlobo eziningana zikaphayini futhi zimenyezelwe njengama-invasive species: zisabalala emadlelweni otshani naku-fynbos futhi zisebenzisa amanzi amaningi.
+1. Tshala ngendlela **ye-polyculture** (izitshalo eziningi ndawonye embhedeni noma ensimini efanayo), esikhundleni sesitshalo esisodwa emigqeni emide.
+2. Tshala ama-perennial (izitshalo eziphila iminyaka, njengezihlahla zezithelo, amakhambi nemifino ephila iminyaka) eceleni kwezitshalo zakho zonyaka.
+3. Tshala **i-food forest**, ingadi enezingqimba kusukela ezihlahleni ezinde kuya kuma-groundcover nasezitshalweni zezimpande.
+4. Gcina ingxube yezilwane, ngasinye sinomsebenzi: izinkukhu zidla izinambuzane, umquba wezinkomo wondla i-compost.
+5. Tshala izimbali, kuhlanganise nezomdabu, ukuze wondle izinyosi nezinye izinambuzane eziwusizo unyaka wonke.
 
-### Kungani ukwehlukahlukana kusiza
+Lapho okuphuma engxenyeni eyodwa kondla enye (ubulongwe buye emhlabathini, izinsalela zezitshalo ziye ezilwaneni, izinambuzane ziye ezinyonini), ipulazi liqala ukuzinakekela.
 
-- **Kusabalalisa ingozi.** Uma isitshalo esisodwa sehluleka ngenxa yesomiso, izinambuzane ezilimazayo noma isifo, ezinye izitshalo zisanika isivuno.
-- **Kusiza ukulawula izinambuzane ezilimazayo.** Ingxube yezitshalo inika ukudla nendawo yokukhosela ama-predator nezimuncagazi ezidla izinambuzane ezilimazayo. Izinambuzane ezilimazayo nazo kuba nzima ukuthola isitshalo ezisithandayo phakathi kwezinye eziningi. Izingadi ezinokwehlukahlukana azivamile ukuhlaselwa kakhulu yizinambuzane ezilimazayo, nakuba zingalokothi zingabi nazo nhlobo.
-- **Kugcina kukhona okuvunwayo unyaka wonke.** Izitshalo ezahlukene ziqhakaza, zithela futhi zivuthwa ngezikhathi ezahlukene. Izihlahla ezahlukene ziwisa amaqabunga azo ngezinkathi zonyaka ezahlukene, ngakho kuhlale kukhona ukudla kwabantu nokwezidalwa zomhlabathi.
-- **Kwakha umhlabathi ophilile.** Izimpande ezahlukene nezinsalela zezitshalo ezahlukene zondla izinhlobo eziningi zezidalwa zomhlabathi.
+## Zama lokhu
 
-### Indlela yokwakha ukwehlukahlukana epulazini lakho
+Yenza ikhona le-habitat kuleli sonto.
 
-- Tshala **izinhlobo eziningi ndawonye** (polycultures): izitshalo eziningi ezahlukene ndawonye embhedeni owodwa noma ensimini eyodwa, esikhundleni sesitshalo esisodwa emigqeni emide.
-- Tshala **ama-perennial** afana nezihlahla zezithelo, amakhambi nemifino engama-perennial eceleni kwama-annual.
-- Tshala **i-food forest** enezingqimba eziningi, kusukela ezihlahleni ezinde kuya **kuma-groundcover** (izitshalo eziphansi ezimboza umhlabathi) nezitshalo zezimpande.
-- Gcina ingxube **yezilwane**, futhi uziyeke zenze indima yazo ohlelweni, njengezinkukhu ezidla izinambuzane ezilimazayo nomquba wezinkomo owondla i-compost.
-- Shiya indawo **yezitshalo nezilwane zasendle** othangweni oluphilayo, emachibini nasezindaweni zasendle.
-- Tshala **izimbali**, kuhlanganise nezimbali zomdabu, ukuze wondle izinyosi nezinye izinambuzane eziwusizo unyaka wonke.
-
-Uma izingxenye zepulazi zixhunyaniswe ukuze okukhishwa yingxenye eyodwa kondle enye, lonke ipulazi liba namandla. Ubulongwe bondla umhlabathi, izinsalela zezitshalo zondla izilwane, bese izinambuzane nezinyoni zilawula izinambuzane ezilimazayo. Yile ndlela esakha ngayo i-ecosystem yepulazi enamandla neqinile ezinakekela izidingo zalo eziningi.
+1. Khetha ikhona elingasetshenziswa eduze kwemibhede yakho yemifino, okungenani u-2 m ngo-2 m, kude nalapho izingane zidlala khona.
+2. Gqiba isitsha esidala, isigubhu esisikiwe noma isondo elinepulasitiki ngaphakathi emhlabathini. Kugcwalise ngamanzi bese ukubiyela ngamatshe. Faka amatshe ambalwa noma izinti ngaphakathi ukuze izinambuzane zikhuphuke ziphume. Kumboze ngenetha eliqinile uma kunezingane ezincane ezihlala eduze.
+3. Yakha inqwaba encane yamatshe ohlangothini olunelanga (olusenyakatho) nenqwaba yezingodo ohlangothini olunomthunzi.
+4. Tshala, noma ushiye, izitshalo zomdabu notshani obude obuzungezile.
+5. Vakashela ekuseni kakhulu nakusihlwa kanye ngesonto. Bhala sonke isidalwa osibonayo.
 
 ## Amaphuzu amqoka
 
-- I-ecosystem yizo zonke izinto eziphilayo nezingaphili endaweni eyodwa nokuthi zithintana kanjani. Inabakhiqizi, abadli nababolisi.
-- Iphiramidi yempilo ime phezu kwezitshalo nomhlabathi. Ungazami ukubulala zonke izinambuzane ezilimaza izitshalo, ngoba uzobulala ngendlala ama-predator akusizayo.
-- Ama-ecosystem aqhutshwa umjikelezo wamanzi, umjikelezo wezakhamzimba, ukugeleza kwamandla avela elangeni, nokushintsha komphakathi wezitshalo nezilwane ngokuhamba kwesikhathi.
-- I-succession yindlela umhlaba ophazanyisiwe ozelapha ngayo. ENingizimu ne-Afrika iningi lomhlaba aligcini liyihlathi: amadlelo otshani, i-savanna ne-fynbos ngama-ecosystem azinzile adinga umlilo nokudla kwemfuyo.
-- Ungatshali izihlahla emadlelweni otshani bemvelo noma ku-fynbos, futhi ungalokothi usebenzise izihlahla "eziqala ukumila" ezingama-invasive species.
-- Yakha i-habitat ngamanzi, izindawo zasendle, uthango oluphilayo lwezitshalo zomdabu, izinqwaba zamatshe nezingodo, namabhokisi ezikhova. Biyela noma umboze amachibi, futhi ungasebenzisi ushevu wamagundane uma ufuna izikhova.
-- I-biodiversity isabalalisa ingozi, inciphisa ukuhlasela kwezinambuzane ezilimazayo futhi igcina ipulazi likhiqiza unyaka wonke.
+- Iphiramidi yempilo ime phezu kwezitshalo nomhlabathi. Bulala zonke izinambuzane ezilimazayo, ubulale ngendlala ama-predator akusizayo.
+- I-succession yindlela umhlaba ophola ngayo. ENingizimu ne-Afrika ivame ukuphela ngamadlelo otshani, i-savanna noma i-fynbos, hhayi ihlathi.
+- Amanzi, amakhona asendle, uthango lwezitshalo, izinqwaba zamatshe namabhokisi ezikhova kuletha abasizi basendle ukuzosebenza epulazini lakho.
+- Ukwehlukahlukana kusabalalisa ingozi futhi kulawula izinambuzane ezilimazayo.
+
+Ngemva kwenyanga, hlala ngasechibini bese ubala lokho okusungenile. Sonke isivakashi esisha singumsebenzi ongadingi ukumqasha.

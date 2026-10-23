@@ -1,0 +1,106 @@
+{
+  "base": "ab50dba9db45103924703ac9fe6dc0958e0d02df",
+  "changedFields": [
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].question"
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[0]"
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[1]"
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[2]"
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[3]"
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].rationale"
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[0]"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].question"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[0]"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[2]"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[3]"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].rationale"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[0]"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].question"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[0]"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[1]"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[2]"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].rationale"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[0]"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[1]"
+    }
+  ],
+  "allOtherModuleFieldsUnchanged": true
+}

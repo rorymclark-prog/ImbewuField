@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-06",
+  "baseCommit": "e1002c3f1c4e42bf6bfe61b9faf6acad4e39ee5b",
+  "scope": {
+    "changedL4BodyParagraphs": 9,
+    "byLanguage": {
+      "st": 2,
+      "ve": 4,
+      "ts": 3
+    },
+    "changedSesothoKeyPoints": 3,
+    "allReviewStatusesRemain": "machine-draft",
+    "pairedDecks": "nine exact-source body rows across slides 15 and 16; all other deck fields and slots byte-identical"
+  },
+  "sha256": {
+    "native-before.json": "af700b2581d458cd32824adbcfb74bf9c4d6b158a65b8c6b8f6a8610e9ef3219",
+    "native-after.json": "ca6212171a8731ccaba1830253e480b9d97f2c9622aba1ddf7afd25c3dbd0bb1",
+    "canonical-source.json": "7b18e9ebda7209fb46a855fcb525d7aae70a1f63cdcec75ec3d4dfed784c9447",
+    "accepted-fields.json": "b4dd27daaedb61c8935b3ed8da7def304f490115f55886632cc103ce16024796",
+    "accepted-deck-rows.json": "3120f2471dfa6ce4e4a653f73ad0591a8117f3ff855fe94d8ed71f5e961b8886",
+    "deck-st-before.json": "fc19541f123be910642ec741761a28516dfd4ef2f14c7e29212bb757cbb92cac",
+    "deck-st-after.json": "f3311a2940f819793f60f657a805245bf48d601db701a9c6992036233382d4b4",
+    "deck-ve-before.json": "8d97a9a7c293bd9ac6baba9fd7958b2085f30fe36a0ba9837d0c52a298cc7f60",
+    "deck-ve-after.json": "f1b7f3f56dccf94ac3fb4b6a086e89b248085b654d759d365cd249a0ae45b792",
+    "deck-ts-before.json": "d869fedbd2216ae0313536e5c56372bd46152addf99a8eb07e0b1c200e621585",
+    "deck-ts-after.json": "697aa04e6b4665b51f077b261f6e395640087c3b561d615ff4b6cc509e923e70"
+  }
+}

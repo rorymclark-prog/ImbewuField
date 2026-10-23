@@ -1,0 +1,94 @@
+{
+  "speciesId": "citrus-reticulata",
+  "commonName": "Soft citrus / naartjie",
+  "botanicalName": "Citrus reticulata",
+  "harvestMonths": [
+    {
+      "region": "Eastern & Western Cape (main soft citrus areas) — Satsuma cultivars",
+      "months": [
+        3,
+        4,
+        5
+      ],
+      "evidence": {
+        "quote": "Miho Wase is also the cultivar that matures the earliest of the Satsuma cultivars, and can be harvested from as early as mid-March. Other Satsuma cultivars are harvested until around the end of May.",
+        "url": "https://www.crw.org.za/home/document-home/learning-aids-and-resources/ca-citrus-av-series-learning-material/citrus-planting-management/5808-ca-av-series-cpm-lm-m02-citrus-types-and-cultivars-1/file",
+        "doc": "Citrus Growers' Association / Citrus Academy — 'Citrus Planting Management 2: Citrus Types and Cultivars' Learner Guide (1st edition), Citrus Resource Warehouse (crw.org.za), citing CRI Cultivar Fact Sheets",
+        "page": 8
+      },
+      "notes": "Miho Wase is stated to be '85% of satsuma production'. Source: 'Still, 75% of soft citrus in southern Africa is planted in the Eastern and Western Cape.'"
+    },
+    {
+      "region": "Eastern & Western Cape (main soft citrus areas) — Clementine cultivars",
+      "months": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "evidence": {
+        "quote": "The earliest commercial clementine cultivar mature towards the end of March, with the last one finishing around mid-June.",
+        "url": "https://www.crw.org.za/home/document-home/learning-aids-and-resources/ca-citrus-av-series-learning-material/citrus-planting-management/5808-ca-av-series-cpm-lm-m02-citrus-types-and-cultivars-1/file",
+        "doc": "Citrus Growers' Association / Citrus Academy — 'Citrus Planting Management 2: Citrus Types and Cultivars' Learner Guide (1st edition), citing CRI Cultivar Fact Sheets",
+        "page": 8
+      },
+      "notes": "Nules is 'the most popular clementine cultivar ... about 75% of planted hectares' per the same source."
+    },
+    {
+      "region": "Eastern & Western Cape (main soft citrus areas) — Mandarin cultivars (incl. Nadorcott)",
+      "months": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "evidence": {
+        "quote": "Nadorcott is the most common mandarin cultivar, and accounts for about two thirds of the hectares planted with mandarin cultivars. Early mandarin cultivars are ready to be harvested around mid-May, and the season from there stretches as late as September.",
+        "url": "https://www.crw.org.za/home/document-home/learning-aids-and-resources/ca-citrus-av-series-learning-material/citrus-planting-management/5808-ca-av-series-cpm-lm-m02-citrus-types-and-cultivars-1/file",
+        "doc": "Citrus Growers' Association / Citrus Academy — 'Citrus Planting Management 2: Citrus Types and Cultivars' Learner Guide (1st edition), citing CRI Cultivar Fact Sheets",
+        "page": 9
+      },
+      "notes": "'Novas' and 'minneolas' are separately noted as marketed under the mandarin umbrella but are technically distinct hybrids (Nova harvested April-mid-June; minneola mid-May-end of July) — not included in the months above since they are not Citrus reticulata proper."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found for soft citrus specifically. The KwaZulu-Natal DARD 'Fruit and Nut Production in KZN' guide gives a 'First crop (years)' table but only for Valencias/Navels/Grapefruit/Lemons — soft citrus/mandarins are not included in that table."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found for soft citrus specifically in any source checked."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found. The CRW 'Citrus Types and Cultivars' learner guide has only a qualitative rootstock-comparison rating ('Yield per tree: High/Good') with no kg figures, and the KZN DARD yields table (tons/ha with first-crop years) does not include soft citrus/mandarins."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": {
+      "quote": "Soft citrus/Mandarins – Base temperature 10oC. HU 1 600 to 2 200 (Jan – Apr: 1 000 – 1 250).",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes)",
+      "page": 11
+    },
+    "notes": "This is a heat-unit (HU, base 10°C) requirement for fruit development, not a classic winter chill-unit/chill-hour requirement. No source found gave an explicit chill-unit figure or an explicit 'no chill requirement' statement for soft citrus, so left null; the HU figure is preserved here as the closest sourced analogue (evergreen citrus dormancy/flowering is driven by heat-unit accumulation and moisture/cold stress rather than a deciduous-style chilling model)."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Set to null in editor review: the quote says 'Nadorcott' is self-incompatible, which contradicts 'self-fertile'; seedless fruit set without pollination is parthenocarpy, and no enum value states it. Withdrawn value: self-fertile."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "Years to first crop, years to full bearing, and per-tree yield (kg) not found for soft citrus/mandarins in any source checked (the one SA yields table located, from KZN DARD, covers Valencias/Navels/Grapefruit/Lemons only, not soft citrus).",
+    "No classic chill-unit/chill-hour figure found; only a heat-unit (HU) figure for fruit maturation.",
+    "DALRRD/nda.gov.za citrus production guideline and CGA 'Citrus profile.pdf' could not be fetched — gov.za domains were unreachable (connection blocked) or returned 503 repeatedly from this environment.",
+    "CRI's own 'Citrus Production Guidelines' (referenced by the CRW learner guide as 'volume 1') were not directly accessible — only the CRW learner guide that cites CRI cultivar fact sheets was reachable.",
+    "Region-specific harvest calendars for soft citrus outside the Eastern/Western Cape (e.g. Limpopo, Mpumalanga lowveld, where some soft-citrus cultivars are also grown per the source's note that 'there are some cultivars which have been shown to be suited to the hotter regions') were not sourced in detail.",
+    "Editor review 2026-09-28: pollination withdrawn — the quote says 'Nadorcott' is self-incompatible, which contradicts 'self-fertile'; seedless fruit set without pollination is parthenocarpy, and no enum value states it."
+  ]
+}

@@ -1,0 +1,474 @@
+{
+  "title": "Reading Landscape slides 15–21 remaining English body candidates",
+  "date": "2026-10-04",
+  "baseHead": "d0b5b846b30935c6b6f0498a1889033602ba8fb5",
+  "sourceSHA256": {
+    "englishMarkdown": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+    "pairedTarget-st": "1f39e73a3f9acc8b005d8d6e7662b8f2c06db31ab39aa623064886735e5aa152",
+    "pairedTarget-ve": "b7ab07dc8f54a6cf43a4ea60cad4ecf2112eeaaec985223d7821cc7f736bf463",
+    "pairedTarget-ts": "74919c9edea607327238235376b9edbd3821df2530c3ce90d1e7422a225751a5",
+    "lib/course-translation-drafts-st-reading-landscape.ts": "c715838def50a0cea744281255f7a5c93cf7812d6e306aae86d63f1ba1ef0360",
+    "lib/course-translation-drafts-ve-reading-landscape.ts": "5d7087f834eb2586557b133b40d826d2e0819f0bd67ae59cc09f822704c80b67",
+    "lib/course-translation-drafts-ts.ts": "4da845821ec081cd9d19ae94c67540fe2a4a9da34d84f9e544a51efc0b00a021",
+    "pairedWaterDeck-st": "ed6f50bd073225225aefccede998b7cb949cf52e4bb30183806bc908eb003ba6",
+    "pairedWaterDeck-ve": "a2935b9f0ce8d5337dc6f945ab95be7148bb4ce0da605636cd16980e8279e5ec",
+    "pairedWaterDeck-ts": "d363c0abf8aff08419c35cafdf3e8c75c9496a3a7a4ab8dc09ec7b6edb6880d8"
+  },
+  "scope": {
+    "slides": [
+      15,
+      21
+    ],
+    "languageCodes": [
+      "st",
+      "ve",
+      "ts"
+    ],
+    "candidateFieldCount": 9,
+    "targetFieldsPerLanguage": {
+      "st": 3,
+      "ve": 3,
+      "ts": 3
+    },
+    "repositoryEdits": 0,
+    "rendered": false
+  },
+  "sourceCurrentChecks": {
+    "allCandidateSourceStringsMatchPairedEnglishAndMarkdown": true,
+    "allNineCurrentTargetsAreExactEnglishHolds": true,
+    "everySegmentListReconstructsTheCompleteEnglishField": true,
+    "allHoldSegmentsHaveNoTargetText": true,
+    "sourceMatchedAframeDraftUsesExactIndependentDeckSource": true
+  },
+  "candidateFields": [
+    {
+      "language": "st",
+      "slide": 15,
+      "bodyIndex": 0,
+      "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Compare candidate places through the local frost season. ",
+          "status": "draft",
+          "text": "Bapisa dibaka tseo e ka bang tsona nakong ya sehla sa serame sa lehae. "
+        },
+        {
+          "sourceEnglish": "Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Check sun and damaging wind too. ",
+          "status": "draft",
+          "text": "Hlahloba letsatsi le moya o senyang le tsona. "
+        },
+        {
+          "sourceEnglish": "No hillside position guarantees freedom from frost.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Bapisa dibaka tseo e ka bang tsona nakong ya sehla sa serame sa lehae. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Hlahloba letsatsi le moya o senyang le tsona. No hillside position guarantees freedom from frost.",
+      "reason": "Translate ordinary comparison/check/advice framing while keeping source-specific siting, frost-season, record/adviser, disease/weather, and control-limit claims exactly attached in English.",
+      "risks": [
+        "Candidate words are machine proposals and need fluent regional review.",
+        "All modalities, no-guarantee statement, local record/adviser condition, disease-weather condition, and bed-alone limitation remain exact English."
+      ],
+      "resolverEvidence": {
+        "lessonId": "reading-landscape-l3",
+        "sourceClause": "Compare candidate places through the local frost season.",
+        "currentResolvedClause": "Bapisa dibaka tseo e ka bang tsona nakong ya sehla sa serame sa lehae.",
+        "match": "Exact English clause match; candidate reuses current learner wording for this clause."
+      },
+      "sourceBinding": {
+        "pairedSlideN": 15,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      }
+    },
+    {
+      "language": "st",
+      "slide": 15,
+      "bodyIndex": 1,
+      "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Seek local crop-health advice too.",
+          "status": "draft",
+          "text": "Batla keletso ya lehae ka bophelo ba dijalo le yona."
+        }
+      ],
+      "candidateText": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Batla keletso ya lehae ka bophelo ba dijalo le yona.",
+      "reason": "Translate ordinary comparison/check/advice framing while keeping source-specific siting, frost-season, record/adviser, disease/weather, and control-limit claims exactly attached in English.",
+      "risks": [
+        "Candidate words are machine proposals and need fluent regional review.",
+        "All modalities, no-guarantee statement, local record/adviser condition, disease-weather condition, and bed-alone limitation remain exact English."
+      ],
+      "resolverEvidence": {
+        "lessonId": "reading-landscape-l3",
+        "sourceRelatedClause": "seek local crop-health guidance too.",
+        "currentResolvedClause": "batla le tataiso ya bophelo bo botle ba dijalo sebakeng sa heno.",
+        "match": "Related resolver wording exists but this source sentence differs (“advice” vs “guidance”); proposed target is separately drafted, not an asserted exact reuse."
+      },
+      "sourceBinding": {
+        "pairedSlideN": 15,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      }
+    },
+    {
+      "language": "st",
+      "slide": 21,
+      "bodyIndex": 0,
+      "sourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateText": "Haha A-frame level ka poles tse tharo le weighted string.",
+      "reason": "Reuse the existing source-paired regional deck draft verbatim because its complete English source is byte-identical. It preserves the A-frame level, three poles and weighted string without adding measurements or rotating/redefining the frame.",
+      "risks": [
+        "This is an unreviewed machine draft from a separate deck; keep facilitator review pending.",
+        "Exact English source equality was verified; no resolver reuse is claimed."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 21,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "sourcePairedDeckReuse": {
+        "path": "docs/narration/water-harvesting.st.paired-draft.json",
+        "slide": 23,
+        "bodyIndex": 0,
+        "sourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+        "target": {
+          "status": "draft",
+          "text": "Haha A-frame level ka poles tse tharo le weighted string.",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+        },
+        "exactCompleteEnglishSourceMatch": true,
+        "reuseType": "complete source-matched paired-deck draft; not a current learner resolver binding"
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 0,
+      "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Compare candidate places through the local frost season. ",
+          "status": "draft",
+          "text": "Vhambedzani candidate places through the local frost season. "
+        },
+        {
+          "sourceEnglish": "Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Check sun and damaging wind too. ",
+          "status": "draft",
+          "text": "Sedzani ḓuvha na muya wa tshinyadzaho na zwone. "
+        },
+        {
+          "sourceEnglish": "No hillside position guarantees freedom from frost.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Vhambedzani candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Sedzani ḓuvha na muya wa tshinyadzaho na zwone. No hillside position guarantees freedom from frost.",
+      "reason": "Translate ordinary comparison/check/advice framing while keeping source-specific siting, frost-season, record/adviser, disease/weather, and control-limit claims exactly attached in English.",
+      "risks": [
+        "Candidate words are machine proposals and need fluent regional review.",
+        "All modalities, no-guarantee statement, local record/adviser condition, disease-weather condition, and bed-alone limitation remain exact English."
+      ],
+      "resolverEvidence": {
+        "lessonId": "reading-landscape-l3",
+        "sourceClause": "Compare candidate places through the local frost season.",
+        "currentResolvedClause": "Vhambedzani candidate places through the local frost season.",
+        "match": "Exact English clause match; candidate reuses current learner wording for this clause."
+      },
+      "sourceBinding": {
+        "pairedSlideN": 15,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 1,
+      "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Seek local crop-health advice too.",
+          "status": "draft",
+          "text": "Ṱoḓani nyeletshedzo ya henefho nga mutakalo wa zwimela na yone."
+        }
+      ],
+      "candidateText": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Ṱoḓani nyeletshedzo ya henefho nga mutakalo wa zwimela na yone.",
+      "reason": "Translate ordinary comparison/check/advice framing while keeping source-specific siting, frost-season, record/adviser, disease/weather, and control-limit claims exactly attached in English.",
+      "risks": [
+        "Candidate words are machine proposals and need fluent regional review.",
+        "All modalities, no-guarantee statement, local record/adviser condition, disease-weather condition, and bed-alone limitation remain exact English."
+      ],
+      "resolverEvidence": {
+        "lessonId": "reading-landscape-l3",
+        "sourceRelatedClause": "seek local crop-health guidance too.",
+        "currentResolvedClause": "Vhudzisani a trained local adviser.",
+        "match": "Related resolver wording exists but this source sentence differs (“advice” vs “guidance”); proposed target is separately drafted, not an asserted exact reuse."
+      },
+      "sourceBinding": {
+        "pairedSlideN": 15,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 21,
+      "bodyIndex": 0,
+      "sourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateText": "Fhaṱani A-frame level nga poles tharu na weighted string.",
+      "reason": "Reuse the existing source-paired regional deck draft verbatim because its complete English source is byte-identical. It preserves the A-frame level, three poles and weighted string without adding measurements or rotating/redefining the frame.",
+      "risks": [
+        "This is an unreviewed machine draft from a separate deck; keep facilitator review pending.",
+        "Exact English source equality was verified; no resolver reuse is claimed."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 21,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "sourcePairedDeckReuse": {
+        "path": "docs/narration/water-harvesting.ve.paired-draft.json",
+        "slide": 23,
+        "bodyIndex": 0,
+        "sourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+        "target": {
+          "status": "draft",
+          "text": "Fhaṱani A-frame level nga poles tharu na weighted string.",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+        },
+        "exactCompleteEnglishSourceMatch": true,
+        "reuseType": "complete source-matched paired-deck draft; not a current learner resolver binding"
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 0,
+      "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Compare candidate places through the local frost season. ",
+          "status": "draft",
+          "text": "Pimanisa candidate places through the local frost season. "
+        },
+        {
+          "sourceEnglish": "Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Check sun and damaging wind too. ",
+          "status": "draft",
+          "text": "Kambela dyambu ni moya lowu onhaka na swona. "
+        },
+        {
+          "sourceEnglish": "No hillside position guarantees freedom from frost.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Pimanisa candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Kambela dyambu ni moya lowu onhaka na swona. No hillside position guarantees freedom from frost.",
+      "reason": "Translate ordinary comparison/check/advice framing while keeping source-specific siting, frost-season, record/adviser, disease/weather, and control-limit claims exactly attached in English.",
+      "risks": [
+        "Candidate words are machine proposals and need fluent regional review.",
+        "All modalities, no-guarantee statement, local record/adviser condition, disease-weather condition, and bed-alone limitation remain exact English."
+      ],
+      "resolverEvidence": {
+        "lessonId": "reading-landscape-l3",
+        "sourceClause": "Compare candidate places through the local frost season.",
+        "currentResolvedClause": "Pimanisa candidate places through the local frost season.",
+        "match": "Exact English clause match; candidate reuses current learner wording for this clause."
+      },
+      "sourceBinding": {
+        "pairedSlideN": 15,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 1,
+      "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Seek local crop-health advice too.",
+          "status": "draft",
+          "text": "Kombela xitsundzuxo xa le kaya hi rihanyo ra swibyariwa na xona."
+        }
+      ],
+      "candidateText": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Kombela xitsundzuxo xa le kaya hi rihanyo ra swibyariwa na xona.",
+      "reason": "Translate ordinary comparison/check/advice framing while keeping source-specific siting, frost-season, record/adviser, disease/weather, and control-limit claims exactly attached in English.",
+      "risks": [
+        "Candidate words are machine proposals and need fluent regional review.",
+        "All modalities, no-guarantee statement, local record/adviser condition, disease-weather condition, and bed-alone limitation remain exact English."
+      ],
+      "resolverEvidence": {
+        "lessonId": "reading-landscape-l3",
+        "sourceRelatedClause": "seek local crop-health guidance too.",
+        "currentResolvedClause": "seek local crop-health guidance too.",
+        "match": "Related resolver wording exists but this source sentence differs (“advice” vs “guidance”); proposed target is separately drafted, not an asserted exact reuse."
+      },
+      "sourceBinding": {
+        "pairedSlideN": 15,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 21,
+      "bodyIndex": 0,
+      "sourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateText": "Vaka A-frame level hi tipolo tinharhu ni ntambhu leyi nga ni ntiko.",
+      "reason": "Reuse the existing source-paired regional deck draft verbatim because its complete English source is byte-identical. It preserves the A-frame level, three poles and weighted string without adding measurements or rotating/redefining the frame.",
+      "risks": [
+        "This is an unreviewed machine draft from a separate deck; keep facilitator review pending.",
+        "Exact English source equality was verified; no resolver reuse is claimed."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 21,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "sourcePairedDeckReuse": {
+        "path": "docs/narration/water-harvesting.ts.paired-draft.json",
+        "slide": 23,
+        "bodyIndex": 0,
+        "sourceEnglish": "Build an A-frame level from three poles and a weighted string.",
+        "target": {
+          "status": "draft",
+          "text": "Vaka A-frame level hi tipolo tinharhu ni ntambhu leyi nga ni ntiko.",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+        },
+        "exactCompleteEnglishSourceMatch": true,
+        "reuseType": "complete source-matched paired-deck draft; not a current learner resolver binding"
+      }
+    }
+  ],
+  "remainingEnglishHoldsWithinScope": [
+    {
+      "slide": 15,
+      "bodyIndex": 0,
+      "clauses": [
+        "Put a frost-sensitive seedling nursery outside the cold pockets you have observed.",
+        "Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position.",
+        "No hillside position guarantees freedom from frost."
+      ],
+      "reason": "Keep site-specific placement, local evidence/adviser before permanence, and explicit no-guarantee claim exact."
+    },
+    {
+      "slide": 15,
+      "bodyIndex": 1,
+      "clauses": [
+        "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry.",
+        "Prolonged cool, damp weather can still favour the disease.",
+        "Moving a bed alone does not control late blight."
+      ],
+      "reason": "Keep crop/disease identity, conditional benefit, disease-favouring weather, and no-single-bed-control warning exact."
+    },
+    {
+      "slide": 21,
+      "bodyIndex": 0,
+      "clause": "an A-frame level from three poles and a weighted string.",
+      "reason": "Keep equipment and geometry exact; no measurement or build detail added."
+    }
+  ],
+  "reviewLimits": "Machine-drafted candidates only. Independent semantic review is required before wiring. No fluency, agronomic approval, or publication-ready claim.",
+  "sourceFiles": [
+    "docs/narration/reading-landscape.en.md",
+    "docs/narration/reading-landscape.st.paired-draft.json",
+    "docs/narration/reading-landscape.ve.paired-draft.json",
+    "docs/narration/reading-landscape.ts.paired-draft.json",
+    "lib/course-modules.ts",
+    "lib/course-localization.ts",
+    "lib/course-translation-drafts-st-reading-landscape.ts",
+    "lib/course-translation-drafts-ve-reading-landscape.ts",
+    "lib/course-translation-drafts-ts.ts",
+    "docs/narration/water-harvesting.st.paired-draft.json",
+    "docs/narration/water-harvesting.ve.paired-draft.json",
+    "docs/narration/water-harvesting.ts.paired-draft.json"
+  ],
+  "provenance": {
+    "baseCommit": "d0b5b846b30935c6b6f0498a1889033602ba8fb5",
+    "method": "Inspected the exact English narration and current deck target hold states, then checked current resolver text for exact source clauses and the separate Water Harvesting A-frame slide 23 source/target binding. New additions remain machine proposals; no reviewer fluency claim.",
+    "reviewStatus": "machine-draft; independent semantic review and facilitator review pending"
+  }
+}

@@ -1,0 +1,788 @@
+{
+  "title": "IsiZulu Introduction and Reading Landscape narration semantic check",
+  "date": "2026-10-05",
+  "reviewType": "independent semantic backcheck; not fluent approval",
+  "binding": {
+    "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+    "head": "58dddd8e064387a4eddb9adb521fedae7e5a1c83",
+    "registeredTranscript": "lib/course-transcripts.ts",
+    "liveExtract": "/tmp/pr940-intro-reading-transcripts-live.json",
+    "sourceCorrespondenceInventory": "/tmp/imbewu-zu-english-transcript-source-correspondence-20261005.json",
+    "sourceAndRegistrySha256": {
+      "intro_en": "312fce3eb18c46b04d9353eac636c3b66013b7e17d1cf2ce18a1446d2900914d",
+      "intro_zu": "b31f633b6e307cf400be55343d433eb847016b089aae589f75439d38c6af6555",
+      "reading_en": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "reading_zu": "a22e0b20fa037fe3ff7be065cc9423868fe1e74aca542fa4b881295bc6c8e26b",
+      "transcript_registry": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+      "source_correspondence_inventory": "ae120552a4036bd6d0113b42a1ece854a6b0af900915b0d66f33306fa5a2c02c"
+    },
+    "registeredCounts": {
+      "Introduction": 22,
+      "Reading Landscape": 21
+    },
+    "englishSourceCorrespondence": "The separate inventory reports exact English source correspondence for both modules; this review used the registered English/isiZulu blocks directly."
+  },
+  "summary": {
+    "totalBlocks": 43,
+    "accepted": 39,
+    "repair": 2,
+    "uncertain": 2,
+    "overall": "Most registered narration preserves instructions, conditions, numbers, and safety scope. Two concrete clause repairs are recommended (Intro 22 worst-wind superlative/destination modal; Reading 15 disease-favouring versus spread). Two scope points are marked uncertain (Intro 10 major earthworks; Reading 16 smallholding scope)."
+  },
+  "blocks": [
+    {
+      "module": "Introduction",
+      "slide": 1,
+      "sourceEnglish": [
+        "Before you dig anything, it helps to know how the decisions get made.",
+        "This module is the foundation for everything else in the course. Three ethics, a set of design principles, and one simple way to organise your land.",
+        "None of it needs money. All of it changes where you put things, and how far you walk every day.",
+        "Think about your own plot. Which part of it do you visit most often?"
+      ],
+      "currentIsiZulu": [
+        "Ngaphambi kokumba noma yini, kuyasiza ukwazi ukuthi izinqumo zenziwa kanjani. Le module iyisisekelo sakho konke okunye okukulesi sifundo: ama-ethics amathathu, ama-design principles, nendlela elula yokuhlela umhlaba wakho. Akukho kulokhu okudinga imali. Konke kushintsha ukuthi ubeka kuphi izinto nokuthi uhamba ibanga elingakanani nsuku zonke.",
+        "Cabanga ngendawo yakho. Iyiphi ingxenye oyivakashela kakhulu?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 2,
+      "sourceEnglish": [
+        "A good design saves work before you pick up a spade.",
+        "Most of the effort on a smallholding is not planting or harvesting. It is walking, carrying and fixing what was put in the wrong place.",
+        "Permaculture is a way of deciding where things go, so the land works with you instead of against you.",
+        "Think of one job on your farm that takes longer than it should. Where does the time actually go?"
+      ],
+      "currentIsiZulu": [
+        "Ukuhlela kahle konga umsebenzi ungakathathi ifosholo. Umsebenzi omningi epulazini elincane awukho ekutshaleni nasekuvuneni. Usekuhambeni, ekuthwaleni nasekulungiseni izinto ezibekwe endaweni engafanele. I-Permaculture iyindlela yokunquma ukuthi izinto zibekwa kuphi, ukuze umhlaba usebenze nawe esikhundleni sokukuvimba.",
+        "Cabanga ngomsebenzi owodwa epulazini lakho othatha isikhathi eside kunalokho okufanele. Isikhathi sihambephi ngempela?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 3,
+      "sourceEnglish": [
+        "By the end of this module you will be able to do three things.",
+        "Name the three ethics, and use them to settle a decision that has no obvious answer.",
+        "Name the design principles that matter most on your land, and say why.",
+        "Sketch your zones and your sectors on one sheet of paper.",
+        "That sketch is the skeleton of every plan you make after this."
+      ],
+      "currentIsiZulu": [
+        "Ekupheleni kwale module uzokwazi ukwenza izinto ezintathu: ukusho ama-ethics amathathu, uwasebenzise ekwenzeni isinqumo esingenayo impendulo esobala; ukusho ama-design principles abaluleke kakhulu emhlabeni wakho uchaze nokuthi kungani ebalulekile; nokudweba ama-zone nama-sector akho ephepheni elilodwa.",
+        "Lowo mdwebo uyisisekelo sawo wonke amapulani ozowenza emva kwalokhu."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 4,
+      "sourceEnglish": [
+        "The first ethic is Earth Care.",
+        "It means treating soil, water, plants and animals as living systems to protect, not resources to use up.",
+        "A system you use up stops paying you. A system you protect keeps paying you.",
+        "Look at one patch of bare soil on your land. Is anything protecting it right now?"
+      ],
+      "currentIsiZulu": [
+        "I-ethic yokuqala yi-Earth Care. Kusho ukuphatha inhlabathi, amanzi, izitshalo nezilwane njengezinhlelo eziphilayo okufanele zivikelwe, hhayi njengezinsiza okufanele uzisebenzise zize ziphele. Uma usebenzisa uhlelo uluphelelisa, luyayeka ukukusiza. Uma uluvikela, luyaqhubeka lukusiza.",
+        "Bheka indawo eyodwa yomhlabathi ongenalutho emhlabeni wakho. Kukhona yini okuyivikelayo njengamanje?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 5,
+      "sourceEnglish": [
+        "The second ethic is People Care.",
+        "Your family's needs come first, then your community's.",
+        "A farmer who sells every egg and every vegetable, and keeps nothing back for the family table, is skipping People Care.",
+        "The farm is meant to feed the household that runs it.",
+        "What comes off your land that your own family never eats?"
+      ],
+      "currentIsiZulu": [
+        "I-ethic yesibili yi-People Care. Izidingo zomndeni wakho ziza kuqala, bese kulandela ezomphakathi wakho. Umlimi othengisa wonke amaqanda nayo yonke imifino, angashiyi lutho etafuleni lomndeni, uyeqa i-People Care. Ipulazi kufanele londle umndeni olisebenzayo.",
+        "Yini ephuma emhlabeni wakho kodwa umndeni wakho ungayidli?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 6,
+      "sourceEnglish": [
+        "The third ethic is Fair Share.",
+        "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+        "A farmer who sells all his surplus mielies and keeps nothing back for compost or for seed is breaking this one. Nothing goes back.",
+        "A community that fences off a shared spring is breaking it too.",
+        "What does your land get back from you each season?"
+      ],
+      "currentIsiZulu": [
+        "I-ethic yesithathu yi-Fair Share. Thatha lokho okudingayo kuphela, bese ubuyisela okusele ohlelweni — imbewu, ukudla, amanzi nolwazi. Umlimi othengisa wonke ama-mielies akhe asele, angashiyi lutho lokwenza i-compost noma lokugcina imbewu, uyephula le-ethic. Akukho okubuyela ohlelweni. Umphakathi ovalela indawo yomthombo osetshenziswa ngokuhlanganyela nawo uyayiphula le-ethic.",
+        "Umhlaba wakho utholani kuwe ngesizini ngayinye?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 7,
+      "sourceEnglish": [
+        "A borehole serves your household. Neighbours ask for water too.",
+        "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+        "Who could help you check the rules and the water supply?"
+      ],
+      "currentIsiZulu": [
+        "I-borehole inikeza umndeni wakho amanzi. Omakhelwane bacela amanzi nabo. Qala uthole ukuthi ukwabelana ngamanzi kuvumelekile yini. Hlola ukuthi i-borehole ingakwazi yini ukusiza bonke abasebenzisi ngaphandle kokusebenzisa amanzi amaningi kakhulu. Uma ukwabelana kuvumelekile futhi kunamanzi anele, vumelanani ngokwabelana ngokulinganayo bese niqhubeka nibheka izinga lamanzi. I-People Care ne-Fair Share kuqondisa isivumelwano. I-Earth Care isho ukuvikela umthombo wamanzi. Ukuqapha izinga lamanzi kukodwa akusho ukuthi ukusebenzisa amanzi engeziwe kuphephile noma kuvumelekile.",
+        "Ubani ongakusiza uhlole imithetho nokuthi amanzi akhona anele yini?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 8,
+      "sourceEnglish": [
+        "This is what the ethics are actually for.",
+        "A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.",
+        "The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.",
+        "Build these three into how you think before you build anything on the ground."
+      ],
+      "currentIsiZulu": [
+        "Yilokho kanye ama-ethics akusiza ngakho. Umakhelwane ucela ukwelusela izinkomo ngemva kwesomiso. Isikhukhula silimaza ama-swale akho. Akekho obhale impendulo phansi. Ama-ethics akusiza ulinganise izinketho bese uchaza isinqumo sakho. Hlola imithetho futhi ucele imvume lapho kudingeka khona.",
+        "Faka la ma-ethics amathathu endleleni ocabanga ngayo ngaphambi kokwakha noma yini emhlabeni."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 9,
+      "sourceEnglish": [
+        "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept.",
+        "You do not need all twelve to start. Three useful starting points for this lesson are: observe and interact, catch and store energy, and use edges and value the marginal.",
+        "We will take those three one at a time."
+      ],
+      "currentIsiZulu": [
+        "UDavid Holmgren wabeka izimiso eziyishumi nambili zokuklama encwadini ethi *Essence of Permaculture*. UBill Mollison noDavid Holmgren basungula ndawonye umqondo we-permaculture.",
+        "Awudingi ukuqala ngazo zonke izimiso eziyishumi nambili. Kulesi sifundo sizoqala ngezintathu eziwusizo: bheka futhi ufunde ngokusebenzelana nomhlaba wakho; bamba ugcine amandla; futhi sebenzisa imiphetho, wazise nezindawo eziseceleni.",
+        "Sizoxoxa ngalezi ezintathu, sinye ngesikhathi."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 10,
+      "sourceEnglish": [
+        "Watch your land through a full season before you commit to major earthworks.",
+        "One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.",
+        "This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
+        "Where does water leave your land? Do you actually know, or are you guessing?"
+      ],
+      "currentIsiZulu": [
+        "Bheka umhlaba wakho isizini yonke ngaphambi kokunquma ukwenza umsebenzi omkhulu wokumba noma wokushintsha umhlaba.",
+        "Isiphepho esisodwa sikukhombisa isikhathi esisodwa. Isizini yemvula yonke ikukhombisa iphethini — lapho amanzi egeleza khona, lapho ehlala khona, nalapho engafiki khona.",
+        "Lokhu kukusiza uqonde indawo yakho. Kodwa ukubuka kukodwa akusho ukuthi ukumba ama-swale kulungele noma kuphephile kuleyo ndawo. Ngaphambi kokumba, hlola umhlabathi, umthambeka, ukugeleza kwamanzi nendlela ephephile amanzi angaphuma ngayo, engeke ibangele ukuguguleka komhlaba noma ithumele amanzi alimazayo komakhelwane. Cela umeluleki wendawo oqeqeshiwe ahlole indawo.",
+        "Amanzi aphuma ngakuphi emhlabeni wakho? Uyazi ngempela, noma uyaqagela?"
+      ],
+      "disposition": "uncertain",
+      "issues": [
+        {
+          "issue": "The ZU phrase “ukushintsha umhlaba” can read as changing the land generally, while the English clause specifically says “major earthworks.” The sentence otherwise retains the “before” timing and all site-assessment factors, and the later no-harm/adviser safeguards remain.",
+          "recommendation": "If this narration needs strict clause scope, retain “major earthworks” in English or use a checked equivalent for major earthworks; do not remove the existing translated assessment and safety clauses."
+        }
+      ],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 11,
+      "sourceEnglish": [
+        "Harvest rain, sun and biomass before they leave your property.",
+        "Every one of those arrives free and leaves free. Water runs off, leaves blow away, sun falls on bare ground.",
+        "Compare the cost and work with the benefit on your own farm.",
+        "Name one thing that arrives on your land free and leaves again without being used."
+      ],
+      "currentIsiZulu": [
+        "Bamba futhi ugcine imvula, ilanga ne-biomass (njengamaqabunga nezinsalela zezitshalo) ngaphambi kokuba zihambe emhlabeni wakho.",
+        "Konke lokhu kufika mahhala futhi kungahamba kungasetshenziswanga.",
+        "Amanzi ayageleza aphume, amaqabunga aphephuka ahambe, nelanga likhanyise umhlabathi ongenalutho.",
+        "Qhathanisa izindleko nomsebenzi kanye nenzuzo ongayithola epulazini lakho.",
+        "Yisho into eyodwa efika emhlabeni wakho mahhala iphinde ihambe ingasetshenziswanga."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 12,
+      "sourceEnglish": [
+        "The edge is where two things meet — a fence line or the strip beside a path.",
+        "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+        "Which edge on your plot is doing nothing at the moment?"
+      ],
+      "currentIsiZulu": [
+        "Umngcele yindawo lapho kuhlangana khona izinto ezimbili — njengolayini wocingo noma indawo eseceleni kwendlela.",
+        "Lezi zingaba izindawo eziwusizo zokubuka. Bheka ukuthi yini esivele ikhula kahle ngasemngceleni wakho. Lokhu kungakufundisa okuthile ngomhlaba wakho.",
+        "Imuphi umphetho endaweni yakho ongakasetshenziselwa lutho okwamanje?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 13,
+      "sourceEnglish": [
+        "Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.",
+        "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+        "What would one bad day cost you right now?"
+      ],
+      "currentIsiZulu": [
+        "Sebenzisa futhi wazise ukwehlukahlukana kwezinto eziphilayo. Ukulimala kommbila yisichotho kuncike ekutheni isiphepho sinjani nokuthi ummbila ukhule kangakanani. Lesi simiso asithembisi ukuthi isitshalo sizosinda kuzo zonke izenzakalo.",
+        "Ezinye izimiso ezimbili ongazazi: ungachithi lutho — izinsalela ziba umquba, umquba ube umhlabathi. Khetha izixazululo ezincane nezihamba kancane — ibhakede linganisela amanzi embhedeni ngaphandle kukagesi.",
+        "Usuku olulodwa olubi lungakubiza ngani epulazini lakho manje?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 14,
+      "sourceEnglish": [
+        "Put each element where it works for its neighbours.",
+        "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+        "The same three things, fenced apart, do only their own job.",
+        "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go."
+      ],
+      "currentIsiZulu": [
+        "Beka into ngayinye lapho isiza khona izinto eziseduze nayo.",
+        "Ingadi, izihlahla zezithelo nendawo yezinkukhu kungahlelwa ukuze izinkukhu zijikeleze emibhedeni ngemva kokuvuna. Gcina izinkukhu zingasondeli ezitshalweni ezivunelwa ukudliwa. Umquba omusha ungaba namagciwane. Ngaphambi kokutshala futhi ukudla okuzodliwa, cela umeluleki wezolimo akutshele ukuthi umbhede ungaphathwa kanjani ngokuphepha.",
+        "Izinkukhu zingasiza ekudleni ezinye izinambuzane nasekufakeni umquba, esikhundleni sokuhlala zinganyakazi esibayeni esisodwa.",
+        "Lezi zinto ezintathu uma zibiyelwe zahlukaniswa, ngayinye yenza umsebenzi wayo kuphela.",
+        "Khetha izimiso ezimbili noma ezintathu ezihambisana nenkinga yakho enkulu, uzisebenzise. Ezinye uzoziqonda njengoba uqhubeka."
+      ],
+      "disposition": "accepted",
+      "issues": [
+        {
+          "issue": "All integration and food-safety clauses are present, including chicken rotation through beds after harvest, keeping chickens away from crops being harvested for food, fresh-manure germ risk, and asking an extension adviser before edible crops return. “After harvest” is explicit in ZU."
+        }
+      ],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 15,
+      "sourceEnglish": [
+        "Zones run from 0 to 5, and they are about your feet, not your fences.",
+        "Zone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.",
+        "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+        "Zone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild."
+      ],
+      "currentIsiZulu": [
+        "Ama-zone asuka ku-0 aye ku-5. Akhuluma ngokuhamba kwakho, hhayi ngezicingo.",
+        "I-Zone 0 yindlu. Kulesi sibonelo, i-Zone 1 iseduze kwendlu futhi inamakhambi\nnemifino yesaladi oyikha kaningi.",
+        "I-Zone 2 yingadi enkulu nendawo yezinkukhu, evakashelwa kanye noma kabili\nngosuku. I-Zone 3 yinsimu enkulu, evakashelwa masonto onke.",
+        "I-Zone 4 i-semi-wild: izihlahla zezithelo nokudla kwezilwane\nokudinga ukunakekelwa ngezikhathi ezithile. I-Zone 5 ishiywa isesimweni\nsemvelo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 16,
+      "sourceEnglish": [
+        "Herbs you pick often are easier to tend near the house.",
+        "Put them far away, and the long walk may mean you miss a visit. The herbs may be neglected.",
+        "Think about the paths you walk each day.",
+        "What do you visit often that could be closer?"
+      ],
+      "currentIsiZulu": [
+        "Amakhambi owakha kaningi kulula ukuwanakekela uma eseduze kwendlu.",
+        "Uma ukude nawo, ukuhamba ibanga elide kungakwenza uphuthelwe ukuwavakashela.\nAngase anganakekelwa kahle.",
+        "Cabanga ngezindlela ozihamba nsuku zonke.",
+        "Yini oyivakashela kaningi engase isondezwe?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 17,
+      "sourceEnglish": [
+        "This is the point of the whole exercise.",
+        "Zones help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+        "The more often something needs you, the closer it lives. That can save walking and work over a season.",
+        "Stand at your kitchen door. What can you reach without thinking about it?"
+      ],
+      "currentIsiZulu": [
+        "Yilona iphuzu lalo msebenzi.",
+        "Ama-zone asiza ukuhlela izindawo ngokomsebenzi wakho: ukuhamba, ukuthwala\nnokuhlola okugcwalisa usuku.",
+        "Into ekudinga kaningi ingabekwa eduze. Lokho kunganciphisa ukuhamba\nnomsebenzi phakathi nesizini.",
+        "Yima emnyango wasekhishini. Yini ongayifinyelela kalula?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 18,
+      "sourceEnglish": [
+        "Zones come from inside your land. Sectors come from outside it.",
+        "Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.",
+        "Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land.",
+        "Which direction does the weather that damages you come from?"
+      ],
+      "currentIsiZulu": [
+        "Ama-zone aqala ngaphakathi kwendawo yakho. Ama-sector akhombisa amandla\nezivela ngaphandle kwayo.",
+        "Ilanga, umoya, imvula, izikhukhula nomlilo kungafika kunqamule umngcele\nwakho, noma ungakuhlelelanga.",
+        "Bheka ukuthi umoya onamandla uvela ngakuphi epulazini lakho. Amarekhodi\nesiteshi sezulu esiseduze angakusiza uhlole uhlangothi lomoya. Bheka lapho\namanzi emvula engena khona nalapho egeleza khona emhlabeni wakho.",
+        "Isimo sezulu esikulimazayo sivela ngakuphi?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 19,
+      "sourceEnglish": [
+        "Look at this example. The wind comes from the north-west.",
+        "The trees and shrubs stand between that wind and the crops.",
+        "Some air passes through the windbreak. Other air moves over it or around its ends.",
+        "The shelter can reduce wind speed behind it. The design and care of the windbreak matter.",
+        "On your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan."
+      ],
+      "currentIsiZulu": [
+        "Bheka lesi sibonelo. Umoya uvela enyakatho-ntshonalanga.",
+        "Izihlahla nezihlahlana zimi phakathi kwalowo moya nezitshalo.",
+        "Omunye umoya udlula phakathi kwe-windbreak. Omunye udlula phezu kwayo noma\nuzungeze iziphetho zayo.",
+        "I-windbreak inganciphisa ijubane lomoya ngemuva kwayo. Indlela eyakhiwe\nfuthi enakekelwa ngayo ibalulekile.",
+        "Endaweni yakho, qala ngokubheka umoya olimazayo ngaphambi kokukhetha lapho\nuzotshala khona. Lesi sithombe asilona uhlelo lokutshala ipulazi lakho."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 20,
+      "sourceEnglish": [
+        "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.",
+        "Then draw arrows in from outside for sun, wind, fire and water.",
+        "That sheet of paper is the skeleton of your design. Everything else in this course hangs on it.",
+        "It does not need to be neat. It needs to be true."
+      ],
+      "currentIsiZulu": [
+        "Dweba umngcele wakho. Maka indlu. Dweba izindawo ezisuka eduze ziye kude\nngokuthi uvakashela kangaki.",
+        "Bese udweba imicibisholo engena ivela ngaphandle, ekhombisa ilanga,\numoya, umlilo namanzi.",
+        "Lelo phepha liyisisekelo sohlelo lwakho. Okunye okulesi sifundo kungakhiwa\nphezu kwalo.",
+        "Akudingeki libe lihle kakhulu. Kudingeka likhombise indawo yakho ngokunembile."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 21,
+      "sourceEnglish": [
+        "Sketch your own zones and sectors on one sheet of paper.",
+        "Mark Zone 0 and Zone 1 first, then work outward as far as your land goes.",
+        "Add an arrow for each energy that arrives from outside, and label where it comes from.",
+        "Photograph the sketch."
+      ],
+      "currentIsiZulu": [
+        "Dweba ama-zone nama-sector akho ephepheni elilodwa.",
+        "Qala ngokumaka i-Zone 0 ne-Zone 1, bese uqhubeka ngaphandle kuze kufike\nemngceleni wendawo yakho.",
+        "Faka umcibisholo wento ngayinye efika ivela ngaphandle, ubhale ukuthi\nivela ngakuphi.",
+        "Thatha isithombe somdwebo."
+      ],
+      "disposition": "accepted",
+      "issues": [
+        {
+          "issue": "The extent clause is rendered as continuing to the boundary of the learner’s land. This is a reasonable rendering of “as far as your land goes”; source order and Zone 0/1 priority remain."
+        }
+      ],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Introduction",
+      "slide": 22,
+      "sourceEnglish": [
+        "Walk out and check your sketch against the ground.",
+        "Stand at the kitchen door and count what is really in Zone 1 today.",
+        "Find one thing planted further away than how often you use it, and write down where it should move to.",
+        "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow."
+      ],
+      "currentIsiZulu": [
+        "Hamba uyohlola umdwebo wakho emhlabeni wangempela.",
+        "Yima emnyango wasekhishini ubale okukhona ngempela ku-Zone 1 namuhla.",
+        "Thola into eyodwa etshalwe kude uma uqhathanisa nokuthi uyisebenzisa\nkaningi kangakanani. Bhala ukuthi ingabekwa kuphi.",
+        "Bese ubuza umakhelwane osekhulile ukuthi umoya olimazayo uvela\nngakuphi. Qhathanisa impendulo yakhe nomcibisholo wakho."
+      ],
+      "disposition": "repair",
+      "issues": [
+        {
+          "issue": "The source asks which direction the “worst wind” comes from. ZU says “umoya olimazayo” (damaging wind), which drops the superlative. The target also changes “write down where it should move to” to a possibility (“where it can be placed”), weakening the requested destination.",
+          "recommendation": "Retain exact English anchors “worst wind” and “where it should move to” if a precise isiZulu equivalent is not established; preserve the already-localized walk/check/count/compare framing."
+        }
+      ],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 1,
+      "sourceEnglish": [
+        "A permaculture course for South African smallholder farmers.",
+        "Read the land before you change it. Find where water moves, where sunlight falls, where wind travels, and where cold air settles.",
+        "These observations guide practical choices for crops, trees, buildings, roads, and water. They are the start of good design."
+      ],
+      "currentIsiZulu": [
+        "Lesi yisifundo se-Permaculture sabalimi abancane baseNingizimu Afrika. Funda umhlaba ngaphambi kokuwushintsha. Thola lapho amanzi ehamba khona, lapho ukukhanya kwelanga kuwela khona, lapho umoya udlula khona nalapho umoya obandayo uqoqana khona. Lokhu okubukayo kukuqondisa ekukhetheni indawo yezitshalo, izihlahla, izakhiwo, imigwaqo namanzi. Kuyisiqalo sokuhlela kahle."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 2,
+      "sourceEnglish": [
+        "Every farm has patterns that work before we add anything.",
+        "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+        "When you read these patterns first, you place water, crops, trees, and buildings where they can work with the land."
+      ],
+      "currentIsiZulu": [
+        "Ipulazi ngalinye selinendlela izinto ezihamba ngayo ngaphambi kokuba sengeze noma yini. Imvula isivele ilandela imigqa emhlabeni. Ilanga lifudumeza ezinye izindawo ngaphezu kwezinye. Umoya uthola izikhala namagquma, kanti umoya obandayo uqoqana ezindaweni eziphansi. Funda lezi zindlela kuqala, bese ubeka amanzi, izitshalo, izihlahla nezakhiwo lapho zingasebenzisana khona nomhlaba."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 3,
+      "sourceEnglish": [
+        "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+        "You will read sun angles, shade, wind, frost, and slope.",
+        "You will use an A-frame level to trace contours.",
+        "You will draw a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors."
+      ],
+      "currentIsiZulu": [
+        "Ekupheleni kwale module, uzokwazi ukulandela amanzi emhlabeni wakho uthole nalapho ephuma khona. Uzokwazi ukufunda indlela ilanga elimi ngayo, imithunzi, umoya, isithwathwa nemithambeka. Uzokwazi ukusebenzisa i-A-frame level ukulandela imigqa ye-contour. Uzodweba imephu elula yendawo ebonisa ukuhamba kwamanzi, imimoya yezinkathi zonyaka, izindawo eziqoqana kuzo isithwathwa, izitshalo ezikhona, ama-zone nama-sector."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 4,
+      "sourceEnglish": [
+        "Before you harvest water, learn where it already goes.",
+        "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+        "Some excess water needs a safe route away so it does not cause damage."
+      ],
+      "currentIsiZulu": [
+        "Ngaphambi kokuvuna amanzi, qala ufunde ukuthi asevele eya kuphi. Ngesikhathi semvula enkulu, bheka usemhlabeni ophephile. Hamba uhlole umhlaba kuphela uma sekuphephile ngemva kwemvula. Bheka imifudlana emincane, izindawo lapho amanzi esabalala khona, amachibi, nalapho ephuma khona emhlabeni wakho. Amanye amanzi amaningi adinga indlela ephephile yokuphuma ukuze angabangeli umonakalo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 5,
+      "sourceEnglish": [
+        "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land."
+      ],
+      "currentIsiZulu": [
+        "Isithombe sibonisa imvula yehla ngomthambeka. Bheka lapho amanzi egeleza khona ngesivinini esikhulu, esabalala khona, ecwila emhlabathini khona, eqoqana khona nalapho ephuma khona emhlabeni."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 6,
+      "sourceEnglish": [
+        "Build an A-frame level from three poles and a weighted string.",
+        "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+        "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser."
+      ],
+      "currentIsiZulu": [
+        "Yakha i-A-frame level ngezigxobo ezintathu nentambo enesisindo esilengayo. Hambisa i-A-frame emhlabeni ukuze uthole amaphuzu asezingeni elifanayo. Xhuma la maphuzu ukuze ulandele umugqa we-contour. I-A-frame ingakusiza umake amaphuzu asezingeni elifanayo futhi ulandele umugqa we-contour, kodwa izimpawu zayo ziyizinto ozibonile; azilona uhlelo lokwakha izakhiwo zomhlaba futhi azibonisi ukuthi ukumba kulungele le ndawo noma kuphephile. Ngaphambi kokumba, cela ukuba indawo ihlolwe. Umhlabathi, umthambeka, ukugeleza kwamanzi, ukugeleza kwamanzi esiphepho nendlela ephephile yokuphuma kwamanzi konke kubalulekile. Cela umeluleki wendawo oqeqeshiwe akusize."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 7,
+      "sourceEnglish": [
+        "Water picks up speed and erosive force as it runs downhill.",
+        "There is no one placement rule for every slope. Observe where water moves and gathers.",
+        "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water."
+      ],
+      "currentIsiZulu": [
+        "Amanzi athola isivinini namandla okuguguleka komhlabathi njengoba ehla ngomthambeka. Awukho umthetho owodwa wokubeka izakhiwo zamanzi osebenza kuyo yonke imithambeka. Bheka lapho amanzi ehamba khona nalapho eqoqana khona. Imigqa ye-contour ebekwe kabi ingakhulisa ukuguguleka komhlabathi, kanti umhlabathi omunca amanzi kancane ungagcina amanzi amaningi kakhulu. Khetha izakhiwo zamanzi ezifanele indawo yakho, bese uhlela indlela ephephile yokuphuma kwamanzi amaningi."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 8,
+      "sourceEnglish": [
+        "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+        "North-facing slopes often get more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles.",
+        "Watch your own site before choosing where to place tender crops, trees, or buildings."
+      ],
+      "currentIsiZulu": [
+        "Ezindaweni eziningi zaseNingizimu Afrika, ikakhulukazi ebusika, ilanga libonakala lisenyakatho. Indlela elihamba ngayo esibhakabhakeni iyashintsha ngokwenkathi nangendawo okuyo.",
+        "Imithambeka ebheke enyakatho ivame ukuthola ilanga eliningi futhi ingafudumala yome kakhulu. Imithambeka ebheke eningizimu ivame ukuphola futhi ibe nomswakama omningi. I-frost ingaqoqana ezindaweni eziphansi eziyimigodi lapho kuhlala khona umoya obandayo.",
+        "Bheka indawo yakho ngaphambi kokukhetha lapho uzobeka khona izitshalo ezizwela amakhaza, izihlahla noma izakhiwo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 9,
+      "sourceEnglish": [
+        "Follow the sun, building, tree, and their shadows across the slope. Compare summer’s high sun with winter’s lower sun."
+      ],
+      "currentIsiZulu": [
+        "Landela ilanga, isakhiwo, isihlahla nemithunzi yazo emthambekeni. Qhathanisa ilanga lasehlobo elibonakala liphezulu nelasebusika elibonakala liphansi."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 10,
+      "sourceEnglish": [
+        "Winter sun is lower and farther north than summer sun.",
+        "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+        "Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls."
+      ],
+      "currentIsiZulu": [
+        "Ilanga lasebusika libonakala liphansi futhi lisenyakatho kakhulu kunelasehlobo.",
+        "Udonga noma i-shade cloth kungafaka umbhede emthunzini isikhathi eside ebusika kunasehlobo. Ngaphambi kokwakha noma yisiphi isakhiwo esihlala endaweni yaso, hlola imithunzi ebonakala kuleyo ndawo ngempela.",
+        "Yima kuleyo ndawo ngo-8 ekuseni, emini, nango-4 ntambama ngosuku lwasebusika. Bheka lapho umthunzi uwela khona."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 11,
+      "sourceEnglish": [
+        "Pawpaw and young citrus are sensitive to frost.",
+        "Keep tender plants out of known low frost pockets. Observe local frost before planting."
+      ],
+      "currentIsiZulu": [
+        "I-pawpaw nezihlahla ezisencane ze-citrus ziyazwela ku-frost.",
+        "Gcina izitshalo ezizwela amakhaza zingekho ezindaweni eziphansi ezaziwayo eziqongelela i-frost. Bheka ukuthi i-frost ivela kuphi endaweni yangakini ngaphambi kokutshala."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 12,
+      "sourceEnglish": [
+        "Wind can damage crops on a smallholding.",
+        "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+        "Wind, cold air and slope all matter when choosing places for crops and shelter."
+      ],
+      "currentIsiZulu": [
+        "Umoya ungalimaza izitshalo epulazini elincane. Indawo ovela kuyo namandla omoya olimazayo kuyashintsha kuye ngesifunda, inkathi yonyaka, amagquma nezikhala ezisemhlabeni wakho. Hamba uhlole umhlaba ngezinsuku ezinomoya. Bhala phansi ukuthi umoya olimazayo uvela ngakuphi nokuthi uthinta ini. Hlola amarekhodi esimo sezulu endawo ngaphambi kokubeka i-windbreak. Umoya, umoya obandayo nomthambeka konke kubalulekile lapho ukhetha izindawo zezitshalo nezokukhosela."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 13,
+      "sourceEnglish": [
+        "A place sheltered from wind can still collect cold air. Check wind shelter and frost risk separately."
+      ],
+      "currentIsiZulu": [
+        "Indawo evikelekile emoyeni isengaba yindawo lapho kuqoqana khona umoya obandayo. Hlola ukuvikeleka emoyeni nobungozi besithwathwa ngokwehlukana."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 14,
+      "sourceEnglish": [
+        "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+        "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+        "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+        "Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position."
+      ],
+      "currentIsiZulu": [
+        "Ngobusuku obucacile nobungenamoya, umoya obandayo ungehla ngomthambeka uqoqane ezindaweni eziphansi. Lezi zindawo zingabanda kakhulu kunemithambeka eseduze. Isithwathwa siyizinhlayiya zeqhwa ezakheka phezu kwendawo ebandayo. Inkungu iyodwa ayisho ukuthi sekwakheke lezo zinhlayiya zeqhwa, futhi isithwathwa singalimaza izitshalo kungabonakali iqhwa. Bheka iqhwa nomonakalo ezitshalweni, uqhathanise izindawo eziphansi nemithambeka, futhi uhlole amazinga okushisa aphansi lapho ukwazi khona. Maka izindawo lapho amakhaza noma umonakalo kuhlala khona isikhathi eside. Gcina izitshalo ezizwela amakhaza zikude nezindawo ezibandayo ozibonile.",
+        "Qhathanisa izindawo ongakhetha kuzo zenkulisa yezithombo kuyo yonke inkathi yesithwathwa yasendaweni. Hlola amarekhodi endawo okushisa okuphansi noma ubuze umeluleki wezolimo wendawo ngaphambi kokukhetha indawo ehlala njalo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 15,
+      "sourceEnglish": [
+        "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+        "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too."
+      ],
+      "currentIsiZulu": [
+        "Beka inkulisa yezithombo ezizwela isithwathwa ngaphandle kwezindawo ezibandayo ozibonile. Qhathanisa izindawo ezingakhethwa kuyo yonke inkathi yesithwathwa yasendaweni. Hlola amarekhodi endawo okushisa okuphansi noma ubuze umeluleki wezolimo ngaphambi kokukhetha indawo ehlala njalo. Hlola nelanga nomoya olimazayo. Ayikho indawo esentabeni eqinisekisa ukuthi ngeke ibe nesithwathwa.",
+        "Kumatamatisi ahlaselwe yi-late blight, ukuhamba komoya nelanga lasekuseni kungasiza amaqabunga ome. Isimo sezulu esibandayo nesinomswakama esiqhubeka isikhathi eside sisengasivumela lesi sifo ukuba sisabalale. Ukususa umbhede uwuyise kwenye indawo kukodwa ngeke kusilawule i-late blight. Funa neseluleko sendawo ngempilo yezitshalo."
+      ],
+      "disposition": "repair",
+      "issues": [
+        {
+          "issue": "“Prolonged cool, damp weather can still favour the disease” is rendered as weather allowing the disease to spread. This changes favouring/conditions into spread as an outcome.",
+          "recommendation": "Retain the exact English clause “Prolonged cool, damp weather can still favour the disease.” The surrounding airflow, morning-sun, no-guarantee, bed-move-alone, and local-advice clauses are aligned."
+        }
+      ],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 16,
+      "sourceEnglish": [
+        "A site map needs paper, a tape measure, a compass, and time to walk your land.",
+        "Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.",
+        "Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding."
+      ],
+      "currentIsiZulu": [
+        "Ukuze wenze i-site map, udinga iphepha, i-tape measure, i-compass nesikhathi sokuhamba emhlabeni wakho.",
+        "Hamba emngceleni wenze umdwebo wokuqala. Maka ukuthi awukabi ngesikali kuze kube usuwahlolile amabanga. Maka inyakatho. Faka indlu, izihlahla, amanzi, imigwaqo nezicingo.",
+        "Bese udweba amaphethini owabonile. Imephu yakho iba uhlaka lomklamo wesiqeshana sakho sonke somhlaba."
+      ],
+      "disposition": "uncertain",
+      "issues": [
+        {
+          "issue": "“Smallholding” is localized as the learner’s whole piece/plot of land. This may be a reasonable local rendering but could be narrower than the source’s whole smallholding. Equipment, boundary walk, not-to-scale status until distance checks, north, mapped objects, observed patterns, and design-skeleton function are retained.",
+          "recommendation": "Keep “smallholding” in English if property scope matters; no other clause needs holding."
+        }
+      ],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 17,
+      "sourceEnglish": [
+        "Use the picture as a guide: boundary, buildings, roads, water, slopes, and direction arrows. Draw what already exists before planning changes."
+      ],
+      "currentIsiZulu": [
+        "Sebenzisa isithombe njengesiqondiso: umngcele, izakhiwo, imigwaqo, amanzi, imithambeka nemicibisholo ekhombisa izinkomba. Dweba okukhona kakade ngaphambi kokuhlela izinguquko."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 18,
+      "sourceEnglish": [
+        "Look for places where frost sits longest and where the ground smells damp during dry months.",
+        "Notice existing vegetation. Mark where khakibos or blackjack grows thick.",
+        "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Check the soil before deciding what the patch means for your design."
+      ],
+      "currentIsiZulu": [
+        "Bheka izindawo lapho i-frost ihlala khona isikhathi eside, nalapho umhlabathi unuka sengathi umanzi phakathi nezinyanga ezomile.",
+        "Qaphela izitshalo ezikhona. Maka lapho i-khakibos noma i-blackjack ikhula khona kakhulu.",
+        "Lezi zitshalo zingakhula ezindaweni eziphazamisekile, kodwa ukuba khona kwazo kukodwa akubonisi ukuthi umhlabathi ucindezelekile. Hlola umhlabathi ngaphambi kokunquma ukuthi leyo ndawo isho ukuthini ohlelweni lwakho."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 19,
+      "sourceEnglish": [
+        "Mark summer and winter wind separately. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.",
+        "Overlay your zones and sectors on the same base map.",
+        "Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once."
+      ],
+      "currentIsiZulu": [
+        "Maka ngokwehlukana umoya wasehlobo nowasebusika. Ungavela ezinhlangothini ezahlukene, ngakho i-windbreak noma indawo yezitshalo esebenza kwenye inkathi ingase ingafanele kwenye.",
+        "Beka ama-zone nama-sector ebalazweni eliyisisekelo elifanayo.",
+        "Buyekeza umdwebo wakho ngokushintsha kwezinkathi zonyaka. Imephu yepensela oyisebenzisayo iwusizo kakhulu kunemephu ephelele edwetshwe kanye kuphela."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 20,
+      "sourceEnglish": [
+        "When it is safe after heavy rain, walk your land. Mark rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away.",
+        "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+        "On paper, draw your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation."
+      ],
+      "currentIsiZulu": [
+        "Ngemva kwemvula enkulu, hamba emhlabeni wakho kuphela uma sekuphephile. Maka imisele emincane egejwe amanzi, izindawo lapho amanzi esabalala khona, amachibi, nalapho amanzi ephuma khona endaweni yakho. Qaphela izindawo lapho amanzi amaningi angase adinge khona indlela ephephile yokuphuma.",
+        "Buyela entathakusa ekuseni okubandayo kuka-June. Maka inkungu, amazolo afriziwe nezindawo lapho i-frost ihlala khona isikhathi eside.",
+        "Ephepheni, dweba umngcele wendawo yakho, maka inyakatho, bese wengeza indlu, amanzi, imigwaqo, izicingo, imithambeka nezitshalo esezikhona."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Reading Landscape",
+      "slide": 21,
+      "sourceEnglish": [
+        "Build an A-frame level from three poles and a weighted string.",
+        "Use it to mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
+        "Add summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it."
+      ],
+      "currentIsiZulu": [
+        "Yakha ithuluzi lokulinganisa i-A-frame ngezigxobo ezintathu nangentambo enesisindo.",
+        "Lisebenzise ukumaka amaphuzu asezingeni elifanayo nokulandela umugqa we-contour. Lokhu kuwukubuka nokurekhoda kuphela; akuwona umklamo womsebenzi womhlaba. Ngaphambi kokumba, cela umeluleki wendawo oqeqeshiwe ahlole indawo futhi ahlele indlela ephephile yokuphuma kwamanzi amaningi.",
+        "Faka imicibisholo ebonisa umoya wasehlobo nowasebusika, okubonile ngemithunzi ngo-8 ekuseni, emini, nango-4 ntambama, kanye nama-zone nama-sector akho. Gcina imephu yakho futhi uyibuyekeze."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "semantic comparison of this registered narration block; not fluent-speaker approval"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-06",
+  "base": "2731fe76f2e8e7d1bc9a0be0dce66be497904401",
+  "candidateSha256": "5553d22ad2b2bfa5f1939fda2663cda0304f8ef5e97ba0006971c937a578fd2c",
+  "rootReadAllActualDeltas": 60,
+  "excludedRowsPreserved": 23,
+  "status": "data-only; final independent check and runtime release-binding design pending",
+  "requirements": [
+    "Preserve canonical English, all source fields and quiz indices.",
+    "Preserve old ST source pair, verification record and all audio bytes.",
+    "Use a separate new source-paired silent ST deck; do not bind old narration to new prose.",
+    "One compatibility authority controls narration availability and offline default.",
+    "Verify actual current source/target/image bindings and phone/offline before release."
+  ],
+  "noFluentApproval": true,
+  "notLearnerWired": true,
+  "notPublished": true
+}

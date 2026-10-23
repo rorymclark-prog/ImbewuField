@@ -1,0 +1,108 @@
+{
+  "packetId": "IMBEWU-TS-MARKET-L3-BODY-NEXT-BACKCHECK-2026-10-03",
+  "checkedAt": "2026-10-03T04:52:02.675Z",
+  "sourceRevision": "18734826c631798ebbec7c0f3f37ea2f9ab6a386",
+  "candidatePacket": "/tmp/imbewu-ts-market-l3-body-next-candidates-20261003.json",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-ts-market-community.ts",
+  "lessonId": "market-community-l3",
+  "languageCode": "ts",
+  "languageName": "itsonga",
+  "reviewStatus": "independent-semantic-backcheck-with-root-bounded-repairs-not-fluency-approval",
+  "exactSourceAndCurrentProof": {
+    "canonicalBodyEqualsPacket": true,
+    "currentRegistryEqualsPacket": true,
+    "exactSourceParagraphsMatch": true,
+    "currentParagraphsMatch": true,
+    "paragraphCount": 12,
+    "paragraphOrderPreserved": true
+  },
+  "existingRegionalPreservation": {
+    "indices": [
+      3,
+      4,
+      5,
+      9
+    ],
+    "allExact": true,
+    "paragraph9IsCurrentLocalizedText": true
+  },
+  "candidateReview": [
+    {
+      "paragraphIndex": 0,
+      "decision": "accept after bounded repair",
+      "originalIssue": "Retain the source phrase “the work of saving seed”; the earlier verb could imply keeping/storing seed.",
+      "finalCandidate": "Vaakelani va nga avelana different varieties and the work of saving seed.",
+      "check": "Neighbors can share different varieties and the work of saving seed. “Different varieties” and the complete seed-saving-work phrase remain English."
+    },
+    {
+      "paragraphIndex": 6,
+      "decision": "exact English hold after bounded repair",
+      "originalIssue": "The proposed Tshivenda/Xitsonga term was backchecked as carefully rather than gently.",
+      "finalCandidate": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+      "check": "Full produce handling, gentle-care, shade, packaging, storage and delivery clause remains exact English."
+    },
+    {
+      "paragraphIndex": 7,
+      "decision": "accept with review flag",
+      "check": "Nearby buyer may reduce journey remains possibility; loss and selling-cost measurement remains exact English."
+    },
+    {
+      "paragraphIndex": 8,
+      "decision": "accept with review flag",
+      "check": "Comparison over each option is localized; full fees/transport/spoilage calculation and nearest-buyer warning retain exact English."
+    },
+    {
+      "paragraphIndex": 10,
+      "decision": "accept with review flag",
+      "check": "Record imperative localized; method/conditions/result and complete may-suit-land conditional remain exact English."
+    }
+  ],
+  "wrongLanguageCheck": {
+    "result": "No obvious Sesotho or Tshivenda contamination in changed words; candidates use Xitsonga forms, with technical spans explicitly English.",
+    "caution": "Semantic/script-level check only, not a fluent-speaker review."
+  },
+  "changedIndicesAsWritten": [
+    0,
+    6,
+    7,
+    8,
+    10
+  ],
+  "recommendedCandidateParagraphs": [
+    "Vaakelani va nga avelana different varieties and the work of saving seed.",
+    "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+    "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+    "Ku avelana switirhisiwa swo durha swi endla leswaku ntlawa wu swi kota ku swi tirhisa.",
+    "Pompo ya mati kumbe muchini wo sila mavele swi nga ha durha ngopfu leswaku ndyangu wun’we wu swi xava.",
+    "Ku tirhisa switirhisiwa swin’we swi endla leswaku ntlawa wu vuyeriwaka hi swona, naswona swi pfuna purasi rin’wana ni rin’wana ku endla mintirho leyi a ri nga ta yi kota ri ri roxe.",
+    "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+    "Muxavi wa le kusuhi a nga ha hunguta riendzo, kambe losses and selling costs still need measuring.",
+    "Pimanisa money received after fees, transport and spoilage eka ndlela yin’wana ni yin’wana. Do not assume the nearest buyer always gives the best return.",
+    "Vaakelani va nga komba vuswikoti bya nkoka naswona va pimanisa leswi humeleleke emapurasi ya vona.",
+    "Tsala method, conditions na result so others can judge whether it may suit their land.",
+    "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together."
+  ],
+  "recommendedChangedIndicesAfterRepairs": [
+    0,
+    7,
+    8,
+    10
+  ],
+  "technicalAndSafetyHolds": [
+    1,
+    2,
+    6,
+    11
+  ],
+  "preservedLocalizedIndices": [
+    3,
+    4,
+    5,
+    9
+  ],
+  "sourceAndQuizFieldsUnchanged": true,
+  "repoWritesMade": false,
+  "repoWritesMadeAtBackcheck": false,
+  "implementationStatus": "The independently checked final candidate is now wired as a visibly unreviewed learner draft; canonical English remains unchanged."
+}

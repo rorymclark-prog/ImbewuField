@@ -35,7 +35,8 @@
 // And regardless of the default, BOTH routes stay available to the caller, so
 // a farmer is never trapped in the one his device happens to prefer.
 
-export type FileDelivery = 'shared' | 'downloaded';
+export type FileDelivery = 'shared' | 'downloaded' | 'cancelled';
+export type FileShare = 'shared' | 'cancelled' | 'unavailable';
 
 type ShareCapableNavigator = Navigator & { canShare?: (data: ShareData) => boolean };
 
@@ -84,21 +85,21 @@ export function downloadFile(blob: Blob, filename: string): FileDelivery {
   return 'downloaded';
 }
 
-/** Always the OS share sheet. Resolves false when the platform cannot take it. */
-export async function shareFile(blob: Blob, filename: string, title: string): Promise<boolean> {
+/** Explicit sharing honours the choice on desktop too, and reports cancellation separately. */
+export async function shareFile(blob: Blob, filename: string, title: string): Promise<FileShare> {
   const n = nav();
-  if (!n?.share || !n.canShare) return false;
+  if (!n?.share || !n.canShare) return 'unavailable';
   try {
     const file = new File([blob], filename, { type: blob.type });
-    if (!n.canShare({ files: [file] })) return false;
+    if (!n.canShare({ files: [file] })) return 'unavailable';
     await n.share({ files: [file], title });
-    return true;
+    return 'shared';
   } catch (err) {
     // AbortError = the farmer dismissed the sheet. That is a completed action,
     // not a failed export — falling through would then ALSO trigger a download
     // he just declined.
-    if (err instanceof Error && err.name === 'AbortError') return true;
-    return false;
+    if (err instanceof Error && err.name === 'AbortError') return 'cancelled';
+    return 'unavailable';
   }
 }
 
@@ -110,13 +111,27 @@ export async function shareFile(blob: Blob, filename: string, title: string): Pr
  */
 export function openFileInTab(blob: Blob): boolean {
   const url = URL.createObjectURL(blob);
-  const win = window.open(url, '_blank', 'noopener');
+  // `noopener` in window.open makes a successfully opened tab return null in
+  // real browsers. That looked blocked and downloaded a second copy. Detach the
+  // blank tab before navigating, so we can distinguish an actual blocked popup.
+  const win = window.open('', '_blank');
   setTimeout(() => URL.revokeObjectURL(url), 60_000);
-  return Boolean(win);
+  if (!win) return false;
+  try {
+    win.opener = null;
+    win.location.replace(url);
+    return true;
+  } catch {
+    win.close();
+    return false;
+  }
 }
 
 /** The default route for this device, with the other always still available. */
 export async function deliverFile(blob: Blob, filename: string, shareTitle: string): Promise<FileDelivery> {
-  if (prefersShareSheet() && (await shareFile(blob, filename, shareTitle))) return 'shared';
+  if (prefersShareSheet()) {
+    const result = await shareFile(blob, filename, shareTitle);
+    if (result !== 'unavailable') return result;
+  }
   return downloadFile(blob, filename);
 }

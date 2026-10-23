@@ -1,0 +1,13 @@
+{
+  "head": "27dc083deda68dd33bfc67bf7c954037ee4a70f1",
+  "reviewedPacket": "/tmp/imbewu-core-final-ordinary-residual-candidates-20261007.json",
+  "decisions": {
+    "VE-VEGETABLES-L2-FRESH-FOOD-LONGER": "HOLD: long is not longer",
+    "VE-VEGETABLES-L2-BEANS-CONNECTOR": "ACCEPT connector only; retain exact technical protein storage clause",
+    "TS-READING-L1-AFRAME-OBSERVATION-LEARNER": "ACCEPT source-clause reuse subject to exact current source/composition assertion; observation not construction approval",
+    "ST-READING-S6-AFRAME-OBSERVATION-PAIRED": "HOLD: tlhokomelo may mean care/attention; existing learner wording alone does not establish recorded observation meaning",
+    "VE-READING-L1-AFRAME-OBSERVATION-HOLD": "HOLD no defensible equivalent established"
+  },
+  "fluentApproval": false,
+  "wired": false
+}

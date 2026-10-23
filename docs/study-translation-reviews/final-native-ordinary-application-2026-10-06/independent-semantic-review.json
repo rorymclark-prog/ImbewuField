@@ -1,0 +1,686 @@
+{
+  "title": "Independent current-source semantic backcheck of root-filtered native packet",
+  "createdAt": "2026-10-06",
+  "reviewedCommit": "05c677d852c30b29cf7c06516b3f7aaaee4a8f62",
+  "packet": "/tmp/imbewu-final-vegetables-native-root-filtered-next-20261006.json",
+  "canonicalSourceFile": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/lib/course-modules.ts",
+  "canonicalSourceSHA256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+  "readOnly": true,
+  "repositoryWrites": false,
+  "renderingOrTests": false,
+  "scope": "Independent semantic and language-identity check against exact current canonical source and native registry target. Not a fluency approval, learner edit, visual approval, publication, or completion percentage.",
+  "checkedFieldCount": 30,
+  "reviewedFields": [
+    {
+      "order": 11,
+      "candidateIndexes": [
+        11
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "ve",
+        "lessonId": "reading-landscape-l1",
+        "fieldLocator": "body.paragraph[2]"
+      },
+      "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "currentTarget": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone. Dzi-contour dzo vhewaho nga nḓila i songo teaho dzi nga engedza erosion, nahone mavu ane a nwa maḓi nga u lenga a nga fara maḓi manzhisa. Nangani any water works for the site nahone ni pulane nḓila yo tsireledzeaho ya u bvisa maḓi a re manzhisa.",
+      "candidate": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone. Dzi-contour dzo vhewaho nga nḓila i songo teaho dzi nga engedza erosion, nahone mavu ane a nwa maḓi nga u lenga a nga fara maḓi manzhisa. Nangani water works dzinwe na dzinwe dzine dza fanelea fhethu hono nahone ni pulane nḓila yo tsireledzeaho ya u bvisa maḓi a re manzhisa.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-reading-landscape.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "“Any” remains bounded by suitability for the site; no claim that an unsuitable waterwork is acceptable."
+    },
+    {
+      "order": 13,
+      "candidateIndexes": [
+        13
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "ts",
+        "lessonId": "reading-landscape-l1",
+        "fieldLocator": "body.paragraph[2]"
+      },
+      "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "currentTarget": "A ku na nawu wun’we wa ndhawu lowu faneleke eka slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Tikhontara leti endliweke hi ndlela yo biha ti nga engetela erosion, naswona misava leyi tswongaka mati hi ku nonoka yi nga khoma mati yo tala ngopfu. Hlawula any water works for the site, kutani u kunguhata ndlela leyi hlayisekeke yo humesa mati lama taleke.",
+      "candidate": "A ku na nawu wun’we wa ndhawu lowu faneleke eka slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Tikhontara leti endliweke hi ndlela yo biha ti nga engetela erosion, naswona misava leyi tswongaka mati hi ku nonoka yi nga khoma mati yo tala ngopfu. Hlawula water works yin'wana ni yin'wana leyi faneleke ndhawu yoleyo, kutani u kunguhata ndlela leyi hlayisekeke yo humesa mati lama taleke.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ts.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "“Any” remains bounded by suitability for the site; the safe excess-water route remains."
+    },
+    {
+      "order": 15,
+      "candidateIndexes": [
+        15
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "st",
+        "lessonId": "reading-landscape-l3",
+        "fieldLocator": "body.paragraph[1]"
+      },
+      "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "currentTarget": "Bosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona through the local frost season. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.",
+      "candidate": "Bosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona ho pholletsa le sehla sa frost sa sebakeng seo. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-st-reading-landscape.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "“ho pholletsa le sehla ...” explicitly means through the local frost season, preserving the duration of comparison."
+    },
+    {
+      "order": 16,
+      "candidateIndexes": [
+        16
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "st",
+        "lessonId": "reading-landscape-l3",
+        "fieldLocator": "quiz[0].rationale"
+      },
+      "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "currentTarget": "Moya o batang o ka dula dibakeng tse tlase masiu a hlakileng, a kgutsitseng. Bapisa dibaka tsa kereche tseo e ka bang tsona through the local frost season. Hlahloba ditlaleho tsa motjheso o tlase-tlase tsa lehae kapa o botse moeletsi wa temo wa lehae pele o etsa qeto ya nako e telele. Serame se bonwang hase sesupo se le seng feela sa tshenyo ya serame, mme ha ho na sebaka sa lehlakoreng la leralla se tiisang ho se be le serame.",
+      "candidate": "Moya o batang o ka dula dibakeng tse tlase masiu a hlakileng, a kgutsitseng. Bapisa dibaka tsa kereche tseo e ka bang tsona ho pholletsa le sehla sa frost sa sebakeng seo. Hlahloba ditlaleho tsa motjheso o tlase-tlase tsa lehae kapa o botse moeletsi wa temo wa lehae pele o etsa qeto ya nako e telele. Serame se bonwang hase sesupo se le seng feela sa tshenyo ya serame, mme ha ho na sebaka sa lehlakoreng la leralla se tiisang ho se be le serame.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-st-reading-landscape.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "Explicit through-the-season comparison retained; visible frost is not the only sign and no hillside position is guaranteed frost-free."
+    },
+    {
+      "order": 25,
+      "candidateIndexes": [
+        25
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "st",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "body.paragraph[8]"
+      },
+      "sourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "currentTarget": "Raised beds di loketse wet ground, moo metsi a hlokang somewhere to drain away to.",
+      "candidate": "Raised beds di loketse mobu o metsi, where water needs somewhere to drain away to.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "Localizes wet ground and preserves the exact drainage-away destination clause."
+    },
+    {
+      "order": 26,
+      "candidateIndexes": [
+        26
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "body.paragraph[10]"
+      },
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "currentTarget": "Musi heavy rain yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na soil and drainage advice ni sa athu khetha bed.",
+      "candidate": "Nga murahu ha mvula khulu, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na nyeletshedzo nga ha soil and drainage ni sa athu khetha bed.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "After heavy rain, inspect where water sits or runs off, combine with soil/drainage advice, then choose; sequence retained."
+    },
+    {
+      "order": 27,
+      "candidateIndexes": [
+        27
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "infographicAlt"
+      },
+      "sourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "currentTarget": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "candidate": "A raised bed ine ya vha na vhuphara ha about 1.2 metres, i re na paths nga matungo mavhili, uri muthu a swike vhukati a tshi bva kha thungo iṅwe na iṅwe a sa vhuye a ima kha mavu ane a khou limiwa.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "About 1.2 metres, paths on both sides, access from either side, and never standing on growing soil are retained."
+    },
+    {
+      "order": 28,
+      "candidateIndexes": [
+        28
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "body.paragraph[10]"
+      },
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "currentTarget": "Endzhaku ka heavy rain, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni soil and drainage advice u nga si hlawula bed.",
+      "candidate": "Endzhaku ka mpfula leyikulu, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni switsundzuxo swa misava ni drainage u nga si hlawula bed.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "After heavy rain, inspect where water sits/runs off and combine observation with soil/drainage advice before choosing."
+    },
+    {
+      "order": 29,
+      "candidateIndexes": [
+        29
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "infographicAlt"
+      },
+      "sourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "currentTarget": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "candidate": "Raised bed leyi nga kwalomu ka 1.2 metres hi ku anama, yi ri ni tindlela ematlhelo hamambirhi, leswaku munhu a kota ku fika exikarhini hi tlhelo rin'wana na rin'wana a nga tshuki a yima ehenhla ka misava leyi ku byariwaka eka yona.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "About 1.2 metres, paths both sides, access either side, and never standing on growing soil are retained."
+    },
+    {
+      "order": 38,
+      "candidateIndexes": [
+        38
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "infographicAlt"
+      },
+      "sourceEnglish": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "currentTarget": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "candidate": "Bed yin’we over three seasons: ximilana lexi hatlisaka ku kula xa tshoveriwa, then a new sowing goes in beside a slower crop that is still growing, leswaku bed yi nga tshuki yi sala yi nga ri na swimilana.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples-l2.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "One bed, three seasons, fast crop harvested, then new sowing beside slower crop still growing, and never-empty condition are all explicit. Technical anchor is retained in English."
+    },
+    {
+      "order": 43,
+      "candidateIndexes": [
+        43,
+        44
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "st",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "body.paragraph[10]"
+      },
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "candidate": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. O se ke wa itirela metswako kapa stronger doses.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "One shared negative governs making up mixtures or stronger doses; registered product, crop/pest scope, label, neem, protection and harvest-waiting clauses are preserved."
+    },
+    {
+      "order": 45,
+      "candidateIndexes": [
+        45
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "st",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "infographicAlt"
+      },
+      "sourceEnglish": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "currentTarget": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "candidate": "Pest e holim'a lekhasi, le ditsela tse tharo tsa ho e laola ntle le dikhemikhali: kokoanyana e molemo, physical barrier, le ho e tlosa ka letsoho.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "Locative phrase means pest on a leaf; three non-chemical methods and their examples are retained. Diagram correspondence was not visually checked here."
+    },
+    {
+      "order": 46,
+      "candidateIndexes": [
+        46
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "st",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "quiz[0].rationale"
+      },
+      "sourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "currentTarget": "Crop, pest, dose, protection and harvest waiting instructions di bohlokwa. Natural origin ha e etse hore improvised treatment e be safe or suitable.",
+      "candidate": "Crop, pest, dose, protection le harvest waiting instructions di bohlokwa. Natural origin ha e etse hore improvised treatment e bolokehe kapa e lokele.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "Natural origin does not make an improvised treatment safe or suitable; both negative and suitability conditions retained."
+    },
+    {
+      "order": 48,
+      "candidateIndexes": [
+        48,
+        49
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "body.paragraph[10]"
+      },
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "candidate": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Ni songo ḓiitela misanganedzo kana stronger doses.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "One shared negative governs making up mixtures or stronger doses; all preceding registration, label, neem, protection and harvest-waiting clauses are preserved."
+    },
+    {
+      "order": 51,
+      "candidateIndexes": [
+        51
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "infographicAlt"
+      },
+      "sourceEnglish": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "currentTarget": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "candidate": "Pest kha ṱari, na nḓila tharu dza u i langa hu si na chemicals: beneficial insect, physical barrier, na u i bvisa nga tshanḓa.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "Locative phrase means pest on a leaf; three non-chemical methods and examples are retained. Diagram correspondence was not visually checked here."
+    },
+    {
+      "order": 52,
+      "candidateIndexes": [
+        52
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "quiz[0].rationale"
+      },
+      "sourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "currentTarget": "Crop, pest, dose, protection and harvest waiting instructions ndi zwa ndeme. Natural origin a i iti uri improvised treatment i vhe safe or suitable.",
+      "candidate": "Crop, pest, dose, protection and harvest waiting instructions ndi zwa ndeme. Natural origin a i iti uri improvised treatment i vhe tsireledzea kana i fanelee.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "Natural origin does not make an improvised treatment safe or suitable; both negative and suitability conditions retained."
+    },
+    {
+      "order": 56,
+      "candidateIndexes": [
+        56,
+        57
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "body.paragraph[10]"
+      },
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "candidate": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. U nga tiendleli swihlanganisi kumbe stronger doses.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "One shared negative governs making up mixtures or stronger doses; all preceding registration, label, neem, protection and harvest-waiting clauses are preserved."
+    },
+    {
+      "order": 59,
+      "candidateIndexes": [
+        59
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "infographicAlt"
+      },
+      "sourceEnglish": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "currentTarget": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "candidate": "Pest eka tluka, ni tindlela tinharhu to yi lawula handle ka tikhemikhali: beneficial insect, physical barrier, ni ku yi susa hi voko.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "Locative phrase means pest on a leaf; three non-chemical methods and examples are retained. Diagram correspondence was not visually checked here."
+    },
+    {
+      "order": 60,
+      "candidateIndexes": [
+        60
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "quiz[0].rationale"
+      },
+      "sourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "currentTarget": "Crop, pest, dose, protection and harvest waiting instructions i swa nkoka. Natural origin a yi endli leswaku improvised treatment yi va safe or suitable.",
+      "candidate": "Crop, pest, dose, protection and harvest waiting instructions i swa nkoka. Natural origin a yi endli leswaku improvised treatment yi hlayiseka kumbe yi faneleka.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "Natural origin does not make an improvised treatment safe or suitable; both negative and suitability conditions retained."
+    },
+    {
+      "order": 64,
+      "candidateIndexes": [
+        64
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "quiz[1].option[0]"
+      },
+      "sourceEnglish": "Whether it's actually a soil nutrient or watering issue",
+      "currentTarget": "Loko hakunene ku ri soil nutrient or watering issue",
+      "candidate": "Loko hakunene ku ri xiphiqo xa soil nutrient kumbe xa ku cheleta",
+      "verdict": "hold",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "reason": "Candidate begins with “Loko” (if), making the option conditional. Source asks “Whether it is actually…”. Preserve the interrogative whether scope; no defensible localized repair was established, so retain current field pending a source-faithful formulation.",
+      "focusedCheck": null
+    },
+    {
+      "order": 65,
+      "candidateIndexes": [
+        65
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "st",
+        "lessonId": "market-community-l1",
+        "fieldLocator": "body.paragraph[8]"
+      },
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "currentTarget": "Ke dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return for each hour of work?",
+      "candidate": "Ke dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return bakeng sa hora e nngwe le e nngwe ya mosebetsi?",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-st-market-community.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "Best yield per bed and greatest return per hour of work are preserved; technical terms remain English."
+    },
+    {
+      "order": 66,
+      "candidateIndexes": [
+        66
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ve",
+        "lessonId": "market-community-l1",
+        "fieldLocator": "body.paragraph[8]"
+      },
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "currentTarget": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwimela zwifhio zwine zwa vhuisa the most return for each hour of work?",
+      "candidate": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwifhio zwine zwa vhuisa the most return nga awara iṅwe na iṅwe ya mushumo?",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-market-community.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "Best yield per bed and greatest return per hour of work are preserved; technical terms remain English."
+    },
+    {
+      "order": 67,
+      "candidateIndexes": [
+        67
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l1",
+        "fieldLocator": "body.paragraph[8]"
+      },
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "currentTarget": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return for each hour of work?",
+      "candidate": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return hi awara yin'wana na yin'wana ya ku tirha?",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "Best yield per bed and greatest return per hour of work are preserved; technical terms remain English."
+    },
+    {
+      "order": 68,
+      "candidateIndexes": [
+        68
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "st",
+        "lessonId": "market-community-l2",
+        "fieldLocator": "body.paragraph[3]"
+      },
+      "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "currentTarget": "Ho rekisa ka kotloloho ho ka retain more of the sale price, empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki.",
+      "candidate": "Ho rekisa ka kotloloho ho ka boloka karolo e kgolwanyane ya sale price, empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-st-market-community.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "“More of the sale price” is comparative in the candidate; time, packing, transport and customer care remain."
+    },
+    {
+      "order": 69,
+      "candidateIndexes": [
+        69
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ve",
+        "lessonId": "market-community-l2",
+        "fieldLocator": "body.paragraph[3]"
+      },
+      "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "currentTarget": "U rengisa nga ho livhisa kha vharengi zwi nga retain more of the sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, u paka, transport na u ṱhogomela vharengi.",
+      "candidate": "U rengisa nga ho livhisa kha vharengi zwi nga ita uri ni sale na tshipiḓa tshihulwane tsha sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, u paka, transport na u ṱhogomela vharengi.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-market-community.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "“Tshipiḓa tshihulwane” expresses a larger share, preserving comparative “more of”; all costs remain."
+    },
+    {
+      "order": 71,
+      "candidateIndexes": [
+        71
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l2",
+        "fieldLocator": "body.paragraph[8]"
+      },
+      "sourceEnglish": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+      "currentTarget": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena does not predict income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke.",
+      "candidate": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbeli income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "Exact “does not predict income” clause preserves the source verb predict (not guess) and the negative scope of “alone”; manageable trial and recording remain."
+    },
+    {
+      "order": 73,
+      "candidateIndexes": [
+        73
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l3",
+        "fieldLocator": "body.paragraph[10]"
+      },
+      "sourceEnglish": "Record the method, conditions and result so others can judge whether it may suit their land.",
+      "currentTarget": "Tsala maendlelo, swiyimo ni mbuyelo leswaku van’wana va kota ku kambela whether it may suit their land.",
+      "candidate": "Tsala maendlelo, swiyimo ni mbuyelo leswaku van’wana va kota ku kambela loko swi nga ha faneleka eka land ya vona.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "“May suit their land” retains possibility and lets others judge; method, conditions and result remain."
+    },
+    {
+      "order": 74,
+      "candidateIndexes": [
+        74
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l3",
+        "fieldLocator": "quiz[0].rationale"
+      },
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "currentTarget": "Khwalithi ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage ni germination checks. Ticheki teto a ti tiyisisi permission to exchange a protected variety; kambisisa applicable rights u nga si avelana.",
+      "candidate": "Khwalithi ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage ni germination checks. Ticheki teto a ti tiyisisi mpfumelelo wo cincana hi protected variety; kambisisa applicable rights u nga si avelana.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "Protected-variety permission-to-exchange clause is retained; checks do not establish permission and applicable rights are checked before sharing."
+    },
+    {
+      "order": 75,
+      "candidateIndexes": [
+        75
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l3",
+        "fieldLocator": "quiz[1].option[0]"
+      },
+      "sourceEnglish": "Always choose the highest headline price",
+      "currentTarget": "Nkarhi hinkwawu hlawula the highest headline price.",
+      "candidate": "Nkarhi hinkwawu hlawula headline price leyi tlakukeke swinene.",
+      "verdict": "accept",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "reason": "Source and current registry target rebound exactly. Candidate preserves the source proposition, qualifiers and retained clauses; see focused check.",
+      "focusedCheck": "“Nkarhi hinkwawu” preserves always and “highest” remains superlative; no weakening of the instruction."
+    }
+  ],
+  "exclusions": [
+    {
+      "order": 72,
+      "candidateIndexes": [
+        72
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ve",
+        "lessonId": "market-community-l3",
+        "fieldLocator": "quiz[0].rationale"
+      },
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "currentTarget": "Kwalithi ya mbeu i ḓitika nga crop-specific isolation, selection, labelling, storage na germination checks. Dzi check idzi a dzi sumbedzi permission to exchange a protected variety; ṱolani applicable rights ni sa athu u kovhelana.",
+      "candidate": "Kwalithi ya mbeu i ḓitika nga crop-specific isolation, selection, labelling, storage na germination checks. Dzi check idzi a dzi sumbedzi permission to exchange a protected variety; ṱolani applicable rights ni sa athu u kovhelana.",
+      "verdict": "exclude-noop",
+      "sourceBound": true,
+      "canonicalSourceFile": "lib/course-modules.ts",
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-market-community.ts",
+      "reason": "Candidate is byte-identical to currentTarget; it yields no translation change.",
+      "focusedCheck": null
+    }
+  ],
+  "summary": {
+    "acceptedCandidateCount": 28,
+    "heldCount": 1,
+    "excludedNoopCount": 1,
+    "sourceAndCurrentBindingFailures": 0
+  }
+}

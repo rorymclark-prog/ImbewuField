@@ -1,0 +1,148 @@
+{
+  "title": "Independent second-actor check of final comparative repairs",
+  "date": "2026-10-07",
+  "reviewedHead": "0b611b93de9c998d601c15cbc9a9aa6476f25274",
+  "sourcePacket": "/tmp/imbewu-core-remaining-comparative-repair-check-20261007.json",
+  "status": "Text-only independent semantic/composition check. No repository edits or tests; no fluent-speaker approval.",
+  "authorityNote": "For this check, each finding’s actual `repair` and `composedTarget` fields were treated as authoritative. The packet’s earlier `sourceSegments[].replacement` values are stale and were not used as authority.",
+  "languageNote": "`ts` is Xitsonga throughout this report; it is not Tshivenda.",
+  "scope": [
+    "Three learner compositions: Sesotho direct-sowing, Xitsonga direct-sowing, and Xitsonga market direct-selling.",
+    "Two paired slide compositions: Sesotho and Xitsonga direct-sowing.",
+    "All ST/VE/TS “lightest thing that works” predicates are outside this check and remain unchanged."
+  ],
+  "counts": {
+    "ACCEPT": 3,
+    "REPAIR": 2
+  },
+  "rows": [
+    {
+      "id": "VS-ST-DIRECT-SOW-LEARNER",
+      "language": "st",
+      "verdict": "REPAIR",
+      "sourceEnglish": "They do better sown straight where they’ll grow.",
+      "binding": {
+        "file": "lib/course-translation-drafts-st-vegetables-staples.ts",
+        "lessonOrSlide": "vegetables-staples-l1",
+        "field": "body, direct-sowing sentence",
+        "currentComposition": "They do better ha di jalwa ka kotloloho moo di tla hola teng.",
+        "packetComposition": "Di sebetsa hantle ho feta ha di jalwa ka kotloloho moo di tla hola teng."
+      },
+      "checkedPacketRepair": "Di sebetsa hantle ho feta",
+      "independentRepair": "Di sebetsa hamolemo",
+      "recommendedComposition": "Di sebetsa hamolemo ha di jalwa ka kotloloho moo di tla hola teng.",
+      "backtranslation": "They perform better when sown directly where they will grow.",
+      "reason": "The predicate must preserve the general “do better” comparison without narrowing it to growth. However, placing ho feta immediately before the existing ha condition risks reading “better than when they are sown…”, which can reverse the relation. Hamolemo preserves “better” and lets the existing ha clause remain the condition.",
+      "uncertainty": "Medium: this is a composition-level syntax concern from source/target comparison, not a fluency certification. Have a Sesotho reviewer confirm hamolemo ha construction.",
+      "preserved": [
+        "Direct-sowing condition and its wording remain unchanged.",
+        "Crop names/list, order, and group-membership sentence remain unchanged.",
+        "No growth-only claim is introduced."
+      ]
+    },
+    {
+      "id": "VS-ST-DIRECT-SOW-PAIRED",
+      "language": "st",
+      "verdict": "REPAIR",
+      "sourceEnglish": "They do better sown straight where they’ll grow.",
+      "binding": {
+        "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+        "lessonOrSlide": "slide 6",
+        "field": "target.body[0], segments 1 and 2",
+        "currentComposition": "Di hola hantle ho feta ha di jalwa ka kotloloho moo di tla hola teng.",
+        "packetComposition": "Di sebetsa hantle ho feta ha di jalwa ka kotloloho moo di tla hola teng."
+      },
+      "checkedPacketRepair": "Di sebetsa hantle ho feta",
+      "independentRepair": "Di sebetsa hamolemo",
+      "recommendedComposition": "Di sebetsa hamolemo ha di jalwa ka kotloloho moo di tla hola teng.",
+      "backtranslation": "They perform better when sown directly where they will grow.",
+      "reason": "The predicate must preserve the general “do better” comparison without narrowing it to growth. However, placing ho feta immediately before the existing ha condition risks reading “better than when they are sown…”, which can reverse the relation. Hamolemo preserves “better” and lets the existing ha clause remain the condition.",
+      "uncertainty": "Medium: this is a composition-level syntax concern from source/target comparison, not a fluency certification. Have a Sesotho reviewer confirm hamolemo ha construction.",
+      "preserved": [
+        "Direct-sowing condition and its wording remain unchanged.",
+        "Crop names/list, order, and group-membership sentence remain unchanged.",
+        "No growth-only claim is introduced."
+      ]
+    },
+    {
+      "id": "VS-TS-DIRECT-SOW-LEARNER",
+      "language": "ts",
+      "verdict": "ACCEPT",
+      "sourceEnglish": "They do better sown straight where they’ll grow.",
+      "binding": {
+        "file": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+        "lessonOrSlide": "vegetables-staples-l1",
+        "field": "body, direct-sowing sentence",
+        "currentComposition": "They do better loko swi byariwa hi ku kongoma laha swi nga ta kula kona.",
+        "packetComposition": "Swi tirha ku antswa loko swi byariwa hi ku kongoma laha swi nga ta kula kona."
+      },
+      "checkedComposition": "Swi tirha ku antswa loko swi byariwa hi ku kongoma laha swi nga ta kula kona.",
+      "backtranslation": "They work/perform better when sown directly where they will grow.",
+      "reason": "Ku antswa explicitly carries the comparative “better”; loko introduces the unchanged direct-sowing condition. This remains general performance rather than “grow better.”",
+      "uncertainty": "Low semantic/source risk on this bounded wording; Xitsonga fluency remains unapproved.",
+      "preserved": [
+        "Direct-sowing condition remains unchanged.",
+        "Crop names/list, order, and group-membership sentence remain unchanged.",
+        "No growth-only claim is introduced."
+      ]
+    },
+    {
+      "id": "VS-TS-DIRECT-SOW-PAIRED",
+      "language": "ts",
+      "verdict": "ACCEPT",
+      "sourceEnglish": "They do better sown straight where they’ll grow.",
+      "binding": {
+        "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "lessonOrSlide": "slide 6",
+        "field": "target.body[0], segments 1 and 2",
+        "currentComposition": "They do better loko swi byariwa hi ku kongoma laha swi nga ta kula kona.",
+        "packetComposition": "Swi tirha ku antswa loko swi byariwa hi ku kongoma laha swi nga ta kula kona."
+      },
+      "checkedComposition": "Swi tirha ku antswa loko swi byariwa hi ku kongoma laha swi nga ta kula kona.",
+      "backtranslation": "They work/perform better when sown directly where they will grow.",
+      "reason": "Ku antswa explicitly carries the comparative “better”; loko introduces the unchanged direct-sowing condition. This remains general performance rather than “grow better.”",
+      "uncertainty": "Low semantic/source risk on this bounded wording; Xitsonga fluency remains unapproved.",
+      "preserved": [
+        "Direct-sowing condition remains unchanged.",
+        "Crop names/list, order, and group-membership sentence remain unchanged.",
+        "No growth-only claim is introduced."
+      ]
+    },
+    {
+      "id": "MC-TS-DIRECT-SELLING-LEARNER",
+      "language": "ts",
+      "verdict": "ACCEPT",
+      "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "binding": {
+        "file": "lib/course-translation-drafts-ts-market-community.ts",
+        "lessonOrSlide": "market-community-l2",
+        "field": "body, direct-selling sentence",
+        "currentComposition": "Ku xavisa hi ku kongoma swi nga retain more of the sale price, kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi.",
+        "checkedComposition": "Ku xavisa hi ku kongoma swi nga hlayisa swo tala swa nxavo wo xavisa, kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi."
+      },
+      "checkedReplacement": "hlayisa swo tala swa nxavo wo xavisa",
+      "backtranslation": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "reason": "The proposed wording matches an existing Xitsonga paired draft for the same source sentence and carries the “can retain more of the selling price” relation. “Swi nga” preserves can; the exact learner suffix keeps the time, packing, transport, and customer-care tradeoff.",
+      "crossCheck": {
+        "file": "docs/narration/market-community.ts.paired-draft.json",
+        "lessonOrSlide": "slide 11",
+        "field": "target.body[0]",
+        "existingSource": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+        "existingTarget": "Ku xavisa hi ku kongoma ku nga hlayisa swo tala swa nxavo wo xavisa, kambe swi teka nkarhi, ku paka, swo famba ni ku khathalela vaxavi.",
+        "scope": "Same whole sentence; shared predicate exactly “hlayisa swo tala swa nxavo wo xavisa.” Learner’s current localized tradeoff suffix is kept as-is, not replaced by the paired variant."
+      },
+      "uncertainty": "Low semantic risk due exact same-source paired corroboration; Xitsonga fluency is not approved.",
+      "preserved": [
+        "Can/modal retained.",
+        "More of the sale price retained.",
+        "Time, packing, transport, customer care retained in current learner suffix.",
+        "No guaranteed return or new quantity introduced."
+      ]
+    }
+  ],
+  "auditNotes": [
+    "The Xitsonga comparative and market clause are source-aligned at the exact composition boundaries checked.",
+    "The Sesotho repair restores a comparative, but the attached unchanged `ha` condition makes `ho feta ha` risky as a composition; `hamolemo ha` is the safer source-bound semantic proposal pending fluent review.",
+    "No crop name, list item, modal, or adjacent condition was changed."
+  ]
+}

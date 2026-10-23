@@ -1,0 +1,127 @@
+{
+  "title": "Vegetables & Staple Crops ordinary body clauses: final source-bound implementation record",
+  "date": "2026-10-04",
+  "baseHead": "beec49d41db081017a83acbe641a56e025530bb1",
+  "state": "Unreviewed machine drafts for facilitator feedback; this record does not imply fluent approval.",
+  "authorization": "User authorized translating ordinary prose, retaining difficult technical English, and publishing visibly unreviewed paired drafts for facilitator feedback; canonical English remains unchanged.",
+  "counts": {
+    "paragraphs": 9,
+    "languageParagraphs": {
+      "TS": 7,
+      "ST": 1,
+      "VE": 1
+    },
+    "languageClauses": 10,
+    "excludedRows": [
+      "TS vegetables-staples-l4 paragraph 4: exact yellow-leaf diagnostic retained",
+      "VE vegetables-staples-l4 paragraph 6: exact observation checklist retained"
+    ]
+  },
+  "files": {
+    "lib/course-modules.ts": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+    "lib/course-translation-drafts-st-vegetables-staples.ts": "c5be563cbefe33b70554dd3da99c8cdf71932bd947a88f2b34dfc6a59b043b6c",
+    "lib/course-translation-drafts-ve-vegetables-staples.ts": "1c55c7bec9d0191b0b80ced62de8264a1aa6f7ce7ae2efd0aee43515269cd5b6",
+    "lib/course-translation-drafts-ts-vegetables-staples.ts": "1582dc6fd1441fe7a94853f8262406aaeb8e01bd4257925bec4555b541b3d68c",
+    "lib/course-translation-drafts-ts-vegetables-staples-l2.ts": "5094ffa78b76c461f71e2f3d07cebec99853148665e8a78e7b81f4c0608cec95"
+  },
+  "rows": [
+    {
+      "language": "TS",
+      "lessonId": "vegetables-staples-l1",
+      "paragraphIndexZeroBased": 3,
+      "sourceParagraph": "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.",
+      "targetParagraph": "Sweswi ehleketa hi mabedhe ya wena. Xana u nga swi kota ku fika exikarhini handle ko kandziya endzeni? Famba u ya ringeta leswi u nga si byala swin'wana.",
+      "reviewStatus": "machine-draft",
+      "bodySourceEnglishMatchesCanonical": true
+    },
+    {
+      "language": "TS",
+      "lessonId": "vegetables-staples-l1",
+      "paragraphIndexZeroBased": 13,
+      "sourceParagraph": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "targetParagraph": "Landzelela spacing guidance for the crop, variety and local conditions. Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula.",
+      "reviewStatus": "machine-draft",
+      "bodySourceEnglishMatchesCanonical": true
+    },
+    {
+      "language": "TS",
+      "lessonId": "vegetables-staples-l2",
+      "paragraphIndexZeroBased": 11,
+      "sourceParagraph": "Intercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.",
+      "targetParagraph": "Intercropping a hi crowding ntsena ka swibyariwa swo hambana endhawini yin’we. Xibyariwa xin'wana ni xin'wana xi lava role ya xona, ni space leyi eneleke ku yi endla.",
+      "reviewStatus": "machine-draft",
+      "bodySourceEnglishMatchesCanonical": true
+    },
+    {
+      "language": "TS",
+      "lessonId": "vegetables-staples-l2",
+      "paragraphIndexZeroBased": 13,
+      "sourceParagraph": "Maize gives height and structure.",
+      "targetParagraph": "Maize yi nyika ku leha ni structure.",
+      "reviewStatus": "machine-draft",
+      "bodySourceEnglishMatchesCanonical": true
+    },
+    {
+      "language": "TS",
+      "lessonId": "vegetables-staples-l2",
+      "paragraphIndexZeroBased": 17,
+      "sourceParagraph": "The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "targetParagraph": "Swibyariwa swi nga ha phikizana. Nyika swibyariwa suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "reviewStatus": "machine-draft",
+      "bodySourceEnglishMatchesCanonical": true
+    },
+    {
+      "language": "TS",
+      "lessonId": "vegetables-staples-l2",
+      "paragraphIndexZeroBased": 21,
+      "sourceParagraph": "Write them down. Then choose the crop and the sowing date that puts food into that gap.",
+      "targetParagraph": "Ti tsale ehansi. Kutani hlawula xibyariwa ni siku ro byala leri nga tisa swakudya eka nkarhi wolowo.",
+      "reviewStatus": "machine-draft",
+      "bodySourceEnglishMatchesCanonical": true
+    },
+    {
+      "language": "ST",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndexZeroBased": 9,
+      "sourceParagraph": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "targetParagraph": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong.",
+      "reviewStatus": "machine-draft",
+      "bodySourceEnglishMatchesCanonical": true
+    },
+    {
+      "language": "VE",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndexZeroBased": 9,
+      "sourceParagraph": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "targetParagraph": "Tsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo.",
+      "reviewStatus": "machine-draft",
+      "bodySourceEnglishMatchesCanonical": true
+    },
+    {
+      "language": "TS",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndexZeroBased": 9,
+      "sourceParagraph": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "targetParagraph": "Vumune. Hi kona ntsena u tekaka goza — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Kambela leswaku goza ri fambisana ni xiphiqo, and monitor the result.",
+      "reviewStatus": "machine-draft",
+      "bodySourceEnglishMatchesCanonical": true
+    }
+  ],
+  "reviewNotes": {
+    "technicalEnglishRetained": [
+      "crowding",
+      "Intercropping",
+      "structure",
+      "suitable space, water and light",
+      "and monitor the result"
+    ],
+    "safetyAndConditionPreservation": [
+      "reachability asks about stepping inside",
+      "nitrogen does not immediately feed maize; residue nutrients are released during decomposition",
+      "pest response order, only-then, lightest effective action and may-help qualifiers remain in their source-bound paragraph"
+    ],
+    "lexicalEvidence": [
+      "Root reports DBE indexed usage of ku kandziya ehansi hi milenge (2024 paper) and ku kandziya in a DBE 2019 wordlist with step-in-mud feet context; this supports the stepping verb only, not full-sentence fluent approval."
+    ]
+  }
+}

@@ -211,7 +211,7 @@ export default function ExchangeBoard() {
         style={{ background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.28)', padding: '10px 12px' }}
       >
         <CircleAlert size={14} strokeWidth={2} style={{ color: EX.amber, marginTop: 1, flexShrink: 0 }} />
-        <p className="font-sans" style={{ fontSize: 11.5, color: EX.amberText, lineHeight: 1.5, margin: 0 }}>
+        <p className="font-sans" style={{ fontSize: 12, color: EX.amberText, lineHeight: 1.5, margin: 0 }}>
           {zu ? <ExchangeSourceCopy en={`${DEMO_EXCHANGE.notice} Anything you post is saved on this device only.`} zu="Lo mbukiso ubonisa izikhangiso ezivela kunethiwekhi yabalimi. Lezi zikhangiso azithengiswa lapha. Okufakayo kugcinwa kule divayisi kuphela." /> : <>{DEMO_EXCHANGE.notice} Anything you post is saved on this device only.</>}
         </p>
       </div>
@@ -242,12 +242,12 @@ export default function ExchangeBoard() {
               onChange={(e) => setQuery(e.target.value)}
               placeholder={tx('Search crop, town or farmer', 'Funa isitshalo, idolobha noma umlimi')}
               aria-label={tx('Search listings', 'Funa izikhangiso')}
-              className="rounded-xl font-sans"
+              className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 rounded-xl font-sans"
               style={{
                 width: '100%',
                 padding: '10px 12px 10px 34px',
                 fontSize: 13.5,
-                background: '#fff',
+                background: 'var(--input-bg)',
                 border: `1px solid ${EX.inputBorder}`,
                 color: EX.ink,
                 outline: 'none',
@@ -261,8 +261,8 @@ export default function ExchangeBoard() {
           style={{
             flex: simple ? 1 : undefined,
             justifyContent: simple ? 'center' : undefined,
-            background: showForm ? 'transparent' : EX.green,
-            color: showForm ? EX.muted : '#F7F2E9',
+            background: showForm ? 'transparent' : EX.fill,
+            color: showForm ? EX.muted : 'var(--on-forest)',
             border: showForm ? `1px solid ${EX.inputBorder}` : 'none',
             cursor: 'pointer',
             padding: '10px 14px',
@@ -298,8 +298,8 @@ export default function ExchangeBoard() {
               borderRadius: 10,
               fontSize: 12.5,
               cursor: 'pointer',
-              background: kind === value ? EX.ink : 'rgba(255,254,250,0.7)',
-              color: kind === value ? '#F7F2E9' : EX.muted,
+              background: kind === value ? EX.fillInk : EX.chip,
+              color: kind === value ? 'var(--on-forest)' : EX.muted,
               border: `1px solid ${kind === value ? EX.ink : EX.border}`,
             }}
           >
@@ -359,7 +359,7 @@ export default function ExchangeBoard() {
             onChange={(e) => setSort(e.target.value as ListingSort)}
             aria-label={tx('Sort listings', 'Hlela izikhangiso')}
             className="rounded-lg px-2 py-1.5 font-sans font-semibold"
-            style={{ fontSize: 12.5, background: '#fff', border: `1px solid ${EX.inputBorder}`, color: EX.ink }}
+            style={{ fontSize: 12.5, background: 'var(--input-bg)', border: `1px solid ${EX.inputBorder}`, color: EX.ink }}
           >
             {(Object.keys(SORT_LABEL) as ListingSort[]).map((s) => (
               <option key={s} value={s}>{tx(SORT_LABEL[s], ({ newest: 'Ezintsha kuqala', nearest: 'Eziseduze kuqala', price_low: 'Intengo ephansi kuqala', price_high: 'Intengo ephezulu kuqala', crop: 'Ngesitshalo', quantity: 'Inani elikhulu kuqala' } as const)[s])}</option>
@@ -372,7 +372,7 @@ export default function ExchangeBoard() {
             onChange={(e) => setViewpointId(e.target.value)}
             aria-label={tx('Where you are viewing from', 'Indawo engibuka ngikuyo')}
             className="rounded-lg px-2 py-1.5 font-sans font-semibold"
-            style={{ fontSize: 12.5, background: '#fff', border: `1px solid ${EX.inputBorder}`, color: EX.ink }}
+            style={{ fontSize: 12.5, background: 'var(--input-bg)', border: `1px solid ${EX.inputBorder}`, color: EX.ink }}
           >
             <option value="none">{tx('nowhere in particular', 'Akukho ndawo ethile')}</option>
             {viewpoints.map((v) => <option key={v.id} value={v.id}>{v.label}</option>)}
@@ -384,7 +384,7 @@ export default function ExchangeBoard() {
               onChange={(e) => setWithinKm(e.target.value)}
               aria-label={tx('Distance limit', 'Umkhawulo webanga')}
               className="rounded-lg px-2 py-1.5 font-sans font-semibold"
-              style={{ fontSize: 12.5, background: '#fff', border: `1px solid ${EX.inputBorder}`, color: EX.ink }}
+              style={{ fontSize: 12.5, background: 'var(--input-bg)', border: `1px solid ${EX.inputBorder}`, color: EX.ink }}
             >
               {WITHIN_OPTIONS.map((o) => <option key={o.value} value={o.value}>{tx(o.label, o.value === '' ? 'Noma yiliphi ibanga' : `Phakathi kuka-${o.value} km`)}</option>)}
             </select>
@@ -397,7 +397,7 @@ export default function ExchangeBoard() {
         {!origin && (
           <p
             className="font-sans"
-            style={{ fontSize: 11.5, color: sort === 'nearest' ? EX.amberText : EX.faint, margin: 0, lineHeight: 1.45 }}
+            style={{ fontSize: 12, color: sort === 'nearest' ? EX.amberText : EX.faint, margin: 0, lineHeight: 1.45 }}
           >
             {sort === 'nearest'
               ? tx('Sorting by distance needs a starting point — choose a town above, or save your site on the map.', 'Ukuhlela ngebanga kudinga indawo yokuqala — khetha idolobha ngenhla noma ugcine indawo yakho kumephu.')
@@ -472,11 +472,11 @@ export default function ExchangeBoard() {
           {rows.some((row) => !isLocalListing(row.listing)) && (
             <div
               className="flex items-start gap-2 rounded-lg"
-              style={{ background: 'rgba(226,216,196,0.4)', padding: '8px 10px' }}
+              style={{ background: 'var(--bg-2)', padding: '8px 10px' }}
             >
-              <Info size={12} strokeWidth={1.9} style={{ color: EX.faint, marginTop: 1.5, flexShrink: 0 }} />
-              <span className="font-sans" style={{ fontSize: 11.5, color: EX.faint, lineHeight: 1.45 }}>
-                {zu ? <ExchangeSourceCopy en="No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your facilitator or group — or use Share to hand a listing on yourself." zu="Okwamanje alikho ithuluzi lokuxhumana nomunye umlimi ngalolu hlelo lokusebenza. Bhala igama nendawo ekhadini bese uhlela ngokusebenzisa umsizi wakho noma iqembu — noma usebenzise u-Yabelana ukudlulisela isikhangiso wena." /> : 'No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your facilitator or group — or use Share to hand a listing on yourself.'}
+              <Info size={12} strokeWidth={1.9} style={{ color: EX.muted, marginTop: 1.5, flexShrink: 0 }} />
+              <span className="font-sans" style={{ fontSize: 12, color: EX.muted, lineHeight: 1.45 }}>
+                {zu ? <ExchangeSourceCopy en="No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your mentor or group — or use Share to hand a listing on yourself." zu="Okwamanje alikho ithuluzi lokuxhumana nomunye umlimi ngalolu hlelo lokusebenza. Bhala igama nendawo ekhadini bese uhlela ngokusebenzisa umholi wakho noma iqembu — noma usebenzise u-Yabelana ukudlulisela isikhangiso wena." /> : 'No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your mentor or group — or use Share to hand a listing on yourself.'}
               </span>
             </div>
           )}
@@ -499,7 +499,7 @@ export default function ExchangeBoard() {
       {/* Scope. Stated once, plainly, rather than implied by absence. */}
       <div
         className="rounded-2xl"
-        style={{ background: 'rgba(255,254,250,0.6)', border: `1px dashed ${EX.inputBorder}`, padding: 16 }}
+        style={{ background: EX.chip, border: `1px dashed ${EX.inputBorder}`, padding: 16 }}
       >
         <div className="flex items-center gap-2" style={{ marginBottom: 8 }}>
           <Info size={14} strokeWidth={1.9} style={{ color: EX.faint }} />
@@ -518,6 +518,11 @@ export default function ExchangeBoard() {
           <li><strong style={{ fontWeight: 600 }}>{tx('Locations are approximate.', 'Izindawo zilinganiselwe.')}</strong> {zu ? <ExchangeSourceCopy en="Every listing carries a point rounded to about a kilometre — a neighbourhood, never a homestead." zu="Indawo yesikhangiso isondezwa cishe kwikhilomitha elilodwa — ibonisa indawo eseduze, hhayi umuzi ngqo." /> : 'Every listing carries a point rounded to about a kilometre — a neighbourhood, never a homestead.'}</li>
         </ul>
       </div>
+      {/* ux-01/desk-01/staff-03: this board is mounted inside app/exchange/page.tsx's own scroll
+          container (not owned by this track), so it cannot set that page's bottom padding —
+          a trailing spacer sized to the Lima launcher's published clearance keeps the "What this
+          preview does not do" box above from sitting under the FAB on whatever page embeds it. */}
+      <div aria-hidden style={{ height: 'var(--lima-fab-clearance, 0px)' }} />
     </div>
   );
 }
@@ -537,7 +542,7 @@ function ChipRow({ label, children }: { label: string; children: React.ReactNode
     <div>
       <div
         className="font-sans uppercase"
-        style={{ fontSize: 10, letterSpacing: '0.12em', color: EX.faint, marginBottom: 6 }}
+        style={{ fontSize: 12, letterSpacing: '0.12em', color: EX.faint, marginBottom: 6 }}
       >
         {label}
       </div>
@@ -569,8 +574,8 @@ function Chip({
         fontSize: 12,
         cursor: disabled ? 'default' : 'pointer',
         opacity: disabled ? 0.4 : 1,
-        background: on ? EX.green : 'rgba(255,254,250,0.75)',
-        color: on ? '#F7F2E9' : EX.muted,
+        background: on ? EX.fill : EX.chip,
+        color: on ? 'var(--on-forest)' : EX.muted,
         border: `1px solid ${on ? EX.green : EX.border}`,
         whiteSpace: 'nowrap',
       }}

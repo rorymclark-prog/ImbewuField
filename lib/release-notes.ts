@@ -33,15 +33,1990 @@ export interface ReleaseNote {
   sha?: string;
 }
 
-export interface UpdateTourStop {
-  title: string;
-  where: string;
-  detail: string;
-  href: string;
-}
+// perf-02: UpdateTourStop and MAX_TOUR_STOPS now live in lib/release-notes-types.ts (a tiny
+// module with no RELEASE_NOTES value) and are re-exported here so existing imports keep working.
+export type { UpdateTourStop } from './release-notes-types';
+export { MAX_TOUR_STOPS } from './release-notes-types';
+import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 October 2026', sha: '2bddc451', changes: [
+    'Green buttons in Study, the refresher course and chat messages stay readable in dark.',
+    'Grey text on Records and Finances is darker in dark mode; Network chips are clearer.',
+    'Print and source links on the sample plan are bigger to tap; text boxes show focus.',
+    'On a laptop, assessment cards sit three to a row and progress bars stop stretching.',
+  ], tour: [{ title: 'Open the Study area in dark mode',
+    where: 'Menu → Study', href: '/student',
+    detail: 'Start studying and the other green buttons now keep dark text on the light green.',
+  }, { title: 'Open your Records in dark mode',
+    where: 'Menu → Records', href: '/records',
+    detail: 'The small grey totals and empty-list notes are easier to read.',
+  }] },
+  { when: '23 October 2026', sha: 'ed8ed899', changes: [
+    'Study pages and course colours follow dark mode; green buttons stay readable in dark.',
+    'Bigger tap areas on Home, Sign in, Invoice, Contact and the NGO and funder pages.',
+    'Sample pages, the Network map and your site report have clearer small text.',
+    'The last emoji icons are proper icons; survey and journal pages fit a laptop.',
+  ], tour: [{ title: 'Open the Study area in dark mode',
+    where: 'Menu → Study', href: '/student',
+    detail: 'Course colours, cards and diagrams now follow dark mode.',
+  }, { title: 'Open the Network map',
+    where: 'Menu → Network', href: '/network',
+    detail: 'Labels and small text on the map and its list are easier to read.',
+  }] },
+  { when: '22 October 2026', sha: '1fb671ea', changes: [
+    'The printable plan fits a phone; screen readers pause between isiZulu and English.',
+    'Buttons and titles use plain sentence case; Study arrows are icons; staff charts go dark.',
+    'On a laptop, Vision and Example fill the screen and farmer text is never below 12px.',
+    'Sign in, Map, Prices and Account have headings; Prices and Calendar share one header.',
+  ], tour: [{ title: 'Open Prices',
+    where: 'Menu → Prices', href: '/prices',
+    detail: 'Prices now has a heading and the same header as Calendar, and ends at its content.',
+  }, { title: 'Open the Study area',
+    where: 'Menu → Study', href: '/student',
+    detail: 'Arrows on the course buttons are proper icons, and the charts follow dark mode.',
+  }] },
+  { when: '22 October 2026', sha: '7f689e73', changes: [
+    'Resume an unfinished site survey after reopening this browser, or discard its draft.',
+    'Close and keep draft lets you pause. Your report uses answers you explicitly save.',
+  ] },
+  { when: '17 October 2026', sha: '5acf084c', changes: [
+    'Dark mode now reaches the Design studio, invoices, print preview and sample pages.',
+    'Farmer pages share one header and leave room for the Lima button; Home fills a laptop.',
+    'isiZulu: today\'s date, crop names in records and prices, and one language note per page.',
+    'Study and Account open without a flicker; shorter notices; Teach the Teachers in isiZulu.',
+    'Staff dashboards: readable dates, plain words, and tables that fit the screen.',
+  ], tour: [{ title: 'Open the Study area',
+    where: 'Menu → Study', href: '/student',
+    detail: 'One header, the language note under it, and the course cards in your language.',
+  }, { title: 'See your records in isiZulu',
+    where: 'Menu → My Records', href: '/records',
+    detail: 'Crop names and the language note now read in isiZulu when that is your language.',
+  }] },
+  { when: '17 October 2026', sha: '44a7dc08', changes: [
+    'Dark mode now covers staff dashboards, Study, Money book, Exchange, Network and maps.',
+    'On a laptop the pages share one header with your role\'s tabs and use the full width.',
+    'The Lima button and the Tour pill no longer sit on top of buttons or text.',
+    'Account opens in tour mode, and maps show a plain message on phones that cannot draw them.',
+    'One name everywhere: Field journal, Production plan, My Records, Site reports.',
+    'Shorter tab labels, page titles in the browser tab, South African number formats.',
+  ], tour: [{ title: 'Try dark mode on your dashboard',
+    where: 'Account → Appearance', href: '/account',
+    detail: 'In the dark earth theme, Records, Exchange and Network cards, chips and inputs follow it.',
+  }, { title: 'Check the names and tabs',
+    where: 'Home', href: '/home',
+    detail: 'Tiles, menu and page headers share one name per feature; My Records fits on one line.',
+  }] },
+  { when: '14 October 2026', sha: '5ce317a', changes: [
+    'Money book dates and charts show month names in Sesotho, Tshivenda, Xitsonga and isiZulu.',
+    'Sesotho, Tshivenda and Xitsonga month names are unreviewed drafts; invoices stay English.',
+  ], tour: [{ title: 'Read months in your language',
+    where: 'Money book', href: '/records',
+    detail: 'Check dates and the Charts tab; the invoice you print or share still uses English.',
+  }] },
+  { when: '14 October 2026', sha: '0e2688eb', changes: [
+    'Ask, Photos, Profile, Design and Places tabs now follow your language (isiZulu drafts).',
+    'Error messages say what went wrong in plain words, never a bare code like 500.',
+    'Saving offline keeps your note or message instead of losing it or hanging.',
+    'Dark mode fixed on the NGO pages, Lima chat, inputs and cards; buttons easier to tap.',
+    'Pages open faster: chat, maps and charts load only when you open them.',
+  ], tour: [{ title: 'Ask Lima in your language',
+    where: 'Ask tab', href: '/farmer',
+    detail: 'Switch to isiZulu and open Ask: the greeting, suggestions and buttons are translated.',
+  }, { title: 'Try saving offline',
+    where: 'Field journal', href: '/journal',
+    detail: 'If saving fails, the sheet stays open with your note so you can try again.',
+  }] },
+  { when: '13 October 2026', sha: 'a07abc08', changes: [
+    'Study keeps five uncertain offline phrases in exact English.',
+  ], tour: [{ title: 'Read the offline instructions',
+    where: 'Study → Study offline', href: '/student',
+    detail: 'Read the exact English instructions before saving the slides on your phone.',
+  }] },
+  { when: '12 October 2026', sha: 'd9b20cf', changes: [
+    'Money book and Invoice gain 33 more unreviewed Sesotho, Tshivenda and Xitsonga drafts.',
+    'Held rows still show exact English; the Xitsonga device-only photo warning is clearer.',
+  ], tour: [{ title: 'Compare newer drafts',
+    where: 'Money book', href: '/records',
+    detail: 'Read unreviewed wording beside English; rows no one could confirm stay English.',
+  }] },
+  { when: '12 October 2026', sha: '5f80840f', changes: [
+    'Study due-date and draft-status badges wrap inside narrow phone cards.',
+    'The Xitsonga low-space warning keeps its exact English wording.',
+  ], tour: [{ title: 'Read Study dates and status',
+    where: 'Study → assigned modules', href: '/student',
+    detail: 'Long due dates and draft notices stay readable on a narrow phone.',
+  }] },
+  { when: '12 October 2026', sha: '5f068b9b', changes: [
+    'Invoice adds unreviewed Sesotho, Tshivenda and Xitsonga drafts beside exact English.',
+    'The invoice you print or share as PDF stays in English for your buyer.',
+    'Tshivenda line prices no longer run past the edge of the card on narrow phones.',
+  ], tour: [{ title: 'Compare Invoice drafts',
+    where: 'Invoice', href: '/invoice',
+    detail: 'Read unreviewed wording beside English; the invoice your buyer gets stays English.',
+  }] },
+  { when: '12 October 2026', sha: '7f297fb1', changes: [
+    'Study corrects nine unreviewed draft phrases beside exact English.',
+    'Compare revised wording in Introduction, Reading, Water, Market and Small Livestock.',
+    'Saved slide packs refresh five corrected cards.',
+  ], tour: [{ title: 'Compare revised Study drafts',
+    where: 'Study → Introduction, Reading, Water, Market or Small Livestock', href: '/student',
+    detail: 'Read unreviewed wording beside English; regional slides keep optional English narration.',
+  }] },
+  { when: '11 October 2026', sha: 'd974be3a', changes: [
+    'Records → Charts adds unreviewed Sesotho, Tshivenda and Xitsonga drafts beside English.',
+    'Harvest rows no longer cut off the line "Harvested · Sold" on narrow phones.',
+  ], tour: [
+    { title: 'Compare Charts drafts',
+      where: 'Records → Charts',
+      detail: 'Read unreviewed chart wording beside exact English.',
+      href: '/records' },
+  ] },
+  { when: '11 October 2026', sha: '6414556a', changes: [
+    'More Study due dates and unlock messages show unreviewed regional drafts.',
+    'Two isiZulu safety cards pair corrected draft wording with exact English.',
+    'Saved slide packs refresh changed cards and keep other media.',
+  ], tour: [{ title: 'Compare the updated Study drafts',
+    where: 'Study → Introduction, Vegetables or Food Forest', href: '/student',
+    detail: 'Read unreviewed drafts beside English; held isiZulu narration stays silent.',
+  }] },
+  { when: '11 October 2026', sha: '1f7239d2', changes: [
+    'Compare fresh food, kept food and crop growing space in monthly graphs.',
+    'Record monthly kg, eggs and litres; an actual amount replaces its expectation.',
+    'Keep quantities and stock with your farm when switching sites or signing in.',
+    'Check more fruit, nut, indigenous plant and animal references by age and area.',
+    'Fruit, staples, meats and preserved food have matching, distinct pictures.',
+    'Print monthly food, growing space and future plant ages with the same guidance.',
+  ], tour: [{
+    title: 'Explore a complete production example',
+    where: 'Examples → Complete production plan',
+    detail: 'Compare food and space graphs, try made-up quantities, and print the illustrated plan.',
+    href: '/samples/production',
+  }, {
+    title: 'Record production and food in store',
+    where: 'Farm → Production plan',
+    detail: 'Open the food graphs and enter this farm’s monthly amounts in their own units.',
+    href: '/facilitator/crops',
+  }] },
+  { when: '10 October 2026', sha: '810c2537', changes: [
+    'Staple crops have their own monthly rows beside vegetables, fruit and animal foods.',
+    'Fruit, nuts, seeds and animal products use pictures that match the vegetables.',
+    'Young trees and dated crops keep their future harvests and show unknown amounts.',
+    'Animal care figures keep their source conditions, and failed saves stay visible.',
+    'Print a short Calendar & jobs or a separate Future harvest plan with age groups.',
+    'PDF actions say whether the file was downloaded, shared, opened or cancelled.',
+  ], tour: [{
+    title: 'Read your production calendar',
+    where: 'Farm → Production plan',
+    detail: 'Compare vegetable, staple, fruit and animal rows, then open a month for details.',
+    href: '/facilitator/crops',
+  }, {
+    title: 'Print your plan',
+    where: 'Production plan → Share or print',
+    detail: 'Choose a short calendar, a full plan or future harvests with plant ages.',
+    href: '/facilitator/crops',
+  }] },
+  { when: '10 October 2026', sha: '142a5988', changes: [
+    'Site report climate and rainfall words now follow your language as they are translated.',
+    'Buttons and text on dark green look the same in every colour theme.',
+  ], tour: [{
+    title: 'Read your site report',
+    where: 'Farm → Site report',
+    detail: 'The climate and rainfall notes at the bottom of the report now switch with your language.',
+    href: '/farmer',
+  }, {
+    title: 'Try a colour theme',
+    where: 'Home → Settings',
+    detail: 'Light text on the green buttons now changes with the theme instead of staying fixed.',
+    href: '/home',
+  }] },
+  { when: '9 October 2026', sha: '4da5c22d', changes: [
+    'Your monthly AI allowance is now R18, shown in rand on your Account page.',
+    'Visitors who are not signed in get R1 of AI a day before being asked to sign in.',
+  ], tour: [{
+    title: 'See your AI allowance',
+    where: 'Account → AI this month',
+    detail: 'Shows how many rand of AI are left and when it refills.',
+    href: '/account',
+  }, {
+    title: 'Use AI as normal',
+    where: 'Home',
+    detail: 'When the allowance runs out, AI keeps working on a simpler model until the 1st.',
+    href: '/home',
+  }] },
+  { when: '8 October 2026', sha: '3d86afb9', changes: [
+    'Reading cards have unreviewed Sesotho, Tshivenda and Xitsonga headings.',
+    'Sesotho pest guidance pairs its revised draft wording with exact English.',
+    'Saved slide packs refresh those four cards and keep other media.',
+  ], tour: [{
+    title: 'Read the updated Study drafts',
+    where: 'Study → Reading Landscape / Vegetables',
+    detail: 'Compare the unreviewed headings and pest guidance with exact English.',
+    href: '/student',
+  }] },
+  { when: '8 October 2026', sha: '24276363', changes: [
+    'More Study readiness and saved-pack messages show unreviewed Tshivenda drafts.',
+    'The Sesotho land-reading lesson keeps the observation phrase beside English.',
+  ], tour: [{ title: 'Check the remaining Study drafts', where: 'Study', href: '/student',
+    detail: 'Read Tshivenda messages and the Sesotho observation with its English source.',
+  }] },
+  { when: '8 October 2026', sha: 'c782a81a', changes: [
+    'Ten silent Sesotho Introduction cards show fuller unreviewed drafts beside English.',
+    'Saved slide packs refresh those ten cards and keep other course media.',
+  ], tour: [{ title: 'Read the fuller Sesotho Introduction drafts',
+    where: 'Study → Introduction → Sesotho → View slides',
+    detail: 'Compare the draft with exact English; narration remains optional.',
+    href: '/student',
+  }] },
+  { when: '8 October 2026', sha: '8b30c345', changes: [
+    'More Study buttons show unreviewed Sesotho, Tshivenda and Xitsonga drafts.',
+    'The Tshivenda download choice clearly names optional English narration.',
+    'Study labels fit inside the card on small screens.',
+  ], tour: [{
+    title: 'Study language drafts', where: 'Study', href: '/student',
+    detail: 'Check the draft notice, completion buttons and optional English download.',
+  }] },
+  { when: '7 October 2026', sha: 'ac2e1c8d', changes: [
+    'Study buttons show unreviewed Sesotho, Tshivenda and Xitsonga drafts.',
+    'Silent slide entries say View slides and explain the optional English voice.',
+  ], tour: [{ title: 'Try the translated Study controls',
+    where: 'Study → Sesotho, Tshivenda or Xitsonga → open a lesson',
+    detail: 'Read draft buttons and silent-slide instructions beside the English source.',
+    href: '/student',
+  }] },
+  { when: '7 October 2026', sha: '89fc5b6f', changes: [
+    'Vegetable drafts translate water limits and increasing bed-work difficulty.',
+    'Four silent Study cards match the reviewed learner wording beside English.',
+    'The Xitsonga succession picture describes the continuing crop and new sowing.',
+  ], tour: [{ title: 'Read the fuller vegetable drafts',
+    where: 'Study → Vegetables or Introduction → Tshivenda or Xitsonga',
+    detail: 'Compare unreviewed drafts with exact English; regional cards stay silent.',
+    href: '/student',
+  }] },
+  { when: '7 October 2026', sha: 'b099cb1d', changes: [
+    'Five silent Study cards show fuller water, wind and direct-sowing drafts.',
+    'Sesotho and Xitsonga vegetable lessons keep the full performance comparison.',
+    'The Xitsonga Market lesson translates the sale-price comparison beside English.',
+  ], tour: [{ title: 'Read the fuller Study drafts',
+    where: 'Study → Reading, Vegetables or Market → Sesotho, Tshivenda or Xitsonga',
+    detail: 'Compare unreviewed wording with exact English; regional cards stay silent.',
+    href: '/student',
+  }] },
+  { when: '7 October 2026', sha: '400ede45', changes: [
+    'Five silent Study cards show checked ordinary drafts beside exact English.',
+    'Sesotho frost wording describes ice forming on a cold surface.',
+    'Tshivenda Market feedback keeps distance as one cost factor.',
+  ], tour: [{ title: 'Read the Study wording drafts',
+    where: 'Study → Reading, Vegetables or Market → Sesotho, Tshivenda or Xitsonga',
+    detail: 'Compare the unreviewed wording with English; regional cards stay silent.',
+    href: '/student',
+  }] },
+  { when: '7 October 2026', sha: 'cee6b5b8', changes: [
+    'Tshivenda Reading drafts clarify keeping sensitive plants away from frost pockets.',
+    'Two silent cards show the frost caution beside exact English.',
+  ], tour: [{ title: 'Read the frost placement drafts',
+    where: 'Study → Reading → Tshivenda → Sun, shade and frost',
+    detail: 'Compare unreviewed wording with English; no hillside guarantees frost freedom.',
+    href: '/student',
+  }] },
+  { when: '7 October 2026', sha: 'e2151df7', changes: [
+    'Reading map drafts distinguish a perfect sketch from a pretty one.',
+    'The Xitsonga map draft keeps actually using a sketch beside exact English.',
+  ], tour: [{ title: 'Read the map wording drafts',
+    where: 'Study → Reading → Sesotho, Tshivenda or Xitsonga → Making a Simple Site Map',
+    detail: 'Compare the unreviewed sketch-value paragraph with its exact English source.',
+    href: '/student',
+  }] },
+  { when: '7 October 2026', sha: '70b570b9', changes: [
+    'Reading drafts clarify frost-season observation and longest or most comparisons.',
+    'A corrected silent isiZulu frost card replaces its older narration beside English.',
+  ], tour: [
+    { title: 'Read the checked wording drafts',
+      where: 'Study → Reading → isiZulu, Tshivenda or Xitsonga',
+      detail: 'Compare unreviewed wording with English and open the silent frost card.',
+      href: '/student' },
+  ] },
+  { when: '7 October 2026', sha: '9d984d54', changes: [
+    'isiZulu Reading quiz drafts clarify young plants and hours of sunlight.',
+    'Tshivenda Introduction image text keeps design and waste-loop terms in English.',
+  ], tour: [
+    { title: 'Read Study wording drafts',
+      where: 'Study → Reading in isiZulu or Introduction in Tshivenda',
+      detail: 'Compare the unreviewed wording with its exact English source.',
+      href: '/student' },
+  ] },
+  { when: '7 October 2026', sha: 'd69134eb', changes: [
+    'Introduction adds fair-sharing drafts in isiZulu and Xitsonga beside exact English.',
+    'Four silent cards use the new wording; affected old isiZulu narration stays off.',
+  ], tour: [
+    { title: 'Read fair-sharing drafts',
+      where: 'Study → Introduction → isiZulu or Xitsonga',
+      detail: 'Compare unreviewed wording with English, or save the silent slide pack.',
+      href: '/student' },
+  ] },
+  { when: '7 October 2026', sha: '5b0caae5', changes: [
+    '10 silent Tshivenda and Xitsonga cards add fuller drafts beside exact English.',
+    'Saved slides refresh these cards while keeping recordings and other lessons.',
+  ], tour: [
+    { title: 'Read fuller regional cards',
+      where: 'Study → Reading, Vegetables or Market → Tshivenda or Xitsonga',
+      detail: 'Compare unreviewed drafts with English, or save the silent slides.',
+      href: '/student' },
+  ] },
+  { when: '7 October 2026', sha: '3ff76610', changes: [
+    '15 silent Tshivenda Study cards add fuller drafts beside exact English.',
+    'Saved slide packs refresh these cards while keeping narration and other lessons.',
+  ], tour: [
+    { title: 'Read fuller Tshivenda cards',
+      where: 'Study → Introduction, Reading, Vegetables or Market → Tshivenda',
+      detail: 'Compare unreviewed wording with English, or save the silent slides.',
+      href: '/student' },
+  ] },
+  { when: '7 October 2026', sha: '41c5323b', changes: [
+    '69 silent Study cards add fuller regional drafts beside exact English.',
+    'Saved slide packs refresh those cards while keeping narration and other lessons.',
+  ], tour: [
+    { title: 'Read fuller silent Study cards',
+      where: 'Study → Introduction, Reading, Vegetables or Market',
+      detail: 'Compare unreviewed regional wording with English, or save the slides-only pack.',
+      href: '/student' },
+  ] },
+  { when: '6 October 2026', sha: '5f410753', changes: [
+    '36 silent regional slides add fuller drafts beside exact English.',
+    'Vegetables lessons add clearer unreviewed regional drafts.',
+  ], tour: [
+    { title: 'Read fuller regional drafts',
+      where: 'Study → Introduction, Reading, Vegetables, Market or Water',
+      detail: 'Compare unreviewed regional drafts with English, or save the silent slides.',
+      href: '/student' },
+  ] },
+  { when: '6 October 2026', sha: '59fba04', changes: [
+    'Records add unreviewed Sesotho, Tshivenda and Xitsonga drafts beside English.',
+    'Save sale & invoice now says "& invoice" in isiZulu and Sesotho.',
+  ], tour: [
+    { title: 'Compare money-book drafts',
+      where: 'Records → Sold or Spent',
+      detail: 'Add a sale or cost and read the unreviewed wording beside exact English.',
+      href: '/records' },
+  ] },
+  { when: '6 October 2026', sha: 'b06536d2', changes: [
+    'Reading, Vegetables and Market add fuller unreviewed regional lesson drafts.',
+    '13 silent Vegetables and Market slides match the fuller lesson drafts.',
+  ], tour: [
+    { title: 'Compare fuller regional drafts',
+      where: 'Study → Reading, Vegetables or Market',
+      detail: 'Read unreviewed regional wording beside exact English, with silent slides.',
+      href: '/student' },
+  ] },
+  { when: '6 October 2026', sha: 'f6dff3fb', changes: [
+    'Silent draft decks show English narration as an optional choice.',
+    'Paired slide images stay visible beside their source text when enlarged.',
+  ] },
+  { when: '6 October 2026', sha: '08a62a3f', changes: [
+    'Sesotho Introduction has 22 silent draft slides beside exact English.',
+    'Choose English narration separately, or save the slides-only pack.',
+  ], tour: [
+    { title: 'Read the Sesotho Introduction',
+      where: 'Study → Introduction → Sesotho',
+      detail: 'Compare unreviewed drafts with English and choose silent slides or English audio.',
+      href: '/student' },
+  ] },
+  { when: '6 October 2026', sha: '906ec229', changes: [
+    'Soil and Water lessons add regional drafts beside exact English.',
+    '18 silent Soil and Water slides show fuller draft wording.',
+  ], tour: [
+    { title: 'Compare Soil and Water drafts',
+      where: 'Study → Soil Health or Water Harvesting',
+      detail: 'Read unreviewed regional drafts beside English, or save the silent slides.',
+      href: '/student' },
+  ] },
+  { when: '6 October 2026', sha: 'd5e3e92e', changes: [
+    'Tshivenda and Xitsonga Introduction lessons add draft prose beside English.',
+    '36 silent Introduction slides show fuller draft wording and exact English.',
+  ], tour: [
+    { title: 'Compare Introduction drafts',
+      where: 'Study → Introduction',
+      detail: 'Read unreviewed Tshivenda or Xitsonga drafts beside exact English.',
+      href: '/student' },
+  ] },
+  { when: '6 October 2026', sha: 'f5108aa1', changes: [
+    'Vegetables Lesson 1 adds regional drafts beside exact English.',
+    'Five silent Vegetables slides show fuller draft wording.',
+  ], tour: [
+    { title: 'Compare Vegetables Lesson 1',
+      where: 'Study → Vegetables & Staple Crops → Lesson 1',
+      detail: 'Read the unreviewed drafts beside English, or save the silent slides.',
+      href: '/student' },
+  ] },
+  { when: '6 October 2026', sha: '06d069cf', changes: [
+    'Vegetables Lesson 3 adds regional drafts beside exact English.',
+    'Eight silent Vegetables slides show fuller draft wording.',
+  ], tour: [
+    { title: 'Compare Vegetables Lesson 3',
+      where: 'Study → Vegetables & Staple Crops → Lesson 3',
+      detail: 'Read the unreviewed drafts beside English, or save the silent slides.',
+      href: '/student' },
+  ] },
+  { when: '6 October 2026', sha: 'e8eb9841', changes: [
+    'Market lessons and questions add regional drafts beside exact English.',
+    'Eleven silent Market slides show fuller drafts and precise cost wording.',
+    'Sesotho Market questions keep precise English order terms beside draft prose.',
+  ], tour: [
+    { title: 'Compare Market drafts',
+      where: 'Study → Market Gardening & Community',
+      detail: 'Read the unreviewed drafts and English, or save the silent slides.',
+      href: '/student' },
+  ] },
+  { when: '6 October 2026', sha: '52a7a00f', changes: [
+    'Vegetables pest lessons and six silent slides add regional draft wording.',
+    'Vegetables questions keep precise comparisons and show exact English beside drafts.',
+  ], tour: [
+    { title: 'Compare Vegetables drafts',
+      where: 'Study → Vegetables & Staple Crops',
+      detail: 'Read the unreviewed drafts, compare English, or save the silent slides.',
+      href: '/student' },
+  ] },
+  { when: '6 October 2026', sha: 'dd251f0e', changes: [
+    'Tshivenda and Xitsonga Introduction slides add draft wording beside English.',
+    'Sesotho Reading keeps the colder comparison without an added intensity word.',
+  ], tour: [
+    { title: 'Compare Introduction drafts',
+      where: 'Study → Introduction → Slides',
+      detail: 'Read the unreviewed draft and exact English, or save the silent slides.',
+      href: '/student' },
+  ] },
+  { when: '6 October 2026', sha: '7d87fca1', changes: [
+    'Soil lessons and six silent slides add checked regional wording beside English.',
+    'The Xitsonga Soil card now shows its unreviewed title and summary draft.',
+  ], tour: [
+    { title: 'Compare Soil drafts',
+      where: 'Study → Soil Health',
+      detail: 'Read draft lessons, answer feedback and silent slides beside English.',
+      href: '/student' },
+  ] },
+  { when: '6 October 2026', sha: '76769f1a', changes: [
+    'Water lessons add regional prose and answer drafts beside exact English.',
+    'Updated silent Water slides keep technical terms and safety conditions clear.',
+  ], tour: [
+    { title: 'Compare Water drafts',
+      where: 'Study → Water Harvesting',
+      detail: 'Read draft lessons, answer feedback and silent slides beside English.',
+      href: '/student' },
+  ] },
+  { when: '6 October 2026', sha: '9b345bb4', changes: [
+    'Regional staple crop lessons add unreviewed key points and answer drafts.',
+    'Exact English stays beside drafts; uncertain crop and seed terms remain precise.',
+  ], tour: [
+    { title: 'Compare staple crop drafts',
+      where: 'Study → Vegetables → Staple Crops',
+      detail: 'Read regional key points and answer feedback beside exact English.',
+      href: '/student' },
+  ] },
+  { when: '6 October 2026', sha: 'eab3e362', changes: [
+    'Water lesson and slide drafts clarify demand, low stores and when to stop reuse.',
+    'Exact English stays beside unreviewed drafts; selected saved slides refresh once.',
+  ], tour: [
+    { title: 'Review Water lesson and slide drafts',
+      where: 'Study → Water Harvesting → Open lessons or slides',
+      detail: 'Compare regional drafts with English and save the refreshed silent slides.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: 'b3020088', changes: [
+    'Regional lessons start without narration when their own recording is unavailable.',
+    'Choose English source narration to listen, or keep reading silently.',
+  ], tour: [
+    { title: 'Choose a lesson voice',
+      where: 'Study → Soil Health or Market Gardening → Open a lesson',
+      detail: 'Start silently, or choose English source narration before pressing Play.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: 'b22c1f84', changes: [
+    'Soil lessons and silent slides add fuller unreviewed regional drafts.',
+    'Exact English stays visible; uncertain technical terms stay precise.',
+  ], tour: [
+    { title: 'Compare Soil lesson and slide drafts',
+      where: 'Study → Soil Health → Open a lesson or slides',
+      detail: 'Read the draft beside English, or save its slide-only pack.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: 'bffe9a18', changes: [
+    'Market lessons add fuller Sesotho, Tshivenda and Xitsonga unreviewed drafts.',
+    'English sources stay visible; seed rights, income and pricing terms stay precise.',
+  ], tour: [
+    { title: 'Compare Market lesson drafts',
+      where: 'Study → Market Gardening → Open a lesson',
+      detail: 'Read the lesson and answer feedback beside the exact English source.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: '967c77fd', changes: [
+    'Soil and Water slides have fuller regional unreviewed drafts beside exact English.',
+    'Four water construction and sanitation phrases retain precise English wording.',
+  ], tour: [
+    { title: 'Compare Soil and Water slide drafts',
+      where: 'Study → Soil Health or Water Harvesting → Open slides',
+      detail: 'Read the silent draft deck beside English, or save its slide-only pack.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: 'cb3482af', changes: [
+    'Soil and Water silent slides add fuller unreviewed regional drafts beside English.',
+    'Terms such as swale, spillway and mulch stay in English inside the drafts.',
+    'No Sesotho, Tshivenda or Xitsonga narration was added.',
+  ], tour: [
+    { title: 'Review the Soil and Water drafts',
+      where: 'Study → Soil Health and Water Harvesting slides',
+      detail: 'Compare drafts with English and save the refreshed slide-only pack.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: 'cc503f9a', changes: [
+    'Water lessons have fuller Sesotho, Tshivenda and Xitsonga unreviewed drafts.',
+    'Exact English stays beside drafts; difficult water and sanitation terms remain English.',
+  ], tour: [
+    { title: 'Compare Water lesson drafts',
+      where: 'Study → Water Harvesting → Open a lesson',
+      detail: 'Read the draft and answer feedback beside the exact English source.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: '69a51ffa', changes: [
+    'isiZulu slide image zoom now includes the unreviewed draft and exact English.',
+    'Source text stays at reading size while you zoom the image.',
+  ], tour: [
+    { title: 'Read the source beside a slide',
+      where: 'Study → isiZulu slides → View slide image',
+      detail: 'Scroll below the image to compare the draft and exact English.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: '96e45c79', changes: [
+    'Study pictures have 32 unreviewed isiZulu descriptions beside exact English.',
+    'Difficult image terms stay in English for facilitator explanation.',
+  ], tour: [
+    { title: 'Compare picture descriptions',
+      where: 'Study → Open a lesson → Lesson picture',
+      detail: 'Read the isiZulu draft description beside its English source.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: '96d4cf4d', changes: [
+    'Succession lessons have fuller Sesotho, Tshivenda and Xitsonga drafts.',
+    'Exact English stays beside unreviewed drafts and difficult technical terms.',
+    'Six silent cards match the lesson and refresh in saved slide packs.',
+  ], tour: [
+    { title: 'Compare Succession drafts',
+      where: 'Study → Vegetables → Succession Planting and Intercropping',
+      detail: 'Read lesson and answer drafts beside English; compare silent cards 8–10.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: 'c4d5c68c', changes: [
+    'Vegetables pest lessons have fuller Sesotho, Tshivenda and Xitsonga drafts.',
+    'Exact English stays beside unreviewed drafts and difficult treatment terms.',
+    'Six silent cards match the lessons and refresh in saved slide packs.',
+  ], tour: [
+    { title: 'Compare pest lesson drafts',
+      where: 'Study → Vegetables → Pest Management',
+      detail: 'Read lesson and answer drafts beside English; compare silent cards 15–16.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: 'ecf7e73c', changes: [
+    'Vegetables bed lessons have fuller Sesotho, Tshivenda and Xitsonga drafts.',
+    'Silent cards match the lessons; exact English stays beside unreviewed drafts.',
+    'Offline packs refresh twelve changed cards without adding narration.',
+  ], tour: [
+    { title: 'Compare bed preparation drafts',
+      where: 'Study → Vegetables → Bed Preparation',
+      detail: 'Read lesson and answer drafts beside English; compare silent cards 4–7.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: 'b9f8248c', changes: [
+    'Market records have fuller Sesotho, Tshivenda and Xitsonga draft lessons and silent cards.',
+    'Teaching prices stay labelled examples; exact English remains beside unreviewed drafts.',
+    'Offline packs refresh the changed cards without adding narration.',
+  ], tour: [
+    { title: 'Compare Market record drafts',
+      where: 'Study → Market Gardening → Record-Keeping',
+      detail: 'Read lesson and quiz drafts beside English; compare the silent cards.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: 'fb9eb3cc', changes: [
+    'Reading lessons and slides have fuller Sesotho, Tshivenda and Xitsonga draft wording.',
+    'Exact English stays beside unreviewed drafts; difficult technical terms stay in English.',
+    'Offline slide packs refresh the changed cards without adding narration.',
+  ], tour: [
+    { title: 'Compare Reading drafts',
+      where: 'Study → Reading the Landscape',
+      detail: 'Read regional drafts beside English in lessons, answers and silent slides.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: '977b2348', changes: [
+    'Reading Landscape has more regional draft text beside exact English.',
+    'Water and contour phrases that need local review remain in English.',
+    'No Sesotho, Tshivenda or Xitsonga narration was added.',
+  ], tour: [
+    { title: 'Compare Reading Landscape drafts',
+      where: 'Study → Reading the Landscape → Slides 2, 5 and 6',
+      detail: 'Compare draft text with English. Slide 6 keeps adviser and digging guidance.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: '45f4181b', changes: [
+    'Twenty-three isiZulu slides now show corrected unreviewed drafts beside exact English.',
+    'These corrected cards stay silent; you can choose English narration explicitly.',
+    'Offline packs save the corrected cards without adding the withheld recordings.',
+  ], tour: [
+    { title: 'Read corrected isiZulu cards',
+      where: 'Study → isiZulu slides',
+      detail: 'Open Read slide for exact English; revised cards keep the old recordings withheld.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: '9098ba34', changes: [
+    'isiZulu slides now offer exact English beside visibly unreviewed draft wording.',
+    'Slides with wording errors show English and pause their isiZulu recordings.',
+    'Offline packs include the displayed slides without adding English audio automatically.',
+  ], tour: [
+    { title: 'Compare slide wording',
+      where: 'Study → isiZulu slides',
+      detail: 'Open Read slide for English; choose English narration when a recording is withheld.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: 'aa5271b1', changes: [
+    'Study isiZulu drafts now show exact English for lessons, key points and answers.',
+    'Checked sources and terminology repairs keep the same answers and existing audio.',
+  ], tour: [
+    { title: 'Compare the isiZulu drafts',
+      where: 'Study → isiZulu lessons',
+      detail: 'Review unreviewed wording beside English; difficult technical terms stay in English.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: '7b6b5a87', changes: [
+    'Study outcome cards add fuller unreviewed drafts beside exact English.',
+    'Reading and Introduction assessments keep the same correct answers.',
+  ], tour: [
+    { title: 'Review the refreshed Study drafts',
+      where: 'Study → Introduction 1, Reading 1/3 and regional slide cards',
+      detail: 'Compare drafts with English and save the refreshed silent slides.',
+      href: '/student' },
+  ] },
+  { when: '5 October 2026', sha: 'b93c0f56', changes: [
+    'Reading lessons add fuller unreviewed regional drafts beside exact English.',
+    'Four silent cards keep technical English inline for easier reading.',
+  ], tour: [
+    { title: 'Review the Reading drafts',
+      where: 'Study → Reading Landscape lessons 1–4',
+      detail: 'Compare drafts with English and save the refreshed silent slides.',
+      href: '/student' },
+  ] },
+  { when: '4 October 2026', sha: '2343737d', changes: [
+    'Introduction adds unreviewed Xitsonga image descriptions and assessment wording.',
+    'Market answer drafts keep technical terms and the same correct answers.',
+  ], tour: [
+    { title: 'Review the remaining learner drafts',
+      where: 'Study → Introduction 1–3 and Market 1–2',
+      detail: 'Compare each unreviewed draft with English; difficult terms stay in English.',
+      href: '/student' },
+  ] },
+  { when: '4 October 2026', sha: 'e1d7de32', changes: [
+    'Tshivenda and Xitsonga vegetable lessons add fuller unreviewed drafts.',
+    'Eight cards match the lessons; Soil and Market add draft titles and image descriptions.',
+  ], tour: [
+    { title: 'Review the fuller regional drafts',
+      where: 'Study → Vegetables lesson 2, Soil or Market',
+      detail: 'Compare the drafts with English and save the refreshed silent slides.',
+      href: '/student' },
+  ] },
+  { when: '4 October 2026', sha: 'b347c1d9', changes: [
+    'Regional assignment cards add fuller bed-care and mapping exercise drafts.',
+    'Seven silent cards refresh beside English; uncertain terms stay in English.',
+  ], tour: [
+    { title: 'Review the assignment drafts',
+      where: 'Study → Vegetables 17 or Introduction 20–22',
+      detail: 'Compare the unreviewed drafts with English and save the silent slides.',
+      href: '/student' },
+  ] },
+  { when: '4 October 2026', sha: 'be3228bf', changes: [
+    'Vegetables Field Action adds fuller regional steps and observation drafts.',
+    'Three silent cards refresh beside English; difficult terms stay in English.',
+  ], tour: [
+    { title: 'Review the Field Action drafts',
+      where: 'Study → Vegetables → Slide 18',
+      detail: 'Compare the unreviewed steps with English and save the silent slides.',
+      href: '/student' },
+  ] },
+  { when: '4 October 2026', sha: '08fbf216', changes: [
+    'Regional slides add clearer record lists, integration nouns and map-use drafts.',
+    'Eight silent cards refresh beside English; uncertain terms stay in English.',
+  ], tour: [
+    { title: 'Review the refreshed draft cards',
+      where: 'Study → Vegetables 18, Introduction 14 or Reading 18–19',
+      detail: 'Compare the unreviewed draft with English and save the silent slides.',
+      href: '/student' },
+  ] },
+  { when: '4 October 2026', sha: 'bb45fac9', changes: [
+    'Reading slides add fuller regional soil, wind and field-observation drafts.',
+    'Nine silent cards refresh beside English; uncertain site terms stay in English.',
+  ], tour: [
+    { title: 'Review the observation drafts',
+      where: 'Study → Reading the Landscape → Slides 18–20',
+      detail: 'Compare the unreviewed regional text with English and save the silent slides.',
+      href: '/student' },
+  ] },
+  { when: '4 October 2026', sha: '54b7a1a8', changes: [
+    'Site-map slides add fuller regional drafts beside the exact English source.',
+    'Three Sesotho cards use local spelling; six saved slides refresh without narration.',
+  ], tour: [
+    { title: 'Review the site-map slide drafts',
+      where: 'Study → Reading the Landscape → Slide 16',
+      detail: 'Compare the unreviewed draft with English and save the refreshed silent slides.',
+      href: '/student' },
+  ] },
+  { when: '4 October 2026', sha: '742084d6', changes: [
+    'Regional Study cards show paired draft text instead of covering it with film posters.',
+    'English and isiZulu films stay available; silent regional packs keep their slides.',
+  ], tour: [
+    { title: 'Read the regional paired slides',
+      where: 'Study → Reading, Soil, Vegetables, Food Forest or Plant Guilds → Slides',
+      detail: 'Open the source-paired card and compare the unreviewed draft with English.',
+      href: '/student' },
+  ] },
+  { when: '4 October 2026', sha: '36173657', changes: [
+    'Record plant ages and see future harvest beside your vegetables.',
+    'Printed plans show clearer season bands and production as plants grow.',
+    'Young plants stay out of early picking references when ages are recorded.',
+  ], tour: [
+    { title: 'Plan production as plants grow',
+      where: 'Production plan → Plant ages & future harvest',
+      detail: 'Add planting dates and locally checked yields, then compare the next ten years and download the plan.',
+      href: '/facilitator/crops' },
+  ] },
+  { when: '4 October 2026', sha: '7f357eee', changes: [
+    'Seven Market slides reuse checked regional lesson drafts beside English.',
+    'Reading lessons add regional wording for assessment before digging.',
+    'Regional seed-sharing slides show the paired text instead of a film poster.',
+  ], tour: [
+    { title: 'Review the regional Market slides',
+      where: 'Study → Market Gardening → Slides 8, 15 and 18',
+      detail: 'Compare unreviewed drafts with English and save the refreshed silent slides.',
+      href: '/student' },
+  ] },
+  { when: '4 October 2026', sha: 'bdf97c28', changes: [
+    'Printed calendar labels separate local fruit dates from vegetable planning dates.',
+  ] },
+  { when: '4 October 2026', sha: 'b12b7cd1', changes: [
+    'Fruit, nuts and berries show outlined planning seasons where sources support them.',
+    'Printed plans use fruit pictures and explain the sources behind the marked months.',
+    'Your confirmed picking months replace the references and count in food totals.',
+  ], tour: [
+    { title: 'See your production seasons',
+      where: 'Production plan → Fruit, nuts & berries',
+      detail: 'Tap an outlined season to read its assumption, then download the plan to see the same months on paper.',
+      href: '/facilitator/crops' },
+  ] },
+  { when: '4 October 2026', sha: '8272b3b9', changes: [
+    'Production plans show individual fruit, indigenous foods and animal product guidance.',
+    'Month bars label the assumed variety; site reports explain what stock to buy.',
+    'Banana circles count as three bananas in the same product row.',
+  ], tour: [
+    { title: 'Check your production choices',
+      where: 'Production plan → Farm conditions and product guidance',
+      detail: 'Read the variety assumption, open care and buying advice, and download the printed plan.',
+      href: '/facilitator/crops' },
+  ] },
+  { when: '4 October 2026', sha: 'fb9cbb01', changes: [
+    'Vegetables and Market lessons add fuller regional drafts beside English.',
+    'Eight silent slides match the lesson text; Study headings show more regional wording.',
+  ], tour: [
+    { title: 'Compare the regional Study drafts',
+      where: 'Study → Vegetables or Market Gardening → Lessons and Slides',
+      detail: 'Read unreviewed drafts beside English and save the silent Vegetables slides.',
+      href: '/student' },
+  ] },
+  { when: '4 October 2026', sha: '34f4d0d3', changes: [
+    'Introduction slides add fuller Tshivenda and Xitsonga drafts beside English.',
+    'Difficult clauses stay in English; the regional decks remain silent for review.',
+  ], tour: [
+    { title: 'Review the regional Introduction slides',
+      where: 'Study → Introduction to Permaculture → Slides',
+      detail: 'Compare unreviewed drafts with English and save slides without narration.',
+      href: '/student' },
+  ] },
+  { when: '4 October 2026', sha: '68626572', changes: [
+    'Reading Landscape slides 8, 10, 15 and 21 show fuller regional drafts beside English.',
+    'Frost limits, disease cautions and observation times remain visible for review.',
+  ], tour: [
+    { title: 'Review the regional Reading Landscape slides',
+      where: 'Study → Reading the Landscape → Slides 8, 10, 15 and 21',
+      detail: 'Compare the unreviewed drafts with English and save slides without narration.',
+      href: '/student' },
+  ] },
+  { when: '4 October 2026', sha: 'a805f5a1', changes: [
+    'Reading Landscape slides add marked regional drafts beside the English source.',
+    'Rain safety and sun, wind and frost conditions stay visible in the silent deck.',
+  ], tour: [
+    { title: 'Review the regional Reading Landscape slides',
+      where: 'Study → Reading the Landscape → Slides',
+      detail: 'Compare the unreviewed drafts with English and save slides without narration.',
+      href: '/student' },
+  ] },
+  { when: '4 October 2026', sha: 'ba1f4b08', changes: [
+    'Market lessons add fuller regional wording beside the complete English source.',
+    'The price example and sales conditions remain visible for facilitator review.',
+  ], tour: [
+    { title: 'Review regional Market lesson wording',
+      where: 'Study → Market Gardening & Community → Lessons 1 and 2',
+      detail: 'Compare the unreviewed drafts with English when reviewing costs and sales.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: '39873b35', changes: [
+    'Soil slides add marked regional drafts beside their complete English source.',
+    'Jar-test limits and leachate warnings stay visible in the silent slide pack.',
+  ], tour: [
+    { title: 'Review the regional Soil slides',
+      where: 'Study → Soil Health → Slides',
+      detail: 'Compare the unreviewed drafts with English and save slides without narration.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: 'b95e7922', changes: [
+    'Water slides add marked regional drafts beside their complete English source.',
+    'Save the silent slide pack; English narration remains an optional choice.',
+  ], tour: [
+    { title: 'Review the regional Water slides',
+      where: 'Study → Water Harvesting → Slides',
+      detail: 'Compare the unreviewed drafts with English before using the field checklist.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: 'ef688935', changes: [
+    'Vegetable slides add regional drafts beside English through the final field task.',
+    'Longer slide text stays readable; save slides only or choose English narration.',
+  ], tour: [
+    { title: 'Review the remaining vegetable slides',
+      where: 'Study → Vegetables and Staple Crops → Slides 7–18',
+      detail: 'Compare the unreviewed wording with English and save the silent slide pack.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: '2e67395f', changes: [
+    'Vegetable lessons add marked regional wording for observation and pest checks.',
+    'Treatment labels and harvest-waiting instructions stay exact in English.',
+  ], tour: [
+    { title: 'Review regional vegetable observation',
+      where: 'Study → Vegetables and Staple Crops → Lessons 2 and 4',
+      detail: 'Read the unreviewed drafts beside English before acting on a pest problem.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: '8fbba78e', changes: [
+    'Vegetable slides add marked regional drafts beside the full English source.',
+    'Save the updated silent slides; English narration remains an optional choice.',
+  ], tour: [
+    { title: 'Review the opening vegetable slides',
+      where: 'Study → Vegetables and Staple Crops → Slides 1–6',
+      detail: 'Read the unreviewed wording with its English source and save slides only.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: 'd81c93a2', changes: [
+    'Vegetable bed lessons add marked regional wording beside exact English.',
+    'Bed sizes, soil precautions and nursery order stay anchored to their source.',
+  ], tour: [
+    { title: 'Review regional vegetable lessons',
+      where: 'Study → Vegetables and Staple Crops → Lessons 1 and 2',
+      detail: 'Read the unreviewed drafts with their English source and retained farming terms.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: '8c07f29a', changes: [
+    'Staple crop lessons add marked Sesotho, Tshivenda and Xitsonga drafts beside English.',
+    'Seed-saving and water conditions stay exact; difficult farming terms remain English.',
+  ], tour: [
+    { title: 'Review regional staple crop wording',
+      where: 'Study → Vegetables and Staple Crops → Lesson 3',
+      detail: 'Compare the unreviewed draft paragraphs with their exact English source.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: '80bbb19d', changes: [
+    'Reading lessons and silent slides add marked regional drafts beside exact English.',
+    'Difficult farming terms stay English; draft wording is still awaiting facilitator review.',
+    'Previously saved Reading slides can be downloaded again with the updated wording.',
+  ], tour: [
+    { title: 'Review regional Reading drafts',
+      where: 'Study → Reading the Landscape → Lessons and Slides',
+      detail: 'Compare the marked drafts with English and save the silent slides offline.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: 'e4761b2b', changes: [
+    'Market slides add marked Sesotho, Tshivenda and Xitsonga drafts beside English.',
+    'Silent slide packs keep the exact price example and seed-permission guidance.',
+  ], tour: [
+    { title: 'Review regional Market slides',
+      where: 'Study → Market Gardening and Community → Slides',
+      detail: 'Choose a regional language and scroll through draft wording and English.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: '015f7ec9', changes: [
+    'Food Forest and Plant Guilds are fully drafted in Sesotho, Tshivenda and Xitsonga.',
+    'Each draft is marked unreviewed beside its exact English; support plant stays English.',
+    'Every silent slide shows the drafted heading and text beside the unchanged English.',
+  ], tour: [
+    { title: 'Review regional Food Forest and Guilds',
+      where: 'Study → Food Forest Design / Plant Selection & Guilds', href: '/student',
+      detail: 'Compare drafts with English, answer a quiz, play silent slides and save slides offline.' },
+  ] },
+  { when: '3 October 2026', sha: '6fd0e40f', changes: [
+    'Market lessons 1 and 2 add marked regional wording beside English.',
+    'Price examples stay exact; selling questions add regional drafts.',
+  ], tour: [
+    { title: 'Review regional Market drafts',
+      where: 'Study → Market Gardening and Community → Lessons 1 and 2',
+      detail: 'Read the marked draft paragraphs and compare English before trying the quizzes.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: '55b6c11b', changes: [
+    'Seasonal food-gap questions add marked regional drafts beside English.',
+    'Customer agreement points add regional drafts; price examples stay in English.',
+  ], tour: [
+    { title: 'Review seasonal food-gap questions',
+      where: 'Study → Market Gardening and Community → Lessons 1 and 2',
+      detail: 'Try the marked questions and compare the exact English source.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: 'c2d16459', changes: [
+    'Market record and selling lessons add marked regional drafts beside English.',
+    'Technical price examples and supply conditions remain explicit in English.',
+  ], tour: [
+    { title: 'Review market record and selling drafts',
+      where: 'Study → Market Gardening and Community → Lessons 1 and 2',
+      detail: 'Compare the marked regional paragraphs with their English source.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: '2f928064', changes: [
+    'Community lesson questions add marked regional drafts beside English.',
+    'Seed safeguards and difficult business terms remain in English.',
+  ], tour: [
+    { title: 'Review community lesson questions',
+      where: 'Study → Market Gardening and Community → Lesson 3',
+      detail: 'Try the marked regional questions and compare their English source.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: 'd9c227f3', changes: [
+    'Community food lessons add marked regional drafts beside the exact English source.',
+    'Seed safeguards and difficult handling or business terms stay in English.',
+  ], tour: [
+    { title: 'Review community food drafts',
+      where: 'Study → Market Gardening and Community → Lesson 3',
+      detail: 'Read Sesotho, Tshivenda or Xitsonga drafts beside English.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: '9e9ec86a', changes: [
+    'Market lessons add marked Sesotho, Tshivenda and Xitsonga drafts beside English.',
+    'Silent Soil slides add regional wording beside the unchanged English source.',
+    'Saved Soil slides refresh without removing your saved narration or other slides.',
+  ], tour: [
+    { title: 'Review market and soil drafts',
+      where: 'Study → Market Gardening and Soil Health',
+      detail: 'Read the marked drafts beside English; narration remains optional.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: 'fe3bff8f', changes: [
+    'Reading lessons add marked Tshivenda and Xitsonga drafts beside English.',
+    'Precise frost, soil and safe-site conditions stay in exact English.',
+  ], tour: [
+    { title: 'Review landscape observations',
+      where: 'Study → Reading the Landscape',
+      detail: 'Read regional observations beside the unchanged English source.',
+      href: '/student' },
+  ] },
+  { when: '3 October 2026', sha: '4143b9b9', changes: [
+    'Printed calendars keep food forest and animal products visible when dates are unknown.',
+    'Plants, hives and coops have named rows; hidden sections explain how to show them.',
+  ], tour: [
+    { title: 'Find fruit and animal products', where: 'Production plan → Download the plan → Picture calendar',
+      href: '/facilitator/crops',
+      detail: 'Read Food forest and Animal products after the vegetable rows, including sources with months to confirm.' },
+  ] },
+  { when: '3 October 2026', sha: '59edf369', changes: [
+    'Vegetable quizzes add marked Sesotho and Xitsonga drafts beside exact English.',
+    'Tshivenda household food-planning paragraphs add marked drafts beside English.',
+  ], tour: [
+    { title: 'Review vegetable drafts', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read regional wording and answer quizzes beside the unchanged English source.' },
+  ] },
+  { when: '2 October 2026', sha: 'ce623f36', changes: [
+    'Silent regional decks now offer slide-only downloads before optional English audio.',
+    'Five Xitsonga staple paragraphs add marked drafts beside exact English.',
+  ], tour: [
+    { title: 'Save silent slides', where: 'Study → Vegetables → Download',
+      href: '/student',
+      detail: 'Sesotho downloads start with slides; English narration remains an explicit choice.' },
+  ] },
+  { when: '2 October 2026', sha: '2339d285', changes: [
+    'Sesotho staple lessons add marked body drafts beside exact English.',
+    'Unclear wording and precise crop, seed and water conditions stay English for review.',
+  ], tour: [
+    { title: 'Review staple lesson drafts', where: 'Study → Vegetables → Lesson 3',
+      href: '/student',
+      detail: 'Read Sesotho household food-plan wording beside the exact English source.' },
+  ] },
+  { when: '2 October 2026', sha: '78f8aefd', changes: [
+    'Xitsonga market lessons add marked body drafts beside exact English.',
+    'Precise market, supply and income conditions remain English for review.',
+  ], tour: [
+    { title: 'Review market body drafts', where: 'Study → Market Gardening → Lesson 2',
+      href: '/student',
+      detail: 'Read ordinary Xitsonga framing beside the unchanged English source.' },
+  ] },
+  { when: '2 October 2026', sha: 'e7f8a847', changes: [
+    'Xitsonga succession lessons add marked body drafts beside exact English.',
+    'Bed and sowing questions add draft wording; precise farming conditions stay English.',
+  ], tour: [
+    { title: 'Review vegetable drafts', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read lessons 1 and 2 with exact English sources and unreviewed draft labels.' },
+  ] },
+  { when: '2 October 2026', sha: 'd6f77b1e', changes: [
+    'Xitsonga pest lessons add marked step-by-step drafts beside exact English.',
+    'Sesotho market lessons add draft framing; precise business conditions stay English.',
+  ], tour: [
+    { title: 'Review regional lesson drafts', where: 'Study → Vegetables and Market Gardening',
+      href: '/student',
+      detail: 'Read Xitsonga lesson 4 and Sesotho Market lesson 2 beside their English source.' },
+  ] },
+  { when: '2 October 2026', sha: '832ef38a', changes: [
+    'Sesotho pest lessons add step-by-step draft framing beside exact English.',
+    'Xitsonga bed preparation adds a marked body draft; precise planting stays English.',
+  ], tour: [
+    { title: 'Review regional vegetable bodies', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read Sesotho lesson 4 and Xitsonga lesson 1 beside their exact English source.' },
+  ] },
+  { when: '2 October 2026', sha: '96641048', changes: [
+    'Sesotho bed preparation adds marked draft paragraphs beside exact English.',
+    'Tshivenda staple lessons add resilience drafts; precise crop advice stays English.',
+  ], tour: [
+    { title: 'Review regional vegetable bodies', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read Sesotho lesson 1 and Tshivenda lesson 3 beside their exact English source.' },
+  ] },
+  { when: '2 October 2026', sha: 'a5f75077', changes: [
+    'Tshivenda Vegetables lessons 1, 2 and 4 add marked quiz and key-point drafts.',
+    'Precise planting, nitrogen and treatment wording stays English beside the drafts.',
+  ], tour: [
+    { title: 'Review vegetable quiz drafts', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read lessons 1, 2 and 4, answer their quizzes, and compare the exact English.' },
+  ] },
+  { when: '2 October 2026', sha: 'd775a08f', changes: [
+    'Tshivenda succession and pest lessons add marked body drafts beside English.',
+    'Crop timing, nitrogen and treatment cautions retain precise English wording.',
+  ], tour: [
+    { title: 'Review succession and pest drafts', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read lessons 2 and 4 beside English. Quizzes and silent media stay unchanged.' },
+  ] },
+  { when: '2 October 2026', sha: '0895bf1b', changes: [
+    'Tshivenda bed preparation adds marked draft paragraphs beside exact English.',
+    'Precise soil, sizing and cultivation wording stays English for facilitator review.',
+  ], tour: [
+    { title: 'Review bed preparation', where: 'Study → Vegetables and Staple Crops',
+      href: '/student',
+      detail: 'Read lesson 1 beside English. Silent slides and optional English audio remain.' },
+  ] },
+  { when: '2 October 2026', sha: 'a4b936fe', changes: [
+    'Seeds and Small Livestock lessons are fully drafted in Sesotho, Tshivenda and Xitsonga.',
+    'Each draft is marked unreviewed and sits beside the exact English it came from.',
+    'Silent regional slides for both modules now show translated text on every slide.',
+  ], tour: [
+    { title: 'Review the regional Seeds and Livestock lessons',
+      where: 'Study → Seeds and Seed Sovereignty / Small Livestock Integration', href: '/student',
+      detail: 'Compare drafts with English, answer a quiz, and play the silent slides.' },
+  ] },
+  { when: '2 October 2026', sha: 'd178ee8f', changes: [
+    'Picking months follow the food chart, including crops already growing.',
+    'New crop comparisons keep their own totals in the app and detailed PDF.',
+  ], tour: [
+    { title: 'Check food months and new crops', where: 'Production plan → Year of food and Planned crop comparison',
+      href: '/facilitator/crops',
+      detail: 'Read picking months in Year of food, then compare the new crop cycles separately.' },
+  ] },
+  { when: '2 October 2026', sha: '133fe811', changes: [
+    'Reading quizzes add Tshivenda and Xitsonga draft explanations beside English.',
+    'Frost, disease and soil cautions keep exact English; answers stay source-paired.',
+  ], tour: [
+    { title: 'Review regional Reading answers', where: 'Study → Reading the Landscape',
+      href: '/student',
+      detail: 'Try lessons 1–4, then compare draft feedback with English. Difficult terms stay English.' },
+  ] },
+  { when: '2 October 2026', sha: 'bbdb1952', changes: [
+    'Plans for fruit trees and animals work without a vegetable bed.',
+    'Harvest totals add decimal measurements without rounding whole egg counts.',
+  ], tour: [
+    { title: 'Plan trees and animal food', where: 'Production plan → Plants and housing from your map',
+      href: '/facilitator/crops',
+      detail: 'Confirm food sources and print your plan, even when no vegetable beds are mapped.' },
+  ] },
+  { when: '2 October 2026', sha: '40691d34', changes: [
+    'Reading lessons show more marked Tshivenda and Xitsonga drafts beside English.',
+    'A Sesotho soil-check point is drafted; difficult farming directions stay English.',
+    'Wind and frost lessons add regional drafts while keeping precise English cautions.',
+  ], tour: [
+    { title: 'Review the regional Reading drafts', where: 'Study → Reading the Landscape',
+      href: '/student',
+      detail: 'Read lessons 1–3 and the Sesotho map point beside English. Silent slides remain.' },
+  ] },
+  { when: '2 October 2026', sha: '366f3e93', changes: [
+    'Production plans include fruit, eggs and honey, with crops shown across printed months.',
+    'Record local frost, dry-season water and chicken care in the site survey.',
+    'Check sourced crop varieties and chicken options; confirm the choice locally.',
+    'Record eggs, jars and packages in their own units alongside weighed harvests.',
+  ], tour: [
+    { title: 'Check your production plan', where: 'Production plan → Check your farm conditions',
+      href: '/facilitator/crops',
+      detail: 'Review water, frost, varieties and chicken care, then print the monthly plan.' },
+    { title: 'Record eggs and honey', where: 'My Records → Picked or Sold',
+      href: '/records',
+      detail: 'Choose the product and its actual unit. Counted products keep their own totals.' },
+  ] },
+  { when: '2 October 2026', sha: 'feaa8a19', changes: [
+    'Greywater lessons show marked Sesotho, Tshivenda and Xitsonga drafts beside English.',
+    'Technical and sanitation cautions stay English; both quizzes keep the source answers.',
+  ], tour: [
+    { title: 'Review the regional greywater drafts', where: 'Study → Water Harvesting → lesson 4',
+      href: '/student',
+      detail: 'Compare drafts with English and try both quizzes. Silent slides remain available.' },
+  ] },
+  { when: '2 October 2026', sha: 'f6268170', changes: [
+    'Tshivenda and Xitsonga roof-water lessons show marked drafts beside exact English.',
+    'Both roof-water quizzes retain safety checks; difficult terms remain English.',
+    'Sesotho roof-water wording and Xitsonga dam assessments are clearer for review.',
+  ], tour: [
+    { title: 'Review the regional Water lessons', where: 'Study → Water Harvesting → lessons 2–3',
+      href: '/student',
+      detail: 'Compare marked drafts with English and try the quizzes. Silent slides stay available.' },
+  ] },
+  { when: '2 October 2026', sha: '4863cbf0', changes: [
+    'Printed crop plans start with crop pictures across the months and larger job sheets.',
+    'Banana, hives and coops stay on the print while local food dates are unconfirmed.',
+    'Confirm missed sowings. Shared-bed jobs show their area; seed weights use sourced rates.',
+    'Tree and animal food months use your local confirmations, kept on this device.',
+  ], tour: [
+    { title: 'Print the crop picture calendar', where: 'Crop plan → Take this plan with you',
+      href: '/facilitator/crops',
+      detail: 'Check local food months, then print the picture calendar and monthly tick-off jobs.' },
+  ] },
+  { when: '2 October 2026', sha: '434cd435', changes: [
+    'Sesotho and Xitsonga now show marked Water L2 body drafts beside exact English.',
+    'The Xitsonga title, picture text, key points and quizzes remain English pending review.',
+    'The Sesotho dam quiz keeps the spillway-clear instruction beside exact English.',
+  ], tour: [
+    { title: 'Read the Sesotho and Xitsonga dam drafts', where: 'Study → Water Harvesting → lesson 2',
+      href: '/student',
+      detail: 'Compare both marked nine-paragraph bodies with English; exact holds remain for review.' },
+  ] },
+  { when: '2 October 2026', sha: 'a33dd6de', changes: [
+    'Tshivenda Water lesson 2 now has nine marked body paragraphs beside exact English.',
+    'Both quizzes show marked drafts; difficult design terms and English holds stay clear.',
+  ], tour: [
+    { title: 'Review the Tshivenda dam lesson', where: 'Study → Water Harvesting → lesson 2',
+      href: '/student',
+      detail: 'Read beside English and try both quizzes. Qualified design and safety checks remain.' },
+  ] },
+  { when: '2 October 2026', sha: '44f60f72', changes: [
+    'Tshivenda Water lesson 1 now has eight marked paragraphs beside exact English.',
+    'The Xitsonga water draft keeps possible infiltration and all site-check cautions.',
+  ], tour: [
+    { title: 'Read the regional water drafts', where: 'Study → Water Harvesting → lesson 1',
+      href: '/student',
+      detail: 'Read beside English. Difficult design terms and checks before digging stay clear.' },
+  ] },
+  { when: '2 October 2026', sha: '6429188d', changes: [
+    'Sesotho Water lesson 1 now has eight marked body paragraphs and both quiz questions.',
+    'Exact English stays beside the drafts; difficult water-design terms stay English.',
+  ], tour: [
+    { title: 'Read the Sesotho water draft', where: 'Study → Water Harvesting → lesson 1',
+      href: '/student',
+      detail: 'Read the body and questions beside English. Site checks before digging stay clear.' },
+  ] },
+  { when: '2 October 2026', sha: '3ed49c3c', changes: [
+    'Soil lessons 2 and 3 now have marked Xitsonga key-point and quiz drafts.',
+    'Tshivenda Soil lesson 3 questions now have marked drafts beside exact English.',
+  ], tour: [
+    { title: 'Review the soil questions', where: 'Study → Soil Health → lessons 2 and 3',
+      href: '/student',
+      detail: 'Read the drafts and answer feedback beside English. Technical terms stay English.' },
+  ] },
+  { when: '2 October 2026', sha: '750e1ab8', changes: [
+    'Tshivenda and Xitsonga Soil lesson 1 now show marked key-point and quiz drafts.',
+    'Exact English stays beside the drafts; difficult technical terms remain in English.',
+  ], tour: [
+    { title: 'Review the regional soil questions', where: 'Study → Soil Health → lesson 1',
+      href: '/student',
+      detail: 'Read the key points and both quizzes beside English, including answer feedback.' },
+  ] },
+  { when: '2 October 2026', sha: '95e1978e', changes: [
+    'Tshivenda and Xitsonga Soil lesson 3 now show complete marked body drafts.',
+    'Exact English stays beside them, with difficult terms and safety wording retained.',
+  ], tour: [
+    { title: 'Read the regional soil-cover drafts', where: 'Study → Soil Health → lesson 3', href: '/student',
+      detail: 'Read all 13 paragraphs beside English. Slides, audio and answer choices are unchanged.' },
+  ] },
+  { when: '2 October 2026', sha: '497f513b', changes: [
+    'Tshivenda compost key points and both quizzes now show marked drafts beside English.',
+    'The Xitsonga compost body now has 12 marked paragraphs with technical English retained.',
+  ], tour: [
+    { title: 'Review the regional compost drafts', where: 'Study → Soil Health → lesson 2', href: '/student',
+      detail: 'Read Xitsonga or answer the Tshivenda quizzes. Exact English stays beside each draft.' },
+  ] },
+  { when: '2 October 2026', sha: '81334c53', changes: [
+    'Tshivenda Soil lesson 2 now has a complete marked compost body draft.',
+    'Difficult technical English remains beside the exact English source.',
+  ], tour: [
+    { title: 'Read the Tshivenda compost draft', where: 'Study → Soil Health → lesson 2', href: '/student',
+      detail: 'Read all 12 unreviewed paragraphs beside English. Slides and audio are unchanged.' },
+  ] },
+  { when: '2 October 2026', sha: 'cd2d24df', changes: [
+    'Sesotho Soil lesson 3 now has a complete marked body and assessment draft.',
+    'Exact English remains beside the draft, with difficult technical terms retained.',
+  ], tour: [
+    { title: 'Read the Sesotho soil-cover draft', where: 'Study → Soil Health → lesson 3', href: '/student',
+      detail: 'Read the unreviewed mulch and worm-bin lesson beside English, including safety feedback.' },
+  ] },
+  { when: '2 October 2026', sha: '4a20403c', changes: [
+    'The Xitsonga Soil Health lesson 1 body now has a marked machine draft.',
+    'Difficult jar and soil terms stay in English beside the exact English source.',
+  ], tour: [
+    { title: 'Read the Xitsonga soil body draft', where: 'Study → Soil Health → lesson 1', href: '/student',
+      detail: 'Choose Xitsonga to read the marked 12-paragraph body beside exact English.' },
+  ] },
+  { when: '2 October 2026', sha: 'fa529c13', changes: [
+    'Sesotho Soil L2 adds marked compost question, feedback and key point drafts.',
+    'Exact English stays beside them; answer choices and order are preserved.',
+  ], tour: [
+    { title: 'Review the Sesotho compost assessment drafts', where: 'Study → Soil Health → lesson 2', href: '/student',
+      detail: 'Choose Sesotho. Read the key point, compost question and explanations beside English. This is an unreviewed machine draft; lesson media are unchanged.' },
+  ] },
+  { when: '2 October 2026', sha: 'c13382d2', changes: [
+    'Soil Health lesson 1 now shows its complete Tshivenda body as a marked draft.',
+    'Jar and soil terms remain in English where needed, beside the exact English source.',
+  ], tour: [
+    { title: 'Read the Tshivenda soil body draft', where: 'Study → Soil Health → lesson 1', href: '/student',
+      detail: 'Choose Tshivenda. The unreviewed body appears beside its exact English source. This update covers the body only; the lesson questions, key points and media remain as they were.' },
+  ] },
+  { when: '1 October 2026', sha: 'e1bdb1d1', changes: [
+    'Sesotho Soil Health lessons 1 and 2 now show marked body drafts.',
+    'The first soil-jar question also has a marked draft.',
+  ], tour: [
+    { title: 'Read the Sesotho soil drafts', where: 'Study → Soil Health → lessons 1 and 2', href: '/student',
+      detail: 'Choose Sesotho. The body and first jar question are unreviewed drafts beside exact English; technical terms stay English.' },
+  ] },
+  { when: '1 October 2026', sha: '4d054145', changes: [
+    'Soil Health lesson 1 now shows the remaining Sesotho body paragraphs as marked drafts.',
+    'Jar and soil terms remain in English where needed, beside the exact English source.',
+  ], tour: [
+    { title: 'Read the Sesotho soil lesson draft', where: 'Study → Soil Health → lesson 1', href: '/student',
+      detail: 'Choose Sesotho. The lesson body and jar summary are unreviewed drafts shown beside their exact English source.' },
+  ] },
+  { when: '1 October 2026', sha: '8bd7b4b6', changes: [
+    'The zones and sectors lesson now has complete marked Tshivenda and Xitsonga text drafts.',
+  ], tour: [
+    { title: 'Read zones and sectors in your language', where: 'Study → Introduction → lesson 3', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga. Read the three paragraphs, key points and both quizzes beside their exact English source. Technical terms and compass names remain English where needed; facilitator review is pending.' },
+  ] },
+  { when: '1 October 2026', sha: 'de1a7538', changes: [
+    'Tshivenda and Xitsonga principles key points and quizzes now have marked drafts.',
+  ], tour: [
+    { title: 'Try the regional principles questions', where: 'Study → Introduction → lesson 2', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga. Read the four key points and both questions with their exact English source. Difficult technical terms remain English; facilitator review is pending.' },
+  ] },
+  { when: '1 October 2026', sha: 'ea414f48', changes: [
+    'The principles body now has complete marked Tshivenda and Xitsonga drafts.',
+  ], tour: [
+    { title: 'Read the regional principles drafts', where: 'Study → Introduction → lesson 2', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga. All three body paragraphs have a marked draft beside the exact English source; difficult technical terms remain English. Facilitator review is pending.' },
+  ] },
+  { when: '1 October 2026', sha: '77b07754', changes: [
+    'Crop calendar: vegetables, staple crops, fruit and animal products each get a section.',
+    'A section that is switched off says so, with one tap to show it again.',
+    'Food chart: month on top, count under the bar; on a phone the blank left strip is gone.',
+  ], tour: [
+    { title: 'See the four sections', where: 'Crop plan → calendar', href: '/facilitator/crops',
+      detail: 'Scroll the calendar. Vegetables, Staple crops, Fruit, nuts & berries and Animal products each have a band.' },
+    { title: 'Read the food chart', where: 'Crop plan → Food, field & value → Availability', href: '/facilitator/crops',
+      detail: 'Each month name heads its bar and the crop count sits under it. Tap a month for detail.' },
+  ] },
+  { when: '1 October 2026', sha: 'f0784645', changes: [
+    'Sesotho principles key points and quizzes now have marked drafts.',
+  ], tour: [
+    { title: 'Try the principles questions', where: 'Study → Introduction → lesson 2', href: '/student',
+      detail: 'Choose Sesotho. Read the four key points and both questions with their exact English source. Difficult technical terms remain English; facilitator review is pending.' },
+  ] },
+  { when: '1 October 2026', sha: 'cde1191d', changes: [
+    'Sesotho principles lesson adds the remaining marked body draft.',
+  ], tour: [
+    { title: 'Read the principles draft', where: 'Study → Introduction → lesson 2', href: '/student',
+      detail: 'Choose Sesotho. Read the complete body draft beside its English source; principle names and technical terms remain in English.' },
+  ] },
+  { when: '1 October 2026', sha: 'fd0cee55', changes: [
+    'Sesotho ethics lesson adds the remaining marked draft paragraphs.',
+  ], tour: [
+    { title: 'Read the ethics draft', where: 'Study → Introduction → lesson 1', href: '/student',
+      detail: 'Choose Sesotho. The lesson body is a complete unreviewed draft with the exact English source alongside it; technical terms remain in English.' },
+  ] },
+  { when: '1 October 2026', sha: '48333384', changes: [
+    'Market lesson 3 adds marked tool-sharing drafts in three languages.',
+  ], tour: [
+    { title: 'Compare the community lesson', where: 'Study → Market Gardening → lesson 3', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Three tool-sharing paragraphs are unreviewed drafts; seed, selling and quiz guidance stays in English.' },
+  ] },
+  { when: '1 October 2026', sha: '8a1047f8', changes: [
+    'Introduction adds four Xitsonga and Tshivenda draft prompts.',
+  ], tour: [
+    { title: 'Compare the silent Introduction slides', where: 'Study → Introduction', href: '/student',
+      detail: 'Choose Xitsonga for slides 3, 7 and 8, or Tshivenda for slide 3. English guidance stays visible, and English narration is optional.' },
+  ] },
+  { when: '1 October 2026', sha: 'a722fc6d', changes: [
+    'Study cards now show when an English module contains regional lesson drafts.',
+  ], tour: [
+    { title: 'Find the regional lesson drafts', where: 'Study → course modules', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga. An English module card names the number of available lesson drafts without presenting the whole module as translated.' },
+  ] },
+  { when: '1 October 2026', sha: '7c0d147c', changes: [
+    'Soil Health adds marked Sesotho and Xitsonga winter wind and storm text.',
+    'Other Soil Health guidance stays in English; the regional decks remain silent.',
+  ], tour: [
+    { title: 'Compare the seasonal soil risks', where: 'Study → Soil Health → lesson 3', href: '/student',
+      detail: 'Choose Sesotho or Xitsonga. Three draft paragraphs appear beside the exact English source; other soil guidance remains in English.' },
+  ] },
+  { when: '1 October 2026', sha: '40a6f825', changes: [
+    'Vegetables adds three marked Tshivenda sentences beside the English lesson.',
+    'Introduction and Seeds add Sesotho descriptions of their lesson pictures.',
+  ], tour: [
+    { title: 'Compare the new Study drafts', where: 'Study → Vegetables L3, Introduction L3 or Seeds L3', href: '/student',
+      detail: 'Choose Tshivenda for Vegetables L3 or Sesotho for the two pictured lessons. The exact English source remains visible and the drafts await local review.' },
+  ] },
+  { when: '1 October 2026', sha: '266b2265', changes: [
+    'Study course cards now show more Tshivenda and Xitsonga headings in the selected language.',
+    'Unreviewed drafts keep English farming guidance where needed.',
+  ], tour: [
+    { title: 'Check regional Study cards', where: 'Study → course modules', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga. Compare category headings and the Xitsonga ready/module labels; some course text remains in English pending language review.' },
+  ] },
+  { when: '1 October 2026', sha: '72de4cc1', changes: [
+    'Study slides now label the silent-reading choice in Sesotho, Tshivenda and Xitsonga.',
+    'Slide zoom and some playback controls also use those languages.',
+  ], tour: [
+    { title: 'Read a regional Study deck silently', where: 'Study → Introduction → lesson 1', href: '/student', detail: 'Choose Sesotho, Tshivenda or Xitsonga. The no-narration choice is a marked language draft; the slide deck stays silent unless you select English source audio.' },
+  ] },
+  { when: '1 October 2026', sha: 'bb21cd90', changes: [
+    'IsiZulu Study slides can now be read without narration.',
+    'Study diagram buttons and loading errors also use isiZulu.',
+  ], tour: [
+    { title: 'Check isiZulu Study controls', where: 'Study → Introduction → lesson 1', href: '/student',
+      detail: 'Choose isiZulu. The diagram button and silent slide choice use isiZulu; the English source teaching remains available where needed.' },
+  ] },
+  { when: '1 October 2026', sha: 'b0cd9613', changes: [
+    'Introduction adds four marked Xitsonga and Tshivenda slide sentences.',
+    'The exact English source remains visible; technical field instructions stay in English.',
+  ], tour: [
+    { title: 'Compare the Introduction slides', where: 'Study → Introduction → slides 2, 3, 16 and 20', href: '/student',
+      detail: 'Choose Xitsonga for slides 2, 3 and 20, or Tshivenda for slide 16. The new draft sentences sit beside exact English. The deck is silent unless you choose English narration.' },
+  ] },
+  { when: '1 October 2026', sha: '26cfbd08', changes: [
+    'Food Forest adds marked regional descriptions for several illustrated planting layers.',
+    'Uncertain terms stay in English. These slides have no regional narration.',
+  ], tour: [
+    { title: 'Compare the Food Forest layers', where: 'Study → Food Forest → slide 5', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. The new unreviewed descriptions appear beside the exact English source; other layers still show English.' },
+  ] },
+  { when: '1 October 2026', sha: '068c4cf9', changes: [
+    'Study adds marked regional headings on field and learning-outcome slides.',
+    'Farming and water instructions remain beside their exact English source.',
+  ], tour: [
+    { title: 'Check the regional Study headings', where: 'Study → Water Harvesting → slide 2', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. The heading is an unreviewed draft; the technical lesson text stays in English.' },
+  ] },
+  { when: '1 October 2026', sha: 'c0dd57f4', changes: [
+    'Soil Health adds marked Sesotho, Tshivenda and Xitsonga cover and erosion slides.',
+    'One unclear Tshivenda storm line stays in English; these slides remain silent.',
+  ], tour: [
+    { title: 'Compare the soil cover slides', where: 'Study → Soil Health & Composting → slides 15 and 18', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. The new unreviewed drafts sit beside the exact English source; the deck has no regional narration.' },
+  ] },
+  { when: '1 October 2026', sha: '4495d6a4', changes: [
+    'Soil Health picture description now matches the soil layers, worms and jar.',
+  ], tour: [
+    { title: 'Check the Soil Health picture', where: 'Study → Soil Health & Composting → lesson 1', href: '/student',
+      detail: 'The image description now matches the soil cross-section and jar. The lesson and quiz wording has not changed.' },
+  ] },
+  { when: '1 October 2026', sha: 'c7b4286c', changes: [
+    'Study removes a reviewer checklist from an isiZulu learner lesson.',
+    'Three Tshivenda soil concepts now show marked drafts beside English.',
+  ], tour: [
+    { title: 'Read the Tshivenda soil concepts', where: 'Study → Soil Health & Composting → lesson 1', href: '/student',
+      detail: 'Choose Tshivenda to compare three marked soil key points with their exact English source. The image description, diagnostic advice and quiz remain in English.' },
+  ] },
+  { when: '1 October 2026', sha: 'b4d86dd9', changes: [
+    'Study adds marked farm-record drafts in Sesotho, Tshivenda and Xitsonga.',
+    'Compost, pricing, crop choices and quizzes stay in English.',
+  ], tour: [
+    { title: 'Compare the farm-record lesson', where: 'Study → Market Gardening & Community → lesson 1', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Read the marked harvest-record lines beside the exact English source.' },
+  ] },
+  { when: '30 September 2026', sha: 'a77b4a20', changes: [
+    'Study adds marked Sesotho drafts for Market Gardening lesson 3.',
+    'Seed permissions and selling-return guidance stay paired with exact English.',
+    'Tshivenda Introduction holds uncertain wind-direction and field steps in English.',
+  ], tour: [
+    { title: 'Compare the Sesotho community lesson', where: 'Study → Market Gardening & Community → lesson 3', href: '/student',
+      detail: 'Read the marked image description, heading, key points and prompts beside their exact English source.' },
+    { title: 'Check the Tshivenda wind lesson', where: 'Study → Introduction → lesson 3', href: '/student',
+      detail: 'The field instructions and direction-dependent quiz remain exact English until a fluent review.' },
+  ] },
+  { when: '30 September 2026', sha: '8a8c5b23', changes: [
+    'Study adds soil observation and harvest record drafts in Sesotho, Tshivenda and Xitsonga.',
+    'Food Forest adds one Xitsonga plant check; technical guidance stays in English.',
+  ], tour: [
+    { title: 'Compare soil and record slides', where: 'Study → Soil Health and Market Gardening', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Read the marked drafts beside exact English; regional slides remain silent.' },
+    { title: 'Compare the Xitsonga Food Forest draft', where: 'Study → Food Forest', href: '/student',
+      detail: 'Choose Xitsonga to see the unreviewed plant-checking sentence beside its exact English source.' },
+  ] },
+  { when: '30 September 2026', sha: '55bcd6ff', changes: [
+    'Study adds marked Food Forest closing steps and more Market Gardening record lines.',
+    'The follow-up checks and uncertain farming advice stay paired with exact English.',
+  ], tour: [
+    { title: 'Compare the new closing steps and records', where: 'Study → Food Forest and Market Gardening', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Read the marked drafts beside the unchanged English source; regional slides have no narration.' },
+  ] },
+  { when: '30 September 2026', sha: '92da51e3', changes: [
+    'Study adds Tshivenda lines for observing wind and rain on a farm.',
+    'Other site and crop-health guidance remains in English beside the marked drafts.',
+  ], tour: [
+    { title: 'Compare the new Tshivenda lines', where: 'Study → Introduction and Reading the Landscape', href: '/student',
+      detail: 'Choose Tshivenda to compare the marked observation lines with their English source.' },
+  ] },
+  { when: '30 September 2026', sha: '00bca002', changes: [
+    'Study adds food forest and farm record lines in Sesotho, Tshivenda and Xitsonga.',
+    'Unreviewed care and market text stays beside its English source.',
+  ], tour: [
+    { title: 'Compare the new Study lines', where: 'Study → Food Forest and Market Gardening', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. The marked text appears beside its English source; the new Xitsonga Food Forest lesson keeps its other fields in English.' },
+  ] },
+  { when: '30 September 2026', sha: '2713e4e0', changes: [
+    'Study adds a few more regional drafts about rain, seed sharing and crop resilience.',
+    'Uncertain water, seed and farming guidance stays in English beside the marked drafts.',
+  ], tour: [
+    { title: 'Compare the new Study lines', where: 'Study → Water Harvesting, Seeds and Vegetables', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Compare the unreviewed lines with exact English; regional decks open with No narration.' },
+  ] },
+  { when: '30 September 2026', sha: 'd26f49a7', changes: [
+    'Study adds regional drafts on selling surplus and plant layers.',
+    'Uncertain prices, plant identity and care advice stay in English.',
+  ], tour: [
+    { title: 'Compare the new Study drafts', where: 'Study → Market Gardening, Food Forest and Plant Guilds', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. The marked draft text is paired with exact English; regional slides open with No narration.' },
+  ] },
+  { when: '30 September 2026', sha: 'a1d5a2db', changes: [
+    'Study adds more Sesotho, Tshivenda and Xitsonga text about beds, soil and reading a site.',
+    'Uncertain farming and earthworks advice stays in English beside the drafts.',
+  ], tour: [
+    { title: 'Read the new Study drafts', where: 'Study → Vegetables, Soil Health and Reading the Landscape', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Compare the unreviewed text with exact English; regional decks open with No narration.' },
+  ] },
+  { when: '30 September 2026', sha: '6d3152ac', changes: [
+    'Food Forest and Plant Guilds add more Sesotho and Xitsonga site-care drafts.',
+    'Uncertain cutting and material advice remains in English beside the marked text.',
+  ], tour: [
+    { title: 'Read and compare site care', where: 'Study → Food Forest and Plant Guilds', href: '/student',
+      detail: 'Choose Sesotho or Xitsonga. The new AI drafts show exact English alongside them; regional slides open with No narration.' },
+  ] },
+  { when: '30 September 2026', sha: '9834b317', changes: [
+    'Plant Guilds and Food Forest add more Sesotho, Tshivenda and Xitsonga lesson drafts.',
+    'Uncertain care wording stays in English beside the marked drafts.',
+  ], tour: [
+    { title: 'Compare plant lessons', where: 'Study → Plant Guilds and Food Forest', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Read the unreviewed local-language concepts beside exact English; regional slides can be read with No narration.' },
+  ] },
+  { when: '30 September 2026', sha: '3a0e346e', changes: [
+    'Study adds more Sesotho and Xitsonga controls, and a Tshivenda Design Studio link.',
+    'Market Gardening adds a few record-keeping prompts in local languages beside English.',
+  ], tour: [
+    { title: 'Read a farm record', where: 'Study → Market Gardening & Community → lesson 1', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. New draft lines are paired with exact English; farming and price advice remains in English where wording is uncertain.' },
+  ] },
+  { when: '30 September 2026', sha: '1e670dcb', changes: [
+    'Market Gardening adds more Sesotho, Tshivenda and Xitsonga slide text.',
+    'Farm records show English beside drafts; sensitive advice stays English.',
+  ], tour: [
+    { title: 'Try a farm record', where: 'Study → Market Gardening & Community → slides 11–20', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. The new AI drafts are unreviewed and paired with exact English; choose No narration to read at your own pace.' },
+  ] },
+  { when: '30 September 2026', sha: '44296706', changes: [
+    'Market Gardening adds more Sesotho, Tshivenda and Xitsonga text on silent slides.',
+    'Price, planting and local trading advice stays in English beside the unreviewed drafts.',
+  ], tour: [
+    { title: 'Read a farm record', where: 'Study → Market Gardening & Community → slides 1–10', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Course and recordkeeping drafts are paired with exact English; the slides play without narration by default.' },
+  ] },
+  { when: '30 September 2026', sha: 'a83e35f8', changes: [
+    'Seeds adds regional reflection drafts near the end of the silent slides.',
+    'Exact English and seed-handling instructions remain beside them.',
+  ], tour: [
+    { title: 'Read the seed exchange', where: 'Study → Seeds and Seed Sovereignty → slides 22–24', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Eight short drafts are paired with exact English; uncertain seed advice stays English.' },
+  ] },
+  { when: '30 September 2026', sha: '1ed267a1', changes: [
+    'Study names regional slides and narration choices.',
+    'English lessons no longer mislabel regional slides.',
+  ], tour: [
+    { title: 'Check a lesson language', where: 'Study → open a Sesotho, Tshivenda or Xitsonga lesson', href: '/student',
+      detail: 'The notice names the slide and narration choices separately; source-paired drafts remain marked unreviewed.' },
+  ] },
+  { when: '30 September 2026', sha: '1d36f255', changes: [
+    'Food Forest adds two Sesotho pattern explanations in the lesson and silent slide.',
+    'Technical terms stay in English beside the unreviewed draft and exact source.',
+  ], tour: [
+    { title: 'Compare a layered food forest', where: 'Study → Food Forest Design → lesson 1 and slide 4', href: '/student',
+      detail: 'Choose Sesotho. Two forest-pattern sentences now match in the lesson and silent slide; planting and species advice stays English.' },
+  ] },
+  { when: '30 September 2026', sha: '2f58cffb', changes: [
+    'Soil Health adds Sesotho, Tshivenda and Xitsonga observation drafts.',
+    'Treatment and weather guidance stays English beside the silent draft slides.',
+  ], tour: [
+    { title: 'Compare Soil Health observations', where: 'Study → Soil Health → slides 2, 5, 14 and 20', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Screened observations are visibly unreviewed and paired with exact English; remaining instructions stay English.' },
+  ] },
+  { when: '30 September 2026', sha: 'ecbdaf15', changes: [
+    'Squashes & melons is its own crop-mix switch, apart from tomatoes and peppers.',
+    'Save your crop mix for a map; auto-suggest starts from it every time you plan there.',
+    'Fruit and animal products show as bars across their months, like bed plantings.',
+  ], tour: [
+    { title: 'Save your crop mix', where: 'Crop plan → Auto-suggest → Optional: change the recommended crop mix', href: '/facilitator/crops',
+      detail: 'Switch off Herbs or Squashes & melons, then tap Save this crop mix for this map. Reset to recommended forgets it.' },
+    { title: 'Read the fruit bars', where: 'Crop plan → bed calendar → Fruit, nuts & berries', href: '/facilitator/crops',
+      detail: 'Each tree kind on your map has its own bar over its picking months. Hover or tap a bar for the plants and months.' },
+  ] },
+  { when: '30 September 2026', sha: '289676a6', changes: [
+    'Landscape Study adds Sesotho, Tshivenda and Xitsonga drafts on silent slides.',
+    'Exact English sits beside each draft; technical land and water guidance stays English.',
+  ], tour: [
+    { title: 'Compare the landscape opening slides', where: 'Study → Reading the Landscape → slides 1–3', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. The slides show bounded draft text beside exact English, with no regional narration selected.' },
+  ] },
+  { when: '30 September 2026', sha: 'a83b9838', changes: [
+    'Crop mix splits herbs, less common crops and cover crops into their own switches.',
+    'One ticked vine no longer takes over a single bed; the other crops still get planted.',
+    'Honey shows in the bed calendar without months, with recorded SA honey flows on hover.',
+  ], tour: [
+    { title: 'Switch off herbs or cover crops', where: 'Crop plan → Auto-suggest → Optional: change the recommended crop mix', href: '/facilitator/crops',
+      detail: 'Turn off Herbs, Less common crops or Cover crops and suggest again. Those crops are left out.' },
+    { title: 'Hover the honey line', where: 'Crop plan → bed calendar → Animals row', href: '/facilitator/crops',
+      detail: 'With a hive for honey on the map, hover "recorded flows" to see each flow and its source.' },
+  ] },
+  { when: '30 September 2026', sha: 'd488b7db', changes: [
+    'Introduction adds six short Tshivenda and Xitsonga reflections on silent slides.',
+    'Each unreviewed draft sits beside exact English; water and field guidance stays English.',
+  ], tour: [
+    { title: 'Compare the Introduction reflections', where: 'Study → Introduction to Permaculture → slides 2, 8, 11, 17 and 20', href: '/student',
+      detail: 'Choose Tshivenda for slides 8, 17 and 20, or Xitsonga for slides 2, 11 and 17. No regional narration is selected; English audio remains an optional choice.' },
+  ] },
+  { when: '30 September 2026', sha: 'cd04623c', changes: [
+    'Plant Guilds adds unreviewed observation prompts in Sesotho, Tshivenda and Xitsonga.',
+    'Plant-care checks stay English; English narration remains a separate choice.',
+  ], tour: [
+    { title: 'Compare Plant Guilds observation prompts', where: 'Study → Plant Selection & Guilds → slides 46–47', href: '/student',
+      detail: 'Choose a regional language to compare marked observation drafts with the exact English source.' },
+  ] },
+  { when: '29 September 2026', sha: 'a6afc841', changes: [
+    'Vegetables Study adds regional harvest-gap drafts and activity headings.',
+    'Silent slides pair each unreviewed draft with English; field steps stay English.',
+  ], tour: [
+    { title: 'Compare the Vegetables slides', where: 'Study → Vegetables and Staple Crops → slides 2, 3, 17 and 18', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Slide 2 shows bounded unreviewed drafts; slides 3, 17 and 18 add short headings. The full English source remains beside each draft. No regional narration is selected.' },
+  ] },
+  { when: '29 September 2026', sha: 'b6fca276', changes: [
+    'Food Forest adds regional care and local-plant headings on silent slides 8 and 13.',
+    'Unreviewed drafts sit beside English; planting and grassland guidance stays English.',
+  ], tour: [
+    { title: 'Compare the Food Forest slides', where: 'Study → Food Forest Design → slides 8 and 13', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. New headings are visibly unreviewed and paired with exact English. Sesotho and Tshivenda also show a short habitat draft; planting and healthy-grassland guidance remains English.' },
+  ] },
+  { when: '29 September 2026', sha: '19d4fb26', changes: [
+    'Seeds adds community-sharing prompts in Sesotho, Tshivenda and Xitsonga.',
+    'Drafts stay beside English; seed-selection advice stays in English.',
+  ], tour: [
+    { title: 'Compare the Seeds community slides', where: 'Study → Seeds and Seed Sovereignty → slides 6–7', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Slides 6–7 show unreviewed household and sharing drafts beside exact English. Seed genetics and selection guidance remain in English.' },
+  ] },
+  { when: '29 September 2026', sha: '43e5f5f3', changes: [
+    'Food Forest opens with more Sesotho study prompts on three silent slides.',
+    'Unreviewed drafts sit beside English. Planting guidance stays in English.',
+  ], tour: [
+    { title: 'Compare the Food Forest opening', where: 'Study → Food Forest Design → slides 1–3', href: '/student',
+      detail: 'Choose Sesotho. The first three silent slides pair the new opening drafts with exact English. Detailed planting advice remains in English.' },
+  ] },
+  { when: '29 September 2026', sha: '81cdc282', changes: [
+    'Introduction adds family-priority and food reflections in Tshivenda and Xitsonga.',
+    'The farm-purpose sentence and other advice stay in English beside each draft.',
+  ], tour: [
+    { title: 'Compare the People Care example', where: 'Study → Introduction to Permaculture → slide 5', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga. Read the family-priority and household-food questions beside their exact English source. The farm-purpose sentence and Fair Share examples remain in English.' },
+  ] },
+  { when: '29 September 2026', sha: 'ccf8cec0', changes: [
+    'Small Livestock shows unreviewed Xitsonga module and bee-lesson labels.',
+    'Animal-care and pollination guidance stays in English.',
+  ], tour: [
+    { title: 'Check the Xitsonga livestock labels', where: 'Study → Small Livestock Integration', href: '/student',
+      detail: 'Choose Xitsonga in Study. Compare the marked module and L2 labels with their English source.' },
+  ] },
+  { when: '29 September 2026', sha: '864dd861', changes: [
+    'Introduction to Permaculture adds three Tshivenda and Xitsonga reflection drafts.',
+    'Each draft stays beside English; the slides remain silent and unreviewed.',
+    'Slide 17 shows a farm walk instead of the zone-circle picture.',
+  ], tour: [
+    { title: 'Compare the Introduction drafts', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga and read slides 2, 4 and 17. The short unreviewed drafts stay beside the exact English source. No regional narration is included.' },
+  ] },
+  { when: '29 September 2026', sha: '4db18c3f', changes: [
+    'Market Gardening L1 adds unreviewed harvest and season-end record-keeping drafts.',
+    'Other instructions stay in English beside the exact source.',
+  ], tour: [
+    { title: 'Compare the Market Gardening record-keeping drafts', where: 'Study → Market Gardening & Community → lesson 1', href: '/student',
+      detail: 'Choose Xitsonga or Tshivenda and open lesson 1. The new sentences are marked unreviewed beside exact English. Other record-keeping steps and business guidance stay in English.' },
+  ] },
+  { when: '29 September 2026', sha: '090437e2', changes: [
+    'Pawpaw now shows in the bed calendar, April to January, from the KZN fruit guide.',
+    'Honey still does not show: no source yet gives honey harvest months. The note says so.',
+  ], tour: [
+    { title: 'Find pawpaw in the calendar', where: 'Crop plan → bed calendar', href: '/facilitator/crops',
+      detail: 'With a pawpaw on your design map, the Fruit, nuts & berries row shows it from April to January. February and March stay empty: the guide says the season runs April to January, busiest September to November.' },
+    { title: 'Check the honey note', where: 'Crop plan → bed calendar', href: '/facilitator/crops',
+      detail: 'With a hive on your map set to honey, the Animal products row still has no honey months. The line under it says why: no source we have read gives the months honey is taken off.' },
+  ] },
+  { when: '29 September 2026', sha: 'e8be1de8', changes: [
+    'The bed calendar has Fruit, nuts & berries and Animal products rows under your beds.',
+    'Each month shows the fruit, nut or egg itself. Hover or tap it for a written list.',
+    'Crops you pick by name, like pumpkin, now get a bed, or the plan says why they cannot.',
+    'Strawberry, blueberry, raspberry and Cape gooseberry are in the design species picker.',
+  ], tour: [
+    { title: 'See the food forest by month', where: 'Crop plan → bed calendar', href: '/facilitator/crops',
+      detail: 'Under the beds, Fruit, nuts & berries shows what your trees and bushes give each month, and Animal products shows eggs, milk or fish. Hover or tap a month for the written list. Plants drawn as proposed are faded and marked not cropping yet.' },
+    { title: 'Check a crop you chose', where: 'Crop plan → Auto-suggest a plan', href: '/facilitator/crops',
+      detail: 'Name pumpkin, groundnuts, amadumbe or bambara. Pumpkin gets a bed to itself even with vines kept out of beds. A crop with no sowing month on your farm\'s calendar, like amadumbe in a hard-frost area, gets a note saying so.' },
+    { title: 'Add a berry to your design', where: 'Design → Pick species', href: '/design',
+      detail: 'On a Fynbos or Grassland site, tap Pick species: strawberry, blueberry, raspberry and Cape gooseberry sit with the fruit and shrubs, most with sourced South African picking months. They are marked not yet reviewed.' },
+  ] },
+  { when: '29 September 2026', sha: 'd833f08d', changes: [
+    'Water Harvesting has silent Sesotho, Tshivenda and Xitsonga draft slides.',
+    'Only one rainfall sentence is drafted; water and safety instructions stay English.',
+    'English narration is optional; regional wording still needs local review.',
+  ], tour: [
+    { title: 'Read the Water Harvesting slides', where: 'Study → Water Harvesting', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. Every slide keeps the exact English source; one rainfall sentence is an unreviewed draft. English narration is optional.' },
+  ] },
+  { when: '29 September 2026', sha: '1e495413', changes: [
+    'Small Livestock has silent Sesotho, Tshivenda and Xitsonga slides.',
+    'Draft words sit beside English; animal-care advice needing review stays English.',
+    'Download slides to read offline. English narration is optional.',
+  ], tour: [
+    { title: 'Read the Small Livestock slides', where: 'Study → Small Livestock Integration', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga. The unreviewed draft slides retain source pictures and English wording; use Next to read at your own pace.' },
+  ] },
+  { when: '29 September 2026', sha: 'a835dc28', changes: [
+    'Food availability now shows fruit trees and animal products as picture trays.',
+    'Each chart names this month (Now) and the year, so you know which column is which.',
+    'The crop-plan PDF has a new Food availability page with the same pictures.',
+  ], tour: [
+    { title: 'Read the availability chart', where: 'Crop plan → Food availability', href: '/facilitator/crops',
+      detail: 'Under the fresh and stored veg trays, a green tray shows the fruit trees in season and an ochre tray shows eggs, milk, fish and other animal food. The first column says Now, and each January shows its year.' },
+    { title: 'Print what there is to eat', where: 'Crop plan → Download PDF → Food availability', href: '/facilitator/crops',
+      detail: 'A landscape page shows twelve months from now with the veg, tree and animal pictures, how much bed space each month uses, and a key naming every picture. Trees or animals you switched off on screen stay off the paper.' },
+  ] },
+  { when: '29 September 2026', sha: '1fdb6fa1', changes: [
+    'Seeds slides 5–9 add Sesotho, Tshivenda and Xitsonga draft prompts beside English.',
+    'The dry-seed and ten-seed stills now match their lessons in silent reading mode.',
+    'Seed science stays in English where wording needs review. Regional decks remain silent.',
+  ], tour: [
+    { title: 'Compare the Seeds prompts', where: 'Study → Seeds and Seed Sovereignty', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga and open slides 5–9. Draft text is marked unreviewed; held technical advice stays in English. The slide-only download works without narration.' },
+  ] },
+  { when: '29 September 2026', sha: '0b83fcbb', changes: [
+    'The crop-plan PDF was checked at eight sites across South Africa and tidied.',
+    'A first-year gap is no longer called yearly when next year\'s crops fill it.',
+    'Buying lists group beds (Beds 2, 4, 8, 9); the workload chart has round steps.',
+  ], tour: [
+    { title: 'Read the gap notes', where: 'Crop plan → Download PDF → page 2', href: '/facilitator/crops',
+      detail: 'Under Ground with no new sowing, a first-year gap only is bare this year and filled from next year. A first-year rest repeats every year unless you change the plan.' },
+    { title: 'Check the buying list', where: 'Crop plan → Download PDF → Seed and seedling buying schedule', href: '/facilitator/crops',
+      detail: 'Each line names its beds in order, grouped as Beds 2, 4, 8, 9. The crop-code key under the bed calendar lists only the colours your plan uses.' },
+  ] },
+  { when: '29 September 2026', sha: '0b83fcbb', changes: [
+    'Parsley, sorghum, bambara, sweetcorn and cowpea now have recommended prices.',
+    'A recommended price is an average of prices found; its badge says so.',
+  ], tour: [
+    { title: 'See a recommended price', where: 'Prices → Cowpea', href: '/prices',
+      detail: 'Open cowpea, sorghum, bambara groundnut, sweetcorn or parsley. The badge reads Recommended price — average of prices found, with the date the prices were collected. Confirm it locally before you agree a price.' },
+    { title: 'Count them in your plan', where: 'Crop plan → Plan-cycle value', href: '/facilitator/crops',
+      detail: 'Plant one of the five crops and it now counts in the value figures. Under Review and edit price assumptions its badge says recommended price, and you can type your own local price.' },
+  ] },
+  { when: '29 September 2026', sha: 'a0f103d1', changes: [
+    'Seeds now has silent Sesotho, Tshivenda and Xitsonga slide decks for review.',
+    'Early drafts pair with English; later technical steps remain English.',
+  ], tour: [
+    { title: 'Compare the Seeds slides', where: 'Study → Seeds and Seed Sovereignty', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga and open the slides. The first three are marked unreviewed drafts; later technical steps show English holds. The slide-only offline pack needs no narration.' },
+  ] },
+  { when: '29 September 2026', sha: '3216aa11', changes: [
+    'Seeds lesson 1 has more Sesotho, Tshivenda and Xitsonga draft teaching beside English.',
+    'Seed genetics quizzes and the slide narration stay in English.',
+  ], tour: [
+    { title: 'Compare the Seeds draft', where: 'Study → Seeds and Seed Sovereignty', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga and open lesson 1. New text is marked unreviewed beside exact English. The quizzes and slides still use English where the technical meaning needs review.' },
+  ] },
+  { when: '29 September 2026', sha: '499d6913', changes: [
+    'Food Forest slides 1–4 add Tshivenda and Xitsonga drafts beside English.',
+    'These slides are silent. Technical terms remain in English.',
+  ], tour: [
+    { title: 'Compare Food Forest opening slides', where: 'Study → Food Forest Design', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga and open slides 1–4. The drafts are marked unreviewed and paired with exact English. Other held passages remain in English; English narration is optional.' },
+  ] },
+  { when: '29 September 2026', sha: '60dfeb6', changes: [
+    'The Permaculture Manual second edition: shorter, clearer, in Rory’s own voice.',
+    'A new last chapter gathers the safety notes and the references for every chapter.',
+    'Xitsonga is back: the manual reads in English and all four home languages.',
+    'Long web addresses now wrap, so printed pages come out full size.',
+  ], tour: [
+    { title: 'Open the second edition', where: 'Manual', href: '/manual',
+      detail: 'Pick a language and open any chapter: each starts with why it matters, has one Try it activity and ends with key points. Chapter 13 holds the notes and references. The four home-language versions are machine drafts awaiting review by fluent speakers.' },
+  ] },
+  { when: '29 September 2026', sha: '0f47d957', changes: [
+    'Market Gardening has 20 silent Sesotho and Xitsonga review slides.',
+    'Existing drafts pair with English; held text stays in one English source card.',
+  ], tour: [
+    { title: 'Compare Market Gardening review slides', where: 'Study → Market Gardening & Community', href: '/student',
+      detail: 'Choose Sesotho or Xitsonga and page through all 20 slides. Existing draft passages pair with exact English; every other slide shows one English source card labelled translation pending. No narration or farming approval is claimed.' },
+  ] },
+  { when: '29 September 2026', sha: 'e1967bb8', changes: [
+    'Market Gardening has 20 silent review slides; three Tshivenda passages are drafts.',
+    'Slides 2–3 pair those drafts with English; other teaching is English pending translation.',
+  ], tour: [
+    { title: 'Compare the Tshivenda Market Gardening draft', where: 'Study → Market Gardening & Community', href: '/student',
+      detail: 'Open Tshivenda to compare three existing draft passages on slides 2 and 3 with the exact English source. All other slide teaching stays in English and is marked translation pending.' },
+  ] },
+  { when: '29 September 2026', sha: '6dd61753', changes: [
+    'Soil Health now has 20 silent Sesotho slides paired with their English source.',
+    'Draft text is marked unreviewed; held teaching stays in English.',
+    'Sesotho Vegetables now has 18 silent, source-paired draft slides.',
+  ], tour: [
+    { title: 'Compare the Sesotho Soil Health slides', where: 'Study → Soil Health & Composting', href: '/student',
+      detail: 'Choose Sesotho and page through all 20 slides. Each pairs its existing draft or English hold with the exact English source. Slides open silently; choose English narration if you want it.' },
+    { title: 'Compare the Sesotho Vegetables draft', where: 'Study → Vegetables and Staple Crops', href: '/student',
+      detail: 'Five existing draft passages appear beside their exact English source. Other teaching stays held in English. No Sesotho audio is included.' },
+  ] },
+  { when: '28 September 2026', sha: 'e75bc004', changes: [
+    'Variety guidance names your growing area and lists varieties chosen for it first.',
+    'Each named variety links to the seed company or guide that recommends it.',
+    'Gem squash, brinjal, baby marrow, cauliflower, spanspek, soya and sunflower have prices.',
+    'Green bean and broccoli yield ranges now reach the higher figures a second guide gives.',
+  ], tour: [
+    { title: 'Varieties for your area', where: 'Crop plan → + crop → pick a crop → Variety guidance', href: '/facilitator/crops',
+      detail: 'Open a crop in any bed. Variety guidance says which growing area this site’s climate points to, then lists the varieties a seed company or growing guide named for it. Where the climate fits two areas, both are named.' },
+    { title: 'Check where a variety comes from', where: 'Crop plan → Variety guidance → Other varieties', href: '/facilitator/crops',
+      detail: 'Open Other varieties to see the rest and the areas they were named for. Every card links its source; hover the link to read the sentence it comes from.' },
+    { title: 'See the new prices', where: 'Crop plan → Plan-cycle value', href: '/facilitator/crops',
+      detail: 'Plant gem squash, brinjal or another newly priced crop and it now counts in the value figures. Each price shows its date, and estimated ones say so.' },
+  ] },
+  { when: '28 September 2026', sha: '3ef09f15', changes: [
+    'Food Forest has 20 unreviewed Sesotho draft slides paired with English.',
+  ], tour: [
+    { title: 'Compare the Food Forest draft slides', where: 'Study → Food Forest Design', href: '/student',
+      detail: 'Choose Sesotho to compare the complete slide set. Three existing unreviewed draft passages appear beside their exact English source; the rest stays held in English. The deck is silent unless you choose the existing English narration.' },
+  ] },
+  { when: '28 September 2026', sha: '320a50b', changes: [
+    'Animals on your map now shows a picture of each animal, from laying hens to tilapia.',
+    '20 more crops have real pictures, and 5 indigenous fruit trees have their own art.',
+  ], tour: [
+    { title: 'See your animals', where: 'Crop plan → Animals on your map', href: '/facilitator/crops',
+      detail: 'Each choice now shows a small picture, and the animal you pick appears above its figures.' },
+    { title: 'Find the indigenous fruit trees', where: 'Design Studio → Plant Catalog', href: '/design',
+      detail: 'Choose Other Tree in the palette, then look for Jacket plum, Transvaal milkplum, African mangosteen, Sour fig or Spiny monkey orange.' },
+  ] },
+  { when: '28 September 2026', sha: '48d93e7c', changes: [
+    'Food Forest: 20 silent Xitsonga slides; Vegetables: 18 silent Tshivenda slides.',
+    'Draft text pairs with English; uncertain farming guidance remains English.',
+  ], tour: [
+    { title: 'Compare the Xitsonga Food Forest draft', where: 'Study → Food Forest Design', href: '/student',
+      detail: 'Choose Xitsonga and open Food Forest Design. Compare the marked sentences on slides 4 and 8 with the exact English source. The other teaching text stays in English; slides open silently and English source narration is optional.' },
+    { title: 'Read the Tshivenda Vegetables slides', where: 'Study → Vegetables and Staple Crops', href: '/student',
+      detail: 'Choose Tshivenda and open Vegetables and Staple Crops. The slides open silently, with most farming guidance held in English beside the source.' },
+  ] },
+  { when: '28 September 2026', sha: '0954e72', changes: [
+    'Food Forest has 20 silent Tshivenda review slides; Vegetables has 18 in Xitsonga.',
+    'Both are unreviewed drafts with most teaching still in English.',
+  ] },
+  { when: '28 September 2026', sha: '5121dd4', changes: [
+    'Tshivenda and Xitsonga Study decks can now be saved as smaller silent slide packs.',
+    'English narration and clips remain an optional full download.',
+  ], tour: [
+    { title: 'Choose your Study language', where: 'Sample course', href: '/samples',
+      detail: 'Choose Tshivenda or Xitsonga to try the regional Study slides.' },
+    { title: 'Save silent slides', where: 'Student → Offline downloads', href: '/student',
+      detail: 'Choose Slides only to save the displayed deck without audio or video.' },
+  ] },
+  { when: '28 September 2026', sha: '759a695', changes: [
+    'Soil Health now has 20 unreviewed Tshivenda and Xitsonga review slides.',
+    'They open silent; most teaching stays in English for review.',
+  ] },
+  { when: '28 September 2026', sha: '46810d6', changes: [
+    'Study downloads now flag English slides or narration in regional language packs.',
+  ] },
+  { when: '28 September 2026', sha: '9518110', changes: [
+    '17 fruit trees in the Plant Catalog now show their picture, from mango to marula.',
+    'On the plan, those trees now draw their own crown instead of one shared stand-in.',
+  ], tour: [
+    { title: 'Pick a fruit tree by its picture', where: 'Design Studio → Plant Catalog', href: '/design',
+      detail: 'Choose Other Tree in the palette and the Plant Catalog opens. Mango, avocado, litchi, fig, marula, waterberry, wild plum and ten more now show a picture beside the name, so the list is quicker to scan.' },
+    { title: 'See the tree on the plan', where: 'Design Studio → Exact plan', href: '/design',
+      detail: 'A tree placed from the Plant Catalog now draws that species\u2019 own crown on the plan. Before, these 17 all drew the same stand-in crown.' },
+  ] },
+  { when: '28 September 2026', sha: 'f10ee34', changes: [
+    'Kraals, pig pens and small ponds on your map now show under Animals on your map.',
+    'New: beef and dairy cattle, meat and wool sheep, pigs and tilapia, each sourced.',
+    'Dairy cows and tilapia add their months to the chart; wool never counts as food.',
+    'Honey, goat milk, rabbits, ducks and broilers still have no sourced months.',
+  ], tour: [
+    { title: 'Say what your kraal is for', where: 'Crop plan → Animals on your map → Kraal', href: '/facilitator/crops',
+      detail: 'A kraal can hold cattle, sheep or goats, so it lists all of them. Pick one, such as a dairy cow, to read milk per cow, first calving, feed, water, welfare and the law, each with its source.' },
+    { title: 'Fish in a small pond', where: 'Crop plan → Animals on your map → Pond', href: '/facilitator/crops',
+      detail: 'A small pond asks whether you keep fish in it. Pick tilapia and its months join the availability chart and the Year of food, next to your beds, fruit trees and hens.' },
+    { title: 'Place a kraal, pig pen or pond', where: 'Design Studio → element palette', href: '/design',
+      detail: 'Search the palette for a kraal, pig pen or small pond and place it. The crop plan picks it up on the same site.' },
+  ] },
+  { when: '28 September 2026', sha: '964eeae', changes: [
+    'New Year of food card: every month, beds, fruit trees and animals together.',
+    'Months with nothing fresh are marked, with a one-line summary of the year.',
+    'Suggested sowings to fill months with no fresh vegetable, on a bed with room.',
+    'Plan it opens the planting form filled in, so you check it before adding.',
+  ], tour: [
+    { title: 'See your whole year of food', where: 'Crop plan → Year of food', href: '/facilitator/crops',
+      detail: 'Under the availability chart, twelve month boxes show what comes in each month from your beds, fruit trees and animals. Months with nothing fresh have a dashed ochre edge. The Orchard and Animals buttons on the chart change this card too.' },
+    { title: 'Fill a month with no vegetables', where: 'Crop plan → Year of food → Fill the months', href: '/facilitator/crops',
+      detail: 'Each month with no fresh vegetable lists up to three sowings that would pick then, on a bed with room. Tap Plan it: the planting form opens with the bed, crop, month and share filled in. Check the notes and tap Add to bed.' },
+  ] },
+  { when: '28 September 2026', sha: '8e07078', changes: [
+    'Coops, goat pens, hives, hutches and duck ponds on your map now show in the crop plan.',
+    'Say what your animals are for: layers, broilers, village hens, milk or meat goats.',
+    'Per-animal eggs, milk or meat, feed, water, space, welfare and the law, each sourced.',
+    'Laying hens add their months to the availability chart; animals never count per m².',
+  ], tour: [
+    { title: 'See what your animals give', where: 'Crop plan → Animals on your map', href: '/facilitator/crops',
+      detail: 'Below the availability chart, each kind of animal housing on your map gets a card. Pick what the animals are for, such as laying hens, and read eggs per hen, feed, water, space, welfare and legal points. Tap a source to read the exact sentence.' },
+    { title: 'Put your laying hens on the calendar', where: 'Crop plan → Food, field & value → Availability', href: '/facilitator/crops',
+      detail: 'Once you have picked laying hens, a row under the chart marks the months your hens give eggs. Use the Animals button to hide it. Animals are never added to the bed yield or any per-m² figure.' },
+    { title: 'Place a coop or hive', where: 'Design Studio → element palette', href: '/design',
+      detail: 'Search the palette for a chicken coop, goat pen, beehive, rabbit hutch or duck pond and place it. Mark it existing or proposed; only existing housing counts in the From today chart.' },
+  ] },
+  { when: '28 September 2026', sha: '2b8b4717', changes: [
+    'Introduction L2 adds one Sesotho study prompt beside its English source.',
+    'Farm guidance, key points and quiz stay in English pending review.',
+    'Lesson audio language choices now wrap on narrow phone screens.',
+  ], tour: [
+    { title: 'Compare the Introduction L2 draft', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Sesotho and open L2. One general study prompt is a draft beside its exact English source. Farm advice, all key points and both quiz items remain English; fluent Sesotho review is pending.' },
+  ] },
+  { when: '28 September 2026', sha: 'c711285', changes: [
+    'Fruit trees on your map now show their picking months in the crop plan.',
+    'Orchard switch: show or hide tree fruit; trees never count in per-m² figures.',
+    'Species picker shows picking months, years to first crop and kg per tree.',
+    'Every tree figure quotes its published source; unknown ones are left blank.',
+  ], tour: [
+    { title: 'See your trees in the calendar', where: 'Crop plan → Food, field & value → Availability', href: '/facilitator/crops',
+      detail: 'Open the Availability tab: a row under the chart counts the fruit trees on your map in season each month. Tap a month to see which trees and their years to first crop. Use the Orchard button to hide them.' },
+    { title: 'Check a tree before you plant it', where: 'Design Studio → place a tree → pick a species', href: '/design',
+      detail: 'Search a fruit tree such as avocado, mango or marula. Under its name you now see when South African sources say it is picked, how many years to its first crop and about how many kg a mature tree gives, where a source states it.' },
+  ] },
+  { when: '28 September 2026', sha: '4fe85a91', changes: [
+    'Introduction adds source-paired Tshivenda holds for slides 7 and 10.',
+  ], tour: [
+    { title: 'Review Tshivenda Introduction slides', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Tshivenda and open slides 7 and 10. Both keep the exact English source beside a visible English hold; fluent and local farming review are pending.' },
+  ] },
+  { when: '28 September 2026', sha: '87396b07', changes: [
+    'Introduction shows source-paired Tshivenda and Xitsonga slide drafts.',
+    'Most Xitsonga text and all field guidance remain English.',
+    'Sesotho landscape slide 1 keeps its uncertain title and field step in English.',
+    'The Sesotho Reading the Landscape course card keeps its uncertain title in English.',
+  ], tour: [
+    { title: 'Compare the regional Introduction slides', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Tshivenda or Xitsonga. Drafts keep the English source; Xitsonga and Tshivenda audio are not available.' },
+  ] },
+  { when: '28 September 2026', sha: 'cbe046d9', changes: [
+    'Plant Guilds adds Sesotho draft slides beside English.',
+  ], tour: [
+    { title: 'Review Plant Guilds drafts', where: 'Study → Plant Selection & Guilds', href: '/student',
+      detail: 'Choose Sesotho and compare the 51 labelled draft slides with their exact English source. Field instructions held in English and all Sesotho wording still need facilitator review.' },
+  ] },
+  { when: '28 September 2026', sha: 'bf42c58', changes: [
+    '20 new crops: sorghum, soybean, brinjal, gem squash, spanspek, amaranth and more.',
+    'Cowpea has no trusted yield yet, so you add it by hand; it is not auto-suggested.',
+    'Auto-suggest keeps every bed winter-ready and fills empty harvest months.',
+  ], tour: [
+    { title: 'Re-run auto-suggest', where: 'Crop plan → Auto-suggest', href: '/facilitator/crops',
+      detail: 'New crops such as sweetcorn, baby marrow and cauliflower can now appear in the plan. No bed is left bare in winter because a summer crop took its slot.' },
+    { title: 'Add a new crop by hand', where: 'Crop plan → Add a crop', href: '/facilitator/crops',
+      detail: 'Pick cowpea, bambara groundnut or African nightshade from the crop list and choose the bed and month yourself.' },
+  ] },
+  { when: '28 September 2026', sha: 'd0a0dec8', changes: [
+    'Introduction has a Sesotho draft voice, with English source available.',
+    'Reading the Landscape adds Sesotho, Tshivenda and Xitsonga drafts beside English.',
+    'On portrait phones, full-screen slides keep the narration and exit controls visible.',
+  ], tour: [
+    { title: 'Compare Introduction narration', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Sesotho, open the Introduction deck and compare the labelled machine voice with the English source. Some uncertain passages remain in English, and fluent-speaker and local farming review are pending.' },
+    { title: 'Review the regional slide drafts', where: 'Study → Reading the Landscape', href: '/student',
+      detail: 'Choose Sesotho, Tshivenda or Xitsonga in the slide selector. Every regional page is marked as an unreviewed draft and keeps the English source beside it. English is the only narration available; fluent-speaker and local farming review are pending.' },
+  ] },
+  { when: '28 September 2026', sha: '3e75bbe6', changes: [
+    'Introduction has more Sesotho and Tshivenda draft slides beside the exact English source.',
+    'The Xitsonga Introduction cover now shows its provisional draft title.',
+  ], tour: [
+    { title: 'Compare the Introduction drafts', where: 'Study → Introduction to Permaculture', href: '/student',
+      detail: 'Choose Sesotho for slides 20–22, Tshivenda for slides 8, 9 and 11–14, or Xitsonga for slide 1. These are AI drafts awaiting facilitator review. Other regional slides may still show English. Sesotho Introduction now also has a draft voice; the other regional recordings remain English.' },
+  ] },
+  { when: '27 September 2026', sha: '040b1e2f', changes: [
+    'Few big harvests re-sows each crop after its harvest; too-hot months are skipped.',
+    'Irrigation off? A mapped farm now gets a rain-fed plan from its own rainfall.',
+    'Plans show each crop’s bed; the calendar and Task Planner follow all your farms.',
+  ], tour: [
+    { title: 'Try a rain-fed plan', where: 'Crop Plan → Auto-suggest', href: '/facilitator/crops',
+      detail: 'Leave “Reliable irrigation” off on a mapped farm. Crops are only sown in months your own rain can carry them, and each row names its bed.' },
+    { title: 'Check the Task Planner', where: 'Task Planner', href: '/cropplan',
+      detail: 'Plantings on beds at every saved farm now show up here, not only the main farm.' },
+  ] },
+  { when: '27 September 2026', sha: 'a89acfd5', changes: [
+    'Regional study slides now wait for your English narration choice.',
+  ], tour: [
+    { title: 'Choose source narration', where: 'Study → any core module', href: '/student',
+      detail: 'With Sesotho, Tshivenda or Xitsonga selected, the slides stay in that language where a draft exists. English narration starts only after you choose it.' },
+  ] },
+  { when: '27 September 2026', sha: '33a7eb68', changes: [
+    'Soil Health adds Sesotho and Xitsonga draft slides beside English.',
+  ], tour: [
+    { title: 'Compare the Soil Health drafts', where: 'Study → Soil Health & Composting', href: '/student',
+      detail: 'Choose Sesotho for slide 5 or Xitsonga for slides 3 to 5. Short unreviewed drafts are paired with exact English. Other teaching and narration stay English where regional wording is uncertain.' },
+  ] },
+  { when: '27 September 2026', sha: '6cbd8602', changes: [
+    'Soil Health opens with four Sesotho draft slides beside English.',
+  ], tour: [
+    { title: 'Compare the Soil Health drafts', where: 'Study → Soil Health & Composting', href: '/student',
+      detail: 'Choose Sesotho and open slides 1 to 4. Their limited Sesotho drafts are visibly unreviewed and paired with exact English; remaining slides and narration stay English.' },
+  ] },
+  { when: '27 September 2026', sha: '8fa5017', changes: [
+    'Whole-year plans no longer stack new crops on beds already growing.',
+    'Cold-interior plans no longer sow tender crops that frost would kill.',
+  ], tour: [
+    { title: 'Re-run the whole-year plan', where: 'Crop plan → Auto-suggest', href: '/facilitator/crops',
+      detail: 'Crops you marked as already growing now keep their beds in the best whole-year plan. In cold-winter areas, late potato, sweet potato, pumpkin, maize, dry bean and groundnut sowings that would still be in the ground at the first frost are no longer offered.' },
+  ] },
+  { when: '27 September 2026', sha: 'bc1dcee', changes: [
+    'Sowing months now follow your winter cold: frost-free farms get winter tomatoes.',
+    'Very cold farms no longer get a light-frost calendar.',
+    'Auto-suggest can stagger sowings of one crop, so beds stay fuller.',
+  ], tour: [
+    { title: 'Re-run auto-suggest', where: 'Crop plan → Auto-suggest', href: '/facilitator/crops',
+      detail: 'Open your crop plan and run auto-suggest again. The climate line under the plan says which calendar your site uses; plans already saved are not changed until you accept a new suggestion.' },
+  ] },
   { when: '27 September 2026', sha: '3a3c87ad', changes: [
     'Introduction adds Tshivenda and Xitsonga draft orientation slides beside English.',
   ], tour: [
@@ -3016,9 +4991,6 @@ export const RELEASE_NOTES: ReleaseNote[] = [
 
 /** Never let the banner become a wall of text over the map. */
 export const MAX_SHOWN = 5;
-// The saved update guide keeps five stops; showing more here makes its preview disagree
-// with the guide a farmer can actually open after refreshing.
-export const MAX_TOUR_STOPS = 5;
 
 /** The lines to render, flattened and capped. Kept pure so it is testable without a DOM. */
 export function visibleNotes(notes: ReleaseNote[] = RELEASE_NOTES, max = MAX_SHOWN): string[] {

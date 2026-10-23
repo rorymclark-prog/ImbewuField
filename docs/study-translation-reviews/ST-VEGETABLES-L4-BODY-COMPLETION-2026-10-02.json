@@ -1,0 +1,156 @@
+{
+  "packetVersion": 1,
+  "created": "2026-10-02",
+  "language": "Sesotho (ST)",
+  "moduleId": "vegetables-staples",
+  "lessonId": "vegetables-staples-l4",
+  "sourceRevision": "d81dee752057bc11c6c61dd0f958fc39117436f8",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "currentRegistryPath": "lib/course-translation-drafts-st-vegetables-staples.ts",
+  "registryFinding": "Canonical English and ST registry sourceEnglish match exactly. Existing Sesotho L4 body contains 12 paragraphs; paragraphs 3, 4, 6 and 7 are already localized and are preserved verbatim. Six ordinary English gaps received candidates; the pest-cause paragraph and registered-product safety paragraph remain complete English holds.",
+  "sourceParagraphCount": 12,
+  "entries": [
+    {
+      "fieldPath": "lessons[3].body.paragraphs[0]",
+      "paragraphIndex": 0,
+      "exactSourceEnglish": "Pest pressure usually rises for a reason.",
+      "currentSesothoDraft": "Pest pressure usually rises for a reason.",
+      "candidateSesothoDraft": "Pest pressure hangata e a eketseha ka lebaka le itseng.",
+      "draftStatus": "machine-draft candidate",
+      "drafterBacktranslation": "Pest pressure usually rises for a reason.",
+      "conditions": "Only ordinary framing is translated; the technical term ‘Pest pressure’ and ‘usually’ qualification remain explicit.",
+      "uncertainty": "Low: term retained in English."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[1]",
+      "paragraphIndex": 1,
+      "exactSourceEnglish": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "currentSesothoDraft": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "candidateSesothoDraft": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "draftStatus": "exact-English hold",
+      "drafterBacktranslation": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "conditions": "Full exact English hold: contains causal pest ecology or strict treatment/product-use safeguards that must not change.",
+      "uncertainty": "No translation attempted; preserving exact clause wording and all conditions."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[2]",
+      "paragraphIndex": 2,
+      "exactSourceEnglish": "So before you treat anything, look at the whole system.",
+      "currentSesothoDraft": "So before you treat anything, look at the whole system.",
+      "candidateSesothoDraft": "Ka hona, pele o phekola eng kapa eng, sheba system yohle.",
+      "draftStatus": "machine-draft candidate",
+      "drafterBacktranslation": "So before you treat anything, look at the whole system.",
+      "conditions": "Preserves the before-treatment sequence and requirement to look at the whole system. ‘System’ remains English.",
+      "uncertainty": "Moderate: ‘treat’ translated as phekola, a broad verb for treat; the whole-system condition is retained."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[3]",
+      "paragraphIndex": 3,
+      "exactSourceEnglish": "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+      "currentSesothoDraft": "Na semela se haellwa ke metsi? Na mobu o petetsane kapa ha o na phepo e lekaneng? Na dibatana tsa disenyi di se di thusa ho rarolla bothata?",
+      "candidateSesothoDraft": "Na semela se haellwa ke metsi? Na mobu o petetsane kapa ha o na phepo e lekaneng? Na dibatana tsa disenyi di se di thusa ho rarolla bothata?",
+      "draftStatus": "preserve existing Sesotho verbatim",
+      "drafterBacktranslation": "",
+      "conditions": "Existing localized paragraph retained unchanged.",
+      "uncertainty": "Existing draft remains machine-draft; no reassessment claimed."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[4]",
+      "paragraphIndex": 4,
+      "exactSourceEnglish": "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.",
+      "currentSesothoDraft": "Lekhasi le lesehla ha le bolele ka boyona hore ho na le disenyi. Bothata e ka ba metsi, phepo ya semela kapa tshenyo ya metso. Fumana hore na ke efe pele o nka kgato.",
+      "candidateSesothoDraft": "Lekhasi le lesehla ha le bolele ka boyona hore ho na le disenyi. Bothata e ka ba metsi, phepo ya semela kapa tshenyo ya metso. Fumana hore na ke efe pele o nka kgato.",
+      "draftStatus": "preserve existing Sesotho verbatim",
+      "drafterBacktranslation": "",
+      "conditions": "Existing localized paragraph retained unchanged.",
+      "uncertainty": "Existing draft remains machine-draft; no reassessment claimed."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[5]",
+      "paragraphIndex": 5,
+      "exactSourceEnglish": "Work through four steps, in order.",
+      "currentSesothoDraft": "Work through four steps, in order.",
+      "candidateSesothoDraft": "Sebetsa ka mehato e mene, ka tatellano.",
+      "draftStatus": "machine-draft candidate",
+      "drafterBacktranslation": "Work through four steps, in order.",
+      "conditions": "Preserves exactly four steps and their required order.",
+      "uncertainty": "Low."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[6]",
+      "paragraphIndex": 6,
+      "exactSourceEnglish": "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+      "currentSesothoDraft": "Ntlha ya pele: Sheba. Sheba mokgwa oo tshenyo e hlahang ka wona, bokatlase ba lekhasi, kutu le dimela tse haufinyane.",
+      "candidateSesothoDraft": "Ntlha ya pele: Sheba. Sheba mokgwa oo tshenyo e hlahang ka wona, bokatlase ba lekhasi, kutu le dimela tse haufinyane.",
+      "draftStatus": "preserve existing Sesotho verbatim",
+      "drafterBacktranslation": "",
+      "conditions": "Existing localized paragraph retained unchanged.",
+      "uncertainty": "Existing draft remains machine-draft; no reassessment claimed."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[7]",
+      "paragraphIndex": 7,
+      "exactSourceEnglish": "Two. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.",
+      "currentSesothoDraft": "Ntlha ya bobedi: Lekola dintho tse bakang kgatello semeleng: mongobo wa mobu, metso, sebaka pakeng tsa dimela, phepo le phallo ya metsi.",
+      "candidateSesothoDraft": "Ntlha ya bobedi: Lekola dintho tse bakang kgatello semeleng: mongobo wa mobu, metso, sebaka pakeng tsa dimela, phepo le phallo ya metsi.",
+      "draftStatus": "preserve existing Sesotho verbatim",
+      "drafterBacktranslation": "",
+      "conditions": "Existing localized paragraph retained unchanged.",
+      "uncertainty": "Existing draft remains machine-draft; no reassessment claimed."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[8]",
+      "paragraphIndex": 8,
+      "exactSourceEnglish": "Three. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.",
+      "currentSesothoDraft": "Three. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.",
+      "candidateSesothoDraft": "Ntlha ya boraro: Sireletsa se o thusang. Beneficial insects are doing work you'd otherwise do yourself.",
+      "draftStatus": "machine-draft candidate",
+      "drafterBacktranslation": "Third: Protect what is helping you. Beneficial insects are doing work you would otherwise do yourself.",
+      "conditions": "Translates only the ordinary framing; leaves the complete beneficial-insect claim exact to retain its role and comparison.",
+      "uncertainty": "Low."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[9]",
+      "paragraphIndex": 9,
+      "exactSourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "currentSesothoDraft": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "candidateSesothoDraft": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "draftStatus": "machine-draft candidate",
+      "drafterBacktranslation": "Fourth. Only then do you act — start with the lightest step that works. Physical removal, barriers, or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "conditions": "Root repair after independent backcheck retains precise intensity/effectiveness English clause; only-then order and all may-help/suitability/monitoring conditions preserved.",
+      "uncertainty": "Unreviewed mixed draft, no fluent approval."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[10]",
+      "paragraphIndex": 10,
+      "exactSourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentSesothoDraft": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "candidateSesothoDraft": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "draftStatus": "exact-English hold",
+      "drafterBacktranslation": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "conditions": "Full exact English hold: contains causal pest ecology or strict treatment/product-use safeguards that must not change.",
+      "uncertainty": "No translation attempted; preserving exact clause wording and all conditions."
+    },
+    {
+      "fieldPath": "lessons[3].body.paragraphs[11]",
+      "paragraphIndex": 11,
+      "exactSourceEnglish": "Be honest with yourself about which step you usually skip.",
+      "currentSesothoDraft": "Be honest with yourself about which step you usually skip.",
+      "candidateSesothoDraft": "Ipolelle nnete, hore na ke mohato ofe oo hangata o o tlolang.",
+      "draftStatus": "machine-draft candidate",
+      "drafterBacktranslation": "Tell yourself the truth about which step you usually skip.",
+      "conditions": "Preserves self-reflection and the ‘usually’ frequency qualifier.",
+      "uncertainty": "Low to moderate: direct everyday phrasing."
+    }
+  ],
+  "constraints": [
+    "No canonical or repository files changed.",
+    "Existing Sesotho paragraphs preserved verbatim.",
+    "Before-treat whole-system sequence and all diagnosis conditions preserved.",
+    "Four steps order preserved.",
+    "Act only then/lightest effective action preserved; conditional may-help, suitability and monitoring clauses remain exact English.",
+    "Registered crop/pest product, label, neem, protection and harvest-waiting terms, and no-improvised-mixture/stronger-dose prohibitions remain exact English.",
+    "No fluent approval claimed."
+  ],
+  "independentCheck": "All12 sources/current pairs and preserved paragraphs checked. Root p9 lightest-action repair independently rechecked and accepted. No fluent approval."
+}

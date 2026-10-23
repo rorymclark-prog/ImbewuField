@@ -1,0 +1,44 @@
+{
+  "base": "d268c3679516299404ffb5529c602743574c14fa",
+  "results": [
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "changedIndices": [
+        5,
+        8,
+        9,
+        11,
+        13,
+        15,
+        16
+      ],
+      "allOtherFieldsUnchanged": true
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "changedIndices": [
+        2,
+        3,
+        4,
+        5,
+        8,
+        9,
+        10,
+        11
+      ],
+      "allOtherFieldsUnchanged": true
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "changedIndices": [
+        5,
+        10,
+        13
+      ],
+      "allOtherFieldsUnchanged": true
+    }
+  ]
+}

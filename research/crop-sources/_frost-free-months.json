@@ -1,0 +1,334 @@
+{
+  "_source": "KZN DARD 'Plant Establishment' (Vegetable production guide), Table 6 'Sowing times for certain selected vegetable crops': https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf — the same table already cited in lib/crop-catalog.ts's FROST_FREE_CALENDAR_CITED comment for the 8 already-cited crops. 'months' = the table's 'Hot areas Frost-free' column (maps to catalog 'all-year'); 'mildFrost' = the table's 'Warm areas Light frosts' column (maps to catalog 'mild-frost'). Where a range gives an ambiguous slash endpoint (e.g. 'Feb - Jun/Jul'), the ambiguous alternative is excluded, matching this catalog's existing convention (see the carrots/turnip in-code comments already doing this).",
+  "crops": {
+    "maize": {
+      "months": [1, 2, 3, 7, 8, 9],
+      "currentCatalogMonths": [10, 11, 12],
+      "matchesCatalog": false,
+      "mildFrost": {
+        "months": [9, 10, 11, 12, 1],
+        "currentCatalogMonths": [10, 11, 12],
+        "matchesCatalog": false
+      },
+      "evidence": [
+        {
+          "quote": "Sweet corn Sept/Oct - Dec Aug/Sept - Jan/Feb Jan - Mar, Jul - Sept",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+          "page": 8,
+          "doc": "KZN DARD 'Plant Establishment', Table 6, Sweet corn row"
+        }
+      ],
+      "note": "PROXY, not an exact match: this catalog entry is grain maize (mielies, dried ~120-140 days), but Table 6 has no separate maize/mielie row — only 'Sweet corn'. Same species (Zea mays), same frost-tenderness and soil-temperature sowing trigger, so the window is a defensible physiological proxy, but not a maize-specific citation. Both slash ends of the mild-frost range ('Aug/Sept' and 'Jan/Feb') are ambiguous; kept only the shared Sept-Jan core. DAFF/DALRRD's grain-maize production guideline (already cited elsewhere in this catalog for days-to-harvest) could give a maize-specific regional planting table, but web.archive.org was intermittently 'Temporarily Offline' during this pass and the guideline's exact filename could not be found on nda.gov.za (which blocks direct fetches) — worth a follow-up. Current catalog's all-year [10,11,12] and mild-frost [10,11,12] share no months at all with this source's frost-free window, which is the most striking disagreement found in this pass."
+    },
+    "dry-beans": {
+      "months": [2, 3, 4, 5, 6, 7, 8, 9],
+      "currentCatalogMonths": [3, 4],
+      "matchesCatalog": false,
+      "mildFrost": {
+        "months": [8, 9, 10, 11, 12, 1, 2],
+        "currentCatalogMonths": [11, 12, 1],
+        "matchesCatalog": false
+      },
+      "evidence": [
+        {
+          "quote": "Bean, bush Sept - Jan Aug - Feb/Mar Feb - Sept",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+          "page": 7,
+          "doc": "KZN DARD 'Plant Establishment', Table 6, Bean bush row"
+        }
+      ],
+      "note": "Table 6 only has one 'Bean, bush' row — it does not split dry (sugar) beans from green/snap beans, so this same row is used for both catalog crops below. Frost-free range taken as Feb-Sept (unambiguous). Warm/light-frost range 'Aug - Feb/Mar': ambiguous Mar end excluded, kept Aug-Feb. Current catalog's all-year [3,4] is far narrower than the source's Feb-Sept and barely overlaps (only March); its mild-frost [11,12,1] falls almost entirely outside the source's Aug-Feb window (Nov, Dec, Jan) but the source's own core Aug-Oct is absent from the catalog."
+    },
+    "green-beans": {
+      "months": [2, 3, 4, 5, 6, 7, 8, 9],
+      "currentCatalogMonths": [2, 3, 4, 8, 9, 10, 11],
+      "matchesCatalog": false,
+      "mildFrost": {
+        "months": [8, 9, 10, 11, 12, 1, 2],
+        "currentCatalogMonths": [9, 10, 11, 12, 1],
+        "matchesCatalog": false
+      },
+      "evidence": [
+        {
+          "quote": "Bean, bush Sept - Jan Aug - Feb/Mar Feb - Sept",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+          "page": 7,
+          "doc": "KZN DARD 'Plant Establishment', Table 6, Bean bush row"
+        }
+      ],
+      "note": "Same shared 'Bean, bush' row as dry-beans (Table 6 does not distinguish green/snap from dry beans) — see that entry's caveat. Current catalog's all-year keeps Oct-Nov beyond the source's Feb-Sept ceiling and is missing the source's May-Jul core; mild-frost is close but not identical (missing Aug and Feb from the source window)."
+    },
+    "butternut": {
+      "months": [3, 4, 5, 7, 8, 9, 10],
+      "currentCatalogMonths": [8, 9, 10, 11],
+      "matchesCatalog": false,
+      "mildFrost": {
+        "months": [8, 9, 10, 11, 12, 1],
+        "currentCatalogMonths": [10, 11, 12],
+        "matchesCatalog": false
+      },
+      "evidence": [
+        {
+          "quote": "Cucurbits Sept - Dec/Jan Aug - Jan/Feb Mar - May, Jul - Oct",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+          "page": 7,
+          "doc": "KZN DARD 'Plant Establishment', Table 6, Cucurbits row"
+        }
+      ],
+      "note": "Table 6 lumps butternut, pumpkin, cucumber, watermelon (and squash/marrow/melon) under one blanket 'Cucurbits' row rather than naming each species, so this is a coarse family-level proxy, not a butternut-specific citation — treat with lower confidence than the other rows here. Frost-free ambiguous end 'Jan' excluded from the Sept-Dec/Jan cold-area range (not used); the Frost-free column itself, 'Mar - May, Jul - Oct', has no ambiguity. Warm/light-frost 'Aug - Jan/Feb': ambiguous Feb end excluded. Current catalog's Aug-Nov window for both all-year and mild-frost barely overlaps this source's split Mar-May/Jul-Oct frost-free window (only Aug-Oct in common) and its mild-frost differs by several months at each end."
+    },
+    "pumpkin": {
+      "months": [3, 4, 5, 7, 8, 9, 10],
+      "currentCatalogMonths": [8, 9, 10, 11],
+      "matchesCatalog": false,
+      "mildFrost": {
+        "months": [8, 9, 10, 11, 12, 1],
+        "currentCatalogMonths": [9, 10, 11],
+        "matchesCatalog": false
+      },
+      "evidence": [
+        {
+          "quote": "Cucurbits Sept - Dec/Jan Aug - Jan/Feb Mar - May, Jul - Oct",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+          "page": 7,
+          "doc": "KZN DARD 'Plant Establishment', Table 6, Cucurbits row"
+        }
+      ],
+      "note": "Same blanket 'Cucurbits' row as butternut — see that entry's caveat about the source not naming pumpkin specifically. Current catalog (already cross-checked in-code against Starke Ayres and Seeds for Africa for the summer/mild-frost windows) does not match this coarser DARD family row either."
+    },
+    "cucumber": {
+      "months": [3, 4, 5, 7, 8, 9, 10],
+      "currentCatalogMonths": [8, 9, 10, 11],
+      "matchesCatalog": false,
+      "mildFrost": {
+        "months": [8, 9, 10, 11, 12, 1],
+        "currentCatalogMonths": [9, 10, 11, 12],
+        "matchesCatalog": false
+      },
+      "evidence": [
+        {
+          "quote": "Cucurbits Sept - Dec/Jan Aug - Jan/Feb Mar - May, Jul - Oct",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+          "page": 7,
+          "doc": "KZN DARD 'Plant Establishment', Table 6, Cucurbits row"
+        }
+      ],
+      "note": "Same blanket 'Cucurbits' row — cucumber (~60-70 days) matures far faster than butternut/pumpkin (~110-130 days), so one shared sowing window for the whole family is a real weakness of this source, not just a citation nuance. Mild-frost is the closest overlap of the four cucurbits (Sept-Dec in common) but still not an exact match."
+    },
+    "watermelon": {
+      "months": [3, 4, 5, 7, 8, 9, 10],
+      "currentCatalogMonths": [8, 9, 10],
+      "matchesCatalog": false,
+      "mildFrost": {
+        "months": [8, 9, 10, 11, 12, 1],
+        "currentCatalogMonths": [8, 9, 10],
+        "matchesCatalog": false
+      },
+      "evidence": [
+        {
+          "quote": "Cucurbits Sept - Dec/Jan Aug - Jan/Feb Mar - May, Jul - Oct",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+          "page": 7,
+          "doc": "KZN DARD 'Plant Establishment', Table 6, Cucurbits row"
+        }
+      ],
+      "note": "Same blanket 'Cucurbits' row. Current catalog already cites a watermelon-specific source (Seeds for Africa KZN chart) for its Aug-Oct mild-frost window, which this catalog's own comment implies is preferred over a generic family row — recorded here for completeness, not as a reason to overwrite it."
+    },
+    "cabbage": {
+      "months": [2, 3, 4, 5, 6],
+      "currentCatalogMonths": [1, 2, 3, 4, 8, 9, 10],
+      "matchesCatalog": false,
+      "mildFrost": {
+        "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        "currentCatalogMonths": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        "matchesCatalog": true
+      },
+      "evidence": [
+        {
+          "quote": "Cabbage Sept - Feb All year Feb - Jun/Jul",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+          "page": 7,
+          "doc": "KZN DARD 'Plant Establishment', Table 6, Cabbage row"
+        }
+      ],
+      "note": "Frost-free ambiguous end 'Jul' excluded, kept Feb-Jun. Mild-frost ('All year') already matches the catalog's existing mild-frost comment and value exactly. All-year does not match: the source's Feb-Jun window omits the catalog's Jan, Aug, Sept, Oct entirely."
+    },
+    "beetroot": {
+      "months": [2, 3, 4, 5, 6, 7, 8, 9],
+      "currentCatalogMonths": [1, 2, 3, 4, 8, 9, 10, 11],
+      "matchesCatalog": false,
+      "mildFrost": {
+        "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        "currentCatalogMonths": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        "matchesCatalog": true
+      },
+      "evidence": [
+        {
+          "quote": "Beetroot Aug - Mar All year Feb - Sept",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+          "page": 7,
+          "doc": "KZN DARD 'Plant Establishment', Table 6, Beetroot row"
+        }
+      ],
+      "note": "Mild-frost ('All year') already matches the catalog's existing mild-frost value exactly. All-year does not match: the source gives Feb-Sept (unambiguous), while the catalog keeps Jan, Oct, Nov (not in the source) and is missing May, Jun, Jul (which the source includes)."
+    },
+    "sweet-potato": {
+      "months": [8, 9, 10, 11, 12, 1, 2, 3],
+      "currentCatalogMonths": [8, 9, 10, 11],
+      "matchesCatalog": false,
+      "mildFrost": {
+        "months": [10, 11, 12],
+        "currentCatalogMonths": [10, 11, 12],
+        "matchesCatalog": true
+      },
+      "evidence": [
+        {
+          "quote": "Sweet potato(cuttings) Nov Sept/Oct - Dec Aug - Mar",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+          "page": 8,
+          "doc": "KZN DARD 'Plant Establishment', Table 6, Sweet potato (cuttings) row"
+        }
+      ],
+      "note": "Mild-frost ambiguous start 'Sept' excluded from 'Sept/Oct - Dec', giving Oct-Dec — matches the catalog's existing mild-frost value exactly. All-year does not match: the source's Aug-Mar frost-free window is wider than the catalog's Aug-Nov at the tail end (source keeps going through Dec-Mar, catalog stops at Nov)."
+    },
+    "potato": {
+      "months": [4, 5],
+      "currentCatalogMonths": [2, 3, 4, 5, 7, 8, 9],
+      "matchesCatalog": false,
+      "mildFrost": {
+        "months": [6, 7, 8],
+        "currentCatalogMonths": [1, 8, 9, 10],
+        "matchesCatalog": false
+      },
+      "evidence": [
+        {
+          "quote": "Potato (tubers) Sept/Oct June-August April/May",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+          "page": 8,
+          "doc": "KZN DARD 'Plant Establishment', Table 6, Potato (tubers) row"
+        }
+      ],
+      "note": "The catalog's existing in-code comment already quotes this exact 'April/May' frost-free cell and folds it into the wider all-year array together with a separate 'potato-specific bulletin' (uncited here) that adds Feb, Mar, Jul, Aug, Sep — so the catalog's all-year is a deliberate blend of two sources, not an error, but on this table alone the frost-free months are only Apr-May. Mild-frost ('June-August') does not match the catalog's [1,8,9,10] — the catalog's mild-frost is sourced from the same potato-specific bulletin's Aug-Oct-plus-Jan figure instead of this table's Jun-Aug, per its own in-code comment."
+    },
+    "lettuce": {
+      "months": [2, 3, 4, 5, 6, 7, 8],
+      "currentCatalogMonths": [1, 2, 3, 4, 8, 9, 10, 11, 12],
+      "matchesCatalog": false,
+      "mildFrost": {
+        "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        "currentCatalogMonths": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        "matchesCatalog": true
+      },
+      "evidence": [
+        {
+          "quote": "Lettuce Jan - Apr, Jul - Dec All year Feb - Aug/Sept",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+          "page": 7,
+          "doc": "KZN DARD 'Plant Establishment', Table 6, Lettuce row"
+        }
+      ],
+      "note": "Mild-frost ('All year') already matches the catalog's existing mild-frost value exactly (its own in-code comment already cites this). Frost-free ambiguous end 'Sept' excluded from 'Feb - Aug/Sept', giving Feb-Aug. All-year does not match: the catalog keeps Sept-Dec and Jan (not in the source's Feb-Aug) and is missing May, Jun, Jul (in the source)."
+    },
+    "amadumbe": {
+      "months": [7, 8, 9, 10, 11, 12, 3],
+      "currentCatalogMonths": [8, 9, 10, 11],
+      "matchesCatalog": false,
+      "mildFrost": {
+        "months": [8, 9, 10, 11],
+        "currentCatalogMonths": [9, 10, 11],
+        "matchesCatalog": false
+      },
+      "evidence": [
+        {
+          "quote": "Madumbe (corms) - Aug - Nov Jul - Dec, Mar",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+          "page": 8,
+          "doc": "KZN DARD 'Plant Establishment', Table 6, Madumbe (corms) row"
+        }
+      ],
+      "note": "'Madumbe' is the same crop as this catalog's 'Amadumbe (taro)' entry (Colocasia esculenta, corm propagation, matches the catalog's own 'Propagate from whole tubers or corm cuttings' note). Frost-free is the split range Jul-Dec plus a separate March window (no ambiguity to resolve). Mild-frost ('Aug - Nov') is missing only August from the catalog's [9,10,11] otherwise-identical set. All-year does not match: the catalog's Aug-Nov omits Jul, Dec and Mar, which the source's frost-free column includes."
+    },
+    "garlic": {
+      "months": [4, 5],
+      "currentCatalogMonths": [4, 5, 6],
+      "matchesCatalog": false,
+      "mildFrost": {
+        "months": [4, 5],
+        "currentCatalogMonths": [4, 5],
+        "matchesCatalog": true
+      },
+      "evidence": [
+        {
+          "quote": "Garlic (cloves) Apr - May Apr - May Apr - May",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+          "page": 7,
+          "doc": "KZN DARD 'Plant Establishment', Table 6, Garlic (cloves) row"
+        }
+      ],
+      "note": "All three columns give the identical Apr-May window. Mild-frost already matches the catalog's existing cited value ([4,5], per its own in-code 'KZN DARD Table 6' comment). All-year does not match: the catalog carries an extra June not present in any column of this source."
+    },
+    "peas": {
+      "months": [3, 4, 5],
+      "currentCatalogMonths": [1, 2, 3, 4, 8, 9],
+      "matchesCatalog": false,
+      "mildFrost": {
+        "months": [3, 4, 5, 6, 7],
+        "currentCatalogMonths": [3, 4, 5, 6, 7, 8],
+        "matchesCatalog": false
+      },
+      "evidence": [
+        {
+          "quote": "Pea Jun/Jul - Sept Mar - Jul/Aug Mar - May/Jun",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+          "page": 8,
+          "doc": "KZN DARD 'Plant Establishment', Table 6, Pea row"
+        }
+      ],
+      "note": "Frost-free ambiguous end 'Jun' excluded from 'Mar - May/Jun', giving Mar-May. Warm/light-frost ambiguous end 'Aug' excluded from 'Mar - Jul/Aug', giving Mar-Jul — the catalog's existing mild-frost [3,4,5,6,7,8] is a near-match but keeps the ambiguous August the source excludes; its own in-code comment already cites this same table for mild-frost, just with the wider (ambiguous) endpoint kept. All-year does not match: the catalog's [1,2,3,4,8,9] shares only Mar-Apr with the source's Mar-May."
+    },
+    "broad-beans": {
+      "months": [4, 5],
+      "currentCatalogMonths": [2, 3, 4, 5, 6, 7, 8],
+      "matchesCatalog": false,
+      "mildFrost": {
+        "months": [4, 5],
+        "currentCatalogMonths": [4, 5],
+        "matchesCatalog": true
+      },
+      "evidence": [
+        {
+          "quote": "Bean, broad Apr - May Apr - May Apr - May",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+          "page": 7,
+          "doc": "KZN DARD 'Plant Establishment', Table 6, Bean, broad row"
+        }
+      ],
+      "note": "All three columns identical (Apr-May); mild-frost already matches the catalog's existing cited value exactly (its own in-code comment already cites this table). All-year does not match: the catalog's much wider [2..8] reflects broad beans' distinct overwintering hardiness (per the catalog's own note on frost tolerance) rather than this table's frost-free cell, so the disagreement looks like a deliberate widening for a genuinely frost-tolerant legume, not an uncited error — but it is still not what this source's frost-free column itself says."
+    },
+    "broccoli": {
+      "months": [2, 3, 4, 5, 6],
+      "currentCatalogMonths": [1, 2, 3, 4, 8, 9],
+      "matchesCatalog": false,
+      "mildFrost": {
+        "months": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        "currentCatalogMonths": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        "matchesCatalog": true
+      },
+      "evidence": [
+        {
+          "quote": "Broccoli Sept - Jan Jan - Sept Feb - Jun/Jul",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+          "page": 7,
+          "doc": "KZN DARD 'Plant Establishment', Table 6, Broccoli row"
+        }
+      ],
+      "note": "Frost-free ambiguous end 'Jul' excluded from 'Feb - Jun/Jul', giving Feb-Jun. Mild-frost ('Jan - Sept') already matches the catalog's existing mild-frost value exactly. All-year does not match: the catalog keeps Jan, Aug, Sept (not in the source's Feb-Jun) and is missing May, Jun (in the source)."
+    }
+  },
+  "uncitable": {
+    "kale": "No row for kale in this table, and the catalog's own in-code comment (dated 2026-08-23) already records that it checked all five KZN DARD vegetable-production tables (expected yields, plant establishment, length of growing period, successional cropping, populations/spacings) plus the DALRRD leafy-vegetables brochure and the GDARD vegetable guideline, and kale is absent from every one — confirmed again here, not re-litigated with a new fetch.",
+    "groundnuts": "No groundnut row in KZN DARD Table 6 (a legume/oilseed crop, not a vegetable this table covers). Attempted DAFF/DALRRD's dedicated groundnut production guideline (nda.gov.za blocks direct fetches; tried via web.archive.org with the brief's id_ pattern and several guessed filenames) and grainsa.co.za/arc.agric.za directly, but web.archive.org returned 'Temporarily Offline' or 404 on every attempt during this pass and the exact DAFF filename could not be located from a CDX listing (archive.org's CDX endpoint was also unreachable/incomplete). A retry once archive.org is stable, or a direct DAFF/ARC-GCI groundnut guideline URL, would likely resolve this.",
+    "coriander": "No coriander/dhania row in KZN DARD Table 6. The catalog's own in-code note already records that coriander/dhania is not a line item in the KZN DARD Expected Yields table either, and that the only SA-adjacent figures found (Kenyan commercial dhania seed yields) are for a different product (dried seed, not fresh leaf) and region. No DAFF herb-specific production guideline covering warm/frost-free sowing months for coriander was located in this pass.",
+    "oats": "No oats row in KZN DARD Table 6 (a vegetable-sowing table; oats here is a non-food winter cover crop for maize land, sourced elsewhere in the catalog from a separate 'forage-cereal bulletin'). That forage-cereal bulletin's own window (mid-Feb to early May) is not broken out by frost-free/warm/cool area the way Table 6 is, so a genuinely frost-free-area-specific oats sowing window was not found in this pass."
+  }
+}

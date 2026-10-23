@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-03",
+  "baseHead": "add09cfface3dcc06836ebc978f4efc4cb444b5c",
+  "sourceCandidatePacket": "docs/study-translation-reviews/VEGETABLES-STAPLES-OPENING-SIX-CANDIDATES-2026-10-03.json",
+  "finalSemanticSourceCheck": "docs/study-translation-reviews/VEGETABLES-STAPLES-OPENING-SIX-FINAL-CHECK-2026-10-03.json",
+  "changedTargetFields": 65,
+  "byLanguage": {
+    "st": 19,
+    "ve": 23,
+    "ts": 23
+  },
+  "mixedSourceHeldFields": [
+    "docs/narration/vegetables-staples.st.paired-draft.json#/slides/0/target/body/0",
+    "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/0/target/body/0",
+    "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/0/target/body/0",
+    "docs/narration/vegetables-staples.st.paired-draft.json#/slides/1/target/body/3",
+    "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/1/target/body/2",
+    "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/0/target/body/2",
+    "docs/narration/vegetables-staples.st.paired-draft.json#/slides/2/target/body/5",
+    "docs/narration/vegetables-staples.ve.paired-draft.json#/slides/2/target/body/5",
+    "docs/narration/vegetables-staples.ts.paired-draft.json#/slides/2/target/body/5"
+  ],
+  "allThreeEnglishNarrationSourcesUnchanged": true,
+  "allUnlistedPairedDeckFieldsUnchanged": true,
+  "approval": "Unreviewed machine drafts only; no fluent or local farming approval."
+}

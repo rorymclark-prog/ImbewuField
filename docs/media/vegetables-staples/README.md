@@ -28,3 +28,7 @@ No Flow generation was used. No `PLAN_VERSION`, English lesson, quiz, species li
 ## Earlier English release record
 
 The original English deck release record is `../studies-illustrated-release/vegetables-staples-corrected-audio.json`. It documents the English deck generation, app preview and earlier quality review from 20 September 2026. No physical-device or fluent-language sign-off is claimed.
+
+## Vegetables L1 fuller regional paired drafts
+
+Slides 4–7 in the Sesotho, Tshivenda and Xitsonga learner decks now include 39 source-bound ordinary-prose draft rows. The 12 stills were rendered from the paired narration drafts and are recorded in the three language verification manifests. These remain unreviewed machine drafts; no fluent-language or local farming review is claimed, and no narration audio was generated or changed. Exact source and target rows, still hashes and the selective offline-cache refresh are recorded in [the 5 October update proof](l1-fuller-paired-update-2026-10-05.json).

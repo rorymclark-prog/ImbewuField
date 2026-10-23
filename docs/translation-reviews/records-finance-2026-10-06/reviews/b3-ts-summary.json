@@ -1,0 +1,38 @@
+{
+ "language": "ts (Xitsonga, provisional standard)",
+ "counts": {
+  "hold": 4,
+  "ok": 101,
+  "repair": 1
+ },
+ "total": 106,
+ "held": [
+  "R285",
+  "R289",
+  "R326",
+  "R356"
+ ],
+ "repaired": [
+  "R349"
+ ],
+ "top_issues": [
+  "R356 HOLD: 'vutika' (weight) unverifiable; sentence about missing weights/unknown kept weight cannot be trusted.",
+  "R289 and R326 HOLD: 'Tsala mikolo ya mibhede' for 'Trace your beds' - 'mikolo' unverified and 'tsala' means write/record, not trace.",
+  "R285 HOLD: legend explanation uses 'mikolo' for 'dashed outline'; unverified (could read as ceremonies/lines). Rest of the sentence is correct.",
+  "R349 REPAIR: tab 'Pulani ni leswi endleke' = 'plan and what was done', not 'actual harvest'; also far too long for a tab. Suggested 'Pulani ni ntshovelo'.",
+  "R348 and R349 tabs are 21 and 23 characters, well over the ~10-char guideline (R348 meaning is right, left ok/minor).",
+  "R373-R375: 'timiwile' (switched off) unverified; 'ku xavisa loku' (this selling) vs 'those sales'. Negations and the kg-only-filtered point are preserved.",
+  "Money in/out: R304, R309, R312, R316-R321 all use mali leyi nghenaka/humaka and 'yi nghenile/yi humile' - correct; R312 correctly 'money you got minus what you paid' and is not called profit; unrecorded costs negation correct. No income/profit confusion found.",
+  "'Kept' = 'leswi tshameke' (remained) in R291, R338, R363, R367, R371, R400, R401 - consistently harvested minus sold, never money. R401 negation ('leswi tshameke a swi tiviwi') correct.",
+  "'Costs' = 'tihakelo'/'xihakelo' (payments/fees) throughout (R287, R297, R300-R302): consistent with existing 'Tihakelo' tab word but literally 'payments'; slightly ambiguous with wages/fees.",
+  "Fragments after figures (R317/R318/R320/R321 'yi nghenile/yi humile', R369 'leswi xavisiweke', R371 'leswi tshameke', R388 'eka {benchmark}', R365/R366 'Ni ...') read acceptably; R388 'eka' could be read as 'to' in a range."
+ ],
+ "checks_clean": [
+  "No words meaning tribe/clan/school (e.g. xikolo) seen in any draft.",
+  "No amount-vs-price mix-up: 'tintsengo' used for prices (R338), {amount} figures neutral.",
+  "No wrong-language (isiZulu/Sesotho/Tshivenda) words noticed; English loans 'app', 'Design Studio', 'kg', 'm²', 'chati', 'bara', 'khadi' are used.",
+  "Placeholders in all drafts match English exactly (scripted check).",
+  "Negations in long caveats (R286, R291, R312, R340, R364, R373-R375, R387, R401) are preserved."
+ ],
+ "confidence_limits": "This is a machine review, not fluent-speaker approval. My Xitsonga is partial: I can parse grammar and common vocabulary but cannot confirm rarer words (mikolo, vutika, timiwile, xivandla, matsavu, mapakete, matandza, papila, switolo, kutlhela) or natural register. 'ok' means the draft is consistent with the English and I found no meaning error I can demonstrate, not that a native speaker would call it natural; 'hold' marks words I could not verify rather than demonstrated errors. Written standard Xitsonga only; Shangani comprehension not assessed."
+}

@@ -1,0 +1,100 @@
+{
+  "speciesId": "carica-papaya",
+  "commonName": "Pawpaw / papaya",
+  "botanicalName": "Carica papaya",
+  "harvestMonths": [
+    {
+      "region": "KwaZulu-Natal",
+      "months": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        1
+      ],
+      "evidence": {
+        "quote": "The cropping season usually extends from about April to January, with a peak from September to November.",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+        "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes), section 1.6 Papaya, 'Bearing age'",
+        "page": 18
+      },
+      "notes": "April to January runs across the year end, so February and March are outside the stated season. The same sentence gives a peak of September to November. The paragraph mentions the Makhathini Flats only for how soon the first crop comes, so the season is for KZN in general. The guide has no in-text citation for this sentence (its reference list includes De Villiers 1999, 'The cultivation of Papaya', ARC). Page is the PDF page."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": [
+      1.5,
+      1.5
+    ],
+    "evidence": {
+      "quote": "first crop is generally produced about 18 months later",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN, Bearing age",
+      "page": 18
+    },
+    "notes": "KZN typical first crop after planting, about 18 months. The same paragraph reports 9–11 months under favourable Makhathini Flats conditions. This is a typical regional reference, not a minimum or guarantee."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No explicit age of full bearing is sourced. The KZN guide does state an economic plantation life of about 4–5 years; this is retained as a renewal reference rather than incorrectly used as the age of full production."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Corrected 11 October 2026: KZN DARD supplies conservative 10–15, average 20–25 and good 30 t/ha (PDF p19), plus planting spacing (p18). These regional hectare references are retained below. The guide does not give an annual per-bearing-female yield by age, so arbitrary plant counts, male plants and household spacing cannot receive a generic kg/plant default."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "Papaya is a frost-tender tropical/subtropical plant with no winter-chill requirement for flowering, but no fetched source explicitly stated 'no chill requirement' for papaya, so left null per the rule rather than asserting it. The FAO compendium instead notes cold sensitivity in a postharvest-ripening context, not a floral-induction chilling need."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Set to null in editor review: the FAO quote says papaya plants are male, female or perfect; which applies depends on the cultivar and the plant, so no single value is stated by the source. Withdrawn value: partly-self-fertile."
+  },
+  "harvestProduct": "fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Plantation renewal",
+      "quote": "The economic life of a plantation is only about 4-5 years.",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN (2006), Papaya: Bearing age",
+      "page": 18,
+      "note": "The KZN guide gives about 4–5 years as the economic life of a plantation. Review replanting in the future plan; this commercial renewal reference does not mean every household plant dies at five or starts full production then."
+    },
+    {
+      "title": "Regional hectare output",
+      "quote": "Yields (t/ha) Conservative: 10 to 15 Average: 20 to 25 Good: 30",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN (2006), Papaya: Yields",
+      "page": 19,
+      "note": "Regional production reference: conservative 10–15 t/ha, average 20–25 t/ha, good 30 t/ha. These area figures are not a per-plant annual age schedule. Match plant sex, bearing plants, spacing, climate and water before setting expected kilograms."
+    },
+    {
+      "title": "Starting stock and plant sex",
+      "quote": "These are solo (or hermaphrodite) varieties eg. ‘Sunrise Solo’, and dioecious (Male and female flowers borne on separate plants) varieties eg. ‘Honey Gold’.",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN (2006), Papaya: Sex forms",
+      "page": 18,
+      "note": "Sunrise Solo is a hermaphrodite-type candidate; Honey Gold has separate male and female plants. Confirm the actual stock and sex form. A count of mapped plants alone does not establish how many bear fruit."
+    }
+  ],
+  "gaps": [
+    "11 October 2026: reopened the official guide and visually verified PDF pp18–19. Previous notes claiming no South African hectare yield and no sourced productive-life reference were incorrect. Both are now retained and displayed in their native context; the missing field is a defensible per-plant annual age-yield schedule.",
+    "Round 3 2026-09-29: harvestMonths filled from the KZN DARD 'Fruit and Nut Production in KZN' guide (April to January, peak September to November), quote checked against the PDF text. DAFF's own 'Brochure Papaya.pdf' (nda.gov.za) and nda.agric.za/docs/papaya/papaya.htm still returned 503 or a reset from this sandbox, so no national or other-province window yet. A trade report (FreshPlaza, on Neofresh) and Food For Mzansi describe year-round picking by a large grower; neither is a primary source, so 12 months was not used. No Limpopo or Mpumalanga window was found.",
+    "ISHS 'OVERVIEW OF THE SOUTH AFRICAN PAPAYA INDUSTRY' (Connolly) was fetched but only its abstract was accessible; it confirmed papaya is a 'small but lucrative industry' with 'very limited papaya production areas within the country' and that South Africa's climate 'is not ideal' for papaya, but gave no harvest months, yields or bearing-age figures in the accessible text.",
+    "Superseded 11 October 2026: the KZN guide supplies hectare yield references. A matching per-plant age-yield schedule remains unknown.",
+    "Superseded 11 October 2026: the KZN guide states about 4–5 years economic life. This is a renewal reference, not a years-to-full-bearing figure or yield-by-age curve.",
+    "agribook.co.za's general fruit chapter mentions papaya is grown 'mainly in Mpumalanga and Limpopo' but its dedicated subtropical-fruit page (referenced but not linked) was not located/fetched.",
+    "Editor review 2026-09-28: pollination withdrawn — the FAO quote says papaya plants are male, female or perfect; which applies depends on the cultivar and the plant, so no single value is stated by the source.",
+    "2026-10-04: First-crop reference updated after retrieving and inspecting the KZN DARD PDF; regional conditions retained in the note."
+  ],
+  "householdFoodStatus": "confirmed-food"
+}

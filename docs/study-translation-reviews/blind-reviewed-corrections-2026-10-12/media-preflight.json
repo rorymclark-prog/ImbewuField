@@ -1,0 +1,92 @@
+[
+  {
+    "path": "public/course-decks/intro-permaculture/st-silent/slide-22.webp",
+    "beforeSha256": "1fd599926f5f11249886a376693aea73bfc387ca9b09d498a0177d44ab288500",
+    "beforeBytes": 259458,
+    "afterSha256": "5524fa056b9fa115ef8c26e7aab725de2d18f5c4187f61023a691269f4e1cffa",
+    "afterBytes": 290480,
+    "width": 1440,
+    "height": 5400,
+    "protectedIllustrationMeanChannelDifference": [
+      0.2728496732026144,
+      0.2611576797385621,
+      0.3219885620915033
+    ],
+    "rootViewedFullPNG": true,
+    "rootViewedCompressed": true,
+    "root390Preview": false,
+    "encoding": "WebP quality90 method6, unchanged established size/encoding"
+  },
+  {
+    "path": "public/course-decks/intro-permaculture/ts/slide-05.webp",
+    "beforeSha256": "6d0340e625b55af2440067afb6854c0b03cfd60ab335534751ccfdf0579e40fa",
+    "beforeBytes": 525246,
+    "afterSha256": "ddf0c39707c614061dea4c95c342f67a0fc546c8a33fe476160b946bde8052c7",
+    "afterBytes": 570870,
+    "width": 1440,
+    "height": 5400,
+    "protectedIllustrationMeanChannelDifference": [
+      1.9724346405228759,
+      1.7370245098039216,
+      2.2032442810457518
+    ],
+    "rootViewedFullPNG": true,
+    "rootViewedCompressed": true,
+    "root390Preview": false,
+    "encoding": "WebP quality90 method6, unchanged established size/encoding"
+  },
+  {
+    "path": "public/course-decks/intro-permaculture/ts/slide-22.webp",
+    "beforeSha256": "175103f340f9880c77507648aea6fb0edd3c251b5fe863eccd6731f519cc40fa",
+    "beforeBytes": 276428,
+    "afterSha256": "5e0ca546bdf475393b8ce5f3adc13b2623b49ec99ba2035caaa64760d95c5312",
+    "afterBytes": 307740,
+    "width": 1440,
+    "height": 5400,
+    "protectedIllustrationMeanChannelDifference": [
+      0.2751004901960784,
+      0.2615563725490196,
+      0.32148937908496733
+    ],
+    "rootViewedFullPNG": true,
+    "rootViewedCompressed": true,
+    "root390Preview": false,
+    "encoding": "WebP quality90 method6, unchanged established size/encoding"
+  },
+  {
+    "path": "public/course-decks/market-community/ts/slide-03.webp",
+    "beforeSha256": "9b7d95fe636974183650963a701bb623e8ae5192cab6610c278c2e541e73b22e",
+    "beforeBytes": 215244,
+    "afterSha256": "bd4d15d650c043060358263205e544bbb10b539fab3f1c1877bd18301b5792c1",
+    "afterBytes": 238276,
+    "width": 1440,
+    "height": 5400,
+    "protectedIllustrationMeanChannelDifference": [
+      0.23847303921568627,
+      0.22389869281045752,
+      0.2709828431372549
+    ],
+    "rootViewedFullPNG": true,
+    "rootViewedCompressed": true,
+    "root390Preview": false,
+    "encoding": "WebP quality90 method6, unchanged established size/encoding"
+  },
+  {
+    "path": "public/course-decks/small-livestock/st/slide-06.webp",
+    "beforeSha256": "c58eecfeaab469d2a5a2935fef00a1de76d269933c242655eba95aa6c1d50e8c",
+    "beforeBytes": 583988,
+    "afterSha256": "958b3f0f6be94391850e818121f4d241ab5f25a8d585f5f96cc4ed7e54d358ae",
+    "afterBytes": 632352,
+    "width": 1440,
+    "height": 5400,
+    "protectedIllustrationMeanChannelDifference": [
+      2.2129942810457517,
+      1.9910408496732026,
+      2.4633047385620914
+    ],
+    "rootViewedFullPNG": true,
+    "rootViewedCompressed": true,
+    "root390Preview": false,
+    "encoding": "WebP quality90 method6, unchanged established size/encoding"
+  }
+]

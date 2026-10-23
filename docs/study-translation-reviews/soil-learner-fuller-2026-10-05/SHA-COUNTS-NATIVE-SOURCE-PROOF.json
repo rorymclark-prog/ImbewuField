@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-05",
+  "scope": "Data-only review archive; no repository implementation or publication",
+  "base": "bde761b33dc4f587746d60b5fe77d881f29b80ca",
+  "finalCandidate": "soil-learner-ordinary-full-repaired-candidates.json",
+  "finalScope": {
+    "module": "soil-health",
+    "lessons": [
+      "soil-health-l1",
+      "soil-health-l2",
+      "soil-health-l3"
+    ],
+    "fieldSlots": 153,
+    "bodyCompositions": 9,
+    "bodyParagraphs": 111,
+    "candidateChangedFields": 77,
+    "candidateChangedUnits": 137,
+    "ordinaryGapUnitsInInventory": 132,
+    "allFieldSlotsReviewed": true,
+    "remainingInventoryGapUnitCount": 36,
+    "retainedEntireEnglishFieldCount": 0,
+    "unchangedReviewedFieldCount": 76
+  },
+  "repairUnits": 14,
+  "repairParentFields": 13,
+  "nativeSourceHashes": {
+    "lib/course-modules.ts": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+    "lib/course-localization.ts": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+    "lib/course-translation-drafts-st-soil-health.ts": "b480046668dc43b43f523e08c6d749838a972c004a95894055c023f538affb5d",
+    "lib/course-translation-drafts-ve-soil-health.ts": "3cc9ce26293fd5d857e8b403b08c3db4478cd53bf402ee6dd0f328be766dab37",
+    "lib/course-translation-drafts-ts-soil-health.ts": "467bcf4bf28905577b5f917c97d12e1d572f8c786f036b09f3084e6b1183c89e"
+  },
+  "files": [
+    {
+      "name": "soil-learner-ordinary-full-candidates.json",
+      "bytes": 1088762,
+      "sha256": "293d75581b0047c69c583857902a2510eb7e08cf6ce926d2929eab7b51e47b77"
+    },
+    {
+      "name": "soil-learner-ordinary-full-candidates-CAUTIONS.md",
+      "bytes": 1439,
+      "sha256": "43d7d5597935530871a91cd9807e4d879ede14d115103d632ae9e09665516ad5"
+    },
+    {
+      "name": "soil-learner-ordinary-full-independent-review.json",
+      "bytes": 581187,
+      "sha256": "fc4e94c801b905b58d522db766a73225cd25280813587ec073fc36f6796126c2"
+    },
+    {
+      "name": "soil-learner-fourteen-repairs-second-check.json",
+      "bytes": 38216,
+      "sha256": "eed35ac0789310c21d4303788a8a71a637fe97681b21870c73fe7686b1ec6836"
+    },
+    {
+      "name": "soil-learner-ordinary-full-repaired-candidates.json",
+      "bytes": 1106435,
+      "sha256": "5728a9b2899c4e18562e3b716bdea53e9dabaf5524509c382910457aa911a84f"
+    },
+    {
+      "name": "soil-learner-ordinary-full-repaired-candidates-proof.json",
+      "bytes": 58596,
+      "sha256": "fa6753a91be2ec02140b4b05197f99399d2368508dae733ad9383625528ccd43"
+    },
+    {
+      "name": "soil-learner-ordinary-residual-inventory.json",
+      "bytes": 839640,
+      "sha256": "39b742381e69bd927990df2c13b796211d2dcce20dad355f1301b660ac57e39c"
+    },
+    {
+      "name": "soil-independent-native-bindings.json",
+      "bytes": 22709,
+      "sha256": "945c78084bf8072a13bddf1e3d1fcdc634d102d594dd8b1bfefdb862cbbc8ae2"
+    },
+    {
+      "name": "prepare-soil-learner-repaired-packet.py",
+      "bytes": 9567,
+      "sha256": "be296f3bb580999044c58d7afa33f9baeb075d55c3826e4ff202f2df868a7c38"
+    }
+  ]
+}

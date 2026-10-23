@@ -1,0 +1,36 @@
+{
+  "observedAt": "2026-10-07T03:54:18.192864+00:00",
+  "sourcePacket": "/tmp/imbewu-agy-reading-l3-all-language-source-20261007.json",
+  "sourceSha256": "6a58915a6ef6a9cc4c99bf5917a78e7ee22a850c2fa426fdd796865c6cda27bc",
+  "auditConversation": "48686326-d31a-4a61-a252-ae3bc13ca69c",
+  "auditCompleted": true,
+  "completedObservation": "/tmp/imbewu-agy-reading-l3-completed-ax-20261007.txt",
+  "rootConfirmedFindings": [
+    {
+      "language": "zu",
+      "field": "body.paragraph3",
+      "source": "Mark places where cold or damage lasts longest.",
+      "current": "Maka izindawo lapho amakhaza noma umonakalo kuhlala khona isikhathi eside.",
+      "issue": "Duration is long but lacks an explicit longest contrast.",
+      "candidate": "Maka izindawo lapho amakhaza noma umonakalo kuhlala khona isikhathi eside kunazo zonke.",
+      "status": "candidate awaiting independent semantic check"
+    },
+    {
+      "language": "zu",
+      "field": "quiz.0.options.3",
+      "source": "The place with the most shade, without checking frost",
+      "current": "Indawo enomthunzi omkhulu, ngaphandle kokuhlola isithwathwa",
+      "issue": "Much/big shade does not explicitly retain most shade.",
+      "candidate": "Indawo enomthunzi omningi kunazo zonke, ngaphandle kokuhlola isithwathwa",
+      "status": "candidate awaiting independent semantic check"
+    }
+  ],
+  "nextRequest": "Repair candidates actually submitted in native UI; duplicate request wording observed but same authorized read-only scope. Response still working at last observation.",
+  "fluentApproval": false,
+  "learnerEdits": false,
+  "notes": [
+    "Model blanket comparative proof is not authoritative. ST/TS shade superlatives need independent scrutiny.",
+    "VE/TS local frost-season duration is an intentional exact English precision hold; ordinary framing remains a translation task.",
+    "No canonical, media, source, indices or learner fields changed."
+  ]
+}

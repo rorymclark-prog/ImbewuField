@@ -1,0 +1,13 @@
+{"language":"ve","counts":{"ok":11,"repair":0,"hold":3},
+"top_issues":[
+"R284 Mobile = 'Founu' reads as telephone only - HOLD",
+"R282 Cash = 'Masheleni' is a locative of generic money, not clearly cash/a way to pay - HOLD",
+"R275 'tshisaka tsha zwiḽiwa' food-forest calque, drafter LOW confidence - HOLD",
+"R274 'sialala' unfamiliar (tshi- expected); reused from existing locale, kept OK but should go to a speaker",
+"R273 'dzinati' nuts loanword unconfirmed (attested in existing locale)",
+"R271 slash alternative with relative clause is clumsy but mirrors English",
+"R283 'Khadi' bare loanword; local preference unconfirmed",
+"R272 'Mutevhe' = list unconfirmed (reused from batch 1)",
+"No placeholders in this batch",
+"No negation/tense issues found"],
+"confidence":"Machine review only, limited Tshivenda competence. Ok means no detectable meaning error, not native approval; several reused words (mutevhe, sialala, dzinati) I cannot independently verify."}

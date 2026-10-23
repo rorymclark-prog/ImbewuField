@@ -1,0 +1,726 @@
+{
+  "language": "ve",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "provenance": {
+    "newDrafts": "Every Soil Health heading and paragraph now carries an unreviewed target draft beside its exact English source. The drafts come from earlier unreviewed layers (the L3 concept drafts and the 3 October 2026 source-paired batch) and the 4–5 October 2026 bounded ordinary-prose completion, in which separate AI agents drafted, blind back-translated and semantically checked each change, with adjudicated repairs of flagged units. Each target field records its own provenance.",
+    "reusedDrafts": "Complete current learner paragraphs are reused only where the paired English source is byte-identical (33 paragraphs, plus the current learner module title on the slide 1 heading). They are not edited in the deck.",
+    "holds": "No whole heading or paragraph remains an English hold. Difficult technical terms (for example compost, mulch, cover crops, organic matter, soil texture, worm castings, topsoil and decomposers) stay in English inside translated sentences. All remaining English, including English inherited from reused learner paragraphs, is inventoried in docs/study-translation-reviews/SOIL-WATER-ORDINARY-SLIDES-2026-10-05.json (remainingEnglish)."
+  },
+  "reviewNotes": [
+    "Every target is an unreviewed machine draft or reused unreviewed learner wording. Facilitator review follows publication; no fluent-speaker, comprehension or local farming approval is claimed.",
+    "Check first: slide 20 body[2] keeps 'slimy' and 'straw' in English as the learner text does, and renders 'feels' as 'ni tshi i fara' (when you hold it). Slide 19 body[2] uses 'botolo' (bottle) for the jar, and slide 1 body[2] keeps an unneeded '(safe)' gloss.",
+    "Reused learner paragraphs keep their own English clauses and terms. Those need learner-text edits outside this deck-only batch (remainingEnglish.inheritedLearnerWording).",
+    "Silent still frames only: no narration or audio was generated for this language; English narration remains optional."
+  ],
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Soil Health & Composting",
+        "body": [
+          "Soil is more than the ground under your feet.",
+          "It is a living place that feeds crops, holds water, and carries your harvest.",
+          "In this module, learn to read soil, make safe compost, protect bare ground, and use cover crops and worm farms."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Mutakalo wa Mavu na U Ita Khomposo (Composting)",
+          "provenance": "Current learner module title reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Mavu a si fhethu fhedzi hu re fhasi ha milenzhe yaṋu.",
+            "provenance": "new-unreviewed-machine-draft; source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Ndi fhethu hu tshilaho hune ha fha zwiliṅwa zwiḽiwa, ha fara maḓi, nahone ha hwala khaṋo yaṋu.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Kha modulu iyi, gudani u vhala mavu, u ita compost i si na khombo (safe), u tsireledza mavu a songo fukwaho, na u shumisa cover crops na worm farms.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Why This Matters",
+        "body": [
+          "Soil condition affects roots, water and the harvest.",
+          "Repeated bare ground, compaction and loss of organic matter can damage it. Colour alone does not tell the whole story.",
+          "Observe your soil, then choose ways to protect and improve it."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ndi ngani hezwi zwi zwa ndeme",
+          "provenance": "new-unreviewed-machine-draft; source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Vhuimo ha mavu vhu kwama midzi, maḓi na khaṋo.",
+            "provenance": "new-unreviewed-machine-draft; source paired"
+          },
+          {
+            "status": "draft",
+            "text": "U dovha u vha na mavu a songo fukwaho, u khwaṱha ha mavu (compaction) na u fhelela ha organic matter zwi nga a tshinyadza. Muvhala fhedzi a u sumbedzi zwoṱhe.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Lavhelesani mavu anu, ni kone u nanga nḓila dza u a tsireledza na u a khwinisa."
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "Look for several clues about soil condition.",
+          "Use a jar to explore soil texture, while recognising its limits.",
+          "Care for a compost heap, protect bare ground, and distinguish worm castings from liquid drainage."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Zwine na ḓo guda",
+          "provenance": "new-unreviewed-machine-draft; source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "sourceEnglish": "Look for several clues about soil condition.",
+            "text": "Sedzani zwiga zwo vhalaho zwa nyimele ya mavu.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Shumisani botolo u lingedza soil texture, ni tshi ḓivha mikano ya nḓila iyi.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Londolozani thulwi ya compost, tsireledzani mavu a songo fukwaho, ni dovhe ni khethekanye worm castings na maḓi a tselaho.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "Soil Is Alive",
+        "body": [
+          "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+          "Some fungi help roots take up nutrients. Worm channels can help water and air enter soil.",
+          "Look at roots, soil structure and water movement as well as visible soil life."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Mavu a a tshila",
+          "provenance": "new-unreviewed-machine-draft; source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Mavu a na mifuda minzhi ya zwithu zwine zwa tshila. Bacteria na fungi dzi thusa u break down organic matter na u cycle nutrients.",
+            "provenance": "Complete current learner paragraph reused only for its byte-exact English source; bounded independently checked ordinary wording, precision English preserved (6 October 2026). Unreviewed machine draft; no fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Dziṅwe fungi dzi thusa midzi u dzhia nutrients. Worm channels dzi nga thusa uri maḓi na muya zwi dzhene mavuni.",
+            "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Sedzani midzi, tshivhumbeo tsha mavu na u tshimbila ha maḓi, ni dovhe ni sedze zwithu zwi tshilaho zwine zwa vhonala mavuni.",
+            "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "Watch: Read Your Soil",
+        "body": [
+          "Look closely at these two soil examples.",
+          "First, look at soil structure. In the field, feel how a moist piece breaks apart.",
+          "Look at the roots and the spaces around them.",
+          "Look at the surface cover. Loose mulch covers one example.",
+          "Use several clues together. Colour alone cannot tell you soil health. Check moisture, plant growth and how water enters the ground."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Sedzani: Vhalani Mavu Aṋu",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Lavhelesani tsumbo idzi mbili dza mavu nga vhuronwane.",
+            "provenance": "new-unreviewed-machine-draft; source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Tsha u thoma, lavhelesani tshivhumbeo tsha mavu. Musi ni tshi vha tsimuni, pfani uri tshipiḓa tsha mavu o nowaho tshi kwashea hani.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Lavhelesani midzi na zwikhala zwi re nga u i mona."
+          },
+          {
+            "status": "draft",
+            "text": "Sedzani tshifukedzi tsha nṱha ha mavu. Mulch yo vhofholowaho ndi tsumbo ithihi ya tshifukedzi.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Shumisani zwiga zwinzhi zwi tshi ṱanganyiswa. Muvhala fhedzi a u koni u ni vhudza mutakalo wa mavu. Sedzani vhunyunyu, nyaluwo ya zwimela na nḓila ine maḓi a dzhena ngayo mavuni.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "Explore Soil Texture with a Jar",
+        "body": [
+          "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",
+          "Sand settles first. Silt settles next, while clay can remain suspended much longer.",
+          "This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Lingedzani Soil Texture nga Botolo",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Vheani mavu na maḓi kha jar ine na kona u vhona zwa nga ngomu hayo, ni engedze suitable dispersing detergent ṱhukhu. Ni vale jar, ni i dzinginye, ni i sie i sa tshintshwi.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Sand i dzula fhasi u thoma. Silt i dzula fhasi nga murahu, ngeno clay i tshi nga sala i suspended lwa tshifhinga tshilapfu vhukuma.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Hezwi ndi nyito ya u guda ya u anganyela. Clumps na clay i sa athu u dzula fhasi zwi nga ni xedza; shumisani soil laboratory musi accurate texture i tshi ṱoḓea.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Read the Jar Carefully",
+        "body": [
+          "A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.",
+          "Compare the settled layers and feel the soil in the field.",
+          "Record what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Vhalani Botolo nga Vhuronwane",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Thick sand layer nga fhasi ha cloudy water a i athu u ni vhudza final proportions. Fine particles dzi nga kha ḓi vha suspended.",
+            "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Vhambedzani layers dze dza dzula fhasi, ni dovhe ni fare mavu tsimuni.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Ṅwalani zwe na zwi vhona na zwine zwa kha ḓi sa vha khagala. Ni songo dzhia phetho ya u sheledza kana u lafha mavu nga u sedza jar nthihi fhedzi.",
+            "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "Investigate Before You Treat",
+        "body": [
+          "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+          "Pale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.",
+          "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ṱolisisani Ni Sa Athu U Lulamisa",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Compaction, poor drainage na u xela ha organic matter zwi nga limit midzi na vhutshilo ha mavu.",
+            "provenance": "Complete current learner paragraph reused only for its byte-exact English source; bounded independently checked ordinary wording, precision English preserved (6 October 2026). Unreviewed machine draft; no fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Pale colour kana worms dzi si gathi a zwi khwaṱhisedzi uri chemicals dzo vhulaha mavu. U shuma ha worms na hone hu a shanduka u ya nga vhunyunyu na khalaṅwaha.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Sedzani patterns tsimuni yoṱhe. Sedzani ḓivhazwakale ya nḓila ya u langa tsimu, drainage na u aluwa ha zwimela ni sa athu khetha nḓila ya u tandulula thaidzo.",
+            "provenance": "Complete current learner paragraph reused only for its byte-exact English source; bounded independently checked ordinary wording, precision English preserved (6 October 2026). Unreviewed machine draft; no fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Compost Feeds the Soil",
+        "body": [
+          "Compost is organic matter broken down under managed conditions.",
+          "Finished compost can improve soil structure and contribute nutrients.",
+          "Time to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Compost i Fha Mavu Zwiḽiwa",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Compost ndi organic matter yo broken down nga fhasi ha zwiimo zwi langulwaho.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Compost yo fhelelaho i nga khwinifhadza tshivhumbeo tsha mavu, na u engedza nutrients.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Tshifhinga tsha u luga ha manyoro tshi a fhambana u ya nga zwishumiswa (materials), vhunyunyu, muya na thempheretsha (temperature). Dzina ḽa vundu kana mbalo yo vhewaho ya vhege a si tsedzuluso ya u luga ha manyoro.",
+            "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Watch: Build the Compost Heap",
+        "body": [
+          "Build the heap with dry browns and fresh greens.",
+          "Keep the layers moist, not wet, so air and decomposers can work."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Sedzani: Fhaṱani Thulwi ya Compost",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Fhaṱani thulwi nga browns dzo omaho na greens dziswa.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Dzulisani miṱaṱo yo nowa, i songo ḓala maḓi, uri muya na decomposers zwi kone u shuma.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Balance Browns and Greens",
+        "body": [
+          "Mix dry browns with fresh greens. Avoid thick, wet layers that keep air out.",
+          "If the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.",
+          "Check moisture and air as the heap changes; one recipe does not suit every mix of materials."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Linganyisani Browns na Greens",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Tanganyani dry browns na fresh greens. Iledzani thick, wet layers dzi thivhelaho muya u dzhena.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Arali thulwi ya manyoro ya vha slimy kana ya nukha ammonia nga maanḓa, shelani dry browns nahone ni i rembuluse.",
+            "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Sedzulusani vhunyunyu na muya musi thulwi i tshi khou shanduka; nḓila nthihi ya u ṱanganya a i lulameli muṱanganyo muṅwe na muṅwe wa zwishumiswa.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Heat Alone Is Not a Safety Check",
+        "body": [
+          "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+          "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+          "Do not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "U fhisa fhedzi a si tsedzuluso ya tsireledzo",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Vhukati ho fhisaho a vhu khwaṱhisedzi uri tshipida tshiṅwe na tshiṅwe tsha thulwi tsho treated. Tshifhinga, temperature na ndangulo zwoṱhe zwi na ndeme.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Iledzani u dzhenisa nyama, zwibveledzwa zwa mafhi, zwimela zwi re na malwadze, pet waste na contaminated materials kha iyi nḓila i leluwaho ya muṱani.",
+            "provenance": "Source-bound ordinary-prose machine draft (6 October 2026): target text updated after exact source/current binding and independent semantic backcheck; difficult or uncertain technical terms retained. Unreviewed for fluency and local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Ni songo humbula uri home composting i fhedza weed seed iṅwe na iṅwe kana disease organism iṅwe na iṅwe. Shumisani recognised process hune sanitation ya ṱoḓea.",
+            "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Keep Seed Pods and Contaminants Out",
+        "body": [
+          "Keep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.",
+          "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+          "Check the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Siyani Zwikhwama zwa Mbeu na Contaminants Nnḓa",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Iledzani u dzhenisa wattle seed pods kha thulwi ya manyoro. Thulwi yo ḓoweleaho i nga kha ḓi sa ita uri mbeu iṅwe na iṅwe i vhe non-viable.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Shumisani fhedzi clean, untreated materials. Bark i a sina nga u ongowa; dzina layo fhedzi a si vhuṱanzi ha uri a i na contamination.",
+            "provenance": "Source-bound ordinary-prose machine draft (6 October 2026): target text updated after exact source/current binding and independent semantic backcheck; difficult or uncertain technical terms retained. Unreviewed for fluency and local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Sedzulusani thulwi ni i rembuluse musi i tshi toda muya wo engedzeaho kana u tanganiswa. I vhulungeni i na vhunyunyu, hu si waterlogged.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Watch: Bare Soil and Mulch",
+        "body": [
+          "Compare bare soil with mulched soil.",
+          "When rain hits mulch instead of bare soil, much of the raindrop energy is dissipated. This diagram shows that surface-impact idea only; it does not predict how water will move at a particular site."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Sedzani: Mavu a Songo Fukwaho na Mulch",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Vhambedzani mavu a songo fukedzwaho na mavu o fukedzwaho nga mulch."
+          },
+          {
+            "status": "draft",
+            "text": "Musi mvula i tshi rwa mulch fhedzi hu si mavu a songo fukwaho, vhunzhi ha maanḓa a marothi a mvula vhu a fhungudzea. Tshifanyiso itshi tshi sumbedza fhedzi muhumbulo wa u rwa ha marothi a mvula nṱha ha mavu; a tshi ambi phanḓa uri maḓi a ḓo tshimbila hani fhethu huthihi hune ha khetheaho.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Mulch Protects the Ground",
+        "body": [
+          "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.",
+          "Mulch can reduce evaporation, soften the impact of rain and suppress weeds.",
+          "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Mulch i Tsireledza Mavu",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Fukedzani mavu a songo fukwaho nga mulch yo kunaho, yo teaho, u fana na straw, hatsi ho omaho kana wood chips.",
+            "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Mulch i nga fhungudza u ṱuwa ha maḓi a tshi ya nga muyani, ya fhungudza maanḓa a mvula, ya fhungudza u mela ha zwimela zwi sa ṱoḓei.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "I vhetseni kule na trunks and stems. Sedzani vhunyunyu nga fhasi hayo ni lulamise layer; mulch nnzhi a i dzuli i tshi vha yavhuḓi.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "Cover Crops Between Seasons",
+        "body": [
+          "Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.",
+          "The course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.",
+          "Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Cover Crops Vhukati ha Zwifhinga zwa Ṅwaha",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Cover crops dzi nga tsireledza mavu vhukati ha main crops. Khethani u ya nga mutsho wa henefho, maḓi ane a vha hone na u zwala hu tevhelaho.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Tsumbo dza ngudo dzi katela oats, lupins, sunn hemp na cowpea. Sedzani arali dzi tshi fanela fhethu haṋu ni sa athu dzi zwala.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Legumes dzi ṱoḓa bacteria dzo teaho na zwiimo zwo teaho zwa u mela u fix nitrogen. Nutrients dzi re kha masalela adzo dzi a wanala musi material i tshi decompose.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Worm Castings and Liquid Drainage",
+        "body": [
+          "Worm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.",
+          "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
+          "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Worm Castings na Maḓi a Tselaho",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Worm farms dzi nga shandula food scraps na bedding zwo teaho zwa vha castings. Sedzani tshifaredzi, ni songo lavhelela ḓuvha ḽo vhewaho ḽa u kaṋa.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Liquid i elelaho nga mvelo i tshi bva kha worm bin i vhidzwa leachate. A si tshithu tshithihi na worm-casting tea yo lugiswaho.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Leachate i nga vha na harmful organisms kana zwithu zwi re na khombo. Ni songo i shumisa kha zwimela zwine zwa nga ḽiwa kana u humbula uri dilution i ita uri i vhe yo tsireledzeaho.",
+            "provenance": "Source-bound ordinary-prose machine draft (6 October 2026): target text updated after exact source/current binding and independent semantic backcheck; difficult or uncertain technical terms retained. Unreviewed for fluency and local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Protect Soil All Year",
+        "body": [
+          "A Highveld field left bare after the maize harvest faces two main risks.",
+          "Winter wind can carry away dry topsoil.",
+          "The first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.",
+          "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Tsireledzani Mavu Ṅwaha Woṱhe",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Tsimu ya Highveld yo siwaho i si na tshifukedzi nga murahu ha u kaṋa mavhele (maize) i sedzana na khombo mbili khulwane.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Muya wa vhuria u nga hwala topsoil yo omaho wa i bvisa."
+          },
+          {
+            "status": "draft",
+            "text": "Storm ya u thoma khulwane ya spring i nga rwa mavu a songo fukedzwaho, ya tshinyadza surface na structure ya hone. Arali maḓi a tshi elela nṱha ha tsimu, a nga hwala loosened soil a a bvisa.",
+            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Cover crops, mulch na organic matter zwi nga thusa u fara mavu fhethu haho na u thusa uri a dzule a tshi tshila."
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "heading": "Field Assignment",
+        "body": [
+          "Inspect soil in a working area. Record colour, structure, roots, moisture and any worm channels.",
+          "Compare another spot and note recent weather and management.",
+          "Try the jar exercise. Write what it suggests, what is uncertain, and whether a laboratory test or local adviser could help."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Mushumo wa tsimuni",
+          "provenance": "existing unreviewed course heading reused verbatim; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sedzani mavu fhethu hune ha shumiwa. Ṅwalani muvhala, tshivhumbeo, midzi, vhunyunyu na nḓila dza zwivhungu dzine dza vha hone.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Vhambedzani na uṅwe fhethu, ni ṅwale nyimele ya tshifhinga tsha zwinozwino na u langa ha fhethu ha zwinozwino.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Itani u lingedza ha botolo. Ṅwalani zwine hu nga zwi sumbedza, zwine zwa si khagala, na arali laboratory test kana mueletshedzi wa henefho a nga thusa.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "heading": "Field Action",
+        "body": [
+          "Start one soil-building action from this module.",
+          "Cover bare ground with mulch, begin a balanced compost heap, sow a suitable cover crop, or prepare a worm farm.",
+          "If your compost smells of ammonia and feels slimy, add dry carbon such as straw and turn it.",
+          "Build soil life step by step."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Nyito ya tsimuni",
+          "provenance": "existing unreviewed course heading reused verbatim; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Thomani nyito nthihi ya u fhaṱa mavu u bva kha modulu iyi.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Fukedzani mavu a songo fukedzwaho nga mulch, thomani thulwi ya compost yo linganyiswaho, zwalani cover crop yo teaho, kana lugiselani worm farm.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Arali compost yaṋu i tshi nukha ammonia nahone ni tshi i fara ya vha slimy, shelani carbon yo omaho u fana na straw nahone ni i rembuluse.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Fhaṱani vhutshilo ha mavu nga vhukando nga vhukando.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    }
+  ]
+}

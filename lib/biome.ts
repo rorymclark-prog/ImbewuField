@@ -148,6 +148,34 @@ export const BIOMES: Record<string, SABiome> = {
 };
 
 /**
+ * BIOMES above stays the technical English source — it still feeds app/api/* prompts and other
+ * callers that want the full jargon (Köppen-style strategy notes etc). components/DataPanel.tsx
+ * shows farmers plain-language versions instead, via t() in lib/i18n.tsx; this table maps each
+ * biome's SABiome.code to the matching translation keys so DataPanel never has to hardcode the
+ * English strings itself. OUT and UNK have no species/challenges (BIOMES lists none for them), so
+ * those two fields are omitted for those codes.
+ */
+export const BIOME_I18N_KEYS: Record<string, {
+  name: string;
+  water: string;
+  soil: string;
+  species?: string;
+  challenges?: string;
+}> = {
+  SV: { name: 'biomeNameSavanna', species: 'biomeSpeciesSavanna', water: 'biomeWaterSavanna', soil: 'biomeSoilSavanna', challenges: 'biomeChallengesSavanna' },
+  GR: { name: 'biomeNameGrassland', species: 'biomeSpeciesGrassland', water: 'biomeWaterGrassland', soil: 'biomeSoilGrassland', challenges: 'biomeChallengesGrassland' },
+  FY: { name: 'biomeNameFynbos', species: 'biomeSpeciesFynbos', water: 'biomeWaterFynbos', soil: 'biomeSoilFynbos', challenges: 'biomeChallengesFynbos' },
+  SK: { name: 'biomeNameSucculentKaroo', species: 'biomeSpeciesSucculentKaroo', water: 'biomeWaterSucculentKaroo', soil: 'biomeSoilSucculentKaroo', challenges: 'biomeChallengesSucculentKaroo' },
+  NK: { name: 'biomeNameNamaKaroo', species: 'biomeSpeciesNamaKaroo', water: 'biomeWaterNamaKaroo', soil: 'biomeSoilNamaKaroo', challenges: 'biomeChallengesNamaKaroo' },
+  DE: { name: 'biomeNameDesert', species: 'biomeSpeciesDesert', water: 'biomeWaterDesert', soil: 'biomeSoilDesert', challenges: 'biomeChallengesDesert' },
+  AT: { name: 'biomeNameAlbanyThicket', species: 'biomeSpeciesAlbanyThicket', water: 'biomeWaterAlbanyThicket', soil: 'biomeSoilAlbanyThicket', challenges: 'biomeChallengesAlbanyThicket' },
+  IOCB: { name: 'biomeNameIocb', species: 'biomeSpeciesIocb', water: 'biomeWaterIocb', soil: 'biomeSoilIocb', challenges: 'biomeChallengesIocb' },
+  FOR: { name: 'biomeNameForest', species: 'biomeSpeciesForest', water: 'biomeWaterForest', soil: 'biomeSoilForest', challenges: 'biomeChallengesForest' },
+  OUT: { name: 'biomeNameOutside', water: 'biomeWaterOutside', soil: 'biomeSoilOutside' },
+  UNK: { name: 'biomeNameUnavailable', water: 'biomeWaterUnavailable', soil: 'biomeSoilUnavailable' },
+};
+
+/**
  * site.biome (see biomeClimates in lib/design-elements.ts) stores the human NAME — "Indian Ocean
  * Coastal Belt" — because that's what a farmer reads. lib/species-catalog.ts's SpeciesBiomeFit
  * stores the BIOMES registry KEY — "IOCB" — because that's what a lookup table needs. Nothing

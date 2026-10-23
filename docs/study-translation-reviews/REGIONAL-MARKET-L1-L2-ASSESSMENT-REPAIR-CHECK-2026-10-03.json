@@ -1,0 +1,143 @@
+{
+  "title": "Focused check of root repairs to Market L1/L2 assessment candidates",
+  "date": "2026-10-03",
+  "input": "/tmp/imbewu-regional-market-l1-l2-assessment-root-repaired-20261003.json",
+  "canonicalSource": "lib/course-modules.ts at review time",
+  "scope": "Three root-repaired fields only; no repository files changed.",
+  "summary": {
+    "checkedRepairs": 3,
+    "sourceMatchesCanonical": true,
+    "correctIndicesStillMatchCanonical": true,
+    "verdicts": {
+      "accept": 2,
+      "hold": 1,
+      "repair": 0
+    },
+    "fluencyApproved": false
+  },
+  "repairs": [
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[0]",
+      "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
+      "canonicalSource": "Agree product, quantity, quality, delivery and payment",
+      "sourceMatchesCanonical": true,
+      "previousCandidate": "Pfumelelanani hi xitirhisiwa, nhlayo, khwalithi, ku yisa ni ku hakela.",
+      "repairedCandidate": "Pfumelelanani hi product, nhlayo, khwalithi, ku yisa ni ku hakela.",
+      "repairedStatus": "candidate",
+      "repairCheck": "The ambiguous “xitirhisiwa” wording is replaced by the source category “product”; quantities, quality, delivery and payment remain in the same agreement list.",
+      "verdict": "accept",
+      "fluencyApproved": false
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].question",
+      "sourceEnglish": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+      "canonicalSource": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+      "sourceMatchesCanonical": true,
+      "previousCandidate": "Rekhodo dza mulimi dzi sumbedza uri u fhelelwa nga miroho nga June na July ṅwaha muṅwe na muṅwe. Ndi vhukando vhufhio vhune ha thusa?",
+      "repairedCandidate": "A farmer's records show she's short of vegetables every June and July. Ndi vhukando vhufhio vhune ha thusa?",
+      "repairedStatus": "candidate",
+      "repairCheck": "The claim “short of vegetables every June and July” is retained exactly in English; no stronger “run out” wording is introduced.",
+      "verdict": "accept",
+      "fluencyApproved": false
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[1]",
+      "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "canonicalSource": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "sourceMatchesCanonical": true,
+      "previousCandidate": "Dzudzanyani ni tshi humela murahu u bva kha u shaya zwiḽiwa, ni tshi shumisa zwimela zwi fanaho na vhupo haṋu na tshifhinga tshazwo tsha u kaṋa.",
+      "repairedCandidate": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "repairedStatus": "hold",
+      "repairCheck": "The complete correct option is held as exact English, retaining suitable local crops and their harvest timing without a narrower “similar” interpretation.",
+      "verdict": "hold",
+      "fluencyApproved": false
+    }
+  ],
+  "indexChecks": [
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "packetCorrectIndices": [
+        2,
+        1
+      ],
+      "canonicalCorrectIndices": [
+        2,
+        1
+      ],
+      "match": true
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "packetCorrectIndices": [
+        2,
+        2
+      ],
+      "canonicalCorrectIndices": [
+        2,
+        2
+      ],
+      "match": true
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "packetCorrectIndices": [
+        2,
+        1
+      ],
+      "canonicalCorrectIndices": [
+        2,
+        1
+      ],
+      "match": true
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "packetCorrectIndices": [
+        2,
+        2
+      ],
+      "canonicalCorrectIndices": [
+        2,
+        2
+      ],
+      "match": true
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "packetCorrectIndices": [
+        2,
+        1
+      ],
+      "canonicalCorrectIndices": [
+        2,
+        1
+      ],
+      "match": true
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "packetCorrectIndices": [
+        2,
+        2
+      ],
+      "canonicalCorrectIndices": [
+        2,
+        2
+      ],
+      "match": true
+    }
+  ],
+  "reviewLimit": "This confirms repair-to-source semantic fidelity and answer-index preservation only. It does not establish fluent or learner-ready Sesotho, Tshivenda, or Xitsonga."
+}

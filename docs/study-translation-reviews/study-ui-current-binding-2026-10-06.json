@@ -1,0 +1,3518 @@
+{
+  "auditDate": "2026-10-06",
+  "worktree": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField",
+  "candidatePacket": "/tmp/imbewu-study-ui-language-completion-repaired-candidates-20261006.json",
+  "candidatePacketPresent": false,
+  "independentPacketPresent": false,
+  "scope": {
+    "sourceFiles": [
+      "app/student/page.tsx",
+      "components/course/DeckPlayer.tsx",
+      "components/course/CourseAudioPlayer.tsx",
+      "components/course/OfflineDownload.tsx",
+      "components/studies/PathwayOfflineDownload.tsx",
+      "components/studies/GuideOfflineDownload.tsx",
+      "components/studies/CourseSyllabus.tsx"
+    ],
+    "method": "Static inventory of literal t(key) calls in Study page, deck, audio, download and syllabus components; compares exact current English source string and explicit locale dictionary binding."
+  },
+  "packetCounts": {
+    "sourcebound": 0,
+    "stale": 0,
+    "unresolved": 1,
+    "unresolvedReason": "Named candidate packet and independent packet are absent after /tmp reset; cannot bind candidate rows or declare them stale."
+  },
+  "currentDictionary": {
+    "zu": {
+      "sourcebound": 161,
+      "exactEnglish": 0,
+      "fallbackEnglish": 6,
+      "unknownSource": 0
+    },
+    "st": {
+      "sourcebound": 60,
+      "exactEnglish": 1,
+      "fallbackEnglish": 106,
+      "unknownSource": 0
+    },
+    "ve": {
+      "sourcebound": 28,
+      "exactEnglish": 1,
+      "fallbackEnglish": 138,
+      "unknownSource": 0
+    },
+    "ts": {
+      "sourcebound": 45,
+      "exactEnglish": 0,
+      "fallbackEnglish": 122,
+      "unknownSource": 0
+    }
+  },
+  "hardcodedStatusAndEnglishNotices": [
+    {
+      "file": "app/student/page.tsx",
+      "evidence": "Study header notice includes bilingual fixed isiZulu unreviewed UI warning."
+    },
+    {
+      "file": "app/student/page.tsx",
+      "evidence": "Sesotho UI notice is localized; exact English source comes from studentSesothoUiDraftNoticeSource."
+    },
+    {
+      "file": "app/student/page.tsx",
+      "evidence": "Tshivenda UI notice is displayed in English and explicitly labeled lang=en."
+    },
+    {
+      "file": "app/student/page.tsx",
+      "evidence": "itsonga notice has a translated notice plus hardcoded / Unreviewed Xitsonga draft."
+    },
+    {
+      "file": "app/student/page.tsx",
+      "evidence": "Regional lesson and slide source panels use hardcoded Exact English source/English source labels."
+    }
+  ],
+  "narrationAndDownloadConditions": [
+    {
+      "file": "app/student/page.tsx",
+      "evidence": "Regional module badges state optional English audio / language-specific AI draft + English holds; check actual availability condition hasNarration(mod.id).",
+      "risk": "Counts and labels must remain conditioned on available narration; no unconditional availability wording should be inferred."
+    },
+    {
+      "file": "components/course/DeckPlayer.tsx",
+      "evidence": "Narration selection and silent-state labels are separate from slide language; inspect current behavior before adding any promise."
+    },
+    {
+      "file": "components/course/OfflineDownload.tsx",
+      "evidence": "Regional pack selector differentiates slides-only from slides plus available English narration/clips and has English fallback notices; download promises must remain limited to files actually available."
+    }
+  ],
+  "limitations": [
+    "No fluent-speaker approval is claimed.",
+    "This is a source and dictionary binding audit, not a phone UI or rendered screen audit.",
+    "It does not inspect the unrelated current core translation layer."
+  ],
+  "rows": [
+    {
+      "language": "zu",
+      "key": "studentDesignPreviewSimpleLabel",
+      "file": "app/student/page.tsx",
+      "englishSource": "Design course",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "zu",
+      "key": "studentFinancePreviewSimpleLabel",
+      "file": "app/student/page.tsx",
+      "englishSource": "Farm Finance course",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "zu",
+      "key": "studentSesothoUiDraftNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "This translation is an AI draft. A fluent Sesotho speaker has not checked it.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "zu",
+      "key": "studentSesothoUiDraftNoticeSource",
+      "file": "app/student/page.tsx",
+      "englishSource": "This translation is an AI draft. A fluent Sesotho speaker has not checked it.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "zu",
+      "key": "studentTshivendaUiDraftNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "Unreviewed Tshivenda interface draft. These Study controls have not been checked by a fluent Tshivenda speaker.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "zu",
+      "key": "xitsongaUiDraftNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "Unreviewed Xitsonga draft.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "courseAudioLanguageMissing",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "englishSource": "This module has not been recorded in {appLanguage} yet — playing {playingLanguage}.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "courseAudioListen",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "englishSource": "Listen",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "courseAudioPlayFailed",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "englishSource": "Could not play this clip — check your connection and try again.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "courseDeckAnimationFailed",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "The animation could not load. You can keep listening, read the slide, or tap Watch to try again.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "courseDeckNarrationAria",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Narration for {title}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "courseDeckNarrationFailed",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Narration could not play. Check your connection and press Play lesson again, or read this slide below.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "courseDeckNarrationFallback",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Narration is in {spokenLanguage}. {appLanguage} narration is not available for this module yet.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "courseDeckOpenImage",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "View slide image · zoom",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "courseDeckOpenImageAria",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Open still image for {title} at full size",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "courseDeckRegion",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Lesson slides. Use Left and Right arrow keys to change slides.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "courseDeckSilentStatus",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "No narration will play. Use Next to read at your own pace.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "courseDeckSlideImageSize",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Slide size",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "courseDeckSlideLanguage",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "This slide is in {language}.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "courseDeckTurnPhoneHint",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Turn your phone sideways for a wider animation.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "courseDeckWatch",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Watch · {seconds}s · {size}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "courseNarrationLanguage",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Narration language",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineDownloadBytesProgress",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "{current} of {total}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineDownloadQuality",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Download quality",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineDownloadUnsupported",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "This browser cannot store lessons for offline use. Chrome on Android can.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineEnglishMediaFallback",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "This pack includes slides or narration in English where your chosen language is not available yet.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineFilesFailed",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "{count} files did not download. Tap Finish download again while you still have signal — the rest is already saved.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineFilesProgress",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "{done} of {total} files",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineFinishDownload",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Finish download · {size} left",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineGetSlidesWhileSignal",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Save the slides and their displayed posters on this phone. The deck then works offline without narration or video.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineGetWhileSignal",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Get the slides, the narration and the clips onto this phone while you have signal. They then work with no airtime at all.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineLowStorage",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "This phone is low on space — the download may not fit.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineQualityHigher",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Higher quality",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineQualityHigherNote",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "facilitators & funders · wifi",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineQualityStandard",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Standard",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineQualityStandardNote",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "for phones on data",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineRegionalFullMedia",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Slides + English narration and clips",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineRegionalFullMediaNote",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "The full pack includes available English source narration, animations and lesson images.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineRegionalPackChoice",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Regional deck download contents",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineRemovePack",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Remove saved lessons",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineSavedMayClear",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Saved, but this phone may clear it if storage runs low. Check your saved lessons again before leaving signal.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "offlineStopDownload",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Stop",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentAlreadySubmitted",
+      "file": "app/student/page.tsx",
+      "englishSource": "Already submitted — submitting again replaces the photo and voice note.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentAppGuideAction",
+      "file": "app/student/page.tsx",
+      "englishSource": "Read the guide · English →",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentDueSoon",
+      "file": "app/student/page.tsx",
+      "englishSource": "{count} due this week.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentOverdue",
+      "file": "app/student/page.tsx",
+      "englishSource": "{count} overdue.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentProgress",
+      "file": "app/student/page.tsx",
+      "englishSource": "{done} of {total} done.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentSetByMentor",
+      "file": "app/student/page.tsx",
+      "englishSource": "Set by your mentor",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentsOrder",
+      "file": "app/student/page.tsx",
+      "englishSource": "Assigned modules are listed first. Everything else is still open to you.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentCapstoneComplete",
+      "file": "app/student/page.tsx",
+      "englishSource": "You have finished every module. Build your final design plan-set in the Design Studio — that is your completion artifact for the course.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentCompletionMessage",
+      "file": "app/student/page.tsx",
+      "englishSource": "You have completed the full ImbewuField permaculture curriculum. If you have a mentor, they will see this progress next time they check in.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentCourseComplete",
+      "file": "app/student/page.tsx",
+      "englishSource": "Course complete!",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentDaysOverdue",
+      "file": "app/student/page.tsx",
+      "englishSource": "{count} days overdue",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentDeckDescription",
+      "file": "app/student/page.tsx",
+      "englishSource": "{count} slides, narrated. Nothing downloads until you press play.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentDesignEnglishPreview",
+      "file": "app/student/page.tsx",
+      "englishSource": "Design course · English teaching preview",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentDesignPreviewAction",
+      "file": "app/student/page.tsx",
+      "englishSource": "Explore the design teaching preview · English →",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentDesignPreviewCardBody",
+      "file": "app/student/page.tsx",
+      "englishSource": "Build a design folder with a facilitator or learning partner. This preview does not award course credit.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentDesignPreviewCardTitle",
+      "file": "app/student/page.tsx",
+      "englishSource": "Bring the decisions together.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentDesignPreviewIntro",
+      "file": "app/student/page.tsx",
+      "englishSource": "Explore eighteen lesson drafts: understand the household, read the site, compare layouts, plan the work and revise with evidence. Practise with a supplied fictional plan; a real field design still needs checked measurements and local evidence.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentDesignPreviewSimpleLabel",
+      "file": "app/student/page.tsx",
+      "englishSource": "Design course",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentDesignPreviewTitle",
+      "file": "app/student/page.tsx",
+      "englishSource": "Design a working homestead",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentDueDate",
+      "file": "app/student/page.tsx",
+      "englishSource": "Due {date}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentDueInDays",
+      "file": "app/student/page.tsx",
+      "englishSource": "Due in {count} days",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentDueToday",
+      "file": "app/student/page.tsx",
+      "englishSource": "Due today",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentDueTomorrow",
+      "file": "app/student/page.tsx",
+      "englishSource": "Due tomorrow",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentFacilitatorVideo",
+      "file": "app/student/page.tsx",
+      "englishSource": "Facilitator training video — for in-person sessions, not for streaming here.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentFinanceEnglishPreview",
+      "file": "app/student/page.tsx",
+      "englishSource": "Separate course · English teaching preview",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentFinancePreviewAction",
+      "file": "app/student/page.tsx",
+      "englishSource": "Explore the finance teaching preview · English →",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentFinancePreviewCardBody",
+      "file": "app/student/page.tsx",
+      "englishSource": "Study independently or with a facilitator. Your reading checklist is separate from permaculture course progress.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentFinancePreviewCardTitle",
+      "file": "app/student/page.tsx",
+      "englishSource": "Understand the money. Plan the next season.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentFinancePreviewIntro",
+      "file": "app/student/page.tsx",
+      "englishSource": "Eight units, from keeping farm records to planning a business. Explore 24 lesson drafts with worked practice and printable workbooks. Review and final assessment are still in preparation.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentFinancePreviewSimpleLabel",
+      "file": "app/student/page.tsx",
+      "englishSource": "Farm Finance course",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentFinancePreviewTitle",
+      "file": "app/student/page.tsx",
+      "englishSource": "Farm Finance",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentFinishToUnlock",
+      "file": "app/student/page.tsx",
+      "englishSource": "Finish the lesson “{title}” to open this",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentGuidesDescription",
+      "file": "app/student/page.tsx",
+      "englishSource": "Map your site, follow a harvest, keep a cost and its receipt, or make an invoice. Practise in the sample farm before using your own records.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentIncorrectSee",
+      "file": "app/student/page.tsx",
+      "englishSource": "Incorrect — see {answer}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentListenModule",
+      "file": "app/student/page.tsx",
+      "englishSource": "Listen to the whole module",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentMarkComplete",
+      "file": "app/student/page.tsx",
+      "englishSource": "Mark as complete",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentMarkNotDone",
+      "file": "app/student/page.tsx",
+      "englishSource": "Mark as not done",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentMinutes",
+      "file": "app/student/page.tsx",
+      "englishSource": "min",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentOpenedByMentor",
+      "file": "app/student/page.tsx",
+      "englishSource": "Opened by your mentor",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentPhotoAdded",
+      "file": "app/student/page.tsx",
+      "englishSource": "Photo added — tap to change",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentPhotoRequired",
+      "file": "app/student/page.tsx",
+      "englishSource": "Add a photo (required)",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentPortalBody",
+      "file": "app/student/page.tsx",
+      "englishSource": "It's set up for students — not your role. Head back to your own home to keep going.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentProgressError",
+      "file": "app/student/page.tsx",
+      "englishSource": "Progress could not be loaded or saved. Check your connection or account access.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentProgressFirebase",
+      "file": "app/student/page.tsx",
+      "englishSource": "Progress will save to Firebase once the backend is connected",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessComplete",
+      "file": "app/student/page.tsx",
+      "englishSource": "Fully built",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessCompleteDetail",
+      "file": "app/student/page.tsx",
+      "englishSource": "All {lessons} lessons are illustrated, narrated in {languages} languages, and have slides and animations.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessLessons",
+      "file": "app/student/page.tsx",
+      "englishSource": "Lessons only",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessLessonsDetail",
+      "file": "app/student/page.tsx",
+      "englishSource": "Reading and pictures are ready. Narration and slides are still being made.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessNarrated",
+      "file": "app/student/page.tsx",
+      "englishSource": "Narrated slides",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessNarratedDetail",
+      "file": "app/student/page.tsx",
+      "englishSource": "Illustrated slides and narration are ready in {languages} languages. Translation review is still outstanding.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentResubmit",
+      "file": "app/student/page.tsx",
+      "englishSource": "Resubmit",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentSampleTourAction",
+      "file": "app/student/page.tsx",
+      "englishSource": "Explore mapping, planning and records in the sample tour →",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentSesothoUiDraftNoticeSource",
+      "file": "app/student/page.tsx",
+      "englishSource": "This translation is an AI draft. A fluent Sesotho speaker has not checked it.",
+      "currentTarget": "This translation is an AI draft. A fluent Sesotho speaker has not checked it.",
+      "binding": "exactEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentSubmit",
+      "file": "app/student/page.tsx",
+      "englishSource": "Submit",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentSubmitError",
+      "file": "app/student/page.tsx",
+      "englishSource": "Could not submit — check your connection and try again.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentSubmitModule",
+      "file": "app/student/page.tsx",
+      "englishSource": "Submit this module",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentSubmitToUnlock",
+      "file": "app/student/page.tsx",
+      "englishSource": "Submit the “{title}” lesson task to open this",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentSubmittedResubmit",
+      "file": "app/student/page.tsx",
+      "englishSource": "Submitted — tap to resubmit",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentSubmitting",
+      "file": "app/student/page.tsx",
+      "englishSource": "Submitting…",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentTshivendaUiDraftNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "Unreviewed Tshivenda interface draft. These Study controls have not been checked by a fluent Tshivenda speaker.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentVoiceAdded",
+      "file": "app/student/page.tsx",
+      "englishSource": "Voice note added — {name}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentVoiceOptional",
+      "file": "app/student/page.tsx",
+      "englishSource": "Add a voice note (optional)",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentZuluAudioDraftNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "This isiZulu narration is a generated draft. Human listening, fluent isiZulu and local farming review are still pending.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentZuluCourseLanguageNote",
+      "file": "app/student/page.tsx",
+      "englishSource": "Some lessons have unreviewed isiZulu drafts; other lessons are shown in English. Audio availability is separate from lesson text review.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentZuluLessonDraftBadge",
+      "file": "app/student/page.tsx",
+      "englishSource": "Unreviewed isiZulu draft",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentZuluLessonDraftNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "This isiZulu lesson, including its key points and quiz, is an unreviewed draft. A fluent isiZulu speaker and a local farming reviewer have not approved it yet.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentZuluLessonEnglishBadge",
+      "file": "app/student/page.tsx",
+      "englishSource": "English lesson text",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentZuluLessonEnglishFallbackNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "This lesson is shown in English because isiZulu lesson text is not available for learner use yet. Any isiZulu audio does not mean the lesson text and quiz have been reviewed.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentZuluModuleDraftBadge",
+      "file": "app/student/page.tsx",
+      "englishSource": "Unreviewed isiZulu draft",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "studentZuluModuleEnglishBadge",
+      "file": "app/student/page.tsx",
+      "englishSource": "English title",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "st",
+      "key": "xitsongaUiDraftNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "Unreviewed Xitsonga draft.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseAudioLanguageMissing",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "englishSource": "This module has not been recorded in {appLanguage} yet — playing {playingLanguage}.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseAudioListen",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "englishSource": "Listen",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseAudioPlayFailed",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "englishSource": "Could not play this clip — check your connection and try again.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckAnimationFailed",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "The animation could not load. You can keep listening, read the slide, or tap Watch to try again.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckBack",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "‹ Back",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckClose",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Close",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckNarrationAria",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Narration for {title}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckNarrationFailed",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Narration could not play. Check your connection and press Play lesson again, or read this slide below.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckNarrationFallback",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Narration is in {spokenLanguage}. {appLanguage} narration is not available for this module yet.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckNext",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Next ›",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckOpenImage",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "View slide image · zoom",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckOpenImageAria",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Open still image for {title} at full size",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckReadSlide",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Read this slide · {language}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckRegion",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Lesson slides. Use Left and Right arrow keys to change slides.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckSilentStatus",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "No narration will play. Use Next to read at your own pace.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckSlideImageSize",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Slide size",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckSlideLanguage",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "This slide is in {language}.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckTurnPhoneHint",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Turn your phone sideways for a wider animation.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckWatch",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Watch · {seconds}s · {size}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "courseNarrationLanguage",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Narration language",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineDownloadBytesProgress",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "{current} of {total}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineDownloadPack",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Download · {size}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineDownloadQuality",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Download quality",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineDownloadUnsupported",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "This browser cannot store lessons for offline use. Chrome on Android can.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineEnglishMediaFallback",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "This pack includes slides or narration in English where your chosen language is not available yet.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineEnglishSlidesFallback",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Some slides remain in English where your chosen language is not available yet.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineFilesFailed",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "{count} files did not download. Tap Finish download again while you still have signal — the rest is already saved.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineFilesProgress",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "{done} of {total} files",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineFinishDownload",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Finish download · {size} left",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineGetSlidesWhileSignal",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Save the slides and their displayed posters on this phone. The deck then works offline without narration or video.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineGetWhileSignal",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Get the slides, the narration and the clips onto this phone while you have signal. They then work with no airtime at all.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineLowStorage",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "This phone is low on space — the download may not fit.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineOnThisPhone",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "On this phone · {size}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineQualityHigher",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Higher quality",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineQualityHigherNote",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "facilitators & funders · wifi",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineQualityStandard",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Standard",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineQualityStandardNote",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "for phones on data",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalFullMedia",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Slides + English narration and clips",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalFullMediaNote",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "The full pack includes available English source narration, animations and lesson images.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalPackChoice",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Regional deck download contents",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalSlidesOnly",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Slides only",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineRemovePack",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Remove saved lessons",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineSavedMayClear",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Saved, but this phone may clear it if storage runs low. Check your saved lessons again before leaving signal.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "offlineStopDownload",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Stop",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentAlreadySubmitted",
+      "file": "app/student/page.tsx",
+      "englishSource": "Already submitted — submitting again replaces the photo and voice note.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentAppGuideAction",
+      "file": "app/student/page.tsx",
+      "englishSource": "Read the guide · English →",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentAppGuidesHeading",
+      "file": "app/student/page.tsx",
+      "englishSource": "Practical app guides",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentAppGuidesTitle",
+      "file": "app/student/page.tsx",
+      "englishSource": "Using ImbewuField",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentAssigned",
+      "file": "app/student/page.tsx",
+      "englishSource": "Assigned",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentDueSoon",
+      "file": "app/student/page.tsx",
+      "englishSource": "{count} due this week.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentOverdue",
+      "file": "app/student/page.tsx",
+      "englishSource": "{count} overdue.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentProgress",
+      "file": "app/student/page.tsx",
+      "englishSource": "{done} of {total} done.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentSetByMentor",
+      "file": "app/student/page.tsx",
+      "englishSource": "Set by your mentor",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentsOrder",
+      "file": "app/student/page.tsx",
+      "englishSource": "Assigned modules are listed first. Everything else is still open to you.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentAudio",
+      "file": "app/student/page.tsx",
+      "englishSource": "Audio",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentBackHome",
+      "file": "app/student/page.tsx",
+      "englishSource": "Back to my home",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentCapstone",
+      "file": "app/student/page.tsx",
+      "englishSource": "Capstone: your farm design",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentCapstoneComplete",
+      "file": "app/student/page.tsx",
+      "englishSource": "You have finished every module. Build your final design plan-set in the Design Studio — that is your completion artifact for the course.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentCapstoneLocked",
+      "file": "app/student/page.tsx",
+      "englishSource": "Finish and submit all {count} modules to unlock your capstone design.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentCheckUnderstanding",
+      "file": "app/student/page.tsx",
+      "englishSource": "Check your understanding",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentComplete",
+      "file": "app/student/page.tsx",
+      "englishSource": "Complete",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentCompletionMessage",
+      "file": "app/student/page.tsx",
+      "englishSource": "You have completed the full ImbewuField permaculture curriculum. If you have a mentor, they will see this progress next time they check in.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentCorrect",
+      "file": "app/student/page.tsx",
+      "englishSource": "Correct",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentCourseComplete",
+      "file": "app/student/page.tsx",
+      "englishSource": "Course complete!",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentDaysOverdue",
+      "file": "app/student/page.tsx",
+      "englishSource": "{count} days overdue",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentDeckDescription",
+      "file": "app/student/page.tsx",
+      "englishSource": "{count} slides, narrated. Nothing downloads until you press play.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentDesignEnglishPreview",
+      "file": "app/student/page.tsx",
+      "englishSource": "Design course · English teaching preview",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentDesignPreviewAction",
+      "file": "app/student/page.tsx",
+      "englishSource": "Explore the design teaching preview · English →",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentDesignPreviewCardBody",
+      "file": "app/student/page.tsx",
+      "englishSource": "Build a design folder with a facilitator or learning partner. This preview does not award course credit.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentDesignPreviewCardTitle",
+      "file": "app/student/page.tsx",
+      "englishSource": "Bring the decisions together.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentDesignPreviewIntro",
+      "file": "app/student/page.tsx",
+      "englishSource": "Explore eighteen lesson drafts: understand the household, read the site, compare layouts, plan the work and revise with evidence. Practise with a supplied fictional plan; a real field design still needs checked measurements and local evidence.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentDesignPreviewSimpleLabel",
+      "file": "app/student/page.tsx",
+      "englishSource": "Design course",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentDesignPreviewTitle",
+      "file": "app/student/page.tsx",
+      "englishSource": "Design a working homestead",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentDone",
+      "file": "app/student/page.tsx",
+      "englishSource": "Done",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentDueDate",
+      "file": "app/student/page.tsx",
+      "englishSource": "Due {date}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentDueInDays",
+      "file": "app/student/page.tsx",
+      "englishSource": "Due in {count} days",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentDueToday",
+      "file": "app/student/page.tsx",
+      "englishSource": "Due today",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentDueTomorrow",
+      "file": "app/student/page.tsx",
+      "englishSource": "Due tomorrow",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentFacilitatorVideo",
+      "file": "app/student/page.tsx",
+      "englishSource": "Facilitator training video — for in-person sessions, not for streaming here.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentFinanceEnglishPreview",
+      "file": "app/student/page.tsx",
+      "englishSource": "Separate course · English teaching preview",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentFinancePreviewAction",
+      "file": "app/student/page.tsx",
+      "englishSource": "Explore the finance teaching preview · English →",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentFinancePreviewCardBody",
+      "file": "app/student/page.tsx",
+      "englishSource": "Study independently or with a facilitator. Your reading checklist is separate from permaculture course progress.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentFinancePreviewCardTitle",
+      "file": "app/student/page.tsx",
+      "englishSource": "Understand the money. Plan the next season.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentFinancePreviewIntro",
+      "file": "app/student/page.tsx",
+      "englishSource": "Eight units, from keeping farm records to planning a business. Explore 24 lesson drafts with worked practice and printable workbooks. Review and final assessment are still in preparation.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentFinancePreviewSimpleLabel",
+      "file": "app/student/page.tsx",
+      "englishSource": "Farm Finance course",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentFinancePreviewTitle",
+      "file": "app/student/page.tsx",
+      "englishSource": "Farm Finance",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentFinishToUnlock",
+      "file": "app/student/page.tsx",
+      "englishSource": "Finish the lesson “{title}” to open this",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentGuidesDescription",
+      "file": "app/student/page.tsx",
+      "englishSource": "Map your site, follow a harvest, keep a cost and its receipt, or make an invoice. Practise in the sample farm before using your own records.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentIncorrectSee",
+      "file": "app/student/page.tsx",
+      "englishSource": "Incorrect — see {answer}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentKeyPoints",
+      "file": "app/student/page.tsx",
+      "englishSource": "Key points",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentListenModule",
+      "file": "app/student/page.tsx",
+      "englishSource": "Listen to the whole module",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentListenOrRead",
+      "file": "app/student/page.tsx",
+      "englishSource": "Listen or read",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentListenToLesson",
+      "file": "app/student/page.tsx",
+      "englishSource": "Listen to this lesson",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentLocked",
+      "file": "app/student/page.tsx",
+      "englishSource": "Locked",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkComplete",
+      "file": "app/student/page.tsx",
+      "englishSource": "Mark as complete",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkDone",
+      "file": "app/student/page.tsx",
+      "englishSource": "Mark done",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkNotDone",
+      "file": "app/student/page.tsx",
+      "englishSource": "Mark as not done",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentMinutes",
+      "file": "app/student/page.tsx",
+      "englishSource": "min",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentOpenedByMentor",
+      "file": "app/student/page.tsx",
+      "englishSource": "Opened by your mentor",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentPhotoAdded",
+      "file": "app/student/page.tsx",
+      "englishSource": "Photo added — tap to change",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentPhotoRequired",
+      "file": "app/student/page.tsx",
+      "englishSource": "Add a photo (required)",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentPortal",
+      "file": "app/student/page.tsx",
+      "englishSource": "Learning Portal",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentPortalBody",
+      "file": "app/student/page.tsx",
+      "englishSource": "It's set up for students — not your role. Head back to your own home to keep going.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentPortalTitle",
+      "file": "app/student/page.tsx",
+      "englishSource": "This is the Learning Portal",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentPractitioner",
+      "file": "app/student/page.tsx",
+      "englishSource": "Permaculture practitioner",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentProgressError",
+      "file": "app/student/page.tsx",
+      "englishSource": "Progress could not be loaded or saved. Check your connection or account access.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentProgressFirebase",
+      "file": "app/student/page.tsx",
+      "englishSource": "Progress will save to Firebase once the backend is connected",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentReadAndPractise",
+      "file": "app/student/page.tsx",
+      "englishSource": "Read and practise",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessComplete",
+      "file": "app/student/page.tsx",
+      "englishSource": "Fully built",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessCompleteDetail",
+      "file": "app/student/page.tsx",
+      "englishSource": "All {lessons} lessons are illustrated, narrated in {languages} languages, and have slides and animations.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessLessons",
+      "file": "app/student/page.tsx",
+      "englishSource": "Lessons only",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessLessonsDetail",
+      "file": "app/student/page.tsx",
+      "englishSource": "Reading and pictures are ready. Narration and slides are still being made.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessNarrated",
+      "file": "app/student/page.tsx",
+      "englishSource": "Narrated slides",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessNarratedDetail",
+      "file": "app/student/page.tsx",
+      "englishSource": "Illustrated slides and narration are ready in {languages} languages. Translation review is still outstanding.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentRelatedLessons",
+      "file": "app/student/page.tsx",
+      "englishSource": "Related lessons",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentResubmit",
+      "file": "app/student/page.tsx",
+      "englishSource": "Resubmit",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentRevisit",
+      "file": "app/student/page.tsx",
+      "englishSource": "Revisit your studies",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentSampleTourAction",
+      "file": "app/student/page.tsx",
+      "englishSource": "Explore mapping, planning and records in the sample tour →",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentSesothoUiDraftNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "This translation is an AI draft. A fluent Sesotho speaker has not checked it.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentSesothoUiDraftNoticeSource",
+      "file": "app/student/page.tsx",
+      "englishSource": "This translation is an AI draft. A fluent Sesotho speaker has not checked it.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmit",
+      "file": "app/student/page.tsx",
+      "englishSource": "Submit",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmitError",
+      "file": "app/student/page.tsx",
+      "englishSource": "Could not submit — check your connection and try again.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmitModule",
+      "file": "app/student/page.tsx",
+      "englishSource": "Submit this module",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmitToUnlock",
+      "file": "app/student/page.tsx",
+      "englishSource": "Submit the “{title}” lesson task to open this",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmittedResubmit",
+      "file": "app/student/page.tsx",
+      "englishSource": "Submitted — tap to resubmit",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmitting",
+      "file": "app/student/page.tsx",
+      "englishSource": "Submitting…",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentTshivendaUiDraftNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "Unreviewed Tshivenda interface draft. These Study controls have not been checked by a fluent Tshivenda speaker.",
+      "currentTarget": "Unreviewed Tshivenda interface draft. These Study controls have not been checked by a fluent Tshivenda speaker.",
+      "binding": "exactEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentVoiceAdded",
+      "file": "app/student/page.tsx",
+      "englishSource": "Voice note added — {name}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentVoiceOptional",
+      "file": "app/student/page.tsx",
+      "englishSource": "Add a voice note (optional)",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentWatchAndListen",
+      "file": "app/student/page.tsx",
+      "englishSource": "Watch and listen",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentZuluAudioDraftNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "This isiZulu narration is a generated draft. Human listening, fluent isiZulu and local farming review are still pending.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentZuluCourseLanguageNote",
+      "file": "app/student/page.tsx",
+      "englishSource": "Some lessons have unreviewed isiZulu drafts; other lessons are shown in English. Audio availability is separate from lesson text review.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentZuluLessonDraftBadge",
+      "file": "app/student/page.tsx",
+      "englishSource": "Unreviewed isiZulu draft",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentZuluLessonDraftNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "This isiZulu lesson, including its key points and quiz, is an unreviewed draft. A fluent isiZulu speaker and a local farming reviewer have not approved it yet.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentZuluLessonEnglishBadge",
+      "file": "app/student/page.tsx",
+      "englishSource": "English lesson text",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentZuluLessonEnglishFallbackNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "This lesson is shown in English because isiZulu lesson text is not available for learner use yet. Any isiZulu audio does not mean the lesson text and quiz have been reviewed.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentZuluModuleDraftBadge",
+      "file": "app/student/page.tsx",
+      "englishSource": "Unreviewed isiZulu draft",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "studentZuluModuleEnglishBadge",
+      "file": "app/student/page.tsx",
+      "englishSource": "English title",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ve",
+      "key": "xitsongaUiDraftNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "Unreviewed Xitsonga draft.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "courseAudioLanguageMissing",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "englishSource": "This module has not been recorded in {appLanguage} yet — playing {playingLanguage}.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "courseAudioListen",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "englishSource": "Listen",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "courseAudioPlayFailed",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "englishSource": "Could not play this clip — check your connection and try again.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckAnimationFailed",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "The animation could not load. You can keep listening, read the slide, or tap Watch to try again.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckNarrationAria",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Narration for {title}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckNarrationFailed",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Narration could not play. Check your connection and press Play lesson again, or read this slide below.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckNarrationFallback",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Narration is in {spokenLanguage}. {appLanguage} narration is not available for this module yet.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckOpenImage",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "View slide image · zoom",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckOpenImageAria",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Open still image for {title} at full size",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckReadSlide",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Read this slide · {language}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckRegion",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Lesson slides. Use Left and Right arrow keys to change slides.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckSilentStatus",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "No narration will play. Use Next to read at your own pace.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckSlideImageSize",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Slide size",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckSlideLanguage",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "This slide is in {language}.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckTurnPhoneHint",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Turn your phone sideways for a wider animation.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckWatch",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Watch · {seconds}s · {size}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "courseNarrationLanguage",
+      "file": "components/course/DeckPlayer.tsx",
+      "englishSource": "Narration language",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineDownloadBytesProgress",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "{current} of {total}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineDownloadPack",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Download · {size}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineDownloadQuality",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Download quality",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineDownloadUnsupported",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "This browser cannot store lessons for offline use. Chrome on Android can.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineEnglishMediaFallback",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "This pack includes slides or narration in English where your chosen language is not available yet.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineEnglishSlidesFallback",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Some slides remain in English where your chosen language is not available yet.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineFilesFailed",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "{count} files did not download. Tap Finish download again while you still have signal — the rest is already saved.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineFilesProgress",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "{done} of {total} files",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineFinishDownload",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Finish download · {size} left",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineGetSlidesWhileSignal",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Save the slides and their displayed posters on this phone. The deck then works offline without narration or video.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineGetWhileSignal",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Get the slides, the narration and the clips onto this phone while you have signal. They then work with no airtime at all.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineLowStorage",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "This phone is low on space — the download may not fit.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineOnThisPhone",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "On this phone · {size}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineQualityHigher",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Higher quality",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineQualityHigherNote",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "facilitators & funders · wifi",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineQualityStandard",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Standard",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineQualityStandardNote",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "for phones on data",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineRegionalFullMedia",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Slides + English narration and clips",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineRegionalFullMediaNote",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "The full pack includes available English source narration, animations and lesson images.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineRegionalPackChoice",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Regional deck download contents",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineRegionalSlidesOnly",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Slides only",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "offlineSavedMayClear",
+      "file": "components/course/OfflineDownload.tsx",
+      "englishSource": "Saved, but this phone may clear it if storage runs low. Check your saved lessons again before leaving signal.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentAlreadySubmitted",
+      "file": "app/student/page.tsx",
+      "englishSource": "Already submitted — submitting again replaces the photo and voice note.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentAppGuideAction",
+      "file": "app/student/page.tsx",
+      "englishSource": "Read the guide · English →",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentAppGuidesHeading",
+      "file": "app/student/page.tsx",
+      "englishSource": "Practical app guides",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentAppGuidesTitle",
+      "file": "app/student/page.tsx",
+      "englishSource": "Using ImbewuField",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentAssigned",
+      "file": "app/student/page.tsx",
+      "englishSource": "Assigned",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentDueSoon",
+      "file": "app/student/page.tsx",
+      "englishSource": "{count} due this week.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentOverdue",
+      "file": "app/student/page.tsx",
+      "englishSource": "{count} overdue.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentProgress",
+      "file": "app/student/page.tsx",
+      "englishSource": "{done} of {total} done.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentSetByMentor",
+      "file": "app/student/page.tsx",
+      "englishSource": "Set by your mentor",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentsOrder",
+      "file": "app/student/page.tsx",
+      "englishSource": "Assigned modules are listed first. Everything else is still open to you.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentAudio",
+      "file": "app/student/page.tsx",
+      "englishSource": "Audio",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentCapstoneComplete",
+      "file": "app/student/page.tsx",
+      "englishSource": "You have finished every module. Build your final design plan-set in the Design Studio — that is your completion artifact for the course.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentCapstoneLocked",
+      "file": "app/student/page.tsx",
+      "englishSource": "Finish and submit all {count} modules to unlock your capstone design.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentCompletionMessage",
+      "file": "app/student/page.tsx",
+      "englishSource": "You have completed the full ImbewuField permaculture curriculum. If you have a mentor, they will see this progress next time they check in.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentCorrect",
+      "file": "app/student/page.tsx",
+      "englishSource": "Correct",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentCourseComplete",
+      "file": "app/student/page.tsx",
+      "englishSource": "Course complete!",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentDaysOverdue",
+      "file": "app/student/page.tsx",
+      "englishSource": "{count} days overdue",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentDeckDescription",
+      "file": "app/student/page.tsx",
+      "englishSource": "{count} slides, narrated. Nothing downloads until you press play.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentDesignEnglishPreview",
+      "file": "app/student/page.tsx",
+      "englishSource": "Design course · English teaching preview",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentDesignPreviewAction",
+      "file": "app/student/page.tsx",
+      "englishSource": "Explore the design teaching preview · English →",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentDesignPreviewCardBody",
+      "file": "app/student/page.tsx",
+      "englishSource": "Build a design folder with a facilitator or learning partner. This preview does not award course credit.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentDesignPreviewCardTitle",
+      "file": "app/student/page.tsx",
+      "englishSource": "Bring the decisions together.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentDesignPreviewIntro",
+      "file": "app/student/page.tsx",
+      "englishSource": "Explore eighteen lesson drafts: understand the household, read the site, compare layouts, plan the work and revise with evidence. Practise with a supplied fictional plan; a real field design still needs checked measurements and local evidence.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentDesignPreviewSimpleLabel",
+      "file": "app/student/page.tsx",
+      "englishSource": "Design course",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentDesignPreviewTitle",
+      "file": "app/student/page.tsx",
+      "englishSource": "Design a working homestead",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentDueDate",
+      "file": "app/student/page.tsx",
+      "englishSource": "Due {date}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentDueInDays",
+      "file": "app/student/page.tsx",
+      "englishSource": "Due in {count} days",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentDueToday",
+      "file": "app/student/page.tsx",
+      "englishSource": "Due today",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentDueTomorrow",
+      "file": "app/student/page.tsx",
+      "englishSource": "Due tomorrow",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentFacilitatorVideo",
+      "file": "app/student/page.tsx",
+      "englishSource": "Facilitator training video — for in-person sessions, not for streaming here.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentFinanceEnglishPreview",
+      "file": "app/student/page.tsx",
+      "englishSource": "Separate course · English teaching preview",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentFinancePreviewAction",
+      "file": "app/student/page.tsx",
+      "englishSource": "Explore the finance teaching preview · English →",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentFinancePreviewCardBody",
+      "file": "app/student/page.tsx",
+      "englishSource": "Study independently or with a facilitator. Your reading checklist is separate from permaculture course progress.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentFinancePreviewCardTitle",
+      "file": "app/student/page.tsx",
+      "englishSource": "Understand the money. Plan the next season.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentFinancePreviewIntro",
+      "file": "app/student/page.tsx",
+      "englishSource": "Eight units, from keeping farm records to planning a business. Explore 24 lesson drafts with worked practice and printable workbooks. Review and final assessment are still in preparation.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentFinancePreviewSimpleLabel",
+      "file": "app/student/page.tsx",
+      "englishSource": "Farm Finance course",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentFinancePreviewTitle",
+      "file": "app/student/page.tsx",
+      "englishSource": "Farm Finance",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentGuidesDescription",
+      "file": "app/student/page.tsx",
+      "englishSource": "Map your site, follow a harvest, keep a cost and its receipt, or make an invoice. Practise in the sample farm before using your own records.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentIncorrectSee",
+      "file": "app/student/page.tsx",
+      "englishSource": "Incorrect — see {answer}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentLessonOne",
+      "file": "app/student/page.tsx",
+      "englishSource": "lesson",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentListenModule",
+      "file": "app/student/page.tsx",
+      "englishSource": "Listen to the whole module",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentListenToLesson",
+      "file": "app/student/page.tsx",
+      "englishSource": "Listen to this lesson",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentMarkNotDone",
+      "file": "app/student/page.tsx",
+      "englishSource": "Mark as not done",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentMinutes",
+      "file": "app/student/page.tsx",
+      "englishSource": "min",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentModules",
+      "file": "app/student/page.tsx",
+      "englishSource": "modules",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentModulesComplete",
+      "file": "app/student/page.tsx",
+      "englishSource": "{done} of {total} modules complete",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentOpenedByMentor",
+      "file": "app/student/page.tsx",
+      "englishSource": "Opened by your mentor",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentPhotoAdded",
+      "file": "app/student/page.tsx",
+      "englishSource": "Photo added — tap to change",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentPhotoRequired",
+      "file": "app/student/page.tsx",
+      "englishSource": "Add a photo (required)",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentPortalBody",
+      "file": "app/student/page.tsx",
+      "englishSource": "It's set up for students — not your role. Head back to your own home to keep going.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentPractitioner",
+      "file": "app/student/page.tsx",
+      "englishSource": "Permaculture practitioner",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentProgressError",
+      "file": "app/student/page.tsx",
+      "englishSource": "Progress could not be loaded or saved. Check your connection or account access.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentProgressFirebase",
+      "file": "app/student/page.tsx",
+      "englishSource": "Progress will save to Firebase once the backend is connected",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessComplete",
+      "file": "app/student/page.tsx",
+      "englishSource": "Fully built",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessCompleteDetail",
+      "file": "app/student/page.tsx",
+      "englishSource": "All {lessons} lessons are illustrated, narrated in {languages} languages, and have slides and animations.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessLessons",
+      "file": "app/student/page.tsx",
+      "englishSource": "Lessons only",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessLessonsDetail",
+      "file": "app/student/page.tsx",
+      "englishSource": "Reading and pictures are ready. Narration and slides are still being made.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessNarrated",
+      "file": "app/student/page.tsx",
+      "englishSource": "Narrated slides",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessNarratedDetail",
+      "file": "app/student/page.tsx",
+      "englishSource": "Illustrated slides and narration are ready in {languages} languages. Translation review is still outstanding.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentRemaining",
+      "file": "app/student/page.tsx",
+      "englishSource": "remaining",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentResubmit",
+      "file": "app/student/page.tsx",
+      "englishSource": "Resubmit",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentSampleTourAction",
+      "file": "app/student/page.tsx",
+      "englishSource": "Explore mapping, planning and records in the sample tour →",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentSaveAvailable",
+      "file": "app/student/page.tsx",
+      "englishSource": "Save available lessons to this phone",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentSaveBeforeSignal",
+      "file": "app/student/page.tsx",
+      "englishSource": "Save lessons to this phone before you leave signal",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentSaveModule",
+      "file": "app/student/page.tsx",
+      "englishSource": "Save {title} to this phone",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentSesothoUiDraftNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "This translation is an AI draft. A fluent Sesotho speaker has not checked it.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentSesothoUiDraftNoticeSource",
+      "file": "app/student/page.tsx",
+      "englishSource": "This translation is an AI draft. A fluent Sesotho speaker has not checked it.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentSubmitError",
+      "file": "app/student/page.tsx",
+      "englishSource": "Could not submit — check your connection and try again.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentSubmitModule",
+      "file": "app/student/page.tsx",
+      "englishSource": "Submit this module",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentSubmitToUnlock",
+      "file": "app/student/page.tsx",
+      "englishSource": "Submit the “{title}” lesson task to open this",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentSubmittedResubmit",
+      "file": "app/student/page.tsx",
+      "englishSource": "Submitted — tap to resubmit",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentSubmitting",
+      "file": "app/student/page.tsx",
+      "englishSource": "Submitting…",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentTshivendaUiDraftNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "Unreviewed Tshivenda interface draft. These Study controls have not been checked by a fluent Tshivenda speaker.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentVoiceAdded",
+      "file": "app/student/page.tsx",
+      "englishSource": "Voice note added — {name}",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentVoiceOptional",
+      "file": "app/student/page.tsx",
+      "englishSource": "Add a voice note (optional)",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentZuluAudioDraftNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "This isiZulu narration is a generated draft. Human listening, fluent isiZulu and local farming review are still pending.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentZuluCourseLanguageNote",
+      "file": "app/student/page.tsx",
+      "englishSource": "Some lessons have unreviewed isiZulu drafts; other lessons are shown in English. Audio availability is separate from lesson text review.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentZuluLessonDraftBadge",
+      "file": "app/student/page.tsx",
+      "englishSource": "Unreviewed isiZulu draft",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentZuluLessonDraftNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "This isiZulu lesson, including its key points and quiz, is an unreviewed draft. A fluent isiZulu speaker and a local farming reviewer have not approved it yet.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentZuluLessonEnglishBadge",
+      "file": "app/student/page.tsx",
+      "englishSource": "English lesson text",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentZuluLessonEnglishFallbackNotice",
+      "file": "app/student/page.tsx",
+      "englishSource": "This lesson is shown in English because isiZulu lesson text is not available for learner use yet. Any isiZulu audio does not mean the lesson text and quiz have been reviewed.",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentZuluModuleDraftBadge",
+      "file": "app/student/page.tsx",
+      "englishSource": "Unreviewed isiZulu draft",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    },
+    {
+      "language": "ts",
+      "key": "studentZuluModuleEnglishBadge",
+      "file": "app/student/page.tsx",
+      "englishSource": "English title",
+      "currentTarget": null,
+      "binding": "fallbackEnglish",
+      "displayCondition": "May be conditional on learner role, progress, content availability or UI branch; this is a potential displayed-key inventory."
+    }
+  ],
+  "rawInventory": {
+    "literalKeys": 167,
+    "keysMissingExactEnglishSource": []
+  },
+  "currentDictionaryInterpretation": "Counts are per literal Study UI dictionary key across the inventoried source files. sourcebound means the language file has a non-English explicit target for the key. fallbackEnglish means that locale has no own key and i18n falls back to the exact English source. These are potential display paths, including conditional controls; they are not a completion percentage or proof every row is visible in every session.",
+  "concreteResidualExamples": [
+    {
+      "language": "st",
+      "file": "lib/locales/st.ts",
+      "key": "courseDeckSilentStatus",
+      "source": "No narration will play. Use Next to read at your own pace.",
+      "reason": "No explicit Sesotho target; silent mode assurance falls back to English."
+    },
+    {
+      "language": "ve",
+      "file": "lib/locales/ve.ts",
+      "key": "offlineRegionalPackChoice",
+      "source": "Regional deck download contents",
+      "reason": "No explicit Tshivenda target; offline pack choice falls back to English."
+    },
+    {
+      "language": "ts",
+      "file": "lib/locales/ts.ts",
+      "key": "offlineEnglishMediaFallback",
+      "source": "This pack includes slides or narration in English where your chosen language is not available yet.",
+      "reason": "No explicit Xitsonga target; English media fallback promise falls back to English."
+    },
+    {
+      "language": "st",
+      "file": "lib/locales/st.ts",
+      "key": "courseAudioLanguageMissing",
+      "source": "This module has not been recorded in {appLanguage} yet — playing {playingLanguage}.",
+      "reason": "No explicit Sesotho target; alternate voice playback notice falls back to English."
+    }
+  ],
+  "knownStatusEvidence": [
+    {
+      "file": "app/student/page.tsx",
+      "language": "zu",
+      "evidence": "Localized studentZuluCourseLanguageNote plus bilingual fixed notice stating the interface is a machine draft not reviewed by a fluent isiZulu speaker."
+    },
+    {
+      "file": "app/student/page.tsx",
+      "language": "st",
+      "evidence": "Localized studentSesothoUiDraftNotice plus an English source line; source-string key studentSesothoUiDraftNoticeSource intentionally remains exact English."
+    },
+    {
+      "file": "app/student/page.tsx",
+      "language": "ts",
+      "evidence": "Localized Xitsonga notice, followed by fixed English “Unreviewed Xitsonga draft.”"
+    },
+    {
+      "file": "app/student/page.tsx",
+      "language": "ve",
+      "evidence": "Tshivenda UI notice is currently exact English and visibly marked lang=en."
+    }
+  ]
+}

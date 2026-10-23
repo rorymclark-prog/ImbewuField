@@ -1,0 +1,66 @@
+{
+  "title": "Independent code/test review: isiZulu source binding",
+  "date": "2026-10-05",
+  "readOnly": true,
+  "repository": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "head": "ee4afe0d05acdb4f22ea0de046cb1e63d47fd79a",
+  "inputSha256": {
+    "lib/course-localization.ts": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+    "app/student/page.tsx": "a37cd8860903ee99cc924bd65034b34e8d5f05708b42f090785dd16977b3da8f",
+    "lib/course-translation-draft-sources-zu.ts": "d0946c4596182378a42bf7c6fd582bef538c56d1f0d5acb9d66c62cf301d82c9",
+    "lib/course-translation-drafts.ts": "66e14ef831c3849ada7160eaf4f88a9271f404647652c122bbb62ce54dc78a6a",
+    "tests/isizulu-source-binding.test.ts": "e9b7ae6c360da8616af3c7aa47d53fe5a7e3ebe43c4593baf6138135ffc0df75",
+    "package.json": "c3fa315822a62bcaa4b544226cb6b95f524d720be4d9fe86c97ad8863f254995"
+  },
+  "verification": {
+    "command": "node --import ./tests/register-alias.mjs --test tests/isizulu-source-binding.test.ts",
+    "result": "5 tests passed; 0 failed",
+    "cases": [
+      "all 33 snapshot entries exactly equal current canonical fields, including infographicAlt, quiz order/options/correct indices",
+      "same-shape changes to title/body/keypoint/quiz/rationale/options/index/alt force whole-lesson English fallback",
+      "a full-shaped arbitrary supplied review draft is rejected; exact clone accepted; malformed supplied keyPoints falls back",
+      "approved ZU path and ST/TS/VE intro draft paths remain intact",
+      "source panel visibility gates tie to ZU/regional draft status"
+    ],
+    "exitCode": 0
+  },
+  "findings": [
+    {
+      "severity": "accepted",
+      "area": "Snapshot completeness and strict source matching",
+      "evidence": "`matchesIsiZuluDraftSource` compares title/body/alt/keypoint count and exact ordered values, quiz count and each ordered question/options/correct index/rationale. The focused test asserts all 33 checked lesson IDs and each snapshot deep-equals the live canonical source object. A single difference returns English fallback for the whole lesson."
+    },
+    {
+      "severity": "accepted",
+      "area": "Supplied review draft cannot override checked copy",
+      "evidence": "For matching lesson ID + review-draft status, supplied draft must exist, pass complete shape, and deeply match the registered checked-in draft. Otherwise resolver returns canonical English. Exact deep clone passes. Shape validation checks arrays/lengths before iteration, so malformed draft keyPoints/quiz/options are expected to fail closed."
+    },
+    {
+      "severity": "accepted",
+      "area": "No caller-supplied draft leaks through alternate status",
+      "evidence": "Only the review-draft branch consumes translation.draft. English source mismatch is checked before that branch. Approved published content follows the existing approval gate and was intentionally left unchanged."
+    },
+    {
+      "severity": "accepted",
+      "area": "Visible source pairing",
+      "evidence": "Student page gates exact English title/body/keypoint/quiz source display on `sourcePairedDraft`, which includes only current ZU/regional `draft` states. Fallback renders English and its fallback notice; it does not show stale ZU text as a draft. Draft notice explicitly says ZU text lacks fluent-speaker/local-farming approval. Image alt uses localized draft alt only when present; otherwise it falls back to canonical English alt."
+    },
+    {
+      "severity": "minor-test-coverage-gap",
+      "area": "Body paragraph order mutation case",
+      "evidence": "Implementation compares the entire body string byte-for-byte, so reordered paragraphs are rejected. The test label says “paragraph order/count” but the changed-body fixture appends an extra paragraph rather than actually reordering same-paragraph content. A pure swap fixture would make that promised case explicit; no resolver defect found."
+    },
+    {
+      "severity": "minor-test-coverage-gap",
+      "area": "Malformed draft arrays",
+      "evidence": "Current malformed-draft test covers `keyPoints: undefined`; `hasCompleteLessonShape` also checks quiz/options via `Array.isArray` before access, so they fail closed by inspection. Adding malformed `quiz` and nested `options` cases would directly exercise the full stated guard, but no throw path was found for malformed supplied draft arrays."
+    }
+  ],
+  "scopeNotes": [
+    "Snapshot contains exactly 33 lessons per the focused passing test.",
+    "Approved isiZulu and ST/VE/TS path checks passed; no evidence of regional resolver regression.",
+    "Review covered source-binding/UI/test path, not semantic correctness of the isiZulu translations.",
+    "No repository files were changed."
+  ],
+  "rootFollowup": "Root added actual same-count paragraph reorder and malformed quiz/options fixtures after this review, and replaced union indexing with safe discriminant narrowing. Assertions retained; full ordered gates follow."
+}

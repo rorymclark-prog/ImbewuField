@@ -1,0 +1,70 @@
+{
+  "key": "coriander",
+  "varieties": [
+    {
+      "name": "Moroccan",
+      "zones": ["highveld", "midlands-mistbelt"],
+      "maturity": "early",
+      "season": "35-40 days to maturity in summer; 45-50 days in winter",
+      "traits": "Vigorous, fast-growing, high heat tolerance for a single cut; bolts sooner than the slow-bolting types, so cannot be left standing long in the field; smaller leaf (1-3mm), dark green, fast germination",
+      "type": null,
+      "note": "Starke Ayres commercial cultivar. Zones assigned as this pass's inference for cooler-season/shorter-window production (it 'can easily be grown all year' but is explicitly NOT a slow-bolt choice), distinct from Green Aroma/American Long which the source itself ties to 'mild and subtropical climates'.",
+      "evidence": [
+        { "quote": "Coriander Moroccan a one cut with a very good heat tolerance. Its vigorous and performance is excellent during hot summer. It can easily be grown all the year.", "url": "https://www.starkeayres.com/products/commercial-farming-seed/herbs-1/coriander-moroccan", "page": null, "doc": "Coriander Moroccan Seeds, Starke Ayres product page" },
+        { "quote": "Maturity Summer: 35 to 40 days. Winter: 45 to 50 days. Plant Characteristics Plants are vigorous and fast growing therefore they can bolt sooner.", "url": "https://www.starkeayres.com/products/commercial-farming-seed/herbs-1/coriander-moroccan", "page": null, "doc": "Coriander Moroccan Seeds, Starke Ayres product page" },
+        { "quote": "MOROCCAN is an early maturing variety that can handle the heat in summer. You can not leave the plant for to long in the field.", "url": "https://www.starkeayres.com/products/commercial-farming-seed/herbs-1/coriander-moroccan", "page": null, "doc": "Coriander Moroccan Seeds, Starke Ayres product page" }
+      ]
+    },
+    {
+      "name": "Green Aroma",
+      "zones": ["subtropical-coast", "lowveld-bushveld", "southern-cape"],
+      "maturity": "medium",
+      "season": "40 days to maturity in summer; 50-55 days in winter",
+      "traits": "Tall standing, slow (late) bolting type; grows well in mild and subtropical climates; good adaptability for year-round production 'in certain areas'; young leaves/stems have relatively mild aroma",
+      "type": null,
+      "note": "Explicitly named for mild/subtropical climates in the source — zones assigned to those matching that climate description under the brief's zone key. This is the cultivar to prefer over Moroccan for a longer standing window before bolting.",
+      "evidence": [
+        { "quote": "Green Aroma is a long standing all-year variety. It is a tall standing type plant, with slow bolting. Plants grow well in mild and subtropical climates.", "url": "https://www.starkeayres.com/products/commercial-farming-seed/herbs-1/coriander-green-aroma", "page": null, "doc": "Coriander Green Aroma Seeds, Starke Ayres product page" },
+        { "quote": "This variety shows good adaptability for year round production in certain areas.", "url": "https://www.starkeayres.com/products/commercial-farming-seed/herbs-1/coriander-green-aroma", "page": null, "doc": "Coriander Green Aroma Seeds, Starke Ayres product page" }
+      ]
+    },
+    {
+      "name": "American Long (Standing)",
+      "zones": ["subtropical-coast", "lowveld-bushveld", "southern-cape"],
+      "maturity": "medium",
+      "season": "40 days to maturity in summer; 50-55 days in winter",
+      "traits": "Tall standing, slow (late) bolting type; grows well in mild and subtropical climates; good adaptability for year-round production 'in certain areas'",
+      "type": null,
+      "note": "Near-identical description and same source/zone reasoning as Green Aroma — both are the 'slow-bolt' pair Starke Ayres pitches against the fast-bolting Moroccan.",
+      "evidence": [{ "quote": "American Long Standing is an all-year variety. It is a tall standing type plant, with slow bolting. Plants grow well in mild and subtropical climates.", "url": "https://www.starkeayres.com/products/commercial-farming-seed/herbs-1/coriander-american-long-1", "page": null, "doc": "Coriander American Long Seeds, Starke Ayres product page" }]
+    }
+  ],
+  "zoneAdvice": {
+    "subtropical-coast": {
+      "text": "Best-sourced fit: Green Aroma or American Long, both explicitly described as suited to 'mild and subtropical climates' with slow bolting and year-round production potential.",
+      "evidence": []
+    },
+    "lowveld-bushveld": {
+      "text": "Same reasoning as subtropical-coast — mild/subtropical-climate cultivars are this pass's inferred fit, not separately confirmed by the source for this specific zone by name.",
+      "evidence": []
+    },
+    "southern-cape": {
+      "text": "Same reasoning as subtropical-coast (mild coastal climate) — inferred fit, not source-confirmed by name.",
+      "evidence": []
+    },
+    "highveld": {
+      "text": "Moroccan is this pass's fit for a quick single cut ahead of hot, dry highveld summer conditions given its explicit heat tolerance, accepting that it bolts sooner and needs prompt harvest — not source-confirmed by zone name.",
+      "evidence": []
+    },
+    "midlands-mistbelt": {
+      "text": "Same reasoning as highveld for Moroccan — inferred, not source-confirmed by zone name.",
+      "evidence": []
+    }
+  },
+  "gaps": [
+    "None of the three Starke Ayres cultivar pages names a South African province, region or climate zone directly — every zone assignment above is this pass's own inference from the stated 'mild/subtropical climate' vs 'heat tolerant, one-cut' framing, flagged in each note.",
+    "No sourced recommendation at all for western-cape, karoo-arid or high-mountain.",
+    "The existing crop-catalog.ts coriander entry's own honest caveat that coriander 'stays manual' (no verified sowMonths/harvest data) was not contradicted or improved by anything found in this pass — this file adds cultivar names only.",
+    "No spacing-by-zone or yield data found; the 30-35cm row / 8-10cm plant spacing and 10-20kg/ha seed rate given are identical across all three cultivars and not zone-specific."
+  ]
+}

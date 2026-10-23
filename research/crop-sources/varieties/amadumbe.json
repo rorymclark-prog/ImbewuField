@@ -1,0 +1,54 @@
+{
+  "key": "amadumbe",
+  "varieties": [
+    {
+      "name": "Umbumbulu (UM landrace)",
+      "zones": ["subtropical-coast", "midlands-mistbelt"],
+      "maturity": null,
+      "season": null,
+      "traits": "Best drought performer of the three landraces trialled: avoids drought via increased stomatal regulation, lower chlorophyll content, smaller canopy and a shortened growth period — recommended for water-stressed production",
+      "type": null,
+      "note": "Named landrace from a peer-reviewed field trial at Pietermaritzburg (KZN Midlands). Zone assigned as the landrace's home area (Umbumbulu, on the KZN coastal belt near Durban) plus the KZN Midlands trial location, since the source names the landrace by its home district rather than a formal production zone.",
+      "evidence": [{ "quote": "Drought tolerance mechanisms of three taro landraces (Dumbe Lomfula (DL), KwaNgwanase (KW) and Umbumbulu (UM)) were evaluated under field conditions Pietermaritzburg, South Africa, over two summer seasons.", "url": "http://ouci.dntb.gov.ua/en/works/leAPkpwl/", "page": null, "doc": "Mabhaudhi, T. & Modi, A.T. (2014) Drought tolerance of selected South African taro (Colocasia esculenta L. Schott) landraces. Experimental Agriculture, Cambridge University Press, 451-466 (abstract, via ouci.dntb.gov.ua mirror; full text behind a paywall this session)" },
+        { "quote": "The UM landrace avoided drought through increased stomatal regulation, lowering chlorophyll content, smaller canopy size and reduced growth period. It is concluded that among the three landraces, UM is suitable for production under water stress conditions, because it exhibited drought avoidance and escape mechanisms.", "url": "http://ouci.dntb.gov.ua/en/works/leAPkpwl/", "page": null, "doc": "Mabhaudhi, T. & Modi, A.T. (2014) Drought tolerance of selected South African taro (Colocasia esculenta L. Schott) landraces. Experimental Agriculture, Cambridge University Press, 451-466 (abstract, via ouci.dntb.gov.ua mirror)" }
+      ]
+    },
+    {
+      "name": "Dumbe Lomfula (DL landrace)",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Weakest emergence of the three landraces under the trial's field conditions; slow to emerge overall (~49 days) with DL never achieving a good crop stand",
+      "type": null,
+      "note": "No specific home zone named for this landrace beyond the Pietermaritzburg trial site; recorded honestly as the poorer performer rather than recommended for any zone.",
+      "evidence": [{ "quote": "Taro was slow to emerge (~49 days) and showed significant differences between landraces with respect to final emergence with DL never achieving a good crop stand.", "url": "http://ouci.dntb.gov.ua/en/works/leAPkpwl/", "page": null, "doc": "Mabhaudhi, T. & Modi, A.T. (2014) Drought tolerance of selected South African taro (Colocasia esculenta L. Schott) landraces. Experimental Agriculture, Cambridge University Press, 451-466 (abstract, via ouci.dntb.gov.ua mirror)" }]
+    },
+    {
+      "name": "KwaNgwanase (KW landrace)",
+      "zones": ["subtropical-coast"],
+      "maturity": null,
+      "season": null,
+      "traits": "One of the three landraces trialled; intermediate performance not singled out as best or worst in the abstract text available",
+      "type": null,
+      "note": "Zone assigned from its home-district name — KwaNgwanase (Manguzi) is on the far northern KZN coast, a frost-free subtropical-coast area under the brief's zone key. No further performance detail was accessible beyond the abstract (full paper paywalled this session).",
+      "evidence": [{ "quote": "Drought tolerance mechanisms of three taro landraces (Dumbe Lomfula (DL), KwaNgwanase (KW) and Umbumbulu (UM)) were evaluated under field conditions Pietermaritzburg, South Africa, over two summer seasons.", "url": "http://ouci.dntb.gov.ua/en/works/leAPkpwl/", "page": null, "doc": "Mabhaudhi, T. & Modi, A.T. (2014) Drought tolerance of selected South African taro (Colocasia esculenta L. Schott) landraces. Experimental Agriculture, Cambridge University Press, 451-466 (abstract, via ouci.dntb.gov.ua mirror)" }]
+    }
+  ],
+  "zoneAdvice": {
+    "subtropical-coast": {
+      "text": "Amadumbe's traditional home zone (KwaNgwanase, Umbumbulu are both KZN coastal districts); Umbumbulu landrace is the sourced choice specifically for water-stressed/drought-prone conditions.",
+      "evidence": []
+    },
+    "midlands-mistbelt": {
+      "text": "The actual field trial validating these three landraces' drought responses ran at Pietermaritzburg, in the Midlands — included as the trial's real location, distinct from the landraces' home districts on the coast.",
+      "evidence": [{ "quote": "were evaluated under field conditions Pietermaritzburg, South Africa, over two summer seasons.", "url": "http://ouci.dntb.gov.ua/en/works/leAPkpwl/", "page": null, "doc": "Mabhaudhi, T. & Modi, A.T. (2014) Drought tolerance of selected South African taro (Colocasia esculenta L. Schott) landraces. Experimental Agriculture, Cambridge University Press, 451-466 (abstract, via ouci.dntb.gov.ua mirror)" }]
+    }
+  },
+  "gaps": [
+    "The DAFF/DALRRD Amadumbe production brochure (2010), which likely names more cultivars/landraces with region-specific guidance, could not be fetched this session — nda.gov.za/dalrrd.gov.za refused direct connections and the Wayback Machine returned 'Temporarily Offline' for the relevant snapshot years tried.",
+    "The full text of the Mabhaudhi & Modi (2014) paper is paywalled (tandfonline/researchgate/academia.edu all returned 403 Forbidden this session); only the open abstract (via an ouci.dntb.gov.ua mirror) could be quoted, so DL and KW's detailed agronomic numbers (yield, harvest index, canopy size) beyond the one verbatim UM sentence are not available here.",
+    "A commonly cited farmer-preference ranking of amadumbe landraces (reportedly Dumbe-dumbe, Mgingqeni, Pitshi, Dumbe-lomfula in some order) was found only in WebSearch snippet form, never in an openly-readable primary document — deliberately excluded per the brief's rule against WebSearch-snippet-only sourcing.",
+    "No sourced recommendation at all for highveld, lowveld-bushveld, western-cape, southern-cape, karoo-arid or high-mountain — amadumbe/taro is frost-tender and these sources address only KZN coastal/Midlands production.",
+    "No maturity length, spacing or yield-in-t/ha figures sourced for any named landrace."
+  ]
+}

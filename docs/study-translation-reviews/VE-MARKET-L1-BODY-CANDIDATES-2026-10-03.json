@@ -1,0 +1,245 @@
+{
+  "packetId": "IMBEWU-VE-MARKET-L1-FULLER-BODY-CANDIDATES-2026-10-03",
+  "sourceRevision": "00abeeb7ae967e733971f5af70d9da9fa2d5d0c0",
+  "backcheckStartingPacket": "/tmp/imbewu-market-ordinary-body-backcheck-20261003.json",
+  "language": "tshivenda",
+  "languageCode": "ve",
+  "lessonId": "market-community-l1",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-ve-market-community.ts",
+  "sourcePairMatches": true,
+  "sourceParagraphCount": 17,
+  "exactSourceParagraphs": [
+    "A harvest can feed the household, be sold, be shared, or be lost.",
+    "Recording these different uses helps you see what the farm produces and what reaches customers.",
+    "Use that information to protect household food and make better business decisions.",
+    "Write down every harvest as it happens.",
+    "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+    "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+    "Do not rely on memory at the end of the season.",
+    "One season of records answers practical questions.",
+    "Which crops give the best yield per bed? Which return the most for each hour of work?",
+    "Which crops use more seeds, water, and compost than they return?",
+    "The record also shows which months leave the household buying food.",
+    "Before setting a price, record production, packing and selling costs, including labour and transport.",
+    "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+    "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+    "Use your record to find when household food runs short.",
+    "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+    "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail."
+  ],
+  "currentRegistryParagraphs": [
+    "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.",
+    "U ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.",
+    "Use that information to protect household food and make better business decisions.",
+    "Ṅwalani khaṋo iṅwe na iṅwe musi i tshi itea.",
+    "Ṅwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.",
+    "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+    "Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.",
+    "One season of records answers practical questions.",
+    "Which crops give the best yield per bed? Which return the most for each hour of work?",
+    "Which crops use more seeds, water, and compost than they return?",
+    "Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.",
+    "Before setting a price, record production, packing and selling costs, including labour and transport.",
+    "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+    "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+    "Shumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.",
+    "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+    "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail."
+  ],
+  "candidateParagraphs": [
+    "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.",
+    "U ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.",
+    "Shumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.",
+    "Ṅwalani khaṋo iṅwe na iṅwe musi i tshi itea.",
+    "Ṅwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.",
+    "Shumisani maitele a sa lemelaho a fanaho kha food kept at home, produce sold, produce gifted, and produce composted.",
+    "Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.",
+    "Rekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.",
+    "Which crops give the best yield per bed? Which return the most for each hour of work?",
+    "Which crops use more seeds, water, and compost than they return?",
+    "Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.",
+    "Musi ni sa athu vhea price, ṅwalani production, packing and selling costs, including labour and transport.",
+    "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+    "Sedzani price, costs na u ṱavha hu tevhelaho. Ṱolani zwine vharengi vha ḓo zwi renga zwa vhukuma; a higher asking price is not a guaranteed sale.",
+    "Shumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.",
+    "Nangani locally suitable crops and work backwards from the harvest you need. Ṱolani planting conditions and expected time to harvest.",
+    "A date that works on another farm may not work here. Engedzani a backup plan when rain, water or crops fail."
+  ],
+  "changedParagraphIndices": [
+    2,
+    5,
+    7,
+    11,
+    13,
+    15,
+    16
+  ],
+  "entries": [
+    {
+      "replacement": "Shumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.",
+      "backtranslation": "Use that information to protect household food and make better business decisions.",
+      "uncertainty": "Carry forward the independently backchecked unreviewed candidate; check formal/plural agreement. No business outcome is added.",
+      "candidateParagraph": "Shumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.",
+      "paragraphIndex": 2,
+      "fieldPath": "body.paragraphs[2]",
+      "exactSourceParagraph": "Use that information to protect household food and make better business decisions.",
+      "currentRegistryParagraph": "Use that information to protect household food and make better business decisions.",
+      "exactSourceEnglishClause": "Use that information to protect household food and make better business decisions."
+    },
+    {
+      "replacement": "Shumisani maitele a sa lemelaho a fanaho kha food kept at home, produce sold, produce gifted, and produce composted.",
+      "backtranslation": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+      "uncertainty": "Carry forward the independently backchecked unreviewed candidate. The accounting category list remains exact English.",
+      "candidateParagraph": "Shumisani maitele a sa lemelaho a fanaho kha food kept at home, produce sold, produce gifted, and produce composted.",
+      "paragraphIndex": 5,
+      "fieldPath": "body.paragraphs[5]",
+      "exactSourceParagraph": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+      "currentRegistryParagraph": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+      "exactSourceEnglishClause": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted."
+    },
+    {
+      "replacement": "Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.",
+      "backtranslation": "When the season ends, do not rely on what you remember.",
+      "uncertainty": "Preserve the existing localized paragraph byte-for-byte; its source is the end-of-season instruction, not the Market L2 reliable-supply paragraph.",
+      "candidateParagraph": "Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.",
+      "paragraphIndex": 6,
+      "fieldPath": "body.paragraphs[6]",
+      "exactSourceParagraph": "Do not rely on memory at the end of the season.",
+      "currentRegistryParagraph": "Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.",
+      "exactSourceEnglishClause": "Do not rely on memory at the end of the season.",
+      "decision": "Source/index mismatch repaired by restoring the current L1 paragraph; meaning and end-of-season qualifier are preserved."
+    },
+    {
+      "replacement": "Rekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.",
+      "backtranslation": "Records from one season answer questions that help.",
+      "uncertainty": "Carry forward the independently backchecked unreviewed candidate. Check wording for “practical questions”; no added guarantee.",
+      "candidateParagraph": "Rekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.",
+      "paragraphIndex": 7,
+      "fieldPath": "body.paragraphs[7]",
+      "exactSourceParagraph": "One season of records answers practical questions.",
+      "currentRegistryParagraph": "One season of records answers practical questions.",
+      "exactSourceEnglishClause": "One season of records answers practical questions."
+    },
+    {
+      "replacement": "Musi ni sa athu vhea price, ṅwalani production, packing and selling costs, including labour and transport.",
+      "backtranslation": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+      "uncertainty": "The full cost list and included categories remain verbatim English; only the ordinary before/set/record framing is localized.",
+      "candidateParagraph": "Musi ni sa athu vhea price, ṅwalani production, packing and selling costs, including labour and transport.",
+      "paragraphIndex": 11,
+      "fieldPath": "body.paragraphs[11]",
+      "exactSourceParagraph": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+      "currentRegistryParagraph": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+      "exactSourceEnglishClause": "Before setting a price, record production, packing and selling costs, including labour and transport."
+    },
+    {
+      "replacement": "Sedzani price, costs na u ṱavha hu tevhelaho. Ṱolani zwine vharengi vha ḓo zwi renga zwa vhukuma; a higher asking price is not a guaranteed sale.",
+      "backtranslation": "Look over the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+      "uncertainty": "“Sedzani” is used for review/look over and “Ṱolani” for check; the explicit no-guaranteed-sale statement stays exact English. Local wording remains unreviewed.",
+      "candidateParagraph": "Sedzani price, costs na u ṱavha hu tevhelaho. Ṱolani zwine vharengi vha ḓo zwi renga zwa vhukuma; a higher asking price is not a guaranteed sale.",
+      "paragraphIndex": 13,
+      "fieldPath": "body.paragraphs[13]",
+      "exactSourceParagraph": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+      "currentRegistryParagraph": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+      "exactSourceEnglishClause": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+      "decision": "Revised to distinguish reviewing the price/costs/next planting from checking what customers will actually buy."
+    },
+    {
+      "replacement": "Nangani locally suitable crops and work backwards from the harvest you need. Ṱolani planting conditions and expected time to harvest.",
+      "backtranslation": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+      "uncertainty": "Only choose/check action verbs are localized; crop suitability, backwards-planning instruction and planting/time-to-harvest conditions remain exact English.",
+      "candidateParagraph": "Nangani locally suitable crops and work backwards from the harvest you need. Ṱolani planting conditions and expected time to harvest.",
+      "paragraphIndex": 15,
+      "fieldPath": "body.paragraphs[15]",
+      "exactSourceParagraph": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+      "currentRegistryParagraph": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+      "exactSourceEnglishClause": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest."
+    },
+    {
+      "replacement": "A date that works on another farm may not work here. Engedzani a backup plan when rain, water or crops fail.",
+      "backtranslation": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "uncertainty": "The full may-not comparison and rain/water/crop failure condition remain exact English; only the ordinary “include” verb is localized.",
+      "candidateParagraph": "A date that works on another farm may not work here. Engedzani a backup plan when rain, water or crops fail.",
+      "paragraphIndex": 16,
+      "fieldPath": "body.paragraphs[16]",
+      "exactSourceParagraph": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "currentRegistryParagraph": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "exactSourceEnglishClause": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail."
+    }
+  ],
+  "exactTechnicalOrRiskHolds": [
+    {
+      "paragraphIndex": 4,
+      "reason": "Preserve kilograms/dozens/bundles, named products and recorded destination wording as the existing text."
+    },
+    {
+      "paragraphIndex": 8,
+      "reason": "Comparative yield-per-bed and return-per-hour measures remain exact English."
+    },
+    {
+      "paragraphIndex": 9,
+      "reason": "Input-versus-return comparison across seed, water and compost remains exact English."
+    },
+    {
+      "paragraphIndex": 12,
+      "reason": "Preserve teaching-example disclaimer, R18 and R15 values, per-kilogram basis and the insufficient-cost statement byte-for-byte."
+    },
+    {
+      "paragraphIndex": 13,
+      "reason": "Preserve the no-guaranteed-sale statement exactly; translate only surrounding ordinary framing."
+    },
+    {
+      "paragraphIndex": 15,
+      "reason": "Keep local crop suitability, working backwards from needed harvest, planting conditions and expected time-to-harvest exact English."
+    },
+    {
+      "paragraphIndex": 16,
+      "reason": "Keep the may-not comparison across farms and the rain/water/crop failure contingency exact English."
+    }
+  ],
+  "preservation": "Only paragraphs 2, 5, 7, 11, 13, 15 and 16 differ from the current VE registry after review. Paragraph 6 is preserved byte-for-byte from the L1 end-of-season source. Canonical English remains unchanged.",
+  "provenance": "Exact source and live VE registry were re-read at sourceRevision. Paragraphs 2, 5 and 7 carry forward the independently backchecked candidate text; remaining entries are new bounded mixed-language proposals, not fluently approved.",
+  "status": "Unreviewed Tshivenda machine-draft candidates; facilitator/local review required.",
+  "constraints": [
+    "No repository edits or publication.",
+    "No new prices, numbers, crop categories, market claims or guarantees.",
+    "Preserve all source price comparisons, compliance/label terms, product categories and crop/time conditions exact where stated.",
+    "Do not alter canonical English or existing regional text outside listed changed paragraphs."
+  ],
+  "backcheck": {
+    "reviewer": "independent semantic backcheck; machine-assisted, not fluent approval",
+    "sourceRevisionVerified": "c2ad8e033b4758b34f288c31d459d23ebaccb5f4",
+    "sourceOrder": "Canonical L1 and current VE registry at the recorded revision were checked. The arrays contain 17 paragraphs in source order; every entry source/current/candidate string matches its indexed array.",
+    "paragraphFindings": [
+      {
+        "index": 6,
+        "finding": "Repair",
+        "detail": "The candidate packet had accidentally placed “Start with what you can reliably supply...” from Market L2 at L1 p6, whose source is “Do not rely on memory at the end of the season.” Restored the existing VE localized paragraph byte-for-byte; its backtranslation preserves the end-of-season and do-not-rely-on-memory meaning."
+      },
+      {
+        "index": 11,
+        "finding": "Accept as unreviewed mixed candidate",
+        "detail": "“Musi ni sa athu” preserves before setting a price; “Ṅwalani” conveys record/write down. Production, packing, selling costs and the including-labour-and-transport list remain exact English."
+      },
+      {
+        "index": 13,
+        "finding": "Repair wording",
+        "detail": "Changed first Ṱolani to Sedzani (“look over/review”) and retained Ṱolani for “check” what customers will actually buy. The higher-asking-price no-guaranteed-sale condition remains exact English."
+      },
+      {
+        "index": 15,
+        "finding": "Accept as unreviewed mixed candidate",
+        "detail": "The locally suitable crop, work-backwards instruction, planting conditions and expected harvest time remain exact English; only choose/check framing is localized."
+      },
+      {
+        "index": 16,
+        "finding": "Accept as unreviewed mixed candidate",
+        "detail": "The exact “may not work here” comparison remains intact; the backup-plan verb is localized and the rain/water/crops-fail condition remains exact English."
+      }
+    ],
+    "businessSafety": "No price, number, crop category, sale, income, or customer outcome was added. The R18/R15 teaching example remains unchanged. All nonlisted paragraphs remain byte-for-byte identical to the current registry.",
+    "limitations": "Unreviewed machine-draft candidates only; local facilitator review is still needed."
+  },
+  "implementationProvenance": "Canonical English lesson and current regional registry were checked at HEAD 00abeeb7ae967e733971f5af70d9da9fa2d5d0c0; exact source/current arrays matched before implementation. This packet records source-bound body candidates only. No title, keypoint, quiz, canonical content, species, number, or media was changed. Candidate remains unreviewed machine draft.",
+  "reviewStatus": "machine-draft; facilitator/local language review pending"
+}

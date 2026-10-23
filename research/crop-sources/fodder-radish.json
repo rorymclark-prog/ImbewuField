@@ -1,0 +1,198 @@
+{
+  "key": "fodder-radish",
+  "name": "Fodder Radish (Oil/Tillage Radish)",
+  "localNames": null,
+  "botanicalName": "Raphanus sativus var. oleiferus",
+  "family": "Brassicaceae",
+  "role": "cover",
+  "foodGroup": null,
+  "harvestProduct": "grazing/fodder (leaves and roots) and green manure/soil-loosening biomass, killed by frost or herbicide",
+  "frostTender": {
+    "value": false,
+    "evidence": [
+      {
+        "quote": "This species is both cold- and drought-resistant, but not tolerant of waterlogged conditions. Radishes grow best when planted early enough to allow six weeks of growth before regular frosts. Radishes are winter hardy plants and are tolerant of light frosts, but generally show injury when temperatures drop below the -0°C.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-15-radish-raphanus-sativus/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 15: Radish, SA Grain/Grain SA (Truter, Dannhauser, Smith & Trytsman), 2019"
+      }
+    ]
+  },
+  "transplant": { "value": false, "evidence": [] },
+  "sowMonths": {
+    "summer": {
+      "months": [12, 1, 2],
+      "evidence": [
+        {
+          "quote": "The normal planting date is January/February, however, in the cooler eastern Highveld regions, the crop can be planted as early as middle December.",
+          "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-15-radish-raphanus-sativus/",
+          "page": null,
+          "doc": "Integrated crop and pasture-based livestock production systems – Part 15: Radish, SA Grain/Grain SA, 2019"
+        }
+      ]
+    },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": {
+      "months": [1, 2],
+      "evidence": [
+        {
+          "quote": "This crop is adapted to the cooler eastern parts of the country; where rainfall is reasonably reliable during January to April.",
+          "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-15-radish-raphanus-sativus/",
+          "page": null,
+          "doc": "Integrated crop and pasture-based livestock production systems – Part 15: Radish, SA Grain/Grain SA, 2019"
+        }
+      ]
+    }
+  },
+  "daysToHarvestRange": {
+    "value": [161, 180],
+    "evidence": [
+      {
+        "quote": "Radishes are only moderately cold-hardy and need about six weeks of favourable growing conditions to produce sufficient biomass to achieve most potential benefits (Gruver et al., 2014)",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-15-radish-raphanus-sativus/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 15: Radish, SA Grain/Grain SA, 2019"
+      },
+      {
+        "quote": "The number of days to full flowering was recorded from the first day of planting to the full flowering in each plot.",
+        "url": "https://researchonline.lshtm.ac.uk/id/eprint/4681939/1/Ncisana-etal-2026-Planting-date-influences-on-growth.pdf",
+        "page": 6,
+        "doc": "Ncisana et al. 2026, 'Planting Date Influences on Growth, Yield and Nutrient Status of Fodder Radish Under Rainfed Conditions in South Africa', Agronomy 2026;16(7):759 (DOI 10.3390/agronomy16070759)"
+      },
+      {
+        "quote": "Nooitgedacht December 95.00 aA 1.8 aA 2.7 aA 56 cA 180 aB\nJanuary 95.00 aA 1.6 bA 2.6 bA 61 aA 180 aB\nFebruary 95.00 aA 1.5 cA 2.6 bA 62 aA 180 aB\nMarch 95.00 aA 1.0 dA 2.6 bA 60 bA 161 bB",
+        "url": "https://researchonline.lshtm.ac.uk/id/eprint/4681939/1/Ncisana-etal-2026-Planting-date-influences-on-growth.pdf",
+        "page": 7,
+        "doc": "Ncisana et al. 2026, Table 2 (days to full flowering, DFF, 2020/2021 season), Agronomy 2026;16(7):759"
+      },
+      {
+        "quote": "Ninety days after planting, an 18 m2 area was excavated to harvest tubers for the measurement of tuber size and yield.",
+        "url": "https://researchonline.lshtm.ac.uk/id/eprint/4681939/1/Ncisana-etal-2026-Planting-date-influences-on-growth.pdf",
+        "page": 6,
+        "doc": "Ncisana et al. 2026, Agronomy 2026;16(7):759"
+      }
+    ],
+    "notes": "Value [161,180] is days-from-sowing-to-FULL-FLOWERING for cultivar 'Nooitgedacht' (the cultivar already named in this dossier's varieties list) across both seasons and four planting dates (Dec/Jan/Feb plantings = 180 days; March planting = 161 days) -- Table 2, 2020/21 and 2021/22 seasons were consistent for this cultivar. The trial's two later-bred, later-flowering cultivars (Endurance, Line 2) took materially longer to flower (200-210 days) and were NOT folded into this range since they are not the cultivar this dossier documents. Separately, the same trial harvested roots/tubers for yield measurement at a fixed 90 days after planting (all cultivars) -- this is a distinct, earlier milestone (root/tuber harvest) and is not merged into the flowering-day figure; both are cited so a future pass can pick whichever definition of 'harvest' fits the UI. The pre-existing SA Grain 'about six weeks' (~42 days) figure remains the sourced MINIMUM growth period before any useful biomass/grazing benefit, i.e. the earliest point termination could occur; the new 161-180 day figure is the upper bound (full flowering) by which termination should have already happened for good fodder-radish forage quality, per the 'harvest just prior to flowering' cover-crop convention used elsewhere in this catalog."
+  },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": {
+    "value": [50, 90],
+    "evidence": [
+      {
+        "quote": "When this crop is planted in rows, it is recommended that rows are planted 90 cm apart with plant interspacing of 35 cm – 50 cm from each other. However, when planted as a cover crop, denser seeding rates are used (usually broadcasted) and narrower rows of maximum 50 cm apart are preferred.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-15-radish-raphanus-sativus/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 15: Radish, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "inRowSpacingRangeCm": {
+    "value": [35, 50],
+    "evidence": [
+      {
+        "quote": "rows are planted 90 cm apart with plant interspacing of 35 cm – 50 cm from each other",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-15-radish-raphanus-sativus/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 15: Radish, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "sowDepthRangeCm": null,
+  "seedRateKgPerHaRange": {
+    "value": [2, 4],
+    "evidence": [
+      {
+        "quote": "The seeding rate of 2 kg/ha in rows is advised and 4 kg/ha when sown in a broadcast fashion.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-15-radish-raphanus-sativus/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 15: Radish, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "yield": {
+    "tPerHaRange": [0, 6],
+    "product": "fresh root + leaf fodder",
+    "conditions": "grazed/fed to cattle",
+    "evidence": [
+      {
+        "quote": "Production values of up to 6 tons/ha can be expected with a protein value of 18% – 21% for roots and 20% – 30% for leaves.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-15-radish-raphanus-sativus/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 15: Radish, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "ecocrop": {
+    "row": "Raphanus sativus var. oleiferus",
+    "TOPMN": 12,
+    "TOPMX": 25,
+    "TMIN": 5,
+    "TMAX": 30,
+    "GMIN": 70,
+    "GMAX": 150
+  },
+  "coverCrop": {
+    "nFixedKgPerHa": null,
+    "biomassTPerHa": 6,
+    "terminateAfterDays": 42,
+    "evidence": [
+      {
+        "quote": "It grows large very quickly and has a large nitrogen uptake of around 20kg/ha.",
+        "url": "https://www.grainsa.co.za/upload/conservation-agriculture/eng/6-CA-manual-Chapter-5-Cover-crops.pdf",
+        "page": 9,
+        "doc": "Conservation Agriculture Manual, Chapter 5: Cover crops, Grain SA, 2016 — this is N UPTAKE (scavenging), not fixation; radish is not a legume, so nFixedKgPerHa is left null."
+      },
+      {
+        "quote": "Tillage radish is killed by frost or herbicide before the start of the next growing season.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-15-radish-raphanus-sativus/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 15: Radish, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "varieties": [
+    {
+      "name": "Nooitgedacht",
+      "zones": ["highveld", "midlands-mistbelt"],
+      "maturity": null,
+      "season": "Jan/Feb sowing (mid-Dec on eastern Highveld)",
+      "note": "Most common fodder-radish cultivar in SA.",
+      "evidence": [
+        {
+          "quote": "The most common cultivar is Nooitgedacht, with alternative cultivars such as Samurai, Sakurajuma, Star 1650 and 1651 and a soft leaf cultivar by the name of Sterling.",
+          "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-15-radish-raphanus-sativus/",
+          "page": null,
+          "doc": "Integrated crop and pasture-based livestock production systems – Part 15: Radish, SA Grain/Grain SA, 2019"
+        }
+      ]
+    },
+    {
+      "name": "Samurai, Sakurajuma, Star 1650, Star 1651",
+      "zones": ["highveld", "midlands-mistbelt"],
+      "maturity": null,
+      "season": "Jan/Feb sowing",
+      "note": "Alternative cultivars to Nooitgedacht.",
+      "evidence": []
+    },
+    {
+      "name": "Sterling (soft leaf)",
+      "zones": ["highveld", "midlands-mistbelt"],
+      "maturity": null,
+      "season": "Jan/Feb sowing",
+      "note": "Soft-leaf cultivar variant.",
+      "evidence": []
+    }
+  ],
+  "zoneNotes": {
+    "highveld": "Adapted to the cooler eastern parts of the country with reliable Jan-Apr rainfall; can be sown as early as mid-December on the eastern Highveld.",
+    "western-cape": "\"More recently, alternative cultivars are being grown in the western parts of the country as well\" — no specific months given for this region."
+  },
+  "gaps": [
+    "No explicit sow-depth figure found.",
+    "Western Cape (winter-rainfall) sow months are only vaguely referenced ('more recently grown in the western parts') without specific months, so winter pattern left empty.",
+    "Requires 650mm/year minimum rainfall per the source, which may not hold everywhere it's listed as grown — worth flagging for irrigated-only western-region use."
+  ],
+  "verdict": "ready",
+  "summary": "Very well sourced from Grain SA's Part 15 (Radish): sow window (Jan/Feb, mid-Dec on Highveld), row/in-row spacing (90cm/35-50cm rows, narrower up to 50cm as cover crop), seed rate (2kg/ha rows, 4kg/ha broadcast) and fodder yield (up to 6 t/ha). Days-to-harvest is now sourced from a 2026 South African rainfed planting-date trial (Ncisana et al., Agronomy): 161-180 days from sowing to full flowering for cultivar Nooitgedacht (this dossier's named cultivar), with root/tuber harvest sampled at a fixed 90 days in the same trial. All four ready-bar fields (sowMonths, daysToHarvestRange, spacing, yield) are now sourced, so verdict moves to 'ready'; sow depth and a Western Cape-specific calendar remain minor open gaps."
+}

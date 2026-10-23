@@ -68,13 +68,81 @@ export function kgTotalLabel(kg: number): string {
  * this app (`formatInvoiceZar`), and unifying the decimal mark across measurements and currency is
  * a product decision, not a formatting one.
  */
+/**
+ * 'R1 240,00' — whole-and-cents rand, space-grouped thousands, comma decimal mark: the same
+ * convention `formatInvoiceZar` (lib/invoice-document.ts) already uses for invoice totals, so a
+ * card quoting a rand figure with cents reads the same way wherever it sits on the page. Negative
+ * reads '-R120,00'.
+ *
+ * ux-17: the records lender card used to format its Income/Costs tiles with a bare
+ * `R ${numberLabel(value, 0)}` — space after 'R', no cents — while the figures above it on the
+ * same screen read 'R8 172,00' through `formatInvoiceZar`. One screen, one convention.
+ */
+export function randCentsLabel(amount: number): string {
+  if (!Number.isFinite(amount)) return 'R0,00';
+  const sign = amount < 0 ? '-' : '';
+  const cents = Math.round(Math.abs(amount) * 100);
+  const whole = Math.floor(cents / 100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  const frac = (cents % 100).toString().padStart(2, '0');
+  return `${sign}R${whole},${frac}`;
+}
+
+/**
+ * '1 203,6 kg' — space-grouped thousands with a comma decimal, one decimal place, matching the
+ * money figures' convention above instead of `quantity.toLocaleString('en-ZA')`: that call renders
+ * differently across ICU builds and between server and client (the hydration-mismatch class
+ * {@link numberLabel} documents), which is how a harvest total ended up reading '1,203.6 kg' —
+ * US thousands commas with a period decimal — beside rand figures formatted the South African way.
+ */
+export function kgPreciseLabel(kg: number): string {
+  if (!Number.isFinite(kg)) return '0,0 kg';
+  const sign = kg < 0 ? '-' : '';
+  const tenths = Math.round(Math.abs(kg) * 10);
+  const whole = Math.floor(tenths / 10).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  const frac = (tenths % 10).toString();
+  return `${sign}${whole},${frac} kg`;
+}
+
 export function numberLabel(n: number, maximumFractionDigits = 3): string {
   if (!Number.isFinite(n)) return '—';
   const sign = n < 0 ? '-' : '';
   const abs = Math.abs(n);
   const factor = 10 ** Math.max(0, Math.min(20, Math.trunc(maximumFractionDigits)));
-  const rounded = Math.round(abs * factor) / factor;
+  // Large entered values must not become Infinity merely while formatting decimals.
+  const rounded = abs <= Number.MAX_VALUE / factor ? Math.round(abs * factor) / factor : abs;
   const [whole, frac] = rounded.toString().split('.');
   const grouped = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   return `${sign}${grouped}${frac ? `.${frac}` : ''}`;
+}
+
+/**
+ * '15 Aug 2026' — the staff dashboards' shared date format (mentor, assessments, ngo). Raw
+ * 'YYYY-MM-DD' strings were leaking straight onto the screen (e.g. 'Due 2026-08-01'); this is
+ * the one place that turns such a string into something a staff member reads at a glance.
+ *
+ * `toLocaleDateString` is used deliberately rather than a hand-rolled month table — lib/
+ * course-assignments.ts's `monthAbbrev` already takes that approach for the exact same reason,
+ * and invoice-document.ts formats dates the same way for the exact same locale pair. Day/month
+ * order (not en-ZA's month/day) is what a South African reader expects.
+ */
+export function formatStaffDate(iso: string | null | undefined, lang: string): string {
+  if (!iso) return '';
+  const date = new Date(`${iso}T00:00:00`);
+  if (Number.isNaN(date.getTime())) return iso;
+  return date.toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+/** '15 Aug – 5 Sep 2026' — a staff date range, dropping the year from the first date when both
+ *  fall in the same year so it isn't printed twice. Falls back to the single date when only one
+ *  side of the range is known. */
+export function formatStaffDateRange(fromIso: string | null | undefined, toIso: string | null | undefined, lang: string): string {
+  if (!fromIso || !toIso) return formatStaffDate(fromIso ?? toIso, lang);
+  const fromDate = new Date(`${fromIso}T00:00:00`);
+  const toDate = new Date(`${toIso}T00:00:00`);
+  if (Number.isNaN(fromDate.getTime()) || Number.isNaN(toDate.getTime())) return `${fromIso} – ${toIso}`;
+  const locale = lang === 'zu' ? 'zu-ZA' : 'en-GB';
+  const sameYear = fromDate.getFullYear() === toDate.getFullYear();
+  const fromLabel = fromDate.toLocaleDateString(locale, sameYear ? { day: 'numeric', month: 'short' } : { day: 'numeric', month: 'short', year: 'numeric' });
+  const toLabel = toDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' });
+  return `${fromLabel} – ${toLabel}`;
 }

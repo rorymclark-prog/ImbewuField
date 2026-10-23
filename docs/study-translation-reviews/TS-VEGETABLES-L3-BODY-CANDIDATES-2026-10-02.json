@@ -1,0 +1,200 @@
+{
+  "packetId": "TS-VEGETABLES-L3-BODY-NEXT-2026-10-02",
+  "language": "itsonga",
+  "languageCode": "ts",
+  "sourceRevision": "a1026c1d1b02eb1cff3b7df463b5519ef4b66955",
+  "checkedOutHead": "a1026c1d1b02eb1cff3b7df463b5519ef4b66955",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+  "lessonId": "vegetables-staples-l3",
+  "paragraphSeparator": "\\n\\n",
+  "paragraphCount": 16,
+  "preservationRule": "Existing localized paragraphs 10, 11, 12, 13 and 15 are copied byte-for-byte from the current Xitsonga registry.",
+  "entries": [
+    {
+      "paragraphIndex": 0,
+      "fieldPath": "body.paragraphs[0]",
+      "exactSourceEnglish": "A staple earns its place because it feeds the household beyond the day of harvest.",
+      "currentRegistryDraft": "A staple earns its place because it feeds the household beyond the day of harvest.",
+      "candidateitsongaDraft": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "A staple earns its place because it feeds the household even after harvest day.",
+      "conditions": "Exact earns-place wording retained after independent rejection of a necessity shift; ordinary reason and post-harvest relation drafted.",
+      "uncertainty": "Independent semantic repair accepted; machine draft, no fluent approval."
+    },
+    {
+      "paragraphIndex": 1,
+      "fieldPath": "body.paragraphs[1]",
+      "exactSourceEnglish": "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+      "currentRegistryDraft": "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+      "candidateitsongaDraft": "Yi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "It provides energy or protein. It stores, or stays in the ground until needed. Often it also carries cultural memory.",
+      "conditions": "Translates the ordinary energy/protein and cultural-memory framing; retains the storage alternatives exact English because the wording is agriculturally specific.",
+      "uncertainty": "The storage alternatives remain exact English; cultural-memory term remains English."
+    },
+    {
+      "paragraphIndex": 2,
+      "fieldPath": "body.paragraphs[2]",
+      "exactSourceEnglish": "One staple leaves you vulnerable. Two or more give you options when weather or pests hit.",
+      "currentRegistryDraft": "One staple leaves you vulnerable. Two or more give you options when weather or pests hit.",
+      "candidateitsongaDraft": "Staple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "One staple leaves you unprotected. Two or more give you options when weather or pests strike.",
+      "conditions": "Preserves one versus two-or-more, vulnerability, options and weather/pest trigger; keeps pests in English because the term may cover more than insects.",
+      "uncertainty": "Machine draft; staple and pests remain English; no fluent approval."
+    },
+    {
+      "paragraphIndex": 3,
+      "fieldPath": "body.paragraphs[3]",
+      "exactSourceEnglish": "Grow at least two. Not one.",
+      "currentRegistryDraft": "Grow at least two. Not one.",
+      "candidateitsongaDraft": "Byala swimbirhi kumbe ku fhira. Ku nga ri xin'we.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "Grow two or more. Not one.",
+      "conditions": "Preserves the minimum of two and explicit contrast with one.",
+      "uncertainty": "Machine draft; quantity and imperative remain direct; no fluent approval."
+    },
+    {
+      "paragraphIndex": 4,
+      "fieldPath": "body.paragraphs[4]",
+      "exactSourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentRegistryDraft": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "candidateitsongaDraft": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "draftStatus": "exact-English-hold",
+      "drafterBacktranslation": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "conditions": "Whole exact English held because the most-heavily superlative was not securely conveyed.",
+      "uncertainty": "Original superlative candidate independently rejected; do not use it."
+    },
+    {
+      "paragraphIndex": 5,
+      "fieldPath": "body.paragraphs[5]",
+      "exactSourceEnglish": "Each staple protects you against something different.",
+      "currentRegistryDraft": "Each staple protects you against something different.",
+      "candidateitsongaDraft": "Staple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana.",
+      "draftStatus": "machine-draft-candidate",
+      "drafterBacktranslation": "Each staple protects you against something different.",
+      "conditions": "Translates the ordinary difference/protection statement; no crop-specific claim added.",
+      "uncertainty": "Machine draft; staple remains English."
+    },
+    {
+      "paragraphIndex": 6,
+      "fieldPath": "body.paragraphs[6]",
+      "exactSourceEnglish": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "currentRegistryDraft": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "candidateitsongaDraft": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "draftStatus": "exact-English-hold",
+      "drafterBacktranslation": "",
+      "conditions": "Exact English hold: open-pollinated maize, seed saving, isolation and selection conditions.",
+      "uncertainty": "No translation attempted."
+    },
+    {
+      "paragraphIndex": 7,
+      "fieldPath": "body.paragraphs[7]",
+      "exactSourceEnglish": "Beans and cowpeas give a storable protein harvest.",
+      "currentRegistryDraft": "Beans and cowpeas give a storable protein harvest.",
+      "candidateitsongaDraft": "Beans and cowpeas give a storable protein harvest.",
+      "draftStatus": "exact-English-hold",
+      "drafterBacktranslation": "",
+      "conditions": "Exact English hold: crop identities and storable-protein harvest claim.",
+      "uncertainty": "No translation attempted."
+    },
+    {
+      "paragraphIndex": 8,
+      "fieldPath": "body.paragraphs[8]",
+      "exactSourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "currentRegistryDraft": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "candidateitsongaDraft": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "draftStatus": "exact-English-hold",
+      "drafterBacktranslation": "",
+      "conditions": "Exact English hold: sweet-potato drought tolerance, root formation, first-weeks water, water-stress harvest effect and edible young leaves.",
+      "uncertainty": "No translation attempted."
+    },
+    {
+      "paragraphIndex": 9,
+      "fieldPath": "body.paragraphs[9]",
+      "exactSourceEnglish": "Amadumbe handles wetter ground, where other staples struggle.",
+      "currentRegistryDraft": "Amadumbe handles wetter ground, where other staples struggle.",
+      "candidateitsongaDraft": "Amadumbe handles wetter ground, where other staples struggle.",
+      "draftStatus": "exact-English-hold",
+      "drafterBacktranslation": "",
+      "conditions": "Exact English hold: amadumbe identity and wetter-ground suitability.",
+      "uncertainty": "No translation attempted."
+    },
+    {
+      "paragraphIndex": 10,
+      "fieldPath": "body.paragraphs[10]",
+      "exactSourceEnglish": "Notice that they fail in different conditions. That's the whole point.",
+      "currentRegistryDraft": "Xiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.",
+      "candidateitsongaDraft": "Xiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.",
+      "draftStatus": "preserve-existing-localized-paragraph-verbatim",
+      "drafterBacktranslation": "Notice that they fail in different conditions. That is the whole point.",
+      "conditions": "Copied byte-for-byte from existing Xitsonga registry.",
+      "uncertainty": "Existing machine draft remains unreviewed."
+    },
+    {
+      "paragraphIndex": 11,
+      "fieldPath": "body.paragraphs[11]",
+      "exactSourceEnglish": "Resilience doesn't mean nothing fails.",
+      "currentRegistryDraft": "Resilience a swi vuli leswaku a ku na lexi tsandzekaka.",
+      "candidateitsongaDraft": "Resilience a swi vuli leswaku a ku na lexi tsandzekaka.",
+      "draftStatus": "preserve-existing-localized-paragraph-verbatim",
+      "drafterBacktranslation": "Resilience does not mean that nothing fails.",
+      "conditions": "Copied byte-for-byte from existing Xitsonga registry.",
+      "uncertainty": "Existing machine draft remains unreviewed."
+    },
+    {
+      "paragraphIndex": 12,
+      "fieldPath": "body.paragraphs[12]",
+      "exactSourceEnglish": "It means one failure doesn't finish your household's food plan.",
+      "currentRegistryDraft": "Swi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.",
+      "candidateitsongaDraft": "Swi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.",
+      "draftStatus": "preserve-existing-localized-paragraph-verbatim",
+      "drafterBacktranslation": "It means one failure does not end your household food plan.",
+      "conditions": "Copied byte-for-byte from existing Xitsonga registry.",
+      "uncertainty": "Existing machine draft remains unreviewed."
+    },
+    {
+      "paragraphIndex": 13,
+      "fieldPath": "body.paragraphs[13]",
+      "exactSourceEnglish": "One crop is one point of failure.",
+      "currentRegistryDraft": "Xibyariwa xin'we i \"point of failure\" yin'we.",
+      "candidateitsongaDraft": "Xibyariwa xin'we i \"point of failure\" yin'we.",
+      "draftStatus": "preserve-existing-localized-paragraph-verbatim",
+      "drafterBacktranslation": "One crop is one point of failure.",
+      "conditions": "Copied byte-for-byte from existing Xitsonga registry.",
+      "uncertainty": "Existing machine draft remains unreviewed."
+    },
+    {
+      "paragraphIndex": 14,
+      "fieldPath": "body.paragraphs[14]",
+      "exactSourceEnglish": "Two or more staples give you more ways to keep eating.",
+      "currentRegistryDraft": "Two or more staples give you more ways to keep eating.",
+      "candidateitsongaDraft": "Two or more staples give you more ways to keep eating.",
+      "draftStatus": "exact-English-hold",
+      "drafterBacktranslation": "",
+      "conditions": "Exact English hold: retain the staple category and quantity claim pending a reliable local term.",
+      "uncertainty": "No translation attempted; staple category term remains unresolved."
+    },
+    {
+      "paragraphIndex": 15,
+      "fieldPath": "body.paragraphs[15]",
+      "exactSourceEnglish": "Different crops use water, soil and seasons differently. That difference is the protection.",
+      "currentRegistryDraft": "Swibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.",
+      "candidateitsongaDraft": "Swibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.",
+      "draftStatus": "preserve-existing-localized-paragraph-verbatim",
+      "drafterBacktranslation": "Different crops use water, soil and seasons in different ways. That difference is the protection.",
+      "conditions": "Copied byte-for-byte from existing Xitsonga registry.",
+      "uncertainty": "Existing machine draft remains unreviewed."
+    }
+  ],
+  "constraints": [
+    "Read-only candidate packet; no repository changes.",
+    "Canonical source text and paragraph order unchanged.",
+    "Precise species, seed, crop-timing, water, root-formation and suitability claims remain exact English.",
+    "No crop, species, number, advice or guarantee added.",
+    "No fluent approval claimed; independent Xitsonga backcheck required."
+  ],
+  "independentCheck": "Exact16sources/order/preserved10–13/15 verified. New1/2/3/5 accepted, p0 root mixed repair independently accepted, p4 held exactEnglish. No fluent/local approval.",
+  "rootScope": "Checked data-only packet for a fresh later body-only learner batch; not learner wired in ST batch."
+}

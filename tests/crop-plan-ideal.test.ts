@@ -138,7 +138,24 @@ test('a full tie resolves to the anchor starting soonest after the real today', 
 
 // ── C. the empirical winners (pinned from the verified sweep) ───────────────
 
-test('family/steady on the real farm: March wins with a gap-free repeating year', () => {
+test('family/steady on the real farm: November wins with a gap-free repeating year', () => {
+  // Re-pinned 2026-09-29 (March → November). This fixture picks butternut,
+  // pumpkin and watermelon by name, and a vine the farmer chose by name now
+  // takes a bed even with "vines in beds" off (Rory: "i selected pumin theres
+  // no pumkin"). Re-read from the full sweep with the vines placed:
+  //
+  //   anchor  1  gaps []  minMonthly 2  kg 233      anchor  7  gaps []  1  232
+  //   anchor  2  gaps []  minMonthly 2  kg 245      anchor  8  gaps []  2  238
+  //   anchor  3  gaps []  minMonthly 1  kg 241      anchor  9  gaps []  2  235
+  //   anchor  4  gaps []  minMonthly 1  kg 251      anchor 10  gaps []  1  224
+  //   anchor  5  gaps []  minMonthly 2  kg 260      anchor 11  gaps []  3  257  ←
+  //   anchor  6  gaps []  minMonthly 1  kg 235      anchor 12  gaps []  2  240
+  //
+  // Every anchor sweeps gap-free, and November is the only one whose thinnest
+  // month still carries three fresh crops, so the kg key never decides. May
+  // again scores the most kg (260) and loses on continuity.
+  //
+  // Earlier history of this pin, kept for the reasoning:
   // Re-pinned 2026-08-23 (January → December → March, twice in one day as
   // kale was sourced in two halves). Read by hand from the full sweep, not
   // just re-recorded:
@@ -160,16 +177,21 @@ test('family/steady on the real farm: March wins with a gap-free repeating year'
   // and still loses — continuity outranks kg, which is the point of the
   // feature. Kale is genuinely placed here (three sowings, months 1/3/3).
   const ideal = suggestIdealYearPlan(roryAnswers('family', 'steady'), 'summer', roryBeds(), [], REAL_NOW, REAL_NOW_YEAR);
-  assert.equal(ideal.best.anchorMonth, 3);
+  assert.equal(ideal.best.anchorMonth, 11);
   assert.deepEqual(ideal.best.score.zeroFreshMonths, [],
-    'the sweep found March leaves NO month without fresh harvest on this farm');
+    'the sweep found November leaves NO month without fresh harvest on this farm');
   assert.equal(ideal.sameAsToday, false);
   assert.equal(ideal.perAnchor.length, 12);
   ideal.perAnchor.forEach((entry, i) => assert.equal(entry.anchorMonth, i + 1, 'perAnchor is in anchor order'));
   // The August anchor really is worse — the whole reason this feature exists.
+  // Re-read 2026-09-27: once a second, staggered sowing of one crop stopped being
+  // vetoed as a rotation repeat, every anchor sweeps gap-free (August and
+  // September used to leave September bare), so August now loses on the next
+  // key — its thinnest month carries fewer fresh crops than the winner's three.
   const august = ideal.perAnchor[REAL_NOW - 1];
-  assert.ok(august.zeroFreshMonths.length > ideal.best.score.zeroFreshMonths.length,
-    `generating from August must actually be worse than the winner (got ${JSON.stringify(august.zeroFreshMonths)})`);
+  assert.deepEqual(august.zeroFreshMonths, [], 'every anchor, August included, now sweeps gap-free');
+  assert.ok(august.minMonthlyFreshCrops < ideal.best.score.minMonthlyFreshCrops,
+    `generating from August must actually be worse than the winner (min ${august.minMonthlyFreshCrops} vs ${ideal.best.score.minMonthlyFreshCrops})`);
 });
 
 test('family/few-big on the real farm: March wins', () => {
@@ -183,9 +205,13 @@ test('family/few-big on the real farm: March wins', () => {
   assert.equal(ideal.best.anchorMonth, 3);
 });
 
-test('commercial/steady on the real farm: September wins', () => {
+test('commercial/steady on the real farm: October wins', () => {
+  // Re-pinned 2026-09-27 (was September, 324 kg). Every anchor leaves the same
+  // four bare months, so kg decides; with staggered same-crop sowings no longer
+  // vetoed, October packs the sale beds to ~364 kg (bed use 58% -> 66%).
   const ideal = suggestIdealYearPlan(roryAnswers('commercial', 'steady'), 'summer', roryBeds(), [], REAL_NOW, REAL_NOW_YEAR);
-  assert.equal(ideal.best.anchorMonth, 9);
+  assert.equal(ideal.best.anchorMonth, 10);
+  assert.ok(ideal.best.score.totalKg > 360, `the winner must keep the fuller packing (got ${ideal.best.score.totalKg})`);
 });
 
 // ── D. the truthfulness pass ─────────────────────────────────────────────────
@@ -880,4 +906,56 @@ test('a once row with no realNow context warns in dev, and stops once realNow is
   } finally {
     console.warn = originalWarn;
   }
+});
+
+// ── Already-growing crops hold their ground in every anchor frame ───────────
+//
+// Found 2026-09-27 by three independent auditors. The sweep aged `existing`
+// rows from each synthetic anchor instead of the real today, so a crop sown a
+// month or two ago looked finished in most frames and the winning plan was
+// stacked on top of it (73% of 1,152 probe inputs overbooked; Simple mode
+// showed no conflict). The benchmark's own conflict detector is the oracle.
+test('the whole-year plan never overbooks a bed holding an already-growing crop', async () => {
+  const { buildPlanYieldBenchmark } = await import('@/lib/crop-plan');
+  const beds: PlanBed[] = [
+    { id: 'eb-1', label: 'Bed 1', areaM2: 10, minDimM: 1.2 },
+    { id: 'eb-2', label: 'Bed 2', areaM2: 10, minDimM: 1.2 },
+  ];
+  const offenders: string[] = [];
+  for (const realNow of [1, 4, 7, 9, 11]) {
+    for (const [cropKey, back] of [['cabbage', 0], ['tomatoes', 2], ['carrots', 1], ['onions', 3]] as const) {
+      const existing: Planting[] = [{
+        id: `ex-${cropKey}`, bedId: 'eb-1', cropKey, sowMonth: wrapMonth(realNow - back), existing: true,
+      }];
+      const ideal = suggestIdealYearPlan({
+        goal: 'family', groups: [], cropKeys: ['cabbage', 'carrots', 'lettuce', 'green-beans', 'beetroot'],
+        rhythm: 'steady', rotateCrops: true, allowVinesInBeds: false,
+        allowMixedCropsInBed: true, reliableIrrigation: true,
+      }, 'mild-frost', beds, existing, realNow, REAL_NOW_YEAR);
+      const benchmark = buildPlanYieldBenchmark([...existing, ...ideal.best.result.plantings], beds, realNow);
+      if (benchmark.areaConflictBedLabels.length) {
+        offenders.push(`now=${realNow} existing ${cropKey} sown ${back} back → anchor ${ideal.best.anchorMonth} overbooks ${benchmark.areaConflictBedLabels.join(', ')}`);
+      }
+    }
+  }
+  assert.deepEqual(offenders, []);
+});
+
+test('on a one-bed map a ticked vine does not crowd out every other chosen crop', () => {
+  // Rory, 2026-09-30: "even though I selected a whole lot of vegetables … it only came up with
+  // three plantings". On one bed a named vine used to claim the whole bed for months. It is now
+  // left out with a note, and the rest of the chosen crops fill the bed as they would without it.
+  const one: PlanBed[] = [{ id: 'solo', label: 'Bed 1', areaM2: 10, minDimM: 1.2 }];
+  const chosen = ['cabbage', 'carrots', 'true-spinach', 'onions', 'beetroot', 'lettuce', 'tomatoes', 'green-beans', 'swiss-chard'];
+  const answers = (cropKeys: string[]): AutoSuggestAnswers => ({
+    goal: 'family', householdSize: 'medium', groups: [], cropKeys, rhythm: 'steady', rotateCrops: true,
+    allowVinesInBeds: false, allowMixedCropsInBed: true, reliableIrrigation: true,
+  } as AutoSuggestAnswers);
+  const without = suggestIdealYearPlan(answers(chosen), 'summer', one, [], 9, REAL_NOW_YEAR).best.result;
+  const withVine = suggestIdealYearPlan(answers([...chosen, 'butternut']), 'summer', one, [], 9, REAL_NOW_YEAR).best.result;
+  assert.ok(!withVine.plantings.some((p) => p.cropKey === 'butternut'), 'butternut took the only bed');
+  assert.equal(withVine.plantings.length, without.plantings.length, 'the vine still changed what else fits');
+  assert.ok(withVine.plantings.length > 3, `only ${withVine.plantings.length} plantings on the bed`);
+  assert.ok(withVine.notes.some((n) => /Butternut was left out: .*your only veg bed/.test(n.text)),
+    withVine.notes.map((n) => n.text).join('\n'));
 });

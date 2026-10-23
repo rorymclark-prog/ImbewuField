@@ -1,0 +1,78 @@
+{
+  "key": "ethiopian-kale",
+  "name": "Ethiopian Kale",
+  "localNames": null,
+  "botanicalName": "Brassica carinata A. Braun",
+  "family": "Brassicaceae (Cruciferae)",
+  "role": "food",
+  "foodGroup": "leafy_green",
+  "harvestProduct": "fresh leaves (cut-and-come-again); seed also used for oil elsewhere, not the focus here",
+  "frostTender": {
+    "value": null,
+    "evidence": [],
+    "notes": "GAP: no South African primary source found for this crop at all. A WebSearch summary (not an opened/quoted primary document, so not usable as evidence per this catalog's sourcing rules) suggested the species 'can tolerate some light freezes,' but this could not be verified against any actual document, so no value is recorded."
+  },
+  "transplant": {
+    "value": null,
+    "evidence": [],
+    "notes": "GAP: no South African or other primary agronomic document was accessible for this crop (see summary). Not recorded."
+  },
+  "sowMonths": {
+    "summer": { "months": [], "evidence": [] },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "daysToHarvestRange": {
+    "value": null,
+    "evidence": [],
+    "notes": "GAP: no South African source found. A WebSearch summary mentioned 'maturing in as little as 25-40 days' but this was not traced to, or verified against, an opened primary document, so it is not recorded as a sourced value."
+  },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": {
+    "value": null,
+    "evidence": [],
+    "notes": "GAP: not found in any accessible source."
+  },
+  "inRowSpacingRangeCm": {
+    "value": null,
+    "evidence": [],
+    "notes": "GAP: not found in any accessible source."
+  },
+  "sowDepthRangeCm": {
+    "value": null,
+    "evidence": []
+  },
+  "seedRateKgPerHaRange": null,
+  "yield": {
+    "tPerHaRange": null,
+    "product": "fresh leaves",
+    "conditions": null,
+    "evidence": [],
+    "notes": "GAP: no fresh-leaf yield figure found for this crop in any South African or otherwise accessible source."
+  },
+  "ecocrop": {
+    "row": "Brassica carinata",
+    "TOPMN": 10,
+    "TOPMX": 25,
+    "TMIN": 5,
+    "TMAX": 35,
+    "GMIN": 0,
+    "GMAX": 0
+  },
+  "coverCrop": null,
+  "varieties": [],
+  "zoneNotes": {},
+  "gaps": [
+    "No DAFF/DALRRD production guideline exists for this crop — confirmed absent by exhaustive Wayback CDX search of nda.agric.za, nda.gov.za and dalrrd.gov.za for 'carinata'/'ethiopian' terms.",
+    "No coverage found in the WRC/DAFF 'Production Guidelines for African Leafy Vegetables' (its table of contents covers 8 named crops; Ethiopian kale/Brassica carinata is not among them).",
+    "No South African commercial seed company (Starke Ayres, Sakata SA, Kirchhoffs, Hygrotech, Klein Karoo, Seedco, Pannar were checked via search) was found to list this crop, Ethiopian kale, Abyssinian mustard or Texsel greens as a product — this is a negative/absence finding from searching, not a certified proof that no company carries it.",
+    "No ARC (VOPI or otherwise) cultivar or accession/line names were found for this species.",
+    "A ResearchGate paper, 'Good Agricultural Practices for Production of Ethiopian Mustard (Brassica carinata A. Braun) in Sub-Saharan Africa,' was located via search but could not be opened (network access to researchgate.net is blocked in this environment), so its content — which may cover parts of Southern Africa — could not be verified or quoted.",
+    "sowMonths, daysToHarvestRange, spacing, sow depth, seed rate and yield are all unsourced gaps.",
+    "Only the ECOCROP global database entry for Brassica carinata (TOPMN 10, TOPMX 25, TMIN 5, TMAX 35 °C) was usable, and even that database records no growing-cycle-length data for this species (GMIN/GMAX = 0).",
+    "No South African common/vernacular names for this crop were found in any source consulted — it does not appear to be a traditional South African indigenous/landrace leafy vegetable in the way the other four crops in this batch are; it is included in this catalog as an introduced Brassica leafy green rather than a documented South African crop."
+  ],
+  "verdict": "unsourced",
+  "summary": "No South African production guideline, research-council document or commercial seed listing could be found for Ethiopian kale (Brassica carinata) despite exhaustive searching of DAFF/DALRRD archives, the WRC/PGALV African leafy vegetable guideline, and major SA seed companies. The only usable data point is the global ECOCROP database's generic temperature range for the species. Every agronomic field (sowing months, days to harvest, spacing, yield) is an honest gap; this is the expected outcome given the crop is not a documented part of South African smallholder practice in the sources available."
+}

@@ -1,5 +1,6 @@
 import type { SalesLog } from './db/types';
 import type { SavedInvoice } from './invoices';
+import { normaliseRecordUnit, recordQuantity, recordUnit } from './farm-records';
 
 export type InvoiceEntryKind = 'new' | 'past-sale' | 'paper-copy';
 
@@ -39,10 +40,11 @@ export function recordedSaleInvoiceError(invoice: SavedInvoice, sale: SalesLog, 
   if ((invoice.enterprise || undefined) !== (sale.enterprise || undefined)) return 'Keep the recorded growing area for this sale.';
   if (invoice.status !== 'paid' || !invoice.paidAt || Date.parse(invoice.paidAt) !== Date.parse(sale.sold_at)) return 'Keep the recorded payment date and paid status for this sale.';
   const item = invoice.items[0];
-  if (invoice.items.length !== 1 || !item || item.unit.trim().toLowerCase() !== 'kg'
-    || item.desc.trim() !== sale.crop.trim() || !Number.isFinite(sale.kg) || !(sale.kg! > 0)
-    || item.qty !== sale.kg || !Number.isFinite(sale.amount) || sale.amount < 0
+  const quantity = recordQuantity(sale), unit = recordUnit(sale);
+  if (invoice.items.length !== 1 || !item || !unit || quantity === null || normaliseRecordUnit(item.unit) !== unit
+    || item.desc.trim() !== sale.crop.trim()
+    || item.qty !== quantity || !Number.isFinite(sale.amount) || sale.amount < 0
     || Math.round(item.qty * item.price * 100) !== Math.round(sale.amount * 100)
-    || Math.round(invoice.total * 100) !== Math.round(sale.amount * 100)) return 'Keep the recorded crop, kilograms and total when documenting this sale.';
+    || Math.round(invoice.total * 100) !== Math.round(sale.amount * 100)) return 'Keep the recorded produce, quantity, unit and total when documenting this sale.';
   return null;
 }

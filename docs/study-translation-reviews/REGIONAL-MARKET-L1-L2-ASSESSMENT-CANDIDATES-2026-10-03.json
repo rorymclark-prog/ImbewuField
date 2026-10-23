@@ -1,0 +1,1153 @@
+{
+  "title": "Market Community L1/L2 regional assessment candidate packet",
+  "date": "2026-10-03",
+  "workspace": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "sourceRevision": "ea8fe92778de3e1e5aae9e69cba8cf7a162821b8",
+  "provenance": "Read-only candidate packet. Canonical English, current registries and repository files were not changed. Translated candidates are unreviewed machine drafts, not fluent-approved or learner-ready.",
+  "selection": "Complete L1/L2 keypoints and quiz question, ordered options, correct indices, and rationales for Sesotho (st), Tshivenda (ve), and Xitsonga (ts). L3 is excluded.",
+  "binding": {
+    "canonicalAndCurrentSourcePairsMatch": true,
+    "sourceBinding": "Every field sourceEnglish is copied from the canonical English lesson and matched byte-for-byte to the corresponding registry sourceEnglish.",
+    "optionOrderAndCorrectIndices": "Canonical order and correct indices retained unchanged.",
+    "preservation": "R15/kg and R18/kg quiz remains exact English. Commercial channel quiz, payment/tax statements, guarantees, and fulfillment conditions remain exact English. No answer key changed."
+  },
+  "languages": [
+    {
+      "code": "st",
+      "lessons": [
+        {
+          "lessonId": "market-community-l1",
+          "correctIndices": [
+            2,
+            1
+          ],
+          "fields": [
+            "keyPoints[0]",
+            "keyPoints[1]",
+            "keyPoints[2]",
+            "keyPoints[3]",
+            "quiz[0].question",
+            "quiz[0].options[0]",
+            "quiz[0].options[1]",
+            "quiz[0].options[2]",
+            "quiz[0].options[3]",
+            "quiz[0].rationale",
+            "quiz[1].question",
+            "quiz[1].options[0]",
+            "quiz[1].options[1]",
+            "quiz[1].options[2]",
+            "quiz[1].options[3]",
+            "quiz[1].rationale"
+          ]
+        },
+        {
+          "lessonId": "market-community-l2",
+          "correctIndices": [
+            2,
+            2
+          ],
+          "fields": [
+            "keyPoints[0]",
+            "keyPoints[1]",
+            "keyPoints[2]",
+            "keyPoints[3]",
+            "quiz[0].question",
+            "quiz[0].options[0]",
+            "quiz[0].options[1]",
+            "quiz[0].options[2]",
+            "quiz[0].options[3]",
+            "quiz[0].rationale",
+            "quiz[1].question",
+            "quiz[1].options[0]",
+            "quiz[1].options[1]",
+            "quiz[1].options[2]",
+            "quiz[1].options[3]",
+            "quiz[1].rationale"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "ve",
+      "lessons": [
+        {
+          "lessonId": "market-community-l1",
+          "correctIndices": [
+            2,
+            1
+          ],
+          "fields": [
+            "keyPoints[0]",
+            "keyPoints[1]",
+            "keyPoints[2]",
+            "keyPoints[3]",
+            "quiz[0].question",
+            "quiz[0].options[0]",
+            "quiz[0].options[1]",
+            "quiz[0].options[2]",
+            "quiz[0].options[3]",
+            "quiz[0].rationale",
+            "quiz[1].question",
+            "quiz[1].options[0]",
+            "quiz[1].options[1]",
+            "quiz[1].options[2]",
+            "quiz[1].options[3]",
+            "quiz[1].rationale"
+          ]
+        },
+        {
+          "lessonId": "market-community-l2",
+          "correctIndices": [
+            2,
+            2
+          ],
+          "fields": [
+            "keyPoints[0]",
+            "keyPoints[1]",
+            "keyPoints[2]",
+            "keyPoints[3]",
+            "quiz[0].question",
+            "quiz[0].options[0]",
+            "quiz[0].options[1]",
+            "quiz[0].options[2]",
+            "quiz[0].options[3]",
+            "quiz[0].rationale",
+            "quiz[1].question",
+            "quiz[1].options[0]",
+            "quiz[1].options[1]",
+            "quiz[1].options[2]",
+            "quiz[1].options[3]",
+            "quiz[1].rationale"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "ts",
+      "lessons": [
+        {
+          "lessonId": "market-community-l1",
+          "correctIndices": [
+            2,
+            1
+          ],
+          "fields": [
+            "keyPoints[0]",
+            "keyPoints[1]",
+            "keyPoints[2]",
+            "keyPoints[3]",
+            "quiz[0].question",
+            "quiz[0].options[0]",
+            "quiz[0].options[1]",
+            "quiz[0].options[2]",
+            "quiz[0].options[3]",
+            "quiz[0].rationale",
+            "quiz[1].question",
+            "quiz[1].options[0]",
+            "quiz[1].options[1]",
+            "quiz[1].options[2]",
+            "quiz[1].options[3]",
+            "quiz[1].rationale"
+          ]
+        },
+        {
+          "lessonId": "market-community-l2",
+          "correctIndices": [
+            2,
+            2
+          ],
+          "fields": [
+            "keyPoints[0]",
+            "keyPoints[1]",
+            "keyPoints[2]",
+            "keyPoints[3]",
+            "quiz[0].question",
+            "quiz[0].options[0]",
+            "quiz[0].options[1]",
+            "quiz[0].options[2]",
+            "quiz[0].options[3]",
+            "quiz[0].rationale",
+            "quiz[1].question",
+            "quiz[1].options[0]",
+            "quiz[1].options[1]",
+            "quiz[1].options[2]",
+            "quiz[1].options[3]",
+            "quiz[1].rationale"
+          ]
+        }
+      ]
+    }
+  ],
+  "fields": [
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "keyPoints[0]",
+      "sourceEnglish": "Record harvest amounts and destinations separately from cash",
+      "currentDraft": "Rekota bongata ba kotulo le moo e yang teng ka thoko ho tjhelete",
+      "candidate": "Rekota bongata ba kotulo le moo e yang teng ka thoko ho tjhelete",
+      "status": "existing-draft-retained",
+      "reason": "Existing localized draft retained unchanged; still unreviewed."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "keyPoints[1]",
+      "sourceEnglish": "Include production and selling costs when assessing a price",
+      "currentDraft": "Include production and selling costs when assessing a price",
+      "candidate": "Include production and selling costs when assessing a price",
+      "status": "hold",
+      "reason": "Held exact English because this carries price/cost, example, crop suitability/timing, regular-supply, or compliance meaning."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "keyPoints[2]",
+      "sourceEnglish": "Label worked examples; use your actual costs for decisions",
+      "currentDraft": "Label worked examples; use your actual costs for decisions",
+      "candidate": "Label worked examples; use your actual costs for decisions",
+      "status": "hold",
+      "reason": "Held exact English because this carries price/cost, example, crop suitability/timing, regular-supply, or compliance meaning."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "keyPoints[3]",
+      "sourceEnglish": "Plan for food gaps using local growing conditions and harvest timing",
+      "currentDraft": "Plan for food gaps using local growing conditions and harvest timing",
+      "candidate": "Plan for food gaps using local growing conditions and harvest timing",
+      "status": "hold",
+      "reason": "Held exact English because this carries price/cost, example, crop suitability/timing, regular-supply, or compliance meaning."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[0].question",
+      "sourceEnglish": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+      "currentDraft": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+      "candidate": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+      "status": "hold",
+      "reason": "Held exact English to preserve exact financial figures or commercial channel and supply-risk conditions."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[0].options[0]",
+      "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
+      "currentDraft": "Keep selling at R15 — short-term loss builds relationships",
+      "candidate": "Keep selling at R15 — short-term loss builds relationships",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[0].options[1]",
+      "sourceEnglish": "Stop growing tomatoes entirely",
+      "currentDraft": "Stop growing tomatoes entirely",
+      "candidate": "Stop growing tomatoes entirely",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[0].options[2]",
+      "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
+      "currentDraft": "The selling price, costs and whether another crop would give a better return",
+      "candidate": "The selling price, costs and whether another crop would give a better return",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[0].options[3]",
+      "sourceEnglish": "Apply for a subsidy to cover the gap",
+      "currentDraft": "Apply for a subsidy to cover the gap",
+      "candidate": "Apply for a subsidy to cover the gap",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+      "currentDraft": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+      "candidate": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+      "status": "hold",
+      "reason": "Held exact English to preserve price/customer-demand claims or supply, payment and fulfillment qualifications."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].question",
+      "sourceEnglish": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+      "currentDraft": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+      "candidate": "Direkoto tsa molemi di bontsha hore meroho ya hae e a haella ka June le July selemo se seng le se seng. Ke kgato efe e thusang?",
+      "status": "candidate",
+      "reason": "Seasonal-gap question candidate; June and July stay in English to preserve the specified months. Unreviewed machine draft."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[0]",
+      "sourceEnglish": "Buy vegetables at market each June and July",
+      "currentDraft": "Buy vegetables at market each June and July",
+      "candidate": "Reka meroho mmarakeng ka June le July e nngwe le e nngwe.",
+      "status": "candidate",
+      "reason": "Seasonal-gap option candidate preserves month names and assertion strength; unreviewed machine draft."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[1]",
+      "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "currentDraft": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "candidate": "Rera o kgutlela morao ho tloha kgaellong ya dijo, o sebedisa dijalo tse loketseng sebaka sa heno le nako ya tsona ya kotulo.",
+      "status": "candidate",
+      "reason": "Seasonal-gap option candidate preserves month names and assertion strength; unreviewed machine draft."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[2]",
+      "sourceEnglish": "Accept her farm can't produce in winter",
+      "currentDraft": "Accept her farm can't produce in winter",
+      "candidate": "Amohela hore polasi ya hae e ke ke ya hlahisa dijalo mariha.",
+      "status": "candidate",
+      "reason": "Seasonal-gap option candidate preserves month names and assertion strength; unreviewed machine draft."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[3]",
+      "sourceEnglish": "The records show a soil fertility problem",
+      "currentDraft": "The records show a soil fertility problem",
+      "candidate": "Direkoto di bontsha bothata ba monono wa mobu.",
+      "status": "candidate",
+      "reason": "Seasonal-gap option candidate preserves month names and assertion strength; unreviewed machine draft."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].rationale",
+      "sourceEnglish": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
+      "currentDraft": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
+      "candidate": "Direkoto di bontsha kgaello. Kgetho ya dijalo le matsatsi a ho jala di lokela ho dumellana le tlelaemete ya sebaka, metsi le nako e lebelletsweng ya kotulo.",
+      "status": "candidate",
+      "reason": "Seasonal-gap rationale candidate retains local climate, water and expected harvest-time requirements; unreviewed machine draft."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[0]",
+      "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
+      "currentDraft": "Agree product, quantity, quality, delivery and payment",
+      "candidate": "Dumellanang ka sehlahiswa, bongata, boleng, thomello le tefo.",
+      "status": "candidate",
+      "reason": "Ordinary wording candidate with limited scope; unreviewed machine draft."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[1]",
+      "sourceEnglish": "Compare costs and losses as well as selling price",
+      "currentDraft": "Bapisa ditshenyehelo le ditahlehelo mmoho le theko ya thekiso",
+      "candidate": "Bapisa ditshenyehelo le ditahlehelo mmoho le theko ya thekiso",
+      "status": "existing-draft-retained",
+      "reason": "Existing localized draft retained unchanged; still unreviewed."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[2]",
+      "sourceEnglish": "Promise regular boxes only when supply and customer terms support them",
+      "currentDraft": "Promise regular boxes only when supply and customer terms support them",
+      "candidate": "Promise regular boxes only when supply and customer terms support them",
+      "status": "hold",
+      "reason": "Held exact English because this carries price/cost, example, crop suitability/timing, regular-supply, or compliance meaning."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[3]",
+      "sourceEnglish": "Check market rules and describe growing practices honestly",
+      "currentDraft": "Check market rules and describe growing practices honestly",
+      "candidate": "Check market rules and describe growing practices honestly",
+      "status": "hold",
+      "reason": "Held exact English because this carries price/cost, example, crop suitability/timing, regular-supply, or compliance meaning."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "field": "quiz[0].question",
+      "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "currentDraft": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "candidate": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "status": "hold",
+      "reason": "Held exact English to preserve exact financial figures or commercial channel and supply-risk conditions."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "field": "quiz[0].options[0]",
+      "sourceEnglish": "A formal market stall needing consistent weekly supply",
+      "currentDraft": "A formal market stall needing consistent weekly supply",
+      "candidate": "A formal market stall needing consistent weekly supply",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "field": "quiz[0].options[1]",
+      "sourceEnglish": "A box scheme needing the same produce weekly",
+      "currentDraft": "A box scheme needing the same produce weekly",
+      "candidate": "A box scheme needing the same produce weekly",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "field": "quiz[0].options[2]",
+      "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
+      "currentDraft": "An informal market or neighbour sales with no fixed commitment",
+      "candidate": "An informal market or neighbour sales with no fixed commitment",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "field": "quiz[0].options[3]",
+      "sourceEnglish": "A daily-delivery school contract",
+      "currentDraft": "A daily-delivery school contract",
+      "candidate": "A daily-delivery school contract",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+      "currentDraft": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+      "candidate": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+      "status": "hold",
+      "reason": "Held exact English to preserve price/customer-demand claims or supply, payment and fulfillment qualifications."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].question",
+      "sourceEnglish": "How can agreed regular orders help a grower plan?",
+      "currentDraft": "How can agreed regular orders help a grower plan?",
+      "candidate": "How can agreed regular orders help a grower plan?",
+      "status": "hold",
+      "reason": "Held exact English to preserve exact financial figures or commercial channel and supply-risk conditions."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].options[0]",
+      "sourceEnglish": "Box customers always pay more per kilogram",
+      "currentDraft": "Box customers always pay more per kilogram",
+      "candidate": "Box customers always pay more per kilogram",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].options[1]",
+      "sourceEnglish": "Box schemes let you charge extra for packaging",
+      "currentDraft": "Box schemes let you charge extra for packaging",
+      "candidate": "Box schemes let you charge extra for packaging",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].options[2]",
+      "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "currentDraft": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "candidate": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].options[3]",
+      "sourceEnglish": "Box schemes avoid tax obligations",
+      "currentDraft": "Box schemes avoid tax obligations",
+      "candidate": "Box schemes avoid tax obligations",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].rationale",
+      "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+      "currentDraft": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+      "candidate": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+      "status": "hold",
+      "reason": "Held exact English to preserve price/customer-demand claims or supply, payment and fulfillment qualifications."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "keyPoints[0]",
+      "sourceEnglish": "Record harvest amounts and destinations separately from cash",
+      "currentDraft": "Record harvest amounts and destinations separately from cash",
+      "candidate": "Record harvest amounts and destinations separately from cash",
+      "status": "hold",
+      "reason": "Held exact English because this carries price/cost, example, crop suitability/timing, regular-supply, or compliance meaning."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "keyPoints[1]",
+      "sourceEnglish": "Include production and selling costs when assessing a price",
+      "currentDraft": "Include production and selling costs when assessing a price",
+      "candidate": "Include production and selling costs when assessing a price",
+      "status": "hold",
+      "reason": "Held exact English because this carries price/cost, example, crop suitability/timing, regular-supply, or compliance meaning."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "keyPoints[2]",
+      "sourceEnglish": "Label worked examples; use your actual costs for decisions",
+      "currentDraft": "Label worked examples; use your actual costs for decisions",
+      "candidate": "Label worked examples; use your actual costs for decisions",
+      "status": "hold",
+      "reason": "Held exact English because this carries price/cost, example, crop suitability/timing, regular-supply, or compliance meaning."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "keyPoints[3]",
+      "sourceEnglish": "Plan for food gaps using local growing conditions and harvest timing",
+      "currentDraft": "Plan for food gaps using local growing conditions and harvest timing",
+      "candidate": "Plan for food gaps using local growing conditions and harvest timing",
+      "status": "hold",
+      "reason": "Held exact English because this carries price/cost, example, crop suitability/timing, regular-supply, or compliance meaning."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[0].question",
+      "sourceEnglish": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+      "currentDraft": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+      "candidate": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+      "status": "hold",
+      "reason": "Held exact English to preserve exact financial figures or commercial channel and supply-risk conditions."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[0].options[0]",
+      "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
+      "currentDraft": "Keep selling at R15 — short-term loss builds relationships",
+      "candidate": "Keep selling at R15 — short-term loss builds relationships",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[0].options[1]",
+      "sourceEnglish": "Stop growing tomatoes entirely",
+      "currentDraft": "Stop growing tomatoes entirely",
+      "candidate": "Stop growing tomatoes entirely",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[0].options[2]",
+      "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
+      "currentDraft": "The selling price, costs and whether another crop would give a better return",
+      "candidate": "The selling price, costs and whether another crop would give a better return",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[0].options[3]",
+      "sourceEnglish": "Apply for a subsidy to cover the gap",
+      "currentDraft": "Apply for a subsidy to cover the gap",
+      "candidate": "Apply for a subsidy to cover the gap",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+      "currentDraft": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+      "candidate": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+      "status": "hold",
+      "reason": "Held exact English to preserve price/customer-demand claims or supply, payment and fulfillment qualifications."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].question",
+      "sourceEnglish": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+      "currentDraft": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+      "candidate": "A farmer's records show she's short of vegetables every June and July. Ndi vhukando vhufhio vhune ha thusa?",
+      "status": "candidate",
+      "reason": "Seasonal-gap question candidate; June and July stay in English to preserve the specified months. Unreviewed machine draft.",
+      "rootRepair": "Retain exact English product/shortage/local-crop timing meaning where the proposed lexical choice may narrow or shift it."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[0]",
+      "sourceEnglish": "Buy vegetables at market each June and July",
+      "currentDraft": "Buy vegetables at market each June and July",
+      "candidate": "Rengani miroho makete nga June na July ṅwaha muṅwe na muṅwe.",
+      "status": "candidate",
+      "reason": "Seasonal-gap option candidate preserves month names and assertion strength; unreviewed machine draft."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[1]",
+      "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "currentDraft": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "candidate": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "status": "hold",
+      "reason": "Seasonal-gap option candidate preserves month names and assertion strength; unreviewed machine draft.",
+      "rootRepair": "Retain exact English product/shortage/local-crop timing meaning where the proposed lexical choice may narrow or shift it."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[2]",
+      "sourceEnglish": "Accept her farm can't produce in winter",
+      "currentDraft": "Accept her farm can't produce in winter",
+      "candidate": "Tanganedzani uri bulasi ḽawe a ḽi nga bveledzi zwimela nga vhuria.",
+      "status": "candidate",
+      "reason": "Seasonal-gap option candidate preserves month names and assertion strength; unreviewed machine draft."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[3]",
+      "sourceEnglish": "The records show a soil fertility problem",
+      "currentDraft": "The records show a soil fertility problem",
+      "candidate": "Rekhodo dzi sumbedza thaidzo ya pfushi ya mavu.",
+      "status": "candidate",
+      "reason": "Seasonal-gap option candidate preserves month names and assertion strength; unreviewed machine draft."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].rationale",
+      "sourceEnglish": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
+      "currentDraft": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
+      "candidate": "Rekhodo dzi sumbedza u shaya. U nanga zwimela na maḓuvha a u zwala zwi tea u tendelana na mutsho wa henefho, maḓi na tshifhinga tsho lavhelelwaho tsha u kaṋa.",
+      "status": "candidate",
+      "reason": "Seasonal-gap rationale candidate retains local climate, water and expected harvest-time requirements; unreviewed machine draft."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[0]",
+      "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
+      "currentDraft": "Agree product, quantity, quality, delivery and payment",
+      "candidate": "Tendelani nga ha tshibveledzwa, tshivhalo, quality, delivery na payment.",
+      "status": "candidate",
+      "reason": "Ordinary wording candidate with limited scope; unreviewed machine draft."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[1]",
+      "sourceEnglish": "Compare costs and losses as well as selling price",
+      "currentDraft": "Vhambedzani tsengo na ndozwo khathihi na mutengo wa u rengisa.",
+      "candidate": "Vhambedzani tsengo na ndozwo khathihi na mutengo wa u rengisa.",
+      "status": "existing-draft-retained",
+      "reason": "Existing localized draft retained unchanged; still unreviewed."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[2]",
+      "sourceEnglish": "Promise regular boxes only when supply and customer terms support them",
+      "currentDraft": "Promise regular boxes only when supply and customer terms support them",
+      "candidate": "Promise regular boxes only when supply and customer terms support them",
+      "status": "hold",
+      "reason": "Held exact English because this carries price/cost, example, crop suitability/timing, regular-supply, or compliance meaning."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[3]",
+      "sourceEnglish": "Check market rules and describe growing practices honestly",
+      "currentDraft": "Check market rules and describe growing practices honestly",
+      "candidate": "Check market rules and describe growing practices honestly",
+      "status": "hold",
+      "reason": "Held exact English because this carries price/cost, example, crop suitability/timing, regular-supply, or compliance meaning."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "field": "quiz[0].question",
+      "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "currentDraft": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "candidate": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "status": "hold",
+      "reason": "Held exact English to preserve exact financial figures or commercial channel and supply-risk conditions."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "field": "quiz[0].options[0]",
+      "sourceEnglish": "A formal market stall needing consistent weekly supply",
+      "currentDraft": "A formal market stall needing consistent weekly supply",
+      "candidate": "A formal market stall needing consistent weekly supply",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "field": "quiz[0].options[1]",
+      "sourceEnglish": "A box scheme needing the same produce weekly",
+      "currentDraft": "A box scheme needing the same produce weekly",
+      "candidate": "A box scheme needing the same produce weekly",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "field": "quiz[0].options[2]",
+      "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
+      "currentDraft": "An informal market or neighbour sales with no fixed commitment",
+      "candidate": "An informal market or neighbour sales with no fixed commitment",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "field": "quiz[0].options[3]",
+      "sourceEnglish": "A daily-delivery school contract",
+      "currentDraft": "A daily-delivery school contract",
+      "candidate": "A daily-delivery school contract",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+      "currentDraft": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+      "candidate": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+      "status": "hold",
+      "reason": "Held exact English to preserve price/customer-demand claims or supply, payment and fulfillment qualifications."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].question",
+      "sourceEnglish": "How can agreed regular orders help a grower plan?",
+      "currentDraft": "How can agreed regular orders help a grower plan?",
+      "candidate": "How can agreed regular orders help a grower plan?",
+      "status": "hold",
+      "reason": "Held exact English to preserve exact financial figures or commercial channel and supply-risk conditions."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].options[0]",
+      "sourceEnglish": "Box customers always pay more per kilogram",
+      "currentDraft": "Box customers always pay more per kilogram",
+      "candidate": "Box customers always pay more per kilogram",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].options[1]",
+      "sourceEnglish": "Box schemes let you charge extra for packaging",
+      "currentDraft": "Box schemes let you charge extra for packaging",
+      "candidate": "Box schemes let you charge extra for packaging",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].options[2]",
+      "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "currentDraft": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "candidate": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].options[3]",
+      "sourceEnglish": "Box schemes avoid tax obligations",
+      "currentDraft": "Box schemes avoid tax obligations",
+      "candidate": "Box schemes avoid tax obligations",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].rationale",
+      "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+      "currentDraft": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+      "candidate": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+      "status": "hold",
+      "reason": "Held exact English to preserve price/customer-demand claims or supply, payment and fulfillment qualifications."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "keyPoints[0]",
+      "sourceEnglish": "Record harvest amounts and destinations separately from cash",
+      "currentDraft": "Tsala nhlayo ya ntshovelo ni laha wu yeke kona hi ku hambana ni mali",
+      "candidate": "Tsala nhlayo ya ntshovelo ni laha wu yeke kona hi ku hambana ni mali",
+      "status": "existing-draft-retained",
+      "reason": "Existing localized draft retained unchanged; still unreviewed."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "keyPoints[1]",
+      "sourceEnglish": "Include production and selling costs when assessing a price",
+      "currentDraft": "Include production and selling costs when assessing a price",
+      "candidate": "Include production and selling costs when assessing a price",
+      "status": "hold",
+      "reason": "Held exact English because this carries price/cost, example, crop suitability/timing, regular-supply, or compliance meaning."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "keyPoints[2]",
+      "sourceEnglish": "Label worked examples; use your actual costs for decisions",
+      "currentDraft": "Label worked examples; use your actual costs for decisions",
+      "candidate": "Label worked examples; use your actual costs for decisions",
+      "status": "hold",
+      "reason": "Held exact English because this carries price/cost, example, crop suitability/timing, regular-supply, or compliance meaning."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "keyPoints[3]",
+      "sourceEnglish": "Plan for food gaps using local growing conditions and harvest timing",
+      "currentDraft": "Plan for food gaps using local growing conditions and harvest timing",
+      "candidate": "Plan for food gaps using local growing conditions and harvest timing",
+      "status": "hold",
+      "reason": "Held exact English because this carries price/cost, example, crop suitability/timing, regular-supply, or compliance meaning."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[0].question",
+      "sourceEnglish": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+      "currentDraft": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+      "candidate": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
+      "status": "hold",
+      "reason": "Held exact English to preserve exact financial figures or commercial channel and supply-risk conditions."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[0].options[0]",
+      "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
+      "currentDraft": "Keep selling at R15 — short-term loss builds relationships",
+      "candidate": "Keep selling at R15 — short-term loss builds relationships",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[0].options[1]",
+      "sourceEnglish": "Stop growing tomatoes entirely",
+      "currentDraft": "Stop growing tomatoes entirely",
+      "candidate": "Stop growing tomatoes entirely",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[0].options[2]",
+      "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
+      "currentDraft": "The selling price, costs and whether another crop would give a better return",
+      "candidate": "The selling price, costs and whether another crop would give a better return",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[0].options[3]",
+      "sourceEnglish": "Apply for a subsidy to cover the gap",
+      "currentDraft": "Apply for a subsidy to cover the gap",
+      "candidate": "Apply for a subsidy to cover the gap",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+      "currentDraft": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+      "candidate": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+      "status": "hold",
+      "reason": "Held exact English to preserve price/customer-demand claims or supply, payment and fulfillment qualifications."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].question",
+      "sourceEnglish": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+      "currentDraft": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+      "candidate": "Switsari swa murimi swi komba leswaku u kayivela matsavu hi June na July lembe rin'wana na rin'wana. Hi rihi goza leri pfunaka?",
+      "status": "candidate",
+      "reason": "Seasonal-gap question candidate; June and July stay in English to preserve the specified months. Unreviewed machine draft."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[0]",
+      "sourceEnglish": "Buy vegetables at market each June and July",
+      "currentDraft": "Buy vegetables at market each June and July",
+      "candidate": "Xava matsavu emakete hi June na July lembe rin’wana ni rin’wana.",
+      "status": "candidate",
+      "reason": "Seasonal-gap option candidate preserves month names and assertion strength; unreviewed machine draft."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[1]",
+      "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "currentDraft": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "candidate": "Hlela u tlhelela endzhaku ku suka eka mpfumaleko wa swakudya, u tirhisa swibyariwa leswi lulameleke ndhawu ya wena ni nkarhi wa swona wa ntshovelo.",
+      "status": "candidate",
+      "reason": "Seasonal-gap option candidate preserves month names and assertion strength; unreviewed machine draft."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[2]",
+      "sourceEnglish": "Accept her farm can't produce in winter",
+      "currentDraft": "Accept her farm can't produce in winter",
+      "candidate": "Amukela leswaku purasi ra yena a ri nge humesi swibyariwa hi xixika.",
+      "status": "candidate",
+      "reason": "Seasonal-gap option candidate preserves month names and assertion strength; unreviewed machine draft."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[3]",
+      "sourceEnglish": "The records show a soil fertility problem",
+      "currentDraft": "The records show a soil fertility problem",
+      "candidate": "Switsari swi komba xiphiqo xa ku nona ka misava.",
+      "status": "candidate",
+      "reason": "Seasonal-gap option candidate preserves month names and assertion strength; unreviewed machine draft."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].rationale",
+      "sourceEnglish": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
+      "currentDraft": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
+      "candidate": "Switsari swi komba mpfumaleko. Ku hlawula swibyariwa ni masiku yo byala swi fanele swi fambisana ni maxelo ya ndhawu, mati ni nkarhi lowu languteriweke wa ntshovelo.",
+      "status": "candidate",
+      "reason": "Seasonal-gap rationale candidate retains local climate, water and expected harvest-time requirements; unreviewed machine draft."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[0]",
+      "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
+      "currentDraft": "Agree product, quantity, quality, delivery and payment",
+      "candidate": "Pfumelelanani hi product, nhlayo, khwalithi, ku yisa ni ku hakela.",
+      "status": "candidate",
+      "reason": "Ordinary wording candidate with limited scope; unreviewed machine draft.",
+      "rootRepair": "Retain exact English product/shortage/local-crop timing meaning where the proposed lexical choice may narrow or shift it."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[1]",
+      "sourceEnglish": "Compare costs and losses as well as selling price",
+      "currentDraft": "Compare costs and losses as well as selling price",
+      "candidate": "Pimanisa costs ni losses xikan’we ni selling price.",
+      "status": "candidate",
+      "reason": "Ordinary wording candidate with limited scope; unreviewed machine draft."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[2]",
+      "sourceEnglish": "Promise regular boxes only when supply and customer terms support them",
+      "currentDraft": "Promise regular boxes only when supply and customer terms support them",
+      "candidate": "Promise regular boxes only when supply and customer terms support them",
+      "status": "hold",
+      "reason": "Held exact English because this carries price/cost, example, crop suitability/timing, regular-supply, or compliance meaning."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[3]",
+      "sourceEnglish": "Check market rules and describe growing practices honestly",
+      "currentDraft": "Check market rules and describe growing practices honestly",
+      "candidate": "Check market rules and describe growing practices honestly",
+      "status": "hold",
+      "reason": "Held exact English because this carries price/cost, example, crop suitability/timing, regular-supply, or compliance meaning."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "quiz[0].question",
+      "sourceEnglish": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "currentDraft": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "candidate": "A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?",
+      "status": "hold",
+      "reason": "Held exact English to preserve exact financial figures or commercial channel and supply-risk conditions."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "quiz[0].options[0]",
+      "sourceEnglish": "A formal market stall needing consistent weekly supply",
+      "currentDraft": "A formal market stall needing consistent weekly supply",
+      "candidate": "A formal market stall needing consistent weekly supply",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "quiz[0].options[1]",
+      "sourceEnglish": "A box scheme needing the same produce weekly",
+      "currentDraft": "A box scheme needing the same produce weekly",
+      "candidate": "A box scheme needing the same produce weekly",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "quiz[0].options[2]",
+      "sourceEnglish": "An informal market or neighbour sales with no fixed commitment",
+      "currentDraft": "An informal market or neighbour sales with no fixed commitment",
+      "candidate": "An informal market or neighbour sales with no fixed commitment",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "quiz[0].options[3]",
+      "sourceEnglish": "A daily-delivery school contract",
+      "currentDraft": "A daily-delivery school contract",
+      "candidate": "A daily-delivery school contract",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+      "currentDraft": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+      "candidate": "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+      "status": "hold",
+      "reason": "Held exact English to preserve price/customer-demand claims or supply, payment and fulfillment qualifications."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].question",
+      "sourceEnglish": "How can agreed regular orders help a grower plan?",
+      "currentDraft": "How can agreed regular orders help a grower plan?",
+      "candidate": "How can agreed regular orders help a grower plan?",
+      "status": "hold",
+      "reason": "Held exact English to preserve exact financial figures or commercial channel and supply-risk conditions."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].options[0]",
+      "sourceEnglish": "Box customers always pay more per kilogram",
+      "currentDraft": "Box customers always pay more per kilogram",
+      "candidate": "Box customers always pay more per kilogram",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].options[1]",
+      "sourceEnglish": "Box schemes let you charge extra for packaging",
+      "currentDraft": "Box schemes let you charge extra for packaging",
+      "candidate": "Box schemes let you charge extra for packaging",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].options[2]",
+      "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "currentDraft": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "candidate": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].options[3]",
+      "sourceEnglish": "Box schemes avoid tax obligations",
+      "currentDraft": "Box schemes avoid tax obligations",
+      "candidate": "Box schemes avoid tax obligations",
+      "status": "hold",
+      "reason": "Held exact English to keep the distractor meaning and scope precise."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].rationale",
+      "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+      "currentDraft": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+      "candidate": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+      "status": "hold",
+      "reason": "Held exact English to preserve price/customer-demand claims or supply, payment and fulfillment qualifications."
+    }
+  ],
+  "holdPolicy": [
+    "Retain exact price examples, numbers and units in English.",
+    "Preserve may/can, before, only when, no-guarantee, fixed-supply and other source qualifications exactly.",
+    "ST means Sesotho; VE means Tshivenda; TS means Xitsonga.",
+    "Semantic candidates require local language review before use."
+  ],
+  "rootReview": "Data-only root repaired packet; learner wiring awaits fresh branch/current source checks and actual release gates. Fluent review follows labelled publication per Rory."
+}

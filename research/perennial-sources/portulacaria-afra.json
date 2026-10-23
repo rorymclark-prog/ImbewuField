@@ -1,0 +1,75 @@
+{
+  "speciesId": "portulacaria-afra",
+  "commonName": "Spekboom",
+  "botanicalName": "Portulacaria afra",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "edible leaves",
+  "supplementaryReferences": [
+    {
+      "title": "Edible part and local use",
+      "quote": "The leaves of the Porkbush can be eaten",
+      "url": "https://pza.sanbi.org/portulacaria-afra",
+      "doc": "SANBI PlantZAfrica, portulacaria-afra",
+      "page": null,
+      "note": "The food is the tart leaf; flowers do not define leaf picking months."
+    },
+    {
+      "title": "Primary food-processing research",
+      "quote": "Fresh leaves were steamed",
+      "url": "https://pure.uj.ac.za/en/publications/impact-of-steaming-as-a-processing-technique-on-the-nutritional-h/",
+      "doc": "Mahlanza et al., University of Johannesburg research record, International Journal of Food Science and Technology (2026)",
+      "page": null,
+      "note": "The study analyses processed spekboom leaves. Its laboratory method and composition are not a farm harvest rate, storage life or household food-safety recipe."
+    }
+  ],
+  "productionGuidance": {
+    "products": "edible leaves",
+    "care": [
+      "Protect young plants from heavy browsing. SANBI reports warm rocky and semi-arid habitats; ground-level goat browsing can prevent vegetative spread and reduce regeneration."
+    ],
+    "purchase": [
+      "Ask for correctly identified spekboom and record whether it is planted for food, browse or restoration. No measured household leaf yield is supplied."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/portulacaria-afra",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    },
+    {
+      "url": "https://pure.uj.ac.za/en/publications/impact-of-steaming-as-a-processing-technique-on-the-nutritional-h/",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary institutional source content checked; context and limits retained."
+    }
+  ],
+  "gaps": [
+    "No verified leaf-picking calendar or repeated-cut yield."
+  ]
+}

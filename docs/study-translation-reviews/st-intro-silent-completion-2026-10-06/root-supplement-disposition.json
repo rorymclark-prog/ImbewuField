@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-06",
+  "acceptedSupplementRows": [
+    63,
+    65,
+    81
+  ],
+  "retainedPriorRows": [
+    47,
+    82
+  ],
+  "reasons": {
+    "47": "Keep existing independently checked complete management/safety wording; new supplement does not localize the retained rotation and pest clauses further.",
+    "82": "Older neighbour remains a bounded exact-English anchor; moholo may refer to size or seniority without a verified comparative age expression."
+  },
+  "lexicalEvidenceRootOpened": "https://www.education.gov.za/Portals/0/CD/2019%20June%20Exams/Languages%20May-June%202019%20Memos%20PDF/Sesotho/HL/Sesotho%20HL%20P2%20May-June%202019%20Memo.pdf?ver=2019-09-29-101255-000",
+  "lexicalScope": "Official DBE answer-marking usage supports tshwaya lexical action; no map phrase fluency approval.",
+  "notLearnerWired": true
+}

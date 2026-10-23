@@ -1,0 +1,254 @@
+{
+  "packetId": "IMBEWU-VE-MARKET-L3-BODY-NEXT-CANDIDATES-2026-10-03",
+  "sourceRevision": "18734826c631798ebbec7c0f3f37ea2f9ab6a386",
+  "languageCode": "ve",
+  "languageName": "Tshivenda",
+  "lessonId": "market-community-l3",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-ve-market-community.ts",
+  "fieldPath": "body.tshivendaDraft",
+  "reviewStatus": "unreviewed-machine-draft-for-facilitator-review",
+  "provenance": "Read-only source-paired candidate draft from the current canonical Market Community L3 body and Tshivenda registry. No learner fields or repository files changed.",
+  "sourceParagraphCount": 12,
+  "sourceEnglishBody": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+  "currentRegionalBody": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nU kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.\n\nPhampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.\n\nU zwi shumisa roṱhe zwi phaḓaladza ndeme yazwo kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽi si kone u u ita ḽoṱhe.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nVhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+  "candidateBody": "Vhahura vha nga kovhelana mifuda yo fhambanaho na mushumo wa u vhulunga mbeu.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nU kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.\n\nPhampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.\n\nU zwi shumisa roṱhe zwi phaḓaladza ndeme yazwo kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽi si kone u u ita ḽoṱhe.\n\nFarani zwibveledzwa nga vhulenda. Keep suitable shade, packaging and storage through delivery.\n\nMukengi wa tsini a nga fhungudza lwendo, fhedzi losses and selling costs still need measuring.\n\nVhambedzani money received after fees, transport and spoilage kha option iṅwe na iṅwe. Ni songo humbula uri the nearest buyer always gives the best return.\n\nVhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.\n\nṄwalani method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+  "exactSourceParagraphs": [
+    "Neighbours can share different varieties and the work of saving seed.",
+    "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+    "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+    "Tool sharing puts expensive equipment within reach of the group.",
+    "A water pump or grain mill may be beyond one household’s budget.",
+    "Shared use spreads the value across the group and helps each farm do work it could not do alone.",
+    "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+    "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+    "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.",
+    "Neighbours can demonstrate useful skills and compare what happened on their own farms.",
+    "Record the method, conditions and result so others can judge whether it may suit their land.",
+    "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together."
+  ],
+  "currentRegistryParagraphs": [
+    "Neighbours can share different varieties and the work of saving seed.",
+    "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+    "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+    "U kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.",
+    "Phampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.",
+    "U zwi shumisa roṱhe zwi phaḓaladza ndeme yazwo kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽi si kone u u ita ḽoṱhe.",
+    "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+    "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+    "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.",
+    "Vhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.",
+    "Record the method, conditions and result so others can judge whether it may suit their land.",
+    "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together."
+  ],
+  "candidateParagraphs": [
+    "Vhahura vha nga kovhelana mifuda yo fhambanaho na mushumo wa u vhulunga mbeu.",
+    "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+    "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+    "U kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.",
+    "Phampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.",
+    "U zwi shumisa roṱhe zwi phaḓaladza ndeme yazwo kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽi si kone u u ita ḽoṱhe.",
+    "Farani zwibveledzwa nga vhulenda. Keep suitable shade, packaging and storage through delivery.",
+    "Mukengi wa tsini a nga fhungudza lwendo, fhedzi losses and selling costs still need measuring.",
+    "Vhambedzani money received after fees, transport and spoilage kha option iṅwe na iṅwe. Ni songo humbula uri the nearest buyer always gives the best return.",
+    "Vhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.",
+    "Ṅwalani method, conditions and result so others can judge whether it may suit their land.",
+    "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together."
+  ],
+  "initialState": [
+    {
+      "paragraphIndex": 0,
+      "state": "exact-English-hold",
+      "source": "Neighbours can share different varieties and the work of saving seed.",
+      "currentRegional": "Neighbours can share different varieties and the work of saving seed.",
+      "candidate": "Vhahura vha nga kovhelana mifuda yo fhambanaho na mushumo wa u vhulunga mbeu.",
+      "preservedExistingRegionalText": false
+    },
+    {
+      "paragraphIndex": 1,
+      "state": "exact-English-hold",
+      "source": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+      "currentRegional": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+      "candidate": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+      "preservedExistingRegionalText": false
+    },
+    {
+      "paragraphIndex": 2,
+      "state": "exact-English-hold",
+      "source": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "currentRegional": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "candidate": "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "preservedExistingRegionalText": false
+    },
+    {
+      "paragraphIndex": 3,
+      "state": "existing-localized-or-mixed",
+      "source": "Tool sharing puts expensive equipment within reach of the group.",
+      "currentRegional": "U kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.",
+      "candidate": "U kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.",
+      "preservedExistingRegionalText": true
+    },
+    {
+      "paragraphIndex": 4,
+      "state": "existing-localized-or-mixed",
+      "source": "A water pump or grain mill may be beyond one household’s budget.",
+      "currentRegional": "Phampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.",
+      "candidate": "Phampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.",
+      "preservedExistingRegionalText": true
+    },
+    {
+      "paragraphIndex": 5,
+      "state": "existing-localized-or-mixed",
+      "source": "Shared use spreads the value across the group and helps each farm do work it could not do alone.",
+      "currentRegional": "U zwi shumisa roṱhe zwi phaḓaladza ndeme yazwo kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽi si kone u u ita ḽoṱhe.",
+      "candidate": "U zwi shumisa roṱhe zwi phaḓaladza ndeme yazwo kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽi si kone u u ita ḽoṱhe.",
+      "preservedExistingRegionalText": true
+    },
+    {
+      "paragraphIndex": 6,
+      "state": "exact-English-hold",
+      "source": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+      "currentRegional": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+      "candidate": "Farani zwibveledzwa nga vhulenda. Keep suitable shade, packaging and storage through delivery.",
+      "preservedExistingRegionalText": false
+    },
+    {
+      "paragraphIndex": 7,
+      "state": "exact-English-hold",
+      "source": "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+      "currentRegional": "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+      "candidate": "Mukengi wa tsini a nga fhungudza lwendo, fhedzi losses and selling costs still need measuring.",
+      "preservedExistingRegionalText": false
+    },
+    {
+      "paragraphIndex": 8,
+      "state": "exact-English-hold",
+      "source": "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.",
+      "currentRegional": "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.",
+      "candidate": "Vhambedzani money received after fees, transport and spoilage kha option iṅwe na iṅwe. Ni songo humbula uri the nearest buyer always gives the best return.",
+      "preservedExistingRegionalText": false
+    },
+    {
+      "paragraphIndex": 9,
+      "state": "existing-localized-or-mixed",
+      "source": "Neighbours can demonstrate useful skills and compare what happened on their own farms.",
+      "currentRegional": "Vhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.",
+      "candidate": "Vhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.",
+      "preservedExistingRegionalText": true
+    },
+    {
+      "paragraphIndex": 10,
+      "state": "exact-English-hold",
+      "source": "Record the method, conditions and result so others can judge whether it may suit their land.",
+      "currentRegional": "Record the method, conditions and result so others can judge whether it may suit their land.",
+      "candidate": "Ṅwalani method, conditions and result so others can judge whether it may suit their land.",
+      "preservedExistingRegionalText": false
+    },
+    {
+      "paragraphIndex": 11,
+      "state": "exact-English-hold",
+      "source": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "currentRegional": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "candidate": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "preservedExistingRegionalText": false
+    }
+  ],
+  "changedParagraphIndices": [
+    0,
+    6,
+    7,
+    8,
+    10
+  ],
+  "preservedParagraphIndices": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    9,
+    11
+  ],
+  "preservedExistingLocalizedParagraphIndices": [
+    3,
+    4,
+    5,
+    9
+  ],
+  "exactEnglishTechnicalHolds": [
+    1,
+    2,
+    11
+  ],
+  "entries": [
+    {
+      "paragraphIndex": 0,
+      "source": "Neighbours can share different varieties and the work of saving seed.",
+      "currentRegional": "Neighbours can share different varieties and the work of saving seed.",
+      "candidate": "Vhahura vha nga kovhelana mifuda yo fhambanaho na mushumo wa u vhulunga mbeu.",
+      "backTranslation": "Neighbours can share different varieties and the work of saving seed.",
+      "retainedEnglishTerms": [],
+      "uncertainty": "Ordinary neighbour-sharing and seed-saving wording is localized; confirm Tshivenda idiom in facilitator review."
+    },
+    {
+      "paragraphIndex": 6,
+      "source": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+      "currentRegional": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+      "candidate": "Farani zwibveledzwa nga vhulenda. Keep suitable shade, packaging and storage through delivery.",
+      "backTranslation": "Handle produce gently. Keep suitable shade, packaging and storage through delivery.",
+      "retainedEnglishTerms": [
+        "suitable shade, packaging and storage through delivery"
+      ],
+      "uncertainty": "Only the handling instruction is localized. Keep shade, packaging, storage and delivery details verbatim in English to avoid changing produce-care guidance."
+    },
+    {
+      "paragraphIndex": 7,
+      "source": "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+      "currentRegional": "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+      "candidate": "Mukengi wa tsini a nga fhungudza lwendo, fhedzi losses and selling costs still need measuring.",
+      "backTranslation": "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+      "retainedEnglishTerms": [
+        "losses and selling costs still need measuring"
+      ],
+      "uncertainty": "The nearby-buyer possibility and journey are translated; retain the loss and selling-cost measurement requirement in English."
+    },
+    {
+      "paragraphIndex": 8,
+      "source": "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.",
+      "currentRegional": "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.",
+      "candidate": "Vhambedzani money received after fees, transport and spoilage kha option iṅwe na iṅwe. Ni songo humbula uri the nearest buyer always gives the best return.",
+      "backTranslation": "Compare money received after fees, transport and spoilage for each option. Do not assume that the nearest buyer always gives the best return.",
+      "retainedEnglishTerms": [
+        "money received after fees, transport and spoilage",
+        "the nearest buyer always gives the best return"
+      ],
+      "uncertainty": "Translate compare/option framing and preserve the nearest-buyer caution verbatim. Business calculation and return terms remain English."
+    },
+    {
+      "paragraphIndex": 10,
+      "source": "Record the method, conditions and result so others can judge whether it may suit their land.",
+      "currentRegional": "Record the method, conditions and result so others can judge whether it may suit their land.",
+      "candidate": "Ṅwalani method, conditions and result so others can judge whether it may suit their land.",
+      "backTranslation": "Record the method, conditions and result so others can judge whether it may suit their land.",
+      "retainedEnglishTerms": [
+        "method, conditions and result",
+        "whether it may suit their land"
+      ],
+      "uncertainty": "Only the recording imperative is localized; retain method, conditions, result and conditional land-suitability assessment verbatim."
+    }
+  ],
+  "constraints": [
+    "Canonical source wording and paragraph order are exact and unchanged.",
+    "Existing localized paragraphs 3–5 and 9 are preserved byte-for-byte.",
+    "Quiz, title, media, species, number and lesson instructions outside body are untouched.",
+    "Seed procedures, seed rights, business calculations, and qualified disease/technical advice stay English where uncertain.",
+    "No sales, yield or quality guarantee is added.",
+    "Candidate is unreviewed and makes no fluency claim."
+  ],
+  "implementation": {
+    "appliedTo": "lib/course-translation-drafts-ve-market-community.ts",
+    "appliedAtBaseline": "18734826c631798ebbec7c0f3f37ea2f9ab6a386",
+    "scope": "body.tshivendaDraft only; canonical English, title, alt text, key points, quiz, lesson order and media unchanged",
+    "learnerStatus": "machine-draft; remains visibly unreviewed"
+  }
+}

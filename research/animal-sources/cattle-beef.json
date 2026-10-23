@@ -1,0 +1,149 @@
+{
+  "enterpriseId": "cattle-beef",
+  "commonName": "Nguni / crossbred beef cattle (communal and extensive veld)",
+  "animal": "cattle",
+  "animalUnit": "cow",
+  "product": "meat",
+  "outputUnit": "kg weaning weight/calf",
+  "outputPerAnimal": {
+    "value": [
+      114.51,
+      121.21
+    ],
+    "evidence": {
+      "quote": "Calves’ in humid zone had higher performance with 121.21 kg for WW, 96.83 kg for P-WG and 0.477 kg/day for P-ADG. The lowest WW (114.51 kg)...were observed in arid zone.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5203849/",
+      "doc": "Mpofu, Ginindza, Siwendu, Nephawe & Mtileni (2016). Effect of agro-ecological zone, season of birth and sex on pre-weaning performance of Nguni calves in Limpopo Province, South Africa. Tropical Animal Health and Production 49:187-194 (PMC5203849), Table 5",
+      "page": null
+    },
+    "notes": "Table 5 gives weaning weight (WW) across four agro-ecological zones for the same nine Nguni communal herds: arid 114.51 kg (lowest), semi-arid 119.98 kg, dry sub-humid 117.91 kg, humid 121.21 kg (highest). The range recorded here spans this one study's own arid-to-humid zone means; it is not merged with any other paper's weaning-weight figures (other SA studies report different ranges for different systems - e.g. research-station or stud herds - and were deliberately excluded to avoid mixing systems). 826 Nguni calves from nine herds that the paper itself says were 'kept under extensive grazing system' in Limpopo Province - a genuine communal/extensive veld system matching this enterprise."
+  },
+  "productionMonths": [],
+  "seasonalPattern": null,
+  "timeToFirstProductWeeks": {
+    "value": null,
+    "evidence": null,
+    "notes": "Withdrawn in editor review: 896.8 days is age at first calving, but a beef cow's product here is a weaned calf, which comes months after calving. No source states the time to a first weaned calf."
+  },
+  "productiveLifeYears": {
+    "value": [
+      6.44,
+      6.44
+    ],
+    "evidence": {
+      "quote": "Average failure time (days) 2 354",
+      "url": "https://scholar.ufs.ac.za/bitstreams/80aad384-ea22-4242-b763-f218826c11ec/download",
+      "doc": "Ngayo, M. (2017). Factors Affecting Productive Life and Fertility in Nguni Cows (MSc dissertation, University of the Free State), Table 5.1",
+      "page": 58
+    },
+    "notes": "2354 days / 365.25 = 6.44 years. 'Failure time' is the length of productive herd life for the 580 uncensored (fully-observed) records in the combined dataset; the dissertation itself defines productive herd life as 'the time interval between first calving date to culling date'. Combined data from three extensively-grazed Nguni stud herds, animals born 1968-2015."
+  },
+  "feedKgPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced for a breeding beef cow on extensive veld/communal grazing. Searches for ARC, SAJAS and LRRD cattle feed-intake figures found only intensive-feedlot, post-weaning-weaner ration studies (a different animal-stage and system from a mature breeding cow on veld) or sources that were unreachable (Springer full text redirected to a login page; sasas.co.za blocked by Cloudflare) within the search budget - see gaps."
+  },
+  "waterLPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced for a beef cow on veld within the search budget - see gaps."
+  },
+  "spaceM2PerAnimal": {
+    "value": null,
+    "evidence": null,
+    "notes": "Withdrawn in editor review: 1.74 m² is the handling and transport code's minimum for a holding pen, not space to keep a cow in. No source gives camp or housing space per beef cow."
+  },
+  "welfare": [
+    {
+      "point": "Cattle pens must not be overcrowded: there must be enough floor space for every animal to lie down at the same time.",
+      "evidence": {
+        "quote": "Livestock shall not be penned in overcrowded conditions. ... Penning space provided shall be enough to permit all livestock to lie down at the same \ntime",
+        "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+        "doc": "Livestock Welfare Coordinating Committee, Code of Practice: Handling and Transport of Livestock (2018), s.1.2",
+        "page": 4
+      }
+    },
+    {
+      "point": "During transport, cattle must have at least 1.4 m² of floor space each so loading is neither too tight nor too loose.",
+      "evidence": {
+        "quote": "1,4 sq.m per each adult cattle",
+        "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+        "doc": "Livestock Welfare Coordinating Committee, Code of Practice: Handling and Transport of Livestock (2018), s.4.6.1",
+        "page": 7
+      }
+    },
+    {
+      "point": "Cattle may not be transported for more than 18 hours without being off-loaded and given feed, water and shelter.",
+      "evidence": {
+        "quote": "Livestock shall not be transported for periods in excess of 18 h. If the journey is longer than  \n18 h the livestock shall be off-loaded and provided with suitable feed, potable water and shelter.",
+        "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+        "doc": "Livestock Welfare Coordinating Committee, Code of Practice: Handling and Transport of Livestock (2018), s.7.1",
+        "page": 9
+      }
+    },
+    {
+      "point": "It is an offence to starve, under-feed, or deny water or food to cattle.",
+      "evidence": {
+        "quote": "unnecessarily starves or under-feeds or denies water or food to any animal",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf",
+        "doc": "Animals Protection Act 71 of 1962, s.2(1)(c)",
+        "page": 1
+      }
+    }
+  ],
+  "legal": [
+    {
+      "point": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: state Veterinary Services enforce isolation and movement restrictions.",
+      "evidence": {
+        "quote": "FMD is classified as a controlled animal disease under the Animal Diseases Act, 1984 (Act No. 35 of 1984), which mandates specific control measures, such as isolation and movement restrictions, enforced by Veterinary Services.",
+        "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+        "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+        "page": null
+      }
+    },
+    {
+      "point": "Every cattle owner must register an official identification mark and brand or mark their cattle with it, under the Animal Identification Act.",
+      "evidence": {
+        "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+        "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+        "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+        "page": 4
+      }
+    },
+    {
+      "point": "Any suspected or confirmed brucellosis-related abortion in cattle must be reported to the State Veterinary office, as part of the national bovine brucellosis control scheme under the Animal Diseases Act.",
+      "evidence": {
+        "quote": "all suspected and confirmed cases of abortion must be reported to the nearest State Veterinary office for zoo-sanitary actions as prescribed in the national bovine brucellosis control scheme",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10784229/",
+        "doc": "Marumo, Hlokwe & Kayoka-Kabongo, Seroprevalence of brucellosis in communal and smallholder cattle farming in North West Province, South Africa, Onderstepoort Journal of Veterinary Research (PMC10784229)",
+        "page": null
+      }
+    },
+    {
+      "point": "No animal may be slaughtered anywhere but a registered abattoir, with the exception below.",
+      "evidence": {
+        "quote": "slaughter any animal at any place other than an abattoir;",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, s.7(1)(a)",
+        "page": 6
+      }
+    },
+    {
+      "point": "Slaughter for the farmer's own household consumption, or for cultural or religious purposes, is exempt from the abattoir rule.",
+      "evidence": {
+        "quote": "Subsection (1) does not apply to slaughter for own consumption or for cultural\nor religious purposes.",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+        "page": 6
+      }
+    }
+  ],
+  "gaps": [
+    "outputPerAnimal: three different SA sources gave substantially different Nguni weaning-weight figures for different systems (a stud/research-station ecotype study; a Mpumalanga CPA report; this Limpopo communal-herd study). Only PMC5203849's own arid-to-humid zone range (114.51-121.21 kg) was used, since it is a single, clearly-extensive/communal-system source; the other figures were not merged in, per the instruction not to mix systems into one range.",
+    "timeToFirstProductWeeks and productiveLifeYears come from a registered-stud Nguni dissertation (Ngayo 2017, UFS), a different herd population from the communal Limpopo weaning-weight study. Both are extensively-grazed Nguni cattle on veld, but no single source covering a purely communal/smallholder herd gave both an age-at-first-calving and a productive-life figure together, so these two fields are not from the same document as outputPerAnimal (each field's value is still a single, undivided figure from one source, not stitched across documents).",
+    "feedKgPerAnimalPerDay and waterLPerAnimalPerDay: no SA-specific feed or water intake figure for a mature breeding beef cow on extensive veld/communal grazing was found. Available cattle feed/water studies (ARC, SAJAS, MDPI) covered intensive feedlot post-weaning weaners instead - a different animal-stage/system - so were excluded rather than mixed in. Some candidate sources (Springer full text, sasas.co.za) were unreachable (login redirect / Cloudflare block) within budget.",
+    "spaceM2PerAnimal: the only cattle-specific space figure found (LWCC Code, s.1.2.1) is a pre-transport holding-pen minimum, not routine extensive-veld camp space; no source was found quantifying typical grazing camp size per beef cow on communal land.",
+    "The LWCC 'Code of Practice for the Welfare of Dairy Cattle' PDF (a candidate welfare source) has an irrecoverably garbled custom font encoding under pypdf, pymupdf and WebFetch alike; abandoned in favour of the LWCC 'Code of Practice: Handling and Transport of Livestock' (2018), which extracts cleanly and is also an official, DAFF-linked, multi-organisation code applicable to cattle.",
+    "Editor review 2026-09-28 (round 2): productionMonths and seasonalPattern withdrawn. Mpofu et al. Table 2 defines the study's two birth seasons (summer Nov-Jan, winter May-Jul) for comparing calves; it does not say the herds calve only then, and calving is not when beef is taken. timeToFirstProductWeeks withdrawn (age at first calving, not a first weaned calf). spaceM2PerAnimal withdrawn (holding-pen minimum). The weaning-weight quote now carries the 121.21 kg humid-zone figure as well as the 114.51 kg arid one. PMC pages serve a reCAPTCHA to scripts, so PMC quotes were checked against the Europe PMC full text of the same articles."
+  ]
+}

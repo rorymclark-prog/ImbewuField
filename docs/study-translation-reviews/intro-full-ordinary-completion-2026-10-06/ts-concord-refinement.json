@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-06",
+  "readOnly": true,
+  "reviewedIndependentReport": {
+    "path": "/tmp/imbewu-intro-remaining-ordinary-prose-ts-independent-check-20261006.json",
+    "sha256": "6fad711e7a2fb669519263bad31e5a1bfab3a60b46057aca55ffa4f5827546b4"
+  },
+  "frozenBase": {
+    "commit": "f923c0c330551586587ec6248cb3e0491d176cf6",
+    "verifiedFileHashes": {
+      "lib/course-modules.ts": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "lib/course-localization.ts": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+      "lib/course-translation-drafts-ts.ts": "77fd4d85f17244f5b72adf3714c5accf3a9ec476b6737f4c88935f3b6ff674ab",
+      "docs/narration/intro-permaculture.ts.paired-draft.json": "10d0f9ede93fc7c323d60dab330b670d4c21b30720e073426598d27f8e444603"
+    }
+  },
+  "finding": {
+    "locator": "docs/narration/intro-permaculture.ts.paired-draft.json slides[n=14].target.body[3]",
+    "exactSource": "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+    "exactCurrentTarget": "Hlawula principles timbirhi kumbe tinharhu leti khumbaka xiphiqo xa wena lexikulu u ti tirhisa swinene. Letin’wana ti ta vonaka kahle loko u ya mahlweni.",
+    "priorFinalCandidate": "Hlawula misinya ya milawu timbirhi kumbe tinharhu leti khumbaka xiphiqo xa wena lexikulu u ti tirhisa hi ku tiyimisela. Letin’wana ti ta vonaka kahle loko u ya mahlweni.",
+    "verdict": "repair",
+    "recommendedWholeComposedTarget": "Hlawula misinya ya milawu yimbirhi kumbe yinharhu leyi khumbaka xiphiqo xa wena lexikulu u yi tirhisa hi ku tiyimisela. Leyin’wana yi ta vonaka kahle loko u ya mahlweni.",
+    "blindBacktranslation": "Choose two or three principles that address your biggest problem and apply them earnestly. The rest will become clear as you go.",
+    "reason": "The inserted noun phrase misinya ya milawu uses the same established TS agreement pattern in the exact-source native L2 paragraph: yimbirhi kumbe yinharhu leyi, then yi for the singular class prefix. The following 'the rest' sentence must carry the same yi agreement. The proposal keeps the source's two-or-three choice, biggest-problem relation, hard/earnest application, and as-you-go result. It only corrects agreement introduced by the noun substitution and preserves the accepted hi ku tiyimisela wording.",
+    "literalNativePrecedent": {
+      "locator": "lib/course-translation-drafts-ts.ts, Introduction L2 body[2] exact-source match",
+      "exactSource": "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+      "currentNativeTarget": "Hlawula misinya ya milawu yimbirhi kumbe yinharhu leyi fambelanaka ni xiphiqo xa wena lexikulu, u yi tirhisa hi ku tiyimisela. Leyin'wana yi ta sungula ku vonaka loko u ri karhi u ya.",
+      "relevance": "Supports noun-class concord for misinya ya milawu: yimbirhi kumbe yinharhu leyi; object yi; following Leyin'wana yi. The recommendation does not copy its differing 'speak to' or final-clause wording."
+    },
+    "exactCompositionProof": {
+      "startingPoint": "priorFinalCandidate",
+      "replacements": [
+        {"before": "timbirhi kumbe tinharhu leti", "after": "yimbirhi kumbe yinharhu leyi"},
+        {"before": "u ti tirhisa hi ku tiyimisela", "after": "u yi tirhisa hi ku tiyimisela"},
+        {"before": "Letin’wana ti ta", "after": "Leyin’wana yi ta"}
+      ],
+      "allOtherPriorCandidateBytesPreserved": true,
+      "sourceAndCurrentBinding": "Exact source and exact current target independently matched to the frozen paired JSON at slide 14 body index 3; native precedent matched by exact source and L2 body index 2.",
+      "indicesOrSourceChanged": false
+    }
+  },
+  "scanOfOtherChangedConcordBearingRows": {
+    "rowsReviewed": 42,
+    "result": "No additional same-type noun-class or object-pronoun mismatch found among the reviewed final targets. This is a bounded review of proposed changes in the referenced 42-row report, not a fluency certification.",
+    "checkedExamples": [
+      {"id": "deck:ts:s10.body[1]", "phrase": "Xidzedze xin’we xi ku komba", "assessment": "introduced noun and agreement align"},
+      {"id": "deck:ts:s15.body[1]", "phrase": "Eka xifaniso lexi", "assessment": "noun and relative concord align"},
+      {"id": "native:ts:L3.keyPoints[0]", "phrase": "Eka xikombiso lexi", "assessment": "noun and relative concord align"},
+      {"id": "deck:ts:s19.body[2]", "phrase": "Moya wun’wana wu", "assessment": "noun and both clause concord align"},
+      {"id": "deck:ts:s22.body[3]", "phrase": "tlhelo leri", "assessment": "noun and relative concord align"}
+    ]
+  },
+  "limitations": [
+    "Semantic and concord backcheck only; no fluent-speaker approval is claimed.",
+    "No repository, deck, asset, test, or publication files were edited."
+  ]
+}

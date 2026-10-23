@@ -13,8 +13,9 @@
 // which pages to print (e.g. just the Water map). Pure client-side,
 // read-only — never writes back to the design.
 
+import { useRegisterBackControl } from '@/components/BackControl';
 import { numberLabel } from '@/lib/format-figures';
-import { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { ArrowLeft, Pencil, Printer, Droplets, ChevronDown } from 'lucide-react';
 // Separate from the toolbar import above (tests/facilitator-print-fixes.test.ts pins that one
 // line exactly) — these are for LAYER_ICON's screen-only per-layer print checkboxes below.
@@ -31,6 +32,7 @@ import { costForItem, costForLine, costForMeasuredAreaLine, formatZar, isAreaPri
 import { describeHarvest } from '@/lib/water-calc';
 import { loadCachedSiteClimate } from '@/lib/site-climate';
 import { useAppLevel } from '@/lib/app-level';
+import { isSampleMode } from '@/lib/sample-mode';
 
 // ── Copied label/colour tables (kept in sync manually with FacilitatorCanvas.tsx) ──
 
@@ -197,17 +199,21 @@ interface PlanSvgProps {
   gridLines: GridLine[];
   /** Omit for the full-design page (everything full-colour). Set to a LayerId to fade every other layer to grey context. */
   highlightLayer?: LayerId;
+  /** Printed width of the drawing in mm (3:2 aspect). The first sheet shares its row with the
+   *  220px Legend + BOQ column, so it must leave room for it inside the 269mm of sheet width
+   *  that remains after padding: 240mm + 8mm gap + 220px (≈58mm) overflowed the sheet. */
+  widthMm?: number;
 }
 
 const CONTEXT_GREY = '#B4ADA0';
 const CONTEXT_OPACITY = 0.25;
 
-function PlanSvg({ itemPts, linePts, sectorPts, toDraw, scale, pxPerM, drawW, drawH, scaleBarM, gridLines, highlightLayer }: PlanSvgProps) {
+function PlanSvg({ itemPts, linePts, sectorPts, toDraw, scale, pxPerM, drawW, drawH, scaleBarM, gridLines, highlightLayer, widthMm = 240 }: PlanSvgProps) {
   const scaleBarPx = scaleBarM * scale;
   const isContext = (layer: LayerId) => highlightLayer !== undefined && layer !== highlightLayer;
 
   return (
-    <svg width="240mm" height="160mm" viewBox={`0 0 ${drawW} ${drawH}`} style={{ border: '1px solid #C7BCA6', background: '#FBF9F4' }}>
+    <svg width={`${widthMm}mm`} height={`${(widthMm * 2) / 3}mm`} viewBox={`0 0 ${drawW} ${drawH}`} style={{ border: '1px solid #C7BCA6', background: '#FBF9F4' }}>
       {/* grid */}
       {gridLines.map((g, i) => (
         <line key={`grid-${i}`} x1={g.x1} y1={g.y1} x2={g.x2} y2={g.y2} stroke="#E2D8C4" strokeWidth={0.2} />
@@ -336,9 +342,45 @@ const SHEET_STYLE: CSSProperties = {
   boxSizing: 'border-box',
 };
 
+// CSS's own fixed mm-to-px conversion (96px / inch, 25.4mm / inch) — not a device DPI guess.
+const SHEET_WIDTH_PX = (297 * 96) / 25.4;
+
+// nav-13: the sheet is fixed at 297mm (≈1123px) wide, so on a 390px phone only the left third
+// was ever visible, with no hint that the rest exists off to the right. `zoom`, not `transform:
+// scale()` — zoom reflows the element's own box to its scaled size, so the page ends where the
+// scaled sheet ends instead of leaving a tall blank gap below it (the same reasoning
+// lib/theme.tsx's Appearance text-size setting already relies on for this codebase). Only ever
+// scales DOWN (never above 1×) so a wide desktop screen still shows it at true size; @media
+// print below forces zoom back to 1 so the printed sheet is still exactly 297mm.
+function SheetScaler({ children }: { children: React.ReactNode }) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [zoom, setZoom] = useState(1);
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const measure = () => setZoom(Math.min(1, el.clientWidth / SHEET_WIDTH_PX));
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  // w15-01: measure an outer box that is never zoomed. Measuring the zoomed box itself fed the
+  // zoom back into its own clientWidth (390px at zoom 0.35 reads as 1123px), so the zoom
+  // flip-flopped between 1 and the fit value and the page ended up 297mm wide on a phone.
+  return (
+    <div ref={wrapRef}>
+      <div className="sheetScaler" style={{ zoom }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
 type PageKey = 'full' | LayerId;
 
 export default function FacilitatorPrintPage() {
+  // w16-10: this page has its own Back controls in every state — the floating pill stands down.
+  useRegisterBackControl();
   const simple = useAppLevel() === 'simple';
   // Simple: the per-layer page checkboxes and the cost tables are collapsed behind this, leaving
   // one "Print my plan" action that prints the full design sheet. All tools is unaffected —
@@ -355,6 +397,12 @@ export default function FacilitatorPrintPage() {
   // nothing, and point at the one route that does work: this same URL, opened in a real browser.
   const [standalone, setStandalone] = useState(false);
   const [showPrintHint, setShowPrintHint] = useState(false);
+  // desk-17: components/SampleModeBanner.tsx (not owned by this track) renders a fixed 'Tour'
+  // pill at the top-right of every screen in sample mode, which sat directly on top of this
+  // toolbar's own top-right 'More options' button. Reserving space for it (only when it can
+  // actually be showing) is the fix available from this file.
+  const [sample, setSample] = useState(false);
+  useEffect(() => { setSample(isSampleMode()); }, []);
   useEffect(() => {
     // After mount only — matchMedia and navigator.standalone do not exist during SSR.
     const iosStandalone = (navigator as Navigator & { standalone?: boolean }).standalone === true;
@@ -672,13 +720,18 @@ export default function FacilitatorPrintPage() {
           body { background: #fff !important; }
           .sheet { box-shadow: none !important; margin: 0 !important; break-inside: avoid; break-after: page; page-break-after: always; }
           .sheet:last-child { break-after: auto; page-break-after: auto; }
+          /* nav-13: never print at the shrunk-to-fit-a-phone zoom SheetScaler applies on screen. */
+          .sheetScaler { zoom: 1 !important; }
         }
         @media screen {
-          body { background: #EDE7DB; }
+          /* dark-14: this was a literal cream hex, so the surround behind the sheet stayed a
+             bright page even in dark mode — a 5000px cream band under the A4 preview reads as a
+             failed render, not a deliberate print-preview surface. */
+          body { background: var(--bg-0); }
         }
       `}</style>
 
-      <div className="print-toolbar" style={{ position: 'sticky', top: 0, zIndex: 10, display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', padding: '10px 16px', background: '#1F4D2B', color: '#fff', fontFamily: 'sans-serif' }}>
+      <div className="print-toolbar" style={{ position: 'sticky', top: 0, zIndex: 10, display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', padding: sample ? '10px 100px 10px 16px' : '10px 16px', background: '#1F4D2B', color: '#fff', fontFamily: 'sans-serif' }}>
         <button
           onClick={() => history.back()}
           style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.4)', background: 'transparent', color: '#fff', cursor: 'pointer', fontSize: 13 }}
@@ -756,7 +809,15 @@ export default function FacilitatorPrintPage() {
         </div>
       </div>
 
+      {/* dark-14: the sheet below stays deliberate print-white in every theme — see SHEET_STYLE
+          and the surrounding body background fix above — but needs a caption so a bright A4 page
+          on a now-themed surround reads as a chosen print preview, not a failed render. */}
+      <p className="no-print" style={{ textAlign: 'center', fontSize: 12, color: 'var(--text-muted)', margin: '14px 0 0' }}>
+        Print preview
+      </p>
+
       {fullOn && (
+        <SheetScaler>
         <div className="sheet" style={SHEET_STYLE}>
           {/* Title block */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '2px solid #161311', paddingBottom: '4mm', marginBottom: '5mm' }}>
@@ -783,21 +844,27 @@ export default function FacilitatorPrintPage() {
                 itemPts={c.itemPts} linePts={c.linePts} sectorPts={c.sectorPts}
                 toDraw={c.toDraw} scale={c.scale} pxPerM={c.pxPerM}
                 drawW={c.drawW} drawH={c.drawH} scaleBarM={c.scaleBarM} gridLines={c.gridLines}
+                widthMm={200}
               />
             </div>
 
             {/* Legend + BOQ */}
-            <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '4mm', fontSize: 10 }}>
+            {/* desk-17: the legend used to be a 2-column CSS multicol list squeezed into
+                whatever was left of a flex:1 column after the drawing took its share — about
+                90px at 1280px, so rows like 'Hugelkultur' or 'Path / 9.0 / m' wrapped across
+                three lines. A fixed 220px column (not flex:1 — never squeezed further) with one
+                item per row fixes the wrap; width comes from here, not from the row count. */}
+            <div style={{ flex: '0 0 220px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: '4mm', fontSize: 10 }}>
               <div>
                 <div style={{ fontSize: 12, fontWeight: 700, borderBottom: '1px solid #C7BCA6', marginBottom: 3, paddingBottom: 2 }}>Legend</div>
-                <div style={{ columnCount: 2, columnGap: '4mm' }}>
+                <div>
                   {(Object.keys(c.itemTally) as ElType[]).map((type) => {
                     const t = c.itemTally[type]!;
                     const cat = CATALOG[type];
                     return (
                       <div key={type} style={{ display: 'flex', alignItems: 'center', gap: 4, marginBottom: 2, breakInside: 'avoid' }}>
                         <span style={{ width: 9, height: 9, borderRadius: cat.shape === 'circle' ? '50%' : 2, background: cat.fill, flexShrink: 0, display: 'inline-block' }} />
-                        <span style={{ fontSize: 9 }}>{cat.icon} {cat.label} × {t.count}</span>
+                        <span style={{ fontSize: 11 }}>{cat.icon} {cat.label} × {t.count}</span>
                       </div>
                     );
                   })}
@@ -810,7 +877,7 @@ export default function FacilitatorPrintPage() {
                     return (
                       <div key={kind} style={{ display: 'flex', alignItems: 'center', gap: 4, marginBottom: 2, breakInside: 'avoid' }}>
                         <span style={{ width: 14, height: 3, background: L.color, flexShrink: 0, display: 'inline-block' }} />
-                        <span style={{ fontSize: 9 }}>{L.icon} {L.label} — {measure}</span>
+                        <span style={{ fontSize: 11 }}>{L.icon} {L.label} — {measure}</span>
                       </div>
                     );
                   })}
@@ -883,12 +950,14 @@ export default function FacilitatorPrintPage() {
             </div>
           </div>
         </div>
+        </SheetScaler>
       )}
 
       {activeLayerPages.map((lid) => {
         const def = LAYERS[lid];
         return (
-          <div key={lid} className="sheet" style={SHEET_STYLE}>
+          <SheetScaler key={lid}>
+          <div className="sheet" style={SHEET_STYLE}>
             <div style={{ borderBottom: '2px solid #161311', paddingBottom: '4mm', marginBottom: '5mm' }}>
               <div style={{ fontSize: 20, fontWeight: 700 }}>{def.icon} {def.name} map</div>
               <div style={{ fontSize: 11, marginTop: 3, color: '#5C5040' }}>{title}</div>
@@ -902,6 +971,7 @@ export default function FacilitatorPrintPage() {
               />
             </div>
           </div>
+          </SheetScaler>
         );
       })}
     </div>

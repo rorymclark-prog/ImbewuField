@@ -1,0 +1,182 @@
+{
+  "packet": "TS Water Harvesting L2 title and assessment candidates",
+  "language": "ts (itsonga)",
+  "lessonId": "water-harvesting-l2",
+  "sourceMainSha": "f76814b2",
+  "currentSourceCheckedAt": "94a2fb4baf5bf801a12647ea8c2d53a4af045223",
+  "canonicalPath": "lib/course-modules.ts",
+  "registryPath": "lib/course-translation-drafts-ts-water-harvesting.ts",
+  "candidateProvenance": "Independent source-bound draft prepared for this packet; no Agy provenance.",
+  "relatedBodyCandidate": "/tmp/imbewu-ts-water-l2-body-candidates-20261002.json",
+  "title": {
+    "sourceEnglish": "Farm Dams and Ponds: Storing Water for the Dry Season",
+    "currentDraft": "Farm Dams and Ponds: Storing Water for the Dry Season",
+    "candidate": "Madamu ya Mapurasi na Swidziva: Ku Hlayisa Mati eka Dry Season",
+    "literalBacktranslation": "Farm dams and ponds: storing water for the dry season.",
+    "uncertainty": "Keeps “Dry Season” in English to avoid narrowing it to drought."
+  },
+  "keyPoints": [
+    {
+      "index": 1,
+      "sourceEnglish": "A dam needs a site assessment and qualified design",
+      "currentDraft": "A dam needs a site assessment and qualified design",
+      "candidate": "Damu ri lava site assessment na qualified design.",
+      "literalBacktranslation": "A dam needs a site assessment and qualified design.",
+      "uncertainty": "Retains technical terms site assessment and qualified design."
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "Design a safe spillway before construction",
+      "currentDraft": "Design a safe spillway before construction",
+      "candidate": "Design a safe spillway before construction",
+      "literalBacktranslation": "Design a safe spillway before construction.",
+      "uncertainty": "This field is retained verbatim in English because it is a technical construction instruction; hold for translation review.",
+      "candidateStatus": "hold"
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "Check required water authorisations before building",
+      "currentDraft": "Check required water authorisations before building",
+      "candidate": "Kamba authorisations ta mati leti lavekaka u nga si aka.",
+      "literalBacktranslation": "Check required water authorisations before building.",
+      "uncertainty": "Localizes the check and before-building condition; authorisations remains exact English."
+    },
+    {
+      "index": 4,
+      "sourceEnglish": "Maintain bank cover and keep trees off an earth dam wall",
+      "currentDraft": "Maintain bank cover and keep trees off an earth dam wall",
+      "candidate": "Hlayisa bank cover naswona do not plant trees on an earth dam wall.",
+      "literalBacktranslation": "Maintain bank cover and do not plant trees on an earth dam wall.",
+      "uncertainty": "Does not add a design-specific modifier absent from this key point; retains the earth-dam-wall tree prohibition exactly in English."
+    }
+  ],
+  "quiz": [
+    {
+      "index": 1,
+      "question": {
+        "sourceEnglish": "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
+        "currentDraft": "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
+        "candidate": "Murimi u aka dam wall with no spillway. After an exceptional storm it overflows. What is the likely result?",
+        "literalBacktranslation": "A farmer builds a dam wall without a spillway. After an exceptional storm it overflows. What is the likely result?",
+        "uncertainty": "Keeps the earth-dam and no-spillway context; Q1 remains simple and source-aligned."
+      },
+      "options": [
+        {
+          "index": 0,
+          "sourceEnglish": "The water irrigates lower fields beneficially",
+          "currentDraft": "The water irrigates lower fields beneficially",
+          "candidate": "Mati ma cheleta masimu ya le hansi hi ndlela leyinene.",
+          "literalBacktranslation": "Water beneficially irrigates lower fields.",
+          "uncertainty": "Translated distractor preserves source polarity and meaning."
+        },
+        {
+          "index": 1,
+          "sourceEnglish": "It overtops and erodes the wall, risking a catastrophic breach",
+          "currentDraft": "It overtops and erodes the wall, risking a catastrophic breach",
+          "candidate": "It overtops and erodes the wall, risking a catastrophic breach",
+          "literalBacktranslation": "It overtops and erodes the wall, risking a catastrophic breach.",
+          "uncertainty": "Technical breach/risk wording retained verbatim in English; hold for translation review.",
+          "candidateStatus": "hold"
+        },
+        {
+          "index": 2,
+          "sourceEnglish": "The dam stays full and overflow drains harmlessly",
+          "currentDraft": "The dam stays full and overflow drains harmlessly",
+          "candidate": "Damu ri sala ri tele naswona overflow yi khuluka hi ndlela leyi nga riki na khombo.",
+          "literalBacktranslation": "The dam stays full and overflow drains harmlessly.",
+          "uncertainty": "Translated distractor preserves source polarity and meaning."
+        },
+        {
+          "index": 3,
+          "sourceEnglish": "Storage capacity increases permanently",
+          "currentDraft": "Storage capacity increases permanently",
+          "candidate": "Storage capacity increases permanently",
+          "literalBacktranslation": "Storage capacity increases permanently.",
+          "uncertainty": "Retained exactly in English so “permanently” is not weakened or altered.",
+          "candidateStatus": "hold"
+        }
+      ],
+      "sourceCorrectIndex": 1,
+      "candidateCorrectIndex": 1,
+      "rationale": {
+        "sourceEnglish": "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
+        "currentDraft": "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
+        "candidate": "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
+        "literalBacktranslation": "Without a designed overflow route, excess water finds its own way over the wall; that uncontrolled flow erodes and eventually breaches it.",
+        "uncertainty": "Retained verbatim to preserve “excess water” and the uncontrolled-flow mechanism through eventual breach.",
+        "candidateStatus": "hold"
+      }
+    },
+    {
+      "index": 2,
+      "question": {
+        "sourceEnglish": "Which action helps protect an earth dam?",
+        "currentDraft": "Which action helps protect an earth dam?",
+        "candidate": "Hi rihi goza leri pfunaka ku sirhelela earth dam?",
+        "literalBacktranslation": "Which action helps protect an earth dam?",
+        "uncertainty": "Keeps the earth-dam and no-spillway context; Q1 remains simple and source-aligned."
+      },
+      "options": [
+        {
+          "index": 0,
+          "sourceEnglish": "A deep, exposed dam with no bank vegetation",
+          "currentDraft": "A deep, exposed dam with no bank vegetation",
+          "candidate": "A deep, exposed dam with no bank vegetation",
+          "literalBacktranslation": "A deep, exposed dam with no bank vegetation.",
+          "uncertainty": "Retained verbatim in English; this is not a localized draft.",
+          "candidateStatus": "hold"
+        },
+        {
+          "index": 1,
+          "sourceEnglish": "Maintain the designed bank cover and keep the spillway clear",
+          "currentDraft": "Maintain the designed bank cover and keep the spillway clear",
+          "candidate": "Hlayisa bank cover leyi design yi yi hlamuselaka naswona u endla leswaku spillway yi nga pfaleki.",
+          "literalBacktranslation": "Maintain the design-specified bank cover and keep the spillway unobstructed.",
+          "uncertainty": "Correct option preserves design-specified bank cover and unobstructed spillway; original answer index unchanged."
+        },
+        {
+          "index": 2,
+          "sourceEnglish": "A full concrete lining and plastic cover",
+          "currentDraft": "A full concrete lining and plastic cover",
+          "candidate": "A full concrete lining and plastic cover",
+          "literalBacktranslation": "A full concrete lining and plastic cover.",
+          "uncertainty": "Retained verbatim in English; this is not a localized draft.",
+          "candidateStatus": "hold"
+        },
+        {
+          "index": 3,
+          "sourceEnglish": "A larger surface area to spread evaporation evenly",
+          "currentDraft": "A larger surface area to spread evaporation evenly",
+          "candidate": "A larger surface area to spread evaporation evenly",
+          "literalBacktranslation": "A larger surface area to spread evaporation evenly.",
+          "uncertainty": "Retained verbatim in English; this is not a localized draft.",
+          "candidateStatus": "hold"
+        }
+      ],
+      "sourceCorrectIndex": 1,
+      "candidateCorrectIndex": 1,
+      "rationale": {
+        "sourceEnglish": "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
+        "currentDraft": "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
+        "candidate": "Spillway leyi nga pfaleki na banks leti hlayisiweke swi pfuna damu ku tirha hi ndlela leyi design yi yi hlamuselaka. Trees should not be planted on an earth dam wall.",
+        "literalBacktranslation": "An unobstructed spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
+        "uncertainty": "Keeps conditional help (not a guarantee) and restores the source force “should not” in the earth-wall tree prohibition."
+      }
+    }
+  ],
+  "bodySourceExact": "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.\n\nRainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.\n\nBefore changing a watercourse or building storage works, check the required authorisation with the water authority.\n\nA dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.\n\nDo not assume that annual rainfall tells you the size of a flood or the storage you will have.\n\nAn uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.\n\nWater can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nAnimals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
+  "bodyCandidatePacket": "/tmp/imbewu-ts-water-l2-body-candidates-20261002.json",
+  "scope": "Candidate-only packet. Corrected KP4 to remove an unsupported design-specific bank-cover condition, preserved exact technical English where translation could shift construction or risk meaning, and retained original quiz order/indices [1,1]. Exact English fields are explicitly marked hold. Source body/order unchanged; no repository edits or fluent-speaker approval.",
+  "holdFields": [
+    "keyPoints[1]",
+    "quiz[0].options[1]",
+    "quiz[0].rationale",
+    "quiz[1].options[0]",
+    "quiz[1].options[2]",
+    "quiz[1].options[3]",
+    "quiz[0].options[3]"
+  ],
+  "implementationBaseSha": "94a2fb4baf5bf801a12647ea8c2d53a4af045223",
+  "authorizationNote": "Rory explicitly authorized regional lesson and quiz translations on 2026-10-02 (“ok yes”); canonical English sources remain unchanged.",
+  "learnerStatusNote": "Machine draft for facilitator review; this is not fluent-speaker or local practitioner approval."
+}

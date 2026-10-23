@@ -10,6 +10,7 @@
 // Everything above the STORAGE section is pure (no window, no I/O) so the
 // grouping, normalisation and trimming rules can be tested directly.
 
+import { Sprout, ShoppingBasket, CloudSun, Bug, Wrench, Users, NotebookPen, type LucideIcon } from 'lucide-react';
 import { activeAccountLocalStorageKey } from './account-local-storage';
 
 /* ── Types ───────────────────────────────────────────────────────────────── */
@@ -26,8 +27,8 @@ export type JournalCategory =
 export interface JournalCategoryDef {
   key: JournalCategory;
   label: string;
-  /** Emoji, rendered as text (same convention as lib/task-board.ts's icons). */
-  icon: string;
+  /** Lucide icon component — CLAUDE.md is Lucide-only, no emoji as UI icons (ux-05, sdesk-10). */
+  icon: LucideIcon;
   tint: string;
   ink: string;
 }
@@ -36,13 +37,13 @@ export interface JournalCategoryDef {
 // is edited by everything; lib/task-board.ts sets the precedent of hardcoding a
 // small verb/label set here and translating it in a later pass.
 export const JOURNAL_CATEGORIES: readonly JournalCategoryDef[] = Object.freeze([
-  { key: 'planting',    label: 'Planting',        icon: '🌱', tint: 'rgba(31,77,43,0.10)',   ink: 'var(--color-forest-800)' },
-  { key: 'harvest',     label: 'Harvest',         icon: '🧺', tint: 'rgba(164,110,20,0.12)', ink: 'var(--gold)' },
-  { key: 'weather',     label: 'Weather',         icon: '🌦️', tint: 'rgba(37,99,143,0.12)',  ink: 'var(--blue)' },
-  { key: 'pest',        label: 'Pest / disease',  icon: '🐛', tint: 'rgba(160,50,45,0.12)',  ink: 'var(--orange)' },
-  { key: 'maintenance', label: 'Maintenance',     icon: '🛠️', tint: 'rgba(92,80,64,0.12)',   ink: 'var(--text-secondary)' },
-  { key: 'training',    label: 'Visitor / training', icon: '👥', tint: 'rgba(103,66,145,0.12)', ink: 'var(--violet)' },
-  { key: 'other',       label: 'Other',           icon: '📝', tint: 'rgba(92,80,64,0.10)',   ink: 'var(--text-secondary)' },
+  { key: 'planting',    label: 'Planting',        icon: Sprout,         tint: 'rgba(31,77,43,0.10)',   ink: 'var(--color-forest-800)' },
+  { key: 'harvest',     label: 'Harvest',         icon: ShoppingBasket, tint: 'rgba(164,110,20,0.12)', ink: 'var(--gold)' },
+  { key: 'weather',     label: 'Weather',         icon: CloudSun,       tint: 'rgba(37,99,143,0.12)',  ink: 'var(--blue)' },
+  { key: 'pest',        label: 'Pest / disease',  icon: Bug,            tint: 'rgba(160,50,45,0.12)',  ink: 'var(--orange)' },
+  { key: 'maintenance', label: 'Maintenance',     icon: Wrench,         tint: 'rgba(92,80,64,0.12)',   ink: 'var(--text-secondary)' },
+  { key: 'training',    label: 'Visitor / training', icon: Users,       tint: 'rgba(103,66,145,0.12)', ink: 'var(--violet)' },
+  { key: 'other',       label: 'Other',           icon: NotebookPen,    tint: 'rgba(92,80,64,0.10)',   ink: 'var(--text-secondary)' },
 ]);
 
 const CATEGORY_KEYS = new Set<string>(JOURNAL_CATEGORIES.map((c) => c.key));

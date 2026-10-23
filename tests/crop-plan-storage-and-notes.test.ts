@@ -37,6 +37,13 @@ import {
   type Planting,
 } from '@/lib/crop-plan';
 import { buildPlanDashboard } from '@/lib/crop-export-benchmark';
+import { accountLocalStorageKey, bindMountedAccountLocalStorageUid } from '@/lib/account-local-storage';
+import {
+  sanitiseProductionRecords, sanitisePreservedFoodRecords,
+  productionRecordsForSite, preservedFoodRecordsForSite,
+  replaceProductionRecordsForSite, replacePreservedFoodRecordsForSite,
+  type DatedProductionRecord, type PreservedFoodRecord,
+} from '@/lib/production-records';
 
 const source = (rel: string) => readFileSync(new URL(rel, import.meta.url), 'utf8');
 const PAGE = source('../app/facilitator/crops/page.tsx');
@@ -96,6 +103,59 @@ function* sweep(): Generator<SweepCase> {
 }
 
 // ── A. the storage contradiction ────────────────────────────────────────────
+
+test('a planned-crop comparison cannot contradict existing October and November pickings', () => {
+  // The live October sample showed cabbage/onions ready while an undated
+  // new-crop narrative declared Sep–Nov empty. The dated calendar owns that
+  // question; a benchmark comparison must not answer it a second way.
+  const beds = bedsFor(3, 0, 9);
+  const plantings: Planting[] = [
+    { id: 'growing-cabbage', bedId: 'b1', cropKey: 'cabbage', sowMonth: 3, existing: true },
+    { id: 'growing-onions', bedId: 'b2', cropKey: 'onions', sowMonth: 3, existing: true },
+    { id: 'new-tomatoes', bedId: 'b3', cropKey: 'tomatoes', sowMonth: 10 },
+  ];
+  const before = JSON.stringify({ beds, plantings });
+  const dated = buildFoodAvailability(plantings, beds, 10, 12);
+  assert.ok(dated[0].some((item) => item.cropKey === 'cabbage' && item.status === 'fresh'));
+  assert.ok(dated[1].some((item) => item.cropKey === 'onions' && item.status === 'fresh'));
+  const annual = buildYearReport(plantings, beds);
+  assert.ok(annual.some((line) => line.startsWith('No verified fresh-picking window')),
+    'the control must reproduce the separate annual timing claim');
+  const comparison = buildYearReport(plantings, beds, { includeCalendarNarrative: false });
+  assert.equal(comparison[0], annual[0], 'removing a timing claim must not alter the sourced benchmark');
+  assert.match(comparison[0], /new bed crop cycles in this comparison/);
+  assert.doesNotMatch(comparison.join(' '), /No verified fresh-picking window|Nothing is due for picking|usable in/);
+  assert.equal(JSON.stringify({ beds, plantings }), before, 'presentation must not rewrite saved plantings or areas');
+});
+
+test('a dated-screen comparison leaves annual gaps and storage months to the calendar', () => {
+  const beds = bedsFor(1, 0, 9);
+  const plantings: Planting[] = [{ id: 'bn', bedId: 'b1', cropKey: 'butternut', sowMonth: 10 }];
+  const annual = buildYearReport(plantings, beds);
+  assert.ok(annual.some((line) => line.startsWith('No verified fresh-picking window')));
+  assert.ok(annual.some((line) => /can be kept after harvest/.test(line)), 'storage control must exercise a real sourced duration');
+  assert.match(annual.find((line) => line.startsWith('No verified fresh-picking window'))!, /repeating new bed crop cycles only/);
+  assert.doesNotMatch(annual.join(' '), /Nothing is due for picking/);
+  const comparison = buildYearReport(plantings, beds, { includeCalendarNarrative: false });
+  assert.equal(comparison[0], annual[0]);
+  assert.ok(comparison.some((line) => line.startsWith('Within the benchmark comparison')));
+  assert.doesNotMatch(comparison.join(' '), /scheduled around|usable in|can be kept after harvest/);
+});
+
+test('removing annual timing prose retains unknown yields, cover crops and area-conflict warnings', () => {
+  const beds = bedsFor(1, 0, 9);
+  const options = { includeCalendarNarrative: false };
+  const unknown = buildYearReport([{ id: 'unknown', bedId: 'b1', cropKey: 'amadumbe', sowMonth: 4 }], beds, options).join(' ');
+  assert.match(unknown, /no verified kg\/m² benchmark/);
+  assert.match(unknown, /treating it as 0kg would be false/);
+  const cover = buildYearReport([{ id: 'cover', bedId: 'b1', cropKey: 'oats', sowMonth: 5 }], beds, options).join(' ');
+  assert.match(cover, /soil-cover crop.*0 food kg.*not as a failed harvest/);
+  const conflict = buildYearReport([
+    { id: 'one', bedId: 'b1', cropKey: 'tomatoes', sowMonth: 10 },
+    { id: 'two', bedId: 'b1', cropKey: 'maize', sowMonth: 10 },
+  ], beds, options).join(' ');
+  assert.match(conflict, /No kilogram or value total.*overlapping or invalid planting shares/);
+});
 
 /** The months the quiet-month sentence claims nothing is due for picking in. */
 function quietRunFromSentence(sentence: string): number[] | null {
@@ -301,12 +361,21 @@ test('the availability chart reaches its stored detail by tap, not only by hover
 
 // ── C. the PDF carries the storage stat ─────────────────────────────────────
 
-test('buildPlanDashboard counts stored months and names the crops behind them', () => {
+test('the dated dashboard counts storage after its sowing and names the crops behind it', () => {
   const beds = bedsFor(1, 0, 9);
   const stored = buildPlanDashboard(
     [{ id: 'bn', bedId: 'b1', cropKey: 'butternut', sowMonth: 10 }],
+    beds, [], { nowMonth: 10 },
+  );
+  // An upcoming October sowing has food and storage later in an October-start
+  // year. The previous annual wrap wrongly borrowed that same future crop
+  // into the January-start year before it was sown.
+  const beforeSowing = buildPlanDashboard(
+    [{ id: 'bn', bedId: 'b1', cropKey: 'butternut', sowMonth: 10 }],
     beds, [], { nowMonth: 1 },
   );
+  assert.equal(beforeSowing.storedFoodMonths, 0);
+  assert.deepEqual(beforeSowing.storedFoodCrops, []);
   assert.ok(stored.storedFoodMonths > 0, 'a sourced shelf life must produce stored months');
   assert.deepEqual(stored.storedFoodCrops, ['Butternut']);
 
@@ -578,4 +647,284 @@ test('the from-now engine call in page.tsx survives the whole-year feature byte-
     'the literal from-now engine call must keep its first five arguments unchanged, and pass '
     + 'realNow explicitly',
   );
+});
+
+test('saving and reopening dated sowing decisions preserves confirmation and never revives last year\'s crop', async () => {
+  const { confirmOnceSowing, loadCropPlan, saveCropPlan } = await import('@/lib/crop-plan');
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const currentStamp = `${year}-${String(month).padStart(2, '0')}`;
+  const oldStamp = `${year - 1}-${String(month).padStart(2, '0')}`;
+  const confirmed = confirmOnceSowing({ id: 'current', bedId: 'b1', cropKey: 'green-beans', sowMonth: month, once: currentStamp }, year, month);
+  const old = confirmOnceSowing({ id: 'old', bedId: 'b1', cropKey: 'green-beans', sowMonth: month, once: oldStamp }, year - 1, month);
+  const undecided: Planting = { id: 'undecided', bedId: 'b1', cropKey: 'green-beans', sowMonth: month, once: oldStamp };
+  const plan: CropPlanState = { version: 1, plantings: [confirmed, old, undecided], updatedAt: now.getTime() };
+  const loaded = withLocalStorage(new Map<string, string>(), () => {
+    assert.equal(saveCropPlan(plan), true);
+    const first = loadCropPlan();
+    assert.equal(saveCropPlan(first), true);
+    return loadCropPlan();
+  });
+  assert.equal(loaded.plantings[0].confirmedOnceSowing, currentStamp);
+  assert.equal(loaded.plantings[0].finishedOnceSowing, undefined);
+  assert.equal(loaded.plantings[1].confirmedOnceSowing, oldStamp);
+  assert.equal(loaded.plantings[1].finishedOnceSowing, true);
+  assert.equal(loaded.plantings[2].once, oldStamp);
+  assert.equal(loaded.plantings[2].awaitingSowingConfirmation, true);
+  assert.equal(loaded.plantings[2].existing, undefined);
+  assert.ok(buildFoodAvailability(loaded.plantings.slice(1), [{ id: 'b1', label: 'Bed 1', areaM2: 9 }], month, 24).every((slot) => slot.length === 0));
+});
+
+test('dated production and stock belong to the saved account and retain years, native units, explicit zero and unknown weights', async () => {
+  const { loadCropPlan, saveCropPlan } = await import('@/lib/crop-plan');
+  const productionRecords: DatedProductionRecord[] = [
+    { id: 'actual-eggs', sourceIconKey: 'animal:chicken-layer', label: 'Eggs', date: { year: 2026, month: 12 }, quantity: 0, unit: 'eggs', status: 'actual', pricePerUnit: 0, provenance: 'farm-record' },
+    { id: 'expected-milk', sourceIconKey: 'animal:goat-dairy', label: 'Goat milk', date: { year: 2027, month: 1 }, quantity: 6.25, unit: 'litres', status: 'expected', provenance: 'farm-record', note: 'A test of a farmer-entered estimate, not a livestock yield reference.' },
+    { id: 'actual-maize', sourceIconKey: 'crop:maize', label: 'Maize', date: { year: 2027, month: 1 }, quantity: 2.5, unit: 'kg', status: 'actual', provenance: 'farm-record' },
+  ];
+  const preservedProducts: PreservedFoodRecord[] = [
+    { id: 'unknown-mango-stock', sourceIconKey: 'tree:mangifera-indica', label: 'Dried mango', method: 'dried', dates: [{ year: 2026, month: 12 }, { year: 2027, month: 1 }], provenance: 'farm-record', note: 'Stock presence is reported; its weight is unknown.' },
+    { id: 'explicit-zero-nuts', sourceIconKey: 'tree:macadamia-integrifolia', label: 'Stored nuts', method: 'stored', dates: [{ year: 2027, month: 2 }], provenance: 'fictional-example', note: 'An explicit zero in a test record.', quantities: [{ year: 2027, month: 2, kg: 0 }] },
+  ];
+  const plan: CropPlanState = { version: 1, plantings: [], productionRecords, preservedProducts, updatedAt: 1 };
+  const store = new Map<string, string>();
+  try {
+    withLocalStorage(store, () => {
+      bindMountedAccountLocalStorageUid('record-farmer/a');
+      assert.equal(saveCropPlan(plan), true);
+      assert.ok(store.has(accountLocalStorageKey('imbewu_crop_plan_v1', 'record-farmer/a')));
+      assert.ok(!store.has('imbewu_crop_plan_v1'), 'a signed-in production record must not enter the legacy shared key');
+      const first = loadCropPlan();
+      assert.deepEqual(first.productionRecords, productionRecords);
+      assert.deepEqual(first.preservedProducts, preservedProducts);
+      assert.equal(first.productionRecords![0].quantity, 0, 'zero eggs must survive instead of becoming missing');
+      assert.equal(first.productionRecords![0].pricePerUnit, 0, 'zero own price must survive instead of becoming missing');
+      assert.equal(first.productionRecords![1].pricePerUnit, undefined, 'an unknown own price must not become zero');
+      assert.equal(first.preservedProducts![0].quantities, undefined, 'reported stock months must not invent a weight');
+      bindMountedAccountLocalStorageUid('record-farmer/b');
+      const other = loadCropPlan();
+      assert.equal(other.productionRecords, undefined, 'a second account must not see the first farm\'s production');
+      assert.equal(other.preservedProducts, undefined, 'a second account must not see the first farm\'s stock');
+      assert.equal(saveCropPlan({ version: 1, plantings: [], productionRecords: [], preservedProducts: [], updatedAt: 2 }), true);
+      bindMountedAccountLocalStorageUid('record-farmer/a');
+      const reopened = loadCropPlan();
+      assert.equal(saveCropPlan(reopened), true);
+      assert.deepEqual(loadCropPlan().productionRecords, productionRecords, 'reopening twice cannot turn litres or eggs into kg or repeat their years');
+      assert.deepEqual(loadCropPlan().preservedProducts, preservedProducts, 'a later account save cannot overwrite exact stock dates or provenance');
+    });
+  } finally { bindMountedAccountLocalStorageUid(null); }
+});
+
+test('old or unanswered production fields stay absent while an explicitly cleared record list stays empty', async () => {
+  const { loadCropPlan, saveCropPlan } = await import('@/lib/crop-plan');
+  const store = new Map<string, string>();
+  try {
+    withLocalStorage(store, () => {
+      bindMountedAccountLocalStorageUid('optional-records-farmer');
+      const key = accountLocalStorageKey('imbewu_crop_plan_v1', 'optional-records-farmer');
+      for (const fields of [{}, { productionRecords: null, preservedProducts: null },
+        { productionRecords: {}, preservedProducts: 'unknown' }]) {
+        store.set(key, JSON.stringify({ version: 1, plantings: [], updatedAt: 1, ...fields }));
+        const unknown = loadCropPlan();
+        assert.ok(!Object.hasOwn(unknown, 'productionRecords'), 'a missing or malformed list must not claim a recorded zero');
+        assert.ok(!Object.hasOwn(unknown, 'preservedProducts'), 'unanswered stock must remain distinguishable from a cleared list');
+        assert.equal(saveCropPlan(unknown), true);
+        assert.ok(!Object.hasOwn(loadCropPlan(), 'productionRecords'));
+        assert.ok(!Object.hasOwn(loadCropPlan(), 'preservedProducts'));
+      }
+      assert.equal(saveCropPlan({ version: 1, plantings: [], productionRecords: [], preservedProducts: [], updatedAt: 1 }), true);
+      const cleared = loadCropPlan();
+      assert.ok(Object.hasOwn(cleared, 'productionRecords'));
+      assert.ok(Object.hasOwn(cleared, 'preservedProducts'));
+      assert.deepEqual(cleared.productionRecords, []);
+      assert.deepEqual(cleared.preservedProducts, []);
+    });
+  } finally { bindMountedAccountLocalStorageUid(null); }
+});
+
+test('corrupt stored quantities are refused without duplicating corrections or turning missing stock kg into zero', async () => {
+  const { loadCropPlan, saveCropPlan } = await import('@/lib/crop-plan');
+  const actual = { id: 'old-eggs', sourceIconKey: 'animal:chicken-layer', label: 'Eggs', date: { year: 2027, month: 1 }, quantity: 3, unit: 'eggs', status: 'actual', provenance: 'farm-record' };
+  const corrected = { ...actual, id: 'corrected-eggs', quantity: 0, pricePerUnit: 0 };
+  const expected = { ...actual, id: 'expected-eggs', quantity: 4, status: 'expected', provenance: 'fictional-example' };
+  const stock = { id: 'nuts', sourceIconKey: 'tree:macadamia-integrifolia', label: 'Nuts in shell', method: 'stored', dates: [{ year: 2026, month: 12 }, { year: 2027, month: 1 }, { year: 2027, month: 1 }], provenance: 'farm-record', note: 'Exact stock readings; no conversion to kernels.', quantities: [
+    { year: 2026, month: 12, kg: null }, { year: 2027, month: 1, kg: 2 }, { year: 2027, month: 1, kg: 0 },
+    { year: 2027, month: 2, kg: 10 }, { year: 2026, month: 12, kg: -1 },
+  ] };
+  const store = new Map<string, string>();
+  try {
+    withLocalStorage(store, () => {
+      bindMountedAccountLocalStorageUid('corrupt-records-farmer');
+      store.set(accountLocalStorageKey('imbewu_crop_plan_v1', 'corrupt-records-farmer'), JSON.stringify({
+        version: 1, plantings: [], updatedAt: 1,
+        productionRecords: [actual, corrected, expected, ...[
+          { date: { year: 2027, month: 13 } }, { date: { year: '2027', month: 1 } },
+          { quantity: null }, { quantity: -1 }, { quantity: '5' }, { quantity: Number.NaN },
+          { unit: 'kilograms' }, { status: 'guaranteed' }, { sourceIconKey: 'housing:bee' },
+          { pricePerUnit: -1 }, { provenance: 'satellite-estimate' },
+        ].map((change, index) => ({ ...actual, id: `invalid-${index}`, ...change }))],
+        preservedProducts: [stock, { ...stock, id: 'invalid-method', method: 'safe-for-ever' },
+          { ...stock, id: 'invalid-dates', dates: [{ year: 2027, month: 0 }] },
+          { ...stock, id: 'invalid-source', sourceIconKey: 'housing:pond' },
+          { ...stock, id: 'invalid-origin', provenance: 'assumed-from-harvest' }],
+      }));
+      const clean = loadCropPlan();
+      assert.deepEqual(clean.productionRecords, [corrected, expected], 'a correction replaces its source/date/status, while expected and actual stay distinct');
+      assert.equal(clean.preservedProducts!.length, 1);
+      assert.deepEqual(clean.preservedProducts![0].dates, [{ year: 2026, month: 12 }, { year: 2027, month: 1 }], 'stock months must be exact and unique, without a next-year recurrence');
+      assert.deepEqual(clean.preservedProducts![0].quantities, [{ year: 2027, month: 1, kg: 0 }],
+        'missing, negative and out-of-stock-month kg cannot create food; a dated correction may explicitly say zero');
+      assert.equal(saveCropPlan(clean), true);
+      const twice = loadCropPlan();
+      assert.deepEqual(twice.productionRecords, clean.productionRecords);
+      assert.deepEqual(twice.preservedProducts, clean.preservedProducts);
+    });
+  } finally { bindMountedAccountLocalStorageUid(null); }
+});
+
+// These are synthetic observations to exercise ownership, not farming output rates.
+const recordSiteA = 'site:-28.00000,32.00000';
+const recordSiteB = 'site:-33.00000,19.00000';
+const scopedProduction = (siteId: string | undefined, quantity: number, unit: DatedProductionRecord['unit'] = 'kg'): DatedProductionRecord => ({
+  id: 'same-imported-id', ...(siteId ? { siteId } : {}), sourceIconKey: 'tree:mangifera-indica', label: 'Mango',
+  date: { year: 2027, month: 1 }, quantity, unit, status: 'actual', pricePerUnit: 0, provenance: 'farm-record',
+});
+const scopedStock = (siteId: string | undefined, kg: number | undefined): PreservedFoodRecord => ({
+  id: 'same-imported-batch', ...(siteId ? { siteId } : {}), sourceIconKey: 'tree:mangifera-indica', label: 'Dried mango',
+  method: 'dried', dates: [{ year: 2027, month: 1 }, { year: 2027, month: 2 }], provenance: 'farm-record',
+  note: 'Measured stock is distinct from production; February is unweighed.',
+  ...(kg === undefined ? {} : { quantities: [{ year: 2027, month: 1, kg }] }),
+});
+
+test('two farms can record the same food, month, status and imported id without replacing each other or claiming unassigned legacy records', () => {
+  const first = scopedProduction(recordSiteA, 0);
+  const second = scopedProduction(recordSiteB, 8);
+  const legacy = scopedProduction(undefined, 900);
+  const input = [first, second, legacy];
+  const before = structuredClone(input);
+  const clean = sanitiseProductionRecords(input);
+  assert.equal(clean.length, 3, 'a shared species and imported id do not establish the farm that grew it');
+  assert.deepEqual(productionRecordsForSite(clean, recordSiteA), [first]);
+  assert.deepEqual(productionRecordsForSite(clean, recordSiteB), [second]);
+  assert.deepEqual(productionRecordsForSite(clean, null), [], 'an unresolved site cannot receive another farm’s amount');
+  assert.deepEqual(productionRecordsForSite(clean, 'site:unknown'), []);
+  assert.equal(productionRecordsForSite(clean, recordSiteA)[0].quantity, 0, 'an explicitly empty harvest survives site selection');
+  assert.equal(productionRecordsForSite(clean, recordSiteA)[0].pricePerUnit, 0);
+  const stocks = [scopedStock(recordSiteA, 0), scopedStock(recordSiteB, 3), scopedStock(undefined, undefined)];
+  assert.equal(sanitisePreservedFoodRecords(stocks).length, 3, 'the same batch id on two farms must not merge their stock');
+  assert.deepEqual(preservedFoodRecordsForSite(stocks, recordSiteA), [stocks[0]]);
+  assert.deepEqual(preservedFoodRecordsForSite(stocks, recordSiteB), [stocks[1]]);
+  assert.deepEqual(preservedFoodRecordsForSite(stocks, null), []);
+  const corrected = sanitiseProductionRecords([...clean, { ...first, id: 'corrected-a', quantity: 0.4 }]);
+  assert.equal(corrected.length, 3, 'correction deduplication remains within the owning farm');
+  assert.equal(productionRecordsForSite(corrected, recordSiteA)[0].quantity, 0.4);
+  assert.deepEqual(productionRecordsForSite(corrected, recordSiteB), [second]);
+  assert.deepEqual(corrected.find(record => record.siteId === undefined), legacy);
+  assert.deepEqual(input, before, 'selecting or cleaning quantities must not mutate either farm’s observations');
+});
+
+test('editing or deleting one farm’s production and stored food preserves another farm and ambiguous legacy records', () => {
+  const original = [scopedProduction(recordSiteA, 0), scopedProduction(recordSiteB, 8), scopedProduction(undefined, 900)];
+  const stock = [scopedStock(recordSiteA, 0), scopedStock(recordSiteB, 3), scopedStock(undefined, undefined)];
+  const before = structuredClone({ original, stock });
+  // The callback owns the current site even if an imported form row carries another scope.
+  const edited = replaceProductionRecordsForSite(original, recordSiteA, [{ ...original[0], siteId: recordSiteB, quantity: 0.4 }]);
+  assert.deepEqual(productionRecordsForSite(edited, recordSiteA), [{ ...original[0], quantity: 0.4 }]);
+  assert.deepEqual(productionRecordsForSite(edited, recordSiteB), [original[1]]);
+  assert.deepEqual(edited.find(record => record.siteId === undefined), original[2]);
+  const editedStock = replacePreservedFoodRecordsForSite(stock, recordSiteA, [{ ...stock[0], siteId: recordSiteB,
+    quantities: [{ year: 2027, month: 1, kg: 0.4 }],
+  }]);
+  assert.equal(preservedFoodRecordsForSite(editedStock, recordSiteA)[0].quantities![0].kg, 0.4);
+  assert.deepEqual(preservedFoodRecordsForSite(editedStock, recordSiteB), [stock[1]]);
+  assert.deepEqual(editedStock.find(record => record.siteId === undefined), stock[2]);
+  const deleted = replaceProductionRecordsForSite(edited, recordSiteA, []);
+  const deletedStock = replacePreservedFoodRecordsForSite(editedStock, recordSiteA, []);
+  assert.deepEqual(productionRecordsForSite(deleted, recordSiteA), []);
+  assert.deepEqual(preservedFoodRecordsForSite(deletedStock, recordSiteA), []);
+  assert.deepEqual(productionRecordsForSite(deleted, recordSiteB), [original[1]]);
+  assert.deepEqual(preservedFoodRecordsForSite(deletedStock, recordSiteB), [stock[1]]);
+  assert.deepEqual(deleted.find(record => record.siteId === undefined), original[2]);
+  assert.deepEqual(deletedStock.find(record => record.siteId === undefined), stock[2]);
+  assert.deepEqual({ original, stock }, before, 'an edit on one site must not rewrite stored arrays belonging to the account');
+});
+
+test('saving and reopening two farms’ dated records keeps their native units, ownership, zero and provenance after one farm changes', async () => {
+  const { loadCropPlan, saveCropPlan } = await import('@/lib/crop-plan');
+  const productionRecords: DatedProductionRecord[] = [
+    { ...scopedProduction(recordSiteA, 0, 'eggs'), sourceIconKey: 'animal:chicken-layer', label: 'Eggs' },
+    { ...scopedProduction(recordSiteB, 7, 'eggs'), sourceIconKey: 'animal:chicken-layer', label: 'Eggs' },
+    { ...scopedProduction(recordSiteA, 6.25, 'litres'), id: 'same-milk-id', sourceIconKey: 'animal:goat-dairy', label: 'Milk', status: 'expected', provenance: 'fictional-example', note: 'A fixture estimate, not a goat yield.' },
+    { ...scopedProduction(recordSiteB, 3.5, 'litres'), id: 'same-milk-id', sourceIconKey: 'animal:goat-dairy', label: 'Milk', status: 'expected' },
+    scopedProduction(undefined, 900),
+  ];
+  const preservedProducts = [scopedStock(recordSiteA, 0), scopedStock(recordSiteB, 3), scopedStock(undefined, undefined)];
+  const store = new Map<string, string>();
+  try {
+    withLocalStorage(store, () => {
+      bindMountedAccountLocalStorageUid('two-farms-record-owner');
+      assert.equal(saveCropPlan({ version: 1, plantings: [], productionRecords, preservedProducts, updatedAt: 1 }), true);
+      const first = loadCropPlan();
+      assert.deepEqual(first.productionRecords, productionRecords);
+      assert.deepEqual(first.preservedProducts, preservedProducts);
+      assert.deepEqual(productionRecordsForSite(first.productionRecords, recordSiteA).map(record => [record.quantity, record.unit, record.status]),
+        [[0, 'eggs', 'actual'], [6.25, 'litres', 'expected']]);
+      assert.equal(preservedFoodRecordsForSite(first.preservedProducts, recordSiteA)[0].quantities![0].kg, 0);
+      assert.equal(preservedFoodRecordsForSite(first.preservedProducts, recordSiteB)[0].quantities!.length, 1, 'unweighed February stock must not inherit January’s kilograms');
+      const remainingA = productionRecordsForSite(first.productionRecords, recordSiteA).filter(record => record.unit === 'litres')
+        .map(record => ({ ...record, quantity: 0.4 }));
+      const changed: CropPlanState = { ...first,
+        productionRecords: replaceProductionRecordsForSite(first.productionRecords, recordSiteA, remainingA),
+        preservedProducts: replacePreservedFoodRecordsForSite(first.preservedProducts, recordSiteA, []), updatedAt: 2,
+      };
+      assert.equal(saveCropPlan(changed), true);
+      const reopened = loadCropPlan();
+      assert.deepEqual(productionRecordsForSite(reopened.productionRecords, recordSiteA), [{ ...productionRecords[2], quantity: 0.4 }]);
+      assert.deepEqual(productionRecordsForSite(reopened.productionRecords, recordSiteB), [productionRecords[1], productionRecords[3]]);
+      assert.deepEqual(preservedFoodRecordsForSite(reopened.preservedProducts, recordSiteA), []);
+      assert.deepEqual(preservedFoodRecordsForSite(reopened.preservedProducts, recordSiteB), [preservedProducts[1]]);
+      assert.deepEqual(reopened.productionRecords!.find(record => record.siteId === undefined), productionRecords[4]);
+      assert.deepEqual(reopened.preservedProducts!.find(record => record.siteId === undefined), preservedProducts[2]);
+      assert.equal(saveCropPlan(reopened), true);
+      assert.deepEqual(loadCropPlan().productionRecords, reopened.productionRecords);
+      assert.deepEqual(loadCropPlan().preservedProducts, reopened.preservedProducts);
+    });
+  } finally { bindMountedAccountLocalStorageUid(null); }
+});
+
+test('the graph, editor and both printed plans use the selected farm’s records and returning to local restores its map', () => {
+  // Leaf ownership tests cannot detect a component wired back to the account-wide array.
+  // This boundary protects the farmer who switches maps after entering production.
+  const graphInput = PAGE.match(/const productionGraphInput\s*=[\s\S]*?(?=const productionAvailabilityGraphs)/)?.[0];
+  assert.ok(graphInput, 'the saved plan must construct the shared dated graph input');
+  assert.match(graphInput, /productionRecords:\s*siteProductionRecords\s*,\s*preservedProducts:\s*sitePreservedProducts/);
+  const graph = PAGE.match(/<ProductionAvailabilityGraphs\b[\s\S]*?\/>/)?.[0];
+  assert.ok(graph);
+  assert.match(graph, /input=\{productionGraphInput\}/);
+  assert.match(graph, /preservedProducts=\{sitePreservedProducts\}/);
+  const editor = PAGE.match(/<ProductionRecordsEditor\b[\s\S]*?\/>/)?.[0];
+  assert.ok(editor);
+  assert.match(editor, /key=\{productionSiteId\s*\?\?\s*'no-site'\}/,
+    'switching farms must discard a partially entered form belonging to the prior farm');
+  const exports = [...PAGE.matchAll(/<CropPlanExportCard\b[\s\S]*?\/>/g)].map(match => match[0]);
+  assert.equal(exports.length, 2, 'Simple and All tools each provide a print entry point');
+  for (const consumer of [editor, ...exports]) {
+    assert.match(consumer, /productionRecords=\{siteProductionRecords\}/);
+    assert.match(consumer, /preservedProducts=\{sitePreservedProducts\}/);
+  }
+  assert.doesNotMatch(PAGE, /(?:productionRecords|preservedProducts)=\{plan\?\.(?:productionRecords|preservedProducts)\}/,
+    'a shared account array must not bypass site selection in any quantity consumer');
+  assert.match(PAGE, /productionRecordsForSite\(plan\?\.productionRecords,\s*productionSiteId\)/);
+  assert.match(PAGE, /preservedFoodRecordsForSite\(plan\?\.preservedProducts,\s*productionSiteId\)/);
+  const scope = PAGE.match(/const productionSiteId\s*=[\s\S]*?;/)?.[0];
+  assert.ok(scope);
+  assert.match(scope, /canvasSite\s*\?\?/);
+  assert.match(scope, /chosenDesignId\s*&&\s*chosenDesignId\s*!==\s*'local'/);
+  assert.match(scope, /:\s*surveySiteId\s*\?\?/,
+    'the initial local map and the picker’s local choice must use the same coordinate site identity');
+  const chooseSite = PAGE.match(/function chooseSite\(id: string\)\s*\{[\s\S]*?\n  \}/)?.[0];
+  assert.ok(chooseSite);
+  assert.match(chooseSite, /if\s*\(id\s*===\s*'local'\)\s*\{\s*setDesign\(loadFacilitatorState\(\)\);\s*return;\s*\}/,
+    'the previously selected cloud map must not remain under local production figures');
 });

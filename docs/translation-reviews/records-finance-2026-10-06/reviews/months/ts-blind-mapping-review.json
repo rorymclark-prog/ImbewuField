@@ -1,0 +1,17 @@
+{
+ "items": [
+  {"n":1,"name":"Hukuri","month":11,"confidence":"medium","flag":"Common published list puts Hukuri at November, but sources that shift the set by one month give October or December; Hukuri/Nhlangula are adjacent and easy to swap."},
+  {"n":2,"name":"Nyenyankulu","month":3,"confidence":"medium","flag":"Easily confused with Nyenyenyani (Feb); the -nkulu form ('big') is conventionally March and the -nyani form ('small') February, but a one-month-shifted source would swap or move both."},
+  {"n":3,"name":"Khotavuxika","month":6,"confidence":"high","flag":"Associated with the cold/winter onset (June); contains 'vuxika' (cold), so it could be mistaken for a season word, but it is the June month name."},
+  {"n":4,"name":"Mhawuri","month":8,"confidence":"medium","flag":"Looks like Mawuwani (July) in spelling and sound; the short form 'Mhaw' versus 'Maw' is the only visible distinction. Check spelling carefully."},
+  {"n":5,"name":"Ndzhati","month":9,"confidence":"medium","flag":"Spring-associated (September); the 'ndzh' digraph is correct standard orthography; alternate spellings (Ndzati) exist."},
+  {"n":6,"name":"Mawuwani","month":7,"confidence":"medium","flag":"Confusable with Mhawuri (Aug); the two differ by a letter or two."},
+  {"n":7,"name":"Mudyaxihi","month":5,"confidence":"high","flag":"Literally 'the eater of the xihi (harvest/crop)' - harvest-time association; could be read as a season but is the May month name."},
+  {"n":8,"name":"N'wendzamhala","month":12,"confidence":"medium","flag":"Apostrophe is part of the orthography and may be lost or altered by typography (N’wendzamhala). Some sources start the set here or shift it by one month (Dec vs Jan)."},
+  {"n":9,"name":"Dzivamisoko","month":4,"confidence":"high","flag":"'Dziva-misoko' (cleansing of the eyes/ceremony); sometimes written Dzivamisoko or Dzivamisoko with variant spacing."},
+  {"n":10,"name":"Nyenyenyani","month":2,"confidence":"medium","flag":"Confusable with Nyenyankulu (Mar); also check repeated syllables for spelling (Nyenyenyani vs Nyenyanyani)."},
+  {"n":11,"name":"Nhlangula","month":10,"confidence":"medium","flag":"Adjacent to Hukuri; the 'nhl' digraph is correct. A shifted source may place it at September or November."},
+  {"n":12,"name":"Sunguti","month":1,"confidence":"medium","flag":"Widely cited as January, but this is the item most affected by the start-of-set ambiguity: some sources treat Sunguti as December or the year's start differently. The set is not unanimously January-aligned."}
+ ],
+ "summary": "Machine review only, not a fluent-speaker approval. From my own knowledge, the most commonly published Xitsonga set runs Sunguti (Jan), Nyenyenyani (Feb), Nyenyankulu (Mar), Dzivamisoko (Apr), Mudyaxihi (May), Khotavuxika (Jun), Mawuwani (Jul), Mhawuri (Aug), Ndzhati (Sep), Nhlangula (Oct), Hukuri (Nov), N'wendzamhala (Dec), which this review reproduces and which starts at January. Some sources shift the traditional set by one month, so Sunguti, Hukuri and N'wendzamhala (the boundary names) carry the most uncertainty; I rated every item medium except Khotavuxika, Mudyaxihi and Dzivamisoko. Look-alike pairs to proofread: Mawuwani/Mhawuri and Nyenyenyani/Nyenyankulu. Khotavuxika and Ndzhati carry seasonal connotations but are month names. Check the N'wendzamhala apostrophe is preserved. A native Xitsonga speaker should confirm before shipping."
+}

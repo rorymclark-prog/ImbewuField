@@ -1,0 +1,944 @@
+{
+  "module": "small-livestock",
+  "language": "st",
+  "reviewStatus": "unreviewed-machine-draft",
+  "method": "Claude Sonnet drafting; blind English back-translation by a separate agent that never saw the source; independent semantic check against the exact English",
+  "items": [
+    {
+      "key": "module.title",
+      "sourceEnglish": "Small Livestock Integration",
+      "draft": "Kopanyo ya Diphoofolo tse Nyenyane",
+      "blindBackTranslation": "Integration of Small Animals"
+    },
+    {
+      "key": "module.description",
+      "sourceEnglish": "Chickens, ducks and bees as system components — not afterthoughts.",
+      "draft": "Dikgoho (chickens), dipidipidi (ducks) le dinotshi (bees) jwalo ka dikarolo tsa tsamaiso — e seng dintho tse hopolwang kamorao.",
+      "blindBackTranslation": "Chickens, ducks and bees as parts of the system — not things remembered afterwards."
+    },
+    {
+      "key": "L1.body.p0",
+      "sourceEnglish": "Chickens can help an empty bed after harvest. They scratch through plant remains and eat some insects and weed seeds. Their manure and bedding can be composted and returned to the soil. Foraging does not replace a balanced diet, clean water, shelter or daily care.",
+      "draft": "Dikgoho (chickens) di ka thusa bethe ya dijalo (bed) e se nang letho kamora kotulo. Di fata hara masala a dimela mme di ja dikokwanyana tse ding le dipeo tsa dimela tse sa batleheng (weeds). Manyolo a tsona le bedding di ka etswa kompost mme tsa kgutlisetswa mobung. Ho phetla dijo (foraging) ha ho nke sebaka sa dijo tse leka-lekaneng, metsi a hlwekileng, bodulo kapa tlhokomelo ya letsatsi le letsatsi.",
+      "blindBackTranslation": "Chickens (chickens) can help an empty crop bed (bed) after harvest. They scratch among the plant remains and eat some insects and the seeds of unwanted plants (weeds). Their manure and bedding can be made into compost and returned to the soil. Foraging does not replace adequate food, clean water, shelter or daily care."
+    },
+    {
+      "key": "L1.body.p1",
+      "sourceEnglish": "A chicken tractor is a moveable, floorless pen. Move it before the ground becomes bare, muddy or heavily covered with manure. The right time depends on the birds, soil and weather. There is no single number of chickens that guarantees enough fertility for every plot.",
+      "draft": "Chicken tractor ke lesaka le ka suthiswang, le se nang mokato (floorless). Le suthise pele mobu o ba o se nang letho, o fetohile seretse kapa o kwahetswe haholo ke manyolo. Nako e nepahetseng e ya ka dinonyana, mobu le boemo ba lehodimo. Ha ho palo e le nngwe ya dikgoho (chickens) e netefatsang monono o lekaneng wa mobu bakeng sa sebaka se seng le se seng.",
+      "blindBackTranslation": "A chicken tractor is a movable pen without a floor (floorless). Move it before the soil becomes bare, turns to mud or is heavily covered in manure. The right timing depends on the birds, the soil and the weather. No single number of chickens (chickens) guarantees enough soil nutrition for each place."
+    },
+    {
+      "key": "L1.body.p2",
+      "sourceEnglish": "Keep chickens away from seedlings and crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage manure safely before the next crop. Ducks scratch less, but can still damage plants and make wet ground muddy. Watch the birds and move them when needed.",
+      "draft": "Boloka dikgoho (chickens) hole le dimela tse nyenyane tse sa tswa mela (seedlings) le dijalo tse kotulwang bakeng sa dijo. Manyolo a matjha a ka jara dikokwanahloko tse bakang malwetse (germs). Botsa extension adviser mokgwa wa ho tshwara manyolo ka polokeho pele ho sejalo se latelang. Dipidipidi (ducks) ha di fate haholo jwaloka dikgoho, empa di ntse di ka senya dimela mme di ka etsa hore mobu o metsi o be seretse. Shebella dinonyana mme o di suthise ha ho hlokeha.",
+      "blindBackTranslation": "Keep chickens (chickens) away from small young plants that have just sprouted (seedlings) and from crops harvested for food. Fresh manure can carry disease-causing germs (germs). Ask an extension adviser how to handle manure safely before the next crop. Ducks (ducks) do not scratch as much as chickens, but they can still damage plants and can turn wet soil into mud. Watch the birds and move them when needed."
+    },
+    {
+      "key": "L1.infographicAlt",
+      "sourceEnglish": "An illustration of a wheeled chicken pen shown in two positions along a strip of ground. An arrow points right; three chickens stand in the pen on the right, and a darker scratched patch lies between the two positions.",
+      "draft": "Setshwantsho sa lesaka la dikgoho (chickens) le nang le mabidi (wheels), se bontshitswe dibakeng tse pedi karolong e telele ya mobu (strip of ground). Motsu o supa ka ho le letona; dikgoho tse tharo di eme lesakeng le ka ho le letona, mme karolo e lefifi ya mobu o fatilweng e pakeng tsa dibaka tse pedi.",
+      "blindBackTranslation": "Picture of a chicken (chickens) pen with wheels, shown in two places along a long strip of ground. An arrow points to the right; three chickens stand in the pen on the right, and the dark part of scratched-up soil is between the two places."
+    },
+    {
+      "key": "L1.title",
+      "sourceEnglish": "Chickens in the System: Pest Control, Fertility, and Food",
+      "draft": "Dikgoho (chickens) Tsamaisong: Taolo ya Dikokwanyana tse Senyang, Monono le Dijo",
+      "blindBackTranslation": "Chickens in the System: Control of Harmful Insects, Soil Fertility and Food"
+    },
+    {
+      "key": "L1.keyPoint0",
+      "sourceEnglish": "Move the pen before birds damage the ground or manure builds up",
+      "draft": "Suthisa lesaka pele dinonyana di senya mobu kapa manyolo a bokellana",
+      "blindBackTranslation": "Move the pen before the birds damage the soil or manure builds up."
+    },
+    {
+      "key": "L1.keyPoint1",
+      "sourceEnglish": "Match bird numbers and manure use to your soil, crops and feed supply",
+      "draft": "Lekanya palo ya dinonyana le tshebediso ya manyolo le mobu wa hao, dijalo le phepelo ya dijo",
+      "blindBackTranslation": "Match the number of birds and the use of manure to your soil, crops and food supply"
+    },
+    {
+      "key": "L1.keyPoint2",
+      "sourceEnglish": "Only put chickens in a bed after harvest — never around young seedlings",
+      "draft": "Beha dikgoho (chickens) bethe ya dijalo (bed) feela kamora kotulo — le ka mohla hara dimela tse nyenyane tse sa tswa mela",
+      "blindBackTranslation": "Put chickens (chickens) in a bed of crops (bed) only after harvest — never among small young plants that have just sprouted"
+    },
+    {
+      "key": "L1.keyPoint3",
+      "sourceEnglish": "Ducks scratch less, but still need supervision around plants and wet soil",
+      "draft": "Dipidipidi (ducks) ha di fate haholo jwaloka dikgoho, empa di ntse di hloka ho hlokomelwa haufi le dimela le mobu o metsi",
+      "blindBackTranslation": "Ducks (ducks) do not scratch as much as chickens, but they still need to be watched near plants and wet soil."
+    },
+    {
+      "key": "L1.quiz0.question",
+      "sourceEnglish": "You want chickens to prepare an empty bed for replanting. When's the right time to put them in?",
+      "draft": "O batla hore dikgoho (chickens) di lokise bethe ya dijalo (bed) e se nang letho bakeng sa ho lema botjha. Ke nako efe e nepahetseng ya ho di kenya?",
+      "blindBackTranslation": "You want chickens to prepare an empty bed of crops for replanting. What is the right time to put them in?"
+    },
+    {
+      "key": "L1.quiz0.option0",
+      "sourceEnglish": "Right after planting seedlings, so they loosen soil around them",
+      "draft": "Hanghang kamora ho jala dimela tse nyenyane (seedlings), hore di lokolle mobu o di potileng",
+      "blindBackTranslation": "Immediately after planting the small young plants (seedlings), so that they loosen the soil around them"
+    },
+    {
+      "key": "L1.quiz0.option1",
+      "sourceEnglish": "After harvest, once the bed is cleared, before the next planting",
+      "draft": "Kamora kotulo, ha bethe e se e hlwekisitswe, pele ho ho jala ho latelang",
+      "blindBackTranslation": "After harvest, once the bed has been cleaned out, before the next sowing"
+    },
+    {
+      "key": "L1.quiz0.option2",
+      "sourceEnglish": "During the growing season once the canopy can withstand scratching",
+      "draft": "Nakong ya kgolo, ha canopy e se e ka mamella ho fatwa",
+      "blindBackTranslation": "During growth, when the canopy can already tolerate being scratched"
+    },
+    {
+      "key": "L1.quiz0.option3",
+      "sourceEnglish": "Only in winter to avoid heat stress",
+      "draft": "Feela mariha ho qoba khatello ya motjheso",
+      "blindBackTranslation": "Only in winter to avoid heat stress"
+    },
+    {
+      "key": "L1.quiz0.rationale",
+      "sourceEnglish": "Use an empty bed after harvest. Keep fresh manure away from food crops and plan safe manure handling before replanting.",
+      "draft": "Sebedisa bethe e se nang letho kamora kotulo. Boloka manyolo a matjha hole le dijalo tsa dijo mme o rale tshebediso e polokehileng ya manyolo pele o lema botjha.",
+      "blindBackTranslation": "Use the empty bed after harvest. Keep fresh manure away from food crops and plan safe use of manure before you plant again."
+    },
+    {
+      "key": "L1.quiz1.question",
+      "sourceEnglish": "Why are ducks better suited than chickens to an established food forest understorey?",
+      "draft": "Ke hobaneng dipidipidi (ducks) di loketse bakeng sa food forest understorey e seng e hodile hantle ho feta dikgoho (chickens)?",
+      "blindBackTranslation": "Why are ducks more suitable than chickens for an already well-grown food forest understorey?"
+    },
+    {
+      "key": "L1.quiz1.option0",
+      "sourceEnglish": "Ducks produce more manure per day",
+      "draft": "Dipidipidi (ducks) di hlahisa manyolo a mangata ho feta ka letsatsi",
+      "blindBackTranslation": "Ducks produce more manure per day"
+    },
+    {
+      "key": "L1.quiz1.option1",
+      "sourceEnglish": "Ducks eat slugs and snails without the heavy scratching that disturbs roots and mulch",
+      "draft": "Dipidipidi (ducks) di ja slugs le snails ntle le ho fata haholo ho tshwenyang medu le mulch",
+      "blindBackTranslation": "Ducks eat slugs and snails without scratching so much that they disturb roots and mulch"
+    },
+    {
+      "key": "L1.quiz1.option2",
+      "sourceEnglish": "Ducks are immune to Newcastle disease",
+      "draft": "Dipidipidi (ducks) ha di tshwarwe ke Newcastle disease",
+      "blindBackTranslation": "Ducks are not caught (infected) by Newcastle disease"
+    },
+    {
+      "key": "L1.quiz1.option3",
+      "sourceEnglish": "Ducks roost in trees, reducing ground compaction",
+      "draft": "Dipidipidi (ducks) di robala hodima difate, ho fokotsa ho kgatellwa ha mobu",
+      "blindBackTranslation": "Ducks sleep on top of trees, reducing compaction of the soil"
+    },
+    {
+      "key": "L1.quiz1.rationale",
+      "sourceEnglish": "Ducks do not scratch like chickens. They can still trample or eat plants, so watch the ground and move them when needed.",
+      "draft": "Dipidipidi (ducks) ha di fate jwaloka dikgoho (chickens). Di ntse di ka hatakela kapa tsa ja dimela, ka hona shebella mobu mme o di suthise ha ho hlokeha.",
+      "blindBackTranslation": "Ducks do not scratch like chickens. They can still trample or eat plants, so watch the soil and move them when needed."
+    },
+    {
+      "key": "L2.body.p0",
+      "sourceEnglish": "Honeybees and other insects carry pollen between flowers. This helps many fruit and vegetable crops, including avocado. Different crops and varieties have different pollination needs. A hive does not guarantee higher yields everywhere: weather, water, plant health and other pollinators also matter.",
+      "draft": "Dinotshi (honeybees) le dikokwanyana tse ding di jara pollen pakeng tsa dipalesa. Sena se thusa dijalo tse ngata tsa dienywa le meroho, ho kenyeletswa avocado. Dijalo tse fapaneng le mefuta (varieties) e fapaneng di na le ditlhoko tse fapaneng tsa pollination. Hive ha e netefatse dikotulo tse eketsehileng hohle: boemo ba lehodimo, metsi, bophelo bo botle ba dimela le pollinators tse ding le tsona di bohlokwa.",
+      "blindBackTranslation": "Bees (honeybees) and other insects carry pollen between flowers. This helps many crops of fruits and vegetables, including avocado. Different crops and different varieties (varieties) have different needs of pollination. A hive does not guarantee increased harvests everywhere: the state of the sky, water, good health of plants and other pollinators also are important."
+    },
+    {
+      "key": "L2.body.p1",
+      "sourceEnglish": "South Africa has two native honeybee subspecies. The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa. These broad natural ranges are not a guide for moving bees. The Department's control measures set a demarcation line for bee movement. Check current movement rules with the Department and an experienced local beekeeper before moving bees or hives.",
+      "draft": "Afrika Borwa e na le subspecies tse pedi tsa tlhaho tsa dinotshi (honeybees). Cape honeybee e fumanwa Western Cape le dibakeng tse ding tsa Eastern Cape. African honeybee ke ya tlhaho Afrika e bohareng le boholo ba borwa ba Afrika. Dibaka tsena tse kgolo tsa tlhaho ha di a lokela ho sebediswa e le tataiso ya ho fallisa dinotshi. Mehato ya taolo ya Lefapha (the Department) e beha demarcation line bakeng sa ho fallisa dinotshi. Hlahloba melao ya jwale ya ho fallisa dinotshi le Department le moboloki wa dinotshi ya nang le phihlelo ya sebakeng pele o fallisa dinotshi kapa dihive.",
+      "blindBackTranslation": "South Africa has two natural subspecies of bees (honeybees). The Cape honeybee is found [in] Western Cape and in other areas of Eastern Cape. The African honeybee is of nature [natural/native] [to] Africa that is in the middle and most of the south of Africa. These large natural areas should not be used as a guide for moving bees. The control measures of the Department (the Department) set a demarcation line for moving bees. Check the current laws on moving bees with the Department and with a keeper of bees who has experience of the area before you move bees or hives."
+    },
+    {
+      "key": "L2.body.p2",
+      "sourceEnglish": "Learn from an experienced local beekeeper before getting a hive. Keep hives away from busy paths, homes and places where children play. Morning sun can help; a safe location comes first. Provide flowering plants through the seasons and avoid exposing bees to pesticides. Active bees do not prove that the farm is free of chemicals or disease. The national honey-bee control measures require registration for defined beekeeping activities, including managed hives for bee products, queen rearing, commercial pollination, and colony removal, eradication or relocation. Check with the Department if you are unsure whether the rules apply to your activity. If a colony swarms repeatedly, ask a trained beekeeper to inspect it. Crowding is one possible cause, not a diagnosis.",
+      "draft": "Ithute ho moboloki wa dinotshi (bees) ya nang le phihlelo ya sebakeng pele o fumana hive. Boloka dihive hole le ditselana tse nang le batho ba bangata, matlo le dibaka tseo bana ba bapalang ho tsona. Letsatsi la hoseng le ka thusa; sebaka se sireletsehileng se tla pele. Fa dimela tse thunyang dinako tsohle tsa selemo mme o qobe ho pepesa dinotshi ho pesticides. Dinotshi tse sebetsang ha di bontshe hore polasi ha e na dikhemikhale kapa malwetse. National honey-bee control measures di hloka ngodiso bakeng sa mesebetsi e hlalositsweng ya ho boloka dinotshi, ho kenyeletswa dihive tse laolwang bakeng sa dihlahiswa tsa dinotshi, ho hlahisa mofumahadi wa dinotshi (queen), commercial pollination, le ho tlosa, ho fedisa kapa ho fallisa colony. Botsa Department haeba o sa tsebe hore na melao e sebetsa mosebetsing wa hao. Haeba colony e etsa swarm kgafetsa, kopa moboloki wa dinotshi ya kwetlisitsweng hore a e hlahlobe. Ho hloka sebaka ka hare ho hive (crowding) ke sesosa se le seng se ka bang teng, e seng diagnosis.",
+      "blindBackTranslation": "Learn from a beekeeper of bees (bees) who has local experience before you get a hive. Keep hives far from paths that have many people, houses and places where children play. The morning sun can help; a protected place will come first. Give plants that flower at all times of the year and avoid exposing bees to pesticides. Working bees do not show that the farm does not have chemicals or diseases. National honey-bee control measures need registration for defined activities of keeping bees, including controlled hives for bee products, producing a queen of the bees (queen), commercial pollination, and removing, finishing (ending) or moving a colony. Ask the Department if you do not know whether the laws work (apply) in your work. If a colony makes swarm repeatedly, ask a trained beekeeper of bees to inspect it. Lacking space inside the hive (crowding) is one possible cause, not a diagnosis."
+    },
+    {
+      "key": "L2.infographicAlt",
+      "sourceEnglish": "A beehive cut open showing the stacked frames inside, and a wide circle over a farm map showing how far the bees travel to forage.",
+      "draft": "Hive e butsweng e bontshang diframe tse bokellaneng ka hare, le sedikadikwe se seholo hodima mmapa wa polasi se bontshang hore dinotshi (bees) di tsamaya hole hakae ho batla dijo.",
+      "blindBackTranslation": "An opened hive showing frames gathered inside, and a large circle on top of a farm map showing how far bees (bees) travel to look for food."
+    },
+    {
+      "key": "L2.title",
+      "sourceEnglish": "Bees: Pollination, Honey, and System Ecology",
+      "draft": "Dinotshi (bees): Pollination, Mahe a Dinotshi le System Ecology",
+      "blindBackTranslation": "Bees (bees): Pollination, Eggs of Bees and System Ecology"
+    },
+    {
+      "key": "L2.keyPoint0",
+      "sourceEnglish": "Pollinators help many crops; the benefit depends on the crop and conditions",
+      "draft": "Pollinators di thusa dijalo tse ngata; molemo o ya ka dijalo le maemo",
+      "blindBackTranslation": "Pollinators help many crops; the benefit goes according to crops and conditions"
+    },
+    {
+      "key": "L2.keyPoint1",
+      "sourceEnglish": "Learn safe hive care from an experienced local beekeeper",
+      "draft": "Ithute tlhokomelo e sireletsehileng ya hive ho moboloki wa dinotshi (bees) ya nang le phihlelo ya sebakeng",
+      "blindBackTranslation": "Learn safe hive care from an experienced local beekeeper (bees)"
+    },
+    {
+      "key": "L2.keyPoint2",
+      "sourceEnglish": "Choose a safe hive site away from busy paths and children",
+      "draft": "Kgetha sebaka se sireletsehileng sa hive hole le ditselana tse nang le batho ba bangata le bana",
+      "blindBackTranslation": "Choose a safe place for the hive away from paths with many people and from children"
+    },
+    {
+      "key": "L2.keyPoint3",
+      "sourceEnglish": "Register with the Department for activities covered by the national honey-bee control measures",
+      "draft": "Ingodise le Department bakeng sa mesebetsi e akaretswang ke national honey-bee control measures",
+      "blindBackTranslation": "Register with the Department for the activities covered by the national honey-bee control measures"
+    },
+    {
+      "key": "L2.quiz0.question",
+      "sourceEnglish": "Avocado trees flower but set little fruit. What should the farmer check about pollination?",
+      "draft": "Difate tsa avocado di a thunya empa di behile ditholwana tse mmalwa. Molemi o lokela ho hlahloba eng mabapi le pollination?",
+      "blindBackTranslation": "Avocado trees do flower but they have set a few fruits. What should a farmer check regarding pollination?"
+    },
+    {
+      "key": "L2.quiz0.option0",
+      "sourceEnglish": "Assume pollination is always enough and check nothing",
+      "draft": "Nahana hore pollination e lekane kamehla mme o se ke wa hlahloba letho",
+      "blindBackTranslation": "Think that pollination is always enough and do not check anything"
+    },
+    {
+      "key": "L2.quiz0.option1",
+      "sourceEnglish": "Assume only one type of beetle can carry pollen",
+      "draft": "Nahana hore ke mofuta o le mong feela wa beetle o ka jarang pollen",
+      "blindBackTranslation": "Think that it is only one kind of beetle that can carry pollen"
+    },
+    {
+      "key": "L2.quiz0.option2",
+      "sourceEnglish": "Check whether insects are visiting flowers and carrying pollen; other causes of poor fruit set also need checking",
+      "draft": "Hlahloba hore na dikokwanyana di etela dipalesa di bile di jara pollen; mabaka a mang a ho se behe ditholwana hantle le ona a hloka ho hlahlojwa",
+      "blindBackTranslation": "Check whether the insects visit the flowers and also carry pollen; other reasons for not putting fruits well also need to be examined."
+    },
+    {
+      "key": "L2.quiz0.option3",
+      "sourceEnglish": "Assume poor fruit set always means frost damage",
+      "draft": "Nahana hore ho se behe ditholwana hantle kamehla ho bolela tshenyo ya serame (frost)",
+      "blindBackTranslation": "Assume that not setting fruit well always means frost damage"
+    },
+    {
+      "key": "L2.quiz0.rationale",
+      "sourceEnglish": "Bees and other insects can move pollen between avocado flowers. Few visits can limit pollination, but weather and plant condition can also affect fruit set.",
+      "draft": "Dinotshi (bees) le dikokwanyana tse ding di ka tsamaisa pollen pakeng tsa dipalesa tsa avocado. Ketelo tse fokolang di ka fokotsa pollination, empa boemo ba lehodimo le boemo ba semela le tsona di ka ama ho beha ditholwana.",
+      "blindBackTranslation": "Bees (bees) and other insects can move pollen between avocado flowers. Few visits can reduce pollination, but the state of the sky and the state of the plant also can affect setting fruit."
+    },
+    {
+      "key": "L2.quiz1.question",
+      "sourceEnglish": "A hive has swarmed repeatedly. What is the best next step?",
+      "draft": "Hive e entse swarm kgafetsa. Ke mohato ofe o latelang o molemo ka ho fetisisa?",
+      "blindBackTranslation": "The hive has made swarm repeatedly. Which following step is the best?"
+    },
+    {
+      "key": "L2.quiz1.option0",
+      "sourceEnglish": "Ask a trained beekeeper to inspect the colony, including space, queen and health",
+      "draft": "Kopa moboloki wa dinotshi (bees) ya kwetlisitsweng hore a hlahlobe colony, ho kenyeletswa sebaka, mofumahadi wa dinotshi (queen) le bophelo bo botle",
+      "blindBackTranslation": "Ask a trained beekeeper (bees) to inspect the colony, including space, the queen of the bees (queen) and health"
+    },
+    {
+      "key": "L2.quiz1.option1",
+      "sourceEnglish": "Replace the queen without inspecting the colony",
+      "draft": "Fetola mofumahadi wa dinotshi (queen) ntle le ho hlahloba colony",
+      "blindBackTranslation": "Replace the queen of the bees (queen) without inspecting the colony"
+    },
+    {
+      "key": "L2.quiz1.option2",
+      "sourceEnglish": "Assume nothing can be checked or managed",
+      "draft": "Nahana hore ha ho letho le ka hlahlojwang kapa ho laolwa",
+      "blindBackTranslation": "Assume that nothing can be inspected or controlled"
+    },
+    {
+      "key": "L2.quiz1.option3",
+      "sourceEnglish": "Turn the hive around without finding the cause",
+      "draft": "Potolla hive e shebe ka ho fapaneng ntle le ho fumana sesosa",
+      "blindBackTranslation": "Turn the hive to face differently without finding the cause"
+    },
+    {
+      "key": "L2.quiz1.rationale",
+      "sourceEnglish": "Crowding can encourage swarming, but it is not the only cause. Inspection guides the response; adding space is not a guaranteed cure.",
+      "draft": "Ho hloka sebaka ka hare ho hive (crowding) ho ka kgothaletsa swarming, empa ha se sesosa se le seng feela. Tlhahlobo e tataisa karabo; ho eketsa sebaka ha se pheko e netefaditsweng.",
+      "blindBackTranslation": "Lack of space inside the hive (crowding) can encourage swarming, but it is not the only cause. An inspection guides the answer; adding space is not a proven cure."
+    },
+    {
+      "key": "L3.body.p0",
+      "sourceEnglish": "Some nutrients can return to the growing area in compost made from manure. Fresh manure can carry harmful germs. Compost manure fully before using it around food crops. Bought feed brings nutrients into the farm, while food and other products carry nutrients away. Keep track of feed bought in and food sold or taken home. Scraps alone may not meet the animals' needs.",
+      "draft": "Tse ding tsa nutrients di ka kgutlela sebakeng sa kgolo ka kompost e entsweng ka manyolo. Manyolo a matjha a ka jara dikokwanahloko tse kotsi (germs). Etsa manyolo kompost ka botlalo pele o a sebedisa haufi le dijalo tsa dijo. Dijo tsa diphoofolo tse rekilweng di tlisa nutrients polasing, athe dijo, hammoho le dihlahiswa tse ding, di di tlosa. Boloka tlaleho ya dijo tsa diphoofolo tse rekilweng, le ya dijo tse rekisitsweng kapa tse nkilweng hae. Masalla a dijo feela a kanna a se ke a fihlella ditlhoko tsa diphoofolo.",
+      "blindBackTranslation": "Some of the nutrients can return to the growing area in compost made from manure. Fresh manure can carry harmful germs. Fully compost manure before you use it near food crops. Bought animal feed brings nutrients onto the farm, while food, together with other products, takes them away. Keep a record of animal feed bought, and of feed sold or taken home. Leftovers of food alone may not meet the needs of the animals."
+    },
+    {
+      "key": "L3.body.p1",
+      "sourceEnglish": "Guinea fowl forage for insects and may eat ticks. Do not rely on them to protect people or livestock from ticks or tick-borne disease. Check animals and follow a local animal-health plan.",
+      "draft": "Guinea fowl di phetla dikokwanyana mme di kanna tsa ja ticks. O se ke wa itshetleha ho tsona ho sireletsa batho kapa diphoofolo ho ticks kapa malwetse a jarwang ke ticks. Hlahloba diphoofolo mme o latele morero wa bophelo bo botle ba diphoofolo wa sebakeng.",
+      "blindBackTranslation": "Guinea fowl forage for insects and may eat ticks. Do not rely on them to protect people or animals from ticks or tick-borne diseases. Inspect the animals and follow the local animal health plan."
+    },
+    {
+      "key": "L3.body.p2",
+      "sourceEnglish": "For each animal, ask: what can it eat here? What useful things does it produce? What else does it need? Include water, suitable feed, shelter, fencing and daily care.",
+      "draft": "Bakeng sa phoofolo ka nngwe, botsa: e ka ja eng mona? E hlahisa dintho dife tse molemo? E hloka eng hape? Kenyelletsa metsi, dijo tse e loketseng, bodulo, terata (fencing) le tlhokomelo ya letsatsi le letsatsi.",
+      "blindBackTranslation": "For each animal, ask: what can it eat here? What good things does it produce? What else does it need? Include water, suitable food, shelter, fencing (fencing) and daily care."
+    },
+    {
+      "key": "L3.body.p3",
+      "sourceEnglish": "Chickens following goats are not a proven replacement for goat worm control. Grazing management can help, but goats still need health checks and a parasite plan from a veterinary or animal-health adviser. Do not stop treatment because chickens have visited the grazing camp.",
+      "draft": "Dikgoho (chickens) tse latelang dipodi (goats) ha se mokgwa o netefaditsweng wa ho nka sebaka sa taolo ya diboko tsa mala (worms) tsa dipodi. Taolo ya ho fula e ka thusa, empa dipodi di ntse di hloka dihlahlobo tsa bophelo le morero wa taolo ya parasites (parasite plan) ho tswa ho ngaka ya diphoofolo kapa moeletsi wa bophelo ba diphoofolo. O se ke wa emisa kalafo hobane dikgoho di kene grazing camp.",
+      "blindBackTranslation": "Chickens that follow goats are not a proven way to replace control of goats' intestinal worms. Grazing management can help, but goats still need health checks and a parasite control plan (parasite plan) from a veterinarian or animal health adviser. Do not stop treatment because chickens have entered the grazing camp."
+    },
+    {
+      "key": "L3.infographicAlt",
+      "sourceEnglish": "Bought feed enters the farm. Animals produce manure, some nutrients return to the growing area through fully composted manure, and food and other products leave the farm.",
+      "draft": "Dijo tsa diphoofolo tse rekilweng di kena polasing. Diphoofolo di hlahisa manyolo, tse ding tsa nutrients di kgutlela sebakeng sa kgolo ka manyolo a entsweng kompost ka botlalo, mme dijo le dihlahiswa tse ding di tswa polasing.",
+      "blindBackTranslation": "Bought animal feed enters the farm. Animals produce manure, some of the nutrients return to the growing area in fully composted manure, and some food and other products leave the farm."
+    },
+    {
+      "key": "L3.title",
+      "sourceEnglish": "Integrating Livestock Cycles: Nutrients Moving Through the Farm",
+      "draft": "Ho Kopanya Dipotoloho tsa Diphoofolo: Nutrients di Tsamayang Polasing",
+      "blindBackTranslation": "Joining Animal Cycles: Nutrients that Move on the Farm"
+    },
+    {
+      "key": "L3.keyPoint0",
+      "sourceEnglish": "Use suitable farm resources while meeting the full needs of each animal",
+      "draft": "Sebedisa disebediswa tse loketseng tsa polasi ha o ntse o fihlella ditlhoko tse feletseng tsa phoofolo ka nngwe",
+      "blindBackTranslation": "Use suitable farm resources while meeting the full needs of each animal"
+    },
+    {
+      "key": "L3.keyPoint1",
+      "sourceEnglish": "Guinea fowl foraging does not replace tick checks or an animal-health plan",
+      "draft": "Guinea fowl ho phetla ha ho nke sebaka sa dihlahlobo tsa ticks kapa morero wa bophelo bo botle ba diphoofolo",
+      "blindBackTranslation": "Guinea fowl foraging does not replace tick inspections or an animal health plan"
+    },
+    {
+      "key": "L3.keyPoint2",
+      "sourceEnglish": "Ask what each animal eats, produces and needs, including any bought inputs",
+      "draft": "Botsa hore phoofolo ka nngwe e ja eng, e hlahisa eng le hore e hloka eng, ho kenyeletswa tse rekilweng",
+      "blindBackTranslation": "Ask what each animal eats, what it produces and what it needs, including what is bought"
+    },
+    {
+      "key": "L3.keyPoint3",
+      "sourceEnglish": "Do not replace goat worm control with chickens following the herd",
+      "draft": "O se ke wa nka sebaka sa taolo ya diboko tsa mala (worms) tsa dipodi (goats) ka dikgoho (chickens) tse latelang mohlape",
+      "blindBackTranslation": "Do not replace control of the intestinal worms (worms) of goats (goats) with chickens (chickens) that follow the herd"
+    },
+    {
+      "key": "L3.quiz0.question",
+      "sourceEnglish": "A farmer keeps guinea fowl. How should she manage ticks on her livestock?",
+      "draft": "Molemi o ruile guinea fowl. O lokela ho laola ticks diphoofolong tsa hae jwang?",
+      "blindBackTranslation": "A farmer has guinea fowl. How should he control ticks on his animals?"
+    },
+    {
+      "key": "L3.quiz0.option0",
+      "sourceEnglish": "Stop checking livestock because birds are present",
+      "draft": "Emisa ho hlahloba diphoofolo hobane dinonyana di teng",
+      "blindBackTranslation": "Stop inspecting the animals because the birds are there"
+    },
+    {
+      "key": "L3.quiz0.option1",
+      "sourceEnglish": "Keep checking animals and follow a local animal-health plan",
+      "draft": "Tswela pele ho hlahloba diphoofolo mme o latele morero wa bophelo bo botle ba diphoofolo wa sebakeng",
+      "blindBackTranslation": "Continue inspecting the animals and follow the local animal health plan"
+    },
+    {
+      "key": "L3.quiz0.option2",
+      "sourceEnglish": "Assume ducks remove every tick",
+      "draft": "Nahana hore dipidipidi (ducks) di tlosa ticks tsohle",
+      "blindBackTranslation": "Assume that ducks (ducks) remove all ticks"
+    },
+    {
+      "key": "L3.quiz0.option3",
+      "sourceEnglish": "Treat every animal without checking the problem or getting advice",
+      "draft": "Phekola phoofolo e nngwe le e nngwe ntle le ho hlahloba bothata kapa ho fumana keletso",
+      "blindBackTranslation": "Treat every animal without inspecting the problem or getting advice"
+    },
+    {
+      "key": "L3.quiz0.rationale",
+      "sourceEnglish": "Birds may eat ticks, but that does not establish reliable protection from ticks or the diseases they carry.",
+      "draft": "Dinonyana di kanna tsa ja ticks, empa seo ha se netefatse tshireletso e tshepahalang ho ticks kapa malwetse ao di a jarang.",
+      "blindBackTranslation": "Birds may eat ticks, but that does not confirm reliable protection from ticks or the diseases they carry."
+    },
+    {
+      "key": "L3.quiz1.question",
+      "sourceEnglish": "Chickens have foraged behind the goats. What should the farmer do about goat worms?",
+      "draft": "Dikgoho (chickens) di phetletse ka mora dipodi (goats). Molemi o lokela ho etsa eng mabapi le diboko tsa mala (worms) tsa dipodi?",
+      "blindBackTranslation": "Chickens (chickens) have foraged behind goats (goats). What should the farmer do about the goats' intestinal worms (worms)?"
+    },
+    {
+      "key": "L3.quiz1.option0",
+      "sourceEnglish": "Continue health checks and the parasite plan agreed with an animal-health adviser",
+      "draft": "Tswela pele ka dihlahlobo tsa bophelo le morero wa taolo ya parasites (parasite plan) o dumellanweng le moeletsi wa bophelo ba diphoofolo",
+      "blindBackTranslation": "Continue with health checks and a parasite control plan (parasite plan) agreed with the animal health adviser"
+    },
+    {
+      "key": "L3.quiz1.option1",
+      "sourceEnglish": "Stop all worm checks because chickens were present",
+      "draft": "Emisa dihlahlobo tsohle tsa diboko tsa mala (worms) hobane dikgoho (chickens) di ne di le teng",
+      "blindBackTranslation": "Stop all checks for intestinal worms (worms) because chickens (chickens) were present"
+    },
+    {
+      "key": "L3.quiz1.option2",
+      "sourceEnglish": "Assume chicken manure kills every worm egg",
+      "draft": "Nahana hore manyolo a dikgoho (chickens) a bolaya mahe ohle a diboko tsa mala (worms)",
+      "blindBackTranslation": "Assume that chicken (chickens) manure kills all the eggs of intestinal worms (worms)"
+    },
+    {
+      "key": "L3.quiz1.option3",
+      "sourceEnglish": "Assume moving the herd always makes treatment unnecessary",
+      "draft": "Nahana hore ho suthisa mohlape kamehla ho etsa hore kalafo e se hlokahale",
+      "blindBackTranslation": "Assume that always moving the herd makes treatment unnecessary"
+    },
+    {
+      "key": "L3.quiz1.rationale",
+      "sourceEnglish": "Chickens are not a proven replacement for goat worm control. Grazing management and animal-health checks must work together.",
+      "draft": "Dikgoho (chickens) ha se mokgwa o netefaditsweng wa ho nka sebaka sa taolo ya diboko tsa mala (worms) tsa dipodi (goats). Taolo ya ho fula le dihlahlobo tsa bophelo ba diphoofolo di tlameha ho sebetsa mmoho.",
+      "blindBackTranslation": "Chickens (chickens) are not a proven way to replace control of goats' (goats) intestinal worms (worms). Grazing management and animal health checks must work together."
+    },
+    {
+      "key": "slide.s1.h",
+      "sourceEnglish": "Small Livestock Integration",
+      "draft": "Kopanyo ya Diphoofolo tse Nyenyane",
+      "blindBackTranslation": "Integration of Small Animals"
+    },
+    {
+      "key": "slide.s1.b0",
+      "sourceEnglish": "Small livestock integration turns chickens, ducks, and bees into working parts of the farm.",
+      "draft": "Ho kopanya diphoofolo tse nyenyane tse ruuwang polasing ho etsa hore dikgoho (chickens), dipidipidi (ducks) le dinotshi (bees) di be dikarolo tse sebetsang tsa polasi.",
+      "blindBackTranslation": "Integrating small animals kept on the farm so that chickens (chickens), ducks (ducks) and bees (bees) become working parts of the farm."
+    },
+    {
+      "key": "slide.s1.b1",
+      "sourceEnglish": "Learn how animals can control pests, build fertility, support pollination, and return value to the soil.",
+      "draft": "Ithute hore diphoofolo di ka laola dikokwanyana tse senyang, tsa nontsha mobu, tsa thusa pollination, tsa kgutlisetsa boleng mobung.",
+      "blindBackTranslation": "Learn that animals can control insects that damage, and enrich the soil, and help pollination, and return quality to the soil."
+    },
+    {
+      "key": "slide.s1.b2",
+      "sourceEnglish": "Use the system you already have: food, manure, flowers, grazing, and careful movement across the land.",
+      "draft": "Sebedisa tsamaiso eo o seng o e na le yona: dijo, manyolo, dipalesa, ho fula le ho suthisa diphoofolo ka hloko naheng.",
+      "blindBackTranslation": "Use the system you already have: food, manure, flowers, grazing and carefully moving animals on the land."
+    },
+    {
+      "key": "slide.s2.h",
+      "sourceEnglish": "Why This Matters",
+      "draft": "Hobaneng Sena Se Bohlokwa",
+      "blindBackTranslation": "Why This Matters"
+    },
+    {
+      "key": "slide.s2.b0",
+      "sourceEnglish": "Small livestock can do work beyond producing meat, eggs, or honey.",
+      "draft": "Diphoofolo tse nyenyane tse ruuwang di ka etsa mesebetsi e meng ntle le ho hlahisa nama, mahe kapa mahe a dinotshi.",
+      "blindBackTranslation": "Small animals that are kept can do other jobs besides producing meat, eggs or honey (lit. 'eggs of bees')."
+    },
+    {
+      "key": "slide.s2.b1",
+      "sourceEnglish": "Chickens eat some insects and weed seeds. Their manure can become compost.",
+      "draft": "Dikgoho (chickens) di ja dikokwanyana tse ding le dipeo tsa dimela tse sa batleheng (weeds). Manyolo a tsona a ka fetoha compost.",
+      "blindBackTranslation": "Chickens (chickens) eat some insects and seeds of unwanted plants (weeds). Their manure can become compost."
+    },
+    {
+      "key": "slide.s2.b2",
+      "sourceEnglish": "Ducks scratch less than chickens, but can still damage plants.",
+      "draft": "Dipidipidi (ducks) ha di fate haholo jwaloka dikgoho (chickens), empa di ntse di ka senya dimela.",
+      "blindBackTranslation": "Ducks (ducks) do not scratch as much as chickens (chickens), but they can still damage plants."
+    },
+    {
+      "key": "slide.s2.b3",
+      "sourceEnglish": "Bees and other pollinators help many crops. Each animal still needs suitable food, water, shelter and care.",
+      "draft": "Dinotshi (bees) le pollinators tse ding di thusa dijalo tse ngata. Phoofolo e nngwe le e nngwe e ntse e hloka dijo tse loketseng, metsi, setshabelo le tlhokomelo.",
+      "blindBackTranslation": "Bees (bees) and other pollinators help many crops. Each and every animal still needs suitable food, water, shelter and care."
+    },
+    {
+      "key": "slide.s3.h",
+      "sourceEnglish": "Learning Outcomes",
+      "draft": "Dipheo tsa Ho Ithuta",
+      "blindBackTranslation": "Learning Goals"
+    },
+    {
+      "key": "slide.s3.b0",
+      "sourceEnglish": "By the end of this module, you will understand how chickens, ducks, bees, and guinea fowl fit into a working system.",
+      "draft": "Qetellong ya module ena, o tla utlwisisa hore dikgoho (chickens), dipidipidi (ducks), dinotshi (bees) le guinea fowl di kena jwang tsamaisong e sebetsang.",
+      "blindBackTranslation": "By the end of this module, you will understand how chickens (chickens), ducks (ducks), bees (bees) and guinea fowl fit into a working system."
+    },
+    {
+      "key": "slide.s3.b1",
+      "sourceEnglish": "You will know when chickens help a bed, and when their scratching can cause damage.",
+      "draft": "O tla tseba hore dikgoho (chickens) di thusa bethe ya dijalo (bed) neng, le hore ho fata ha tsona ho ka baka tshenyo neng.",
+      "blindBackTranslation": "You will know when chickens (chickens) help the crop bed (bed), and when their scratching can cause damage."
+    },
+    {
+      "key": "slide.s3.b2",
+      "sourceEnglish": "You will understand pollination, hive placement, and how livestock move nutrients around a farm.",
+      "draft": "O tla utlwisisa pollination, moo hive e behwang teng, le hore diphoofolo di tsamaisa nutrients polasing jwang.",
+      "blindBackTranslation": "You will understand pollination, where a hive is placed, and how animals move nutrients on the farm."
+    },
+    {
+      "key": "slide.s4.h",
+      "sourceEnglish": "Watch: Hens Foraging After Harvest",
+      "draft": "Sheba: Dikgoho Di Batla Dijo Kamora Kotulo",
+      "blindBackTranslation": "Look: Chickens Look for Food After Harvest"
+    },
+    {
+      "key": "slide.s4.b0",
+      "sourceEnglish": "Watch the hens peck at the ground among dry plant remains.",
+      "draft": "Sheba dikgoho tse tshehadi (hens) di kgotha (peck) fatshe hara masalla a dimela a omileng.",
+      "blindBackTranslation": "Watch the hens (hens) peck (peck) on the ground among dry plant remains."
+    },
+    {
+      "key": "slide.s4.b1",
+      "sourceEnglish": "Chickens may eat some insects and weed seeds. They still need balanced feed, clean water and shelter.",
+      "draft": "Dikgoho (chickens) di ka ja dikokwanyana tse ding le dipeo tsa dimela tse sa batleheng (weeds). Di ntse di hloka dijo tsa diphoofolo tse leka-lekaneng, metsi a hlwekileng le setshabelo.",
+      "blindBackTranslation": "Chickens (chickens) can eat some insects and seeds of unwanted plants (weeds). They still need adequate animal feed, clean water and shelter."
+    },
+    {
+      "key": "slide.s4.b2",
+      "sourceEnglish": "Keep them away from seedlings and food ready to harvest.",
+      "draft": "Di boloke hole le dimela tse ntjha (seedlings) le dijo tse seng di loketse ho kotulwa.",
+      "blindBackTranslation": "Keep them away from young plants (seedlings) and food that is ready to be harvested."
+    },
+    {
+      "key": "slide.s5.h",
+      "sourceEnglish": "Chickens Turn Scratching Into Useful Work",
+      "draft": "Ho Ngwapa ha Dikgoho ke Mosebetsi o Thusang",
+      "blindBackTranslation": "Chicken Scratching Is Helpful Work"
+    },
+    {
+      "key": "slide.s5.b0",
+      "sourceEnglish": "Chickens can help an empty bed after harvest.",
+      "draft": "Dikgoho (chickens) di ka thusa bethe ya dijalo e se nang letho kamora kotulo.",
+      "blindBackTranslation": "Chickens (chickens) can help an empty bed of crops after harvest."
+    },
+    {
+      "key": "slide.s5.b1",
+      "sourceEnglish": "They scratch through plant remains and eat some insects and weed seeds.",
+      "draft": "Di fata hara masalla a dimela mme di ja dikokwanyana tse ding le dipeo tsa dimela tse sa batleheng (weeds).",
+      "blindBackTranslation": "They scratch among the plant remains and eat some insects and the seeds of unwanted plants (weeds)."
+    },
+    {
+      "key": "slide.s5.b2",
+      "sourceEnglish": "Their manure and bedding can be composted and returned to the soil.",
+      "draft": "Manyolo a tsona le bedding di ka etswa compost mme tsa kgutlisetswa mobung.",
+      "blindBackTranslation": "Their manure and bedding can be made into compost and returned to the soil."
+    },
+    {
+      "key": "slide.s5.b3",
+      "sourceEnglish": "Foraging does not replace a balanced diet, clean water, shelter or daily care.",
+      "draft": "Ho batla dijo ha ho nke sebaka sa dijo tsa diphoofolo tse leka-lekaneng, metsi a hlwekileng, setshabelo kapa tlhokomelo ya letsatsi le letsatsi.",
+      "blindBackTranslation": "Looking for food does not take the place of adequate animal feed, clean water, shelter or daily care."
+    },
+    {
+      "key": "slide.s6.h",
+      "sourceEnglish": "Use Chickens at the Right Time",
+      "draft": "Sebedisa Dikgoho Nakong e Nepahetseng",
+      "blindBackTranslation": "Use Chickens at the Right Time"
+    },
+    {
+      "key": "slide.s6.b0",
+      "sourceEnglish": "Use chickens in an empty bed after harvest.",
+      "draft": "Sebedisa dikgoho (chickens) bething ya dijalo e se nang letho kamora kotulo.",
+      "blindBackTranslation": "Use chickens (chickens) in a bed of crops that is empty after harvest."
+    },
+    {
+      "key": "slide.s6.b1",
+      "sourceEnglish": "Keep them away from seedlings and crops being harvested for food.",
+      "draft": "Di boloke hole le dimela tse ntjha (seedlings) le dijalo tse kotulwang bakeng sa dijo.",
+      "blindBackTranslation": "Keep them away from young plants (seedlings) and crops being harvested for food."
+    },
+    {
+      "key": "slide.s6.b2",
+      "sourceEnglish": "Fresh manure can carry germs. Ask an extension adviser how to manage manure safely before the next crop.",
+      "draft": "Manyolo a ntjha a ka jara dikokwanahloko tse bakang malwetse (germs). Botsa extension adviser hore na o ka tsamaisa manyolo ka polokeho jwang pele ho jalo e latelang.",
+      "blindBackTranslation": "Fresh manure can carry disease-causing germs. Ask an extension adviser how you can handle manure safely before the next crop."
+    },
+    {
+      "key": "slide.s6.b3",
+      "sourceEnglish": "Move the birds before they damage the ground.",
+      "draft": "Sisinya dinonyana pele di senya fatshe.",
+      "blindBackTranslation": "Move the birds before they damage the ground."
+    },
+    {
+      "key": "slide.s7.h",
+      "sourceEnglish": "Ducks Suit Established Understorey",
+      "draft": "Dipidipidi di Loketse Understorey e Tsepameng",
+      "blindBackTranslation": "Ducks Suit an Established Understorey"
+    },
+    {
+      "key": "slide.s7.b0",
+      "sourceEnglish": "Ducks eat slugs and snails without the heavy scratching of chickens.",
+      "draft": "Dipidipidi (ducks) di ja slugs le snails ntle le ho fata haholo jwalo ka dikgoho (chickens).",
+      "blindBackTranslation": "Ducks (ducks) eat slugs (slugs) and snails (snails) without scratching as much as chickens (chickens)."
+    },
+    {
+      "key": "slide.s7.b1",
+      "sourceEnglish": "They may suit an established food forest understorey.",
+      "draft": "Di kanna tsa loketsa food forest understorey e thehilweng.",
+      "blindBackTranslation": "They may suit an established food forest understorey."
+    },
+    {
+      "key": "slide.s7.b2",
+      "sourceEnglish": "They can still eat or trample plants and make wet ground muddy. Watch the birds and move them when needed.",
+      "draft": "Di ntse di ka ja kapa di hatakela dimela, mme di ka etsa hore fatshe le metsi-metsi le be seretse. Shebisisa dinonyana mme o di suthise ha ho hlokeha.",
+      "blindBackTranslation": "They can still eat or trample plants, and can make the ground and wet places turn to mud. Watch the birds closely and move them when needed."
+    },
+    {
+      "key": "slide.s7.b3",
+      "sourceEnglish": "Provide clean water and suitable feed; foraging alone may not be enough.",
+      "draft": "Fana ka metsi a hlwekileng le dijo tsa diphoofolo tse loketseng; ho batla dijo feela ho ka ba ho sa lekane.",
+      "blindBackTranslation": "Provide clean water and suitable animal feed; looking for food alone may not be enough."
+    },
+    {
+      "key": "slide.s8.h",
+      "sourceEnglish": "Rotate the Tractor Across the Plot",
+      "draft": "Potoloha chicken tractor Sebakeng sa Dijalo",
+      "blindBackTranslation": "Move the chicken tractor Around the Crop Area"
+    },
+    {
+      "key": "slide.s8.b0",
+      "sourceEnglish": "A chicken tractor is a moveable, floorless pen.",
+      "draft": "Chicken tractor ke lesaka le ka suthiswang, le se nang mokato (floorless).",
+      "blindBackTranslation": "A chicken tractor is a movable pen without a floor (floorless)."
+    },
+    {
+      "key": "slide.s8.b1",
+      "sourceEnglish": "Move it before the ground becomes bare, muddy or heavily covered with manure.",
+      "draft": "Le suthise pele fatshe le fetoha le se nang letho, seretse kapa le kwahetswe haholo ke manyolo.",
+      "blindBackTranslation": "Move it before the ground becomes bare, muddy or heavily covered in manure."
+    },
+    {
+      "key": "slide.s8.b2",
+      "sourceEnglish": "The right time depends on the birds, soil and weather. Let the ground recover between visits.",
+      "draft": "Nako e nepahetseng e itshetlehile ka dinonyana, mobu le boemo ba lehodimo. Lesa fatshe le hlaphohelle pakeng tsa ketelo le ketelo.",
+      "blindBackTranslation": "The right timing depends on the birds, the soil and the weather. Let the ground rest and recover between each visit."
+    },
+    {
+      "key": "slide.s8.b3",
+      "sourceEnglish": "There is no single number of chickens that guarantees enough fertility for every plot.",
+      "draft": "Ha ho na palo e le nngwe ya dikgoho (chickens) e netefatsang ho nontsha mobu ho lekaneng bakeng sa sebaka se seng le se seng sa dijalo.",
+      "blindBackTranslation": "There is no single number of chickens (chickens) that guarantees adequate fertilising of the soil for every crop area."
+    },
+    {
+      "key": "slide.s9.h",
+      "sourceEnglish": "Watch: A Bee Moves Between Two Blossoms",
+      "draft": "Sheba: Notshi (bee) Pakeng tsa Dipalesa Tse Pedi",
+      "blindBackTranslation": "Look: A Bee (bee) Between Two Flowers"
+    },
+    {
+      "key": "slide.s9.b0",
+      "sourceEnglish": "Watch one bee move from one blossom to another.",
+      "draft": "Sheba notshi (bee) e le nngwe e tloha palesa e nngwe e ya ho e nngwe.",
+      "blindBackTranslation": "Look at one bee (bee) going from one flower to another."
+    },
+    {
+      "key": "slide.s9.b1",
+      "sourceEnglish": "Bees can carry pollen as they visit flowers.",
+      "draft": "Dinotshi (bees) di ka jara pollen ha di etela dipalesa.",
+      "blindBackTranslation": "Bees (bees) can carry pollen when they visit flowers."
+    },
+    {
+      "key": "slide.s10.h",
+      "sourceEnglish": "Bees Help Pollinate Many Crops",
+      "draft": "Dinotshi di Thusa Pollination ya Dijalo Tse Ngata",
+      "blindBackTranslation": "Bees Help Pollination of Many Crops"
+    },
+    {
+      "key": "slide.s10.b0",
+      "sourceEnglish": "Honeybees and other insects carry pollen between flowers.",
+      "draft": "Dinotshi (honeybees) le dikokwanyana tse ding di jara pollen pakeng tsa dipalesa.",
+      "blindBackTranslation": "Bees (honeybees) and other insects carry pollen between flowers."
+    },
+    {
+      "key": "slide.s10.b1",
+      "sourceEnglish": "This helps many fruit and vegetable crops, including avocado. Different crops and varieties have different pollination needs.",
+      "draft": "Sena se thusa dijalo tse ngata tsa ditholwana le meroho, ho kenyeletswa avocado. Dijalo le mefuta (varieties) e fapaneng di na le ditlhoko tse fapaneng tsa pollination.",
+      "blindBackTranslation": "This helps many crops of fruits and vegetables, including avocado. Crops and different varieties (varieties) have different needs of pollination."
+    },
+    {
+      "key": "slide.s10.b2",
+      "sourceEnglish": "A hive does not guarantee higher yields everywhere. Weather, water, plant health and other pollinators also matter.",
+      "draft": "Hive ha e netefatse kotulo e phahameng hohle. Boemo ba lehodimo, metsi, bophelo bo botle ba dimela le pollinators tse ding le tsona di bohlokwa.",
+      "blindBackTranslation": "A hive does not guarantee a high harvest everywhere. The state of the sky, water, good health of plants and other pollinators also are important."
+    },
+    {
+      "key": "slide.s11.h",
+      "sourceEnglish": "South Africa’s Native Honeybees",
+      "draft": "Dinotshi (honeybees) tsa Tlhaho tsa Afrika Borwa",
+      "blindBackTranslation": "Natural Honeybees (honeybees) of South Africa"
+    },
+    {
+      "key": "slide.s11.b0",
+      "sourceEnglish": "South Africa has two native honeybee subspecies.",
+      "draft": "Afrika Borwa e na le subspecies tse pedi tsa dinotshi (honeybees) tsa tlhaho.",
+      "blindBackTranslation": "South Africa has two natural subspecies of honeybees (honeybees)."
+    },
+    {
+      "key": "slide.s11.b1",
+      "sourceEnglish": "The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa.",
+      "draft": "Cape honeybee e fumanwa Western Cape le dibakeng tse ding tsa Eastern Cape. African honeybee ke ya tlhaho bohareng ba Afrika le boholo ba borwa ba Afrika.",
+      "blindBackTranslation": "The Cape honeybee is found in the Western Cape and some areas of the Eastern Cape. The African honeybee is native to central Africa and most of southern Africa."
+    },
+    {
+      "key": "slide.s11.b2",
+      "sourceEnglish": "These broad natural ranges are not a guide for moving bees. The Department's control measures set a demarcation line for bee movement. Check current rules before moving bees or hives.",
+      "draft": "Dibaka tsena tse kgolo tsa tlhaho ha di a lokela ho sebediswa e le tataiso ya ho fallisa dinotshi (bees). Mehato ya taolo ya Lefapha (Department) e beha demarcation line bakeng sa ho fallisa dinotshi. Hlahloba melao ya hajwale pele o fallisa dinotshi kapa dihive.",
+      "blindBackTranslation": "These large natural areas should not be used as a guide for moving bees (bees). The control steps (measures) of the Department (Department) set a demarcation line for moving bees. Check the current laws before you move bees or hives."
+    },
+    {
+      "key": "slide.s12.h",
+      "sourceEnglish": "Place the Hive With Care",
+      "draft": "Beha Hive ka Hloko",
+      "blindBackTranslation": "Place the Hive Carefully"
+    },
+    {
+      "key": "slide.s12.b0",
+      "sourceEnglish": "Learn from an experienced local beekeeper before getting a hive.",
+      "draft": "Ithute ho moboloki wa dinotshi (bees) wa sebakeng ya nang le phihlelo pele o fumana hive.",
+      "blindBackTranslation": "Learn from an experienced local beekeeper (bees) before you get a hive."
+    },
+    {
+      "key": "slide.s12.b1",
+      "sourceEnglish": "Keep hives away from busy paths, homes and places where children play.",
+      "draft": "Boloka dihive hole le ditselana tse nang le batho ba bangata, matlo le dibaka moo bana ba bapalang teng.",
+      "blindBackTranslation": "Keep hives away from busy paths, houses and places where children play."
+    },
+    {
+      "key": "slide.s12.b2",
+      "sourceEnglish": "Morning sun can help, but a safe location comes first.",
+      "draft": "Letsatsi la hoseng le ka thusa, empa sebaka se sireletsehileng se tla pele.",
+      "blindBackTranslation": "Morning sun can help, but a safe place comes first."
+    },
+    {
+      "key": "slide.s12.b3",
+      "sourceEnglish": "Plan how people and animals will move around the site.",
+      "draft": "Rera hore batho le diphoofolo ba tla tsamaya jwang ho potoloha sebaka.",
+      "blindBackTranslation": "Plan how people and animals will move around the place."
+    },
+    {
+      "key": "slide.s13.h",
+      "sourceEnglish": "Strong Colonies Need Care and Flowers",
+      "draft": "Dikolone Tse Matla: Tlhokomelo le Dipalesa",
+      "blindBackTranslation": "Strong Colonies: Care and Flowers"
+    },
+    {
+      "key": "slide.s13.b0",
+      "sourceEnglish": "Provide flowering plants through the seasons and avoid exposing bees to pesticides.",
+      "draft": "Fana ka dimela tse thehang dipalesa ka dinako tsohle tsa selemo mme o qobe ho pepesa dinotshi (bees) ho pesticides.",
+      "blindBackTranslation": "Provide plants that produce flowers at all times of the year and avoid exposing bees (bees) to pesticides."
+    },
+    {
+      "key": "slide.s13.b1",
+      "sourceEnglish": "Active bees do not prove that the farm is free of chemicals or disease.",
+      "draft": "Dinotshi (bees) tse sebetsang ha di fane ka bopaki ba hore polasi ha e na dikhemikhale kapa malwetse.",
+      "blindBackTranslation": "Active bees (bees) do not give proof that the farm has no chemicals or diseases."
+    },
+    {
+      "key": "slide.s13.b2",
+      "sourceEnglish": "Registration is required for activities defined by the national honey-bee control measures. These include keeping managed hives for bee products, queen rearing, commercial pollination, and removing, eradicating or relocating colonies. Check with the Department if you are unsure whether your activity is covered.",
+      "draft": "Ngodiso (registration) e a hlokahala bakeng sa mesebetsi e hlalositsweng ke national honey-bee control measures. Mesebetsi ena e kenyeletsa ho boloka dihive tse laolwang bakeng sa dihlahiswa tsa dinotshi (bees), queen rearing, commercial pollination, le ho tlosa, ho fedisa kapa ho fallisa dikolone. Botsa Lefapha (Department) haeba o sa tsebe hore na mosebetsi wa hao o kenyeletswa.",
+      "blindBackTranslation": "Registration (registration) is needed for activities that are defined by national honey-bee control measures. These activities include keeping controlled hives for products of bees (bees), queen rearing, commercial pollination, and removing, finishing (ending) or moving colonies. Ask the Department (Department) if you do not know whether your work is included."
+    },
+    {
+      "key": "slide.s13.b3",
+      "sourceEnglish": "If a colony swarms repeatedly, ask a trained beekeeper to inspect it. Crowding is one possible cause, not a diagnosis.",
+      "draft": "Haeba kolone e etsa swarm kgafetsa, kopa moboloki wa dinotshi (bees) ya kwetlisitsweng hore a e hlahlobe. Ho hloka sebaka ka hare ho hive (crowding) ke lebaka le le leng le ka bang teng, e seng diagnosis.",
+      "blindBackTranslation": "If a colony makes swarm repeatedly, ask a trained beekeeper of bees (bees) to inspect it. Lacking space inside the hive (crowding) is one possible reason, not a diagnosis."
+    },
+    {
+      "key": "slide.s14.h",
+      "sourceEnglish": "Nutrients Moving Through the Farm",
+      "draft": "Nutrients di Tsamaya Polasing",
+      "blindBackTranslation": "Nutrients Move on the Farm"
+    },
+    {
+      "key": "slide.s14.b0",
+      "sourceEnglish": "Some nutrients move from plants to animals. Bought feed also brings nutrients into the farm. Some nutrients may return to the growing area through compost made from manure. Food and other products carry nutrients away.",
+      "draft": "Nutrients tse ding di tloha dimeleng di ya ho diphoofolo. Dijo tsa diphoofolo tse rekilweng le tsona di tlisa nutrients polasing. Nutrients tse ding di kanna tsa kgutlela sebakeng sa ho jala ka compost e entsweng ka manyolo. Dijo le dihlahiswa tse ding di jara nutrients di di tlosa.",
+      "blindBackTranslation": "Some nutrients go from plants to animals. Bought animal feed also brings nutrients onto the farm. Some nutrients may return to the planting area in compost made from manure. Food and other products carry nutrients away (remove them)."
+    },
+    {
+      "key": "slide.s15.h",
+      "sourceEnglish": "Some Nutrients Return; Others Enter and Leave",
+      "draft": "Tse Ding Di Kgutla; Tse Ding Di Kena le Ho Tswa",
+      "blindBackTranslation": "Some Return; Some Come In and Go Out"
+    },
+    {
+      "key": "slide.s15.b0",
+      "sourceEnglish": "Animals can return some nutrients through compost made from manure. Fresh manure can carry harmful germs. Compost manure fully before using it around food crops.",
+      "draft": "Diphoofolo di ka kgutlisa nutrients tse ding ka compost e entsweng ka manyolo. Manyolo a ntjha a ka jara dikokwanahloko tse kotsi (germs). Etsa compost ya manyolo ka ho feletseng pele o a sebedisa haufi le dijalo tsa dijo.",
+      "blindBackTranslation": "Animals can return some nutrients through compost made from manure. Fresh manure can carry harmful germs. Make manure compost completely before you use it near food crops."
+    },
+    {
+      "key": "slide.s15.b1",
+      "sourceEnglish": "Chickens eat suitable farm produce and insects.",
+      "draft": "Dikgoho (chickens) di ja dihlahiswa tse loketseng tsa polasi le dikokwanyana.",
+      "blindBackTranslation": "Chickens (chickens) eat suitable farm products and insects."
+    },
+    {
+      "key": "slide.s15.b2",
+      "sourceEnglish": "Bought feed brings nutrients into the farm. Food sold or taken home and other products carry nutrients away. Keep track of feed bought in and food sold or taken home.",
+      "draft": "Dijo tsa diphoofolo tse rekilweng di kenya nutrients polasing. Dijo tse rekisitsweng kapa tse nkilweng ho ya hae le dihlahiswa tse ding di jara nutrients di di tlosa. Boloka rekoto ya dijo tsa diphoofolo tse rekilweng le dijo tse rekisitsweng kapa tse nkilweng ho ya hae.",
+      "blindBackTranslation": "Bought animal feed puts nutrients onto the farm. Food sold or taken home, and other products, carry nutrients away. Keep a record of animal feed bought and food sold or taken home."
+    },
+    {
+      "key": "slide.s15.b3",
+      "sourceEnglish": "Scraps alone may not meet the animals’ needs.",
+      "draft": "Masalla a dijo feela a kanna a se ke a fihlella ditlhoko tsa diphoofolo.",
+      "blindBackTranslation": "Leftovers of food alone may not meet the needs of the animals."
+    },
+    {
+      "key": "slide.s16.h",
+      "sourceEnglish": "Guinea Fowl Forage, but Health Checks Still Matter",
+      "draft": "Guinea Fowl di Iphepa, empa o Ntse o Hlahloba Bophelo",
+      "blindBackTranslation": "Guinea Fowl Feed Themselves, but You Still Check Health"
+    },
+    {
+      "key": "slide.s16.b0",
+      "sourceEnglish": "Guinea fowl forage for insects and may eat ticks.",
+      "draft": "Guinea fowl di batla dikokwanyana mme di ka ja ticks.",
+      "blindBackTranslation": "Guinea fowl look for insects and can eat ticks."
+    },
+    {
+      "key": "slide.s16.b1",
+      "sourceEnglish": "Do not rely on them to protect people or livestock from ticks or tick-borne disease.",
+      "draft": "O se ke wa di tshepa hore di sireletse batho kapa diphoofolo ho ticks kapa malwetse a jarwang ke ticks.",
+      "blindBackTranslation": "Do not trust them to protect people or animals from ticks or tick-borne diseases."
+    },
+    {
+      "key": "slide.s16.b2",
+      "sourceEnglish": "Keep checking animals and follow a local animal-health plan.",
+      "draft": "Tswela pele o hlahloba diphoofolo mme o latele morero wa sebakeng wa bophelo bo botle ba diphoofolo (animal-health plan).",
+      "blindBackTranslation": "Keep checking the animals and follow the local animal-health plan (animal-health plan)."
+    },
+    {
+      "key": "slide.s16.b3",
+      "sourceEnglish": "Foraging birds are one part of the farm, not a replacement for health care.",
+      "draft": "Dinonyana tse batlang dijo ke karolo e le nngwe ya polasi, e sa nkeng sebaka sa tlhokomelo ya bophelo bo botle.",
+      "blindBackTranslation": "Birds that look for food are one part of the farm, which does not take the place of health care."
+    },
+    {
+      "key": "slide.s17.h",
+      "sourceEnglish": "Ask Three Questions for Every Animal",
+      "draft": "Dipotso Tse Tharo ka Phoofolo e Nngwe le e Nngwe",
+      "blindBackTranslation": "Three Questions for Each Animal"
+    },
+    {
+      "key": "slide.s17.b0",
+      "sourceEnglish": "For each animal, ask what it can eat here.",
+      "draft": "Bakeng sa phoofolo e nngwe le e nngwe, botsa hore na e ka ja eng mona.",
+      "blindBackTranslation": "For each animal, ask what it can eat here."
+    },
+    {
+      "key": "slide.s17.b1",
+      "sourceEnglish": "Ask what useful things it produces.",
+      "draft": "Botsa hore na e hlahisa dintho dife tse molemo.",
+      "blindBackTranslation": "Ask what good things it produces."
+    },
+    {
+      "key": "slide.s17.b2",
+      "sourceEnglish": "Then ask what else it needs. Include water, suitable feed, shelter, fencing and daily care.",
+      "draft": "Ebe o botsa hore na e hloka eng hape. Kenyeletsa metsi, dijo tsa diphoofolo tse loketseng, setshabelo, terata (fencing) le tlhokomelo ya letsatsi le letsatsi.",
+      "blindBackTranslation": "Then ask what else it needs. Include water, suitable animal food, shelter, fencing (fencing) and daily care."
+    },
+    {
+      "key": "slide.s17.b3",
+      "sourceEnglish": "Some needs may require bought inputs. Plan for them before bringing animals onto the land.",
+      "draft": "Ditlhoko tse ding di kanna tsa hloka inputs tse rekilweng. Di rerele pele o tlisa diphoofolo naheng.",
+      "blindBackTranslation": "Some needs may require bought inputs (inputs). Plan for them before you bring animals onto the land."
+    },
+    {
+      "key": "slide.s18.h",
+      "sourceEnglish": "Grazing and Goat Worm Control",
+      "draft": "Ho Fula le Taolo ya Diboko tsa Mala tsa Dipodi (goats)",
+      "blindBackTranslation": "Grazing and Control of Worms of the Intestines of Goats (goats)"
+    },
+    {
+      "key": "slide.s18.b0",
+      "sourceEnglish": "Chickens following goats are not a proven replacement for goat worm control.",
+      "draft": "Dikgoho (chickens) tse latelang dipodi (goats) ha di a netefatswa hore di ka nka sebaka sa taolo ya diboko tsa mala (worms) tsa dipodi.",
+      "blindBackTranslation": "Chickens (chickens) that follow goats (goats) are not guaranteed to be able to replace the control of intestinal worms (worms) of goats."
+    },
+    {
+      "key": "slide.s18.b1",
+      "sourceEnglish": "Grazing management can help, but goats still need health checks.",
+      "draft": "Taolo ya ho fula e ka thusa, empa dipodi di ntse di hloka hlahlobo ya bophelo.",
+      "blindBackTranslation": "Grazing management can help, but goats still need a health check."
+    },
+    {
+      "key": "slide.s18.b2",
+      "sourceEnglish": "Work with a veterinary or animal-health adviser on a parasite plan for your herd.",
+      "draft": "Sebetsa le ngaka ya diphoofolo kapa moeletsi wa bophelo ba diphoofolo ho rera morero wa parasites bakeng sa mohlape wa hao.",
+      "blindBackTranslation": "Work with a veterinarian or animal health adviser to plan a parasite plan for your herd."
+    },
+    {
+      "key": "slide.s18.b3",
+      "sourceEnglish": "Do not stop treatment because chickens have visited the grazing camp.",
+      "draft": "O se ke wa emisa kalafo hobane dikgoho (chickens) di kile tsa kena kampong ya ho fula (grazing camp).",
+      "blindBackTranslation": "Do not stop treatment because chickens (chickens) have entered the grazing camp (grazing camp) at some point."
+    },
+    {
+      "key": "slide.s19.h",
+      "sourceEnglish": "Field Assignment: Draw Where Resources Go",
+      "draft": "Mosebetsi wa Naheng: Taka Hore Methopo e Ya Kae",
+      "blindBackTranslation": "Field Task: Draw Where the Resources Go"
+    },
+    {
+      "key": "slide.s19.b0",
+      "sourceEnglish": "Walk your smallholding and choose an area where livestock could support another part of the system.",
+      "draft": "Tsamaya polasing ya hao e nyenyane o kgethe sebaka seo diphoofolo di ka thusang karolo e nngwe ya tsamaiso.",
+      "blindBackTranslation": "Walk through your small farm and choose a place where animals could help one part of the system."
+    },
+    {
+      "key": "slide.s19.b1",
+      "sourceEnglish": "Record what food, scraps, pests, surplus produce, manure, or flowering resources are already present.",
+      "draft": "Ngola hore ke dijo, masalla, dikokwanyana tse senyang (pests), dihlahiswa tse setseng, manyolo kapa methopo ya dipalesa life tse seng di le teng.",
+      "blindBackTranslation": "Write down which food, leftovers, pests (pests), remaining products, manure or sources of flowers already exist."
+    },
+    {
+      "key": "slide.s19.b2",
+      "sourceEnglish": "Then note what each animal could produce, and what it would need from the farm.",
+      "draft": "Ebe o ngola hore phoofolo e nngwe le e nngwe e ka hlahisa eng, le hore e tla hloka eng polasing.",
+      "blindBackTranslation": "Then write down what each animal could produce, and what it will need on the farm."
+    },
+    {
+      "key": "slide.s19.b3",
+      "sourceEnglish": "Draw one useful link between livestock and the rest of your farm. Show what comes in and what leaves.",
+      "draft": "Taka kamano e le nngwe e molemo pakeng tsa diphoofolo le karolo e setseng ya polasi ya hao. Bontsha se kenang le se tlohang.",
+      "blindBackTranslation": "Draw one good relationship between the animals and the remaining part of your farm. Show what comes in and what goes out."
+    },
+    {
+      "key": "slide.s20.h",
+      "sourceEnglish": "Field Action: Put One Link to Work",
+      "draft": "Ketso ya Naheng: Sebedisa Kamano e le Nngwe",
+      "blindBackTranslation": "Field Action: Use One Relationship"
+    },
+    {
+      "key": "slide.s20.b0",
+      "sourceEnglish": "Choose one safe action from this module.",
+      "draft": "Kgetha ketso e le nngwe e sireletsehileng ho tswa moduleng ena.",
+      "blindBackTranslation": "Choose one safe action from this module."
+    },
+    {
+      "key": "slide.s20.b1",
+      "sourceEnglish": "Plan how chickens could use an empty bed after harvest, ask a beekeeper about a safe hive position, or check your animals’ daily needs.",
+      "draft": "Rera hore dikgoho (chickens) di ka sebedisa jwang bethe ya dijalo e se nang letho kamora kotulo, botsa moboloki wa dinotshi (bees) ka sebaka se sireletsehileng sa hive, kapa hlahloba ditlhoko tsa letsatsi le letsatsi tsa diphoofolo tsa hao.",
+      "blindBackTranslation": "Plan how chickens (chickens) could use an empty crop bed (bed) after harvest, ask a beekeeper (bees) about a safe hive location, or check the daily needs of your animals."
+    },
+    {
+      "key": "slide.s20.b2",
+      "sourceEnglish": "Record the food, water, shelter and care that the action requires.",
+      "draft": "Ngola dijo, metsi, setshabelo le tlhokomelo tseo ketso eo e di hlokang.",
+      "blindBackTranslation": "Write down the food, water, shelter and care that the action requires."
+    },
+    {
+      "key": "slide.s20.b3",
+      "sourceEnglish": "Start with the resources and help you can reliably provide.",
+      "draft": "Qala ka methopo le thuso tseo o ka di fanang ka tshepahalo.",
+      "blindBackTranslation": "Start with the resources and help that you can provide reliably."
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "lib/course-translation-drafts.ts": {
+    "before": {
+      "path": "lib__course-translation-drafts.ts.before.txt",
+      "sha256": "63652b9838ffbb0446f815b7ef9b3d45043bfc97d3bf4657ea5127de75b110e4"
+    },
+    "after": {
+      "path": "lib__course-translation-drafts.ts.after.txt",
+      "sha256": "4e87795b15197e3eb1eaca5c16fd0f97f6a8f2cff56d0e637258f26cff8322c6"
+    }
+  },
+  "lib/course-translation-drafts-ts.ts": {
+    "before": {
+      "path": "lib__course-translation-drafts-ts.ts.before.txt",
+      "sha256": "6195ba7766184d2298af73c0a55fbfc0d3d72b6e461ea7c67d7b13a4a76f5817"
+    },
+    "after": {
+      "path": "lib__course-translation-drafts-ts.ts.after.txt",
+      "sha256": "dd2d6061830fcfb722bfbbfe7e9d4eaa483503bd3f7217dbf392497f56981971"
+    }
+  },
+  "docs/narration/intro-permaculture.ts.paired-draft.json": {
+    "before": {
+      "path": "docs__narration__intro-permaculture.ts.paired-draft.json.before.txt",
+      "sha256": "0a358078b515eab624df8735a022a7e4a5b70c1e2a67b2ae551937296e327729"
+    },
+    "after": {
+      "path": "docs__narration__intro-permaculture.ts.paired-draft.json.after.txt",
+      "sha256": "94dc11005a921723e0a6722d18b868d0533d40983a014b84fcea436a104f424c"
+    }
+  },
+  "lib/course-asset-sizes.ts": {
+    "before": {
+      "path": "lib__course-asset-sizes.ts.before.txt",
+      "sha256": "a83aa343a799fc2c3e0fdfc1ed9d3d71f02968a1f86f652e7b6070957ea1ba5e"
+    },
+    "after": {
+      "path": "lib__course-asset-sizes.ts.after.txt",
+      "sha256": "c042c69c7b6bdaa2cd165538d829617e5306d16fe01b95c8e7dfced447cf51b9"
+    }
+  }
+}

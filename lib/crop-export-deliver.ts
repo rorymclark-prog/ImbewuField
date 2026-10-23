@@ -19,4 +19,5 @@ export {
   canShareFiles,
   prefersShareSheet,
   type FileDelivery,
+  type FileShare,
 } from '@/lib/file-delivery';

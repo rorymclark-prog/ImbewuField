@@ -1,0 +1,16 @@
+[
+{"id":"R271","verdict":"ok","problem":"Meaning matches (choose product). Spelling Kgetha vs Khetha is orthographic only.","repaired":"","severity":"minor"},
+{"id":"R272","verdict":"ok","problem":"","repaired":"","severity":"minor"},
+{"id":"R273","verdict":"hold","problem":"'dinate' for 'nuts' cannot be confirmed as Sesotho; drafter also flagged it. Unconfirmed word in a heading farmers see.","repaired":"","severity":"meaning"},
+{"id":"R274","verdict":"ok","problem":"'tsa tlhaho' = natural/wild; slightly broader than 'indigenous' but functional for a wild-fruit heading.","repaired":"","severity":"wording"},
+{"id":"R275","verdict":"hold","problem":"'sekgwa sa dijo' is a calque of 'food forest' that a smallholder may not parse (sekgwa = bush/woodland); drafter says the source term is itself unsure. Cryptic category heading.","repaired":"","severity":"meaning"},
+{"id":"R276","verdict":"ok","problem":"","repaired":"","severity":"minor"},
+{"id":"R277","verdict":"ok","problem":"Past tense 'you have added' matches 'you added'.","repaired":"","severity":"minor"},
+{"id":"R278","verdict":"ok","problem":"'Another product' matches the English; works after '+'.","repaired":"","severity":"minor"},
+{"id":"R279","verdict":"ok","problem":"","repaired":"","severity":"minor"},
+{"id":"R280","verdict":"ok","problem":"'Ngola' (write) is acceptable for 'type'.","repaired":"","severity":"minor"},
+{"id":"R281","verdict":"ok","problem":"","repaired":"","severity":"minor"},
+{"id":"R282","verdict":"hold","problem":"'Tjhelete ya matsoho' = 'money of the hands'; after 'Invoice ·' it can read as cash-on-hand/balance rather than the payment method 'cash', and the drafter itself marks it uncertain. Cannot confirm it is the natural word for paying in cash.","repaired":"","severity":"meaning"},
+{"id":"R283","verdict":"ok","problem":"'Karete' is the common loanword for card; reads as a payment instrument after 'Invoice ·'. 'Karete ya banka' would be clearer but longer.","repaired":"","severity":"minor"},
+{"id":"R284","verdict":"hold","problem":"'Fono' means only the telephone; after 'Invoice ·' it reads as 'telephone/phoned', not as paying by mobile money. Cannot be repaired confidently ('Tjhelete ya fono' is the drafter's guess, unconfirmed).","repaired":"","severity":"meaning"}
+]

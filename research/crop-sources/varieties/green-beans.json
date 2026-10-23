@@ -1,0 +1,36 @@
+{
+  "key": "green-beans",
+  "varieties": [
+    {
+      "name": "Contender",
+      "zones": ["highveld", "lowveld-bushveld", "subtropical-coast", "midlands-mistbelt", "western-cape", "southern-cape", "karoo-arid"],
+      "maturity": "early",
+      "season": "Spring and summer, full sun",
+      "traits": "Bush habit, dark green stringless pods, germination 7-10 days",
+      "type": null,
+      "note": "Marketed nationally (Starke Ayres home-garden range) with no stated regional restriction; the catalog's existing bush-bean spacing/timing figures already assume this general bush type. Breeding type (OP/hybrid) is not stated on the retail listing found, so left null rather than guessed — Contender is a long-established North American bush bean name and is commonly OP elsewhere, but that is not itself SA-sourced confirmation.",
+      "evidence": [
+        { "quote": "produces tasty beans with dark green stringless pods, with germination of 7 to 10 days and maturity of 60 days", "url": "https://www.starkeayres.com/products/home-gardening-seed/vegetable-seed/bush-bean-contender", "page": null, "doc": "Contender bush bean, Starke Ayres product page (via search snippet — page is JS-rendered and could not be fetched directly for a verbatim on-page quote)" }
+      ]
+    },
+    {
+      "name": "Star 2000",
+      "zones": ["highveld", "lowveld-bushveld", "subtropical-coast", "midlands-mistbelt", "western-cape", "southern-cape", "karoo-arid"],
+      "maturity": "early",
+      "season": "Spring and summer, full sun",
+      "traits": "High-yielding bush habit, dark green stringless pods, germination 7-10 days",
+      "type": null,
+      "note": "Same national, non-region-specific marketing as Contender; the two are presented by Starke Ayres as equivalent bush-bean choices.",
+      "evidence": [
+        { "quote": "high-yielding bush beans with tasty, dark green stringless pods, also with germination of 7 to 10 days and maturity of 60 days", "url": "https://www.starkeayres.com/products/home-gardening-seed/vegetable-seed/bush-bean-star-2000", "page": null, "doc": "Star 2000 bush bean, Starke Ayres product page (via search snippet — JS-rendered page, not directly fetchable)" }
+      ]
+    }
+  ],
+  "zoneAdvice": {},
+  "gaps": [
+    "No South African source found that differentiates green bean VARIETY choice by growing zone the way onions or carrots are differentiated — both named varieties are marketed nationally with only a season (spring/summer, full sun) attached, not a region. zoneAdvice is left empty rather than inventing an 8-zone spread; all zones list is carried only on the variety entries as 'this variety is not zone-restricted by the source', not as a sourced zone recommendation.",
+    "Both Starke Ayres product pages are JS-rendered single-page-app views; curl/WebFetch could only retrieve the page shell (nav menu), not the product description, so the quotes above come from a WebSearch tool summary of that page rather than a directly fetched verbatim quote. Flagged here rather than hidden.",
+    "OP vs hybrid status not stated for either cultivar in the source reached.",
+    "A Starke Ayres runner/climbing bean ('Lazy Housewife') was mentioned in passing by a search result but not independently verified or added, since climbing beans use a different stand than this catalog's bush-bean-based spacing figures."
+  ]
+}

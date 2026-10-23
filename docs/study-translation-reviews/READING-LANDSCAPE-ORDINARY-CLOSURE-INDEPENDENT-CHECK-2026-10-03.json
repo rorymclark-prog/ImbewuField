@@ -1,0 +1,236 @@
+{
+  "title": "Independent final semantic and composition check of root-repaired Reading the Landscape candidates",
+  "date": "2026-10-03",
+  "authority": {
+    "repository": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+    "pinnedRevision": "a961b2d305522907fbfb7cabca9cad597dba10e5",
+    "packet": "/tmp/imbewu-regional-reading-ordinary-closure-candidates-root-repaired-20261003.json"
+  },
+  "scope": "Read-only verification of every one of the 10 repaired candidates against the pinned canonical module, current field text, body composition metadata, assessment placement and protected meanings. Does not certify target-language fluency or local approval.",
+  "summary": "All 10 candidate source strings match their canonical source field at the pinned revision. All five body candidates equal their current registry field after applying only declared clause changes, with paragraph order and existing localized spans preserved. No further material semantic or index repair identified. Candidates remain visibly unreviewed for fluency.",
+  "requiredProtectiveChecks": [
+    "A-frame marks equal-height points; it does not prove earthwork suitability.",
+    "Winter/summer sun direction and local shade checks retained. Pawpaw and young citrus sensitivity and frost-pocket exclusion remain explicit.",
+    "Cold air downhill flow and low-ground frost risk retained; observation and adviser before permanent nursery choice retained.",
+    "Mist alone does not establish ice; frost damage can occur without visible ice; no hill guarantees freedom from frost.",
+    "Late-blight uncertainty, cool/damp condition, moving a bed alone being insufficient, and local crop-health advice retained."
+  ],
+  "fields": [
+    {
+      "candidateIndex": 0,
+      "language": "st",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location. North-facing slopes often receive more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles. Watch your own site before choosing where to plant tender crops or place buildings.\n\nWinter sun is lower and farther north than summer sun. A wall or shade cloth can shade a bed longer in winter than in summer. Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+      "currentField": "Dikarolong tse ngata tsa South Africa, haholo mariha, letsatsi le ba ka leboya. Tsela ya lona e fetoha ho latela sehla le sebaka sa hao. Matswapo a shebileng leboya hangata a fumana letsatsi le lengata mme a ka futhumala le ho omella haholwanyane. Matswapo a shebileng borwa hangata a phodile haholwanyane ebile a na le mongobo. Serame (frost) se ka bokellana dikotong tse tlase moo moya o batang o dulang teng. Shebella setsha sa hao pele o kgetha moo o ka jalang dijalo tse bonolo (tender crops) kapa ho beha meaho.\n\nLetsatsi la mariha le tlase haholo ebile le hole ka leboya ho feta letsatsi la lehlabula. Lebota kapa lesela la moriti (shade cloth) le ka etsa moriti hodima bethe ya serapa nako e telele mariha ho feta lehlabula. Pele o beha ntho leha e le efe ya nako e telele, ema sebakeng seo ka 8am, motshehare, le 4pm ka letsatsi la mariha mme o shebelle moo moriti o welang teng.\n\nPawpaw le citrus tse nyane di kotsing habonolo ke serame (frost). Boloka dimela tse bonolo hole le dibaka tse tlase tse tsejwang ka dipokotho tsa serame (frost pockets). Hlokomela serame sa lehae pele o jala.",
+      "candidateField": "Dikarolong tse ngata tsa South Africa, haholo mariha, letsatsi le ba ka leboya. Tsela ya lona e fetoha ho latela sehla le sebaka sa hao. Matswapo a shebileng leboya hangata a fumana letsatsi le lengata mme a ka futhumala le ho omella haholwanyane. Matswapo a shebileng borwa hangata a phodile haholwanyane ebile a na le mongobo. Serame (frost) se ka bokellana dikotong tse tlase moo moya o batang o dulang teng. Shebella setsha sa hao pele o kgetha moo o ka jalang dijalo tse bonolo (tender crops) kapa ho beha meaho.\n\nLetsatsi la mariha le tlase haholo ebile le hole ka leboya ho feta letsatsi la lehlabula. Lebota kapa lesela la moriti (shade cloth) le ka etsa moriti hodima bethe ya serapa nako e telele mariha ho feta lehlabula. Pele o beha ntho leha e le efe ya nako e telele, ema sebakeng seo ka 8am, motshehare, le 4pm ka letsatsi la mariha mme o shebelle moo moriti o welang teng.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Hlokomela serame sa lehae pele o jala.",
+      "canonicalSourceMatchAtPinnedRevision": true,
+      "bodyEqualsCurrentPlusDeclaredChanges": true,
+      "assessmentMetadata": {},
+      "finding": "Current localized paragraphs 1–2 are byte-identical in candidate. Paragraph 3 changes only the declared clause. The English “Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets.” remains exact; the current local observation sentence remains exact.",
+      "verdict": "composition and protected meaning preserved; fluency unverified",
+      "furtherRepair": "No further repair.",
+      "registryProof": {
+        "revision": "a961b2d305522907fbfb7cabca9cad597dba10e5",
+        "module": "lib/course-modules.ts",
+        "targetRegistry": "lib/course-translation-drafts-st-reading-landscape.ts"
+      }
+    },
+    {
+      "candidateIndex": 1,
+      "language": "ve",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location. North-facing slopes often receive more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles. Watch your own site before choosing where to plant tender crops or place buildings.\n\nWinter sun is lower and farther north than summer sun. A wall or shade cloth can shade a bed longer in winter than in summer. Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+      "currentField": "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), ḓuvha ḽi vha ḽi devhula (north). Nḓila yaḽo i shanduka hu tshi tevhedzwa khalaṅwaha na vhuimo haṋu. U sendama ho lavhelesaho devhula (north-facing slopes) lunzhi hu wana ḓuvha ḽinzhisa nahone hu nga duderana ha dovha ha oma. U sendama ho lavhelesaho tshipembe (south-facing slopes) lunzhi hu fhola ha vha na vhunyisi. Tshando (frost) tshi nga kuvhangana kha milindi i re fhasi hune muya wo rotholaho wa dzula hone. Ṱhogomelani tshitentsi tshaṋu musi ni sa athu nanga hune na ḓo ṱavha zwimela zwi sa konḓeleliho tshando (tender crops) kana u vhea zwifhaṱo.\n\nḒuvha ḽa vhuria ḽi fhasi nahone ḽi kule devhula u fhira ḓuvha ḽa tshilimo. Luvhondo kana lilaṱa ḽa murunzi (shade cloth) zwi nga thivhela ndima lwa tshifhinga tshilapfu vhuria u fhira tshilimo. Musi ni sa athu vhea tshithu tshi sa rembuluswi, imani henefho fhethu nga 8am, masiari, na 4pm nga ḓuvha ḽa vhuria nahone ni sedze hune murunzi wa wela hone.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Ṱhogomelani tshando tsha henefho musi ni sa athu ṱavha.",
+      "candidateField": "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), ḓuvha ḽi vha ḽi devhula (north). Nḓila yaḽo i shanduka hu tshi tevhedzwa khalaṅwaha na vhuimo haṋu. U sendama ho lavhelesaho devhula (north-facing slopes) lunzhi hu wana ḓuvha ḽinzhisa nahone hu nga duderana ha dovha ha oma. U sendama ho lavhelesaho tshipembe (south-facing slopes) lunzhi hu fhola ha vha na vhunyisi. Tshando (frost) tshi nga kuvhangana kha milindi i re fhasi hune muya wo rotholaho wa dzula hone. Ṱhogomelani tshitentsi tshaṋu musi ni sa athu nanga hune na ḓo ṱavha zwimela zwi sa konḓeleliho tshando (tender crops) kana u vhea zwifhaṱo.\n\nḒuvha ḽa vhuria ḽi fhasi nahone ḽi kule devhula u fhira ḓuvha ḽa tshilimo. Luvhondo kana lilaṱa ḽa murunzi (shade cloth) zwi nga thivhela ndima lwa tshifhinga tshilapfu vhuria u fhira tshilimo. Musi ni sa athu vhea tshithu tshi sa rembuluswi, imani henefho fhethu nga 8am, masiari, na 4pm nga ḓuvha ḽa vhuria nahone ni sedze hune murunzi wa wela hone.\n\nPawpaw and young citrus are sensitive to frost. Ni songo vhea tender plants kha known low frost pockets. Ṱhogomelani tshando tsha henefho musi ni sa athu ṱavha.",
+      "canonicalSourceMatchAtPinnedRevision": true,
+      "bodyEqualsCurrentPlusDeclaredChanges": true,
+      "assessmentMetadata": {},
+      "finding": "Current localized paragraphs 1–2 are byte-identical in candidate. Paragraph 3 changes only the declared clause. The English “Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets.” remains exact; the current local observation sentence remains exact.",
+      "verdict": "composition and protected meaning preserved; fluency unverified",
+      "furtherRepair": "No further repair.",
+      "registryProof": {
+        "revision": "a961b2d305522907fbfb7cabca9cad597dba10e5",
+        "module": "lib/course-modules.ts",
+        "targetRegistry": "lib/course-translation-drafts-ve-reading-landscape.ts"
+      }
+    },
+    {
+      "candidateIndex": 2,
+      "language": "ts",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "body",
+      "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location. North-facing slopes often receive more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles. Watch your own site before choosing where to plant tender crops or place buildings.\n\nWinter sun is lower and farther north than summer sun. A wall or shade cloth can shade a bed longer in winter than in summer. Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+      "currentField": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, dyambu ri le n'walungwini. Ndlela ya rona yi cinca hi tinguva na ndhawu ya wena. Tindhawu to rhelela leti languteke n'walungwini ti tala ku kuma dyambu ro tala naswona ti nga hisa no oma swinene. Tindhawu to rhelela leti languteke dzongeni ti tala ku titimela no tsakamanyana. Xirhami xi nga hlengeletana eka swikhele swa le hansi laha moya wo titimela wu wisaka kona. Xiya ndhawu ya wena u nga se hlawula laha u nga byalaka swimilana leswi tsaneke kumbe ku veka miako.\n\nDyambu ra vuxika ri le hansi naswona ri le n'walungwini swinene ku tlula dyambu ra ximumu. Khumbi kumbe shade cloth swi nga sirhelela mubhedhi hi ndzhuti nkarhi wo leha hi vuxika ku tlula hi ximumu. U nga se veka nchumu wo tshama hilaha ku nga heriki, yima eka ndhawu yoleyo hi 8am, nhlikanhi, na 4pm hi siku ra vuxika u languta laha ndzhuti wu welaka kona.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Xiya local frost u nga se byala.",
+      "candidateField": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, dyambu ri le n'walungwini. Ndlela ya rona yi cinca hi tinguva na ndhawu ya wena. Tindhawu to rhelela leti languteke n'walungwini ti tala ku kuma dyambu ro tala naswona ti nga hisa no oma swinene. Tindhawu to rhelela leti languteke dzongeni ti tala ku titimela no tsakamanyana. Xirhami xi nga hlengeletana eka swikhele swa le hansi laha moya wo titimela wu wisaka kona. Xiya ndhawu ya wena u nga se hlawula laha u nga byalaka swimilana leswi tsaneke kumbe ku veka miako.\n\nDyambu ra vuxika ri le hansi naswona ri le n'walungwini swinene ku tlula dyambu ra ximumu. Khumbi kumbe shade cloth swi nga sirhelela mubhedhi hi ndzhuti nkarhi wo leha hi vuxika ku tlula hi ximumu. U nga se veka nchumu wo tshama hilaha ku nga heriki, yima eka ndhawu yoleyo hi 8am, nhlikanhi, na 4pm hi siku ra vuxika u languta laha ndzhuti wu welaka kona.\n\nPawpaw and young citrus are sensitive to frost. Hlayisa tender plants swi nga ri eka known low frost pockets. Xiya local frost u nga se byala.",
+      "canonicalSourceMatchAtPinnedRevision": true,
+      "bodyEqualsCurrentPlusDeclaredChanges": true,
+      "assessmentMetadata": {},
+      "finding": "Current localized paragraphs 1–2 are byte-identical in candidate. Paragraph 3 changes only the declared clause. The English “Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets.” remains exact; the current local observation sentence remains exact.",
+      "verdict": "composition and protected meaning preserved; fluency unverified",
+      "furtherRepair": "No further repair.",
+      "registryProof": {
+        "revision": "a961b2d305522907fbfb7cabca9cad597dba10e5",
+        "module": "lib/course-modules.ts",
+        "targetRegistry": "lib/course-translation-drafts-ts.ts"
+      }
+    },
+    {
+      "candidateIndex": 3,
+      "language": "ve",
+      "lessonId": "reading-landscape-l1",
+      "fieldPath": "keyPoints[1]",
+      "sourceEnglish": "An A-frame can mark points at the same height, but it does not show whether earthworks are suitable",
+      "currentField": "An A-frame can mark points at the same height, but it does not show whether earthworks are suitable",
+      "candidateField": "A-frame i nga thusa u maka points at the same height, fhedzi a i sumbedzi whether earthworks are suitable.",
+      "canonicalSourceMatchAtPinnedRevision": true,
+      "bodyEqualsCurrentPlusDeclaredChanges": null,
+      "assessmentMetadata": {},
+      "finding": "Retains can/help rather than must; retains same-height points and explicitly says A-frame does not establish whether earthworks are suitable.",
+      "verdict": "material semantics preserved; fluency unverified",
+      "furtherRepair": "No further repair.",
+      "registryProof": {
+        "revision": "a961b2d305522907fbfb7cabca9cad597dba10e5",
+        "module": "lib/course-modules.ts",
+        "targetRegistry": "lib/course-translation-drafts-ve-reading-landscape.ts"
+      }
+    },
+    {
+      "candidateIndex": 4,
+      "language": "ve",
+      "lessonId": "reading-landscape-l4",
+      "fieldPath": "quiz[1].options[1]",
+      "sourceEnglish": "They can come from different directions, changing where windbreaks and tender crops should go",
+      "currentField": "They can come from different directions, changing where windbreaks and tender crops should go",
+      "candidateField": "Thungo dza hone dzi nga fhambana; changing where windbreaks and tender crops should go.",
+      "canonicalSourceMatchAtPinnedRevision": true,
+      "bodyEqualsCurrentPlusDeclaredChanges": null,
+      "assessmentMetadata": {
+        "sourceCorrectIndex": 1,
+        "currentCorrectIndex": 1,
+        "optionOrderPreserved": true
+      },
+      "finding": "Retains possible differing seasonal directions and the consequence for windbreak and tender-crop placement. The field remains quiz[1].options[1]; correct index/order stays 1.",
+      "verdict": "material semantics and assessment index preserved; fluency unverified",
+      "furtherRepair": "No further repair.",
+      "registryProof": {
+        "revision": "a961b2d305522907fbfb7cabca9cad597dba10e5",
+        "module": "lib/course-modules.ts",
+        "targetRegistry": "lib/course-translation-drafts-ve-reading-landscape.ts"
+      }
+    },
+    {
+      "candidateIndex": 5,
+      "language": "ve",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "body",
+      "sourceEnglish": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "currentField": "Muya u nga tshinyadza zwimela kha smallholding. Thungo na maanḓa a muya wa tshinyadzaho zwi shanduka u ya nga vhupo, khalaṅwaha, na your site's ridges and gaps. Tshimbilani kha shango nga maḓuvha a re na muya. Ṅwalani hune muya wa bva hone na zwine wa kwama. Check local weather records musi ni sa athu dzhia tsheo ya hune tsireledzo ya ṱoḓea hone.\n\nVhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Ṱolani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, u elela ha muya na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "candidateField": "Muya u nga tshinyadza zwimela kha smallholding. Thungo na maanḓa a muya wa tshinyadzaho zwi shanduka u ya nga vhupo, khalaṅwaha, na your site's ridges and gaps. Tshimbilani kha shango nga maḓuvha a re na muya. Ṅwalani hune muya wa bva hone na zwine wa kwama. Check local weather records musi ni sa athu dzhia tsheo ya hune tsireledzo ya ṱoḓea hone.\n\nVhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Frost patterns zwi dovha zwa ya nga site. Vhambedzani candidate places through the local frost season. Sedzani local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Ṱolani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, u elela ha muya na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "canonicalSourceMatchAtPinnedRevision": true,
+      "bodyEqualsCurrentPlusDeclaredChanges": true,
+      "assessmentMetadata": {},
+      "finding": "All current spans outside three declared paragraph-2 replacements remain byte-identical. The clear/still condition, downhill flow, colder low places, frost-season comparison, minimum-record availability, observe-and-adviser branch, mist/ice distinction, no-visible-ice damage possibility, and complete late-blight limitation/advice remain.",
+      "verdict": "composition and safety meaning preserved; fluency unverified",
+      "furtherRepair": "No further repair.",
+      "registryProof": {
+        "revision": "a961b2d305522907fbfb7cabca9cad597dba10e5",
+        "module": "lib/course-modules.ts",
+        "targetRegistry": "lib/course-translation-drafts-ve-reading-landscape.ts"
+      }
+    },
+    {
+      "candidateIndex": 6,
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "body",
+      "sourceEnglish": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "currentField": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matimba ya moya lowu onhaka swi cinca hi muganga, nguva na your site's ridges and gaps. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona na leswi wu khumbaka swona. Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records where available. Loko records ti nga ri kona, yana mahlweni u ri karhi u languta across cold nights, u tlhela u vutisa local agriculture adviser u nga si hlawula permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu where cold or damage lasts longest. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.\n\nEka matamatisi lawa ya khomiweke hi late blight, ku famba ka moya na dyambu ra nimixo swi nga pfuna ku omisa matluka. Late blight can still spread during prolonged cool, damp weather. Ku rhurhisa bed ntsena a swi nge lawuli late blight; seek local crop-health guidance too.",
+      "candidateField": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matimba ya moya lowu onhaka swi cinca hi muganga, nguva na your site's ridges and gaps. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona na leswi wu khumbaka swona. Kambela matimu ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. Tindhawu leti can be colder than nearby slopes. Frost patterns na tona ti ya hi site. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records where available. Loko records ti nga ri kona, yana mahlweni u ri karhi u languta across cold nights, u tlhela u vutisa local agriculture adviser u nga si hlawula permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu where cold or damage lasts longest. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.\n\nEka matamatisi lawa ya khomiweke hi late blight, ku famba ka moya na dyambu ra nimixo swi nga pfuna ku omisa matluka. Late blight can still spread during prolonged cool, damp weather. Ku rhurhisa bed ntsena a swi nge lawuli late blight; seek local crop-health guidance too.",
+      "canonicalSourceMatchAtPinnedRevision": true,
+      "bodyEqualsCurrentPlusDeclaredChanges": true,
+      "assessmentMetadata": {},
+      "finding": "All current spans outside two declared paragraph-2 replacements remain byte-identical. Cold-air flow/low places remains exact English; other source conditions are intact. Ice/mist distinction and damage without visible ice remain exact English. Late blight can still spread in prolonged cool/damp weather; moving alone will not control it; crop-health advice remains.",
+      "verdict": "composition and safety meaning preserved; fluency unverified",
+      "furtherRepair": "No further repair.",
+      "registryProof": {
+        "revision": "a961b2d305522907fbfb7cabca9cad597dba10e5",
+        "module": "lib/course-modules.ts",
+        "targetRegistry": "lib/course-translation-drafts-ts.ts"
+      }
+    },
+    {
+      "candidateIndex": 7,
+      "language": "ts",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "quiz[0].rationale",
+      "sourceEnglish": "Cold air can collect in low places. A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.",
+      "currentField": "Moya wo titimela wu nga hlengeletana eka tindhawu ta le hansi. A sunnier site outside a known frost pocket may reduce risk, but local frost observations must guide the final position.",
+      "candidateField": "Moya wo titimela wu nga hlengeletana eka tindhawu ta le hansi. Ndhawu leyi nga na dyambu swinene ehandle ka known frost pocket swi nga ha hunguta risk; kambe local frost observations must guide the final position.",
+      "canonicalSourceMatchAtPinnedRevision": true,
+      "bodyEqualsCurrentPlusDeclaredChanges": null,
+      "assessmentMetadata": {
+        "sourceCorrectIndex": 2,
+        "currentCorrectIndex": 2,
+        "optionOrderPreserved": true
+      },
+      "finding": "Restores the source/current first sentence about cold air collecting in low places. Retains may reduce risk and local observation must guide final position.",
+      "verdict": "omission repaired; material semantics preserved; fluency unverified",
+      "furtherRepair": "No further repair.",
+      "registryProof": {
+        "revision": "a961b2d305522907fbfb7cabca9cad597dba10e5",
+        "module": "lib/course-modules.ts",
+        "targetRegistry": "lib/course-translation-drafts-ts.ts"
+      }
+    },
+    {
+      "candidateIndex": 8,
+      "language": "ts",
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "quiz[1].rationale",
+      "sourceEnglish": "Winter sun is lower and farther north. Shade cloth can change the hours of sun on a bed. Check the actual shadows at 8am, midday, and 4pm before fixing it in place.",
+      "currentField": "Winter sun is lower and farther north. Shade cloth can change the hours of sun on a bed. Kambela the actual shadows at 8am, midday, and 4pm before fixing it in place.",
+      "candidateField": "Winter sun is lower and farther north. Shade cloth yi nga cinca the hours of sun on a bed. Kambela ndzhuti wa xiviri at 8am, midday, and 4pm u nga se yi tiyisa endhawini.",
+      "canonicalSourceMatchAtPinnedRevision": true,
+      "bodyEqualsCurrentPlusDeclaredChanges": null,
+      "assessmentMetadata": {
+        "sourceCorrectIndex": 0,
+        "currentCorrectIndex": 0,
+        "optionOrderPreserved": true
+      },
+      "finding": "Winter sun direction and shade-cloth effect remain exact English. The actual-shadow check at all three original times and before-fixing condition remain.",
+      "verdict": "material semantics preserved; fluency unverified",
+      "furtherRepair": "No further repair.",
+      "registryProof": {
+        "revision": "a961b2d305522907fbfb7cabca9cad597dba10e5",
+        "module": "lib/course-modules.ts",
+        "targetRegistry": "lib/course-translation-drafts-ts.ts"
+      }
+    },
+    {
+      "candidateIndex": 9,
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "quiz[1].question",
+      "sourceEnglish": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Which bed position may help leaves dry, alongside local crop-health advice?",
+      "currentField": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Hi yihi bed position leyi yi nga pfunaka leswaku matluka ma oma, alongside local crop-health advice?",
+      "candidateField": "Matamatisi ya murimi wa KZN repeatedly develop late blight during cool, damp spells. Hi yihi bed position leyi yi nga pfunaka leswaku matluka ma oma, alongside local crop-health advice?",
+      "canonicalSourceMatchAtPinnedRevision": true,
+      "bodyEqualsCurrentPlusDeclaredChanges": null,
+      "assessmentMetadata": {
+        "sourceCorrectIndex": 1,
+        "currentCorrectIndex": 1,
+        "optionOrderPreserved": true
+      },
+      "finding": "Correctly attached to L3 quiz[1].question (KZN tomatoes repeatedly develop late blight during cool/damp spells), not L2 nursery question. Existing English claim, repeated occurrence, condition, bed-position prompt, and alongside-local-advice condition are preserved. Correct answer index remains 1.",
+      "verdict": "wrong-binding repair is correct; material meaning and assessment index preserved; fluency unverified",
+      "furtherRepair": "No further repair.",
+      "registryProof": {
+        "revision": "a961b2d305522907fbfb7cabca9cad597dba10e5",
+        "module": "lib/course-modules.ts",
+        "targetRegistry": "lib/course-translation-drafts-ts.ts"
+      }
+    }
+  ]
+}

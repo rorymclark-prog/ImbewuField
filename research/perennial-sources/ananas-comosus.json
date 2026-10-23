@@ -1,0 +1,81 @@
+{
+  "speciesId": "ananas-comosus",
+  "commonName": "Pineapple",
+  "botanicalName": "Ananas comosus",
+  "harvestProduct": "fruit; keep whole fruit and processed portions separate",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": [
+      1.5,
+      1.5
+    ],
+    "evidence": {
+      "quote": "Can vary tremendously, but a cycle time of 18 months is normal at Hluhluwe.",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN (2006), Pineapple: Bearing Age",
+      "page": 22
+    },
+    "notes": "Hluhluwe production-cycle reference: 18 months / 12 = 1.5 years. The source explicitly says cycle length varies greatly. Starting material, cultivar, weather and flower initiation matter; this is neither a universal first-harvest date nor a 12-month annual yield."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No species-wide full-bearing age stated. Pineapple is a plant/ratoon crop, not an orchard tree; Queen plantings in this guide are re-established after the plant crop."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "The source supplies hectare crop-cycle yields and distinct cultivar planting densities. It does not attribute each yield class to a cultivar/density or supply an annual age-yield curve. Keep these native references separate rather than multiply a mapped plant by an invented annual kg default."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chilling requirement. The guide identifies frost and cold as production hazards."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No species-wide pollination requirement stated in this regional production guide."
+  },
+  "productionGuidance": {
+    "products": "Pineapple fruit; whole fruit and processed portions have different weights.",
+    "care": [
+      "Use a warm, frost-free, well-drained site. The KZN production reference is Hluhluwe; it does not establish suitability throughout South Africa.",
+      "Record planting and actual picking dates. Year-round commercial planting or marketing does not mean every planted pineapple gives fruit in every month."
+    ],
+    "purchase": [
+      "KZN guide: Queen is a fresh-fruit candidate; Smooth Cayenne is mainly a processing candidate. Confirm clean crowns/suckers, local suitability and crop-cycle advice with a nursery. Queen re-establishment after the plant crop belongs in the future plan."
+    ]
+  },
+  "supplementaryReferences": [
+    {
+      "title": "Hluhluwe crop-cycle output",
+      "quote": "Yields (t/ha) Conservative: 50 Average: 60 to 75 Good: 80",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN (2006), Pineapple",
+      "page": 22,
+      "note": "Regional hectare reference: conservative 50 t/ha, average 60–75 t/ha, good 80 t/ha per production crop. The same page describes a normal 18-month Hluhluwe cycle. These are not kg/plant/year or a forecast for a household planting."
+    },
+    {
+      "title": "Cultivar and renewal choice",
+      "quote": "Queen – Suckers planted at 120 000 to 150 000 plants per hectare tend to give optimum yields, but need to be re-established after the plant crop. ... Smooth Cayenne - mainly processing, weight 2kg ... Queen - mainly fresh market, weight 0.75kg",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN (2006), Pineapple: Spacing and Cultivars",
+      "page": 22,
+      "note": "Queen and Smooth Cayenne serve different uses. The guide's example fruit weights (Queen 0.75 kg; Smooth Cayenne 2 kg) are cultivar descriptions, not annual yields per plant. Queen is re-established after the plant crop in this system."
+    },
+    {
+      "title": "Climate and calendar conditions",
+      "quote": "Plants are frost sensitive. ... Good drainage is essential ... In the warmer production area of Hluhluwe there is year-round planting. In cooler areas planting is restricted to the warmer months",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN (2006), Pineapple: Climate and Planting Times",
+      "page": 22,
+      "note": "Frost sensitivity and drainage constrain the site. Year-round planting at Hluhluwe is a planting reference, not an all-year household picking window; cooler sites use warmer planting months."
+    }
+  ],
+  "gaps": [
+    "Checked 11 October 2026 against the official guide and rendered PDF page 22 (printed page 18). No fixed local picking-month array is stated. Chemical flower-initiation and commercial marketing references must not become a household all-year calendar.",
+    "No generic annual per-plant age-yield curve, full-bearing age or species-wide chill/pollination value is supplied by this source. Regional establishment and output references are retained and shown in their original units."
+  ],
+  "householdFoodStatus": "confirmed-food"
+}

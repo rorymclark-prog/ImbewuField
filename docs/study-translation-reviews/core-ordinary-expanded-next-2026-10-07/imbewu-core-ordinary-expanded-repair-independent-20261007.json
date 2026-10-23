@@ -1,0 +1,275 @@
+{
+  "title": "Independent second semantic and full-composition check of repaired ordinary regional candidates",
+  "date": "2026-10-07",
+  "inputPacket": "/tmp/imbewu-core-ordinary-expanded-repaired-candidates-20261007.json",
+  "worktree": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField",
+  "repoHeadClaimed": "0b611b93de9c998d601c15cbc9a9aa6476f25274",
+  "reviewLimits": [
+    "Read-only source and candidate check.",
+    "No fluent-speaker or agricultural approval claimed.",
+    "No repository authoring edits, tests, browser, rendering, or publication."
+  ],
+  "structuralAssertions": {
+    "allTenRowsReviewed": true,
+    "pairedReadingLandscapeTargetRecomposedFromActualSegments": true,
+    "pairedHungryGapHeadingRecomposedFromActualSegments": true,
+    "allCandidateProposalCompositionsEqualExplicitPrefixFragmentSuffix": true,
+    "chickenProposalChangesOnlyRequestedRotationSegmentAndPreservesExactSafetySuffix": true,
+    "exactDraftRegistryImportsPresent": true,
+    "allTenExactSourceContextsMatchedCurrentPairedOrCanonicalFields": true,
+    "normalizedLanguageLabel": "Use Xitsonga (ts) for the Xitsonga rows; the candidate label “Tshivitsonga / Xitsonga” is nonstandard.",
+    "rootThermalComparisonReviewedAgainstCurrentProjectUseOfXirhami": true,
+    "rootThermalHoldOverrideRecordedSeparately": true
+  },
+  "counts": {
+    "effectiveAccept": 6,
+    "effectiveRepair": 0,
+    "effectiveHold": 4,
+    "note": "Effective count applies the root thermal hold override to RL-TS-COLDER-SLOPES; the original per-row rationale is preserved for audit."
+  },
+  "rows": [
+    {
+      "id": "RL-TS-COLDER-SLOPES",
+      "independentDisposition": "accept",
+      "exactBinding": {
+        "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+        "module": "reading-landscape",
+        "slide": 14,
+        "field": "target.body[0].segments[3]",
+        "segmentStatus": "english-hold"
+      },
+      "sourceEnglishFullContext": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "actualCurrentTargetFullContext": "Loko ku ri vusiku byo basa, ku nga ri na moya, moya wo titimela wu nga khuluka wu ya ehansi wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti nga va colder than nearby slopes.",
+      "actualPrefix": "Loko ku ri vusiku byo basa, ku nga ri na moya, moya wo titimela wu nga khuluka wu ya ehansi wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti nga va",
+      "currentCandidateFragment": " colder than nearby slopes.",
+      "actualSuffix": "",
+      "candidateProposedFragment": " na xirhami xo tala ku tlurisa tindhawu to rhelela leti nga ekusuhi.",
+      "candidateComposedTarget": "Loko ku ri vusiku byo basa, ku nga ri na moya, moya wo titimela wu nga khuluka wu ya ehansi wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti nga va na xirhami xo tala ku tlurisa tindhawu to rhelela leti nga ekusuhi.",
+      "independentComposedTarget": "Loko ku ri vusiku byo basa, ku nga ri na moya, moya wo titimela wu nga khuluka wu ya ehansi wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti nga va na xirhami xo tala ku tlurisa tindhawu to rhelela leti nga ekusuhi.",
+      "independentSemanticBacktranslation": "These places can be colder than nearby slopes.",
+      "independentReasoning": "The revised predicate uses a comparative noun phrase (“more coldness than nearby slopes”) after the retained `ti nga va` modal/copula. It avoids the prior bare finite predicate immediately following `va`, and retains “these places can be” plus the colder-than comparison. Candidate is a bounded meaning draft.",
+      "uncertainty": "Check the exact Xitsonga comparative construction and the adjective/noun relation in “na xirhami xo tala ku tlurisa” with a fluent reviewer. Use standard language label Xitsonga (ts), not “Tshivitsonga / Xitsonga.” No fluency approval."
+    },
+    {
+      "id": "VS-VE-HUNGRY-GAP-HEADING",
+      "independentDisposition": "accept",
+      "exactBinding": {
+        "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "module": "vegetables-staples",
+        "slide": 11,
+        "field": "target.heading.segments[1]",
+        "segmentStatus": "english-hold"
+      },
+      "sourceEnglishFullContext": "Plan Backwards From Your Hungry Gap",
+      "actualCurrentTargetFullContext": "Planani ni tshi humela murahu u bva kha Your Hungry Gap",
+      "actualPrefix": "Planani ni tshi humela murahu u bva kha ",
+      "currentCandidateFragment": "Your Hungry Gap",
+      "actualSuffix": "",
+      "candidateProposedFragment": "Hungry gap yaṋu",
+      "candidateComposedTarget": "Planani ni tshi humela murahu u bva kha Hungry gap yaṋu",
+      "independentComposedTarget": "Planani ni tshi humela murahu u bva kha Hungry gap yaṋu",
+      "independentSemanticBacktranslation": "Plan backwards from your hungry gap.",
+      "independentReasoning": "The possessive phrase is “your hungry gap”; it preserves the heading frame “Plan backwards from” and leaves the established term intact.",
+      "uncertainty": "Check Tshivenda capitalization and collocation with a fluent reviewer. This is a meaning check only."
+    },
+    {
+      "id": "VS-TS-L2-WATER-LIMITS",
+      "independentDisposition": "accept",
+      "exactBinding": {
+        "file": "lib/course-translation-drafts-ts-vegetables-staples-l2.ts",
+        "module": "vegetables-staples",
+        "lesson": "vegetables-staples-l2",
+        "field": "body paragraph 19"
+      },
+      "sourceEnglishFullContext": "Yours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.",
+      "actualCurrentTargetFullContext": "Hungry gap ya wena yi nga fika endzhaku ka loko maize leyi hlayisiweke yi herile. Yi nga fika loko winter greens ti nga si lulama. Yi nga fika hi nkarhi wo oma loko water limits the garden.",
+      "actualPrefix": "Hungry gap ya wena yi nga fika endzhaku ka loko maize leyi hlayisiweke yi herile. Yi nga fika loko winter greens ti nga si lulama. Yi nga fika hi nkarhi wo oma ",
+      "currentCandidateFragment": "loko water limits the garden.",
+      "actualSuffix": "",
+      "candidateProposedFragment": "loko mati ma hunguta leswi xirhapa xi nga swi humesaka.",
+      "candidateComposedTarget": "Hungry gap ya wena yi nga fika endzhaku ka loko maize leyi hlayisiweke yi herile. Yi nga fika loko winter greens ti nga si lulama. Yi nga fika hi nkarhi wo oma loko mati ma hunguta leswi xirhapa xi nga swi humesaka.",
+      "independentComposedTarget": "Hungry gap ya wena yi nga fika endzhaku ka loko maize leyi hlayisiweke yi herile. Yi nga fika loko winter greens ti nga si lulama. Yi nga fika hi nkarhi wo oma loko mati ma hunguta leswi xirhapa xi nga swi humesaka.",
+      "independentSemanticBacktranslation": "Your gap might come after stored maize runs out; before winter greens are ready; or in a dry period when water reduces what the garden can produce.",
+      "independentReasoning": "In the full paragraph, the target retains the three possible timings. The final clause makes water reduce what the garden can produce during the dry period, which preserves a limitation without turning it into prevention or total crop failure.",
+      "uncertainty": "Check whether `hunguta leswi xirhapa xi nga swi humesaka` is idiomatic and sufficiently broad in Xitsonga. The modal `Yi nga fika` and dry-period context remain exact."
+    },
+    {
+      "id": "VS-VE-L2-WATER-LIMITS",
+      "independentDisposition": "accept",
+      "exactBinding": {
+        "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+        "module": "vegetables-staples",
+        "lesson": "vegetables-staples-l2",
+        "field": "body paragraph 19"
+      },
+      "sourceEnglishFullContext": "Yours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.",
+      "actualCurrentTargetFullContext": "Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela. I nga ḓa musi winter greens dzi sa athu u luga. I nga ḓa nga tshifhinga tsho omaho when water limits the garden.",
+      "actualPrefix": "Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela. I nga ḓa musi winter greens dzi sa athu u luga. I nga ḓa nga tshifhinga tsho omaho ",
+      "currentCandidateFragment": "when water limits the garden.",
+      "actualSuffix": "",
+      "candidateProposedFragment": "musi maḓi a tshi fhungudza zwine zwa nga aluswa tsimuni.",
+      "candidateComposedTarget": "Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela. I nga ḓa musi winter greens dzi sa athu u luga. I nga ḓa nga tshifhinga tsho omaho musi maḓi a tshi fhungudza zwine zwa nga aluswa tsimuni.",
+      "independentComposedTarget": "Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela. I nga ḓa musi winter greens dzi sa athu u luga. I nga ḓa nga tshifhinga tsho omaho musi maḓi a tshi fhungudza zwine zwa nga aluswa tsimuni.",
+      "independentSemanticBacktranslation": "Your gap might come after stored maize runs out; before winter greens are ready; or in a dry period when water reduces what can be grown in the garden.",
+      "independentReasoning": "The full paragraph retains the possible timing and dry-period condition. `fhungudza zwine zwa nga aluswa tsimuni` expresses reduced garden growing/production, preserving water as a constraint without asserting that the garden has no water or cannot produce at all.",
+      "uncertainty": "Confirm the Tshivenda idiom and breadth of `aluswa`; do not count this as fluent or locally approved."
+    },
+    {
+      "id": "VS-TS-L2-INFOGRAPHIC-SEQUENCE",
+      "independentDisposition": "accept",
+      "exactBinding": {
+        "file": "lib/course-translation-drafts-ts-vegetables-staples-l2.ts",
+        "module": "vegetables-staples",
+        "lesson": "vegetables-staples-l2",
+        "field": "infographicAlt"
+      },
+      "sourceEnglishFullContext": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "actualCurrentTargetFullContext": "Bed yin’we over three seasons: ximilana lexi hatlisaka ku kula xa tshoveriwa, then a new sowing goes in beside a slower crop that is still growing, leswaku bed yi nga tshuki yi sala yi nga ri na swimilana.",
+      "actualPrefix": "Bed yin’we over three seasons: ximilana lexi hatlisaka ku kula xa tshoveriwa, ",
+      "currentCandidateFragment": "then a new sowing goes in beside a slower crop that is still growing",
+      "actualSuffix": ", leswaku bed yi nga tshuki yi sala yi nga ri na swimilana.",
+      "candidateProposedFragment": "kutani new sowing yi endliwa etlhelo ka xibyariwa lexi kulaka hi ku nonoka, lexi ha ha kulaka",
+      "candidateComposedTarget": "Bed yin’we over three seasons: ximilana lexi hatlisaka ku kula xa tshoveriwa, kutani new sowing yi endliwa etlhelo ka xibyariwa lexi kulaka hi ku nonoka, lexi ha ha kulaka, leswaku bed yi nga tshuki yi sala yi nga ri na swimilana.",
+      "independentComposedTarget": "Bed yin’we over three seasons: ximilana lexi hatlisaka ku kula xa tshoveriwa, kutani new sowing yi endliwa etlhelo ka xibyariwa lexi kulaka hi ku nonoka, lexi ha ha kulaka, leswaku bed yi nga tshuki yi sala yi nga ri na swimilana.",
+      "independentSemanticBacktranslation": "One bed over three seasons: a fast crop is harvested, then a new sowing is made beside a crop that grows more slowly and is still growing, so the bed is never empty.",
+      "independentReasoning": "The exact middle segment keeps the technical action as English “new sowing,” while translating the order (`kutani`, then), relation (`etlhelo ka`, beside), crop comparison (`hi ku nonoka`, more slowly), and current state (`lexi ha ha kulaka`, still growing). It preserves the already-localized first crop harvest before this clause and the exact never-empty consequence after it. That retains the sowing action and sequence; it does not substitute transplantation or claim a yield.",
+      "uncertainty": "The code-switched `new sowing yi endliwa` agreement/idiom needs Xitsonga review. Semantically, retaining the precise sowing anchor is safer than translating it as planting plants."
+    },
+    {
+      "id": "VS-VE-L1-BED-WORK",
+      "independentDisposition": "accept",
+      "exactBinding": {
+        "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+        "module": "vegetables-staples",
+        "lesson": "vegetables-staples-l1",
+        "field": "body paragraph 0, sentence 4"
+      },
+      "sourceEnglishFullContext": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "actualCurrentTargetFullContext": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe.",
+      "actualPrefix": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. ",
+      "currentCandidateFragment": "Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe.",
+      "actualSuffix": "",
+      "candidateProposedFragment": "Bed i a konḓa u shuma khayo khalaṅwaha iṅwe na iṅwe u fhira khalaṅwaha yo fhiraho.",
+      "candidateComposedTarget": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed i a konḓa u shuma khayo khalaṅwaha iṅwe na iṅwe u fhira khalaṅwaha yo fhiraho.",
+      "independentComposedTarget": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed i a konḓa u shuma khayo khalaṅwaha iṅwe na iṅwe u fhira khalaṅwaha yo fhiraho.",
+      "independentSemanticBacktranslation": "The bed is harder to work each season than the previous season.",
+      "independentReasoning": "The sentence states the bed is harder to work in each season than the previous season. That explicit adjacent-season comparator is a direct way of expressing the source’s successive increase in difficulty; the source already says “gets harder ... every season,” so the candidate does not introduce an unrelated date, cause, or advice.",
+      "uncertainty": "Confirm the natural Tshivenda comparative and whether `khalaṅwaha yo fhiraho` refers to the immediately preceding season. This is an entailment/composition judgment, not fluency approval."
+    },
+    {
+      "id": "VS-VE-L3-NICHE-CLAUSE",
+      "independentDisposition": "hold",
+      "exactBinding": {
+        "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+        "module": "vegetables-staples",
+        "lesson": "vegetables-staples-l3",
+        "field": "quiz[1].rationale"
+      },
+      "sourceEnglishFullContext": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "actualCurrentTargetFullContext": "Amadumbe actually prefers damper ground where maize would struggle — i ḓadza niche ine other staples can't handle well.",
+      "actualPrefix": "",
+      "currentCandidateFragment": "",
+      "actualSuffix": "",
+      "candidateProposedFragment": null,
+      "candidateComposedTarget": null,
+      "independentComposedTarget": null,
+      "independentSemanticBacktranslation": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "independentReasoning": "Keep the current exact-English hold. The related L1 sentence about wetter ground does not settle whether “niche” or “ground” is the scope of “other staples can’t handle well,” so reuse could narrow the rationale or turn struggle into categorical inability.",
+      "uncertainty": "The referent/scope of “handle” and “niche” remain unresolved; no proposed translation."
+    },
+    {
+      "id": "VS-TS-L1-ESTABLISH-POORLY",
+      "independentDisposition": "hold",
+      "exactBinding": {
+        "file": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+        "module": "vegetables-staples",
+        "lesson": "vegetables-staples-l1",
+        "field": "quiz[1].rationale"
+      },
+      "sourceEnglishFullContext": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+      "actualCurrentTargetFullContext": "Beans and other quick, sensitive-rooted crops establish poorly endzhaku ka transplant shock — ku swi byala hi ku kongoma eka bed ku papalata setback yoleyo hi ku helela.",
+      "actualPrefix": "",
+      "currentCandidateFragment": "",
+      "actualSuffix": "",
+      "candidateProposedFragment": null,
+      "candidateComposedTarget": null,
+      "independentComposedTarget": null,
+      "independentSemanticBacktranslation": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+      "independentReasoning": "Keep only the establishment predicate in English. “Establish poorly after transplant shock” concerns poor establishment/rooting after the shock, not simply slower growth. Preserve the exact following localized claim that direct sowing avoids that setback entirely.",
+      "uncertainty": "No source-matched Xitsonga predicate was established. The subsequent `entirely` force and direct-sowing remedy must remain unchanged."
+    },
+    {
+      "id": "VS-VE-L1-ESTABLISH-POORLY",
+      "independentDisposition": "hold",
+      "exactBinding": {
+        "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+        "module": "vegetables-staples",
+        "lesson": "vegetables-staples-l1",
+        "field": "quiz[1].rationale"
+      },
+      "sourceEnglishFullContext": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+      "actualCurrentTargetFullContext": "Beans and other quick, sensitive-rooted crops establish poorly nga murahu ha transplant shock — u zwi zwala nga ho livhaho kha bed zwi thivhela setback yeneyo nga hoṱhe.",
+      "actualPrefix": "",
+      "currentCandidateFragment": "",
+      "actualSuffix": "",
+      "candidateProposedFragment": null,
+      "candidateComposedTarget": null,
+      "independentComposedTarget": null,
+      "independentSemanticBacktranslation": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+      "independentReasoning": "Keep only the establishment predicate in English. It means poor establishment after transplant shock; the following direct-sowing remedy and its “entirely” force must stay exact. A Sesotho analogue does not establish Tshivenda wording.",
+      "uncertainty": "No sufficiently certain source-matched Tshivenda predicate is available; keep the hold rather than implying only slow growth."
+    },
+    {
+      "id": "IP-VE-CHICKEN-ROTATION",
+      "independentDisposition": "accept",
+      "exactBinding": {
+        "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+        "module": "intro-permaculture",
+        "language": "ve",
+        "slide": 14,
+        "field": "target.body[1].segments[3]",
+        "status": "english-hold",
+        "sourceSegment": "rotate through the beds"
+      },
+      "sourceEnglishFullContext": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+      "actualCurrentTargetFullContext": "Serapa, miri ya mitshelo na chicken run zwi nga dzudzanywa uri khuhu dzi rotate through the beds nga murahu ha u kaṋa; izwi ndi integration. Ni songo tendela khuhu dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe. Fresh manure i nga hwalela germs. Vhudzisani mueletshedzi wa extension uri bed i langulwe hani safely, crops dzine dza ḽiwa dzi sa athu vhuya. Khuhu dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha pen yo dzulaho fhethu huthihi.",
+      "actualPrefix": "Serapa, miri ya mitshelo na chicken run zwi nga dzudzanywa uri khuhu dzi ",
+      "currentCandidateFragment": "rotate through the beds",
+      "actualSuffix": " nga murahu ha u kaṋa; izwi ndi integration. Ni songo tendela khuhu dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe. Fresh manure i nga hwalela germs. Vhudzisani mueletshedzi wa extension uri bed i langulwe hani safely, crops dzine dza ḽiwa dzi sa athu vhuya. Khuhu dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha pen yo dzulaho fhethu huthihi.",
+      "candidateProposedFragment": "tshimbila kha beds dzi tshi tevhekana",
+      "candidateComposedTarget": "Serapa, miri ya mitshelo na chicken run zwi nga dzudzanywa uri khuhu dzi tshimbila kha beds dzi tshi tevhekana nga murahu ha u kaṋa; izwi ndi integration. Ni songo tendela khuhu dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe. Fresh manure i nga hwalela germs. Vhudzisani mueletshedzi wa extension uri bed i langulwe hani safely, crops dzine dza ḽiwa dzi sa athu vhuya. Khuhu dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha pen yo dzulaho fhethu huthihi.",
+      "independentComposedTarget": "Serapa, miri ya mitshelo na chicken run zwi nga dzudzanywa uri khuhu dzi tshimbila kha beds dzi tshi tevhekana nga murahu ha u kaṋa; izwi ndi integration. Ni songo tendela khuhu dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe. Fresh manure i nga hwalela germs. Vhudzisani mueletshedzi wa extension uri bed i langulwe hani safely, crops dzine dza ḽiwa dzi sa athu vhuya. Khuhu dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha pen yo dzulaho fhethu huthihi.",
+      "independentSemanticBacktranslation": "A garden, fruit trees and a chicken run arranged so chickens move through the beds in sequence after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+      "independentReasoning": "The proposed segment means the chickens move through the beds in sequence. In the exact source sentence, that movement is explicitly after harvest; it does not move the practice to crop turnover generally or invent a rotation schedule. The full suffix remains verbatim: keep chickens away from crops harvested for food; fresh manure can carry germs; ask an extension adviser how to manage beds safely before edible crops return; chickens clean pests/add fertility instead of sitting idle in a fixed pen. This is an exact segment-only proposal with no change to safety conditions or order.",
+      "uncertainty": "Confirm that `tshimbila kha beds dzi tshi tevhekana` conveys bed-to-bed sequential movement, not an unbounded walk-through. Source has no specified schedule; none is added. Verify agreement with fluent Tshivenda.",
+      "safetyAndOrderAssertions": {
+        "suffixPreservedExactly": true,
+        "postHarvestClausePreserved": true,
+        "keepChickensAwayConditionPreserved": true,
+        "freshManureGermsWarningPreserved": true,
+        "adviserSafeBedAndEdibleCropsReturnConditionPreserved": true,
+        "sourceOrderPreserved": true
+      }
+    }
+  ],
+  "rootOverrides": [
+    {
+      "id": "RL-TS-COLDER-SLOPES",
+      "supersedesIndependentDisposition": "accept",
+      "effectiveDisposition": "hold",
+      "exactBinding": "docs/narration/reading-landscape.ts.paired-draft.json :: slides[n=14].target.body[0].segments[3]",
+      "sourceEnglish": "These places can be colder than nearby slopes.",
+      "currentTarget": "Loko ku ri vusiku byo basa, ku nga ri na moya, moya wo titimela wu nga khuluka wu ya ehansi wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti nga va colder than nearby slopes.",
+      "candidateSegment": " na xirhami xo tala ku tlurisa tindhawu to rhelela leti nga ekusuhi.",
+      "candidateComposedTarget": "Loko ku ri vusiku byo basa, ku nga ri na moya, moya wo titimela wu nga khuluka wu ya ehansi wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti nga va na xirhami xo tala ku tlurisa tindhawu to rhelela leti nga ekusuhi.",
+      "rootConcern": "The source asserts a comparative in air temperature, not more frost or more cold weather generally.",
+      "independentEvidence": "Current Xitsonga reading-landscape learner wording uses “xirhami” in explicit frost contexts: “Frost can collect in low hollows...” is rendered “Xirhami xi nga hlengeletana...” and “Check local frost” is rendered “Kambela xirhami xa laha kaya.” This supports that `xirhami` may mean frost in this project’s own registry, so `na xirhami xo tala` does not reliably distinguish colder temperature from greater frost/coldness.",
+      "decisionReason": "The candidate fixes the prior modal/predicate boundary with `ti nga va` and expresses a relative quantity, but the chosen noun is already used for frost. No other source-matched comparative temperature construction has been established in this review. Retain the English comparative thermal predicate as a visible hold until a defensible temperature-specific wording is available.",
+      "holdSegment": " colder than nearby slopes.",
+      "preservedPrefix": " Tindhawu leti ti nga va",
+      "preservedSuffix": "",
+      "backTranslation": "These places can have more xirhami than nearby sloping places; the precise sense may be more frost/coldness rather than colder air temperature.",
+      "uncertainty": "Needs a source-matched Xitsonga temperature-comparison wording; do not infer fluent correctness."
+    }
+  ]
+}

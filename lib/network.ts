@@ -1,3 +1,4 @@
+import { recordWeightKg } from './farm-records';
 /*
  * ╔══════════════════════════════════════════════════════════════════════════╗
  * ║  ACCESS-CONTROL PRECONDITION — READ THIS BEFORE FEEDING REAL DATA IN     ║
@@ -302,6 +303,23 @@ export interface NetworkFarmer {
   isDemo: boolean;
 }
 
+/**
+ * sec-05: app/api/network/farmers/route.ts builds each row from the farmer's OWN
+ * `profiles/{uid}.network` map — a document the farmer can write themselves — merged with the
+ * three fields the server derives (the profile's doc id, its full_name, and the org_id the
+ * caller queried for, which canSeeOrg() has already authorised). Those three identity fields
+ * must always win: a farmer could otherwise edit `network.id`/`network.name`/`network.orgId` on
+ * their own profile and have a mentor/NGO/funder dashboard display a different name, a spoofed
+ * id, or (worse) another organisation's org_id entirely. `network` still supplies every OTHER
+ * display field exactly as before — only identity is pinned to the server-known values.
+ */
+export function withServerIdentity(
+  network: Record<string, unknown> | null | undefined,
+  identity: { id: string; name: string; orgId: string },
+): NetworkFarmer {
+  return { ...(network ?? {}), ...identity } as unknown as NetworkFarmer;
+}
+
 /* ────────────────────────────────────────────────────────────────────────────
  * Metrics
  * ──────────────────────────────────────────────────────────────────────────*/
@@ -497,8 +515,8 @@ export function buildFarmerMetrics(
     plan: reconciliation !== null,
   };
 
-  const producedKg = production ? round(sumBy(production, (r) => r.kg), 1) : null;
-  const soldKg = sales ? round(sumBy(sales, (r) => r.kg), 1) : null;
+  const producedKg = production && (!production.length || production.some(row => recordWeightKg(row) !== null)) ? round(sumBy(production, recordWeightKg), 1) : null;
+  const soldKg = sales && (!sales.length || sales.some(row => recordWeightKg(row) !== null)) ? round(sumBy(sales, recordWeightKg), 1) : null;
   const incomeZar = sales ? round(sumBy(sales, (r) => r.amount), 2) : null;
   const expensesZar = expenses ? round(sumBy(expenses, (r) => r.amount), 2) : null;
 

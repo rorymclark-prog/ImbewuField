@@ -40,8 +40,12 @@ export interface CropPrice {
   /** 'sourced' = both figures traced to a real, dated source. 'estimated' =
    *  at least one figure is derived (via the wholesale/retail ratio, a
    *  same-food-group proxy, or general knowledge) rather than directly
-   *  found — a real number, but a rougher one; expect to correct it. */
-  confidence: 'sourced' | 'estimated';
+   *  found — a real number, but a rougher one; expect to correct it.
+   *  'recommended' = no single source fits the crop as a farmer sells it, so the figure
+   *  is the AVERAGE of the cited prices that were found (research/crop-sources/), and
+   *  the app says so ("Recommended price — average of prices found"). Always carries
+   *  `pricedAt`. A starting point to confirm locally, never a quoted market price. */
+  confidence: 'sourced' | 'estimated' | 'recommended';
   /** The date THIS price is from — its market trading day where one applies, else the
    *  day it was researched — when that is not the shared snapshot date
    *  (PRICE_SNAPSHOT_DATE in components/prices/CropPriceGuide.format.ts). Set it on any
@@ -106,6 +110,72 @@ export const DEFAULT_CROP_PRICES: Record<string, CropPrice> = {
   // used for dry-beans above): 5.12/0.38 ≈ R13/kg, in the same band as
   // carrots' real R14/kg — sanity-checked, not just formula output.
   turnip: { retailPerKg: 13, wholesalePerKg: 5.12, confidence: 'estimated', pricedAt: '19 August 2026' },
+
+  // 2026-09-28 pass for the crop-catalog batch 1 crops. Wholesale is Joburg Market daily trade
+  // (joburgmarket.co.za/jhb-market/dailyprices.php?commodity=<n>, fetched 2026-09-28: total value
+  // sold / total kg sold) or the SAFEX spot in Grain SA's Morning Market Report of 28 Sep 2026
+  // (settlement 25 Sep; grainsa.co.za/upload/report_files/Grain-SA-Morning-Market-Report-28-Sep-2026.pdf).
+  // Retail is a live shop listing, used only when it sells the SAME product the farmer grows.
+  // Where the only listing is a processed product (florets, cooked soya, roasted snack seed) it is
+  // not this crop, so retail is derived from the real wholesale via the ~38% ratio above and the
+  // entry is 'estimated'. Full quotes: research/crop-sources/_prices-2026-09-28.json.
+  //
+  // Both sides real. Gem squash: Woolworths "Gem Squash 1 kg" R29.99; GEM SQUASHES R85,714.00 /
+  // 13,651 kg = R6.28 (commodity=154).
+  'gem-squash': { retailPerKg: 29.99, wholesalePerKg: 6.28, confidence: 'sourced', pricedAt: '28 September 2026' },
+  // Brinjal: Little Oaks "Brinjals/Aubergines 500g" R15.90 = R31.80/kg (a small online farm-box
+  // seller; the chains were bot-blocked); BRINJALS R19,714.00 / 1,740 kg = R11.33 (commodity=124).
+  brinjal: { retailPerKg: 31.8, wholesalePerKg: 11.33, confidence: 'sourced', pricedAt: '28 September 2026' },
+  // Baby marrow: Papyrus Natural "Baby Marrow 1kg" R73.00; BABY MARROWS R81,067.00 / 5,263 kg =
+  // R15.40 (commodity=1189). The only retail listing found is a premium organic grocer — 4.7x
+  // wholesale against ~2-3x for the other crops — so read it as the top of the retail range.
+  'baby-marrow': { retailPerKg: 73, wholesalePerKg: 15.4, confidence: 'sourced', pricedAt: '28 September 2026' },
+  //
+  // Wholesale real, retail derived (wholesale / 0.38).
+  // Cauliflower: CAULIFLOWER R38,758.00 / 1,455 kg = R26.64 (commodity=134). The only retail
+  // listing is Woolworths pre-cut "Cauliflower Florets 300 g" (R123.30/kg) — a processed format,
+  // not a head — so 26.64 / 0.38 ≈ R70/kg; the florets price is an upper bound.
+  cauliflower: { retailPerKg: 70, wholesalePerKg: 26.64, confidence: 'estimated', pricedAt: '28 September 2026' },
+  // Spanspek: MUSK MELONS R53,740.00 / 4,437 kg = R12.11 (commodity=47; SWEET MELONS traded
+  // R10.72). No spanspek retail page could be read (Checkers 403), so 12.11 / 0.38 ≈ R32/kg.
+  spanspek: { retailPerKg: 32, wholesalePerKg: 12.11, confidence: 'estimated', pricedAt: '28 September 2026' },
+  // Soybean: SAFEX spot "Soybean 8,950.00" R/ton = R8.95/kg. The only retail soya is Woolworths'
+  // steam-cooked 150 g pack (R113.27/kg), not dry grain, so 8.95 / 0.38 ≈ R23.50/kg.
+  soybean: { retailPerKg: 23.5, wholesalePerKg: 8.95, confidence: 'estimated', pricedAt: '25 September 2026' },
+  // Sunflower: SAFEX spot "Sunflower 10,106.00" R/ton = R10.11/kg. The only retail is roasted
+  // snack seed (Woolworths 250 g, R195.96/kg), not oilseed, so 10.11 / 0.38 ≈ R26.60/kg.
+  sunflower: { retailPerKg: 26.6, wholesalePerKg: 10.11, confidence: 'estimated', pricedAt: '25 September 2026' },
+
+  // RECOMMENDED PRICES, 2026-09-29 pass. These five had no single source that fits the crop as a
+  // farmer sells it (the 2026-09-28 exclusions below the object). Rory, 2026-09-29: "just give an
+  // avg ... find a recommended price and say it that way in the app". So each side is the plain
+  // AVERAGE of the like-for-like cited prices found, and the app labels it "Recommended price —
+  // average of prices found". Points of a different product (herb impulse packs, milled meal,
+  // baby corn, mini cobs) are left out of the average, not blended in. Every quote and URL:
+  // research/crop-sources/_prices-2026-09-29.json.
+  //
+  // Parsley. Wholesale: Cape Town Market PARSLEY 2.5 kg R61.54 = R24.62 (28 Sep) and Joburg Market
+  // R15.91 (28 Sep pass) → R20.27. Retail: the bunch-sized packs only — PnP "Parsley Bunch 100g"
+  // R14.99 = R149.90 and Woolworths "Fresh Parsley 80 g" R26.99 = R337.38 → R243.64. The 20-30 g
+  // packs (R500-750/kg) price a garnish, not a bed of parsley, and are excluded.
+  parsley: { retailPerKg: 243.64, wholesalePerKg: 20.27, confidence: 'recommended', pricedAt: '29 September 2026' },
+  // Sorghum (dry grain). Wholesale: the one grain figure, FAOSTAT's SA farm-gate US$0.21 = R4.12
+  // (via Selina Wamucii, Jan 2024 — old, a floor). Retail: whole red sorghum, Pure and Whole R40
+  // and Manolis Munchies 1 kg R24.99 → R32.50. Mabele meal (R27.50-32.99) is milled, excluded.
+  sorghum: { retailPerKg: 32.5, wholesalePerKg: 4.12, confidence: 'recommended', pricedAt: '29 September 2026' },
+  // Bambara groundnut (jugo beans). Retail: Local Village 500 g R65 = R130, Matumi 1 kg R76.50,
+  // Veggies Basket 1 kg R75, VicFame 5 kg R539.95 = R107.99 → R97.37. No market or producer price
+  // names bambara (the KZN survey row is "Groundnut"), so wholesale is 97.37 × 0.38 = R37.00.
+  'bambara-groundnut': { retailPerKg: 97.37, wholesalePerKg: 37, confidence: 'recommended', pricedAt: '29 September 2026' },
+  // Sweetcorn. Wholesale: Cape Town Market SWEETCORN PREPACK 10 kg punnet, mean of the four count
+  // rows = R28.30 (28 Sep). Joburg's SWEET CORN R69.55 is left out — its pack unit could not be
+  // confirmed. Shelf packs (Checkers 4s R34.99, Woolworths 4 pk R36.99) give no weight, so retail
+  // is 28.30 / 0.38 = R74.47. That is probably high: sold by the cob, confirm locally.
+  sweetcorn: { retailPerKg: 74.47, wholesalePerKg: 28.3, confidence: 'recommended', pricedAt: '29 September 2026' },
+  // Cowpea (dry black-eyed beans). Wholesale: the KZN smallholder survey (Frontiers in Sustainable
+  // Food Systems 2026, Table 10, n=319) sold at R9 and R16/kg → R12.50. Retail 1 kg: Spice Bazaar
+  // R60, Pure and Whole R60, The Refillery R55, The Deli R60, MultiSnack R45 → R56.00.
+  cowpea: { retailPerKg: 56, wholesalePerKg: 12.5, confidence: 'recommended', pricedAt: '29 September 2026' },
 };
 
 // Herbs are sold and valued completely differently from bulk vegetables —
@@ -136,7 +206,13 @@ export const DEFAULT_CROP_PRICES: Record<string, CropPrice> = {
 // would misrepresent a field planting rather than estimate it. No
 // bunch-form or field-crop per-kg price for true spinach specifically could
 // be found. Honest exclusion, same pattern as coriander.
-export const UNPRICED_CROPS = new Set<string>(['coriander', 'true-spinach']);
+// parsley, sorghum, bambara-groundnut, sweetcorn and cowpea were excluded here after the
+// 2026-09-28 pass (no single source fitted). They now carry 'recommended' average prices in
+// DEFAULT_CROP_PRICES above — see the 2026-09-29 note there.
+export const UNPRICED_CROPS = new Set<string>([
+  'coriander',
+  'true-spinach',
+]);
 
 const PRICE_OVERRIDES_KEY = 'imbewu_crop_price_overrides_v1';
 

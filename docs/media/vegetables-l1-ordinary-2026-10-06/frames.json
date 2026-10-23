@@ -1,0 +1,840 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-06",
+  "baselineCommit": "f923c0c330551586587ec6248cb3e0491d176cf6",
+  "acceptedIndependentSHA256": "a1ee00a6b90454b48a49b2ff21ec824f134424fcef94e8369480548d2f7c4fbd",
+  "frames": [
+    {
+      "language": "st",
+      "slide": 6,
+      "path": "/course-decks/vegetables-staples/st/slide-06.webp",
+      "old": {
+        "path": "/course-decks/vegetables-staples/st/slide-06.webp",
+        "bytes": 589958,
+        "sha256": "00d4f4dff32b779f7aa91ce38060b38d1bdd882739e15cf14ca0f58fa64d69d3"
+      },
+      "new": {
+        "bytes": 592852,
+        "sha256": "b257be07546844d9187e16ed0781fb3849a29c29fc92c8636e3f75b4c5a793ee",
+        "width": 1440,
+        "height": 5400
+      },
+      "pairedSource": {
+        "n": 6,
+        "english": {
+          "n": 6,
+          "heading": "Seed or Seedling?",
+          "body": [
+            "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+            "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+            "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Some crops resent having their roots disturbed. ",
+                  "status": "draft",
+                  "text": "Dijalo tse ding ha di rate hore metso ya tsona e tshwenngwe. "
+                },
+                {
+                  "sourceEnglish": "They do better",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " sown straight where they'll grow. ",
+                  "status": "draft",
+                  "text": " ha di jalwa ka kotloloho moo di tla hola teng. "
+                },
+                {
+                  "sourceEnglish": "Beans, carrots",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " le "
+                },
+                {
+                  "sourceEnglish": "maize",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " belong in that group.",
+                  "status": "draft",
+                  "text": " ke tsa sehlopha seo."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Others ",
+                  "status": "draft",
+                  "text": "Tse ding "
+                },
+                {
+                  "sourceEnglish": "do better",
+                  "status": "draft",
+                  "text": "di sebetsa hantle ho feta"
+                },
+                {
+                  "sourceEnglish": " with a protected start in a ",
+                  "status": "draft",
+                  "text": " ka qalo e sireletsehileng ho "
+                },
+                {
+                  "sourceEnglish": "nursery",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", then ",
+                  "status": "draft",
+                  "text": ", ebe "
+                },
+                {
+                  "sourceEnglish": "transplanting.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " Tomatoes",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " le "
+                },
+                {
+                  "sourceEnglish": "brassicas",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " belong there.",
+                  "status": "draft",
+                  "text": " ke tsa sehlopha seo."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Use ",
+                  "status": "draft",
+                  "text": "Sebedisa "
+                },
+                {
+                  "sourceEnglish": "spacing guidance",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " for the ",
+                  "status": "draft",
+                  "text": " bakeng sa "
+                },
+                {
+                  "sourceEnglish": "crop, variety",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " le "
+                },
+                {
+                  "sourceEnglish": "local conditions",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ". Check the packet and ",
+                  "status": "draft",
+                  "text": ". Hlahloba packet le "
+                },
+                {
+                  "sourceEnglish": "local grower advice",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ". Watch for crowding as plants develop.",
+                  "status": "draft",
+                  "text": ". Sheba crowding ha plants di ntse di hola."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "rendererPNG": "/tmp/imbewu-vegetables-l1-render-20261006-f923c0c/st/slide-06.png",
+      "compression": "RGB WebP quality88 method6; no crop/resize"
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "path": "/course-decks/vegetables-staples/ve/slide-04.webp",
+      "old": {
+        "path": "/course-decks/vegetables-staples/ve/slide-04.webp",
+        "bytes": 714532,
+        "sha256": "a8a7fdb934a521121d7dde7fe4fe240ebecca2a393db81c979244d9d1fa3694e"
+      },
+      "new": {
+        "bytes": 717192,
+        "sha256": "d71de77a6a622d602ab8e7fef137a15eddb955f60bd691f0d5154bd37381fa5b",
+        "width": 1440,
+        "height": 5400
+      },
+      "pairedSource": {
+        "n": 4,
+        "english": {
+          "n": 4,
+          "heading": "Roots Need Loose Soil, Paths Need Your Feet",
+          "body": [
+            "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+            "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+            "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+            "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "The protection is simple. ",
+                  "status": "draft",
+                  "text": "Tsireledzo ndi yo leluwaho. "
+                },
+                {
+                  "sourceEnglish": "Permanent paths",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", and a bed narrow enough to reach into from both sides.",
+                  "status": "draft",
+                  "text": ", na bed ine ya vha tsekene lune na nga swikelela nga ngomu ni tshi bva kha masia oṱhe mavhili."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "One metre to one point two metres wide.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " That's the working number. At that width you can reach the centre from either path, and your feet never touch the ",
+                  "status": "draft",
+                  "text": " Wonoyo ndi mpimo une wa shumiswa. Kha honoho vhuphara ni nga swikelela vhukati ni tshi bva kha iṅwe na iṅwe ya paths mbili, nahone milenzhe yaṋu a i kwami "
+                },
+                {
+                  "sourceEnglish": "growing area",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ".",
+                  "status": "draft",
+                  "text": " na luthihi."
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Zwino humbulani nga ha beds dzaṋu. Ni nga swikelela vhukati ni sa kande nga ngomu? Iyani ni lingedze zwenezwo ni sa athu ṱavha tshiṅwe tshithu."
+            }
+          ]
+        }
+      },
+      "rendererPNG": "/tmp/imbewu-vegetables-l1-render-20261006-f923c0c/ve/slide-04.png",
+      "compression": "RGB WebP quality88 method6; no crop/resize"
+    },
+    {
+      "language": "ve",
+      "slide": 5,
+      "path": "/course-decks/vegetables-staples/ve/slide-05.webp",
+      "old": {
+        "path": "/course-decks/vegetables-staples/ve/slide-05.webp",
+        "bytes": 422062,
+        "sha256": "469ae00392d7a2bcb03a86877d253957849513ab00a2486e9ad20db9ecf22d48"
+      },
+      "new": {
+        "bytes": 421644,
+        "sha256": "52387bacfd5c4830e82501ecfb832f94022a038e0f7a958eef7aa6df1924ed0d",
+        "width": 1440,
+        "height": 5400
+      },
+      "pairedSource": {
+        "n": 5,
+        "english": {
+          "n": 5,
+          "heading": "Choose the Bed for the Soil and Rainfall",
+          "body": [
+            "There's no single bed shape that's right everywhere.",
+            "Start with the least disturbance that solves your problem.",
+            "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+            "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+            "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+            "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+            "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "A hu na tshivhumbeo tshithihi tsha bed tshine tsha tea fhethu hoṱhe."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Start with the ",
+                  "status": "draft",
+                  "text": "Thomani nga "
+                },
+                {
+                  "sourceEnglish": "least disturbance",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " that solves your problem.",
+                  "status": "draft",
+                  "text": " ine ya tandulula thaidzo yaṋu."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "No-dig",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " suits most garden soils.",
+                  "status": "draft",
+                  "text": " i tea kha vhunzhi ha mavu a ngade."
+                },
+                {
+                  "sourceEnglish": " Leave the structure alone and build fertility on top.",
+                  "status": "draft",
+                  "text": " Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Do not dig ",
+                  "status": "draft",
+                  "text": "Ni songo bwa "
+                },
+                {
+                  "sourceEnglish": "wet clay",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ". If ",
+                  "status": "draft",
+                  "text": ". Arali "
+                },
+                {
+                  "sourceEnglish": "compaction",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " or ",
+                  "status": "draft",
+                  "text": " kana "
+                },
+                {
+                  "sourceEnglish": "poor drainage",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " is severe, identify the cause with local advice before choosing ",
+                  "status": "draft",
+                  "text": " zwi tshi vha severe, wanani tshiitisi nga nyeletshedzo ya henefho ni sa athu khetha "
+                },
+                {
+                  "sourceEnglish": "deeper cultivation",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ".",
+                  "status": "draft",
+                  "text": "."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Raised beds",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " suit ",
+                  "status": "draft",
+                  "text": " dzi tea "
+                },
+                {
+                  "sourceEnglish": "wet ground",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", where water needs somewhere to drain away to.",
+                  "status": "draft",
+                  "text": ", hune maḓi a ṱoḓa fhethu ha u bva hone."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Sunken beds",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " suit ",
+                  "status": "draft",
+                  "text": " dzi tea "
+                },
+                {
+                  "sourceEnglish": "dry ground",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", where you want to catch and hold what rain you get.",
+                  "status": "draft",
+                  "text": ", hune na ṱoḓa u fara na u vhulunga mvula ine na i wana."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Look after ",
+                  "status": "draft",
+                  "text": "Musi "
+                },
+                {
+                  "sourceEnglish": "heavy rain",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ". Where does water sit or run off? Combine that observation with ",
+                  "status": "draft",
+                  "text": " yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na "
+                },
+                {
+                  "sourceEnglish": "soil and drainage advice",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " before choosing the bed.",
+                  "status": "draft",
+                  "text": " ni sa athu khetha bed."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "rendererPNG": "/tmp/imbewu-vegetables-l1-render-20261006-f923c0c/ve/slide-05.png",
+      "compression": "RGB WebP quality88 method6; no crop/resize"
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "path": "/course-decks/vegetables-staples/ve/slide-06.webp",
+      "old": {
+        "path": "/course-decks/vegetables-staples/ve/slide-06.webp",
+        "bytes": 599526,
+        "sha256": "9d316da77fe3afb8c7256848ec3100ac64f5459b2b6f70517aab3e959b588b4b"
+      },
+      "new": {
+        "bytes": 602090,
+        "sha256": "8cc1de07002dae7f0f7df4336579d97ed8e2a1bf52854827a410656f7462de0b",
+        "width": 1440,
+        "height": 5400
+      },
+      "pairedSource": {
+        "n": 6,
+        "english": {
+          "n": 6,
+          "heading": "Seed or Seedling?",
+          "body": [
+            "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+            "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+            "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Some crops resent having their roots disturbed. ",
+                  "status": "draft",
+                  "text": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. "
+                },
+                {
+                  "sourceEnglish": "They do better",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " sown straight where they'll grow. ",
+                  "status": "draft",
+                  "text": " musi zwi tshi zwaliwa nga ho livhaho hune zwa ḓo aluwa hone. "
+                },
+                {
+                  "sourceEnglish": "Beans, carrots",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " na "
+                },
+                {
+                  "sourceEnglish": "maize",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " belong in that group.",
+                  "status": "draft",
+                  "text": " zwi wela kha tshigwada itsho."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Others ",
+                  "status": "draft",
+                  "text": "Zwiṅwe "
+                },
+                {
+                  "sourceEnglish": "do better",
+                  "status": "draft",
+                  "text": "zwi ita khwine"
+                },
+                {
+                  "sourceEnglish": " with a protected start in a ",
+                  "status": "draft",
+                  "text": " musi zwi tshi thoma zwo tsireledzea kha "
+                },
+                {
+                  "sourceEnglish": "nursery",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", then ",
+                  "status": "draft",
+                  "text": ", nga murahu "
+                },
+                {
+                  "sourceEnglish": "transplanting.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " Tomatoes",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " na "
+                },
+                {
+                  "sourceEnglish": "brassicas",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " belong there.",
+                  "status": "draft",
+                  "text": " zwi wela henefho."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Use ",
+                  "status": "draft",
+                  "text": "Shumisani "
+                },
+                {
+                  "sourceEnglish": "spacing guidance",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " for the ",
+                  "status": "draft",
+                  "text": " ya "
+                },
+                {
+                  "sourceEnglish": "crop, variety",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " na "
+                },
+                {
+                  "sourceEnglish": "local conditions",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ". Check the packet and ",
+                  "status": "draft",
+                  "text": ". Sedzani packet na "
+                },
+                {
+                  "sourceEnglish": "local grower advice",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ". Watch for crowding as plants develop.",
+                  "status": "draft",
+                  "text": ". Sedzani crowding musi zwimela zwi tshi aluwa."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "rendererPNG": "/tmp/imbewu-vegetables-l1-render-20261006-f923c0c/ve/slide-06.png",
+      "compression": "RGB WebP quality88 method6; no crop/resize"
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "path": "/course-decks/vegetables-staples/ts/slide-06.webp",
+      "old": {
+        "path": "/course-decks/vegetables-staples/ts/slide-06.webp",
+        "bytes": 614190,
+        "sha256": "dd236aad3b2a840888e9a30bd667e4ec21e9725a9479eccd4393ae436c07d8e5"
+      },
+      "new": {
+        "bytes": 615486,
+        "sha256": "240369b94b8505cb6fd0aa026279d14a2b25195e66fd632de071c43d4db0480d",
+        "width": 1440,
+        "height": 5400
+      },
+      "pairedSource": {
+        "n": 6,
+        "english": {
+          "n": 6,
+          "heading": "Seed or Seedling?",
+          "body": [
+            "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+            "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+            "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Some crops resent having their roots disturbed. ",
+                  "status": "draft",
+                  "text": "Swibyariwa swin'wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. "
+                },
+                {
+                  "sourceEnglish": "They do better",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " sown straight where they'll grow. ",
+                  "status": "draft",
+                  "text": " loko swi byariwa hi ku kongoma laha swi nga ta kula kona. "
+                },
+                {
+                  "sourceEnglish": "Beans, carrots",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " na "
+                },
+                {
+                  "sourceEnglish": "maize",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " belong in that group.",
+                  "status": "draft",
+                  "text": " swi wela eka ntlawa wolowo."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Others ",
+                  "status": "draft",
+                  "text": "Swin'wana "
+                },
+                {
+                  "sourceEnglish": "do better",
+                  "status": "draft",
+                  "text": "swi tirha ku antswa"
+                },
+                {
+                  "sourceEnglish": " with a protected start in a ",
+                  "status": "draft",
+                  "text": " loko swi sungula swi sirhelelekile eka "
+                },
+                {
+                  "sourceEnglish": "nursery",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", then ",
+                  "status": "draft",
+                  "text": ", kutani "
+                },
+                {
+                  "sourceEnglish": "transplanting.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " Tomatoes",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " na "
+                },
+                {
+                  "sourceEnglish": "brassicas",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " belong there.",
+                  "status": "draft",
+                  "text": " swi wela eka ntlawa wolowo."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Use ",
+                  "status": "draft",
+                  "text": "Landzelela "
+                },
+                {
+                  "sourceEnglish": "spacing guidance",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " for the ",
+                  "status": "draft",
+                  "text": " ya "
+                },
+                {
+                  "sourceEnglish": "crop, variety",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " na "
+                },
+                {
+                  "sourceEnglish": "local conditions",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ". Check the packet and local grower advice. Watch for crowding as plants develop.",
+                  "status": "draft",
+                  "text": ". Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "rendererPNG": "/tmp/imbewu-vegetables-l1-render-20261006-f923c0c/ts/slide-06.png",
+      "compression": "RGB WebP quality88 method6; no crop/resize"
+    }
+  ],
+  "manifestBeforeSHA256": "a03498447da08af3f848798a59885c3699e3f77102e2c7870e84bc4ee3a4c61b",
+  "manifestAfterSHA256": "3418ba37152873e31306751bfd35b1849e3487ea194d2c4a0356fc316d95a928",
+  "manifestOldComment": "// 1905 files, 744.4 MB total.",
+  "manifestNewComment": "// 1905 files, 744.4 MB total.",
+  "manifestActualTotalBytes": 744366586,
+  "aggregateDeltaBytes": 8996,
+  "protected": {
+    "vegetables-assets-before.json": {
+      "rows": 87,
+      "sha256": "867d4e0d9bcf0d90ea8f189ba166270f959fe2af557df505d1ae20bfd9794ca5"
+    },
+    "protected-audio-films-before.json": {
+      "rows": 604,
+      "sha256": "c12c534f5f81ee51d996befe66615d4242fef545159e27b8d64ec496d47f052b"
+    },
+    "st-intro-stills-before.json": {
+      "rows": 22,
+      "sha256": "696fbbf19ac6415a6752ea02bc38b185089284ef26f0cb9d09611a34db0a25e1"
+    }
+  },
+  "pairedSnapshotHashes": {
+    "st": "f8bbb28e594ef3f1225c89462efe18a2ea4b45f45bd779eb45e82b725d106f11",
+    "ve": "797dfe0c41e75a737095aad138a8ba2e971fa92d22c973d70d78462381c512df",
+    "ts": "4baec2d8ed0f8ac5298e350bf5ee76ee7b5952f9501fa25c8f2f21c1c3d71796"
+  },
+  "renderCommands": [
+    "node scripts/make-lesson-slides.mjs vegetables-staples st /tmp/imbewu-vegetables-l1-render-20261006-f923c0c/st --paired-draft docs/narration/vegetables-staples.st.paired-draft.json --slides 6",
+    "node scripts/make-lesson-slides.mjs vegetables-staples ve /tmp/imbewu-vegetables-l1-render-20261006-f923c0c/ve --paired-draft docs/narration/vegetables-staples.ve.paired-draft.json --slides 4,5,6",
+    "node scripts/make-lesson-slides.mjs vegetables-staples ts /tmp/imbewu-vegetables-l1-render-20261006-f923c0c/ts --paired-draft docs/narration/vegetables-staples.ts.paired-draft.json --slides 6"
+  ],
+  "visualReview": "Agent viewed all five compressed frames via full-card contacts; target/source panels and counters intact, no observed clipping; root review pending.",
+  "phoneReview": "pending preview",
+  "contacts": [
+    "/tmp/imbewu-vegetables-l1-render-20261006-f923c0c/contact-1.png",
+    "/tmp/imbewu-vegetables-l1-render-20261006-f923c0c/contact-2.png",
+    "/tmp/imbewu-vegetables-l1-render-20261006-f923c0c/contact-3.png"
+  ]
+}

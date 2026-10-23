@@ -11,11 +11,11 @@ function memoryStore(start: Record<string, number> = {}): AiSpendStore & { data:
   return { data, async spentUsd(k) { return data[k] ?? 0; }, async add(k, usd) { data[k] = (data[k] ?? 0) + usd; } };
 }
 
-test('defaults: €3 a month per person, a few cents a day per guest', () => {
-  assert.equal(cfg.monthlyCapEur, 3);
-  assert.ok(cfg.guestDailyEur > 0 && cfg.guestDailyEur < 0.5);
-  assert.equal(budgetConfig({ AI_MONTHLY_CAP_EUR: '5' }).monthlyCapEur, 5);
-  assert.equal(budgetConfig({ AI_MONTHLY_CAP_EUR: 'nonsense' }).monthlyCapEur, 3);
+test('defaults: R18 a month per person, a rand a day per guest', () => {
+  assert.equal(cfg.monthlyCapZar, 18);
+  assert.equal(cfg.guestDailyZar, 1);
+  assert.equal(budgetConfig({ AI_MONTHLY_CAP_ZAR: '30' }).monthlyCapZar, 30);
+  assert.equal(budgetConfig({ AI_MONTHLY_CAP_ZAR: 'nonsense' }).monthlyCapZar, 18);
 });
 
 test('the monthly allowance refills on the 1st, including across a year end', () => {
@@ -25,11 +25,11 @@ test('the monthly allowance refills on the 1st, including across a year end', ()
 
 test('a person keeps the chosen model until the cap, then drops to the cheap one', () => {
   const who = { kind: 'user' as const, uid: 'u1' };
-  const under = allowanceFrom(who, 2 * cfg.usdPerEur, NOW, cfg);
+  const under = allowanceFrom(who, 12 / cfg.zarPerUsd, NOW, cfg);
   assert.equal(under.capped, false);
-  assert.equal(under.remainingEur, 1);
+  assert.equal(under.remainingZar, 6);
   assert.equal(pickModel(AI_MODELS.main, under), AI_MODELS.main);
-  const over = allowanceFrom(who, 3 * cfg.usdPerEur, NOW, cfg);
+  const over = allowanceFrom(who, 18 / cfg.zarPerUsd, NOW, cfg);
   assert.equal(over.capped, true);
   assert.equal(pickModel(AI_MODELS.deep, over), CHEAP_MODEL);
 });

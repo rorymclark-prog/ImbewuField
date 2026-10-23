@@ -10,6 +10,7 @@
 // a pre-computed score (from lib/completion-score.ts) or the raw inputs and
 // let this component compute it.
 
+import { Check } from 'lucide-react';
 import { computeCompletionScore, type CompletionScoreInputs, type CompletionScoreResult } from '@/lib/completion-score';
 import { useLanguage } from '@/lib/i18n';
 
@@ -17,7 +18,24 @@ const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
 const DARK = '#0B120B';
 
+/** Colours for the card. The default is the dark scorecard the report dashboard has always used;
+ *  `surface` (desk-13) paints the same card with the theme tokens so /example is not a dark green
+ *  slab in light mode. */
+const DARK_PALETTE = {
+  bg: DARK, border: GREEN, accent: GOLD, strong: GOLD, soft: 'rgba(247,201,126,0.8)',
+  faint: 'rgba(247,201,126,0.7)', mid: 'rgba(247,201,126,0.7)', track: 'rgba(247,201,126,0.15)',
+  tick: GREEN, tickFg: GOLD, dashed: GOLD, idle: 'rgba(247,201,126,0.45)', idleBorder: 'rgba(247,201,126,0.35)',
+};
+const SURFACE_PALETTE = {
+  bg: 'var(--bg-1)', border: 'var(--border)', accent: 'var(--color-forest-800)', strong: 'var(--text-primary)',
+  soft: 'var(--text-secondary)', faint: 'var(--text-muted)', mid: 'var(--text-secondary)', track: 'var(--border)',
+  tick: 'var(--color-forest-800)', tickFg: 'var(--bg-1)', dashed: 'var(--gold-dim)', idle: 'var(--text-muted)', idleBorder: 'var(--border)',
+};
+type Palette = typeof DARK_PALETTE;
+
 export interface CompletionScoreProps {
+  /** Paint the card with theme surface tokens instead of the dark scorecard colours. */
+  surface?: boolean;
   /** Pre-computed result. Provide this OR `inputs`, not both — `score` wins if both are set. */
   score?: CompletionScoreResult;
   /** Raw already-loaded inputs; computed internally via computeCompletionScore(). */
@@ -32,18 +50,19 @@ const STROKE = 14;
 const CIRCUMFERENCE = 2 * Math.PI * R;
 
 /** Small inline glyphs so state never relies on colour alone. */
-function StepIcon({ done, pct }: { done: boolean; pct: number }) {
+function StepIcon({ done, pct, c }: { done: boolean; pct: number; c: Palette }) {
   if (done) {
     return (
       <span
         aria-hidden
         style={{
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-          width: 22, height: 22, borderRadius: 9999, background: GREEN, color: GOLD,
-          fontSize: 13, fontWeight: 800, flexShrink: 0, border: `1px solid ${GOLD}`,
+          width: 22, height: 22, borderRadius: 9999, background: c.tick, color: c.tickFg,
+          flexShrink: 0, border: `1px solid ${c.accent}`,
         }}
       >
-        ✓
+        {/* code-11: a literal '✓' text glyph — Lucide only. */}
+        <Check size={13} strokeWidth={3} />
       </span>
     );
   }
@@ -53,8 +72,8 @@ function StepIcon({ done, pct }: { done: boolean; pct: number }) {
         aria-hidden
         style={{
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-          width: 22, height: 22, borderRadius: 9999, background: 'transparent', color: GOLD,
-          fontSize: 10, fontWeight: 800, flexShrink: 0, border: `1.5px dashed ${GOLD}`,
+          width: 22, height: 22, borderRadius: 9999, background: 'transparent', color: c.dashed,
+          fontSize: 12, fontWeight: 800, flexShrink: 0, border: `1.5px dashed ${c.dashed}`,
         }}
       >
         {Math.round(pct)}
@@ -66,8 +85,8 @@ function StepIcon({ done, pct }: { done: boolean; pct: number }) {
       aria-hidden
       style={{
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-        width: 22, height: 22, borderRadius: 9999, background: 'transparent', color: 'rgba(247,201,126,0.45)',
-        fontSize: 12, fontWeight: 800, flexShrink: 0, border: '1.5px solid rgba(247,201,126,0.35)',
+        width: 22, height: 22, borderRadius: 9999, background: 'transparent', color: c.idle,
+        fontSize: 12, fontWeight: 800, flexShrink: 0, border: `1.5px solid ${c.idleBorder}`,
       }}
     >
       ·
@@ -75,8 +94,9 @@ function StepIcon({ done, pct }: { done: boolean; pct: number }) {
   );
 }
 
-export default function CompletionScore({ score, inputs, title, className }: CompletionScoreProps) {
+export default function CompletionScore({ score, inputs, title, className, surface }: CompletionScoreProps) {
   const { t } = useLanguage();
+  const c = surface ? SURFACE_PALETTE : DARK_PALETTE;
   const result = score ?? (inputs ? computeCompletionScore(inputs) : undefined);
   if (!result) return null;
 
@@ -88,18 +108,18 @@ export default function CompletionScore({ score, inputs, title, className }: Com
     <section
       className={className}
       style={{
-        background: DARK,
-        border: `1px solid ${GREEN}`,
+        background: c.bg,
+        border: `1px solid ${c.border}`,
         borderRadius: 16,
         padding: '18px 16px',
-        color: GOLD,
+        color: c.strong,
         fontFamily: 'inherit',
-        maxWidth: 420,
+        maxWidth: surface ? undefined : 420,
         width: '100%',
       }}
       aria-label={t('completionScoreAria')}
     >
-      <h3 style={{ margin: '0 0 14px', fontSize: 15, fontWeight: 700, letterSpacing: '0.01em', color: GOLD }}>
+      <h3 style={{ margin: '0 0 14px', fontSize: 15, fontWeight: 700, letterSpacing: '0.01em', color: c.strong }}>
         {title ?? t('completionScoreTitle')}
       </h3>
 
@@ -116,13 +136,13 @@ export default function CompletionScore({ score, inputs, title, className }: Com
             <circle
               cx={64} cy={64} r={R}
               fill="none"
-              stroke="rgba(247,201,126,0.15)"
+              stroke={c.track}
               strokeWidth={STROKE}
             />
             <circle
               cx={64} cy={64} r={R}
               fill="none"
-              stroke={GOLD}
+              stroke={c.accent}
               strokeWidth={STROKE}
               strokeLinecap="round"
               strokeDasharray={CIRCUMFERENCE}
@@ -137,8 +157,8 @@ export default function CompletionScore({ score, inputs, title, className }: Com
               alignItems: 'center', justifyContent: 'center',
             }}
           >
-            <span style={{ fontSize: 26, fontWeight: 800, lineHeight: 1, color: GOLD }}>{overallPct}%</span>
-            <span style={{ fontSize: 12.5, color: 'rgba(247,201,126,0.7)', marginTop: 4 }}>
+            <span style={{ fontSize: 26, fontWeight: 800, lineHeight: 1, color: c.strong }}>{overallPct}%</span>
+            <span style={{ fontSize: 12.5, color: c.mid, marginTop: 4 }}>
               {t('completionScoreDoneCount').replace('{done}', String(doneCount)).replace('{total}', String(steps.length))}
             </span>
           </div>
@@ -154,17 +174,17 @@ export default function CompletionScore({ score, inputs, title, className }: Com
                 padding: '6px 0',
               }}
             >
-              <StepIcon done={step.done} pct={step.pct} />
+              <StepIcon done={step.done} pct={step.pct} c={c} />
               <span
                 style={{
                   fontSize: 13,
                   fontWeight: step.done ? 700 : 500,
-                  color: step.done ? GOLD : 'rgba(247,201,126,0.8)',
+                  color: step.done ? c.strong : c.soft,
                 }}
               >
                 {t(({ located: 'completionStepLocated', boundary: 'completionStepBoundary', survey: 'completionStepSurvey', design: 'completionStepDesign', cropPlan: 'completionStepCropPlan' } as const)[step.key])}
               </span>
-              <span style={{ marginLeft: 'auto', fontSize: 12.5, color: 'rgba(247,201,126,0.55)' }}>
+              <span style={{ marginLeft: 'auto', fontSize: 12.5, color: c.faint }}>
                 {step.done ? t('completionStatusDone') : step.pct > 0 ? t('completionStatusPartial') : t('completionStatusNotStarted')}
               </span>
             </li>

@@ -1,0 +1,27 @@
+{
+  "base": "25f6baaefc56e82a4fae5f679a43aa5f605d66f0",
+  "branch": "codex/study-silent-entry-next-20261007",
+  "learnerContentChanges": false,
+  "mediaChanges": false,
+  "audioChanges": false,
+  "sourceAuthority": "T_en labels and requiresExplicitNarrationChoice shared with DeckPlayer",
+  "newLabels": "Six independently semantically checked ST/VE/TS UI drafts with exact English alongside",
+  "untranslatedFallback": "No-voice descriptions now have checked regional drafts; unavailable or ambiguous technical controls remain exact English.",
+  "residualPacket": "Data-only; two root-accepted ordinary candidates are not wired; source variants kept distinct",
+  "verification": "Typecheck clean; initial label-only full suite4865pass0fail1existingTODO; expanded240 source/target/placeholder checks pass. Final suite84386 is active and exposed one obsolete hold-only assertion. Rewritten exact source/draft/runtime/notice assertions pass focused test; full-suite rerun required after original terminal result. Native preview and phone gates pending.",
+  "approvalClaims": false,
+  "nextCompleteStudyUIInventory": {
+    "sourceVerifiedRows": 262,
+    "st": 74,
+    "ve": 103,
+    "ts": 85,
+    "exceptions": 0,
+    "status": "240 additional entries applied after independent semantic checks; 38 held English for units, technical terms or further context review",
+    "excludes": "13 separately drafted controls; narrated-entry dependency; already available locale keys; finance/reserve/newFlow"
+  },
+  "appliedAdditionalUIStrings": 240,
+  "heldAdditionalUIStrings": 38,
+  "appliedProof": "imbewu-study-ui-full-applied-proof-20261007.json",
+  "sourceAndMediaInvariant": "No course canonical English, learner prose, media, audio, geometry, indices or PLAN_VERSION edits in this branch.",
+  "historicalTestReason": "Five Tshivenda submission/access/completion controls were held before independent review. They now have source-bound draft candidates, so the old must-be-absent claim is replaced with exact reviewed target/source/status/runtime checks. Unresolved progress error and original notice/fallback coverage are retained."
+}

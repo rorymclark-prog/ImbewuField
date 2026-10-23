@@ -1,4 +1,4 @@
-.root { --mel-ink:#183427; --mel-muted:#506158; color:var(--mel-ink); background:#eff4ef; padding:24px; font-family:var(--font-sans),sans-serif; width:100%; min-width:0; min-height:0; overflow:auto; padding-bottom:180px; }
+.root { --mel-ink:var(--text-primary); --mel-muted:var(--text-secondary); color:var(--mel-ink); background:var(--bg-0); padding:24px; font-family:var(--font-sans),sans-serif; width:100%; min-width:0; min-height:0; overflow:auto; padding-bottom:180px; }
 .wrap { max-width:1440px; margin:auto; }
 .hero { background:#214d35; color:white; border-radius:16px; padding:16px 20px; margin-bottom:16px; display:flex; align-items:center; gap:8px 20px; flex-wrap:wrap; }
 .hero > span { display:none; }
@@ -9,12 +9,12 @@
 .root h3 { font-size:17px; margin:0 0 10px; }
 .root p { font-size:14px; line-height:1.6; }
 .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
-.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr)); gap:16px; margin:18px 0; }
-.card { background:white; padding:20px; border:1px solid #d7e3d9; border-radius:16px; min-width:0; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); gap:16px; margin:18px 0; }
+.card { background:var(--bg-1); padding:20px; border:1px solid var(--border); border-radius:16px; min-width:0; }
 .stat { font-size:30px; font-weight:700; display:block; margin:8px 0; }
 .muted { color:var(--mel-muted); font-size:13px; }
-.tag { display:inline-block; background:#e9f1e9; color:#244d34; padding:5px 9px; border-radius:8px; font-size:12px; font-weight:600; }
-.root button,.root select,.root input:not([type=checkbox]),.root textarea { min-height:44px; border-radius:9px; padding:9px 12px; border:1px solid #adbeaf; font:inherit; font-size:14px; background:white; color:var(--mel-ink); max-width:100%; }
+.tag { display:inline-block; background:var(--badge-bg); color:var(--emerald); padding:5px 9px; border-radius:8px; font-size:12px; font-weight:600; }
+.root button,.root select,.root input:not([type=checkbox]),.root textarea { min-height:44px; border-radius:9px; padding:9px 12px; border:1px solid var(--border); font:inherit; font-size:14px; background:var(--input-bg); color:var(--mel-ink); max-width:100%; }
 .root input:not([type=checkbox]),.root textarea { width:100%; }
 .root textarea { min-height:90px; }
 .root input[type=checkbox] { width:20px; height:20px; accent-color:#245739; flex-shrink:0; }
@@ -24,18 +24,29 @@
 .root button:disabled { opacity:.55; cursor:default; }
 .root button.primary { background:#245739; color:white; border-color:#245739; }
 .root button[aria-pressed=true] { box-shadow:0 0 0 2px #245739; }
-.root :focus-visible { outline:3px solid #d39935; outline-offset:3px; }
-.error { padding:15px; background:#fff0ed; color:#8c2e1f; border:1px solid #d39489; border-radius:10px; }
-.notice { padding:15px; background:#e5eff8; color:#244b6b; border-radius:10px; margin:14px 0; }
-.scroll { max-height:300px; overflow:auto; border:1px solid #d7e3d9; border-radius:10px; padding:12px; }
+.root :focus-visible { outline:3px solid var(--gold); outline-offset:3px; }
+.error { padding:15px; background:color-mix(in srgb, var(--orange) 14%, var(--bg-0)); color:var(--orange); border:1px solid color-mix(in srgb, var(--orange) 40%, var(--border)); border-radius:10px; }
+.notice { padding:15px; background:color-mix(in srgb, var(--blue) 14%, var(--bg-0)); color:var(--blue); border-radius:10px; margin:14px 0; }
+.scroll { max-height:300px; overflow:auto; border:1px solid var(--border); border-radius:10px; padding:12px; }
 .option { display:flex !important; align-items:center; gap:9px; }
-.metric { padding:14px 0; border-bottom:1px solid #dce5de; }
-.bar { height:8px; background:#e9efea; border-radius:6px; overflow:hidden; margin:6px 0 12px; }
-.bar span { display:block; height:100%; background:#34724d; }
-.compact { padding:12px 20px; background:white; border-bottom:1px solid #d7e3d9; font-size:14px; display:flex; gap:20px; flex-wrap:wrap; }
+.metric { padding:14px 0; border-bottom:1px solid var(--border); }
+.bar { height:8px; background:var(--bg-2); border-radius:6px; overflow:hidden; margin:6px 0 12px; }
+.bar span { display:block; height:100%; background:var(--emerald); }
+.compact { padding:12px 20px; background:var(--bg-1); border-bottom:1px solid var(--border); font-size:14px; display:flex; gap:20px; flex-wrap:wrap; }
 .statsGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:14px 0; }
-.about { font-size:14px; }
-.about summary { min-height:44px; display:flex; align-items:center; gap:6px; }
+/* ux-22: a bordered row with a chevron, not a bare bold label — the same disclosure affordance
+   every other <details> on these dashboards gives (see .root summary below). */
+.about { font-size:14px; border:1px solid var(--border); border-radius:12px; padding:0 14px; margin:14px 0; background:var(--bg-1); }
+.about summary { min-height:44px; display:flex; align-items:center; gap:6px; list-style:none; }
+.about summary::-webkit-details-marker { display:none; }
+.about summary::after { content:''; flex-shrink:0; width:8px; height:8px; margin-left:auto; border-right:2px solid var(--text-muted); border-bottom:2px solid var(--text-muted); transform:rotate(45deg); transition:transform .15s; }
+.about[open] summary::after { transform:rotate(-135deg); }
+.about p { margin-top:0; padding-bottom:14px; }
+/* MelMetrics' per-question result bars — sdesk-14: this used to be a plain stacked <div>, so
+   each question's bar ran the full 1280px frame on desktop. Reusing .grid puts 2-3 questions
+   side by side at lg+ (see minmax above) and the bar itself stays capped so it reads as a bar,
+   not a stretched rule. */
+.metric .bar { max-width:420px; }
 @media(max-width:650px) {
   .root { padding:12px; padding-bottom:calc(96px + env(safe-area-inset-bottom)); }
   .hero { padding:0; margin-bottom:10px; border-radius:0; background:transparent; color:var(--mel-ink); }
@@ -68,38 +79,38 @@
 .overview { margin:12px 0 20px; }
 .overview h2 { margin:0; }
 .overviewStats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-bottom:16px; }
-.root .summaryCard { display:flex; align-items:center; gap:12px; text-align:left; padding:16px; border-radius:16px; border:1px solid #cddcd1; box-shadow:0 4px 14px #18342706; }
+.root .summaryCard { display:flex; align-items:center; gap:12px; text-align:left; padding:16px; border-radius:16px; border:1px solid var(--border); box-shadow:0 4px 14px #18342706; }
 .summaryCard > span:nth-child(2) { flex:1; }
-.summaryCard small { color:#506158; font-size:13px; }
+.summaryCard small { color:var(--text-secondary); font-size:13px; }
 .summaryCard .stat { margin:4px 0; line-height:1; font-size:32px; }
-.statIcon { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; flex-shrink:0; border-radius:12px; background:#e4eee8; color:#245739; }
+.statIcon { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; flex-shrink:0; border-radius:12px; background:var(--badge-bg); color:var(--emerald); }
 .overviewPanels { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
 .overviewPanels .card { padding:18px 20px; }
 .coverageValue { display:flex; align-items:baseline; gap:14px; margin:12px 0; flex-wrap:wrap; }
 .coverageValue > strong { font-size:36px; line-height:1; }
 .coverageValue > span { font-size:14px; }
-.coverageTrack { height:14px; overflow:hidden; border-radius:20px; background:#e4ebe6; }
-.coverageTrack > span { display:block; height:100%; background:#327450; border-radius:20px; }
-.root .attention { background:#fffaf0; border-color:#dfcda9; }
-.root .attention button { display:flex; width:100%; align-items:center; gap:12px; text-align:left; background:transparent; border:0; border-bottom:1px solid #e8dcc6; padding:10px 0; }
+.coverageTrack { height:14px; overflow:hidden; border-radius:20px; background:var(--bg-2); }
+.coverageTrack > span { display:block; height:100%; background:var(--emerald); border-radius:20px; }
+.root .attention { background:color-mix(in srgb, var(--gold) 12%, var(--bg-0)); border-color:color-mix(in srgb, var(--gold) 45%, var(--border)); }
+.root .attention button { display:flex; width:100%; align-items:center; gap:12px; text-align:left; background:transparent; border:0; border-bottom:1px solid var(--border); padding:10px 0; }
 .attention button > span { flex:1; }
-.attention small { display:block; color:#645a45; margin-top:3px; }
-.cyclePanel { background:white; border:1px solid #d7e3d9; border-radius:16px; padding:18px 20px; margin-bottom:20px; }
-.root .cycleLabel { font:600 13px var(--font-sans),sans-serif; text-transform:uppercase; letter-spacing:.06em; color:#506158; margin:18px 0 10px; }
+.attention small { display:block; color:var(--text-secondary); margin-top:3px; }
+.cyclePanel { background:var(--bg-1); border:1px solid var(--border); border-radius:16px; padding:18px 20px; margin-bottom:20px; }
+.root .cycleLabel { font:600 13px var(--font-sans),sans-serif; text-transform:uppercase; letter-spacing:.06em; color:var(--text-secondary); margin:18px 0 10px; }
 .cycleStages { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; }
 .appStages { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
-.root .cycleStages button,.root .appStages button { display:grid; grid-template-columns:28px 1fr; align-items:center; gap:6px 8px; text-align:left; border-color:#d7e3d9; background:#f7faf7; padding:12px; min-width:0; }
-.cycleStages button > span,.appStages button > span { grid-column:2; font-size:13px; color:#506158; }
+.root .cycleStages button,.root .appStages button { display:grid; grid-template-columns:28px 1fr; align-items:center; gap:6px 8px; text-align:left; border-color:var(--border); background:var(--bg-2); padding:12px; min-width:0; }
+.cycleStages button > span,.appStages button > span { grid-column:2; font-size:13px; color:var(--text-secondary); }
 .cycleStages .bar,.appStages .bar { grid-column:1 / -1; width:100%; margin:4px 0 0; }
-.root .cycleStages button[aria-pressed=true],.root .appStages button[aria-pressed=true] { background:#e4eee8; }
+.root .cycleStages button[aria-pressed=true],.root .appStages button[aria-pressed=true] { background:var(--badge-bg); }
 .assessmentCards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:14px 0; }
-.root .assessmentCard { display:flex; align-items:flex-start; gap:12px; padding:18px; border-radius:16px; border-color:#d7e3d9; text-align:left; }
+.root .assessmentCard { display:flex; align-items:flex-start; gap:12px; padding:18px; border-radius:16px; border-color:var(--border); text-align:left; }
 .assessmentText { display:flex; flex-direction:column; align-items:flex-start; gap:8px; flex:1; min-width:0; }
 .assessmentText > strong { font-family:var(--font-display),serif; font-size:20px; font-weight:600; }
-.assessmentText > span:not(.tag),.assessmentText > small { color:#506158; font-size:14px; }
+.assessmentText > span:not(.tag),.assessmentText > small { color:var(--text-secondary); font-size:14px; }
 .assessmentText .bar { width:100%; margin:0; }
 .root .guide { margin:20px 0; padding:12px 20px; }
-.root .guide > summary { color:#315a42; }
+.root .guide > summary { color:var(--emerald); }
 @media(max-width:1100px) { .hero p { display:none; } .cycleStages { grid-template-columns:repeat(3,minmax(0,1fr)); } .summaryCard > svg { display:none; } }
 @media(max-width:650px) {
   .hero { display:block; padding:0; }
@@ -115,4 +126,12 @@
   .root .cycleStages button,.root .appStages button { padding:10px; grid-template-columns:1fr; }
   .cycleStages button > span,.appStages button > span { grid-column:1; }
   .root .assessmentCard { padding:14px; }
+}
+
+/* w17-06: at lg+ the assessment cards fill the row (Workspace .cards pattern) and the
+   progress tracks stop at a readable length instead of running the whole panel width.
+   Phone and tablet rules above are untouched. */
+@media(min-width:1024px) {
+  .assessmentCards { grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr)); }
+  .coverageTrack, .assessmentText .bar { max-width:480px; }
 }

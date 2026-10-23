@@ -1,0 +1,487 @@
+{
+  "status": "DATA-ONLY supplementary metadata proposal; root review pending; original target packet immutable",
+  "originalTargetAuthoritySHA256": "982d6151e95ba3ac522ed26754d4ce35c85797eb880c98163de56b01f2d8f785",
+  "registryPath": "lib/course-translation-drafts-ts.ts",
+  "metadataField": "holds",
+  "originalFullHoldArray": [
+    {
+      "lessonId": "intro-permaculture-l1",
+      "field": "keyPoints[1]",
+      "sourceText": "People Care",
+      "reason": "Retain the named permaculture ethic exactly while translating the family-needs-before-market-production priority around it."
+    },
+    {
+      "lessonId": "intro-permaculture-l1",
+      "field": "quiz[0].q",
+      "sourceText": "all his surplus maize",
+      "reason": "Retain the exact crop, ownership, and all-of-surplus wording because Xitsonga concord for the English crop anchor is uncertain."
+    },
+    {
+      "lessonId": "intro-permaculture-l1",
+      "field": "quiz[0].q",
+      "sourceText": "composting",
+      "reason": "Retain the named soil-input practice exact within the unreviewed negative clause."
+    },
+    {
+      "lessonId": "intro-permaculture-l1",
+      "field": "quiz[0].q",
+      "sourceText": "seed saving",
+      "reason": "Retain the named seed practice exact within the unreviewed negative clause."
+    },
+    {
+      "lessonId": "intro-permaculture-l1",
+      "field": "quiz[0].q",
+      "sourceText": "ethic",
+      "reason": "Retain the formal ethics-category term exact in the final question."
+    }
+  ],
+  "removedExactly": [
+    {
+      "lessonId": "intro-permaculture-l1",
+      "field": "keyPoints[1]",
+      "sourceText": "People Care",
+      "reason": "Retain the named permaculture ethic exactly while translating the family-needs-before-market-production priority around it."
+    },
+    {
+      "lessonId": "intro-permaculture-l1",
+      "field": "quiz[0].q",
+      "sourceText": "seed saving",
+      "reason": "Retain the named seed practice exact within the unreviewed negative clause."
+    }
+  ],
+  "proposedHoldArray": [
+    {
+      "lessonId": "intro-permaculture-l1",
+      "field": "quiz[0].q",
+      "sourceText": "all his surplus maize",
+      "reason": "Retain the exact crop, ownership, and all-of-surplus wording because Xitsonga concord for the English crop anchor is uncertain."
+    },
+    {
+      "lessonId": "intro-permaculture-l1",
+      "field": "quiz[0].q",
+      "sourceText": "composting",
+      "reason": "Retain the named soil-input practice exact within the unreviewed negative clause."
+    },
+    {
+      "lessonId": "intro-permaculture-l1",
+      "field": "quiz[0].q",
+      "sourceText": "ethic",
+      "reason": "Retain the formal ethics-category term exact in the final question."
+    }
+  ],
+  "remainingEntriesByteExactAsObjects": true,
+  "targetSourceStatusIndexAndOtherMetadataDeltaCount": 0,
+  "exactMetadataRewindToOriginalAcceptedAfter": true,
+  "fullNativeProposedAfterWithMetadataAmendment": {
+    "id": "intro-permaculture",
+    "language": "ts",
+    "reviewStatus": "machine-draft",
+    "sourceMetadata": {
+      "durationMins": 20,
+      "category": "foundation"
+    },
+    "title": {
+      "sourceEnglish": "Introduction to Permaculture",
+      "xitsongaDraft": "Ngheniso eka Permaculture",
+      "reviewStatus": "machine-draft"
+    },
+    "description": {
+      "sourceEnglish": "Ethics, principles and patterns — the foundation for everything else you will build.",
+      "xitsongaDraft": "Mahanyelo, misinya ya milawu na mavumbeko (patterns) — masungulo ya hinkwaswo leswi u nga ta swi aka.",
+      "reviewStatus": "machine-draft"
+    },
+    "lessons": [
+      {
+        "id": "intro-permaculture-l1",
+        "title": {
+          "sourceEnglish": "The Three Ethics: Earth Care, People Care, Fair Share",
+          "xitsongaDraft": "Mahanyelo Manharhu: Ku Hlayisa Misava, Ku Hlayisa Vanhu, Ku Avelana hi Ku Ringana",
+          "reviewStatus": "machine-draft"
+        },
+        "infographicAlt": {
+          "sourceEnglish": "The three ethics as three linked circles of equal size: a hand holding soil for Earth Care, two people for People Care, and a basket passing between hands for Fair Share.",
+          "xitsongaDraft": "Mahanyelo lawa manharhu ma kombisiwa hi swirhendzevutana swinharhu leswi hlanganisiweke, leswi ringanaka hi vukulu: voko leri khomeke misava ra Ku Hlayisa Misava; vanhu vambirhi va Ku Hlayisa Vanhu; na baskiti leri hundziseriwaka hi mavoko ra Ku Avelana hi Ku Ringana.",
+          "reviewStatus": "machine-draft"
+        },
+        "body": {
+          "sourceEnglish": "Permaculture rests on three ethics. Earth Care means treating soil, water, plants and animals as living systems to protect, not resources to use up. People Care means your family's needs come first, then your community's. Fair Share means taking only what you need and returning the surplus — seeds, food, water, knowledge — back into the system.\n\nThese aren't abstract ideas. A farmer who sells every egg and vegetable but keeps nothing back for the family table is skipping People Care. A community that fences off a shared spring is breaking Fair Share.\n\nEthics matter because they help you decide when there's no rulebook — a neighbour asking to graze cattle after a drought, a flood damaging your swales. Build these three into how you think before you build anything on the ground.",
+          "xitsongaDraft": "Permaculture yi seketeriwe eka mahanyelo manharhu. Ku Hlayisa Misava swi vula ku teka misava, mati, swimilana na swiharhi tanihi maendlelo lama hanyaka lama faneleke ku sirheleriwa, ku nga ri switirhisiwa swo hela hi ku tirhisiwa. Ku Hlayisa Vanhu swi vula leswaku swilaveko swa ndyangu wa wena swi rhanga emahlweni, kutani ku landzela swa vaaki va ka n'wina. Ku Avelana hi Ku Ringana swi vula ku teka ntsena leswi u swi lavaka kutani u vuyisela leswi saleke — mbewu, swakudya, mati, vutivi — endzeni ka maendlelo ya nsimu.\n\nLawa a hi mianakanyo ntsena leyi nga riki ya xiviri. Murimi loyi a xavisaka matandza hinkwawo na matsavu kambe a nga siyi nchumu etafuleni ra ndyangu u tlula Ku Hlayisa Vanhu. Vaaki lava biyelaka xihlovo lexi avelaneriwaka va tlula Ku Avelana hi Ku Ringana.\n\nMahanyelo i ya nkoka hikuva ma ku pfuna ku endla swiboho loko ku nga ri na buku ya milawu — muakelani loyi a kombelaka ku risa tihomu endzhaku ka dyandza, kumbe ndhambi leyi onhaka swisele (swales) swa wena. Aka mahanyelo lawa manharhu eka ndlela leyi u anakanyaka ha yona u nga si aka nchumu emisaveni.",
+          "reviewStatus": "machine-draft"
+        },
+        "keyPoints": [
+          {
+            "sourceEnglish": "Earth Care: protect soil, water, and biodiversity",
+            "xitsongaDraft": "Ku Hlayisa Misava: sirelela misava, mati na ku hambana-hambana ka swihanyisi",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "People Care: your family's needs come before market production",
+            "xitsongaDraft": "Ku Hlayisa Vanhu: swilaveko swa ndyangu wa wena swi rhanga market production",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Fair Share: return surplus to the system — seeds, water, food, knowledge",
+            "xitsongaDraft": "Ku Avelana hi Ku Ringana: vuyisela leswi saleke eka maendlelo ya nsimu — mbewu, mati, swakudya, vutivi",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Ethics guide decisions when there's no rulebook",
+            "xitsongaDraft": "Mahanyelo ma kongomisa swiboho loko ku nga ri na buku ya milawu",
+            "reviewStatus": "machine-draft"
+          }
+        ],
+        "quiz": [
+          {
+            "question": {
+              "sourceEnglish": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
+              "xitsongaDraft": "Murimi u xavisa all his surplus maize kambe a nga hlayisi xilo xa composting kumbe ku hlayisa mbewu. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Earth Care only",
+                "xitsongaDraft": "Ku Hlayisa Misava ntsena",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "People Care only",
+                "xitsongaDraft": "Ku Hlayisa Vanhu ntsena",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Fair Share — he returns nothing to the system",
+                "xitsongaDraft": "Ku Avelana hi Ku Ringana — a nga vuyiseli nchumu eka maendlelo ya nsimu",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "All three equally",
+                "xitsongaDraft": "Hinkwaswo swinharhu hi ku ringana",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 2,
+            "rationale": {
+              "sourceEnglish": "Fair Share means returning some of what you take — as seed, compost, or food for others. Selling everything and keeping nothing back breaks that cycle.",
+              "xitsongaDraft": "Ku Avelana hi Ku Ringana swi vula ku vuyisela swin'wana swa leswi u swi tekaka — tanihi mbewu, monyolo wa khompositi (compost), kumbe swakudya swa van'wana. Ku xavisa hinkwaswo handle ko siya swin'wana swi tshova ndzhendzeleko wolowo.",
+              "reviewStatus": "machine-draft"
+            }
+          },
+          {
+            "question": {
+              "sourceEnglish": "Your borehole serves your household. Neighbours ask for water too. Which action best reflects all three ethics?",
+              "xitsongaDraft": "Mugodi wa wena wa borehole wu tirhela muti wa wena. Vaakelani va kombela mati na vona. Hi xihi xiendlo lexi kombisaka kahle mahanyelo hinkwawo manharhu?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Sell access to the highest bidder",
+                "xitsongaDraft": "Xavisa mpfumelelo eka loyi a nyikaka mali yo tala swinene",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Keep all the borehole water for a larger irrigation area",
+                "xitsongaDraft": "Hlayisa mati hinkwawo ya borehole ma tirhela ndhawu leyikulu ya ku cheleta ntsena",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Find out if sharing is allowed and if the borehole can serve all users. Only then agree how to share fairly and keep watching the water level.",
+                "xitsongaDraft": "Kuma leswaku xana ku avelana swa pfumeleriwa naswona borehole yi nga kota ku tirhela vatirhisi hinkwavo. Hi kona ntsena mi nga pfumelelanaka hi ndlela yo avelana hi ku ringana naswona mi ya emahlweni mi languta xiyimo xa mati.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Cap the borehole to preserve groundwater only",
+                "xitsongaDraft": "Pfala borehole ku hlayisa mati ya le hansi ka misava ntsena",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 2,
+            "rationale": {
+              "sourceEnglish": "First find out what water use is allowed and whether the source can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly. Monitoring helps you notice change; it does not give permission to take more water.",
+              "xitsongaDraft": "Rhanga u kuma leswaku hi kwihi ku tirhisiwa ka mati loku pfumeleriwaka na loko xihlovo xi nga kota ku tirhela vatirhisi hinkwavo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona mati ma ringene, pfumelelanani hi ndlela yo avelana hi ku ringana. Ku xiyisisa swi ku pfuna ku vona ku cinca; a swi nyiki mpfumelelo wo teka mati yo tala.",
+              "reviewStatus": "machine-draft"
+            }
+          }
+        ]
+      },
+      {
+        "id": "intro-permaculture-l2",
+        "title": {
+          "sourceEnglish": "Twelve Principles: Designing with Nature",
+          "xitsongaDraft": "Misinya ya Milawu ya Khume-Mbirhi: Ku Endla Pulani na Ntumbuluko",
+          "reviewStatus": "machine-draft"
+        },
+        "infographicAlt": {
+          "sourceEnglish": "Twelve design principles arranged as segments around a central seedling, each shown as a simple picture — an eye for observing, a droplet for catching water, a sun for energy, a loop for returning waste.",
+          "xitsongaDraft": "Misinya ya milawu ya dizayini ya khume-mbirhi yi vekiwile hi swiphemu leswi rhendzeleke ximilana lexi nga exikarhini. Xiphemu xin’wana ni xin’wana xi kombisiwa hi xifaniso xo olova — tihlo ra ku xiyisisa, thonsi ra ku khoma mati, dyambu ra eneji, na xirhendzevutana lexi kombisaka ku vuyisa thyaka.",
+          "reviewStatus": "machine-draft"
+        },
+        "body": {
+          "sourceEnglish": "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+          "xitsongaDraft": "David Holmgren u hlamuserile misinya ya milawu ya dizayini ya khume-mbirhi eka Essence of Permaculture. Bill Mollison na David Holmgren va sungule nongoti wa permaculture swin'we. Tindlela tinharhu to sungula leti pfunaka eka dyondzo leyi hi leti: observe and interact — languta ndhawu ya wena eka nguva leyi heleleke u nga si endla earthworks letikulu; catch and store energy — xiya mpfula, dyambu na biomass loko swi nga si suka eka ndhawu ya wena; na use edges and value the marginal — layini ya fence kumbe xiphemu xa misava lexi nga etlhelo ka ndlela (strip) xi nga va ndhawu leyi pfunaka ku xiyisisa.\n\nTin'wana leti faneleke ku tiviwa: produce no waste (masalela ma hundzuka compost, compost yi hundzuka misava), use small and slow solutions (bakiti ri nga cheleta planting bed handle ka gezi), na use and value diversity. Ku onhaka ka maize hi xihangu swi ya hi xidzedze na growth stage ya xibyariwa.\n\nHlawula misinya ya milawu yimbirhi kumbe yinharhu leyi fambelanaka ni xiphiqo xa wena lexikulu, u yi tirhisa hi ku tiyimisela. Leyin'wana yi ta sungula ku vonaka loko u ri karhi u ya.",
+          "reviewStatus": "machine-draft"
+        },
+        "keyPoints": [
+          {
+            "sourceEnglish": "Observe your land for a full season before major earthworks",
+            "xitsongaDraft": "Xiyisisa ndhawu ya wena eka nguva leyi heleleke u nga si sungula major earthworks",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Catch and store rain, sun, and biomass before they leave your property",
+            "xitsongaDraft": "Hlengeleta u tlhela u hlayisa mpfula, dyambu na biomass swi nga si suka eka ndhawu ya wena",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Edges and margins can be useful places to observe what grows well",
+            "xitsongaDraft": "Edges na margins swi nga va tindhawu leti pfunaka ku xiyisisa leswi kulaka kahle",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Hail injury to maize depends on the storm and the crop’s growth stage",
+            "xitsongaDraft": "Ku onhaka ka maize hi xihangu swi ya hi xidzedze na growth stage ya ximilana",
+            "reviewStatus": "machine-draft"
+          }
+        ],
+        "quiz": [
+          {
+            "question": {
+              "sourceEnglish": "A farmer wants to dig swales to harvest rainwater. What should she do first, following 'observe and interact'?",
+              "xitsongaDraft": "Murimi u lava ku cela swales ku hlengeleta mati ya mpfula. I yini lexi a faneleke ku sungula hi xona, a landzela observe and interact?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Dig immediately after the first good rain",
+                "xitsongaDraft": "Cela hi ku hatlisa endzhaku ka mpfula leyinene yo sungula",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Watch where water flows and pools across at least one wet season",
+                "xitsongaDraft": "Xiyisisa laha mati ma khulukaka kona ni laha ma hlengeletanaka kona eka nguva ya mpfula yin’we kumbe ku tlurisa",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Copy a neighbour's swale layout",
+                "xitsongaDraft": "Kopisa ndlela leyi swale ya muakelani yi endliweke ha yona",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Assume the same swale design fits every site",
+                "xitsongaDraft": "Anakanya leswaku design leyi fanaka ya swale ya faneleka eka ndhawu yin’wana ni yin’wana",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "A wet season shows more than one storm, but observation is only a first step. Check the soil, slope, drainage and safe overflow route with a trained local adviser before digging.",
+              "xitsongaDraft": "Nguva ya mpfula yi komba swidzedze swo tala ku tlula xin’we, kambe ku xiyisisa i goza ro sungula ntsena. Kambela misava, slope, drainage na safe overflow route swin’we na mutsundzuxi wa le ndhawini ya wena loyi a leteriweke u nga si cela.",
+              "reviewStatus": "machine-draft"
+            }
+          },
+          {
+            "question": {
+              "sourceEnglish": "Which layout best applies 'integrate rather than segregate'?",
+              "xitsongaDraft": "Hi rihi hlelelo leri tirhisaka kahle integrate rather than segregate?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Chickens penned far from the garden",
+                "xitsongaDraft": "Tihuku ti pfaleriwe ekule na ntanga",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Garden, fruit trees and a chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return",
+                "xitsongaDraft": "Ntanga, mirhi ya mihandzu na chicken run swi hleriwe leswaku tihuku ti tirhisa planting bed leyi nga riki na swin'wana endzhaku ka harvest, kutani murimi u kambela safe management loko crops leti dyiwaka ti nga si vuya",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Separate paddocks for each crop",
+                "xitsongaDraft": "Paddocks to hambana eka crop yin’wana ni yin’wana",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "All animals kept off the cultivated zone",
+                "xitsongaDraft": "Swiharhi hinkwaswo swi hlayisiwa swi nga ngheni eka zone leyi rimiweke",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops return.",
+              "xitsongaDraft": "Ku hlanganisa swi endla leswaku element yin’wana ni yin’wana yi tirhela leswi nga ekusuhi na yona — laha, tihuku ti basisa pests ni ku engetela fertility, ematshan'weni yo tshamela eka pen leyi nga endhawini yin’we ti nga endli nto. Fresh manure yi nga rhwala germs, hikokwalaho kambela safe management loko crops leti dyiwaka ti nga si vuya.",
+              "reviewStatus": "machine-draft"
+            }
+          }
+        ]
+      },
+      {
+        "id": "intro-permaculture-l3",
+        "title": {
+          "sourceEnglish": "Zones and Sectors: Organising Your Farm by Energy",
+          "xitsongaDraft": "Ti-Zone na Ti-Sector: Ku Hlela Purasi ra Wena hi Matimba",
+          "reviewStatus": "machine-draft"
+        },
+        "infographicAlt": {
+          "sourceEnglish": "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
+          "xitsongaDraft": "Xikombiso xa purasi lexi kombisiweke hi swifaniso: tinomboro ta 0 ku ya eka 5 ti landzelela ndlela yo famba hi milenge leyi jikajikaka ku suka endlwini ni le xirhapeni xa le kusuhi, ti hundza tihuku ni nsimu, ti ya eka mirhi ni ndhawu ya le tlhelo ka nambu leyi nga wilder. Tinomboro leti i swikombiso ntsena; a hi mindzilakano leyi tiyisiweke kumbe mipfhuka leyi tiyisiweke.",
+          "reviewStatus": "machine-draft"
+        },
+        "body": {
+          "sourceEnglish": "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
+          "xitsongaDraft": "Zones na sectors swi ku pfuna ku hunguta ntirho lowu tlangisiwaka. Zones ti sukela eka 0 ku ya eka 5 hi ku ya hi ku tala ka minkarhi leyi u endzelaka ha yona. Zone 0 i yindlu. Eka xikombiso lexi, Zone 1 yi le kusuhi na yindlu naswona yi na leswi u swi tshovelaka nkarhi na nkarhi — herbs na salad greens. Zone 2 i ntanga lowukulu na xivala xa tihuku, leswi u swi endzelaka kan’we kumbe kambirhi hi siku. Zone 3 i nsimu leyikulu, leyi u yi endzelaka vhiki na vhiki. Zone 4 yi le ka semi-wild — mirhi ya mihandzu na fodder leyi lavaka nyingiso minkarhi yin’wana. Zone 5 yi tshikiwile yi ri nhova.\n\nSectors i energy leyi nghenaka yi huma ehandle — dyambu, moya, mpfula, ndhambi na ndzilo. Xiya laha moya lowu tiyeke wu humaka kona epurasini ra wena. Matsalwa ya weather station ya le kusuhi ma nga ku pfuna ku kambela tlhelo leri moya wu humaka eka rona. Xiya laha mati ya mpfula ma nghenaka kona ni laha ma khulukaka kona eka ndhawu ya wena. Dirowa miseve ya leswi u swi vonaka.\n\nDirowa zones na sectors ephepheni kutani u va na motheo wa design ya wena.",
+          "reviewStatus": "machine-draft"
+        },
+        "keyPoints": [
+          {
+            "sourceEnglish": "In this example, Zone 1 near the house holds often-picked herbs",
+            "xitsongaDraft": "Eka xikombiso lexi, Zone 1 leyi nga kusuhi na yindlu yi na herbs leti u ti tshovelaka nkarhi na nkarhi",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Zones organise labour by how often you need to visit",
+            "xitsongaDraft": "Ti-zone ti hlela mintirho hi ku ya hi minkarhi leyi u lavaka ku endzela ha yona",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Sectors map incoming sun, wind, rainwater, flood and fire",
+            "xitsongaDraft": "Sectors ti komba energy leyi nghenaka: dyambu, moya, mati ya mpfula, ndhambi na ndzilo",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "A simple sketch of zones and sectors is enough to start designing",
+            "xitsongaDraft": "Mpfapfarhuto wo olova wa ti-zone na ti-sector wu ringene ku sungula ku endla pulani",
+            "reviewStatus": "machine-draft"
+          }
+        ],
+        "quiz": [
+          {
+            "question": {
+              "sourceEnglish": "You plant herbs in Zone 3, the main field far from the house. What problem does this create?",
+              "xitsongaDraft": "U byala herbs eka Zone 3, main field leyi nga ekule na yindlu. Xana leswi swi vanga xiphiqo xihi?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Herbs grow too large",
+                "xitsongaDraft": "Herbs ti kula ngopfu",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "The extra walk may mean you pick or check them less often",
+                "xitsongaDraft": "Ku famba mpfhuka wo engetela swi nga endla leswaku u tshovela kumbe u kambela herbs hi minkarhi yitsongo.",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Herbs cross-pollinate with main crops",
+                "xitsongaDraft": "Herbs ti cross-pollinate na crops letikulu",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Zone 3 gets too much sun for herbs",
+                "xitsongaDraft": "Zone 3 yi kuma dyambu ro tala ngopfu eka herbs",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "Put a crop you pick often near a daily path. A distant bed adds walking and may be checked less often.",
+              "xitsongaDraft": "Veka crop leyi u yi tshovelaka nkarhi na nkarhi ekusuhi na ndlela leyi u yi tirhisaka siku na siku. Bed leyi nga ekule yi engetela ku famba naswona yi nga endla leswaku u yi kambela hi minkarhi yitsongo.",
+              "reviewStatus": "machine-draft"
+            }
+          },
+          {
+            "question": {
+              "sourceEnglish": "You observe damaging wind coming from the north-west on a Highveld farm. Where should a windbreak go?",
+              "xitsongaDraft": "U xiyisisa moya lowu onhaka lowu humaka hi North-west eka purasi ra Highveld. Windbreak yi fanele ku ya kwihi?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "South-east boundary",
+                "xitsongaDraft": "Ndzilakana wa South-east",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "North-west boundary, between the wind and the crops",
+                "xitsongaDraft": "Ndzilakana wa North-west, vhukati ka moya na crops",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Centre of the property",
+                "xitsongaDraft": "Exikari ka property",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Windbreaks aren't needed since winds are seasonal",
+                "xitsongaDraft": "Swisivela-moya a swi laveki hikuva mimoya yi hunga hi tinguva",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "A windbreak works by standing between the wind source and what it would damage — so it belongs on the side the wind actually comes from.",
+              "xitsongaDraft": "Windbreak yi tirha hi ku yima vhukati ka laha moya wu humaka kona ni leswi wu nga swi onhaka. Hikokwalaho yi fanele ku va eka tlhelo leri moya wu humaka eka rona hakunene.",
+              "reviewStatus": "machine-draft"
+            }
+          }
+        ]
+      }
+    ],
+    "holds": [
+      {
+        "lessonId": "intro-permaculture-l1",
+        "field": "quiz[0].q",
+        "sourceText": "all his surplus maize",
+        "reason": "Retain the exact crop, ownership, and all-of-surplus wording because Xitsonga concord for the English crop anchor is uncertain."
+      },
+      {
+        "lessonId": "intro-permaculture-l1",
+        "field": "quiz[0].q",
+        "sourceText": "composting",
+        "reason": "Retain the named soil-input practice exact within the unreviewed negative clause."
+      },
+      {
+        "lessonId": "intro-permaculture-l1",
+        "field": "quiz[0].q",
+        "sourceText": "ethic",
+        "reason": "Retain the formal ethics-category term exact in the final question."
+      }
+    ]
+  },
+  "reasons": [
+    {
+      "field": "lessons[0].keyPoints[1]",
+      "sourceEnglish": "People Care: your family's needs come before market production",
+      "current": {
+        "sourceEnglish": "People Care: your family's needs come before market production",
+        "xitsongaDraft": "People Care: swilaveko swa ndyangu wa wena swi rhanga market production",
+        "reviewStatus": "machine-draft"
+      },
+      "acceptedTarget": {
+        "sourceEnglish": "People Care: your family's needs come before market production",
+        "xitsongaDraft": "Ku Hlayisa Vanhu: swilaveko swa ndyangu wa wena swi rhanga market production",
+        "reviewStatus": "machine-draft"
+      },
+      "removedSourceText": "People Care",
+      "reason": "Root-accepted ordinary completion now uses the localized formal name Ku Hlayisa Vanhu; claiming that People Care remains exact English in the target is false."
+    },
+    {
+      "field": "lessons[0].quiz[0].question",
+      "sourceEnglish": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
+      "current": {
+        "sourceEnglish": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
+        "xitsongaDraft": "Murimi u xavisa all his surplus maize kambe a nga hlayisi xilo xa composting kumbe seed saving. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?",
+        "reviewStatus": "machine-draft"
+      },
+      "acceptedTarget": {
+        "sourceEnglish": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
+        "xitsongaDraft": "Murimi u xavisa all his surplus maize kambe a nga hlayisi xilo xa composting kumbe ku hlayisa mbewu. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?",
+        "reviewStatus": "machine-draft"
+      },
+      "removedSourceText": "seed saving",
+      "reason": "Root-accepted framing now uses ku hlayisa mbewu. Keep the negative/OR, all his surplus maize, composting and ethic safeguards; remove only this superseded literal-English metadata claim."
+    }
+  ],
+  "testStrategy": "Keep current all-holds source/target containment check on all three remaining entries. Assert both superseded entries absent and exact remaining array preserved. Dated older target assertions may use validated historical rewind; live metadata contract must not be rewound to evade stale annotations."
+}

@@ -1,0 +1,26 @@
+{
+  "base": "40868fd550d8bc9efb5818757ccb70a7ddcdb658",
+  "bodyChanges": 38,
+  "assessmentChanges": 66,
+  "total": 104,
+  "result": [
+    {
+      "language": "st",
+      "wholeModuleAfterRestoringAuthorizedFields": "identical to HEAD",
+      "canonicalEnglishAndIndices": "unchanged",
+      "taxFalseDistractor": "exact English hold"
+    },
+    {
+      "language": "ve",
+      "wholeModuleAfterRestoringAuthorizedFields": "identical to HEAD",
+      "canonicalEnglishAndIndices": "unchanged",
+      "taxFalseDistractor": "exact English hold"
+    },
+    {
+      "language": "ts",
+      "wholeModuleAfterRestoringAuthorizedFields": "identical to HEAD",
+      "canonicalEnglishAndIndices": "unchanged",
+      "taxFalseDistractor": "exact English hold"
+    }
+  ]
+}

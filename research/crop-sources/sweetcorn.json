@@ -1,0 +1,122 @@
+{
+  "key": "sweetcorn",
+  "name": "Sweetcorn",
+  "localNames": null,
+  "botanicalName": "Zea mays",
+  "family": "Poaceae",
+  "role": "vegetable",
+  "foodGroup": "fruiting-vegetable",
+  "harvestProduct": "immature ears (fresh cobs)",
+  "frostTender": {
+    "value": true,
+    "evidence": {
+      "quote": "1. Tender (sensitive to frost and low temperatures)\nNew Zealand spinach Sweet corn Tomato\nGreen bean",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/climatic_requirements.pdf",
+      "page": 2,
+      "doc": "KZN DARD, 'Climatic Requirements' (Vegetable Production series), Table 1"
+    },
+    "notes": "Classified only as 'Tender' (not 'Very Tender'), a slightly milder category than okra, eggplant, gem squash, marrow and melon. Optimum/min/max temperatures given separately: 'Optimum 15-24 Minimum 10 Maximum 35 ... Sweet corn' (same doc, Table 2, p3)."
+  },
+  "transplant": {
+    "value": false,
+    "evidence": {
+      "quote": "various beans, carrot, cucurbits, parsnip, peas, sweet corn and so on, that the disadvantages of transplants usually far outweigh the advantages, and transplanting is seldom a practical consideration. Such crops are thus sown directly",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+      "page": 1,
+      "doc": "KZN DARD, 'Plant Establishment' (Vegetable Production series)"
+    }
+  },
+  "sowMonths": {
+    "summer": {
+      "months": [9, 10, 11, 12],
+      "evidence": {
+        "quote": "Sweet corn Sept/Oct - Dec Aug/Sept - Jan/Feb Jan - Mar, Jul - Sept",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 8,
+        "doc": "KZN DARD, 'Plant Establishment' (Vegetable Production series), Table 6, 'Sweet corn' row, 'Cold areas' column"
+      }
+    },
+    "winter": {
+      "months": [],
+      "evidence": null
+    },
+    "all-year": {
+      "months": [1, 2, 3, 7, 8, 9],
+      "evidence": {
+        "quote": "Sweet corn Sept/Oct - Dec Aug/Sept - Jan/Feb Jan - Mar, Jul - Sept",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 8,
+        "doc": "KZN DARD, 'Plant Establishment' (Vegetable Production series), Table 6, 'Sweet corn' row, 'Hot areas' column"
+      }
+    },
+    "mild-frost": {
+      "months": [8, 9, 10, 11, 12, 1, 2],
+      "evidence": {
+        "quote": "Sweet corn Sept/Oct - Dec Aug/Sept - Jan/Feb Jan - Mar, Jul - Sept",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 8,
+        "doc": "KZN DARD, 'Plant Establishment' (Vegetable Production series), Table 6, 'Sweet corn' row, 'Warm areas' column"
+      }
+    }
+  },
+  "daysToHarvestRange": {
+    "value": [70, 90],
+    "evidence": {
+      "quote": "Sweet corn 70 - 90 1 - 2 weeks",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/length_of_growing_period.pdf",
+      "page": 3,
+      "doc": "KZN DARD, 'Length of Growing Period' (Vegetable Production series), Table 4"
+    },
+    "notes": "Two Starke Ayres cultivars (Odyssey, Invictus) were verified as real, adapted SA cultivars, but their product pages did not state verifiable day-to-maturity figures reachable this session; two other product pages (Defender, Assegai) returned HTTP 500 errors, so WebSearch-reported maturity numbers for those (e.g. '90 days') could not be confirmed verbatim and are excluded."
+  },
+  "harvestPeriodWeeksOrMonths": "1-2 weeks",
+  "rowSpacingRangeCm": [70, 80],
+  "inRowSpacingRangeCm": [25, 35],
+  "sowDepthRangeCm": [2.5, 4.0],
+  "seedRateKgPerHaRange": [12, 15],
+  "yield": {
+    "tPerHaRange": [7, 15],
+    "product": "immature ears",
+    "conditions": "Conservative 7-8 t/ha, likely 10 t/ha, target 15 t/ha (KZN)",
+    "evidence": {
+      "quote": "Sweet-corn 7 - 8 10 15",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/expected_yields.pdf",
+      "page": 3,
+      "doc": "KZN DARD, 'Expected Yields' (Vegetable Production series), Table 8"
+    }
+  },
+  "ecocrop": {
+    "row": "Zea mays",
+    "TOPMN": 18,
+    "TOPMX": 33,
+    "TMIN": 10,
+    "TMAX": 47,
+    "GMIN": 65,
+    "GMAX": 365
+  },
+  "coverCrop": false,
+  "varieties": [
+    {
+      "name": "Odyssey",
+      "supplier": "Starke Ayres",
+      "maturity": null,
+      "zones": ["highveld", "lowveld-bushveld", "karoo-arid"],
+      "notes": "Quoted verbatim: 'very well adapted for summer production and copes extremely well with hot and dry climates', plants described as prolific, 'often yielding two marketable ears per plant'. No verified day-count could be obtained this session."
+    },
+    {
+      "name": "Invictus",
+      "supplier": "Starke Ayres",
+      "maturity": null,
+      "zones": [],
+      "notes": "Quoted verbatim: 'fast-maturing ... well adapted for summer and winter production.' No specific months or provinces stated, so no zone keys are assigned beyond noting its dual-season adaptability."
+    }
+  ],
+  "zoneNotes": null,
+  "gaps": [
+    "Winter/Western Cape sowing months not sourced: KZN DARD's calendar is KZN-specific, and while Starke Ayres states Invictus is 'well adapted for summer and winter production', it gives no explicit months or provinces for that winter window.",
+    "Seed rate note: KZN DARD's Table 5 adds 'Note: Super Sweet sweet-corn has a shrunken seed and would have nearly double the seed count per kg seed than that of standard sweet corn. Seeding rates are thus likely to be about half that shown above' (same doc, p7) — the seedRateKgPerHaRange given here (12-15kg/ha) is for standard (non-shrunken-seed) sweetcorn only.",
+    "Verified day-to-maturity figures for two commercially important Starke Ayres sweetcorn cultivars (Defender, Assegai) could not be obtained: both product pages returned HTTP 500 errors on direct fetch, so WebSearch-snippet-only maturity claims for them were excluded per the sourcing rules."
+  ],
+  "verdict": "partial",
+  "summary": "Frost tenderness, transplant status, days-to-harvest, row/in-row spacing, seed rate and yield are all sourced from KZN DARD's Vegetable Production series (Tables 1/2, 4, 5, 6, 8). Verdict held to 'partial' because winter/Western Cape sowMonths could not be sourced with specific months."
+}

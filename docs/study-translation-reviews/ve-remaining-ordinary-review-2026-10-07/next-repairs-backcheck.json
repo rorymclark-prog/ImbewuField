@@ -1,0 +1,114 @@
+{
+  "title": "Repairs and blind semantic backcheck for next Tshivenda candidates",
+  "date": "2026-10-07",
+  "status": "read-only; no learner wiring; no fluent approval",
+  "sourcePacket": "/tmp/imbewu-ve-ordinary-next-repaired-candidates-20261007.json",
+  "counts": {
+    "revisedComposedProposalFields": 11,
+    "indexedSegmentProposals": 13,
+    "wholeFieldSentenceProposals": 1,
+    "outstandingUnappliedExactOrChangedBindingsInventoried": 63,
+    "alreadyAppliedCandidateRowsExcluded": 18,
+    "blindSemanticBackchecks": 4
+  },
+  "rootFeedbackApplied": [
+    {
+      "rejected": "way of planning for design",
+      "action": "withdrawn; exact design remains English hold because it narrows the discipline concept."
+    },
+    {
+      "rejected": "gidima nga luvhilo for speeds up",
+      "action": "withdrawn; that says fast movement, not acceleration. Exact source remains English."
+    },
+    {
+      "rejected": "all-time paths",
+      "action": "withdrawn; permanent-path meaning remains English hold."
+    },
+    {
+      "rejected": "make/take an image for photograph",
+      "action": "withdrawn; exact imperative remains English."
+    },
+    {
+      "rejected": "grow better for do better",
+      "action": "withdrawn; explicit comparison remains English until a wider success/suitability equivalent is checked."
+    },
+    {
+      "rejected": "small action for lightest effective intervention",
+      "action": "withdrawn; exact intervention phrase remains English."
+    },
+    {
+      "rejected": "hard to work for gets harder each season",
+      "action": "revised as progressive “keeps becoming harder” with every-season qualifier."
+    },
+    {
+      "rejected": "zwikhokhonono as pest problem",
+      "action": "revised to Ṱolani pest problem, retaining broad pest phrase exactly in English."
+    },
+    {
+      "rejected": "arranged bed for well-shaped bed",
+      "action": "revised to retain exact “A well-shaped bed” and translate only failure conditional."
+    },
+    {
+      "rejected": "sensitive plants paraphrased as cold-sensitive",
+      "action": "revised to retain exact sensitive plants and cold pockets."
+    },
+    {
+      "rejected": "cold air clause capitalization",
+      "action": "lower-case muya follows the preceding comma."
+    }
+  ],
+  "backchecks": [
+    {
+      "proposalId": "VE-N04",
+      "exactSource": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "composedTarget": "Frost ndi ice ine ya vhumbwa kha cold surface. Mist fhedzi a i sumbedzi uri ice yo no vhumbwa, nahone frost damage i nga bvelela hu si na visible ice.",
+      "backTranslation": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "checks": [
+        "Definition preserved.",
+        "Mist alone remains insufficient evidence.",
+        "“Has formed” remains completed.",
+        "Frost damage remains possible without visible ice."
+      ],
+      "result": "No identified source-condition loss in composition; linguistic fluency remains unverified."
+    },
+    {
+      "proposalId": "VE-N05",
+      "exactSource": "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+      "composedTarget": "Vhuyelelani nga dawn on a cold June morning. Swayani mist, frozen dew, na fhethu hune frost ya dzula hone lwa tshifhinga tshilapfusesa.",
+      "backTranslation": "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places where frost lasts the longest.",
+      "checks": [
+        "Dawn/cold/June timing is kept exactly in English.",
+        "Observation list order remains mist, frozen dew, longest frost locations.",
+        "Duration superlative “lasts longest” remains."
+      ],
+      "result": "No identified source-condition loss; the retained timing and frost-sign terms remain English holds."
+    },
+    {
+      "proposalId": "VE-N14",
+      "exactSource": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "composedTarget": "Tendelanani nga zwine zwa vha kha box, mutengo, mbadelo na zwine zwa itea musi zwimela zwi sa eḓani. Regular orders dzi thusa u dzudzanya fhedzi musi vharengi na vhalimi vha tshi kona u tevhedza thendelano.",
+      "backTranslation": "Agree on contents, price, payment, and what happens when crops are insufficient. Regular orders help planning only when customers and growers can keep the agreement.",
+      "checks": [
+        "Contents, price, payment remain in source order.",
+        "Crop shortage remains a condition, not crop failure or total absence.",
+        "“Only when” restriction and both agreement parties remain."
+      ],
+      "result": "No identified source-condition loss in composed proposal; shortage wording remains unreviewed Tshivenda."
+    },
+    {
+      "proposalId": "VE-N15",
+      "exactSource": "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+      "composedTarget": "Murengi wa tsini a nga fhungudza lwendo, fhedzi ndozwo na selling costs zwi kha ḓi tea u kaliwa.",
+      "backTranslation": "A nearby buyer may reduce the journey, but losses and selling costs still need to be measured.",
+      "checks": [
+        "“May” possibility remains.",
+        "Journey reduction is not made certain.",
+        "Losses and selling costs remain separate.",
+        "Selling costs is not replaced by sale price.",
+        "“Still need measuring” remains a measurement requirement."
+      ],
+      "result": "No identified source-condition loss in composition; modal strength and fluent agreement still need reviewer confirmation."
+    }
+  ],
+  "overall": "11 full-field candidates remain as unreviewed drafts/options; blind checks found no listed source-condition loss in Frost definition, frost-sign timing, crop-shortage/order condition, or selling-cost modality. This is not fluent approval."
+}

@@ -1,0 +1,331 @@
+[
+ {
+  "id": "R001",
+  "verdict": "repair",
+  "problem": "'flat' rendered as 'lying evenly'; light clause is telegraphic",
+  "repaired": "Asikwazanga ukufunda irisidi — zama isithombe esicacile, irisidi lilele ngokuyisicaba, kukhanya kahle.",
+  "severity": "minor"
+ },
+ {
+  "id": "R002",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R003",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R004",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R104",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R127",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R165",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R183",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R184",
+  "verdict": "repair",
+  "problem": "'imali yokudayisa' = 'money for selling' is ambiguous (reads like budget/money to sell with), not 'the sale amount'",
+  "repaired": "Faka umkhiqizo, inani elingaphezu kuka-0 nesamba semali etholakale ekudayisweni.",
+  "severity": "wording"
+ },
+ {
+  "id": "R185",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R186",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R187",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R188",
+  "verdict": "repair",
+  "problem": "'Uswidi' = sweets/candy, not spinach; wrong item name (a pre-existing placeholder error should not be propagated)",
+  "repaired": "Isipinashi",
+  "severity": "meaning"
+ },
+ {
+  "id": "R189",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R190",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R203",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R211",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R213",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R214",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R235",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R236",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R237",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R238",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R239",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R240",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R243",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R244",
+  "verdict": "repair",
+  "problem": "'kanye nokufakiwe kwezindleko' is awkward/unclear; should say the receipt is saved with a cost (expense)",
+  "repaired": "Londoloza irisidi kanye nendleko.",
+  "severity": "wording"
+ },
+ {
+  "id": "R245",
+  "verdict": "ok",
+  "problem": "minor: 'isithombe sokuqala' (first photo) for 'original' acceptable.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R246",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R247",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R248",
+  "verdict": "ok",
+  "problem": "minor: 'retry this cost' faithfully mirrors English, but 'uzama lezi zindleko futhi' may suggest re-entering costs (duplicate risk); consider adding 'irisidi'.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R251",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R252",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R253",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R254",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R255",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R256",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R257",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R258",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R263",
+  "verdict": "repair",
+  "problem": "'Isivande' = a pumpkin/sweet-pumpkin dish, not an orchard; also inconsistent with page.tsx 'Ingadi yezithelo'. 'sicishiwe' agreement changes with the noun.",
+  "repaired": "Ingadi yezithelo icishiwe, ngakho {kg} kg ayikho esisindweni esingenhla: {names}. Isamba serandi sisabala konke okudayisiwe, kufaka phakathi ingadi yezithelo.",
+  "severity": "meaning"
+ },
+ {
+  "id": "R264",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R265",
+  "verdict": "hold",
+  "problem": "'izimbiza' = cooking pots, not jars; a different container as a unit word. No confident replacement loan word.",
+  "repaired": "",
+  "severity": "meaning"
+ },
+ {
+  "id": "R266",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R267",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R268",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R269",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R270",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ }
+]

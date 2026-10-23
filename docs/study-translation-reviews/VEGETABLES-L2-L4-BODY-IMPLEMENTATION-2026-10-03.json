@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-03",
+  "branch": "codex/regional-vegetables-pest-prose-next-20261003",
+  "baseHead": "6b2b3ba5144d6fe81a8349593dd30fc335ea0555",
+  "candidatePacket": "docs/study-translation-reviews/VEGETABLES-L2-L4-BODY-FINAL-CANDIDATES-2026-10-03.json",
+  "independentSemanticCheck": "docs/study-translation-reviews/VEGETABLES-L2-L4-BODY-FINAL-CHECK-2026-10-03.json",
+  "changedBodyEntries": 17,
+  "byLanguage": {
+    "st": 2,
+    "ve": 6,
+    "ts": 9
+  },
+  "otherCandidatePositionsPreserved": 25,
+  "englishCanonicalUnchanged": true,
+  "assessmentsAndQuizIndicesUnchanged": true,
+  "mediaAndPlanVersionUnchanged": true,
+  "sourceDrift": "Resolver rejects changed English lesson body and displays canonical English fallback; covered by registered ST, VE and TS tests.",
+  "safety": "L4 paragraph 9 existing conditional action wording is preserved; paragraph 10 registered-product, crop-and-pest, label, harvest waiting and no-mixture/stronger-dose conditions remain exact English.",
+  "approval": "Unreviewed machine drafts only; fluent language and local farming review remains required.",
+  "executableBindingProof": "/tmp/imbewu-vegetables-l2-l4-binding-proof-20261003.mjs",
+  "verifiedResolverRows": 42,
+  "preservedRows": 25
+}

@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { Loader2, RefreshCw } from 'lucide-react';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { networkFailureMessage } from '@/lib/network-failure';
+import { useLanguage } from '@/lib/i18n';
 
 interface Props { coords: { lat: number; lon: number } | null }
 
@@ -63,6 +65,7 @@ function renderMarkdown(text: string) {
 }
 
 export default function AreaPanel({ coords }: Props) {
+  const { t } = useLanguage();
   const [profile, setProfile] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -85,7 +88,7 @@ export default function AreaPanel({ coords }: Props) {
         method: 'POST', headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
         body: JSON.stringify({ lat: c.lat, lon: c.lon }), signal: ac.signal,
       });
-      if (!res.ok) throw new Error(`API error ${res.status}`);
+      if (!res.ok) { setError(networkFailureMessage(t, { status: res.status })); return; }
       const reader = res.body!.getReader();
       const dec = new TextDecoder();
       let text = '';
@@ -97,7 +100,7 @@ export default function AreaPanel({ coords }: Props) {
       }
       if (text.trim()) { setCached(k, text); setLastUpdated(Date.now()); }
     } catch (err: unknown) {
-      if (err instanceof Error && err.name !== 'AbortError') setError(err.message);
+      if (err instanceof Error && err.name !== 'AbortError') setError(networkFailureMessage(t));
     } finally {
       if (abortRef.current === ac) setLoading(false);
     }
@@ -126,11 +129,11 @@ export default function AreaPanel({ coords }: Props) {
     <div>
       <div className="flex items-center justify-between mb-3">
         <div>
-          <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
+          <div className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
             Area &amp; community
           </div>
           {lastUpdated && !loading && (
-            <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <div className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
               Cached · refreshes in {Math.max(0, 7 - Math.floor((Date.now() - lastUpdated) / 86400000))}d
             </div>
           )}
@@ -148,9 +151,9 @@ export default function AreaPanel({ coords }: Props) {
       </div>
 
       {error && (
-        <div className="text-xs font-mono px-3 py-2 rounded-lg mb-3"
+        <div className="text-xs px-3 py-2 rounded-lg mb-3"
           style={{ background: 'rgba(212,110,66,0.1)', border: '1px solid rgba(212,110,66,0.3)', color: 'var(--orange)' }}>
-          {error} — tap Refresh to retry.
+          {error}{t('networkTapRefreshToRetry')}
         </div>
       )}
 
@@ -166,7 +169,7 @@ export default function AreaPanel({ coords }: Props) {
         <div>
           {renderMarkdown(profile)}
           {loading && <span className="inline-block w-1.5 h-3.5 rounded-sm animate-pulse ml-0.5" style={{ background: '#C07A1E' }} />}
-          <p className="text-xs font-mono mt-4 pt-2" style={{ color: 'var(--text-secondary)', opacity: 0.6, borderTop: '1px solid var(--border)' }}>
+          <p className="text-xs mt-4 pt-2" style={{ color: 'var(--text-secondary)', opacity: 0.6, borderTop: '1px solid var(--border)' }}>
             AI research · OSM + Overpass POI data · verify locally · tap Refresh to update
           </p>
         </div>

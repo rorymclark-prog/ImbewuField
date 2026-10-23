@@ -1,0 +1,149 @@
+{
+  "packetId": "IMBEWU-ST-MARKET-L3-ASSESSMENT-BACKCHECK-2026-10-03",
+  "checkedAt": "2026-10-03T04:53:51.346Z",
+  "sourceRevision": "18734826c631798ebbec7c0f3f37ea2f9ab6a386",
+  "candidatePacket": "docs/study-translation-reviews/ST-MARKET-L3-ASSESSMENT-CANDIDATES-2026-10-03.json",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-st-market-community.ts",
+  "languageCode": "st",
+  "lessonId": "market-community-l3",
+  "reviewStatus": "independent-source-and-semantic-check-not-fluency-approval",
+  "sourceCorrectIndices": [
+    1,
+    2
+  ],
+  "packetAndRegistryCorrectIndices": {
+    "packet": [
+      1,
+      2
+    ],
+    "registry": [
+      1,
+      2
+    ],
+    "match": true
+  },
+  "entriesAllSourceBound": true,
+  "fieldCount": 13,
+  "fieldChecks": [
+    {
+      "fieldPath": "keyPoints[0]",
+      "sourceMatchesCanonical": true,
+      "currentMatchesRegistry": true,
+      "correctIndexMatchesCanonical": true,
+      "candidateReview": "Ngola seed identity, source and quality, mme o hlahlobe hore na permission e a hlokahala pele o arolelana.",
+      "semanticAssessment": "Seed identity/source/quality and the before-sharing permission check remain explicit; technical anchors are held in English."
+    },
+    {
+      "fieldPath": "keyPoints[2]",
+      "sourceMatchesCanonical": true,
+      "currentMatchesRegistry": true,
+      "correctIndexMatchesCanonical": true,
+      "candidateReview": "Lekanya losses le net returns bakeng sa selling route ka nngwe.",
+      "semanticAssessment": "Candidate retains losses/net returns or fees/transport/unsold produce/losses, comparison scope, and nearest-buyer caveat where applicable."
+    },
+    {
+      "fieldPath": "keyPoints[3]",
+      "sourceMatchesCanonical": true,
+      "currentMatchesRegistry": true,
+      "correctIndexMatchesCanonical": true,
+      "candidateReview": "Kopanya shared experience le qualified help ha ho hlokahala.",
+      "semanticAssessment": "Qualified-help requirement and when-needed condition remain explicit."
+    },
+    {
+      "fieldPath": "quiz[0].options[0]",
+      "sourceMatchesCanonical": true,
+      "currentMatchesRegistry": true,
+      "correctIndexMatchesCanonical": true,
+      "candidateReview": "Kopanya mefuta yohle ntle le labels.",
+      "semanticAssessment": "Ordinary distractor wording preserves its original limitation or absolute."
+    },
+    {
+      "fieldPath": "quiz[0].options[1]",
+      "sourceMatchesCanonical": true,
+      "currentMatchesRegistry": true,
+      "correctIndexMatchesCanonical": true,
+      "candidateReview": "Lumellanang ka seed-quality checks, mme le hlahlobe hore na permission e a hlokahala ho arolelana variety.",
+      "semanticAssessment": "Seed identity/source/quality and the before-sharing permission check remain explicit; technical anchors are held in English."
+    },
+    {
+      "fieldPath": "quiz[0].options[2]",
+      "sourceMatchesCanonical": true,
+      "currentMatchesRegistry": true,
+      "correctIndexMatchesCanonical": true,
+      "candidateReview": "Nka hore sharing e ntlafatsa seed lot e nngwe le e nngwe ka boyona.",
+      "semanticAssessment": "Ordinary distractor wording preserves its original limitation or absolute."
+    },
+    {
+      "fieldPath": "quiz[0].options[3]",
+      "sourceMatchesCanonical": true,
+      "currentMatchesRegistry": true,
+      "correctIndexMatchesCanonical": true,
+      "candidateReview": "Itshetlehe feela ka size ya group.",
+      "semanticAssessment": "Ordinary distractor wording preserves its original limitation or absolute."
+    },
+    {
+      "fieldPath": "quiz[0].rationale",
+      "sourceMatchesCanonical": true,
+      "currentMatchesRegistry": true,
+      "correctIndexMatchesCanonical": true,
+      "candidateReview": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "semanticAssessment": "Exact English hold preserves crop-specific isolation, selection, labelling, storage, germination, and protected-variety permission. No seed-quality result is represented as legal permission."
+    },
+    {
+      "fieldPath": "quiz[1].options[0]",
+      "sourceMatchesCanonical": true,
+      "currentMatchesRegistry": true,
+      "correctIndexMatchesCanonical": true,
+      "candidateReview": "Khetha kamehla highest headline price.",
+      "semanticAssessment": "Candidate retains losses/net returns or fees/transport/unsold produce/losses, comparison scope, and nearest-buyer caveat where applicable."
+    },
+    {
+      "fieldPath": "quiz[1].options[1]",
+      "sourceMatchesCanonical": true,
+      "currentMatchesRegistry": true,
+      "correctIndexMatchesCanonical": true,
+      "candidateReview": "Khetha kamehla shortest journey.",
+      "semanticAssessment": "Candidate retains losses/net returns or fees/transport/unsold produce/losses, comparison scope, and nearest-buyer caveat where applicable."
+    },
+    {
+      "fieldPath": "quiz[1].options[2]",
+      "sourceMatchesCanonical": true,
+      "currentMatchesRegistry": true,
+      "correctIndexMatchesCanonical": true,
+      "candidateReview": "Bapisa money received ka mora fees, transport, unsold produce le losses.",
+      "semanticAssessment": "Candidate retains losses/net returns or fees/transport/unsold produce/losses, comparison scope, and nearest-buyer caveat where applicable."
+    },
+    {
+      "fieldPath": "quiz[1].options[3]",
+      "sourceMatchesCanonical": true,
+      "currentMatchesRegistry": true,
+      "correctIndexMatchesCanonical": true,
+      "candidateReview": "Nka hore ho kena group ho tlosa costs tsohle.",
+      "semanticAssessment": "Candidate retains losses/net returns or fees/transport/unsold produce/losses, comparison scope, and nearest-buyer caveat where applicable."
+    },
+    {
+      "fieldPath": "quiz[1].rationale",
+      "sourceMatchesCanonical": true,
+      "currentMatchesRegistry": true,
+      "correctIndexMatchesCanonical": true,
+      "candidateReview": "Distance e ama costs, empa ha se yona feela factor. Sebedisa actual returns le losses ho bapisa options.",
+      "semanticAssessment": "Candidate retains losses/net returns or fees/transport/unsold produce/losses, comparison scope, and nearest-buyer caveat where applicable."
+    }
+  ],
+  "preservedAlreadyLocalizedFields": {
+    "title": true,
+    "keyPoints1": true,
+    "quizQuestions": true
+  },
+  "semanticSummary": {
+    "seedRightsAndQuality": "Correct answer remains option 1. Seed-quality checks do not imply permission to share a protected variety; the full technical rationale remains exact English. Before-sharing condition remains explicit in KP0 and correct option.",
+    "qualityAndDiversity": "Distractor preserves the claim that sharing automatically improves every seed lot; rationale continues to say sharing does not automatically improve quality or diversity.",
+    "buyerComparison": "Correct answer remains option 2. Candidate preserves fees, transport, unsold produce, losses, actual returns, and comparison framing; nearest buyer is not treated as always best.",
+    "qualifiedHelp": "KP3 keeps qualified help and the when-needed condition explicit."
+  },
+  "repairsRequired": [],
+  "caveat": "This semantic/source check does not establish fluent Sesotho quality.",
+  "provenance": " Verified against canonical lesson and current Sesotho registry at HEAD 18734826c631798ebbec7c0f3f37ea2f9ab6a386. This review packet is data-only and unwired; do not treat candidates as learner-facing until incorporated into a separately checked learner batch.",
+  "wiringStatus": "data-only-unwired-pending-next-fresh-learner-batch"
+}

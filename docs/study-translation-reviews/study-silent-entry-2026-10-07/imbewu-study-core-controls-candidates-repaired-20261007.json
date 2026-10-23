@@ -1,0 +1,286 @@
+{
+  "title": "Revalidated drafts for missing core Study controls",
+  "date": "2026-10-07",
+  "status": "DRAFTS_FOR_INDEPENDENT_SEMANTIC_REVIEW;_HOLDS_PRESERVE_SOURCE",
+  "inventoryPath": "/tmp/imbewu-study-core-controls-missing-direct-20261007.json",
+  "inventoryHead": "25f6baaefc56e82a4fae5f679a43aa5f605d66f0",
+  "inspectedWorktreeHead": "25f6baaefc56e82a4fae5f679a43aa5f605d66f0",
+  "caveat": "The supplied inventory head differs from the inspected worktree head. Current locale neighbors were inspected for lexical anchors, but this packet does not establish exact-revision binding or fluent/native approval. Each candidate needs independent review before adoption.",
+  "count": 16,
+  "candidates": [
+    {
+      "language": "ve",
+      "key": "studentCheckUnderstanding",
+      "sourceLiteral": "'Check your understanding'",
+      "candidate": null,
+      "meaning": "Invites the learner to check their own understanding.",
+      "risk": "Draft only. The local verb and polite/plural imperative need Tshivenda review; this may read as checking understood things rather than checking one's understanding.",
+      "status": "HOLD",
+      "draftAttemptHeld": "Kambelani zwine na zwi pfesesa",
+      "literalBackTranslation": "Check what you understand.",
+      "holdReason": "The neighboring Tshivenda locale has no understanding/check phrase to support this wording. Kambela is attested in the Xitsonga locale only; that does not establish a Tshivenda equivalent. Retain the English source until a Tshivenda-specific term is verified.",
+      "sourceBinding": {
+        "file": "lib/i18n.tsx",
+        "sourceLiteral": "'Check your understanding'"
+      }
+    },
+    {
+      "language": "st",
+      "key": "studentIncorrectSee",
+      "sourceLiteral": "'Incorrect — see {answer}'",
+      "candidate": "Karabo ha e nepahale — sheba {answer}",
+      "meaning": "States that the learner's answer is incorrect and directs them to the answer shown in the placeholder.",
+      "risk": "Draft only. Confirm agreement and whether 'sheba' is the right learner-facing imperative. The {answer} placeholder is preserved exactly.",
+      "status": "DRAFT_FOR_INDEPENDENT_REVIEW",
+      "literalBackTranslation": "The answer is not correct — look at {answer}.",
+      "sourceBinding": {
+        "file": "lib/i18n.tsx",
+        "sourceLiteral": "'Incorrect — see {answer}'"
+      }
+    },
+    {
+      "language": "ve",
+      "key": "studentIncorrectSee",
+      "sourceLiteral": "'Incorrect — see {answer}'",
+      "candidate": "Phindulo a yo ngo luga — sedzani {answer}",
+      "meaning": "Marks the answer incorrect and directs the learner to the displayed answer.",
+      "risk": "Draft only. Confirm 'phindulo' and the negative construction in Tshivenda, plus imperative register. The {answer} placeholder is preserved exactly.",
+      "status": "DRAFT_FOR_INDEPENDENT_REVIEW",
+      "literalBackTranslation": "The answer is not right — look at {answer}.",
+      "sourceBinding": {
+        "file": "lib/i18n.tsx",
+        "sourceLiteral": "'Incorrect — see {answer}'"
+      }
+    },
+    {
+      "language": "ts",
+      "key": "studentIncorrectSee",
+      "sourceLiteral": "'Incorrect — see {answer}'",
+      "candidate": "Nhlamulo a yi lulamanga — vona {answer}",
+      "meaning": "Marks the answer incorrect and directs the learner to the displayed answer.",
+      "risk": "Draft only. Confirm the negative predicate and imperative register with Xitsonga review. The {answer} placeholder is preserved exactly.",
+      "status": "DRAFT_FOR_INDEPENDENT_REVIEW",
+      "literalBackTranslation": "The answer is not correct — see {answer}.",
+      "sourceBinding": {
+        "file": "lib/i18n.tsx",
+        "sourceLiteral": "'Incorrect — see {answer}'"
+      }
+    },
+    {
+      "language": "ve",
+      "key": "studentKeyPoints",
+      "sourceLiteral": "'Key points'",
+      "candidate": "Zwithu zwa ndeme",
+      "meaning": "Labels the lesson's important points or takeaways.",
+      "risk": "Draft only. This is broad ('important things') and may lose the specific sense of points; no verified Tshivenda equivalent for 'key points' was found in the inspected current locale.",
+      "status": "DRAFT_FOR_INDEPENDENT_REVIEW",
+      "literalBackTranslation": "Important things.",
+      "sourceBinding": {
+        "file": "lib/i18n.tsx",
+        "sourceLiteral": "'Key points'"
+      }
+    },
+    {
+      "language": "ve",
+      "key": "studentListenToLesson",
+      "sourceLiteral": "'Listen to this lesson'",
+      "candidate": "Thetshelesani ngudo iyi",
+      "meaning": "Tells the learner to listen to the current lesson.",
+      "risk": "Draft only. Confirm the imperative and lesson noun in Tshivenda.",
+      "status": "DRAFT_FOR_INDEPENDENT_REVIEW",
+      "literalBackTranslation": "Listen to this lesson.",
+      "sourceBinding": {
+        "file": "lib/i18n.tsx",
+        "sourceLiteral": "'Listen to this lesson'"
+      }
+    },
+    {
+      "language": "ts",
+      "key": "studentListenToLesson",
+      "sourceLiteral": "'Listen to this lesson'",
+      "candidate": "Yingisela dyondzo leyi",
+      "meaning": "Tells the learner to listen to the current lesson.",
+      "risk": "Draft only. Reuses the established Xitsonga listen verb in 'Yingisela kumbe u hlaya'; confirm the lesson noun and its agreement.",
+      "status": "DRAFT_FOR_INDEPENDENT_REVIEW",
+      "literalBackTranslation": "Listen to this lesson.",
+      "sourceBinding": {
+        "file": "lib/i18n.tsx",
+        "sourceLiteral": "'Listen to this lesson'"
+      }
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkDone",
+      "sourceLiteral": "'Mark done'",
+      "candidate": null,
+      "meaning": "Sets the lesson's progress state to completed.",
+      "risk": "Draft only. Confirm this wording means marking completion rather than recording that the lesson merely ended; pair with the not-yet-finished candidate below.",
+      "status": "HOLD",
+      "draftAttemptHeld": "Maka uri ngudo iyi yo fhela",
+      "literalBackTranslation": "Mark that this lesson is finished.",
+      "holdReason": "The current Tshivenda locale does not provide a verified completion-state verb or a done/not-done pair. The draft may say the lesson ended, which does not prove that the progress state was marked complete. Retain the English source until an aligned toggle pair is verified.",
+      "sourceBinding": {
+        "file": "lib/i18n.tsx",
+        "sourceLiteral": "'Mark done'"
+      }
+    },
+    {
+      "language": "st",
+      "key": "studentMarkNotDone",
+      "sourceLiteral": "'Mark as not done'",
+      "candidate": "Tshwaya hore thuto ha e so phethwe",
+      "meaning": "Reverses the completed state and marks the lesson incomplete.",
+      "risk": "Draft only. Confirm tense and spelling/concord. It preserves the negation and 'not yet' meaning rather than asking the learner to complete the lesson.",
+      "status": "DRAFT_FOR_INDEPENDENT_REVIEW",
+      "literalBackTranslation": "Mark that the lesson has not yet been completed.",
+      "sourceBinding": {
+        "file": "lib/i18n.tsx",
+        "sourceLiteral": "'Mark as not done'"
+      }
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkNotDone",
+      "sourceLiteral": "'Mark as not done'",
+      "candidate": null,
+      "meaning": "Reverses the completed state and marks the lesson incomplete.",
+      "risk": "Draft only. Must be reviewed against the paired done wording; confirm the negative form and whether the lesson subject is expressed correctly.",
+      "status": "HOLD",
+      "draftAttemptHeld": "Maka uri ngudo iyi a i athu fhela",
+      "literalBackTranslation": "Mark that this lesson has not finished yet.",
+      "holdReason": "The current Tshivenda locale does not provide a verified completion-state verb or a done/not-done pair. The draft may say the lesson ended, which does not prove that the progress state was marked complete. Retain the English source until an aligned toggle pair is verified.",
+      "sourceBinding": {
+        "file": "lib/i18n.tsx",
+        "sourceLiteral": "'Mark as not done'"
+      }
+    },
+    {
+      "language": "ts",
+      "key": "studentMarkNotDone",
+      "sourceLiteral": "'Mark as not done'",
+      "candidate": "Maka leswaku dyondzo leyi a yi si hela",
+      "meaning": "Reverses the completed state and marks the lesson incomplete.",
+      "risk": "Draft only. Confirm concord for 'dyondzo leyi' and whether 'hela' is the right completion predicate; the source negation is retained.",
+      "status": "DRAFT_FOR_INDEPENDENT_REVIEW",
+      "literalBackTranslation": "Mark that this lesson has not finished yet.",
+      "sourceBinding": {
+        "file": "lib/i18n.tsx",
+        "sourceLiteral": "'Mark as not done'"
+      }
+    },
+    {
+      "language": "ve",
+      "key": "studentReadAndPractise",
+      "sourceLiteral": "'Read and practise'",
+      "candidate": "Vhalani ni ḓiḓowedzeni",
+      "meaning": "Gives two actions: read, then practise.",
+      "risk": "Draft only. Confirm the plural/respectful imperative and reflexive form; avoid interpreting the second action as merely getting used to something.",
+      "status": "DRAFT_FOR_INDEPENDENT_REVIEW",
+      "literalBackTranslation": "Read and practise.",
+      "sourceBinding": {
+        "file": "lib/i18n.tsx",
+        "sourceLiteral": "'Read and practise'"
+      }
+    },
+    {
+      "language": "ve",
+      "key": "studentRelatedLessons",
+      "sourceLiteral": "'Related lessons'",
+      "candidate": "Ngudo dzi elanaho",
+      "meaning": "Labels lessons connected by topic or subject.",
+      "risk": "Draft only. Confirm 'elanaho' is idiomatic for related lessons and does not imply only lessons that agree with one another.",
+      "status": "DRAFT_FOR_INDEPENDENT_REVIEW",
+      "literalBackTranslation": "Lessons that are related.",
+      "sourceBinding": {
+        "file": "lib/i18n.tsx",
+        "sourceLiteral": "'Related lessons'"
+      }
+    },
+    {
+      "language": "st",
+      "key": "studentSilentDeckNoVoiceDescription",
+      "sourceLiteral": "'{count} slides. No narration is available.'",
+      "candidate": "Diselaete tse {count}. Ha ho tlhaloso e buuoang.",
+      "meaning": "Shows the slide count and tells the learner that spoken narration is unavailable.",
+      "risk": "Draft only. Keeps the previously used Sesotho loan 'diselaete' and established spoken-explanation phrasing. Check agreement and whether omission of an explicit 'available' is acceptable. The {count} placeholder is preserved exactly.",
+      "status": "DRAFT_FOR_INDEPENDENT_REVIEW",
+      "literalBackTranslation": "{count} slides. There is no spoken explanation.",
+      "sourceBinding": {
+        "file": "lib/i18n.tsx",
+        "sourceLiteral": "'{count} slides. No narration is available.'"
+      },
+      "neighborAnchors": {
+        "slidesLabel": {
+          "file": "lib/locales/st.ts",
+          "key": "studentViewSilentSlides",
+          "value": "Shebella diselaete"
+        },
+        "narrationLabel": {
+          "file": "lib/locales/st.ts",
+          "key": "courseDeckNoNarration",
+          "value": "Ha ho tlhaloso e buuoang"
+        }
+      }
+    },
+    {
+      "language": "ve",
+      "key": "studentSilentDeckNoVoiceDescription",
+      "sourceLiteral": "'{count} slides. No narration is available.'",
+      "candidate": "Slides dza {count}. A hu na ṱhalutshedzo nga ipfi.",
+      "meaning": "Shows the slide count and tells the learner that spoken narration is unavailable.",
+      "risk": "Draft only. Retains 'slides' as a provisional technical UI loan; uses the previously checked spoken-explanation phrase. Confirm class agreement and whether this clearly conveys unavailability. The {count} placeholder is preserved exactly.",
+      "status": "DRAFT_FOR_INDEPENDENT_REVIEW",
+      "literalBackTranslation": "{count} slides. There is no spoken explanation.",
+      "sourceBinding": {
+        "file": "lib/i18n.tsx",
+        "sourceLiteral": "'{count} slides. No narration is available.'"
+      },
+      "neighborAnchors": {
+        "slidesLabel": {
+          "file": "lib/locales/ve.ts",
+          "key": "studentViewSilentSlides",
+          "value": "Vhonani slides"
+        },
+        "narrationLabel": {
+          "file": "lib/locales/ve.ts",
+          "key": "courseDeckNoNarration",
+          "value": "A hu na ṱhalutshedzo nga ipfi"
+        }
+      }
+    },
+    {
+      "language": "ts",
+      "key": "studentSilentDeckNoVoiceDescription",
+      "sourceLiteral": "'{count} slides. No narration is available.'",
+      "candidate": "Slides ta {count}. A ku na nhlamuselo hi rito.",
+      "meaning": "Shows the slide count and tells the learner that spoken narration is unavailable.",
+      "risk": "Draft only. Retains 'slides' as a provisional technical UI loan; reuses the checked phrase for narration. Confirm noun agreement and whether the sentence is idiomatic. The {count} placeholder is preserved exactly.",
+      "status": "DRAFT_FOR_INDEPENDENT_REVIEW",
+      "literalBackTranslation": "{count} slides. There is no spoken explanation.",
+      "sourceBinding": {
+        "file": "lib/i18n.tsx",
+        "sourceLiteral": "'{count} slides. No narration is available.'"
+      },
+      "neighborAnchors": {
+        "slidesLabel": {
+          "file": "lib/locales/ts.ts",
+          "key": "studentViewSilentSlides",
+          "value": "Vona slides"
+        },
+        "narrationLabel": {
+          "file": "lib/locales/ts.ts",
+          "key": "courseDeckNoNarration",
+          "value": "A ku na nhlamuselo hi rito"
+        }
+      }
+    }
+  ],
+  "inspectedWorktreePath": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField",
+  "originalDraftPacket": "/tmp/imbewu-study-core-controls-candidates-20261007.json",
+  "provenanceCorrection": "The first packet was drafted while inspecting a different worktree at ef7ce95. This packet retains its draft history but revalidates source literals and locale anchors at the inventory HEAD 25f6baa. It is not fluent/native approval.",
+  "counts": {
+    "total": 16,
+    "draftForReview": 13,
+    "hold": 3
+  }
+}

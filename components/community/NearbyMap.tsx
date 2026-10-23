@@ -52,7 +52,7 @@ export default function NearbyMap({ people, onOpenProfile }: Props) {
               }}>
                 {p.photos?.[0]
                   ? <img data-photo-preview src={p.photos[0]} alt={p.display_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  : <span style={{ color: '#F7F2E9', fontWeight: 700, fontSize: 14 }}>{(p.display_name?.[0] ?? '?').toUpperCase()}</span>}
+                  : <span style={{ color: 'var(--on-forest)', fontWeight: 700, fontSize: 14 }}>{(p.display_name?.[0] ?? '?').toUpperCase()}</span>}
               </div>
             </div>
           </Marker>
@@ -69,12 +69,12 @@ export default function NearbyMap({ people, onOpenProfile }: Props) {
           >
             <div style={{ minWidth: 160, padding: 2 }}>
               <div className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{active.display_name}</div>
-              <div className="font-sans" style={{ fontSize: 11, color: '#5C5040', marginTop: 2 }}>{active.area_text}</div>
+              <div className="font-sans" style={{ fontSize: 12, color: '#5C5040', marginTop: 2 }}>{active.area_text}</div>
               <button
                 onClick={() => onOpenProfile(active.uid)}
                 className="font-sans font-semibold"
                 style={{
-                  marginTop: 8, background: '#1F4D2B', color: '#F7F2E9', border: 'none',
+                  marginTop: 8, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: 'none',
                   borderRadius: 100, padding: '5px 12px', fontSize: 12, cursor: 'pointer',
                 }}
               >

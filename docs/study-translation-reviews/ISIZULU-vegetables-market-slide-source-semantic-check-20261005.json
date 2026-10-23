@@ -1,0 +1,787 @@
+{
+  "title": "IsiZulu Vegetables and Market narration semantic check",
+  "date": "2026-10-05",
+  "reviewType": "independent semantic backcheck; not fluent approval",
+  "binding": {
+    "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+    "head": "58dddd8e064387a4eddb9adb521fedae7e5a1c83",
+    "registeredTranscript": "lib/course-transcripts.ts",
+    "sourceAndRegistrySha256": {
+      "vegetables_en": "9cfb6fc5784818d529fdfeecb28f367183fce8a28b6dee28c8f88142640d5bd3",
+      "vegetables_zu": "9a617e6eb54544534c216268cd8db402cd311f12e8436f97a3d4a4ed5ad5566d",
+      "market_en": "3a8ea6cdc78eadb556744a09df2037cb9924443d9f10992be90bab7d0d8825d4",
+      "market_zu": "31c0990885544d52893fc113cff84f9a11c8d37d79153ab1b83b1e50a67c60ca",
+      "transcript_registry": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08"
+    },
+    "registeredCounts": {
+      "Vegetables and Staple Crops": 18,
+      "Market and Community": 20
+    },
+    "method": "Compared each exact registered English and isiZulu transcript block with current source files. Reviewed crop/species identity, quantities, money/cost/revenue, timing, conditions, instructions, order, and meaning changes. No narration, audio, or media changed."
+  },
+  "summary": {
+    "totalBlocks": 38,
+    "accepted": 35,
+    "repair": 3,
+    "uncertain": 0,
+    "overall": "The registered narration preserves crop and variety identity, exact measurements and timing, costs and teaching-example amounts, the sequence of pest response and pesticide safeguards, and the conditional financial claims. Three concrete source-fidelity repairs are recommended: the effective-action threshold in Vegetables 16, the “Pest pressure” record item in Vegetables 18, and the per-household contribution qualifier in Market 14."
+  },
+  "blocks": [
+    {
+      "module": "Vegetables and Staple Crops",
+      "slide": 1,
+      "sourceEnglish": [
+        "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training.",
+        "A productive garden is not the one that looks fullest on one day. It's the one that keeps food moving into the household, week after week.",
+        "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive."
+      ],
+      "registeredIsiZulu": [
+        "Siyakwamukela. Lesi isifundo Semifino Nezitshalo Eziyisisekelo. Singesinye sezingxenye eziyishumi zokuqeqeshwa kwe-ImbewuField.",
+        "Ingadi ekhiqizayo akuyona egcwele kakhulu ngosuku olulodwa. Yileyo eqhubeka iletha ukudla ekhaya, isonto ngalinye.",
+        "Emizuzwini embalwa ezayo, sizokhuluma ngezinto ezine: indlela yokwenza umbhede; indlela yokugcina isivuno siqhubeka; ukuthi yiziphi izitshalo eziyisisekelo ongazitshala; nokuthi wenzeni uma kuvela izinambuzane."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "slide": 2,
+      "sourceEnglish": [
+        "Let's start with the problem.",
+        "One big sowing gives you a glut. Everything is ready at once. You eat what you can, you give some away, and the rest is wasted.",
+        "Then comes the gap. Nothing is ready. The garden is full of plants, but there's no food in it.",
+        "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready.",
+        "That rhythm is what feeds a household. Not the size of the garden."
+      ],
+      "registeredIsiZulu": [
+        "Ake siqale ngenkinga.",
+        "Ukuhlwanyela okuningi ngesikhathi esisodwa kungaletha isivuno esiningi esilungele ukuvunwa ngesikhathi esisodwa. Udla ongakudla, uphe abanye, bese okunye kumoshakala.",
+        "Bese kufika isikhathi lapho kungekho okuvuthiwe. Ingadi igcwele izitshalo, kodwa akukho ukudla okulungele ukuvunwa.",
+        "Ukuhlwanyela okuncane ngezikhathi ezihlukene kudala isigqi. Ukutshala, ukunakekela nokuvuna kuyagqagqana. Kuhlala kunokuthile okusondela esikhathini sokuvunwa.",
+        "Yileso sigqi esiletha ukudla ekhaya, hhayi ubukhulu bengadi."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "slide": 3,
+      "sourceEnglish": [
+        "By the end of this module, you'll be able to make four decisions in your own field.",
+        "One. Build the right bed — matching the width and the bed type to your soil and your rainfall.",
+        "Two. Keep harvests moving, using succession planting and intercropping.",
+        "Three. Choose staples that protect you when one crop fails.",
+        "Four. Read a pest problem before you treat it.",
+        "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem."
+      ],
+      "registeredIsiZulu": [
+        "Ekupheleni kwale mojuli, uzokwazi ukwenza izinqumo ezine ensimini yakho.",
+        "Okokuqala. Yakha umbhede ofanele, uhambisanise ububanzi nohlobo lombhede nomhlabathi wakho nemvula etholwa indawo yakho.",
+        "Okwesibili. Gcina ukuvunwa kuqhubeka ngokuhlwanyela ngezigaba nangokutshala izitshalo ezahlukene ndawonye.",
+        "Okwesithathu. Khetha izitshalo eziyisisekelo ezikunika ezinye izindlela uma esinye isitshalo sihluleka.",
+        "Okwesine. Funda inkinga yezinambuzane ngaphambi kokwelapha.",
+        "Lezi zinto ezine zihambisana. Umbhede omuhle usengahluleka uma yonke into itshalwa ngosuku olulodwa. Ukutshala izitshalo ezahlukene nakho kungaba nenkinga uma wonke amaqabunga aphuzi ethathwa njengomonakalo wezinambuzane."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "slide": 4,
+      "sourceEnglish": [
+        "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+        "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+        "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+        "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else."
+      ],
+      "registeredIsiZulu": [
+        "Umhlabathi ominyene ulahlekelwa yizikhala zomoya. Izimpande zikhula kancane. Amanzi angena ngendlela ehlukile. Umbhede uba nzima ukuwusebenza inkathi ngayinye.",
+        "Ukuvikela kulula: yiba nezindlela ezihlala njalo, nombhede omncane ngokwanele ukuthi ufinyelele kuwo uvela ezinhlangothini zombili.",
+        "Ububanzi obusebenzayo busuka kumitha elilodwa kuya kumamitha angu-1.2. Ngalobo bubanzi ungafinyelela maphakathi uvela kunoma iyiphi indlela, izinyawo zakho zingangeni endaweni okukhulela kuyo izitshalo.",
+        "Manje cabanga ngamabhede akho. Ungafinyelela phakathi ngaphandle kokungena kuwo? Hamba uyokuzama lokhu ngaphambi kokutshala enye into."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "slide": 5,
+      "sourceEnglish": [
+        "There's no single bed shape that's right everywhere.",
+        "Start with the least disturbance that solves your problem.",
+        "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+        "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+        "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+        "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+        "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed."
+      ],
+      "registeredIsiZulu": [
+        "Awukho umumo wombhede owodwa ofanele yonke indawo.",
+        "Qala ngokuphazamisa umhlabathi kancane ngangokunokwenzeka ukuze uxazulule inkinga yakho.",
+        "Indlela ye-no-dig ifanele inhlabathi yezingadi eminingi. Shiya ukwakheka komhlabathi kungaphazamisekile, wakhe ukuvunda phezu kwawo.",
+        "Ungawumbi ubumba olumanzi. Uma ukucinana noma ukungaphumi kahle kwamanzi kukukhulu, thola imbangela ngosizo lwendawo ngaphambi kokukhetha ukulima ujule.",
+        "Amabhede aphakanyisiwe afanele umhlabathi omanzi, lapho amanzi edinga khona indawo yokuphuma.",
+        "Amabhede acwile phansi afanele umhlabathi owomile, lapho ufuna ukubamba khona amanzi emvula uwagcine.",
+        "Ngemva kwemvula enkulu, bheka ukuthi amanzi ahlala kuphi noma ageleza ngakuphi. Hlanganisa lokho okubonile neseluleko ngomhlabathi nangokuphuma kwamanzi ngaphambi kokukhetha uhlobo lombhede."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "slide": 6,
+      "sourceEnglish": [
+        "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+        "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+        "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop."
+      ],
+      "registeredIsiZulu": [
+        "Ezinye izitshalo azikuthandi ukuphazanyiswa kwezimpande. Zikhula kangcono uma zihlwanyelwa ngqo lapho zizokhulela khona. Izimbotyi, izaqathe nommbila kungena kulelo qembu.",
+        "Ezinye zikhula kangcono uma ziqala zisesitshalweni esincane endaweni evikelekile yokukhulisela izithombo, bese zitshalwa kwenye indawo. Utamatisi nezitshalo zohlobo lwe-brassica kungena kulelo qembu.",
+        "Sebenzisa iseluleko sebanga lokutshala esifanele isitshalo, uhlobo lwaso nezimo zendawo. Hlola iphakethe lembewu neseluleko somlimi wendawo. Njengoba izitshalo zikhula, bheka ukuthi aziminyene yini."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "slide": 7,
+      "sourceEnglish": [
+        "Before you plant, mark the bed out.",
+        "One point two metres wide. Three metres long. One practice bed.",
+        "Use pegs and string. Mark the rectangle, and mark both access paths.",
+        "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+        "A string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.",
+        "That bed gets easier to improve every season, because you stopped walking on it."
+      ],
+      "registeredIsiZulu": [
+        "Ngaphambi kokutshala, maka indawo yombhede.",
+        "Umbhede owodwa wokuzijwayeza: ububanzi obungamamitha angu-1.2 nobude obungamamitha amathathu.",
+        "Sebenzisa izikhonkwane nentambo. Maka unxande kanye nezindlela zokungena kuzo zombili izinhlangothi.",
+        "Bese ulungiselela umhlabathi wakho: qala nge-no-dig, bese umba ujule kuphela uma umhlabathi wakho ukudinga ngempela.",
+        "Umugqa wentambo uguqula umbono ube yisinqumo. Uma usunezindlela, zigcine zikhona. Uma usunendawo yokukhulisela izitshalo, yivikele.",
+        "Lowo mbhede uba lula ukuwuthuthukisa inkathi ngayinye ngoba uyeka ukuhamba phezu kwawo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "slide": 8,
+      "sourceEnglish": [
+        "Succession planting is a calendar habit, not a special crop.",
+        "Choose something your household actually eats often. Then sow a small amount of it, again and again.",
+        "Plant a short row every two to three weeks.",
+        "Less waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.",
+        "Separate sowings may reduce the risk of losing everything at once. They do not guarantee a harvest if difficult conditions continue.",
+        "Which fast crop could you sow in small batches? Decide on one, and start it this week."
+      ],
+      "registeredIsiZulu": [
+        "Ukuhlwanyela ngokulandelana kuwumkhuba wokuhlela ikhalenda, akusona isitshalo esikhethekile.",
+        "Khetha into umuzi wakho oyidla njalo ngempela. Bese uhlwanyela isilinganiso esincane sayo, uphinde wenze njalo.",
+        "Tshala umugqa omfushane njalo ngemva kwamaviki amabili kuya kwamathathu.",
+        "Lokhu kunganciphisa ukumoshakala ngesikhathi isivuno sisiningi kakhulu. Kungaletha ukudla okusha isikhathi eside futhi kusabalalise umsebenzi kuyo yonke inkathi, esikhundleni sokuwenza wonke ngesikhathi esisodwa.",
+        "Ukuhlwanyela ngezikhathi ezihlukene kunganciphisa ingozi yokulahlekelwa yikho konke ngesikhathi esisodwa. Kodwa akukuqinisekisi ukuvuna uma izimo ezinzima ziqhubeka.",
+        "Yisiphi isitshalo esikhula ngokushesha ongasihlwanyela ngamaqoqo amancane? Khetha esisodwa, bese uqala ukusihlwanyela kuleli sonto."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "slide": 9,
+      "sourceEnglish": [
+        "Here's what it looks like in practice.",
+        "Sow one. Then two to three weeks later, sow two. Then sow three. Then sow four.",
+        "With suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.",
+        "Two to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
+        "Watch what your own garden does, and adjust the interval. That observation is the skill."
+      ],
+      "registeredIsiZulu": [
+        "Nansi indlela esebenza ngayo.",
+        "Hlwanyela iqoqo lokuqala. Ngemva kwamaviki amabili kuya kwamathathu, hlwanyela elesibili. Bese uhlwanyela elesithathu, bese elesine.",
+        "Uma isikhathi sokukhula kwesitshalo sikuvumela, ukuvuna kwamaqoqo kungaqala ukuhlangana. Iqoqo lokuqala alihlali lilungele ukuvunwa ngesikhathi kuhlwanyelwa iqoqo lesine.",
+        "Amaviki amabili kuya kwamathathu ayisiqalo sesigqi sokuhlwanyela, akuwona umthetho. Isitshalo samaqabunga senkathi epholile singathatha isikhathi eside. Ukushisa kungasheshisa ukukhula noma kubangele ukwehluleka.",
+        "Bheka okwenzeka engadini yakho, bese ulungisa isikhawu sokuhlwanyela. Lelo khono lokubuka nokulungisa libalulekile."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "slide": 10,
+      "sourceEnglish": [
+        "Intercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.",
+        "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+        "Maize gives height and structure.",
+        "Beans climb the maize, and store as protein.",
+        "Pumpkin spreads across the ground, shading the soil and holding moisture.",
+        "Timing matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
+        "The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
+      ],
+      "registeredIsiZulu": [
+        "Ukutshala izitshalo ezahlukene ndawonye akukhona ukuminyanisa izitshalo nje. Isitshalo ngasinye sidinga umsebenzi waso nesikhala esanele sokuwenza.",
+        "I-Three Sisters iyisibonelo esivela emasikweni okulima abantu boMdabu baseMelika.",
+        "Ummbila unikeza ukuphakama nesakhiwo.",
+        "Izimbotyi zikhwela ummbila futhi zingagcinwa njengomthombo wamaprotheni.",
+        "Ithanga lisabalala phansi, lenze umthunzi emhlabathini futhi lisize ukuwugcina unomswakama.",
+        "Isikhathi sokutshala sibalulekile. Qala ngokutshala ummbila ukuze uqine ngokwanele ukuthwala izimbotyi lapho seziqala ukukhwela.",
+        "Lezi zitshalo zisengancintisana. Zinike isikhala, amanzi nokukhanya okufanele. Izimbotyi zibopha i-nitrogen ngosizo lwamagciwane asezimpandeni, kodwa ungacabangi ukuthi zondla ummbila ngokushesha; izakhamzimba ezisezinsaleleni zitholakala lapho sezibola."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "slide": 11,
+      "sourceEnglish": [
+        "A household may have a hungry gap: weeks when stored food runs low before the next harvest is ready.",
+        "Yours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.",
+        "Don't copy somebody else's calendar. Name your own months first.",
+        "Write them down. Then choose the crop and the sowing date that puts food into that gap.",
+        "That's planning backwards, and it's the difference between a garden that looks productive and a household that eats."
+      ],
+      "registeredIsiZulu": [
+        "Umuzi ungase ube nesikhathi sokushoda kokudla: amasonto lapho ukudla okugcinwe khona sekuncipha ngaphambi kokuba isivuno esilandelayo silungele ukuvunwa.",
+        "Kowenu leso sikhathi singafika ngemva kokuphela kommbila ogciniwe. Singafika ngaphambi kokuba imifino yasebusika ilungele ukuvunwa. Singafika nangesikhathi esomile lapho amanzi enciphisa okungatshalwa engadini.",
+        "Ungakopeli ikhalenda lomunye umuntu. Qala ngokusho izinyanga zakho.",
+        "Zibhale phansi. Bese ukhetha isitshalo nesikhathi sokusihlwanyela ukuze ukudla kutholakale ngaleso sikhathi sokushoda.",
+        "Lokho ukuhlela usuka ekudingeni uye emuva. Kwenza umehluko phakathi kwengadi ebonakala ikhiqiza nomuzi othola ukudla."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "slide": 12,
+      "sourceEnglish": [
+        "A staple earns its place because it feeds the household beyond the day of harvest.",
+        "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+        "One staple leaves you vulnerable. Two or more give you options when weather or pests hit.",
+        "Grow at least two. Not one.",
+        "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion."
+      ],
+      "registeredIsiZulu": [
+        "Isitshalo esiyisisekelo sikufanele ukutshalwa uma sondla umuzi nangemva kosuku lokuvuna.",
+        "Sinikeza amandla okudla noma amaprotheni. Singagcinwa, noma sihlale emhlabathini size sisidinge. Sivame nokuthwala umlando wesiko.",
+        "Ukuthembela esitshalweni esisodwa kukushiya usengozini. Izitshalo eziyisisekelo ezimbili noma ngaphezulu zikunika izindlela ongakhetha kuzo lapho isimo sezulu noma izinambuzane zidala umonakalo.",
+        "Tshala okungenani ezimbili, hhayi esisodwa.",
+        "Yisiphi isitshalo esiyisisekelo umuzi wakho oncike kuso kakhulu njengamanje? Uma singavuni, yisona esingawulimaza kakhulu umuzi wakho ngokushoda kokudla; cabanga ngesinye esingahambisana naso."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "slide": 13,
+      "sourceEnglish": [
+        "Each staple protects you against something different.",
+        "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+        "Beans and cowpeas give a storable protein harvest.",
+        "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+        "Amadumbe handles wetter ground, where other staples struggle.",
+        "Notice that they fail in different conditions. That's the whole point."
+      ],
+      "registeredIsiZulu": [
+        "Isitshalo ngasinye esiyisisekelo singasiza ngezimo ezihlukene.",
+        "Ummbila unikeza amakhalori futhi ungomiswa ugcinwe. Ummbila ovulekele impova yezinye izitshalo zohlobo olufanayo ungakuvumela ugcine imbewu yakho, uma ulawula ukuhlangana kwempova nokukhetha izitshalo zembewu.",
+        "Izimbotyi nezindumba zinikeza isivuno samaprotheni esingagcinwa.",
+        "Ubhatata ungakhula ubekezelele ukoma ngezinga elithile ngemva kokwakheka kwezimpande zawo ezigcinela ukudla. Udinga amanzi emasontweni okuqala nangesikhathi kwakheka lezo zimpande; ukuntuleka kwamanzi ngalezo zikhathi kunganciphisa isivuno. Amaqabunga awo amancane nawo ayadliwa.",
+        "Amadumbe abhekana nomhlabathi omanzi kakhulu, lapho ezinye izitshalo eziyisisekelo zingase zingakhuli kahle khona.",
+        "Qaphela ukuthi lezi zitshalo azihluleki ezimweni ezifanayo. Yilokho okubalulekile."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "slide": 14,
+      "sourceEnglish": [
+        "Resilience doesn't mean nothing fails.",
+        "It means one failure doesn't finish your household's food plan.",
+        "One crop is one point of failure.",
+        "Two or more staples give you more ways to keep eating.",
+        "Different crops use water, soil and seasons differently. That difference is the protection."
+      ],
+      "registeredIsiZulu": [
+        "Ukukwazi ukuqhubeka nezinhlelo akusho ukuthi akukho lutho oluzohluleka.",
+        "Kusho ukuthi ukwehluleka kwesitshalo esisodwa akupheli uhlelo lokudla lomndeni wakho.",
+        "Ukuthembela esitshalweni esisodwa kubeka umuzi engcupheni eyodwa.",
+        "Izitshalo ezimbili noma ngaphezulu zikunika izindlela eziningi zokuqhubeka uthola ukudla.",
+        "Izitshalo ezahlukene zisebenzisa amanzi, umhlabathi nezinkathi ngezindlela ezahlukene. Lo mehluko unikeza ezinye izindlela uma isimo sishintsha."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "slide": 15,
+      "sourceEnglish": [
+        "Pest pressure usually rises for a reason.",
+        "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+        "So before you treat anything, look at the whole system.",
+        "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+        "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act."
+      ],
+      "registeredIsiZulu": [
+        "Ukwanda kwezinambuzane ezilimaza izitshalo kuvame ukuba nesizathu.",
+        "Izitshalo zingacindezeleka. Uhlobo olulodwa lwesitshalo lungabusa indawo. Noma ukusetshenziswa kabanzi kwamakhemikhali kungase kube sekususe izilwane ezidla izinambuzane ezazikusiza.",
+        "Ngakho ngaphambi kokwelapha noma yini, bheka lonke uhlelo.",
+        "Ingabe isitshalo sishoda ngamanzi? Ingabe umhlabathi uminyene noma untula izakhamzimba? Ingabe izilwane ezidla izinambuzane sezisiza kule nkinga?",
+        "Iqabunga eliphuzi alisho ngokuzenzakalelayo ukuthi kunesinambuzane. Kungabangelwa amanzi, ukondleka noma ukulimala kwezimpande. Thola ukuthi iyiphi imbangela ngaphambi kokuthatha isinyathelo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "slide": 16,
+      "sourceEnglish": [
+        "Work through four steps, in order.",
+        "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+        "Two. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.",
+        "Three. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.",
+        "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+        "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+        "Be honest with yourself about which step you usually skip."
+      ],
+      "registeredIsiZulu": [
+        "Landela izinyathelo ezine ngokulandelana.",
+        "Okokuqala. Bheka. Bheka iphethini yokulimala, ngaphansi kweqabunga, isiqu nezitshalo eziseduze.",
+        "Okwesibili. Hlola ukucindezeleka kwesitshalo. Hlola umswakama womhlabathi, izimpande, isikhala phakathi kwezitshalo, izakhamzimba nokuphuma kwamanzi.",
+        "Okwesithathu. Vikela okusizayo. Izinambuzane ezizuzisayo zenza umsebenzi obungase uwenze wena.",
+        "Okwesine. Yilapho kuphela osuthatha khona isinyathelo; qala ngesenzo esilula kunazo zonke esifanele. Ukususa izinambuzane ngesandla, ukubeka izithiyo noma ukushintsha indlela yokunakekela izitshalo kungasiza. Hlola ukuthi isenzo siyayifanele yini inkinga, bese ubheka umphumela.",
+        "Uma kudingeka ukwelapha ngomkhiqizo, sebenzisa umkhiqizo obhaliswe ukuthi usetshenziswe kuleso sitshalo nakuleso sinambuzane, bese ulandela yonke imiyalelo eselebulini lawo. Lokhu kuhlanganisa nemikhiqizo ye-neem. Hlola imiyalelo yokuzivikela kanye nesikhathi sokulinda ngaphambi kokuvuna. Ungazenzeli izingxube noma usebenzise imithamo enamandla kunaleyo eselebulini.",
+        "Zitshele iqiniso ngokuthi yisiphi isinyathelo ovame ukusishiya."
+      ],
+      "disposition": "repair",
+      "issues": [
+        {
+          "issue": "The instruction “start with the lightest thing that works” is rendered as starting with the simplest action that is suitable. Suitability is preserved, but the explicit effectiveness threshold (“works”) is missing.",
+          "recommendation": "Retain “that works” in English in this instruction unless a checked ZU equivalent preserves the least-intensive effective action. All four-step ordering, “only then,” crop/pest product registration, label, PPE/harvest waiting instructions, and no-improvised-mixtures/doses remain."
+        }
+      ],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "slide": 17,
+      "sourceEnglish": [
+        "Now the lesson finishes in the soil.",
+        "Build one bed that can keep feeding you. One point two metres by three metres.",
+        "Reach the middle from both sides. Keep every foot on the paths. Space your plants for your own climate. Mulch the bed.",
+        "Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.",
+        "Photograph it when it's planted. Then come back after ten days with what you observed.",
+        "The aim isn't a perfect picture. The aim is a bed whose shape, spacing and rhythm you chose on purpose."
+      ],
+      "registeredIsiZulu": [
+        "Manje isifundo siphetha ngomsebenzi emhlabathini.",
+        "Yenza umbhede owodwa ongakusiza uqhubeke uthola ukudla. Ububanzi obungamamitha angu-1.2 nobude obungamamitha amathathu.",
+        "Finyelela maphakathi uvela ezinhlangothini zombili. Hamba ezindleleni kuphela. Shiya isikhala esifanele phakathi kwezitshalo ngokwesimo sezulu sendawo yakho. Mboza umbhede nge-mulch.",
+        "Bheka umbhede njalo kusukela ngosuku otshalwe ngalo. Isithombe sezinsuku eziyishumi siyisikhathi sokuhlola umsebenzi; akusona isizathu sokulinda ngaphambi kokunakekela umbhede.",
+        "Thatha isithombe lapho usanda kutshalwa. Buya ngemva kwezinsuku eziyishumi nokubone kwenzeka.",
+        "Inhloso akusona isithombe esiphelele. Inhloso umbhede omumo wawo, isikhala sezitshalo nesigqi sokuhlwanyela okukhethe ngamabomu."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "slide": 18,
+      "sourceEnglish": [
+        "This week, put one bed into production.",
+        "One. Mark the bed and the paths.",
+        "Two. Plant, with your spacing and your sowing rhythm.",
+        "Three. Return after ten days, with a photo.",
+        "Then observe. Adjust. And write it down.",
+        "Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.",
+        "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+        "Use your record with reliable local advice when making the next decision."
+      ],
+      "registeredIsiZulu": [
+        "Kuleli sonto, sebenzisa umbhede owodwa.",
+        "Okokuqala. Maka umbhede nezindlela.",
+        "Okwesibili. Tshala, usebenzise isikhala nesigqi sakho sokuhlwanyela.",
+        "Okwesithathu. Buya ngemva kwezinsuku eziyishumi nesithombe.",
+        "Bese ubheka, ulungise, ubhale phansi.",
+        "Bhala usuku lokuhlwanyela, imvula, okumilile, ukwanda kwezinambuzane, nokuvunile.",
+        "Inkathi ngayinye, ingadi yakho ingancika kancane ekuqageleni futhi incike kakhulu kulokho okubonile kwenzeka emhlabeni wakho. Sebenzisa amarekhodi akho kanye neseluleko esithembekile sendawo lapho uthatha isinqumo esilandelayo."
+      ],
+      "disposition": "repair",
+      "issues": [
+        {
+          "issue": "The required record item “Pest pressure” is translated as “ukwanda kwezinambuzane” (increase in pests), which can mean an increase/count rather than the pressure/severity of pest activity.",
+          "recommendation": "Retain the exact technical label “Pest pressure” or use a checked equivalent for pest pressure; preserve the other record items and their order."
+        }
+      ],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 1,
+      "sourceEnglish": [
+        "Your garden gives food, income, and useful knowledge.",
+        "This module shows how to keep records, sell surplus, and build local food networks.",
+        "The aim is a farm that feeds the household and works as a small, clear economy."
+      ],
+      "registeredIsiZulu": [
+        "Ingadi yakho inikeza umndeni ukudla, imali, nolwazi oluwusizo.",
+        "Kule module uzofunda ukugcina amarekhodi, ukuthengisa okusele, nokwakha amanethiwekhi okudla aseduze.",
+        "Inhloso yipulazi elondla umuzi futhi lisebenze njengomnotho omncane ocacile."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 2,
+      "sourceEnglish": [
+        "A harvest can feed the household, be sold, be shared, or be lost.",
+        "Recording these different uses helps you see what the farm produces and what reaches customers.",
+        "Use that information to protect household food and make better business decisions."
+      ],
+      "registeredIsiZulu": [
+        "Isivuno singondla umuzi, sithengiswe, sabelwane ngaso noma silahleke.",
+        "Ukubhala lezi zindlela esisetshenziswe ngazo kukusiza ubone ukuthi ipulazi likhiqiza ini nokuthi yini efinyelela kubathengi.",
+        "Sebenzisa lolo lwazi ukuze uvikele ukudla komuzi futhi wenze izinqumo ezingcono zebhizinisi."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 3,
+      "sourceEnglish": [
+        "By the end, you can record harvests and where they go.",
+        "You can work out the true cost of production before setting a price.",
+        "You can match surplus to a suitable customer or selling channel.",
+        "You can build a local network for seeds, tools, skills, and food."
+      ],
+      "registeredIsiZulu": [
+        "Ekupheleni kwale module uzokwazi ukubhala isivuno nokuthi siyephi.",
+        "Uzokwazi ukubala izindleko zangempela zokukhiqiza ngaphambi kokubeka inani lokuthengisa.",
+        "Uzokwazi ukuqhathanisa okusele nomthengi noma nendlela efanele yokuthengisa.",
+        "Uzokwazi ukwakha inethiwekhi yasendaweni yezimbewu, amathuluzi, amakhono, nokudla."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 4,
+      "sourceEnglish": [
+        "The record follows each harvest to family food, sales, gifts, or compost.",
+        "Read across the season to see the farm as an economy before making a business decision."
+      ],
+      "registeredIsiZulu": [
+        "Irekhodi lilandela isivuno esiya emndenini, ekuthengisweni, ekunikezweni noma ku-compost.",
+        "Funda irekhodi lonke lesizini ukuze ubone ipulazi njengomnotho ngaphambi kwesinqumo sebhizinisi."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 5,
+      "sourceEnglish": [
+        "Write down every harvest as it happens.",
+        "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+        "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+        "Do not rely on memory at the end of the season."
+      ],
+      "registeredIsiZulu": [
+        "Bhala phansi sonke isivuno ngesikhathi sivunwa.",
+        "Qopha amakhilogremu katamatisi, ama-dozen amaqanda, nezinyanda ze-morogo, bese ubhala ukuthi ngakunye kuyephi.",
+        "Sebenzisa lo mkhuba ekudleni okugcinelwe umuzi, umkhiqizo othengisiwe, onikezwe omunye, noma ofakwe ku-compost.",
+        "Ungathembeli enkumbulweni ekupheleni kwesizini."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 6,
+      "sourceEnglish": [
+        "One season of records answers practical questions.",
+        "Which crops give the best yield per bed? Which return the most for each hour of work?",
+        "Which crops use more seeds, water, and compost than they return?",
+        "The record also shows which months leave the household buying food."
+      ],
+      "registeredIsiZulu": [
+        "Irekhodi lesizini eyodwa liphendula imibuzo ebalulekile.",
+        "Yiziphi izitshalo ezinikeza isivuno esingcono embhedeni ngamunye? Yiziphi ezibuyisa imali eningi ngehora lomsebenzi?",
+        "Yiziphi ezisebenzisa imbewu, amanzi, ne-compost eningi kunalokho ezikubuyisayo?",
+        "Irekhodi libuye libonise izinyanga lapho umuzi ugcina uthenga khona ukudla."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 7,
+      "sourceEnglish": [
+        "Before setting a price, record production, packing and selling costs, including labour and transport.",
+        "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+        "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale."
+      ],
+      "registeredIsiZulu": [
+        "Ngaphambi kokubeka inani lokuthengisa, qopha izindleko zokukhiqiza, ukupakisha nokuthengisa, kuhlanganise nomsebenzi nezokuthutha.",
+        "Nasi isibonelo sokufundisa, asiyona inani lentengo yamanje emakethe: utamatisi ubiza u-R18 ngekhilogremu ukuwukhiqiza, kodwa uthengiswa ngo-R15 ngekhilogremu. Lelo nani alizikhokhi izindleko ezishiwo.",
+        "Buyekeza inani lokuthengisa, izindleko nokuthi uzotshala ini ngokulandelayo. Hlola ukuthi abathengi bazothengani ngempela; inani eliphakeme elicelwayo aliqinisekisi ukuthi umkhiqizo uzothengiswa."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 8,
+      "sourceEnglish": [
+        "Use your record to find when household food runs short.",
+        "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+        "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail."
+      ],
+      "registeredIsiZulu": [
+        "Sebenzisa irekhodi lakho ukuthola ukuthi ukudla komuzi kushoda nini.",
+        "Khetha izitshalo ezifanele indawo yangakini, uhlele uhlehle usuka esikhathini sokuvuna osidingayo. Hlola izimo zokutshala nesikhathi esilindelekile kuze kuvunwe.",
+        "Usuku olusebenza kwelinye ipulazi lungase lungasebenzi lapha. Yiba nohlelo lwesibili uma imvula, amanzi noma izitshalo kungahambi kahle."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 9,
+      "sourceEnglish": [
+        "Surplus can leave the farm through a roadside stall, a group delivery to a shop, or a box delivered to a household.",
+        "The arrows show each route."
+      ],
+      "registeredIsiZulu": [
+        "Okusele kungaya esitolo esiseceleni komgwaqo, ekulethweni kweqembu esitolo, noma ebhokisini elilethwa emzini.",
+        "Imicibisholo ikhombisa indlela ngayinye."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 10,
+      "sourceEnglish": [
+        "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+        "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+        "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs."
+      ],
+      "registeredIsiZulu": [
+        "Buza ukuthi umthengi udingani: umkhiqizo, inani, ikhwalithi, ukulethwa nosuku lokukhokha.",
+        "Qhathanisa izimali zemakethe, ezokuthutha, ukupakisha nomkhiqizo ongathengiswanga kanye nenani lokuthengisa.",
+        "Hlola imithetho yemakethe nezimfuneko zendawo zokuhweba nokudla. Ukuthi itafula lokuthengisa alihlelekile akusho ngokuzenzakalelayo ukuthi alinayo imithetho noma izindleko."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 11,
+      "sourceEnglish": [
+        "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+        "A box scheme supplies a regular selection to agreed customers.",
+        "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement."
+      ],
+      "registeredIsiZulu": [
+        "Ukuthengisa ngqo kungagcina ingxenye enkulu yenani lokuthengisa kumlimi, kodwa kudinga nesikhathi, ukupakisha, ukuthutha nokunakekela amakhasimende.",
+        "I-box scheme iletha izinhlobo ezivamile zemikhiqizo kumakhasimende okuvunyelwene nawo.",
+        "Vumelanani ngokuqukethwe kwebhokisi, inani, ukukhokha nokuthi kuzokwenzekani uma isivuno sishoda. Ama-oda avamile asiza ukuhlela kuphela uma amakhasimende nabalimi bekwazi ukugcina isivumelwano."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 12,
+      "sourceEnglish": [
+        "Start from what you can reliably supply and what customers want.",
+        "Check the costs and household food needs before promising regular boxes.",
+        "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results."
+      ],
+      "registeredIsiZulu": [
+        "Qala ngalokho ongakuhlinzeka ngokwethembeka kanye nalokho okufunwa amakhasimende.",
+        "Hlola izindleko nezidingo zokudla komuzi ngaphambi kokuthembisa amabhokisi avamile.",
+        "Ubukhulu bengadi noma inani lamakhasimende kukodwa akubikezeli imali engenayo. Zama indlela ongakwazi ukuyiphatha bese uqopha imiphumela."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 13,
+      "sourceEnglish": [
+        "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+        "Offer the surplus you have and agree clear terms with customers.",
+        "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label."
+      ],
+      "registeredIsiZulu": [
+        "Uma ukukhiqiza kushintsha isonto nesonto, gwema ukuthembisa ukulethwa okungaguquki ongeke ukwazi ukukufeza.",
+        "Nikeza ngomkhiqizo osele onawo bese nivumelana ngemigomo ecacile namakhasimende.",
+        "Chaza ngokwethembeka izindlela okhulisa ngazo izitshalo. Ngaphambi kokufaka ilebula, hlola isitifiketi noma isimangalo esidingwa umthengi."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 14,
+      "sourceEnglish": [
+        "One farm can produce food.",
+        "A group can share seed, tools, skills, and transport.",
+        "Separate growers become a stronger local food network, with each household contributing what it can."
+      ],
+      "registeredIsiZulu": [
+        "Ipulazi elilodwa lingakhiqiza ukudla.",
+        "Iqembu lingabelana ngembewu, amathuluzi, amakhono nezokuthutha.",
+        "Abalimi abahlukene baba inethiwekhi yokudla yasendaweni enamandla."
+      ],
+      "disposition": "repair",
+      "issues": [
+        {
+          "issue": "The final source clause “with each household contributing what it can” is absent from the ZU narration. The target says separate growers form a strong local food network but omits the contribution-by-capacity qualifier.",
+          "recommendation": "Restore that exact source clause in English, or use a checked ZU equivalent; retain the existing localized preceding sentences."
+        }
+      ],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 15,
+      "sourceEnglish": [
+        "Neighbours can share different varieties and the work of saving seed.",
+        "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+        "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed.",
+        "Before exchanging seed, check whether the variety is protected and whether permission is needed."
+      ],
+      "registeredIsiZulu": [
+        "Omakhelwane bangabelana ngezinhlobo ezahlukene zezitshalo nangomsebenzi wokugcina imbewu.",
+        "Bhala isitshalo, uhlobo lwaso, lapho imbewu ivela khona nosuku eyabuthwa ngalo. Hlela ukuhlukanisa impova, ukukhetha izitshalo zembewu, ukomisa nokugcina ngokwendlela efanele isitshalo ngasinye.",
+        "Ukwabelana akukhulisi ukuhlukahluka ngokuzenzakalelayo futhi akuqinisekisi ikhwalithi engcono. Hlola ukuthi imbewu ingeyaluphi uhlobo nokuthi iyahluma yini ngaphambi kokuthembela kuyo.",
+        "Ngaphambi kokushintshisana ngembewu, hlola ukuthi uhlobo luvikelwe yini nokuthi imvume iyadingeka yini."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 16,
+      "sourceEnglish": [
+        "Tool sharing puts expensive equipment within reach of the group.",
+        "A water pump or grain mill may be beyond one household’s budget.",
+        "Shared use spreads the value across the group and helps each farm do work it could not do alone."
+      ],
+      "registeredIsiZulu": [
+        "Ukwabelana ngamathuluzi kwenza imishini ebizayo ifinyeleleke eqenjini lonke.",
+        "I-water pump noma i-grain mill ingaba ngaphezu kwamandla emuzi owodwa.",
+        "Ukusetshenziswa ngokuhlanganyela kusabalalisa inzuzo yethuluzi futhi kusize ipulazi ngalinye lenze umsebenzi ebelingeke liwenze lodwa."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 17,
+      "sourceEnglish": [
+        "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+        "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+        "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return."
+      ],
+      "registeredIsiZulu": [
+        "Phatha umkhiqizo ngobumnene futhi uwugcine emthunzini ofanele, upakishwe futhi ugcinwe kahle ngesikhathi sokulethwa.",
+        "Umthengi oseduze anganciphisa uhambo, kodwa ukulahleka komkhiqizo nezindleko zokuthengisa kusadinga ukubalwa.",
+        "Qhathanisa imali engenile ngemva kwezimali ezikhokhiwe, ezokuthutha nokonakala komkhiqizo endleleni ngayinye. Ungacabangi ukuthi umthengi oseduze uhlala enikeza inzuzo engcono."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 18,
+      "sourceEnglish": [
+        "Neighbours can demonstrate useful skills and compare what happened on their own farms.",
+        "Record the method, conditions and result so others can judge whether it may suit their land.",
+        "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together."
+      ],
+      "registeredIsiZulu": [
+        "Omakhelwane bangakhombisa amakhono awusizo futhi baqhathanise okwenzeke emapulazini abo.",
+        "Qopha indlela esetshenzisiwe, izimo nomphumela ukuze abanye bakwazi ukwahlulela ukuthi leyo ndlela ingase iwafanele yini umhlaba wabo.",
+        "Funa iseluleko sochwepheshe abafanele ngezifo ezingajwayelekile noma izinkinga zobuchwepheshe. Ulwazi lomphakathi lungasebenza kanye nosizo lochwepheshe."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 19,
+      "sourceEnglish": [
+        "Use headings for harvest, where it went, costs, and labour.",
+        "Record every kilogram, dozen, or bundle as it leaves the farm.",
+        "Include food kept by the household, produce sold, produce gifted, and produce composted.",
+        "At the end of one season, identify a crop that returns well and a month when the household buys food."
+      ],
+      "registeredIsiZulu": [
+        "Sebenzisa izigaba ezibhalwe ukuthi isivuno, lapho siye khona, izindleko, nomsebenzi.",
+        "Qopha wonke amakhilogremu, ama-dozen, noma izinyanda njengoba ziphuma epulazini.",
+        "Faka ukudla okugcinelwe umuzi, okuthengisiwe, okunikezwe abanye, nokufakwe ku-compost.",
+        "Ekupheleni kwesizini eyodwa, thola isivuno esibuyisa kahle kanye nenyanga lapho umuzi uthenga khona ukudla."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Market and Community",
+      "slide": 20,
+      "sourceEnglish": [
+        "Choose one real decision from your farm record.",
+        "Compare the cost and return of a crop or selling route, or plan for a household food gap using local growing conditions.",
+        "Then agree one practical seed swap, tool share, shared delivery or skills session with neighbours. Before a seed swap, check whether the variety is protected and whether permission is needed. Record responsibilities and review what happens."
+      ],
+      "registeredIsiZulu": [
+        "Khetha isinqumo esisodwa sangempela esivela kurekhodi lepulazi lakho.",
+        "Qhathanisa izindleko nembuyiselo yesitshalo noma yendlela yokuthengisa, noma uhlelele isikhathi sokushoda kokudla komuzi usebenzisa izimo zokutshala zendawo.",
+        "Bese nivumelana nomakhelwane ngesinyathelo esisodwa esisebenzayo: ukushintshisana ngembewu, ukwabelana ngethuluzi, ukuletha umkhiqizo ndawonye noma ukufunda ikhono. Ngaphambi kokushintshisana ngembewu, hlolani ukuthi uhlobo luvikelwe yini nokuthi imvume iyadingeka yini. Qophani izibopho zomuntu ngamunye bese nibuyekeza okwenzekile."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    }
+  ]
+}

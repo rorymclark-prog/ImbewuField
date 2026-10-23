@@ -1,3 +1,4 @@
+import { recordWeightKg, quantityTotals, recordUnit, type RecordUnit } from './farm-records';
 /**
  * credit-pack.ts — turning a farmer's own logged records into the shape a lender reads.
  *
@@ -296,6 +297,9 @@ export interface CreditPackCropTotal {
 export interface CreditPackTrackRecord {
   harvestEntryCount: number;
   totalHarvestedKg: number;
+  harvestQuantities: Array<{ unit: RecordUnit; quantity: number }>;
+  soldQuantities: Array<{ unit: RecordUnit; quantity: number }>;
+  countedProduce: Array<{ crop: string; harvested: Array<{ unit: RecordUnit; quantity: number }>; sold: Array<{ unit: RecordUnit; quantity: number }>; revenueZar: number }>;
   firstHarvestIso: string | null;
   lastHarvestIso: string | null;
   saleEntryCount: number;
@@ -364,7 +368,7 @@ export function creditPackTrackRecord(
     const d = parsedDate(row.logged_at);
     if (!d) continue;
     harvestEntryCount += 1;
-    const kg = nonNegative(row.kg);
+    const kg = nonNegative(recordWeightKg(row));
     totalHarvestedKg += kg;
     ensureCrop(row.crop).harvestedKg += kg;
     const ms = d.getTime();
@@ -387,13 +391,13 @@ export function creditPackTrackRecord(
     const d = parsedDate(row.sold_at);
     if (!d) continue;
     saleEntryCount += 1;
-    const kg = nonNegative(row.kg);
+    const kg = nonNegative(recordWeightKg(row));
     const amount = nonNegative(row.amount);
     totalSoldKg += kg;
     totalRevenueZar += amount;
     const crop = ensureCrop(row.crop);
     crop.soldKg += kg;
-    crop.revenueZar += amount;
+    if (recordWeightKg(row) !== null) crop.revenueZar += amount;
     const ms = d.getTime();
     if (firstSaleMs === null || ms < firstSaleMs) { firstSaleMs = ms; firstSaleIso = row.sold_at; }
     if (lastSaleMs === null || ms > lastSaleMs) { lastSaleMs = ms; lastSaleIso = row.sold_at; }
@@ -408,6 +412,17 @@ export function creditPackTrackRecord(
   return {
     harvestEntryCount,
     totalHarvestedKg,
+    harvestQuantities: quantityTotals(production.filter(row => parsedDate(row.logged_at))),
+    soldQuantities: quantityTotals(cropSales.filter(row => parsedDate(row.sold_at))),
+    countedProduce: [...new Set([
+      ...production.filter(row => parsedDate(row.logged_at) && recordUnit(row) !== 'kg').map(row => row.crop),
+      ...cropSales.filter(row => parsedDate(row.sold_at) && recordUnit(row) !== 'kg').map(row => row.crop),
+    ])].flatMap(crop => {
+      const harvested = quantityTotals(production.filter(row => row.crop === crop && parsedDate(row.logged_at) && recordUnit(row) !== 'kg'));
+      const soldRows = cropSales.filter(row => row.crop === crop && parsedDate(row.sold_at) && recordUnit(row) !== 'kg');
+      const sold = quantityTotals(soldRows);
+      return harvested.length || sold.length ? [{ crop, harvested, sold, revenueZar: soldRows.reduce((sum, row) => sum + nonNegative(row.amount), 0) }] : [];
+    }),
     firstHarvestIso,
     lastHarvestIso,
     saleEntryCount,

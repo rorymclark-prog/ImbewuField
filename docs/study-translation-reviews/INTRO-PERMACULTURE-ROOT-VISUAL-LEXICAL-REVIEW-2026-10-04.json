@@ -1,0 +1,36 @@
+{
+  "reviewStatus": "unreviewed; facilitator and fluent/local review remain open",
+  "scope": "125 source-bound ordinary fields, VE62/TS63, 42 changed silent source-paired frames; ST media unchanged",
+  "rootVisualEvidence": {
+    "contactSheets": [
+      "/tmp/imbewu-intro-ts-contact-20261004.jpg",
+      "/tmp/imbewu-intro-ve-contact-20261004.jpg"
+    ],
+    "layoutFrames": 42,
+    "fullFrames": [
+      "VE7",
+      "VE21",
+      "VE22",
+      "TS14",
+      "TS19 original then repaired"
+    ],
+    "finding": "No visible clipping or overlapping panels in reviewed render layouts; full target/source and unreviewed labels visible in representative full frames. Phone runtime review still required."
+  },
+  "ts19Correction": {
+    "initialTerm": "ematlhelo ya yona",
+    "risk": "Sides may replace endpoints and change the airflow geometry. Initial independent approval did not resolve this risk.",
+    "finalExactEnglishHold": " Other air moves over it or around its ends.",
+    "scope": "TS19 bodyIndex2 only; first sentence localized, bodyIndex3 unchanged",
+    "approvedImage": "/tmp/imbewu-intro-ts-slide-19-repaired-20261004.webp",
+    "finalAssetSHA256": "cdad8004c020a18b0e788ef88789bda778044319737a6dd87fe88d49e1436823"
+  },
+  "ve19LexicalCrossCheck": {
+    "primarySource": "https://www.education.gov.za/Portals/0/Documents/MTbBE/mttbe%20terminology/Tshivenda%20Grade%204%20and%205%20MathematicsTerminology.pdf?ver=2025-11-06-164434-523",
+    "downloadSHA256": "81a8665cc0f67504189204f9722902a7f728c83550b700f743ec3cb6ecf01ae5",
+    "entry": "total length",
+    "rootReadText": "tshithu u bva kha maṅwe magumo u ya kha maṅwe",
+    "inference": "The official mathematics entry supports an endpoint reading of magumo. It is not approval of full Tshivenda grammar or farming usage."
+  },
+  "releaseStatus": "Local gates passed: typecheck, full 4544 pass/0 fail/1 existing TODO, whitespace. Exact preview, phone/offline QA, CI and production checks remain required.",
+  "localFullTestLog": "/tmp/imbewu-intro-final-full-tests-20261004.log"
+}

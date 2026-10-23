@@ -1,0 +1,350 @@
+{
+  "packetVersion": 1,
+  "created": "2026-10-02",
+  "language": "Tshivenda (VE)",
+  "moduleId": "vegetables-staples",
+  "lessonId": "vegetables-staples-l2",
+  "sourceRevision": "8a0728379a57256a78bbb207213f2953f7f1b943",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "currentRegistryPath": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+  "registryFinding": "Existing VE L1/L3 preserved; add missing L2 source-paired body. No title or assessment translation.",
+  "paragraphSeparator": "\\n\\n",
+  "sourceParagraphCount": 23,
+  "entries": [
+    {
+      "fieldPath": "lessons[1].body.paragraphs[0]",
+      "paragraphIndex": 0,
+      "exactSourceEnglish": "Succession planting is a calendar habit, not a special crop.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "machine-draft-candidate",
+      "newTshivendaDraft": "Succession planting ndi maitele a kalenda, hu si tshimela tsho khetheaho.",
+      "conditions": "Keeps the difficult farming term Succession planting exact; translates the ordinary explanation without implying that succession planting is a crop.",
+      "uncertainty": "Moderate: retained term in English; Tshivenda wording for calendar habit is a plain explanation.",
+      "initialCandidateBackTranslation": "Succession planting is a calendar habit, not a special crop.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[1]",
+      "paragraphIndex": 1,
+      "exactSourceEnglish": "Choose something your household actually eats often. Then sow a small amount of it, again and again.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "exact-English hold",
+      "newTshivendaDraft": "Choose something your household actually eats often. Then sow a small amount of it, again and again.",
+      "conditions": "Keeps repeated small sowings and household preference. No crop or interval added.",
+      "uncertainty": "Moderate: ‘sow’ is rendered as ṱavha (plant/sow); crop-specific sowing details remain outside this sentence.",
+      "initialCandidateBackTranslation": "Choose something that your household eats often. Then plant a little of it repeatedly.",
+      "rootRepair": "Retain whole exact English rather than unresolved mixed-clause concord or sowing ambiguity.",
+      "reviewStatus": "hold"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[2]",
+      "paragraphIndex": 2,
+      "exactSourceEnglish": "Plant a short row every two to three weeks.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "machine-draft-candidate",
+      "newTshivendaDraft": "Ṱavhani muduba mupfufhi every two to three weeks.",
+      "conditions": "Translates the short-row instruction while retaining the exact source interval wording and value. No frequency beyond the source interval added.",
+      "uncertainty": "Moderate: this renders the recurring interval as ‘again after two to three weeks’; retain the phrase two to three weeks in English for exact timing review.",
+      "initialCandidateBackTranslation": "Plant a short row, and plant again after two to three weeks.",
+      "rootRepair": "Preserve exact English for sowing, recurring interval, degree/guarantee or crowding meaning.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[3]",
+      "paragraphIndex": 3,
+      "exactSourceEnglish": "Less waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "machine-draft-candidate",
+      "newTshivendaDraft": "Less waste during a glut. Fresh food for longer. Na mushumo u a phadalala kha khalaṅwaha, u sa ni kwama woṱhe nga tshifhinga tshithihi.",
+      "conditions": "Preserves reduced waste, longer availability of fresh food, and labour spread across the season. Keeps ‘glut’ in English as an agricultural term.",
+      "uncertainty": "Moderate: the first sentence makes the source’s ‘Less waste during a glut’ explicit as less food waste; it does not promise zero waste.",
+      "initialCandidateBackTranslation": "Food is not wasted when there is a glut. You get fresh food for longer. The work is also spread across the season, instead of all affecting you at once.",
+      "rootRepair": "Preserve exact English for sowing, recurring interval, degree/guarantee or crowding meaning.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[4]",
+      "paragraphIndex": 4,
+      "exactSourceEnglish": "Separate sowings may reduce the risk of losing everything at once. They do not guarantee a harvest if difficult conditions continue.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "newTshivendaDraft": "Separate sowings dzi nga fhungudza risk ya u xelelwa nga zwoṱhe nga tshifhinga tshithihi. They do not guarantee a harvest if difficult conditions continue.",
+      "heldClauses": [
+        "Separate sowings",
+        "risk",
+        "They do not guarantee a harvest if difficult conditions continue."
+      ],
+      "conditions": "Preserves all exact crop identities, timing, modality, risk, and ecological conditions identified in heldClauses. No numbers, methods, species, or conditions are added.",
+      "uncertainty": "The may-reduce modality and risk of losing everything at once are retained; the no-guarantee and continuing-difficult-conditions sentence stays exact English. Verify “Separate sowings dzi nga fhungudza risk” does not sound certain.",
+      "initialCandidateBackTranslation": "Separate sowings may reduce the risk of losing everything at once. They do not guarantee a harvest if difficult conditions continue.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[5]",
+      "paragraphIndex": 5,
+      "exactSourceEnglish": "Which fast crop could you sow in small batches? Decide on one, and start it this week.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "machine-draft-candidate",
+      "newTshivendaDraft": "Which fast crop could you sow in small batches? Nangani tshithihi, ni tshi thome ino vhege.",
+      "conditions": "Preserves the question, small-batch approach, one choice, and start this week. No crop or extra frequency added.",
+      "uncertainty": "Moderate: ‘fast crop’ interpreted as fast-growing crop; retained the source timing ‘this week’.",
+      "initialCandidateBackTranslation": "Which fast-growing crop could you sow in small batches? Choose one and begin it this week.",
+      "rootRepair": "Preserve exact English for sowing, recurring interval, degree/guarantee or crowding meaning.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[6]",
+      "paragraphIndex": 6,
+      "exactSourceEnglish": "Here's what it looks like in practice.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "machine-draft-candidate",
+      "newTshivendaDraft": "Hezwi ndi zwine zwa itea ngazwo.",
+      "conditions": "Framing sentence only; no new instruction.",
+      "uncertainty": "Low.",
+      "initialCandidateBackTranslation": "This is what it looks like in practice.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[7]",
+      "paragraphIndex": 7,
+      "exactSourceEnglish": "Sow one. Then two to three weeks later, sow two. Then sow three. Then sow four.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "newTshivendaDraft": "Sow one. Nga murahu ha two to three weeks, sow two. Nga murahu, sow three. Nga murahu, sow four.",
+      "heldClauses": [
+        "Sow one.",
+        "two to three weeks",
+        "sow two",
+        "sow three",
+        "sow four"
+      ],
+      "conditions": "Preserves all exact crop identities, timing, modality, risk, and ecological conditions identified in heldClauses. No numbers, methods, species, or conditions are added.",
+      "uncertainty": "Every count, action, order and the exact two-to-three-week interval remains verbatim; only the sequence connectors are localized. Verify the connectors do not imply extra time gaps.",
+      "initialCandidateBackTranslation": "Sow one. Then, two to three weeks later, sow two. Then sow three. Then sow four.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[8]",
+      "paragraphIndex": 8,
+      "exactSourceEnglish": "With suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "newTshivendaDraft": "With suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.",
+      "heldClauses": [
+        "With suitable crop timing, harvests can begin to overlap.",
+        "The first batch will not always be ready by the fourth sowing."
+      ],
+      "conditions": "Preserves all exact crop identities, timing, modality, risk, and ecological conditions identified in heldClauses. No numbers, methods, species, or conditions are added.",
+      "uncertainty": "Whole-paragraph hold: preserve “suitable” timing, can-begin modality, and “not always” by fourth sowing; no translation is proposed.",
+      "initialCandidateBackTranslation": "With suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.",
+      "reviewStatus": "hold"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[9]",
+      "paragraphIndex": 9,
+      "exactSourceEnglish": "Two to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "newTshivendaDraft": "Two to three weeks ndi starting rhythm, hu si law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
+      "heldClauses": [
+        "Two to three weeks",
+        "starting rhythm",
+        "A cool-season leaf crop may hold longer.",
+        "Heat may speed things up, or cause a failure."
+      ],
+      "conditions": "Preserves all exact crop identities, timing, modality, risk, and ecological conditions identified in heldClauses. No numbers, methods, species, or conditions are added.",
+      "uncertainty": "The numeric interval remains spelled exactly as source. The law/rhythm contrast is mixed; both “may” weather/crop outcomes stay exact. Verify the Tshivenda negation “hu si law.”",
+      "initialCandidateBackTranslation": "Two to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[10]",
+      "paragraphIndex": 10,
+      "exactSourceEnglish": "Watch what your own garden does, and adjust the interval. That observation is the skill.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "machine-draft-candidate",
+      "newTshivendaDraft": "Sedzani zwine zwa itea tsimuni yaṋu, ni shandule interval. U sedza nga nḓila iyi ndi yone skill.",
+      "conditions": "Preserves observing one's own garden, adjusting the interval, and observation as the skill. Keeps interval as the precise planting term.",
+      "uncertainty": "Low to moderate: interval and skill remain English technical terms.",
+      "initialCandidateBackTranslation": "Watch what happens in your own garden and adjust the interval. Observing in this way is the skill.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[11]",
+      "paragraphIndex": 11,
+      "exactSourceEnglish": "Intercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "machine-draft-candidate",
+      "newTshivendaDraft": "Intercropping is not just crowding different plants together. Tshimela tshiṅwe na tshiṅwe tshi ṱoḓa mushumo watsho, na fhethu ho eḓanaho uri tshi kone u ita wonoyo mushumo.",
+      "conditions": "Preserves the distinction from simply crowding plants, plus each plant's role and adequate space. Retains the difficult term Intercropping.",
+      "uncertainty": "Moderate: ‘job’ is translated literally as role/work; the source does not specify particular roles.",
+      "initialCandidateBackTranslation": "Intercropping is not merely putting different plants together. Each plant needs its own job and enough space to do that job.",
+      "rootRepair": "Preserve exact English for sowing, recurring interval, degree/guarantee or crowding meaning.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[12]",
+      "paragraphIndex": 12,
+      "exactSourceEnglish": "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "newTshivendaDraft": "The Three Sisters ndi tsumbo from Indigenous farming traditions in the Americas.",
+      "heldClauses": [
+        "The Three Sisters",
+        "Indigenous farming traditions in the Americas"
+      ],
+      "conditions": "Preserves all exact crop identities, timing, modality, risk, and ecological conditions identified in heldClauses. No numbers, methods, species, or conditions are added.",
+      "uncertainty": "The named tradition and attribution remain exact English; only the ordinary predicate is localized. Verify “tsumbo” conveys “example.”",
+      "initialCandidateBackTranslation": "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[13]",
+      "paragraphIndex": 13,
+      "exactSourceEnglish": "Maize gives height and structure.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "newTshivendaDraft": "Maize i fha height and structure.",
+      "heldClauses": [
+        "Maize",
+        "height and structure"
+      ],
+      "conditions": "Preserves all exact crop identities, timing, modality, risk, and ecological conditions identified in heldClauses. No numbers, methods, species, or conditions are added.",
+      "uncertainty": "Crop identity and ecological function terms remain exact; only the ordinary verb is localized. Verify the sentence does not imply a different plant role.",
+      "initialCandidateBackTranslation": "Maize gives height and structure.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[14]",
+      "paragraphIndex": 14,
+      "exactSourceEnglish": "Beans climb the maize, and store as protein.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "newTshivendaDraft": "Beans dzi gonya maize, and store as protein.",
+      "heldClauses": [
+        "Beans",
+        "maize",
+        "protein"
+      ],
+      "conditions": "Preserves all exact crop identities, timing, modality, risk, and ecological conditions identified in heldClauses. No numbers, methods, species, or conditions are added.",
+      "uncertainty": "Crop identities and protein claim remain unchanged; verify “vhuḽunga”/“store” phrasing expresses the source’s storage role and not a new nutrition claim.",
+      "initialCandidateBackTranslation": "Beans climb the maize and store as protein.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[15]",
+      "paragraphIndex": 15,
+      "exactSourceEnglish": "Pumpkin spreads across the ground, shading the soil and holding moisture.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "newTshivendaDraft": "Pumpkin spreads across the ground, i ita murunzi kha mavu na u vhulunga moisture.",
+      "heldClauses": [
+        "Pumpkin",
+        "moisture"
+      ],
+      "conditions": "Preserves all exact crop identities, timing, modality, risk, and ecological conditions identified in heldClauses. No numbers, methods, species, or conditions are added.",
+      "uncertainty": "The named crop is unchanged. Verify the localized spread/shade actions preserve ground cover and soil-shading meaning; moisture remains exact English.",
+      "initialCandidateBackTranslation": "Pumpkin spreads across the ground, shades the soil and holds moisture.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[16]",
+      "paragraphIndex": 16,
+      "exactSourceEnglish": "Timing matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "newTshivendaDraft": "Timing ndi ya ndeme. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
+      "heldClauses": [
+        "Establish the maize first, so it is strong enough to carry the beans when they start to climb."
+      ],
+      "conditions": "Preserves all exact crop identities, timing, modality, risk, and ecological conditions identified in heldClauses. No numbers, methods, species, or conditions are added.",
+      "uncertainty": "Only the ordinary lead-in is translated. Order, strength threshold, crop identity, and when beans begin to climb remain exact English.",
+      "initialCandidateBackTranslation": "Timing matters. Establish the maize first so it is strong enough to carry the beans when they start to climb.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[17]",
+      "paragraphIndex": 17,
+      "exactSourceEnglish": "The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "newTshivendaDraft": "The plants can still compete. Ni zwi fhe fhethu ho teaho, maḓi na tshedza. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "heldClauses": [
+        "The plants can still compete.",
+        "Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
+      ],
+      "conditions": "Preserves all exact crop identities, timing, modality, risk, and ecological conditions identified in heldClauses. No numbers, methods, species, or conditions are added.",
+      "uncertainty": "The competition condition and entire nitrogen/decomposition qualification remain exact. Only the resource-allocation instruction is translated; verify “fhethu ho teaho” retains suitable rather than simply sufficient space.",
+      "initialCandidateBackTranslation": "The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[18]",
+      "paragraphIndex": 18,
+      "exactSourceEnglish": "A household may have a hungry gap: weeks when stored food runs low before the next harvest is ready.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "newTshivendaDraft": "Muṱa u nga vha na hungry gap: weeks when stored food runs low before the next harvest is ready.",
+      "heldClauses": [
+        "hungry gap",
+        "weeks when stored food runs low before the next harvest is ready"
+      ],
+      "conditions": "Preserves all exact crop identities, timing, modality, risk, and ecological conditions identified in heldClauses. No numbers, methods, species, or conditions are added.",
+      "uncertainty": "The may/possibility framing is translated; the hungry-gap name and exact definition/timing remain English.",
+      "initialCandidateBackTranslation": "A household may have a hungry gap: weeks when stored food runs low before the next harvest is ready.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[19]",
+      "paragraphIndex": 19,
+      "exactSourceEnglish": "Yours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "newTshivendaDraft": "Yours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.",
+      "heldClauses": [
+        "Yours might come after stored maize runs out.",
+        "It might come before winter greens are ready.",
+        "It might come in a dry period when water limits the garden."
+      ],
+      "conditions": "Preserves all exact crop identities, timing, modality, risk, and ecological conditions identified in heldClauses. No numbers, methods, species, or conditions are added.",
+      "uncertainty": "Whole-paragraph hold: the three possible timing/season/water conditions remain exact English; no single calendar or outcome is imposed.",
+      "initialCandidateBackTranslation": "Yours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.",
+      "reviewStatus": "hold"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[20]",
+      "paragraphIndex": 20,
+      "exactSourceEnglish": "Don't copy somebody else's calendar. Name your own months first.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "machine-draft-candidate",
+      "newTshivendaDraft": "Ni songo kopolola calendar ya muṅwe muthu. Thomani nga u bula miṅwedzi yaṋu.",
+      "conditions": "Preserves the instruction not to copy someone else's calendar and to identify one's own months first.",
+      "uncertainty": "Low: calendar retained as an English loan term.",
+      "initialCandidateBackTranslation": "Do not copy another person's calendar. Start by naming your own months.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[21]",
+      "paragraphIndex": 21,
+      "exactSourceEnglish": "Write them down. Then choose the crop and the sowing date that puts food into that gap.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "machine-draft-candidate",
+      "newTshivendaDraft": "Iṅwaleni fhasi. Ni kone u khetha crop na sowing date ine ya isa zwiḽiwa kha hungry gap yeneyo.",
+      "conditions": "Preserves writing down the months, then selecting a crop and sowing date to address the already identified gap. Keeps crop, sowing date, and hungry gap as precise terms.",
+      "uncertainty": "Moderate: does not add crop, date, or guarantee that the gap will be filled.",
+      "initialCandidateBackTranslation": "Write them down. Then choose the crop and sowing date that puts food into that hungry gap.",
+      "reviewStatus": "machine-draft"
+    },
+    {
+      "fieldPath": "lessons[1].body.paragraphs[22]",
+      "paragraphIndex": 22,
+      "exactSourceEnglish": "That's planning backwards, and it's the difference between a garden that looks productive and a household that eats.",
+      "currentRegistry": "No VE L2 entry; current learner text falls back to this exact canonical English paragraph.",
+      "draftStatus": "machine-draft-candidate",
+      "newTshivendaDraft": "Hezwi ndi planning backwards, nahone ndi zwone zwi fhambanyisaho garden ine ya vhonala i tshi bveledza na muṱa une wa wana zwiḽiwa.",
+      "conditions": "Keeps the named planning method in English; preserves the contrast between appearance of productivity and food reaching the household.",
+      "uncertainty": "Moderate: ‘planning backwards’ retained because it is the key planning concept.",
+      "initialCandidateBackTranslation": "This is planning backwards, and it is what distinguishes a garden that looks productive from a household that gets food.",
+      "reviewStatus": "machine-draft"
+    }
+  ],
+  "reviewStatus": "machine-draft; independent semantic check, no fluent/local approval",
+  "constraints": [
+    "Canonical English unchanged.",
+    "Paragraph order and indices are the canonical zero-based order.",
+    "No added numbers, crops, species, methods, or timing.",
+    "Difficult agricultural terms and clauses with precise claims/conditions remain exact English.",
+    "No TS/Xitsonga text was used.",
+    "For translated mixed-language drafts, exact technical terms and numeric intervals are retained verbatim where needed."
+  ],
+  "rootReview": "Independent actual23-index initial and12-index extension checks accepted after repairs. Root retains whole paragraph1, sow/cadence/degree/crowding English, p14 store-as-protein and p15 spread-across-ground English; p16 conditional clause exact-source contraction restored. No fluent approval, not learner-wired; rebind/check canonical again in fresh batch.",
+  "combinedCandidateBody": "Succession planting ndi maitele a kalenda, hu si tshimela tsho khetheaho.\n\nChoose something your household actually eats often. Then sow a small amount of it, again and again.\n\nṰavhani muduba mupfufhi every two to three weeks.\n\nLess waste during a glut. Fresh food for longer. Na mushumo u a phadalala kha khalaṅwaha, u sa ni kwama woṱhe nga tshifhinga tshithihi.\n\nSeparate sowings dzi nga fhungudza risk ya u xelelwa nga zwoṱhe nga tshifhinga tshithihi. They do not guarantee a harvest if difficult conditions continue.\n\nWhich fast crop could you sow in small batches? Nangani tshithihi, ni tshi thome ino vhege.\n\nHezwi ndi zwine zwa itea ngazwo.\n\nSow one. Nga murahu ha two to three weeks, sow two. Nga murahu, sow three. Nga murahu, sow four.\n\nWith suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.\n\nTwo to three weeks ndi starting rhythm, hu si law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.\n\nSedzani zwine zwa itea tsimuni yaṋu, ni shandule interval. U sedza nga nḓila iyi ndi yone skill.\n\nIntercropping is not just crowding different plants together. Tshimela tshiṅwe na tshiṅwe tshi ṱoḓa mushumo watsho, na fhethu ho eḓanaho uri tshi kone u ita wonoyo mushumo.\n\nThe Three Sisters ndi tsumbo from Indigenous farming traditions in the Americas.\n\nMaize i fha height and structure.\n\nBeans dzi gonya maize, and store as protein.\n\nPumpkin spreads across the ground, i ita murunzi kha mavu na u vhulunga moisture.\n\nTiming ndi ya ndeme. Establish the maize first, so it's strong enough to carry the beans when they start to climb.\n\nThe plants can still compete. Ni zwi fhe fhethu ho teaho, maḓi na tshedza. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.\n\nMuṱa u nga vha na hungry gap: weeks when stored food runs low before the next harvest is ready.\n\nYours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.\n\nNi songo kopolola calendar ya muṅwe muthu. Thomani nga u bula miṅwedzi yaṋu.\n\nIṅwaleni fhasi. Ni kone u khetha crop na sowing date ine ya isa zwiḽiwa kha hungry gap yeneyo.\n\nHezwi ndi planning backwards, nahone ndi zwone zwi fhambanyisaho garden ine ya vhonala i tshi bveledza na muṱa une wa wana zwiḽiwa."
+}

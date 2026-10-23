@@ -1,0 +1,89 @@
+{
+  "speciesId": "cajanus-cajan",
+  "commonName": "Pigeon pea",
+  "botanicalName": "Cajanus cajan",
+  "harvestMonths": [],
+  "householdFoodStatus": "confirmed-food",
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable planting-to-first-food age. Trial days after sowing are accession, place and season specific, not a perennial age curve."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No universal full-bearing age applies to this annual or dual-purpose crop."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Trial grain kg/ha is retained as a reference only; it is not kg/plant or household food yield."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric crop-specific chilling requirement is verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No household-food pollination classification is inferred from a grain trial."
+  },
+  "harvestProduct": "dry grain or green immature seed; fodder is a separate product",
+  "supplementaryReferences": [
+    {
+      "title": "SA cultivar maturity and grain trial",
+      "quote": "Days to maturity",
+      "url": "https://oar.icrisat.org/335/1/CO_0013.pdf",
+      "doc": "Mathews, Silim and Saxena: ICPN 8 (2001), Tables 1–2, printed pp37–38",
+      "page": 37,
+      "note": "Malekutu, Mpumalanga, 1998/99; rainfed mid-December sowing, sandy loam, no fertiliser. Paired days after planting / grain kg/ha: ICPL 88039 127 / 1823; ICPL 85010 129 / 1525; ICPL 87091 140 / 1299; ICPL 87051 193 / 978; ICEAP 00053 231 / 918. Grain differences within each trial were not significant. Visually checked Tables 1–2 (PDF pp43–44). These are dry-grain observations, not green-seed picking dates or nationwide yield defaults."
+    },
+    {
+      "title": "Tentative newer ARC planting comparison",
+      "quote": "Tentatively, Variety 2 (ICEAP01284) can be recommended",
+      "url": "https://www.arc.agric.za/arc-gci/News%20Articles%20Library/Indigenous%20crops%20can%20help%20with%20food%20security.pdf",
+      "doc": "Bello, Mofokeng and du Toit: SA Graan/Grain, October 2021, pp56–57",
+      "page": 57,
+      "note": "Potchefstroom 2020/21, good rainfall season: ICEAP01258 versus ICEAP01284 and 22 October versus 25 November sowing. ARC tentatively favours ICEAP01284 in late October and calls for further agro-ecological trials. Exact yield values were not taken from graph bars. Confirm current seed availability; this is not a national cultivar recommendation."
+    },
+    {
+      "title": "Green seed is timed from flowering",
+      "quote": "Green pods: Harvest 30-35 days after flowering",
+      "url": "https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Legume%20poster.pdf",
+      "doc": "DAFF: Legume poster, pigeon-pea column, Harvesting row",
+      "page": null,
+      "note": "The interval starts at flowering, not sowing. Dry-grain harvest is a separate pod-maturity stage. The broad marketing period does not mean that one planting supplies food continuously."
+    }
+  ],
+  "productionGuidance": {
+    "products": "dry grain or green immature seed; fodder is a separate product",
+    "care": [
+      "Record green immature seed and dry grain separately; fodder biomass cannot be counted as household food kg.",
+      "Match the selected duration type and sowing date to local frost, rainfall and water availability; the trials retain their own conditions."
+    ],
+    "purchase": [
+      "Discuss the named SA trial cultivars with a local seed supplier or extension adviser. Current purchase availability and suitability for this site are unverified; do not substitute a cultivar silently."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://oar.icrisat.org/335/1/CO_0013.pdf",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary publication or producer page checked; product, cultivar, location and native units retained. Generic age, plant yield and calendar remain unknown."
+    },
+    {
+      "url": "https://www.arc.agric.za/arc-gci/News%20Articles%20Library/Indigenous%20crops%20can%20help%20with%20food%20security.pdf",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary publication or producer page checked; product, cultivar, location and native units retained. Generic age, plant yield and calendar remain unknown."
+    },
+    {
+      "url": "https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Legume%20poster.pdf",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary publication or producer page checked; product, cultivar, location and native units retained. Generic age, plant yield and calendar remain unknown."
+    }
+  ],
+  "gaps": [
+    "An actual farm cultivar, sowing date, product purpose and applicable local harvest window are required; reference trials do not create an automatic annual forecast."
+  ]
+}

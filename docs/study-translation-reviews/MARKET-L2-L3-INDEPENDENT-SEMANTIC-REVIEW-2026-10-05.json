@@ -1,0 +1,804 @@
+{
+  "review": "Independent bounded source-to-final semantic review",
+  "canonicalBase": "bde761b33dc4f587746d60b5fe77d881f29b80ca",
+  "scope": "37 fields including all 72 body paragraphs; no fluency approval",
+  "reviewStatus": "complete-semantic-pass-no-fluency-approval",
+  "preservation": {
+    "all37InitialRegistryBindingsExact": true,
+    "allSixBodies12Paragraphs": true,
+    "allUnlistedParagraphsExactBaseline": true,
+    "allThreeToolSharingPrefixesExactBaseline": true,
+    "reviewStatusMachineDraft": true,
+    "crossLanguageContaminationFound": false,
+    "englishAnchors": "Deliberate retained source anchors; not treated as contamination.",
+    "all37FinalActualSourceTargetBindingsExact": true,
+    "correctIndices": "Verified by lesson ID: market-community-l2 [2,2]; market-community-l3 [1,2], for st/ve/ts; order of lessons in ve differs and is unchanged."
+  },
+  "entries": [
+    {
+      "index": 0,
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "fieldPath": "body",
+      "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "reviewedTarget": "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.\n\nBapisa ditefello tsa mmaraka, dipalangoang, ho paka le dihlahiswa tse sa rekiswang, hammoho le theko ya thekiso.\n\nHlahloba melao ya mmaraka le ditlhoko tsa lehae tsa kgwebo le dijo. Setala sa informal ha se bolele ka boyona hore ha ho na melao kapa ditjeo.\n\nHo rekisa ka kotloloho ho ka retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.\n\nMokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.\n\nDumellanang ka box contents, price, payment le se tla etsahala ha crops di haella. Regular orders di thusa ho rera feela ha customers le growers ba ka phethahatsa agreement.\n\nQala ka seo o ka reliably supply le seo bareki ba se batlang.\n\nSheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa ho fana ka mabokose kgafetsa.\n\nSebaka sa tshingwana kapa palo ya bareki feela ha e bolele esale pele hore na income e tla ba bokae. Leka mokgwa oo o ka o laolang, mme o ngole diphetho.\n\nHa tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.\n\nFana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.\n\nHlalosa ditsela tseo o lemang ka tsona ka botshepehi. Pele o sebedisa label, hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "All source paragraph conditions reviewed; see paragraph checks.",
+      "paragraphChecks": [
+        {
+          "paragraph": 0,
+          "condition": "Customer needs: product, quantity, quality, delivery, payment date.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 1,
+          "condition": "Compare fees, transport, packing, unsold produce AND selling price.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 2,
+          "condition": "Check market/local trading/food rules; informal does not automatically imply no costs or rules.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 3,
+          "condition": "CAN retain MORE of sale price, plus time, packing, transport, customer care.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 4,
+          "condition": "Regular box selection to agreed customers.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 5,
+          "condition": "Box CONTENTS, price, payment, crop SHORTAGE; regular orders help ONLY WHEN BOTH customers and growers CAN keep agreement.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 6,
+          "condition": "Start reliable supply plus customer wants.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 7,
+          "condition": "Costs and household food needs checked BEFORE regular-box promise.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 8,
+          "condition": "Garden area OR customer count ALONE does NOT predict INCOME; manageable arrangement and results recorded.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 9,
+          "condition": "Variable weekly production: avoid promise of fixed unsuppliable delivery.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 10,
+          "condition": "Offer actual surplus; agree clear customer terms.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 11,
+          "condition": "Describe practices honestly; check required certification/claim BEFORE label.",
+          "verdict": "semantic-pass"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "fieldPath": "body",
+      "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "reviewedTarget": "Baahisani ba ka arolelana mefuta e fapaneng ya dijalo le mosebetsi wa ho boloka peo.\n\nNgola crop, variety, source le collection date. Rera isolation, selection, drying le storage tse loketseng crop e nngwe le e nngwe.\n\nHo arolelana ha ho bolele hore diversity e tla eketseha kapa quality e ntlafale ka boyona. Hlahloba identity le germination pele o itshetleha ka shared seed. Pele o fapanyetsana peo, hlahloba hore na variety e sireleditswe le hore na permission e a hlokahala.\n\nHo arolelana lisebelisoa ho etsa hore sehlopha se khone ho sebelisa lisebelisoa tse turang.\n\nPompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.\n\nHo sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.\n\nTshwara produce ka bonolo mme o boloke moriti o loketseng, packaging le storage nakong yohle ya delivery.\n\nMoreki wa haufi a ka fokotsa leeto, empa losses le selling costs di sa ntse di lokela ho lekanngwa.\n\nBapisa tjhelete e amohetsweng ka mora fees, transport le spoilage bakeng sa option e nngwe le e nngwe. O se ke wa nka hore nearest buyer ka mehla o fana ka best return.\n\nBaahisani ba ka bontsha bokgoni bo molemo mme ba bapisa se etsahetseng mapolasing a bona.\n\nNgola method, conditions le result hore ba bang ba kgone ho ahlola hore na e ka tshwanela naha ya bona.\n\nKopa qualified advice bakeng sa unfamiliar disease kapa technical problems. Shared experience le specialist help di ka sebetsa mmoho.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "All conditions retained after exact nearest buyer repair; nearby MAY in P7 remains distinct from NEAREST in P8.",
+      "paragraphChecks": [
+        {
+          "paragraph": 0,
+          "condition": "Neighbours CAN share different varieties and saving-seed work.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 1,
+          "condition": "Record crop, variety, source, collection date; suitable isolation, selection, drying, storage EACH crop.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 2,
+          "condition": "Sharing not automatically diversity/quality improvement; identity/germination BEFORE reliance; BEFORE EXCHANGE check protected variety AND permission.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 3,
+          "condition": "Existing tool-sharing paragraph preserved exactly.",
+          "verdict": "baseline-exact-preservation"
+        },
+        {
+          "paragraph": 4,
+          "condition": "Existing pump/mill household-budget paragraph preserved exactly.",
+          "verdict": "baseline-exact-preservation"
+        },
+        {
+          "paragraph": 5,
+          "condition": "Existing shared-use farm-work paragraph preserved exactly.",
+          "verdict": "baseline-exact-preservation"
+        },
+        {
+          "paragraph": 6,
+          "condition": "Gentle handling and suitable shade, packaging, storage THROUGH delivery.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 7,
+          "condition": "Nearby buyer MAY reduce journey; losses and selling costs STILL measured.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 8,
+          "condition": "Compare money AFTER fees, transport, spoilage EACH option; do NOT assume NEAREST buyer ALWAYS BEST return.",
+          "verdict": "semantic-pass-after-repair"
+        },
+        {
+          "paragraph": 9,
+          "condition": "Neighbours CAN demonstrate and compare own farm outcomes.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 10,
+          "condition": "Record method, conditions, result so others judge MAY suit THEIR land.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 11,
+          "condition": "Qualified advice for unfamiliar disease/technical problems; shared experience and specialist help CAN work together.",
+          "verdict": "semantic-pass"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "fieldPath": "body",
+      "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "reviewedTarget": "Vhudzisani uri mutengi u ṱoḓa mini: product, tshivhalo, quality, delivery na ḓuvha ḽa payment.\n\nVhambedzani market fees, transport, u paka na zwibveledzwa zwi sa rengiswi, na mutengo wa u rengisa.\n\nSedzani milayo ya market na ṱhoḓea dza henefho dza u rengisa na zwiḽiwa. Informal stall a zwi sokou amba uri a hu na milayo kana costs.\n\nU rengisa nga ho livhisa kha vharengi zwi nga retain more of the sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, packing, transport na customer care.\n\nBox scheme i ṋetshedza regular selection kha vharengi vho tendelanaho.\n\nTendelani nga box contents, mutengo, payment na zwine zwa ḓo itea arali crops dzi tshi vha dzi si gathi. Regular orders dzi thusa u pulana fhedzi musi customers na growers vha tshi kona u tevhedza agreement.\n\nThomani nga zwine na nga kona u tshi zwi ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.\n\nṰolani costs na household food needs musi ni sa athu fulufhedzisa regular boxes.\n\nTshikalo tsha ngade kana tshivhalo tsha vharengi fhedzi a tshi sumbedzi uri hu ḓo vha na income nngafhani. Lingedzani nḓila ine na nga kona u langula, ni ṅwale zwe zwa bvelela.\n\nArali production i tshi shanduka vhege nga vhege, ni songo fulufhedzisa fixed delivery ine na si kone u i ṋetshedza.\n\nṊetshedzani surplus ine na vha nayo nahone ni tendelane na vharengi nga clear terms.\n\nṰalusani growing practices dzaṋu nga u fulufhedzea. Musi ni sa athu shumisa label, sedzani certification kana claim ine murengi a i ṱoḓa.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "All source paragraph conditions reviewed; see paragraph checks.",
+      "paragraphChecks": [
+        {
+          "paragraph": 0,
+          "condition": "Customer needs: product, quantity, quality, delivery, payment date.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 1,
+          "condition": "Compare fees, transport, packing, unsold produce AND selling price.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 2,
+          "condition": "Check market/local trading/food rules; informal does not automatically imply no costs or rules.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 3,
+          "condition": "CAN retain MORE of sale price, plus time, packing, transport, customer care.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 4,
+          "condition": "Regular box selection to agreed customers.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 5,
+          "condition": "Box CONTENTS, price, payment, crop SHORTAGE; regular orders help ONLY WHEN BOTH customers and growers CAN keep agreement.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 6,
+          "condition": "Start reliable supply plus customer wants.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 7,
+          "condition": "Costs and household food needs checked BEFORE regular-box promise.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 8,
+          "condition": "Garden area OR customer count ALONE does NOT predict INCOME; manageable arrangement and results recorded.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 9,
+          "condition": "Variable weekly production: avoid promise of fixed unsuppliable delivery.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 10,
+          "condition": "Offer actual surplus; agree clear customer terms.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 11,
+          "condition": "Describe practices honestly; check required certification/claim BEFORE label.",
+          "verdict": "semantic-pass"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "body",
+      "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "reviewedTarget": "Vhahura vha nga kovhelana mifuda yo fhambanaho na mushumo wa u vhulunga mbeu.\n\nṄwalani crop, variety, source na datumu ya u kuvhanganya. Pulani isolation, selection, drying na storage zwo teaho kha crop iṅwe na iṅwe.\n\nU kovhekana a zwi ambi nga u tou kovhekana fhedzi uri diversity i ḓo engedzea kana quality i khwinifhale. Ṱolani identity na germination ni sa athu ḓitika nga shared seed. Before exchanging seed, ṱolani arali variety yo tsireledzwa na arali permission i tshi ṱoḓea.\n\nU kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.\n\nPhampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.\n\nU zwi shumisa roṱhe zwi phaḓaladza ndeme yazwo kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽi si kone u u ita ḽoṱhe.\n\nFarani produce nga vhulenda, ni vhulunge nga shade yo teaho, packaging na storage u swika delivery i tshi fhela.\n\nMutengi wa tsini a nga fhungudza lwendo, fhedzi losses na selling costs zwi kha ḓi tea u pimiwa.\n\nVhambedzani money received nga murahu ha fees, transport na spoilage kha option iṅwe na iṅwe. Ni songo humbula uri nearest buyer u dzula a tshi netshedza best return.\n\nVhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.\n\nṄwalani method, conditions na result uri vhaṅwe vha kone u vhona arali zwi tshi nga fanela their land.\n\nṰoḓani qualified advice nga ha unfamiliar disease kana technical problems. Shared experience na specialist help zwi nga shuma khathihi.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "All conditions retained after exact nearest buyer repair; nearby MAY in P7 remains distinct from NEAREST in P8.",
+      "paragraphChecks": [
+        {
+          "paragraph": 0,
+          "condition": "Neighbours CAN share different varieties and saving-seed work.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 1,
+          "condition": "Record crop, variety, source, collection date; suitable isolation, selection, drying, storage EACH crop.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 2,
+          "condition": "Sharing not automatically diversity/quality improvement; identity/germination BEFORE reliance; BEFORE EXCHANGE check protected variety AND permission.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 3,
+          "condition": "Existing tool-sharing paragraph preserved exactly.",
+          "verdict": "baseline-exact-preservation"
+        },
+        {
+          "paragraph": 4,
+          "condition": "Existing pump/mill household-budget paragraph preserved exactly.",
+          "verdict": "baseline-exact-preservation"
+        },
+        {
+          "paragraph": 5,
+          "condition": "Existing shared-use farm-work paragraph preserved exactly.",
+          "verdict": "baseline-exact-preservation"
+        },
+        {
+          "paragraph": 6,
+          "condition": "Gentle handling and suitable shade, packaging, storage THROUGH delivery.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 7,
+          "condition": "Nearby buyer MAY reduce journey; losses and selling costs STILL measured.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 8,
+          "condition": "Compare money AFTER fees, transport, spoilage EACH option; do NOT assume NEAREST buyer ALWAYS BEST return.",
+          "verdict": "semantic-pass-after-repair"
+        },
+        {
+          "paragraph": 9,
+          "condition": "Neighbours CAN demonstrate and compare own farm outcomes.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 10,
+          "condition": "Record method, conditions, result so others judge MAY suit THEIR land.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 11,
+          "condition": "Qualified advice for unfamiliar disease/technical problems; shared experience and specialist help CAN work together.",
+          "verdict": "semantic-pass"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "fieldPath": "body",
+      "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "reviewedTarget": "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.\n\nPimanisa market fees, transport, ku paka ni leswi nga xavisiwangiki, swin’we ni nxavo wo xavisa.\n\nKambisisa milawu ya makete ni swilaveko swa ndhawu swa ku xavisa ni swakudya. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe costs.\n\nKu xavisa hi ku kongoma swi nga retain more of the sale price, kambe swi tlhela swi teka nkarhi, packing, transport ni ku khathalela vaxavi.\n\nBox scheme yi nyika regular selection eka vaxavi lava pfumelelaneke.\n\nPfumelelanani hi box contents, nxavo, ku hakela ni leswi nga ta endleka loko crops ti kala. Tioda leti vuyeleriwaka ti pfuna ku pulana ntsena loko vaxavi ni varimi va kota ku hetisisa agreement.\n\nSungula hi leswi u nga kotaka ku swi nyika hi ku tshamiseka ni leswi vaxavi va swi lavaka.\n\nKambisisa costs ni swilaveko swa swakudya swa ndyangu u nga se tshembisa ku nyika regular boxes.\n\nVukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena does not predict income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke.\n\nLoko production yi cinca vhiki na vhiki, papalata ku tshembisa fixed delivery leyi u nga ta ka u nga swi koti ku yi nyika.\n\nNyika surplus leyi u nga na yona, kutani mi twanana hi clear terms ni vaxavi.\n\nHlamusela maendlelo ya wena ya ku byala hi ku vula xiviri. U nga si tirhisa label, kambisisa certification kumbe claim leyi muxavi a yi lavaka.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "All source paragraph conditions reviewed; see paragraph checks.",
+      "paragraphChecks": [
+        {
+          "paragraph": 0,
+          "condition": "Customer needs: product, quantity, quality, delivery, payment date.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 1,
+          "condition": "Compare fees, transport, packing, unsold produce AND selling price.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 2,
+          "condition": "Check market/local trading/food rules; informal does not automatically imply no costs or rules.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 3,
+          "condition": "CAN retain MORE of sale price, plus time, packing, transport, customer care.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 4,
+          "condition": "Regular box selection to agreed customers.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 5,
+          "condition": "Box CONTENTS, price, payment, crop SHORTAGE; regular orders help ONLY WHEN BOTH customers and growers CAN keep agreement.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 6,
+          "condition": "Start reliable supply plus customer wants.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 7,
+          "condition": "Costs and household food needs checked BEFORE regular-box promise.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 8,
+          "condition": "Garden area OR customer count ALONE does NOT predict INCOME; manageable arrangement and results recorded.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 9,
+          "condition": "Variable weekly production: avoid promise of fixed unsuppliable delivery.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 10,
+          "condition": "Offer actual surplus; agree clear customer terms.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 11,
+          "condition": "Describe practices honestly; check required certification/claim BEFORE label.",
+          "verdict": "semantic-pass"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "body",
+      "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "reviewedTarget": "Vaakelani va nga avelana different varieties ni mintirho yo hlayisa mbewu.\n\nTsala crop, variety, source ni siku ra ku hlengeleta. Pulana isolation, selection, drying ni storage leswi faneleke eka crop yin’wana ni yin’wana.\n\nKu avelana a swi vuli leswaku diversity yi ta engeteleka kumbe quality yi ta antswa hi yoxe. Kambisisa identity ni germination u nga si titshega hi shared seed. U nga si cincana mbewu, kambisisa loko variety yi sirheleriwile ni loko ku laveka permission.\n\nKu avelana switirhisiwa swo durha swi endla leswaku ntlawa wu swi kota ku swi tirhisa.\n\nPompo ya mati kumbe muchini wo sila mavele swi nga ha durha ngopfu leswaku ndyangu wun’we wu swi xava.\n\nKu tirhisa switirhisiwa swin’we swi endla leswaku ntlawa wu vuyeriwaka hi swona, naswona swi pfuna purasi rin’wana ni rin’wana ku endla mintirho leyi a ri nga ta yi kota ri ri roxe.\n\nKhoma produce hi vukheta, u hlayisa ndzhuti lowu faneleke, packaging ni storage ku fikela loko yi fikisiwa.\n\nMuxavi wa le kusuhi a nga ha hunguta riendzo, kambe losses ni selling costs swa ha fanele ku pimiwa.\n\nPimanisa mali leyi u yi amukelaka endzhaku ka fees, transport na spoilage eka option yin’wana ni yin’wana. U nga ehleketi leswaku nearest buyer u nyika best return minkarhi hinkwato.\n\nVaakelani va nga komba vuswikoti bya nkoka naswona va pimanisa leswi humeleleke emapurasi ya vona.\n\nTsala method, conditions ni result leswaku van’wana va kota ku kambela whether it may suit their land.\n\nLavani qualified advice hi unfamiliar disease kumbe technical problems. Shared experience ni specialist help swi nga tirha swin’we.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "All conditions retained after exact nearest buyer repair; nearby MAY in P7 remains distinct from NEAREST in P8.",
+      "paragraphChecks": [
+        {
+          "paragraph": 0,
+          "condition": "Neighbours CAN share different varieties and saving-seed work.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 1,
+          "condition": "Record crop, variety, source, collection date; suitable isolation, selection, drying, storage EACH crop.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 2,
+          "condition": "Sharing not automatically diversity/quality improvement; identity/germination BEFORE reliance; BEFORE EXCHANGE check protected variety AND permission.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 3,
+          "condition": "Existing tool-sharing paragraph preserved exactly.",
+          "verdict": "baseline-exact-preservation"
+        },
+        {
+          "paragraph": 4,
+          "condition": "Existing pump/mill household-budget paragraph preserved exactly.",
+          "verdict": "baseline-exact-preservation"
+        },
+        {
+          "paragraph": 5,
+          "condition": "Existing shared-use farm-work paragraph preserved exactly.",
+          "verdict": "baseline-exact-preservation"
+        },
+        {
+          "paragraph": 6,
+          "condition": "Gentle handling and suitable shade, packaging, storage THROUGH delivery.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 7,
+          "condition": "Nearby buyer MAY reduce journey; losses and selling costs STILL measured.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 8,
+          "condition": "Compare money AFTER fees, transport, spoilage EACH option; do NOT assume NEAREST buyer ALWAYS BEST return.",
+          "verdict": "semantic-pass-after-repair"
+        },
+        {
+          "paragraph": 9,
+          "condition": "Neighbours CAN demonstrate and compare own farm outcomes.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 10,
+          "condition": "Record method, conditions, result so others judge MAY suit THEIR land.",
+          "verdict": "semantic-pass"
+        },
+        {
+          "paragraph": 11,
+          "condition": "Qualified advice for unfamiliar disease/technical problems; shared experience and specialist help CAN work together.",
+          "verdict": "semantic-pass"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "fieldPath": "keyPoints.0",
+      "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "reviewedTarget": "Ngola seed identity, source le quality, mme o hlahlobe hore na permission e a hlokahala pele o arolelana.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Record identity/source/quality plus whether permission is needed before sharing."
+    },
+    {
+      "index": 7,
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.1.options.2",
+      "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
+      "reviewedTarget": "Bapisa tjhelete e amohetsweng ka mora fees, transport, dihlahiswa tse sa rekiswang le tahlehelo.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Compare money received after all four deductions: fees, transport, unsold produce, losses."
+    },
+    {
+      "index": 8,
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "keyPoints.0",
+      "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "reviewedTarget": "Ṅwalani seed identity, source na quality, nahone ni sedze arali permission i tshi ṱoḓea ni sa athu u kovhelana.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Record identity/source/quality plus whether permission is needed before sharing."
+    },
+    {
+      "index": 9,
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "keyPoints.2",
+      "sourceEnglish": "Measure losses and net returns for each selling route",
+      "reviewedTarget": "Pimani losses na net returns kha selling route iṅwe na iṅwe.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Measure losses and net returns for each selling route."
+    },
+    {
+      "index": 10,
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.0.q",
+      "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+      "reviewedTarget": "Vhahura vha ṱoḓa u kovhelana saved seed. Ndi mini tshi nga thusa uri seed yo kovhelanaho i shume zwavhuḓi?",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Neighbours want to share saved seed; asks what helps usefulness, without asserting automatic quality."
+    },
+    {
+      "index": 11,
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.0.options.2",
+      "sourceEnglish": "Assume sharing automatically improves every seed lot",
+      "reviewedTarget": "Humbulani uri u kovhelana hu khwinifhadza seed lot iṅwe na iṅwe nga u tou ita zwenezwo.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Incorrect option retains assume, automatic improvement, and every seed lot."
+    },
+    {
+      "index": 12,
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.1.options.2",
+      "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
+      "reviewedTarget": "Vhambedzani money received nga murahu ha fees, transport, unsold produce na losses.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Compare money received after fees, transport, unsold produce and losses."
+    },
+    {
+      "index": 13,
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.1.rationale",
+      "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "reviewedTarget": "Distance affects costs, but it is not the only factor. Shumisani actual returns na losses u vhambedza options.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Exact distance clause preserves costs and not-only-factor; actual returns and losses drive comparison."
+    },
+    {
+      "index": 14,
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "keyPoints.0",
+      "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "reviewedTarget": "Tsala seed identity, source ni quality, kutani u kambisisa loko permission yi laveka u nga si avelana.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Record identity/source/quality and check permission before sharing."
+    },
+    {
+      "index": 15,
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "keyPoints.2",
+      "sourceEnglish": "Measure losses and net returns for each selling route",
+      "reviewedTarget": "Pima losses ni net returns eka selling route yin’wana ni yin’wana.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Measure losses and net returns for each selling route."
+    },
+    {
+      "index": 16,
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "keyPoints.3",
+      "sourceEnglish": "Combine shared experience with qualified help when needed",
+      "reviewedTarget": "Hlanganisa shared experience ni qualified help loko swi laveka.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Combines shared experience and qualified help, conditional when needed."
+    },
+    {
+      "index": 17,
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.0.options.1",
+      "sourceEnglish": "Agree seed-quality checks and check whether permission is needed to share the variety",
+      "reviewedTarget": "Pfumelelana hi seed-quality checks ni ku kambisisa loko permission yi laveka ku avelana variety.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Correct option retains agreeing quality checks AND separately checking permission to share variety."
+    },
+    {
+      "index": 18,
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.1.options.2",
+      "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
+      "reviewedTarget": "Pimanisa mali leyi u yi amukelaka endzhaku ka fees, transport, unsold produce ni losses.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Compare money received after fees, transport, unsold produce and losses."
+    },
+    {
+      "index": 19,
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.1.options.3",
+      "sourceEnglish": "Assume joining a group removes all costs",
+      "reviewedTarget": "Ehleketa leswaku ku nghena eka group ku susa costs hinkwato.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Incorrect option retains joining group and removing ALL costs."
+    },
+    {
+      "index": 20,
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.1.rationale",
+      "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "reviewedTarget": "Ku leha ka riendzo ku khumba costs, kambe a hi xona ntsena lexi faneleke ku kambisiwa. Tirhisa actual returns ni losses ku pimanisa options.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Distance rendered as length of journey; costs, not sole factor, actual returns/losses remain."
+    },
+    {
+      "index": 21,
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "fieldPath": "quiz[0].options[0]",
+      "sourceEnglish": "A formal market stall needing consistent weekly supply",
+      "reviewedTarget": "Formal market stall e hlokang supply e tsitsitseng beke le beke.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Formal stall still needs consistent weekly supply."
+    },
+    {
+      "index": 22,
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "fieldPath": "quiz[0].options[0]",
+      "sourceEnglish": "A formal market stall needing consistent weekly supply",
+      "reviewedTarget": "Formal market stall ine ya ṱoḓa supply yo fulufhedzeaho ya vhege iṅwe na iṅwe.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Formal stall still needs reliable supply each week."
+    },
+    {
+      "index": 23,
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "fieldPath": "quiz[0].options[0]",
+      "sourceEnglish": "A formal market stall needing consistent weekly supply",
+      "reviewedTarget": "Formal market stall leyi lavaka supply leyi tshamisekeke vhiki ni vhiki.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Formal stall still needs consistent supply week after week."
+    },
+    {
+      "index": 24,
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[0].rationale",
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "reviewedTarget": "Boleng ba peo bo itshetlehile ka crop-specific isolation, selection, labelling, storage le germination checks. Ditshekatsheko tseo ha di netefatse permission ya ho fapanyetsana protected variety; hlahloba applicable rights pele o arolelana.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Crop-specific isolation/selection/labelling/storage/germination and dependence retained; checks do not establish permission to exchange protected variety; rights checked before sharing."
+    },
+    {
+      "index": 25,
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[0].rationale",
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "reviewedTarget": "Kwalithi ya mbeu i ḓitika nga crop-specific isolation, selection, labelling, storage na germination checks. Dzi check idzi a dzi sumbedzi permission to exchange a protected variety; ṱolani applicable rights ni sa athu u kovhelana.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Crop-specific quality dependency retained; exact protected-variety exchange permission anchor negated; applicable rights before sharing."
+    },
+    {
+      "index": 26,
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[0].rationale",
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "reviewedTarget": "Quality ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage ni germination checks. Ticheki teto a ti tiyisisi permission to exchange a protected variety; kambisisa applicable rights u nga si avelana.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Crop-specific quality dependency retained; exact protected-variety exchange permission anchor negated; applicable rights before sharing."
+    },
+    {
+      "index": 27,
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[0].question",
+      "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+      "reviewedTarget": "Vaakelani va lava ku avelana mbewu leyi va yi hlayiseke. I yini lexi nga endla leswaku mbewu leyi avelaniweke yi pfuna?",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Saved seed and shared-seed usefulness question retained."
+    },
+    {
+      "index": 28,
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[0].options[0]",
+      "sourceEnglish": "Mix all varieties without labels",
+      "reviewedTarget": "Hlanganisa all varieties without labels.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "After bounded repair, mix command and exact all varieties without labels retain absence of labels without imposing a writing requirement."
+    },
+    {
+      "index": 29,
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[0].options[3]",
+      "sourceEnglish": "Rely only on the size of the group",
+      "reviewedTarget": "Tshemba ntsena eka vukulu bya group.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Only reliance and group size retained."
+    },
+    {
+      "index": 30,
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[1].question",
+      "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+      "reviewedTarget": "Mulimi u khou vhambedza market i re kule na vharengi vha re tsini. Ndi mini ine ya tea u livhisa phetho?",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Distant market versus nearby customers; asks what guides decision."
+    },
+    {
+      "index": 31,
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[1].question",
+      "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+      "reviewedTarget": "Murimi u pimanisa makete wa le kule ni vaxavi va le kusuhi. Xana xiboho xi fanele ku kongomisiwa hi yini?",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Distant market versus nearby customers; asks what guides decision."
+    },
+    {
+      "index": 32,
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[1].options[0]",
+      "sourceEnglish": "Always choose the highest headline price",
+      "reviewedTarget": "Khetha kamehla headline price e phahameng ka ho fetisisa.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Always and highest headline price superlative retained."
+    },
+    {
+      "index": 33,
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[1].options[0]",
+      "sourceEnglish": "Always choose the highest headline price",
+      "reviewedTarget": "Khethani tshifhinga tshoṱhe headline price ya nṱhesa.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Always and highest headline price superlative retained."
+    },
+    {
+      "index": 34,
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[1].options[0]",
+      "sourceEnglish": "Always choose the highest headline price",
+      "reviewedTarget": "Nkarhi hinkwawu hlawula the highest headline price.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Always localized; exact highest headline price retained."
+    },
+    {
+      "index": 35,
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[1].options[1]",
+      "sourceEnglish": "Always choose the shortest journey",
+      "reviewedTarget": "Khetha kamehla tsela e kgutshwane ka ho fetisisa.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Always and shortest journey superlative retained."
+    },
+    {
+      "index": 36,
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[1].options[1]",
+      "sourceEnglish": "Always choose the shortest journey",
+      "reviewedTarget": "Nkarhi hinkwawu hlawula the shortest journey.",
+      "sourceAndActualBinding": "verified exact after four bounded repairs",
+      "verdict": "semantic-pass",
+      "reason": "Always localized; exact shortest journey retained."
+    }
+  ],
+  "materialIssuesResolved": {
+    "nearestBuyerSuperlative": "Exact nearest buyer anchor verified in all three actual L3 bodies and durable APPLIED.",
+    "tsWithoutLabelsDistractor": "Hlanganisa all varieties without labels. verified in actual registry and durable APPLIED."
+  },
+  "limits": "This is a semantic condition and exact binding review. It grants no fluent, spelling, pronunciation, or pedagogical approval; preserved legacy tool-sharing paragraphs are verified for exact preservation.",
+  "finalApplicationCountNote": "Final application has 36 changed fields and 5 unchanged reviewed tuples. The repaired TS distractor equals its prior target, so it is preserved rather than counted as changed. Independent review inspected all original 37 proposed slots and all 72 body paragraphs."
+}

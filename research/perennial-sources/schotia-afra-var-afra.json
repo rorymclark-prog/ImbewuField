@@ -1,0 +1,78 @@
+{
+  "speciesId": "schotia-afra-var-afra",
+  "commonName": "Karoo boer-bean",
+  "botanicalName": "Schotia afra var. afra",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [
+    {
+      "region": "Little Karoo and drier Cape botanical account — edible seed production reference",
+      "months": [
+        5,
+        6
+      ],
+      "evidence": {
+        "quote": "Seeds are produced in May and June of each year.",
+        "url": "https://pza.sanbi.org/schotia-afra-var-afra",
+        "doc": "SANBI PlantZAfrica, schotia-afra-var-afra",
+        "page": null
+      },
+      "notes": "Source states that both green and mature seeds are edible. This is a botanical seed-production reference, not a guaranteed household picking schedule."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "edible seeds",
+  "supplementaryReferences": [
+    {
+      "title": "Edible part and local use",
+      "quote": "The seeds are edible either green or mature.",
+      "url": "https://pza.sanbi.org/schotia-afra-var-afra",
+      "doc": "SANBI PlantZAfrica, schotia-afra-var-afra",
+      "page": null,
+      "note": "Edibility is recorded for this exact variety; do not apply the common name boer-bean to every species as food evidence."
+    }
+  ],
+  "productionGuidance": {
+    "products": "edible seeds",
+    "care": [
+      "Its natural setting includes dry stream banks in the Little Karoo and drier Eastern and southern Western Cape.",
+      "The pods disperse seeds when dry. Record your local seed collection and use; this is not a measured food yield."
+    ],
+    "purchase": [
+      "Ask for Schotia afra var. afra, with botanical identity confirmed. The source's five-year shade claim is not a first-food age."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/schotia-afra-var-afra",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    }
+  ],
+  "gaps": [
+    "No measured food kg or bearing age; germination and shade age are different."
+  ]
+}

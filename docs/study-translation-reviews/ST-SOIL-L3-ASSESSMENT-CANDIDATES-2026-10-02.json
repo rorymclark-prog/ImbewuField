@@ -1,0 +1,62 @@
+{
+  "lessonId": "soil-health-l3",
+  "language": "st",
+  "languageName": "Sesotho",
+  "sourceMainSha": "3b1c519ce01f80426ac0efcf0dab25b0236e040d",
+  "status": "unwired-machine-candidate; requires independent semantic backcheck",
+  "scopeNote": "Read-only candidate for only the remaining exact-English holds in the current Sesotho key point and quizzes. Canonical source and registry identity/status/source strings were programmatically checked. Already translated questions, options, rationales and key points are not duplicated or changed.",
+  "fields": [
+    {
+      "field": "keyPoints[3]",
+      "sourceEnglish": "Worm-bin leachate is not automatically safe fertiliser; keep it off edible plants",
+      "currentDraft": "Worm-bin leachate is not automatically safe fertiliser; keep it off edible plants",
+      "reviewStatus": "hold",
+      "sesothoDraft": "Leachate ya worm bin ha ya lokela ho nkwa e le fertiliser e bolokehileng ka bohona; do not use it on edible plants.",
+      "literalBacktranslation": "Worm-bin leachate should not automatically be considered a safe fertiliser; do not use it on edible plants.",
+      "uncertainty": "Retains “not automatically safe” rather than claiming the liquid is always unsafe; keeps leachate, worm bin, fertiliser and edible plants explicit. Independent review should check that “keep it off” reads as a clear use prohibition."
+    },
+    {
+      "field": "quiz[0].options[2]",
+      "sourceEnglish": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
+      "currentDraft": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
+      "reviewStatus": "hold",
+      "sesothoDraft": "Wind erosion ya topsoil e ommeng le tahlehelo ya soil structure ka lebaka la tshusumetso ya spring storm.",
+      "literalBacktranslation": "Wind erosion of dry topsoil and loss of soil structure because of spring storm impact.",
+      "uncertainty": "Keeps technical wind erosion, topsoil, soil structure and spring storm terms explicit. This remains the correct option at index 2; do not change order or correct index."
+    },
+    {
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away.",
+      "currentDraft": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away.",
+      "reviewStatus": "hold",
+      "sesothoDraft": "Mobu o sa kwahelwang o pepesetswa moya wa mariha, o ka nkang topsoil e ommeng wa tsamaya nayo. Tshusumetso ya marothodi a pula e ka senya bokahodimo; moo metsi a phallang hodima tshimo, a ka nka mobu o hlephileng a o tlosa.",
+      "literalBacktranslation": "Uncovered soil is exposed to winter wind, which can carry dry topsoil away. Raindrop impact can damage the surface; where water flows over the field, it can carry loose soil away.",
+      "uncertainty": "Preserves both “can” statements and the conditional “where water runs over the field”; does not generalize runoff to the whole field."
+    },
+    {
+      "field": "quiz[1].rationale",
+      "sourceEnglish": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.",
+      "currentDraft": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.",
+      "reviewStatus": "hold",
+      "sesothoDraft": "Leachate ke liquid that drains naturally from a worm bin. Composition ya yona e a fapana, kahoo ha ya lokela ho hlahiswa jwalo ka feed e bolokehileng ka tiisetso bakeng sa edible crops.",
+      "literalBacktranslation": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it should not be presented as feed guaranteed safe for edible crops.",
+      "uncertainty": "Retains natural drainage, variable composition and prohibition on presenting it as guaranteed-safe feed for edible crops. Keeps leachate/feed/edible crops technical terms in English."
+    }
+  ],
+  "assessmentPreservation": {
+    "quiz0SourceCorrectIndex": 2,
+    "quiz0OptionOrderPreserved": true,
+    "quiz1SourceCorrectIndex": 1,
+    "quiz1QuestionAndOptionsAlreadyTranslated": true,
+    "noQuestionOrOptionOrderChanges": true
+  },
+  "semanticChecks": [
+    "Leachate keypoint keeps the non-automatic safety claim and edible-plant exclusion.",
+    "Quiz 0 option remains the correct option at index 2; correct index remains 2.",
+    "Quiz 0 rationale preserves winter wind carrying dry topsoil, raindrop damage, and the conditional where water runs over the field carrying loosened soil.",
+    "Quiz 1 rationale preserves natural drainage, variable composition, and no claim that the liquid is guaranteed safe feed for edible crops.",
+    "No species, dates, ratios or safety conditions were added."
+  ],
+  "uncertaintySummary": "Unreviewed Sesotho machine candidates, not fluent approval. Worm-bin leachate and feed/safety terms remain English where precision is uncertain. Independently review whether the edible-plant exclusion reads as a clear prohibition.",
+  "independentBackcheck": "Accepted after root repairs: explicit do not use on edible plants; exact English drains naturally retained; correct-option metadata repaired. No fluent/local farming approval."
+}

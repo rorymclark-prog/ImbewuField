@@ -1,182 +1,136 @@
 # U pulana bulasi kana mudi waṋu
 
-Permaculture ndi nḓila ya u pulana. Ni nga lima zwiḽiwa hunzhi-hunzhi, fhedzi pulane yavhuḓi i ni vhulungela tshifhinga, tshelede na maanḓa. I ni ṋea bulasi ine ya bveledza malaṱwa maṱuku nahone mavu ayo a dzula a tshi nona ṅwaha muṅwe na muṅwe.
+Ni nga lima zwiḽiwa hu ḓo nga fhethu hoṱhe. Fhedzi ngade i re fhethu ho khakheaho i ni ḓurela ḓuvha ḽiṅwe na ḽiṅwe: u tshimbila zwinzhi u ya kha pompi, u hwala mabakede manzhi u gonya thavha, mavu a tshi khukhulwa nga ḓumbu ḽiṅwe na ḽiṅwe. Pulane yavhuḓi i vhulunga tshifhinga, tshelede na maanḓa, nahone bulasi i a nona ṅwaha muṅwe na muṅwe.
 
-Pulane yavhuḓi i ita zwithu zwivhili:
+Permaculture ndi nḓila ya u pulana. I bvisa maanḓa oṱhe a mavu nahone i swikela ṱhoḓea dza zwimela, zwipuka, maḓi, zwifhaṱo na vhathu nga tshifhinga tshithihi. Vhalimi vhaṱuku vho pfumaho a si kanzhi vhe vha vha na mavu manzhi.
 
-- I bvisa zwoṱhe zwine mavu a nga kona u zwi ṋea.
-- I fusha ṱhoḓea nnzhi nga hune zwa konadzea ngaho kha tshipiḓa tshiṅwe na tshiṅwe tsha sisiteme: zwimela, zwipuka, maḓi, zwifhaṱo na vhathu.
+**Musi ni tshi fhedza ino ndima ni ḓo kona u:**
 
-Ndima ino i amba nga ha zwiṱepe zwiraru zwa u pulana: tsedzuluso ya fhethu, u pulana nga **zone** (tshipiḓa tsha bulasi tsho pulanwaho u ya nga uri ni tshi tshi dalela lungana), na u pulana u ya nga u sendama ha mavu (slope). Tshiṱepe tsha vhuṋa, u pulana nga **sector** (maanḓa a ḓaho kha mavu aṋu a tshi bva nnḓa, sa ḓuvha, muya na mulilo), tshi kha ndima i tevhelaho.
+- Ola mmapa wa fhethu (base map) wa mavu aṋu na u swaya zwine zwa vha hone kale
+- Vhala fhethu haṋu ni tshi sedza maḓi, u sendama, thungo ine ha lavhelesa khayo na nḓila dza u swika
+- Kovha mavu aṋu nga dzi-zone, uri zwine na zwi dalela ḓuvha ḽiṅwe na ḽiṅwe zwi vhe tsini na hayani
+- Shumisa u sendama ha mavu uri maanḓa a u kokodzelwa fhasi a ni hwalele maḓi, compost na manyaga
 
-## Tshiṱepe 1: Tsedzuluso ya fhethu
+U pulana nga sector, lwendo lwa vhuṋa, zwi tevhela kha ndima i tevhelaho.
 
-### Kuvhanganyani mafhungo
+## Lwendo lwa 1: Tsedzuluso ya fhethu
 
-Musi ni sa athu shandukisa tshithu, ṱoḓani u ḓivha zwinzhi nga hune na nga kona ngaho nga ha mavu aṋu:
+Vhukhakhi kha bammbiri a vhu ḓuri tshithu u vhu lugisa. Vhukhakhi kha mavu vhu ḓura mushumo muhulu. Ngauralo gudani mavu phanḓa ha u a shandukisa.
 
-- **Ḓivhazwakale:** mavu o vha a tshi shumiswa hani kale, na uri ho vha hu tshi mela mini.
-- **Mutsho (climate):** mvula, tshando (frost), mufhiso na muya.
-- **Zwiko zwi re fhethu hafho kana tsini:** maḓi, mavu, manyaga, **mulch** (tshifukedzi tsha mahatsi o omaho kana maṱari), zwishumiswa zwa u fhaṱa na vhathu vha nga thusaho.
-- **Makete:** hune na nga rengisa zwine na zwi lima.
+### Kuvhanganyani mafhungo nahone ni sedze
 
-### Sedzani mavu
+Wanani uri mavu o vha a tshi shumiswa hani kale; mvula yao, tshando (frost), mufhiso na muya; zwine zwa vha hone kha ao kana tsini (maḓi, manyaga, mulch, zwishumiswa zwa u fhaṱa, vhathusi); na hune na nga rengisa hone zwine na zwi lima.
 
-Tshimbilani mavuni aṋu kanzhi, ni na muhumbulo wo vulea. Ni songo dzhia phetho nga u ṱavhanya. Sedzani:
+Nga murahu tshimbilani mavu kanzhi, no vula muhumbulo, ni songo dzhia tsheo nga u ṱavhanya. Ṱoḓani:
 
-- hune maḓi a mvula a elela hone nga murahu ha maḓumbu, na hune a kuvhangana hone,
-- nḓila ine miri ya kotama ngayo kana ya vhumbiwa ngayo nga muya,
-- zwipuka zwine zwa fhira mavuni aṋu,
-- fhethu hune ha pfala hu tshi dudela, hu tshi rotha, hu na maḓi kana ho oma.
+- hune maḓi a mvula a elela hone nga murahu ha ḓumbu, na hune a kuvhangana hone
+- nḓila ine miri ya sendama ngayo kana ya vhumbiwa ngayo nga muya
+- zwipuka zwine zwa pfuka mavu
+- fhethu hune ha pfala ho dudela, ho rothola, ho nowa kana ho oma.
 
-U sedza a hu fheli. Khalaṅwaha iṅwe na iṅwe na ḓumbu ḽiṅwe na ḽiṅwe zwi ni funza tshithu tshiswa. Musi ni tshi sedza lwa tshifhinga tshilapfu, phetho dzaṋu dzi ḓo vha khwine.
+Khalaṅwaha iṅwe na iṅwe na ḓumbu ḽiṅwe na ḽiṅwe zwi ni funza tshithu tshiswa.
 
 ### Olani mmapa wa fhethu
 
-Mmebe wa fhethu (base map) ndi tshifanyiso tsha fhethu haṋu hoṱhe hu tshi vhonala u bva nṱha. Sumbedzani:
+**Mmapa wa fhethu** (base map) ndi tshifanyiso tsha tshiṱentsi tshaṋu tshi tshi vhonala u bva nṱha. Sumbedzani:
 
-- mikano na lufhenḓe,
-- badi, nḓila na khoro,
-- nnḓu, dzisheḓe, maḓanga na zwiṅwe zwifhaṱo,
-- uri tshipiḓa tshiṅwe na tshiṅwe tshi shumiswa hani zwino, sa tsumbo tsimu, ḓaka ḽa mupo (veld) kana ngade,
-- maḓi: zwisima, milambo, dzithanngi, pombi na fhethu hu re na maḓi,
-- miri mihulwane na fhethu ha matombo,
-- **dzi-contour** (mitalo ya vhuimo vhuthihi) arali ni nayo. Contour i ṱumanya fhethu hoṱhe hu re kha vhulapfu vhu fanaho.
+- mikano, mafhenḓe, bada, nḓila na khoro
+- nnḓu, sheḓe, madanga na zwiṅwe zwifhaṱo
+- nḓila ine tshipiḓa tshiṅwe na tshiṅwe tsha shumiswa ngayo zwino: tsimu, ḓaka ḽa mupo kana ngade
+- maḓi: zwisima zwa mupo, milambo, zwisima zwa u bowa (boreholes), dzithanngi, pompi na fhethu ho nowaho
+- miri mihulwane na fhethu ha matombo
+- mitalo ya **contour** (mutalo u ṱumanyaho zwiṱhavhi zwi re kha vhuimo vhuthihi) arali ni nayo.
 
-Hune na nga wana mmapa hone:
-
-- Masipala waṋu a nga vha na mmapa wa fhethu haṋu.
-- Ni nga gandisa tshifanyiso tsha sathelaithi tsha mahala (sa tsumbo u bva kha Google Earth) na tou tshi tevhekanya.
-- Mimebe ya muvhuso ya muvhumbeleo wa mavu (topographic maps) ya tshikalo tsha 1:50 000 i sumbedza dzi-contour kha Afrika Tshipembe yoṱhe.
-- Kha tshitentsi tshiṱuku, ni nga ela nga theiphi ya u ela na ḓiolela mmapa waṋu.
-
-Olani mmapa waṋu nga tshikalo. Sa tsumbo, 1 cm kha bammbiri i nga imela 1 m mavuni. Rula ya tshikalo (scale ruler) i ni thusa u ela na u pulana nga vhuḓalo.
+Olani nga u tevhela tshifanyiso tsha satellite tsha mahala (tsumbo, tshi bvaho kha Google Earth), kana, kha tshiṱentsi tshiṱuku, elani nga theiphi ni ole mmapa waṋu. Mimapa ya topographic ya muvhuso ya 1:50 000 i katela Afrika Tshipembe yoṱhe, i na dzi-contour dzo fhambanaho nga 20 m: i sumbedza tshivhumbeo tshihulwane tsha mavu, hu si milindi miṱuku. Olani nga tshikalo, tsumbo, 1 cm kha bammbiri kha 1 m kha mavu.
 
 ## Zwine na fanela u zwi sedza fhethu haṋu
 
 ### Maḓi
 
-Maḓi ndi tshithu tsha ndeme vhukuma tshine na fanela u tshi pulanela. Ndima ya 7 i amba nga hazwo nga vhuḓalo.
+Maḓi ndi tshithu tsha u thoma tsha u pulanela (ndima ya 7 i zwi ṱalutshedza nga vhuḓalo).
 
-1. Ṱoḓani zwivhalo zwa mvula ya vhupo haṋu. Vhunzhi ha Afrika Tshipembe vhu wana mvula nga tshilimo. Kapa Vhukovhela (Western Cape) i wana mvula nnzhi nga vhuria.
-2. Sedzani **catchment** (fhethu hune maḓi a mvula a kuvhangana hone). Heneho ndi mavu a re nṱha ha aṋu ane maḓi aḽo a elela a tshi ḓa mavuni aṋu.
-3. Sedzani **runoff** (maḓi a elelaho nṱha ha mavu): maḓi ane a elela nṱha ha mavu nga murahu ha mvula. Sedzani na zwiga zwa maḓi o no elela kale, sa migero mihulwane yo siwaho nga maḓi (gullies), fhethu hu si na zwimela na mavu o kukulwaho. Runoff i hwala mavu na zwiḽiwa zwa zwimela zwe na zwi engedza mavuni.
-4. Ṅwalani vhuvhulungelo ha maḓi he na vha naho zwino, na fhethu hune na nga engedza dzithanngi, zwidziva kana madamu.
-5. Ṅwalani zwiko zwaṋu zwa maḓi zwa u thusa: tshisima tsha u bowiwa (borehole), mulambo, tshisima tsha mupo kana pombi ya masipala.
-6. Swayani fhethu ho omaho vhukuma na fhethu hu re na maḓi manzhi vhukuma kha mmapa waṋu.
-7. Humbulani uri ni ḓo sheledza hani zwimela zwiṱuku zwiswa ni sa shumi nga maanḓa, na uri ni nga shumisa hani maḓi maṱuku.
+1. Wanani mvula ya vhupo haṋu. Vhunzhi ha Afrika Tshipembe vhu wana mvula nga tshilimo; Kapa Vhukovhela (Western Cape) i i wana nga vhuria.
+2. Sedzani **catchment** (mavu a re nṱha ha aṋu ane a elelisa maḓi kha mavu aṋu).
+3. Ṱoḓani **runoff** (maḓi a mvula a elelaho nṱha ha mavu nṱhani ha u dzhena), na zwiga zwayo zwa kale: mikoloṱo, fhethu hu si na zwimela na mavu o khukhulwaho. Runoff i khukhula mavu na zwiḽiwa zwa zwimela zwe na zwi engedza.
+4. Swayani fhethu hune na vhulunga maḓi hone zwino, fhethu hune dzithanngi, zwidziva kana madamu a nga vha hone, na zwiko zwaṋu zwa thikhedzo: tshisima tsha u bowa, mulambo, tshisima tsha mupo kana pompi.
+5. Swayani fhethu ho omesaho na ho nowesaho, ni pulane nḓila ya u sheledza zwimela zwiṱuku nga maanḓa maṱuku.
 
 ### Muvhumbeleo wa mavu na u sendama
 
-Fhethu havhuḓi ndi hune mavu a sendama zwiṱuku, maḓi a elela zwavhuḓi, nahone ho lavhelesa ḓuvha. Mavu o sendamaho vhukuma a konḓa u limiwa nahone a khukhulwa nga u ṱavhanya.
+Fhethu havhuḓi ndi fhethu ho sendamaho zwiṱuku, hune maḓi a bva zwavhuḓi, ho lavhelesaho ḓuvha. Mavu o sendamesaho a konḓa u shumiwa nahone a tambula nga **erosion** (mavu a tshi khukhulwa nga maḓi).
 
-U sendama ha mavu kanzhi hu ṋewa nga phesenthe (%). Hu ni vhudza uri mavu a tsa mitha nngana kha 100 m. Sa tsumbo, arali mavu a tsa 1 m kha 10 m, u sendama ndi 10%.
+U sendama kanzhi hu ṋewa sa phesenthe: u tsa kha 100 m. U tsa ha 1 m kha 10 m ndi u sendama ha 10%.
 
 | U sendama | U tsa | Khona | Zwine zwa amba |
 |---|---|---|---|
-| 5% | 1 m kha 20 m | tsini na 3° | Zwo leluwa kha ngade na masimu |
-| 12% | 1 m kha 8 m nga u ṱalela | tsini na 7° | Tsireledzani mavu nga ndima dzo tevhelaho contour, mitalo ya hatsi kana zwiṱepisi zwa mavu (terraces) |
-| 20% | 1 m kha 5 m | tsini na 11° | Mulayo wa Afrika Tshipembe u ṱoḓa thendelo yo ṅwalwaho u itela u lima |
-| 32% | 1 m kha 3 m nga u ṱalela | tsini na 18° | Siani hu na miri kana hatsi tshoṱhe |
+| 5% | 1 m kha 20 m | hu ḓo nga 3° | Zwi a leluwa kha ngade na tsimu |
+| 12% | 1 m kha hu ḓo nga 8 m | hu ḓo nga 7° | Tsireledzani mavu nga ndima dza contour, mitalo ya mahatsi kana zwiṱepisi |
+| 32% | 1 m kha hu ḓo nga 3 m | hu ḓo nga 18° | Dzulani ho ṱavhiwa miri kana mahatsi tshoṱhe |
 
-> **Ḓivhani:** Nga fhasi ha Conservation of Agricultural Resources Act (43 of 1983) (mulayo wa u tsireledza zwiko zwa vhulimi), ni ṱoḓa thendelo yo ṅwalwaho i bvaho kha Muhasho wa Vhulimi phanḓa ha u lima mavu o sendamaho u fhira 20%. Kha zwiṅwe zwipiḓa zwine mavu a khukhulwa nga u ṱavhanya zwo ṅwalwaho kha milawana, mukano ndi 12%. Vhudzisani mueletshedzi wa zwa vhulimi.
+Bill Mollison, muṅwe wa vhathomi vha permaculture, o eletshedza uri fhethu ho sendamaho u fhira khona dza 18 hu dzule hu na miri ya tshoṱhe. Humbulani izwi musi ni tshi nanga mavu a u renga kana a u hira.
 
-Arali mavu aṋu o sendama vhukuma, pulanani zwiṱepisi zwa mavu kana ndima dzo tevhelaho contour. Bill Mollison, muṅwe wa vho thomaho permaculture, o eletshedza uri mavu o sendamaho u fhira khona dza 18 (tsini na 32%) a fanela u dzula o fukedzwa nga miri tshoṱhe u tsireledza mavu. Humbulani zwenezwi musi ni tshi khetha mavu a u renga kana a u hira.
+### Thungo ine ha lavhelesa khayo
 
-Arali ni tshi nga wana mmapa wa muvhumbeleo wa mavu, tevhekanyani dzi-contour dzawo kha mmapa waṋu wa fhethu. Dzi ni thusa u dzhia phetho ya uri tshipiḓa tshiṅwe na tshiṅwe tsha mavu na vhuvhulungelo ha maḓi hoṱhe zwi fanela u ya ngafhi.
+**Thungo ine fhethu ha lavhelesa khayo** (aspect) ndi thungo ine fhethu ho sendamaho kana tshifhaṱo tsha lavhelesa khayo. Kha Afrika Tshipembe ḓuvha ḽi devhula, ngauralo:
 
-### Thungo ine fhethu ha lavhelesa khayo
+- **Fhethu ho sendamaho ho lavhelesaho devhula na vhubvaḓuvha** hu wana ḓuvha ḽinzhi nahone hu dudela nga u ṱavhanya. Ndi havhuḓi kha vhunzhi ha zwiliṅwa.
+- **Fhethu ho sendamaho ho lavhelesaho vhukovhela** hu wana ḓuvha ḽi fhisaho ḽa masiari, ḽine ḽa nga swa zwimela nga tshilimo.
+- **Fhethu ho sendamaho ho lavhelesaho tshipembe** hu a rothola nahone hu na murunzi nga vhuria. Hu tea miri, nahone kha fhethu ho omaho hu dzula ho nowa tshifhinga tshilapfu.
 
-Thungo ine fhethu ha lavhelesa khayo (aspect) ndi thungo ine u sendama ha mavu kana tshifhaṱo zwa lavhelesa khayo. Kha Tshipembe tsha Ḽifhasi (Southern Hemisphere) ḓuvha ḽi kha tshipiḓa tsha devhula tsha ṱaḓulu, ngauralo:
+A hu na mushumo u nga shandukisaho hune ḓuvha ḽa bva hone. Sedzani hune miri na zwifhaṱo zwa posa mirunzi hone; mirunzi ya vhuria i lapfa vhukuma (ndima ya 3).
 
-- **U sendama ho lavhelesaho devhula na vhubvaḓuvha** ndi hone havhuḓi kha zwiliṅwa zwinzhi. Hu wana ḓuvha ḽinzhi nahone hu a dudela nga u ṱavhanya nga matsheloni.
-- **U sendama ho lavhelesaho vhukovhela** hu wana ḓuvha ḽi fhisaho ḽa masiari. Ḽi nga swa zwimela nga tshilimo.
-- **U sendama ho lavhelesaho tshipembe** hu a rotha nahone hu na murunzi munzhi, zwihuluhulu nga vhuria musi mirunzi i tshi lapfa. Hu tea miri. Fhethu ho omaho hu dovha ha dzula hu na mutshelo lwa tshifhinga tshilapfu.
+### Nḓila dza u swika
 
-A hu na mushumo une wa nga shandukisa hune ḓuvha ḽa bvela hone, ngauralo pulanani zwavhuḓi. Sedzani hune miri na zwifhaṱo zwi re tsini zwa posa hone mirunzi yazwo. Nga vhuria, mirunzi i lapfa vhukuma u fhira nga tshilimo. Ndima ya 3 i ṱalutshedza u tsa ha ḓuvha (sun angles).
+Bada na nḓila zwi dzula hu ḓo nga tshoṱhe. Itani dziswa u tshimbila na contour. Nḓila i re kha contour i nga vha ṱhanga ya **swale** (mugero wo gwiwaho u tshimbila na contour u fara maḓi a mvula, ndima ya 7). Ṋeani nḓila iṅwe na iṅwe u sendama hu si hunzhi vhukuma, uri mvula i elele i ye kha swale kana beseni ḽa muri nṱhani ha u elela i tshi tsa nga nḓila.
 
-### U swikelela
+## Lwendo lwa 2: U pulana nga dzi-zone
 
-Badi na nḓila zwi dzula tshoṱhe. Musi zwo no fhaṱwa, zwi konḓa u pfukiswa. Swayani badi na nḓila dzoṱhe dzi re hone kha mmapa waṋu wa fhethu.
+Kule hune na tshimbila hone ndi hone hu tshi tiba zwine na zwi ṱhogomela. Ngade i re magumoni i a hangwiwa; ngade i re tsini na vothi ḽa khishini i a sheledzwa. U pulana nga dzi-zone zwi kovha bulasi nga **dzi-zone** (zwipiḓa zwa bulasi zwo kovhiwaho nga u ya nga uri ni zwi dalela lunzhi hani): zwithu zwa ḓuvha ḽiṅwe na ḽiṅwe tsini na nnḓu, zwi dalelwaho lu si gathi kule.
 
-Musi ni tshi pulana nḓila kana badi ntswa, dzi itani dzi tshi tevhela contour. Nḓila i tevhelaho contour i nga vha ṱhanga ya **swale** (mugero wa u fara maḓi a mvula). Swale ndi mugero wo gwiwaho u tshi tevhela contour u itela u fara maḓi a mvula (sedzani ndima ya 7). Hezwi zwi kuvhanganya maḓi, zwi fhungudza runoff nahone zwi thusa u thivhela **erosion** (u khukhulwa ha mavu nga maḓi kana muya). Ṋeani nḓila iṅwe na iṅwe u tsa hu si hunzhi uri mvula i elele i tshi ya kha swale kana kha mukwita wa muri, i si elele i tshi tevhela nḓila.
-
-## Tshiṱepe 2: U pulana nga zone
-
-U pulana nga zone — tshipiḓa tsha bulasi tshine na tshi dalela lunzhi kana lwa si gathi — zwi vhea tshipiḓa tshiṅwe na tshiṅwe tsha bulasi u ya nga uri ni tshi dalela lungana. Zwithu zwine na zwi dalela ḓuvha ḽiṅwe na ḽiṅwe zwi ya tsini na nnḓu. Zwithu zwine na zwi dalela lwa si gathi zwi ya kule. Hezwi zwi vhulunga u tshimbila, tshifhinga na maanḓa.
-
-| Zone | Ndi mini | Ni i dalela lungana | Tsumbo |
+| Zone | Ndi mini | Ni i dalela lunzhi hani | Tsumbo |
 |---|---|---|---|
-| 0 | Nnḓu | Tshifhinga tshoṱhe | Khishi, vhuvhulungelo ha mbeu, dzithanngi dza maḓi a mvula kha nnḓu |
-| 1 | Tsini-tsini na nnḓu | Ḓuvha ḽiṅwe na ḽiṅwe, kanzhi lunzhi | Ngade ya tsini ha nnḓu (kitchen garden), mihaṱa, nasari, **compost** (zwithu zwo vholaho zwi nontshisaho mavu), zwipuka zwiṱuku, zwidziva zwiṱuku |
-| 2 | Tsini na nnḓu | Maḓuvha manzhi | **Food forest** (ḓaka ḽa zwiḽiwa) yo ṱanganyiswaho, miri ya mitshelo, ngade ya miroho khulwane, khuhu, zwiliṅwa zwa ndeme |
-| 3 | Tshipiḓa tshihulwane tsha u lima | Luthihi nga vhege, kana musi zwi tshi ṱoḓea | Zwiliṅwa zwa tsimu na zwa u rengisa, ngade ya miri ya mitshelo khulwane, madambaya, zwidziva zwa khovhe, madamu |
-| 4 | Hu re tsini na mupo, hu ṱhogomelwaho zwiṱuku | Nga zwiṅwe zwifhinga | Ḓaka ḽa miri ya khuni, mitanda na mapulanga, madambaya, madamu mahulwane |
-| 5 | Mupo | Lwa si gathi, u sedza na u guda | Ḓaka ḽa mupo, zwiṱaka kana ḓaka ḽo siwaho zwipuka zwa ḓaka |
+| 0 | Nnḓu | Tshifhinga tshoṱhe | Khishi, vhuvhulungelo ha mbeu, dzithanngi dza nnḓu |
+| 1 | Tsini-tsini na nnḓu | Ḓuvha ḽiṅwe na ḽiṅwe, kanzhi lunzhi | Ngade ya tsini ha nnḓu, mihaṱa, nasari, compost, zwifuwo zwiṱuku |
+| 2 | Tsini na nnḓu | Maḓuvha manzhi | Food forest, miri ya mitshelo, khuhu, zwiliṅwa zwa ndeme |
+| 3 | Fhethu ha u lima hohulwane | Vhege iṅwe na iṅwe, kana musi zwi tshi ṱoḓea | Zwiliṅwa zwa tsimu na zwa makete, ngade ya miri ya mitshelo, madambaya, madamu |
+| 4 | Ho vhaho ḓaka nga tshipiḓa, ho langiwaho zwiṱuku | Lwa zwiṅwe zwifhinga | Ḓaka ḽa khuni, u fulisa |
+| 5 | Ḓaka | Lu si gathi, u sedza na u guda | Ḓaka ḽa mupo kana ḓaka |
 
-### Zone 1
+**Zone 1** i ṋea khaṋo khulwane u bva kha fhethu huṱuku. Vhewani henefho miroho ya **annual** (zwimela zwi tshilaho khalaṅwaha nthihi) na muroho une na u ka kanzhi, mihaṱa ya khishini, miri miṱuku ya mitshelo, zwifuwo zwiṱuku zwi ngaho zwiṋoni zwa quail na mbuvhi, na vhuvhulungelo huṱuku ha maḓi. Fukedzani thanngi iṅwe na iṅwe na tshisima tshiṅwe na tshiṅwe, ni pfalele kana ni fukedze zwidziva, uri hu si vhe na ṅwana ane a nga wela khazwo.
 
-Zone 1 ndi zone ine ya vha na mushumo munzhi. I ṋea khaṋo khulwane u bva kha fhethu huṱuku. Ni i ṱhogomela nga vhuronwane, ni fhedza tshifhinga tshinzhi khayo nahone ni kaṋa khayo kanzhi. I na zwimela na zwipuka zwo fhambanaho vhukuma.
+**Zone 2** i a fhira nga vhuhulu nahone i ṱoḓa mushumo muṱuku. **Food forest** yayo (ngade yo ṱavhiwaho nga miṱaṱo sa ḓaka ḽa mupo) i nga katela miri ya **coppicing** (u rema muri tsini na mavu uri u ṱumbule matanda maswa). Kha khuni na matanda, ṱavhani muunga (*Vachellia karroo*), muri wa **indigenous** (sialala, u melaho hone nga mupo), hu si wattle kana gum (mukalipitasi), zwine zwa phaḓalala ya dzhena ḓakani na milamboni.
 
-- **Annual** (miroho ine ya tshila ṅwaha muthihi) na muroho une na u ka kanzhi.
-- Mihaṱa na mishonga ine na i shumisa ḓuvha ḽiṅwe na ḽiṅwe khishini.
-- Miri ya mitshelo miṱuku kana i sa aluwi ya lapfa.
-- Zwipuka zwiṱuku sa khwaili (quail), gini-phigi (guinea pigs) na mbuvhi.
-- Vhuvhulungelo ha maḓi huṱuku: dzithanngi dza maḓi a mvula na zwidziva zwiṱuku.
+**Zone 3** i na zwifuwo, zwiliṅwa zwa tsimu na madamu a bulasi. **Zone 4** i ṋea u fulisa, khuni na mapulanga. **Zone 5** ndi mavu a mupo o siiwaho e ḓaka, vhudzulo ha zwiṋoni na zwikukumi zwine zwa thusa u langa zwikukumi zwi tshinyadzaho. I daleleni u sedza, u guda na u kuvhanganya zwiḽiwa zwa ḓaka nga vhuronwane.
 
-> **Tsireledzo:** Ṅwana muṱuku a nga nwela kha maḓi a senthimitha dzi si nngana. Fukedzani thanngi iṅwe na iṅwe na tshisima tshiṅwe na tshiṅwe, nahone ni kombe kana ni fukedze zwidziva.
+A si fhethu hoṱhe hu re na tshikhala tsha dzi-zone dzoṱhe. Tshiṱentsi tsha ḓoroboni tsha hu ḓo nga 1 000 dzimitha dza tshikwea (tshipiḓa tshiṋa tsha eka) tshi na tshikhala tsha Zone 1 na zwipiḓa zwa dziṅwe; khona yo siiwaho zwiṋoni na zwikukumi ndi Zone 5 ṱhukhu. Kha mavu a tshitshavha, Zone 4 na 5 dzi nga vha madambaya a u kovhelana kana ḓaka ḽa mupo. Nahone dzi-zone a si zwitendeledzi zwo lugaho: u sendama, maḓi na nḓila zwi dzi kotamisela kha zwiṅwe zwivhumbeo.
 
-### Zone 2
+## Lwendo lwa 3: U pulana nga u sendama ha mavu
 
-Zone 2 i kule na nnḓu, ndi khulwane nahone a i ṱoḓi mushumo munzhi sa zone 1. Ni i dalela maḓuvha manzhi u ḽisa khuhu, u kuvhanganya makumba na u ka mitshelo na miroho ine khaṋo yayo ya dzhia tshifhinga tshilapfu. Food forest ya henefha i na tshaka nnzhi. Fhethu hu rothaho i nga katela miri ine ya remiwa u itela khuni. **Coppicing** (u rema muri u sia tshitumbu) zwi amba u rema muri u swika tsini na mavu u itela uri u mele mitanda miswa.
+Maḓi a elela a tshi tsa mahala. U pulana nga u sendama ha mavu, u tevhela nḓila ya Bill Mollison, zwi amba u sedza mavu aṋu u bva thungo ni tshi vhudzisa: ndi fhi hune nda vha hone kha thavha? Shumisani u sendama zwavhuḓi, maanḓa a u kokodzelwa fhasi a ḓo hwala.
 
-> **Ḓivhani:** Ni songo ṱavha black wattle, Port Jackson, leucaena kana miri ya ngamu (gum trees, tshaka nnzhi dza *Eucalyptus*) u itela khuni. Ndi **invasive species** (zwimela zwi phaḓaladzeaho zwi tshinyadzaho) zwo ṅwalwaho nga fhasi ha mulayo wa Afrika Tshipembe wa **biodiversity** (u fhambana ha zwitshili), NEMBA (2020), nahone u zwi ṱavha zwo thivhelwa kana zwi ṱoḓa thendelo. Miri ya sialala sa muunga (sweet thorn, *Vachellia karroo*), karee (*Searsia lancea*) na mutwari (wild olive, *Olea europaea* subsp. *africana*) i nga ṋea khuni, mitanda na tshitshavhelo.
+- **Maḓi nṱha.** Vhewani madamu na dzithanngi nṱha ha nnḓu na ngade, maanḓa a u kokodzelwa fhasi a ḓo tshimbidza maḓi hu si na pompo. Mitha dziṅwe na dziṅwe dza 10 dza vhulapfu dzi ṋea hu ḓo nga bar 1 ya tsikeledzo.
+- **Miri kha fhethu ho sendamesaho ha nṱha** i ongolowisa runoff, i thusa maḓi u dzhena nahone i fara mavu.
+- **Ndima, nḓila na dzi-swale kha contour** zwi fara maḓi mavuni.
+- **Mirundu ya compost na vhudzulo ha zwifuwo zwi vulelwe fhasi,** uri compost na manyaga zwi tsele ngadeni.
+- **Maḓi a u nwa a dzula o kuna.** Vhewani manyaga, compost na madanga a zwifuwo fhasi ha, na kule vhukuma na, zwisima zwa u bowa na zwisima zwa mupo.
+- **Greywater i ye fhasi kha miri.** **Greywater** (maḓi o shumiswaho a bvaho kha u ṱanzwa, u ṱamba na mabeisini) i elela nga maanḓa a u kokodzelwa fhasi i ya kha mabeseni a miri o fukedzwaho nga mulch kana kha dzi-swale dzi re fhasi ha nnḓu, i sa ye kha muroho kana miṅwe miroho ine na i ḽa i songo bikwa (ndima ya 7).
 
-### Zone 3
+## Lingani
 
-Zone 3 ndi khulwane u fhira zone 2. Zwifuwo zwihulwane zwi fula madambaya henefha. I dovha ya vha na miroho ya u rengisa na zwiliṅwa zwa tsimu, na food forest khulwane yo leluwaho i re na tshaka dzi si nngana u fhira kha zone 2. Vhuvhulungelo ha maḓi vhu nga vha vhuhulwane, sa madamu a bulasi.
+Thomani mmapa waṋu wa fhethu ino vhege.
 
-### Zone 4
-
-Zone 4 ndi ya miri ya bulasi na madambaya: khuni, mitanda na mapulanga. I nga vha khulwane vhukuma, nahone ni i ṱhogomela zwiṱuku.
-
-### Zone 5
-
-Zone 5 ndi mavu a mupo o siwaho zwipuka zwa ḓaka. Ndi fhethu ha u tshavhela ha zwimela na zwipuka, hu tshi katelwa zwiṋoni na zwikukumi zwine zwa thusa u lwisana na zwikukumi zwi tshinyadzaho. I daleleni u sedza, u guda na u kuvhanganya zwiḽiwa zwa ḓaka nga vhuronwane.
-
-### Zone kha mavu a vhukuma
-
-A si fhethu hoṱhe hu re na tshikhala tsha dzi-zone dzoṱhe.
-
-- Tshitentsi tsha ḓoroboni tsha tsini na mitha dza tshikwea dza 1,000 (tshipiḓa tshithihi kha zwiṋa tsha eka) tshi na tshikhala tsha zone 1, na zwipiḓa zwiṱuku zwa dziṅwe dzi-zone. Sa tsumbo, khona nthihi i nga ṱavhelwa zwiṋoni na zwikukumi sa zone 5 ṱhukhu.
-- Tshitentsi tshihulwane tsha mahayani tshi nga vha na zone 2, 3 na 4, na miri ya mapulanga.
-- Ndi mavu mahulwane vhukuma fhedzi ane a vha na zone 5 ya vhukuma.
-- Kha mavu a tshitshavha, zone 4 na 5 dzi nga vha madambaya kana ḓaka ḽa mupo zwine zwa shumiswa nga vhathu vhoṱhe.
-
-Dzi-zone a si zwitendeledzi zwo lugaho. U sendama, thungo ine fhethu ha lavhelesa khayo, maḓi na nḓila zwi dzi kotamisa dza vha na zwiṅwe zwivhumbeo. Olani mmapa wa dzi-zone nṱha ha mmapa waṋu wa fhethu. U ḓo ni thusa u dzhia phetho ya uri tshipiḓa tshiṅwe na tshiṅwe tsha bulasi tshi fanela u ya ngafhi.
-
-## Tshiṱepe 3: U pulana u ya nga u sendama ha mavu
-
-U pulana u ya nga u sendama ha mavu zwi amba u sedza mavu aṋu u bva thungo, na u ḓivhudzisa uri: ndi ngafhi kha thavha? Arali na shumisa u sendama zwavhuḓi, maanḓa a u kokodzelwa fhasi (gravity) a ni itela mushumo munzhi. Sedzani mavu aṋu u bva thungo u dzhia phetho ya hune na ḓo vhea madamu, dzithanngi dza maḓi, badi, migero ya u bvisa maḓi na zwa u livhisa maḓi kha iṅwe nḓila.
-
-Nḓila iyi i tevhela tshiedziso tsha Bill Mollison tsha u pulana u ya nga u sendama ha mavu:
-
-- **Maḓi nṱha.** Vheani madamu, dzithanngi na fhethu ha u kuvhanganya maḓi nṱha ha nnḓu na ngade. Ndi hone maanḓa a u kokodzelwa fhasi a tshi ḓo tshimbidza maḓi, nahone a ni ṱoḓi bombi ya muḓagasi. Mitha iṅwe na iṅwe ya 10 ya vhulapfu i ṋea tsini na bar 1 ya maanḓa a u sundedza maḓi (water pressure).
-- **Miri kha u sendama ha nṱha ho sendamaho vhukuma.** Miri ya tshoṱhe kha mavu o sendamaho i ongolowedza runoff, i thusa **infiltration** (u dzhena ha maḓi mavuni) nahone i fara mavu.
-- **Shumani ni tshi tevhela contour.** Ndima, nḓila na dzi-swale zwo tevhelaho contour zwi fhungudza erosion nahone zwi dzudza maḓi mavuni.
-- **Compost na vhudzulo ha zwipuka zwi lavhelesa fhasi.** Fhaṱani milundu ya compost na vhudzulo ha zwipuka zwi tshi vula zwo lavhelesa fhasi. Ndi hone ni tshi ḓo kona u fhirisela compost na manyaga fhasi kha ngade nga thuso ya u sendama.
-- **Tsireledzani maḓi aṋu a u nwa.** Vheani manyaga, compost na maḓanga a zwipuka kule, nahone fhasi, ha zwisima zwa u bowiwa, zwisima zwa u gwiwa na zwisima zwa mupo.
-- **Greywater i ye fhasi kha miri.** Tendelani **greywater** (maḓi o shumiswaho) — maḓi a bvaho kha u ṱamba kana u ṱanzwa — i elele nga maanḓa a u kokodzelwa fhasi i tshi ya kha dzi-swale kana mikwita ya miri i re fhasi ha nnḓu.
-
-> **Tsireledzo:** Greywater i nga vha na zwitshili zwi ḓisaho malwadze (germs). Ni songo shumisa maḓi a khishi kana maḓi a u ṱanzwa dzinapi (nappies) kha miroho i ḽiwaho i songo bikwa, sa letisi na sipinashi. Isani greywater kha miri na zwiṅwe zwimela zwine zwipiḓa zwazwo zwi ḽiwaho zwi sa i kwame. Ndima ya 7 i ṱalutshedza greywater nga vhuḓalo.
+1. Wanani tshifanyiso tsha satellite tsho gandiswaho tsha mavu aṋu, kana bammbiri ḽihulwane. Swayani devhula.
+2. Tshimbilani mukano. Olani magumo, zwifhaṱo, nḓila, pompi, dzithanngi na miri mihulwane.
+3. Nga murahu ha mvula yavhuḓi i tevhelaho, tshimbilani mavu hafhu. Swayani nga mitsevho hune maḓi a elela hone na hune a kuvhangana hone.
+4. Swayani fhethu ho dudelaho, ho rotholaho, ho nowaho na ho omaho.
+5. Lwa ḓuvha ḽithihi, vhalani lwendo luṅwe na luṅwe lwe na lu ita u ya fhethu huṅwe na huṅwe: pompi, khuhu, ngade, mulundu wa khuni.
+6. Nga pentsela, olani dzi-zone nṱha ha mmapa. Fhethu hune na ho dalela lunzhi hu tsini-tsini na nnḓu naa?
 
 ## Zwithu zwa ndeme
 
-- Sedzani mavu aṋu kha khalaṅwaha dzoṱhe phanḓa ha u ita tshanduko khulwane.
-- Olani mmapa wa fhethu u sumbedzaho mikano, zwifhaṱo, maḓi, badi, u shumiswa ha mavu na dzi-contour.
-- Sedzani maḓi, u sendama, thungo ine fhethu ha lavhelesa khayo na u swikelela fhethu haṋu.
-- Afrika Tshipembe ḓuvha ḽi kha devhula, ngauralo u sendama ho lavhelesaho devhula na vhubvaḓuvha ndi hone hu dudelaho vhukuma nahone ndi havhuḓi kha zwiliṅwa zwinzhi.
-- U sendama hu fhiraho 12% hu ṱoḓa u tsireledzwa ha mavu; u lima mavu o sendamaho u fhira 20% (12% kha zwiṅwe zwipiḓa) zwi ṱoḓa thendelo yo ṅwalwaho.
-- Zone 0 u swika 5 dzi vhea zwithu u ya nga uri ni zwi dalela lungana: zwa ḓuvha ḽiṅwe na ḽiṅwe tsini na nnḓu, zwine na zwi dalela lwa si gathi kule.
-- Ni songo ṱavha miri ya invasive species yo ṅwalwaho sa black wattle kana miri ya ngamu u itela khuni; shumisani miri ya sialala.
-- Vheani vhuvhulungelo ha maḓi nṱha ni shumise maanḓa a u kokodzelwa fhasi; vheani manyaga kule na maḓi a u nwa; shumisani greywater kha miri na zwimela zwi sa ḽiwi zwi songo bikwa fhedzi.
+- Sedzani mavu aṋu kha khalaṅwaha dzoṱhe, ni vhee zwine na zwi vhona kha mmapa wa fhethu.
+- Vhalani fhethu haṋu ni tshi sedza maḓi, u sendama, thungo ine ha lavhelesa khayo na nḓila dza u swika. Fhethu ho sendamaho ho lavhelesaho devhula na vhubvaḓuvha ndi ho dudelesaho.
+- Zone 0 u swika kha 5 dzi vhea zwithu u ya nga uri ni zwi dalela lunzhi hani.
+- Vhewani maḓi nṱha ni litshe maanḓa a u kokodzelwa fhasi a a tshimbidze. Vhewani manyaga kule na maḓi a u nwa, na greywater kule na miroho ine ya ḽiwa i songo bikwa.
+
+Farani mmapa waṋu kha luvhondo ni u engedzele khalaṅwaha iṅwe na iṅwe. Nga miṅwaha mishoni u ḓo vha bugu i shumaho vhukuma nga ha mavu aṋu.

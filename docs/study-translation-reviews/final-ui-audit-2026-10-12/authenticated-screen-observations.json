@@ -1,0 +1,436 @@
+{
+  "environment": "isolated local Firebase Auth/Firestore demo emulator with exact production source tree plus scoped pending layout/English-warning fixes",
+  "projectId": "demo-imbewu-translation-audit",
+  "realProductionAccountOrRecordChanges": false,
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "scrollWidth": 390
+  },
+  "deadlineObservations": [
+    {
+      "language": "ts",
+      "deadlines": [
+        {
+          "badge": {
+            "bottom": 415.046875,
+            "height": 61.4375,
+            "left": 130,
+            "right": 349,
+            "top": 353.609375,
+            "width": 219,
+            "x": 130,
+            "y": 353.609375
+          },
+          "container": {
+            "bottom": 415.046875,
+            "height": 81.4375,
+            "left": 130,
+            "right": 349,
+            "top": 333.609375,
+            "width": 219,
+            "x": 130,
+            "y": 333.609375
+          },
+          "source": "English source: 2 days overdue",
+          "target": "Swi hundzeriwe hi nkarhi hi masiku ya 2"
+        },
+        {
+          "badge": {
+            "bottom": 1041.578125,
+            "height": 61.4375,
+            "left": 130,
+            "right": 349,
+            "top": 980.140625,
+            "width": 219,
+            "x": 130,
+            "y": 980.140625
+          },
+          "container": {
+            "bottom": 1041.578125,
+            "height": 81.4375,
+            "left": 130,
+            "right": 349,
+            "top": 960.140625,
+            "width": 219,
+            "x": 130,
+            "y": 960.140625
+          },
+          "source": "English source: Due today",
+          "target": "Swi fanele ku endliwa namuntlha"
+        },
+        {
+          "badge": {
+            "bottom": 1687.703125,
+            "height": 61.4375,
+            "left": 130,
+            "right": 349,
+            "top": 1626.265625,
+            "width": 219,
+            "x": 130,
+            "y": 1626.265625
+          },
+          "container": {
+            "bottom": 1687.703125,
+            "height": 81.4375,
+            "left": 130,
+            "right": 349,
+            "top": 1606.265625,
+            "width": 219,
+            "x": 130,
+            "y": 1606.265625
+          },
+          "source": "English source: Due tomorrow",
+          "target": "Swi fanele ku endliwa mundzuku"
+        },
+        {
+          "badge": {
+            "bottom": 2274.546875,
+            "height": 61.4375,
+            "left": 130,
+            "right": 349,
+            "top": 2213.109375,
+            "width": 219,
+            "x": 130,
+            "y": 2213.109375
+          },
+          "container": {
+            "bottom": 2274.546875,
+            "height": 81.4375,
+            "left": 130,
+            "right": 349,
+            "top": 2193.109375,
+            "width": 219,
+            "x": 130,
+            "y": 2193.109375
+          },
+          "source": "English source: Due in 3 days",
+          "target": "Swi fanele ku endliwa ku nga si hela masiku ya 3"
+        },
+        {
+          "badge": {
+            "bottom": 2939.515625,
+            "height": 61.4375,
+            "left": 130,
+            "right": 349,
+            "top": 2878.078125,
+            "width": 219,
+            "x": 130,
+            "y": 2878.078125
+          },
+          "container": {
+            "bottom": 2939.515625,
+            "height": 81.4375,
+            "left": 130,
+            "right": 349,
+            "top": 2858.078125,
+            "width": 219,
+            "x": 130,
+            "y": 2858.078125
+          },
+          "source": "English source: Due 27 Oct",
+          "target": "Swi fanele ku endliwa hi 27 Oct"
+        }
+      ]
+    },
+    {
+      "language": "st",
+      "deadlines": [
+        {
+          "badge": {
+            "bottom": 412.734375,
+            "height": 61.4375,
+            "left": 130,
+            "right": 349,
+            "top": 351.296875,
+            "width": 219,
+            "x": 130,
+            "y": 351.296875
+          },
+          "container": {
+            "bottom": 412.734375,
+            "height": 81.4375,
+            "left": 130,
+            "right": 349,
+            "top": 331.296875,
+            "width": 219,
+            "x": 130,
+            "y": 331.296875
+          },
+          "source": "English source: 2 days overdue",
+          "target": "E ne e lokela ho etsoa matsatsi a 2 a fetileng"
+        },
+        {
+          "badge": {
+            "bottom": 2654.234375,
+            "height": 42.59375,
+            "left": 146,
+            "right": 322.7421875,
+            "top": 2611.640625,
+            "width": 176.7421875,
+            "x": 146,
+            "y": 2611.640625
+          },
+          "container": {
+            "bottom": 2654.234375,
+            "height": 42.59375,
+            "left": 130,
+            "right": 349,
+            "top": 2611.640625,
+            "width": 219,
+            "x": 130,
+            "y": 2611.640625
+          },
+          "source": "English source: Due today",
+          "target": "E lokela ho etsoa kajeno"
+        },
+        {
+          "badge": {
+            "bottom": 3320.796875,
+            "height": 42.59375,
+            "left": 146,
+            "right": 326.2578125,
+            "top": 3278.203125,
+            "width": 180.2578125,
+            "x": 146,
+            "y": 3278.203125
+          },
+          "container": {
+            "bottom": 3320.796875,
+            "height": 42.59375,
+            "left": 130,
+            "right": 349,
+            "top": 3278.203125,
+            "width": 219,
+            "x": 130,
+            "y": 3278.203125
+          },
+          "source": "English source: Due tomorrow",
+          "target": "E lokela ho etsoa hosane"
+        },
+        {
+          "badge": {
+            "bottom": 3966.921875,
+            "height": 61.4375,
+            "left": 130,
+            "right": 349,
+            "top": 3905.484375,
+            "width": 219,
+            "x": 130,
+            "y": 3905.484375
+          },
+          "container": {
+            "bottom": 3966.921875,
+            "height": 81.4375,
+            "left": 130,
+            "right": 349,
+            "top": 3885.484375,
+            "width": 219,
+            "x": 130,
+            "y": 3885.484375
+          },
+          "source": "English source: Due in 3 days",
+          "target": "E lokela ho etsoa matsatsing a 3 a tlang"
+        },
+        {
+          "badge": {
+            "bottom": 4611.890625,
+            "height": 42.59375,
+            "left": 146,
+            "right": 340.2578125,
+            "top": 4569.296875,
+            "width": 194.2578125,
+            "x": 146,
+            "y": 4569.296875
+          },
+          "container": {
+            "bottom": 4611.890625,
+            "height": 42.59375,
+            "left": 130,
+            "right": 349,
+            "top": 4569.296875,
+            "width": 219,
+            "x": 130,
+            "y": 4569.296875
+          },
+          "source": "English source: Due 27 Oct",
+          "target": "E lokela ho etsoa ka 27 Oct"
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "deadlines": [
+        {
+          "badge": {
+            "bottom": -1475.953125,
+            "height": 42.59375,
+            "left": 146,
+            "right": 345,
+            "top": -1518.546875,
+            "width": 199,
+            "x": 146,
+            "y": -1518.546875
+          },
+          "container": {
+            "bottom": -1475.953125,
+            "height": 42.59375,
+            "left": 130,
+            "right": 349,
+            "top": -1518.546875,
+            "width": 219,
+            "x": 130,
+            "y": -1518.546875
+          },
+          "source": "English source: 2 days overdue",
+          "target": "Zwo lenga nga maḓuvha a 2"
+        },
+        {
+          "badge": {
+            "bottom": -879.421875,
+            "height": 42.59375,
+            "left": 146,
+            "right": 307.78125,
+            "top": -922.015625,
+            "width": 161.78125,
+            "x": 146,
+            "y": -922.015625
+          },
+          "container": {
+            "bottom": -879.421875,
+            "height": 42.59375,
+            "left": 130,
+            "right": 349,
+            "top": -922.015625,
+            "width": 219,
+            "x": 130,
+            "y": -922.015625
+          },
+          "source": "English source: Due today",
+          "target": "Zwi tea u itwa ṋamusi"
+        },
+        {
+          "badge": {
+            "bottom": -220.859375,
+            "height": 42.59375,
+            "left": 146,
+            "right": 319.9921875,
+            "top": -263.453125,
+            "width": 173.9921875,
+            "x": 146,
+            "y": -263.453125
+          },
+          "container": {
+            "bottom": -220.859375,
+            "height": 42.59375,
+            "left": 130,
+            "right": 349,
+            "top": -263.453125,
+            "width": 219,
+            "x": 130,
+            "y": -263.453125
+          },
+          "source": "English source: Due tomorrow",
+          "target": "Zwi tea u itwa matshelo"
+        },
+        {
+          "badge": {
+            "bottom": 412.515625,
+            "height": 61.4375,
+            "left": 130,
+            "right": 349,
+            "top": 351.078125,
+            "width": 219,
+            "x": 130,
+            "y": 351.078125
+          },
+          "container": {
+            "bottom": 412.515625,
+            "height": 81.4375,
+            "left": 130,
+            "right": 349,
+            "top": 331.078125,
+            "width": 219,
+            "x": 130,
+            "y": 331.078125
+          },
+          "source": "English source: Due in 3 days",
+          "target": "Zwi tea u itwa nga maḓuvha a 3"
+        },
+        {
+          "badge": {
+            "bottom": 2840.234375,
+            "height": 42.59375,
+            "left": 146,
+            "right": 330.15625,
+            "top": 2797.640625,
+            "width": 184.15625,
+            "x": 146,
+            "y": 2797.640625
+          },
+          "container": {
+            "bottom": 2840.234375,
+            "height": 42.59375,
+            "left": 130,
+            "right": 349,
+            "top": 2797.640625,
+            "width": 219,
+            "x": 130,
+            "y": 2797.640625
+          },
+          "source": "English source: Due 27 Oct",
+          "target": "Zwi tea u itwa nga 27 Oct"
+        }
+      ]
+    },
+    {
+      "language": "zu",
+      "visibleValues": [
+        "Sekudlule izinsuku ezingu-2",
+        "Kufuneka namuhla",
+        "Kufuneka kusasa",
+        "Kusele izinsuku ezingu-3",
+        "Kufuneka ngo-27 Oct",
+        "Kwabelwe wena"
+      ],
+      "unlockSourceTitlesPreserved": true
+    }
+  ],
+  "lockedReasons": [
+    "Finish previous module",
+    "Submit previous module assignment"
+  ],
+  "mentorOverride": "Assigned Water expanded while preceding Reading remained incomplete; Opened by mentor label is not rendered because unlockReason is only called for locked cards.",
+  "sequentialUnlock": "Submitting fictional Intro document changed current module to Reading and exposed its module button without mentor assignment.",
+  "capstone": [
+    {
+      "language": "st",
+      "cardText": "Mosebetsi wa ho qetela: moralo wa polasi ya hao\n\nO qetile dimojule tsohle. Haha sephuthelo sa hao sa ho qetela sa meralo ho Design Studio — ke sona mosebetsi wa hao wa ho phethela thupelo.\n\nBula Design Studio",
+      "href": "/design"
+    },
+    {
+      "language": "ve",
+      "cardText": "Mushumo wa u fhedza: pulane ya bulasi yaṋu\n\nNo fhedza modulu dzoṱhe. Kha Design Studio, itani plan-set ya pulane yaṋu ya u fhedza — ndi yone mushumo waṋu wa u fhedza khoso.\n\nVulani Design Studio",
+      "href": "/design"
+    },
+    {
+      "language": "ts",
+      "cardText": "Ntirho wo hetelela: pulani ya purasi ra wena\n\nU hetile module yin'wana na yin'wana. Endla seti ya wena ya pulani ya dizayini yo hetelela eka Design Studio — hi yona mbuyelo lowu hetiselaka khoso ya wena.\n\nPfula Design Studio",
+      "href": "/design"
+    }
+  ],
+  "zuCapstoneAvailable": true,
+  "lowStorageProbe": {
+    "quotaFixtureBytes": 12582912,
+    "displayedPack": "8.5 MB",
+    "sourceThreshold": "free < totalBytes * 1.5",
+    "EnglishWarningActuallyViewed": true,
+    "networkFailureFixtureUsedToHoldPartialStateVisible": true,
+    "networkAndStorageEstimateRestored": true
+  },
+  "limitations": [
+    "Fictional emulator records are screen-state fixtures, not proof of learner fieldwork or production sign-in.",
+    "Initial missing docs links caused local dev compile errors; corrected before accepted screenshots.",
+    "No new language/fluent/farming approval."
+  ]
+}

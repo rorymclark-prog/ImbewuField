@@ -1,0 +1,87 @@
+{
+  "date": "2026-10-06",
+  "head": "c573f4e9d15f78223ab6d1789107fb544340e6e8",
+  "status": "source-bound future candidate, not learner wired or rendered",
+  "currentFile": "docs/narration/vegetables-staples.st.paired-draft.json",
+  "currentFileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+  "slide": 2,
+  "bodyIndex": 3,
+  "sourceEnglish": "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready.",
+  "before": {
+    "status": "mixed",
+    "segments": [
+      {
+        "sourceEnglish": "Small sowings create a rhythm instead. ",
+        "status": "draft",
+        "text": "Ho jala hanyenyane ho e-na le hoo ho theha morethetho. "
+      },
+      {
+        "sourceEnglish": "Planting, tending and harvesting overlap.",
+        "status": "english-hold",
+        "reason": "Corrects inherited exact-simultaneity wording; ordinary overlap wording remains a disclosed precision gap."
+      },
+      {
+        "sourceEnglish": " Something is always coming ready.",
+        "status": "draft",
+        "text": " Kamehla ho na le se seng se atamelang ho loka."
+      }
+    ],
+    "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
+  },
+  "after": {
+    "status": "mixed",
+    "segments": [
+      {
+        "sourceEnglish": "Small sowings create a rhythm instead. ",
+        "status": "draft",
+        "text": "Ho jala hanyenyane ho e-na le hoo ho theha morethetho. "
+      },
+      {
+        "sourceEnglish": "Planting, tending and harvesting overlap.",
+        "status": "draft",
+        "reason": "Translate ordinary action nouns; retain difficult temporal-overlap concept as explicit English loan. No same-time claim or added temporal qualifier.",
+        "text": "Ho jala, ho hlokomela le ho kotula di overlap."
+      },
+      {
+        "sourceEnglish": " Something is always coming ready.",
+        "status": "draft",
+        "text": " Kamehla ho na le se seng se atamelang ho loka."
+      }
+    ],
+    "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending; 2026-10-06 root precision repair retains difficult overlap term while localising ordinary subjects; no added simultaneity"
+  },
+  "independentReviewSHA256": "2e0b80b034746d832cb7e277f34a5726b18f1c21f4b9245f228a3d3ebdf1d509",
+  "rootFinalAdjustment": "Remove ka nako, which checker flagged as potential simultaneity context. Exact borrowed overlap preserves scope; subject/action noun translation already checked.",
+  "preservation": "First and third localized segments byte-identical; source untouched.",
+  "remainingDiscretion": [
+    {
+      "id": "ts-intro22-distance-frequency-comparison",
+      "classification": "ordinary precision gap",
+      "analysis": "“Further away than” compares spatial distance with use frequency, an unusual cross-dimension comparison. The current explicit English hold avoids inventing a distance threshold or reversing the intended placement relation. The surrounding Xitsonga pieces already localize the item, use-frequency clause, and write-down/move instruction. No new localized comparator is defensible from this audit without fluent review."
+    },
+    {
+      "id": "ve-vegetables17-frequency",
+      "classification": "ordinary precision gap",
+      "analysis": "“Regularly” is an ordinary frequency word. The current mixed draft localizes “from planting” and preserves the no-delay instruction, while leaving the bed/frequency phrase partially English. “Every day” would impose a cadence absent from the source; “all the time” is stronger than regularly. No precise equivalent is independently established in this audit."
+    },
+    {
+      "id": "st-market18-unfamiliar-disease",
+      "classification": "health-context ordinary adjective; technical holds remain",
+      "analysis": "“Unfamiliar” is ordinary wording, but it qualifies disease in a health-advice instruction. A guessed “new disease” or “disease not seen before” could change that condition. Keep that adjective visible in English for facilitator review. “Qualified advice”, “technical”, and “specialist” are legitimate technical precision holds. The current target already localizes the imperative prefix, “or”, “problems”, and the complete second sentence/modal."
+    },
+    {
+      "id": "ve-market18-unfamiliar-disease",
+      "classification": "health-context ordinary adjective; technical holds remain",
+      "analysis": "“Unfamiliar” is ordinary wording, but it qualifies disease in a health-advice instruction. A guessed “new disease” or “disease not seen before” could change that condition. Keep it visible in English for facilitator review. “Qualified advice”, “technical”, and “specialist help” remain technical precision holds. The current target localizes the imperative, “or”, “problems”, and preserves the complete second sentence/modal."
+    },
+    {
+      "id": "ts-market18-unfamiliar-disease",
+      "classification": "health-context ordinary adjective; technical holds remain",
+      "analysis": "“Unfamiliar” is ordinary wording, but it qualifies disease in a health-advice instruction. A guessed “new disease” or “disease not seen before” could change that condition. Keep it visible in English for facilitator review. “Qualified advice”, “technical”, and “specialist help” remain technical precision holds. The current target localizes the imperative, “or”, “problems”, and preserves the complete second sentence/modal."
+    }
+  ],
+  "limits": [
+    "No fluent or farming approval.",
+    "Disease-qualified terminology, precise cadence and ambiguous source comparator remain disclosed English terms; no prepublication facilitator gate."
+  ]
+}

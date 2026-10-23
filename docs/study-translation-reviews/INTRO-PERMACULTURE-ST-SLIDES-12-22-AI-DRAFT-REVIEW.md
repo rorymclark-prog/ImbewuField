@@ -6,6 +6,8 @@ Source: `docs/narration/intro-permaculture.en.md` at the same revision. English 
 
 The target wording is provisional and must be checked by a fluent Sesotho speaker from the intended Free State audience. Technical permaculture terms remain in English where useful for facilitator explanation. Actionable field assignments and uncertain farming, water, wind, crop, count, and labour claims remain on hold.
 
+Slides 20–22 received one additional machine-translation pass followed by a separate semantic backcheck. Only four lines with a clear back-translation were added: slide 20’s arrows and design-paper metaphor, slide 21’s photo instruction (with the spelling corrected), and slide 22’s neighbour question. The backcheck flagged the rings word, the land/Zone and energy directions, ground-checking, counting, and crop-relocation wording as ambiguous or awkward; those source paragraphs stay exact English. The English source remains beside every draft, and this check is not human approval.
+
 ## Slide 12
 
 **Tally:** headings translated 0, held 1; body paragraphs translated 3, held 0. Pause cues are source directions and are excluded.
@@ -451,7 +453,7 @@ On your own site, observe the damaging winds before choosing where to plant. Thi
 
 ## Slide 20
 
-**Tally:** headings translated 0, held 1; body paragraphs translated 1, held 3. Pause cues are source directions and are excluded.
+**Tally:** headings translated 0, held 1; body paragraphs translated 3, held 1. Pause cues are source directions and are excluded.
 
 **Exact English heading:**
 
@@ -497,9 +499,11 @@ It does not need to be neat. It needs to be true.
 
 - Paragraph 1 — **exact-English hold (is a field design instruction involving boundaries, house and visit-based rings):** Draw your boundary. Mark the house. Draw the rings outward by how often you visit.
 
-- Paragraph 2 — **exact-English hold (is an instruction to map external forces on the design):** Then draw arrows in from outside for sun, wind, fire and water.
+- Paragraph 2 — **provisional machine draft, unreviewed:** Ebe o thala metsu e kenang ho tswa kantle bakeng sa letsatsi, moya, mollo le metsi.
+  - Exact English: `Then draw arrows in from outside for sun, wind, fire and water.`
 
-- Paragraph 3 — **exact-English hold (uses a design metaphor that could be unclear if translated literally):** That sheet of paper is the skeleton of your design. Everything else in this course hangs on it.
+- Paragraph 3 — **provisional machine draft, unreviewed:** Leqephe leo la pampiri ke mokokotlo wa moralo wa hao. Ntho e nngwe le e nngwe khosong ena e itshetlehile hodima lona.
+  - Exact English: `That sheet of paper is the skeleton of your design. Everything else in this course hangs on it.`
 
 - Paragraph 4: `[pause]` is a source direction; no target copy.
 
@@ -508,7 +512,7 @@ It does not need to be neat. It needs to be true.
 
 ## Slide 21
 
-**Tally:** headings translated 1, held 0; body paragraphs translated 0, held 4. Pause cues are source directions and are excluded.
+**Tally:** headings translated 1, held 0; body paragraphs translated 1, held 3. Pause cues are source directions and are excluded.
 
 **Exact English heading:**
 
@@ -552,11 +556,12 @@ Photograph the sketch.
 
 - Paragraph 3 — **exact-English hold (is a field assignment using the technical concept of external energies):** Add an arrow for each energy that arrives from outside, and label where it comes from.
 
-- Paragraph 4 — **exact-English hold (is an assignment instruction):** Photograph the sketch.
+- Paragraph 4 — **provisional machine draft, unreviewed:** Nka senepe sa setshwantsho.
+  - Exact English: `Photograph the sketch.`
 
 ## Slide 22
 
-**Tally:** headings translated 1, held 0; body paragraphs translated 0, held 4. Pause cues are source directions and are excluded.
+**Tally:** headings translated 1, held 0; body paragraphs translated 1, held 3. Pause cues are source directions and are excluded.
 
 **Exact English heading:**
 
@@ -600,4 +605,5 @@ Then ask one older neighbour which direction the worst wind comes from, and comp
 
 - Paragraph 3 — **exact-English hold (is an instruction to identify and relocate a planting):** Find one thing planted further away than how often you use it, and write down where it should move to.
 
-- Paragraph 4 — **exact-English hold (is an instruction involving a neighbour and wind-direction comparison):** Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow.
+- Paragraph 4 — **provisional machine draft, unreviewed:** Ebe o botsa moahisani a le mong ya hodileng hore na moya o mobe ka ho fetisisa o tswa ntlheng efe, mme o bapise karabo ya hae le motsu wa hao.
+  - Exact English: `Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow.`

@@ -29,6 +29,7 @@ import { isSampleMode } from '@/lib/sample-mode';
 import { DEMO_SITE } from '@/lib/demo-farm';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { networkFailureMessage } from '@/lib/network-failure';
 import { listOrgPeople, getMyProfile } from '@/lib/db/queries';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import type { SavedReport } from '@/lib/saved-reports';
@@ -297,14 +298,17 @@ function HomeInner() {
       const res = await fetch(`/api/location-data?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}`, {
         headers: await paidApiHeaders(),
       });
-      if (!res.ok) throw new Error(`${res.status}`);
+      if (!res.ok) {
+        if (request === locationRequest.current) setError(networkFailureMessage(t, { status: res.status }));
+        return;
+      }
       const json = await res.json();
       if (request !== locationRequest.current) return;
       if (designSiteIdFromLocation(json) !== designSiteIdFromLocation({ lat, lon })) throw Error('The loaded location did not match the selected site. Please select it again.');
       setData(json);
       try { localStorage.setItem(cacheKey, JSON.stringify(json)); } catch { /* quota exceeded */ }
     } catch (err: unknown) {
-      if (request === locationRequest.current) setError(err instanceof Error ? err.message : 'Failed to load data');
+      if (request === locationRequest.current) setError(err instanceof Error ? err.message : networkFailureMessage(t));
     } finally {
       if (request === locationRequest.current) setLoading(false);
     }
@@ -325,11 +329,11 @@ function HomeInner() {
     if (!siteId || siteParamHandled.current === siteId) return;
     siteParamHandled.current = siteId;
     const p = loadPlaces().find((pl) => pl.id === siteId);
-    if (!p) { setError('This saved site is no longer available. Return to Site reports and choose another site.'); return; }
+    if (!p) { setError(t('savedSiteUnavailable')); return; }
     handlePlaceSelect({ name: p.name, id: p.id });
     handleLocationSelect(p.lat, p.lon);
-    const t = setTimeout(() => setJumpTo({ lat: p.lat, lon: p.lon }), 800);
-    return () => clearTimeout(t);
+    const jumpTimer = setTimeout(() => setJumpTo({ lat: p.lat, lon: p.lon }), 800);
+    return () => clearTimeout(jumpTimer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchKey, authLoading]);
 
@@ -569,6 +573,7 @@ function HomeInner() {
           <MenuButton /><BackButton fallback="/home" />
 
           <BrandLogo />
+          <h1 className="sr-only">{t('tabMap')}</h1>
 
           <div className="w-px h-5 flex-shrink-0 hidden md:block" style={{ background: 'var(--border)', opacity: 0.5 }} />
           <span className="hidden md:block font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{t('tagline')}</span>
@@ -586,14 +591,12 @@ function HomeInner() {
             style={{ fontSize: 15, background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--color-forest-800)' }}
           >
             <Palette size={15} aria-hidden />
-            <span className={lang === 'zu' ? 'flex flex-col leading-tight' : undefined}>
-              <span>{t('designStudioLabel')}</span>
-              {lang === 'zu' && (
-                <small lang="en" style={{ fontSize: 12, fontWeight: 500, opacity: 0.78 }}>
-                  {t('designStudioZuluDraftBadge')} · English: Design Studio
-                </small>
-              )}
-            </span>
+            {/* zu-04: this pill used to grow a second English line here whenever lang === 'zu'
+                ('Isitudiyo Sokuklama' / 'Uhlaka olungakabuyekezwa · English: Design Studio'),
+                turning a one-line nav pill into two. The draft disclosure now lives once, under
+                the header, in the shared <LanguageDraftNote /> (see DataPanel.tsx) — this pill is
+                just its label, in either language. */}
+            <span>{t('designStudioLabel')}</span>
           </Link>
           {buildInfo?.sha && (
             <div
@@ -631,7 +634,7 @@ function HomeInner() {
             className="hidden md:flex flex-shrink-0 items-center justify-center rounded-lg transition-all"
             style={{
               width: 40, height: 40,
-              background: 'rgba(226,216,196,0.35)',
+              background: 'color-mix(in srgb, var(--border) 35%, transparent)',
               border: '1px solid var(--border)',
               color: 'var(--text-secondary)',
               cursor: 'pointer',
@@ -874,7 +877,7 @@ function HomeInner() {
                 className="rounded-full"
                 style={{ width: 40, height: 4, background: 'var(--border)', opacity: 0.7 }}
               />
-              <span className="text-xs font-mono" style={{ color: 'var(--text-muted)', opacity: 0.6, letterSpacing: '0.05em' }}>
+              <span className="text-xs font-sans" style={{ color: 'var(--text-muted)', opacity: 0.6, letterSpacing: '0.05em' }}>
                 {t('tapToClose')}
               </span>
             </button>

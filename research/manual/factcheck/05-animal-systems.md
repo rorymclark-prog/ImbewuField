@@ -106,3 +106,40 @@ Note on method: in this session WebFetch was blocked for most government and res
 - Removed as unsupported: "maximum group number about 20"; "98% of eggs by 9 or 10 am" (softened); "tea bags"; "apiary a dying art"; "most commonly pesticides" as the main cause of colony loss; sunn hemp as grazing; *Dalbergia obovata* uses; carob "nitrogen fixing"; torchwood "fast"; sweet thorn "coffee, glue"; sweet chestnut.
 - Italian ryegrass, chicory, lucerne, carob and English oak are alien plants; none was found on the NEMBA 2020 lists in the summaries consulted (oak confirmed not listed), but the full DFFE list PDF could not be opened to confirm every species.
 - No income or price figures appear in this chapter of the source, so none needed dating.
+
+## Second pass (27 Sep 2026)
+
+Rewrite to 3,278 words in Rory's voice (REWRITE.md). All Safety boxes, legal remarks and "ask your vet / animal health technician / doctor / conservation office" lines removed; the legal points are listed in `research/manual/rewrite/05-animal-systems-endnote.md`.
+
+### "Could not verify" items from the first pass
+
+| Item | Result | Source |
+|---|---|---|
+| Beekeeper registration renewal period | **Cut** from the chapter (legal point; moved to the endnote without a period). | — |
+| Exact rules on moving bees between regions | **Cut** (legal point; endnote). | — |
+| AFB distribution | **Verified and narrowed**: "first confirmed in the Western Cape in 2009" (clinical signs Dec 2008, lab-confirmed Feb 2009). "Since found elsewhere" dropped; the reporting duty moved to the endnote. | gov.za statement 25 Mar 2009 https://www.gov.za/news/agriculture-american-foul-brood-afb-outbreak-25-mar-2009 ; The Conversation (2015) https://theconversation.com/american-disease-thats-wreaking-havoc-on-the-capes-honeybee-population-44804 (search summaries) |
+| Newcastle revaccination "about every three months" | **Verified**: FAO village-chicken guidance gives revaccination at three-monthly intervals (booster 2–4 weeks after the first dose; 3–4-monthly also protects). Eye-drop preferred. | FAO (2001) *Controlling Newcastle Disease in Village Chickens* https://openknowledge.fao.org/server/api/core/bitstreams/0ee168a3-53cf-4a45-a4eb-dc127373081a/content ; Tanzania I-2 field trial https://www.lrrd.org/lrrd24/7/mwak24123.htm (search summaries) |
+| GM share of SA maize and soya | **Verified and made specific**: about 85% of SA maize and 90–100% of soya is GM (ARC / ISAAA 2018 figures). Text now says "most ... maize and nearly all its soya". | ACB fact sheet https://acbio.org.za/wp-content/uploads/2022/03/ACB-factsheet_GM-maize-SA.pdf ; AgriOrbit https://agriorbit.com/quick-overview-of-gmos-in-south-africa/ (search summaries) |
+| Quarantine of new birds (2–3 weeks) | **Changed**: extension biosecurity guidance recommends 30 days (two weeks as a bare minimum). Text now says "about a month". | https://poultry.extension.org/articles/poultry-health/biosecurity-for-small-poultry-flocks/ ; UF/IFAS https://blogs.ifas.ufl.edu/polkco/2022/04/01/backyard-chickens-biosecurity/ (search summaries) |
+| Hen water intake "about twice the feed weight" | **Verified**: chickens drink about twice (2–3×) as much water as feed by weight, more in heat. | Alabama Extension (above); OSU PNW 477 https://extension.oregonstate.edu/catalog/pnw-477-how-feed-your-laying-hens (search summaries) |
+| Commercial hybrid egg numbers | Still no figure given. | — |
+| NEMBA status of the alien fodder plants | **Generalised / cut**: could not open the NEMBA list or the SANBI Red List page (egress blocked). Carob, English oak, chicory and Italian ryegrass were dropped from the fodder table (oak also spreads along Western Cape rivers). Lucerne, white clover, rye, turnip, fodder radish, lupin, cowpea and pigeon pea are ordinary field crops and stay. | — |
+
+Also re-checked this pass:
+- ARC egg numbers (Koekoek ~196, Venda ~154, Naked Neck ~139, Ovambo ~126 eggs per 52 weeks, ARC Irene): **verified** — Grobbelaar, Sutherland & Molalakgotla (2010), *Animal Genetic Resources Information* 46: 25–32, https://www.fao.org/4/i1353t/i1353t04.pdf (search summary).
+- SA emergency numbers 10177 (ambulance) and 112 (from a cellphone): **verified** — News24 https://www.news24.com/life/archive/calling-an-ambulance-10177-112-from-cell-20150826 ; Trek Medics https://trekmedics.org/database/south_africa/ (search summaries).
+- Varroa tolerance source identified: Locke (2016) *Natural Varroa mite-surviving Apis mellifera honeybee populations*, Apidologie 47: 467–482.
+
+### Cut for length (not for accuracy)
+
+- Benefits list folded into one paragraph; "worm tea" line dropped (worms are covered in chapter 8).
+- Beak-trimming note, "your first house may not be perfect" line.
+- Pollination share of total crop production ("about a third") dropped; the "three-quarters of leading crops" figure kept. Rice dropped from the wind-pollinated list only for brevity.
+- Fodder table cut from 32 rows to 12: dropped torchwood, pride-of-De Kaap, false olive, bluebush, blue guarri, cross-berry, ouhout, wild olive, African wattle, river willow, thorn pear, silver cluster-leaf, common hook-thorn, large sourplum, sunn hemp, broad bean, and the four aliens above. The rows kept use only uses already checked in the first pass.
+- English oak note removed with the oak row.
+
+### Facts changed
+
+- Quarantine: 2–3 weeks → about a month.
+- GM: "much" → "most maize and nearly all soya".
+- Introduction of new birds, duck products and natural-beekeeping principles condensed into prose; no facts changed.

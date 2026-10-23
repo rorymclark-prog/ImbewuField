@@ -1,3 +1,5 @@
+import { cleanChoices, type HousingKind } from './animal-enterprises';
+import type { PlacedPlant } from './perennial-harvest';
 // ── The farm's own measured facts, as report input ───────────────────────────────────────────
 //
 // WHY THIS EXISTS. The generated site report was generic BY CONSTRUCTION, and not because the
@@ -170,6 +172,9 @@ export interface FactCropPlan {
 }
 
 export interface ReportSiteFacts {
+  /** Canonical item identities for purchasing guidance, never geometry or guessed labels. */
+  productionItems?: PlacedPlant[];
+  productionEnterpriseChoices?: Partial<Record<HousingKind, string>>;
   farmName?: string;
   design?: FactDesign;
   water?: FactWater;
@@ -355,6 +360,18 @@ export function normaliseReportSiteFacts(value: unknown): ReportSiteFacts | null
       };
     }
   }
+
+  if (Array.isArray(value.productionItems)) {
+    facts.productionItems = value.productionItems.slice(0, 10000).flatMap((item): PlacedPlant[] => {
+      if (!isRec(item)) return [];
+      const defId = text(item.defId, 64);
+      if (!defId) return [];
+      const speciesId = text(item.speciesId, 100);
+      return [{ defId, ...(speciesId ? { speciesId } : {}), ...(item.status === 'proposed' || item.status === 'existing' ? { status: item.status } : {}) }];
+    });
+  }
+
+  if (isRec(value.productionEnterpriseChoices)) facts.productionEnterpriseChoices = cleanChoices(value.productionEnterpriseChoices);
 
   if (isRec(value.water)) {
     const w = value.water;

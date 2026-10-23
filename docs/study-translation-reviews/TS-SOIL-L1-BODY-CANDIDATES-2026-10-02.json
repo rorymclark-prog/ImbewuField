@@ -1,0 +1,181 @@
+{
+  "lessonId": "soil-health-l1",
+  "language": "ts",
+  "languageName": "Xitsonga",
+  "sourceMainSha": "d2eeea49c2507c1afb75a8d5a20d1af85ac34f36",
+  "status": "unwired-machine-draft",
+  "scopeNote": "Checked Xitsonga Soil L1 body candidate saved for later source-paired wiring; not learner-wired. Root and independent semantic review accepted the retained clear jar, much longer, thick sand layer, few worms and can limit wording. No fluent-speaker approval is claimed.",
+  "body": {
+    "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.\n\nSome fungi help roots take up nutrients. Worm channels can help water and air enter soil.\n\nLook at roots, soil structure and water movement as well as visible soil life.\n\nPut soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.\n\nSand settles first. Silt settles next, while clay can remain suspended much longer.\n\nThis is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.\n\nA thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.\n\nCompare the settled layers and feel the soil in the field.\n\nRecord what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.\n\nCompaction, poor drainage and loss of organic matter can limit roots and soil life.\n\nPale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.\n\nLook for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+    "currentRegistryDraft": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria and fungi help break down organic matter and cycle nutrients.\n\nFungi tin'wana ti pfuna timitsu ku tswonga nutrients. Worm channels ti nga pfuna mati na moya ku nghena emhlabeni.\n\nLanguta timitsu, xivumbeko xa misava ni ndlela leyi mati ma fambaka ha yona, swin’we ni leswi hanyaka emisaveni leswi u swi vonaka.\n\nPut soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.\n\nSand settles first. Silt settles next, while clay can remain suspended much longer.\n\nThis is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.\n\nA thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.\n\nFananisa swiyenge leswi tshamaka ehansi, kutani u twa misava ensin'wini.\n\nTsala leswi u swi vonaka ni leswi nga si tiyiseka. U nga teki xiboho xa ku cheleta kumbe ku tirhisa ndlela yo lulamisa misava hi ku ya hi jar yin’we ntsena.\n\nCompaction, poor drainage and loss of organic matter can limit roots and soil life.\n\nPale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.\n\nLook for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+    "candidateDraft": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku fayelela organic matter ni ku cycle nutrients.\n\nFungi tin'wana ti pfuna timitsu ku tswonga nutrients. Worm channels ti nga pfuna mati na moya ku nghena emhlabeni.\n\nLanguta timitsu, xivumbeko xa misava ni ndlela leyi mati ma fambaka ha yona, swin’we ni leswi hanyaka emisaveni leswi u swi vonaka.\n\nChela misava na mati eka clear jar, u chela nyana suitable dispersing detergent. Pfala jar u yi ninginika, kutani u yi tshika yi nga ninginiki.\n\nSand yi sungula ku tshamisa ehansi. Silt yi tshamisa endzhaku ka yona, kasi clay yi nga ha sala yi suspended much longer.\n\nLowu i rough learning exercise. Clumps na clay leyi nga si tshamaka ehansi swi nga ku hambukisa; tirhisa soil laboratory loko ku laveka accurate soil texture.\n\nThick sand layer ehansi ka cloudy water a yi si komba final proportions. Fine particles tin’wana ti nga ha va suspended.\n\nFananisa swiyenge leswi tshamaka ehansi, kutani u twa misava ensin'wini.\n\nTsala leswi u swi vonaka ni leswi nga si tiyiseka. U nga teki xiboho xa ku cheleta kumbe ku tirhisa ndlela yo lulamisa misava hi ku ya hi jar yin’we ntsena.\n\nCompaction, poor drainage na ku lahleka ka organic matter can limit timitsu ni soil life.\n\nMuhlovo lowu nga vonakaka wa pale kumbe few worms a swi tiyisisi leswaku chemicals ti dlayile misava. Worm activity na yona ya cinca hi ku ya hi moisture na season.\n\nLanguta patterns leti humelelaka ensin’wini hinkwaro. Kambela management history, drainage ni ku kula ka swimilani u nga si hlawula remedy.",
+    "paragraphs": [
+      {
+        "index": 1,
+        "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+        "currentDraft": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria and fungi help break down organic matter and cycle nutrients.",
+        "candidateDraft": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku fayelela organic matter ni ku cycle nutrients.",
+        "literalBacktranslation": "Soil has many kinds of living things. Bacteria and fungi help break down organic matter and cycle nutrients.",
+        "currentStatus": "partly translated; second sentence hold",
+        "preservationOrUncertainty": "Existing first sentence is preserved verbatim; second sentence is newly drafted. Technical microbiology and nutrient-cycling terms remain in English. Backcheck the Xitsonga phrase “ku cycle nutrients” for naturalness without weakening the claim."
+      },
+      {
+        "index": 2,
+        "sourceEnglish": "Some fungi help roots take up nutrients. Worm channels can help water and air enter soil.",
+        "currentDraft": "Fungi tin'wana ti pfuna timitsu ku tswonga nutrients. Worm channels ti nga pfuna mati na moya ku nghena emhlabeni.",
+        "candidateDraft": "Fungi tin'wana ti pfuna timitsu ku tswonga nutrients. Worm channels ti nga pfuna mati na moya ku nghena emhlabeni.",
+        "literalBacktranslation": "Some fungi help roots take up nutrients. Worm channels can help water and air enter soil.",
+        "currentStatus": "translated machine-draft preserved",
+        "preservationOrUncertainty": "Existing paragraph preserved verbatim; it states fungi help roots take up nutrients and worm channels can help water and air enter soil."
+      },
+      {
+        "index": 3,
+        "sourceEnglish": "Look at roots, soil structure and water movement as well as visible soil life.",
+        "currentDraft": "Languta timitsu, xivumbeko xa misava ni ndlela leyi mati ma fambaka ha yona, swin’we ni leswi hanyaka emisaveni leswi u swi vonaka.",
+        "candidateDraft": "Languta timitsu, xivumbeko xa misava ni ndlela leyi mati ma fambaka ha yona, swin’we ni leswi hanyaka emisaveni leswi u swi vonaka.",
+        "literalBacktranslation": "Look at roots, soil structure and water movement as well as the visible living things in soil.",
+        "currentStatus": "translated machine-draft preserved",
+        "preservationOrUncertainty": "Existing paragraph preserved verbatim; roots, soil structure, water movement and visible soil life remain as clues."
+      },
+      {
+        "index": 4,
+        "sourceEnglish": "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",
+        "currentDraft": "Put soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.",
+        "candidateDraft": "Chela misava na mati eka clear jar, u chela nyana suitable dispersing detergent. Pfala jar u yi ninginika, kutani u yi tshika yi nga ninginiki.",
+        "literalBacktranslation": "Put soil and water in a clear jar, adding a little suitable dispersing detergent. Close and shake it, then leave it without moving.",
+        "currentStatus": "exact-English hold",
+        "preservationOrUncertainty": "New draft retains clear jar, little quantity, suitable dispersing detergent, closing and shaking, and leaving it undisturbed. “Jar” and the technical detergent term remain English."
+      },
+      {
+        "index": 5,
+        "sourceEnglish": "Sand settles first. Silt settles next, while clay can remain suspended much longer.",
+        "currentDraft": "Sand settles first. Silt settles next, while clay can remain suspended much longer.",
+        "candidateDraft": "Sand yi sungula ku tshamisa ehansi. Silt yi tshamisa endzhaku ka yona, kasi clay yi nga ha sala yi suspended much longer.",
+        "literalBacktranslation": "Sand starts settling at the bottom first. Silt settles after it, while clay may remain suspended for a much longer time.",
+        "currentStatus": "exact-English hold",
+        "preservationOrUncertainty": "New draft preserves sand-first, silt-next order and the modal “can” plus “much longer” for clay suspension."
+      },
+      {
+        "index": 6,
+        "sourceEnglish": "This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.",
+        "currentDraft": "This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.",
+        "candidateDraft": "Lowu i rough learning exercise. Clumps na clay leyi nga si tshamaka ehansi swi nga ku hambukisa; tirhisa soil laboratory loko ku laveka accurate soil texture.",
+        "literalBacktranslation": "This is a rough learning exercise. Clumps and clay that has not settled can mislead you; use a soil laboratory when accurate soil texture is needed.",
+        "currentStatus": "exact-English hold",
+        "preservationOrUncertainty": "New draft preserves the rough learning-only limit, both sources of misleading observation, and conditional laboratory use when accurate texture is needed."
+      },
+      {
+        "index": 7,
+        "sourceEnglish": "A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.",
+        "currentDraft": "A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.",
+        "candidateDraft": "Thick sand layer ehansi ka cloudy water a yi si komba final proportions. Fine particles tin’wana ti nga ha va suspended.",
+        "literalBacktranslation": "A thick layer of sand below cloudy water does not yet show the final proportions. Some fine particles may still be suspended.",
+        "currentStatus": "exact-English hold",
+        "preservationOrUncertainty": "New draft preserves that the thick sand layer under cloudy water does not yet establish final proportions; some fine particles may still be suspended."
+      },
+      {
+        "index": 8,
+        "sourceEnglish": "Compare the settled layers and feel the soil in the field.",
+        "currentDraft": "Fananisa swiyenge leswi tshamaka ehansi, kutani u twa misava ensin'wini.",
+        "candidateDraft": "Fananisa swiyenge leswi tshamaka ehansi, kutani u twa misava ensin'wini.",
+        "literalBacktranslation": "Compare the layers that have settled, then feel the soil in the field.",
+        "currentStatus": "translated machine-draft preserved",
+        "preservationOrUncertainty": "Existing paragraph preserved verbatim; compare settled layers and feel the field soil."
+      },
+      {
+        "index": 9,
+        "sourceEnglish": "Record what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.",
+        "currentDraft": "Tsala leswi u swi vonaka ni leswi nga si tiyiseka. U nga teki xiboho xa ku cheleta kumbe ku tirhisa ndlela yo lulamisa misava hi ku ya hi jar yin’we ntsena.",
+        "candidateDraft": "Tsala leswi u swi vonaka ni leswi nga si tiyiseka. U nga teki xiboho xa ku cheleta kumbe ku tirhisa ndlela yo lulamisa misava hi ku ya hi jar yin’we ntsena.",
+        "literalBacktranslation": "Write what you see and what is still uncertain. Do not make a decision to water or use a method to improve soil based on one jar alone.",
+        "currentStatus": "translated machine-draft preserved",
+        "preservationOrUncertainty": "Existing paragraph preserved verbatim; record observations and uncertainty, and do not prescribe watering or treatment from one jar alone."
+      },
+      {
+        "index": 10,
+        "sourceEnglish": "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+        "currentDraft": "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+        "candidateDraft": "Compaction, poor drainage na ku lahleka ka organic matter can limit timitsu ni soil life.",
+        "literalBacktranslation": "Compaction, poor drainage and loss of organic matter can hinder roots and soil life.",
+        "currentStatus": "exact-English hold",
+        "preservationOrUncertainty": "New draft retains all three possible limits to roots and soil life: compaction, poor drainage and loss of organic matter."
+      },
+      {
+        "index": 11,
+        "sourceEnglish": "Pale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.",
+        "currentDraft": "Pale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.",
+        "candidateDraft": "Muhlovo lowu nga vonakaka wa pale kumbe few worms a swi tiyisisi leswaku chemicals ti dlayile misava. Worm activity na yona ya cinca hi ku ya hi moisture na season.",
+        "literalBacktranslation": "Pale-looking colour or having few worms does not prove that chemicals have killed the soil. Worm activity also changes according to moisture and season.",
+        "currentStatus": "exact-English hold",
+        "preservationOrUncertainty": "New draft preserves that pale colour or few worms do not prove chemicals killed the soil; worm activity also changes with moisture and season. Terms for chemicals, worms and moisture remain English where precision is uncertain."
+      },
+      {
+        "index": 12,
+        "sourceEnglish": "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+        "currentDraft": "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+        "candidateDraft": "Languta patterns leti humelelaka ensin’wini hinkwaro. Kambela management history, drainage ni ku kula ka swimilani u nga si hlawula remedy.",
+        "literalBacktranslation": "Look for patterns that recur across the whole field. Check management history, drainage and plant growth before choosing a remedy.",
+        "currentStatus": "exact-English hold",
+        "preservationOrUncertainty": "New draft keeps all checks before remedy selection: recurring field patterns, management history, drainage and plant growth. Technical drainage/history terms stay English."
+      }
+    ]
+  },
+  "paragraphGapAudit": {
+    "canonicalParagraphCount": 12,
+    "registryParagraphCount": 12,
+    "sourceEnglishMatchesCanonical": true,
+    "exactEnglishHoldParagraphs": [
+      4,
+      5,
+      6,
+      7,
+      10,
+      11,
+      12
+    ],
+    "partiallyTranslatedParagraphs": [
+      1
+    ],
+    "alreadyTranslatedAndPreserved": [
+      2,
+      3,
+      8,
+      9
+    ],
+    "draftedParagraphs": [
+      1,
+      4,
+      5,
+      6,
+      7,
+      10,
+      11,
+      12
+    ]
+  },
+  "preservation": {
+    "existingTranslatedSentencesPreserved": true,
+    "existingTranslatedParagraphsPreservedVerbatim": [
+      2,
+      3,
+      8,
+      9
+    ],
+    "paragraph1ExistingFirstSentencePreserved": true,
+    "paragraphBoundariesPreserved": true,
+    "noNumbersOrSpeciesAdded": true
+  },
+  "criticalConditions": [
+    "Little suitable dispersing detergent; close and shake the clear jar, then leave it undisturbed.",
+    "Sand settles first; silt next; clay can remain suspended much longer.",
+    "Rough learning exercise only; clumps and unsettled clay can mislead; use a soil laboratory when accurate texture is needed.",
+    "Thick sand below cloudy water does not yet establish final proportions; fine particles may still be suspended.",
+    "Do not prescribe watering or soil treatments from one jar alone.",
+    "Compaction, poor drainage and organic-matter loss can limit roots and soil life.",
+    "Pale colour or few worms do not prove chemical damage; worm activity changes with moisture and season.",
+    "Check patterns across the field, management history, drainage and plant growth before choosing a remedy."
+  ],
+  "uncertaintySummary": "Machine candidate, not fluent approval. Jar, suspension, rough exercise, laboratory, proportions and diagnostic terms are retained in English to protect technical limits. Independent Xitsonga review should check phrasing and confirm each conditional, negative and before/after relation.",
+  "independentBackcheck": "Root and independent semantic review retain clear jar, much longer, thick sand layer, few worms and can limit English to prevent transparency/duration/thickness/number/modality ambiguity. Exact source and preserved Xitsonga paragraphs must be checked against current main before wiring. No fluent/local approval.",
+  "languageLabel": "Standard written Xitsonga; provisional for Shangani"
+}

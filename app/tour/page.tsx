@@ -3,9 +3,8 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, Sprout, Map, BookOpen, ReceiptText, Users, Building2, BarChart3, FileText, MessageCircle, type LucideIcon } from 'lucide-react';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
-import SettingsButton from '@/components/SettingsButton';
+import AppHeader from '@/components/layout/AppHeader';
+import TabBar from '@/components/TabBar';
 import { useProductTour } from '@/components/ProductTourProvider';
 import { PRODUCT_TOUR } from '@/lib/sample-tour';
 import { productTourError, productTourStepCopy, productTourUi } from '@/lib/sample-tour-localization';
@@ -42,8 +41,7 @@ export default function TourPage() {
   }
   const minutes = PRODUCT_TOUR.reduce((sum, step) => sum + step.minutes, 0);
   const tried = tour?.done.length ?? 0;
-  return <main className={styles.page}><div className={styles.wrap}>
-    <header className={styles.header}><MenuButton/><BackButton fallback="/home"/><SettingsButton/></header>
+  return <main className={styles.page}><AppHeader title={ui('Tour', 'Uhambo')} /><div className={styles.scroll}><div className={styles.wrap}>
     <section className={styles.hero}>
       <div><span className={styles.eyebrow}>{ui('FARMERS · MENTORS · ORGANISATIONS · FUNDERS', 'ABALIMI · ABELULEKI · IZINHLANGANO · ABAXHASI')}</span>
         <h1>{ui('See what ImbewuField can do.', 'Bona okungenziwa yi-ImbewuField.')}</h1>
@@ -52,7 +50,7 @@ export default function TourPage() {
         <div className={styles.controls}>{tour?.active ? <button className={styles.primary} onClick={tour.open}>{tourUi('continue', `Continue tour · stop ${tour.current+1}`, { current: tour.current + 1 })}</button> : <button className={styles.primary} onClick={tour?.start} disabled={!tour?.ready}>{!tour?.ready ? tourUi('loading', 'Getting the tour ready…') : tried ? tourUi('tryAgain', 'Try the tour again') : tourUi('start', 'Start the 15-minute tour')}</button>}
         <Link href="/samples/gardens">{tourUi('browseGardens', 'Browse the gardens')}</Link></div>
       </div>
-      <figure><img src="/demo/harvest.webp" alt={ui('Illustrated example of a garden harvest', 'Umdwebo wesibonelo sesivuno sengadi')}/><figcaption>{ui('Garden harvest · AI-generated illustration', 'Isivuno sengadi · umdwebo owenziwe nge-AI')}</figcaption></figure>
+      <figure><img src="/demo/harvest.webp" width={512} height={512} loading="lazy" alt={ui('Illustrated example of a garden harvest', 'Umdwebo wesibonelo sesivuno sengadi')}/><figcaption>{ui('Garden harvest · AI-generated illustration', 'Isivuno sengadi · umdwebo owenziwe nge-AI')}</figcaption></figure>
     </section>
     {tour?.error && <p role="alert">{productTourError(tour.error, lang)}</p>}
     <p className={styles.notice}>{ui('Try the app with prepared records. Your own project stays unchanged.', 'Zama uhlelo ngamarekhodi alungisiwe. Iphrojekthi yakho ayishintshi.')}</p>
@@ -75,5 +73,8 @@ export default function TourPage() {
       </article>;
     })}</div>
     <div className={styles.controls}><Link href="/samples/farm">{ui('Full farm evidence pack', 'Iphakethe eligcwele lobufakazi bepulazi')}</Link><Link href="/samples">{ui('All role workspaces', 'Zonke izindawo zokusebenza')}</Link><Link href="/feedback">{ui('Feature requests & programme customisation', 'Izicelo zezici nokwenza uhlelo lufaneleke')}</Link></div>
-  </div></main>;
+  </div></div>
+  {/* nav-03: without this, /tour was one of the secondary pages that lost the farmer's way home. */}
+  <div className="no-print"><TabBar hideAtDesktop/></div>
+  </main>;
 }

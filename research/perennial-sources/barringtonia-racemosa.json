@@ -1,0 +1,71 @@
+{
+  "speciesId": "barringtonia-racemosa",
+  "commonName": "Powder-puff tree / iBoqo",
+  "botanicalName": "Barringtonia racemosa",
+  "householdFoodStatus": "specialist-review",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "young leaves reported edible — specialist review needed",
+  "supplementaryReferences": [
+    {
+      "title": "Edible-part and safety review",
+      "quote": "The young leaves are edible",
+      "url": "https://pza.sanbi.org/barringtonia-racemosa",
+      "doc": "SANBI PlantZAfrica, barringtonia-racemosa",
+      "page": null,
+      "note": "The same source reports poison in seeds, bark, wood and roots. Guava-like fruit appearance is not evidence of edible fruit."
+    },
+    {
+      "title": "Poisonous parts must remain visible",
+      "quote": "The seeds, bark, wood and roots contain the poison saponin",
+      "url": "https://pza.sanbi.org/barringtonia-racemosa",
+      "doc": "SANBI PlantZAfrica, barringtonia-racemosa",
+      "page": null,
+      "note": "The account records fish-stunning use. No such use is recommended, and no household fruit food claim is made."
+    }
+  ],
+  "productionGuidance": {
+    "products": "young leaves reported edible — specialist review needed",
+    "care": [
+      "Keep this tree in mapped inventory and do not count it as household food until identity and a safe edible-leaf preparation are reviewed.",
+      "SANBI describes humid coastal/estuarine conditions and no tolerance of even mild frost."
+    ],
+    "purchase": [
+      "Ask a specialist nursery about lawful provenance and local site fit. Resolve the food-use question before purchasing it as a household crop."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/barringtonia-racemosa",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    }
+  ],
+  "gaps": [
+    "No safe leaf preparation, harvest months or food kg. Seed, bark, wood and root poison must not be omitted from guidance."
+  ]
+}

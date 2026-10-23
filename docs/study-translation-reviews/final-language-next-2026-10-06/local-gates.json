@@ -1,0 +1,23 @@
+{
+  "status": "local gates passed; preview/phone/publication pending",
+  "typecheck": "original npx tsc --noEmit passed",
+  "suite": {
+    "command": "npm test",
+    "tests": 4806,
+    "pass": 4805,
+    "fail": 0,
+    "todo": 1,
+    "todoIdentity": "shape-sync-loss: pre-listener concurrent shape write",
+    "logSHA256": "c5f75a3e2331638f5aa10c1e2dc070cc658f6a458b710758f9efbcc0499ff6f7",
+    "durationMs": 375621.627917
+  },
+  "focused": {
+    "tests": 7,
+    "pass": 7,
+    "fail": 0,
+    "durationMs": 245578.083834
+  },
+  "whitespace": "git diff --check passed",
+  "sourceInvariant": "canonical English, indices, audio and archived ST Introduction unchanged",
+  "publication": "NOT published; no exact preview/phone evidence yet"
+}

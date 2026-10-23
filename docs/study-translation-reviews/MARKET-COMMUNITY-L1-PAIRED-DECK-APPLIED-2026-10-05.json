@@ -1,0 +1,1164 @@
+{
+  "generatedAt": "2026-10-05T08:10:34.672Z",
+  "sourcePacket": "/tmp/imbewu-market-l1-root-accepted-candidates-20261005.json",
+  "sourcePacketSha256": "a5376934a3accd8ae351df3ea5f56b9e952294079ced72ba46fbd3ec64f9094c",
+  "baseHead": "664685d3ecc5cf53b144bf6bf8813fa55e4cb63e",
+  "moduleId": "market-community",
+  "lessonId": "market-community-l1",
+  "status": "paired targets applied; focused tests passed; 16 changed frames rendered and verified; awaiting root final review",
+  "claims": {
+    "humanLanguageApproval": false,
+    "localFarmingApproval": false,
+    "canonicalEnglishChanged": false
+  },
+  "sourceAuthority": {
+    "canonicalFile": "lib/course-modules.ts",
+    "canonicalBodyField": "market-community.lessons[market-community-l1].body",
+    "pairedEnglishSource": "docs/narration/market-community.en.md",
+    "acceptedTargets": "actual appliedBodies and perfield repairedTarget in independent root-accepted packet"
+  },
+  "languages": {
+    "st": {
+      "file": "docs/narration/market-community.st.paired-draft.json",
+      "changedFrames": [
+        1,
+        2,
+        5,
+        7,
+        8
+      ],
+      "bodyFieldCount": 17,
+      "bodyFields": [
+        {
+          "paragraphIndex": 0,
+          "slide": 2,
+          "slideBodyIndex": 0,
+          "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.",
+          "canonicalBodySource": "A harvest can feed the household, be sold, be shared, or be lost.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha).",
+            "provenance": "reused verbatim from SESOTHO_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha).",
+            "provenance": "reused verbatim from SESOTHO_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 1,
+          "slide": 2,
+          "slideBodyIndex": 1,
+          "sourceEnglish": "Recording these different uses helps you see what the farm produces and what reaches customers.",
+          "canonicalBodySource": "Recording these different uses helps you see what the farm produces and what reaches customers.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Ho rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.",
+            "provenance": "reused verbatim from SESOTHO_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Ho rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.",
+            "provenance": "reused verbatim from SESOTHO_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 2,
+          "slide": 2,
+          "slideBodyIndex": 2,
+          "sourceEnglish": "Use that information to protect household food and make better business decisions.",
+          "canonicalBodySource": "Use that information to protect household food and make better business decisions.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Sebelisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa better business decisions.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Sebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 3,
+          "slide": 5,
+          "slideBodyIndex": 0,
+          "sourceEnglish": "Write down every harvest as it happens.",
+          "canonicalBodySource": "Write down every harvest as it happens.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.",
+            "provenance": "reused verbatim from SESOTHO_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.",
+            "provenance": "reused verbatim from SESOTHO_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 4,
+          "slide": 5,
+          "slideBodyIndex": 1,
+          "sourceEnglish": "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+          "canonicalBodySource": "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Rekota kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe o ngola hore e nngwe le e nngwe e ile hokae.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 5,
+          "slide": 5,
+          "slideBodyIndex": 2,
+          "sourceEnglish": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+          "canonicalBodySource": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Sebelisa mokgwa ona o bonolo o tshwanang bakeng sa dijo tse bolokwang lapeng, dihlahiswa tse rekiswang, tse fanwang e le mpho, le tse kenngwang compost.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Sebedisa mokgwa ona o bonolo o tshwanang bakeng sa dijo tse bolokwang lapeng, dihlahiswa tse rekisitsweng, tse fanweng e le mpho, le tse entsweng compost.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 6,
+          "slide": 5,
+          "slideBodyIndex": 3,
+          "sourceEnglish": "Do not rely on memory at the end of the season.",
+          "canonicalBodySource": "Do not rely on memory at the end of the season.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "O se ke wa itshetleha ka mohopolo qetellong ya sehla.",
+            "provenance": "reused verbatim from SESOTHO_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "O se ke wa itshetleha ka mohopolo qetellong ya sehla.",
+            "provenance": "reused verbatim from SESOTHO_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 7,
+          "slide": 6,
+          "slideBodyIndex": 0,
+          "sourceEnglish": "One season of records answers practical questions.",
+          "canonicalBodySource": "One season of records answers practical questions.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Sehla se le seng sa direkoto se araba dipotso tse sebetsang."
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Sehla se le seng sa direkoto se araba dipotso tse sebetsang."
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 8,
+          "slide": 6,
+          "slideBodyIndex": 1,
+          "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+          "canonicalBodySource": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Ke dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return for each hour of work?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Ke dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return for each hour of work?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "repair",
+          "rootReason": "Candidate weakens best/most comparative ranking; Tshivenda also narrows return to money. Preserve accurate current ordinary question framing and exact best yield per bed / the most return for each hour of work anchors."
+        },
+        {
+          "paragraphIndex": 9,
+          "slide": 6,
+          "slideBodyIndex": 2,
+          "sourceEnglish": "Which crops use more seeds, water, and compost than they return?",
+          "canonicalBodySource": "Which crops use more seeds, water, and compost than they return?",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Ke dijalo dife tse sebedisang dipeo, metsi le compost tse ngata ho feta seo di se kgutlisang?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Ke dijalo dife tse sebedisang dipeo, metsi le compost tse ngata ho feta seo di se kgutlisang?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 10,
+          "slide": 6,
+          "slideBodyIndex": 3,
+          "sourceEnglish": "The record also shows which months leave the household buying food.",
+          "canonicalBodySource": "The record also shows which months leave the household buying food.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona."
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona."
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 11,
+          "slide": 7,
+          "slideBodyIndex": 0,
+          "sourceEnglish": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+          "canonicalBodySource": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Pele o beha theko, rekota ditjeo tsa tlhahiso, ho paka le ho rekisa, ho kenyeletsa mosebetsi le dipalangoang.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Pele o beha theko, rekota ditjeo tsa tlhahiso, ho paka le ho rekisa, ho kenyeletsa mosebetsi le dipalangoang.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 12,
+          "slide": 7,
+          "slideBodyIndex": 1,
+          "sourceEnglish": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+          "canonicalBodySource": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+          "beforeTarget": {
+            "status": "english-hold"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Mohlala ona ke wa ho ruta, eseng theko ya mmaraka: ditamati di bitsa R18 ka kilogram ho di hlahisa, empa di rekiswa ka R15 ka kilogram. Theko eo ha e koahele ditjeo tse boletsweng.",
+            "provenance": "root-accepted unreviewed machine draft; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 13,
+          "slide": 7,
+          "slideBodyIndex": 2,
+          "sourceEnglish": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+          "canonicalBodySource": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Hlahloba theko, ditjeo le next planting. Sheba seo bareki ba tla se reka e le kannete; theko e hodimo eo o e kopang ha e tiise thekiso.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Hlahloba theko, ditjeo le ho lema ho latelang. Sheba seo bareki ba tla se reka e le kannete; theko e hodimo eo o e kopang ha e tiise thekiso.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 14,
+          "slide": 8,
+          "slideBodyIndex": 0,
+          "sourceEnglish": "Use your record to find when household food runs short.",
+          "canonicalBodySource": "Use your record to find when household food runs short.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Sebedisa rekoto ya hao ho fumana hore na dijo tsa lelapa di haella neng.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Sebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 15,
+          "slide": 8,
+          "slideBodyIndex": 1,
+          "sourceEnglish": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+          "canonicalBodySource": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Kgetha dijalo tse loketseng sebaka sa heno, mme o bale o kgutlela morao ho tloha kotulong eo o e hlokang. Hlahloba maemo a ho jala le nako e lebeletsweng ya ho fihla kotulong.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Khetha dijalo tse loketseng sebaka sa heno, mme o rale o kgutlela morao ho tloha kotulong eo o e hlokang. Hlahloba maemo a ho jala le nako e lebelletsweng ya kotulo.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 16,
+          "slide": 8,
+          "slideBodyIndex": 2,
+          "sourceEnglish": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+          "canonicalBodySource": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Letsatsi le sebetsang polasing e nngwe le ka nna la se sebetse mona. Kenyelletsa leano la bobedi haeba pula, metsi kapa dijalo di hloleha.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Letsatsi le sebetsang polasing e nngwe le ka nna la se sebetse mona. Kenyelletsa leano la bobedi haeba pula, metsi kapa dijalo di hloleha.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        }
+      ],
+      "cardTitle": {
+        "field": "card.title",
+        "slide": 1,
+        "sourceEnglish": "Market Gardening & Community",
+        "canonicalSource": "Market Gardening & Community",
+        "beforeTarget": {
+          "status": "draft",
+          "text": "Ho lema serapeng bakeng sa mmaraka le setjhaba",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "afterTarget": {
+          "status": "draft",
+          "text": "Temo ya Marakeng le Setjhaba",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "rootOutcome": "accept"
+      },
+      "cardDescription": {
+        "sourceEnglish": "This module shows how to keep records, sell surplus, and build local food networks.",
+        "canonicalModuleDescription": "Record-keeping, selling surplus and building local food networks.",
+        "sourceEnglishFieldMatch": false,
+        "action": "preserved unchanged because slide-1 body prose is not an exact source-field match",
+        "target": {
+          "status": "draft",
+          "text": "Thuto ena e bontsha kamoo o ka bolokang direkoto, wa rekisa masalla, le ho haha marangrang a dijo a lehae.",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        }
+      },
+      "preservedOutOfScopeFrames": [
+        3,
+        4,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "preservedOutOfScopeTargetSha256": "761434c8e4b15db438106da45cadd27e95f806d5f2d39ceac768d4369618a9fa",
+      "targetReviewStatus": "unreviewed",
+      "changedBodyTargets": 7
+    },
+    "ve": {
+      "file": "docs/narration/market-community.ve.paired-draft.json",
+      "changedFrames": [
+        2,
+        5,
+        6,
+        7,
+        8
+      ],
+      "bodyFieldCount": 17,
+      "bodyFields": [
+        {
+          "paragraphIndex": 0,
+          "slide": 2,
+          "slideBodyIndex": 0,
+          "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.",
+          "canonicalBodySource": "A harvest can feed the household, be sold, be shared, or be lost.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.",
+            "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.",
+            "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 1,
+          "slide": 2,
+          "slideBodyIndex": 1,
+          "sourceEnglish": "Recording these different uses helps you see what the farm produces and what reaches customers.",
+          "canonicalBodySource": "Recording these different uses helps you see what the farm produces and what reaches customers.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "U ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.",
+            "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "U ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.",
+            "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 2,
+          "slide": 2,
+          "slideBodyIndex": 2,
+          "sourceEnglish": "Use that information to protect household food and make better business decisions.",
+          "canonicalBodySource": "Use that information to protect household food and make better business decisions.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Shumisani mafhungo ayo u tsireledza zwiḽiwa zwa muṱa na u dzhia better business decisions.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Shumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 3,
+          "slide": 5,
+          "slideBodyIndex": 0,
+          "sourceEnglish": "Write down every harvest as it happens.",
+          "canonicalBodySource": "Write down every harvest as it happens.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Ṅwalani khaṋo iṅwe na iṅwe musi i tshi itea.",
+            "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Ṅwalani khaṋo iṅwe na iṅwe musi i tshi itea.",
+            "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 4,
+          "slide": 5,
+          "slideBodyIndex": 1,
+          "sourceEnglish": "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+          "canonicalBodySource": "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Rekhodani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo, ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Ṅwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 5,
+          "slide": 5,
+          "slideBodyIndex": 2,
+          "sourceEnglish": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+          "canonicalBodySource": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Shumisani nḓowelo iyi yo leluwaho kha zwiḽiwa zwi re hayani, zwibveledzwa zwo rengiswaho, zwe zwa ṋewa vhaṅwe, na zwe zwa vhewa kha compost.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Shumisani maitele a sa lemelaho a fanaho kha zwiḽiwa zwine zwa dzula hayani, zwibveledzwa zwo rengiswaho, zwo ṋewaho vhaṅwe nga mpho, na zwo itwaho compost.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 6,
+          "slide": 5,
+          "slideBodyIndex": 3,
+          "sourceEnglish": "Do not rely on memory at the end of the season.",
+          "canonicalBodySource": "Do not rely on memory at the end of the season.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.",
+            "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.",
+            "provenance": "reused verbatim from TSHIVENDA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 7,
+          "slide": 6,
+          "slideBodyIndex": 0,
+          "sourceEnglish": "One season of records answers practical questions.",
+          "canonicalBodySource": "One season of records answers practical questions.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Khalaṅwaha nthihi ya rekhodo i fhindula mbudziso dzine dza thusa.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Rekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 8,
+          "slide": 6,
+          "slideBodyIndex": 1,
+          "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+          "canonicalBodySource": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Ndi zwifhio zwimela zwine zwa bveledza best yield per bed? Ndi zwifhio zwine zwa vhuisa the most return for each hour of work?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwimela zwifhio zwine zwa vhuisa the most return for each hour of work?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "repair",
+          "rootReason": "Candidate weakens best/most comparative ranking; Tshivenda also narrows return to money. Preserve accurate current ordinary question framing and exact best yield per bed / the most return for each hour of work anchors."
+        },
+        {
+          "paragraphIndex": 9,
+          "slide": 6,
+          "slideBodyIndex": 2,
+          "sourceEnglish": "Which crops use more seeds, water, and compost than they return?",
+          "canonicalBodySource": "Which crops use more seeds, water, and compost than they return?",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Ndi zwifhio zwimela zwine zwa shumisa mbeu, maḓi na compost nnzhi u fhira zwine zwa zwi bveledza?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Ndi zwimela zwifhio zwine zwa shumisa mbeu, maḓi na compost zwinzhi u fhira zwine zwa vhuisa?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 10,
+          "slide": 6,
+          "slideBodyIndex": 3,
+          "sourceEnglish": "The record also shows which months leave the household buying food.",
+          "canonicalBodySource": "The record also shows which months leave the household buying food.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa tea u renga zwiḽiwa.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 11,
+          "slide": 7,
+          "slideBodyIndex": 0,
+          "sourceEnglish": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+          "canonicalBodySource": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Musi ni sa athu vhea mutengo, ṅwalani production, packing and selling costs, hu tshi katelwa mushumo na transport.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Musi ni sa athu vhea mutengo, ṅwalani masheleni a u bveledza, u paka na u rengisa, hu tshi katelwa mushumo na transport.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 12,
+          "slide": 7,
+          "slideBodyIndex": 1,
+          "sourceEnglish": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+          "canonicalBodySource": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+          "beforeTarget": {
+            "status": "english-hold"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Tsumbo iyi ndi ya u funza, a si mutengo wa makete: tomatoes cost R18 per kilogram to produce but sell for R15 per kilogram. Mutengo wonoyo a u swikeli cost yo bulwaho.",
+            "provenance": "root-accepted unreviewed machine draft; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 13,
+          "slide": 7,
+          "slideBodyIndex": 2,
+          "sourceEnglish": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+          "canonicalBodySource": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Sedzani mutengo, costs na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u fulufhedzisi uri hu ḓo rengiswa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Sedzani mutengo, costs na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u khwaṱhisedzi uri zwi ḓo rengiswa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "repair",
+          "rootReason": "Costs are not confined to money already spent. Preserve review of costs broadly; retain accurate candidate purchase/no-guaranteed-sale clauses."
+        },
+        {
+          "paragraphIndex": 14,
+          "slide": 8,
+          "slideBodyIndex": 0,
+          "sourceEnglish": "Use your record to find when household food runs short.",
+          "canonicalBodySource": "Use your record to find when household food runs short.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Shumisani rekhodo yaṋu u wana uri zwiḽiwa zwa muṱa zwi ṱhaela lini.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Shumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 15,
+          "slide": 8,
+          "slideBodyIndex": 1,
+          "sourceEnglish": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+          "canonicalBodySource": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Nangani crops dzine dza tea fhethu haṋu, ni pulane ni tshi vhalela murahu ni tshi bva kha harvest ine na i ṱoḓa. Sedzani nyimele dza u ṱavha na tshifhinga tshine khaṋo ya lavhelelwa u swika ngatsho.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Nangani zwimela zwine zwa tea vhupo haṋu, ni dzudzanye ni tshi vhalela murahu u bva kha harvest ine na i ṱoḓa. Ṱolani nyimele dza u zwala na tshifhinga tsho lavhelelwaho tsha u kaṋa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "repair",
+          "rootReason": "Candidate unverified khanwiwa replacement risks harvest noun meaning. Preserve exact current harvest anchor while retaining defensible ordinary local crop/backwards/conditions/time framing."
+        },
+        {
+          "paragraphIndex": 16,
+          "slide": 8,
+          "slideBodyIndex": 2,
+          "sourceEnglish": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+          "canonicalBodySource": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Datumu ine ya shuma kha ḽiṅwe bulasi i nga sa shuma hafha. Engedzani a backup plan musi mvula, maḓi kana zwimela zwi tshi kundelwa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Ḓuvha ḽine ḽa shuma bulasini ḽiṅwe ḽi nga kha ḽi sa shumi fhano. Katelani a backup plan arali mvula, maḓi kana zwimela zwa kundelwa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "repair",
+          "rootReason": "Generic plan to help does not preserve fallback/backup scope. Narrow exact backup plan inside translated may-not-work and rain/water/crops fail conditions."
+        }
+      ],
+      "cardTitle": {
+        "field": "card.title",
+        "slide": 1,
+        "sourceEnglish": "Market Gardening & Community",
+        "canonicalSource": "Market Gardening & Community",
+        "beforeTarget": {
+          "status": "draft",
+          "text": "U Ṱavha Zwimela U Itela Maraga na Vhadzulapo",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "afterTarget": {
+          "status": "draft",
+          "text": "U Ṱavha Zwimela U Itela Maraga na Vhadzulapo",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "rootOutcome": "accept"
+      },
+      "cardDescription": {
+        "sourceEnglish": "This module shows how to keep records, sell surplus, and build local food networks.",
+        "canonicalModuleDescription": "Record-keeping, selling surplus and building local food networks.",
+        "sourceEnglishFieldMatch": false,
+        "action": "preserved unchanged because slide-1 body prose is not an exact source-field match",
+        "target": {
+          "status": "draft",
+          "text": "Modulu uyu u sumbedza nḓila ya u vhulunga rekhodo, u rengisa zwo salaho, na u fhaṱa vhukwamani ha zwiḽiwa ha henefho.",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        }
+      },
+      "preservedOutOfScopeFrames": [
+        3,
+        4,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "preservedOutOfScopeTargetSha256": "d53046d9ea70c395589d4c7283c5a20bdbec5f98248bcb7fecf56b28ab29be02",
+      "targetReviewStatus": "unreviewed",
+      "changedBodyTargets": 13
+    },
+    "ts": {
+      "file": "docs/narration/market-community.ts.paired-draft.json",
+      "changedFrames": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        8
+      ],
+      "bodyFieldCount": 17,
+      "bodyFields": [
+        {
+          "paragraphIndex": 0,
+          "slide": 2,
+          "slideBodyIndex": 0,
+          "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.",
+          "canonicalBodySource": "A harvest can feed the household, be sold, be shared, or be lost.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.",
+            "provenance": "reused verbatim from XITSONGA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.",
+            "provenance": "reused verbatim from XITSONGA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 1,
+          "slide": 2,
+          "slideBodyIndex": 1,
+          "sourceEnglish": "Recording these different uses helps you see what the farm produces and what reaches customers.",
+          "canonicalBodySource": "Recording these different uses helps you see what the farm produces and what reaches customers.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Ku tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.",
+            "provenance": "reused verbatim from XITSONGA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Ku tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.",
+            "provenance": "reused verbatim from XITSONGA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 2,
+          "slide": 2,
+          "slideBodyIndex": 2,
+          "sourceEnglish": "Use that information to protect household food and make better business decisions.",
+          "canonicalBodySource": "Use that information to protect household food and make better business decisions.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Tirhisa rungula rero ku hlayisa swakudya swa ndyangu ni ku endla better business decisions.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Tirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 3,
+          "slide": 5,
+          "slideBodyIndex": 0,
+          "sourceEnglish": "Write down every harvest as it happens.",
+          "canonicalBodySource": "Write down every harvest as it happens.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Tsala ntshovelo wun'wana ni wun'wana loko wu humelela.",
+            "provenance": "reused verbatim from XITSONGA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Tsala ntshovelo wun'wana ni wun'wana loko wu humelela.",
+            "provenance": "reused verbatim from XITSONGA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 4,
+          "slide": 5,
+          "slideBodyIndex": 1,
+          "sourceEnglish": "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+          "canonicalBodySource": "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Tsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, u tlhela u tsala laha xin’wana ni xin’wana xi yeke kona.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Tsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 5,
+          "slide": 5,
+          "slideBodyIndex": 2,
+          "sourceEnglish": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+          "canonicalBodySource": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Tirhisa mukhuva lowu wo olova eka swakudya leswi hlayisiwaka ekaya, leswi xavisiwaka, leswi nyikiwaka van’wana, ni leswi endliwaka compost.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Tirhisa mukhuva lowu wo olova lowu fanaka eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 6,
+          "slide": 5,
+          "slideBodyIndex": 3,
+          "sourceEnglish": "Do not rely on memory at the end of the season.",
+          "canonicalBodySource": "Do not rely on memory at the end of the season.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Loko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.",
+            "provenance": "reused verbatim from XITSONGA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Loko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.",
+            "provenance": "reused verbatim from XITSONGA_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 7,
+          "slide": 6,
+          "slideBodyIndex": 0,
+          "sourceEnglish": "One season of records answers practical questions.",
+          "canonicalBodySource": "One season of records answers practical questions.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Nguva yin’we ya tirhekhodo yi hlamula swivutiso leswi pfunaka.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Nguva yin’we ya tirhekhodo yi hlamula swivutiso leswi pfunaka.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 8,
+          "slide": 6,
+          "slideBodyIndex": 1,
+          "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+          "canonicalBodySource": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return for each hour of work?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return for each hour of work?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "repair",
+          "rootReason": "Candidate weakens best/most comparative ranking; Tshivenda also narrows return to money. Preserve accurate current ordinary question framing and exact best yield per bed / the most return for each hour of work anchors."
+        },
+        {
+          "paragraphIndex": 9,
+          "slide": 6,
+          "slideBodyIndex": 2,
+          "sourceEnglish": "Which crops use more seeds, water, and compost than they return?",
+          "canonicalBodySource": "Which crops use more seeds, water, and compost than they return?",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Hi swihi swimilana leswi tirhisaka mbewu, mati ni compost yo tala ku hundza leswi swi swi humesaka?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Hi swihi swibyariwa leswi tirhisaka mbewu, mati na compost swo tala ku tlurisa leswi swi swi vuyisaka?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 10,
+          "slide": 6,
+          "slideBodyIndex": 3,
+          "sourceEnglish": "The record also shows which months leave the household buying food.",
+          "canonicalBodySource": "The record also shows which months leave the household buying food.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Rekhodo yi tlhela yi komba tin'wana ta tin'hweti leti ndyangu wu xava swakudya.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Rekhodo yi tlhela yi komba leswaku muti wu xava swakudya hi tin’hweti tihi.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 11,
+          "slide": 7,
+          "slideBodyIndex": 0,
+          "sourceEnglish": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+          "canonicalBodySource": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "U nga si veka nxavo, tsala production, packing and selling costs, ku katsa labour ni transport.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "U nga si veka nxavo, tsala production, packing and selling costs, ku katsa labour ni transport.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "repair",
+          "rootReason": "Candidate narrows labour to employee money and transport to moving goods. Restore exact cost categories and all labour/transport scope inside existing localized before-setting-price frame."
+        },
+        {
+          "paragraphIndex": 12,
+          "slide": 7,
+          "slideBodyIndex": 1,
+          "sourceEnglish": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+          "canonicalBodySource": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+          "beforeTarget": {
+            "status": "english-hold"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Lexi i xikombiso xo dyondzisa, a hi nxavo wa makete: matamatisi ya durha R18 hi kilogram ku ma humesa, kambe ya xavisiwa hi R15 hi kilogram. Nxavo wolowo a wu hakeli ntsengo lowu boxiweke.",
+            "provenance": "root-accepted unreviewed machine draft; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "repair",
+          "rootReason": "The actual saved prior repairedTarget has Lowu i with the noun and wa ku dyondzisa. For the inspected example noun, class xi concord is Lexi and xo. Correct only the introduction; preserve numeric cost/sale per kilogram and not-market-price scope."
+        },
+        {
+          "paragraphIndex": 13,
+          "slide": 7,
+          "slideBodyIndex": 2,
+          "sourceEnglish": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+          "canonicalBodySource": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Languta nxavo, ntsengo ni ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombisaka a wu tiyisisi ku xavisiwa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Languta nxavo, costs ni ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombisaka a wu tiyisisi ku xavisiwa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "repair",
+          "rootReason": "Restore actual purchases rather than wants and no guaranteed sale rather than no guaranteed customers. Current ordinary clauses are already faithful; retain costs narrowly."
+        },
+        {
+          "paragraphIndex": 14,
+          "slide": 8,
+          "slideBodyIndex": 0,
+          "sourceEnglish": "Use your record to find when household food runs short.",
+          "canonicalBodySource": "Use your record to find when household food runs short.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Tirhisa rekhodo ya wena ku kuma nkarhi lowu swakudya swa ndyangu swi kayivelaka.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Tirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 15,
+          "slide": 8,
+          "slideBodyIndex": 1,
+          "sourceEnglish": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+          "canonicalBodySource": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Hlawula swimilana leswi faneleke ndhawu ya ka n’wina, u tlhela u tirha u tlhelela endzhaku ku suka eka ntshovelo lowu u wu lavaka. Kambisisa swiyimo swa ku byala ni nkarhi lowu ntshovelo wu languteriwaka ku fika ha wona.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Hlawula swibyariwa leswi faneleke ndhawu ya wena, u tlhela u tirha u tlhelela endzhaku ku suka eka ntshovelo lowu u wu lavaka. Kambisisa swiyimo swa ku byala ni nkarhi lowu ntshovelo wu languteriwaka ku fika ha wona.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        },
+        {
+          "paragraphIndex": 16,
+          "slide": 8,
+          "slideBodyIndex": 2,
+          "sourceEnglish": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+          "canonicalBodySource": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Siku leri tirhaka epurasini rin’wana ri nga ha ka ri nga tirhi laha. Nghenisa pulani ya vumbirhi loko mpfula, mati kumbe swimilana swi tsandzeka.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "afterTarget": {
+            "status": "draft",
+            "text": "Siku leri tirhaka epurasini rin’wana ri nga ha ka ri nga tirhi laha. Nghenisa pulani ya vumbirhi loko mpfula, mati kumbe swibyariwa swi tsandzeka.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "rootOutcome": "accept",
+          "rootReason": "Source-bound semantic review accepts this machine draft: preserves the source scope, conditions and ordered relationships; existing accurate clauses preserved. No fluent approval."
+        }
+      ],
+      "cardTitle": {
+        "field": "card.title",
+        "slide": 1,
+        "sourceEnglish": "Market Gardening & Community",
+        "canonicalSource": "Market Gardening & Community",
+        "beforeTarget": {
+          "status": "draft",
+          "text": "Vurimi Bya Masimu Ya Mbuyelo Ni Vuxaka Bya Vaaki",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "afterTarget": {
+          "status": "draft",
+          "text": "Market Gardening Ni Vaaki",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "rootOutcome": "repair"
+      },
+      "cardDescription": {
+        "sourceEnglish": "This module shows how to keep records, sell surplus, and build local food networks.",
+        "canonicalModuleDescription": "Record-keeping, selling surplus and building local food networks.",
+        "sourceEnglishFieldMatch": false,
+        "action": "preserved unchanged because slide-1 body prose is not an exact source-field match",
+        "target": {
+          "status": "draft",
+          "text": "Dyondzo leyi yi komba ndlela yo hlayisa tirhekhodo, ku xavisa leswi saleke, ni ku aka local food networks.",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        }
+      },
+      "preservedOutOfScopeFrames": [
+        3,
+        4,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "preservedOutOfScopeTargetSha256": "62f43e2f4cb02f2e8ef236f54821cbd334b0bbc34f32fe7ea84dfa7033ab637c",
+      "targetReviewStatus": "unreviewed",
+      "changedBodyTargets": 10
+    }
+  },
+  "assetProof": "docs/media/market-community/l1-completion-20261005/assets-proof.json",
+  "contactSheet": "docs/media/market-community/l1-completion-20261005/changed-frames-contact-sheet.jpg"
+}

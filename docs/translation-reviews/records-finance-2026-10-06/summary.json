@@ -1,0 +1,21 @@
+{
+ "st": {
+  "accepted": 516,
+  "held": 27,
+  "retired": 1
+ },
+ "ve": {
+  "accepted": 489,
+  "held": 54,
+  "retired": 1
+ },
+ "ts": {
+  "accepted": 494,
+  "held": 49,
+  "retired": 1
+ },
+ "zu": {
+  "accepted": 84,
+  "held": 3
+ }
+}

@@ -1,0 +1,3206 @@
+{
+  "head": "25f6baaefc56e82a4fae5f679a43aa5f605d66f0",
+  "worktree": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField",
+  "scope": "Reachable core Study UI dictionary fallbacks for isiZulu, Sesotho, Tshivenda and Xitsonga. Excludes design/finance reserve preview cards and general app guides. No translation wording proposed. Farm Finance/Design reserve previews and app guides excluded. Shared app header chrome is outside these page/player-owned files. The dictionary inventory includes main learner states and expanded lesson controls.",
+  "rows": [
+    {
+      "language": "st",
+      "key": "studentMinutes",
+      "englishSource": "min",
+      "file": "app/student/page.tsx",
+      "line": 80,
+      "otherSourceLocations": [
+        {
+          "file": "app/student/page.tsx",
+          "line": 83,
+          "condition": "remaining > 0"
+        }
+      ],
+      "displayCondition": "mins < 60",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentHourOne",
+      "englishSource": "h",
+      "file": "app/student/page.tsx",
+      "line": 83,
+      "otherSourceLocations": [],
+      "displayCondition": "hours === 1",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentHours",
+      "englishSource": "h",
+      "file": "app/student/page.tsx",
+      "line": 83,
+      "otherSourceLocations": [],
+      "displayCondition": "not (hours === 1)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentFacilitatorVideo",
+      "englishSource": "Facilitator training video — for in-person sessions, not for streaming here.",
+      "file": "app/student/page.tsx",
+      "line": 396,
+      "otherSourceLocations": [],
+      "displayCondition": "open → lesson.videoUrl",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentSubmitError",
+      "englishSource": "Could not submit — check your connection and try again.",
+      "file": "app/student/page.tsx",
+      "line": 497,
+      "otherSourceLocations": [],
+      "displayCondition": "Study learner page at app/student/page.tsx:497; shown in the containing module/lesson/task state.",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentPhotoAdded",
+      "englishSource": "Photo added — tap to change",
+      "file": "app/student/page.tsx",
+      "line": 545,
+      "otherSourceLocations": [],
+      "displayCondition": "photoPreview",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentPhotoRequired",
+      "englishSource": "Add a photo (required)",
+      "file": "app/student/page.tsx",
+      "line": 545,
+      "otherSourceLocations": [],
+      "displayCondition": "not (photoPreview)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentVoiceAdded",
+      "englishSource": "Voice note added — {name}",
+      "file": "app/student/page.tsx",
+      "line": 560,
+      "otherSourceLocations": [],
+      "displayCondition": "voiceFile",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentVoiceOptional",
+      "englishSource": "Add a voice note (optional)",
+      "file": "app/student/page.tsx",
+      "line": 560,
+      "otherSourceLocations": [],
+      "displayCondition": "not (voiceFile)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentSubmitting",
+      "englishSource": "Submitting…",
+      "file": "app/student/page.tsx",
+      "line": 578,
+      "otherSourceLocations": [],
+      "displayCondition": "submitting",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentResubmit",
+      "englishSource": "Resubmit",
+      "file": "app/student/page.tsx",
+      "line": 579,
+      "otherSourceLocations": [],
+      "displayCondition": "not (submitting) → existing",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentSubmit",
+      "englishSource": "Submit",
+      "file": "app/student/page.tsx",
+      "line": 579,
+      "otherSourceLocations": [],
+      "displayCondition": "not (submitting) → not (existing)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentAlreadySubmitted",
+      "englishSource": "Already submitted — submitting again replaces the photo and voice note.",
+      "file": "app/student/page.tsx",
+      "line": 584,
+      "otherSourceLocations": [],
+      "displayCondition": "existing",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentPortalBody",
+      "englishSource": "It's set up for students — not your role. Head back to your own home to keep going.",
+      "file": "app/student/page.tsx",
+      "line": 793,
+      "otherSourceLocations": [],
+      "displayCondition": "!loading && user && isLive && role && !STUDENT_ALLOWED_ROLES.has(role)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentCourseComplete",
+      "englishSource": "Course complete!",
+      "file": "app/student/page.tsx",
+      "line": 913,
+      "otherSourceLocations": [
+        {
+          "file": "app/student/page.tsx",
+          "line": 1466,
+          "condition": "pct === 100"
+        }
+      ],
+      "displayCondition": "not (fetching) → pct === 100",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentProgressError",
+      "englishSource": "Progress could not be loaded or saved. Check your connection or account access.",
+      "file": "app/student/page.tsx",
+      "line": 922,
+      "otherSourceLocations": [],
+      "displayCondition": "progressError",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentSetByMentor",
+      "englishSource": "Set by your mentor",
+      "file": "app/student/page.tsx",
+      "line": 954,
+      "otherSourceLocations": [],
+      "displayCondition": "assignSummary && assignSummary.total > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentProgress",
+      "englishSource": "{done} of {total} done.",
+      "file": "app/student/page.tsx",
+      "line": 961,
+      "otherSourceLocations": [
+        {
+          "file": "app/student/page.tsx",
+          "line": 976,
+          "condition": "assignSummary && assignSummary.total > 0 → not (simple)"
+        }
+      ],
+      "displayCondition": "assignSummary && assignSummary.total > 0 → simple",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentOverdue",
+      "englishSource": "{count} overdue.",
+      "file": "app/student/page.tsx",
+      "line": 965,
+      "otherSourceLocations": [
+        {
+          "file": "app/student/page.tsx",
+          "line": 980,
+          "condition": "assignSummary && assignSummary.total > 0 → not (simple) → assignSummary.overdue > 0"
+        }
+      ],
+      "displayCondition": "assignSummary && assignSummary.total > 0 → simple → assignSummary.overdue > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentDueSoon",
+      "englishSource": "{count} due this week.",
+      "file": "app/student/page.tsx",
+      "line": 969,
+      "otherSourceLocations": [
+        {
+          "file": "app/student/page.tsx",
+          "line": 986,
+          "condition": "assignSummary && assignSummary.total > 0 → not (simple) → assignSummary.dueSoon > 0"
+        }
+      ],
+      "displayCondition": "assignSummary && assignSummary.total > 0 → simple → not (assignSummary.overdue > 0) → assignSummary.dueSoon > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentsOrder",
+      "englishSource": "Assigned modules are listed first. Everything else is still open to you.",
+      "file": "app/student/page.tsx",
+      "line": 991,
+      "otherSourceLocations": [],
+      "displayCondition": "assignSummary && assignSummary.total > 0 → not (simple)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessCompleteDetail",
+      "englishSource": "All {lessons} lessons are illustrated, narrated in {languages} languages, and have slides and animations.",
+      "file": "app/student/page.tsx",
+      "line": 1047,
+      "otherSourceLocations": [],
+      "displayCondition": "readiness?.text === 'Fully built'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessNarratedDetail",
+      "englishSource": "Illustrated slides and narration are ready in {languages} languages. Translation review is still outstanding.",
+      "file": "app/student/page.tsx",
+      "line": 1051,
+      "otherSourceLocations": [],
+      "displayCondition": "not (readiness?.text === 'Fully built') → readiness?.text === 'Narrated slides'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessLessonsDetail",
+      "englishSource": "Reading and pictures are ready. Narration and slides are still being made.",
+      "file": "app/student/page.tsx",
+      "line": 1052,
+      "otherSourceLocations": [],
+      "displayCondition": "not (readiness?.text === 'Fully built') → not (readiness?.text === 'Narrated slides')",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessComplete",
+      "englishSource": "Fully built",
+      "file": "app/student/page.tsx",
+      "line": 1158,
+      "otherSourceLocations": [],
+      "displayCondition": "!simple && isStaff → readiness?.text === 'Fully built'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessNarrated",
+      "englishSource": "Narrated slides",
+      "file": "app/student/page.tsx",
+      "line": 1160,
+      "otherSourceLocations": [],
+      "displayCondition": "!simple && isStaff → not (readiness?.text === 'Fully built') → readiness?.text === 'Narrated slides'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessLessons",
+      "englishSource": "Lessons only",
+      "file": "app/student/page.tsx",
+      "line": 1161,
+      "otherSourceLocations": [],
+      "displayCondition": "!simple && isStaff → not (readiness?.text === 'Fully built') → not (readiness?.text === 'Narrated slides')",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentMarkComplete",
+      "englishSource": "Mark as complete",
+      "file": "app/student/page.tsx",
+      "line": 1225,
+      "otherSourceLocations": [],
+      "displayCondition": "not (done)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentListenModule",
+      "englishSource": "Listen to the whole module",
+      "file": "app/student/page.tsx",
+      "line": 1298,
+      "otherSourceLocations": [],
+      "displayCondition": "isExpanded && mod.lessons && mod.lessons.length > 0 → not (hasDeck(mod.id)) → hasNarration(mod.id)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentSubmittedResubmit",
+      "englishSource": "Submitted — tap to resubmit",
+      "file": "app/student/page.tsx",
+      "line": 1333,
+      "otherSourceLocations": [],
+      "displayCondition": "content → submission",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentSubmitModule",
+      "englishSource": "Submit this module",
+      "file": "app/student/page.tsx",
+      "line": 1333,
+      "otherSourceLocations": [],
+      "displayCondition": "content → not (submission)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentCapstoneComplete",
+      "englishSource": "You have finished every module. Build your final design plan-set in the Design Studio — that is your completion artifact for the course.",
+      "file": "app/student/page.tsx",
+      "line": 1376,
+      "otherSourceLocations": [],
+      "displayCondition": "capstoneUnlocked",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentCompletionMessage",
+      "englishSource": "You have completed the full ImbewuField permaculture curriculum. If you have a mentor, they will see this progress next time they check in.",
+      "file": "app/student/page.tsx",
+      "line": 1473,
+      "otherSourceLocations": [],
+      "displayCondition": "pct === 100",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "studentProgressFirebase",
+      "englishSource": "Progress will save to Firebase once the backend is connected",
+      "file": "app/student/page.tsx",
+      "line": 1480,
+      "otherSourceLocations": [],
+      "displayCondition": "!isLive",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentMinutes",
+      "englishSource": "min",
+      "file": "app/student/page.tsx",
+      "line": 80,
+      "otherSourceLocations": [
+        {
+          "file": "app/student/page.tsx",
+          "line": 83,
+          "condition": "remaining > 0"
+        }
+      ],
+      "displayCondition": "mins < 60",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentHourOne",
+      "englishSource": "h",
+      "file": "app/student/page.tsx",
+      "line": 83,
+      "otherSourceLocations": [],
+      "displayCondition": "hours === 1",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentHours",
+      "englishSource": "h",
+      "file": "app/student/page.tsx",
+      "line": 83,
+      "otherSourceLocations": [],
+      "displayCondition": "not (hours === 1)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentCorrect",
+      "englishSource": "Correct",
+      "file": "app/student/page.tsx",
+      "line": 170,
+      "otherSourceLocations": [],
+      "displayCondition": "revealed && isCorrect",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentListenOrRead",
+      "englishSource": "Listen or read",
+      "file": "app/student/page.tsx",
+      "line": 260,
+      "otherSourceLocations": [],
+      "displayCondition": "hasAudio",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentWatchAndListen",
+      "englishSource": "Watch and listen",
+      "file": "app/student/page.tsx",
+      "line": 325,
+      "otherSourceLocations": [],
+      "displayCondition": "open → hasDeck(moduleId) → not (deckOpen)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentFacilitatorVideo",
+      "englishSource": "Facilitator training video — for in-person sessions, not for streaming here.",
+      "file": "app/student/page.tsx",
+      "line": 396,
+      "otherSourceLocations": [],
+      "displayCondition": "open → lesson.videoUrl",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmitError",
+      "englishSource": "Could not submit — check your connection and try again.",
+      "file": "app/student/page.tsx",
+      "line": 497,
+      "otherSourceLocations": [],
+      "displayCondition": "Study learner page at app/student/page.tsx:497; shown in the containing module/lesson/task state.",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentPhotoAdded",
+      "englishSource": "Photo added — tap to change",
+      "file": "app/student/page.tsx",
+      "line": 545,
+      "otherSourceLocations": [],
+      "displayCondition": "photoPreview",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentPhotoRequired",
+      "englishSource": "Add a photo (required)",
+      "file": "app/student/page.tsx",
+      "line": 545,
+      "otherSourceLocations": [],
+      "displayCondition": "not (photoPreview)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentVoiceAdded",
+      "englishSource": "Voice note added — {name}",
+      "file": "app/student/page.tsx",
+      "line": 560,
+      "otherSourceLocations": [],
+      "displayCondition": "voiceFile",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentVoiceOptional",
+      "englishSource": "Add a voice note (optional)",
+      "file": "app/student/page.tsx",
+      "line": 560,
+      "otherSourceLocations": [],
+      "displayCondition": "not (voiceFile)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmitting",
+      "englishSource": "Submitting…",
+      "file": "app/student/page.tsx",
+      "line": 578,
+      "otherSourceLocations": [],
+      "displayCondition": "submitting",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentResubmit",
+      "englishSource": "Resubmit",
+      "file": "app/student/page.tsx",
+      "line": 579,
+      "otherSourceLocations": [],
+      "displayCondition": "not (submitting) → existing",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmit",
+      "englishSource": "Submit",
+      "file": "app/student/page.tsx",
+      "line": 579,
+      "otherSourceLocations": [],
+      "displayCondition": "not (submitting) → not (existing)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentAlreadySubmitted",
+      "englishSource": "Already submitted — submitting again replaces the photo and voice note.",
+      "file": "app/student/page.tsx",
+      "line": 584,
+      "otherSourceLocations": [],
+      "displayCondition": "existing",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentPortal",
+      "englishSource": "Learning Portal",
+      "file": "app/student/page.tsx",
+      "line": 782,
+      "otherSourceLocations": [],
+      "displayCondition": "!loading && user && isLive && role && !STUDENT_ALLOWED_ROLES.has(role)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentPortalTitle",
+      "englishSource": "This is the Learning Portal",
+      "file": "app/student/page.tsx",
+      "line": 791,
+      "otherSourceLocations": [],
+      "displayCondition": "!loading && user && isLive && role && !STUDENT_ALLOWED_ROLES.has(role)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentPortalBody",
+      "englishSource": "It's set up for students — not your role. Head back to your own home to keep going.",
+      "file": "app/student/page.tsx",
+      "line": 793,
+      "otherSourceLocations": [],
+      "displayCondition": "!loading && user && isLive && role && !STUDENT_ALLOWED_ROLES.has(role)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentBackHome",
+      "englishSource": "Back to my home",
+      "file": "app/student/page.tsx",
+      "line": 801,
+      "otherSourceLocations": [],
+      "displayCondition": "!loading && user && isLive && role && !STUDENT_ALLOWED_ROLES.has(role)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentRevisit",
+      "englishSource": "Revisit your studies",
+      "file": "app/student/page.tsx",
+      "line": 880,
+      "otherSourceLocations": [],
+      "displayCondition": "pct === 100",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentCourseComplete",
+      "englishSource": "Course complete!",
+      "file": "app/student/page.tsx",
+      "line": 913,
+      "otherSourceLocations": [
+        {
+          "file": "app/student/page.tsx",
+          "line": 1466,
+          "condition": "pct === 100"
+        }
+      ],
+      "displayCondition": "not (fetching) → pct === 100",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentProgressError",
+      "englishSource": "Progress could not be loaded or saved. Check your connection or account access.",
+      "file": "app/student/page.tsx",
+      "line": 922,
+      "otherSourceLocations": [],
+      "displayCondition": "progressError",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentPractitioner",
+      "englishSource": "Permaculture practitioner",
+      "file": "app/student/page.tsx",
+      "line": 939,
+      "otherSourceLocations": [],
+      "displayCondition": "!simple && pct === 100",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentSetByMentor",
+      "englishSource": "Set by your mentor",
+      "file": "app/student/page.tsx",
+      "line": 954,
+      "otherSourceLocations": [],
+      "displayCondition": "assignSummary && assignSummary.total > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentProgress",
+      "englishSource": "{done} of {total} done.",
+      "file": "app/student/page.tsx",
+      "line": 961,
+      "otherSourceLocations": [
+        {
+          "file": "app/student/page.tsx",
+          "line": 976,
+          "condition": "assignSummary && assignSummary.total > 0 → not (simple)"
+        }
+      ],
+      "displayCondition": "assignSummary && assignSummary.total > 0 → simple",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentOverdue",
+      "englishSource": "{count} overdue.",
+      "file": "app/student/page.tsx",
+      "line": 965,
+      "otherSourceLocations": [
+        {
+          "file": "app/student/page.tsx",
+          "line": 980,
+          "condition": "assignSummary && assignSummary.total > 0 → not (simple) → assignSummary.overdue > 0"
+        }
+      ],
+      "displayCondition": "assignSummary && assignSummary.total > 0 → simple → assignSummary.overdue > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentDueSoon",
+      "englishSource": "{count} due this week.",
+      "file": "app/student/page.tsx",
+      "line": 969,
+      "otherSourceLocations": [
+        {
+          "file": "app/student/page.tsx",
+          "line": 986,
+          "condition": "assignSummary && assignSummary.total > 0 → not (simple) → assignSummary.dueSoon > 0"
+        }
+      ],
+      "displayCondition": "assignSummary && assignSummary.total > 0 → simple → not (assignSummary.overdue > 0) → assignSummary.dueSoon > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentsOrder",
+      "englishSource": "Assigned modules are listed first. Everything else is still open to you.",
+      "file": "app/student/page.tsx",
+      "line": 991,
+      "otherSourceLocations": [],
+      "displayCondition": "assignSummary && assignSummary.total > 0 → not (simple)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessCompleteDetail",
+      "englishSource": "All {lessons} lessons are illustrated, narrated in {languages} languages, and have slides and animations.",
+      "file": "app/student/page.tsx",
+      "line": 1047,
+      "otherSourceLocations": [],
+      "displayCondition": "readiness?.text === 'Fully built'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessNarratedDetail",
+      "englishSource": "Illustrated slides and narration are ready in {languages} languages. Translation review is still outstanding.",
+      "file": "app/student/page.tsx",
+      "line": 1051,
+      "otherSourceLocations": [],
+      "displayCondition": "not (readiness?.text === 'Fully built') → readiness?.text === 'Narrated slides'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessLessonsDetail",
+      "englishSource": "Reading and pictures are ready. Narration and slides are still being made.",
+      "file": "app/student/page.tsx",
+      "line": 1052,
+      "otherSourceLocations": [],
+      "displayCondition": "not (readiness?.text === 'Fully built') → not (readiness?.text === 'Narrated slides')",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentLocked",
+      "englishSource": "Locked",
+      "file": "app/student/page.tsx",
+      "line": 1088,
+      "otherSourceLocations": [],
+      "displayCondition": "!unlocked",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentComplete",
+      "englishSource": "Complete",
+      "file": "app/student/page.tsx",
+      "line": 1109,
+      "otherSourceLocations": [],
+      "displayCondition": "done",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessComplete",
+      "englishSource": "Fully built",
+      "file": "app/student/page.tsx",
+      "line": 1158,
+      "otherSourceLocations": [],
+      "displayCondition": "!simple && isStaff → readiness?.text === 'Fully built'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessNarrated",
+      "englishSource": "Narrated slides",
+      "file": "app/student/page.tsx",
+      "line": 1160,
+      "otherSourceLocations": [],
+      "displayCondition": "!simple && isStaff → not (readiness?.text === 'Fully built') → readiness?.text === 'Narrated slides'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessLessons",
+      "englishSource": "Lessons only",
+      "file": "app/student/page.tsx",
+      "line": 1161,
+      "otherSourceLocations": [],
+      "displayCondition": "!simple && isStaff → not (readiness?.text === 'Fully built') → not (readiness?.text === 'Narrated slides')",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentAssigned",
+      "englishSource": "Assigned",
+      "file": "app/student/page.tsx",
+      "line": 1172,
+      "otherSourceLocations": [],
+      "displayCondition": "state && state !== 'done'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkComplete",
+      "englishSource": "Mark as complete",
+      "file": "app/student/page.tsx",
+      "line": 1225,
+      "otherSourceLocations": [],
+      "displayCondition": "not (done)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentDone",
+      "englishSource": "Done",
+      "file": "app/student/page.tsx",
+      "line": 1239,
+      "otherSourceLocations": [],
+      "displayCondition": "not (isToggling) → done",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentListenModule",
+      "englishSource": "Listen to the whole module",
+      "file": "app/student/page.tsx",
+      "line": 1298,
+      "otherSourceLocations": [],
+      "displayCondition": "isExpanded && mod.lessons && mod.lessons.length > 0 → not (hasDeck(mod.id)) → hasNarration(mod.id)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmittedResubmit",
+      "englishSource": "Submitted — tap to resubmit",
+      "file": "app/student/page.tsx",
+      "line": 1333,
+      "otherSourceLocations": [],
+      "displayCondition": "content → submission",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmitModule",
+      "englishSource": "Submit this module",
+      "file": "app/student/page.tsx",
+      "line": 1333,
+      "otherSourceLocations": [],
+      "displayCondition": "content → not (submission)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentCapstone",
+      "englishSource": "Capstone: your farm design",
+      "file": "app/student/page.tsx",
+      "line": 1371,
+      "otherSourceLocations": [],
+      "displayCondition": "Study learner page at app/student/page.tsx:1371; shown in the containing module/lesson/task state.",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentCapstoneComplete",
+      "englishSource": "You have finished every module. Build your final design plan-set in the Design Studio — that is your completion artifact for the course.",
+      "file": "app/student/page.tsx",
+      "line": 1376,
+      "otherSourceLocations": [],
+      "displayCondition": "capstoneUnlocked",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentCapstoneLocked",
+      "englishSource": "Finish and submit all {count} modules to unlock your capstone design.",
+      "file": "app/student/page.tsx",
+      "line": 1377,
+      "otherSourceLocations": [],
+      "displayCondition": "not (capstoneUnlocked)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentCompletionMessage",
+      "englishSource": "You have completed the full ImbewuField permaculture curriculum. If you have a mentor, they will see this progress next time they check in.",
+      "file": "app/student/page.tsx",
+      "line": 1473,
+      "otherSourceLocations": [],
+      "displayCondition": "pct === 100",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentProgressFirebase",
+      "englishSource": "Progress will save to Firebase once the backend is connected",
+      "file": "app/student/page.tsx",
+      "line": 1480,
+      "otherSourceLocations": [],
+      "displayCondition": "!isLive",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ve",
+      "key": "studentCategoryBusiness",
+      "englishSource": "Business",
+      "file": "app/student/page.tsx",
+      "line": 1083,
+      "otherSourceLocations": [
+        {
+          "file": "app/student/page.tsx",
+          "line": 1133,
+          "condition": "not (simple)"
+        }
+      ],
+      "displayCondition": "!unlocked",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentMinutes",
+      "englishSource": "min",
+      "file": "app/student/page.tsx",
+      "line": 80,
+      "otherSourceLocations": [
+        {
+          "file": "app/student/page.tsx",
+          "line": 83,
+          "condition": "remaining > 0"
+        }
+      ],
+      "displayCondition": "mins < 60",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentHourOne",
+      "englishSource": "h",
+      "file": "app/student/page.tsx",
+      "line": 83,
+      "otherSourceLocations": [],
+      "displayCondition": "hours === 1",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentHours",
+      "englishSource": "h",
+      "file": "app/student/page.tsx",
+      "line": 83,
+      "otherSourceLocations": [],
+      "displayCondition": "not (hours === 1)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentCorrect",
+      "englishSource": "Correct",
+      "file": "app/student/page.tsx",
+      "line": 170,
+      "otherSourceLocations": [],
+      "displayCondition": "revealed && isCorrect",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentFacilitatorVideo",
+      "englishSource": "Facilitator training video — for in-person sessions, not for streaming here.",
+      "file": "app/student/page.tsx",
+      "line": 396,
+      "otherSourceLocations": [],
+      "displayCondition": "open → lesson.videoUrl",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentSubmitError",
+      "englishSource": "Could not submit — check your connection and try again.",
+      "file": "app/student/page.tsx",
+      "line": 497,
+      "otherSourceLocations": [],
+      "displayCondition": "Study learner page at app/student/page.tsx:497; shown in the containing module/lesson/task state.",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentPhotoAdded",
+      "englishSource": "Photo added — tap to change",
+      "file": "app/student/page.tsx",
+      "line": 545,
+      "otherSourceLocations": [],
+      "displayCondition": "photoPreview",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentPhotoRequired",
+      "englishSource": "Add a photo (required)",
+      "file": "app/student/page.tsx",
+      "line": 545,
+      "otherSourceLocations": [],
+      "displayCondition": "not (photoPreview)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentVoiceAdded",
+      "englishSource": "Voice note added — {name}",
+      "file": "app/student/page.tsx",
+      "line": 560,
+      "otherSourceLocations": [],
+      "displayCondition": "voiceFile",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentVoiceOptional",
+      "englishSource": "Add a voice note (optional)",
+      "file": "app/student/page.tsx",
+      "line": 560,
+      "otherSourceLocations": [],
+      "displayCondition": "not (voiceFile)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentSubmitting",
+      "englishSource": "Submitting…",
+      "file": "app/student/page.tsx",
+      "line": 578,
+      "otherSourceLocations": [],
+      "displayCondition": "submitting",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentResubmit",
+      "englishSource": "Resubmit",
+      "file": "app/student/page.tsx",
+      "line": 579,
+      "otherSourceLocations": [],
+      "displayCondition": "not (submitting) → existing",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentAlreadySubmitted",
+      "englishSource": "Already submitted — submitting again replaces the photo and voice note.",
+      "file": "app/student/page.tsx",
+      "line": 584,
+      "otherSourceLocations": [],
+      "displayCondition": "existing",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentPortalBody",
+      "englishSource": "It's set up for students — not your role. Head back to your own home to keep going.",
+      "file": "app/student/page.tsx",
+      "line": 793,
+      "otherSourceLocations": [],
+      "displayCondition": "!loading && user && isLive && role && !STUDENT_ALLOWED_ROLES.has(role)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentCourseComplete",
+      "englishSource": "Course complete!",
+      "file": "app/student/page.tsx",
+      "line": 913,
+      "otherSourceLocations": [
+        {
+          "file": "app/student/page.tsx",
+          "line": 1466,
+          "condition": "pct === 100"
+        }
+      ],
+      "displayCondition": "not (fetching) → pct === 100",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentModulesComplete",
+      "englishSource": "{done} of {total} modules complete",
+      "file": "app/student/page.tsx",
+      "line": 917,
+      "otherSourceLocations": [],
+      "displayCondition": "!fetching && !simple",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentProgressError",
+      "englishSource": "Progress could not be loaded or saved. Check your connection or account access.",
+      "file": "app/student/page.tsx",
+      "line": 922,
+      "otherSourceLocations": [],
+      "displayCondition": "progressError",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentRemaining",
+      "englishSource": "remaining",
+      "file": "app/student/page.tsx",
+      "line": 931,
+      "otherSourceLocations": [],
+      "displayCondition": "!simple && pct < 100 && totalMins > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentPractitioner",
+      "englishSource": "Permaculture practitioner",
+      "file": "app/student/page.tsx",
+      "line": 939,
+      "otherSourceLocations": [],
+      "displayCondition": "!simple && pct === 100",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentSetByMentor",
+      "englishSource": "Set by your mentor",
+      "file": "app/student/page.tsx",
+      "line": 954,
+      "otherSourceLocations": [],
+      "displayCondition": "assignSummary && assignSummary.total > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentProgress",
+      "englishSource": "{done} of {total} done.",
+      "file": "app/student/page.tsx",
+      "line": 961,
+      "otherSourceLocations": [
+        {
+          "file": "app/student/page.tsx",
+          "line": 976,
+          "condition": "assignSummary && assignSummary.total > 0 → not (simple)"
+        }
+      ],
+      "displayCondition": "assignSummary && assignSummary.total > 0 → simple",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentOverdue",
+      "englishSource": "{count} overdue.",
+      "file": "app/student/page.tsx",
+      "line": 965,
+      "otherSourceLocations": [
+        {
+          "file": "app/student/page.tsx",
+          "line": 980,
+          "condition": "assignSummary && assignSummary.total > 0 → not (simple) → assignSummary.overdue > 0"
+        }
+      ],
+      "displayCondition": "assignSummary && assignSummary.total > 0 → simple → assignSummary.overdue > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentDueSoon",
+      "englishSource": "{count} due this week.",
+      "file": "app/student/page.tsx",
+      "line": 969,
+      "otherSourceLocations": [
+        {
+          "file": "app/student/page.tsx",
+          "line": 986,
+          "condition": "assignSummary && assignSummary.total > 0 → not (simple) → assignSummary.dueSoon > 0"
+        }
+      ],
+      "displayCondition": "assignSummary && assignSummary.total > 0 → simple → not (assignSummary.overdue > 0) → assignSummary.dueSoon > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentsOrder",
+      "englishSource": "Assigned modules are listed first. Everything else is still open to you.",
+      "file": "app/student/page.tsx",
+      "line": 991,
+      "otherSourceLocations": [],
+      "displayCondition": "assignSummary && assignSummary.total > 0 → not (simple)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentSaveBeforeSignal",
+      "englishSource": "Save lessons to this phone before you leave signal",
+      "file": "app/student/page.tsx",
+      "line": 1003,
+      "otherSourceLocations": [],
+      "displayCondition": "Study learner page at app/student/page.tsx:1003; shown in the containing module/lesson/task state.",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentSaveAvailable",
+      "englishSource": "Save available lessons to this phone",
+      "file": "app/student/page.tsx",
+      "line": 1004,
+      "otherSourceLocations": [],
+      "displayCondition": "Study learner page at app/student/page.tsx:1004; shown in the containing module/lesson/task state.",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentModules",
+      "englishSource": "modules",
+      "file": "app/student/page.tsx",
+      "line": 1014,
+      "otherSourceLocations": [],
+      "displayCondition": "Study learner page at app/student/page.tsx:1014; shown in the containing module/lesson/task state.",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessCompleteDetail",
+      "englishSource": "All {lessons} lessons are illustrated, narrated in {languages} languages, and have slides and animations.",
+      "file": "app/student/page.tsx",
+      "line": 1047,
+      "otherSourceLocations": [],
+      "displayCondition": "readiness?.text === 'Fully built'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessNarratedDetail",
+      "englishSource": "Illustrated slides and narration are ready in {languages} languages. Translation review is still outstanding.",
+      "file": "app/student/page.tsx",
+      "line": 1051,
+      "otherSourceLocations": [],
+      "displayCondition": "not (readiness?.text === 'Fully built') → readiness?.text === 'Narrated slides'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessLessonsDetail",
+      "englishSource": "Reading and pictures are ready. Narration and slides are still being made.",
+      "file": "app/student/page.tsx",
+      "line": 1052,
+      "otherSourceLocations": [],
+      "displayCondition": "not (readiness?.text === 'Fully built') → not (readiness?.text === 'Narrated slides')",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessComplete",
+      "englishSource": "Fully built",
+      "file": "app/student/page.tsx",
+      "line": 1158,
+      "otherSourceLocations": [],
+      "displayCondition": "!simple && isStaff → readiness?.text === 'Fully built'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessNarrated",
+      "englishSource": "Narrated slides",
+      "file": "app/student/page.tsx",
+      "line": 1160,
+      "otherSourceLocations": [],
+      "displayCondition": "!simple && isStaff → not (readiness?.text === 'Fully built') → readiness?.text === 'Narrated slides'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessLessons",
+      "englishSource": "Lessons only",
+      "file": "app/student/page.tsx",
+      "line": 1161,
+      "otherSourceLocations": [],
+      "displayCondition": "!simple && isStaff → not (readiness?.text === 'Fully built') → not (readiness?.text === 'Narrated slides')",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentAssigned",
+      "englishSource": "Assigned",
+      "file": "app/student/page.tsx",
+      "line": 1172,
+      "otherSourceLocations": [],
+      "displayCondition": "state && state !== 'done'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentLessonOne",
+      "englishSource": "lesson",
+      "file": "app/student/page.tsx",
+      "line": 1211,
+      "otherSourceLocations": [],
+      "displayCondition": "mod.lessons && mod.lessons.length > 0 → mod.lessons.length === 1",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentSaveModule",
+      "englishSource": "Save {title} to this phone",
+      "file": "app/student/page.tsx",
+      "line": 1255,
+      "otherSourceLocations": [],
+      "displayCondition": "isExpanded && mod.lessons && mod.lessons.length > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentListenModule",
+      "englishSource": "Listen to the whole module",
+      "file": "app/student/page.tsx",
+      "line": 1298,
+      "otherSourceLocations": [],
+      "displayCondition": "isExpanded && mod.lessons && mod.lessons.length > 0 → not (hasDeck(mod.id)) → hasNarration(mod.id)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentSubmittedResubmit",
+      "englishSource": "Submitted — tap to resubmit",
+      "file": "app/student/page.tsx",
+      "line": 1333,
+      "otherSourceLocations": [],
+      "displayCondition": "content → submission",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentSubmitModule",
+      "englishSource": "Submit this module",
+      "file": "app/student/page.tsx",
+      "line": 1333,
+      "otherSourceLocations": [],
+      "displayCondition": "content → not (submission)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentCapstoneComplete",
+      "englishSource": "You have finished every module. Build your final design plan-set in the Design Studio — that is your completion artifact for the course.",
+      "file": "app/student/page.tsx",
+      "line": 1376,
+      "otherSourceLocations": [],
+      "displayCondition": "capstoneUnlocked",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentCapstoneLocked",
+      "englishSource": "Finish and submit all {count} modules to unlock your capstone design.",
+      "file": "app/student/page.tsx",
+      "line": 1377,
+      "otherSourceLocations": [],
+      "displayCondition": "not (capstoneUnlocked)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentCompletionMessage",
+      "englishSource": "You have completed the full ImbewuField permaculture curriculum. If you have a mentor, they will see this progress next time they check in.",
+      "file": "app/student/page.tsx",
+      "line": 1473,
+      "otherSourceLocations": [],
+      "displayCondition": "pct === 100",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentProgressFirebase",
+      "englishSource": "Progress will save to Firebase once the backend is connected",
+      "file": "app/student/page.tsx",
+      "line": 1480,
+      "otherSourceLocations": [],
+      "displayCondition": "!isLive",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "ts",
+      "key": "studentCategoryBusiness",
+      "englishSource": "Business",
+      "file": "app/student/page.tsx",
+      "line": 1083,
+      "otherSourceLocations": [
+        {
+          "file": "app/student/page.tsx",
+          "line": 1133,
+          "condition": "not (simple)"
+        }
+      ],
+      "displayCondition": "!unlocked",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true
+    },
+    {
+      "language": "st",
+      "key": "courseDeckRegion",
+      "englishSource": "Lesson slides. Use Left and Right arrow keys to change slides.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 548,
+      "otherSourceLocations": [],
+      "displayCondition": "Deck UI at components/course/DeckPlayer.tsx:548; player is mounted only for a module with a deck, then control text follows current slide/player state.",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseNarrationLanguage",
+      "englishSource": "Narration language",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 561,
+      "otherSourceLocations": [
+        {
+          "file": "components/course/CourseAudioPlayer.tsx",
+          "line": 226,
+          "condition": "(availableLanguages.length > 1 || needsExplicitChoice)"
+        }
+      ],
+      "displayCondition": "languages.length > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckSlideImageSize",
+      "englishSource": "Slide size",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 635,
+      "otherSourceLocations": [
+        {
+          "file": "components/course/DeckPlayer.tsx",
+          "line": 932,
+          "condition": "fullSizeImageUrl"
+        }
+      ],
+      "displayCondition": "expanded",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckTurnPhoneHint",
+      "englishSource": "Turn your phone sideways for a wider animation.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 642,
+      "otherSourceLocations": [
+        {
+          "file": "components/course/DeckPlayer.tsx",
+          "line": 657,
+          "condition": "expanded && anim"
+        }
+      ],
+      "displayCondition": "anim",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckWatch",
+      "englishSource": "Watch · {seconds}s · {size}",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 715,
+      "otherSourceLocations": [],
+      "displayCondition": "anim && (!isPlaying || animationFailed)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckOpenImageAria",
+      "englishSource": "Open still image for {title} at full size",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 725,
+      "otherSourceLocations": [
+        {
+          "file": "components/course/DeckPlayer.tsx",
+          "line": 918,
+          "condition": "fullSizeImageUrl"
+        }
+      ],
+      "displayCondition": "fullSizeImageUrl && (!expanded || !showReflowedSlide)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckOpenImage",
+      "englishSource": "View slide image · zoom",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 739,
+      "otherSourceLocations": [],
+      "displayCondition": "fullSizeImageUrl && (!expanded || !showReflowedSlide)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckNarrationAria",
+      "englishSource": "Narration for {title}",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 748,
+      "otherSourceLocations": [],
+      "displayCondition": "audio",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckNarrationFailed",
+      "englishSource": "Narration could not play. Check your connection and press Play lesson again, or read this slide below.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 767,
+      "otherSourceLocations": [],
+      "displayCondition": "audioFailed",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckAnimationFailed",
+      "englishSource": "The animation could not load. You can keep listening, read the slide, or tap Watch to try again.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 772,
+      "otherSourceLocations": [],
+      "displayCondition": "animationFailed",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckSlideLanguage",
+      "englishSource": "This slide is in {language}.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 793,
+      "otherSourceLocations": [],
+      "displayCondition": "img && !img.exact",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckNarrationFallback",
+      "englishSource": "Narration is in {spokenLanguage}. {appLanguage} narration is not available for this module yet.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 799,
+      "otherSourceLocations": [],
+      "displayCondition": "spokenLang && !spokenLang.exact",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckSilentStatus",
+      "englishSource": "No narration will play. Use Next to read at your own pace.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 807,
+      "otherSourceLocations": [],
+      "displayCondition": "narrationChoice === NO_NARRATION && !needsSourceNarrationChoice",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckPlayAria",
+      "englishSource": "Play the lesson",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 853,
+      "otherSourceLocations": [],
+      "displayCondition": "not (running)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckPlay",
+      "englishSource": "Play lesson",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 862,
+      "otherSourceLocations": [],
+      "displayCondition": "not (running)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseAudioListen",
+      "englishSource": "Listen",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "line": 222,
+      "otherSourceLocations": [],
+      "displayCondition": "Audio UI at components/course/CourseAudioPlayer.tsx:222; component is rendered where matching track(s) exist, and playback requires explicit learner action.",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseAudioLanguageMissing",
+      "englishSource": "This module has not been recorded in {appLanguage} yet — playing {playingLanguage}.",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "line": 267,
+      "otherSourceLocations": [],
+      "displayCondition": "mismatch && lang → playing",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseAudioPauseTrack",
+      "englishSource": "Pause {title}",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "line": 302,
+      "otherSourceLocations": [],
+      "displayCondition": "isPlaying",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseAudioPlayTrack",
+      "englishSource": "Play {title}",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "line": 302,
+      "otherSourceLocations": [],
+      "displayCondition": "not (isPlaying)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "courseAudioPlayFailed",
+      "englishSource": "Could not play this clip — check your connection and try again.",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "line": 351,
+      "otherSourceLocations": [],
+      "displayCondition": "failed",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineDownloadUnsupported",
+      "englishSource": "This browser cannot store lessons for offline use. Chrome on Android can.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 158,
+      "otherSourceLocations": [],
+      "displayCondition": "!offlineSupported() → not (compact)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineGetSlidesWhileSignal",
+      "englishSource": "Save the slides and their displayed posters on this phone. The deck then works offline without narration or video.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 183,
+      "otherSourceLocations": [],
+      "displayCondition": "!compact → regionalSlidePack && variant === 'slides'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineGetWhileSignal",
+      "englishSource": "Get the slides, the narration and the clips onto this phone while you have signal. They then work with no airtime at all.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 183,
+      "otherSourceLocations": [],
+      "displayCondition": "!compact → not (regionalSlidePack && variant === 'slides')",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineEnglishMediaFallback",
+      "englishSource": "This pack includes slides or narration in English where your chosen language is not available yet.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 191,
+      "otherSourceLocations": [],
+      "displayCondition": "hasEnglishMedia → not (variant === 'slides')",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineRemovePack",
+      "englishSource": "Remove saved lessons",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 205,
+      "otherSourceLocations": [],
+      "displayCondition": "phase === 'done'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineDownloadBytesProgress",
+      "englishSource": "{current} of {total}",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 213,
+      "otherSourceLocations": [],
+      "displayCondition": "not (phase === 'done') → busy",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineStopDownload",
+      "englishSource": "Stop",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 220,
+      "otherSourceLocations": [],
+      "displayCondition": "not (phase === 'done') → busy",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineFinishDownload",
+      "englishSource": "Finish download · {size} left",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 231,
+      "otherSourceLocations": [],
+      "displayCondition": "not (phase === 'done') → not (busy) → phase === 'partial' && doneFiles > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineRegionalPackChoice",
+      "englishSource": "Regional deck download contents",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 238,
+      "otherSourceLocations": [],
+      "displayCondition": "regionalSlidePack && !busy",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineRegionalFullMedia",
+      "englishSource": "Slides + English narration and clips",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 241,
+      "otherSourceLocations": [],
+      "displayCondition": "regionalSlidePack && !busy",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineRegionalFullMediaNote",
+      "englishSource": "The full pack includes available English source narration, animations and lesson images.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 269,
+      "otherSourceLocations": [],
+      "displayCondition": "regionalSlidePack && !busy → variant === 'full'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineDownloadQuality",
+      "englishSource": "Download quality",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 283,
+      "otherSourceLocations": [],
+      "displayCondition": "hasHigher && !busy && phase !== 'done' && !simple && isStaff",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineQualityStandard",
+      "englishSource": "Standard",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 285,
+      "otherSourceLocations": [],
+      "displayCondition": "hasHigher && !busy && phase !== 'done' && !simple && isStaff",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineQualityStandardNote",
+      "englishSource": "for phones on data",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 285,
+      "otherSourceLocations": [],
+      "displayCondition": "hasHigher && !busy && phase !== 'done' && !simple && isStaff",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineQualityHigher",
+      "englishSource": "Higher quality",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 286,
+      "otherSourceLocations": [],
+      "displayCondition": "hasHigher && !busy && phase !== 'done' && !simple && isStaff",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineQualityHigherNote",
+      "englishSource": "facilitators & funders · wifi",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 286,
+      "otherSourceLocations": [],
+      "displayCondition": "hasHigher && !busy && phase !== 'done' && !simple && isStaff",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineFilesProgress",
+      "englishSource": "{done} of {total} files",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 318,
+      "otherSourceLocations": [],
+      "displayCondition": "(busy || phase === 'partial') && totalFiles > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineFilesFailed",
+      "englishSource": "{count} files did not download. Tap Finish download again while you still have signal — the rest is already saved.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 328,
+      "otherSourceLocations": [],
+      "displayCondition": "failed.length > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineSavedMayClear",
+      "englishSource": "Saved, but this phone may clear it if storage runs low. Check your saved lessons again before leaving signal.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 334,
+      "otherSourceLocations": [],
+      "displayCondition": "phase === 'done' && notPersisted",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "st",
+      "key": "offlineLowStorage",
+      "englishSource": "This phone is low on space — the download may not fit.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 340,
+      "otherSourceLocations": [],
+      "displayCondition": "tightOnSpace && phase !== 'done'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckRegion",
+      "englishSource": "Lesson slides. Use Left and Right arrow keys to change slides.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 548,
+      "otherSourceLocations": [],
+      "displayCondition": "Deck UI at components/course/DeckPlayer.tsx:548; player is mounted only for a module with a deck, then control text follows current slide/player state.",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseNarrationLanguage",
+      "englishSource": "Narration language",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 561,
+      "otherSourceLocations": [
+        {
+          "file": "components/course/CourseAudioPlayer.tsx",
+          "line": 226,
+          "condition": "(availableLanguages.length > 1 || needsExplicitChoice)"
+        }
+      ],
+      "displayCondition": "languages.length > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckFullscreenExitAria",
+      "englishSource": "Exit full screen",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 625,
+      "otherSourceLocations": [],
+      "displayCondition": "expanded",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckFullscreenEnterAria",
+      "englishSource": "Show slides full screen",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 625,
+      "otherSourceLocations": [],
+      "displayCondition": "not (expanded)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckFullscreenExit",
+      "englishSource": "Exit full screen",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 628,
+      "otherSourceLocations": [],
+      "displayCondition": "expanded",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckFullscreenEnter",
+      "englishSource": "Full screen",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 628,
+      "otherSourceLocations": [],
+      "displayCondition": "not (expanded)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckClose",
+      "englishSource": "Close",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 631,
+      "otherSourceLocations": [
+        {
+          "file": "components/course/DeckPlayer.tsx",
+          "line": 930,
+          "condition": "fullSizeImageUrl"
+        }
+      ],
+      "displayCondition": "onClose",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckSlideImageSize",
+      "englishSource": "Slide size",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 635,
+      "otherSourceLocations": [
+        {
+          "file": "components/course/DeckPlayer.tsx",
+          "line": 932,
+          "condition": "fullSizeImageUrl"
+        }
+      ],
+      "displayCondition": "expanded",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckTurnPhoneHint",
+      "englishSource": "Turn your phone sideways for a wider animation.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 642,
+      "otherSourceLocations": [
+        {
+          "file": "components/course/DeckPlayer.tsx",
+          "line": 657,
+          "condition": "expanded && anim"
+        }
+      ],
+      "displayCondition": "anim",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckWatch",
+      "englishSource": "Watch · {seconds}s · {size}",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 715,
+      "otherSourceLocations": [],
+      "displayCondition": "anim && (!isPlaying || animationFailed)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckOpenImageAria",
+      "englishSource": "Open still image for {title} at full size",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 725,
+      "otherSourceLocations": [
+        {
+          "file": "components/course/DeckPlayer.tsx",
+          "line": 918,
+          "condition": "fullSizeImageUrl"
+        }
+      ],
+      "displayCondition": "fullSizeImageUrl && (!expanded || !showReflowedSlide)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckOpenImage",
+      "englishSource": "View slide image · zoom",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 739,
+      "otherSourceLocations": [],
+      "displayCondition": "fullSizeImageUrl && (!expanded || !showReflowedSlide)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckNarrationAria",
+      "englishSource": "Narration for {title}",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 748,
+      "otherSourceLocations": [],
+      "displayCondition": "audio",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckNarrationFailed",
+      "englishSource": "Narration could not play. Check your connection and press Play lesson again, or read this slide below.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 767,
+      "otherSourceLocations": [],
+      "displayCondition": "audioFailed",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckAnimationFailed",
+      "englishSource": "The animation could not load. You can keep listening, read the slide, or tap Watch to try again.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 772,
+      "otherSourceLocations": [],
+      "displayCondition": "animationFailed",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckSlideLanguage",
+      "englishSource": "This slide is in {language}.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 793,
+      "otherSourceLocations": [],
+      "displayCondition": "img && !img.exact",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckNarrationFallback",
+      "englishSource": "Narration is in {spokenLanguage}. {appLanguage} narration is not available for this module yet.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 799,
+      "otherSourceLocations": [],
+      "displayCondition": "spokenLang && !spokenLang.exact",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckSilentStatus",
+      "englishSource": "No narration will play. Use Next to read at your own pace.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 807,
+      "otherSourceLocations": [],
+      "displayCondition": "narrationChoice === NO_NARRATION && !needsSourceNarrationChoice",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckStopAria",
+      "englishSource": "Stop the lesson",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 853,
+      "otherSourceLocations": [],
+      "displayCondition": "running",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckPlayAria",
+      "englishSource": "Play the lesson",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 853,
+      "otherSourceLocations": [],
+      "displayCondition": "not (running)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckStop",
+      "englishSource": "Stop",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 862,
+      "otherSourceLocations": [],
+      "displayCondition": "running",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckPlay",
+      "englishSource": "Play lesson",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 862,
+      "otherSourceLocations": [],
+      "displayCondition": "not (running)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckBack",
+      "englishSource": "‹ Back",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 870,
+      "otherSourceLocations": [],
+      "displayCondition": "Deck UI at components/course/DeckPlayer.tsx:870; player is mounted only for a module with a deck, then control text follows current slide/player state.",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckNext",
+      "englishSource": "Next ›",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 881,
+      "otherSourceLocations": [],
+      "displayCondition": "Deck UI at components/course/DeckPlayer.tsx:881; player is mounted only for a module with a deck, then control text follows current slide/player state.",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckReadSlide",
+      "englishSource": "Read this slide · {language}",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 906,
+      "otherSourceLocations": [],
+      "displayCondition": "transcript && !hasCurrentRelease && slideChoice !== 'zu'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseAudioListen",
+      "englishSource": "Listen",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "line": 222,
+      "otherSourceLocations": [],
+      "displayCondition": "Audio UI at components/course/CourseAudioPlayer.tsx:222; component is rendered where matching track(s) exist, and playback requires explicit learner action.",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseAudioLanguageMissing",
+      "englishSource": "This module has not been recorded in {appLanguage} yet — playing {playingLanguage}.",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "line": 267,
+      "otherSourceLocations": [],
+      "displayCondition": "mismatch && lang → playing",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseAudioPauseTrack",
+      "englishSource": "Pause {title}",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "line": 302,
+      "otherSourceLocations": [],
+      "displayCondition": "isPlaying",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseAudioPlayTrack",
+      "englishSource": "Play {title}",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "line": 302,
+      "otherSourceLocations": [],
+      "displayCondition": "not (isPlaying)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "courseAudioPlayFailed",
+      "englishSource": "Could not play this clip — check your connection and try again.",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "line": 351,
+      "otherSourceLocations": [],
+      "displayCondition": "failed",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineDownloadUnsupported",
+      "englishSource": "This browser cannot store lessons for offline use. Chrome on Android can.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 158,
+      "otherSourceLocations": [],
+      "displayCondition": "!offlineSupported() → not (compact)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineGetSlidesWhileSignal",
+      "englishSource": "Save the slides and their displayed posters on this phone. The deck then works offline without narration or video.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 183,
+      "otherSourceLocations": [],
+      "displayCondition": "!compact → regionalSlidePack && variant === 'slides'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineGetWhileSignal",
+      "englishSource": "Get the slides, the narration and the clips onto this phone while you have signal. They then work with no airtime at all.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 183,
+      "otherSourceLocations": [],
+      "displayCondition": "!compact → not (regionalSlidePack && variant === 'slides')",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineEnglishSlidesFallback",
+      "englishSource": "Some slides remain in English where your chosen language is not available yet.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 191,
+      "otherSourceLocations": [],
+      "displayCondition": "hasEnglishMedia → variant === 'slides'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineEnglishMediaFallback",
+      "englishSource": "This pack includes slides or narration in English where your chosen language is not available yet.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 191,
+      "otherSourceLocations": [],
+      "displayCondition": "hasEnglishMedia → not (variant === 'slides')",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineOnThisPhone",
+      "englishSource": "On this phone · {size}",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 200,
+      "otherSourceLocations": [],
+      "displayCondition": "phase === 'done'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineRemovePack",
+      "englishSource": "Remove saved lessons",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 205,
+      "otherSourceLocations": [],
+      "displayCondition": "phase === 'done'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineDownloadBytesProgress",
+      "englishSource": "{current} of {total}",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 213,
+      "otherSourceLocations": [],
+      "displayCondition": "not (phase === 'done') → busy",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineStopDownload",
+      "englishSource": "Stop",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 220,
+      "otherSourceLocations": [],
+      "displayCondition": "not (phase === 'done') → busy",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineFinishDownload",
+      "englishSource": "Finish download · {size} left",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 231,
+      "otherSourceLocations": [],
+      "displayCondition": "not (phase === 'done') → not (busy) → phase === 'partial' && doneFiles > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineDownloadPack",
+      "englishSource": "Download · {size}",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 232,
+      "otherSourceLocations": [],
+      "displayCondition": "not (phase === 'done') → not (busy) → not (phase === 'partial' && doneFiles > 0)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalPackChoice",
+      "englishSource": "Regional deck download contents",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 238,
+      "otherSourceLocations": [],
+      "displayCondition": "regionalSlidePack && !busy",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalSlidesOnly",
+      "englishSource": "Slides only",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 240,
+      "otherSourceLocations": [],
+      "displayCondition": "regionalSlidePack && !busy",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalFullMedia",
+      "englishSource": "Slides + English narration and clips",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 241,
+      "otherSourceLocations": [],
+      "displayCondition": "regionalSlidePack && !busy",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalFullMediaNote",
+      "englishSource": "The full pack includes available English source narration, animations and lesson images.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 269,
+      "otherSourceLocations": [],
+      "displayCondition": "regionalSlidePack && !busy → variant === 'full'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineDownloadQuality",
+      "englishSource": "Download quality",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 283,
+      "otherSourceLocations": [],
+      "displayCondition": "hasHigher && !busy && phase !== 'done' && !simple && isStaff",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineQualityStandard",
+      "englishSource": "Standard",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 285,
+      "otherSourceLocations": [],
+      "displayCondition": "hasHigher && !busy && phase !== 'done' && !simple && isStaff",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineQualityStandardNote",
+      "englishSource": "for phones on data",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 285,
+      "otherSourceLocations": [],
+      "displayCondition": "hasHigher && !busy && phase !== 'done' && !simple && isStaff",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineQualityHigher",
+      "englishSource": "Higher quality",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 286,
+      "otherSourceLocations": [],
+      "displayCondition": "hasHigher && !busy && phase !== 'done' && !simple && isStaff",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineQualityHigherNote",
+      "englishSource": "facilitators & funders · wifi",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 286,
+      "otherSourceLocations": [],
+      "displayCondition": "hasHigher && !busy && phase !== 'done' && !simple && isStaff",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineFilesProgress",
+      "englishSource": "{done} of {total} files",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 318,
+      "otherSourceLocations": [],
+      "displayCondition": "(busy || phase === 'partial') && totalFiles > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineFilesFailed",
+      "englishSource": "{count} files did not download. Tap Finish download again while you still have signal — the rest is already saved.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 328,
+      "otherSourceLocations": [],
+      "displayCondition": "failed.length > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineSavedMayClear",
+      "englishSource": "Saved, but this phone may clear it if storage runs low. Check your saved lessons again before leaving signal.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 334,
+      "otherSourceLocations": [],
+      "displayCondition": "phase === 'done' && notPersisted",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ve",
+      "key": "offlineLowStorage",
+      "englishSource": "This phone is low on space — the download may not fit.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 340,
+      "otherSourceLocations": [],
+      "displayCondition": "tightOnSpace && phase !== 'done'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckRegion",
+      "englishSource": "Lesson slides. Use Left and Right arrow keys to change slides.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 548,
+      "otherSourceLocations": [],
+      "displayCondition": "Deck UI at components/course/DeckPlayer.tsx:548; player is mounted only for a module with a deck, then control text follows current slide/player state.",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseNarrationLanguage",
+      "englishSource": "Narration language",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 561,
+      "otherSourceLocations": [
+        {
+          "file": "components/course/CourseAudioPlayer.tsx",
+          "line": 226,
+          "condition": "(availableLanguages.length > 1 || needsExplicitChoice)"
+        }
+      ],
+      "displayCondition": "languages.length > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckSlideImageSize",
+      "englishSource": "Slide size",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 635,
+      "otherSourceLocations": [
+        {
+          "file": "components/course/DeckPlayer.tsx",
+          "line": 932,
+          "condition": "fullSizeImageUrl"
+        }
+      ],
+      "displayCondition": "expanded",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckTurnPhoneHint",
+      "englishSource": "Turn your phone sideways for a wider animation.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 642,
+      "otherSourceLocations": [
+        {
+          "file": "components/course/DeckPlayer.tsx",
+          "line": 657,
+          "condition": "expanded && anim"
+        }
+      ],
+      "displayCondition": "anim",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckWatch",
+      "englishSource": "Watch · {seconds}s · {size}",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 715,
+      "otherSourceLocations": [],
+      "displayCondition": "anim && (!isPlaying || animationFailed)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckOpenImageAria",
+      "englishSource": "Open still image for {title} at full size",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 725,
+      "otherSourceLocations": [
+        {
+          "file": "components/course/DeckPlayer.tsx",
+          "line": 918,
+          "condition": "fullSizeImageUrl"
+        }
+      ],
+      "displayCondition": "fullSizeImageUrl && (!expanded || !showReflowedSlide)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckOpenImage",
+      "englishSource": "View slide image · zoom",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 739,
+      "otherSourceLocations": [],
+      "displayCondition": "fullSizeImageUrl && (!expanded || !showReflowedSlide)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckNarrationAria",
+      "englishSource": "Narration for {title}",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 748,
+      "otherSourceLocations": [],
+      "displayCondition": "audio",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckNarrationFailed",
+      "englishSource": "Narration could not play. Check your connection and press Play lesson again, or read this slide below.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 767,
+      "otherSourceLocations": [],
+      "displayCondition": "audioFailed",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckAnimationFailed",
+      "englishSource": "The animation could not load. You can keep listening, read the slide, or tap Watch to try again.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 772,
+      "otherSourceLocations": [],
+      "displayCondition": "animationFailed",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckSlideLanguage",
+      "englishSource": "This slide is in {language}.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 793,
+      "otherSourceLocations": [],
+      "displayCondition": "img && !img.exact",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckNarrationFallback",
+      "englishSource": "Narration is in {spokenLanguage}. {appLanguage} narration is not available for this module yet.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 799,
+      "otherSourceLocations": [],
+      "displayCondition": "spokenLang && !spokenLang.exact",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckSilentStatus",
+      "englishSource": "No narration will play. Use Next to read at your own pace.",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 807,
+      "otherSourceLocations": [],
+      "displayCondition": "narrationChoice === NO_NARRATION && !needsSourceNarrationChoice",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckReadSlide",
+      "englishSource": "Read this slide · {language}",
+      "file": "components/course/DeckPlayer.tsx",
+      "line": 906,
+      "otherSourceLocations": [],
+      "displayCondition": "transcript && !hasCurrentRelease && slideChoice !== 'zu'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseAudioListen",
+      "englishSource": "Listen",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "line": 222,
+      "otherSourceLocations": [],
+      "displayCondition": "Audio UI at components/course/CourseAudioPlayer.tsx:222; component is rendered where matching track(s) exist, and playback requires explicit learner action.",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseAudioLanguageMissing",
+      "englishSource": "This module has not been recorded in {appLanguage} yet — playing {playingLanguage}.",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "line": 267,
+      "otherSourceLocations": [],
+      "displayCondition": "mismatch && lang → playing",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseAudioPauseTrack",
+      "englishSource": "Pause {title}",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "line": 302,
+      "otherSourceLocations": [],
+      "displayCondition": "isPlaying",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseAudioPlayTrack",
+      "englishSource": "Play {title}",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "line": 302,
+      "otherSourceLocations": [],
+      "displayCondition": "not (isPlaying)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "courseAudioPlayFailed",
+      "englishSource": "Could not play this clip — check your connection and try again.",
+      "file": "components/course/CourseAudioPlayer.tsx",
+      "line": 351,
+      "otherSourceLocations": [],
+      "displayCondition": "failed",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineDownloadUnsupported",
+      "englishSource": "This browser cannot store lessons for offline use. Chrome on Android can.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 158,
+      "otherSourceLocations": [],
+      "displayCondition": "!offlineSupported() → not (compact)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineGetSlidesWhileSignal",
+      "englishSource": "Save the slides and their displayed posters on this phone. The deck then works offline without narration or video.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 183,
+      "otherSourceLocations": [],
+      "displayCondition": "!compact → regionalSlidePack && variant === 'slides'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineGetWhileSignal",
+      "englishSource": "Get the slides, the narration and the clips onto this phone while you have signal. They then work with no airtime at all.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 183,
+      "otherSourceLocations": [],
+      "displayCondition": "!compact → not (regionalSlidePack && variant === 'slides')",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineEnglishSlidesFallback",
+      "englishSource": "Some slides remain in English where your chosen language is not available yet.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 191,
+      "otherSourceLocations": [],
+      "displayCondition": "hasEnglishMedia → variant === 'slides'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineEnglishMediaFallback",
+      "englishSource": "This pack includes slides or narration in English where your chosen language is not available yet.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 191,
+      "otherSourceLocations": [],
+      "displayCondition": "hasEnglishMedia → not (variant === 'slides')",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineOnThisPhone",
+      "englishSource": "On this phone · {size}",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 200,
+      "otherSourceLocations": [],
+      "displayCondition": "phase === 'done'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineDownloadBytesProgress",
+      "englishSource": "{current} of {total}",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 213,
+      "otherSourceLocations": [],
+      "displayCondition": "not (phase === 'done') → busy",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineFinishDownload",
+      "englishSource": "Finish download · {size} left",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 231,
+      "otherSourceLocations": [],
+      "displayCondition": "not (phase === 'done') → not (busy) → phase === 'partial' && doneFiles > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineDownloadPack",
+      "englishSource": "Download · {size}",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 232,
+      "otherSourceLocations": [],
+      "displayCondition": "not (phase === 'done') → not (busy) → not (phase === 'partial' && doneFiles > 0)",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineRegionalPackChoice",
+      "englishSource": "Regional deck download contents",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 238,
+      "otherSourceLocations": [],
+      "displayCondition": "regionalSlidePack && !busy",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineRegionalSlidesOnly",
+      "englishSource": "Slides only",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 240,
+      "otherSourceLocations": [],
+      "displayCondition": "regionalSlidePack && !busy",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineRegionalFullMedia",
+      "englishSource": "Slides + English narration and clips",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 241,
+      "otherSourceLocations": [],
+      "displayCondition": "regionalSlidePack && !busy",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineRegionalFullMediaNote",
+      "englishSource": "The full pack includes available English source narration, animations and lesson images.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 269,
+      "otherSourceLocations": [],
+      "displayCondition": "regionalSlidePack && !busy → variant === 'full'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineDownloadQuality",
+      "englishSource": "Download quality",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 283,
+      "otherSourceLocations": [],
+      "displayCondition": "hasHigher && !busy && phase !== 'done' && !simple && isStaff",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineQualityStandard",
+      "englishSource": "Standard",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 285,
+      "otherSourceLocations": [],
+      "displayCondition": "hasHigher && !busy && phase !== 'done' && !simple && isStaff",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineQualityStandardNote",
+      "englishSource": "for phones on data",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 285,
+      "otherSourceLocations": [],
+      "displayCondition": "hasHigher && !busy && phase !== 'done' && !simple && isStaff",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineQualityHigher",
+      "englishSource": "Higher quality",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 286,
+      "otherSourceLocations": [],
+      "displayCondition": "hasHigher && !busy && phase !== 'done' && !simple && isStaff",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineQualityHigherNote",
+      "englishSource": "facilitators & funders · wifi",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 286,
+      "otherSourceLocations": [],
+      "displayCondition": "hasHigher && !busy && phase !== 'done' && !simple && isStaff",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineFilesProgress",
+      "englishSource": "{done} of {total} files",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 318,
+      "otherSourceLocations": [],
+      "displayCondition": "(busy || phase === 'partial') && totalFiles > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineFilesFailed",
+      "englishSource": "{count} files did not download. Tap Finish download again while you still have signal — the rest is already saved.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 328,
+      "otherSourceLocations": [],
+      "displayCondition": "failed.length > 0",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineSavedMayClear",
+      "englishSource": "Saved, but this phone may clear it if storage runs low. Check your saved lessons again before leaving signal.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 334,
+      "otherSourceLocations": [],
+      "displayCondition": "phase === 'done' && notPersisted",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    },
+    {
+      "language": "ts",
+      "key": "offlineLowStorage",
+      "englishSource": "This phone is low on space — the download may not fit.",
+      "file": "components/course/OfflineDownload.tsx",
+      "line": 340,
+      "otherSourceLocations": [],
+      "displayCondition": "tightOnSpace && phase !== 'done'",
+      "currentFallback": "locale key absent; translator falls back to this exact English source.",
+      "sourceVerified": true,
+      "sourceAuthority": "lib/learner-ui-english.ts"
+    }
+  ],
+  "exceptions": [],
+  "excluded": "Already drafted 13 controls; fixed narration-dependent description; available runtime locale keys; old source mismatch. Date/unit abbreviations and voice-count promises need HOLD review, no completion claims."
+}

@@ -1,0 +1,519 @@
+{
+  "assets": [
+    {
+      "language": "st",
+      "slide": 4,
+      "url": "/course-decks/reading-landscape/st/slide-04.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 265672,
+      "sha256": "4e479e8f0fe531f72ac681b118eb12e9eb3e39938236275301114ca8ffeb30ac",
+      "beforeSha256": "69433454d8b1bfbe81a023e12fa97b5c60d6b48a0ed4d423febc6a843dc23c0e"
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "url": "/course-decks/reading-landscape/st/slide-06.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 625512,
+      "sha256": "4f13d85748b873a7b10042987e2ff00bba63993706913e49ba260b43a39ae29f",
+      "beforeSha256": "f1808041cfdac3c96404b61dd13b35030f66aed821aa52eefeac60d8ea697bce"
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "url": "/course-decks/reading-landscape/st/slide-07.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 282654,
+      "sha256": "6bb1ab19eae5f6b795206384b6a1e48c4b17baa5122f4d07f8b637c5cac35237",
+      "beforeSha256": "6499bc182071c7e95f666acfc3c03993a112f100aa392313702db7af61e32311"
+    },
+    {
+      "language": "st",
+      "slide": 8,
+      "url": "/course-decks/reading-landscape/st/slide-08.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 346318,
+      "sha256": "b003ecd4b0383abdc1a0e6e3e9aa9085f970d0cbd5db0f98435ecb3a77fe973f",
+      "beforeSha256": "6512290916c4a12f397b607d3b72cc35e455cde1ff56d578eaa58034bdce9798"
+    },
+    {
+      "language": "st",
+      "slide": 10,
+      "url": "/course-decks/reading-landscape/st/slide-10.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 580676,
+      "sha256": "94a712ed731edce5e101280a369cb5aa58c20383fc6b4b6e6479bb6a1f7ca201",
+      "beforeSha256": "7c88c99cdbb24a1d573c3c8d1078e921a4b83631e33f9254ec150f1cf08d095c"
+    },
+    {
+      "language": "st",
+      "slide": 12,
+      "url": "/course-decks/reading-landscape/st/slide-12.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 467344,
+      "sha256": "034e15ed3218313d276ded063a310e85867dd2198dbac1e31a7c3cbc3b14efbf",
+      "beforeSha256": "9347a71fdaa80f3b7c06918dfd5a72c4c7781c639c271a9e728de74d312f3f42"
+    },
+    {
+      "language": "st",
+      "slide": 13,
+      "url": "/course-decks/reading-landscape/st/slide-13.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 185868,
+      "sha256": "7a3b15f6f6453473c91152e1bc1d5db67e276622a570106cd60f5a6b4a6caa75",
+      "beforeSha256": "c8bf7f8c6391f62391655bdc3d304f612c9ac5d7358d5be4006824518ea11039"
+    },
+    {
+      "language": "st",
+      "slide": 14,
+      "url": "/course-decks/reading-landscape/st/slide-14.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 455710,
+      "sha256": "f50932d814db8e2c7607beb5c4abf550c6a6fd9d5eb2d6e94c8dd50e68edef13",
+      "beforeSha256": "650c18f4f08a23a42790f1811dffc9595288139ffcac0fdc52804cdc98deabc8"
+    },
+    {
+      "language": "st",
+      "slide": 16,
+      "url": "/course-decks/reading-landscape/st/slide-16.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 291800,
+      "sha256": "7cc725dce29284e39bb0c9b6bd541a68729a09972bee75c1f89351b7fb7ca8be",
+      "beforeSha256": "f3029b066f39f077dfbfe8c2c3cc8f10231a2b183c5299eb79bef48e01522109"
+    },
+    {
+      "language": "st",
+      "slide": 19,
+      "url": "/course-decks/reading-landscape/st/slide-19.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 283868,
+      "sha256": "bb2796f8848fc27f0acb9287a79596c7b0689f4424a085b1c4f4a7a8104bdbeb",
+      "beforeSha256": "3bd14763db8058ab56c629c1591dfece54d8a68c866b69b219ee8a2e643b3c2d"
+    },
+    {
+      "language": "st",
+      "slide": 20,
+      "url": "/course-decks/reading-landscape/st/slide-20.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 679954,
+      "sha256": "2020aa44cb3bd5373325f987d492bee6c45bd3a67f49cec4186e4817b36cc368",
+      "beforeSha256": "a99893b9dcebf72841dac439453f4c56240252ddbbb78e83bf70576de4ed7892"
+    },
+    {
+      "language": "st",
+      "slide": 21,
+      "url": "/course-decks/reading-landscape/st/slide-21.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 297590,
+      "sha256": "4c91026821ffdbed5a1194eecc0693f5b80446448194f08c7a3303459565d796",
+      "beforeSha256": "c082a4e81db1ccd09c39e2d4005c0e5df8f4078b20ff984ecc64020968a36a29"
+    },
+    {
+      "language": "ve",
+      "slide": 1,
+      "url": "/course-decks/reading-landscape/ve/slide-01.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 271350,
+      "sha256": "346d555c301242b880e16a03f888df4dd7ff0a1c1452bb7112746a6fa4f6e8ad",
+      "beforeSha256": "19f01acde0d83ec0cc627c12bf58b38e3761b79194e62fbb65ddfc62c3acc612"
+    },
+    {
+      "language": "ve",
+      "slide": 2,
+      "url": "/course-decks/reading-landscape/ve/slide-02.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 259786,
+      "sha256": "818afcc081231561c8f1541fccfab4d4b333012880b6ce1d900954f5a8febc20",
+      "beforeSha256": "adcae3738641889e9e48127b36b1d38ad177bcdac31d57e746873e102433c030"
+    },
+    {
+      "language": "ve",
+      "slide": 3,
+      "url": "/course-decks/reading-landscape/ve/slide-03.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 249222,
+      "sha256": "0bed481dac56e81bb023e7f97bbce11bc6622dcf94647509e19f96c3a59eef89",
+      "beforeSha256": "43e289d94b534f53050598f22eb6fa26a31aa273f7a655a7f26de296d0cd2490"
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "url": "/course-decks/reading-landscape/ve/slide-04.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 263978,
+      "sha256": "156f2fc776fbf56978a56e34901196c8852d6a652fe56410bfbaaa97a9cb3a6a",
+      "beforeSha256": "f914cf3e9d59703aaec8e48f5c750640da2ab4d1f4c926663eae5db6c0f1cd2e"
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "url": "/course-decks/reading-landscape/ve/slide-06.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 622838,
+      "sha256": "ba58e946b512a65756b3da16ab4fb46935e9cf0d1cebdd52367c2b23f9386b86",
+      "beforeSha256": "dd593b75aec5d6f413ce44141c3c781ea29bff9bd72f7f1f6b4a7a3cff505402"
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "url": "/course-decks/reading-landscape/ve/slide-07.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 292534,
+      "sha256": "542c4b566cd8f6f16a77b2fdfb73c63d75a6e40b606033ed96a04ad19f0dfe47",
+      "beforeSha256": "6aae55cbe93bc679884bce4f7fe1ecb9092c27e8901c8c5d651b9aafbfc136a7"
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "url": "/course-decks/reading-landscape/ve/slide-08.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 350528,
+      "sha256": "352f5fcdbcaa5fd9fc9f5cdb98f615c7104cd14c710f8100ccc224ee5362f4b7",
+      "beforeSha256": "6e9d3e150f261f65b27016b9b22354ee16aa3e6c6d2263ea0cfa0bee723abe13"
+    },
+    {
+      "language": "ve",
+      "slide": 9,
+      "url": "/course-decks/reading-landscape/ve/slide-09.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 182736,
+      "sha256": "8838c72f8434c68270b002f10e50ef832c7d4758d41af0be2b04736728b8dba6",
+      "beforeSha256": "7e6aad911fe986e50598b39a21a9ad22d9fb28b72af4f830213d32e59805f571"
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "url": "/course-decks/reading-landscape/ve/slide-10.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 578450,
+      "sha256": "a1cfc8167c2301a1685d9999692301b75528425a83e169face2d4117b0084ba8",
+      "beforeSha256": "1ee4e7ad04bfbb09318a22915d39d956e5c134b7465d0beecd37d4db2e87e01d"
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "url": "/course-decks/reading-landscape/ve/slide-11.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 209186,
+      "sha256": "96d48148c9fba44a876b59f21ea07c216b73febfc5552d8a9bbcb3ff4e51de10",
+      "beforeSha256": "ed016cfd8fafcfbff081623559cdb37a3dfc4f4fe53940bd325c71a461e9a00c"
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "url": "/course-decks/reading-landscape/ve/slide-12.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 475656,
+      "sha256": "64e9c9405fa997e9117efed5a873feac0dda91434462fad58c1ce35f27bbd231",
+      "beforeSha256": "1b58bfc18e96839db5d2f5ce2713e233beefbd945719ea918ddf6190b640871d"
+    },
+    {
+      "language": "ve",
+      "slide": 13,
+      "url": "/course-decks/reading-landscape/ve/slide-13.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 188138,
+      "sha256": "4097334e02019a6623b3f6f61aec3b84662d514c42ce6e616949f9a37e9ae2fb",
+      "beforeSha256": "8e31ef721d085c3f81dfcc5023256705fe5b846e3371fd61194bc5470b483ba4"
+    },
+    {
+      "language": "ve",
+      "slide": 14,
+      "url": "/course-decks/reading-landscape/ve/slide-14.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 475332,
+      "sha256": "30c7805f39eb4ac323306a889e14105081a4b00b947307f82bf48466dd6b5287",
+      "beforeSha256": "a7a73bd826f64cc9556a978bf6bf4d65fcd93c068fb05f51500d7283eb60d9da"
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "url": "/course-decks/reading-landscape/ve/slide-16.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 289542,
+      "sha256": "39505f9de57f802c75d53b394da5d09138d2cb51e60102749fd5264850e00f4f",
+      "beforeSha256": "2ddce5039a98b43b8dbf1cb2044d3bddc89084b05b63965ac517b98396c52922"
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "url": "/course-decks/reading-landscape/ve/slide-17.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 201098,
+      "sha256": "7329c59070944ed8917727741ee2c8ebe3aa3b5ed1834b109337cf72dc836037",
+      "beforeSha256": "50d74f1b0da15e9b880a8fe8325b07652201a9dff47e1edd0ebd23127f439ef5"
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "url": "/course-decks/reading-landscape/ve/slide-18.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 592056,
+      "sha256": "5f431aabbcb78f1c08fbabbd4a996aa229dcb42ff59037bd7f4f7ef420fc3d97",
+      "beforeSha256": "57d2799158eb15a8f7c02eab2a80793bc8f27f2724012f519e0e7a35e301b1f0"
+    },
+    {
+      "language": "ve",
+      "slide": 19,
+      "url": "/course-decks/reading-landscape/ve/slide-19.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 270550,
+      "sha256": "ff88ec52d89eb80ccc853e82c218a26d3e413a770e6dbcb5420797674ce27422",
+      "beforeSha256": "533567a28e10ce1a0a9396b49cd81f8cdefad9b549a7a8b6b77a508df1e8c48c"
+    },
+    {
+      "language": "ve",
+      "slide": 20,
+      "url": "/course-decks/reading-landscape/ve/slide-20.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 689538,
+      "sha256": "90e5bd933803eeae3e3c8ee61d0da22f8f03cd725635a60dca5315a71701cf5a",
+      "beforeSha256": "01e1c0023bf007d18a1c2fc743c03f46484b94305efe10d81c1dd30f5ae4260c"
+    },
+    {
+      "language": "ve",
+      "slide": 21,
+      "url": "/course-decks/reading-landscape/ve/slide-21.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 297338,
+      "sha256": "47948f3d1910ad14a20615fd5421ea9ba8e38af25231bdf3aafa9760d829d7fd",
+      "beforeSha256": "6d294bacf82129d91ac54401d42a735199f680dc7eddc197c2a2f0a4f55d052a"
+    },
+    {
+      "language": "ts",
+      "slide": 1,
+      "url": "/course-decks/reading-landscape/ts/slide-01.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 282350,
+      "sha256": "c26bcc4c0251cc0a92641bef7fa5cc404df9cb980612e05a60e80582d5f08cce",
+      "beforeSha256": "712f7262ab5ab2be806732d984470372b4fb60d265da1db45633533362423091"
+    },
+    {
+      "language": "ts",
+      "slide": 2,
+      "url": "/course-decks/reading-landscape/ts/slide-02.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 268270,
+      "sha256": "27b48ca67a6fd67327546540e42b084a545e6fe54df4dcfd67fee58c0eaee1ab",
+      "beforeSha256": "4cd6a7fa8621ab0c1f52486708191fc8f414779ecb1b4de693a3f80aedfc03c4"
+    },
+    {
+      "language": "ts",
+      "slide": 3,
+      "url": "/course-decks/reading-landscape/ts/slide-03.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 252876,
+      "sha256": "9e2b7aec3c00927051c07623454fc0f08190dce3839a57ceb4138b145da01107",
+      "beforeSha256": "dee90fdfe8a9a7d428be5789437bb4958b514104bb14de0c339a1a702c2993fc"
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "url": "/course-decks/reading-landscape/ts/slide-04.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 270536,
+      "sha256": "72affe92697eb1aaa90f6c05ef45772c536706eb9ae1a68acbaa39000d4f18db",
+      "beforeSha256": "5d0a56e221ebb769b9a0e77a0f5d8bcf7425db6f2154c029b489d5238ccf3ac9"
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "url": "/course-decks/reading-landscape/ts/slide-06.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 625606,
+      "sha256": "c9cd99bac5cc899dd8324228bc77e679419fae2e69294bee749598c10e88259f",
+      "beforeSha256": "78ff7ef3bec734fa52fb8841f7f5e333795ae19ee5b508ea9d21fc47e5f3813c"
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "url": "/course-decks/reading-landscape/ts/slide-07.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 285094,
+      "sha256": "9b1b9a2b92a4d0586fa429f0665cd95a526febfa0fcad43bbedfa1b307261306",
+      "beforeSha256": "ebcf5df559ada4e1403aa5a42b5c93fe43e6e65093c8407f16a1ed94583cfcb6"
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "url": "/course-decks/reading-landscape/ts/slide-08.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 352568,
+      "sha256": "da73cd35791a98b93813946f6dd13f2dfc6294fc1478db4ce23bd2aea0c9b89c",
+      "beforeSha256": "f74f719d74af847a55168f1df340b8db76ca5e6825b2a5d40c41980c42fe5745"
+    },
+    {
+      "language": "ts",
+      "slide": 9,
+      "url": "/course-decks/reading-landscape/ts/slide-09.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 185588,
+      "sha256": "700d5826669dcf19e9f55c70be1d193dc3e7b7a41c5267ea7d88538de5b9c7e9",
+      "beforeSha256": "96e9755eabec66a2d0e92e961dd47f6ecd92207e2701eaccf635c2526e105afd"
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "url": "/course-decks/reading-landscape/ts/slide-10.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 584012,
+      "sha256": "35021995677415edcd28e0d85f676f9b4faa80f37b4255bc58d3967e10e6d638",
+      "beforeSha256": "5476acd15d1a91ae76a34663a46f4c3cf6893a7c98c7cb0a59e5111ebe2e8104"
+    },
+    {
+      "language": "ts",
+      "slide": 11,
+      "url": "/course-decks/reading-landscape/ts/slide-11.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 199660,
+      "sha256": "e1c8b01ebd6a963abe2ac69a2b4d45d2399467f34a27cc2d67b5b88682bb48b1",
+      "beforeSha256": "60a78944a43774694f90085d1c0793bd3c9eee77541cb2884788443c2f532ca2"
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "url": "/course-decks/reading-landscape/ts/slide-12.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 481182,
+      "sha256": "79600a00a414de3099e90d77ffff0df849787d46dbaf90d0c2d8bd7f8baf7450",
+      "beforeSha256": "39ac2a7d0751520fed8ee8b62db42d835d326f44b6d98360fbf14d5f7fb7ad84"
+    },
+    {
+      "language": "ts",
+      "slide": 13,
+      "url": "/course-decks/reading-landscape/ts/slide-13.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 184714,
+      "sha256": "ef910d1559d51572c56b52ea2351e38835b5b2ec73b0229a2b67a9c1d27d11ee",
+      "beforeSha256": "4fae0f506213c224a620f69b815cf2899dad7c3dc4d5c333f96cbcc592d1fb0c"
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "url": "/course-decks/reading-landscape/ts/slide-14.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 479164,
+      "sha256": "ba0c6d5ae3cf2ba37910615041f8790a40aa029a9694ea16934a1081d7d65b49",
+      "beforeSha256": "4ccd3ca590861bfa504aad4da3983e8cc98f439b47cddbb83f4fac8b5f8c16b2"
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "url": "/course-decks/reading-landscape/ts/slide-16.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 278472,
+      "sha256": "0d5c5f3e41a2fdbe698c97e78e958566071a81875f67d0cde8f735dcba407489",
+      "beforeSha256": "018e1b50e7764f7c4bab9d0b9637a50084023e623bb74ad6c75d8460e43f1813"
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "url": "/course-decks/reading-landscape/ts/slide-17.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 202226,
+      "sha256": "447ff5667d4867eb79da770a66a0003f8d7572b18468f13fb0f24dd7aaeff68f",
+      "beforeSha256": "c3cbfa6a2f914e8ead29a75e73df1f670f883ddea412f16b15f38fa1822cd3a3"
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "url": "/course-decks/reading-landscape/ts/slide-19.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 278206,
+      "sha256": "247859b5ef2459a16e7d2400abb4fb902ea24debd242bacad2fc4f6aceeaf9c6",
+      "beforeSha256": "a8c1f82e2278be95d912c19a2b7682d75c273621df675fd70ededd9ce46dbfee"
+    },
+    {
+      "language": "ts",
+      "slide": 20,
+      "url": "/course-decks/reading-landscape/ts/slide-20.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 679742,
+      "sha256": "c798cd1cd893eacc647b1c5be539c9f7ab6abc7115e4a15b5036be343c11f43d",
+      "beforeSha256": "b361c54755c0026fc8a962958d14e52c97f8e189b29ce41790d63e86a7520003"
+    },
+    {
+      "language": "ts",
+      "slide": 21,
+      "url": "/course-decks/reading-landscape/ts/slide-21.webp",
+      "width": 1440,
+      "height": 5400,
+      "bytes": 295106,
+      "sha256": "7e7852b14f2af72f14344ae767831d4a91fe7e6cf214e8756103d1998996feac",
+      "beforeSha256": "479940fd17c8109bd7970a95b7d249c0efdc10863b1553aabdf2c1d829bf19f0"
+    }
+  ],
+  "reviewStatus": "unreviewed",
+  "visualReview": {
+    "rootViewedContacts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "result": "Root inspected all49 compressed cards via17contacts; finalST21 compressed crop reviewed, English update-it rust hold correct; target/source panels within bounds",
+    "limitations": "Static image layout review only; actual390px learner/offline preview pending",
+    "finalST21Image": "/tmp/imbewu-reading-st21-final-hold-colour-20261005.png"
+  }
+}

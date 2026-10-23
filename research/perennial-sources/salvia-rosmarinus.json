@@ -1,0 +1,61 @@
+{
+  "speciesId": "salvia-rosmarinus",
+  "commonName": "Rosemary",
+  "botanicalName": "Salvia rosmarinus",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No food-production pollination classification verified in the checked primary source."
+  },
+  "harvestProduct": "fresh or dried leaves for seasoning",
+  "supplementaryReferences": [
+    {
+      "title": "Food-leaf product distinct from essential oil",
+      "quote": "Fresh and dried rosemary leaves",
+      "url": "https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Brochure%20Rosemary.pdf",
+      "doc": "DAFF: Rosemary production brochure (2012)",
+      "page": 2,
+      "note": "The brochure uses the older botanical name Rosmarinus officinalis; catalogue identity is preserved. It documents food seasoning leaves and separate essential oil uses, without a food-leaf yield, first cut age or local picking calendar."
+    }
+  ],
+  "productionGuidance": {
+    "products": "fresh or dried leaves for seasoning",
+    "care": [
+      "Use well-drained soil and adequate water during establishment; avoid waterlogging and root rot.",
+      "Record fresh leaves, dried seasoning and essential oil as different products."
+    ],
+    "purchase": [
+      "Obtain identified healthy rosemary material and local growing advice; no regional culinary-leaf yield variety is verified."
+    ]
+  },
+  "householdFoodStatus": "confirmed-food",
+  "sourceChecks": [
+    {
+      "url": "https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Brochure%20Rosemary.pdf",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified primary page, institutional abstract or downloaded primary PDF; product, region, age and native-unit limits retained."
+    }
+  ],
+  "gaps": []
+}

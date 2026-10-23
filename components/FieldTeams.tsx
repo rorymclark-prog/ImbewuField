@@ -1,5 +1,5 @@
 'use client';
-import { numberLabel } from '@/lib/format-figures';
+import { numberLabel, formatStaffDate } from '@/lib/format-figures';
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/lib/auth';
 import { fieldApi } from '@/lib/field-api';
@@ -9,7 +9,7 @@ import FieldDraft, { clearFieldDraft } from './FieldDraft';
 import { getFirebase } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { sampleRead, sampleWrite } from '@/lib/sample-operations';
-import { FIELD_FOCUS, FIELD_PROGRAMMES, summariseFieldWork, completeSampleFieldWorkspace, fieldVisitReportLines, freshFieldWorkspace, projectFieldWorkspace, validFieldTeam, validFieldVisit, type FieldFocus, type FieldProgramme, type FieldTeam, type FieldVisit, type FieldWorkspace } from '@/lib/field-teams';
+import { FIELD_FOCUS, FIELD_PROGRAMMES, summariseFieldWork, completeSampleFieldWorkspace, fieldVisitReportLines, freshFieldWorkspace, localTodayISODate, projectFieldWorkspace, validFieldTeam, validFieldVisit, type FieldFocus, type FieldProgramme, type FieldTeam, type FieldVisit, type FieldWorkspace } from '@/lib/field-teams';
 import VisitCapture from './VisitCapture';
 import VenueLocation from './VenueLocation';
 import workStyles from './FieldWork.module.css';
@@ -25,14 +25,14 @@ import { useLanguage } from '@/lib/i18n-context';
 import { translate } from '@/lib/i18n';
 import SurveyZuluDraftPair from './SurveyZuluDraftPair';
 
-const emptyVisit=():FieldVisit=>({id:'',mentorId:'',farmerId:'',date:new Date().toISOString().slice(0,10),notes:'',supportRequested:'',observations:'',agreedAction:'',responsiblePerson:'',followUpDate:'',location:'',photos:[],photoCount:0});
+const emptyVisit=():FieldVisit=>({id:'',mentorId:'',farmerId:'',date:localTodayISODate(),notes:'',supportRequested:'',observations:'',agreedAction:'',responsiblePerson:'',followUpDate:'',location:'',photos:[],photoCount:0});
 
 // isiZulu labels for lib/field-teams.ts's FIELD_PROGRAMMES — English-only there next to the
 // translated FIELD_FOCUS tags this same component already renders with ui() below. Kept local to
 // this component the same way FIELD_FOCUS's own isiZulu strings are.
 const FIELD_PROGRAMMES_ZU: Record<FieldProgramme, string> = {
   general: 'Ukusekelwa okuvamile kwengadi',
-  'act-sef-food-security': 'ACT · SEF ukuvikeleka kokudla',
+  'act-sef-food-security': 'Uhlelo lokuvikeleka kokudla',
 };
 
 // Maps FIELD_FOCUS's closed set of keys (lib/field-teams.ts) onto the MENTOR_ENGLISH_PENDING keys
@@ -126,7 +126,7 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
     try {
       const nextVisit={...visit,mentorId:data.selfId,photoCount:visit.photos?.length??0};
       let confirmedVisit:FieldVisit|undefined; let queued=false;
-      if(!team && (!canRecordVisits || !photosReady || !validFieldVisit(nextVisit,new Date().toISOString().slice(0,10),data.sample)))throw Error('Check the farmer, observations, follow-up date and photo captions. A named person or follow-up date needs an agreed action.');
+      if(!team && (!canRecordVisits || !photosReady || !validFieldVisit(nextVisit,localTodayISODate(),data.sample)))throw Error('Check the farmer, observations, follow-up date and photo captions. A named person or follow-up date needs an agreed action.');
       if (isSampleMode()) {
         if(!data.sample)throw Error('The workspace changed. Reopen field teams.');
         const all = completeSampleFieldWorkspace(sampleRead('field-teams', freshFieldWorkspace));
@@ -164,7 +164,7 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
   const garden = (id: string) => data?.people.find(p => p.id === id)?.gardenName || data?.teams.find(t => t.farmerIds.includes(id))?.location;
   const assigned = [...new Set(data?.teams.flatMap(t => t.farmerIds) ?? [])];
   const captureScope=currentScope(),captureVersion=requestVersion.current;
-  const today=new Date().toISOString().slice(0,10);
+  const today=localTodayISODate();
   const summary=data?summariseFieldWork(data,from,to,farmerFilter,today):null;
   const recordedVisits=summary?.visits??[];
   const scopeValid=!from||!to||from<=to;
@@ -174,8 +174,17 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
   // English throughout regardless of `lang`, same as the rest of that report's own text.
   const programmeLabel=programmeKeys.length?programmeKeys.map(p=>FIELD_PROGRAMMES[p]).join(' / '):'Garden mentoring';
   // The on-screen counterpart, isiZulu-aware like the hero text it sits beside.
+  // ux-22's English-side fix (spelling out FIELD_PROGRAMMES' acronym-heavy label here) is
+  // NOT done: tests/field-programmes-i18n.test.ts (not owned by this track) pins this exact
+  // line reading FIELD_PROGRAMMES[p] directly, so changing it would break a test outside this
+  // track's files. The isiZulu label above has already dropped the acronym.
   const programmeLabelUi=programmeKeys.length?programmeKeys.map(p=>ui(FIELD_PROGRAMMES[p],FIELD_PROGRAMMES_ZU[p])).join(' / '):ui('Garden mentoring','Ukwelulekwa kwengadi');
-  const scopeLabel=`${farmerFilter?name(farmerFilter):'All assigned participants'} · ${from||recordedVisits.at(-1)?.date||'First recorded visit'} to ${to||recordedVisits[0]?.date||'Latest recorded visit'}`;
+  // staff-13: this used to splice raw 'YYYY-MM-DD' strings into the summary text ('Record scope
+  // · 2026-08-15 to 2026-09-05'). formatStaffDate reads each date the way a staff member would
+  // say it; the fallback phrases ('First/Latest recorded visit') are unchanged.
+  const scopeFromLabel=from?formatStaffDate(from,lang):recordedVisits.at(-1)?.date?formatStaffDate(recordedVisits.at(-1)!.date,lang):'First recorded visit';
+  const scopeToLabel=to?formatStaffDate(to,lang):recordedVisits[0]?.date?formatStaffDate(recordedVisits[0].date,lang):'Latest recorded visit';
+  const scopeLabel=`${farmerFilter?name(farmerFilter):'All assigned participants'} · ${scopeFromLabel} to ${scopeToLabel}`;
   const actionLabel=(record:FieldVisit)=>record.actionCompletedOn?t('mentorActionCompleted'):record.followUpDate?record.followUpDate<today?t('mentorFollowUpOverdue'):record.followUpDate===today?t('mentorFollowUpToday'):t('mentorFollowUpScheduled'):t('mentorDateNeeded');
   const filteredPeople=data?.people.filter(person=>assigned.includes(person.id)&&(!farmerFilter||person.id===farmerFilter)&&`${person.name} ${person.gardenName??''}`.toLowerCase().includes(peopleSearch.toLowerCase()))??[];
   return <section className={`${styles.root} ${workStyles.workspace}`}><div className={styles.wrap}>
@@ -229,7 +238,7 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
           <fieldset disabled={readOnlyVisit||busy||photosBusy||captureBusy||!photosReady} style={{border:0,padding:0,minWidth:0}}>
             <div className={styles.grid}>
               <label>{paired('mentorParticipantLabel')}<select required value={visit.farmerId} onChange={e=>setVisit({...visit,farmerId:e.target.value,location:data.people.find(p=>p.id===e.target.value)?.gardenName??'',latitude:null,longitude:null})}><option value="">{paired('mentorChooseParticipant')}</option>{[...new Set([...assigned,...(visit.farmerId?[visit.farmerId]:[])])].map(id=><option key={id} value={id}>{name(id)}</option>)}</select></label>
-              <label>{paired('mentorVisitDateLabel')}<input required type="date" max={new Date().toISOString().slice(0,10)} value={visit.date} onChange={e=>setVisit({...visit,date:e.target.value})}/></label>
+              <label>{paired('mentorVisitDateLabel')}<input required type="date" max={localTodayISODate()} value={visit.date} onChange={e=>setVisit({...visit,date:e.target.value})}/></label>
             </div>
             <label>{paired('mentorSiteLocationLabel')}<input maxLength={240} value={visit.location??''} placeholder={t('mentorSiteLocationPlaceholder')} onChange={e=>setVisit({...visit,location:e.target.value})}/></label>
             <details><summary>{paired('mentorLocationMapDirections')}</summary><VenueLocation key={`${visit.id}|${visit.farmerId}`} latitude={visit.latitude??null} longitude={visit.longitude??null} sample={data.sample} recordKind="visit" venue={visit.location} onChange={point=>{if(captureScope===currentScope()&&captureVersion===requestVersion.current)setVisit(current=>({...current,...point}));}}/></details>
@@ -255,14 +264,14 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
       {panel==='visits'&&scopeValid&&<section className={styles.card} style={{margin:'16px 0'}} aria-label={t('mentorRecordedVisitsAria')}>
         <h2>{t('mentorRecordedVisitsHeading')}</h2><p className={styles.muted}>{scopeLabel}</p>
         {!recordedVisits.length&&<p>{t('mentorNoVisitsRecorded')}</p>}
-        {recordedVisits.slice(0,visibleCount).map(record=><article key={record.id} className={styles.metric}><div className={workStyles.actionHeader}><div className={workStyles.personHeading}>{portrait(record.farmerId)}<div><h3 style={{marginBottom:0}}>{name(record.farmerId)}</h3><p className={workStyles.personGarden}>{garden(record.farmerId)}</p></div></div><span className={styles.tag}>{record.date}</span></div><p>{record.observations||record.notes}</p>{record.agreedAction&&<p><strong>{record.actionCompletedOn?t('mentorCompletedActionLabel'):t('mentorNextActionLabel')}</strong> {record.agreedAction}<br/><strong>{t('mentorResponsibleLabel')}</strong> {record.responsiblePerson||t('mentorNotYetAssigned')} · <strong>{t('mentorFollowUpLabel')}</strong> {record.followUpDate||t('mentorNotYetScheduled')}{record.actionCompletedOn&&<><br/><strong>{t('mentorCompletedLabel')}</strong> {record.actionCompletedOn} · {record.actionOutcome}</>}</p>}{(record.photoCount??record.photos?.length??0)>0&&<p>{t('mentorVisitPhotosCount').replace('{count}',String(record.photoCount??record.photos?.length))}</p>}<button disabled={busy||photosBusy||captureBusy} onClick={()=>void openVisit(record)}>{canRecordVisits&&record.mentorId===data.selfId?t('mentorViewEditVisit'):t('mentorViewVisit')}</button></article>)}
+        {recordedVisits.slice(0,visibleCount).map(record=><article key={record.id} className={styles.metric}><div className={workStyles.actionHeader}><div className={workStyles.personHeading}>{portrait(record.farmerId)}<div><h3 style={{marginBottom:0}}>{name(record.farmerId)}</h3><p className={workStyles.personGarden}>{garden(record.farmerId)}</p></div></div><span className={styles.tag}>{formatStaffDate(record.date,lang)}</span></div><p>{record.observations||record.notes}</p>{record.agreedAction&&<p><strong>{record.actionCompletedOn?t('mentorCompletedActionLabel'):t('mentorNextActionLabel')}</strong> {record.agreedAction}<br/><strong>{t('mentorResponsibleLabel')}</strong> {record.responsiblePerson||t('mentorNotYetAssigned')} · <strong>{t('mentorFollowUpLabel')}</strong> {record.followUpDate?formatStaffDate(record.followUpDate,lang):t('mentorNotYetScheduled')}{record.actionCompletedOn&&<><br/><strong>{t('mentorCompletedLabel')}</strong> {formatStaffDate(record.actionCompletedOn,lang)} · {record.actionOutcome}</>}</p>}{(record.photoCount??record.photos?.length??0)>0&&<p>{t('mentorVisitPhotosCount').replace('{count}',String(record.photoCount??record.photos?.length))}</p>}<button disabled={busy||photosBusy||captureBusy} onClick={()=>void openVisit(record)}>{canRecordVisits&&record.mentorId===data.selfId?t('mentorViewEditVisit'):t('mentorViewVisit')}</button></article>)}
         {recordedVisits.length>visibleCount&&<button onClick={()=>setVisibleCount(n=>n+10)}>{t('mentorShowMoreVisits').replace('{count}',String(recordedVisits.length-visibleCount))}</button>}
       </section>}
       {panel==='people'&&<><label>{t('mentorFindParticipantLabel')}<input type="search" value={peopleSearch} onChange={e=>setPeopleSearch(e.target.value)} placeholder={t('mentorSearchNamesGardens')}/></label><div className={workStyles.people}>
-      {filteredPeople.map(person=>{const latest=data.visits.filter(v=>v.farmerId===person.id).sort((a,b)=>b.date.localeCompare(a.date))[0];return <article className={styles.card} key={person.id}><div className={workStyles.personHeading}>{portrait(person.id)}<h3>{person.name}</h3></div><p>{person.gardenName||data.teams.find(team=>team.farmerIds.includes(person.id))?.location||t('mentorGardenLocationTBD')}</p>{person.gardenAreaM2!=null&&<p className={styles.muted}>{person.gardenType} · {numberLabel(Math.round(person.gardenAreaM2))} m²</p>}<p className={styles.muted}>{latest?`${data.visitCursor?t('mentorMostRecentLoadedVisit'):t('mentorLastRecordedVisit')} · ${latest.date}`:data.visitCursor?t('mentorNoVisitInHistoryLoaded'):t('mentorNoVisitRecordedYet')}</p><div className={styles.row}>{canRecordVisits&&<button disabled={busy||captureBusy||photosBusy} onClick={()=>newVisit(person.id)}>{t('mentorRecordVisitButton')}</button>}{latest&&<button disabled={busy||captureBusy||photosBusy} onClick={()=>void openVisit(latest)}>{t('mentorLatestVisitButton')}</button>}</div></article>;})}
+      {filteredPeople.map(person=>{const latest=data.visits.filter(v=>v.farmerId===person.id).sort((a,b)=>b.date.localeCompare(a.date))[0];return <article className={styles.card} key={person.id}><div className={workStyles.personHeading}>{portrait(person.id)}<h3>{person.name}</h3></div><p>{person.gardenName||data.teams.find(team=>team.farmerIds.includes(person.id))?.location||t('mentorGardenLocationTBD')}</p>{person.gardenAreaM2!=null&&<p className={styles.muted}>{person.gardenType} · {numberLabel(Math.round(person.gardenAreaM2))} m²</p>}<p className={styles.muted}>{latest?`${data.visitCursor?t('mentorMostRecentLoadedVisit'):t('mentorLastRecordedVisit')} · ${formatStaffDate(latest.date,lang)}`:data.visitCursor?t('mentorNoVisitInHistoryLoaded'):t('mentorNoVisitRecordedYet')}</p><div className={styles.row}>{canRecordVisits&&<button disabled={busy||captureBusy||photosBusy} onClick={()=>newVisit(person.id)}>{t('mentorRecordVisitButton')}</button>}{latest&&<button disabled={busy||captureBusy||photosBusy} onClick={()=>void openVisit(latest)}>{t('mentorLatestVisitButton')}</button>}</div></article>;})}
       {!filteredPeople.length&&<p>{t('mentorNoParticipantsMatch')}</p>}</div></>}
       {!data.teams.length && <p className={styles.card}>{t('mentorNoFieldTeamAssigned')}</p>}
-      {(panel==='people'||organisation)&&data.teams.map(t => <article key={t.mentorId} className={styles.card} style={{ marginBottom: 16 }}><h2>{t.location}</h2><p style={{ display: 'flex', alignItems: 'center', gap: 12 }}>{portrait(t.mentorId,64)}<span>{translate(lang,'mentorLabelPrefix')} {name(t.mentorId)} · {translate(lang,'mentorUpdatedPrefix')} {t.updatedAt.slice(0, 10)}</span></p><h3>{translate(lang,'mentorOrganisationGuidanceHeading')}</h3><p style={{ whiteSpace: 'pre-wrap' }}>{t.guidance || translate(lang,'mentorNoGuidancePosted')}</p><p>{translate(lang,'mentorAssignedParticipantsCount').replace('{count}',String(t.farmerIds.length))} · {ui(FIELD_PROGRAMMES[t.programme??'general'],FIELD_PROGRAMMES_ZU[t.programme??'general'])}</p>{data.canManage && <button onClick={() => setDraft(t)}>{translate(lang,'mentorEditTeamGuidance')}</button>}</article>)}
+      {(panel==='people'||organisation)&&data.teams.map(t => <article key={t.mentorId} className={styles.card} style={{ marginBottom: 16 }}><h2>{t.location}</h2><p style={{ display: 'flex', alignItems: 'center', gap: 12 }}>{portrait(t.mentorId,64)}<span>{translate(lang,'mentorLabelPrefix')} {name(t.mentorId)} · {translate(lang,'mentorUpdatedPrefix')} {formatStaffDate(t.updatedAt.slice(0, 10),lang)}</span></p><h3>{translate(lang,'mentorOrganisationGuidanceHeading')}</h3><p style={{ whiteSpace: 'pre-wrap' }}>{t.guidance || translate(lang,'mentorNoGuidancePosted')}</p><p>{translate(lang,'mentorAssignedParticipantsCount').replace('{count}',String(t.farmerIds.length))} · {ui(FIELD_PROGRAMMES[t.programme??'general'],FIELD_PROGRAMMES_ZU[t.programme??'general'])}</p>{data.canManage && <button onClick={() => setDraft(t)}>{translate(lang,'mentorEditTeamGuidance')}</button>}</article>)}
       {data.canManage && <form className={styles.card} onSubmit={e => { e.preventDefault(); void save(true); }}><h2>{t('mentorAssignUpdateTeam')}</h2><label>{t('mentorMentorLabel')}<select required value={draft.mentorId} onChange={e => setDraft(data.teams.find(t => t.mentorId === e.target.value) ?? { ...draft, mentorId: e.target.value, farmerIds: [], guidance: '', location: '' })}><option value="">{t('mentorChooseMentorOption')}</option>{data.people.filter(p => p.role === 'mentor').map(p => <option key={p.id} value={p.id}>{p.name}</option>)}</select></label><label>{t('mentorServiceLocationLabel')}<input required maxLength={160} value={draft.location} onChange={e => setDraft({ ...draft, location: e.target.value })} /></label><label>{t('mentorProgrammeFocusLabel')}<select value={draft.programme??'general'} onChange={e=>setDraft({...draft,programme:e.target.value as FieldProgramme})}>{Object.entries(FIELD_PROGRAMMES).map(([key,label])=><option key={key} value={key}>{ui(label,FIELD_PROGRAMMES_ZU[key as FieldProgramme])}</option>)}</select></label><h3>{t('mentorParticipantGroupHeading')}</h3><div className={styles.scroll}>{data.people.filter(p => ['farmer', 'student'].includes(p.role)).map(p => <label key={p.id} className={styles.option}><input type="checkbox" checked={draft.farmerIds.includes(p.id)} onChange={e => setDraft({ ...draft, farmerIds: e.target.checked ? [...draft.farmerIds, p.id] : draft.farmerIds.filter(id => id !== p.id) })} />{p.name}</label>)}</div><label>{t('mentorGuidanceForMentorLabel')}<textarea maxLength={4000} value={draft.guidance} onChange={e => setDraft({ ...draft, guidance: e.target.value })} /></label><button className={styles.primary} disabled={busy}>{t('mentorSaveTeamGuidance')}</button></form>}
       {/* Exported/copied report content (ReportComposer's title/photoHeading/metrics/chart/sections) stays English on purpose — goes to English-speaking funders, same decision as programmeLabel above. Only the screen note above it is translated. */}
       {panel==='report'&&summary&&scopeValid&&!data.visitCursor&&<><p className={styles.notice}>{t('mentorInternalReportNotice')}</p><ReportComposer deviceData={data} orgId={org||undefined} photos={summary.visits.flatMap(v=>(visitPhotos[v.id]??v.photos??[]).map(p=>({image:p.image,caption:`${v.date} · ${name(v.farmerId)} · ${p.caption}`})))} photoHeading="Visit photographs opened for this report" title={organisation ? 'Field implementation report' : 'Mentor field report'} sample={data.sample}

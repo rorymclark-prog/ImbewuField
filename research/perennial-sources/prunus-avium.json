@@ -1,0 +1,73 @@
+{
+  "speciesId": "prunus-avium",
+  "commonName": "Sweet cherry",
+  "botanicalName": "Prunus avium",
+  "harvestProduct": "ripe fruit",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "The KZN guide gives a yield at year 6, not the age of the first crop. A tree being productive at six does not establish that it first crops at six."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No explicit species-wide age of full bearing. A good hectare yield in year 8 or 9 is a contextual result, not an age definition."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "The directly stated 4–6 kg/tree refers to year 6 and uncertain pollination/fruit set; it is retained as an age-specific supplemental reference, not a generic mature annual default."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "The guide gives a greater-than-1000-PCU requirement for conventional commercial production, plus distinct low-chill candidates. A lower-bound conventional reference is not an exact species-wide range and PCUs must not be relabelled chill hours."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Requirements depend on cultivar: most are self-incompatible, while the guide explicitly names Lapins, Stella and Sweetheart as self-fertile. No single species enum can represent both."
+  },
+  "productionGuidance": {
+    "products": "Ripe sweet cherries.",
+    "care": [
+      "Check measured winter chilling, spring frost, drainage and rain near picking. The older KZN guide regarded commercial suitability there as still under trial; a broad climate-zone label does not replace current local advice.",
+      "Pollination depends on the selected cultivar. Compatible flowering and pollen sources are separate from early or late fruit ripening."
+    ],
+    "purchase": [
+      "Regional guide candidates include Bing, Van, Rainier, Burlat and Vista, which generally need compatible pollen partners. It explicitly lists Lapins, Stella and Sweetheart as self-fertile. Minnie Royal, Royal Lee, Royal Dawn and Early Sweet are lower-chill candidates. Confirm current stock, exact rootstock, compatibility and measured local chilling before purchase; this is not a warm-coast recommendation."
+    ]
+  },
+  "supplementaryReferences": [
+    {
+      "title": "Production at age six",
+      "quote": "An average yield would be 4-6 kg/tree (4.5 to 6.5t/ha) in year 6, with a good yield of 9t/ha in year 8 or 9.",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN (2006), Sweet Cherry: Yield",
+      "page": 31,
+      "note": "The guide reports 4–6 kg/tree in year 6 and warns that yields are difficult to predict because of pollination and fruit set. The separate good result at year 8–9 is 9 t/ha. Do not connect them into a made-up growth curve or convert the later hectare result to arbitrary tree spacing."
+    },
+    {
+      "title": "Chilling and pollen partners",
+      "quote": "Cherries require in excess of 1000 PCUs between May and August for commercial production. ... Self fertile cultivars: Lapins, Stella, Sweetheart. ... New low cultivars: Minnie Royal, Royal Lee, Royal Dawn, Early Sweet",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN (2006), Sweet Cherry: Climate and Cultivars",
+      "page": 30,
+      "note": "Conventional commercial cherry reference: more than 1,000 Positive Utah Chill Units, not 1,000 chill hours. Low-chill candidates need their own verified requirements. Most cultivars need compatible cross-pollination; the named self-fertile choices differ. The September flowering reference is not a picking-month array."
+    },
+    {
+      "title": "Observed Ceres season start",
+      "quote": "The 2025 harvest has started about seven to ten days earlier than last year",
+      "url": "https://www.hortgro.co.za/news/tru-cape-se-kersieseisoen-skop-op-n-hoe-noot-af/",
+      "doc": "Hortgro / Tru-Cape growers, Cherry season begins: Ideal conditions, 29 October 2025",
+      "page": null,
+      "note": "Ceres growers reported the start of the 2025 cherry harvest in late October, seven to ten days earlier than the prior year. This is an observed season in a named region, not a fixed future duration, KZN calendar or all-variety season."
+    }
+  ],
+  "gaps": [
+    "Checked 11 October 2026 using rendered KZN PDF pages 30–31 and the primary industry/grower October 2025 report. The guide's September–November/December sentence combines flowering and fruit ripening, so it cannot establish a clean picking-month window.",
+    "No verified fixed cultivar/site harvest duration or first/full-bearing age was found in the checked primary material. Explicit age-six production and cultivar-specific pollination/chilling context are retained for review without supplying unsupported numeric defaults."
+  ],
+  "householdFoodStatus": "confirmed-food"
+}

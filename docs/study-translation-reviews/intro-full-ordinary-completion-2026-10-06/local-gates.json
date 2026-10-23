@@ -1,0 +1,39 @@
+{
+  "baseCommit": "8914c4ed10d7fdddd9b7b58b43a839fe7bdda7b7",
+  "branch": "codex/regional-intro-full-ordinary-completion-20261006",
+  "status": "local ordered gates pass; no commit/push/native preview",
+  "ordered": {
+    "typecheck": "npx tsc --noEmit exit0",
+    "fullTests": {
+      "command": "npm test",
+      "exitCode": 0,
+      "tests": 4763,
+      "pass": 4762,
+      "fail": 0,
+      "todo": 1,
+      "durationMs": 847707.385834,
+      "log": "/tmp/imbewu-intro-full-final2-ordered-tests-20261006.log"
+    },
+    "whitespace": "git diff --check exit0"
+  },
+  "priorRuns": [
+    {
+      "status": "cancelled/incomplete",
+      "availableLog": "/tmp/imbewu-intro-full-first-cancelled-tests-20261006.log",
+      "record": "/tmp/imbewu-intro-full-first-run-cancellation-20261006.json"
+    },
+    {
+      "status": "terminal fail",
+      "tests": 4763,
+      "pass": 4760,
+      "fail": 2,
+      "todo": 1,
+      "durationMs": 856304,
+      "log": "/tmp/imbewu-intro-full-final-ordered-tests-20261006.log",
+      "reason": "historical aggregate mutation no-op and superseded exact validator error route; repaired without deleting controls"
+    }
+  ],
+  "localPixelReview": "Root viewed18 complete contacts36frames plus VE14; no clipping/collision seen; VE14 naturalheight5402 preserved. No preview/phone/fluency approval.",
+  "protected": "all1869unlisted manifest files byte/hash exact; ST22stills+23audio unchanged; no canonical/source/index/species/number/PLAN_VERSION edits",
+  "lateTestDiff": "only two header mutation tests; root read exactdiff and accepted. Planner and dated descriptor patches likewise root accepted."
+}

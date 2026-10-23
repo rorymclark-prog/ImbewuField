@@ -1,0 +1,152 @@
+{
+  "lessonId": "soil-health-l3",
+  "sourceMainSha": "2a34447c46065c93ce44b833fb6d3d1f84296521",
+  "status": "wired-machine-draft",
+  "scopeNote": "Source-paired candidates for the exact-English-held key points and both complete quiz items in the current Xitsonga Soil L3 registry. Four key points and both quizzes are drafted in canonical order; source options and correct indices are retained. No repository edits. Candidates are unreviewed and require independent Xitsonga backcheck. Wired as source-paired Xitsonga machine drafts after exact-source verification at ae1bc6cbb290ef9046fda51c2704019f5fc4187a. No fluent-speaker approval is implied.",
+  "keyPoints": [
+    {
+      "index": 0,
+      "sourceEnglish": "Protect exposed soil with suitable cover",
+      "currentDraft": "Protect exposed soil with suitable cover",
+      "status": "exact-English hold",
+      "draft": "Sirhelela misava leyi paluxiweke hi cover leyi faneleke.",
+      "literalBacktranslation": "Protect exposed soil with suitable cover.",
+      "uncertainty": "Retains the suitability requirement; cover remains a broad term and is not narrowed to mulch alone."
+    },
+    {
+      "index": 1,
+      "sourceEnglish": "Keep mulch away from trunks and stems",
+      "currentDraft": "Keep mulch away from trunks and stems",
+      "status": "exact-English hold",
+      "draft": "Hlayisa mulch ekule na trunks na stems.",
+      "literalBacktranslation": "Keep mulch away from trunks and stems.",
+      "uncertainty": "Keeps both trunks and stems explicit; mulch and plant-part technical terms remain English."
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "Choose cover crops for local water, weather and the following crop",
+      "currentDraft": "Choose cover crops for local water, weather and the following crop",
+      "status": "exact-English hold",
+      "draft": "Hlawula cover crops hi ku ya hi mati ya laha, weather ni crop leyi landzelaka.",
+      "literalBacktranslation": "Choose cover crops according to local water, weather and the crop that follows.",
+      "uncertainty": "Preserves all three selection factors, including the crop that follows. Cover crops and crop remain English."
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "Worm-bin leachate is not automatically safe fertiliser; keep it off edible plants",
+      "currentDraft": "Worm-bin leachate is not automatically safe fertiliser; keep it off edible plants",
+      "status": "exact-English hold",
+      "draft": "Worm-bin leachate is not automatically safe fertiliser; yi hlayise ekule na edible plants.",
+      "literalBacktranslation": "You should not take worm-bin leachate to be safe fertiliser automatically; keep it away from edible plants.",
+      "uncertainty": "Preserves 'not automatically safe' and the instruction to keep leachate away from edible plants. Retains technical safety terms in English; it does not say dilution or any other step makes it safe."
+    }
+  ],
+  "quizzes": [
+    {
+      "index": 0,
+      "sourceCorrectIndex": 2,
+      "question": {
+        "sourceEnglish": "A Highveld farmer harvests maize in April and leaves the field bare all winter. What are the two main risks?",
+        "currentDraft": "A Highveld farmer harvests maize in April and leaves the field bare all winter. What are the two main risks?",
+        "status": "exact-English hold",
+        "draft": "Murimi wa Highveld u tshovela maize hi April kutani a siya field yi nga funengetiwangi all winter. Hi wahi makhombo mambirhi lamakulu?",
+        "literalBacktranslation": "A Highveld farmer harvests maize in April and leaves the field uncovered throughout winter. What are the two main risks?",
+        "uncertainty": "Preserves Highveld, maize, April, bare condition for all winter, and exactly two main risks."
+      },
+      "options": [
+        {
+          "sourceEnglish": "Overheating in winter sun and waterlogging from rain",
+          "currentDraft": "Overheating in winter sun and waterlogging from rain",
+          "status": "exact-English hold",
+          "draft": "Ku hisa ngopfu ehansi ka dyambu ra winter ni waterlogging from rain"
+        },
+        {
+          "sourceEnglish": "Frost kills soil life and weeds take over early",
+          "currentDraft": "Frost kills soil life and weeds take over early",
+          "status": "exact-English hold",
+          "draft": "Frost kills soil life naswona weeds take over early"
+        },
+        {
+          "sourceEnglish": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
+          "currentDraft": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
+          "status": "exact-English hold",
+          "draft": "Wind erosion ya dry topsoil ni ku lahlekeriwa hi soil structure hi ku ba ka spring storm"
+        },
+        {
+          "sourceEnglish": "Soil pH drops and nitrogen builds up",
+          "currentDraft": "Soil pH drops and nitrogen builds up",
+          "status": "exact-English hold",
+          "draft": "Soil pH ya hunguteka naswona nitrogen ya hlengeletana"
+        }
+      ],
+      "rationale": {
+        "sourceEnglish": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away.",
+        "currentDraft": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away.",
+        "status": "exact-English hold",
+        "draft": "Misava leyi nga funengetiwangi yi va erivaleni eka mheho wa winter, lowu nga susaka dry topsoil. Ku ba ka marhonsi ya mpfula ku nga onha surface; laha mati ma khulukaka ehenhla ka field, ma nga teka misava leyi ntshunxekeke ma yi susa.",
+        "literalBacktranslation": "Uncovered soil is exposed to winter wind, which can remove dry topsoil. Raindrop impact can damage the surface; where water flows over the field, it can carry loosened soil away.",
+        "uncertainty": "Preserves can for wind loss and raindrop damage; the runoff loss remains conditional on water flowing over the field. Topsoil, surface and field remain English."
+      }
+    },
+    {
+      "index": 1,
+      "sourceCorrectIndex": 1,
+      "question": {
+        "sourceEnglish": "What should you remember about liquid draining from a worm bin?",
+        "currentDraft": "What should you remember about liquid draining from a worm bin?",
+        "status": "exact-English hold",
+        "draft": "U fanele ku tsundzuka yini hi liquid draining from a worm bin?",
+        "literalBacktranslation": "What should you remember about liquid that comes out of a worm bin?",
+        "uncertainty": "Retains worm bin and the liquid-drainage context; the question does not imply the liquid was prepared."
+      },
+      "options": [
+        {
+          "sourceEnglish": "It is always safe on salad leaves",
+          "currentDraft": "It is always safe on salad leaves",
+          "status": "exact-English hold",
+          "draft": "Yi hlayisekile minkarhi hinkwayu eka salad leaves"
+        },
+        {
+          "sourceEnglish": "It can contain harmful organisms or substances; dilution is not a safety guarantee",
+          "currentDraft": "It can contain harmful organisms or substances; dilution is not a safety guarantee",
+          "status": "exact-English hold",
+          "draft": "Yi nga va na harmful organisms kumbe substances; dilution a hi safety guarantee"
+        },
+        {
+          "sourceEnglish": "It is identical to finished worm castings",
+          "currentDraft": "It is identical to finished worm castings",
+          "status": "exact-English hold",
+          "draft": "Yi fana hi ku helela na finished worm castings"
+        },
+        {
+          "sourceEnglish": "A fixed dilution makes every liquid safe",
+          "currentDraft": "A fixed dilution makes every liquid safe",
+          "status": "exact-English hold",
+          "draft": "Dilution yo karhi leyi vekiweke yi endla leswaku liquid yin'wana ni yin'wana yi hlayiseka"
+        }
+      ],
+      "rationale": {
+        "sourceEnglish": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.",
+        "currentDraft": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.",
+        "status": "exact-English hold",
+        "draft": "Leachate i liquid that drains naturally from a worm bin. Composition ya yona ya hambana, hikokwalaho a yi fanelanga ku kombisiwa yi ri feed leyi tiyisekisiweke leswaku yi hlayisekile eka edible crops.",
+        "literalBacktranslation": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it should not be presented as a feed guaranteed to be safe for edible crops.",
+        "uncertainty": "Retains natural drainage, variable composition and the prohibition on presenting it as guaranteed-safe feed for edible crops. The natural-drainage technical clause remains English to distinguish leachate from prepared worm-casting tea."
+      }
+    }
+  ],
+  "sourceCorrectIndices": [
+    2,
+    1
+  ],
+  "semanticChecks": [
+    "All four key points and both quiz items are exact-English holds in the current TS registry; answer indices remain 2 and 1.",
+    "Cover-crop wording preserves local water, weather and the next crop; mulch is kept away from trunks and stems.",
+    "The Highveld quiz retains maize harvest in April, the bare-field-through-winter condition, winter-wind topsoil loss and spring-storm structure damage. Rationale preserves can and makes soil carried away conditional on water running over the field.",
+    "The worm-bin quiz distinguishes naturally drained leachate from prepared worm-casting tea, preserves variable composition, possible harmful contents, no edible-crop safety guarantee and dilution not being a safety guarantee.",
+    "No crop species, numbers, timing, new safety claim or farming advice was added."
+  ],
+  "uncertaintySummary": "Unreviewed Xitsonga machine-draft candidates, not fluent-speaker approval. Difficult soil and leachate terms remain English where a local equivalent risks changing the source. Independent backcheck is required before wiring.",
+  "independentBackcheck": "Current exact source/order/indices2,1 and semantic conditions independently checked. Root retained not automatically safe fertiliser/all winter/weeds take over early/liquid draining from a worm bin in English to remove ambiguous safety, duration and drainage wording. Repaired final fields await re-observation before wiring; not fluent approval.",
+  "currentSourceCheckedAt": "ae1bc6cbb290ef9046fda51c2704019f5fc4187a"
+}

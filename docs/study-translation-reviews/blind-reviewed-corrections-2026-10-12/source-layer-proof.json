@@ -1,0 +1,543 @@
+{
+  "base": "74b0d72a3d49ac90503db436ee79e56248b3a350",
+  "reviewStatus": "unreviewed",
+  "modelChecksAreNotFluentApproval": true,
+  "learnerCorrections": 9,
+  "files": {
+    "docs/narration/intro-permaculture.st.silent-draft.json": {
+      "beforeSha256": "e476474a58deab53f4d360524a53fb214d7aab19b10dd0b43aaff490ea63a310",
+      "afterSha256": "b80d92fbe011e202efa174222f4dec2892ba1f1cd0cf51c8e164f8c87725d095",
+      "beforeBytes": 42731,
+      "afterBytes": 42769,
+      "replacements": [
+        {
+          "before": "          },\n          {\n            \"status\": \"draft\",\n            \"text\": \"Ebe o botse older neighbour a le mong hore worst wind e tswa ka lehlakoreng lefe, mme o bapise karabo ya hae le motsu wa hao.\",\n            \"provenance\": \"2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open\"\n          }\n        ]\n      }\n",
+          "after": "          },\n          {\n            \"status\": \"draft\",\n            \"text\": \"Ebe o botse moahisani ya hodileng a le mong hore moya o mobe ka ho fetisisa o tswa ka lehlakoreng lefe, mme o bapise karabo ya hae le motsu wa hao.\",\n            \"provenance\": \"2026-10-12 bounded wording independently back-translated without source; unreviewed machine draft, exact English retained; no fluent/farming/narration approval\"\n          }\n        ]\n      }\n",
+          "lineBefore": 846,
+          "lineAfter": 846
+        }
+      ]
+    },
+    "lib/course-deck-release-bindings-data.ts": {
+      "beforeSha256": "f6ceaa3788cea69e0ad0f7623205208d3388c8496c930a4242aee9deef36a9c7",
+      "afterSha256": "c6981a4b37b514f776444ca572e635b32915bd21f8bd1edd3bfe831ea1a305ca",
+      "beforeBytes": 35344,
+      "afterBytes": 35366,
+      "replacements": [
+        {
+          "before": "    \"moduleId\": \"intro-permaculture\",\n    \"language\": \"st\",\n    \"pairPath\": \"docs/narration/intro-permaculture.st.silent-draft.json\",\n    \"pairSha256\": \"e476474a58deab53f4d360524a53fb214d7aab19b10dd0b43aaff490ea63a310\",\n    \"reviewStatus\": \"unreviewed\",\n    \"audioBinding\": \"none\",\n    \"slides\": [\n",
+          "after": "    \"moduleId\": \"intro-permaculture\",\n    \"language\": \"st\",\n    \"pairPath\": \"docs/narration/intro-permaculture.st.silent-draft.json\",\n    \"pairSha256\": \"b80d92fbe011e202efa174222f4dec2892ba1f1cd0cf51c8e164f8c87725d095\",\n    \"reviewStatus\": \"unreviewed\",\n    \"audioBinding\": \"none\",\n    \"slides\": [\n",
+          "lineBefore": 7,
+          "lineAfter": 7
+        },
+        {
+          "before": "          \"Tsamaya ka ntle mme o bapise setshwantsho sa hao le setsha sa sebele.\",\n          \"Ema monyako wa kichine mme o bale seo Zone 1 e nang le sona ka nnete kajeno.\",\n          \"Fumana ntho e le nngwe e lenngweng further away than how often you use it, mme o ngole moo e lokelang ho iswa teng.\",\n          \"Ebe o botse older neighbour a le mong hore worst wind e tswa ka lehlakoreng lefe, mme o bapise karabo ya hae le motsu wa hao.\"\n        ],\n        \"sourceHash\": \"bc403a1fafa33ab5f3168f769eb80558f857a1861897f3ad0dc03b0217d738d1\",\n        \"targetHash\": \"177f5cbd9071f73e95b8046f70bb07f9a889ca740c93637f5a1ba09d303ed194\",\n        \"imageUrl\": \"/course-decks/intro-permaculture/st-silent/slide-22.webp\",\n        \"imageSha256\": \"1fd599926f5f11249886a376693aea73bfc387ca9b09d498a0177d44ab288500\",\n        \"imageBytes\": 259458,\n        \"width\": 1440,\n        \"height\": 5400\n      }\n",
+          "after": "          \"Tsamaya ka ntle mme o bapise setshwantsho sa hao le setsha sa sebele.\",\n          \"Ema monyako wa kichine mme o bale seo Zone 1 e nang le sona ka nnete kajeno.\",\n          \"Fumana ntho e le nngwe e lenngweng further away than how often you use it, mme o ngole moo e lokelang ho iswa teng.\",\n          \"Ebe o botse moahisani ya hodileng a le mong hore moya o mobe ka ho fetisisa o tswa ka lehlakoreng lefe, mme o bapise karabo ya hae le motsu wa hao.\"\n        ],\n        \"sourceHash\": \"bc403a1fafa33ab5f3168f769eb80558f857a1861897f3ad0dc03b0217d738d1\",\n        \"targetHash\": \"fbee8d1c6caa60e80818d0a737934a9a0fa1c589d17f4a061b022b98fdac7daf\",\n        \"imageUrl\": \"/course-decks/intro-permaculture/st-silent/slide-22.webp\",\n        \"imageSha256\": \"5524fa056b9fa115ef8c26e7aab725de2d18f5c4187f61023a691269f4e1cffa\",\n        \"imageBytes\": 290480,\n        \"width\": 1440,\n        \"height\": 5400\n      }\n",
+          "lineBefore": 529,
+          "lineAfter": 529
+        }
+      ]
+    },
+    "docs/narration/intro-permaculture.ts.paired-draft.json": {
+      "beforeSha256": "94dc11005a921723e0a6722d18b868d0533d40983a014b84fcea436a104f424c",
+      "afterSha256": "f04b40fd3f1a69306b710d86e74f4373c289e53ac4d9a7fc22964aa809d5001b",
+      "beforeBytes": 132669,
+      "afterBytes": 132683,
+      "replacements": [
+        {
+          "before": "          },\n          {\n            \"status\": \"draft\",\n            \"text\": \"Murimi la xavaka tandza hinkwato ni matsavu hinkwato, kambe a nga hlayisi na xin'we leswaku ndyangu wu ta dya, a nga landzeli People Care.\",\n            \"provenance\": \"unreviewed-ai-draft; source paired\"\n          },\n          {\n            \"status\": \"draft\",\n",
+          "after": "          },\n          {\n            \"status\": \"draft\",\n            \"text\": \"Murimi la xavisaka tandza hinkwato ni matsavu hinkwato, kambe a nga hlayisi na xin'we leswaku ndyangu wu ta dya, a nga landzeli People Care.\",\n            \"provenance\": \"2026-10-12 bounded wording independently back-translated without source; unreviewed machine draft, exact English retained; no fluent/farming/narration approval\"\n          },\n          {\n            \"status\": \"draft\",\n",
+          "lineBefore": 338,
+          "lineAfter": 338
+        },
+        {
+          "before": "            \"provenance\": \"new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending\"\n          },\n          {\n            \"provenance\": \"Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending\",\n            \"status\": \"mixed\",\n            \"segments\": [\n              {\n",
+          "after": "            \"provenance\": \"new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending\"\n          },\n          {\n            \"provenance\": \"2026-10-12 bounded wording independently back-translated without source; unreviewed machine draft, exact English retained; no fluent/farming/narration approval\",\n            \"status\": \"mixed\",\n            \"segments\": [\n              {\n",
+          "lineBefore": 2415,
+          "lineAfter": 2415
+        },
+        {
+          "before": "              {\n                \"sourceEnglish\": \"one older neighbour\",\n                \"status\": \"draft\",\n                \"text\": \"older neighbour un’we\",\n                \"reason\": \"Count follows the retained age-comparative noun phrase; one/older both remain semantically bound. Retained English is not claimed translated.\"\n              },\n              {\n                \"sourceEnglish\": \" which direction the \",\n",
+          "after": "              {\n                \"sourceEnglish\": \"one older neighbour\",\n                \"status\": \"draft\",\n                \"text\": \"muakelani la kuleke un’we\",\n                \"reason\": \"Bounded older-neighbour phrase independently back-translated; remaining grammar stays unreviewed.\"\n              },\n              {\n                \"sourceEnglish\": \" which direction the \",\n",
+          "lineBefore": 2427,
+          "lineAfter": 2427
+        },
+        {
+          "before": "              },\n              {\n                \"sourceEnglish\": \"worst wind\",\n                \"status\": \"english-hold\",\n                \"reason\": \"Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal.\"\n              },\n              {\n                \"sourceEnglish\": \" comes from, and compare their answer with your arrow.\",\n                \"status\": \"draft\",\n                \"text\": \" yi humaka hi yona, u ringanisa nhlamulo ya yena ni museve wa wena.\",\n                \"reason\": \"Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval.\"\n              }\n            ]\n",
+          "after": "              },\n              {\n                \"sourceEnglish\": \"worst wind\",\n                \"status\": \"draft\",\n                \"reason\": \"Bounded worst-wind superlative independently checked; English source span unchanged.\",\n                \"text\": \"moya wo biha ku tlula hinkwayo\"\n              },\n              {\n                \"sourceEnglish\": \" comes from, and compare their answer with your arrow.\",\n                \"status\": \"draft\",\n                \"text\": \" wu humaka hi yona, u ringanisa nhlamulo ya yena ni museve wa wena.\",\n                \"reason\": \"Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval.\"\n              }\n            ]\n",
+          "lineBefore": 2438,
+          "lineAfter": 2438
+        }
+      ]
+    },
+    "lib/course-translation-drafts-ve-reading-landscape.ts": {
+      "beforeSha256": "fab9be70796ad512750ee9f5940f8f436e6908ed09eef0aef85c89b19b4f0f5f",
+      "afterSha256": "1f492d6358fa2aab14a1c4331b2742bbddebbfdc63d6678db2f97486baf403b3",
+      "beforeBytes": 30308,
+      "afterBytes": 30323,
+      "replacements": [
+        {
+          "before": "      ),\n      body: pair(\n        \"Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.\\n\\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\\n\\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.\",\n        \"Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Sedzani rills, hune maḓi a phaḓaladzana hone (fans out), hune a kuvhangana hone (ponds), na hune a bva hone kha tshitentsi tshaṋu. Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.\\n\\nLevel ya A-frame i nga ni thusa u swaya points at the same height na u tevhela contour line. Its marks are an observation; a si pulane kana thendelo ya earthworks. Musi ni sa athu bwa swale, dam kana tshiṅwe tshivhumbeo, itani uri fhethu hu ṱolwe. Mavu, u sendama ha mavu, na nḓila ine maḓi a bva ngayo, u elela ha maḓi musi hu na mvula khulu na nḓila yo tsireledzeaho ya u bvisa maḓi manzhisa zwiṅwe na zwiṅwe ndi zwa ndeme. Vhudzisani mueletshedzi wa zwa vhulimi wa henefho o gudiswaho.\\n\\nA hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone. Dzi-contour dzo vhewaho nga nḓila i songo teaho dzi nga engedza erosion, nahone mavu ane a nwa maḓi nga u lenga a nga fara maḓi manzhisa. Nangani water works dzinwe na dzinwe dzine dza fanelea fhethu hono nahone ni pulane nḓila yo tsireledzeaho ya u bvisa maḓi a re manzhisa.\",\n      ),\n      keyPoints: [\n        pair(\n",
+          "after": "      ),\n      body: pair(\n        \"Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.\\n\\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\\n\\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.\",\n        \"Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Sedzani rills, hune maḓi a phaḓaladzana hone (fans out), hune a kuvhangana hone (ponds), na hune a bva hone kha tshitentsi tshaṋu. Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.\\n\\nLevel ya A-frame i nga ni thusa u swaya points at the same height na u tevhela contour line. Zwine ya zwi swaya ndi zwe na zwi lavhelesa; a si pulane kana thendelo ya earthworks. Musi ni sa athu bwa swale, dam kana tshiṅwe tshivhumbeo, itani uri fhethu hu ṱolwe. Mavu, u sendama ha mavu, na nḓila ine maḓi a bva ngayo, u elela ha maḓi musi hu na mvula khulu na nḓila yo tsireledzeaho ya u bvisa maḓi manzhisa zwiṅwe na zwiṅwe ndi zwa ndeme. Vhudzisani mueletshedzi wa zwa vhulimi wa henefho o gudiswaho.\\n\\nA hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone. Dzi-contour dzo vhewaho nga nḓila i songo teaho dzi nga engedza erosion, nahone mavu ane a nwa maḓi nga u lenga a nga fara maḓi manzhisa. Nangani water works dzinwe na dzinwe dzine dza fanelea fhethu hono nahone ni pulane nḓila yo tsireledzeaho ya u bvisa maḓi a re manzhisa.\",\n      ),\n      keyPoints: [\n        pair(\n",
+          "lineBefore": 42,
+          "lineAfter": 42
+        }
+      ]
+    },
+    "lib/course-translation-drafts-ts.ts": {
+      "beforeSha256": "f606ddfbaecc8cd0126d7bc3550eb596424d52ddd84db84c503e93af74d74151",
+      "afterSha256": "02691131fb5bb5c352756188f38719755ca38adab7c518c76fa5032b7ac08073",
+      "beforeBytes": 76971,
+      "afterBytes": 76665,
+      "replacements": [
+        {
+          "before": "      },\n      \"body\": {\n        \"sourceEnglish\": \"Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.\\n\\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\\n\\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.\",\n        \"xitsongaDraft\": \"Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.\\n\\nA-frame level yi nga ku pfuna ku fungha points at the same height ni ku landzelela contour line. Its marks are an observation; a hi design kumbe mpfumelelo wa earthworks. U nga se cela swale, dam, kumbe xivumbeko xin’wana, tiyisisa leswaku ndhawu yi kamberiwile. Soil, slope, drainage, storm flow, na ndlela leyi hlayisekeke yo khulukisa mati lama taleke i swa nkoka. Vutisa trained local adviser.\\n\\nA ku na nawu wun’we wa ndhawu lowu faneleke eka slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Tikhontara leti endliweke hi ndlela yo biha ti nga engetela erosion, naswona misava leyi tswongaka mati hi ku nonoka yi nga khoma mati yo tala ngopfu. Hlawula water works yin'wana ni yin'wana leyi faneleke ndhawu yoleyo, kutani u kunguhata ndlela leyi hlayisekeke yo humesa mati lama taleke.\",\n              \"reviewStatus\": \"machine-draft\"\n      },\n      \"keyPoints\": [\n",
+          "after": "      },\n      \"body\": {\n        \"sourceEnglish\": \"Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.\\n\\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\\n\\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.\",\n        \"xitsongaDraft\": \"Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.\\n\\nA-frame level yi nga ku pfuna ku fungha points at the same height ni ku landzelela contour line. Mimfungho ya yona i leswi u swi xiyisiseke; a hi design kumbe mpfumelelo wa earthworks. U nga se cela swale, dam, kumbe xivumbeko xin’wana, tiyisisa leswaku ndhawu yi kamberiwile. Soil, slope, drainage, storm flow, na ndlela leyi hlayisekeke yo khulukisa mati lama taleke i swa nkoka. Vutisa trained local adviser.\\n\\nA ku na nawu wun’we wa ndhawu lowu faneleke eka slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Tikhontara leti endliweke hi ndlela yo biha ti nga engetela erosion, naswona misava leyi tswongaka mati hi ku nonoka yi nga khoma mati yo tala ngopfu. Hlawula water works yin'wana ni yin'wana leyi faneleke ndhawu yoleyo, kutani u kunguhata ndlela leyi hlayisekeke yo humesa mati lama taleke.\",\n              \"reviewStatus\": \"machine-draft\"\n      },\n      \"keyPoints\": [\n",
+          "lineBefore": 447,
+          "lineAfter": 447
+        },
+        {
+          "before": "    {\n      \"lessonId\": \"reading-landscape-l1\",\n      \"field\": \"body\",\n      \"sourceText\": \"Its marks are an observation\",\n      \"reason\": \"Narrow exact English retained to preserve the observation-versus-design distinction or any-waterworks scope; ordinary surrounding text remains an unreviewed machine draft.\"\n    },\n    {\n      \"lessonId\": \"reading-landscape-l1\",\n      \"field\": \"body\",\n      \"sourceText\": \"any water works for the site\",\n      \"reason\": \"Narrow exact English retained to preserve the observation-versus-design distinction or any-waterworks scope; ordinary surrounding text remains an unreviewed machine draft.\"\n    }\n",
+          "after": "    {\n      \"lessonId\": \"reading-landscape-l1\",\n      \"field\": \"body\",\n      \"sourceText\": \"any water works for the site\",\n      \"reason\": \"Narrow exact English retained to preserve the observation-versus-design distinction or any-waterworks scope; ordinary surrounding text remains an unreviewed machine draft.\"\n    }\n",
+          "lineBefore": 1174,
+          "lineAfter": 1174
+        }
+      ]
+    },
+    "lib/course-translation-drafts.ts": {
+      "beforeSha256": "ad550296162dc51838388ebd5ca01198a8eab89fab46efbaea09e9c6af270f25",
+      "afterSha256": "499b07050095ec620be4d2fda39cd95b1a3cdcf6ee8d9eb8879c7d336f6ec042",
+      "beforeBytes": 126439,
+      "afterBytes": 126439,
+      "replacements": [
+        {
+          "before": "        \"rationale\": \"Umthambeka wodwa awanele ukukhetha umsebenzi womhlaba. Umhlabathi, ukugeleza kwamanzi, ukuzinza komhlaba nokugeleza kwamanzi emvula enamandla nakho kufanele kuhlolwe.\"\n      }\n    ],\n    infographicAlt: \"Umdwebo osika i-level contour swale, nesiduli somhlabathi esiphakanyisiwe ngaphansi kwayo. Imicibisholo ikhombisa amanzi ageleza phezu komhlaba (runoff) ehla ngejubane futhi asabalale; ukungena kwamanzi emhlabathini (infiltration) kuncike enhlabathini nasendaweni.\",\n  },\n  \"water-harvesting-l2\": {\n    \"title\": \"Amadamu Namachibi Epulazini: Ukugcina Amanzi Esikhathi Esomile\",\n",
+          "after": "        \"rationale\": \"Umthambeka wodwa awanele ukukhetha umsebenzi womhlaba. Umhlabathi, ukugeleza kwamanzi, ukuzinza komhlaba nokugeleza kwamanzi emvula enamandla nakho kufanele kuhlolwe.\"\n      }\n    ],\n    infographicAlt: \"Umdwebo osika i-level contour swale, nesiduli somhlabathi esiphakanyisiwe ngaphansi kwayo. Imicibisholo ikhombisa amanzi ageleza phezu komhlaba (runoff) ehlisa ijubane futhi asabalale; ukungena kwamanzi emhlabathini (infiltration) kuncike enhlabathini nasendaweni.\",\n  },\n  \"water-harvesting-l2\": {\n    \"title\": \"Amadamu Namachibi Epulazini: Ukugcina Amanzi Esikhathi Esomile\",\n",
+          "lineBefore": 490,
+          "lineAfter": 490
+        }
+      ]
+    },
+    "docs/narration/market-community.ts.paired-draft.json": {
+      "beforeSha256": "9226ae5f24c7705420b30aff5defe141d0bbfdf873980d45af349e4fba7ab201",
+      "afterSha256": "0255c6e5940bfbdef4b9bf3c198af5b6733b805796d755aff24323e90dccc4e6",
+      "beforeBytes": 43407,
+      "afterBytes": 43396,
+      "replacements": [
+        {
+          "before": "      },\n      \"target\": {\n        \"heading\": {\n          \"status\": \"draft\",\n          \"text\": \"Kuma True Cost.\",\n          \"provenance\": \"unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval\"\n        },\n        \"body\": [\n          {\n",
+          "after": "      },\n      \"target\": {\n        \"heading\": {\n          \"status\": \"english-hold\",\n          \"provenance\": \"2026-10-12 exact canonical heading retained after blind review found different subject; no regional translation claimed\"\n        },\n        \"body\": [\n          {\n",
+          "lineBefore": 89,
+          "lineAfter": 89
+        }
+      ]
+    },
+    "docs/study-translation-reviews/small-livestock-regional/small-livestock.st.paired-draft.json": {
+      "beforeSha256": "f8f2d214aa226debd7f49a9b8dbed05fd82f5928eeb0da4575e9f75070d90dc9",
+      "afterSha256": "d18b4044fc4e36654a3789af18f0bef443a4df0cecb5a143e6d2b9ad19621b23",
+      "beforeBytes": 46034,
+      "afterBytes": 46200,
+      "replacements": [
+        {
+          "before": "          },\n          {\n            \"status\": \"draft\",\n            \"text\": \"Sisinya dinonyana pele di senya fatshe.\",\n            \"provenance\": \"unreviewed-machine-draft; blind back-translation checked\",\n            \"backTranslation\": \"Move the birds before they damage the ground.\"\n          }\n        ]\n      }\n",
+          "after": "          },\n          {\n            \"status\": \"draft\",\n            \"text\": \"Suthisa dinonyana pele di senya fatshe.\",\n            \"provenance\": \"2026-10-12 bounded wording independently back-translated without source; unreviewed-machine-draft, exact English retained; no fluent/farming/narration approval\",\n            \"backTranslation\": \"Move [shift aside] the birds before they damage/spoil the ground. (Model-only; remaining grammar ambiguous.)\"\n          }\n        ]\n      }\n",
+          "lineBefore": 251,
+          "lineAfter": 251
+        }
+      ]
+    },
+    "lib/course-translation-drafts-ts-small-livestock.ts": {
+      "beforeSha256": "fbd651cfe42cf1c559120c2a7f4621d444d102ff452351bdf4c0af4fa4b0e2b3",
+      "afterSha256": "410b37e603d293d5ff6e8aff03c523af47b09368e2706756ebaf06efe71719a0",
+      "beforeBytes": 28646,
+      "afterBytes": 28646,
+      "replacements": [
+        {
+          "before": "            },\n            {\n              \"sourceEnglish\": \"Only in winter to avoid heat stress\",\n              \"xitsongaDraft\": \"Ntsena hi ximumu (winter), leswaku ku papalatiwa heat stress\",\n              \"reviewStatus\": \"machine-draft\"\n            }\n          ],\n",
+          "after": "            },\n            {\n              \"sourceEnglish\": \"Only in winter to avoid heat stress\",\n              \"xitsongaDraft\": \"Ntsena hi xixika (winter), leswaku ku papalatiwa heat stress\",\n              \"reviewStatus\": \"machine-draft\"\n            }\n          ],\n",
+          "lineBefore": 88,
+          "lineAfter": 88
+        }
+      ]
+    },
+    "lib/course-asset-sizes.ts": {
+      "beforeSha256": "e0b93c155323d3dc782d41d4f344e048eeede64852f74584515beb37447c1639",
+      "afterSha256": "06ede2f422106a6ea27951991ced9213c29b9d914d3e8a78d9ecfb05171569e8",
+      "beforeBytes": 117408,
+      "afterBytes": 117408,
+      "replacements": [
+        {
+          "before": "// Every course asset in public/, with its exact size. The offline download states a total before\n// it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.\n//\n// 1936 files, 721.7 MB total.\n\nexport const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({\n  '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,\n",
+          "after": "// Every course asset in public/, with its exact size. The offline download states a total before\n// it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.\n//\n// 1936 files, 721.9 MB total.\n\nexport const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({\n  '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,\n",
+          "lineBefore": 3,
+          "lineAfter": 3
+        },
+        {
+          "before": "  '/course-decks/intro-permaculture/st-silent/slide-19.webp': 586348,\n  '/course-decks/intro-permaculture/st-silent/slide-20.webp': 487536,\n  '/course-decks/intro-permaculture/st-silent/slide-21.webp': 215114,\n  '/course-decks/intro-permaculture/st-silent/slide-22.webp': 259458,\n  '/course-decks/intro-permaculture/st/slide-01.webp': 265292,\n  '/course-decks/intro-permaculture/st/slide-02.webp': 251390,\n  '/course-decks/intro-permaculture/st/slide-03.webp': 228478,\n",
+          "after": "  '/course-decks/intro-permaculture/st-silent/slide-19.webp': 586348,\n  '/course-decks/intro-permaculture/st-silent/slide-20.webp': 487536,\n  '/course-decks/intro-permaculture/st-silent/slide-21.webp': 215114,\n  '/course-decks/intro-permaculture/st-silent/slide-22.webp': 290480,\n  '/course-decks/intro-permaculture/st/slide-01.webp': 265292,\n  '/course-decks/intro-permaculture/st/slide-02.webp': 251390,\n  '/course-decks/intro-permaculture/st/slide-03.webp': 228478,\n",
+          "lineBefore": 756,
+          "lineAfter": 756
+        },
+        {
+          "before": "  '/course-decks/intro-permaculture/ts/slide-02.webp': 253290,\n  '/course-decks/intro-permaculture/ts/slide-03.webp': 274112,\n  '/course-decks/intro-permaculture/ts/slide-04.webp': 582564,\n  '/course-decks/intro-permaculture/ts/slide-05.webp': 525246,\n  '/course-decks/intro-permaculture/ts/slide-06.webp': 596664,\n  '/course-decks/intro-permaculture/ts/slide-07.webp': 375340,\n  '/course-decks/intro-permaculture/ts/slide-08.webp': 283416,\n",
+          "after": "  '/course-decks/intro-permaculture/ts/slide-02.webp': 253290,\n  '/course-decks/intro-permaculture/ts/slide-03.webp': 274112,\n  '/course-decks/intro-permaculture/ts/slide-04.webp': 582564,\n  '/course-decks/intro-permaculture/ts/slide-05.webp': 570870,\n  '/course-decks/intro-permaculture/ts/slide-06.webp': 596664,\n  '/course-decks/intro-permaculture/ts/slide-07.webp': 375340,\n  '/course-decks/intro-permaculture/ts/slide-08.webp': 283416,\n",
+          "lineBefore": 783,
+          "lineAfter": 783
+        },
+        {
+          "before": "  '/course-decks/intro-permaculture/ts/slide-19.webp': 605902,\n  '/course-decks/intro-permaculture/ts/slide-20.webp': 507624,\n  '/course-decks/intro-permaculture/ts/slide-21.webp': 230794,\n  '/course-decks/intro-permaculture/ts/slide-22.webp': 276428,\n  '/course-decks/intro-permaculture/ve/slide-01.webp': 298738,\n  '/course-decks/intro-permaculture/ve/slide-02.webp': 286578,\n  '/course-decks/intro-permaculture/ve/slide-03.webp': 259658,\n",
+          "after": "  '/course-decks/intro-permaculture/ts/slide-19.webp': 605902,\n  '/course-decks/intro-permaculture/ts/slide-20.webp': 507624,\n  '/course-decks/intro-permaculture/ts/slide-21.webp': 230794,\n  '/course-decks/intro-permaculture/ts/slide-22.webp': 307740,\n  '/course-decks/intro-permaculture/ve/slide-01.webp': 298738,\n  '/course-decks/intro-permaculture/ve/slide-02.webp': 286578,\n  '/course-decks/intro-permaculture/ve/slide-03.webp': 259658,\n",
+          "lineBefore": 800,
+          "lineAfter": 800
+        },
+        {
+          "before": "  '/course-decks/market-community/st/slide-20.webp': 356740,\n  '/course-decks/market-community/ts/slide-01.webp': 314122,\n  '/course-decks/market-community/ts/slide-02.webp': 232738,\n  '/course-decks/market-community/ts/slide-03.webp': 215244,\n  '/course-decks/market-community/ts/slide-04.webp': 218116,\n  '/course-decks/market-community/ts/slide-05.webp': 388230,\n  '/course-decks/market-community/ts/slide-06.webp': 263916,\n",
+          "after": "  '/course-decks/market-community/st/slide-20.webp': 356740,\n  '/course-decks/market-community/ts/slide-01.webp': 314122,\n  '/course-decks/market-community/ts/slide-02.webp': 232738,\n  '/course-decks/market-community/ts/slide-03.webp': 238276,\n  '/course-decks/market-community/ts/slide-04.webp': 218116,\n  '/course-decks/market-community/ts/slide-05.webp': 388230,\n  '/course-decks/market-community/ts/slide-06.webp': 263916,\n",
+          "lineBefore": 891,
+          "lineAfter": 891
+        },
+        {
+          "before": "  '/course-decks/small-livestock/st/slide-03.webp': 255880,\n  '/course-decks/small-livestock/st/slide-04.webp': 507156,\n  '/course-decks/small-livestock/st/slide-05.webp': 285908,\n  '/course-decks/small-livestock/st/slide-06.webp': 583988,\n  '/course-decks/small-livestock/st/slide-07.webp': 608958,\n  '/course-decks/small-livestock/st/slide-08.webp': 303976,\n  '/course-decks/small-livestock/st/slide-09.webp': 177448,\n",
+          "after": "  '/course-decks/small-livestock/st/slide-03.webp': 255880,\n  '/course-decks/small-livestock/st/slide-04.webp': 507156,\n  '/course-decks/small-livestock/st/slide-05.webp': 285908,\n  '/course-decks/small-livestock/st/slide-06.webp': 632352,\n  '/course-decks/small-livestock/st/slide-07.webp': 608958,\n  '/course-decks/small-livestock/st/slide-08.webp': 303976,\n  '/course-decks/small-livestock/st/slide-09.webp': 177448,\n",
+          "lineBefore": 1494,
+          "lineAfter": 1494
+        }
+      ]
+    },
+    "app/sw.js/route.ts": {
+      "beforeSha256": "5ef2ad599a54237d48794a330f4f6f32967fbaf145f02015a7d54e5c95351b39",
+      "afterSha256": "d6962bbda0e2568256d611060c4b421a70294a96993f7222900f0e6497eae781",
+      "beforeBytes": 132335,
+      "afterBytes": 133251,
+      "replacements": [
+        {
+          "before": "  await cache.put(marker, new Response('Refreshed two isiZulu silent sentence-repair stills'));\n}\n\nself.addEventListener('activate', function (event) {\n  event.waitUntil(\n    caches.keys().then(function (keys) {\n",
+          "after": "  await cache.put(marker, new Response('Refreshed two isiZulu silent sentence-repair stills'));\n}\n\n// Retire only five stills corrected after the blind wording audit; saved voices and films stay.\nasync function migrateBlindReviewedStudyCorrectionStills() {\n  const cache = await caches.open(COURSE_CACHE);\n  const marker = '/course-decks/.blind-reviewed-corrections-20261012';\n  if (await cache.match(marker)) return;\n  const obsolete = new Set([\n    '/course-decks/intro-permaculture/st-silent/slide-22.webp',\n    '/course-decks/intro-permaculture/ts/slide-05.webp',\n    '/course-decks/intro-permaculture/ts/slide-22.webp',\n    '/course-decks/market-community/ts/slide-03.webp',\n    '/course-decks/small-livestock/st/slide-06.webp',\n  ]);\n  for (const request of await cache.keys()) {\n    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);\n  }\n  await cache.put(marker, new Response('Refreshed five blind-reviewed correction stills'));\n}\n\nself.addEventListener('activate', function (event) {\n  event.waitUntil(\n    caches.keys().then(function (keys) {\n",
+          "lineBefore": 2368,
+          "lineAfter": 2368
+        },
+        {
+          "before": "          })\n          .map(function (key) { return caches.delete(key); })\n      );\n    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWaterL4DecisionOnly).then(migrateWaterHarvestingZuluDraft).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateSoilHealthRegionalStills).then(migrateSoilL3ComparisonStill).then(migrateSoilHealthL3CorrectedNarration).then(migrateVegetablesL2ReadableStills).then(migrateVegetablesL3SweetPotatoTeaching).then(migrateVegetablesL4DecisionStill).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateFoodForestClimateMatchStill).then(migrateFoodForestL3AdjustStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(migrateMarketL2RouteStill).then(migrateMarketCommunityNetworkStill).then(migrateMarketCommunityL3SeedRightsTeaching).then(migrateMarketCommunityL3SeedRightsCard).then(migrateSmallLivestockSlide8Still).then(migrateIntroL1WaterUseTeaching).then(migrateSmallLivestockL3NutrientFlow).then(migrateSmallLivestockModuleFlows).then(migrateIntroL2PrinciplesTeaching).then(migrateIntroL3ZonesAndSectorsTeaching).then(migrateLandscapeL1WaterObservationTeaching).then(migrateLandscapeL2SunAndFrostTeaching).then(migrateLandscapeL3WindAndFrostTeaching).then(migrateWaterL1SwaleTeaching).then(migrateWaterL2DamSizingTeaching).then(migrateWaterL3RoofSuitabilityTeaching).then(migrateSmallLivestockL2BeeTeaching).then(migrateReadingLandscapeRegionalStills).then(migrateVegetablesOpeningRegionalStills).then(migrateVegetablesRemainingRegionalStills).then(migrateWaterRegionalDraftStills).then(migrateSoilRegionalDraftStills).then(migrateReadingLandscapeDraftStills).then(migrateReadingLandscapeOrdinaryStills).then(migrateIntroRegionalSubstantiveStills).then(migrateVegetablesOrdinaryLessonStills).then(migrateMarketLearnerReuseStills).then(migrateReadingLandscapePairedReuseStills).then(migrateReadingLandscapeObservationStills).then(migrateRegionalRecordIntroReadingStills).then(migrateVegetablesFieldActionStills).then(migrateRegionalAssignmentExerciseStills).then(migrateVegetablesL2OrdinaryPairedStills).then(migrateVegetablesL1FullerOrdinaryPairedStills).then(migrateVegetablesL4OrdinaryPairedStills).then(migrateVegetablesL2FullerOrdinaryPairedStills).then(migrateVegetablesPestPrecisionPairedStills).then(migrateReadingLandscapeFrostBodySyncStills).then(migrateReadingLandscapeFirstObservationStills).then(migrateStudyOutcomesResidualStills).then(migrateReadingLandscapeFullOrdinaryStills).then(migrateMarketL1OrdinaryStills).then(migrateSoilWaterOrdinaryPairedStills).then(migrateSoilFullerLearnerStills).then(migrateWaterReviewedPrecisionStills).then(migrateWaterOrdinaryCompletionStills).then(migrateSoilOrdinaryCompletionStills).then(migrateSoilWaterResidualOrdinaryPairedStills).then(migrateIntroOrdinaryNextStills).then(migrateMarketOrdinaryResidualStills).then(migrateVegetablesL3OrdinaryResidualStills).then(migrateVegetablesL1OrdinaryResidualStills).then(migrateIntroFullOrdinaryCompletionStills).then(migrateIntroSilentReleaseStills).then(migrateStIntroRuntimeResidualStills).then(migrateNativePairedResidualStills).then(migrateFinalLanguageNextStills).then(migrateCoreHeldOrdinaryStills).then(migrateTshivendaOrdinaryReviewedStills).then(migrateRegionalOrdinaryFramingStills).then(migrateIntroFairSharingStills).then(migrateVeReadingFrostPlacementStills).then(migrateCoreReadingVegetablesFollowupStills).then(migrateCoreOrdinaryCompletionNextStills).then(migrateCoreOrdinaryExpandedNextStills).then(migrateVegetablesTwoOrdinaryResidualStills).then(migrateReadingTitleLightestFourStills).then(migrateZuluSilentSafetyStills).then(migrateZuluSilentSentenceRepairs).then(function () {\n      // Take control of already-open tabs so this version's fetch handler\n      // (and therefore network-first HTML) runs without needing a reload first.\n      return self.clients.claim();\n",
+          "after": "          })\n          .map(function (key) { return caches.delete(key); })\n      );\n    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWaterL4DecisionOnly).then(migrateWaterHarvestingZuluDraft).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateSoilHealthRegionalStills).then(migrateSoilL3ComparisonStill).then(migrateSoilHealthL3CorrectedNarration).then(migrateVegetablesL2ReadableStills).then(migrateVegetablesL3SweetPotatoTeaching).then(migrateVegetablesL4DecisionStill).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateFoodForestClimateMatchStill).then(migrateFoodForestL3AdjustStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(migrateMarketL2RouteStill).then(migrateMarketCommunityNetworkStill).then(migrateMarketCommunityL3SeedRightsTeaching).then(migrateMarketCommunityL3SeedRightsCard).then(migrateSmallLivestockSlide8Still).then(migrateIntroL1WaterUseTeaching).then(migrateSmallLivestockL3NutrientFlow).then(migrateSmallLivestockModuleFlows).then(migrateIntroL2PrinciplesTeaching).then(migrateIntroL3ZonesAndSectorsTeaching).then(migrateLandscapeL1WaterObservationTeaching).then(migrateLandscapeL2SunAndFrostTeaching).then(migrateLandscapeL3WindAndFrostTeaching).then(migrateWaterL1SwaleTeaching).then(migrateWaterL2DamSizingTeaching).then(migrateWaterL3RoofSuitabilityTeaching).then(migrateSmallLivestockL2BeeTeaching).then(migrateReadingLandscapeRegionalStills).then(migrateVegetablesOpeningRegionalStills).then(migrateVegetablesRemainingRegionalStills).then(migrateWaterRegionalDraftStills).then(migrateSoilRegionalDraftStills).then(migrateReadingLandscapeDraftStills).then(migrateReadingLandscapeOrdinaryStills).then(migrateIntroRegionalSubstantiveStills).then(migrateVegetablesOrdinaryLessonStills).then(migrateMarketLearnerReuseStills).then(migrateReadingLandscapePairedReuseStills).then(migrateReadingLandscapeObservationStills).then(migrateRegionalRecordIntroReadingStills).then(migrateVegetablesFieldActionStills).then(migrateRegionalAssignmentExerciseStills).then(migrateVegetablesL2OrdinaryPairedStills).then(migrateVegetablesL1FullerOrdinaryPairedStills).then(migrateVegetablesL4OrdinaryPairedStills).then(migrateVegetablesL2FullerOrdinaryPairedStills).then(migrateVegetablesPestPrecisionPairedStills).then(migrateReadingLandscapeFrostBodySyncStills).then(migrateReadingLandscapeFirstObservationStills).then(migrateStudyOutcomesResidualStills).then(migrateReadingLandscapeFullOrdinaryStills).then(migrateMarketL1OrdinaryStills).then(migrateSoilWaterOrdinaryPairedStills).then(migrateSoilFullerLearnerStills).then(migrateWaterReviewedPrecisionStills).then(migrateWaterOrdinaryCompletionStills).then(migrateSoilOrdinaryCompletionStills).then(migrateSoilWaterResidualOrdinaryPairedStills).then(migrateIntroOrdinaryNextStills).then(migrateMarketOrdinaryResidualStills).then(migrateVegetablesL3OrdinaryResidualStills).then(migrateVegetablesL1OrdinaryResidualStills).then(migrateIntroFullOrdinaryCompletionStills).then(migrateIntroSilentReleaseStills).then(migrateStIntroRuntimeResidualStills).then(migrateNativePairedResidualStills).then(migrateFinalLanguageNextStills).then(migrateCoreHeldOrdinaryStills).then(migrateTshivendaOrdinaryReviewedStills).then(migrateRegionalOrdinaryFramingStills).then(migrateIntroFairSharingStills).then(migrateVeReadingFrostPlacementStills).then(migrateCoreReadingVegetablesFollowupStills).then(migrateCoreOrdinaryCompletionNextStills).then(migrateCoreOrdinaryExpandedNextStills).then(migrateVegetablesTwoOrdinaryResidualStills).then(migrateReadingTitleLightestFourStills).then(migrateZuluSilentSafetyStills).then(migrateZuluSilentSentenceRepairs).then(migrateBlindReviewedStudyCorrectionStills).then(function () {\n      // Take control of already-open tabs so this version's fetch handler\n      // (and therefore network-first HTML) runs without needing a reload first.\n      return self.clients.claim();\n",
+          "lineBefore": 2383,
+          "lineAfter": 2401
+        }
+      ]
+    }
+  },
+  "assets": [
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-22.webp",
+      "beforeSha256": "1fd599926f5f11249886a376693aea73bfc387ca9b09d498a0177d44ab288500",
+      "beforeBytes": 259458,
+      "afterSha256": "5524fa056b9fa115ef8c26e7aab725de2d18f5c4187f61023a691269f4e1cffa",
+      "afterBytes": 290480,
+      "width": 1440,
+      "height": 5400,
+      "protectedIllustrationMeanChannelDifference": [
+        0.2728496732026144,
+        0.2611576797385621,
+        0.3219885620915033
+      ],
+      "rootViewedFullPNG": true,
+      "rootViewedCompressed": true,
+      "root390Preview": false,
+      "encoding": "WebP quality90 method6, unchanged established size/encoding"
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/ts/slide-05.webp",
+      "beforeSha256": "6d0340e625b55af2440067afb6854c0b03cfd60ab335534751ccfdf0579e40fa",
+      "beforeBytes": 525246,
+      "afterSha256": "ddf0c39707c614061dea4c95c342f67a0fc546c8a33fe476160b946bde8052c7",
+      "afterBytes": 570870,
+      "width": 1440,
+      "height": 5400,
+      "protectedIllustrationMeanChannelDifference": [
+        1.9724346405228759,
+        1.7370245098039216,
+        2.2032442810457518
+      ],
+      "rootViewedFullPNG": true,
+      "rootViewedCompressed": true,
+      "root390Preview": false,
+      "encoding": "WebP quality90 method6, unchanged established size/encoding"
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/ts/slide-22.webp",
+      "beforeSha256": "175103f340f9880c77507648aea6fb0edd3c251b5fe863eccd6731f519cc40fa",
+      "beforeBytes": 276428,
+      "afterSha256": "5e0ca546bdf475393b8ce5f3adc13b2623b49ec99ba2035caaa64760d95c5312",
+      "afterBytes": 307740,
+      "width": 1440,
+      "height": 5400,
+      "protectedIllustrationMeanChannelDifference": [
+        0.2751004901960784,
+        0.2615563725490196,
+        0.32148937908496733
+      ],
+      "rootViewedFullPNG": true,
+      "rootViewedCompressed": true,
+      "root390Preview": false,
+      "encoding": "WebP quality90 method6, unchanged established size/encoding"
+    },
+    {
+      "path": "public/course-decks/market-community/ts/slide-03.webp",
+      "beforeSha256": "9b7d95fe636974183650963a701bb623e8ae5192cab6610c278c2e541e73b22e",
+      "beforeBytes": 215244,
+      "afterSha256": "bd4d15d650c043060358263205e544bbb10b539fab3f1c1877bd18301b5792c1",
+      "afterBytes": 238276,
+      "width": 1440,
+      "height": 5400,
+      "protectedIllustrationMeanChannelDifference": [
+        0.23847303921568627,
+        0.22389869281045752,
+        0.2709828431372549
+      ],
+      "rootViewedFullPNG": true,
+      "rootViewedCompressed": true,
+      "root390Preview": false,
+      "encoding": "WebP quality90 method6, unchanged established size/encoding"
+    },
+    {
+      "path": "public/course-decks/small-livestock/st/slide-06.webp",
+      "beforeSha256": "c58eecfeaab469d2a5a2935fef00a1de76d269933c242655eba95aa6c1d50e8c",
+      "beforeBytes": 583988,
+      "afterSha256": "958b3f0f6be94391850e818121f4d241ab5f25a8d585f5f96cc4ed7e54d358ae",
+      "afterBytes": 632352,
+      "width": 1440,
+      "height": 5400,
+      "protectedIllustrationMeanChannelDifference": [
+        2.2129942810457517,
+        1.9910408496732026,
+        2.4633047385620914
+      ],
+      "rootViewedFullPNG": true,
+      "rootViewedCompressed": true,
+      "root390Preview": false,
+      "encoding": "WebP quality90 method6, unchanged established size/encoding"
+    }
+  ],
+  "protected": {
+    "lib/course-modules.ts": {
+      "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "bytes": 113494
+    },
+    "lib/course-audio.ts": {
+      "sha256": "36baa7b8e6ffb452a1fee06f3358d4b2050c80101200da8f1dda77cb5f356d64",
+      "bytes": 105380
+    },
+    "public/course-audio/intro-permaculture/st/full.mp3": {
+      "sha256": "c2411fd63e864a7bf158547a921ab9613ccd8d40d6d2cd09ec0974492ffe9510",
+      "bytes": 5168108
+    },
+    "public/course-audio/intro-permaculture/st/slide-14.mp3": {
+      "sha256": "ee77bce0d1d64cb219771930cc6952794fe54566cd403c5c7e8cdc2ed3b83742",
+      "bytes": 331820
+    },
+    "public/course-audio/intro-permaculture/st/slide-15.mp3": {
+      "sha256": "e98f413d6e6875fdea5eb272bf89347ff95683efcd31aef2fde21c90bc319bd0",
+      "bytes": 255788
+    },
+    "public/course-audio/intro-permaculture/st/slide-01.mp3": {
+      "sha256": "e6126d03971fc957eb8465625e6c1cbad9653b8cfa9c06a8fc364b640eb426cb",
+      "bytes": 283628
+    },
+    "public/course-audio/intro-permaculture/st/slide-17.mp3": {
+      "sha256": "cfc2f59c05ed362256699ad8645f0546a1d5b3574fa65d023a57d10d2442a474",
+      "bytes": 215468
+    },
+    "public/course-audio/intro-permaculture/st/slide-03.mp3": {
+      "sha256": "4b870e2ea0eb2501ebc2e6f2c6ac9874edb3ed47c5b701287e36146f80ebe0f4",
+      "bytes": 245804
+    },
+    "public/course-audio/intro-permaculture/st/slide-02.mp3": {
+      "sha256": "852d9d98894ba4466145433f620a8898450c2cdd5c813f5cb7956b722b9a783b",
+      "bytes": 255980
+    },
+    "public/course-audio/intro-permaculture/st/slide-16.mp3": {
+      "sha256": "2d96297c2a3c073bfd12d95e1086bbf0c82b76396d0a00f4fd56dc54a86a4a10",
+      "bytes": 161708
+    },
+    "public/course-audio/intro-permaculture/st/slide-12.mp3": {
+      "sha256": "bef2ab756beea6e941455389219dbe131d0a9da64ced8ff07ab72b2b424fe271",
+      "bytes": 172844
+    },
+    "public/course-audio/intro-permaculture/st/slide-06.mp3": {
+      "sha256": "f0fe5f1c8b8700321a56aa5f081e1afe0ae28094926c6fcd56e7ac88e15a07cd",
+      "bytes": 231788
+    },
+    "public/course-audio/intro-permaculture/st/slide-07.mp3": {
+      "sha256": "4908700e6b6b8b7ac1841716be0c9abd9da4b9d47e235f9bb96cd6459eaa2d35",
+      "bytes": 257708
+    },
+    "public/course-audio/intro-permaculture/st/slide-13.mp3": {
+      "sha256": "741918799e5ddd653ad0a4638d4edfe664aeaf40f8329e8f7bced856a94ce80e",
+      "bytes": 227180
+    },
+    "public/course-audio/intro-permaculture/st/slide-05.mp3": {
+      "sha256": "24f8a79fd1aa23799957968385c2e22d4202364fc9b8d9bb2b34100182a340b5",
+      "bytes": 226028
+    },
+    "public/course-audio/intro-permaculture/st/slide-11.mp3": {
+      "sha256": "182c16cc99390ac6a6f4094540ad069cf871a2c469edda8d6cc74107afd7c279",
+      "bytes": 244268
+    },
+    "public/course-audio/intro-permaculture/st/slide-10.mp3": {
+      "sha256": "d2f7359238379c1dbe8ee0f168f45c2802d76f3bb64f408dd719f7f70abee5e9",
+      "bytes": 346028
+    },
+    "public/course-audio/intro-permaculture/st/slide-04.mp3": {
+      "sha256": "767a4f3a50ba255c7a468ae05986f9544e69dfab7bc35f5e571ddaa3017c3a2e",
+      "bytes": 239660
+    },
+    "public/course-audio/intro-permaculture/st/slide-09.mp3": {
+      "sha256": "f7430be929f4244e796127abf7e01dc1741933395c957361fd6bf9f5ba9f8243",
+      "bytes": 255020
+    },
+    "public/course-audio/intro-permaculture/st/slide-21.mp3": {
+      "sha256": "91dd1d172982254fa040a0d2b9820226b98b1e016d292c7ef7f5c935ee985bcd",
+      "bytes": 145964
+    },
+    "public/course-audio/intro-permaculture/st/slide-20.mp3": {
+      "sha256": "f281ce330f09951d197196df8d3c5d09219f32e2e77bba5f69c7f58adc8b37fb",
+      "bytes": 242540
+    },
+    "public/course-audio/intro-permaculture/st/slide-08.mp3": {
+      "sha256": "781e1107d13a46f1a75a0282b5f70275b1f4ef54fb5ce3f40b22ca1c390585f6",
+      "bytes": 199148
+    },
+    "public/course-audio/intro-permaculture/st/slide-22.mp3": {
+      "sha256": "38a4980a865fbde9541176d1d4d42eac0c4699448a7026c21c4fd8294d508cd6",
+      "bytes": 182828
+    },
+    "public/course-audio/intro-permaculture/st/slide-18.mp3": {
+      "sha256": "85ea7f16de208a83af15c423bbc0f3ca452c605194f621c557243dfd5b333f84",
+      "bytes": 234860
+    },
+    "public/course-audio/intro-permaculture/st/slide-19.mp3": {
+      "sha256": "95988c9559a92e7fabe49d213f3d3dffdf1f416e3a938997d5430fa9b36781d3",
+      "bytes": 226604
+    },
+    "public/course-decks/intro-permaculture/st/slide-13.webp": {
+      "sha256": "c5257c90b0188b6bc2f7366c011d4cf9f49512e80e8896281dd0b96f71cd4671",
+      "bytes": 352656
+    },
+    "public/course-decks/intro-permaculture/st/slide-05.webp": {
+      "sha256": "7fcb33543b20f16e83de4d6f596ab1a84afbd43d1e992a946cad9c326cca2aad",
+      "bytes": 418758
+    },
+    "public/course-decks/intro-permaculture/st/slide-09.webp": {
+      "sha256": "d0b7d721896847337a1452ea73e665a78dd192480d2509f2983dde39105d0751",
+      "bytes": 253428
+    },
+    "public/course-decks/intro-permaculture/st/slide-08.webp": {
+      "sha256": "2faf2edd8e3ae42c5194e1be2b91af74395ad3f2c28d1587563eead376ca4d0e",
+      "bytes": 246518
+    },
+    "public/course-decks/intro-permaculture/st/slide-04.webp": {
+      "sha256": "f8a3a12c76589c3e267767aeeec5ef748957dddad8047cb699f1a64c2a9ffcc1",
+      "bytes": 470012
+    },
+    "public/course-decks/intro-permaculture/st/slide-12.webp": {
+      "sha256": "48cd0ef7de44a3c73ba45720d4c35a9dd54166e60c71fd53089eccfe80920394",
+      "bytes": 216360
+    },
+    "public/course-decks/intro-permaculture/st/slide-19.webp": {
+      "sha256": "45349972ba07a113d54c3c3d660a7df78dbafd839e1a21a251f6dfc1e3d54159",
+      "bytes": 499162
+    },
+    "public/course-decks/intro-permaculture/st/slide-15.webp": {
+      "sha256": "c56a9420a281fd0cd4630df98007521abe05d6ecae1ab1fc4c39b8411828b634",
+      "bytes": 561626
+    },
+    "public/course-decks/intro-permaculture/st/slide-03.webp": {
+      "sha256": "5826f38dc9c59af454e17cf9355412c97c1c7eb665c538d166d9eb37a7e8386b",
+      "bytes": 228478
+    },
+    "public/course-decks/intro-permaculture/st/slide-02.webp": {
+      "sha256": "028b9190e4e79212fcb274d241918cebe7aadd25324c8eb7186ee82048a5aa55",
+      "bytes": 251390
+    },
+    "public/course-decks/intro-permaculture/st/slide-14.webp": {
+      "sha256": "e5c31d0cda31f9f61457f10e771c8263d403633f339d63b55b6cf91d745ace4a",
+      "bytes": 370012
+    },
+    "public/course-decks/intro-permaculture/st/slide-22.webp": {
+      "sha256": "96bfd69d4d9f270f1511afda15cf69c8c3e9eb8c99a49b83d0b252e32de70537",
+      "bytes": 231466
+    },
+    "public/course-decks/intro-permaculture/st/slide-18.webp": {
+      "sha256": "aa12c6087de716c1b67f2a67b2fbfdb5754a0a83bbf610dd3c5c00e4b645f082",
+      "bytes": 277404
+    },
+    "public/course-decks/intro-permaculture/st/slide-21.webp": {
+      "sha256": "2cb8ea33e1ebff7e2cb0f2161e32c13314b084fb116092cf5e08f3711521420e",
+      "bytes": 208754
+    },
+    "public/course-decks/intro-permaculture/st/slide-01.webp": {
+      "sha256": "b36c045503a462f2042ed10d87a0867f7854dd16ab9f665c7db9e8e65a675886",
+      "bytes": 265292
+    },
+    "public/course-decks/intro-permaculture/st/slide-17.webp": {
+      "sha256": "5a49ab2deac3fb7ac51bd353250d1ecc9af41de9c8a5aec932db6569eae39d9c",
+      "bytes": 529086
+    },
+    "public/course-decks/intro-permaculture/st/slide-16.webp": {
+      "sha256": "1427822f3cdc18848ecb1e9667a1cda285f7ff402e7bbe6e133467f5f692e455",
+      "bytes": 448928
+    },
+    "public/course-decks/intro-permaculture/st/slide-20.webp": {
+      "sha256": "3547e473f6916dec7716e5e245a88077397c1b4d6e0fea0bd47a18aad7b17bc3",
+      "bytes": 443178
+    },
+    "public/course-decks/intro-permaculture/st/slide-07.webp": {
+      "sha256": "7df59401d248b5a1fad1814d63d670b6e34c16a25531520d9658113cc67033e2",
+      "bytes": 316054
+    },
+    "public/course-decks/intro-permaculture/st/slide-11.webp": {
+      "sha256": "44e4ae1d408c60e409158a05de20be32c463ee398861d563cf2985394babbc6a",
+      "bytes": 236554
+    },
+    "public/course-decks/intro-permaculture/st/slide-10.webp": {
+      "sha256": "f6b864e5b480b639f7f25ada16cf78fb4a3fc2509904c9ad238bab7021bee191",
+      "bytes": 592998
+    },
+    "public/course-decks/intro-permaculture/st/slide-06.webp": {
+      "sha256": "e2680b0abffabd3e50a66d52ad3122dc065539f670357dd437549a440498c91f",
+      "bytes": 471666
+    },
+    "public/course-decks/intro-permaculture/en/slide-22.jpg": {
+      "sha256": "174b5d4a96c663321c29a21e2e556316553b57cde0fc09d82c603aed70c03c98",
+      "bytes": 140502
+    },
+    "public/course-decks/intro-permaculture/en/slide-05.jpg": {
+      "sha256": "7bf1781f49f57ec7e0b720f5d6fb05a9a1fb84166e86b12bc92f2f1f91ab2ca1",
+      "bytes": 820804
+    },
+    "public/course-decks/market-community/en/slide-03.jpg": {
+      "sha256": "52862d29adaaf657a585c7c45ed66e2dde643f66573ca893da75529aecc2f87d",
+      "bytes": 127111
+    },
+    "public/course-decks/small-livestock/en/slide-06.jpg": {
+      "sha256": "0288089f30804e178da4ed6d216f5977fbf98c5b5a83b18537f4d1dc3a4bfa03",
+      "bytes": 974145
+    },
+    "docs/narration/intro-permaculture.st.paired-draft.json": {
+      "sha256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+      "bytes": 25360
+    },
+    "lib/plan-version.ts": {
+      "sha256": "28a0cae271659c00b0a18b3f31117b0e34297af6a35fcdde8bc1f0a7dcb391be",
+      "bytes": 938
+    }
+  },
+  "nativeSnapshotsSha256": "2523fb126c89e4395eeb0ea16c15e572366451ae82da8774e6005fcd4a8c64e2",
+  "mediaInventorySha256": "14fdd1383741d86b91520984a6154f01fd81d87f8bbd13a0fc725ec682c08d8e",
+  "mediaDirectories": [
+    "course-audio",
+    "course-decks",
+    "course-images",
+    "course-animations",
+    "studies-guides"
+  ]
+}

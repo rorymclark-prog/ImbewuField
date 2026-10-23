@@ -1,0 +1,346 @@
+{
+  "title": "Tshivenda held Study UI context candidates",
+  "date": "2026-10-07",
+  "status": "READ_ONLY_DRAFTS_FOR_SEPARATE_REVIEW",
+  "worktree": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField",
+  "head": "25f6baaefc56e82a4fae5f679a43aa5f605d66f0",
+  "approvedPacket": "docs/study-translation-reviews/study-silent-entry-2026-10-07/imbewu-study-ui-full-approved-20261007.json",
+  "sourceContextHolds": "docs/study-translation-reviews/study-silent-entry-2026-10-07/source-context-holds.json",
+  "scope": "All 18 currently held Tshivenda rows. Six ordinary controls have source-bound draft repairs; other source strings remain held with context-specific reasons. No fluent approval.",
+  "counts": {
+    "total": 18,
+    "draftRepair": 6,
+    "hold": 12
+  },
+  "rows": [
+    {
+      "language": "ve",
+      "key": "studentMinutes",
+      "exactSource": "min",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 80,
+        "displayCondition": "mins < 60",
+        "otherSourceLocations": [
+          {
+            "file": "app/student/page.tsx",
+            "line": 83,
+            "condition": "remaining > 0"
+          }
+        ]
+      },
+      "candidate": "min",
+      "literalBackTranslation": "English source retained unchanged; no localized wording proposed.",
+      "decision": "HOLD",
+      "reason": "HOLD: the “min” unit abbreviation remains without a verified Tshivenda form.",
+      "risk": "No translation claim is made for this held source.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "studentHourOne",
+      "exactSource": "h",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 83,
+        "displayCondition": "hours === 1",
+        "otherSourceLocations": []
+      },
+      "candidate": "h",
+      "literalBackTranslation": "English source retained unchanged; no localized wording proposed.",
+      "decision": "HOLD",
+      "reason": "HOLD: the “h” time-unit abbreviation remains without a verified Tshivenda form.",
+      "risk": "No translation claim is made for this held source.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "studentHours",
+      "exactSource": "h",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 83,
+        "displayCondition": "not (hours === 1)",
+        "otherSourceLocations": []
+      },
+      "candidate": "h",
+      "literalBackTranslation": "English source retained unchanged; no localized wording proposed.",
+      "decision": "HOLD",
+      "reason": "HOLD: the “h” time-unit abbreviation remains without a verified Tshivenda form.",
+      "risk": "No translation claim is made for this held source.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "studentProgressError",
+      "exactSource": "Progress could not be loaded or saved. Check your connection or account access.",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 922,
+        "displayCondition": "progressError",
+        "otherSourceLocations": []
+      },
+      "candidate": "Mvelaphanḓa a yo ngo kona u laisiwa kana u vhulungwa. Ṱolani vhuṱumani haṋu kana account access yaṋu.",
+      "literalBackTranslation": "Progress could not be loaded or saved. Check your connection or account access.",
+      "decision": "DRAFT_REPAIR",
+      "reason": "Uses the existing Tshivenda progress term mvelaphanḓa, the existing load verb laisa (“Ho kundelwa u laisa data”), and save term vhulunga. It preserves both failure modes and the connection/account-access recovery choices.",
+      "risk": "The passive form laisiwa is derived from the existing load verb but needs Tshivenda grammar review. “account access” remains a technical loan.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "studentPractitioner",
+      "exactSource": "Permaculture practitioner",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 939,
+        "displayCondition": "!simple && pct === 100",
+        "otherSourceLocations": []
+      },
+      "candidate": "Permaculture practitioner",
+      "literalBackTranslation": "English source retained unchanged; no localized wording proposed.",
+      "decision": "HOLD",
+      "reason": "HOLD: “Permaculture practitioner” asserts a professional practitioner status; keep source because learner completion does not establish that credential.",
+      "risk": "No translation claim is made for this held source.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessCompleteDetail",
+      "exactSource": "All {lessons} lessons are illustrated, narrated in {languages} languages, and have slides and animations.",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 1047,
+        "displayCondition": "readiness?.text === 'Fully built'",
+        "otherSourceLocations": []
+      },
+      "candidate": "All {lessons} lessons are illustrated, narrated in {languages} languages, and have slides and animations.",
+      "literalBackTranslation": "English source retained unchanged; no localized wording proposed.",
+      "decision": "HOLD",
+      "reason": "HOLD for a separate staff/global-readiness review. Code shows this tooltip is rendered only for !simple && isStaff and is derived globally, not by the selected language; it should not be read as a Tshivenda narration promise.",
+      "risk": "No translation claim is made for this held source.",
+      "sourcePlaceholders": [
+        "{lessons}",
+        "{languages}"
+      ],
+      "candidatePlaceholders": [
+        "{lessons}",
+        "{languages}"
+      ]
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessNarratedDetail",
+      "exactSource": "Illustrated slides and narration are ready in {languages} languages. Translation review is still outstanding.",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 1051,
+        "displayCondition": "not (readiness?.text === 'Fully built') → readiness?.text === 'Narrated slides'",
+        "otherSourceLocations": []
+      },
+      "candidate": "Illustrated slides and narration are ready in {languages} languages. Translation review is still outstanding.",
+      "literalBackTranslation": "English source retained unchanged; no localized wording proposed.",
+      "decision": "HOLD",
+      "reason": "HOLD for separate staff/global-readiness wording review. The badge is staff-only and global, not a selected-language status; preserve current source scope.",
+      "risk": "No translation claim is made for this held source.",
+      "sourcePlaceholders": [
+        "{languages}"
+      ],
+      "candidatePlaceholders": [
+        "{languages}"
+      ]
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessLessonsDetail",
+      "exactSource": "Reading and pictures are ready. Narration and slides are still being made.",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 1052,
+        "displayCondition": "not (readiness?.text === 'Fully built') → not (readiness?.text === 'Narrated slides')",
+        "otherSourceLocations": []
+      },
+      "candidate": "Reading and pictures are ready. Narration and slides are still being made.",
+      "literalBackTranslation": "English source retained unchanged; no localized wording proposed.",
+      "decision": "HOLD",
+      "reason": "HOLD for separate staff/global-readiness wording review. The badge is staff-only and global; do not localize it as a promise about the selected-language silent deck in this batch.",
+      "risk": "No translation claim is made for this held source.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessComplete",
+      "exactSource": "Fully built",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 1158,
+        "displayCondition": "!simple && isStaff → readiness?.text === 'Fully built'",
+        "otherSourceLocations": []
+      },
+      "candidate": "Fully built",
+      "literalBackTranslation": "English source retained unchanged; no localized wording proposed.",
+      "decision": "HOLD",
+      "reason": "HOLD for separate staff/global-readiness wording review. This status is shown only to staff outside Simple mode and describes global production readiness.",
+      "risk": "No translation claim is made for this held source.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessNarrated",
+      "exactSource": "Narrated slides",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 1160,
+        "displayCondition": "!simple && isStaff → not (readiness?.text === 'Fully built') → readiness?.text === 'Narrated slides'",
+        "otherSourceLocations": []
+      },
+      "candidate": "Narrated slides",
+      "literalBackTranslation": "English source retained unchanged; no localized wording proposed.",
+      "decision": "HOLD",
+      "reason": "HOLD for separate staff/global-readiness wording review. This status is a global staff badge, not a guarantee of selected-language narration.",
+      "risk": "No translation claim is made for this held source.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkComplete",
+      "exactSource": "Mark as complete",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 1225,
+        "displayCondition": "not (done)",
+        "otherSourceLocations": []
+      },
+      "candidate": "Tshwayani uri modulu iyi yo fhela",
+      "literalBackTranslation": "Mark that this module is finished/complete.",
+      "decision": "DRAFT_REPAIR",
+      "reason": "This aria label and studentMarkDone name the same action on the not-done button. Reusing one source-bound phrase keeps visible and accessible actions aligned.",
+      "risk": "Shares the same completion-verb uncertainty as studentMarkDone; fluent review should check the paired actions together.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckAnimationFailed",
+      "exactSource": "The animation could not load. You can keep listening, read the slide, or tap Watch to try again.",
+      "sourceBinding": {
+        "file": "components/course/DeckPlayer.tsx",
+        "line": 772,
+        "displayCondition": "animationFailed",
+        "otherSourceLocations": []
+      },
+      "candidate": "The animation could not load. You can keep listening, read the slide, or tap Watch to try again.",
+      "literalBackTranslation": "English source retained unchanged; no localized wording proposed.",
+      "decision": "HOLD",
+      "reason": "HOLD: the message offers “keep listening,” but the animation-failure state does not itself establish that narration exists for this deck.",
+      "risk": "No translation claim is made for this held source.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "offlineGetWhileSignal",
+      "exactSource": "Get the slides, the narration and the clips onto this phone while you have signal. They then work with no airtime at all.",
+      "sourceBinding": {
+        "file": "components/course/OfflineDownload.tsx",
+        "line": 183,
+        "displayCondition": "!compact → not (regionalSlidePack && variant === 'slides')",
+        "otherSourceLocations": []
+      },
+      "candidate": "Get the slides, the narration and the clips onto this phone while you have signal. They then work with no airtime at all.",
+      "literalBackTranslation": "English source retained unchanged; no localized wording proposed.",
+      "decision": "HOLD",
+      "reason": "HOLD: this copy is shown for the full/global variant, but offlinePack adds audio only when an actual narration track resolves and animation assets only where present. The source sentence promises slides, narration, and clips together; retain until the availability wording is safely qualified.",
+      "risk": "No translation claim is made for this held source.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "offlineDownloadPack",
+      "exactSource": "Download · {size}",
+      "sourceBinding": {
+        "file": "components/course/OfflineDownload.tsx",
+        "line": 232,
+        "displayCondition": "not (phase === 'done') → not (busy) → not (phase === 'partial' && doneFiles > 0)",
+        "otherSourceLocations": []
+      },
+      "candidate": "Download · {size}",
+      "literalBackTranslation": "English source retained unchanged; no localized wording proposed.",
+      "decision": "HOLD",
+      "reason": "HOLD: the compact control consists of the technical action “Download” and a formatted size; no verified concise Tshivenda action label is available.",
+      "risk": "No translation claim is made for this held source.",
+      "sourcePlaceholders": [
+        "{size}"
+      ],
+      "candidatePlaceholders": [
+        "{size}"
+      ]
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalFullMedia",
+      "exactSource": "Slides + English narration and clips",
+      "sourceBinding": {
+        "file": "components/course/OfflineDownload.tsx",
+        "line": 241,
+        "displayCondition": "regionalSlidePack && !busy",
+        "otherSourceLocations": []
+      },
+      "candidate": "Slides + ṱhalutshedzo nga ipfi ya English source na clips",
+      "literalBackTranslation": "Slides + English source narration and clips.",
+      "decision": "DRAFT_REPAIR",
+      "reason": "The UI presents this as an explicit full-pack choice alongside the slides-only default for learners whose selected-language narration is not exact. The full-pack note says available English source narration; naming English source avoids implying regional-language narration.",
+      "risk": "Keep the technical terms and plus-list scope clear; do not shorten this to generic narration or imply every regional deck has a local voice.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "studentCheckUnderstanding",
+      "exactSource": "Check your understanding",
+      "sourceBinding": null,
+      "candidate": "Ṱolani u pfesesa haṋu",
+      "literalBackTranslation": "Check your understanding.",
+      "decision": "DRAFT_REPAIR",
+      "reason": "This is the heading immediately above the lesson quiz. Ṱolani (“check”) is anchored by current Tshivenda UI phrases such as “Ṱolani vhuṱumani haṋu”; it does not reuse Xitsonga Kambela.",
+      "risk": "The noun construction u pfesesa haṋu is a draft without a matching existing locale key; verify the Tshivenda word/form for understanding.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkDone",
+      "exactSource": "Mark done",
+      "sourceBinding": null,
+      "candidate": "Tshwayani uri modulu iyi yo fhela",
+      "literalBackTranslation": "Mark that this module is finished/complete.",
+      "decision": "DRAFT_REPAIR",
+      "reason": "Uses Tshivenda Tshwaya (“mark”) already in the locale and the same fhela completion state used by accepted studentComplete/studentDone labels. The context is a module progress toggle.",
+      "risk": "The completion pair needs a fluent grammar check; fhela can describe finishing, so confirm that the surrounding “mark” verb clearly makes this a progress-state action.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkNotDone",
+      "exactSource": "Mark as not done",
+      "sourceBinding": null,
+      "candidate": "Tshwayani uri modulu iyi a yo ngo fhela",
+      "literalBackTranslation": "Mark that this module is not finished/complete.",
+      "decision": "DRAFT_REPAIR",
+      "reason": "Pairs the positive done-state draft with explicit negation, without adding “yet.” This aria label appears only when the module is currently marked done and the action will undo that state.",
+      "risk": "Confirm negative concord and that the phrase communicates unmarking completion rather than a claim about whether work has ever been attempted.",
+      "sourcePlaceholders": [],
+      "candidatePlaceholders": []
+    }
+  ]
+}

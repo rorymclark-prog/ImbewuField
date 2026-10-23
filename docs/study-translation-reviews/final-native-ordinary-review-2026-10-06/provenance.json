@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-06",
+  "reports": [
+    {
+      "file": "study-final-native-ordinary-independent-check-20261006.json",
+      "sha256": "0ad3848113f88fb8c1ce4710c243e8b9a3602a5ffdf2ed1499c305778eb6f104"
+    },
+    {
+      "file": "study-final-native-ordinary-independent-check-supplement-20261006.json",
+      "sha256": "b645733ff65bf22413c3d4f4b236f4faf979f1c806c9899e112082b524538bb9"
+    },
+    {
+      "file": "study-final-native-ordinary-duration-market-supplement-20261006.json",
+      "sha256": "d5d54683e3671760f8c98ee9ae8e09bca9361976b75babdbb8a5c792c01703ea"
+    }
+  ],
+  "scope": "Read-only candidate review; not learner-wired or root-approved as a whole. Supplements supersede the explicitly named initial dispositions.",
+  "rootFinding": "Through-season duration, relative sale-price comparison, exchange-versus-sharing scope, locative leaf wording and shared negative treatment scope require the supplements. Byte-identical proposals are excluded.",
+  "unpublished": true,
+  "fluentApproval": false
+}

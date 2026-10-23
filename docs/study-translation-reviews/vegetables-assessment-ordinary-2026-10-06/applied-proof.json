@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-06",
+  "base": "e1002c3f1c4e42bf6bfe61b9faf6acad4e39ee5b",
+  "separateLayerAfter": "vegetables pest precision",
+  "acceptedFields": 18,
+  "languages": {
+    "ve": 8,
+    "ts": 10
+  },
+  "completeBeforeOverlayEqualsAfter": true,
+  "canonicalSourceUnchanged": true,
+  "allUnlistedNativeMetadataSourceStatusIndicesExact": true,
+  "editedStatus": "machine-draft; hold→machine-draft only where precise new target exists",
+  "sha256": {
+    "native-after.json": "d1be0db9cca313e436f6e8d23ddc824434692c56d9483040e8730c259ad33835",
+    "root-accepted.json": "3209a9593292790ffa7e86ed89aac9940d07146b01ed16b10532709f5aed6c0e",
+    "independent-check.json": "e7f7afa0ce60886a97db242caf253a23369af89fba6b96ca7889e663ca317ff4",
+    "original-candidates.json": "f3999789bab1a0c4beb52ab88bf1c410615d86ddb1e98107b14b7bab01ee4500",
+    "ve-native-before.ts.txt": "6e21f046ca4a48780d2a796c1b2f06f8dc9be9e902321ead5e69126f89e35044",
+    "native-before.json": "5243ec72e5aff681577f47aea80696ea1c23492bce4bbf47b52d4e8a6a38722b",
+    "ts-native-before.ts.txt": "2b0e710f2f2890fb0ef1a3ecb125b01704f2e02e4a8706409d4371447f514e6d",
+    "ts-l2-native-before.ts.txt": "7c7e77c82baaa046a563e50f0802a9148867fd4936a57151bd711a3c58f0d963"
+  },
+  "holdToMachineDraft": 8,
+  "verification": {
+    "typecheck": "PASS",
+    "focusedTests": {
+      "total": 69,
+      "pass": 69,
+      "fail": 0,
+      "log": "/tmp/vegetables-assessment-final-focused-20261006.log"
+    },
+    "diffCheck": "PASS",
+    "historicalReason": "Later root-approved18 assessment leaf layer is validated as a complete actual native overlay, then precisely rewound before older pest/L3/L4 whole-registry claims; original assertions retained."
+  }
+}

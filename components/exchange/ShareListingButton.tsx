@@ -55,8 +55,8 @@ export default function ShareListingButton({
         style={{
           fontSize: 12,
           padding: '6px 12px',
-          background: '#25D366',
-          color: '#fff',
+          background: 'var(--color-forest-800)',
+          color: 'var(--on-forest-800)',
           border: 'none',
           cursor: 'pointer',
         }}
@@ -67,9 +67,9 @@ export default function ShareListingButton({
       {state === 'failed' && (
         <div
           className="rounded-lg"
-          style={{ marginTop: 8, padding: '8px 10px', background: 'rgba(226,216,196,0.5)', border: `1px solid ${EX.border}` }}
+          style={{ marginTop: 8, padding: '8px 10px', background: 'var(--bg-2)', border: `1px solid ${EX.border}` }}
         >
-          <p className="font-sans" style={{ fontSize: 11.5, color: EX.faint, margin: '0 0 6px', lineHeight: 1.45 }}>
+          <p className="font-sans" style={{ fontSize: 12, color: EX.faint, margin: '0 0 6px', lineHeight: 1.45 }}>
             {zu ? <ExchangeSourceCopy en="Could not share on this device. Copy this yourself and send it:" zu="Ayikwazanga ukwabelana kule divayisi. Kopisha lokhu wena bese ukuthumela:" /> : 'Could not share on this device. Copy this yourself and send it:'}
           </p>
           <textarea
@@ -79,7 +79,7 @@ export default function ShareListingButton({
             aria-label={zu ? 'Imininingwane yesikhangiso ozoyikopisha' : 'Listing details to copy'}
             onFocus={(e) => e.currentTarget.select()}
             className="w-full font-sans rounded-lg px-2.5 py-2"
-            style={{ fontSize: 12, background: '#fff', border: `1px solid ${EX.inputBorder}`, color: EX.ink, resize: 'none' }}
+            style={{ fontSize: 12, background: 'var(--input-bg)', border: `1px solid ${EX.inputBorder}`, color: EX.ink, resize: 'none' }}
           />
         </div>
       )}

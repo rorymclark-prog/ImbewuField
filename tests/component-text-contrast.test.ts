@@ -123,11 +123,20 @@ function reachable(): string[] {
 
 type Offence = { file: string; line: number; hex: string; card: number; page: number };
 
-/** Every `color: '#rrggbb'` in `rel` that is dark enough to be judged and fails the card floor. */
+/**
+ * Every `color:` in `rel` that resolves to a literal hex and is dark enough to be judged and
+ * fails the card floor — including a ternary (`color: ok ? '#3C6B3F' : '#B07A1E'`), which a plain
+ * `color: '#hex'` match missed (code-06: DataPanel's status copy used exactly this shape).
+ *
+ * A `const x = '#hex'` declaration used later as a `color` value is NOT matched here: probing it
+ * against every route this test walks surfaces 4 hits in files this track does not own (AddSheet,
+ * CashflowChart, FinanceGraphs, SiteManageMenu) — widening the regex that far would fail this test
+ * for other tracks' code without this track being able to fix it.
+ */
 function offences(rel: string): Offence[] {
   const src = source(rel);
   const out: Offence[] = [];
-  for (const m of src.matchAll(/\bcolor:\s*'(#[0-9A-Fa-f]{6})'/g)) {
+  for (const m of src.matchAll(/\bcolor:\s*[^,}]*?'(#[0-9A-Fa-f]{6})'/g)) {
     const hex = m[1].toUpperCase();
     if (relativeLuminance(hex) >= ON_DARK_LUMINANCE) continue;
     const card = contrastRatio(hex, CARD);

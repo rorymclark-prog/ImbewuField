@@ -1,0 +1,66 @@
+{
+  "speciesId": "morella-cordifolia",
+  "commonName": "Waxberry / wasbessie",
+  "botanicalName": "Morella cordifolia",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": "separate-male-female-plants",
+    "evidence": {
+      "url": "https://pza.sanbi.org/morella-cordifolia",
+      "doc": "SANBI PlantZAfrica: Morella cordifolia",
+      "page": null,
+      "quote": "The sexes are separate."
+    },
+    "notes": "Obtain correctly sexed planting material and confirm local pollen provision; this source gives no male-to-female planting ratio."
+  },
+  "harvestProduct": "berry fat — traditional processed product",
+  "supplementaryReferences": [
+    {
+      "title": "Historical processed fat, not a fresh-fruit forecast",
+      "quote": "The wax is in fact not wax, but a true fat.",
+      "url": "https://pza.sanbi.org/morella-cordifolia",
+      "doc": "SANBI PlantZAfrica: Morella cordifolia",
+      "page": null,
+      "note": "Historical food use concerns the fatty berry coating, not a generic fresh sweet berry. No validated household extraction method, recovered food yield or storage life is established. Source coating/oil percentages are not assigned as processing conversion factors."
+    }
+  ],
+  "productionGuidance": {
+    "products": "berry fat — traditional processed product",
+    "care": [
+      "Treat edible-fat preparation as a specialist process requiring local validation.",
+      "Use well-drained coastal sand with sun or semi-shade; fruit production needs correctly sexed planting material."
+    ],
+    "purchase": [
+      "Confirm the exact species and male/female stock with an indigenous nursery. Keep landscape use separate from an unverified household food process."
+    ]
+  },
+  "householdFoodStatus": "specialist-review",
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/morella-cordifolia",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary article text retrieved through the search index; the direct PlantZAfrica endpoint returned 403 during this session."
+    }
+  ],
+  "gaps": []
+}

@@ -1,0 +1,185 @@
+{
+  "title": "Core final ordinary residual candidate packet",
+  "date": "2026-10-07",
+  "checkedHead": "27dc083deda68dd33bfc67bf7c954037ee4a70f1",
+  "scope": "Read-only bounded check of current learner targets plus visible paired target fields in Vegetables & Staple Crops L2 and Reading Landscape A-frame framing for st/ve/ts. This is a review packet, not a completeness claim.",
+  "limitations": [
+    "All source spans were checked against the current canonical source and exact learner or paired field.",
+    "No fluent-speaker, learner-comprehension, or agricultural approval is claimed.",
+    "No code, translation registry, tests, rendered media, or repository files were modified."
+  ],
+  "structuralAssertions": {
+    "allFiveRowsBoundToCurrentLearnerOrVisiblePairedFields": true,
+    "sourceContextVerifiedAgainstCurrentCanonicalLesson": true,
+    "allProposedFullTargetsAreExactPrefixPlusSingleFragmentPlusSuffix": true,
+    "pairedAFrameSourceFieldsVerifiedAtSlide6Body2": true,
+    "learnerVegetableSourceFieldsVerifiedAtVegetablesStaplesL2": true,
+    "noFullModuleCompletenessClaim": true
+  },
+  "counts": {
+    "accept": 3,
+    "hold": 2
+  },
+  "rows": [
+    {
+      "id": "VE-VEGETABLES-L2-FRESH-FOOD-LONGER",
+      "decision": "HOLD",
+      "language": "Tshivenda (ve)",
+      "bindings": [
+        {
+          "kind": "actual-learner",
+          "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+          "lesson": "vegetables-staples-l2",
+          "field": "body paragraph 3 / source body paragraph 3",
+          "sourceEnglish": "Less waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.",
+          "currentTarget": "U tambisea ha zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi. Zwiḽiwa zwiswa zwi a wanala for longer. Na mushumo u a phaḓalala kha khalaṅwaha, u sa ni lemedza woṱhe nga tshifhinga tshithihi."
+        },
+        {
+          "kind": "visible-paired-target",
+          "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+          "slide": 8,
+          "field": "target.body[3].text",
+          "sourceEnglish": "Less waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.",
+          "currentTarget": "U tambisea ha zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi. Zwiḽiwa zwiswa zwi a wanala for longer. Na mushumo u a phaḓalala kha khalaṅwaha, u sa ni lemedza woṱhe nga tshifhinga tshithihi."
+        }
+      ],
+      "sourceClause": "Fresh food for longer.",
+      "actualPrefix": "U tambisea ha zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi. ",
+      "currentFragment": "Zwiḽiwa zwiswa zwi a wanala for longer.",
+      "actualSuffix": " Na mushumo u a phaḓalala kha khalaṅwaha, u sa ni lemedza woṱhe nga tshifhinga tshithihi.",
+      "candidateFragment": "Zwiḽiwa zwiswa zwi a wanala lwa tshifhinga tshilapfu.",
+      "candidateComposedTarget": "U tambisea ha zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi. Zwiḽiwa zwiswa zwi a wanala lwa tshifhinga tshilapfu. Na mushumo u a phaḓalala kha khalaṅwaha, u sa ni lemedza woṱhe nga tshifhinga tshithihi.",
+      "literalBackTranslation": "Fresh food is available for a long time.",
+      "meaningCheck": "The draft phrase gives the thought that fresh food remains available over a long time; it localizes the complete short clause.",
+      "risk": "It may weaken the source comparative “for longer” to simply “for a long time.” No confirmed Tshivenda comparative adverb is available in this bounded check. Hold the English comparative phrase or have a fluent reviewer confirm that `lwa tshifhinga tshilapfu` conveys a longer duration in this context. No fluency claim."
+    },
+    {
+      "id": "VE-VEGETABLES-L2-BEANS-CONNECTOR",
+      "decision": "ACCEPT (connector only; technical clause remains an English hold)",
+      "language": "Tshivenda (ve)",
+      "bindings": [
+        {
+          "kind": "actual-learner",
+          "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+          "lesson": "vegetables-staples-l2",
+          "field": "body paragraph 14",
+          "sourceEnglish": "Beans climb the maize, and store as protein.",
+          "currentTarget": "Beans dzi gonya maize, and store as protein."
+        },
+        {
+          "kind": "visible-paired-target",
+          "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+          "slide": 10,
+          "field": "target.body[3].text",
+          "sourceEnglish": "Beans climb the maize, and store as protein.",
+          "currentTarget": "Beans dzi gonya maize, and store as protein."
+        }
+      ],
+      "sourceClause": "Beans climb the maize, and store as protein.",
+      "actualPrefix": "Beans dzi gonya maize, ",
+      "currentFragment": "and",
+      "actualSuffix": " store as protein.",
+      "candidateFragment": "nahone",
+      "candidateComposedTarget": "Beans dzi gonya maize, nahone store as protein.",
+      "literalBackTranslation": "Beans climb maize, and store as protein.",
+      "meaningCheck": "Only the ordinary conjunction changes; subject, climbing relationship, order, and the full technical source clause `store as protein` remain in place and visible in English. This does not claim that the storage/protein concept has been translated.",
+      "risk": "Code-switch agreement around the retained English clause needs Tshivenda review. Root should retain the English phrase as an explicit hold if it reads as an unsupported claim."
+    },
+    {
+      "id": "TS-READING-L1-AFRAME-OBSERVATION-LEARNER",
+      "decision": "ACCEPT (draft reuse; fluent review still open)",
+      "language": "itsonga (ts)",
+      "bindings": [
+        {
+          "kind": "actual-learner",
+          "file": "lib/course-translation-drafts-ts.ts",
+          "lesson": "reading-landscape-l1",
+          "field": "body paragraph 1",
+          "sourceEnglish": "An A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+          "currentTarget": "A-frame level yi nga ku pfuna ku fungha points at the same height ni ku landzelela contour line. Its marks are an observation; a hi design kumbe mpfumelelo wa earthworks. U nga se cela swale, dam, kumbe xivumbeko xin’wana, tiyisisa leswaku ndhawu yi kamberiwile. Soil, slope, drainage, storm flow, na ndlela leyi hlayisekeke yo khulukisa mati lama taleke i swa nkoka. Vutisa trained local adviser."
+        },
+        {
+          "kind": "visible-paired-target-reference",
+          "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+          "slide": 6,
+          "field": "target.body[2].segments[5].text",
+          "sourceEnglish": "Its marks are an observation, not a design or approval for earthworks.",
+          "currentTarget": "A-frame yi nga ku pfuna ku mark points at the same height ni ku landzela contour line. Mimfungho ya xona i leswi xiyiwaka; a hi pulani kumbe mpfumelelo wa earthworks. U nga si cela, endla leswaku ndhawu yi kamberiwa. Soil, slope, drainage, storm flow na safe overflow route hinkwato i swa nkoka. Vutisa mutsundzuxi wa le ndhawini loyi a leteriweke."
+        }
+      ],
+      "sourceClause": "Its marks are an observation",
+      "actualPrefix": "A-frame level yi nga ku pfuna ku fungha points at the same height ni ku landzelela contour line. ",
+      "currentFragment": "Its marks are an observation",
+      "actualSuffix": "; a hi design kumbe mpfumelelo wa earthworks. U nga se cela swale, dam, kumbe xivumbeko xin’wana, tiyisisa leswaku ndhawu yi kamberiwile. Soil, slope, drainage, storm flow, na ndlela leyi hlayisekeke yo khulukisa mati lama taleke i swa nkoka. Vutisa trained local adviser.",
+      "candidateFragment": "Mimfungho ya xona i leswi xiyiwaka",
+      "candidateComposedTarget": "A-frame level yi nga ku pfuna ku fungha points at the same height ni ku landzelela contour line. Mimfungho ya xona i leswi xiyiwaka; a hi design kumbe mpfumelelo wa earthworks. U nga se cela swale, dam, kumbe xivumbeko xin’wana, tiyisisa leswaku ndhawu yi kamberiwile. Soil, slope, drainage, storm flow, na ndlela leyi hlayisekeke yo khulukisa mati lama taleke i swa nkoka. Vutisa trained local adviser.",
+      "literalBackTranslation": "Its markings are what is observed; they are not a plan or permission for earthworks.",
+      "meaningCheck": "Uses the exact source-matched phrase already present in the Xitsonga paired target. The learner target prefix has the A-frame mark/contour function; the suffix keeps the contrast with design/approval and preserves the digging assessment plus soil/slope/drainage/storm-flow/overflow/adviser conditions in order.",
+      "risk": "The phrase is draft wording, not fluent approval. Keep its full suffix intact; no technical terms or safety conditions were changed."
+    },
+    {
+      "id": "ST-READING-S6-AFRAME-OBSERVATION-PAIRED",
+      "decision": "ACCEPT (draft reuse; fluent review still open)",
+      "language": "Sesotho (st)",
+      "bindings": [
+        {
+          "kind": "visible-paired-target",
+          "file": "docs/narration/reading-landscape.st.paired-draft.json",
+          "slide": 6,
+          "field": "target.body[2].segments[4]",
+          "sourceEnglish": "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+          "currentTarget": "A-frame e ka u thusa ho tshwaya dintlha tse bophahamo bo lekanang mme o latele contour line. Its marks are an observation; ha se moralo kapa tumello ya earthworks. Pele u cheka, etsa hore sebaka se hlahlojoe. Mobu, moepa, ho ntsha metsi mobung, phallo ya metsi a sefefo (storm flow) le tsela e sireletsehileng ya ho ntsha metsi a mangata kaofela di bohlokwa. Botsa moeletsi ea koetlisitsoeng oa sebakeng seo."
+        },
+        {
+          "kind": "actual-learner-reference",
+          "file": "lib/course-translation-drafts-st-reading-landscape.ts",
+          "lesson": "reading-landscape-l1",
+          "field": "body paragraph 1",
+          "sourceEnglish": "An A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+          "currentTarget": "Level ya A-frame e ka o thusa ho tshwaya dintlha tse bophahamong bo lekanang le ho latela mola wa contour. Matshwao a yona ke tlhokomelo feela, eseng moralo kapa tumello ya ho tjheka mobu (earthworks). Pele o tjheka mokero (swale), letamo, kapa sebopeho se seng, etsa hore sebaka se hlahlojwe. Mofuta wa mobu, letswapo, tsamaiso ya metsi, phallo ya sefefo, le tsela e sireletsehileng ya ho phalla ha metsi a tletse (overflow route) kaofela di a hlokahala. Botsa moeletsi wa lehae ya kwetlisitsweng (trained local adviser)."
+        }
+      ],
+      "sourceClause": "Its marks are an observation",
+      "actualPrefix": "A-frame e ka u thusa ho tshwaya dintlha tse bophahamo bo lekanang mme o latele contour line. ",
+      "currentFragment": "Its marks are an observation",
+      "actualSuffix": "; ha se moralo kapa tumello ya earthworks. Pele u cheka, etsa hore sebaka se hlahlojoe. Mobu, moepa, ho ntsha metsi mobung, phallo ya metsi a sefefo (storm flow) le tsela e sireletsehileng ya ho ntsha metsi a mangata kaofela di bohlokwa. Botsa moeletsi ea koetlisitsoeng oa sebakeng seo.",
+      "candidateFragment": "Matshwao a yona ke tlhokomelo feela",
+      "candidateComposedTarget": "A-frame e ka u thusa ho tshwaya dintlha tse bophahamo bo lekanang mme o latele contour line. Matshwao a yona ke tlhokomelo feela; ha se moralo kapa tumello ya earthworks. Pele u cheka, etsa hore sebaka se hlahlojoe. Mobu, moepa, ho ntsha metsi mobung, phallo ya metsi a sefefo (storm flow) le tsela e sireletsehileng ya ho ntsha metsi a mangata kaofela di bohlokwa. Botsa moeletsi ea koetlisitsoeng oa sebakeng seo.",
+      "literalBackTranslation": "Its marks are only observation/attention.",
+      "meaningCheck": "Reuses the existing Sesotho learner expression for the same source-bound clause while retaining the following not-a-design/not-an-approval contrast. The remaining assessment and safety guidance stays exactly as authored and in source order.",
+      "risk": "`tlhokomelo` may also read as attention/care rather than recorded observation; the following contrast helps but does not settle the nuance. Keep as an unreviewed draft pending fluent confirmation."
+    },
+    {
+      "id": "VE-READING-L1-AFRAME-OBSERVATION-HOLD",
+      "decision": "HOLD",
+      "language": "Tshivenda (ve)",
+      "bindings": [
+        {
+          "kind": "actual-learner",
+          "file": "lib/course-translation-drafts-ve-reading-landscape.ts",
+          "lesson": "reading-landscape-l1",
+          "field": "body paragraph 1",
+          "sourceEnglish": "An A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+          "currentTarget": "Level ya A-frame i nga ni thusa u swaya points at the same height na u tevhela contour line. Its marks are an observation; a si pulane kana thendelo ya earthworks. Musi ni sa athu bwa swale, dam kana tshiṅwe tshivhumbeo, itani uri fhethu hu ṱolwe. Mavu, u sendama ha mavu, na nḓila ine maḓi a bva ngayo, u elela ha maḓi musi hu na mvula khulu na nḓila yo tsireledzeaho ya u bvisa maḓi manzhisa zwiṅwe na zwiṅwe ndi zwa ndeme. Vhudzisani mueletshedzi wa zwa vhulimi wa henefho o gudiswaho."
+        },
+        {
+          "kind": "visible-paired-target",
+          "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+          "slide": 6,
+          "field": "target.body[2].segments[6]",
+          "sourceEnglish": "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+          "currentTarget": "A-frame i nga ni thusa u mark points at the same height na u tevhela contour line. Its marks are an observation; a si pulane kana thendelo ya earthworks. Musi ni sa athu bwa, itani uri fhethu hu ṱolwe. Soil, slope, drainage, storm flow na safe overflow route zwoṱhe zwi na ndeme. Vhudzisani mueletshedzi wa henefho o gudiswaho."
+        }
+      ],
+      "sourceClause": "Its marks are an observation",
+      "actualPrefix": "Level ya A-frame i nga ni thusa u swaya points at the same height na u tevhela contour line. ",
+      "currentFragment": "Its marks are an observation",
+      "actualSuffix": "; a si pulane kana thendelo ya earthworks. Musi ni sa athu bwa swale, dam kana tshiṅwe tshivhumbeo, itani uri fhethu hu ṱolwe. Mavu, u sendama ha mavu, na nḓila ine maḓi a bva ngayo, u elela ha maḓi musi hu na mvula khulu na nḓila yo tsireledzeaho ya u bvisa maḓi manzhisa zwiṅwe na zwiṅwe ndi zwa ndeme. Vhudzisani mueletshedzi wa zwa vhulimi wa henefho o gudiswaho.",
+      "candidateFragment": null,
+      "candidateComposedTarget": null,
+      "literalBackTranslation": "Exact English remains in both target fields.",
+      "meaningCheck": "This ordinary clause carries an important distinction: an A-frame mark is an observation, not an engineering design or permission. The learner and visible paired targets retain the exact source phrase; nearby sentences localize surrounding grammar but do not resolve an equivalent for the conceptual noun.",
+      "risk": "No defensible Tshivenda phrase was established without risking changing “observation” into an instruction/monitoring concept. Keep exact English for this clause; preserve the following contrast and safety instructions."
+    }
+  ]
+}

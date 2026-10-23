@@ -1,0 +1,67 @@
+{
+  "title": "TS introduction slide 19 windbreak focused source-segment review",
+  "date": "2026-10-04",
+  "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json",
+  "pairedFileSHA256": "18b578721ca976633554f4f75e75ea716f510e7a079082b23f29ef2630ac9eeb",
+  "rows": [
+    {
+      "language": "ts",
+      "slide": 19,
+      "bodyIndex": 2,
+      "sourceEnglish": "Some air passes through the windbreak. Other air moves over it or around its ends.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Air yin’wana yi hundza hi le ka windbreak. Yin’wana yi ya ehenhla ka yona kumbe yi rhendzeleka ematlhelo ya yona.",
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "normalizedProposal": {
+        "status": "mixed",
+        "segments": [
+          {
+            "status": "draft",
+            "sourceEnglish": "Some air passes through the windbreak.",
+            "text": "Air yin’wana yi hundza hi le ka windbreak."
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": " Other air moves over it or around its ends."
+          }
+        ]
+      },
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "review": "Keep “Some air passes through the windbreak” localized as drafted. Hold the complete second sentence in exact English because “emAtlhelo” may indicate sides and does not securely preserve the endpoints of the windbreak. No directional equivalence approved."
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "bodyIndex": 3,
+      "sourceEnglish": "The shelter can reduce wind speed behind it. The design and care of the windbreak matter.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Shelter yi nga hunguta wind speed endzhaku ka yona. Design ni ku hlayisiwa ka windbreak swi na nkoka.",
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Shelter yi nga hunguta wind speed endzhaku ka yona. Design ni ku hlayisiwa ka windbreak swi na nkoka."
+      },
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "review": "The modal “can” is retained by “yi nga”; “behind it” remains endzhaku ka yona; design and care are said to matter. Do not upgrade the claim to a guarantee."
+    }
+  ],
+  "checks": {
+    "sourceStringsReadFromActualCurrentPairedJson": true,
+    "targetObjectsReadFromActualCurrentPairedJson": true,
+    "bothRowsCurrentBindingsExact": true,
+    "bothRowsSourceConcatenationsExact": true,
+    "mixedStatusHasAtLeastTwoSegments": true,
+    "englishHoldHasNoText": true,
+    "fluentApproval": false,
+    "repoEdits": false
+  },
+  "interpretation": "The doubtful geometric relation remains visible as exact English. The separate shelter claim retains its modal “can,” behind direction, and design/care condition."
+}

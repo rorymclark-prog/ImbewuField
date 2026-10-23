@@ -353,10 +353,19 @@ test('the material bill reconciles to spacing ranges without inventing packet se
       continue;
     }
     if (crop.seedRateKgPerHaRange !== undefined) {
-      // This BOQ is a piece/packet model. A field cover's sourced kg/ha rate
-      // belongs in its sowing task; the legacy plant-grid placeholder must not
-      // be converted into a fake shopping count merely to force a bill row.
-      if (row) wrong.push(`${crop.key}: a kg/ha field rate became a final-position purchase line`);
+      // The old assertion required no row, which hid real seed purchases.
+      // Published field kg/ha can be scaled by recorded field area, while a
+      // nursery must not borrow field area and broadcast seed has no grid.
+      if (crop.transplant) {
+        if (row) wrong.push(`${crop.key}: a field rate became a tray-seed order`);
+      } else {
+        const expectedKg = crop.seedRateKgPerHaRange.map((rate) => rate * bed.areaM2 / 10_000);
+        if (!row || row.quantityStatus !== 'sourced-weight-range' || row.unit !== 'kg seed'
+          || row.count !== null || row.finalPlantPositions !== 0
+          || row.countRange?.[0] !== expectedKg[0] || row.countRange?.[1] !== expectedKg[1]) {
+          wrong.push(`${crop.key}: source-derived weight missing, changed, or disguised as plant positions`);
+        }
+      }
       continue;
     }
     if (!row) { wrong.push(`${crop.key}: no bill line at all`); continue; }
@@ -450,6 +459,14 @@ test('every material line names a real crop and never disguises final positions 
   for (const run of sweep([8])) {
     for (const row of seedBoqForPlan(run.plantings, run.beds)) {
       if (!cropByKey(row.cropKey)) bad.push(`${run.label} — unknown crop ${row.cropKey}`);
+      if (row.quantityStatus === 'sourced-weight-range') {
+        if (row.unit !== 'kg seed' || row.count !== null || row.finalPlantPositions !== 0
+          || row.finalPlantPositionsRange.some((value) => value !== 0)
+          || !row.countRange || row.countRange[0] <= 0 || row.countRange[1] < row.countRange[0]) {
+          bad.push(`${run.label} — ${row.cropKey} unusable source-derived seed weight`);
+        }
+        continue;
+      }
       if (!Number.isFinite(row.finalPlantPositionsRange[0])
         || !Number.isFinite(row.finalPlantPositionsRange[1])
         || row.finalPlantPositionsRange[0] < 1
@@ -760,10 +777,14 @@ interface RotationCourseUnderTest {
   end: number;
   sourceIds: Set<string>;
   plotCover: boolean;
+  /** Every cohort in this course is a proposed row drawn one year BACK. */
+  pastCopyOnly: boolean;
+  /** Some cohort in this course is a farmer-recorded existing row. */
+  hasExisting: boolean;
 }
 
 /** Bed-hold courses on the rolling timeline: existing rows once at their
- * observed offset, proposed rows at +0 and +12 (the saved annual template
+ * observed offset, proposed rows at -12, +0 and +12 (the saved annual template
  * repeats). Overlapping cohorts of ONE crop merge into one standing course,
  * exactly as the planner's ledger treats staggered sowings. */
 function rotationCoursesUnderTest(
@@ -789,13 +810,20 @@ function rotationCoursesUnderTest(
       end: start + span - 1,
       sourceIds: new Set([planting.id]),
       plotCover: beds.find((bed) => bed.id === bedId)?.kind === 'plot' && isPlotWinterCover(crop),
+      pastCopyOnly: !planting.existing && shift < 0,
+      hasExisting: planting.existing === true,
     };
   };
   const raw = [
     ...existing.filter((planting) => planting.bedId === bedId)
       .map((planting) => course(planting, 0)),
+    // -12 as well as +12 (2026-09-27): the planner's ledger compares against both
+    // annual neighbours. Drawing only year 0 and year +1 left a cohort at the very
+    // start of the window unable to join its staggered partners' previous-year
+    // occurrence, so one continuous spinach spell (sown May, Jun, then Aug) read as
+    // two spinach courses with nothing between them.
     ...proposed.filter((planting) => planting.bedId === bedId)
-      .flatMap((planting) => [course(planting, 0), course(planting, 12)]),
+      .flatMap((planting) => [course(planting, -12), course(planting, 0), course(planting, 12)]),
   ].filter((candidate): candidate is RotationCourseUnderTest => candidate !== null)
     .sort((a, b) => a.start - b.start || a.end - b.end);
   // Merge PER CROP, transitively: in a mixed bed another crop's course can sit
@@ -809,6 +837,8 @@ function rotationCoursesUnderTest(
     if (standing) {
       standing.start = Math.min(standing.start, next.start);
       standing.end = Math.max(standing.end, next.end);
+      standing.pastCopyOnly = standing.pastCopyOnly && next.pastCopyOnly;
+      standing.hasExisting = standing.hasExisting || next.hasExisting;
       for (const sourceId of next.sourceIds) standing.sourceIds.add(sourceId);
     } else {
       courses.push({ ...next, sourceIds: new Set(next.sourceIds) });
@@ -849,6 +879,11 @@ function sameFamilyRotationViolations(
         // exception (docs/CROP-PLAN-TRUTH-AUDIT: staple plots carry their own
         // course sequence), not a vegetable rotation course.
         if (!includePlotCovers && (a.plotCover || b.plotCover)) continue;
+        // A proposal drawn one year back is not something the farmer grew, so it
+        // is never judged against their recorded history — the planner's ledger
+        // draws the same line (only real history and current-cycle courses are
+        // evidence about what was actually in the ground).
+        if ((a.pastCopyOnly && b.hasExisting) || (b.pastCopyOnly && a.hasExisting)) continue;
         const overlap = a.start <= b.end && b.start <= a.end;
         if (overlap) {
           out.push(`${bed.id}: ${a.cropKey}[${a.start}..${a.end}] overlaps ${b.cropKey}[${b.start}..${b.end}] (${a.family})`);

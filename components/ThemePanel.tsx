@@ -19,7 +19,10 @@ function PillToggle({ on, onClick, label }: { on: boolean; onClick: () => void; 
       aria-checked={on}
       aria-label={label}
       onClick={onClick}
+      // 46x28 paint, 46x44 hit area (a11y-08): the switch keeps its size, the touch band grows.
+      className="u-tap-target"
       style={{
+        ['--tap-inset' as string]: '-8px 0',
         width: 46, height: 28, borderRadius: 999, border: 'none', cursor: 'pointer', flexShrink: 0,
         background: on ? 'var(--emerald)' : 'var(--border)', position: 'relative',
         transition: 'background 0.15s ease', padding: 0,
@@ -488,7 +491,7 @@ export default function ThemePanel({ open, onClose }: Props) {
           display: 'flex', alignItems: 'center', gap: 8,
         }}>
           <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--emerald)', flexShrink: 0 }} />
-          <span style={{ fontSize: 12, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+          <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>
             {zu ? 'ImbewuField · kulondolozwa ngokuzenzakalelayo' : 'ImbewuField · saved automatically'}
           </span>
         </div>

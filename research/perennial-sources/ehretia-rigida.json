@@ -1,0 +1,67 @@
+{
+  "speciesId": "ehretia-rigida",
+  "commonName": "Puzzle bush / deurmekaarbos",
+  "botanicalName": "Ehretia rigida",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": "separate-male-female-plants",
+    "evidence": {
+      "quote": "male and female flowers on different plants",
+      "url": "https://pza.sanbi.org/ehretia-rigida",
+      "doc": "SANBI PlantZAfrica, ehretia-rigida",
+      "page": null
+    },
+    "notes": "Sex affects fruit-bearing potential; no male:female ratio is supplied."
+  },
+  "harvestProduct": "ripe fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Edible part and local use",
+      "quote": "Ripe fruits of this plant are edible but not tasty.",
+      "url": "https://pza.sanbi.org/ehretia-rigida",
+      "doc": "SANBI PlantZAfrica, ehretia-rigida",
+      "page": null,
+      "note": "Food is the ripe black fruit. Spring flowers do not supply ripe-harvest months; growth rate is not food-bearing age."
+    }
+  ],
+  "productionGuidance": {
+    "products": "ripe fruit",
+    "care": [
+      "SANBI records it across varied eastern habitats and some Cape areas. It is hardy and drought resistant and can form a hedge."
+    ],
+    "purchase": [
+      "Confirm the Ehretia species and local subspecies. If fruit is intended, ask about plant sex; the source records male and female flowers on different plants."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/ehretia-rigida",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    }
+  ],
+  "gaps": [
+    "No exact ripe-picking window, age-specific food output or kg."
+  ]
+}

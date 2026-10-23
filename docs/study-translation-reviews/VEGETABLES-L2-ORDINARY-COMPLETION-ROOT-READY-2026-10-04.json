@@ -1,0 +1,523 @@
+{
+  "title": "Independent semantic backcheck: VE/TS Vegetables Staples L2 ordinary body candidates",
+  "createdDate": "2026-10-04",
+  "candidatePacket": "/tmp/imbewu-ve-ts-vegetables-l2-ordinary-completion-candidates-20261004.json",
+  "candidatePacketSha256": "0fd453253689950aa595fa8b9a67916600fed5c483872887516d9884fa56e7ab",
+  "candidatePacketInspectedHead": "4055b8f9570a83f15e83a85f04e784c02657ee7e",
+  "liveWorktreeHead": "4055b8f9570a83f15e83a85f04e784c02657ee7e",
+  "liveSourceProof": "/tmp/imbewu-ve-ts-l2-live-proof.json",
+  "liveSourceProofSha256": "e80f54bc6a3e90dc7a59657d6c53e51b2bd9a507d007e5ed408144271cd5597b",
+  "originalCandidatePacketPath": "/tmp/imbewu-ve-ts-vegetables-l2-ordinary-completion-candidates-20261004.json",
+  "originalCandidatePacketSha256": "0fd453253689950aa595fa8b9a67916600fed5c483872887516d9884fa56e7ab",
+  "repairProvenance": "Root review required mapped-fragment-sized replacements. All repairs below are recomposed from exact currentTargetFragment spans; where the candidate changed a source-specific anchor, the recommended fragment restores the exact current resolver wording.",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "canonicalSourceSha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+  "scope": "Two complete body fields: VE and TS Vegetables Staples L2. No repository edits were made.",
+  "counts": {
+    "bodyFields": 2,
+    "mappedFragments": 43,
+    "accepted": 27,
+    "repairsRecommended": 4,
+    "held": 10,
+    "unchanged": 2
+  },
+  "fullBodyComposition": "The original candidate map was independently replayed from each exact current resolver body and reproduced the candidate body. The reviewed recommendation then replaces only its mapped fragments, each found exactly once, starting from live resolver text. This preserves all mapped and unmapped target spans outside accepted changes. The recomposed body has the same 23 paragraph boundaries; explicit checks reject duplicated full-sentence prefixes/endings and adjacent periods.",
+  "reviewStatus": "Independent meaning check only. Machine-generated language is not fluency-approved; facilitator/native review remains necessary.",
+  "rows": [
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l2",
+      "registryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "registryFileSha256": "ab59043d3a8113b7002c655942b07d47b914bdc47de1bdb7c40e2aa66b275302",
+      "canonicalSourceFileSha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "exactCanonicalSourceMatch": true,
+      "exactCurrentTargetAndResolverMatch": true,
+      "rawFieldReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "currentBodyUtf8Bytes": 2516,
+      "candidateBodyUtf8Bytes": 2971,
+      "reviewedRecommendedBodyUtf8Bytes": 2922,
+      "candidateFragmentMapComposesExactly": true,
+      "recommendedFullBody": "Succession planting ndi maitele a kalenda, hu si tshimela tsho khetheaho.\n\nNangani tshithu tshine muṱa waṋu wa tshi ḽa kanzhi vhukuma. Nga murahu, sow zwiṱuku zwa tshithu itsho, ni dovhe ni ite tano hafhu na hafhu.\n\nṰavhani muduba mupfufhi every two to three weeks.\n\nU xelelwa nga zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi. Zwiḽiwa zwiswa zwi a wanala for longer. Na mushumo u a phadalala kha khalaṅwaha, u sa ni kwama woṱhe nga tshifhinga tshithihi.\n\nU ṱavha nga zwifhinga zwo fhambanaho hu nga fhungudza khombo ya u xelelwa nga zwoṱhe nga tshifhinga tshithihi. A zwi khwaṱhisedzi uri ni ḓo wana khaṋo arali nyimele dzi konḓaho dzi tshi bvela phanḓa.\n\nNdi fast crop ifhio ine na nga sow nga zwipiḓa zwiṱuku? Nangani tshithihi, ni tshi thome ino vhege.\n\nHezwi ndi zwine zwa itea ngazwo.\n\nSow tsha u thoma. Nga murahu ha two to three weeks, sow tsha vhuvhili. Nga murahu, sow tsha vhuraru. Nga murahu, sow tsha vhuṋa.\n\nArali tshifhinga tsha crop tsho tea, khaṋo dzi nga thoma u overlap. A si tshifhinga tshoṱhe tshine tshigwada tsha u thoma tsha vha tsho lugela u kaṋiwa musi ni tshi zwala lwa vhuṋa.\n\nVhege mbili u swika kha tharu ndi maitele a u thoma, hu si mulayo. A cool-season leaf crop may hold longer. Musi hu tshi fhisa, zwi nga ṱavhanyisa zwithu kana zwa ita uri zwi kundelwe.\n\nSedzani zwine zwa itea tsimuni yaṋu, ni shandule interval. U sedza nga nḓila iyi ndi yone skill.\n\nIntercropping is not just crowding different plants together. Tshimela tshiṅwe na tshiṅwe tshi ṱoḓa mushumo watsho, na fhethu ho eḓanaho uri tshi kone u ita wonoyo mushumo.\n\nThe Three Sisters ndi tsumbo from Indigenous farming traditions in the Americas.\n\nMaize i ṋea vhulapfu na tshivhumbeo.\n\nBeans dzi gonya maize, and store as protein.\n\nPumpkin spreads across the ground, i ita murunzi kha mavu na u vhulunga moisture.\n\nTshifhinga tshi a vha tsha ndeme. Thomani nga u ita uri maize i khwaṱhe, u itela uri i kone u tikedza beans musi dzi tshi thoma u gonya.\n\nZwimela zwi nga kha ḓi konkurisana. Ni zwi fhe fhethu ho teaho, maḓi na tshedza. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.\n\nMuṱa u nga vha na hungry gap: vhege dzine zwiḽiwa zwo vhulungwaho zwa vha zwi tshi khou fhungudzea phanḓa ha musi khaṋo i tevhelaho i tshi luga.\n\nHungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela. I nga ḓa musi winter greens dzi sa athu u luga. I nga ḓa nga tshifhinga tsho omaho when water limits the garden.\n\nNi songo kopolola calendar ya muṅwe muthu. Thomani nga u bula miṅwedzi yaṋu.\n\nIṅwaleni fhasi. Ni kone u khetha crop na sowing date ine ya isa zwiḽiwa kha hungry gap yeneyo.\n\nHezwi ndi planning backwards, nahone ndi zwone zwi fhambanyisaho garden ine ya vhonala i tshi bveledza na muṱa une wa wana zwiḽiwa.",
+      "paragraphCountCanonical": 23,
+      "paragraphCountCurrent": 23,
+      "paragraphCountRecommended": 23,
+      "paragraphBoundariesPreserved": true,
+      "fragments": [
+        {
+          "fragmentIndex": 0,
+          "sourceEnglishClause": "Then sow a small amount of it, again and again.",
+          "currentTargetFragment": "Nga murahu sow a small amount of it, hafhu na hafhu.",
+          "candidateTargetFragment": "Nga murahu, sow zwiṱuku zwa tshithu itsho, ni dovhe ni ite tano hafhu na hafhu.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Nga murahu, sow zwiṱuku zwa tshithu itsho, ni dovhe ni ite tano hafhu na hafhu.",
+          "reason": "The small amount is retained, with repeated sowing (“again and again”) explicit.",
+          "riskToPreserve": "Keep the seed-specific sow action."
+        },
+        {
+          "fragmentIndex": 1,
+          "sourceEnglishClause": "Separate sowings may reduce the risk of losing everything at once.",
+          "currentTargetFragment": "Separate sowings dzi nga fhungudza risk ya u xelelwa nga zwoṱhe nga tshifhinga tshithihi.",
+          "candidateTargetFragment": "U ṱavha nga zwifhinga zwo fhambanaho hu nga fhungudza khombo ya u xelelwa nga zwoṱhe nga tshifhinga tshithihi.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "U ṱavha nga zwifhinga zwo fhambanaho hu nga fhungudza khombo ya u xelelwa nga zwoṱhe nga tshifhinga tshithihi.",
+          "reason": "Different sowing times retain may/nga and the at-once risk qualifier.",
+          "riskToPreserve": "Do not promise risk elimination."
+        },
+        {
+          "fragmentIndex": 2,
+          "sourceEnglishClause": "Less waste during a glut.",
+          "currentTargetFragment": "Less waste during a glut.",
+          "candidateTargetFragment": "U xelelwa nga zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "U xelelwa nga zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi.",
+          "reason": "“Less waste during a glut” is rendered as reduced food loss during abundant harvest; this is a plausible ordinary description without guaranteeing an outcome.",
+          "riskToPreserve": "Ensure abundant harvest remains the condition."
+        },
+        {
+          "fragmentIndex": 3,
+          "sourceEnglishClause": "Fresh food for longer.",
+          "currentTargetFragment": "Fresh food for longer.",
+          "candidateTargetFragment": "Zwiḽiwa zwiswa zwi a wanala tshifhinga tshilapfu.",
+          "disposition": "repair",
+          "recommendedTargetFragment": "Zwiḽiwa zwiswa zwi a wanala for longer.",
+          "reason": "The candidate expresses availability for a long time but does not clearly keep the comparative “for longer.” Retain that exact comparison while localizing the rest of the short description.",
+          "riskToPreserve": "Keep the comparison, not just a long duration."
+        },
+        {
+          "fragmentIndex": 4,
+          "sourceEnglishClause": "They do not guarantee a harvest if difficult conditions continue.",
+          "currentTargetFragment": "They do not guarantee a harvest if difficult conditions continue.",
+          "candidateTargetFragment": "A zwi khwaṱhisedzi uri ni ḓo wana khaṋo arali nyimele dzi konḓaho dzi tshi bvela phanḓa.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "A zwi khwaṱhisedzi uri ni ḓo wana khaṋo arali nyimele dzi konḓaho dzi tshi bvela phanḓa.",
+          "reason": "Retains the explicit no-guarantee statement and its continuing-difficult-conditions condition.",
+          "riskToPreserve": "Keep negation and condition together."
+        },
+        {
+          "fragmentIndex": 5,
+          "sourceEnglishClause": "Which fast crop could you sow in small batches?",
+          "currentTargetFragment": "Which fast crop could you sow in small batches?",
+          "candidateTargetFragment": "Ndi crop ifhio ine ya hula nga u ṱavhanya ine na nga sow nga zwipiḓa zwiṱuku?",
+          "disposition": "repair",
+          "recommendedTargetFragment": "Ndi fast crop ifhio ine na nga sow nga zwipiḓa zwiṱuku?",
+          "reason": "The candidate’s “crop that grows quickly” can narrow “fast crop” to growth rate rather than a crop that matures quickly. Keep “fast crop” and seed-specific “sow” exact while localizing the could/batch frame.",
+          "riskToPreserve": "Do not equate fast growth with short time to harvest."
+        },
+        {
+          "fragmentIndex": 6,
+          "sourceEnglishClause": "Sow one. Then two to three weeks later, sow two. Then sow three. Then sow four.",
+          "currentTargetFragment": "Sow one. Nga murahu ha two to three weeks, sow two. Nga murahu, sow three. Nga murahu, sow four.",
+          "candidateTargetFragment": "Sow tsha u thoma. Nga murahu ha two to three weeks, sow tsha vhuvhili. Nga murahu, sow tsha vhuraru. Nga murahu, sow tsha vhuṋa.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Sow tsha u thoma. Nga murahu ha two to three weeks, sow tsha vhuvhili. Nga murahu, sow tsha vhuraru. Nga murahu, sow tsha vhuṋa.",
+          "reason": "The four sowings remain in order and the two-to-three-week interval remains attached to the second sowing.",
+          "riskToPreserve": "Keep the separate every-two-to-three-weeks instruction in the next paragraph."
+        },
+        {
+          "fragmentIndex": 7,
+          "sourceEnglishClause": "With suitable crop timing, harvests can begin to overlap.",
+          "currentTargetFragment": "Arali crop timing yo tea, harvests dzi nga thoma u overlap.",
+          "candidateTargetFragment": "Arali tshifhinga tsha crop tsho tea, khaṋo dzi nga thoma u overlap.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Arali tshifhinga tsha crop tsho tea, khaṋo dzi nga thoma u overlap.",
+          "reason": "Suitable crop timing, can/nga, and the possibility of harvest overlap are preserved.",
+          "riskToPreserve": "Do not turn possible overlap into a promise."
+        },
+        {
+          "fragmentIndex": 8,
+          "sourceEnglishClause": "The first batch will not always be ready by the fourth sowing.",
+          "currentTargetFragment": "The first batch will not always be ready by the fourth sowing.",
+          "candidateTargetFragment": "A si tshifhinga tshoṱhe tshine tshigwada tsha u thoma tsha vha tsho lugela u kaṋiwa musi ni tshi zwala lwa vhuṋa.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "A si tshifhinga tshoṱhe tshine tshigwada tsha u thoma tsha vha tsho lugela u kaṋiwa musi ni tshi zwala lwa vhuṋa.",
+          "reason": "The candidate retains the first-versus-fourth comparison and “not always” qualification.",
+          "riskToPreserve": "Keep the first batch and fourth sowing distinct."
+        },
+        {
+          "fragmentIndex": 9,
+          "sourceEnglishClause": "Two to three weeks is a starting rhythm, not a law.",
+          "currentTargetFragment": "Two to three weeks ndi starting rhythm, hu si law.",
+          "candidateTargetFragment": "Vhege mbili u swika kha tharu ndi maitele a u thoma, hu si mulayo.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Vhege mbili u swika kha tharu ndi maitele a u thoma, hu si mulayo.",
+          "reason": "The two-to-three-week interval remains a starting rhythm rather than a rule.",
+          "riskToPreserve": "Retain the cool-season leaf-crop exception in English."
+        },
+        {
+          "fragmentIndex": 10,
+          "sourceEnglishClause": "Heat may speed things up, or cause a failure.",
+          "currentTargetFragment": "Heat may speed things up, or cause a failure.",
+          "candidateTargetFragment": "Musi hu tshi fhisa, zwi nga ṱavhanyisa zwithu kana zwa ita uri zwi kundelwe.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Musi hu tshi fhisa, zwi nga ṱavhanyisa zwithu kana zwa ita uri zwi kundelwe.",
+          "reason": "The candidate keeps may/nga and both alternatives: faster development or failure.",
+          "riskToPreserve": "No certainty or one-way effect added."
+        },
+        {
+          "fragmentIndex": 11,
+          "sourceEnglishClause": "Intercropping is not just crowding different plants together.",
+          "currentTargetFragment": "Intercropping is not just crowding different plants together.",
+          "candidateTargetFragment": "Intercropping a si u tou dzudza zwimela zwo fhambanaho fhethu huthihi.",
+          "disposition": "hold",
+          "recommendedTargetFragment": "Intercropping is not just crowding different plants together.",
+          "reason": "The proposed Tshivenda wording shifts “crowding” toward merely placing/sitting plants together. Retain the whole nuanced contrast in exact English rather than weakening the claim.",
+          "riskToPreserve": "Preserve this source sentence; the following ordinary spacing sentence can still be drafted."
+        },
+        {
+          "fragmentIndex": 12,
+          "sourceEnglishClause": "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+          "currentTargetFragment": "The Three Sisters ndi tsumbo from Indigenous farming traditions in the Americas.",
+          "candidateTargetFragment": "The Three Sisters ndi tsumbo ya Indigenous farming traditions in the Americas.",
+          "disposition": "repair",
+          "recommendedTargetFragment": "The Three Sisters ndi tsumbo from Indigenous farming traditions in the Americas.",
+          "reason": "Changing “from Indigenous farming traditions” to “of Indigenous farming traditions” shifts the source’s origin attribution. Keep the precise origin phrase in English while retaining the localized introductory frame.",
+          "riskToPreserve": "Protect the named system’s source/origin attribution."
+        },
+        {
+          "fragmentIndex": 13,
+          "sourceEnglishClause": "Maize gives height and structure.",
+          "currentTargetFragment": "Maize i fha height and structure.",
+          "candidateTargetFragment": "Maize i ṋea vhulapfu na tshivhumbeo.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Maize i ṋea vhulapfu na tshivhumbeo.",
+          "reason": "The maize crop name remains exact and the height/structure functions are both retained.",
+          "riskToPreserve": "No new planting advice."
+        },
+        {
+          "fragmentIndex": 14,
+          "sourceEnglishClause": "Pumpkin spreads across the ground, shading the soil and holding moisture.",
+          "currentTargetFragment": "Pumpkin spreads across the ground, i ita murunzi kha mavu na u vhulunga moisture.",
+          "candidateTargetFragment": "Pumpkin i a phadalala fhasi, i ita murunzi kha mavu na u vhulunga moisture.",
+          "disposition": "hold",
+          "recommendedTargetFragment": "Pumpkin spreads across the ground, i ita murunzi kha mavu na u vhulunga moisture.",
+          "reason": "The candidate’s “spreads below/on the ground” is less precise than “spreads across the ground.” Keep that spatial clause exact, while retaining the current localized shade/moisture clause byte-for-byte.",
+          "riskToPreserve": "Do not change the soil-shading or moisture claim."
+        },
+        {
+          "fragmentIndex": 15,
+          "sourceEnglishClause": "Timing matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
+          "currentTargetFragment": "Timing ndi ya ndeme. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
+          "candidateTargetFragment": "Tshifhinga tshi a vha tsha ndeme. Thomani nga u ita uri maize i khwaṱhe, u itela uri i kone u tikedza beans musi dzi tshi thoma u gonya.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Tshifhinga tshi a vha tsha ndeme. Thomani nga u ita uri maize i khwaṱhe, u itela uri i kone u tikedza beans musi dzi tshi thoma u gonya.",
+          "reason": "Maize is established first, becomes strong enough to support the beans, and the beans climb after they start.",
+          "riskToPreserve": "Preserve maize-first and strength-before-bean-climbing sequence."
+        },
+        {
+          "fragmentIndex": 16,
+          "sourceEnglishClause": "The plants can still compete.",
+          "currentTargetFragment": "The plants can still compete.",
+          "candidateTargetFragment": "Zwimela zwi nga kha ḓi konkurisana.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Zwimela zwi nga kha ḓi konkurisana.",
+          "reason": "The candidate retains that plants can still compete.",
+          "riskToPreserve": "Do not imply competition is certain or absent."
+        },
+        {
+          "fragmentIndex": 17,
+          "sourceEnglishClause": "A household may have a hungry gap: weeks when stored food runs low before the next harvest is ready.",
+          "currentTargetFragment": "Muṱa u nga vha na hungry gap: weeks when stored food runs low before the next harvest is ready.",
+          "candidateTargetFragment": "Muṱa u nga vha na hungry gap: vhege dzine zwiḽiwa zwo vhulungwaho zwa vha zwi tshi khou fhungudzea phanḓa ha musi khaṋo i tevhelaho i tshi luga.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Muṱa u nga vha na hungry gap: vhege dzine zwiḽiwa zwo vhulungwaho zwa vha zwi tshi khou fhungudzea phanḓa ha musi khaṋo i tevhelaho i tshi luga.",
+          "reason": "Retains may, the hungry-gap term, stored food becoming low, and the timing before the next harvest is ready.",
+          "riskToPreserve": "Low/running out remains distinct from complete exhaustion."
+        },
+        {
+          "fragmentIndex": 18,
+          "sourceEnglishClause": "Yours might come after stored maize runs out.",
+          "currentTargetFragment": "stored maize yo fhela",
+          "candidateTargetFragment": "maize yo vhulungwaho yo fhela",
+          "disposition": "accept",
+          "recommendedTargetFragment": "maize yo vhulungwaho yo fhela",
+          "reason": "Stored maize remains the crop, and the timing remains after it runs out.",
+          "riskToPreserve": "Keep after-runout sequence."
+        },
+        {
+          "fragmentIndex": 19,
+          "sourceEnglishClause": "It might come before winter greens are ready.",
+          "currentTargetFragment": "winter greens dzi sa athu u luga",
+          "candidateTargetFragment": "meroho ya vhuria i sa athu u luga",
+          "disposition": "hold",
+          "recommendedTargetFragment": "winter greens dzi sa athu u luga",
+          "reason": "The proposed “winter vegetables/green foods” can broaden the source phrase. Retain the exact “winter greens” noun phrase and its readiness clause; localize only the might/sequence frame.",
+          "riskToPreserve": "Do not generalize winter greens into all vegetables."
+        },
+        {
+          "fragmentIndex": 20,
+          "sourceEnglishClause": "It might come in a dry period when water limits the garden.",
+          "currentTargetFragment": "when water limits the garden",
+          "candidateTargetFragment": "hune maḓi a fhungudza garden",
+          "disposition": "hold",
+          "recommendedTargetFragment": "when water limits the garden",
+          "reason": "The proposal replaced only a mapped clause with a full sentence and duplicated the surrounding dry-period prefix. Keep the exact clause here; the current prefix already localizes the timing.",
+          "riskToPreserve": "Avoid duplicated prefix and preserve the limitation condition."
+        },
+        {
+          "fragmentIndex": 21,
+          "sourceEnglishClause": "Write them down. Then choose the crop and the sowing date that puts food into that gap.",
+          "currentTargetFragment": "sowing date",
+          "candidateTargetFragment": "ḓuvha ḽa u ṱavha",
+          "disposition": "hold",
+          "recommendedTargetFragment": "sowing date",
+          "reason": "“Date to plant” may broaden sowing to other planting methods. Keep the source-specific “sowing date” anchor and retain the rest of the already localized sentence.",
+          "riskToPreserve": "Preserve the seed-sowing action."
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "lessonId": "vegetables-staples-l2",
+      "registryFile": "lib/course-translation-drafts-ts-vegetables-staples-l2.ts",
+      "registryFileSha256": "5094ffa78b76c461f71e2f3d07cebec99853148665e8a78e7b81f4c0608cec95",
+      "canonicalSourceFileSha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "exactCanonicalSourceMatch": true,
+      "exactCurrentTargetAndResolverMatch": true,
+      "rawFieldReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "currentBodyUtf8Bytes": 2656,
+      "candidateBodyUtf8Bytes": 2947,
+      "reviewedRecommendedBodyUtf8Bytes": 2888,
+      "candidateFragmentMapComposesExactly": true,
+      "recommendedFullBody": "Ku byala swibyariwa hi ku landzelelana i ntolovelo wa khalendara, a hi xibyariwa xo hlawuleka.\n\nHlawula swakudya leswi ndyangu wa wena wu talaka ku swi dya. Kutani byala xitsongo xa swona, u tlhela u endla tano hi ku phindha-phindha.\n\nByala ntila wo koma every two to three weeks.\n\nKu lahleka ka swakudya ka hunguteka loko ku ri na ntshovelo wo tala. Ku va na swakudya swo tenga nkarhi wo leha. Ntirho wu hangalaka hi nkarhi wa nguva, ematshan'weni yo ku wu humelela hinkwawo hi nkarhi wun'we.\n\nKu byala hi minkarhi leyi hambaneke swi nga hunguta khombo ra ku lahlekeriwa hi swilo hinkwaswo hi nkarhi wun'we. A swi tiyisisi ntshovelo loko swiyimo swo tika swi ya mahlweni.\n\nHi xihi fast crop lexi u nga xi sow hi swiphemu leswitsongo? Hlawula xin'we, u sungula hi vhege leyi.\n\nHi leswi swi langutekaka hakona hi ku tirhisa.\n\nSow xo sungula. Endzhaku ka two to three weeks, sow xa vumbirhi. Kutani sow xa vunharhu. Kutani sow xa vumune.\n\nLoko nkarhi wa crop wu lulamile, minkarhi ya ntshovelo yi nga sungula ku overlap. A hi minkarhi hinkwako laha ntlawa wo sungula wu nga vaka wu lunghekele ku tshoveriwa loko ku byariwa ka vumune ku endliwa.\n\nMavhiki mambirhi ku ya eka manharhu i maitele ya u sungula, a hi nawu. A cool-season leaf crop may hold longer. Ku hisa ku nga endla leswaku swilo swi hatlisa kumbe swi tsandzeka.\n\nLanguta leswi humelelaka ensin'wini ya wena, u lulamisa interval. Ku xiyisisa leswi hi swona vutshila.\n\nIntercropping a hi crowding ntsena ka swibyariwa swo hambana endhawini yin’we. Xibyariwa xin'wana ni xin'wana xi lava role ya xona, ni space leyi eneleke ku yi endla.\n\nThe Three Sisters is an example from Indigenous farming traditions in the Americas.\n\nMaize yi nyika ku leha ni structure.\n\nBeans ti khandziya maize, and store as protein.\n\nPumpkin yi hangalaka ehenhla ka misava, yi endla ndzhuti ehenhla ka misava, yi tlhela yi hlayisa moisture.\n\nNkarhi wu ni nkoka. Sungulani hi ku byala maize yi rhanga, leswaku yi tiya ku ringana ku rhwala beans loko ti sungula ku khandziya.\n\nSwibyariwa swi nga ha phikizana. Nyika swibyariwa ndhawu leyi faneleke, mati ni ku vonakala. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.\n\nNdyangu wu nga va na hungry gap: mavhiki lawa swakudya leswi hlayisiweke swi nga va switsongo ku nga si lungheka ntshovelo lowu landzelaka.\n\nHungry gap ya wena yi nga fika endzhaku ka loko maize leyi hlayisiweke yi herile. Yi nga fika loko winter greens ti nga si lulama. Yi nga fika hi nkarhi wo oma loko water limits the garden.\n\nU nga tekeleli calendar ya munhu un'wana. Rhanga hi ku vula tin'hweti ta wena.\n\nTi tsale ehansi. Kutani hlawula xibyariwa ni siku ro byala leri nga tisa swakudya eka nkarhi wolowo.\n\nLeswi i planning backwards, naswona hi swona swi hambanisaka garden leyi vonakaka yi ri productive ni ndyangu lowu dyaka.",
+      "paragraphCountCanonical": 23,
+      "paragraphCountCurrent": 23,
+      "paragraphCountRecommended": 23,
+      "paragraphBoundariesPreserved": true,
+      "fragments": [
+        {
+          "fragmentIndex": 0,
+          "sourceEnglishClause": "Plant a short row every two to three weeks.",
+          "currentTargetFragment": "Byala short row every two to three weeks.",
+          "candidateTargetFragment": "Byala ntila wo koma every two to three weeks.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Byala ntila wo koma every two to three weeks.",
+          "reason": "A short row is rendered as a short line; every two-to-three-weeks recurrence stays exact.",
+          "riskToPreserve": "Keep “every” and the interval."
+        },
+        {
+          "fragmentIndex": 1,
+          "sourceEnglishClause": "Separate sowings may reduce the risk of losing everything at once.",
+          "currentTargetFragment": "Separate sowings swi nga hunguta risk ya ku lahlekeriwa hi swilo hinkwaswo hi nkarhi wun'we.",
+          "candidateTargetFragment": "Ku byala hi minkarhi leyi hambaneke swi nga hunguta khombo ra ku lahlekeriwa hi swilo hinkwaswo hi nkarhi wun'we.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Ku byala hi minkarhi leyi hambaneke swi nga hunguta khombo ra ku lahlekeriwa hi swilo hinkwaswo hi nkarhi wun'we.",
+          "reason": "Separate sowings remain plantings at different times; may, risk, and losing everything at once are preserved.",
+          "riskToPreserve": "Do not make risk reduction certain."
+        },
+        {
+          "fragmentIndex": 2,
+          "sourceEnglishClause": "They do not guarantee a harvest if difficult conditions continue.",
+          "currentTargetFragment": "They do not guarantee a harvest if difficult conditions continue.",
+          "candidateTargetFragment": "A swi tiyisisi ntshovelo loko swiyimo swo tika swi ya mahlweni.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "A swi tiyisisi ntshovelo loko swiyimo swo tika swi ya mahlweni.",
+          "reason": "Retains the explicit no-guarantee statement and continuing-difficult-conditions condition.",
+          "riskToPreserve": "Keep negation and condition."
+        },
+        {
+          "fragmentIndex": 3,
+          "sourceEnglishClause": "Which fast crop could you sow in small batches?",
+          "currentTargetFragment": "Hi xihi fast crop lexi u nga xi byalaka hi small batches?",
+          "candidateTargetFragment": "Hi xihi xibyariwa lexi hatlisaka ku kula lexi u nga xi sow hi swiphemu leswitsongo?",
+          "disposition": "repair",
+          "recommendedTargetFragment": "Hi xihi fast crop lexi u nga xi sow hi swiphemu leswitsongo?",
+          "reason": "“Crop that grows quickly” may refer to growth rate rather than short time to maturity. Retain the exact “fast crop” and “sow” anchors while localizing the could/small-batch frame.",
+          "riskToPreserve": "Do not infer harvest speed from plant growth speed."
+        },
+        {
+          "fragmentIndex": 4,
+          "sourceEnglishClause": "Sow one. Then two to three weeks later, sow two. Then sow three. Then sow four.",
+          "currentTargetFragment": "Byala xin'we. Then two to three weeks later, byala xa vumbirhi. Kutani byala xa vunharhu. Kutani byala xa vumune.",
+          "candidateTargetFragment": "Sow xo sungula. Endzhaku ka two to three weeks, sow xa vumbirhi. Kutani sow xa vunharhu. Kutani sow xa vumune.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Sow xo sungula. Endzhaku ka two to three weeks, sow xa vumbirhi. Kutani sow xa vunharhu. Kutani sow xa vumune.",
+          "reason": "The sow-one-through-four sequence and the two-to-three-weeks-later timing are retained in order.",
+          "riskToPreserve": "Keep each sowing distinct."
+        },
+        {
+          "fragmentIndex": 5,
+          "sourceEnglishClause": "With suitable crop timing, harvests can begin to overlap.",
+          "currentTargetFragment": "Loko crop timing yi lulamile, harvests can begin to overlap.",
+          "candidateTargetFragment": "Loko nkarhi wa crop wu lulamile, minkarhi ya ntshovelo yi nga sungula ku overlap.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Loko nkarhi wa crop wu lulamile, minkarhi ya ntshovelo yi nga sungula ku overlap.",
+          "reason": "Suitable timing, can/nga, and beginning to overlap remain qualified possibilities.",
+          "riskToPreserve": "Do not promise overlap."
+        },
+        {
+          "fragmentIndex": 6,
+          "sourceEnglishClause": "The first batch will not always be ready by the fourth sowing.",
+          "currentTargetFragment": "The first batch will not always be ready by the fourth sowing.",
+          "candidateTargetFragment": "A hi minkarhi hinkwako laha ntlawa wo sungula wu nga vaka wu lunghekele ku tshoveriwa loko ku byariwa ka vumune ku endliwa.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "A hi minkarhi hinkwako laha ntlawa wo sungula wu nga vaka wu lunghekele ku tshoveriwa loko ku byariwa ka vumune ku endliwa.",
+          "reason": "Retains first-versus-fourth and “not always” readiness.",
+          "riskToPreserve": "Do not imply the first batch is always ready."
+        },
+        {
+          "fragmentIndex": 7,
+          "sourceEnglishClause": "Two to three weeks is a starting rhythm, not a law.",
+          "currentTargetFragment": "Two to three weeks i starting rhythm, a hi nawu.",
+          "candidateTargetFragment": "Mavhiki mambirhi ku ya eka manharhu i maitele ya u sungula, a hi nawu.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Mavhiki mambirhi ku ya eka manharhu i maitele ya u sungula, a hi nawu.",
+          "reason": "The interval is still two to three weeks and is explicitly a starting rhythm, not a law.",
+          "riskToPreserve": "Keep the cool-season exception exact English."
+        },
+        {
+          "fragmentIndex": 8,
+          "sourceEnglishClause": "Heat may speed things up, or cause a failure.",
+          "currentTargetFragment": "Heat may speed things up, or cause a failure.",
+          "candidateTargetFragment": "Ku hisa ku nga endla leswaku swilo swi hatlisa kumbe swi tsandzeka.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Ku hisa ku nga endla leswaku swilo swi hatlisa kumbe swi tsandzeka.",
+          "reason": "The candidate retains may/nga and both possible outcomes.",
+          "riskToPreserve": "No certainty added."
+        },
+        {
+          "fragmentIndex": 9,
+          "sourceEnglishClause": "Intercropping is not just crowding different plants together.",
+          "currentTargetFragment": "Intercropping a hi crowding ntsena ka swibyariwa swo hambana endhawini yin’we.",
+          "candidateTargetFragment": "Intercropping a hi ku hlengeleta ntsena swibyariwa swo hambana swi tala endhawini yin’we.",
+          "disposition": "hold",
+          "recommendedTargetFragment": "Intercropping a hi crowding ntsena ka swibyariwa swo hambana endhawini yin’we.",
+          "reason": "The proposed wording makes this “not just gathering/filling a place,” which does not clearly preserve the specific crowding contrast. Keep “crowding” exact while retaining the localized frame.",
+          "riskToPreserve": "Do not turn the source into a claim about plants simply being together."
+        },
+        {
+          "fragmentIndex": 10,
+          "sourceEnglishClause": "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+          "currentTargetFragment": "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+          "candidateTargetFragment": "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+          "disposition": "unchanged",
+          "recommendedTargetFragment": "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+          "reason": "The cultural-origin sentence remains byte-for-byte exact English.",
+          "riskToPreserve": "No translation proposed."
+        },
+        {
+          "fragmentIndex": 11,
+          "sourceEnglishClause": "Maize gives height and structure.",
+          "currentTargetFragment": "Maize yi nyika ku leha ni structure.",
+          "candidateTargetFragment": "Maize yi nyika ku leha ni structure.",
+          "disposition": "unchanged",
+          "recommendedTargetFragment": "Maize yi nyika ku leha ni structure.",
+          "reason": "The existing localized maize-height sentence is unchanged.",
+          "riskToPreserve": "No new change."
+        },
+        {
+          "fragmentIndex": 12,
+          "sourceEnglishClause": "Beans climb the maize, and store as protein.",
+          "currentTargetFragment": "Beans climb the maize, and store as protein.",
+          "candidateTargetFragment": "Beans ti khandziya maize, and store as protein.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Beans ti khandziya maize, and store as protein.",
+          "reason": "The climbing clause is localized; the ambiguous “and store as protein” remains exact English.",
+          "riskToPreserve": "Do not reinterpret the protein-storage clause."
+        },
+        {
+          "fragmentIndex": 13,
+          "sourceEnglishClause": "Timing matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
+          "currentTargetFragment": "Timing i ya nkoka. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
+          "candidateTargetFragment": "Nkarhi wu ni nkoka. Sungulani hi ku byala maize yi rhanga, leswaku yi tiya ku ringana ku rhwala beans loko ti sungula ku khandziya.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Nkarhi wu ni nkoka. Sungulani hi ku byala maize yi rhanga, leswaku yi tiya ku ringana ku rhwala beans loko ti sungula ku khandziya.",
+          "reason": "Maize-first establishment, sufficient strength, and later bean climbing remain in the source order.",
+          "riskToPreserve": "No timing reversal."
+        },
+        {
+          "fragmentIndex": 14,
+          "sourceEnglishClause": "The plants can still compete.",
+          "currentTargetFragment": "Swibyariwa swi nga ha phikizana.",
+          "candidateTargetFragment": "Swibyariwa swa ha nga phikizana.",
+          "disposition": "hold",
+          "recommendedTargetFragment": "Swibyariwa swi nga ha phikizana.",
+          "reason": "The replacement changes the existing modal/concord form without adding clearer meaning. Preserve the already-localized current sentence byte-for-byte.",
+          "riskToPreserve": "Can-still meaning retained from current checked target."
+        },
+        {
+          "fragmentIndex": 15,
+          "sourceEnglishClause": "Give them suitable space, water and light.",
+          "currentTargetFragment": "Nyika swibyariwa suitable space, water and light.",
+          "candidateTargetFragment": "Nyika swibyariwa ndhawu leyi faneleke, mati ni ku vonakala.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Nyika swibyariwa ndhawu leyi faneleke, mati ni ku vonakala.",
+          "reason": "Suitable space, water and light are translated without adding a prescription.",
+          "riskToPreserve": "Retain all three care conditions."
+        },
+        {
+          "fragmentIndex": 16,
+          "sourceEnglishClause": "A household may have a hungry gap: weeks when stored food runs low before the next harvest is ready.",
+          "currentTargetFragment": "Ndyangu wu nga va na hungry gap: weeks when stored food runs low before the next harvest is ready.",
+          "candidateTargetFragment": "Ndyangu wu nga va na hungry gap: mavhiki lawa swakudya leswi hlayisiweke swi nga va switsongo ku nga si lungheka ntshovelo lowu landzelaka.",
+          "disposition": "accept",
+          "recommendedTargetFragment": "Ndyangu wu nga va na hungry gap: mavhiki lawa swakudya leswi hlayisiweke swi nga va switsongo ku nga si lungheka ntshovelo lowu landzelaka.",
+          "reason": "Retains may, stored food running low (not empty), and timing before the next harvest is ready.",
+          "riskToPreserve": "Do not strengthen “low” to “out.”"
+        },
+        {
+          "fragmentIndex": 17,
+          "sourceEnglishClause": "Yours might come after stored maize runs out.",
+          "currentTargetFragment": "stored maize yi herile",
+          "candidateTargetFragment": "maize leyi hlayisiweke yi herile",
+          "disposition": "accept",
+          "recommendedTargetFragment": "maize leyi hlayisiweke yi herile",
+          "reason": "Stored maize, might, and after-it-runs-out timing are preserved.",
+          "riskToPreserve": "No change to crop or order."
+        },
+        {
+          "fragmentIndex": 18,
+          "sourceEnglishClause": "It might come before winter greens are ready.",
+          "currentTargetFragment": "winter greens ti nga si lulama",
+          "candidateTargetFragment": "swakudya swa rihlaza swa xixika swi nga si lulama",
+          "disposition": "hold",
+          "recommendedTargetFragment": "winter greens ti nga si lulama",
+          "reason": "The proposal changes “winter greens” to a broader phrase for green foods/vegetables. Retain the exact source noun phrase and readiness clause, localizing only the might/sequence frame.",
+          "riskToPreserve": "Do not broaden the crop category."
+        },
+        {
+          "fragmentIndex": 19,
+          "sourceEnglishClause": "It might come in a dry period when water limits the garden.",
+          "currentTargetFragment": "water limits the garden",
+          "candidateTargetFragment": "mati ma hungutaka garden",
+          "disposition": "hold",
+          "recommendedTargetFragment": "water limits the garden",
+          "reason": "The proposal replaced only a mapped clause with a full sentence and duplicated the surrounding dry-period prefix. Keep the exact condition as the mapped replacement.",
+          "riskToPreserve": "Avoid duplicated prefix and preserve the limitation condition."
+        },
+        {
+          "fragmentIndex": 20,
+          "sourceEnglishClause": "That's planning backwards, and it's the difference between a garden that looks productive and a household that eats.",
+          "currentTargetFragment": "productive",
+          "candidateTargetFragment": "tswala swakudya",
+          "disposition": "hold",
+          "recommendedTargetFragment": "productive",
+          "reason": "The proposal replaced the one-word mapped fragment with a full sentence, duplicating the existing final-paragraph prefix and ending. It also narrows “looks productive” to food production. Keep the exact comparative adjective in its original clause.",
+          "riskToPreserve": "Preserve source scope and prevent duplicated sentence text."
+        }
+      ]
+    }
+  ],
+  "remainingRisks": [
+    "“fast crop” could imply growth speed rather than time to maturity; proposed repair retains this short source phrase in English.",
+    "Intercropping crowding wording is kept exact English in both languages where the proposal could shift crowding into simply placing plants together.",
+    "“Beans climb the maize, and store as protein” remains ambiguous; exact English clause is retained.",
+    "Water-limits-the-garden clause is held exact English to avoid implying water reduces garden size.",
+    "“Garden that looks productive” retains exact “productive” to preserve the appearance/productivity comparison.",
+    "One Xitsonga “can still compete” target is kept at its current checked wording because the proposed changed concord/modal did not improve it."
+  ],
+  "supersedesEarlierCheck": {
+    "path": "/tmp/imbewu-ve-ts-vegetables-l2-ordinary-independent-check-20261004.json",
+    "reason": "That first recommendation used full-sentence replacements for smaller mapped fragments in the water-condition and final comparison clauses, duplicating existing text. This root-ready file restores the fragment-sized boundary, preserves winter greens and sowing date anchors, restores the “for longer” comparison, and verifies the complete recomposed bodies."
+  },
+  "duplicateTextValidation": {
+    "doubleAdjacentPeriodsRejected": true,
+    "dryPeriodPrefixesExactlyOnce": true,
+    "tsPlanningBackwardsFinalPrefixExactlyOnce": true,
+    "veForLongerAnchorExactlyOnce": true,
+    "veSowingDateAnchorExactlyOnce": true,
+    "winterGreensExactTargetPhraseOnceEach": true,
+    "paragraphBoundariesPreserved": true
+  }
+}

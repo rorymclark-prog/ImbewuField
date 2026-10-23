@@ -1,0 +1,151 @@
+{
+  "lessonId": "soil-health-l2",
+  "sourceMainSha": "4ef73fa7f8e55e4262c8f2153aab9fbb137a4916",
+  "status": "wired-machine-draft",
+  "scopeNote": "Read-only source-paired candidates for all exact-English-held Soil L2 key points and quiz fields in the current Xitsonga registry. Four key points and both complete quiz items are included in canonical order; option order and correct indices are preserved. Difficult compost and safety language stays English where precision is uncertain. No repository edits; candidates require independent Xitsonga backcheck. Wired as source-paired Xitsonga machine drafts after exact-source verification at ae1bc6cbb290ef9046fda51c2704019f5fc4187a. No fluent-speaker approval is implied.",
+  "keyPoints": [
+    {
+      "index": 0,
+      "sourceEnglish": "Balance browns, greens, moisture and air",
+      "currentDraft": "Balance browns, greens, moisture and air",
+      "status": "exact-English hold",
+      "draft": "Ringanisa browns, greens, moisture ni air.",
+      "literalBacktranslation": "Balance browns, greens, moisture and air.",
+      "uncertainty": "Retains the compost-category and process terms in English; the instruction to balance them is translated."
+    },
+    {
+      "index": 1,
+      "sourceEnglish": "A hot centre does not prove the whole heap is sanitised",
+      "currentDraft": "A hot centre does not prove the whole heap is sanitised",
+      "status": "exact-English hold",
+      "draft": "Hot centre a yi tiyisisi leswaku heap hinkwaro ri sanitised.",
+      "literalBacktranslation": "A hot centre does not prove that the whole heap is sanitised.",
+      "uncertainty": "Preserves failure of proof and whole-heap scope; keeps hot centre, heap and sanitised in English to avoid implying a safety result."
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "Keep seed pods and contaminated materials out",
+      "currentDraft": "Keep seed pods and contaminated materials out",
+      "status": "exact-English hold",
+      "draft": "Hlayisa seed pods na contaminated materials swi ri handle ka heap.",
+      "literalBacktranslation": "Keep seed pods and contaminated materials outside the heap.",
+      "uncertainty": "Retains the prohibition for both seed pods and contaminated materials. Heap is included from the lesson context to make 'out' explicit."
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "Judge readiness from the compost condition, not a fixed regional timetable",
+      "currentDraft": "Judge readiness from the compost condition, not a fixed regional timetable",
+      "status": "exact-English hold",
+      "draft": "Kambela ku lungheka ka compost hi xiyimo xa yona, ku nga ri hi fixed regional timetable.",
+      "literalBacktranslation": "Check compost readiness from its condition, not from a fixed regional timetable.",
+      "uncertainty": "Keeps compost condition as the basis and explicitly rejects a fixed regional timetable as the test. Retains the technical timetable phrase in English."
+    }
+  ],
+  "quizzes": [
+    {
+      "index": 0,
+      "sourceCorrectIndex": 1,
+      "question": {
+        "sourceEnglish": "A farmer's compost heap smells strongly of ammonia and is wet and slimy. What's the fix?",
+        "currentDraft": "A farmer's compost heap smells strongly of ammonia and is wet and slimy. What's the fix?",
+        "status": "exact-English hold",
+        "draft": "Heap ya compost ya murimi yi nun'hwa ammonia swinene naswona yi tsakama yi tlhela yi va slimy. Ku lulamisa i yini?",
+        "literalBacktranslation": "The farmer's compost heap smells strongly of ammonia and is wet and also slimy. What is the fix?",
+        "uncertainty": "Preserves strong ammonia smell and both wet/slimy observations. Heap, compost, ammonia and slimy remain technical English terms."
+      },
+      "options": [
+        {
+          "sourceEnglish": "Add more nitrogen-rich green material",
+          "currentDraft": "Add more nitrogen-rich green material",
+          "status": "exact-English hold",
+          "draft": "Engetela green material yo tala leyi fuweke hi nitrogen"
+        },
+        {
+          "sourceEnglish": "Add more dry carbon material like straw and turn the heap",
+          "currentDraft": "Add more dry carbon material like straw and turn the heap",
+          "status": "exact-English hold",
+          "draft": "Engetela more dry carbon material yo fana na straw kutani u hundzuluxa heap"
+        },
+        {
+          "sourceEnglish": "Stop turning it and let it cool",
+          "currentDraft": "Stop turning it and let it cool",
+          "status": "exact-English hold",
+          "draft": "Tshika ku hundzuluxa heap kutani u yi tshika yi hola"
+        },
+        {
+          "sourceEnglish": "Add more water — the smell means it's too dry",
+          "currentDraft": "Add more water — the smell means it's too dry",
+          "status": "exact-English hold",
+          "draft": "Engetela mati yo tala — nun'hwelo wu vula leswaku yi omile ngopfu"
+        }
+      ],
+      "rationale": {
+        "sourceEnglish": "A wet, slimy heap may need more air and drier material. Add dry browns and turn the heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy.",
+        "currentDraft": "A wet, slimy heap may need more air and drier material. Add dry browns and turn the heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy.",
+        "status": "exact-English hold",
+        "draft": "Heap leyi tsakamaka, yi slimy yi nga lava more air na drier material. Engetela dry browns kutani u hundzuluxa heap leswaku yi pfuleka. Nun'hwelo wa ammonia na wona wu nga suggest nitrogen-rich material yo tala ngopfu. Kambela leswaku heap yi sala yi damp, ku nga ri soggy.",
+        "literalBacktranslation": "A wet, slimy heap may need more air and drier material. Add dry browns and turn the heap so it opens. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy.",
+        "uncertainty": "Preserves may need, the add-dry-browns-and-turn action to open the heap, can also suggest rather than a certain diagnosis, and damp rather than soggy. Retains technical material and moisture terms in English."
+      }
+    },
+    {
+      "index": 1,
+      "sourceCorrectIndex": 1,
+      "question": {
+        "sourceEnglish": "Why keep wattle seed pods out of an ordinary compost heap?",
+        "currentDraft": "Why keep wattle seed pods out of an ordinary compost heap?",
+        "status": "exact-English hold",
+        "draft": "Ha yini u fanele ku hlayisa wattle seed pods handle ka ordinary compost heap?",
+        "literalBacktranslation": "Why should you keep wattle seed pods outside an ordinary compost heap?",
+        "uncertainty": "Retains the wattle seed pod species/material and ordinary-heap scope in English."
+      },
+      "options": [
+        {
+          "sourceEnglish": "Bark makes every heap too hot",
+          "currentDraft": "Bark makes every heap too hot",
+          "status": "exact-English hold",
+          "draft": "Bark yi endla leswaku heap yin'wana ni yin'wana yi hisa ngopfu"
+        },
+        {
+          "sourceEnglish": "Some seeds may survive and spread when the compost is used",
+          "currentDraft": "Some seeds may survive and spread when the compost is used",
+          "status": "exact-English hold",
+          "draft": "Mbewu tin'wana ti nga ha pona kutani ti hangalaka loko compost yi tirhisiwa"
+        },
+        {
+          "sourceEnglish": "Pods always attract termites",
+          "currentDraft": "Pods always attract termites",
+          "status": "exact-English hold",
+          "draft": "Pods ti koka termites minkarhi hinkwayu"
+        },
+        {
+          "sourceEnglish": "Pods release a gas that kills every soil organism",
+          "currentDraft": "Pods release a gas that kills every soil organism",
+          "status": "exact-English hold",
+          "draft": "Pods ti humesa gas leyi dlayaka soil organism yin'wana ni yin'wana"
+        }
+      ],
+      "rationale": {
+        "sourceEnglish": "An ordinary heap may not expose every seed to conditions that make it non-viable. Excluding pods avoids spreading them with the compost.",
+        "currentDraft": "An ordinary heap may not expose every seed to conditions that make it non-viable. Excluding pods avoids spreading them with the compost.",
+        "status": "exact-English hold",
+        "draft": "An ordinary heap may not expose every seed to conditions that make it non-viable. Ku susa pods swi papalata ku ti hangalasa na compost.",
+        "literalBacktranslation": "An ordinary heap may not expose every seed to conditions that make it non-viable. Removing pods avoids spreading them with compost.",
+        "uncertainty": "Retains may not and every seed, and does not claim that every seed survives or that ordinary heaps never make seeds non-viable. The exclusion is tied to preventing spread with compost. Keeps the technical exposure/non-viability clause in English for precision."
+      }
+    }
+  ],
+  "sourceCorrectIndices": [
+    1,
+    1
+  ],
+  "semanticChecks": [
+    "All four key points and both quiz items are exact-English holds in the current TS registry; no localized assessment field was overwritten.",
+    "Quiz 0 retains the possible need for more air and drier material, dry browns plus turning, ammonia can also suggest too much nitrogen-rich material, and damp-not-soggy limit.",
+    "Quiz 1 preserves correct index 1, excludes wattle seed pods from an ordinary heap, retains may not/every-seed/non-viable uncertainty, and says exclusion avoids spread with compost.",
+    "All option wording, order and source-correct indices are unchanged in meaning; no new sanitation claim, species, amount, timing or advice was added."
+  ],
+  "uncertaintySummary": "Unreviewed Xitsonga machine-draft candidates, not fluent-speaker approval. Compost and seed-viability technical clauses remain in English where precise local wording is uncertain. Independent Xitsonga backcheck is required before wiring.",
+  "independentBackcheck": "Independent source/order/index1,1 and semantic check accepted after root repaired KP0 added qualifiers, option more comparative, drier-material degree and kept the technical seed-condition sentence exact English. Final repaired packet awaits re-observation before wiring; not fluent approval.",
+  "currentSourceCheckedAt": "ae1bc6cbb290ef9046fda51c2704019f5fc4187a"
+}

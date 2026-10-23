@@ -1,0 +1,77 @@
+{
+  "speciesId": "ficus-sur",
+  "commonName": "Broom cluster fig / umKhiwane",
+  "botanicalName": "Ficus sur",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [
+    {
+      "region": "South African botanical account — approximate ripe figs",
+      "months": [
+        12
+      ],
+      "evidence": {
+        "quote": "ripen around December",
+        "url": "https://pza.sanbi.org/ficus-sur",
+        "doc": "SANBI PlantZAfrica, ficus-sur",
+        "page": null
+      },
+      "notes": "The source distinguishes September production from December ripeness. It does not establish all September–March months as ripe harvest."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "ripe figs",
+  "supplementaryReferences": [
+    {
+      "title": "Edible part and local use",
+      "quote": "turn pinkish and soft",
+      "url": "https://pza.sanbi.org/ficus-sur",
+      "doc": "SANBI PlantZAfrica, ficus-sur",
+      "page": null,
+      "note": "These are the source's signs for figs eaten by local people. Broad September–March fig production is not the same as ripe picking."
+    }
+  ],
+  "productionGuidance": {
+    "products": "ripe figs",
+    "care": [
+      "This large tree requires substantial space away from buildings, paving, sewer lines and walls because SANBI reports aggressive roots.",
+      "The source limits it to frost-free areas with moderate rainfall."
+    ],
+    "purchase": [
+      "Confirm Ficus sur and the space available before buying. No numeric bearing age or household kg was verified."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/ficus-sur",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    }
+  ],
+  "gaps": [
+    "December is an approximate botanical ripe reference, not a guaranteed local first/last-pick interval."
+  ]
+}

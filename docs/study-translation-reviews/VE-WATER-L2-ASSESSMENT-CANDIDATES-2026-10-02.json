@@ -1,0 +1,212 @@
+{
+  "lessonId": "water-harvesting-l2",
+  "language": "ve",
+  "sourceMainSha": "8f187e6750a0510d581d4ebc82b64051c4a85e09",
+  "currentSourceCheckedAt": "8f187e6750a0510d581d4ebc82b64051c4a85e09",
+  "canonicalPath": "lib/course-modules.ts",
+  "registryPath": "lib/course-translation-drafts-ve-water-harvesting.ts",
+  "status": "wired-machine-draft",
+  "scopeNote": "Source-paired Tshivenda Water Harvesting L2 key points and quizzes wired as visibly unreviewed machine drafts where ordinary prose is present. English-only technical fields remain exact-source holds without punctuation-only changes. No canonical, media, or PLAN_VERSION changes; not fluent-speaker or engineering approval.",
+  "keyPoints": [
+    {
+      "index": 0,
+      "sourceEnglish": "A dam needs a site assessment and qualified design",
+      "currentDraft": "A dam needs a site assessment and qualified design",
+      "currentStatus": "hold",
+      "draft": "Dam i ṱoḓa site assessment na qualified design.",
+      "candidateStatus": "machine-draft",
+      "literalBacktranslation": "A dam needs a site assessment and qualified design.",
+      "uncertainty": "Keeps site assessment and qualified design terminology in English to avoid weakening the professional-design condition."
+    },
+    {
+      "index": 1,
+      "sourceEnglish": "Design a safe spillway before construction",
+      "currentDraft": "Design a safe spillway before construction",
+      "currentStatus": "hold",
+      "draft": "Design a safe spillway before construction",
+      "candidateStatus": "hold",
+      "literalBacktranslation": "Design a safe spillway before construction",
+      "uncertainty": "The candidate only added punctuation to English technical wording, so this remains an exact English hold."
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "Check required water authorisations before building",
+      "currentDraft": "Check required water authorisations before building",
+      "currentStatus": "hold",
+      "draft": "Ṱolani required water authorisations before building.",
+      "candidateStatus": "machine-draft",
+      "literalBacktranslation": "Check required water authorisations before building.",
+      "uncertainty": "Retains high-consequence design terms in English; no new design advice is added."
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "Maintain bank cover and keep trees off an earth dam wall",
+      "currentDraft": "Maintain bank cover and keep trees off an earth dam wall",
+      "currentStatus": "hold",
+      "draft": "Maintain bank cover and keep trees off an earth dam wall",
+      "candidateStatus": "hold",
+      "literalBacktranslation": "Maintain bank cover and keep trees off an earth dam wall",
+      "uncertainty": "The candidate only added punctuation to English technical wording, so this remains an exact English hold."
+    }
+  ],
+  "quizzes": [
+    {
+      "index": 0,
+      "sourceCorrectIndex": 1,
+      "question": {
+        "sourceEnglish": "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
+        "currentDraft": "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
+        "currentStatus": "hold",
+        "draft": "Mulimi u fhaṱa dam wall i si na spillway. Nga murahu ha exceptional storm, dam i a overflow. Ndi mvelelo ifhio ine ya nga tevhela?",
+        "candidateStatus": "machine-draft",
+        "literalBacktranslation": "A farmer builds a dam wall without a spillway. After an exceptional storm, the dam overflows. What result may follow?",
+        "uncertainty": "Preserves missing-spillway condition, exceptional storm, overflow and likely-result framing."
+      },
+      "options": [
+        {
+          "index": 0,
+          "sourceEnglish": "The water irrigates lower fields beneficially",
+          "currentDraft": "The water irrigates lower fields beneficially",
+          "currentStatus": "hold",
+          "draft": "Maḓi a sheledza masimu a re fhasi nga ndila ya vhuyedzo.",
+          "candidateStatus": "machine-draft",
+          "literalBacktranslation": "The water irrigates lower fields beneficially.",
+          "uncertainty": "Preserves the source distractor without adding a new claim."
+        },
+        {
+          "index": 1,
+          "sourceEnglish": "It overtops and erodes the wall, risking a catastrophic breach",
+          "currentDraft": "It overtops and erodes the wall, risking a catastrophic breach",
+          "currentStatus": "hold",
+          "draft": "Maḓi a fhira nga nṱha ha wall na u erode wall, zwa ita uri hu vhe na khombo ya catastrophic breach.",
+          "candidateStatus": "machine-draft",
+          "literalBacktranslation": "Water overtops the wall and erodes it, putting the wall at risk of a catastrophic breach.",
+          "uncertainty": "Preserves overtopping, erosion and risk—not certainty—of catastrophic breach."
+        },
+        {
+          "index": 2,
+          "sourceEnglish": "The dam stays full and overflow drains harmlessly",
+          "currentDraft": "The dam stays full and overflow drains harmlessly",
+          "currentStatus": "hold",
+          "draft": "Dam i dzula yo ḓala nahone overflow i bva nga ndila i si na khombo.",
+          "candidateStatus": "machine-draft",
+          "literalBacktranslation": "The dam stays full and the overflow exits harmlessly.",
+          "uncertainty": "Preserves the source distractor without adding a new claim."
+        },
+        {
+          "index": 3,
+          "sourceEnglish": "Storage capacity increases permanently",
+          "currentDraft": "Storage capacity increases permanently",
+          "currentStatus": "hold",
+          "draft": "Storage capacity i engedzea tshifhinga tshoṱhe.",
+          "candidateStatus": "machine-draft",
+          "literalBacktranslation": "Storage capacity increases permanently.",
+          "uncertainty": "Preserves the source distractor without adding a new claim."
+        }
+      ],
+      "rationale": {
+        "sourceEnglish": "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
+        "currentDraft": "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
+        "currentStatus": "hold",
+        "draft": "Without a designed overflow route, excess water i wana ndila yayo ya u fhira nga nṱha ha wall — and that uncontrolled flow is what erodes and eventually breaches it.",
+        "candidateStatus": "machine-draft",
+        "literalBacktranslation": "Without a designed overflow route, excess water finds its way over the wall—and that uncontrolled flow is what erodes and eventually breaches it.",
+        "uncertainty": "Keeps the likely-result framing; overtopping/erosion puts the wall at risk of breach rather than making catastrophic failure certain. Technical overflow terms remain English."
+      }
+    },
+    {
+      "index": 1,
+      "sourceCorrectIndex": 1,
+      "question": {
+        "sourceEnglish": "Which action helps protect an earth dam?",
+        "currentDraft": "Which action helps protect an earth dam?",
+        "currentStatus": "hold",
+        "draft": "Ndi vhukando vhufhio vhune ha thusa u tsireledza earth dam?",
+        "candidateStatus": "machine-draft",
+        "literalBacktranslation": "Which action helps protect an earth dam?",
+        "uncertainty": "Preserves the helpful-action framing and earth-dam scope."
+      },
+      "options": [
+        {
+          "index": 0,
+          "sourceEnglish": "A deep, exposed dam with no bank vegetation",
+          "currentDraft": "A deep, exposed dam with no bank vegetation",
+          "currentStatus": "hold",
+          "draft": "A deep, exposed dam with no bank vegetation",
+          "candidateStatus": "hold",
+          "literalBacktranslation": "A deep, exposed dam with no bank vegetation",
+          "uncertainty": "The candidate only added punctuation to English technical wording, so this remains an exact English hold."
+        },
+        {
+          "index": 1,
+          "sourceEnglish": "Maintain the designed bank cover and keep the spillway clear",
+          "currentDraft": "Maintain the designed bank cover and keep the spillway clear",
+          "currentStatus": "hold",
+          "draft": "Maintain the designed bank cover and keep the spillway clear",
+          "candidateStatus": "hold",
+          "literalBacktranslation": "Maintain the designed bank cover and keep the spillway clear",
+          "uncertainty": "The candidate only added punctuation to English technical wording, so this remains an exact English hold."
+        },
+        {
+          "index": 2,
+          "sourceEnglish": "A full concrete lining and plastic cover",
+          "currentDraft": "A full concrete lining and plastic cover",
+          "currentStatus": "hold",
+          "draft": "Full concrete lining na plastic cover.",
+          "candidateStatus": "machine-draft",
+          "literalBacktranslation": "A full concrete lining and plastic cover.",
+          "uncertainty": "Preserves the source distractor without adding a new claim."
+        },
+        {
+          "index": 3,
+          "sourceEnglish": "A larger surface area to spread evaporation evenly",
+          "currentDraft": "A larger surface area to spread evaporation evenly",
+          "currentStatus": "hold",
+          "draft": "Surface area khulwane u phaḓaladza evaporation nga ndinganelo.",
+          "candidateStatus": "machine-draft",
+          "literalBacktranslation": "A larger surface area to spread evaporation evenly.",
+          "uncertainty": "Preserves the source distractor without adding a new claim."
+        }
+      ],
+      "rationale": {
+        "sourceEnglish": "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
+        "currentDraft": "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
+        "currentStatus": "hold",
+        "draft": "Clear spillway na bank maintenance zwi thusa dam u shuma u ya nga design. Trees should not be planted on an earth dam wall.",
+        "candidateStatus": "machine-draft",
+        "literalBacktranslation": "A clear spillway and bank maintenance help the dam work according to its design. Trees should not be planted on an earth dam wall.",
+        "uncertainty": "Keeps the direct help claim and the tree prohibition; technical dam/design terms remain English."
+      }
+    }
+  ],
+  "sourceCorrectIndices": [
+    1,
+    1
+  ],
+  "preservation": {
+    "keyPointCount": 4,
+    "quizCount": 2,
+    "optionCounts": [
+      4,
+      4
+    ],
+    "sourceOptionsPreservedInOrder": true,
+    "indicesPreserved": true,
+    "bodyUntouched": true,
+    "englishOnlyFieldsRemainExactHolds": [
+      "keyPoints[1]",
+      "keyPoints[3]",
+      "quizzes[1].options[0]",
+      "quizzes[1].options[1]"
+    ]
+  },
+  "semanticChecks": [
+    "All exact English source strings are copied from the actual canonical lesson; quiz option order remains unchanged and correct indices are [1,1].",
+    "Site assessment and qualified design, safe spillway before construction, and water authorisations before building remain explicit.",
+    "The no-spillway/exceptional-storm case retains the likely result: overtopping can erode the wall and risk catastrophic breach, not certainty of catastrophe.",
+    "The protection quiz keeps designed bank cover and clear spillway; rationale preserves the tree prohibition on earth dam walls.",
+    "No numbers, species, animals-only narrowing, new legal instruction or design prescription added."
+  ],
+  "uncertaintySummary": "Unreviewed machine-draft candidates, not fluent Tshivenda or engineering approval. Technical dam, earth wall, spillway, authorisation and bank-cover wording remains English where the safety/legal meaning could otherwise shift.",
+  "independentBackcheck": "Independent semantic review accepted candidates with the listed English-only fields retained as exact holds and the quiz 1 rationale retaining the direct help claim. This is not fluent-speaker or engineering approval."
+}

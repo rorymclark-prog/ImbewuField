@@ -1,0 +1,62 @@
+[
+  {
+    "module": "reading-landscape",
+    "language": "st",
+    "slide": 15,
+    "file": "/tmp/imbewu-core-followup-render-20261007/st/slide-15.webp",
+    "dimensions": [
+      1440,
+      5400
+    ],
+    "bytes": 411414,
+    "sha256": "34afdd16a4adddb70435172fe621d7a1efb6b7d3a22cc906ddb2017c63863a80"
+  },
+  {
+    "module": "reading-landscape",
+    "language": "ts",
+    "slide": 7,
+    "file": "/tmp/imbewu-core-followup-render-20261007/ts/slide-07.webp",
+    "dimensions": [
+      1440,
+      5400
+    ],
+    "bytes": 288102,
+    "sha256": "fe5553479cd2730ba932ef93b69ac7767ee0b554e627eda2646ba32226187d7b"
+  },
+  {
+    "module": "reading-landscape",
+    "language": "ts",
+    "slide": 12,
+    "file": "/tmp/imbewu-core-followup-render-20261007/ts/slide-12.webp",
+    "dimensions": [
+      1440,
+      5400
+    ],
+    "bytes": 473304,
+    "sha256": "0081f3d65b19ece3ff731397445eadf4e41abeca1b31b42f2e77423b6c5d6dca"
+  },
+  {
+    "module": "reading-landscape",
+    "language": "ts",
+    "slide": 15,
+    "file": "/tmp/imbewu-core-followup-render-20261007/ts/slide-15.webp",
+    "dimensions": [
+      1440,
+      5400
+    ],
+    "bytes": 414510,
+    "sha256": "22ee221d168d668241ca456dfc2bd96427c731166031a425744080b315f845df"
+  },
+  {
+    "module": "vegetables-staples",
+    "language": "ve",
+    "slide": 6,
+    "file": "/tmp/imbewu-core-followup-render-20261007/ve/slide-06.webp",
+    "dimensions": [
+      1440,
+      5400
+    ],
+    "bytes": 602216,
+    "sha256": "68fe4ec6a7936fc01e9742eb4c704e6ed2e23b5845d996d7ececffed29075709"
+  }
+]

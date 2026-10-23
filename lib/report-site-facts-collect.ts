@@ -17,6 +17,7 @@
 // exported ringAreaOf + pointInRing at the same ground scale the sheets use, so it is the same
 // maths, not a second opinion.
 
+import { loadEnterpriseChoices } from './animal-enterprises';
 import { captureReportCropPlan } from './report-crop-plan';
 import turfArea from '@turf/area';
 import turfLength from '@turf/length';
@@ -177,6 +178,8 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
   // ── The drawn design ──
   if (canvas) {
     try {
+      facts.productionEnterpriseChoices = loadEnterpriseChoices(input.siteId);
+      facts.productionItems = canvas.items.map(item => ({ defId: item.defId, ...(item.speciesId ? { speciesId: item.speciesId } : {}), ...(item.status ? { status: item.status } : {}) }));
       const summary = summariseDesignStudio(canvas);
       const bedDefIds = new Set<string>(BED_DEF_IDS);
       const elements: FactElementGroup[] = summary.elements
@@ -227,6 +230,8 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
   const bodies: FactWaterPoint[] = [];
   if (canvas) {
     try {
+      facts.productionEnterpriseChoices = loadEnterpriseChoices(input.siteId);
+      facts.productionItems = canvas.items.map(item => ({ defId: item.defId, ...(item.speciesId ? { speciesId: item.speciesId } : {}), ...(item.status ? { status: item.status } : {}) }));
       const summary = summariseDesignStudio(canvas);
       for (const groupItem of summary.elements) {
         if (TANK_IDS.has(groupItem.defId)) {

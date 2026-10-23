@@ -1,0 +1,884 @@
+{
+  "title": "Study outcomes residual paired-still field application proof",
+  "date": "2026-10-05",
+  "status": "Applied and rendered; root reviewed all nine phone-width frames; pending final gates and release review",
+  "baseHead": "a5fd76db64e70fd69d6c5e449cc6b8ce4dda7a0b",
+  "candidatePacket": "/tmp/imbewu-study-outcomes-root-frozen-candidates-20261005.json",
+  "candidatePacketSha256": "e8cee409690fe0e51c95e7b68a28d501c2da7aa149092df5d2bcd8ee599b5a29",
+  "independentSignoff": "/tmp/imbewu-study-outcomes-root-frozen-independent-signoff-20261005.json",
+  "independentSignoffSha256": "b57c33c387a4b6c0414f61ac9019a491626c1d95bcc5d58426d8f51b94e919e7",
+  "frozenPacketProvenance": {
+    "sourcePacketPath": "/tmp/imbewu-codex-study-ordinary-residual-repaired-20261005.json",
+    "sourcePacketSha256": "704fd372b3418c54982c447e4a6a1b583ebfdfd9eb395a89b8320c36a8574960",
+    "note": "Root froze the final 16 new fields plus 2 Reading reuses after the late removal of one ordinal-only VE bed field. Field content is unchanged; summary counts are recomputed from actual rows. No semantic edits. This frozen file is implementation authority."
+  },
+  "fieldCount": 18,
+  "changedFiles": [
+    {
+      "path": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "beforeSha256": "5c2c04ac3aff70d62a59b5ea68eb3dfaedd32ef068bfa143113bce0f9a6ee2f7",
+      "afterSha256": "01461eca47f40a5db61a5f8d2c2d507621a1ca949b277b9a06ae2f22bcd1d6e4",
+      "changedBodyFields": [
+        {
+          "moduleId": "intro-permaculture",
+          "language": "ve",
+          "slide": 22,
+          "bodyIndexZeroBased": 0,
+          "sourceEnglish": "Walk out and check your sketch against the ground.",
+          "targetText": "Tshimbilani ni sedzani nyolo yaṋu against the ground.",
+          "targetStatus": "mixed",
+          "retainedEnglishSourceSegments": [
+            " against the ground."
+          ],
+          "beforeTarget": {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Walk out and ",
+                "status": "draft",
+                "text": "Ibani ni "
+              },
+              {
+                "sourceEnglish": "check your sketch against the ground.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          "beforeTargetSha256": "4549dc445141c47b76039ed2542cb61bbbac4f03b94fa9e2bf173870366fd943"
+        },
+        {
+          "moduleId": "intro-permaculture",
+          "language": "ve",
+          "slide": 22,
+          "bodyIndexZeroBased": 2,
+          "sourceEnglish": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+          "targetText": "Wanani tshithu tshithihi tsho ṱavhiwaho further away than how often you use it, ni ṅwale hune tsha tea u pfuluselwa hone.",
+          "targetStatus": "mixed",
+          "retainedEnglishSourceSegments": [
+            "further away than how often you use it, "
+          ],
+          "beforeTarget": {
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "Find one thing ",
+                "text": "Wanani tshithu tshithihi "
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "planted further away than how often you use it, "
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": "and write down where it should move to.",
+                "text": "ni ṅwale hune tsha tea u pfuluselwa hone."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          "beforeTargetSha256": "f68bd642ddb01a4da6f8a1f5b0490473e3dcbeee5e9fb114374a6d4ba3b20478"
+        }
+      ]
+    },
+    {
+      "path": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "beforeSha256": "95758a62c3b74f043233f72202bbefa51fe92481e53620e89fcf9b2c61f3f123",
+      "afterSha256": "427cd88461ecf81071dda4e85d71c414718026a634d271a9df04e67629eaf226",
+      "changedBodyFields": [
+        {
+          "moduleId": "intro-permaculture",
+          "language": "ts",
+          "slide": 22,
+          "bodyIndexZeroBased": 2,
+          "sourceEnglish": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+          "targetText": "Kuma xilo xin’we lexi byariweke further away than how often you use it, u tsala laha xi faneleke ku rhurhiseriwa kona.",
+          "targetStatus": "mixed",
+          "retainedEnglishSourceSegments": [
+            "further away than how often you use it, "
+          ],
+          "beforeTarget": {
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "Find one thing ",
+                "text": "Kuma xilo xin’we lexi "
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "planted further away than how often you use it, "
+              },
+              {
+                "status": "draft",
+                "sourceEnglish": "and write down where it should move to.",
+                "text": "u tsala laha xi faneleke ku rhurhiseriwa kona."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          "beforeTargetSha256": "756ab57511718c51fef65c2d5a9b9851a2da0dccf626b11d41e10923635724fc"
+        }
+      ]
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "beforeSha256": "415355f47d485ddc2e5dbbeeb952b3134bdaca40341fd7b7a53fb08cfe6a44d3",
+      "afterSha256": "0ba77f1d0a9a9cc500481762c48e8baaeba9b93645d8038322312db25e9c9143",
+      "changedBodyFields": [
+        {
+          "moduleId": "vegetables-staples",
+          "language": "st",
+          "slide": 3,
+          "bodyIndexZeroBased": 2,
+          "sourceEnglish": "Two. Keep harvests moving, using succession planting and intercropping.",
+          "targetText": "Pedi. Etsa hore dikotulo di tswele pele ka succession planting le intercropping.",
+          "targetStatus": "mixed",
+          "retainedEnglishSourceSegments": [
+            "succession planting",
+            "intercropping."
+          ],
+          "beforeTarget": {
+            "status": "english-hold"
+          },
+          "beforeTargetSha256": "d5a922624c826a7ce9fdcdbe421a2dfc0c5fd29a62d48b5deb831d608e71c5eb"
+        },
+        {
+          "moduleId": "vegetables-staples",
+          "language": "st",
+          "slide": 3,
+          "bodyIndexZeroBased": 3,
+          "sourceEnglish": "Three. Choose staples that protect you when one crop fails.",
+          "targetText": "Tharo. Khetha staples tse o sireletsang when one crop fails.",
+          "targetStatus": "mixed",
+          "retainedEnglishSourceSegments": [
+            "staples",
+            "when one crop fails."
+          ],
+          "beforeTarget": {
+            "status": "english-hold"
+          },
+          "beforeTargetSha256": "d5a922624c826a7ce9fdcdbe421a2dfc0c5fd29a62d48b5deb831d608e71c5eb"
+        },
+        {
+          "moduleId": "vegetables-staples",
+          "language": "st",
+          "slide": 3,
+          "bodyIndexZeroBased": 4,
+          "sourceEnglish": "Four. Read a pest problem before you treat it.",
+          "targetText": "Nne. Read a pest problem pele o e phekola.",
+          "targetStatus": "mixed",
+          "retainedEnglishSourceSegments": [
+            "Read a pest problem"
+          ],
+          "beforeTarget": {
+            "status": "english-hold"
+          },
+          "beforeTargetSha256": "d5a922624c826a7ce9fdcdbe421a2dfc0c5fd29a62d48b5deb831d608e71c5eb"
+        },
+        {
+          "moduleId": "vegetables-staples",
+          "language": "st",
+          "slide": 3,
+          "bodyIndexZeroBased": 1,
+          "sourceEnglish": "One. Build the right bed — matching the width and the bed type to your soil and your rainfall.",
+          "targetText": "Nngwe. Build the right bed — width le bed type di tsamaisana le soil ya hao le rainfall ya hao.",
+          "targetStatus": "mixed",
+          "retainedEnglishSourceSegments": [
+            "Build the right bed",
+            "width",
+            "bed type",
+            "soil",
+            "rainfall"
+          ],
+          "beforeTarget": {
+            "status": "english-hold"
+          },
+          "beforeTargetSha256": "d5a922624c826a7ce9fdcdbe421a2dfc0c5fd29a62d48b5deb831d608e71c5eb"
+        }
+      ]
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "beforeSha256": "5c9b8dd7fa4b759771290c35b939f0bf042eb6fe62c6ee07bf9d12cccc146ae9",
+      "afterSha256": "b090a41e3a902c70f6e43fb6e8d50f1893295f07caf7c4e70b621aaaf135bcea",
+      "changedBodyFields": [
+        {
+          "moduleId": "vegetables-staples",
+          "language": "ve",
+          "slide": 3,
+          "bodyIndexZeroBased": 2,
+          "sourceEnglish": "Two. Keep harvests moving, using succession planting and intercropping.",
+          "targetText": "Tsha vhuvhili. Itani uri harvests dzi bvele phanḓa, ni tshi shumisa succession planting na intercropping.",
+          "targetStatus": "mixed",
+          "retainedEnglishSourceSegments": [
+            "harvests",
+            "succession planting",
+            "intercropping."
+          ],
+          "beforeTarget": {
+            "status": "english-hold"
+          },
+          "beforeTargetSha256": "d5a922624c826a7ce9fdcdbe421a2dfc0c5fd29a62d48b5deb831d608e71c5eb"
+        },
+        {
+          "moduleId": "vegetables-staples",
+          "language": "ve",
+          "slide": 3,
+          "bodyIndexZeroBased": 3,
+          "sourceEnglish": "Three. Choose staples that protect you when one crop fails.",
+          "targetText": "Tsha vhuraru. Nangani staples dzi ni tsireledzaho when one crop fails.",
+          "targetStatus": "mixed",
+          "retainedEnglishSourceSegments": [
+            "staples",
+            "when one crop fails."
+          ],
+          "beforeTarget": {
+            "status": "english-hold"
+          },
+          "beforeTargetSha256": "d5a922624c826a7ce9fdcdbe421a2dfc0c5fd29a62d48b5deb831d608e71c5eb"
+        },
+        {
+          "moduleId": "vegetables-staples",
+          "language": "ve",
+          "slide": 3,
+          "bodyIndexZeroBased": 4,
+          "sourceEnglish": "Four. Read a pest problem before you treat it.",
+          "targetText": "Tsha vhuṋa. Read a pest problem ni sa athu u treat it.",
+          "targetStatus": "mixed",
+          "retainedEnglishSourceSegments": [
+            "Read a pest problem",
+            "treat it."
+          ],
+          "beforeTarget": {
+            "status": "english-hold"
+          },
+          "beforeTargetSha256": "d5a922624c826a7ce9fdcdbe421a2dfc0c5fd29a62d48b5deb831d608e71c5eb"
+        }
+      ]
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "beforeSha256": "f88282ee1bd59b344267d01ed2773632dcea3f462ff230965b0624d2ab213a65",
+      "afterSha256": "0191e62324464eec08801fd65b0643a69024d78383b6633ac43847f93ad44ae2",
+      "changedBodyFields": [
+        {
+          "moduleId": "vegetables-staples",
+          "language": "ts",
+          "slide": 3,
+          "bodyIndexZeroBased": 2,
+          "sourceEnglish": "Two. Keep harvests moving, using succession planting and intercropping.",
+          "targetText": "Xa vumbirhi. Endla leswaku ku tshovela ku ya mahlweni hi ku tirhisa succession planting na intercropping.",
+          "targetStatus": "mixed",
+          "retainedEnglishSourceSegments": [
+            "succession planting",
+            "intercropping."
+          ],
+          "beforeTarget": {
+            "status": "english-hold"
+          },
+          "beforeTargetSha256": "d5a922624c826a7ce9fdcdbe421a2dfc0c5fd29a62d48b5deb831d608e71c5eb"
+        },
+        {
+          "moduleId": "vegetables-staples",
+          "language": "ts",
+          "slide": 3,
+          "bodyIndexZeroBased": 3,
+          "sourceEnglish": "Three. Choose staples that protect you when one crop fails.",
+          "targetText": "Xa vunharhu. Hlawula staples leti ku sirhelelaka loko xibyariwa xin'we xi tsandzeka.",
+          "targetStatus": "mixed",
+          "retainedEnglishSourceSegments": [
+            "staples"
+          ],
+          "beforeTarget": {
+            "status": "english-hold"
+          },
+          "beforeTargetSha256": "d5a922624c826a7ce9fdcdbe421a2dfc0c5fd29a62d48b5deb831d608e71c5eb"
+        },
+        {
+          "moduleId": "vegetables-staples",
+          "language": "ts",
+          "slide": 3,
+          "bodyIndexZeroBased": 4,
+          "sourceEnglish": "Four. Read a pest problem before you treat it.",
+          "targetText": "Xa vumune. Read a pest problem u nga si xi tshungula.",
+          "targetStatus": "mixed",
+          "retainedEnglishSourceSegments": [
+            "Read a pest problem"
+          ],
+          "beforeTarget": {
+            "status": "english-hold"
+          },
+          "beforeTargetSha256": "d5a922624c826a7ce9fdcdbe421a2dfc0c5fd29a62d48b5deb831d608e71c5eb"
+        },
+        {
+          "moduleId": "vegetables-staples",
+          "language": "ts",
+          "slide": 3,
+          "bodyIndexZeroBased": 1,
+          "sourceEnglish": "One. Build the right bed — matching the width and the bed type to your soil and your rainfall.",
+          "targetText": "Xo sungula. Build the right bed — width na bed type swi fambisana ni soil ya wena na rainfall ya wena.",
+          "targetStatus": "mixed",
+          "retainedEnglishSourceSegments": [
+            "Build the right bed",
+            "width",
+            "bed type",
+            "soil",
+            "rainfall"
+          ],
+          "beforeTarget": {
+            "status": "english-hold"
+          },
+          "beforeTargetSha256": "d5a922624c826a7ce9fdcdbe421a2dfc0c5fd29a62d48b5deb831d608e71c5eb"
+        }
+      ]
+    },
+    {
+      "path": "docs/narration/market-community.st.paired-draft.json",
+      "beforeSha256": "332daa6077eee3d825757da29533165c3ea2345012d8ae2eac9c6735139699fd",
+      "afterSha256": "8df19581bea4f502fed4727c032dbe6a9d876838d0a5f30354b57fa2254c94da",
+      "changedBodyFields": [
+        {
+          "moduleId": "market-community",
+          "language": "st",
+          "slide": 15,
+          "bodyIndexZeroBased": 3,
+          "sourceEnglish": "Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "targetText": "Pele o fapanyetsana peo, check whether the variety is protected and whether permission is needed.",
+          "targetStatus": "mixed",
+          "retainedEnglishSourceSegments": [
+            "check whether the variety is protected and whether permission is needed."
+          ],
+          "beforeTarget": {
+            "status": "english-hold"
+          },
+          "beforeTargetSha256": "d5a922624c826a7ce9fdcdbe421a2dfc0c5fd29a62d48b5deb831d608e71c5eb"
+        }
+      ]
+    },
+    {
+      "path": "docs/narration/market-community.ts.paired-draft.json",
+      "beforeSha256": "05b8b76a2718787331b01ce5842d7cf4836287e7fc467fa893fb514f0b31dc97",
+      "afterSha256": "877c0189fd5c47d8f214f2150864b25cf93dc89328899e421e704d74f79f74a2",
+      "changedBodyFields": [
+        {
+          "moduleId": "market-community",
+          "language": "ts",
+          "slide": 15,
+          "bodyIndexZeroBased": 3,
+          "sourceEnglish": "Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+          "targetText": "Loko u nga si cincana hi mbewu, check whether the variety is protected and whether permission is needed.",
+          "targetStatus": "mixed",
+          "retainedEnglishSourceSegments": [
+            "check whether the variety is protected and whether permission is needed."
+          ],
+          "beforeTarget": {
+            "status": "english-hold"
+          },
+          "beforeTargetSha256": "d5a922624c826a7ce9fdcdbe421a2dfc0c5fd29a62d48b5deb831d608e71c5eb"
+        }
+      ]
+    },
+    {
+      "path": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "beforeSha256": "efcf9a8c9d3eeaddae582816710149e21d0ca6769c9ef31e4a2d5bdc4dd00694",
+      "afterSha256": "9e1fcdc7e176acc66ecc923a3a51791eecad0d3e26508b265a10259ee387dcf3",
+      "changedBodyFields": [
+        {
+          "moduleId": "reading-landscape",
+          "language": "ve",
+          "slide": 14,
+          "bodyIndexZeroBased": 2,
+          "sourceEnglish": "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+          "targetText": "Ṱolani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Keep sensitive plants away from the cold pockets dzine na dzi vhona.",
+          "targetStatus": "mixed",
+          "retainedEnglishSourceSegments": [
+            " Keep sensitive plants away from the cold pockets "
+          ],
+          "beforeTarget": {
+            "status": "draft",
+            "text": "Sedzani ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe."
+          },
+          "beforeTargetSha256": "9f91be677b421d4437fc1c2a1ae0435b5e59860a61a140e2b6ea8cc3f1717de2"
+        }
+      ]
+    },
+    {
+      "path": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "beforeSha256": "6e611d4a624524e651d14873abfd6a250a33b0e0b6db731406f0250899878410",
+      "afterSha256": "21772676299309bb51e8a6f99332674ba0dc8b539893b66d4df07fb265a99b82",
+      "changedBodyFields": [
+        {
+          "moduleId": "reading-landscape",
+          "language": "ts",
+          "slide": 14,
+          "bodyIndexZeroBased": 2,
+          "sourceEnglish": "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+          "targetText": "Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu laha cold or damage swi tshamaka kona nkarhi wo leha ngopfu. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.",
+          "targetStatus": "mixed",
+          "retainedEnglishSourceSegments": [],
+          "beforeTarget": {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. ",
+                "status": "draft",
+                "text": "Languta ice ni ku onhaka ka swimilani, compare low ground with slopes, and check minimum temperatures where you can. "
+              },
+              {
+                "sourceEnglish": "Mark places where cold or damage lasts longest.",
+                "status": "draft",
+                "text": "Fungha tindhawu laha cold or damage swi tshamaka kona nkarhi wo leha ngopfu."
+              },
+              {
+                "sourceEnglish": " Keep sensitive plants away from the cold pockets you observe.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open."
+          },
+          "beforeTargetSha256": "d5d8f3954170e7de6cab12de785bb6178d06b31cd0710dac967bcc02079d24db"
+        }
+      ]
+    }
+  ],
+  "fields": [
+    {
+      "moduleId": "intro-permaculture",
+      "language": "ve",
+      "slide": 22,
+      "bodyIndexZeroBased": 0,
+      "sourceEnglish": "Walk out and check your sketch against the ground.",
+      "targetText": "Tshimbilani ni sedzani nyolo yaṋu against the ground.",
+      "targetStatus": "mixed",
+      "retainedEnglishSourceSegments": [
+        " against the ground."
+      ]
+    },
+    {
+      "moduleId": "intro-permaculture",
+      "language": "ve",
+      "slide": 22,
+      "bodyIndexZeroBased": 2,
+      "sourceEnglish": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+      "targetText": "Wanani tshithu tshithihi tsho ṱavhiwaho further away than how often you use it, ni ṅwale hune tsha tea u pfuluselwa hone.",
+      "targetStatus": "mixed",
+      "retainedEnglishSourceSegments": [
+        "further away than how often you use it, "
+      ]
+    },
+    {
+      "moduleId": "intro-permaculture",
+      "language": "ts",
+      "slide": 22,
+      "bodyIndexZeroBased": 2,
+      "sourceEnglish": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+      "targetText": "Kuma xilo xin’we lexi byariweke further away than how often you use it, u tsala laha xi faneleke ku rhurhiseriwa kona.",
+      "targetStatus": "mixed",
+      "retainedEnglishSourceSegments": [
+        "further away than how often you use it, "
+      ]
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "language": "st",
+      "slide": 3,
+      "bodyIndexZeroBased": 2,
+      "sourceEnglish": "Two. Keep harvests moving, using succession planting and intercropping.",
+      "targetText": "Pedi. Etsa hore dikotulo di tswele pele ka succession planting le intercropping.",
+      "targetStatus": "mixed",
+      "retainedEnglishSourceSegments": [
+        "succession planting",
+        "intercropping."
+      ]
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "language": "st",
+      "slide": 3,
+      "bodyIndexZeroBased": 3,
+      "sourceEnglish": "Three. Choose staples that protect you when one crop fails.",
+      "targetText": "Tharo. Khetha staples tse o sireletsang when one crop fails.",
+      "targetStatus": "mixed",
+      "retainedEnglishSourceSegments": [
+        "staples",
+        "when one crop fails."
+      ]
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "language": "st",
+      "slide": 3,
+      "bodyIndexZeroBased": 4,
+      "sourceEnglish": "Four. Read a pest problem before you treat it.",
+      "targetText": "Nne. Read a pest problem pele o e phekola.",
+      "targetStatus": "mixed",
+      "retainedEnglishSourceSegments": [
+        "Read a pest problem"
+      ]
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "language": "st",
+      "slide": 3,
+      "bodyIndexZeroBased": 1,
+      "sourceEnglish": "One. Build the right bed — matching the width and the bed type to your soil and your rainfall.",
+      "targetText": "Nngwe. Build the right bed — width le bed type di tsamaisana le soil ya hao le rainfall ya hao.",
+      "targetStatus": "mixed",
+      "retainedEnglishSourceSegments": [
+        "Build the right bed",
+        "width",
+        "bed type",
+        "soil",
+        "rainfall"
+      ]
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "language": "ve",
+      "slide": 3,
+      "bodyIndexZeroBased": 2,
+      "sourceEnglish": "Two. Keep harvests moving, using succession planting and intercropping.",
+      "targetText": "Tsha vhuvhili. Itani uri harvests dzi bvele phanḓa, ni tshi shumisa succession planting na intercropping.",
+      "targetStatus": "mixed",
+      "retainedEnglishSourceSegments": [
+        "harvests",
+        "succession planting",
+        "intercropping."
+      ]
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "language": "ve",
+      "slide": 3,
+      "bodyIndexZeroBased": 3,
+      "sourceEnglish": "Three. Choose staples that protect you when one crop fails.",
+      "targetText": "Tsha vhuraru. Nangani staples dzi ni tsireledzaho when one crop fails.",
+      "targetStatus": "mixed",
+      "retainedEnglishSourceSegments": [
+        "staples",
+        "when one crop fails."
+      ]
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "language": "ve",
+      "slide": 3,
+      "bodyIndexZeroBased": 4,
+      "sourceEnglish": "Four. Read a pest problem before you treat it.",
+      "targetText": "Tsha vhuṋa. Read a pest problem ni sa athu u treat it.",
+      "targetStatus": "mixed",
+      "retainedEnglishSourceSegments": [
+        "Read a pest problem",
+        "treat it."
+      ]
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "language": "ts",
+      "slide": 3,
+      "bodyIndexZeroBased": 2,
+      "sourceEnglish": "Two. Keep harvests moving, using succession planting and intercropping.",
+      "targetText": "Xa vumbirhi. Endla leswaku ku tshovela ku ya mahlweni hi ku tirhisa succession planting na intercropping.",
+      "targetStatus": "mixed",
+      "retainedEnglishSourceSegments": [
+        "succession planting",
+        "intercropping."
+      ]
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "language": "ts",
+      "slide": 3,
+      "bodyIndexZeroBased": 3,
+      "sourceEnglish": "Three. Choose staples that protect you when one crop fails.",
+      "targetText": "Xa vunharhu. Hlawula staples leti ku sirhelelaka loko xibyariwa xin'we xi tsandzeka.",
+      "targetStatus": "mixed",
+      "retainedEnglishSourceSegments": [
+        "staples"
+      ]
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "language": "ts",
+      "slide": 3,
+      "bodyIndexZeroBased": 4,
+      "sourceEnglish": "Four. Read a pest problem before you treat it.",
+      "targetText": "Xa vumune. Read a pest problem u nga si xi tshungula.",
+      "targetStatus": "mixed",
+      "retainedEnglishSourceSegments": [
+        "Read a pest problem"
+      ]
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "language": "ts",
+      "slide": 3,
+      "bodyIndexZeroBased": 1,
+      "sourceEnglish": "One. Build the right bed — matching the width and the bed type to your soil and your rainfall.",
+      "targetText": "Xo sungula. Build the right bed — width na bed type swi fambisana ni soil ya wena na rainfall ya wena.",
+      "targetStatus": "mixed",
+      "retainedEnglishSourceSegments": [
+        "Build the right bed",
+        "width",
+        "bed type",
+        "soil",
+        "rainfall"
+      ]
+    },
+    {
+      "moduleId": "market-community",
+      "language": "st",
+      "slide": 15,
+      "bodyIndexZeroBased": 3,
+      "sourceEnglish": "Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "targetText": "Pele o fapanyetsana peo, check whether the variety is protected and whether permission is needed.",
+      "targetStatus": "mixed",
+      "retainedEnglishSourceSegments": [
+        "check whether the variety is protected and whether permission is needed."
+      ]
+    },
+    {
+      "moduleId": "market-community",
+      "language": "ts",
+      "slide": 15,
+      "bodyIndexZeroBased": 3,
+      "sourceEnglish": "Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "targetText": "Loko u nga si cincana hi mbewu, check whether the variety is protected and whether permission is needed.",
+      "targetStatus": "mixed",
+      "retainedEnglishSourceSegments": [
+        "check whether the variety is protected and whether permission is needed."
+      ]
+    },
+    {
+      "moduleId": "reading-landscape",
+      "language": "ve",
+      "slide": 14,
+      "bodyIndexZeroBased": 2,
+      "sourceEnglish": "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "targetText": "Ṱolani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Keep sensitive plants away from the cold pockets dzine na dzi vhona.",
+      "targetStatus": "mixed",
+      "retainedEnglishSourceSegments": [
+        " Keep sensitive plants away from the cold pockets "
+      ]
+    },
+    {
+      "moduleId": "reading-landscape",
+      "language": "ts",
+      "slide": 14,
+      "bodyIndexZeroBased": 2,
+      "sourceEnglish": "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "targetText": "Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu laha cold or damage swi tshamaka kona nkarhi wo leha ngopfu. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.",
+      "targetStatus": "mixed",
+      "retainedEnglishSourceSegments": []
+    }
+  ],
+  "preservation": {
+    "canonicalEnglishChanged": false,
+    "audioChanged": false,
+    "otherDeckFieldsChanged": false,
+    "animationConfigChanged": false
+  },
+  "postWriteIntegrityCheck": {
+    "checkedFieldCount": 18,
+    "sourceAndTargetBindingRevalidated": true,
+    "allNonTargetParsedFileDataEqualsSnapshotsAfterRestoringOnlyApprovedBodySlots": true,
+    "originalSnapshotDirectory": "/tmp/imbewu-study-outcomes-targets-before-apply-20261005",
+    "noSlideAudioOrAnimationFilesWritten": true
+  },
+  "renderedFrames": [
+    {
+      "module": "intro-permaculture",
+      "language": "ve",
+      "slide": 22,
+      "path": "public/course-decks/intro-permaculture/ve/slide-22.webp",
+      "pixels": "1440x5400",
+      "bytes": 269994,
+      "sha256": "6864a8bca66a818d8487ec7f1ac8fcff9fafae0ab50dd71fe5d941203b30cbd8",
+      "phoneReview": "/tmp/imbewu-study-outcomes-phone-frames-20261005/intro-permaculture-ve-slide-22-390.jpg"
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "ts",
+      "slide": 22,
+      "path": "public/course-decks/intro-permaculture/ts/slide-22.webp",
+      "pixels": "1440x5400",
+      "bytes": 268712,
+      "sha256": "5ebc77cf89cecacbe9537f5ed9e301cb860bf95d3d9c3173c29fbf2cbc88545a",
+      "phoneReview": "/tmp/imbewu-study-outcomes-phone-frames-20261005/intro-permaculture-ts-slide-22-390.jpg"
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 3,
+      "path": "public/course-decks/vegetables-staples/st/slide-03.webp",
+      "pixels": "1440x5400",
+      "bytes": 354184,
+      "sha256": "98de999b3e0602518134136f5b4b0f93030d714f1819d0097d787873e7c63bb8",
+      "phoneReview": "/tmp/imbewu-study-outcomes-phone-frames-20261005/vegetables-staples-st-slide-03-390.jpg"
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ve",
+      "slide": 3,
+      "path": "public/course-decks/vegetables-staples/ve/slide-03.webp",
+      "pixels": "1440x5400",
+      "bytes": 362984,
+      "sha256": "7c6c8b408453108067b09bcc5f1cc6c21ca6a8255ad883828321bff7419112e8",
+      "phoneReview": "/tmp/imbewu-study-outcomes-phone-frames-20261005/vegetables-staples-ve-slide-03-390.jpg"
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ts",
+      "slide": 3,
+      "path": "public/course-decks/vegetables-staples/ts/slide-03.webp",
+      "pixels": "1440x5400",
+      "bytes": 370094,
+      "sha256": "35c7cd0889d7714233f1e948f48c4d1daa35fb4e459baed6ffdbe6b90ddf436d",
+      "phoneReview": "/tmp/imbewu-study-outcomes-phone-frames-20261005/vegetables-staples-ts-slide-03-390.jpg"
+    },
+    {
+      "module": "market-community",
+      "language": "st",
+      "slide": 15,
+      "path": "public/course-decks/market-community/st/slide-15.webp",
+      "pixels": "1440x5400",
+      "bytes": 533706,
+      "sha256": "2bd19395873fd7640c706a4155e4cf2374482d52ea476bfb0e5e63e8d2e39723",
+      "phoneReview": "/tmp/imbewu-study-outcomes-phone-frames-20261005/market-community-st-slide-15-390.jpg"
+    },
+    {
+      "module": "market-community",
+      "language": "ts",
+      "slide": 15,
+      "path": "public/course-decks/market-community/ts/slide-15.webp",
+      "pixels": "1440x5400",
+      "bytes": 538650,
+      "sha256": "c5a14de0a5d546fd284b9cfb448941198563d3bf8f3ef162d41298355cfbae14",
+      "phoneReview": "/tmp/imbewu-study-outcomes-phone-frames-20261005/market-community-ts-slide-15-390.jpg"
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ve",
+      "slide": 14,
+      "path": "public/course-decks/reading-landscape/ve/slide-14.webp",
+      "pixels": "1440x5400",
+      "bytes": 474360,
+      "sha256": "a7a73bd826f64cc9556a978bf6bf4d65fcd93c068fb05f51500d7283eb60d9da",
+      "phoneReview": "/tmp/imbewu-study-outcomes-phone-frames-20261005/reading-landscape-ve-slide-14-390.jpg"
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ts",
+      "slide": 14,
+      "path": "public/course-decks/reading-landscape/ts/slide-14.webp",
+      "pixels": "1440x5400",
+      "bytes": 472594,
+      "sha256": "4ccd3ca590861bfa504aad4da3983e8cc98f439b47cddbb83f4fac8b5f8c16b2",
+      "phoneReview": "/tmp/imbewu-study-outcomes-phone-frames-20261005/reading-landscape-ts-slide-14-390.jpg"
+    }
+  ],
+  "rendering": {
+    "renderer": "scripts/make-lesson-slides.mjs with each bound paired-draft JSON",
+    "selectedFrameCount": 9,
+    "dimensions": "1440x5400",
+    "webp": "Pillow WebP quality 88 method 6",
+    "contactSheet": "/tmp/imbewu-study-outcomes-phone-frames-20261005/contact-3x3-390px.jpg",
+    "phonePreviewWidth": 390,
+    "temporaryOriginalsDirectory": "/tmp/imbewu-study-outcomes-assets-before-render-20261005",
+    "onlySelectedPublicFramesWritten": true
+  },
+  "renderedFramesManifest": {
+    "generatedBy": "scripts/gen-asset-sizes.mjs; byte values cross-checked against each SHA-256",
+    "entries": [
+      {
+        "url": "/course-decks/intro-permaculture/ve/slide-22.webp",
+        "bytes": 269994,
+        "sha256": "6864a8bca66a818d8487ec7f1ac8fcff9fafae0ab50dd71fe5d941203b30cbd8",
+        "dimensions": "1440x5400"
+      },
+      {
+        "url": "/course-decks/intro-permaculture/ts/slide-22.webp",
+        "bytes": 268712,
+        "sha256": "5ebc77cf89cecacbe9537f5ed9e301cb860bf95d3d9c3173c29fbf2cbc88545a",
+        "dimensions": "1440x5400"
+      },
+      {
+        "url": "/course-decks/vegetables-staples/st/slide-03.webp",
+        "bytes": 354184,
+        "sha256": "98de999b3e0602518134136f5b4b0f93030d714f1819d0097d787873e7c63bb8",
+        "dimensions": "1440x5400"
+      },
+      {
+        "url": "/course-decks/vegetables-staples/ve/slide-03.webp",
+        "bytes": 362984,
+        "sha256": "7c6c8b408453108067b09bcc5f1cc6c21ca6a8255ad883828321bff7419112e8",
+        "dimensions": "1440x5400"
+      },
+      {
+        "url": "/course-decks/vegetables-staples/ts/slide-03.webp",
+        "bytes": 370094,
+        "sha256": "35c7cd0889d7714233f1e948f48c4d1daa35fb4e459baed6ffdbe6b90ddf436d",
+        "dimensions": "1440x5400"
+      },
+      {
+        "url": "/course-decks/market-community/st/slide-15.webp",
+        "bytes": 533706,
+        "sha256": "2bd19395873fd7640c706a4155e4cf2374482d52ea476bfb0e5e63e8d2e39723",
+        "dimensions": "1440x5400"
+      },
+      {
+        "url": "/course-decks/market-community/ts/slide-15.webp",
+        "bytes": 538650,
+        "sha256": "c5a14de0a5d546fd284b9cfb448941198563d3bf8f3ef162d41298355cfbae14",
+        "dimensions": "1440x5400"
+      },
+      {
+        "url": "/course-decks/reading-landscape/ve/slide-14.webp",
+        "bytes": 474360,
+        "sha256": "a7a73bd826f64cc9556a978bf6bf4d65fcd93c068fb05f51500d7283eb60d9da",
+        "dimensions": "1440x5400"
+      },
+      {
+        "url": "/course-decks/reading-landscape/ts/slide-14.webp",
+        "bytes": 472594,
+        "sha256": "4ccd3ca590861bfa504aad4da3983e8cc98f439b47cddbb83f4fac8b5f8c16b2",
+        "dimensions": "1440x5400"
+      }
+    ]
+  },
+  "mediaPreservation": {
+    "changedCourseDeckPaths": [
+      "public/course-decks/intro-permaculture/ts/slide-22.webp",
+      "public/course-decks/intro-permaculture/ve/slide-22.webp",
+      "public/course-decks/market-community/st/slide-15.webp",
+      "public/course-decks/market-community/ts/slide-15.webp",
+      "public/course-decks/reading-landscape/ts/slide-14.webp",
+      "public/course-decks/reading-landscape/ve/slide-14.webp",
+      "public/course-decks/vegetables-staples/st/slide-03.webp",
+      "public/course-decks/vegetables-staples/ts/slide-03.webp",
+      "public/course-decks/vegetables-staples/ve/slide-03.webp"
+    ],
+    "onlyTheNineRecordedRegionalFramesChanged": true,
+    "courseAudioChanges": [],
+    "courseAnimationChanges": [],
+    "introPermacultureSesothoDeckChanges": [],
+    "canonicalEnglishDeckChanges": [],
+    "introPermacultureZuluDeckChanges": [],
+    "note": "Only the nine listed regional WebP stills changed. Audio, animation files, and ST Introduction slide assets are untouched."
+  },
+  "offlineCacheRefresh": {
+    "workerFunction": "migrateStudyOutcomesResidualStills",
+    "marker": "/course-decks/.study-outcomes-residual-stills-20261005",
+    "scope": "The nine listed regional still paths only; evicts all saved URL variants by pathname once.",
+    "networkFetches": 0,
+    "learnerMustChooseReplacementDownload": true,
+    "test": "tests/studies-media-migration.test.ts; checks exact path variants, unrelated slides, EN/ZU, ST Intro still, narration, animation, one-time marker and no-fetch behavior."
+  },
+  "historicalBeforeTargets": {
+    "count": 18,
+    "source": "/tmp/imbewu-study-outcomes-targets-before-apply-20261005/",
+    "note": "Exact pre-batch parsed target objects are included per changed field so earlier dated preservation proofs can reconstruct their historical scope without treating later approved edits as regressions."
+  }
+}

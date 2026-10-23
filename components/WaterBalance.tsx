@@ -3,6 +3,7 @@
 import type { LocationData, WaterData } from '@/lib/types';
 import type { SiteSurvey } from '@/lib/site-survey';
 import { useLanguage } from '@/lib/i18n';
+import { numberLabel } from '@/lib/format-figures';
 
 interface Props {
   locationData: LocationData;
@@ -28,6 +29,21 @@ function formatDrySeason(drySeason: string, t: (key: string) => string, lang: st
   };
   const translated = sourceLabels[drySeason];
   return translated ? `${translated[0]}–${translated[1]} (${drySeason})` : drySeason;
+}
+
+// 'kL' (kilolitres) is a unit only an expert would know; litres is what a farmer buys a tank in,
+// and once the amount is large, counting it in standard 5 000 L tanks is easier to picture than a
+// bare litre figure. Same helper as components/DataPanel.tsx's litresLabel, kept local here to
+// avoid a dependency between the two (DataPanel already imports this component).
+const TANK_SIZE_L = 5000;
+function litresLabel(kl: number, t: (key: string) => string): string {
+  const litres = Math.round(kl * 1000);
+  if (litres >= TANK_SIZE_L * 3) {
+    return t('estVolumeTanksLabel')
+      .replace('{tanks}', String(Math.round(litres / TANK_SIZE_L)))
+      .replace('{size}', numberLabel(TANK_SIZE_L));
+  }
+  return t('estVolumeLitresLabel').replace('{litres}', numberLabel(litres));
 }
 
 function peopleFromAdults(adults: string | undefined): number {
@@ -129,8 +145,8 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
     <div className="space-y-3">
       {/* Heading */}
       <div className="flex items-center justify-between">
-        <span className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--blue)' }}>{t('waterBalanceTitle')}</span>
-        <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{t('waterBalanceEstimateLabel')}</span>
+        <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--blue)' }}>{t('waterBalanceTitle')}</span>
+        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('waterBalanceEstimateLabel')}</span>
       </div>
 
       {lang === 'zu' && (
@@ -190,12 +206,12 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
 
           {/* X axis labels */}
           {MONTHS.map((m, i) => (
-            <text key={i} x={xPoint(i)} y={H - 6} textAnchor="middle" fontSize="8" fill="#755942" fontFamily="monospace">{m}</text>
+            <text key={i} x={xPoint(i)} y={H - 6} textAnchor="middle" fontSize="8" fill="#755942" fontFamily="var(--font-sans)">{m}</text>
           ))}
 
           {/* Y axis labels */}
           {ticks.filter((_, i) => i % 2 === 0).map(({ v, y, label }) => (
-            <text key={v} x={PAD.left - 3} y={y + 3} textAnchor="end" fontSize="7.5" fill="#755942" fontFamily="monospace">{label}</text>
+            <text key={v} x={PAD.left - 3} y={y + 3} textAnchor="end" fontSize="7.5" fill="#755942" fontFamily="var(--font-sans)">{label}</text>
           ))}
         </svg>
       </div>
@@ -204,21 +220,21 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
       <div className="flex flex-wrap gap-x-4 gap-y-1">
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded-sm flex-shrink-0" style={{ background: 'rgba(35,94,134,0.55)' }} />
-          <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendRoofCatchment')}</span>
+          <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendRoofCatchment')}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded-sm flex-shrink-0" style={{ background: 'rgba(192,122,30,0.45)' }} />
-          <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendTotalDemand')}</span>
+          <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendTotalDemand')}</span>
         </div>
         {capacity > 0 && (
           <div className="flex items-center gap-1.5">
             <div className="w-8 h-0.5 flex-shrink-0" style={{ background: '#1F4D2B' }} />
-            <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendTankLevel')}</span>
+            <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendTankLevel')}</span>
           </div>
         )}
         <div className="flex items-center gap-1.5">
           <div className="w-8 flex-shrink-0" style={{ borderTop: '1.5px dashed rgba(192,60,30,0.7)' }} />
-          <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendMinSafe')}</span>
+          <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendMinSafe')}</span>
         </div>
       </div>
 
@@ -226,10 +242,10 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
       <div className="grid grid-cols-2 gap-2">
         <StatBox label={t('waterBalancePeopleEstimated')} value={String(people)} sub={t('waterBalanceHouseholdMonthly').replace('{litres}', (monthlyHouseKL * 1000).toFixed(0))} color="#235E86" />
         {capacity > 0
-          ? <StatBox label={t('waterBalanceStorageCapacity')} value={`${capacity.toFixed(0)} kL`} sub={t('waterBalanceMinSafe').replace('{amount}', minSafe.toFixed(0))} color="#1F4D2B" />
+          ? <StatBox label={t('waterBalanceStorageCapacity')} value={litresLabel(capacity, t)} sub={t('waterBalanceMinSafe').replace('{amount}', litresLabel(minSafe, t))} color="#1F4D2B" />
           : <StatBox label={t('waterBalanceStorage')} value={t('waterBalanceNotMapped')} sub={t('waterBalanceDrawWaterArea')} color="#755942" />
         }
-        {hasVeg && <StatBox label={t('waterBalanceVegIrrigation')} value={`${(months.find(m => m.isDry)?.irrigVeg ?? 0).toFixed(1)} kL`} sub={t('waterBalancePerDryMonthEstimate')} color="#C07A1E" />}
+        {hasVeg && <StatBox label={t('waterBalanceVegIrrigation')} value={litresLabel(months.find(m => m.isDry)?.irrigVeg ?? 0, t)} sub={t('waterBalancePerDryMonthEstimate')} color="#C07A1E" />}
         {hasFruit && <StatBox label={t('waterBalanceFruitTrees')} value={`${fruitTrees}`} sub={`${(months.find(m => m.isDry)?.irrigFruit ?? 0).toFixed(1)} ${t('waterBalancePerDryMonthUnit')}`} color="#C07A1E" />}
       </div>
 
@@ -268,9 +284,9 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
 function StatBox({ label, value, sub, color }: { label: string; value: string; sub: string; color: string }) {
   return (
     <div className="rounded-xl p-3" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)', marginBottom: 2 }}>{label}</p>
+      <p className="text-xs" style={{ color: 'var(--text-muted)', marginBottom: 2 }}>{label}</p>
       <p className="font-display font-semibold" style={{ fontSize: 16, color, lineHeight: 1.2 }}>{value}</p>
-      <p className="text-xs font-mono mt-1" style={{ color: 'var(--text-muted)', fontSize: 12 }}>{sub}</p>
+      <p className="text-xs mt-1" style={{ color: 'var(--text-muted)', fontSize: 12 }}>{sub}</p>
     </div>
   );
 }

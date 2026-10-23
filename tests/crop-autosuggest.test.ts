@@ -22,7 +22,7 @@ import {
 } from '../lib/crop-autosuggest.ts';
 import { buildFieldUtilizationByMonth, buildFoodAvailability, isSpaceHungry, occupiedMonthsForPlanting, type PlanBed } from '../lib/crop-plan.ts';
 import { cropByKey, CROPS, hasAutomaticPlanningBasis, hasVerifiedFieldPlan, hasVerifiedSchedule } from '../lib/crop-catalog.ts';
-import { foodGroupOf, rotationFamilyOf } from '../lib/crop-groups.ts';
+import { foodGroupOf, nutritionGroupOf, rotationFamilyOf } from '../lib/crop-groups.ts';
 import { isStapleCrop } from '../lib/staple-crops.ts';
 
 /** `AutoSuggestResult.notes` became `{ kind, bedIds?, text }[]` in the Notes
@@ -43,14 +43,16 @@ const FOUR_PLOTS: PlanBed[] = Array.from({ length: 4 }, (_, i) => ({
 const FAMILY: AutoSuggestAnswers = {
   goal: 'family',
   householdSize: 'medium',
-  groups: ['staple_grain', 'legume', 'leafy_green', 'root_tuber', 'allium_aromatic', 'fruiting_veg'],
+  groups: ['staple_grain', 'legume', 'leafy_green', 'root_tuber', 'allium', 'herb', 'fruiting_veg', 'squash_melon', 'less_common', 'cover_crop'],
   rhythm: 'steady',
   rotateCrops: true,
   allowVinesInBeds: false,
   reliableIrrigation: true,
 } as AutoSuggestAnswers;
 
-test('auto-suggest refuses to invent a production plan until reliable irrigation is confirmed', () => {
+test('auto-suggest refuses to invent a production plan without irrigation or the site\'s own climate', () => {
+  // No siteMonthlyRainMm/TempC here, so no rain-fed plan either
+  // (tests/crop-climate-gate.test.ts covers the rain-fed path).
   for (const reliableIrrigation of [undefined, false]) {
     const result = autoSuggestPlan(
       { ...FAMILY, reliableIrrigation },
@@ -258,6 +260,82 @@ test('the recommended family plan limits long per-bed harvest gaps and does not 
   }, new Map<string, number>());
   assert.ok((counts.get('garlic') ?? 0) <= 2, `garlic still dominates with ${counts.get('garlic')} cohorts`);
   assert.ok(result.plantings.some((planting) => planting.cropKey === 'maize' && planting.bedId.startsWith('zone-staple-')));
+});
+
+test('a garden-wide spread cap keeps one crop off most of the shared beds (2026-09-28 Ubhejane audit)', () => {
+  // Ubhejane's real 9-bed + 4-plot mild-frost farm, mixed-crop-list style (the
+  // audited plan itself chose these twelve crops). Before the cap, the widest
+  // sow windows (cabbage, carrots, lettuce -- all legal in almost every month
+  // of the year, so every pass reaches for them whenever nothing narrower
+  // fits) filled cabbage into all 9 shared beds and carrots into all 9, with
+  // lettuce close behind at 8 -- a garden that is a brassica monoculture with
+  // extra steps. gardenSpreadCapFor(beds) = ceil(9 shared beds / 2) = 5, and
+  // every placement/closing pass in the pipeline now respects that ceiling
+  // UNLESS respecting it would leave a fillable slot bare (no invented crop
+  // can fill it, so the cap yields rather than starving a month) -- which is
+  // why the audited ceiling below is 7, not 5: the three wide-window crops
+  // are still sometimes the only legal candidate left once the other two are
+  // already capped. That fallback-adjusted 7 is still a real cut from 9/9/8.
+  const beds = [...NINE_BEDS, ...FOUR_PLOTS];
+  const cropKeys = ['cabbage', 'lettuce', 'maize', 'potato', 'dry-beans', 'oats', 'broad-beans',
+    'butternut', 'carrots', 'onions', 'tomatoes', 'green-beans'];
+  const tempC = [26, 25, 24, 21, 18, 15, 14, 16, 19, 22, 24, 26]; // mild-frost KZN-ish normals
+  const result = autoSuggestPlan({
+    ...FAMILY, cropKeys, groups: [], allowMixedCropsInBed: true, siteMonthlyTempC: tempC,
+  }, 'mild-frost', beds, [], 1);
+
+  const bedsUsedBy = (cropKey: string) =>
+    new Set(result.plantings.filter((p) => p.cropKey === cropKey).map((p) => p.bedId)).size;
+  for (const key of ['cabbage', 'lettuce', 'carrots']) {
+    assert.ok(bedsUsedBy(key) <= 7, `${key} still reached ${bedsUsedBy(key)} of ${NINE_BEDS.length} shared beds (cap-with-fallback ceiling is 7)`);
+  }
+
+  // Staple plots: the two that already had a second, real catalog crop with a
+  // compatible sow window before the cap work (Plot 1 butternut + broad
+  // beans, Plot 3 maize + broad beans) must still get both -- the cap must
+  // not touch plot logic (plots bypass it entirely).
+  const plantingsOn = (bedId: string) => result.plantings.filter((p) => p.bedId === bedId).map((p) => p.cropKey);
+  assert.deepEqual(new Set(plantingsOn(FOUR_PLOTS[0].id)), new Set(['butternut', 'broad-beans']));
+  assert.deepEqual(new Set(plantingsOn(FOUR_PLOTS[2].id)), new Set(['maize', 'broad-beans']));
+
+  // Plot 2 (dry beans only) and Plot 4 (potato only) are DELIBERATELY left
+  // single-crop here: dry beans' Jan sow (soonest legal, correctly preferred
+  // by the plot ordering) leaves too short a window before its own May
+  // harvest for either winter cover crop's Apr/May sow, and potato's Aug sow
+  // occupies through December, which overlaps every legal sow month of both
+  // covers regardless of which of potato's own legal months is chosen given
+  // their real 6-7 month field spans (holdSpanMonths). No catalog crop closes
+  // either gap without inventing a schedule, so this is pinned as a known,
+  // explained limit rather than silently left to drift.
+  assert.deepEqual(plantingsOn(FOUR_PLOTS[1].id), ['dry-beans']);
+  assert.deepEqual(plantingsOn(FOUR_PLOTS[3].id), ['potato']);
+});
+
+test('planSuccession reaches for a cooler legal sow month before a hotter one when both are ok (2026-09-28 heat-preference audit)', () => {
+  // Lettuce is legal (ECOCROP absoluteMax 30) every month of a mild-frost
+  // year, so with no site temperatures the engine has no reason to prefer
+  // any one month and 'few-big' (cap 1) just takes the soonest: nowMonth 1.
+  const beds = Array.from({ length: 6 }, (_, i) => ({ id: `hb-${i + 1}`, label: `Bed ${i + 1}`, areaM2: 9, minDimM: 3 }));
+  const noTemps = autoSuggestPlan({
+    ...FAMILY, cropKeys: ['lettuce'], groups: [], rhythm: 'few-big', allowMixedCropsInBed: true,
+  }, 'mild-frost', beds, [], 1);
+  assert.ok(noTemps.plantings.length > 0, 'fixture: lettuce must place with no site temps');
+  assert.ok(noTemps.plantings.every((p) => p.sowMonth === 1), 'fixture: with no heat data the soonest month (Jan) is chosen');
+
+  // A hot mild-frost site (Jan/Feb mid-20s, ECOCROP optimum 21) makes Jan and
+  // Feb sowings grow into their hottest stretch. optimalMax is advisory, not
+  // exclusionary (tests/crop-climate-gate.test.ts covers that split), so both
+  // months stay legal -- but planSuccession's cooler-first reorder must now
+  // reach past them for a non-flagged month while one is available.
+  const tempC = [26, 25, 24, 21, 18, 15, 14, 16, 19, 22, 24, 26];
+  const withTemps = autoSuggestPlan({
+    ...FAMILY, cropKeys: ['lettuce'], groups: [], rhythm: 'few-big', allowMixedCropsInBed: true, siteMonthlyTempC: tempC,
+  }, 'mild-frost', beds, [], 1);
+  assert.ok(withTemps.plantings.length > 0, 'a heat-aware site must still get a lettuce schedule');
+  assert.ok(
+    withTemps.plantings.every((p) => p.sowMonth !== 1 && p.sowMonth !== 2),
+    `a hot Jan/Feb must be passed over while a cooler legal month exists: got ${withTemps.plantings.map((p) => p.sowMonth)}`,
+  );
 });
 
 test('automatic vegetable plantings use only full, half, third or quarter beds', () => {
@@ -697,4 +775,100 @@ test('commercial concentration does not invent a universal plants-across cutoff 
   );
   assert.ok(result.plantings.some((planting) => planting.bedId === 'wide'));
   assert.doesNotMatch(noteText(result).join(' '), /too narrow|measured width/i);
+});
+
+test('few big harvests re-sows a crop after its harvest ends instead of leaving the ground bare', () => {
+  // Before 2026-09-27 few-big placed ONE cohort per crop and stopped, so an
+  // August plan on nine beds used 53.7% of bed-months. Follow-on rounds now
+  // add each crop's next big sowing once its previous one is harvested.
+  const res = autoSuggestPlan({
+    goal: 'family', householdSize: 'medium', groups: [], rhythm: 'few-big',
+    rotateCrops: true, allowVinesInBeds: false, reliableIrrigation: true,
+  }, 'summer', NINE_BEDS, [], 8);
+  const use = buildFieldUtilizationByMonth(res.plantings, NINE_BEDS, 8, 12);
+  const mean = use.reduce((sum, value) => sum + value, 0) / use.length;
+  assert.ok(mean >= 0.7, `few-big bed-month use fell to ${(mean * 100).toFixed(1)}%`);
+  const sowsOf = (key: string) => new Set(res.plantings.filter((p) => p.cropKey === key).map((p) => p.sowMonth));
+  assert.deepEqual([...sowsOf('green-beans')].sort((a, b) => a - b), [9, 12]);
+  assert.deepEqual([...sowsOf('carrots')].sort((a, b) => a - b), [2, 8]);
+  assert.ok(noteText(res).some((text) => /next sowing starts only after that harvest ends/.test(text)));
+});
+
+test('a crop the farmer picked by name is placed, or the plan says truthfully why not', () => {
+  // Rory, 2026-09-29: "i selected pumpkin theres no pumkin or amadumbe or peanuts bambara".
+  const beds: PlanBed[] = Array.from({ length: 6 }, (_, i) => ({ id: `pk-${i}`, label: `Bed ${i + 1}`, areaM2: 9, minDimM: 1.4 }));
+  const cropKeys = ['pumpkin', 'amadumbe', 'groundnuts', 'bambara-groundnut', 'cabbage', 'carrots'];
+  const run = (pattern: 'summer' | 'mild-frost') => autoSuggestPlan({
+    goal: 'family', groups: [], cropKeys, rhythm: 'steady', rotateCrops: true,
+    allowVinesInBeds: false, allowMixedCropsInBed: true, reliableIrrigation: true,
+  }, pattern, beds, [], 9);
+  for (const pattern of ['summer', 'mild-frost'] as const) {
+    const result = run(pattern);
+    const placed = new Set(result.plantings.map((p) => p.cropKey));
+    // Ticking pumpkin is the opt-in the vine toggle asks for; the review note still names its bed.
+    assert.ok(placed.has('pumpkin'), `${pattern}: pumpkin was chosen by name and not placed`);
+    assert.ok(result.notes.some((n) => /Pumpkin gets Bed \d to itself/.test(n.text)));
+    assert.ok(!result.notes.some((n) => /Pumpkin wants? more room to sprawl/.test(n.text)));
+    assert.ok(placed.has('groundnuts'), `${pattern}: groundnuts not placed`);
+    // Whatever is left out has no month on this calendar, and is not blamed on full beds.
+    for (const key of cropKeys.filter((k) => !placed.has(k))) {
+      const crop = cropByKey(key)!;
+      assert.deepEqual(crop.sowMonths[pattern], [], `${pattern}: ${key} had months but was left out`);
+      const note = result.notes.find((n) => n.unplacedCropKeys?.includes(key));
+      assert.ok(note && /no sowing month/.test(note.text) && !/didn't fit/.test(note.text), `${pattern}: ${key} note: ${note?.text}`);
+    }
+  }
+  // A vine nobody asked for still waits for the toggle.
+  const broad = autoSuggestPlan({
+    goal: 'family', groups: ['fruiting_veg', 'squash_melon'], rhythm: 'steady', rotateCrops: true,
+    allowVinesInBeds: false, allowMixedCropsInBed: true, reliableIrrigation: true,
+  }, 'summer', beds, [], 9);
+  assert.ok(!broad.plantings.some((p) => isSpaceHungry(cropByKey(p.cropKey)!)));
+});
+
+test('herbs, less common crops and cover crops each switch off from the crop mix', () => {
+  // Rory, 2026-09-30: separate herbs so they can be turned off, a category for fringe crops such
+  // as mung bean, and cover crops as their own choice.
+  assert.equal(foodGroupOf(cropByKey('parsley')!), 'herb');
+  assert.equal(foodGroupOf(cropByKey('coriander')!), 'herb');
+  assert.equal(foodGroupOf(cropByKey('onions')!), 'allium');
+  assert.equal(foodGroupOf(cropByKey('mung-bean')!), 'less_common');
+  assert.equal(foodGroupOf(cropByKey('sunn-hemp')!), 'cover_crop');
+  const plots = [...NINE_BEDS, ...FOUR_PLOTS];
+  const off = new Set(['herb', 'less_common', 'cover_crop']);
+  const narrowed = { ...FAMILY, groups: FAMILY.groups.filter((g) => !off.has(g)) };
+  for (const pattern of ['summer', 'mild-frost'] as const) {
+    const full = autoSuggestPlan(FAMILY, pattern, plots, [], 8);
+    const res = autoSuggestPlan(narrowed, pattern, plots, [], 8);
+    for (const p of res.plantings) {
+      const group = foodGroupOf(cropByKey(p.cropKey)!);
+      assert.ok(group !== 'herb' && group !== 'less_common', `${pattern}: ${p.cropKey} (${group}) placed with its tile off`);
+    }
+    const covers = (r: typeof res) => r.plantings.filter((p) => FOUR_PLOTS.some((b) => b.id === p.bedId) && (p.cropKey === 'oats' || p.cropKey === 'broad-beans'));
+    assert.ok(covers(full).length > 0, `${pattern}: test premise — plots take a winter cover with the tile on`);
+    assert.deepEqual(covers(res), [], `${pattern}: a plot got a winter cover with Cover crops off`);
+    assert.ok(noteText(res).some((t) => /Cover crops is switched off/.test(t)));
+    assert.ok(!noteText(full).some((t) => /Cover crops is switched off/.test(t)));
+  }
+});
+
+test('squashes and melons are their own crop-mix tile', () => {
+  // Rory, 2026-09-30: "should we have squashes and melons as categories too?"
+  for (const key of ['pumpkin', 'butternut', 'gem-squash', 'baby-marrow', 'watermelon', 'spanspek']) {
+    const crop = cropByKey(key)!;
+    assert.equal(foodGroupOf(crop), 'squash_melon', key);
+    // Still fruiting veg as food, so it shares that breadth-first turn rather than adding one.
+    assert.equal(nutritionGroupOf(crop), 'fruiting_veg', key);
+  }
+  assert.equal(foodGroupOf(cropByKey('cucumber')!), 'fruiting_veg');
+  const plots = [...NINE_BEDS, ...FOUR_PLOTS];
+  const withVines = { ...FAMILY, allowVinesInBeds: true };
+  const narrowed = { ...withVines, groups: withVines.groups.filter((g) => g !== 'squash_melon') };
+  for (const pattern of ['summer', 'mild-frost'] as const) {
+    const full = autoSuggestPlan(withVines, pattern, plots, [], 8);
+    const squash = (r: typeof full) => r.plantings.filter((p) => foodGroupOf(cropByKey(p.cropKey)!) === 'squash_melon');
+    assert.ok(squash(full).length > 0, `${pattern}: test premise — a squash or melon is placed with the tile on`);
+    assert.deepEqual(squash(autoSuggestPlan(narrowed, pattern, plots, [], 8)).map((p) => p.cropKey), [],
+      `${pattern}: a squash or melon was placed with its tile off`);
+  }
 });

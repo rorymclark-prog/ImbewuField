@@ -1,0 +1,30 @@
+{
+  "base": "c67b5fde8796849720e64474c05656b8ca1ecff2",
+  "reports": [
+    {
+      "language": "st",
+      "slides": 21,
+      "bytes": 7208200
+    },
+    {
+      "language": "ve",
+      "slides": 21,
+      "bytes": 7279862
+    },
+    {
+      "language": "ts",
+      "slides": 21,
+      "bytes": 7297594
+    }
+  ],
+  "rootVisualInspection": [
+    "st/ve/ts contact sheets (all63 layouts)",
+    "ST13 full390 source/title/English hold",
+    "VE18 full390 repaired directive and exact source",
+    "ST3 full390 outcomes/source",
+    "TS20 full390 field assignment/source"
+  ],
+  "visualLimits": "Actual deployed player/offline QA still pending. Contact sheets show layout, not fluent-language approval.",
+  "localTests": "4525 pass,0fail,1existingTODO; original tsc and diff check pass",
+  "narration": "None added; optional English and existing silent pack paths unchanged"
+}

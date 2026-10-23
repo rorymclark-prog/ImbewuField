@@ -1,0 +1,29 @@
+{
+ "language": "ts (provisional standard written Xitsonga)",
+ "counts": {
+  "total": 269,
+  "ok": 242,
+  "repair": 22,
+  "hold": 5
+ },
+ "phaseC": "No demonstrated meaning errors in the 27 shipped entries (empty array). Unverified candidates only: 'muleteri' for supervisor/mentor, 'Log production' rendered as 'Tsala ntshovelo' (harvest), 'A ku si avelaniwa' construction.",
+ "top10": [
+  "R173 Category = 'Rixaka' (tribe/nation/race) -> 'Muxaka' (kind/type).",
+  "R192 Lender summary: 'xikoro xa mbolekiso' reads 'school of loan' for 'credit score'; 'consistency' rendered as mere presence; concord error. Negation 'not a credit score or loan approval' must be kept.",
+  "R019 Feed = 'swakudya swa swiharhi' (wild animals) -> 'swifuwo' (livestock).",
+  "R033 AI receipt 'ready' rendered as 'swi lunghekile' (correct/fine), asserting accuracy before the farmer checks.",
+  "R096 Offline note: 'anything missing will appear' became 'anything that exists will appear'.",
+  "R158 'Optional AI reading' rendered 'loku nga hlawuliwaka' (which is not chosen) - negation-like misread.",
+  "R088 Sales minus expenses sentence ungrammatical; 'guessed' became 'tried'.",
+  "R264/R265/R268 unit words (eggs, jars, bunches) not recognisable; held. Wrong unit beside a quantity is a real error.",
+  "R139/R140/R141 vegetable beds / staple plots words ('matsavu', 'swirhapa') unrecognised; R139 held, R140-141 repaired.",
+  "R105 concord error ('Tinhlayo ... swi ha hlayela'); R262 'switch back on' rendered 'open again'; R186/R241 'hi byoxe' unclear for 'on its own/automatically' (negations 'nothing is lost', 'do not enter again' are correct and preserved)."
+ ],
+ "also_notes": [
+  "R021 Fuel='Fuyili' held (unattested respelling).",
+  "Recurring: 'xa ku sungula' = first/initial used for 'original' (R124,R128,R150,R231,R233,R245,R247) - ambiguous but understandable, left ok.",
+  "Muholo (salary/wage) used for income throughout - consistent with shipped dictionary, flagged as a term a fluent speaker should confirm.",
+  "Recover invoice (R113 'Aka nakambe') is distinct from View/Create/Retry; Picked=Ntshovelo OK; negations, tense, buyer/supplier direction, 'greater than zero' and placeholders all verified; placeholders identical in every draft and repair."
+ ],
+ "confidence_limits": "This is a machine review, not fluent-speaker approval. My Xitsonga is moderate: I am confident about ordinary grammar, negation, tense and well-known vocabulary, but less so for domain terms (matsavu, swirhapa, nhova, marhavi, swibya, swihlanganiso, switolo, byoxe/yexe, vasa/pfula, buti, landa, muphakeri, vutika) and for the best Xitsonga equivalents of English finance terms (income vs muholo, tihakelo as expenses). My repairs are proposals needing native verification; 'ok' means no meaning error found, not natural or approved. Shangani comprehension was not assessed. Blind phase A used code snippets in the usage field that contained English; I back-translated from the Xitsonga drafts only."
+}

@@ -1,0 +1,594 @@
+{
+ "00-introduction": [
+  {
+   "id": "00-handbook-collage",
+   "section": 0,
+   "heading": "Where this manual comes from",
+   "caption": "Scenes from the handbook's project gardens: maize, fruit, mulched beds, a home run on solar power and a harvest of vegetables."
+  }
+ ],
+ "02-planning-your-farm": [
+  {
+   "id": "02-base-map",
+   "section": 0,
+   "heading": "Step 1: Site assessment",
+   "caption": "A base map: an aerial photo of the property with contour lines, the buildings and a north arrow. Map what is already there before you plan anything new."
+  },
+  {
+   "id": "02-planning-together",
+   "section": 0,
+   "heading": "Step 1: Site assessment",
+   "caption": "A family draws their farm plan together. Plan on paper first: a mistake on paper costs nothing to fix."
+  },
+  {
+   "id": "02-zone-map",
+   "section": 2,
+   "heading": "Step 2: Zone planning",
+   "caption": "The same property divided into zones, from the home (Zone 0) out to the wild area (Zone 5). The places you visit every day are closest to the house."
+  },
+  {
+   "id": "02-zone-rings",
+   "section": 2,
+   "heading": "Step 2: Zone planning",
+   "caption": "Zones as rings around the home: the house is Zone 0, and each zone further out is visited less often."
+  },
+  {
+   "id": "02-slope-analysis",
+   "section": 3,
+   "heading": "Step 3: Slope planning",
+   "caption": "Slope planning: water stored high up, trees on the steep upper slope, the house and gardens lower down, and greywater flowing on down to trees."
+  }
+ ],
+ "03-sector-planning": [
+  {
+   "id": "03-sector-map",
+   "section": 0,
+   "heading": "Drawing a sector map",
+   "caption": "A sector map of the same property: hot and cold winds, fire risk, the best view and cold air flowing downhill at night. The small inset shows the sun's path across the north."
+  },
+  {
+   "id": "03-compass",
+   "section": 1,
+   "heading": "Finding north",
+   "caption": "Finding north with a compass. In South Africa the needle points about 20 to 28 degrees west of true north."
+  },
+  {
+   "id": "03-sun-angles",
+   "section": 4,
+   "heading": "Sunlight",
+   "caption": "The sun is in the north: high in the summer sky and low in winter, so winter shadows are much longer."
+  },
+  {
+   "id": "03-frost-pocket",
+   "section": 7,
+   "heading": "Frost",
+   "caption": "On still, clear nights cold air flows downhill and settles in low places. Leave a gap on the downhill side of a hedge so it can drain away."
+  }
+ ],
+ "04-vegetable-and-staple-crops": [
+  {
+   "id": "04-kitchen-garden",
+   "section": 2,
+   "heading": "1. The kitchen garden (Zone 1)",
+   "caption": "A kitchen garden right beside the house, under a shade-net frame. It is the garden you pass many times a day (Zone 1)."
+  },
+  {
+   "id": "04-mandala-garden",
+   "section": 2,
+   "heading": "1. The kitchen garden (Zone 1)",
+   "caption": "A mandala garden: beds edged with timber offcuts curve around a central sitting place. A kitchen garden can be useful and beautiful."
+  },
+  {
+   "id": "04-keyhole-beds",
+   "section": 2,
+   "heading": "1. The kitchen garden (Zone 1)",
+   "caption": "Keyhole beds edged with recycled plastic strip, with stone paths and drip irrigation. You can reach every plant from the path."
+  },
+  {
+   "id": "04-vegetable-garden-beds",
+   "section": 3,
+   "heading": "2. The vegetable garden (Zone 2)",
+   "caption": "Stone-edged vegetable beds of spinach and beetroot inside a fence. The paths let you work without stepping on the beds."
+  },
+  {
+   "id": "04-home-vegetable-garden",
+   "section": 3,
+   "heading": "2. The vegetable garden (Zone 2)",
+   "caption": "A home vegetable garden with mulched rows of cabbage, a short walk from the house (Zone 2)."
+  },
+  {
+   "id": "04-market-garden-rows",
+   "section": 4,
+   "heading": "3. Small-scale commercial vegetable farming (Zone 3)",
+   "caption": "A market garden: long rows of one crop each, here green and red cabbage, make planting, weeding and harvesting quick."
+  },
+  {
+   "id": "04-market-garden-aerial",
+   "section": 4,
+   "heading": "3. Small-scale commercial vegetable farming (Zone 3)",
+   "caption": "Two market-garden blocks seen from above. Beds of the same size make it easy to plan how much to plant and sell."
+  },
+  {
+   "id": "04-maize-staple-garden",
+   "section": 5,
+   "heading": "4. The staple garden (Zone 3)",
+   "caption": "A tall, healthy stand of maize in a staple garden. Staple crops need a lot of space, so they go in Zone 3."
+  }
+ ],
+ "05-animal-systems": [
+  {
+   "id": "05-chicken-needs-yields",
+   "section": 1,
+   "heading": "Place animals where they work for you",
+   "caption": "A chicken's needs, products and behaviours: what it needs (food, water, shelter, grit, dust), what it gives (eggs, meat, manure, feathers) and what it does by nature (scratching, pecking)."
+  },
+  {
+   "id": "05-poultry-tractors",
+   "section": 2,
+   "heading": "Animal tractors",
+   "caption": "Movable poultry pens (animal tractors) on grass. Move them every few days so the birds get fresh ground and the grass can recover."
+  },
+  {
+   "id": "05-chicken-tractor",
+   "section": 2,
+   "heading": "Animal tractors",
+   "caption": "An A-frame chicken tractor: a light wooden frame with wire mesh, a tin roof for shade and rain, and a drinker inside."
+  },
+  {
+   "id": "05-poultry-netting-energiser",
+   "section": 2,
+   "heading": "Animal tractors",
+   "caption": "A solar energiser powers movable electric netting around a poultry run: an open animal tractor that you can shift across the land."
+  },
+  {
+   "id": "05-pigs-windfall-fruit",
+   "section": 4,
+   "heading": "Pigs",
+   "caption": "Young pigs eating spoiled apricots. Pigs turn fallen and spoiled fruit into meat and manure."
+  },
+  {
+   "id": "05-pig-tractor",
+   "section": 4,
+   "heading": "Pigs",
+   "caption": "A pig tractor: pigs graze inside an electric fence powered by a small solar panel, with a simple shelter for shade."
+  },
+  {
+   "id": "05-pig-cleared-ground",
+   "section": 4,
+   "heading": "Pigs",
+   "caption": "The ground after the pigs have moved on: they have rooted out the grass and turned the soil, ready for planting."
+  },
+  {
+   "id": "05-muscovy-ducks",
+   "section": 5,
+   "heading": "Ducks",
+   "caption": "Muscovy ducks resting in the shade. They help control pests, graze grass and are much quieter than other ducks."
+  },
+  {
+   "id": "05-hive-on-tyres",
+   "section": 6,
+   "heading": "Bees",
+   "caption": "A wooden beehive raised on a stack of old tyres: level, firm and off the damp ground."
+  }
+ ],
+ "06-tree-systems": [
+  {
+   "id": "06-food-forest-durban",
+   "section": 0,
+   "heading": "Food forests",
+   "caption": "A subtropical food forest in Durban, seen from above: bananas, a young fruit tree, shrubs and groundcover, with no bare soil."
+  },
+  {
+   "id": "06-quince",
+   "section": 1,
+   "heading": "Designing a food forest",
+   "caption": "Quinces: a very frost-hardy fruit for jam and cooking, well suited to cold Highveld and Lesotho winters."
+  },
+  {
+   "id": "06-peach",
+   "section": 1,
+   "heading": "Designing a food forest",
+   "caption": "A young peach. Choose a peach variety that matches the winter cold where you live."
+  },
+  {
+   "id": "06-apple",
+   "section": 1,
+   "heading": "Designing a food forest",
+   "caption": "A young apple. Apples need cold winters; in warmer areas choose low-chill varieties."
+  },
+  {
+   "id": "06-legume-seed-mix",
+   "section": 2,
+   "heading": "Planting a food forest",
+   "caption": "Mixed cowpea and bean seed, ready to sow as a legume groundcover between young trees."
+  },
+  {
+   "id": "06-planting-basins",
+   "section": 2,
+   "heading": "Planting a food forest",
+   "caption": "Planting basins dug and ready, with the young trees waiting beside them. Dig all the holes and basins before you plant."
+  },
+  {
+   "id": "06-nitrogen-fixers-citrus",
+   "section": 2,
+   "heading": "Planting a food forest",
+   "caption": "A young lemon tree ringed by pigeon pea. The nitrogen fixers are cut back often and left on the ground as mulch (chop and drop)."
+  },
+  {
+   "id": "06-food-forest-layers",
+   "section": 4,
+   "heading": "The layers of a food forest",
+   "caption": "The seven layers of a food forest planted along a swale: tall trees, small trees, shrubs, herbs, roots, groundcover and climbers."
+  },
+  {
+   "id": "06-turmeric-harvest",
+   "section": 4,
+   "heading": "The layers of a food forest",
+   "caption": "Freshly dug turmeric: a crop for the root layer of a warm, frost-free food forest."
+  },
+  {
+   "id": "06-wild-dagga",
+   "section": 5,
+   "heading": "Windbreaks",
+   "caption": "Wild dagga (Leonotis leonurus): a fast-growing indigenous windbreak shrub whose orange flowers feed sunbirds."
+  },
+  {
+   "id": "06-windbreak",
+   "section": 5,
+   "heading": "Windbreaks",
+   "caption": "A windbreak of several rows of indigenous trees and shrubs, planted across the damaging wind and kept away from the north side of the garden."
+  },
+  {
+   "id": "06-planting-hole",
+   "section": 6,
+   "heading": "Planting a tree",
+   "caption": "A planting hole two to three times as wide as the root ball, with the topsoil and subsoil kept in separate heaps and the stake knocked in first."
+  },
+  {
+   "id": "06-staking-a-tree",
+   "section": 6,
+   "heading": "Planting a tree",
+   "caption": "Tying a young tree to its stake. Use a soft tie in a loose figure of eight so the stem can still move a little."
+  }
+ ],
+ "07-earthworks-and-water": [
+  {
+   "id": "07-earthworks-plan",
+   "section": 0,
+   "heading": "What earthworks can do",
+   "caption": "An earthworks plan for a whole property: swales, basins and a pond catch runoff from the top of the land to the bottom, each with a safe overflow."
+  },
+  {
+   "id": "07-swale-full-of-runoff",
+   "section": 0,
+   "heading": "What earthworks can do",
+   "caption": "A swale full of runoff from a nearby driveway. The water soaks into the soil slowly instead of running away."
+  },
+  {
+   "id": "07-swale-dug-by-machine",
+   "section": 0,
+   "heading": "What earthworks can do",
+   "caption": "A long swale being dug by TLB, with a survey staff to check the level. Get experienced advice before any large machine earthworks."
+  },
+  {
+   "id": "07-rain-barrel",
+   "section": 1,
+   "heading": "Harvesting and storing rainwater",
+   "caption": "A recycled drum under a roof downpipe, with a tap near the bottom: a cheap way to start harvesting rainwater. Keep it covered."
+  },
+  {
+   "id": "07-linked-tanks",
+   "section": 1,
+   "heading": "Harvesting and storing rainwater",
+   "caption": "Three tanks joined by a pipe at the base, so they fill and empty together."
+  },
+  {
+   "id": "07-infiltration-basins",
+   "section": 2,
+   "heading": "Infiltration basins",
+   "caption": "Stone-lined channels lead runoff into infiltration basins around young trees, watering them after every rain."
+  },
+  {
+   "id": "07-runoff-dam",
+   "section": 3,
+   "heading": "Ponds and dams",
+   "caption": "A runoff dam at the top of a property catches water flowing down the valley. Dams have legal rules in South Africa."
+  },
+  {
+   "id": "07-pond-digging",
+   "section": 3,
+   "heading": "Ponds and dams",
+   "caption": "Digging a runoff pond with a TLB. Keep people well away from a working machine, and slope the sides of the hole."
+  },
+  {
+   "id": "07-pond-filled",
+   "section": 3,
+   "heading": "Ponds and dams",
+   "caption": "The same pond, lined with plastic, three weeks later after 45 mm of rain. Fence ponds so that children cannot get in."
+  },
+  {
+   "id": "07-sand-dam-diagram",
+   "section": 4,
+   "heading": "Sand dams",
+   "caption": "How a sand dam works: a concrete wall is built on bedrock across a dry river bed. Sand builds up behind it and holds water that the sun cannot dry up."
+  },
+  {
+   "id": "07-sand-dam-lesotho",
+   "section": 4,
+   "heading": "Sand dams",
+   "caption": "A sand dam across a river bed at a community centre in Lesotho."
+  },
+  {
+   "id": "07-a-frame-level",
+   "section": 5,
+   "heading": "Swales",
+   "caption": "An A-frame level: a string with a weight hangs from the top. When the string crosses the centre mark, both legs stand at the same height."
+  },
+  {
+   "id": "07-a-frame-contour",
+   "section": 5,
+   "heading": "Swales",
+   "caption": "Pegging out a contour line with an A-frame. Each new peg is at the same height as the one before."
+  },
+  {
+   "id": "07-swale-digging",
+   "section": 5,
+   "heading": "Swales",
+   "caption": "Digging a swale by hand along the pegged contour. The soil is piled on the downhill side to make the berm."
+  },
+  {
+   "id": "07-planted-berm",
+   "section": 5,
+   "heading": "Swales",
+   "caption": "A planted swale and berm: amadumbe in the moist ditch, with lemongrass, sweet potato and pigeon pea on the berm."
+  },
+  {
+   "id": "07-volunteers-dug-beds",
+   "section": 6,
+   "heading": "Preparing the ground",
+   "caption": "A small vegetable garden prepared by hand by a team of volunteers. With many hands, digging goes quickly."
+  },
+  {
+   "id": "07-two-wheel-tractor",
+   "section": 6,
+   "heading": "Preparing the ground",
+   "caption": "A two-wheel tractor: small enough for a smallholding, it can plough, rotavate and pull a planter."
+  },
+  {
+   "id": "07-tarping",
+   "section": 6,
+   "heading": "Preparing the ground",
+   "caption": "Black plastic held down with bales and sandbags. Left for some weeks, it kills the grass so that beds can be made without digging."
+  },
+  {
+   "id": "07-beds-on-contour",
+   "section": 7,
+   "heading": "Forming growing beds for vegetables",
+   "caption": "Beds pegged out along the contour on a slope, with the soil pulled downhill to make each bed level."
+  },
+  {
+   "id": "07-stone-edged-beds",
+   "section": 7,
+   "heading": "Forming growing beds for vegetables",
+   "caption": "Double-reach beds edged with stones and filled with good topsoil. Each bed is narrow enough to reach the middle from both sides."
+  },
+  {
+   "id": "07-banana-circle",
+   "section": 7,
+   "heading": "Forming growing beds for vegetables",
+   "caption": "A pit bed (banana circle) lined with cardboard and filled with organic matter, being watered. The plants go around the rim."
+  },
+  {
+   "id": "07-hand-watering",
+   "section": 8,
+   "heading": "Irrigation",
+   "caption": "Hand watering under shade cloth. Water the soil at the base of the plants, not the leaves."
+  },
+  {
+   "id": "07-bottle-irrigation",
+   "section": 8,
+   "heading": "Irrigation",
+   "caption": "Bottle irrigation: an upturned bottle buried beside the plants lets water seep slowly into the roots."
+  },
+  {
+   "id": "07-drip-irrigation",
+   "section": 8,
+   "heading": "Irrigation",
+   "caption": "Drip irrigation: the drip line runs past the base of each pepper plant and wets only the soil around its roots."
+  },
+  {
+   "id": "07-greywater-drum",
+   "section": 9,
+   "heading": "Using greywater for irrigation",
+   "caption": "A greywater drum: kitchen water runs through a filter box (grease trap) and on to a mulched swale. Let it flow on the same day; stored greywater goes bad."
+  }
+ ],
+ "08-soil": [
+  {
+   "id": "08-soil-profile",
+   "section": 1,
+   "heading": "The layers of the soil",
+   "caption": "The layers of the soil: dark topsoil full of roots and life, lighter subsoil below, and stones and rock at the bottom."
+  },
+  {
+   "id": "08-soil-jar-test",
+   "section": 3,
+   "heading": "Testing your soil",
+   "caption": "The jar test: shake soil with water in a clear jar, let it settle for a day, then read the layers of sand, silt and clay."
+  },
+  {
+   "id": "08-straw-mulch",
+   "section": 4,
+   "heading": "Caring for your soil",
+   "caption": "A young pumpkin-family seedling growing through straw mulch. The mulch keeps the soil covered, cool and moist."
+  },
+  {
+   "id": "08-manure-on-cut-grass",
+   "section": 6,
+   "heading": "Way 2: Animal manure",
+   "caption": "Spreading manure on freshly cut, moist grass: the first layer of a sheet-mulched bed."
+  },
+  {
+   "id": "08-sheet-mulch-cardboard",
+   "section": 7,
+   "heading": "Way 3: Mulch",
+   "caption": "Sheet mulching: cardboard laid over the grass and covered with compost. The cardboard smothers the grass and then rots away."
+  },
+  {
+   "id": "08-planting-into-mulch",
+   "section": 7,
+   "heading": "Way 3: Mulch",
+   "caption": "Planting seedlings through a thick layer of straw into the finished sheet-mulched bed."
+  },
+  {
+   "id": "08-compost-stick-base",
+   "section": 8,
+   "heading": "Way 4: Compost",
+   "caption": "Building a compost heap on a base of sticks, which lets air in from below."
+  },
+  {
+   "id": "08-compost-watering-layers",
+   "section": 8,
+   "heading": "Way 4: Compost",
+   "caption": "Watering each layer as the compost heap is built. Keep it about as damp as a wrung-out sponge."
+  },
+  {
+   "id": "08-red-wigglers",
+   "section": 9,
+   "heading": "Way 5: Earthworms and worm farming",
+   "caption": "Red wigglers: the small compost worms used in a worm farm. They are a different kind from ordinary garden earthworms."
+  },
+  {
+   "id": "08-bathtub-worm-farm",
+   "section": 9,
+   "heading": "Way 5: Earthworms and worm farming",
+   "caption": "An old bath on bricks used as a worm farm, with a hessian cover to keep it dark and moist."
+  },
+  {
+   "id": "08-stacking-worm-farm",
+   "section": 9,
+   "heading": "Way 5: Earthworms and worm farming",
+   "caption": "A stacking worm farm: the worms move up into the top tray of fresh food, and worm tea drains out at the bottom."
+  }
+ ],
+ "09-balanced-ecology": [
+  {
+   "id": "09-trophic-pyramid",
+   "section": 2,
+   "heading": "Food chains and the ecological pyramid",
+   "caption": "The ecological pyramid: many plants at the base, fewer plant-eaters above them, fewer predators again, and only a few top predators such as owls."
+  },
+  {
+   "id": "09-cowpea-ground-cover",
+   "section": 4,
+   "heading": "Succession",
+   "caption": "A dense cowpea groundcover. As a pioneer legume it covers bare soil, feeds it with nitrogen and gives food as well."
+  },
+  {
+   "id": "09-legume-trees",
+   "section": 4,
+   "heading": "Succession",
+   "caption": "Pioneers first: pigeon pea and indigenous sweet thorn growing between young fruit trees to feed the soil."
+  },
+  {
+   "id": "09-wildlife-pond",
+   "section": 5,
+   "heading": "Habitat",
+   "caption": "Filling a small wildlife pond made from an old tyre, a blanket and plastic, edged with stones. Frogs and dragonflies soon move in."
+  },
+  {
+   "id": "09-owl-box",
+   "section": 5,
+   "heading": "Habitat",
+   "caption": "A barn owl box on a pole at least 3 m above the ground. A family of barn owls can eat 1 000 or more rodents a year."
+  }
+ ],
+ "10-natural-pest-control": [
+  {
+   "id": "10-companion-flowers",
+   "section": 7,
+   "heading": "Companion planting",
+   "caption": "Cabbages with marigolds, nasturtiums and borage between them. The mixed flowers feed useful insects and help hide the cabbages from pests."
+  },
+  {
+   "id": "10-nasturtium-aphids",
+   "section": 7,
+   "heading": "Companion planting",
+   "caption": "Nasturtium as a trap crop: aphids gather on its leaves instead of on the cabbages. Pick the infested leaves and feed them to the chickens."
+  },
+  {
+   "id": "10-onions-beside-carrots",
+   "section": 10,
+   "heading": "Good and poor neighbours",
+   "caption": "Onions planted along the edge of a carrot bed: good neighbours in the garden."
+  }
+ ],
+ "11-home-and-appropriate-technology": [
+  {
+   "id": "11-stone-house-bethel",
+   "section": 2,
+   "heading": "Design the house for the sun",
+   "caption": "A stone-and-cob building at a community centre in Lesotho, with solar panels and a roof vent: a home designed for the sun."
+  },
+  {
+   "id": "11-small-solar-panels",
+   "section": 4,
+   "heading": "Solar energy",
+   "caption": "Two small solar panels on a tin roof: enough for LED lights and charging phones."
+  },
+  {
+   "id": "11-solar-geyser",
+   "section": 4,
+   "heading": "Solar energy",
+   "caption": "An evacuated-tube solar geyser on a roof. Like solar panels, it should face north."
+  },
+  {
+   "id": "11-solar-oven",
+   "section": 4,
+   "heading": "Solar energy",
+   "caption": "A box solar cooker with a pot of stew. Use thick gloves: the pot and the box get very hot."
+  },
+  {
+   "id": "11-sun-drying-fruit",
+   "section": 5,
+   "heading": "Drying food with the sun",
+   "caption": "Halved fruit drying on corrugated iron. Dry food off the ground, cover it with netting against flies and bring it in at night."
+  },
+  {
+   "id": "11-solar-dryer",
+   "section": 5,
+   "heading": "Drying food with the sun",
+   "caption": "A solar dryer with a glass lid: food dries faster and stays clean, safe from flies and dust."
+  },
+  {
+   "id": "11-wonder-bag",
+   "section": 6,
+   "heading": "Heat-retention cooking: the wonder bag",
+   "caption": "A wonder bag. Bring the pot to the boil on the stove, then put it in the bag to finish cooking without more fuel."
+  },
+  {
+   "id": "11-rocket-stove",
+   "section": 7,
+   "heading": "Rocket stoves",
+   "caption": "A rocket stove cut away to show inside: sticks burn at the base of a short, insulated chimney, so the fire is hot and uses little wood."
+  },
+  {
+   "id": "11-biogas-diagram",
+   "section": 8,
+   "heading": "Biogas digesters",
+   "caption": "How a household biogas digester works: manure and food waste go in, gas flows to the kitchen stove, and the slurry goes to the garden."
+  },
+  {
+   "id": "11-biogas-digester-build",
+   "section": 8,
+   "heading": "Biogas digesters",
+   "caption": "Building a household biogas digester in Lesotho: the tank sits in a block-lined pit. Never work alone in a pit."
+  },
+  {
+   "id": "11-biogas-digester-finished",
+   "section": 8,
+   "heading": "Biogas digesters",
+   "caption": "A finished household biogas digester, with the gas pipe running to the kitchen. Biogas can explode: keep flames away from leaks and let fresh air in."
+  }
+ ]
+}

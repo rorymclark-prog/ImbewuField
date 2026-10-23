@@ -2,7 +2,7 @@
 
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
-import { ArrowRight, MapPin, Eye, ChevronRight } from 'lucide-react';
+import { ArrowRight, MapPin, Eye, ChevronRight, Users, BarChart3, Building2 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { useSiteProgress } from '@/lib/site-progress';
 import { nextAction } from '@/lib/home-next-step';
@@ -20,7 +20,32 @@ export interface HomeHeroCardProps {
   /** Simple puts the next step inside this card and heads it with the site; All tools keeps the
    *  original Lima-suggests card, with the next step as a separate card below (lib/app-level.ts). */
   level?: AppLevel;
+  /** staff-09: when the viewer is a mentor/ngo/funder (own account or sample preview), Home's
+   *  hero becomes a plain link to that role's own dashboard instead of the farmer's land/site
+   *  prompt — this card never had anything a non-farmer role could act on. */
+  staffRole?: 'mentor' | 'ngo' | 'funder' | null;
 }
+
+const STAFF_HERO_COPY: Record<'mentor' | 'ngo' | 'funder', { Icon: typeof Users; en: { title: string; desc: string; cta: string }; zu: { title: string; desc: string; cta: string }; href: string }> = {
+  mentor: {
+    Icon: Users,
+    href: '/mentor',
+    en: { title: 'Your mentor dashboard', desc: 'Review your assigned farmers, garden visits and training records.', cta: 'Open mentor dashboard' },
+    zu: { title: 'Ideshibhodi yakho yomeluleki', desc: 'Buyekeza abalimi ababelwe wena, ukuvakashelwa kwezingadi namarekhodi okuqeqeshwa.', cta: 'Vula ideshibhodi yomeluleki' },
+  },
+  ngo: {
+    Icon: BarChart3,
+    href: '/ngo',
+    en: { title: 'Your organisation dashboard', desc: 'Review gardens, assessments and reports across your programme.', cta: 'Open organisation dashboard' },
+    zu: { title: 'Ideshibhodi yenhlangano yakho', desc: 'Buyekeza izingadi, ukuhlola nemibiko kulo lonke uhlelo lwakho.', cta: 'Vula ideshibhodi yenhlangano' },
+  },
+  funder: {
+    Icon: Building2,
+    href: '/funder',
+    en: { title: 'Your funder dashboard', desc: 'Review the programme summaries shared with you.', cta: 'Open funder dashboard' },
+    zu: { title: 'Ideshibhodi yakho yomxhasi', desc: 'Buyekeza izifinyezo zohlelo esabelwane nawe.', cta: 'Vula ideshibhodi yomxhasi' },
+  },
+};
 
 // Shared green-card shell — identical background/backgroundImage/borderRadius/boxShadow
 // across all three variants so the card never visually jumps when the variant swaps.
@@ -102,10 +127,10 @@ function HeroEntranceStyle() {
         .imf-progress-sprout-hit:hover .imf-progress-sprout-art > svg, .imf-progress-sprout-hit:hover .imf-progress-sprout-art > span { transform: scale(1.34) rotate(-4deg); }
       }
       .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-art > svg, .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-art > span { transform: scale(1.34) rotate(-4deg); }
-      .imf-progress-sprout-help { position: absolute; right: 4px; bottom: 3px; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #F7F2E9; color: #1F4D2B; font: 700 13px var(--font-sans, sans-serif); box-shadow: 0 2px 8px rgba(10,25,13,.3); }
+      .imf-progress-sprout-help { position: absolute; right: 4px; bottom: 3px; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--on-forest); color: #1F4D2B; font: 700 13px var(--font-sans, sans-serif); box-shadow: 0 2px 8px rgba(10,25,13,.3); }
       @keyframes imfSproutHelpCue { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
       .imf-progress-sprout-help { animation: imfSproutHelpCue 480ms 900ms ease-out 1; }
-      .imf-progress-sprout-tip { position: absolute; z-index: 5; top: calc(100% + 8px); right: 0; display: flex; flex-direction: column; gap: 4px; width: min(260px, calc(100vw - 44px)); padding: 12px 14px; border: 1px solid #D8CFBC; border-radius: 12px; background: #F7F2E9; color: #1F4D2B; box-shadow: 0 12px 28px rgba(10,25,13,.25); font: 13px/1.4 var(--font-sans, sans-serif); opacity: 0; visibility: hidden; transform: translateY(-5px); transition: opacity 160ms ease, transform 160ms ease, visibility 160ms; pointer-events: none; }
+      .imf-progress-sprout-tip { position: absolute; z-index: 5; top: calc(100% + 8px); right: 0; display: flex; flex-direction: column; gap: 4px; width: min(260px, calc(100vw - 44px)); padding: 12px 14px; border: 1px solid #D8CFBC; border-radius: 12px; background: var(--on-forest); color: #1F4D2B; box-shadow: 0 12px 28px rgba(10,25,13,.25); font: 13px/1.4 var(--font-sans, sans-serif); opacity: 0; visibility: hidden; transform: translateY(-5px); transition: opacity 160ms ease, transform 160ms ease, visibility 160ms; pointer-events: none; }
       .imf-progress-sprout-tip strong { font-weight: 700; }
       .imf-progress-sprout-tip-status { margin-top: 3px; font-weight: 700; }
       .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-tip, .imf-progress-sprout-hit:focus-visible + .imf-progress-sprout-tip { opacity: 1; visibility: visible; transform: translateY(0); }
@@ -144,7 +169,7 @@ function HeroEntranceStyle() {
   );
 }
 
-export default function HomeHeroCard({ places, mainSite, firstName, level = 'full' }: HomeHeroCardProps) {
+export default function HomeHeroCard({ places, mainSite, firstName, level = 'full', staffRole = null }: HomeHeroCardProps) {
   const { t, lang } = useLanguage();
 
   // Hooks run unconditionally, before any early return, so the null-until-mounted
@@ -153,6 +178,38 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
   const coords = mainSite ? { lat: mainSite.lat, lon: mainSite.lon } : null;
   const progress = useSiteProgress(coords);
   const completedSteps = progress?.score.steps.filter((step) => step.done).length ?? 0;
+
+  // ── STAFF — staff-09: a mentor/ngo/funder viewer gets their own dashboard as the hero,
+  // never the farmer's land/site prompt (there is nothing for them to act on there). ──
+  if (staffRole) {
+    const copy = STAFF_HERO_COPY[staffRole];
+    const text = lang === 'zu' ? copy.zu : copy.en;
+    const Icon = copy.Icon;
+    return (
+      <Link href={copy.href} className="imf-hero-settle" style={{ ...SHELL_STYLE, textDecoration: 'none' }}>
+        <HeroEntranceStyle />
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <Overline>{firstName ? t('homeGreeting').replace('{name}', firstName) : text.title}</Overline>
+            <h2 className="u-display-sm" style={{ color: 'var(--on-forest)', marginBottom: 6 }}>
+              {text.title}
+            </h2>
+          </div>
+          <div className="flex items-center justify-center flex-shrink-0 rounded-full" style={{ width: 48, height: 48, background: 'rgba(234,243,226,0.14)' }}>
+            <Icon size={22} style={{ color: 'var(--on-forest)' }} strokeWidth={1.6} />
+          </div>
+        </div>
+
+        <p className="font-sans" style={{ fontSize: 14, color: 'rgba(234,243,226,0.78)', lineHeight: 1.5, marginBottom: 18 }}>
+          {text.desc}
+        </p>
+
+        <span className="inline-flex items-center font-sans font-semibold transition-all active:scale-[0.97]" style={PILL_STYLE}>
+          <span className="flex items-center gap-1.5">{text.cta}<ArrowRight size={14} /></span>
+        </span>
+      </Link>
+    );
+  }
 
   // ── DEFAULT — pre-hydration paint (places === null). This is today's exact
   // analyse-CTA markup: the whole card is one Link, so returning users never see
@@ -164,7 +221,7 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
             <Overline>{t('homeLimaSuggests')}</Overline>
-            <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 6 }}>
+            <h2 className="u-display-sm" style={{ color: 'var(--on-forest)', marginBottom: 6 }}>
               {t('homeSurveyNew')}
             </h2>
           </div>
@@ -198,7 +255,7 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
             <div className="u-display-sm" style={{ color: 'rgba(234,243,226,0.88)', marginBottom: 2 }}>
               {firstName ? t('homeGreeting').replace('{name}', firstName) : t('welcomeTitle')}
             </div>
-            <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 6 }}>
+            <h2 className="u-display-sm" style={{ color: 'var(--on-forest)', marginBottom: 6 }}>
               {t('welcomeHeroTitle')}
             </h2>
           </div>
@@ -252,7 +309,7 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
             <Overline>{t('homeLimaSuggests')}</Overline>
-            <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 12 }}>
+            <h2 className="u-display-sm" style={{ color: 'var(--on-forest)', marginBottom: 12 }}>
               {t('continueSiteTitle').replace('{site}', mainSite.name)}
             </h2>
           </div>
@@ -305,7 +362,7 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
             <div className="uppercase tracking-widest font-sans mb-2" style={{ fontSize: 12, color: 'rgba(234,243,226,0.72)', letterSpacing: '0.12em' }}>
               {t('homeMainSite')}
             </div>
-            <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 12, overflowWrap: 'anywhere' }}>
+            <h2 className="u-display-sm" style={{ color: 'var(--on-forest)', marginBottom: 12, overflowWrap: 'anywhere' }}>
               {mainSite.name}
             </h2>
           </div>
@@ -347,7 +404,7 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
             </div>
             <span
               className="imf-hero-next-arrow flex items-center justify-center flex-shrink-0"
-              style={{ width: 40, height: 40, borderRadius: 999, background: '#1F4D2B', color: '#F7F2E9' }}
+              style={{ width: 40, height: 40, borderRadius: 999, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)' }}
             >
               <ChevronRight size={20} strokeWidth={2} />
             </span>
@@ -375,7 +432,7 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
           <Overline>{t('homeLimaSuggests')}</Overline>
-          <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 6 }}>
+          <h2 className="u-display-sm" style={{ color: 'var(--on-forest)', marginBottom: 6 }}>
             {t('homeSurveyNew')}
           </h2>
         </div>

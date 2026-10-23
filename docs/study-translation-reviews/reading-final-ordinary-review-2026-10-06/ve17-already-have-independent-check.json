@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-06",
+  "readOnly": true,
+  "candidatePacket": "/tmp/imbewu-reading-final-12-candidates-20261006.json",
+  "candidatePacketSHA256": "620670a3bc5c89afa8583eabcec189121c21a33928cb696936dd1abd0b3c25a7",
+  "actualHEAD": "3d5bd8b5b8fd913af0060f9bbe4a3004d344cd25",
+  "fieldID": "ve:reading-landscape:slide17:heading",
+  "sourceEnglish": "Watch: Draw the Land You Already Have",
+  "currentTarget": "Sedzani: Draw the Land You Already Have",
+  "currentStatus": "draft",
+  "currentPairedSHA256": "aafdcf1a482fd3c16619479f60b2765b4975a2a67fafd01f81ae375033c1e579",
+  "previousCandidate": "Sedzani: Olani land ine ya no vha yaṋu",
+  "proposedTarget": "Sedzani: Olani land ine na no vha nayo",
+  "verdict": "accept-as-unreviewed-source-bound-repair",
+  "backtranslation": "Watch: Draw the land you already have.",
+  "analysis": {
+    "already": "no is a defensible already/completed-state aspect here. Primary DBE text attests ro no vha nayo in a have-already construction, not merely now.",
+    "have": "vha nayo expresses having/being with it; removing yaṋu avoids the previous is-yours predicate. No legal-title or acquisition claim is added.",
+    "subject": "na is plausible second-person plural/honorific relative subject corresponding to instructional ni; primary DBE relative clauses attest ine na ... nayo.",
+    "concord": "The retained English land is treated in the same class9-compatible ine/nayo agreement as the earlier have proposal. The primary examples support the construction pieces, not a proof that the full new borrowed-noun heading is fluent.",
+    "prefix": "Existing Sedzani: is preserved; Olani translates Draw. No scope, times, prescriptions or extra ownership qualification."
+  },
+  "primaryEvidence": [
+    {
+      "title": "DBE Tshivenda HL P2 February–March2015 memorandum",
+      "url": "https://www.education.gov.za/Portals/0/CD/Computer/Tshivenda%20HL%20P2%20Feb-March%202015%20Memo.pdf?ver=2015-04-02-084537-000",
+      "printedPage": 4,
+      "pdfPageZeroBased": 3,
+      "question": "4.2",
+      "exactExcerpt": "mbofholowo ya u amba ro no vha nayo kha ndayotewa.",
+      "boundedInference": "We already have the freedom of speech in the constitution: ro no vha nayo supports already+have, with another person concord.",
+      "access": "Primary PDF textual extract read; screenshot request timed out and is not claimed visually verified."
+    },
+    {
+      "title": "DBE Mind the Gap Nandi ndi Shenga study guide",
+      "url": "https://www.education.gov.za/Portals/0/Documents/Manuals/MTG%20Literature/tshivenda-novel-nandi-ndi-shenga.pdf",
+      "printedPage": 43,
+      "exactExcerpt": "Khuḓano ine na ḓo ṱangana nayo i simuwa hone.",
+      "boundedInference": "Relative ine na ... nayo addresses the reader; illustrates relative subject/object concord but not the already aspect itself.",
+      "access": "Primary indexed PDF textual extract read; legacy encoded diacritics normalized for this excerpt."
+    }
+  ],
+  "inferenceLimits": [
+    "Exact full phrase ine na no vha nayo was not located in the bounded primary search.",
+    "Acceptance is a semantic plausibility judgment combining attested already-have and relative-address constructions; not fluent concord approval.",
+    "The new heading retains land English but no longer retains ordinary already English.",
+    "No required new fluent-speaker prepublication gate is asserted; root retains adoption decision."
+  ],
+  "supersession": {
+    "earlierReport": "/tmp/imbewu-reading-ve17-fuller-independent-check-20261006.json",
+    "earlierRecommendedTarget": "Sedzani: Olani land ine na vha nayo already",
+    "scope": "Only that VE17 recommended target is replaced by this independently reviewed fuller option; other11 prior recommendations unchanged."
+  },
+  "noRepositoryWrites": true
+}

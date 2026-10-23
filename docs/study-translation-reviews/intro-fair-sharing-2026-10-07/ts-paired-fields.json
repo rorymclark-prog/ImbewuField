@@ -1,0 +1,28 @@
+{
+  "reviewStatus": "unreviewed",
+  "fields": [
+    {
+      "slide": 6,
+      "field": "heading",
+      "before": "Ku Avelana hi Ku Ringana (Fair Share)",
+      "after": "Ku Avelana Loku Lulameke (Fair Share)"
+    },
+    {
+      "slide": 6,
+      "field": "body[0]",
+      "before": "Nawu wa vunharhu wa mahanyelo i Ku Avelana hi Ku Ringana (Fair Share).",
+      "after": "Nawu wa vunharhu wa mahanyelo i Ku Avelana Loku Lulameke (Fair Share)."
+    },
+    {
+      "slide": 7,
+      "field": "body[1]",
+      "before": " yi nga tirhela vatirhisi hinkwawo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona ku ri na mati yo ringana, pfumelelani ndlela ya ku avelana hi ku ringana, mi ya mahlweni mi languta xiyimo xa mati. ",
+      "after": " yi nga tirhela vatirhisi hinkwawo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona ku ri na mati yo ringana, pfumelelani ndlela ya ku avelana leyi lulameke, mi ya mahlweni mi languta xiyimo xa mati. "
+    }
+  ],
+  "assetsPending": false,
+  "sourceUnchanged": true,
+  "audioUnchanged": true,
+  "renderEvidence": "intro-fair-sharing-2026-10-07/assets.json",
+  "phonePreviewPending": true
+}

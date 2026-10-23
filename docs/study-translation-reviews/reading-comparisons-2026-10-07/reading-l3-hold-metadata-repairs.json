@@ -1,0 +1,20 @@
+[
+  {
+    "path": "lib/course-translation-drafts-ts.ts",
+    "before": "    {\n      \"lessonId\": \"reading-landscape-l3\",\n      \"field\": \"body\",\n      \"sourceText\": \"through the local frost season\",\n      \"reason\": \"Preserve the full observation-season duration; during-season wording is insufficient.\"\n    },\n",
+    "after": "",
+    "reason": "Separately checked entire local season now drafted; remove obsolete English-hold claim."
+  },
+  {
+    "path": "lib/course-translation-drafts-ts.ts",
+    "before": "    {\n      \"lessonId\": \"reading-landscape-l3\",\n      \"field\": \"quiz[0].rationale\",\n      \"sourceText\": \"through the local frost season\",\n      \"reason\": \"Preserve the full observation-season duration; during-season wording is insufficient.\"\n    },\n",
+    "after": "",
+    "reason": "Separately checked entire local season now drafted; remove obsolete English-hold claim."
+  },
+  {
+    "path": "lib/course-translation-drafts-ts.ts",
+    "before": "      \"sourceText\": \"your site's ridges and gaps\",\n      \"reason\": \"Keep the site-landform terms exact until a fluent reviewer confirms the meaning.\"",
+    "after": "      \"sourceText\": \"ridges and gaps\",\n      \"reason\": \"Keep the technical site-landform terms exact; ordinary ownership framing is now a source-paired unreviewed draft.\"",
+    "reason": "Retain actual technical nouns while ordinary ownership is localized."
+  }
+]

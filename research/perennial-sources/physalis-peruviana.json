@@ -1,0 +1,54 @@
+{
+  "speciesId": "physalis-peruviana",
+  "commonName": "Cape gooseberry",
+  "botanicalName": "Physalis peruviana",
+  "harvestMonths": [
+    {
+      "region": "Stellenbosch, Western Cape (tunnel trial, planted June 2021)",
+      "months": [
+        10,
+        11,
+        12,
+        1
+      ],
+      "evidence": {
+        "quote": "only the matured fruits were harvested (Lovelli et al., 2017; Patidar et al., 2018) from late October 2021 to January 2022.",
+        "url": "http://hdl.handle.net/10019.1/127165",
+        "doc": "Tuaandi D (2023) The response of two Cape gooseberry varieties to organic amendments on degraded soils in the Western Cape, South Africa. MSc thesis, Stellenbosch University",
+        "page": 28
+      },
+      "notes": "Trial dates, not a grower recommendation: one season, in a tunnel at Welgevallen Experimental Farm, transplanted June 2021. 'late October' is month 10 and 'January' month 1; November and December are the span between them. Open-field timing and other planting months may differ. Page is the PDF page."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "The same thesis says 'The harvesting of the Cape gooseberry fruits started 120 days after transplanting.' (PDF p.28). That is days from transplanting in a tunnel, not years from planting a perennial, so no years value is stored."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Per-hectare only (e.g. 'the average yield of the Buffelsvlei gooseberry cultivar was 1191 kg ha-1', PDF p.35) with no per-plant figure; not converted."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in a fetched SA source."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "Only one SA primary source: a single-season Stellenbosch tunnel trial. No open-field SA grower calendar from a government, ARC or grower body was found.",
+    "A seed company's sowing calendar (round 1) was excluded: nursery and seed-company pages are not used for harvest data.",
+    "Blocked: DALRRD/DAFF Cape gooseberry brochure (502), a 1986 tandfonline gooseberry paper (403), web.archive.org."
+  ]
+}

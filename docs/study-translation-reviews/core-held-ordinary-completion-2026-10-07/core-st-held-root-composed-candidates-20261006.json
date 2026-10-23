@@ -1,0 +1,4029 @@
+{
+  "status": "Data-only root read full assembled candidates and removed additional context/concord risks; no learner wiring or publication, no fluent approval.",
+  "inputSHA256": "101bfd9c01bc72e904810d6d46b6561b4a0eb11e2f5cc2256ce636a4a0d448aa",
+  "rootRepairAuthoritySHA256": "9b1f24a9ac422385646e381ab6ed35c08ab26f15dd33b86649e9431be5d490c6",
+  "segmentCount": 78,
+  "fieldCount": 53,
+  "groups": [
+    {
+      "file": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "fileSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "slide": 10,
+      "field": "heading",
+      "sourceEnglish": "Observe and Interact",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Sheba mme o sebelisane",
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "intro-permaculture-st-s10-heading-segwhole",
+          "segmentIndex": null,
+          "exactSourceFragment": "Observe and Interact",
+          "candidateText": "Sheba mme o sebelisane",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Sheba mme o sebelisane"
+    },
+    {
+      "file": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "fileSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "slide": 11,
+      "field": "heading",
+      "sourceEnglish": "Catch and Store Energy",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Bokella matla mme o a boloke",
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "intro-permaculture-st-s11-heading-segwhole",
+          "segmentIndex": null,
+          "exactSourceFragment": "Catch and Store Energy",
+          "candidateText": "Bokella matla mme o a boloke",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Bokella matla mme o a boloke"
+    },
+    {
+      "file": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "fileSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "slide": 12,
+      "field": "heading",
+      "sourceEnglish": "Use Edges and Value the Marginal",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Sebedisa mathoko mme o ananele dibaka tse ka thoko",
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "intro-permaculture-st-s12-heading-segwhole",
+          "segmentIndex": null,
+          "exactSourceFragment": "Use Edges and Value the Marginal",
+          "candidateText": "Sebedisa mathoko mme o ananele dibaka tse ka thoko",
+          "spellingObjectRepair": true
+        }
+      ],
+      "visibleCandidate": "Sebedisa mathoko mme o ananele dibaka tse ka thoko"
+    },
+    {
+      "file": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "fileSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "slide": 13,
+      "field": "heading",
+      "sourceEnglish": "Use and Value Diversity",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Sebedisa mefuta-futa mme o e ananele",
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "intro-permaculture-st-s13-heading-segwhole",
+          "segmentIndex": null,
+          "exactSourceFragment": "Use and Value Diversity",
+          "candidateText": "Sebedisa mefuta-futa mme o e ananele",
+          "spellingObjectRepair": true
+        }
+      ],
+      "visibleCandidate": "Sebedisa mefuta-futa mme o e ananele"
+    },
+    {
+      "file": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "fileSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "slide": 14,
+      "field": "heading",
+      "sourceEnglish": "Integrate Rather Than Segregate",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Kopanya ho e-na le ho arola",
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "intro-permaculture-st-s14-heading-segwhole",
+          "segmentIndex": null,
+          "exactSourceFragment": "Integrate Rather Than Segregate",
+          "candidateText": "Kopanya ho e-na le ho arola",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Kopanya ho e-na le ho arola"
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "slide": 19,
+      "field": "body[1]",
+      "sourceEnglish": "Overlay your zones and sectors on the same base map.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Overlay your ",
+            "text": "Beha dibaka tsa hao (",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "zones",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "text": ") le makala (",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "sectors",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " on the ",
+            "text": ") hodima ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "same base map",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "text": ".",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Overlay your ",
+            "text": "Beha dibaka tsa hao (",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "zones",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "text": ") le makala (",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "sectors",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " on the ",
+            "text": ") hodima ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "same base map",
+            "status": "draft",
+            "text": "’mapa o le mong wa motheo"
+          },
+          {
+            "sourceEnglish": ".",
+            "text": ".",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "reading-landscape-st-s19-body[1]-seg5",
+          "segmentIndex": 5,
+          "exactSourceFragment": "same base map",
+          "candidateText": "’mapa o le mong wa motheo",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Beha dibaka tsa hao (zones) le makala (sectors) hodima ’mapa o le mong wa motheo."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "slide": 21,
+      "field": "body[2]",
+      "sourceEnglish": "Add summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Add summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your ",
+            "text": "Eketsa metsu ya moya wa lehlabula le wa mariha, dintlha tsa moriti tsa 8am, motsheare le 4pm, le ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "zones",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "text": " le ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "sectors",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". Keep the map and ",
+            "status": "draft",
+            "text": " tsa hao. Boloka ’mapa ’me "
+          },
+          {
+            "sourceEnglish": "update it",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": "."
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Add summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your ",
+            "text": "Eketsa metsu ya moya wa lehlabula le wa mariha, dintlha tsa moriti tsa 8am, motsheare le 4pm, le ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "zones",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "text": " le ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "sectors",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". Keep the map and ",
+            "status": "draft",
+            "text": " tsa hao. Boloka ’mapa ’me "
+          },
+          {
+            "sourceEnglish": "update it",
+            "status": "draft",
+            "text": "o ntlafatse"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": "."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "reading-landscape-st-s21-body[2]-seg5",
+          "segmentIndex": 5,
+          "exactSourceFragment": "update it",
+          "candidateText": "o ntlafatse",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Eketsa metsu ya moya wa lehlabula le wa mariha, dintlha tsa moriti tsa 8am, motsheare le 4pm, le zones le sectors tsa hao. Boloka ’mapa ’me o ntlafatse."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "slide": 6,
+      "field": "body[2]",
+      "sourceEnglish": "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "An A-frame",
+            "status": "draft",
+            "text": "A-frame"
+          },
+          {
+            "sourceEnglish": " can help you ",
+            "text": " e ka u thusa ho ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "mark points at the same height and trace a contour line",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". ",
+            "text": ". ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "Its marks are an observation",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", not a design or approval for ",
+            "text": "; ha se moralo kapa tumello ya ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "earthworks",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". Before digging, have the site assessed. Soil, ",
+            "text": ". Pele u cheka, etsa hore sebaka se hlahlojoe. Mobu, ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "slope",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", ",
+            "text": ", ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "drainage",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", ",
+            "text": ", ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "storm flow",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and a ",
+            "text": " le ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "safe overflow route",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " all matter. Ask a trained local adviser.",
+            "text": " kaofela di bohlokwa. Botsa moeletsi ea koetlisitsoeng oa sebakeng seo.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "An A-frame",
+            "status": "draft",
+            "text": "A-frame"
+          },
+          {
+            "sourceEnglish": " can help you ",
+            "text": " e ka u thusa ho ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "mark points at the same height and trace a contour line",
+            "status": "draft",
+            "text": "tshwaya dintlha tse bophahamo bo lekanang mme o latele contour line"
+          },
+          {
+            "sourceEnglish": ". ",
+            "text": ". ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "Its marks are an observation",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", not a design or approval for ",
+            "text": "; ha se moralo kapa tumello ya ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "earthworks",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". Before digging, have the site assessed. Soil, ",
+            "text": ". Pele u cheka, etsa hore sebaka se hlahlojoe. Mobu, ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "slope",
+            "status": "draft",
+            "text": "moepa"
+          },
+          {
+            "sourceEnglish": ", ",
+            "text": ", ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "drainage",
+            "status": "draft",
+            "text": "ho ntsha metsi mobung"
+          },
+          {
+            "sourceEnglish": ", ",
+            "text": ", ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "storm flow",
+            "status": "draft",
+            "text": "phallo ya metsi a sefefo (storm flow)"
+          },
+          {
+            "sourceEnglish": ", and a ",
+            "text": " le ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "safe overflow route",
+            "status": "draft",
+            "text": "tsela e sireletsehileng ya ho ntsha metsi a mangata"
+          },
+          {
+            "sourceEnglish": " all matter. Ask a trained local adviser.",
+            "text": " kaofela di bohlokwa. Botsa moeletsi ea koetlisitsoeng oa sebakeng seo.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "reading-landscape-st-s6-body[2]-seg8",
+          "segmentIndex": 8,
+          "exactSourceFragment": "slope",
+          "candidateText": "moepa",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "reading-landscape-st-s6-body[2]-seg10",
+          "segmentIndex": 10,
+          "exactSourceFragment": "drainage",
+          "candidateText": "ho ntsha metsi mobung",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "reading-landscape-st-s6-body[2]-seg14",
+          "segmentIndex": 14,
+          "exactSourceFragment": "safe overflow route",
+          "candidateText": "tsela e sireletsehileng ya ho ntsha metsi a mangata",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "reading-landscape-st-s6-body[2]-seg2",
+          "segmentIndex": 2,
+          "exactSourceFragment": "mark points at the same height and trace a contour line",
+          "candidateText": "tshwaya dintlha tse bophahamo bo lekanang mme o latele contour line",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "reading-landscape-st-s6-body[2]-seg12",
+          "segmentIndex": 12,
+          "exactSourceFragment": "storm flow",
+          "candidateText": "phallo ya metsi a sefefo (storm flow)",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "A-frame e ka u thusa ho tshwaya dintlha tse bophahamo bo lekanang mme o latele contour line. Its marks are an observation; ha se moralo kapa tumello ya earthworks. Pele u cheka, etsa hore sebaka se hlahlojoe. Mobu, moepa, ho ntsha metsi mobung, phallo ya metsi a sefefo (storm flow) le tsela e sireletsehileng ya ho ntsha metsi a mangata kaofela di bohlokwa. Botsa moeletsi ea koetlisitsoeng oa sebakeng seo."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "slide": 12,
+      "field": "body[2]",
+      "sourceEnglish": "Wind, cold air and slope all matter when choosing places for crops and shelter.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Wind, cold air and ",
+            "text": "Moya, moya o batang le ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "slope",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " all matter when choosing places for crops and shelter.",
+            "text": " kaofela di bohlokwa ha o kgetha dibaka tsa dijalo le tshireletso.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Wind, cold air and ",
+            "text": "Moya, moya o batang le ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "slope",
+            "status": "draft",
+            "text": "moepa"
+          },
+          {
+            "sourceEnglish": " all matter when choosing places for crops and shelter.",
+            "text": " kaofela di bohlokwa ha o kgetha dibaka tsa dijalo le tshireletso.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "reading-landscape-st-s12-body[2]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "slope",
+          "candidateText": "moepa",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Moya, moya o batang le moepa kaofela di bohlokwa ha o kgetha dibaka tsa dijalo le tshireletso."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "slide": 12,
+      "field": "body[1]",
+      "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The direction and strength of damaging wind change with region, season and ",
+            "text": "Tataiso le matla a moya o senyang di a fetoha ho ya ka sebaka, sehla, ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "your site's ridges and gaps",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a ",
+            "text": ". Tsamaya lefatsheng matsatsing a nang le moya. Ngola moo moya o senyang o tswang teng le hore na o ama eng. Sheba direkoto tsa maemo a lehodimo tsa sebakeng seo pele o beha ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "windbreak",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "text": ".",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The direction and strength of damaging wind change with region, season and ",
+            "text": "Tataiso le matla a moya o senyang di a fetoha ho ya ka sebaka, sehla, ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "your site's ridges and gaps",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a ",
+            "text": ". Tsamaya lefatsheng matsatsing a nang le moya. Ngola moo moya o senyang o tswang teng le hore na o ama eng. Sheba direkoto tsa maemo a lehodimo tsa sebakeng seo pele o beha ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "windbreak",
+            "status": "draft",
+            "text": "windbreak (tshireletso ya moya)"
+          },
+          {
+            "sourceEnglish": ".",
+            "text": ".",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "reading-landscape-st-s12-body[1]-seg3",
+          "segmentIndex": 3,
+          "exactSourceFragment": "windbreak",
+          "candidateText": "windbreak (tshireletso ya moya)",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Tataiso le matla a moya o senyang di a fetoha ho ya ka sebaka, sehla, your site's ridges and gaps. Tsamaya lefatsheng matsatsing a nang le moya. Ngola moo moya o senyang o tswang teng le hore na o ama eng. Sheba direkoto tsa maemo a lehodimo tsa sebakeng seo pele o beha windbreak (tshireletso ya moya)."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "slide": 19,
+      "field": "body[0]",
+      "sourceEnglish": "Mark summer and winter wind separately. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Mark summer and winter wind separately. They can come from different directions, so a ",
+            "text": "Tshwaya moya wa lehlabula le wa mariha ka thoko. Di ka tswa mahlakoreng a fapaneng, kahoo ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "windbreak",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " or crop position that works in one season may be wrong in the other.",
+            "text": " kapa sebaka sa dijalo se loketseng sehla se seng se ka se lokele sehla se seng.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Mark summer and winter wind separately. They can come from different directions, so a ",
+            "text": "Tshwaya moya wa lehlabula le wa mariha ka thoko. Di ka tswa mahlakoreng a fapaneng, kahoo ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "windbreak",
+            "status": "draft",
+            "text": "windbreak (tshireletso ya moya)"
+          },
+          {
+            "sourceEnglish": " or crop position that works in one season may be wrong in the other.",
+            "text": " kapa sebaka sa dijalo se loketseng sehla se seng se ka se lokele sehla se seng.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "reading-landscape-st-s19-body[0]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "windbreak",
+          "candidateText": "windbreak (tshireletso ya moya)",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Tshwaya moya wa lehlabula le wa mariha ka thoko. Di ka tswa mahlakoreng a fapaneng, kahoo windbreak (tshireletso ya moya) kapa sebaka sa dijalo se loketseng sehla se seng se ka se lokele sehla se seng."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "slide": 2,
+      "field": "body[1]",
+      "sourceEnglish": "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Rain already follows lines across the land.",
+            "status": "draft",
+            "text": "Pula e se e latela mela ho pholletsa le land."
+          },
+          {
+            "sourceEnglish": " The sun already warms some places more than others.",
+            "status": "draft",
+            "text": " Letsatsi le se le futhumatsa libaka tse ling ho feta tse ling."
+          },
+          {
+            "sourceEnglish": " Wind already finds ",
+            "status": "draft",
+            "text": " Moya o se o fumana "
+          },
+          {
+            "sourceEnglish": "gaps and ridges.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Cold air already settles in ",
+            "status": "draft",
+            "text": " Moya o batang o se o bokellana ka "
+          },
+          {
+            "sourceEnglish": "hollows.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Rain already follows lines across the land.",
+            "status": "draft",
+            "text": "Pula e se e latela mela ho pholletsa le land."
+          },
+          {
+            "sourceEnglish": " The sun already warms some places more than others.",
+            "status": "draft",
+            "text": " Letsatsi le se le futhumatsa libaka tse ling ho feta tse ling."
+          },
+          {
+            "sourceEnglish": " Wind already finds ",
+            "status": "draft",
+            "text": " Moya o se o fumana "
+          },
+          {
+            "sourceEnglish": "gaps and ridges.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Cold air already settles in ",
+            "status": "draft",
+            "text": " Moya o batang o se o bokellana ka "
+          },
+          {
+            "sourceEnglish": "hollows.",
+            "status": "draft",
+            "text": "mekoting e tlase."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "reading-landscape-st-s2-body[1]-seg5",
+          "segmentIndex": 5,
+          "exactSourceFragment": "hollows.",
+          "candidateText": "mekoting e tlase.",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Pula e se e latela mela ho pholletsa le land. Letsatsi le se le futhumatsa libaka tse ling ho feta tse ling. Moya o se o fumana gaps and ridges. Moya o batang o se o bokellana ka mekoting e tlase."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "slide": 4,
+      "field": "body[1]",
+      "sourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for ",
+            "text": "Shebella u le sebakeng se sireletsehileng nakong ea pula e matla. Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. Batla ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "rills",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", places where water fans out, ",
+            "text": ", dibaka tseo metsi a hasanang ho tsona, ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "ponds",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and ",
+            "text": ", le ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "where water leaves your property",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "text": ".",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for ",
+            "text": "Shebella u le sebakeng se sireletsehileng nakong ea pula e matla. Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. Batla ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "rills",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", places where water fans out, ",
+            "text": ", dibaka tseo metsi a hasanang ho tsona, ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "ponds",
+            "status": "draft",
+            "text": "matamo"
+          },
+          {
+            "sourceEnglish": ", and ",
+            "text": ", le ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "where water leaves your property",
+            "status": "draft",
+            "text": "moo metsi a tswang teng setsheng sa hao"
+          },
+          {
+            "sourceEnglish": ".",
+            "text": ".",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "reading-landscape-st-s4-body[1]-seg3",
+          "segmentIndex": 3,
+          "exactSourceFragment": "ponds",
+          "candidateText": "matamo",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "reading-landscape-st-s4-body[1]-seg5",
+          "segmentIndex": 5,
+          "exactSourceFragment": "where water leaves your property",
+          "candidateText": "moo metsi a tswang teng setsheng sa hao",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Shebella u le sebakeng se sireletsehileng nakong ea pula e matla. Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. Batla rills, dibaka tseo metsi a hasanang ho tsona, matamo, le moo metsi a tswang teng setsheng sa hao."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "slide": 20,
+      "field": "body[0]",
+      "sourceEnglish": "When it is safe after heavy rain, walk your land. Mark rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "When it is safe after heavy rain, walk your land. Mark ",
+            "text": "Ha ho se ho sireletsehile kamora pula e matla, tsamaya lefatsheng la hao. Tšoaea ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "rills",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", spreading water, ",
+            "text": ", spreading water, ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "ponds",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and ",
+            "text": ", and ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "where water leaves your property",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". Note where excess water may need a safe route away.",
+            "text": ". Hlokomela moo metsi a mangata a ka hlokang tsela e sireletsehileng ea ho tsoa.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "When it is safe after heavy rain, walk your land. Mark ",
+            "text": "Ha ho se ho sireletsehile kamora pula e matla, tsamaya lefatsheng la hao. Tšoaea ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "rills",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", spreading water, ",
+            "text": ", spreading water, ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "ponds",
+            "status": "draft",
+            "text": "matamo"
+          },
+          {
+            "sourceEnglish": ", and ",
+            "text": ", and ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "where water leaves your property",
+            "status": "draft",
+            "text": "moo metsi a tswang teng setsheng sa hao"
+          },
+          {
+            "sourceEnglish": ". Note where excess water may need a safe route away.",
+            "text": ". Hlokomela moo metsi a mangata a ka hlokang tsela e sireletsehileng ea ho tsoa.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "reading-landscape-st-s20-body[0]-seg3",
+          "segmentIndex": 3,
+          "exactSourceFragment": "ponds",
+          "candidateText": "matamo",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "reading-landscape-st-s20-body[0]-seg5",
+          "segmentIndex": 5,
+          "exactSourceFragment": "where water leaves your property",
+          "candidateText": "moo metsi a tswang teng setsheng sa hao",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Ha ho se ho sireletsehile kamora pula e matla, tsamaya lefatsheng la hao. Tšoaea rills, spreading water, matamo, and moo metsi a tswang teng setsheng sa hao. Hlokomela moo metsi a mangata a ka hlokang tsela e sireletsehileng ea ho tsoa."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "slide": 5,
+      "field": "body[0]",
+      "sourceEnglish": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The picture shows rain",
+            "status": "draft",
+            "text": "Setšoantšo se bontša pula"
+          },
+          {
+            "sourceEnglish": " moving downhill.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Follow where it ",
+            "status": "draft",
+            "text": " Latela moo e "
+          },
+          {
+            "sourceEnglish": "speeds up, ",
+            "status": "draft",
+            "text": "potlakang, "
+          },
+          {
+            "sourceEnglish": "spreads, ",
+            "status": "draft",
+            "text": "hasanang, "
+          },
+          {
+            "sourceEnglish": "sinks",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", gathers, and leaves the land.",
+            "status": "draft",
+            "text": ", bokellanang, le moo e tlohang land."
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The picture shows rain",
+            "status": "draft",
+            "text": "Setšoantšo se bontša pula"
+          },
+          {
+            "sourceEnglish": " moving downhill.",
+            "status": "draft",
+            "text": " e theohelang tlase."
+          },
+          {
+            "sourceEnglish": " Follow where it ",
+            "status": "draft",
+            "text": " Latela moo e "
+          },
+          {
+            "sourceEnglish": "speeds up, ",
+            "status": "draft",
+            "text": "potlakang, "
+          },
+          {
+            "sourceEnglish": "spreads, ",
+            "status": "draft",
+            "text": "hasanang, "
+          },
+          {
+            "sourceEnglish": "sinks",
+            "status": "draft",
+            "text": "kenella mobung"
+          },
+          {
+            "sourceEnglish": ", gathers, and leaves the land.",
+            "status": "draft",
+            "text": ", bokellanang, le moo e tlohang land."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "reading-landscape-st-s5-body[0]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": " moving downhill.",
+          "candidateText": " e theohelang tlase.",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "reading-landscape-st-s5-body[0]-seg5",
+          "segmentIndex": 5,
+          "exactSourceFragment": "sinks",
+          "candidateText": "kenella mobung",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Setšoantšo se bontša pula e theohelang tlase. Latela moo e potlakang, hasanang, kenella mobung, bokellanang, le moo e tlohang land."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "slide": 6,
+      "field": "body[1]",
+      "sourceEnglish": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Walk it across the land to find ",
+            "status": "draft",
+            "text": "E tsamaiseng ho pholletsa le land ho fumana "
+          },
+          {
+            "sourceEnglish": "points at the same height.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Join ",
+            "status": "draft",
+            "text": " Kopanya "
+          },
+          {
+            "sourceEnglish": "these points",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " to trace a contour line.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Walk it across the land to find ",
+            "status": "draft",
+            "text": "E tsamaiseng ho pholletsa le land ho fumana "
+          },
+          {
+            "sourceEnglish": "points at the same height.",
+            "status": "draft",
+            "text": "dintlha tse bophahamo bo lekanang."
+          },
+          {
+            "sourceEnglish": " Join ",
+            "status": "draft",
+            "text": " Kopanya "
+          },
+          {
+            "sourceEnglish": "these points",
+            "status": "draft",
+            "text": "dintlha tsena"
+          },
+          {
+            "sourceEnglish": " to trace a contour line.",
+            "status": "draft",
+            "text": " ho latela contour line."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "reading-landscape-st-s6-body[1]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "points at the same height.",
+          "candidateText": "dintlha tse bophahamo bo lekanang.",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "reading-landscape-st-s6-body[1]-seg3",
+          "segmentIndex": 3,
+          "exactSourceFragment": "these points",
+          "candidateText": "dintlha tsena",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "reading-landscape-st-s6-body[1]-seg4",
+          "segmentIndex": 4,
+          "exactSourceFragment": " to trace a contour line.",
+          "candidateText": " ho latela contour line.",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "E tsamaiseng ho pholletsa le land ho fumana dintlha tse bophahamo bo lekanang. Kopanya dintlha tsena ho latela contour line."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "slide": 21,
+      "field": "body[1]",
+      "sourceEnglish": "Use it to mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Use it to ",
+            "text": "E sebelise ho ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "mark points at the same height and trace a contour line",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". ",
+            "text": ". ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "This is an observation",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", not a design for ",
+            "text": ", eseng moralo wa ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "earthworks",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
+            "text": ". Pele o cheka, kopa moeletsi wa sebakeng seo ya kwetlisitsweng hore a lekole sebaka mme a rere tsela e sireletsehileng ya metsi a mangata.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Use it to ",
+            "text": "E sebelise ho ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "mark points at the same height and trace a contour line",
+            "status": "draft",
+            "text": "tshwaya dintlha tse bophahamo bo lekanang mme o latele contour line"
+          },
+          {
+            "sourceEnglish": ". ",
+            "text": ". ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "This is an observation",
+            "status": "draft",
+            "text": "Sena ke seo o se boneng"
+          },
+          {
+            "sourceEnglish": ", not a design for ",
+            "text": ", eseng moralo wa ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "earthworks",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
+            "text": ". Pele o cheka, kopa moeletsi wa sebakeng seo ya kwetlisitsweng hore a lekole sebaka mme a rere tsela e sireletsehileng ya metsi a mangata.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "reading-landscape-st-s21-body[1]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "mark points at the same height and trace a contour line",
+          "candidateText": "tshwaya dintlha tse bophahamo bo lekanang mme o latele contour line",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "reading-landscape-st-s21-body[1]-seg3",
+          "segmentIndex": 3,
+          "exactSourceFragment": "This is an observation",
+          "candidateText": "Sena ke seo o se boneng",
+          "spellingObjectRepair": false,
+          "rootReason": "Removed added feela (only); unchanged source contrast already states observation, not design."
+        }
+      ],
+      "visibleCandidate": "E sebelise ho tshwaya dintlha tse bophahamo bo lekanang mme o latele contour line. Sena ke seo o se boneng, eseng moralo wa earthworks. Pele o cheka, kopa moeletsi wa sebakeng seo ya kwetlisitsweng hore a lekole sebaka mme a rere tsela e sireletsehileng ya metsi a mangata."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "slide": 7,
+      "field": "body[0]",
+      "sourceEnglish": "Water picks up speed and erosive force as it runs downhill.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Water picks up speed and ",
+            "text": "Metsi a fumana lebelo le ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "erosive force",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " as it runs downhill.",
+            "text": " ha a ntse a theohela tlase.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Water picks up speed and ",
+            "text": "Metsi a fumana lebelo le ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "erosive force",
+            "status": "draft",
+            "text": "matla a bakang khoholeho ya mobu"
+          },
+          {
+            "sourceEnglish": " as it runs downhill.",
+            "text": " ha a ntse a theohela tlase.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "reading-landscape-st-s7-body[0]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "erosive force",
+          "candidateText": "matla a bakang khoholeho ya mobu",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Metsi a fumana lebelo le matla a bakang khoholeho ya mobu ha a ntse a theohela tlase."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "slide": 10,
+      "field": "body[2]",
+      "sourceEnglish": "Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Stand in the spot ",
+            "status": "draft",
+            "text": "Ema sebakeng seo "
+          },
+          {
+            "sourceEnglish": "at 8am, midday, and 4pm on a winter's day. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Watch where the shade falls.",
+            "status": "draft",
+            "text": "Shebella moo moriti o welang teng."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Stand in the spot ",
+            "status": "draft",
+            "text": "Ema sebakeng seo "
+          },
+          {
+            "sourceEnglish": "at 8am, midday, and 4pm on a winter's day. ",
+            "status": "draft",
+            "text": "ka 8am, motsheare, le 4pm ka letsatsi la mariha. "
+          },
+          {
+            "sourceEnglish": "Watch where the shade falls.",
+            "status": "draft",
+            "text": "Shebella moo moriti o welang teng."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "reading-landscape-st-s10-body[2]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "at 8am, midday, and 4pm on a winter's day. ",
+          "candidateText": "ka 8am, motsheare, le 4pm ka letsatsi la mariha. ",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Ema sebakeng seo ka 8am, motsheare, le 4pm ka letsatsi la mariha. Shebella moo moriti o welang teng."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "slide": 14,
+      "field": "body[0]",
+      "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "On a clear, still night, ",
+            "status": "draft",
+            "text": "Bosiu bo hlakileng, bo kgutsitseng, "
+          },
+          {
+            "sourceEnglish": "cold air can flow downhill and collect in low places.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " These places can be colder than nearby slopes.",
+            "status": "draft",
+            "text": " Dibaka tsena di ka bata ho feta matswapo a haufi."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "On a clear, still night, ",
+            "status": "draft",
+            "text": "Bosiu bo hlakileng, bo kgutsitseng, "
+          },
+          {
+            "sourceEnglish": "cold air can flow downhill and collect in low places.",
+            "status": "draft",
+            "text": "Moya o batang o ka theohela tlase mme wa bokellana dibakeng tse tlase."
+          },
+          {
+            "sourceEnglish": " These places can be colder than nearby slopes.",
+            "status": "draft",
+            "text": " Dibaka tsena di ka bata ho feta matswapo a haufi."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "reading-landscape-st-s14-body[0]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "cold air can flow downhill and collect in low places.",
+          "candidateText": "Moya o batang o ka theohela tlase mme wa bokellana dibakeng tse tlase.",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Bosiu bo hlakileng, bo kgutsitseng, Moya o batang o ka theohela tlase mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata ho feta matswapo a haufi."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "slide": 14,
+      "field": "body[3]",
+      "sourceEnglish": "Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Compare candidate ",
+            "text": "Bapisa dibaka tseo o ka thehang ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "nursery",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " sites through the local ",
+            "text": " ho tsona nakong yohle ya ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "frost",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " season. Check ",
+            "text": " ya sebakeng seo. Sheba ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "local minimum-temperature records",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " or ask a local agriculture adviser before choosing a permanent position.",
+            "text": " kapa o botse moeletsi wa temo wa sebakeng seo pele o kgetha sebaka sa ka mehla.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Compare candidate ",
+            "text": "Bapisa dibaka tseo o ka thehang ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "nursery",
+            "status": "draft",
+            "text": "sebaka sa ho hodisetsa dimela tse nyane"
+          },
+          {
+            "sourceEnglish": " sites through the local ",
+            "text": " ho tsona nakong yohle ya ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "frost",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " season. Check ",
+            "text": " ya sebakeng seo. Sheba ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "local minimum-temperature records",
+            "status": "draft",
+            "text": "direkoto tsa mocheso o tlase ka ho fetisisa sebakeng seo"
+          },
+          {
+            "sourceEnglish": " or ask a local agriculture adviser before choosing a permanent position.",
+            "text": " kapa o botse moeletsi wa temo wa sebakeng seo pele o kgetha sebaka sa ka mehla.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "reading-landscape-st-s14-body[3]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "nursery",
+          "candidateText": "sebaka sa ho hodisetsa dimela tse nyane",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "reading-landscape-st-s14-body[3]-seg5",
+          "segmentIndex": 5,
+          "exactSourceFragment": "local minimum-temperature records",
+          "candidateText": "direkoto tsa mocheso o tlase ka ho fetisisa sebakeng seo",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Bapisa dibaka tseo o ka thehang sebaka sa ho hodisetsa dimela tse nyane ho tsona nakong yohle ya frost ya sebakeng seo. Sheba direkoto tsa mocheso o tlase ka ho fetisisa sebakeng seo kapa o botse moeletsi wa temo wa sebakeng seo pele o kgetha sebaka sa ka mehla."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 6,
+      "field": "body[1]",
+      "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Others ",
+            "status": "draft",
+            "text": "Tse ding "
+          },
+          {
+            "sourceEnglish": "do better",
+            "status": "draft",
+            "text": "di sebetsa hantle ho feta"
+          },
+          {
+            "sourceEnglish": " with a protected start in a ",
+            "status": "draft",
+            "text": " ka qalo e sireletsehileng ho "
+          },
+          {
+            "sourceEnglish": "nursery",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", then ",
+            "status": "draft",
+            "text": ", ebe "
+          },
+          {
+            "sourceEnglish": "transplanting.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Tomatoes",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " le "
+          },
+          {
+            "sourceEnglish": "brassicas",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " belong there.",
+            "status": "draft",
+            "text": " ke tsa sehlopha seo."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Others ",
+            "status": "draft",
+            "text": "Tse ding "
+          },
+          {
+            "sourceEnglish": "do better",
+            "status": "draft",
+            "text": "di sebetsa hantle ho feta"
+          },
+          {
+            "sourceEnglish": " with a protected start in a ",
+            "status": "draft",
+            "text": " ka qalo e sireletsehileng ho "
+          },
+          {
+            "sourceEnglish": "nursery",
+            "status": "draft",
+            "text": "sebaka sa ho hodisetsa dimela tse nyane"
+          },
+          {
+            "sourceEnglish": ", then ",
+            "status": "draft",
+            "text": ", ebe "
+          },
+          {
+            "sourceEnglish": "transplanting.",
+            "status": "draft",
+            "text": "ho isa dimela sebakeng sa tsona sa ho qetela."
+          },
+          {
+            "sourceEnglish": " Tomatoes",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " le "
+          },
+          {
+            "sourceEnglish": "brassicas",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " belong there.",
+            "status": "draft",
+            "text": " ke tsa sehlopha seo."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s6-body[1]-seg3",
+          "segmentIndex": 3,
+          "exactSourceFragment": "nursery",
+          "candidateText": "sebaka sa ho hodisetsa dimela tse nyane",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "vegetables-staples-st-s6-body[1]-seg5",
+          "segmentIndex": 5,
+          "exactSourceFragment": "transplanting.",
+          "candidateText": "ho isa dimela sebakeng sa tsona sa ho qetela.",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Tse ding di sebetsa hantle ho feta ka qalo e sireletsehileng ho sebaka sa ho hodisetsa dimela tse nyane, ebe ho isa dimela sebakeng sa tsona sa ho qetela. Tomatoes le brassicas ke tsa sehlopha seo."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "slide": 20,
+      "field": "body[1]",
+      "sourceEnglish": "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Return at ",
+            "status": "draft",
+            "text": "Khutla ka "
+          },
+          {
+            "sourceEnglish": "dawn on a cold June morning. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Mark ",
+            "status": "draft",
+            "text": "Tshwaya "
+          },
+          {
+            "sourceEnglish": "mist, frozen dew, and the places frost lasts longest.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed mixed machine draft; exact source clauses remain paired, with uncertain timing and observation/site terms held verbatim in English. Facilitator review pending."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Return at ",
+            "status": "draft",
+            "text": "Khutla ka "
+          },
+          {
+            "sourceEnglish": "dawn on a cold June morning. ",
+            "status": "draft",
+            "text": "ha mafube a hlaha hoseng ho batang ha June. "
+          },
+          {
+            "sourceEnglish": "Mark ",
+            "status": "draft",
+            "text": "Tshwaya "
+          },
+          {
+            "sourceEnglish": "mist, frozen dew, and the places frost lasts longest.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "reading-landscape-st-s20-body[1]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "dawn on a cold June morning. ",
+          "candidateText": "ha mafube a hlaha hoseng ho batang ha June. ",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Khutla ka ha mafube a hlaha hoseng ho batang ha June. Tshwaya mist, frozen dew, and the places frost lasts longest."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "slide": 20,
+      "field": "body[2]",
+      "sourceEnglish": "On paper, draw your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "On paper, draw your boundary, mark north, and add the house, water, roads, ",
+            "text": "Pampiring, taka moedi wa hao, Tshwaya leboya, mme o kenye ntlo, metsi, ditsela, ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "fences",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", ",
+            "text": ", ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "slopes",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and existing vegetation.",
+            "text": " le dimela tse seng di le teng.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "On paper, draw your boundary, mark north, and add the house, water, roads, ",
+            "text": "Pampiring, taka moedi wa hao, Tshwaya leboya, mme o kenye ntlo, metsi, ditsela, ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "fences",
+            "status": "draft",
+            "text": "makgora"
+          },
+          {
+            "sourceEnglish": ", ",
+            "text": ", ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "slopes",
+            "status": "draft",
+            "text": "matsoapo"
+          },
+          {
+            "sourceEnglish": ", and existing vegetation.",
+            "text": " le dimela tse seng di le teng.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "reading-landscape-st-s20-body[2]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "fences",
+          "candidateText": "makgora",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "reading-landscape-st-s20-body[2]-seg3",
+          "segmentIndex": 3,
+          "exactSourceFragment": "slopes",
+          "candidateText": "matsoapo",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Pampiring, taka moedi wa hao, Tshwaya leboya, mme o kenye ntlo, metsi, ditsela, makgora, matsoapo le dimela tse seng di le teng."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 1,
+      "field": "heading",
+      "sourceEnglish": "Vegetables and Staple Crops",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Meroho le dijalo tsa dijo tsa motheo",
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s1-heading-segwhole",
+          "segmentIndex": null,
+          "exactSourceFragment": "Vegetables and Staple Crops",
+          "candidateText": "Meroho le dijalo tsa dijo tsa motheo",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Meroho le dijalo tsa dijo tsa motheo"
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 1,
+      "field": "body[0]",
+      "sourceEnglish": "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Welcome. This is ",
+            "status": "draft",
+            "text": "Rea le amohela. Ena ke "
+          },
+          {
+            "sourceEnglish": "Vegetables and Staple Crops.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " It's one of the ten modules in the ImbewuField training.",
+            "status": "draft",
+            "text": " Ke e nngwe ya dimmojule tse leshome tsa thupelo ya ImbewuField."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Welcome. This is ",
+            "status": "draft",
+            "text": "Rea le amohela. Ena ke "
+          },
+          {
+            "sourceEnglish": "Vegetables and Staple Crops.",
+            "status": "draft",
+            "text": "Meroho le dijalo tsa dijo tsa motheo."
+          },
+          {
+            "sourceEnglish": " It's one of the ten modules in the ImbewuField training.",
+            "status": "draft",
+            "text": " Ke e nngwe ya dimmojule tse leshome tsa thupelo ya ImbewuField."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s1-body[0]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "Vegetables and Staple Crops.",
+          "candidateText": "Meroho le dijalo tsa dijo tsa motheo.",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Rea le amohela. Ena ke Meroho le dijalo tsa dijo tsa motheo. Ke e nngwe ya dimmojule tse leshome tsa thupelo ya ImbewuField."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 3,
+      "field": "body[1]",
+      "sourceEnglish": "One. Build the right bed — matching the width and the bed type to your soil and your rainfall.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "One. ",
+            "status": "draft",
+            "text": "Nngwe. "
+          },
+          {
+            "sourceEnglish": "Build the right bed",
+            "status": "draft",
+            "text": "Haha bed e loketseng",
+            "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: bed, width, bed type, soil, rainfall"
+          },
+          {
+            "sourceEnglish": " — matching the ",
+            "status": "draft",
+            "text": " — "
+          },
+          {
+            "sourceEnglish": "width",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and the ",
+            "status": "draft",
+            "text": " le "
+          },
+          {
+            "sourceEnglish": "bed type",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " to your ",
+            "status": "draft",
+            "text": " di tsamaisana le "
+          },
+          {
+            "sourceEnglish": "soil",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and your ",
+            "status": "draft",
+            "text": " ya hao le "
+          },
+          {
+            "sourceEnglish": "rainfall",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": " ya hao."
+          }
+        ],
+        "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "One. ",
+            "status": "draft",
+            "text": "Nngwe. "
+          },
+          {
+            "sourceEnglish": "Build the right bed",
+            "status": "draft",
+            "text": "Haha bed e loketseng",
+            "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: bed, width, bed type, soil, rainfall"
+          },
+          {
+            "sourceEnglish": " — matching the ",
+            "status": "draft",
+            "text": " — "
+          },
+          {
+            "sourceEnglish": "width",
+            "status": "draft",
+            "text": "bophara"
+          },
+          {
+            "sourceEnglish": " and the ",
+            "status": "draft",
+            "text": " le "
+          },
+          {
+            "sourceEnglish": "bed type",
+            "status": "draft",
+            "text": "mofuta wa bethe"
+          },
+          {
+            "sourceEnglish": " to your ",
+            "status": "draft",
+            "text": " di tsamaisana le "
+          },
+          {
+            "sourceEnglish": "soil",
+            "status": "draft",
+            "text": "mobu"
+          },
+          {
+            "sourceEnglish": " and your ",
+            "status": "draft",
+            "text": " ya hao le "
+          },
+          {
+            "sourceEnglish": "rainfall",
+            "status": "draft",
+            "text": "pula"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": " ya hao."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s3-body[1]-seg3",
+          "segmentIndex": 3,
+          "exactSourceFragment": "width",
+          "candidateText": "bophara",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "vegetables-staples-st-s3-body[1]-seg5",
+          "segmentIndex": 5,
+          "exactSourceFragment": "bed type",
+          "candidateText": "mofuta wa bethe",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "vegetables-staples-st-s3-body[1]-seg7",
+          "segmentIndex": 7,
+          "exactSourceFragment": "soil",
+          "candidateText": "mobu",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "vegetables-staples-st-s3-body[1]-seg9",
+          "segmentIndex": 9,
+          "exactSourceFragment": "rainfall",
+          "candidateText": "pula",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Nngwe. Haha bed e loketseng — bophara le mofuta wa bethe di tsamaisana le mobu ya hao le pula ya hao."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 3,
+      "field": "body[2]",
+      "sourceEnglish": "Two. Keep harvests moving, using succession planting and intercropping.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Two. ",
+            "status": "draft",
+            "text": "Pedi. "
+          },
+          {
+            "sourceEnglish": "Keep harvests moving, using ",
+            "status": "draft",
+            "text": "Etsa hore dikotulo di tswele pele ka "
+          },
+          {
+            "sourceEnglish": "succession planting",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " le "
+          },
+          {
+            "sourceEnglish": "intercropping.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Two. ",
+            "status": "draft",
+            "text": "Pedi. "
+          },
+          {
+            "sourceEnglish": "Keep harvests moving, using ",
+            "status": "draft",
+            "text": "Etsa hore dikotulo di tswele pele ka "
+          },
+          {
+            "sourceEnglish": "succession planting",
+            "status": "draft",
+            "text": "ho jala ka mekhahlelo (succession planting)"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " le "
+          },
+          {
+            "sourceEnglish": "intercropping.",
+            "status": "draft",
+            "text": "ho jala dijalo tse fapaneng hammoho."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s3-body[2]-seg2",
+          "segmentIndex": 2,
+          "exactSourceFragment": "succession planting",
+          "candidateText": "ho jala ka mekhahlelo (succession planting)",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "vegetables-staples-st-s3-body[2]-seg4",
+          "segmentIndex": 4,
+          "exactSourceFragment": "intercropping.",
+          "candidateText": "ho jala dijalo tse fapaneng hammoho.",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Pedi. Etsa hore dikotulo di tswele pele ka ho jala ka mekhahlelo (succession planting) le ho jala dijalo tse fapaneng hammoho."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 3,
+      "field": "body[3]",
+      "sourceEnglish": "Three. Choose staples that protect you when one crop fails.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Three. ",
+            "status": "draft",
+            "text": "Tharo. "
+          },
+          {
+            "sourceEnglish": "Choose ",
+            "status": "draft",
+            "text": "Khetha "
+          },
+          {
+            "sourceEnglish": "staples",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that protect you ",
+            "status": "draft",
+            "text": " tse o sireletsang "
+          },
+          {
+            "sourceEnglish": "when one crop fails.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Three. ",
+            "status": "draft",
+            "text": "Tharo. "
+          },
+          {
+            "sourceEnglish": "Choose ",
+            "status": "draft",
+            "text": "Khetha "
+          },
+          {
+            "sourceEnglish": "staples",
+            "status": "draft",
+            "text": "dijalo tsa dijo tsa motheo"
+          },
+          {
+            "sourceEnglish": " that protect you ",
+            "status": "draft",
+            "text": " tse o sireletsang "
+          },
+          {
+            "sourceEnglish": "when one crop fails.",
+            "status": "draft",
+            "text": "ha sejalo se le seng se hloleha."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s3-body[3]-seg2",
+          "segmentIndex": 2,
+          "exactSourceFragment": "staples",
+          "candidateText": "dijalo tsa dijo tsa motheo",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "vegetables-staples-st-s3-body[3]-seg4",
+          "segmentIndex": 4,
+          "exactSourceFragment": "when one crop fails.",
+          "candidateText": "ha sejalo se le seng se hloleha.",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Tharo. Khetha dijalo tsa dijo tsa motheo tse o sireletsang ha sejalo se le seng se hloleha."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 3,
+      "field": "body[5]",
+      "sourceEnglish": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "These four belong together. ",
+            "status": "draft",
+            "text": "Dintho tsena tse nne di tsamaya mmoho. "
+          },
+          {
+            "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "These four belong together. ",
+            "status": "draft",
+            "text": "Dintho tsena tse nne di tsamaya mmoho. "
+          },
+          {
+            "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+            "status": "draft",
+            "text": "Bethe e bopehileng hantle e ntse e hloleha haeba tsohle di jalwa ka letsatsi le le leng. "
+          },
+          {
+            "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s3-body[5]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "A well-shaped bed still fails if everything goes in on one day. ",
+          "candidateText": "Bethe e bopehileng hantle e ntse e hloleha haeba tsohle di jalwa ka letsatsi le le leng. ",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Dintho tsena tse nne di tsamaya mmoho. Bethe e bopehileng hantle e ntse e hloleha haeba tsohle di jalwa ka letsatsi le le leng. A diverse planting still struggles if you treat every yellow leaf as an insect problem."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 4,
+      "field": "heading",
+      "sourceEnglish": "Roots Need Loose Soil, Paths Need Your Feet",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Metso e hloka mobu o hlephileng; maoto a hao a tsamaye ditseleng",
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s4-heading-segwhole",
+          "segmentIndex": null,
+          "exactSourceFragment": "Roots Need Loose Soil, Paths Need Your Feet",
+          "candidateText": "Metso e hloka mobu o hlephileng; maoto a hao a tsamaye ditseleng",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Metso e hloka mobu o hlephileng; maoto a hao a tsamaye ditseleng"
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 4,
+      "field": "body[1]",
+      "sourceEnglish": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The protection is simple. ",
+            "status": "draft",
+            "text": "Tshireletso e bonolo. "
+          },
+          {
+            "sourceEnglish": "Permanent paths",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and a bed narrow enough to reach into from both sides.",
+            "status": "draft",
+            "text": ", le bethe e tshesane hoo o ka fihlang ka hare ho yona ho tswa mahlakoreng ka bobedi."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The protection is simple. ",
+            "status": "draft",
+            "text": "Tshireletso e bonolo. "
+          },
+          {
+            "sourceEnglish": "Permanent paths",
+            "status": "draft",
+            "text": "ditsela tsa ka mehla"
+          },
+          {
+            "sourceEnglish": ", and a bed narrow enough to reach into from both sides.",
+            "status": "draft",
+            "text": ", le bethe e tshesane hoo o ka fihlang ka hare ho yona ho tswa mahlakoreng ka bobedi."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s4-body[1]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "Permanent paths",
+          "candidateText": "ditsela tsa ka mehla",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Tshireletso e bonolo. ditsela tsa ka mehla, le bethe e tshesane hoo o ka fihlang ka hare ho yona ho tswa mahlakoreng ka bobedi."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 4,
+      "field": "body[2]",
+      "sourceEnglish": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "One metre to one point two metres wide.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " That's the ",
+            "status": "draft",
+            "text": " Ke yona "
+          },
+          {
+            "sourceEnglish": "working number",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". At that width you can reach the centre from either path, and your feet never touch the growing area.",
+            "status": "draft",
+            "text": ". Ka bophara boo, o ka fihla bohareng o tswa tseleng efe kapa efe, mme maoto a hao ha a ame sebaka se lemwang le ka mohla."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "One metre to one point two metres wide.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " That's the ",
+            "status": "draft",
+            "text": " Ke yona "
+          },
+          {
+            "sourceEnglish": "working number",
+            "status": "draft",
+            "text": "tekanyo eo re e sebedisang"
+          },
+          {
+            "sourceEnglish": ". At that width you can reach the centre from either path, and your feet never touch the growing area.",
+            "status": "draft",
+            "text": ". Ka bophara boo, o ka fihla bohareng o tswa tseleng efe kapa efe, mme maoto a hao ha a ame sebaka se lemwang le ka mohla."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s4-body[2]-seg2",
+          "segmentIndex": 2,
+          "exactSourceFragment": "working number",
+          "candidateText": "tekanyo eo re e sebedisang",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "One metre to one point two metres wide. Ke yona tekanyo eo re e sebedisang. Ka bophara boo, o ka fihla bohareng o tswa tseleng efe kapa efe, mme maoto a hao ha a ame sebaka se lemwang le ka mohla."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 5,
+      "field": "heading",
+      "sourceEnglish": "Choose the Bed for the Soil and Rainfall",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Kgetha bethe ho ya ka mobu le pula",
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s5-heading-segwhole",
+          "segmentIndex": null,
+          "exactSourceFragment": "Choose the Bed for the Soil and Rainfall",
+          "candidateText": "Kgetha bethe ho ya ka mobu le pula",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Kgetha bethe ho ya ka mobu le pula"
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 5,
+      "field": "body[2]",
+      "sourceEnglish": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "No-dig",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " suits most garden soils. Leave the structure alone and build fertility on top.",
+            "status": "draft",
+            "text": " e loketse boholo ba mobu wa dirapa. Tlohela structure e le jwalo, mme o hahe fertility hodimo."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "No-dig",
+            "status": "draft",
+            "text": "Ho lema ntle le ho cheka (no-dig)"
+          },
+          {
+            "sourceEnglish": " suits most garden soils. Leave the structure alone and build fertility on top.",
+            "status": "draft",
+            "text": " e loketse boholo ba mobu wa dirapa. Tlohela structure e le jwalo, mme o hahe fertility hodimo."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s5-body[2]-seg0",
+          "segmentIndex": 0,
+          "exactSourceFragment": "No-dig",
+          "candidateText": "Ho lema ntle le ho cheka (no-dig)",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Ho lema ntle le ho cheka (no-dig) e loketse boholo ba mobu wa dirapa. Tlohela structure e le jwalo, mme o hahe fertility hodimo."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 5,
+      "field": "body[3]",
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Do not dig ",
+            "status": "draft",
+            "text": "U se ke ua cheka "
+          },
+          {
+            "sourceEnglish": "wet clay",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". If ",
+            "status": "draft",
+            "text": ". Ha "
+          },
+          {
+            "sourceEnglish": "compaction",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " or ",
+            "status": "draft",
+            "text": " kapa "
+          },
+          {
+            "sourceEnglish": "poor drainage",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " is severe, identify the cause with local advice before choosing ",
+            "status": "draft",
+            "text": " e le matla haholo, fumana sesosa ka keletso ya sebaka sa heno pele o kgetha "
+          },
+          {
+            "sourceEnglish": "deeper cultivation",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": "."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Do not dig ",
+            "status": "draft",
+            "text": "U se ke ua cheka "
+          },
+          {
+            "sourceEnglish": "wet clay",
+            "status": "draft",
+            "text": "letsopa le metsi"
+          },
+          {
+            "sourceEnglish": ". If ",
+            "status": "draft",
+            "text": ". Ha "
+          },
+          {
+            "sourceEnglish": "compaction",
+            "status": "draft",
+            "text": "ho petetsana ha mobu"
+          },
+          {
+            "sourceEnglish": " or ",
+            "status": "draft",
+            "text": " kapa "
+          },
+          {
+            "sourceEnglish": "poor drainage",
+            "status": "draft",
+            "text": "metsi a sa kgoneng ho phalla hantle"
+          },
+          {
+            "sourceEnglish": " is severe, identify the cause with local advice before choosing ",
+            "status": "draft",
+            "text": " e le matla haholo, fumana sesosa ka keletso ya sebaka sa heno pele o kgetha "
+          },
+          {
+            "sourceEnglish": "deeper cultivation",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": "."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s5-body[3]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "wet clay",
+          "candidateText": "letsopa le metsi",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "vegetables-staples-st-s5-body[3]-seg3",
+          "segmentIndex": 3,
+          "exactSourceFragment": "compaction",
+          "candidateText": "ho petetsana ha mobu",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "vegetables-staples-st-s5-body[3]-seg5",
+          "segmentIndex": 5,
+          "exactSourceFragment": "poor drainage",
+          "candidateText": "metsi a sa kgoneng ho phalla hantle",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "U se ke ua cheka letsopa le metsi. Ha ho petetsana ha mobu kapa metsi a sa kgoneng ho phalla hantle e le matla haholo, fumana sesosa ka keletso ya sebaka sa heno pele o kgetha deeper cultivation."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 5,
+      "field": "body[4]",
+      "sourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Raised beds",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " suit ",
+            "status": "draft",
+            "text": " di loketse "
+          },
+          {
+            "sourceEnglish": "wet ground",
+            "status": "draft",
+            "text": "mobu o metsi"
+          },
+          {
+            "sourceEnglish": ", where water needs ",
+            "status": "draft",
+            "text": ", moo metsi a hlokang "
+          },
+          {
+            "sourceEnglish": "somewhere to drain away to",
+            "status": "draft",
+            "text": "sebaka sa ho phallela teng"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": "."
+          }
+        ],
+        "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Raised beds",
+            "status": "draft",
+            "text": "Dibethe tse phahamisitsweng"
+          },
+          {
+            "sourceEnglish": " suit ",
+            "status": "draft",
+            "text": " di loketse "
+          },
+          {
+            "sourceEnglish": "wet ground",
+            "status": "draft",
+            "text": "mobu o metsi"
+          },
+          {
+            "sourceEnglish": ", where water needs ",
+            "status": "draft",
+            "text": ", moo metsi a hlokang "
+          },
+          {
+            "sourceEnglish": "somewhere to drain away to",
+            "status": "draft",
+            "text": "sebaka sa ho phallela teng"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": "."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s5-body[4]-seg0",
+          "segmentIndex": 0,
+          "exactSourceFragment": "Raised beds",
+          "candidateText": "Dibethe tse phahamisitsweng",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Dibethe tse phahamisitsweng di loketse mobu o metsi, moo metsi a hlokang sebaka sa ho phallela teng."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 5,
+      "field": "body[5]",
+      "sourceEnglish": "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Sunken beds",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " suit ",
+            "status": "draft",
+            "text": " di loketse "
+          },
+          {
+            "sourceEnglish": "dry ground",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", where you want to catch and hold what rain you get.",
+            "status": "draft",
+            "text": ", moo o batlang ho tshwara le ho boloka pula eo o e fumanang."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Sunken beds",
+            "status": "draft",
+            "text": "Dibethe tse tebisitsweng"
+          },
+          {
+            "sourceEnglish": " suit ",
+            "status": "draft",
+            "text": " di loketse "
+          },
+          {
+            "sourceEnglish": "dry ground",
+            "status": "draft",
+            "text": "mobu o ommeng"
+          },
+          {
+            "sourceEnglish": ", where you want to catch and hold what rain you get.",
+            "status": "draft",
+            "text": ", moo o batlang ho tshwara le ho boloka pula eo o e fumanang."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s5-body[5]-seg0",
+          "segmentIndex": 0,
+          "exactSourceFragment": "Sunken beds",
+          "candidateText": "Dibethe tse tebisitsweng",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "vegetables-staples-st-s5-body[5]-seg2",
+          "segmentIndex": 2,
+          "exactSourceFragment": "dry ground",
+          "candidateText": "mobu o ommeng",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Dibethe tse tebisitsweng di loketse mobu o ommeng, moo o batlang ho tshwara le ho boloka pula eo o e fumanang."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 6,
+      "field": "heading",
+      "sourceEnglish": "Seed or Seedling?",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Peo kapa sethopo?",
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s6-heading-segwhole",
+          "segmentIndex": null,
+          "exactSourceFragment": "Seed or Seedling?",
+          "candidateText": "Peo kapa sethopo?",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Peo kapa sethopo?"
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 6,
+      "field": "body[0]",
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Some crops resent having their roots disturbed. ",
+            "status": "draft",
+            "text": "Dijalo tse ding ha di rate hore metso ya tsona e tshwenngwe. "
+          },
+          {
+            "sourceEnglish": "They do better",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " sown straight where they'll grow. ",
+            "status": "draft",
+            "text": " ha di jalwa ka kotloloho moo di tla hola teng. "
+          },
+          {
+            "sourceEnglish": "Beans, carrots",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " le "
+          },
+          {
+            "sourceEnglish": "maize",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " belong in that group.",
+            "status": "draft",
+            "text": " ke tsa sehlopha seo."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Some crops resent having their roots disturbed. ",
+            "status": "draft",
+            "text": "Dijalo tse ding ha di rate hore metso ya tsona e tshwenngwe. "
+          },
+          {
+            "sourceEnglish": "They do better",
+            "status": "draft",
+            "text": "Di hola hantle ho feta"
+          },
+          {
+            "sourceEnglish": " sown straight where they'll grow. ",
+            "status": "draft",
+            "text": " ha di jalwa ka kotloloho moo di tla hola teng. "
+          },
+          {
+            "sourceEnglish": "Beans, carrots",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " le "
+          },
+          {
+            "sourceEnglish": "maize",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " belong in that group.",
+            "status": "draft",
+            "text": " ke tsa sehlopha seo."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s6-body[0]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "They do better",
+          "candidateText": "Di hola hantle ho feta",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Dijalo tse ding ha di rate hore metso ya tsona e tshwenngwe. Di hola hantle ho feta ha di jalwa ka kotloloho moo di tla hola teng. Beans, carrots le maize ke tsa sehlopha seo."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 6,
+      "field": "body[2]",
+      "sourceEnglish": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Use ",
+            "status": "draft",
+            "text": "Sebedisa "
+          },
+          {
+            "sourceEnglish": "spacing guidance",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " for the ",
+            "status": "draft",
+            "text": " bakeng sa "
+          },
+          {
+            "sourceEnglish": "crop, variety",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " le "
+          },
+          {
+            "sourceEnglish": "local conditions",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". Check the packet and ",
+            "status": "draft",
+            "text": ". Hlahloba packet le "
+          },
+          {
+            "sourceEnglish": "local grower advice",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". Watch for crowding as plants develop.",
+            "status": "draft",
+            "text": ". Sheba crowding ha plants di ntse di hola."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Use ",
+            "status": "draft",
+            "text": "Sebedisa "
+          },
+          {
+            "sourceEnglish": "spacing guidance",
+            "status": "draft",
+            "text": "ditaelo tsa sebaka se lokelang ho ba pakeng tsa dimela"
+          },
+          {
+            "sourceEnglish": " for the ",
+            "status": "draft",
+            "text": " bakeng sa "
+          },
+          {
+            "sourceEnglish": "crop, variety",
+            "status": "draft",
+            "text": "sejalo le mofuta"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " le "
+          },
+          {
+            "sourceEnglish": "local conditions",
+            "status": "draft",
+            "text": "maemo a sebakeng seo"
+          },
+          {
+            "sourceEnglish": ". Check the packet and ",
+            "status": "draft",
+            "text": ". Hlahloba packet le "
+          },
+          {
+            "sourceEnglish": "local grower advice",
+            "status": "draft",
+            "text": "keletso ya balemi ba sebakeng seo"
+          },
+          {
+            "sourceEnglish": ". Watch for crowding as plants develop.",
+            "status": "draft",
+            "text": ". Sheba crowding ha plants di ntse di hola."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s6-body[2]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "spacing guidance",
+          "candidateText": "ditaelo tsa sebaka se lokelang ho ba pakeng tsa dimela",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "vegetables-staples-st-s6-body[2]-seg3",
+          "segmentIndex": 3,
+          "exactSourceFragment": "crop, variety",
+          "candidateText": "sejalo le mofuta",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "vegetables-staples-st-s6-body[2]-seg5",
+          "segmentIndex": 5,
+          "exactSourceFragment": "local conditions",
+          "candidateText": "maemo a sebakeng seo",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "vegetables-staples-st-s6-body[2]-seg7",
+          "segmentIndex": 7,
+          "exactSourceFragment": "local grower advice",
+          "candidateText": "keletso ya balemi ba sebakeng seo",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Sebedisa ditaelo tsa sebaka se lokelang ho ba pakeng tsa dimela bakeng sa sejalo le mofuta le maemo a sebakeng seo. Hlahloba packet le keletso ya balemi ba sebakeng seo. Sheba crowding ha plants di ntse di hola."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 7,
+      "field": "body[2]",
+      "sourceEnglish": "Use pegs and string. Mark the rectangle, and mark both access paths.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Use pegs and string. Mark the ",
+            "status": "draft",
+            "text": "Sebedisa pegs le string. Tshwaya "
+          },
+          {
+            "sourceEnglish": "rectangle",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and mark both access paths.",
+            "status": "draft",
+            "text": ", le ho tshwaya ditsela ka bobedi tsa ho kena."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Use pegs and string. Mark the ",
+            "status": "draft",
+            "text": "Sebedisa pegs le string. Tshwaya "
+          },
+          {
+            "sourceEnglish": "rectangle",
+            "status": "draft",
+            "text": "sebopeho sa kgutlonne"
+          },
+          {
+            "sourceEnglish": ", and mark both access paths.",
+            "status": "draft",
+            "text": ", le ho tshwaya ditsela ka bobedi tsa ho kena."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s7-body[2]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "rectangle",
+          "candidateText": "sebopeho sa kgutlonne",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Sebedisa pegs le string. Tshwaya sebopeho sa kgutlonne, le ho tshwaya ditsela ka bobedi tsa ho kena."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 7,
+      "field": "body[3]",
+      "sourceEnglish": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Then prepare for your own soil — ",
+            "status": "draft",
+            "text": "Jwale lokisetsa ho ya ka mobu wa hao — qala ka "
+          },
+          {
+            "sourceEnglish": "no-dig",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " first, and dig deeper only if your ground genuinely needs it.",
+            "status": "draft",
+            "text": ", mme o cheke ho teba feela ha mobu wa hao o hlile o ho hloka."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Then prepare for your own soil — ",
+            "status": "draft",
+            "text": "Jwale lokisetsa ho ya ka mobu wa hao — qala ka "
+          },
+          {
+            "sourceEnglish": "no-dig",
+            "status": "draft",
+            "text": "mokgwa wa ho lema ntle le ho cheka (no-dig)"
+          },
+          {
+            "sourceEnglish": " first, and dig deeper only if your ground genuinely needs it.",
+            "status": "draft",
+            "text": ", mme o cheke ho teba feela ha mobu wa hao o hlile o ho hloka."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s7-body[3]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "no-dig",
+          "candidateText": "mokgwa wa ho lema ntle le ho cheka (no-dig)",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Jwale lokisetsa ho ya ka mobu wa hao — qala ka mokgwa wa ho lema ntle le ho cheka (no-dig), mme o cheke ho teba feela ha mobu wa hao o hlile o ho hloka."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 8,
+      "field": "heading",
+      "sourceEnglish": "A Sowing Rhythm Keeps Food Moving",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "A Sowing Rhythm",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Keeps Food Moving",
+            "status": "draft",
+            "text": " e boloka lijo li ntse li fumaneha."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "A Sowing Rhythm",
+            "status": "draft",
+            "text": "Morethetho wa ho jala"
+          },
+          {
+            "sourceEnglish": " Keeps Food Moving",
+            "status": "draft",
+            "text": " e boloka lijo li ntse li fumaneha."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s8-heading-seg0",
+          "segmentIndex": 0,
+          "exactSourceFragment": "A Sowing Rhythm",
+          "candidateText": "Morethetho wa ho jala",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Morethetho wa ho jala e boloka lijo li ntse li fumaneha."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 10,
+      "field": "heading",
+      "sourceEnglish": "Each Crop Earns Its Place",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Sejalo ka seng se na le mosebetsi wa sona",
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s10-heading-segwhole",
+          "segmentIndex": null,
+          "exactSourceFragment": "Each Crop Earns Its Place",
+          "candidateText": "Sejalo ka seng se na le mosebetsi wa sona",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Sejalo ka seng se na le mosebetsi wa sona"
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 11,
+      "field": "heading",
+      "sourceEnglish": "Plan Backwards From Your Hungry Gap",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plan Backwards From ",
+            "status": "draft",
+            "text": "Rera u khutlela morao ho tloha ho "
+          },
+          {
+            "sourceEnglish": "Your Hungry Gap",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plan Backwards From ",
+            "status": "draft",
+            "text": "Rera u khutlela morao ho tloha ho "
+          },
+          {
+            "sourceEnglish": "Your Hungry Gap",
+            "status": "draft",
+            "text": "Nako eo dijo di haellang ka yona"
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s11-heading-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "Your Hungry Gap",
+          "candidateText": "Nako eo dijo di haellang ka yona",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Rera u khutlela morao ho tloha ho Nako eo dijo di haellang ka yona"
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 12,
+      "field": "heading",
+      "sourceEnglish": "Staples Are Food Insurance",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Dijalo tsa motheo di thusa ho sireletsa dijo tsa lelapa",
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s12-heading-segwhole",
+          "segmentIndex": null,
+          "exactSourceFragment": "Staples Are Food Insurance",
+          "candidateText": "Dijalo tsa motheo di thusa ho sireletsa dijo tsa lelapa",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Dijalo tsa motheo di thusa ho sireletsa dijo tsa lelapa"
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 15,
+      "field": "body[1]",
+      "sourceEnglish": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plants under ",
+            "status": "draft",
+            "text": "Dimela tse nang le "
+          },
+          {
+            "sourceEnglish": "stress.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " One crop dominating the ground.",
+            "status": "draft",
+            "text": " Sejalo se le seng se laolang sebaka."
+          },
+          {
+            "sourceEnglish": " Or ",
+            "status": "draft",
+            "text": " Kapa "
+          },
+          {
+            "sourceEnglish": "broad chemical use",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that has already removed the ",
+            "status": "draft",
+            "text": " e seng e tlositse "
+          },
+          {
+            "sourceEnglish": "predators",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that were helping you.",
+            "status": "draft",
+            "text": " tse neng di o thusa."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plants under ",
+            "status": "draft",
+            "text": "Dimela tse nang le "
+          },
+          {
+            "sourceEnglish": "stress.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " One crop dominating the ground.",
+            "status": "draft",
+            "text": " Sejalo se le seng se laolang sebaka."
+          },
+          {
+            "sourceEnglish": " Or ",
+            "status": "draft",
+            "text": " Kapa "
+          },
+          {
+            "sourceEnglish": "broad chemical use",
+            "status": "draft",
+            "text": "tshebediso e pharalletseng ya dikhemikhale"
+          },
+          {
+            "sourceEnglish": " that has already removed the ",
+            "status": "draft",
+            "text": " e seng e tlositse "
+          },
+          {
+            "sourceEnglish": "predators",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that were helping you.",
+            "status": "draft",
+            "text": " tse neng di o thusa."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s15-body[1]-seg4",
+          "segmentIndex": 4,
+          "exactSourceFragment": "broad chemical use",
+          "candidateText": "tshebediso e pharalletseng ya dikhemikhale",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Dimela tse nang le stress. Sejalo se le seng se laolang sebaka. Kapa tshebediso e pharalletseng ya dikhemikhale e seng e tlositse predators tse neng di o thusa."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 16,
+      "field": "body[4]",
+      "sourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four.",
+            "status": "draft",
+            "text": "Ntlha ya bone."
+          },
+          {
+            "sourceEnglish": " Only then, act — and start with ",
+            "status": "draft",
+            "text": " Ke ka morao feela moo o nkang kgato — qala ka "
+          },
+          {
+            "sourceEnglish": "the lightest thing that works.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Physical removal",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", barriers",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " or changes in ",
+            "status": "draft",
+            "text": " kapa diphetoho "
+          },
+          {
+            "sourceEnglish": "crop care",
+            "status": "draft",
+            "text": "tlhokomelong ya dijalo"
+          },
+          {
+            "sourceEnglish": " may help.",
+            "status": "draft",
+            "text": " di ka thusa."
+          },
+          {
+            "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+            "status": "draft",
+            "text": " Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four.",
+            "status": "draft",
+            "text": "Ntlha ya bone."
+          },
+          {
+            "sourceEnglish": " Only then, act — and start with ",
+            "status": "draft",
+            "text": " Ke ka morao feela moo o nkang kgato — qala ka "
+          },
+          {
+            "sourceEnglish": "the lightest thing that works.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Physical removal",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", barriers",
+            "status": "draft",
+            "text": ", mekoallo"
+          },
+          {
+            "sourceEnglish": " or changes in ",
+            "status": "draft",
+            "text": " kapa diphetoho "
+          },
+          {
+            "sourceEnglish": "crop care",
+            "status": "draft",
+            "text": "tlhokomelong ya dijalo"
+          },
+          {
+            "sourceEnglish": " may help.",
+            "status": "draft",
+            "text": " di ka thusa."
+          },
+          {
+            "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+            "status": "draft",
+            "text": " Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s16-body[4]-seg4",
+          "segmentIndex": 4,
+          "exactSourceFragment": ", barriers",
+          "candidateText": ", mekoallo",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — qala ka the lightest thing that works. Physical removal, mekoallo kapa diphetoho tlhokomelong ya dijalo di ka thusa. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 16,
+      "field": "body[5]",
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "If a ",
+            "status": "draft",
+            "text": "Ha "
+          },
+          {
+            "sourceEnglish": "treatment",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " is needed, use a ",
+            "status": "draft",
+            "text": " e hlokahala, sebedisa "
+          },
+          {
+            "sourceEnglish": "product registered for that crop and pest",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and follow its ",
+            "status": "draft",
+            "text": ", mme o latele "
+          },
+          {
+            "sourceEnglish": "label",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": " ya yona."
+          },
+          {
+            "sourceEnglish": " This includes ",
+            "status": "draft",
+            "text": " Sena se kenyeletsa "
+          },
+          {
+            "sourceEnglish": "neem products.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Check ",
+            "status": "draft",
+            "text": " Hlahloba "
+          },
+          {
+            "sourceEnglish": "protection and harvest waiting instructions.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Do not improvise ",
+            "status": "draft",
+            "text": " O se ke wa itirela "
+          },
+          {
+            "sourceEnglish": "mixtures",
+            "status": "draft",
+            "text": "metswako"
+          },
+          {
+            "sourceEnglish": " or ",
+            "status": "draft",
+            "text": " kapa "
+          },
+          {
+            "sourceEnglish": "stronger doses",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": "."
+          }
+        ],
+        "provenance": "unreviewed independent draft; bounded exact stronger-doses hold; ordinary negative and mixtures clause translated; exact source partition verified"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "If a ",
+            "status": "draft",
+            "text": "Ha "
+          },
+          {
+            "sourceEnglish": "treatment",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " is needed, use a ",
+            "status": "draft",
+            "text": " e hlokahala, sebedisa "
+          },
+          {
+            "sourceEnglish": "product registered for that crop and pest",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and follow its ",
+            "status": "draft",
+            "text": ", mme o latele "
+          },
+          {
+            "sourceEnglish": "label",
+            "status": "draft",
+            "text": "leibole"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": " ya yona."
+          },
+          {
+            "sourceEnglish": " This includes ",
+            "status": "draft",
+            "text": " Sena se kenyeletsa "
+          },
+          {
+            "sourceEnglish": "neem products.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Check ",
+            "status": "draft",
+            "text": " Hlahloba "
+          },
+          {
+            "sourceEnglish": "protection and harvest waiting instructions.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Do not improvise ",
+            "status": "draft",
+            "text": " O se ke wa itirela "
+          },
+          {
+            "sourceEnglish": "mixtures",
+            "status": "draft",
+            "text": "metswako"
+          },
+          {
+            "sourceEnglish": " or ",
+            "status": "draft",
+            "text": " kapa "
+          },
+          {
+            "sourceEnglish": "stronger doses",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": "."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s16-body[5]-seg5",
+          "segmentIndex": 5,
+          "exactSourceFragment": "label",
+          "candidateText": "leibole",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele leibole ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. O se ke wa itirela metswako kapa stronger doses."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "slide": 18,
+      "field": "body[5]",
+      "sourceEnglish": "Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Record the sowing date.",
+            "status": "draft",
+            "text": "Ngola letsatsi la sowing."
+          },
+          {
+            "sourceEnglish": " The rain.",
+            "status": "draft",
+            "text": " Pula."
+          },
+          {
+            "sourceEnglish": " What germinated.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Pest pressure.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " What you harvested.",
+            "status": "draft",
+            "text": " Seo o se kotutseng."
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Record the sowing date.",
+            "status": "draft",
+            "text": "Ngola letsatsi la sowing."
+          },
+          {
+            "sourceEnglish": " The rain.",
+            "status": "draft",
+            "text": " Pula."
+          },
+          {
+            "sourceEnglish": " What germinated.",
+            "status": "draft",
+            "text": " Se ileng sa mela."
+          },
+          {
+            "sourceEnglish": " Pest pressure.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " What you harvested.",
+            "status": "draft",
+            "text": " Seo o se kotutseng."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "vegetables-staples-st-s18-body[5]-seg2",
+          "segmentIndex": 2,
+          "exactSourceFragment": " What germinated.",
+          "candidateText": " Se ileng sa mela.",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Ngola letsatsi la sowing. Pula. Se ileng sa mela. Pest pressure. Seo o se kotutseng."
+    },
+    {
+      "file": "docs/narration/market-community.st.paired-draft.json",
+      "fileSHA256": "084bd6732647bdcefcbcf93fb8326f7225a2875704835cf9b3636dde0ef318fc",
+      "slide": 11,
+      "field": "body[0]",
+      "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Direct selling can retain more of the ",
+            "status": "draft",
+            "text": "Ho rekisa ka kotloloho ho ka boloka karolo e kgolwanyane ya "
+          },
+          {
+            "sourceEnglish": "sale price",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", but it also takes time, packing, transport and customer care.",
+            "status": "draft",
+            "text": ", empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki."
+          }
+        ],
+        "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Direct selling can retain more of the ",
+            "status": "draft",
+            "text": "Ho rekisa ka kotloloho ho ka boloka karolo e kgolwanyane ya "
+          },
+          {
+            "sourceEnglish": "sale price",
+            "status": "draft",
+            "text": "theko eo dihlahiswa di rekiswang ka yona"
+          },
+          {
+            "sourceEnglish": ", but it also takes time, packing, transport and customer care.",
+            "status": "draft",
+            "text": ", empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "market-community-st-s11-body[0]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "sale price",
+          "candidateText": "theko eo dihlahiswa di rekiswang ka yona",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Ho rekisa ka kotloloho ho ka boloka karolo e kgolwanyane ya theko eo dihlahiswa di rekiswang ka yona, empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki."
+    },
+    {
+      "file": "docs/narration/market-community.st.paired-draft.json",
+      "fileSHA256": "084bd6732647bdcefcbcf93fb8326f7225a2875704835cf9b3636dde0ef318fc",
+      "slide": 15,
+      "field": "body[1]",
+      "sourceEnglish": "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Record the crop, ",
+            "status": "draft",
+            "text": "Ngola sejalo, ",
+            "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+          },
+          {
+            "sourceEnglish": "variety",
+            "status": "english-hold",
+            "reason": "Exact English technical or business precision retained; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": ", source and collection date. Plan ",
+            "status": "draft",
+            "text": ", mohlodi le letsatsi la ho bokella. Rera ",
+            "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+          },
+          {
+            "sourceEnglish": "suitable isolation, selection, drying",
+            "status": "english-hold",
+            "reason": "Exact English technical or business precision retained; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " le ",
+            "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+          },
+          {
+            "sourceEnglish": "storage",
+            "status": "english-hold",
+            "reason": "Exact English technical or business precision retained; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " for each crop.",
+            "status": "draft",
+            "text": " bakeng sa sejalo se seng le se seng.",
+            "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+          }
+        ],
+        "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Record the crop, ",
+            "status": "draft",
+            "text": "Ngola sejalo, ",
+            "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+          },
+          {
+            "sourceEnglish": "variety",
+            "status": "draft",
+            "reason": "Exact English technical or business precision retained; not fluent reviewed.",
+            "text": "mofuta"
+          },
+          {
+            "sourceEnglish": ", source and collection date. Plan ",
+            "status": "draft",
+            "text": ", mohlodi le letsatsi la ho bokella. Rera ",
+            "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+          },
+          {
+            "sourceEnglish": "suitable isolation, selection, drying",
+            "status": "english-hold",
+            "reason": "Exact English technical or business precision retained; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " le ",
+            "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+          },
+          {
+            "sourceEnglish": "storage",
+            "status": "draft",
+            "reason": "Exact English technical or business precision retained; not fluent reviewed.",
+            "text": "poloko"
+          },
+          {
+            "sourceEnglish": " for each crop.",
+            "status": "draft",
+            "text": " bakeng sa sejalo se seng le se seng.",
+            "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+          }
+        ],
+        "provenance": "Source-bound unreviewed South African Sesotho machine draft; root semantic review and independent check; exact English paired; facilitator fluency/local farming review remains open."
+      },
+      "changes": [
+        {
+          "rowId": "market-community-st-s15-body[1]-seg1",
+          "segmentIndex": 1,
+          "exactSourceFragment": "variety",
+          "candidateText": "mofuta",
+          "spellingObjectRepair": false
+        },
+        {
+          "rowId": "market-community-st-s15-body[1]-seg5",
+          "segmentIndex": 5,
+          "exactSourceFragment": "storage",
+          "candidateText": "poloko",
+          "spellingObjectRepair": false
+        }
+      ],
+      "visibleCandidate": "Ngola sejalo, mofuta, mohlodi le letsatsi la ho bokella. Rera suitable isolation, selection, drying le poloko bakeng sa sejalo se seng le se seng."
+    }
+  ],
+  "invariants": {
+    "allCurrentFileHashesSourcesTargetsVerified": true,
+    "allUnlistedSegmentsPreserved": true,
+    "canonicalEnglishChanged": false,
+    "stHistoricalAudioArchiveChanged": false
+  },
+  "remainingRootRiskRows": [
+    "reading-landscape-st-s11-body[0]-seg0",
+    "reading-landscape-st-s11-body[1]-seg1",
+    "reading-landscape-st-s11-body[1]-seg3",
+    "reading-landscape-st-s12-body[1]-seg1",
+    "reading-landscape-st-s13-body[0]-seg1",
+    "reading-landscape-st-s14-body[1]-seg0",
+    "reading-landscape-st-s14-body[1]-seg2",
+    "reading-landscape-st-s14-body[3]-seg3",
+    "reading-landscape-st-s15-body[0]-seg4",
+    "reading-landscape-st-s20-body[0]-seg1",
+    "reading-landscape-st-s20-body[1]-seg3",
+    "reading-landscape-st-s4-body[1]-seg1",
+    "reading-landscape-st-s6-body[0]-seg1",
+    "reading-landscape-st-s6-body[2]-seg4",
+    "reading-landscape-st-s8-body[1]-seg1",
+    "reading-landscape-st-s8-body[2]-seg1",
+    "vegetables-staples-st-s15-heading-segwhole",
+    "vegetables-staples-st-s16-body[4]-seg2",
+    "vegetables-staples-st-s16-body[4]-seg3",
+    "vegetables-staples-st-s17-body[3]-seg2",
+    "vegetables-staples-st-s3-body[4]-seg1",
+    "vegetables-staples-st-s5-body[3]-seg7"
+  ],
+  "publicationConditions": "Recheck fresh main/current source and learner/deck consistency; independent check any new repairs, then scoped implementation/render/typecheck/full tests/notes/CI/exact preview/actual phone/offline before publication. Do not apply old rejected candidates.",
+  "additionalComposedContextRisks": {
+    "reading-landscape-st-s19-body[1]-seg1": "Current prefix already supplies a localized zones gloss; replacement duplicates nested glosses. Keep formal zones anchor, not twice-localized parentheses.",
+    "reading-landscape-st-s21-body[2]-seg1": "Formal zones anchor retained; no checked need for added plan-area gloss.",
+    "reading-landscape-st-s19-body[1]-seg3": "Current prefix already supplies a localized sectors gloss; replacement duplicates nested glosses.",
+    "reading-landscape-st-s21-body[2]-seg3": "Formal sectors anchor retained rather than unverified branches-of-plan expansion.",
+    "reading-landscape-st-s2-body[1]-seg3": "Ridges must not become generic ground bumps; ordinary gaps can be localized only after exact landform anchor composition check.",
+    "vegetables-staples-st-s5-body[1]-seg1": "Least-disturbance infinitive fails agreement with unchanged following relative clause; compose full grammatical least-intervention noun before application.",
+    "vegetables-staples-st-s15-body[1]-seg1": "Plant stress must not be generalized to psychological pressure; precision term remains English pending context-specific repair.",
+    "vegetables-staples-st-s15-body[1]-seg6": "Predators in this crop-care context must not imply generic wild beasts; retain technical biological-control label.",
+    "vegetables-staples-st-s16-body[5]-seg1": "Treatment noun replacement requires changing following agreement. Do not insert ungrammatical noun into unchanged safety clause."
+  }
+}

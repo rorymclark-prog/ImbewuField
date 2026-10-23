@@ -1,0 +1,60 @@
+{
+  "speciesId": "harpephyllum-caffrum",
+  "commonName": "Wild plum / umgwenya",
+  "botanicalName": "Harpephyllum caffrum",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general; SANBI: Eastern Cape, KwaZulu-Natal, Limpopo, Mpumalanga)",
+      "months": [
+        3,
+        4,
+        5
+      ],
+      "evidence": {
+        "quote": "The whitish green flowers are borne near the ends of the branches with male and female flowers on separate trees, throughout summer (November to February). The tasty plum-like fruits first appear green and then turn red when they ripen in autumn; they contain a single seed and are enjoyed by people, mammals and birds.",
+        "url": "https://pza.sanbi.org/harpephyllum-caffrum",
+        "doc": "Harpephyllum caffrum | PlantZAfrica (SANBI)",
+        "page": null
+      },
+      "notes": "SANBI gives flowering as 'November to February' and ripening only as 'autumn'. Southern-hemisphere autumn is March–May, so the window is recorded as Mar–May. The earlier [11,12,1,2] were the FLOWERING months and were removed."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in any fetched primary/peer-reviewed source. WebSearch (paraphrased, unverified) suggested 'usually mature to start producing flowers and fruit after 5 years' but this came from general nursery/plant-database websites (Kumbula Indigenous Nursery, PlantMaster, plantbook.co.za, etc.), which the task's sourcing rules explicitly exclude, and it was never confirmed against a fetched primary document, so it is NOT used."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in any fetched source."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in any fetched source."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source states a chilling requirement or explicitly says the (evergreen) species has none."
+  },
+  "pollination": {
+    "value": "separate-male-female-plants",
+    "evidence": {
+      "quote": "male and female flowers on separate trees",
+      "url": "https://pza.sanbi.org/harpephyllum-caffrum",
+      "doc": "Harpephyllum caffrum | PlantZAfrica (SANBI)",
+      "page": null
+    },
+    "notes": "No explicit statement of the pollinating agent (insect/wind/bird) was found for this species in the fetched PZA page; the Ecology section mentions only fruit-eating/leaf-eating animals (baboons, monkeys, birds), not flower visitors."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "Exact fruit-ripening/harvest months: SANBI states only that fruit 'ripen in autumn' without giving specific months; flowering months (Nov-Feb) were recorded instead as the closest dated evidence, with the autumn-ripening caveat noted.",
+    "yearsToFirstCrop, yearsToFullBearing, yieldKgPerTreeMature: none found in any primary/peer-reviewed source searched. No ICRAF Agroforestree Database PDF exists for this species (apps.worldagroforestry.org/treedb2/AFTPDFS/Harpephyllum_caffrum.PDF returns HTTP 500), and no working ICRAF treedb2 species-profile page (speciesprofile.php?Spid=...) was located for it via search. PROTA4U's descriptive content could not be retrieved with available tools (client-side AJAX content absent from static HTML). WebSearch surfaced only nursery/plant-database sites for these figures, which are excluded by the sourcing rules.",
+    "chillUnits: not stated by any source found.",
+    "Pollinating agent (insect/bird/wind) not confirmed by any fetched source for this species specifically.",
+    "Editor review 2026-09-28: harvest window changed from the flowering months (Nov–Feb) to SANBI's 'ripen in autumn', read as the South African autumn Mar–May."
+  ]
+}

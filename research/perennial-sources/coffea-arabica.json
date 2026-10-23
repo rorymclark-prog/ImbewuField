@@ -1,0 +1,96 @@
+{
+  "speciesId": "coffea-arabica",
+  "commonName": "Arabica coffee",
+  "botanicalName": "Coffea arabica",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [
+    {
+      "region": "Beaver Creek Estate, Port Edward, KwaZulu-Natal — SL28, Catuai and F6",
+      "months": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "evidence": {
+        "quote": "harvested from May to September",
+        "url": "https://www.beavercreek.co.za/coffee-cultivars/",
+        "doc": "Beaver Creek Coffee Estate, Coffee Cultivars (own-farm observations)",
+        "page": null
+      },
+      "notes": "Producer describes its own estate cultivars. This is ripe coffee-cherry picking, not packaged roasted coffee availability, dry green-bean kg or a forecast for every KZN site."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No locally qualified numeric first-crop age was established in the checked primary sources. Record planting date, nursery starting age and propagation method."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured local numeric full-bearing age was established. No yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified mature per-plant food kg with age, product basis and management context was established. Missing output remains unknown rather than zero."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No universal numeric chilling requirement is assigned. Check the actual cultivar and site's winter conditions."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Check the actual cultivar's pollen needs; no universal classification is inferred from a named cultivar."
+  },
+  "harvestProduct": "coffee cherries",
+  "supplementaryReferences": [
+    {
+      "title": "Estate cultivar identity and processing basis",
+      "quote": "There are 3 varieties that have been planted and harvested at Beaver Creek.",
+      "url": "https://www.beavercreek.co.za/coffee-cultivars/",
+      "doc": "Beaver Creek Coffee Estate, Coffee Cultivars (own-farm observations)",
+      "page": null,
+      "note": "The three are SL28, Catuai and F6. The estate explains pulping, fermentation, drying, hulling and roasting after picking; cherry weight, green beans and roasted output are separate products."
+    },
+    {
+      "title": "Local coffee planting context",
+      "quote": "Beaver Creek Estate, Izingolweni Road, Port Edward, 4295",
+      "url": "https://www.beavercreek.co.za/story/",
+      "doc": "Beaver Creek Estate, Our Story",
+      "page": null,
+      "note": "The estate is on the KZN south coast and reports growing SL28, Catuai and F6. This is first-party cultivation evidence, not nationwide suitability."
+    }
+  ],
+  "productionGuidance": {
+    "products": "coffee cherries",
+    "care": [
+      "Record coffee-cherry picking separately from drying, hulling and roasting. Do not use roasted packet stock months as the fresh harvest calendar.",
+      "Use the Port Edward reference only after checking the actual site's conditions and chosen cultivar."
+    ],
+    "purchase": [
+      "SL28, Catuai and F6 are documented on a working Port Edward estate. Ask a local nursery or coffee adviser which planting material fits the site and intended processing."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://www.beavercreek.co.za/coffee-cultivars/",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    },
+    {
+      "url": "https://www.beavercreek.co.za/story/",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    }
+  ],
+  "gaps": [
+    "No verified numeric first/full bearing age or per-plant mature food kg; per-hectare compilation figures lack a matched plant/product basis.",
+    "The checked NDA coffee PDF endpoints were unavailable; the official Ugu assessment remains a lead, not a silently imported generic age curve.",
+    "No household drying time, safe storage duration or cherry-to-bean weight conversion is assigned."
+  ]
+}

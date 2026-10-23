@@ -1,0 +1,67 @@
+{
+  "status": "read-only findings; not learner wired",
+  "observedNativeConversation": "48686326-d31a-4a61-a252-ae3bc13ca69c",
+  "model": "Gemini 3.8 Flash Medium",
+  "reviewedLanguages": [
+    "st",
+    "ve",
+    "ts"
+  ],
+  "lessonId": "reading-landscape-l2",
+  "rootDisposition": "Earlier blanket aligned verdicts rejected as completion evidence. Morphological explanations remain model claims, not fluent approval or independently verified primary-source grammar. Repair candidates and independent composition checks still required.",
+  "findings": [
+    {
+      "language": "st",
+      "field": "body paragraph 1",
+      "phrase": "a fumana letsatsi le lengata",
+      "risk": "much sun vs more sun"
+    },
+    {
+      "language": "st",
+      "field": "body paragraph 1 and key point 0",
+      "phrase": "a na le mongobo",
+      "risk": "has moisture vs moister"
+    },
+    {
+      "language": "ve",
+      "field": "body paragraph 1",
+      "phrase": "hu nga duderana ha dovha ha oma",
+      "risk": "warm/dry without explicit comparative"
+    },
+    {
+      "language": "ve",
+      "field": "body paragraph 1 and key point 0",
+      "phrase": "hu fhola ha vha na vhunyisi",
+      "risk": "cool/has moisture vs cooler/moister"
+    },
+    {
+      "language": "ts",
+      "field": "body paragraph 1 and key point 0",
+      "phrase": "dyambu ro tala / dyambu ro kongoma",
+      "risk": "much/direct sun vs more sun/more direct sun"
+    },
+    {
+      "language": "ts",
+      "field": "body paragraph 1",
+      "phrase": "ti nga hisa no oma swinene",
+      "risk": "intensive very vs comparative warmer/drier"
+    },
+    {
+      "language": "ts",
+      "field": "body paragraph 1 and key point 0",
+      "phrase": "ti tala ku titimela no tsakamanyana",
+      "risk": "cooler not explicit; -nyana comparative claim not independently proven"
+    }
+  ],
+  "preserve": [
+    "often",
+    "can",
+    "north/south",
+    "seasons",
+    "before choosing site",
+    "quiz indices 2 and 0",
+    "canonical English",
+    "all other clauses"
+  ],
+  "fluentApproval": false
+}

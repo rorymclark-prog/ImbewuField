@@ -40,9 +40,6 @@ export const APP_HEADER_INSET: CSSProperties = {
 
 export const APP_HEADER_STYLE: CSSProperties = {
   ...APP_HEADER_INSET,
-  // NOTE: these are literals, not tokens, so this bar does not follow the theme. The seven pages
-  // using it are staff screens outside the farmer routes that went through the dark-mode pass —
-  // worth tokenising when dark mode is extended to them.
-  background: '#FFFEFA',
-  borderBottom: '1px solid #E2D8C4',
+  background: 'var(--bg-1)',
+  borderBottom: '1px solid var(--border)',
 };

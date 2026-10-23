@@ -1,0 +1,62 @@
+{
+  "speciesId": "rhoicissus-tridentata",
+  "commonName": "Bushman's grape",
+  "botanicalName": "Rhoicissus tridentata",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "edible berries; roots excluded",
+  "supplementaryReferences": [
+    {
+      "title": "Edible part and local use",
+      "quote": "The fruits are edible, but sour, and can be eaten raw.",
+      "url": "https://pza.sanbi.org/rhoicissus-tridentata",
+      "doc": "SANBI PlantZAfrica, rhoicissus-tridentata",
+      "page": null,
+      "note": "Food is the berry; the same SANBI account reports poisonous tuberous roots. September–June describes berry occurrence, not a measured ripe-picking interval."
+    }
+  ],
+  "productionGuidance": {
+    "products": "edible berries; roots excluded",
+    "care": [
+      "Provide a trellis or other support. Young plants need water until established; SANBI describes later drought tolerance and sun to semi-shade use."
+    ],
+    "purchase": [
+      "Ask for Rhoicissus tridentata and record local ripe-fruit months. Do not use medicinal or animal root use as food evidence."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/rhoicissus-tridentata",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    }
+  ],
+  "gaps": [
+    "No exact ripe-picking window or food kg; roots must stay excluded."
+  ]
+}

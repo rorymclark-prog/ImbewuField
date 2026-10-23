@@ -15,6 +15,13 @@
 //
 // PURE MODULE — no react, no firebase, no fetch. Just the manifest and lookups over it.
 
+import { COURSE_TRANSCRIPTS } from './course-transcripts';
+import { resolveIsiZuluDeckSourcePair, ISIZULU_DECK_SOURCE_BINDINGS } from './course-deck-source-bindings';
+import { isiZuluDeckReviewHold } from './course-deck-review-holds';
+import { regionalNarrationDraft } from './narration-blockers';
+import { CURRENT_DECK_RELEASE_BINDINGS } from './course-deck-release-bindings-registry';
+import { recordingMatchesDeckRelease, type CourseDeckReleaseBindings } from './course-deck-release-bindings';
+
 export interface NarrationTrack {
   /** Slide number in the facilitator deck. Also the filename: slide-07.mp3. */
   slide: number;
@@ -87,7 +94,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
     ],
   },
   'intro-permaculture': {
-    languages: ['en', 'zu'],
+    languages: ['en', 'zu', 'st'],
     // 22 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural (Antigravity's batch run) and
     // verified by import-course-audio: 22/22 clips matched their script blocks, median 3.22 w/s.
     // The isiZulu draft uses zu-ZA-ThandoNeural at -12%. Slide 22 was rerecorded on 2026-09-25
@@ -98,16 +105,19 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
     // NOTE the voice differs from seeds-sovereignty's en-ZA-LeahNeural — the eight modules
     // recorded after this one share Luke, so seeds is the odd one out; Rory decides whether to
     // re-record seeds EN for a single course voice.
+    // The Sesotho track is an unreviewed machine voice with 43 draft and 45 exact-English
+    // paragraphs. Rory asked to publish it for facilitator feedback on 28 September; the
+    // paired text, clip hashes and open listening review are recorded in docs/narration-reviews/.
     tracks: [
-      { slide: 1,  lesson: null,                    title: 'Introduction to Permaculture', titleByLang: { zu: 'Isingeniso Se-Permaculture' } },
-      { slide: 2,  lesson: null,                    title: 'Why This Matters', titleByLang: { zu: 'Kungani Lokhu Kubalulekile' } },
-      { slide: 3,  lesson: null,                    title: 'Learning Outcomes', titleByLang: { zu: 'Imiphumela Yokufunda' } },
-      { slide: 4,  lesson: 'intro-permaculture-l1', title: 'Earth Care', titleByLang: { zu: 'Ukunakekela Umhlaba' } },
-      { slide: 5,  lesson: 'intro-permaculture-l1', title: 'People Care', titleByLang: { zu: 'Ukunakekela Abantu' } },
-      { slide: 6,  lesson: 'intro-permaculture-l1', title: 'Fair Share', titleByLang: { zu: 'Ukwabelana Ngokulinganayo' } },
-      { slide: 7,  lesson: 'intro-permaculture-l1', title: 'Watch: One Decision, Three Ethics', titleByLang: { zu: 'Bheka: Isinqumo Esisodwa, Ama-Ethics Amathathu' } },
+      { slide: 1,  lesson: null,                    title: 'Introduction to Permaculture', titleByLang: { zu: 'Isingeniso Se-Permaculture', st: 'Selelekela sa Permaculture' } },
+      { slide: 2,  lesson: null,                    title: 'Why This Matters', titleByLang: { zu: 'Kungani Lokhu Kubalulekile', st: 'Lebaka Leo Sena se Leng Bohlokwa ka Lona' } },
+      { slide: 3,  lesson: null,                    title: 'Learning Outcomes', titleByLang: { zu: 'Imiphumela Yokufunda', st: 'Dintho Tseo o Tla Kgona ho di Etsa' } },
+      { slide: 4,  lesson: 'intro-permaculture-l1', title: 'Earth Care', titleByLang: { zu: 'Ukunakekela Umhlaba', st: 'Tlhokomelo ya Lefatshe' } },
+      { slide: 5,  lesson: 'intro-permaculture-l1', title: 'People Care', titleByLang: { zu: 'Ukunakekela Abantu', st: 'Tlhokomelo ya Batho' } },
+      { slide: 6,  lesson: 'intro-permaculture-l1', title: 'Fair Share', titleByLang: { zu: 'Ukwabelana Ngokulinganayo', st: 'Karolelano e Lokileng (Fair Share)' } },
+      { slide: 7,  lesson: 'intro-permaculture-l1', title: 'Watch: One Decision, Three Ethics', titleByLang: { zu: 'Bheka: Isinqumo Esisodwa, Ama-Ethics Amathathu', st: 'Shebella: Qeto e le Nngwe, Melao e Meraro ya Boitshwaro' } },
       { slide: 8,  lesson: 'intro-permaculture-l1', title: 'When There Is No Rulebook', titleByLang: { zu: 'Lapho Kungekho Rulebook' } },
-      { slide: 9,  lesson: 'intro-permaculture-l2', title: 'Twelve Principles', titleByLang: { zu: 'Izimiso Eziyishumi Nambili' } },
+      { slide: 9,  lesson: 'intro-permaculture-l2', title: 'Twelve Principles', titleByLang: { zu: 'Izimiso Eziyishumi Nambili', st: 'Melao-motheo e Leshome le Metso e Mmedi' } },
       { slide: 10, lesson: 'intro-permaculture-l2', title: 'Observe and Interact', titleByLang: { zu: 'Bheka Bese Uxhumana Nomhlaba Wakho' } },
       { slide: 11, lesson: 'intro-permaculture-l2', title: 'Catch and Store Energy', titleByLang: { zu: 'Bamba Ugcine Amandla' } },
       { slide: 12, lesson: 'intro-permaculture-l2', title: 'Use Edges and Value the Marginal', titleByLang: { zu: 'Sebenzisa Imiphetho Nezindawo Eziseceleni' } },
@@ -119,8 +129,8 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 18, lesson: 'intro-permaculture-l3', title: 'Sectors: The Energies Arriving From Outside', titleByLang: { zu: 'Ama-Sector: Izinto Ezifika Zivela Ngaphandle' } },
       { slide: 19, lesson: 'intro-permaculture-l3', title: 'Watch: Shelter Between Wind and Crops', titleByLang: { zu: 'Buka: I-Windbreak Phakathi Komoya Nezitshalo' } },
       { slide: 20, lesson: 'intro-permaculture-l3', title: 'Sketch It And You Have A Design', titleByLang: { zu: 'Dweba Ukuze Uqale Uhlelo' } },
-      { slide: 21, lesson: null,                    title: 'Field Assignment', titleByLang: { zu: 'Umsebenzi Wasensimini' } },
-      { slide: 22, lesson: null,                    title: 'Field Action', titleByLang: { zu: 'Isenzo Sasensimini' } },
+      { slide: 21, lesson: null,                    title: 'Field Assignment', titleByLang: { zu: 'Umsebenzi Wasensimini', st: 'Mosebetsi oa Tšimo.' } },
+      { slide: 22, lesson: null,                    title: 'Field Action', titleByLang: { zu: 'Isenzo Sasensimini', st: 'Ketso ea Tšimo.' } },
     ],
   },
   'reading-landscape': {
@@ -761,6 +771,21 @@ export function hasNarration(moduleId: string): boolean {
   return Boolean(n && n.languages.length > 0 && n.tracks.length > 0);
 }
 
+/** Raw manifest languages keep archived files owned; callers offer only compatible voices. */
+export function availableNarrationLanguages(moduleId: string, bindings: CourseDeckReleaseBindings = CURRENT_DECK_RELEASE_BINDINGS): string[] {
+  return (COURSE_NARRATION[moduleId]?.languages ?? []).filter(lang => narrationReleaseCompatible(moduleId, lang, bindings));
+}
+
+export function narrationReleaseCompatible(moduleId: string, lang: string, bindings: CourseDeckReleaseBindings = CURRENT_DECK_RELEASE_BINDINGS): boolean {
+  if (!bindings.has(moduleId, lang)) return true;
+  const release = bindings.resolve(moduleId, lang, slide => {
+    const track = COURSE_NARRATION[moduleId]?.tracks.find(row => row.slide === slide);
+    const body = COURSE_TRANSCRIPTS[moduleId]?.en?.[slide];
+    return track && body ? { heading: trackTitle(track, 'en'), body } : undefined;
+  });
+  return recordingMatchesDeckRelease(release, regionalNarrationDraft(moduleId, lang)?.sourcePairSha256);
+}
+
 export interface ResolvedLang {
   lang: string;
   /** false = we are playing a different language from the one the app is set to. The UI must
@@ -770,12 +795,20 @@ export interface ResolvedLang {
 
 /** Pick the language to actually play: the app language if it was recorded, else English,
  *  else whatever exists. Null when the module has no recording at all. */
-export function resolveNarrationLang(moduleId: string, appLang: string): ResolvedLang | null {
+export function resolveNarrationLang(moduleId: string, appLang: string, bindings: CourseDeckReleaseBindings = CURRENT_DECK_RELEASE_BINDINGS): ResolvedLang | null {
   const n = COURSE_NARRATION[moduleId];
-  if (!n || n.languages.length === 0) return null;
-  if (n.languages.includes(appLang)) return { lang: appLang, exact: true };
-  if (n.languages.includes('en')) return { lang: 'en', exact: false };
-  return { lang: n.languages[0], exact: false };
+  const languages = availableNarrationLanguages(moduleId, bindings);
+  if (!n || languages.length === 0) return null;
+  if (languages.includes(appLang)) return { lang: appLang, exact: true };
+  if (languages.includes('en')) return { lang: 'en', exact: false };
+  return { lang: languages[0], exact: false };
+}
+
+/** Regional readers must choose a voice when their own recording is absent.
+ * The resolver still describes available fallback audio for explicit choices. */
+export function requiresExplicitNarrationChoice(moduleId: string, appLang: string, bindings: CourseDeckReleaseBindings = CURRENT_DECK_RELEASE_BINDINGS): boolean {
+  return ['st', 've', 'ts'].includes(appLang) &&
+    !availableNarrationLanguages(moduleId, bindings).includes(appLang);
 }
 
 const pad2 = (n: number) => String(n).padStart(2, '0');
@@ -786,17 +819,34 @@ function base(n: ModuleNarration, moduleId: string, lang: string): string {
 }
 
 /** URL for one slide clip, or null if the module or slide isn't in the manifest. */
-export function trackUrl(moduleId: string, lang: string, slide: number): string | null {
+export function trackUrl(moduleId: string, lang: string, slide: number, bindings: CourseDeckReleaseBindings = CURRENT_DECK_RELEASE_BINDINGS): string | null {
   const n = COURSE_NARRATION[moduleId];
-  if (!n || !n.languages.includes(lang)) return null;
-  if (!n.tracks.some((t) => t.slide === slide)) return null;
+  if (!n || !n.languages.includes(lang) || !narrationReleaseCompatible(moduleId, lang, bindings)) return null;
+  const track = n.tracks.find((t) => t.slide === slide);
+  if (!track) return null;
+  if (lang === 'zu' && ISIZULU_DECK_SOURCE_BINDINGS.some((binding) => binding.moduleId === moduleId)) {
+    if (isiZuluDeckReviewHold(moduleId, slide)) return null;
+    if (!resolveIsiZuluDeckSourcePair(moduleId, slide, COURSE_TRANSCRIPTS, {
+      en: trackTitle(track, 'en'),
+      zu: trackTitle(track, 'zu'),
+    })) return null;
+  }
   return `${base(n, moduleId, lang)}/slide-${pad2(slide)}.mp3`;
 }
 
 /** URL for the single continuous narration of the whole module. */
-export function fullNarrationUrl(moduleId: string, lang: string): string | null {
+export function fullNarrationUrl(moduleId: string, lang: string, bindings: CourseDeckReleaseBindings = CURRENT_DECK_RELEASE_BINDINGS): string | null {
   const n = COURSE_NARRATION[moduleId];
-  if (!n || !n.languages.includes(lang)) return null;
+  if (!n || !n.languages.includes(lang) || !narrationReleaseCompatible(moduleId, lang, bindings)) return null;
+  if (lang === 'zu' && ISIZULU_DECK_SOURCE_BINDINGS.some((binding) => binding.moduleId === moduleId)) {
+    for (const track of n.tracks) {
+      if (isiZuluDeckReviewHold(moduleId, track.slide)) return null;
+      if (!resolveIsiZuluDeckSourcePair(moduleId, track.slide, COURSE_TRANSCRIPTS, {
+        en: trackTitle(track, 'en'),
+        zu: trackTitle(track, 'zu'),
+      })) return null;
+    }
+  }
   return `${base(n, moduleId, lang)}/full.mp3`;
 }
 

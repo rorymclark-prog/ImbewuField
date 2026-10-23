@@ -1,0 +1,93 @@
+{
+  "speciesId": "carya-illinoinensis",
+  "commonName": "Pecan",
+  "botanicalName": "Carya illinoinensis",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general — Southern Hemisphere phenology; main areas Vaalharts/Northern Cape, Lower Orange River)",
+      "months": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "evidence": {
+        "quote": "Shell hardening and nut-fill is complete around end of February, taking approximately three weeks. At this stage shuck-split will take place which indicates the start of the harvesting period, ending in middle June. Trees then enter dormancy after natural leaf drop end of July.",
+        "url": "https://www.sappa.za.org/download/16968/?tmstv=1790592292",
+        "doc": "Lötze, E., 'Literature Review: Factors influencing pollination of pecans for commercial production', published by SAPPA (South African Pecan Nut Producers' Association)",
+        "page": 3
+      },
+      "notes": "SAPPA's own 2026 harvest-progress updates (sappa.za.org/2026-harvest-update-september/) show processors still actively receiving nut-in-shell in September ('By week 36, participating processors had received approximately 57,719 tons' as the '2026 pecan harvest season nears completion'), suggesting the real-world harvest/delivery window in some years/regions extends noticeably later than the 'ending in middle June' stated in the phenology literature review — kept the literature review's Mar-Jun figure as the sourced evidence since it is an explicit month-range statement, but flagging this discrepancy rather than silently reconciling it."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": [
+      5,
+      5
+    ],
+    "evidence": {
+      "quote": "Light cropping starts at about 5 years, with full production in year 12-13.",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN, Pecan bearing age; printed p.22",
+      "page": 26
+    },
+    "notes": "Light cropping at about year 5 in the KZN guide, for irrigated areas with hot summers, cold winters and low growing-season humidity. It identifies dry Zululand/Lowveld river valleys as suitable regional areas. Propagation, cultivar and nursery age are not specified; this is a qualified general reference, not an expected farm quantity."
+  },
+  "yearsToFullBearing": {
+    "value": [
+      12,
+      13
+    ],
+    "evidence": {
+      "quote": "Light cropping starts at about 5 years, with full production in year 12-13.",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN, Pecan bearing age; printed p.22",
+      "page": 26
+    },
+    "notes": "Full production around years 12–13 in the general KZN guide. Cultivar, propagation, density and management affect actual output; mature ages do not automatically create an annual kg/tree curve."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Set to null in editor review: the SAPPA figure is an industry average across orchards of all ages used for a water calculation, not a yield for a mature tree. Withdrawn value: [20, 20]."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": {
+      "quote": "The date of budburst is also important and depends on the growing degree hours (GDH) as well as the chilling requirement (Kudan et al., 2013). ... The prominent climate parameters winter chilling and HU in spring furthermore enhanced cultivar differences (Grauke and Thompson, 1996b).",
+      "url": "https://www.sappa.za.org/download/16968/?tmstv=1790592292",
+      "doc": "Lötze, E., 'Literature Review: Factors influencing pollination of pecans for commercial production', published by SAPPA",
+      "page": 27
+    },
+    "notes": "Unlike the other 7 species in this research set, pecan IS a true deciduous tree with a genuine winter-chilling requirement affecting budbreak and flowering (confirmed by this SAPPA-published review), but no specific chill-hour/chill-unit NUMBER for South African conditions or cultivars was given in the accessible text, so the value is left null rather than guessed; the qualitative requirement itself is real and captured in evidence/notes rather than defaulted to 'no chill requirement'."
+  },
+  "pollination": {
+    "value": "needs-cross-pollinator",
+    "evidence": {
+      "quote": "In pecans [Carya illinoinensis (Wangenh. K. Koch)], male (staminate) and female (pistillate) flowers occur on the same tree (monoecious) and exhibits heterodichogamy ... Therefore, trees were divided into two groups: “Protandrous” (Type I) which is when pollen from the male flowers is shed before the female flowers are receptive, and “Protogynous” (Type II), where female flowers are receptive to pollen before pollen is shed from the male flowers ... Compatible cultivars need to be in close proximity to each other for successful cross-pollination ... It is possible for fruit to set through self-pollination in the case of incomplete dichogamy, but this often results in smaller and lighter nuts ... Under self-pollination, pecan yield is 35 – 75% lower with nut quality severely reduced (Polles et al., 1980). Complete dichogamy will result in a self-sterile cultivar, as there is no overlap between pollen shed and pistil receptivity.",
+      "url": "https://www.sappa.za.org/download/16968/?tmstv=1790592292",
+      "doc": "Lötze, E., 'Literature Review: Factors influencing pollination of pecans for commercial production', published by SAPPA",
+      "page": 2
+    },
+    "notes": "Pecan is wind-pollinated and monoecious (male and female flowers on the same tree) but exhibits heterodichogamy — male and female flowers on a given tree mature at different times (Type I protandrous vs Type II protogynous) — so a single tree/cultivar alone generally cannot pollinate itself well or at all (many named cultivars are effectively self-sterile), and commercial orchards in South Africa are planted with complementary Type I x Type II cultivar combinations. Self-pollination is possible in some cultivars with incomplete dichogamy but yields 35-75% less with poorer nut quality — hence 'needs-cross-pollinator' rather than 'partly-self-fertile' or 'self-fertile'."
+  },
+  "supplementaryReferences": [
+    {
+      "title": "Pecan guide output — dry nut-in-shell hectare basis",
+      "quote": "Dry-in-Shell",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN, Pecan yield; printed p.22",
+      "page": 26,
+      "note": "The guide gives conservative 750, average 800–1,200 and good 1,500+ kg/ha Dry-in-Shell. It separately lists alternative tree spacings and later thinning, so one density is not assumed. These are unaged hectare benchmarks; shell weight is not edible kernel weight and no generic kg/tree curve is derived."
+    }
+  ],
+  "harvestProduct": "nut in shell",
+  "gaps": [
+    "No specific numeric winter-chill-hour/chill-unit requirement for pecan under South African conditions was found; only a qualitative statement that chilling requirement affects budburst timing (SAPPA literature review, citing a Turkish study, Kudan et al. 2013, for the underlying concept).",
+    "The single yield-per-tree figure used (20 kg/tree) comes from a water-use slide in a SAPPA orchard-establishment presentation and is presented as a general/average figure, not explicitly tied to tree age or 'mature' status; no separate mature-vs-young yield curve was found.",
+    "SAPPA's larger 'Establishing an Orchard' PDF is mostly a slide deck with limited embedded body text (many pages are image-based), so a lot of its likely detailed content (e.g. spacing-to-yield tables) was not machine-extractable; other SAPPA PDFs (Orchard Layout, Pecan Nut Plant Materials) were not fetched due to size/budget constraints.",
+    "There is a discrepancy between the phenology literature review's stated harvest window (starting after shuck-split around end-Feb/March, 'ending in middle June') and SAPPA's own 2026 in-season harvest-tracker update showing nut deliveries to processors still substantial in September; both are noted but not reconciled with a single source.",
+    "Editor review 2026-09-28: yieldKgPerTreeMature withdrawn — the SAPPA figure is an industry average across orchards of all ages used for a water calculation, not a yield for a mature tree.",
+    "11 October 2026: verified KZN guide fills light-crop age about 5 and full-production age 12–13. A repeatable cultivar/region/age yield curve and matched edible-kernel output remain unresolved; the withdrawn all-ages SAPPA average is not restored."
+  ]
+}

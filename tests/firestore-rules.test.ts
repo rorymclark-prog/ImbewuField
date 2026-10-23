@@ -431,10 +431,59 @@ test('a farmer can read and write their own production, sales, and expense logs'
   }
 });
 
+test('counted produce is stored with unknown weight and retains the same owner gates', async () => {
+  const db = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  const other = env.authenticatedContext(FARMER_WITHOUT_LINK).firestore();
+  for (const collectionName of ['production_logs', 'sales_logs']) {
+    const target = doc(db, collectionName, `counted-${collectionName}`);
+    const data = { ...logData(FARMER_WITH_LINK, 'org-1', collectionName), kg: null, quantity: 12, unit: 'eggs' };
+    await assertSucceeds(setDoc(target, data));
+    await assertSucceeds(updateDoc(target, { quantity: 18 }));
+    await assertFails(updateDoc(target, { profile_id: FARMER_WITHOUT_LINK }));
+    await assertFails(updateDoc(target, { org_id: 'org-other' }));
+    await assertFails(updateDoc(doc(other, collectionName, `counted-${collectionName}`), { quantity: 99 }));
+    await assertFails(deleteDoc(doc(other, collectionName, `counted-${collectionName}`)));
+    await assertSucceeds(deleteDoc(target));
+  }
+});
+
+test('unit validation rejects fabricated kg conversions, fractional eggs and unsupported units', async () => {
+  const db = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  for (const collectionName of ['production_logs', 'sales_logs']) {
+    const target = doc(db, collectionName, `invalid-count-${collectionName}`);
+    const data = { ...logData(FARMER_WITH_LINK, 'org-1', collectionName), kg: null, quantity: 12, unit: 'eggs' };
+    for (const invalid of [
+      { quantity: 0 }, { quantity: -1 }, { quantity: 1.5 }, { quantity: Infinity },
+      { kg: 12 }, { unit: 'hours' }, { unit: 'kg', kg: 2 },
+    ]) await assertFails(setDoc(target, { ...data, ...invalid }));
+    await assertSucceeds(setDoc(target, { ...data, unit: 'jars', quantity: 2.5 }));
+    await assertFails(updateDoc(target, { kg: 2.5 }));
+    await assertSucceeds(updateDoc(target, { kg: 2.5, unit: 'kg' }));
+    await assertSucceeds(deleteDoc(target));
+  }
+});
+
 test('a shared site is readable by exact code but its collection cannot be listed', async () => {
   const anonymous = env.unauthenticatedContext().firestore();
   await assertSucceeds(getDoc(doc(anonymous, 'shared_sites', 'ABC123')));
   await assertFails(getDocs(collection(anonymous, 'shared_sites')));
+});
+
+test('sec-11: a shared site must be owned, size-capped, and its code must match its own docId', async () => {
+  const db = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  const honest = { code: 'XYZ999', creator: FARMER_WITH_LINK, geojson: { type: 'FeatureCollection', features: [] }, places: [], waterPoints: [] };
+
+  // Forging someone else's uid as creator is refused.
+  await assertFails(setDoc(doc(db, 'shared_sites', 'XYZ999'), { ...honest, creator: FARMER_WITHOUT_LINK }));
+  // code must match the document's own id — writing a doc whose code field names a DIFFERENT
+  // code is refused, not silently accepted.
+  await assertFails(setDoc(doc(db, 'shared_sites', 'XYZ999'), { ...honest, code: 'OTHER1' }));
+  // Oversized arrays are refused even with an honest code/creator.
+  await assertFails(setDoc(doc(db, 'shared_sites', 'XYZ999'), {
+    ...honest, places: Array.from({ length: 301 }, (_, i) => ({ id: `p${i}` })),
+  }));
+  // An honest, size-respecting create succeeds.
+  await assertSucceeds(setDoc(doc(db, 'shared_sites', 'XYZ999'), honest));
 });
 
 test('a farmer cannot re-point their own financial row at another farmer', async () => {
@@ -859,10 +908,25 @@ test('cross-org isolation matrix: gardens and members', async () => {
   await assertSucceeds(getDoc(doc(adminDb, 'gardens', 'garden-b')));
   await assertSucceeds(getDoc(doc(adminDb, 'gardens', 'garden-b', 'members', FARMER_B)));
 
-  // KNOWN, DELIBERATELY UNCHANGED GAP (RULES-FIX-PROPOSAL-2026-08-01.md Part 3 #3): garden and
-  // garden-member WRITES are still bare isStaff(), with no same-org requirement at all. NOT
-  // fixed or asserted here (report-only backlog item; see the PR description) — only the READ
-  // side is this PR's scope, matching the four collections #375 already fixed the same way.
+  // sec-02 (2026-10-10 audit): garden and garden-member WRITES were bare isStaff(), with no
+  // same-org requirement at all — ANY provisioned ngo/funder/admin account, in ANY org, could
+  // edit or delete ANY other org's garden or member list. Now same-org staff (+ admin), matching
+  // the read rule's own isAdmin()/sameOrg() pairing immediately above it.
+  await assertSucceeds(updateDoc(doc(staffADb, 'gardens', 'garden-a'), { name: 'Garden A (renamed)' }));
+  await assertFails(updateDoc(doc(staffBDb, 'gardens', 'garden-a'), { name: 'hacked' }));
+  await assertFails(updateDoc(doc(staffADb, 'gardens', 'garden-b'), { name: 'hacked' }));
+  await assertSucceeds(updateDoc(doc(staffBDb, 'gardens', 'garden-b'), { name: 'Garden B (renamed)' }));
+
+  await assertSucceeds(setDoc(doc(staffADb, 'gardens', 'garden-a', 'members', 'new-member-a'), {
+    garden_id: 'garden-a', profile_id: 'new-member-a', plot: 'A2', size_m2: 15, lat: null, lon: null,
+  }));
+  await assertFails(setDoc(doc(staffBDb, 'gardens', 'garden-a', 'members', 'new-member-a'), {
+    garden_id: 'garden-a', profile_id: 'new-member-a', plot: 'A3', size_m2: 15, lat: null, lon: null,
+  }));
+
+  // Admin's write bypass, same as its read bypass above — its own org_id is null, so sameOrg()
+  // alone would fail it closed on every garden regardless of which org it belongs to.
+  await assertSucceeds(updateDoc(doc(adminDb, 'gardens', 'garden-b'), { name: 'Garden B (admin edit)' }));
 });
 
 test('cross-org isolation matrix: production, sales and expense logs', async () => {
@@ -896,6 +960,47 @@ test('cross-org isolation matrix: production, sales and expense logs', async () 
     // than assumed.
     await assertFails(updateDoc(doc(staffADb, collectionName, rowB), { crop: 'hacked', item: 'hacked' }));
     await assertFails(deleteDoc(doc(mentorADb, collectionName, rowB)));
+
+    // sec-06 (2026-10-10 audit): create had no org_id check at all, so a farmer could stamp a
+    // brand-new row with ANOTHER org's id and pollute that org's mentor/NGO dashboards with a
+    // row that was never theirs to see. org_id is now pinned to the writer's own profile org.
+    const forged = { ...logData(FARMER_A, ORG_B, collectionName), profile_id: FARMER_A };
+    await assertFails(setDoc(doc(farmerADb, collectionName, `${FARMER_A}-forged-${collectionName}`), forged));
+    const honest = { ...logData(FARMER_A, ORG_A, collectionName), profile_id: FARMER_A };
+    await assertSucceeds(setDoc(doc(farmerADb, collectionName, `${FARMER_A}-honest-${collectionName}`), honest));
+  }
+});
+
+// sec-06 fix-up (integrator review): the first draft compared request.resource.data.org_id to
+// myOrg(), which bare-accesses prof().org_id. A self-signup profile (lib/auth.tsx's signUp ->
+// updateMyProfile never sets org_id at all, matching the profiles create rule's own
+// `!('org_id' in request.resource.data) || ... == null`) has no org_id KEY — not even an
+// explicit null — and dot access on a genuinely absent key errors the whole create rule closed.
+// That would have silently blocked every org-less farmer from saving production, sales or costs,
+// which is most self-signed-up farmers before a mentor assigns their org. ORG_LESS_FARMER below
+// is seeded with the key truly absent (not org_id: null) to prove the fix actually covers it —
+// the profile()/logData() helpers elsewhere in this file always include the key.
+const ORG_LESS_FARMER = 'org-less-farmer';
+test('sec-06: an org-less (self-signup) farmer can still save their own logs', async () => {
+  await env.withSecurityRulesDisabled(async (c) => {
+    const db = c.firestore();
+    // Deliberately NOT using the profile() helper — it always writes an org_id key, even as
+    // null, which does not reproduce the real self-signup shape this test exists to cover.
+    await setDoc(doc(db, 'profiles', ORG_LESS_FARMER), {
+      role: 'farmer', full_name: 'Org-less Farmer', language: 'en', created_at: '2026-10-10T00:00:00.000Z',
+    });
+  });
+  const db = env.authenticatedContext(ORG_LESS_FARMER).firestore();
+
+  for (const collectionName of LOG_COLLECTIONS) {
+    // The client (lib/db/queries.ts) always writes org_id explicitly, defaulting to null —
+    // matching what an org-less farmer's own profile resolves to under the same `.get()` default.
+    const honest = { ...logData(ORG_LESS_FARMER, null, collectionName), profile_id: ORG_LESS_FARMER };
+    await assertSucceeds(setDoc(doc(db, collectionName, `${ORG_LESS_FARMER}-honest-${collectionName}`), honest));
+
+    // Still cannot forge a real org's id just because they have none of their own.
+    const forged = { ...logData(ORG_LESS_FARMER, ORG_A, collectionName), profile_id: ORG_LESS_FARMER };
+    await assertFails(setDoc(doc(db, collectionName, `${ORG_LESS_FARMER}-forged-${collectionName}`), forged));
   }
 });
 
@@ -1202,13 +1307,70 @@ test('cross-org isolation matrix: per-user collections (not org-scoped by design
   // not org membership. Already covered by 'a shared site is readable by exact code but its
   // collection cannot be listed' above; not re-tested here.
   //
-  // community_profiles, board_posts, message_threads (+ its messages subcollection) and
-  // community_reports are a DELIBERATELY cross-org feature (opt-in discovery directory, trade
-  // board, 1:1 messaging) — the file's own section comment says so: "nothing here ever loosens
-  // the existing profiles/gardens/logs isolation above". Gated by the communityOn() kill switch
-  // plus signedIn() only, by product design, not an oversight. Out of scope for an ORG isolation
-  // matrix, which is about tenants who should NOT see each other — community is the one place
-  // farmers from different orgs are meant to.
+  // community_profiles, board_posts and community_reports (the discovery directory and trade
+  // board) remain a DELIBERATELY cross-org feature — gated by the communityOn() kill switch plus
+  // signedIn() only, by product design. message_threads (1:1 messaging) is the one exception:
+  // sec-07 (2026-10-10 audit) scoped thread CREATION to same-org-or-opted-into-community, see the
+  // next test — any two signed-in users, any org, could previously open a thread with each other.
+});
+
+test('sec-07: a message thread needs same org or mutual community opt-in, with capped names', async () => {
+  const ORGLESS_MSG_A = 'orgless-msg-a';
+  const ORGLESS_MSG_B = 'orgless-msg-b';
+  await env.withSecurityRulesDisabled(async (c) => {
+    const db = c.firestore();
+    await setDoc(doc(db, 'app_config', 'community'), { enabled: true });
+    // Deliberately no org_id key at all — the same self-signup shape as ORG_LESS_FARMER above.
+    // Only ORGLESS_MSG_A has opted into the community layer (a community_profiles doc).
+    await Promise.all([
+      setDoc(doc(db, 'profiles', ORGLESS_MSG_A), { role: 'farmer', full_name: 'Org-less A', language: 'en', created_at: '2026-10-10T00:00:00.000Z' }),
+      setDoc(doc(db, 'profiles', ORGLESS_MSG_B), { role: 'farmer', full_name: 'Org-less B', language: 'en', created_at: '2026-10-10T00:00:00.000Z' }),
+      setDoc(doc(db, 'community_profiles', ORGLESS_MSG_A), { uid: ORGLESS_MSG_A }),
+      setDoc(doc(db, 'community_profiles', ORGLESS_MSG_B), { uid: ORGLESS_MSG_B }),
+    ]);
+  });
+
+  const farmerADb = env.authenticatedContext(FARMER_A).firestore();
+  const orglessADb = env.authenticatedContext(ORGLESS_MSG_A).firestore();
+  const longName = 'x'.repeat(101);
+
+  // Cross-org: FARMER_A (org-a) cannot open a thread with FARMER_B (org-b) — neither has
+  // opted into community either.
+  await assertFails(setDoc(doc(farmerADb, 'message_threads', 'thread-a-b'), {
+    participants: [FARMER_A, FARMER_B],
+    participant_names: { [FARMER_A]: 'Farmer A', [FARMER_B]: 'Farmer B' },
+    last_message: '', last_message_at: '2026-10-10T00:00:00.000Z', created_at: '2026-10-10T00:00:00.000Z',
+  }));
+
+  // Same org (both FARMER_A and MENTOR_A belong to ORG_A): allowed.
+  await assertSucceeds(setDoc(doc(farmerADb, 'message_threads', 'thread-a-mentor'), {
+    participants: [FARMER_A, MENTOR_A],
+    participant_names: { [FARMER_A]: 'Farmer A', [MENTOR_A]: 'Mentor A' },
+    last_message: '', last_message_at: '2026-10-10T00:00:00.000Z', created_at: '2026-10-10T00:00:00.000Z',
+  }));
+
+  // An oversized display name is refused even for two same-org participants.
+  await assertFails(setDoc(doc(farmerADb, 'message_threads', 'thread-a-mentor-2'), {
+    participants: [FARMER_A, MENTOR_A],
+    participant_names: { [FARMER_A]: longName, [MENTOR_A]: 'Mentor A' },
+    last_message: '', last_message_at: '2026-10-10T00:00:00.000Z', created_at: '2026-10-10T00:00:00.000Z',
+  }));
+
+  // Two org-less farmers, BOTH opted into community: allowed even though neither has an org —
+  // same-org-only would have disabled community messaging for exactly this pairing.
+  await assertSucceeds(setDoc(doc(orglessADb, 'message_threads', 'thread-orgless-a-b'), {
+    participants: [ORGLESS_MSG_A, ORGLESS_MSG_B],
+    participant_names: { [ORGLESS_MSG_A]: 'Org-less A', [ORGLESS_MSG_B]: 'Org-less B' },
+    last_message: '', last_message_at: '2026-10-10T00:00:00.000Z', created_at: '2026-10-10T00:00:00.000Z',
+  }));
+
+  // An org-less farmer who opted into community messaging someone who is neither in their org
+  // (they have none) nor opted in themselves: denied.
+  await assertFails(setDoc(doc(orglessADb, 'message_threads', 'thread-orgless-a-farmerA'), {
+    participants: [ORGLESS_MSG_A, FARMER_A],
+    participant_names: { [ORGLESS_MSG_A]: 'Org-less A', [FARMER_A]: 'Farmer A' },
+    last_message: '', last_message_at: '2026-10-10T00:00:00.000Z', created_at: '2026-10-10T00:00:00.000Z',
+  }));
 });
 
 // NGO assessment publication replaces unrestricted raw funder survey reads.

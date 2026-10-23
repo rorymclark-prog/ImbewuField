@@ -1,0 +1,80 @@
+{
+  "title": "Independent final repairs for three Reading the Landscape slide headings",
+  "date": "2026-10-03",
+  "authority": {
+    "packet": "/tmp/imbewu-regional-reading-slide-ordinary-closure-candidates-revised-20261003.json",
+    "sourceRevision": "a961b2d305522907fbfb7cabca9cad597dba10e5",
+    "sourceEnglish": "docs/narration/reading-landscape.en.md",
+    "pairedDrafts": [
+      "docs/narration/reading-landscape.st.paired-draft.json",
+      "docs/narration/reading-landscape.ve.paired-draft.json",
+      "docs/narration/reading-landscape.ts.paired-draft.json"
+    ]
+  },
+  "scope": "Read-only heading repairs only. No repository file was changed. Sesotho object-form check consulted a Peace Corps beginner Sesotho tutorial, which uses “li tla u thusa” (“they will help you”); remaining Tshivenda/Xitsonga forms are conservative semantic drafts requiring fluent-speaker review.",
+  "entries": [
+    {
+      "language": "st",
+      "slide": 13,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Watch: See Wind and Cold Air on the Map",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "currentCandidate": "Shebella: See Wind and Cold Air mapa",
+      "repairedCandidate": "Shebella: See Wind and Cold Air on the Map",
+      "independentFinding": "“mapa” names a map but the candidate does not clearly express the source relation “on the map.” Keep the locative phrase exact in English until a reviewed Sesotho form is available.",
+      "repairRationale": "Conservative restoration of the exact source prepositional relation.",
+      "reviewStatus": "unreviewed machine draft; target-language fluency and local approval not claimed"
+    },
+    {
+      "language": "st",
+      "slide": 18,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Let Plants Help You Read Soil",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "currentCandidate": "Lumella dimela di go thuse ho bala Soil",
+      "repairedCandidate": "Lumella dimela di u thuse ho bala Soil",
+      "independentFinding": "“go” is the object form commonly associated with Northern Sotho/Sepedi, while Southern Sesotho uses “u” for the second-person object in examples such as “li tla u thusa” (“they will help you”). “di u thuse” keeps plants as the subject and you as object in the directive construction.",
+      "repairRationale": "Change go to u; retain the candidate’s “Let plants help you read Soil” construction. This is a conservative grammar correction, not a fluent approval.",
+      "reviewStatus": "unreviewed machine draft; target-language fluency and local approval not claimed"
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Let Plants Help You Read Soil",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "currentCandidate": "Zwilimela zwi nga ni thusa u vhala Soil",
+      "repairedCandidate": "Tendelani zwilimela zwi ni thuse u read Soil",
+      "independentFinding": "Current “Zwilimela zwi nga ni thusa...” back-translates as “Plants can help you...,” shifting the source directive “Let plants help you...” to a possibility statement. The repair uses a directive “allow/let plants...” construction and leaves the difficult technical phrase “read Soil” in English.",
+      "repairRationale": "Proposed directive form for facilitator review; preserve Read Soil as exact English anchor.",
+      "reviewStatus": "unreviewed machine draft; target-language fluency and local approval not claimed"
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "fieldPath": "target.heading",
+      "exactSourceEnglish": "Let Plants Help You Read Soil",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "currentCandidate": "Swimilani swi nga ku pfuna ku hlaya Soil",
+      "repairedCandidate": "Pfumelela swimilani swi ku pfuna ku read Soil",
+      "independentFinding": "Current “Swimilani swi nga ku pfuna...” back-translates as “Plants can help you...,” shifting the source directive “Let plants help you...” to a possibility statement. The repair uses a directive “allow/let plants...” construction and leaves the difficult technical phrase “read Soil” in English.",
+      "repairRationale": "Proposed directive form for facilitator review; preserve Read Soil as exact English anchor.",
+      "reviewStatus": "unreviewed machine draft; target-language fluency and local approval not claimed"
+    }
+  ],
+  "references": [
+    {
+      "title": "Peace Corps Puo Ea Sechaba: A Beginner’s Tutorial in Sesotho",
+      "url": "https://fsi-languages.yojik.eu/languages/PeaceCorps/Sesotho/Peace%20Corps-%20A%20Beginner%27s%20Tutorial%20in%20Sesotho.pdf",
+      "use": "Examples use u as the second-person singular object marker, including “Lilemo ... li tla u thusa” (“The years ... will help you”)."
+    }
+  ]
+}

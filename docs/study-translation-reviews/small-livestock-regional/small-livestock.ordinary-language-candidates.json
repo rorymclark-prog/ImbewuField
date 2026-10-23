@@ -1,0 +1,394 @@
+{
+  "module": "Small Livestock Integration",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed-machine-candidates",
+  "scope": "Bounded proposals for ordinary-language text only. These are not approved translations and must not be wired into a learner deck before fluent-speaker review.",
+  "languages": {
+    "ve": {
+      "name": "Tshivenda",
+      "candidates": [
+        {
+          "slide": 9,
+          "kind": "body",
+          "sourceEnglish": "Watch one bee move from one blossom to another.",
+          "candidate": "Vhonani ṋotshi nthihi i tshi bva kha luvha i tshi ya kha ḽiṅwe.",
+          "backTranslation": "Watch one bee go from one flower to another.",
+          "drift": "Low based on this source-blind back-translation. The English verb 'move' became 'go'; the number and one-flower-to-another relationship remain. 'Blossom' is rendered as the more general 'flower'.",
+          "holdReason": "The sentence is observational, not animal-care or hive-safety advice. Keep it unapproved pending a Tshivenda first-language review, including noun-class and idiomatic wording.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 9,
+          "kind": "body",
+          "sourceEnglish": "Bees can carry pollen as they visit flowers.",
+          "candidate": "Dziṋotshi dzi nga hwala pollen musi dzi tshi dalela maluvha.",
+          "backTranslation": "Bees can carry pollen when they visit flowers.",
+          "drift": "No material drift identified in the back-translation. 'Pollen' remains English because a technical term should not be guessed at.",
+          "holdReason": "This is a general explanatory statement, not a care instruction or safety claim. The English technical term is intentionally retained; have a Tshivenda speaker confirm whether it is understandable or has a locally preferred term.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 1,
+          "kind": "body",
+          "sourceEnglish": "Small livestock integration turns chickens, ducks, and bees into working parts of the farm.",
+          "candidate": "U ṱanganya zwifuwo zwiṱuku zwi ngaho chickens, ducks na bees zwi ita uri zwi shume na kha purasi.",
+          "backTranslation": "Joining small animals such as chickens, ducks and bees makes them work on the farm too.",
+          "drift": "Low apparent drift: the three named animal groups and the idea of becoming useful parts of the farm remain. “Small livestock integration” is simplified to “joining small animals”; confirm that this is a suitable course-level wording.",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 1,
+          "kind": "body",
+          "sourceEnglish": "Learn how animals can control pests, build fertility, support pollination, and return value to the soil.",
+          "candidate": "Gudani uri zwifuwo zwi nga langa pests, zwa engedza soil fertility, zwa thusa pollination, na u vhuedzedza ndeme mavuni.",
+          "backTranslation": "Learn that animals can manage pests, increase soil fertility, help pollination, and return value to the soil.",
+          "drift": "Low apparent drift in the proposition. The technical terms “pests,” “soil fertility,” and “pollination” stay English for review; “control” is softened to “manage,” so confirm that the claim is not weakened too far.",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 2,
+          "kind": "body",
+          "sourceEnglish": "Small livestock can do work beyond producing meat, eggs, or honey.",
+          "candidate": "Zwifuwo zwiṱuku zwi nga ita mishumo iṅwe nga nnḓa ha u bveledza nyama, eggs kana honey.",
+          "backTranslation": "Small livestock can do other work besides producing meat, eggs or honey.",
+          "drift": "Low apparent drift. Product names stay exact in English except meat; check the naturalness and class agreement of the mixed sentence.",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 2,
+          "kind": "body",
+          "sourceEnglish": "Chickens eat some insects and weed seeds.",
+          "candidate": "Chickens dziḽa dziṅwe insects na seeds dza weeds.",
+          "backTranslation": "Chickens eat some insects and seeds from weeds.",
+          "drift": "Low apparent drift. “Some” remains; species name is retained in English to avoid an uncertain local bird term.",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 2,
+          "kind": "body",
+          "sourceEnglish": "Ducks scratch less than chickens, but can still damage plants.",
+          "candidate": "Ducks dzi ṱharamudza fhasi nga zwiṱuku u fhira chickens, fhedzi dzi nga kha ḓi tshinya zwimela.",
+          "backTranslation": "Ducks scratch the ground less than chickens, but can still damage plants.",
+          "drift": "Low apparent drift; comparative direction and damage possibility remain. Animal behavior wording needs fluent review.",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 2,
+          "kind": "body",
+          "sourceEnglish": "Bees and other pollinators help many crops.",
+          "candidate": "Bees na dziṅwe pollinators dzi thusa zwimela zwinzhi.",
+          "backTranslation": "Bees and other pollinators help many crops.",
+          "drift": "No apparent proposition drift; the technical word “pollinators” stays English.",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 3,
+          "kind": "body",
+          "sourceEnglish": "By the end of this module, you will understand how chickens, ducks, bees, and guinea fowl fit into a working system.",
+          "candidate": "Musi module iyi i tshi fhela, ni ḓo pfesesa uri chickens, ducks, bees na guinea fowl zwi shuma hani kha sisiteme i shumaho.",
+          "backTranslation": "When this module ends, you will understand how chickens, ducks, bees and guinea fowl work in a functioning system.",
+          "drift": "Low apparent drift; all four animal names are preserved. “Fit into” is expressed as “work in”; validate that this does not imply a stronger performance claim.",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 4,
+          "kind": "body",
+          "sourceEnglish": "Watch the hens peck at the ground among dry plant remains.",
+          "candidate": "Sedzani hens dzi tshi runga fhasi vhukati ha masalela a zwimela o omileyo.",
+          "backTranslation": "Watch hens peck the ground among dry plant remains.",
+          "drift": "Low apparent drift; observation, animals and dry remains are retained. Confirm the verb chosen for pecking and the spelling/spacing.",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 5,
+          "kind": "body",
+          "sourceEnglish": "They scratch through plant remains and eat some insects and weed seeds.",
+          "candidate": "Dzi runga vhukati ha masalela a zwimela nahone dziḽa dziṅwe insects na seeds dza weeds.",
+          "backTranslation": "They scratch among plant remains and eat some insects and weed seeds.",
+          "drift": "Low apparent drift; “some” and both food categories remain. Species subject is inherited from the exact adjacent English source; verify whether the standalone clause needs an explicit subject.",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 7,
+          "kind": "body",
+          "sourceEnglish": "Ducks eat slugs and snails without the heavy scratching of chickens.",
+          "candidate": "Ducks dziḽa slugs na snails, fhedzi a dzi runga fhasi nga maanḓa u fana na chickens.",
+          "backTranslation": "Ducks eat slugs and snails, but do not scratch the ground heavily like chickens.",
+          "drift": "Potential drift: “without the heavy scratching” is restated as a contrast with chickens; check the exact degree and implied behavior with a speaker. Pest names and the comparison are retained in English where useful.",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        }
+      ]
+    },
+    "ts": {
+      "name": "Standard written Xitsonga (provisional for Shangani-speaking learners)",
+      "candidates": [
+        {
+          "slide": 9,
+          "kind": "body",
+          "sourceEnglish": "Watch one bee move from one blossom to another.",
+          "candidate": "Languta nyoxi yin’we yi suka eka xiluva yi ya eka xin’wana.",
+          "backTranslation": "Look at one bee leaving one flower and going to another.",
+          "drift": "Low based on this source-blind back-translation. 'Watch' becomes 'look at'; the source's movement and singular count remain. 'Blossom' is rendered as the more general 'flower'.",
+          "holdReason": "The sentence is observational, not animal-care or hive-safety advice. Keep it unapproved pending fluent standard-Xitsonga and local-register review. Standard written Xitsonga has not been comprehension-tested with Shangani-speaking learners.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 9,
+          "kind": "body",
+          "sourceEnglish": "Bees can carry pollen as they visit flowers.",
+          "candidate": "Tinyoxi ti nga rhwala pollen loko ti endzela swiluva.",
+          "backTranslation": "Bees can carry pollen when they visit flowers.",
+          "drift": "No material drift identified in the back-translation. 'Pollen' remains English because a technical term should not be guessed at.",
+          "holdReason": "This is a general explanatory statement, not a care instruction or safety claim. The English technical term is intentionally retained; have a fluent Xitsonga speaker confirm whether it is understandable or has a locally preferred term. Standard written Xitsonga has not been comprehension-tested with Shangani-speaking learners.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 1,
+          "kind": "body",
+          "sourceEnglish": "Small livestock integration turns chickens, ducks, and bees into working parts of the farm.",
+          "candidate": "Ku hlanganisa swifuwo leswitsongo swo fana na tihuku, masekwe na tinyoxi swi endla leswaku swi tirha swin’we na purasi.",
+          "backTranslation": "Combining small livestock such as chickens, ducks and bees makes them work together with the farm.",
+          "drift": "Low apparent drift: the three animal groups and farm role remain. The technical heading concept is simplified to “combining small livestock”; confirm idiomatic phrasing.",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 1,
+          "kind": "body",
+          "sourceEnglish": "Learn how animals can control pests, build fertility, support pollination, and return value to the soil.",
+          "candidate": "Dyondza ndlela leyi swifuwo swi nga lawulaka pests, swi antswisaka soil fertility, swi pfunaka pollination ni ku tlherisela nkoka emisaveni.",
+          "backTranslation": "Learn how animals can manage pests, improve soil fertility, help pollination and return value to the soil.",
+          "drift": "Low apparent drift in the proposition. “Pests,” “soil fertility,” and “pollination” remain English technical terms; fluent review should confirm the framing and whether “manage” captures “control.”",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 2,
+          "kind": "body",
+          "sourceEnglish": "Chickens eat some insects and weed seeds.",
+          "candidate": "Tihuku ti dya switsotswana swin’wana ni mbewu ya nhova.",
+          "backTranslation": "Chickens eat some insects and weed seeds.",
+          "drift": "No apparent drift in the back-translation; “some” is preserved.",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 2,
+          "kind": "body",
+          "sourceEnglish": "Ducks scratch less than chickens, but can still damage plants.",
+          "candidate": "Masekwe ma cela misava katsongo ku hundza tihuku, kambe ma nga ha onha swimilana.",
+          "backTranslation": "Ducks scratch/dig the soil less than chickens, but can still damage plants.",
+          "drift": "Low apparent drift; comparative direction and plant damage remain. Confirm that “cela misava” is the right everyday rendering of scratching.",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 2,
+          "kind": "body",
+          "sourceEnglish": "Bees and other pollinators help many crops.",
+          "candidate": "Tinyoxi ni swin’wana leswi pfunaka pollination swi pfuna swibyariwa swo tala.",
+          "backTranslation": "Bees and other things that help pollination help many crops.",
+          "drift": "Possible wording drift: “pollinators” is explained rather than named, and the repeated “help” is awkward. Meaning is preserved but requires a fluent edit; “pollination” remains English.",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 3,
+          "kind": "body",
+          "sourceEnglish": "By the end of this module, you will understand how chickens, ducks, bees, and guinea fowl fit into a working system.",
+          "candidate": "Loko module leyi yi hela, u ta twisisa ndlela leyi tihuku, masekwe, tinyoxi na guinea fowl swi tirhaka ha yona eka sisiteme leyi tirhaka.",
+          "backTranslation": "When this module ends, you will understand how chickens, ducks, bees and guinea fowl work in a functioning system.",
+          "drift": "Low apparent drift; all four animal names and general system relationship remain. “Fit into” is expressed as “work in”; confirm that this does not imply a stronger performance claim.",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 4,
+          "kind": "body",
+          "sourceEnglish": "Watch the hens peck at the ground among dry plant remains.",
+          "candidate": "Languta tihuku ti ri karhi ti peck-a ehansi, exikari ka masalela ya swimilana leswi omeke.",
+          "backTranslation": "Watch chickens peck at the ground among dry plant remains.",
+          "drift": "Low apparent drift; observation, birds, ground and dry remains are retained. “Peck” is deliberately left in English pending a clear local verb.",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 5,
+          "kind": "body",
+          "sourceEnglish": "They scratch through plant remains and eat some insects and weed seeds.",
+          "candidate": "Ti cela-cela exikari ka masalela ya swimilana, ti dya switsotswana swin’wana ni mbewu ya nhova.",
+          "backTranslation": "They scratch/dig among plant remains and eat some insects and weed seeds.",
+          "drift": "Low apparent drift; “some” and both food categories remain. Subject is inherited from the adjacent English source; verify standalone subject clarity.",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        },
+        {
+          "slide": 7,
+          "kind": "body",
+          "sourceEnglish": "Ducks eat slugs and snails without the heavy scratching of chickens.",
+          "candidate": "Masekwe ma dya slugs na snails, kambe a ma cela-celi misava hi ndlela yo tika ku fana na tihuku.",
+          "backTranslation": "Ducks eat slugs and snails, but do not scratch/dig the ground heavily like chickens.",
+          "drift": "Potential drift: “without the heavy scratching” becomes an explicit contrast with chickens. Confirm exact degree and idiom with a fluent speaker. Pest names remain English.",
+          "holdReason": "Unreviewed machine draft for Rory-authorized visible review. Keep out of a learner release until the facilitator feedback gate; check terminology, grammar, species names and local register.",
+          "reviewStatus": "unreviewed-machine-draft"
+        }
+      ],
+      "existingSourcePairReferences": [
+        {
+          "slide": 2,
+          "sourceEnglish": "Small livestock can do work beyond producing meat, eggs, or honey.",
+          "candidate": "Swiharhi switsongo swi nga endla mintirho yo tala ku tlhandlekela ku humesa nyama, matandza kumbe vulombe.",
+          "note": "Already present in small-livestock.ts.paired-draft.json on the source branch; omitted here to avoid a duplicate proposal."
+        }
+      ]
+    }
+  },
+  "excludedText": {
+    "slides": "Slides 9-20, except the existing separately recorded candidates on slides 2 and 17 and the slide 9 candidates in this packet",
+    "reason": "This packet now drafts ordinary-language descriptive clauses on slides 1-8, excluding existing Xitsonga slide 2 copy to avoid duplication. Care, hive safety/placement, manure, crop-protection, site-specific actions, technical concepts and quantities remain exact English; see heldClausesSlides1to8 for each retained clause and reason."
+  },
+  "backTranslationMethod": "For every newly added candidate, the target wording was read without its English source and rendered back into plain English. The resulting paraphrase and any suspected meaning change are recorded beside the exact source. This is an internal drift check, not an independent speaker review.",
+  "lexicalChecks": [
+    {
+      "language": "ts",
+      "terms": [
+        "languta",
+        "xiluva"
+      ],
+      "reference": "https://www.polytranslator.com/dictionary/tsonga/",
+      "note": "Used only as a basic lexical cross-check for 'look' and 'flower'; it does not validate sentence grammar, register or meaning."
+    },
+    {
+      "language": "ts",
+      "terms": [
+        "tinyoxi",
+        "swiluva"
+      ],
+      "reference": "https://www.education.gov.za/LinkClick.aspx?fileticket=n7SRyjB4-iA%3D&forcedownload=true&mid=14823&portalid=0&tabid=5742",
+      "note": "Department of Basic Education Xitsonga home-language material uses these bee/flower forms in a pollination lesson; this does not validate these candidate sentences."
+    },
+    {
+      "language": "ve",
+      "terms": [],
+      "reference": "https://oxford.co.za/shop/resources-and-home-learning/resource-book/9780195988246-oxford-first-bilingual-dictionary-tshivenda-and-english/",
+      "note": "A Tshivenda-English reference was identified, but no full phrase validation was available for this draft. A fluent speaker must validate every Tshivenda line."
+    }
+  ],
+  "heldClausesSlides1to8": [
+    {
+      "slide": 1,
+      "sourceEnglish": "Use the system you already have: food, manure, flowers, grazing, and careful movement across the land.",
+      "holdReason": "Manure, grazing and animal movement can be read as husbandry directions; keep the whole source clause exact."
+    },
+    {
+      "slide": 2,
+      "sourceEnglish": "Their manure can become compost.",
+      "holdReason": "Manure handling/composting claim; keep exact English."
+    },
+    {
+      "slide": 2,
+      "sourceEnglish": "Each animal still needs suitable food, water, shelter and care.",
+      "holdReason": "Animal-care requirement; keep exact English."
+    },
+    {
+      "slide": 3,
+      "sourceEnglish": "You will know when chickens help a bed, and when their scratching can cause damage.",
+      "holdReason": "Bed timing and animal placement are actionable site-specific farming instructions; keep exact English."
+    },
+    {
+      "slide": 3,
+      "sourceEnglish": "You will understand pollination, hive placement, and how livestock move nutrients around a farm.",
+      "holdReason": "Hive placement is safety-sensitive; nutrient cycling is a technical claim. Keep exact English."
+    },
+    {
+      "slide": 4,
+      "sourceEnglish": "They still need balanced feed, clean water and shelter.",
+      "holdReason": "Animal-care instructions; keep exact English."
+    },
+    {
+      "slide": 4,
+      "sourceEnglish": "Keep them away from seedlings and food ready to harvest.",
+      "holdReason": "Direct crop/animal placement instruction; keep exact English."
+    },
+    {
+      "slide": 5,
+      "sourceEnglish": "Chickens can help an empty bed after harvest.",
+      "holdReason": "Specific crop-bed and timing advice; keep exact English."
+    },
+    {
+      "slide": 5,
+      "sourceEnglish": "Their manure and bedding can be composted and returned to the soil.",
+      "holdReason": "Manure handling and food-production advice; keep exact English."
+    },
+    {
+      "slide": 5,
+      "sourceEnglish": "Foraging does not replace a balanced diet, clean water, shelter or daily care.",
+      "holdReason": "Animal-care warning; keep exact English."
+    },
+    {
+      "slide": 6,
+      "sourceEnglish": "Use chickens in an empty bed after harvest.",
+      "holdReason": "Direct, site-specific farming instruction; keep exact English."
+    },
+    {
+      "slide": 6,
+      "sourceEnglish": "Keep them away from seedlings and crops being harvested for food.",
+      "holdReason": "Direct crop-protection instruction; keep exact English."
+    },
+    {
+      "slide": 6,
+      "sourceEnglish": "Fresh manure can carry germs. Ask an extension adviser how to manage manure safely before the next crop.",
+      "holdReason": "Manure and food-safety instruction; keep exact English."
+    },
+    {
+      "slide": 6,
+      "sourceEnglish": "Move the birds before they damage the ground.",
+      "holdReason": "Direct animal-management/site instruction; keep exact English."
+    },
+    {
+      "slide": 7,
+      "sourceEnglish": "They may suit an established food forest understorey.",
+      "holdReason": "Site-suitability claim; keep exact English."
+    },
+    {
+      "slide": 7,
+      "sourceEnglish": "They can still eat or trample plants and make wet ground muddy. Watch the birds and move them when needed.",
+      "holdReason": "Crop-damage and animal-movement instruction; keep exact English."
+    },
+    {
+      "slide": 7,
+      "sourceEnglish": "Provide clean water and suitable feed; foraging alone may not be enough.",
+      "holdReason": "Animal-care guidance; keep exact English."
+    },
+    {
+      "slide": 8,
+      "sourceEnglish": "A chicken tractor is a moveable, floorless pen.",
+      "holdReason": "Specialized equipment term; keep the full definition exact English until a locally understood equivalent is checked."
+    },
+    {
+      "slide": 8,
+      "sourceEnglish": "Move it before the ground becomes bare, muddy or heavily covered with manure.",
+      "holdReason": "Specific movement thresholds and manure exposure; keep exact English."
+    },
+    {
+      "slide": 8,
+      "sourceEnglish": "The right time depends on the birds, soil and weather. Let the ground recover between visits.",
+      "holdReason": "Site-specific husbandry and soil-management instruction; keep exact English."
+    },
+    {
+      "slide": 8,
+      "sourceEnglish": "There is no single number of chickens that guarantees enough fertility for every plot.",
+      "holdReason": "Quantity/fertility claim; keep exact English."
+    }
+  ]
+}

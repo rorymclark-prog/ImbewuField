@@ -1,0 +1,3664 @@
+{
+  "status": "Data-only composed source-bound machine-draft preparation; NOT learner-wired or published",
+  "inputSHA256": "c10c5cdf14fb5aead8856d9f679f56fa7954e0bf36562175a685e920b1495a81",
+  "scope": "48 selected ordinary segments composed into current fields. Remaining rows retain review decisions and need scoped repair/technical-term checks; no whole-job completion claim.",
+  "groups": [
+    {
+      "file": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "fileSHA256": "956f558efef759c858c57f84aa826c7121f4bc657846069be943b0708043a655",
+      "slide": 4,
+      "field": "body[1]",
+      "sourceEnglish": "It means treating soil, water, plants and animals as living systems to protect, not resources to use up.",
+      "before": {
+        "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "It means treating soil, water, plants and animals as ",
+            "status": "draft",
+            "text": "Swi vula ku teka misava, mati, swimilana na swiharhi tani hi “",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "living systems",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " to protect, not ",
+            "status": "draft",
+            "text": " to sirhelela, ku nga ri ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "resources",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " ",
+            "status": "english-hold",
+            "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+          },
+          {
+            "sourceEnglish": "to use up.",
+            "status": "draft",
+            "text": "to heta hi ku tirhisa.”",
+            "reason": "Complete consume/exhaust predicate includes unchanged target closing quotation punctuation; punctuation alone is not a translated clause. Retained English is not claimed translated."
+          }
+        ]
+      },
+      "after": {
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending.",
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "It means treating soil, water, plants and animals as ",
+            "status": "draft",
+            "text": "Swi vula ku teka misava, mati, swimilana na swiharhi tani hi “",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "living systems",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " to protect, not ",
+            "status": "draft",
+            "text": " to sirhelela, ku nga ri ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "resources",
+            "status": "draft",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+            "text": "swilo leswi tirhisiwaka"
+          },
+          {
+            "sourceEnglish": " ",
+            "status": "english-hold",
+            "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+          },
+          {
+            "sourceEnglish": "to use up.",
+            "status": "draft",
+            "text": "to heta hi ku tirhisa.”",
+            "reason": "Complete consume/exhaust predicate includes unchanged target closing quotation punctuation; punctuation alone is not a translated clause. Retained English is not claimed translated."
+          }
+        ]
+      },
+      "changes": [
+        {
+          "independentRowIndex": 0,
+          "segmentIndex": 3,
+          "sourceFragment": "resources",
+          "candidateText": "swilo leswi tirhisiwaka",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Swi vula ku teka misava, mati, swimilana na swiharhi tani hi “living systems to sirhelela, ku nga ri swilo leswi tirhisiwaka to heta hi ku tirhisa.”"
+    },
+    {
+      "file": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "fileSHA256": "956f558efef759c858c57f84aa826c7121f4bc657846069be943b0708043a655",
+      "slide": 6,
+      "field": "body[1]",
+      "sourceEnglish": "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+      "before": {
+        "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Take only what you need, and ",
+            "status": "draft",
+            "text": "Teka ntsena leswi u swi lavaka, kutani ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "return the surplus to the ",
+            "status": "draft",
+            "text": "vuyisela leswi saleke eka ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "system",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " —",
+            "status": "english-hold",
+            "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+          },
+          {
+            "sourceEnglish": " seeds, food, water, knowledge.",
+            "status": "draft",
+            "text": " mbewu, swakudya, mati, vutivi.",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          }
+        ]
+      },
+      "after": {
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending.",
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Take only what you need, and ",
+            "status": "draft",
+            "text": "Teka ntsena leswi u swi lavaka, kutani ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "return the surplus to the ",
+            "status": "draft",
+            "text": "vuyisela leswi saleke eka ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "system",
+            "status": "draft",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+            "text": "sisiteme"
+          },
+          {
+            "sourceEnglish": " —",
+            "status": "english-hold",
+            "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+          },
+          {
+            "sourceEnglish": " seeds, food, water, knowledge.",
+            "status": "draft",
+            "text": " mbewu, swakudya, mati, vutivi.",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          }
+        ]
+      },
+      "changes": [
+        {
+          "independentRowIndex": 1,
+          "segmentIndex": 2,
+          "sourceFragment": "system",
+          "candidateText": "sisiteme",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Teka ntsena leswi u swi lavaka, kutani vuyisela leswi saleke eka sisiteme — mbewu, swakudya, mati, vutivi."
+    },
+    {
+      "file": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "fileSHA256": "956f558efef759c858c57f84aa826c7121f4bc657846069be943b0708043a655",
+      "slide": 10,
+      "field": "body[1]",
+      "sourceEnglish": "One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.",
+      "before": {
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "One storm shows you one moment. ",
+            "status": "draft",
+            "text": "Xidzedze xin’we xi ku komba nkarhi wun’we. ",
+            "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+          },
+          {
+            "sourceEnglish": "A full wet season shows you the ",
+            "status": "draft",
+            "text": "Nguva ya mpfula leyi heleleke yi ku komba ",
+            "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+          },
+          {
+            "sourceEnglish": "pattern",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " — where water runs, where it pools, where it never reaches.",
+            "status": "draft",
+            "text": ": laha mati ya khulukaka, laha ya hlengeletanaka kona, ni laha ma nga fiki kona nikatsongo.",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          }
+        ]
+      },
+      "after": {
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending.",
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "One storm shows you one moment. ",
+            "status": "draft",
+            "text": "Xidzedze xin’we xi ku komba nkarhi wun’we. ",
+            "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+          },
+          {
+            "sourceEnglish": "A full wet season shows you the ",
+            "status": "draft",
+            "text": "Nguva ya mpfula leyi heleleke yi ku komba ",
+            "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+          },
+          {
+            "sourceEnglish": "pattern",
+            "status": "draft",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+            "text": "patironi"
+          },
+          {
+            "sourceEnglish": " — where water runs, where it pools, where it never reaches.",
+            "status": "draft",
+            "text": ": laha mati ya khulukaka, laha ya hlengeletanaka kona, ni laha ma nga fiki kona nikatsongo.",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          }
+        ]
+      },
+      "changes": [
+        {
+          "independentRowIndex": 2,
+          "segmentIndex": 2,
+          "sourceFragment": "pattern",
+          "candidateText": "patironi",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Xidzedze xin’we xi ku komba nkarhi wun’we. Nguva ya mpfula leyi heleleke yi ku komba patironi: laha mati ya khulukaka, laha ya hlengeletanaka kona, ni laha ma nga fiki kona nikatsongo."
+    },
+    {
+      "file": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "fileSHA256": "956f558efef759c858c57f84aa826c7121f4bc657846069be943b0708043a655",
+      "slide": 11,
+      "field": "body[0]",
+      "sourceEnglish": "Harvest rain, sun and biomass before they leave your property.",
+      "before": {
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Harvest",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " rain, sun and ",
+            "status": "draft",
+            "text": " mpfula, dyambu na ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "biomass",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " ",
+            "status": "english-hold",
+            "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+          },
+          {
+            "sourceEnglish": "before they leave your property.",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          }
+        ]
+      },
+      "after": {
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending.",
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Harvest",
+            "status": "draft",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+            "text": "Hlengeleta"
+          },
+          {
+            "sourceEnglish": " rain, sun and ",
+            "status": "draft",
+            "text": " mpfula, dyambu na ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "biomass",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " ",
+            "status": "english-hold",
+            "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+          },
+          {
+            "sourceEnglish": "before they leave your property.",
+            "status": "draft",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+            "text": "leswi swi nga si huma eka ndhawu ya wena."
+          }
+        ]
+      },
+      "changes": [
+        {
+          "independentRowIndex": 3,
+          "segmentIndex": 0,
+          "sourceFragment": "Harvest",
+          "candidateText": "Hlengeleta",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        },
+        {
+          "independentRowIndex": 4,
+          "segmentIndex": 4,
+          "sourceFragment": "before they leave your property.",
+          "candidateText": "leswi swi nga si huma eka ndhawu ya wena.",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Hlengeleta mpfula, dyambu na biomass leswi swi nga si huma eka ndhawu ya wena."
+    },
+    {
+      "file": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "fileSHA256": "956f558efef759c858c57f84aa826c7121f4bc657846069be943b0708043a655",
+      "slide": 12,
+      "field": "body[0]",
+      "sourceEnglish": "The edge is where two things meet — a fence line or the strip beside a path.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The edge",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " is where two things meet",
+            "status": "draft",
+            "text": " hi laha swilo swimbirhi swi hlanganaka kona"
+          },
+          {
+            "sourceEnglish": " — a fence line or the strip beside a path.",
+            "status": "draft",
+            "text": " — layini ya fence kumbe xiphemu xa misava lexi nga etlhelo ka ndlela (strip).",
+            "reason": "Meaning-bounded alternatives clause. Fence/strip retained technical labels change noun order; entire source clause is paired with its full translated context."
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 accepted ordinary remainder; facilitator fluency review pending"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The edge",
+            "status": "draft",
+            "text": "Ndhawu ya ku hlangana",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " is where two things meet",
+            "status": "draft",
+            "text": " hi laha swilo swimbirhi swi hlanganaka kona"
+          },
+          {
+            "sourceEnglish": " — a fence line or the strip beside a path.",
+            "status": "draft",
+            "text": " — layini ya fence kumbe xiphemu xa misava lexi nga etlhelo ka ndlela (strip).",
+            "reason": "Meaning-bounded alternatives clause. Fence/strip retained technical labels change noun order; entire source clause is paired with its full translated context."
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 5,
+          "segmentIndex": 0,
+          "sourceFragment": "The edge",
+          "candidateText": "Ndhawu ya ku hlangana",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Ndhawu ya ku hlangana hi laha swilo swimbirhi swi hlanganaka kona — layini ya fence kumbe xiphemu xa misava lexi nga etlhelo ka ndlela (strip)."
+    },
+    {
+      "file": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "fileSHA256": "956f558efef759c858c57f84aa826c7121f4bc657846069be943b0708043a655",
+      "slide": 13,
+      "field": "body[1]",
+      "sourceEnglish": "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Two others worth knowing: ",
+            "status": "draft",
+            "text": "Ku na swin’wana swimbirhi leswi swi nga swinene ku swi tiva: ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "produce no waste",
+            "status": "english-hold",
+            "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+          },
+          {
+            "sourceEnglish": ", so scraps become ",
+            "status": "draft",
+            "text": ", hikokwalaho masalela ma hundzuka ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "compost",
+            "status": "english-hold",
+            "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " na ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "compost",
+            "status": "english-hold",
+            "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+          },
+          {
+            "sourceEnglish": " becomes soil. And ",
+            "status": "draft",
+            "text": " yi hundzuka misava. Naswona ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "use small and slow solutions",
+            "status": "english-hold",
+            "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+          },
+          {
+            "sourceEnglish": " — a bucket can irrigate a ",
+            "status": "draft",
+            "text": " — bakiti ri nga cheleta ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "bed",
+            "status": "english-hold",
+            "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+          },
+          {
+            "sourceEnglish": " with no electricity at all.",
+            "status": "draft",
+            "text": " handle ka gezi nikatsongo.",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          }
+        ],
+        "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Two others worth knowing: ",
+            "status": "draft",
+            "text": "Ku na swin’wana swimbirhi leswi swi nga swinene ku swi tiva: ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "produce no waste",
+            "status": "draft",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+            "text": "ku nga tlangisi"
+          },
+          {
+            "sourceEnglish": ", so scraps become ",
+            "status": "draft",
+            "text": ", hikokwalaho masalela ma hundzuka ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "compost",
+            "status": "english-hold",
+            "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " na ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "compost",
+            "status": "english-hold",
+            "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+          },
+          {
+            "sourceEnglish": " becomes soil. And ",
+            "status": "draft",
+            "text": " yi hundzuka misava. Naswona ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "use small and slow solutions",
+            "status": "english-hold",
+            "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+          },
+          {
+            "sourceEnglish": " — a bucket can irrigate a ",
+            "status": "draft",
+            "text": " — bakiti ri nga cheleta ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "bed",
+            "status": "english-hold",
+            "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+          },
+          {
+            "sourceEnglish": " with no electricity at all.",
+            "status": "draft",
+            "text": " handle ka gezi nikatsongo.",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 6,
+          "segmentIndex": 1,
+          "sourceFragment": "produce no waste",
+          "candidateText": "ku nga tlangisi",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Ku na swin’wana swimbirhi leswi swi nga swinene ku swi tiva: ku nga tlangisi, hikokwalaho masalela ma hundzuka compost na compost yi hundzuka misava. Naswona use small and slow solutions — bakiti ri nga cheleta bed handle ka gezi nikatsongo."
+    },
+    {
+      "file": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "fileSHA256": "956f558efef759c858c57f84aa826c7121f4bc657846069be943b0708043a655",
+      "slide": 14,
+      "field": "body[1]",
+      "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+      "before": {
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "A garden, fruit trees and a ",
+            "status": "draft",
+            "text": "Ntanga, mirhi ya mihandzu na ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "chicken run",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " arranged so the chickens ",
+            "status": "draft",
+            "text": " swi nga veketeriwa leswaku tihuku ti ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "rotate through the beds",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " after ",
+            "status": "draft",
+            "text": " endzhaku ka ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "harvest",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " is ",
+            "status": "draft",
+            "text": "; leswi i ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "integration",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": ". ",
+            "status": "english-hold",
+            "reason": "Complete unchanged source sentence; no text key."
+          },
+          {
+            "sourceEnglish": "Keep chickens away from ",
+            "status": "draft",
+            "text": "U nga pfumeleli tihuku ti tshinela eka ",
+            "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+          },
+          {
+            "sourceEnglish": "crops",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " being harvested for food. ",
+            "status": "draft",
+            "text": " leti ku tshoveriwaka swakudya. ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "Fresh manure",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " can carry ",
+            "status": "draft",
+            "text": " yi nga rhwala ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "germs",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": ". ",
+            "status": "english-hold",
+            "reason": "Complete unchanged source sentence; no text key."
+          },
+          {
+            "sourceEnglish": "Ask ",
+            "status": "draft",
+            "text": "Kombela ",
+            "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+          },
+          {
+            "sourceEnglish": "an extension adviser",
+            "status": "draft",
+            "text": "mutsundzuxi wa extension",
+            "reason": "Role noun precedes retained extension modifier in target grammar; no trained/local qualifier substituted. Retained English is not claimed translated."
+          },
+          {
+            "sourceEnglish": " ",
+            "status": "english-hold",
+            "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+          },
+          {
+            "sourceEnglish": "how to manage the bed safely before edible crops return",
+            "status": "draft",
+            "text": "a ku hlamusela ndlela yo hlayisa bed yi ri safe loko crops leti dyiwaka ti nga si vuya",
+            "reason": "Whole management/timing clause preserves safely and before edible crops return. Target safe adjective corresponds to source safely; it cannot be a source-only safe hold at that source position. Retained English is not claimed translated."
+          },
+          {
+            "sourceEnglish": ". ",
+            "status": "english-hold",
+            "reason": "Complete unchanged source sentence; no text key."
+          },
+          {
+            "sourceEnglish": "The chickens can clean up ",
+            "status": "draft",
+            "text": "Tihuku ti nga basisa ",
+            "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+          },
+          {
+            "sourceEnglish": "pests",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " and add ",
+            "status": "draft",
+            "text": " ti tlhela ti engetela ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "fertility",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " instead of sitting idle in ",
+            "status": "draft",
+            "text": ", ematshan’weni yo tshama ti nga endli swo karhi eka ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "a fixed pen",
+            "status": "draft",
+            "text": "pen leyi nga endhawini yin’we",
+            "reason": "Fixed-location qualifier follows retained pen; source noun phrase preserved as a whole. Retained English is not claimed translated."
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "english-hold",
+            "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+          }
+        ]
+      },
+      "after": {
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending.",
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "A garden, fruit trees and a ",
+            "status": "draft",
+            "text": "Ntanga, mirhi ya mihandzu na ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "chicken run",
+            "status": "draft",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+            "text": "ndhawu leyi tihuku ti fambaka-famba eka yona"
+          },
+          {
+            "sourceEnglish": " arranged so the chickens ",
+            "status": "draft",
+            "text": " swi nga veketeriwa leswaku tihuku ti ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "rotate through the beds",
+            "status": "draft",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+            "text": "famba hi ku landzelelana etibedini"
+          },
+          {
+            "sourceEnglish": " after ",
+            "status": "draft",
+            "text": " endzhaku ka ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "harvest",
+            "status": "draft",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+            "text": "ntshovelo"
+          },
+          {
+            "sourceEnglish": " is ",
+            "status": "draft",
+            "text": "; leswi i ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "integration",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": ". ",
+            "status": "english-hold",
+            "reason": "Complete unchanged source sentence; no text key."
+          },
+          {
+            "sourceEnglish": "Keep chickens away from ",
+            "status": "draft",
+            "text": "U nga pfumeleli tihuku ti tshinela eka ",
+            "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+          },
+          {
+            "sourceEnglish": "crops",
+            "status": "draft",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+            "text": "swibyariwa"
+          },
+          {
+            "sourceEnglish": " being harvested for food. ",
+            "status": "draft",
+            "text": " leti ku tshoveriwaka swakudya. ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "Fresh manure",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " can carry ",
+            "status": "draft",
+            "text": " yi nga rhwala ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "germs",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": ". ",
+            "status": "english-hold",
+            "reason": "Complete unchanged source sentence; no text key."
+          },
+          {
+            "sourceEnglish": "Ask ",
+            "status": "draft",
+            "text": "Kombela ",
+            "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+          },
+          {
+            "sourceEnglish": "an extension adviser",
+            "status": "draft",
+            "text": "mutsundzuxi wa extension",
+            "reason": "Role noun precedes retained extension modifier in target grammar; no trained/local qualifier substituted. Retained English is not claimed translated."
+          },
+          {
+            "sourceEnglish": " ",
+            "status": "english-hold",
+            "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+          },
+          {
+            "sourceEnglish": "how to manage the bed safely before edible crops return",
+            "status": "draft",
+            "text": "a ku hlamusela ndlela yo hlayisa bed yi ri safe loko crops leti dyiwaka ti nga si vuya",
+            "reason": "Whole management/timing clause preserves safely and before edible crops return. Target safe adjective corresponds to source safely; it cannot be a source-only safe hold at that source position. Retained English is not claimed translated."
+          },
+          {
+            "sourceEnglish": ". ",
+            "status": "english-hold",
+            "reason": "Complete unchanged source sentence; no text key."
+          },
+          {
+            "sourceEnglish": "The chickens can clean up ",
+            "status": "draft",
+            "text": "Tihuku ti nga basisa ",
+            "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+          },
+          {
+            "sourceEnglish": "pests",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " and add ",
+            "status": "draft",
+            "text": " ti tlhela ti engetela ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "fertility",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " instead of sitting idle in ",
+            "status": "draft",
+            "text": ", ematshan’weni yo tshama ti nga endli swo karhi eka ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "a fixed pen",
+            "status": "draft",
+            "text": "pen leyi nga endhawini yin’we",
+            "reason": "Fixed-location qualifier follows retained pen; source noun phrase preserved as a whole. Retained English is not claimed translated."
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "english-hold",
+            "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+          }
+        ]
+      },
+      "changes": [
+        {
+          "independentRowIndex": 8,
+          "segmentIndex": 1,
+          "sourceFragment": "chicken run",
+          "candidateText": "ndhawu leyi tihuku ti fambaka-famba eka yona",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        },
+        {
+          "independentRowIndex": 10,
+          "segmentIndex": 3,
+          "sourceFragment": "rotate through the beds",
+          "candidateText": "famba hi ku landzelelana etibedini",
+          "rootReason": "Current previous segment already supplies ti. Removing duplicate subject concord preserves full rotation meaning, after-harvest timing unchanged."
+        },
+        {
+          "independentRowIndex": 11,
+          "segmentIndex": 5,
+          "sourceFragment": "harvest",
+          "candidateText": "ntshovelo",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        },
+        {
+          "independentRowIndex": 12,
+          "segmentIndex": 10,
+          "sourceFragment": "crops",
+          "candidateText": "swibyariwa",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Ntanga, mirhi ya mihandzu na ndhawu leyi tihuku ti fambaka-famba eka yona swi nga veketeriwa leswaku tihuku ti famba hi ku landzelelana etibedini endzhaku ka ntshovelo; leswi i integration. U nga pfumeleli tihuku ti tshinela eka swibyariwa leti ku tshoveriwaka swakudya. Fresh manure yi nga rhwala germs. Kombela mutsundzuxi wa extension a ku hlamusela ndlela yo hlayisa bed yi ri safe loko crops leti dyiwaka ti nga si vuya. Tihuku ti nga basisa pests ti tlhela ti engetela fertility, ematshan’weni yo tshama ti nga endli swo karhi eka pen leyi nga endhawini yin’we."
+    },
+    {
+      "file": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "fileSHA256": "956f558efef759c858c57f84aa826c7121f4bc657846069be943b0708043a655",
+      "slide": 15,
+      "field": "body[2]",
+      "sourceEnglish": "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+      "before": {
+        "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Zone 2",
+            "status": "english-hold",
+            "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+          },
+          {
+            "sourceEnglish": " is the ",
+            "status": "draft",
+            "text": " i ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "main",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " garden",
+            "status": "draft",
+            "text": " ntanga",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": " and the ",
+            "status": "draft",
+            "text": " ni ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "chicken run",
+            "status": "english-hold",
+            "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+          },
+          {
+            "sourceEnglish": ", visited once or twice a day. ",
+            "status": "draft",
+            "text": ", u ya eka swona kan’we kumbe kambirhi hi siku. ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "Zone 3",
+            "status": "english-hold",
+            "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+          },
+          {
+            "sourceEnglish": " is the ",
+            "status": "draft",
+            "text": " i ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "main",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " field",
+            "status": "draft",
+            "text": " nsimu",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": ", visited weekly.",
+            "status": "draft",
+            "text": ", u ya kona vhiki na vhiki.",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          }
+        ]
+      },
+      "after": {
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending.",
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Zone 2",
+            "status": "english-hold",
+            "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+          },
+          {
+            "sourceEnglish": " is the ",
+            "status": "draft",
+            "text": " i ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "main",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " garden",
+            "status": "draft",
+            "text": " ntanga",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": " and the ",
+            "status": "draft",
+            "text": " ni ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "chicken run",
+            "status": "draft",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+            "text": "ndhawu leyi tihuku ti fambaka-famba eka yona"
+          },
+          {
+            "sourceEnglish": ", visited once or twice a day. ",
+            "status": "draft",
+            "text": ", u ya eka swona kan’we kumbe kambirhi hi siku. ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "Zone 3",
+            "status": "english-hold",
+            "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+          },
+          {
+            "sourceEnglish": " is the ",
+            "status": "draft",
+            "text": " i ",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": "main",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " field",
+            "status": "draft",
+            "text": " nsimu",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": ", visited weekly.",
+            "status": "draft",
+            "text": ", u ya kona vhiki na vhiki.",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          }
+        ]
+      },
+      "changes": [
+        {
+          "independentRowIndex": 9,
+          "segmentIndex": 5,
+          "sourceFragment": "chicken run",
+          "candidateText": "ndhawu leyi tihuku ti fambaka-famba eka yona",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Zone 2 i main ntanga ni ndhawu leyi tihuku ti fambaka-famba eka yona, u ya eka swona kan’we kumbe kambirhi hi siku. Zone 3 i main nsimu, u ya kona vhiki na vhiki."
+    },
+    {
+      "file": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "fileSHA256": "956f558efef759c858c57f84aa826c7121f4bc657846069be943b0708043a655",
+      "slide": 19,
+      "field": "body[1]",
+      "sourceEnglish": "The trees and shrubs stand between that wind and the crops.",
+      "before": {
+        "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The trees and ",
+            "status": "draft",
+            "text": "Mirhi na ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "shrubs",
+            "status": "english-hold",
+            "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+          },
+          {
+            "sourceEnglish": " stand between that wind and the ",
+            "status": "draft",
+            "text": " swi yima exikarhi ka moya wolowo ni ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "crops",
+            "status": "draft",
+            "text": "swibyariwa",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "english-hold",
+            "reason": "Exact source ending retained."
+          }
+        ]
+      },
+      "after": {
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending.",
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The trees and ",
+            "status": "draft",
+            "text": "Mirhi na ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "shrubs",
+            "status": "draft",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+            "text": "swihlahla"
+          },
+          {
+            "sourceEnglish": " stand between that wind and the ",
+            "status": "draft",
+            "text": " swi yima exikarhi ka moya wolowo ni ",
+            "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+          },
+          {
+            "sourceEnglish": "crops",
+            "status": "draft",
+            "text": "swibyariwa",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "english-hold",
+            "reason": "Exact source ending retained."
+          }
+        ]
+      },
+      "changes": [
+        {
+          "independentRowIndex": 13,
+          "segmentIndex": 1,
+          "sourceFragment": "shrubs",
+          "candidateText": "swihlahla",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Mirhi na swihlahla swi yima exikarhi ka moya wolowo ni swibyariwa."
+    },
+    {
+      "file": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "fileSHA256": "956f558efef759c858c57f84aa826c7121f4bc657846069be943b0708043a655",
+      "slide": 20,
+      "field": "body[0]",
+      "sourceEnglish": "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.",
+      "before": {
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Draw your boundary. ",
+            "status": "draft",
+            "text": "Dirowa ndzilakana wa wena. ",
+            "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+          },
+          {
+            "sourceEnglish": "Mark the house. ",
+            "status": "draft",
+            "text": "Maka yindlu. ",
+            "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+          },
+          {
+            "sourceEnglish": "Draw the ",
+            "status": "draft",
+            "text": "Dirowa ",
+            "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+          },
+          {
+            "sourceEnglish": "rings",
+            "status": "english-hold",
+            "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+          },
+          {
+            "sourceEnglish": " outward by how often you visit.",
+            "status": "draft",
+            "text": " u ya ehandle hi ku ya hi leswaku u endzela ndhawu yin’wana ni yin’wana kangani.",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          }
+        ]
+      },
+      "after": {
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending.",
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Draw your boundary. ",
+            "status": "draft",
+            "text": "Dirowa ndzilakana wa wena. ",
+            "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+          },
+          {
+            "sourceEnglish": "Mark the house. ",
+            "status": "draft",
+            "text": "Maka yindlu. ",
+            "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+          },
+          {
+            "sourceEnglish": "Draw the ",
+            "status": "draft",
+            "text": "Dirowa ",
+            "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+          },
+          {
+            "sourceEnglish": "rings",
+            "status": "draft",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+            "text": "swirhendzevutana"
+          },
+          {
+            "sourceEnglish": " outward by how often you visit.",
+            "status": "draft",
+            "text": " u ya ehandle hi ku ya hi leswaku u endzela ndhawu yin’wana ni yin’wana kangani.",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          }
+        ]
+      },
+      "changes": [
+        {
+          "independentRowIndex": 14,
+          "segmentIndex": 3,
+          "sourceFragment": "rings",
+          "candidateText": "swirhendzevutana",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Dirowa ndzilakana wa wena. Maka yindlu. Dirowa swirhendzevutana u ya ehandle hi ku ya hi leswaku u endzela ndhawu yin’wana ni yin’wana kangani."
+    },
+    {
+      "file": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "fileSHA256": "956f558efef759c858c57f84aa826c7121f4bc657846069be943b0708043a655",
+      "slide": 12,
+      "field": "body[2]",
+      "sourceEnglish": "Which edge on your plot is doing nothing at the moment?",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Which ",
+            "status": "draft",
+            "text": "Hi yihi "
+          },
+          {
+            "sourceEnglish": "edge",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " on your plot is doing nothing at the moment?",
+            "status": "draft",
+            "text": " eka plot ya wena leyi nga endli xin’wana sweswi?"
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Which ",
+            "status": "draft",
+            "text": "Hi yihi "
+          },
+          {
+            "sourceEnglish": "edge",
+            "status": "draft",
+            "text": "ndzilekana",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " on your plot is doing nothing at the moment?",
+            "status": "draft",
+            "text": " eka plot ya wena leyi nga endli xin’wana sweswi?"
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 20,
+          "segmentIndex": 1,
+          "sourceFragment": "edge",
+          "candidateText": "ndzilekana",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Hi yihi ndzilekana eka plot ya wena leyi nga endli xin’wana sweswi?"
+    },
+    {
+      "file": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "fileSHA256": "956f558efef759c858c57f84aa826c7121f4bc657846069be943b0708043a655",
+      "slide": 20,
+      "field": "heading",
+      "sourceEnglish": "Sketch It And You Have A Design",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Sketch It And You Have A ",
+            "status": "draft",
+            "text": "Dirowa Swona Kutani U Va na "
+          },
+          {
+            "sourceEnglish": "Design",
+            "status": "english-hold",
+            "reason": "Formal design term retained exactly."
+          }
+        ],
+        "provenance": "2026-10-06 source-bound accepted unreviewed draft; facilitator fluency review pending"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Sketch It And You Have A ",
+            "status": "draft",
+            "text": "Dirowa Swona Kutani U Va na "
+          },
+          {
+            "sourceEnglish": "Design",
+            "status": "draft",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+            "text": "pulani"
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 24,
+          "segmentIndex": 1,
+          "sourceFragment": "Design",
+          "candidateText": "pulani",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Dirowa Swona Kutani U Va na pulani"
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "slide": 4,
+      "field": "body[1]",
+      "sourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for ",
+            "text": "Languta u ri endhawini leyi hlayisekeke hi nkarhi wa mpfula leyikulu. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "rills",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", places where water fans out, ",
+            "text": ", tindhawu leti mati ma hangalakaka eka tona, ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "ponds",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and where water leaves your property.",
+            "text": " ni laha mati ma humaka eka ndhawu ya wena.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for ",
+            "text": "Languta u ri endhawini leyi hlayisekeke hi nkarhi wa mpfula leyikulu. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "rills",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", places where water fans out, ",
+            "text": ", tindhawu leti mati ma hangalakaka eka tona, ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "ponds",
+            "status": "draft",
+            "text": "swidziva",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": ", and where water leaves your property.",
+            "text": " ni laha mati ma humaka eka ndhawu ya wena.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 25,
+          "segmentIndex": 3,
+          "sourceFragment": "ponds",
+          "candidateText": "swidziva",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Languta u ri endhawini leyi hlayisekeke hi nkarhi wa mpfula leyikulu. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta rills, tindhawu leti mati ma hangalakaka eka tona, swidziva ni laha mati ma humaka eka ndhawu ya wena."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "slide": 20,
+      "field": "body[0]",
+      "sourceEnglish": "When it is safe after heavy rain, walk your land. Mark rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "When it is safe after heavy rain, walk your land. Mark ",
+            "text": "Endzhaku ka mpfula leyikulu, loko swi hlayisekile, famba-famba eka misava ya wena. Fungha ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "rills",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", spreading water, ",
+            "text": ", mati lama hangalakeke, ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "ponds",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and where water leaves your property. Note where excess water may need a safe route away.",
+            "text": " ni laha mati ma humaka eka ndhawu ya wena. Xiya laha mati lama taleke ma nga lavaka ndlela leyi hlayisekeke yo huma hi yona.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "When it is safe after heavy rain, walk your land. Mark ",
+            "text": "Endzhaku ka mpfula leyikulu, loko swi hlayisekile, famba-famba eka misava ya wena. Fungha ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "rills",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", spreading water, ",
+            "text": ", mati lama hangalakeke, ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "ponds",
+            "status": "draft",
+            "text": "swidziva",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": ", and where water leaves your property. Note where excess water may need a safe route away.",
+            "text": " ni laha mati ma humaka eka ndhawu ya wena. Xiya laha mati lama taleke ma nga lavaka ndlela leyi hlayisekeke yo huma hi yona.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 26,
+          "segmentIndex": 3,
+          "sourceFragment": "ponds",
+          "candidateText": "swidziva",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Endzhaku ka mpfula leyikulu, loko swi hlayisekile, famba-famba eka misava ya wena. Fungha rills, mati lama hangalakeke, swidziva ni laha mati ma humaka eka ndhawu ya wena. Xiya laha mati lama taleke ma nga lavaka ndlela leyi hlayisekeke yo huma hi yona."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "slide": 5,
+      "field": "body[0]",
+      "sourceEnglish": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The picture shows rain moving downhill.",
+            "status": "draft",
+            "text": "Xifaniso xi komba mpfula yi ri karhi yi rhelela yi ya ehansi."
+          },
+          {
+            "sourceEnglish": " Follow where it ",
+            "status": "draft",
+            "text": " Landzelela laha yi "
+          },
+          {
+            "sourceEnglish": "speeds up, ",
+            "status": "draft",
+            "text": "hatlisaka, "
+          },
+          {
+            "sourceEnglish": "spreads, ",
+            "status": "draft",
+            "text": "hangalaka, "
+          },
+          {
+            "sourceEnglish": "sinks",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", gathers, and leaves the land.",
+            "status": "draft",
+            "text": ", yi hlengeletanaka, naswona yi suka ehenhla ka land."
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The picture shows rain moving downhill.",
+            "status": "draft",
+            "text": "Xifaniso xi komba mpfula yi ri karhi yi rhelela yi ya ehansi."
+          },
+          {
+            "sourceEnglish": " Follow where it ",
+            "status": "draft",
+            "text": " Landzelela laha yi "
+          },
+          {
+            "sourceEnglish": "speeds up, ",
+            "status": "draft",
+            "text": "hatlisaka, "
+          },
+          {
+            "sourceEnglish": "spreads, ",
+            "status": "draft",
+            "text": "hangalaka, "
+          },
+          {
+            "sourceEnglish": "sinks",
+            "status": "draft",
+            "text": "nghena ehansi ka misava",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": ", gathers, and leaves the land.",
+            "status": "draft",
+            "text": ", yi hlengeletanaka, naswona yi suka ehenhla ka land."
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 27,
+          "segmentIndex": 4,
+          "sourceFragment": "sinks",
+          "candidateText": "nghena ehansi ka misava",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Xifaniso xi komba mpfula yi ri karhi yi rhelela yi ya ehansi. Landzelela laha yi hatlisaka, hangalaka, nghena ehansi ka misava, yi hlengeletanaka, naswona yi suka ehenhla ka land."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "slide": 7,
+      "field": "body[0]",
+      "sourceEnglish": "Water picks up speed and erosive force as it runs downhill.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Water picks up speed and ",
+            "text": "Mati ma kuma rivilo na ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "erosive force",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " as it runs downhill.",
+            "text": " loko ma khuluka ma ya ehansi.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Water picks up speed and ",
+            "text": "Mati ma kuma rivilo na ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "erosive force",
+            "status": "draft",
+            "text": "matimba yo khukhula misava",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " as it runs downhill.",
+            "text": " loko ma khuluka ma ya ehansi.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 29,
+          "segmentIndex": 1,
+          "sourceFragment": "erosive force",
+          "candidateText": "matimba yo khukhula misava",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Mati ma kuma rivilo na matimba yo khukhula misava loko ma khuluka ma ya ehansi."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "slide": 14,
+      "field": "body[0]",
+      "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "On a clear, still night, ",
+            "status": "draft",
+            "text": "Loko ku ri vusiku byo basa, ku nga ri na moya, "
+          },
+          {
+            "sourceEnglish": "cold air can flow downhill and collect in low places.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " These places can be",
+            "status": "draft",
+            "text": " Tindhawu leti ti nga va"
+          },
+          {
+            "sourceEnglish": " colder than nearby slopes.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "On a clear, still night, ",
+            "status": "draft",
+            "text": "Loko ku ri vusiku byo basa, ku nga ri na moya, "
+          },
+          {
+            "sourceEnglish": "cold air can flow downhill and collect in low places.",
+            "status": "draft",
+            "text": "moya wo titimela wu nga khuluka wu ya ehansi wu hlengeletana etindhawini ta le hansi.",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " These places can be",
+            "status": "draft",
+            "text": " Tindhawu leti ti nga va"
+          },
+          {
+            "sourceEnglish": " colder than nearby slopes.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 31,
+          "segmentIndex": 1,
+          "sourceFragment": "cold air can flow downhill and collect in low places.",
+          "candidateText": "moya wo titimela wu nga khuluka wu ya ehansi wu hlengeletana etindhawini ta le hansi.",
+          "rootReason": "Lowercase after the existing comma; complete modal downhill/low-place clause preserved."
+        }
+      ],
+      "visibleCandidate": "Loko ku ri vusiku byo basa, ku nga ri na moya, moya wo titimela wu nga khuluka wu ya ehansi wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti nga va colder than nearby slopes."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "slide": 20,
+      "field": "body[1]",
+      "sourceEnglish": "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Return at ",
+            "status": "draft",
+            "text": "Vuya hi "
+          },
+          {
+            "sourceEnglish": "dawn on a cold June morning. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Mark ",
+            "status": "draft",
+            "text": "Fungha "
+          },
+          {
+            "sourceEnglish": "mist, frozen dew, and the places frost lasts longest.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed mixed machine draft; exact source clauses remain paired, with uncertain timing and observation/site terms held verbatim in English. Facilitator review pending."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Return at ",
+            "status": "draft",
+            "text": "Vuya hi "
+          },
+          {
+            "sourceEnglish": "dawn on a cold June morning. ",
+            "status": "draft",
+            "text": "ku xa ka siku ra June ro titimela. ",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": "Mark ",
+            "status": "draft",
+            "text": "Fungha "
+          },
+          {
+            "sourceEnglish": "mist, frozen dew, and the places frost lasts longest.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 33,
+          "segmentIndex": 1,
+          "sourceFragment": "dawn on a cold June morning. ",
+          "candidateText": "ku xa ka siku ra June ro titimela. ",
+          "rootReason": "Preserve both source trailing spaces before unchanged Mark segment. Month, dawn and cold retained."
+        }
+      ],
+      "visibleCandidate": "Vuya hi ku xa ka siku ra June ro titimela. Fungha mist, frozen dew, and the places frost lasts longest."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "slide": 20,
+      "field": "body[2]",
+      "sourceEnglish": "On paper, draw your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "On paper, draw your boundary, mark north, and add the house, water, roads, ",
+            "text": "Ephepheni, dirowa ndzilakana wa wena, Fungha n'walungu, u engetela yindlu, mati, magondzo, ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "fences",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", ",
+            "text": ", ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "slopes",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and existing vegetation.",
+            "text": " ni swimilana leswi nga kona.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "On paper, draw your boundary, mark north, and add the house, water, roads, ",
+            "text": "Ephepheni, dirowa ndzilakana wa wena, Fungha n'walungu, u engetela yindlu, mati, magondzo, ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "fences",
+            "status": "draft",
+            "text": "tifense",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": ", ",
+            "text": ", ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "slopes",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and existing vegetation.",
+            "text": " ni swimilana leswi nga kona.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 34,
+          "segmentIndex": 1,
+          "sourceFragment": "fences",
+          "candidateText": "tifense",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Ephepheni, dirowa ndzilakana wa wena, Fungha n'walungu, u engetela yindlu, mati, magondzo, tifense, slopes ni swimilana leswi nga kona."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "slide": 21,
+      "field": "body[1]",
+      "sourceEnglish": "Use it to mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Use it to mark ",
+            "text": "Yi tirhise ku mark ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "points at the same height",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and trace a ",
+            "text": " ni ku landzela ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "contour line",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". ",
+            "text": ". ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "This is an observation",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", not a design for ",
+            "text": "; a hi pulani ya ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "earthworks",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
+            "text": ". U nga si cela, kombela mutsundzuxi wa laha kaya loyi a leteriweke ku kambela ndhawu ni ku pulana ndlela leyi hlayisekeke ya mati yo tala.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Use it to mark ",
+            "text": "Yi tirhise ku mark ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "points at the same height",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and trace a ",
+            "text": " ni ku landzela ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "contour line",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". ",
+            "text": ". ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "This is an observation",
+            "status": "draft",
+            "text": "Leswi i ku xiyaxiya",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": ", not a design for ",
+            "text": "; a hi pulani ya ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "earthworks",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
+            "text": ". U nga si cela, kombela mutsundzuxi wa laha kaya loyi a leteriweke ku kambela ndhawu ni ku pulana ndlela leyi hlayisekeke ya mati yo tala.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 36,
+          "segmentIndex": 5,
+          "sourceFragment": "This is an observation",
+          "candidateText": "Leswi i ku xiyaxiya",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Yi tirhise ku mark points at the same height ni ku landzela contour line. Leswi i ku xiyaxiya; a hi pulani ya earthworks. U nga si cela, kombela mutsundzuxi wa laha kaya loyi a leteriweke ku kambela ndhawu ni ku pulana ndlela leyi hlayisekeke ya mati yo tala."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "slide": 1,
+      "field": "body[2]",
+      "sourceEnglish": "These observations guide practical choices for crops, trees, buildings, roads, and water. They are the start of good design.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "These observations guide ",
+            "text": "Leswi u swi vonaka swi kongomisa ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "practical choices for crops, trees, buildings, roads, and water",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". They are the start of good design.",
+            "text": ". I masungulo ya dizayini leyinene.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "These observations guide ",
+            "text": "Leswi u swi vonaka swi kongomisa ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "practical choices for crops, trees, buildings, roads, and water",
+            "status": "draft",
+            "text": "swiboho leswi tirhaka eka swibyariwa, mirhi, miako, mapatu na mati",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": ". They are the start of good design.",
+            "text": ". I masungulo ya dizayini leyinene.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 37,
+          "segmentIndex": 1,
+          "sourceFragment": "practical choices for crops, trees, buildings, roads, and water",
+          "candidateText": "swiboho leswi tirhaka eka swibyariwa, mirhi, miako, mapatu na mati",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Leswi u swi vonaka swi kongomisa swiboho leswi tirhaka eka swibyariwa, mirhi, miako, mapatu na mati. I masungulo ya dizayini leyinene."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "slide": 8,
+      "field": "body[1]",
+      "sourceEnglish": "North-facing slopes often get more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "North-facing slopes",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " often get more sun and can be ",
+            "text": " hi ntolovelo ti kuma dyambu ro tala naswona ti nga va ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "warmer and drier",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". ",
+            "text": ". ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "South-facing slopes",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " are often ",
+            "text": " hi ntolovelo ti va ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "cooler and moister",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". ",
+            "text": ". ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "Frost",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " can collect in ",
+            "text": " yi nga hlengeletana eka ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "low hollows",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " where cold air settles.",
+            "text": " laha moya wo titimela wu tshamaka kona.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "North-facing slopes",
+            "status": "draft",
+            "text": "slopes leti langutekeke en’walungwini",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " often get more sun and can be ",
+            "text": " hi ntolovelo ti kuma dyambu ro tala naswona ti nga va ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "warmer and drier",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". ",
+            "text": ". ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "South-facing slopes",
+            "status": "draft",
+            "text": "slopes leti langutekeke edzongeni",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " are often ",
+            "text": " hi ntolovelo ti va ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "cooler and moister",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". ",
+            "text": ". ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "Frost",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " can collect in ",
+            "text": " yi nga hlengeletana eka ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "low hollows",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " where cold air settles.",
+            "text": " laha moya wo titimela wu tshamaka kona.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 41,
+          "segmentIndex": 0,
+          "sourceFragment": "North-facing slopes",
+          "candidateText": "slopes leti langutekeke en’walungwini",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        },
+        {
+          "independentRowIndex": 43,
+          "segmentIndex": 4,
+          "sourceFragment": "South-facing slopes",
+          "candidateText": "slopes leti langutekeke edzongeni",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "slopes leti langutekeke en’walungwini hi ntolovelo ti kuma dyambu ro tala naswona ti nga va warmer and drier. slopes leti langutekeke edzongeni hi ntolovelo ti va cooler and moister. Frost yi nga hlengeletana eka low hollows laha moya wo titimela wu tshamaka kona."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "slide": 19,
+      "field": "body[1]",
+      "sourceEnglish": "Overlay your zones and sectors on the same base map.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Overlay your zones and sectors on ",
+            "text": "Veka ti-zone na ti-sector ta wena ehenhla ka ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "the same base map",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "text": ".",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Overlay your zones and sectors on ",
+            "text": "Veka ti-zone na ti-sector ta wena ehenhla ka ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "the same base map",
+            "status": "draft",
+            "text": "mepe lowu fanaka wa masungulo",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": ".",
+            "text": ".",
+            "status": "draft"
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 47,
+          "segmentIndex": 1,
+          "sourceFragment": "the same base map",
+          "candidateText": "mepe lowu fanaka wa masungulo",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Veka ti-zone na ti-sector ta wena ehenhla ka mepe lowu fanaka wa masungulo."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "slide": 19,
+      "field": "body[2]",
+      "sourceEnglish": "Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Update the sketch season by season. ",
+            "status": "draft",
+            "text": "Endla sketch yi va ya sweswi hi nguva yin’wana ni yin’wana. "
+          },
+          {
+            "sourceEnglish": "A pencil map you actually use is worth more than ",
+            "status": "draft",
+            "text": "Pencil map leyi u yi tirhisaka hakunene yi na nkoka ku tlula "
+          },
+          {
+            "sourceEnglish": "a perfect map drawn once.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Update the sketch season by season. ",
+            "status": "draft",
+            "text": "Endla sketch yi va ya sweswi hi nguva yin’wana ni yin’wana. "
+          },
+          {
+            "sourceEnglish": "A pencil map you actually use is worth more than ",
+            "status": "draft",
+            "text": "Pencil map leyi u yi tirhisaka hakunene yi na nkoka ku tlula "
+          },
+          {
+            "sourceEnglish": "a perfect map drawn once.",
+            "status": "draft",
+            "text": "mepe lowu hetisekeke lowu dirowiweke kan’we.",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 48,
+          "segmentIndex": 2,
+          "sourceFragment": "a perfect map drawn once.",
+          "candidateText": "mepe lowu hetisekeke lowu dirowiweke kan’we.",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Endla sketch yi va ya sweswi hi nguva yin’wana ni yin’wana. Pencil map leyi u yi tirhisaka hakunene yi na nkoka ku tlula mepe lowu hetisekeke lowu dirowiweke kan’we."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "slide": 1,
+      "field": "body[1]",
+      "sourceEnglish": "Read the land before you change it. Find where water moves, where sunlight falls, where wind travels, and where cold air settles.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Read the land",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " before you change it. Find where water moves, where ",
+            "text": " u nga si yi cinca. Kuma laha mati ma fambaka kona, laha ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "sunlight",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " falls, where wind travels, and where cold air settles.",
+            "text": " yi welaka kona, laha moya wu hungaka kona ni laha moya wo titimela wu tshamaka kona.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Read the land",
+            "status": "draft",
+            "text": "Xiya ndhawu",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " before you change it. Find where water moves, where ",
+            "text": " u nga si yi cinca. Kuma laha mati ma fambaka kona, laha ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "sunlight",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " falls, where wind travels, and where cold air settles.",
+            "text": " yi welaka kona, laha moya wu hungaka kona ni laha moya wo titimela wu tshamaka kona.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 49,
+          "segmentIndex": 0,
+          "sourceFragment": "Read the land",
+          "candidateText": "Xiya ndhawu",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Xiya ndhawu u nga si yi cinca. Kuma laha mati ma fambaka kona, laha sunlight yi welaka kona, laha moya wu hungaka kona ni laha moya wo titimela wu tshamaka kona."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "slide": 4,
+      "field": "body[2]",
+      "sourceEnglish": "Some excess water needs a safe route away so it does not cause damage.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Some excess water needs ",
+            "status": "draft",
+            "text": "Mati man'wana lama taleke ma lava "
+          },
+          {
+            "sourceEnglish": "a safe route away so it does not cause damage.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Some excess water needs ",
+            "status": "draft",
+            "text": "Mati man'wana lama taleke ma lava "
+          },
+          {
+            "sourceEnglish": "a safe route away so it does not cause damage.",
+            "status": "draft",
+            "text": "ndlela leyi hlayisekeke yo fambisa mati ekule leswaku ma nga vangi ku onhaka.",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 50,
+          "segmentIndex": 1,
+          "sourceFragment": "a safe route away so it does not cause damage.",
+          "candidateText": "ndlela leyi hlayisekeke yo fambisa mati ekule leswaku ma nga vangi ku onhaka.",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo fambisa mati ekule leswaku ma nga vangi ku onhaka."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "slide": 18,
+      "field": "body[0]",
+      "sourceEnglish": "Look for places where frost sits longest and where the ground smells damp during dry months.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "status": "draft",
+            "sourceEnglish": "Look for places ",
+            "text": "Languta tindhawu "
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": "where frost sits longest"
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": " and ",
+            "text": " ni "
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": "where the ground smells damp"
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": " during dry months.",
+            "text": " hi tin’hweti leti omeke."
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "status": "draft",
+            "sourceEnglish": "Look for places ",
+            "text": "Languta tindhawu "
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": "where frost sits longest"
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": " and ",
+            "text": " ni "
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": "where the ground smells damp",
+            "text": "laha misava yi nun’hwaka yi tsakama",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": " during dry months.",
+            "text": " hi tin’hweti leti omeke."
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 54,
+          "segmentIndex": 3,
+          "sourceFragment": "where the ground smells damp",
+          "candidateText": "laha misava yi nun’hwaka yi tsakama",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Languta tindhawu where frost sits longest ni laha misava yi nun’hwaka yi tsakama hi tin’hweti leti omeke."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "slide": 21,
+      "field": "body[2]",
+      "sourceEnglish": "Add summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Add ",
+            "text": "Engetela ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "summer",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "text": " na ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "winter wind arrows",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it.",
+            "text": ", leswi u swi xiyeke hi ndzhuti hi 8am, nhlikanhi na 4pm, ni ti-zone na ti-sector ta wena. Hlayisa mepe kutani u wu pfuxeta.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Add ",
+            "text": "Engetela ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "summer",
+            "status": "draft",
+            "text": "ximumu",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " and ",
+            "text": " na ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "winter wind arrows",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it.",
+            "text": ", leswi u swi xiyeke hi ndzhuti hi 8am, nhlikanhi na 4pm, ni ti-zone na ti-sector ta wena. Hlayisa mepe kutani u wu pfuxeta.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 55,
+          "segmentIndex": 1,
+          "sourceFragment": "summer",
+          "candidateText": "ximumu",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Engetela ximumu na winter wind arrows, leswi u swi xiyeke hi ndzhuti hi 8am, nhlikanhi na 4pm, ni ti-zone na ti-sector ta wena. Hlayisa mepe kutani u wu pfuxeta."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "fileSHA256": "334a3e41eeecace2458be5188d01166f9cf7a046a64891cf8eef83ba4ae2ebee",
+      "slide": 1,
+      "field": "heading",
+      "sourceEnglish": "Vegetables and Staple Crops",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Miroho ni Swibyariwa swa Masungulo",
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 56,
+          "segmentIndex": null,
+          "sourceFragment": "Vegetables and Staple Crops",
+          "candidateText": "Miroho ni Swibyariwa swa Masungulo",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Miroho ni Swibyariwa swa Masungulo"
+    },
+    {
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "fileSHA256": "334a3e41eeecace2458be5188d01166f9cf7a046a64891cf8eef83ba4ae2ebee",
+      "slide": 1,
+      "field": "body[0]",
+      "sourceEnglish": "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Welcome. This is ",
+            "status": "draft",
+            "text": "Hi mi amukela. Leyi i "
+          },
+          {
+            "sourceEnglish": "Vegetables and Staple Crops.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " It's one of the ten modules in the ImbewuField training.",
+            "status": "draft",
+            "text": " I yin'we ya timoduli ta khume eka dyondzo ya ImbewuField."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Welcome. This is ",
+            "status": "draft",
+            "text": "Hi mi amukela. Leyi i "
+          },
+          {
+            "sourceEnglish": "Vegetables and Staple Crops.",
+            "status": "draft",
+            "text": "Miroho ni Swibyariwa swa Masungulo.",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " It's one of the ten modules in the ImbewuField training.",
+            "status": "draft",
+            "text": " I yin'we ya timoduli ta khume eka dyondzo ya ImbewuField."
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 57,
+          "segmentIndex": 1,
+          "sourceFragment": "Vegetables and Staple Crops.",
+          "candidateText": "Miroho ni Swibyariwa swa Masungulo.",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Hi mi amukela. Leyi i Miroho ni Swibyariwa swa Masungulo. I yin'we ya timoduli ta khume eka dyondzo ya ImbewuField."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "fileSHA256": "334a3e41eeecace2458be5188d01166f9cf7a046a64891cf8eef83ba4ae2ebee",
+      "slide": 3,
+      "field": "body[3]",
+      "sourceEnglish": "Three. Choose staples that protect you when one crop fails.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Three. ",
+            "status": "draft",
+            "text": "Xa vunharhu. "
+          },
+          {
+            "sourceEnglish": "Choose ",
+            "status": "draft",
+            "text": "Hlawula "
+          },
+          {
+            "sourceEnglish": "staples",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that protect you when one crop fails.",
+            "status": "draft",
+            "text": " leti ku sirhelelaka loko xibyariwa xin'we xi tsandzeka."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Three. ",
+            "status": "draft",
+            "text": "Xa vunharhu. "
+          },
+          {
+            "sourceEnglish": "Choose ",
+            "status": "draft",
+            "text": "Hlawula "
+          },
+          {
+            "sourceEnglish": "staples",
+            "status": "draft",
+            "text": "swakudya swa masungulo",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " that protect you when one crop fails.",
+            "status": "draft",
+            "text": " leti ku sirhelelaka loko xibyariwa xin'we xi tsandzeka."
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 58,
+          "segmentIndex": 2,
+          "sourceFragment": "staples",
+          "candidateText": "swakudya swa masungulo",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Xa vunharhu. Hlawula swakudya swa masungulo leti ku sirhelelaka loko xibyariwa xin'we xi tsandzeka."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "fileSHA256": "334a3e41eeecace2458be5188d01166f9cf7a046a64891cf8eef83ba4ae2ebee",
+      "slide": 3,
+      "field": "body[5]",
+      "sourceEnglish": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "These four belong together. ",
+            "status": "draft",
+            "text": "Swilo leswi swa mune swi fambisana. "
+          },
+          {
+            "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "These four belong together. ",
+            "status": "draft",
+            "text": "Swilo leswi swa mune swi fambisana. "
+          },
+          {
+            "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+            "status": "draft",
+            "text": "Hambi bed leyi endliweke kahle ya tsandzeka loko swilo hinkwaswo swi byariwa hi siku rin’we. ",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 60,
+          "segmentIndex": 1,
+          "sourceFragment": "A well-shaped bed still fails if everything goes in on one day. ",
+          "candidateText": "Hambi bed leyi endliweke kahle ya tsandzeka loko swilo hinkwaswo swi byariwa hi siku rin’we. ",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Swilo leswi swa mune swi fambisana. Hambi bed leyi endliweke kahle ya tsandzeka loko swilo hinkwaswo swi byariwa hi siku rin’we. A diverse planting still struggles if you treat every yellow leaf as an insect problem."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "fileSHA256": "334a3e41eeecace2458be5188d01166f9cf7a046a64891cf8eef83ba4ae2ebee",
+      "slide": 4,
+      "field": "body[1]",
+      "sourceEnglish": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The protection is simple. ",
+            "status": "draft",
+            "text": "Nsirhelelo wu olova. "
+          },
+          {
+            "sourceEnglish": "Permanent paths",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and a bed narrow enough to reach into from both sides.",
+            "status": "draft",
+            "text": ", ni bed leyi nga anamangiki ngopfu leswaku u ta kota ku fika endzeni ka yona ku suka ematlhelweni haswimbirhi."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The protection is simple. ",
+            "status": "draft",
+            "text": "Nsirhelelo wu olova. "
+          },
+          {
+            "sourceEnglish": "Permanent paths",
+            "status": "draft",
+            "text": "Tindlela leti tshamaka ti ri kona",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": ", and a bed narrow enough to reach into from both sides.",
+            "status": "draft",
+            "text": ", ni bed leyi nga anamangiki ngopfu leswaku u ta kota ku fika endzeni ka yona ku suka ematlhelweni haswimbirhi."
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 61,
+          "segmentIndex": 1,
+          "sourceFragment": "Permanent paths",
+          "candidateText": "Tindlela leti tshamaka ti ri kona",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Nsirhelelo wu olova. Tindlela leti tshamaka ti ri kona, ni bed leyi nga anamangiki ngopfu leswaku u ta kota ku fika endzeni ka yona ku suka ematlhelweni haswimbirhi."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "fileSHA256": "334a3e41eeecace2458be5188d01166f9cf7a046a64891cf8eef83ba4ae2ebee",
+      "slide": 6,
+      "field": "body[2]",
+      "sourceEnglish": "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Use ",
+            "status": "draft",
+            "text": "Landzelela "
+          },
+          {
+            "sourceEnglish": "spacing guidance",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " for the ",
+            "status": "draft",
+            "text": " ya "
+          },
+          {
+            "sourceEnglish": "crop, variety",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " na "
+          },
+          {
+            "sourceEnglish": "local conditions",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". Check the packet and local grower advice. Watch for crowding as plants develop.",
+            "status": "draft",
+            "text": ". Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Use ",
+            "status": "draft",
+            "text": "Landzelela "
+          },
+          {
+            "sourceEnglish": "spacing guidance",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " for the ",
+            "status": "draft",
+            "text": " ya "
+          },
+          {
+            "sourceEnglish": "crop, variety",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " na "
+          },
+          {
+            "sourceEnglish": "local conditions",
+            "status": "draft",
+            "text": "swiyimo swa laha kaya",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": ". Check the packet and local grower advice. Watch for crowding as plants develop.",
+            "status": "draft",
+            "text": ". Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula."
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 67,
+          "segmentIndex": 5,
+          "sourceFragment": "local conditions",
+          "candidateText": "swiyimo swa laha kaya",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Landzelela spacing guidance ya crop, variety na swiyimo swa laha kaya. Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "fileSHA256": "334a3e41eeecace2458be5188d01166f9cf7a046a64891cf8eef83ba4ae2ebee",
+      "slide": 11,
+      "field": "heading",
+      "sourceEnglish": "Plan Backwards From Your Hungry Gap",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plan Backwards From ",
+            "status": "draft",
+            "text": "Hlela u tlhelela endzhaku ku suka eka "
+          },
+          {
+            "sourceEnglish": "Your Hungry Gap",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plan Backwards From ",
+            "status": "draft",
+            "text": "Hlela u tlhelela endzhaku ku suka eka "
+          },
+          {
+            "sourceEnglish": "Your Hungry Gap",
+            "status": "draft",
+            "text": "Nkarhi Wa Wena Wa Ku Kayivela Ka Swakudya",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 69,
+          "segmentIndex": 1,
+          "sourceFragment": "Your Hungry Gap",
+          "candidateText": "Nkarhi Wa Wena Wa Ku Kayivela Ka Swakudya",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Hlela u tlhelela endzhaku ku suka eka Nkarhi Wa Wena Wa Ku Kayivela Ka Swakudya"
+    },
+    {
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "fileSHA256": "334a3e41eeecace2458be5188d01166f9cf7a046a64891cf8eef83ba4ae2ebee",
+      "slide": 12,
+      "field": "heading",
+      "sourceEnglish": "Staples Are Food Insurance",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Swakudya Swa Masungulo I Nsirhelelo Wa Swakudya",
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 70,
+          "segmentIndex": null,
+          "sourceFragment": "Staples Are Food Insurance",
+          "candidateText": "Swakudya Swa Masungulo I Nsirhelelo Wa Swakudya",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Swakudya Swa Masungulo I Nsirhelelo Wa Swakudya"
+    },
+    {
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "fileSHA256": "334a3e41eeecace2458be5188d01166f9cf7a046a64891cf8eef83ba4ae2ebee",
+      "slide": 16,
+      "field": "body[4]",
+      "sourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four.",
+            "status": "draft",
+            "text": "Vumune."
+          },
+          {
+            "sourceEnglish": " Only then, act — and start with ",
+            "status": "draft",
+            "text": " Hi kona ntsena u tekaka goza — sungula hi "
+          },
+          {
+            "sourceEnglish": "the lightest thing that works.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Physical removal",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", barriers",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " or changes in ",
+            "status": "draft",
+            "text": " kumbe ku cinca ndlela yo hlayisa "
+          },
+          {
+            "sourceEnglish": "crop care",
+            "status": "draft",
+            "text": "swibyariwa"
+          },
+          {
+            "sourceEnglish": " may help.",
+            "status": "draft",
+            "text": " swi nga pfuna."
+          },
+          {
+            "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+            "status": "draft",
+            "text": " Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four.",
+            "status": "draft",
+            "text": "Vumune."
+          },
+          {
+            "sourceEnglish": " Only then, act — and start with ",
+            "status": "draft",
+            "text": " Hi kona ntsena u tekaka goza — sungula hi "
+          },
+          {
+            "sourceEnglish": "the lightest thing that works.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Physical removal",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", barriers",
+            "status": "draft",
+            "text": ", swisirhelelo",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " or changes in ",
+            "status": "draft",
+            "text": " kumbe ku cinca ndlela yo hlayisa "
+          },
+          {
+            "sourceEnglish": "crop care",
+            "status": "draft",
+            "text": "swibyariwa"
+          },
+          {
+            "sourceEnglish": " may help.",
+            "status": "draft",
+            "text": " swi nga pfuna."
+          },
+          {
+            "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+            "status": "draft",
+            "text": " Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo."
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 75,
+          "segmentIndex": 4,
+          "sourceFragment": ", barriers",
+          "candidateText": ", swisirhelelo",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Vumune. Hi kona ntsena u tekaka goza — sungula hi the lightest thing that works. Physical removal, swisirhelelo kumbe ku cinca ndlela yo hlayisa swibyariwa swi nga pfuna. Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "fileSHA256": "334a3e41eeecace2458be5188d01166f9cf7a046a64891cf8eef83ba4ae2ebee",
+      "slide": 17,
+      "field": "body[3]",
+      "sourceEnglish": "Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Check the bed regularly from planting.",
+            "status": "draft",
+            "text": "Kambela bed nkarhi na nkarhi ku sukela loko yi byariwile."
+          },
+          {
+            "sourceEnglish": " Use the ",
+            "status": "draft",
+            "text": " Tirhisa "
+          },
+          {
+            "sourceEnglish": "ten-day photograph",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " as an assignment checkpoint, ",
+            "status": "draft",
+            "text": " tanihi assignment checkpoint, "
+          },
+          {
+            "sourceEnglish": "not a reason to delay care.",
+            "status": "draft",
+            "text": "ku nga ri xivangelo xo hlwela ku khathalela."
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Check the bed regularly from planting.",
+            "status": "draft",
+            "text": "Kambela bed nkarhi na nkarhi ku sukela loko yi byariwile."
+          },
+          {
+            "sourceEnglish": " Use the ",
+            "status": "draft",
+            "text": " Tirhisa "
+          },
+          {
+            "sourceEnglish": "ten-day photograph",
+            "status": "draft",
+            "text": "foto ra le ndzhaku ka masiku ya khume",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " as an assignment checkpoint, ",
+            "status": "draft",
+            "text": " tanihi assignment checkpoint, "
+          },
+          {
+            "sourceEnglish": "not a reason to delay care.",
+            "status": "draft",
+            "text": "ku nga ri xivangelo xo hlwela ku khathalela."
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 76,
+          "segmentIndex": 2,
+          "sourceFragment": "ten-day photograph",
+          "candidateText": "foto ra le ndzhaku ka masiku ya khume",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Kambela bed nkarhi na nkarhi ku sukela loko yi byariwile. Tirhisa foto ra le ndzhaku ka masiku ya khume tanihi assignment checkpoint, ku nga ri xivangelo xo hlwela ku khathalela."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "fileSHA256": "334a3e41eeecace2458be5188d01166f9cf7a046a64891cf8eef83ba4ae2ebee",
+      "slide": 18,
+      "field": "body[5]",
+      "sourceEnglish": "Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Record the sowing date.",
+            "status": "draft",
+            "text": "Tsala siku ra sowing."
+          },
+          {
+            "sourceEnglish": " The rain.",
+            "status": "draft",
+            "text": " Mpfula."
+          },
+          {
+            "sourceEnglish": " What germinated.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Pest pressure.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " What you harvested.",
+            "status": "draft",
+            "text": " Leswi u tshoveleke."
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Record the sowing date.",
+            "status": "draft",
+            "text": "Tsala siku ra sowing."
+          },
+          {
+            "sourceEnglish": " The rain.",
+            "status": "draft",
+            "text": " Mpfula."
+          },
+          {
+            "sourceEnglish": " What germinated.",
+            "status": "draft",
+            "text": " Leswi nga mila.",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " Pest pressure.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " What you harvested.",
+            "status": "draft",
+            "text": " Leswi u tshoveleke."
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 77,
+          "segmentIndex": 2,
+          "sourceFragment": " What germinated.",
+          "candidateText": " Leswi nga mila.",
+          "rootReason": "Preserve initial source separator space before recording the germination event."
+        }
+      ],
+      "visibleCandidate": "Tsala siku ra sowing. Mpfula. Leswi nga mila. Pest pressure. Leswi u tshoveleke."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "fileSHA256": "334a3e41eeecace2458be5188d01166f9cf7a046a64891cf8eef83ba4ae2ebee",
+      "slide": 17,
+      "field": "body[4]",
+      "sourceEnglish": "Photograph it when it's planted. Then come back after ten days with what you observed.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Photograph it when it's planted.",
+            "status": "draft",
+            "text": "Teka foto loko bed yi byariwile."
+          },
+          {
+            "sourceEnglish": " Then come back after ten days",
+            "status": "draft",
+            "text": " Kutani vuya endzhaku ka masiku ya khume"
+          },
+          {
+            "sourceEnglish": " with what you observed.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Photograph it when it's planted.",
+            "status": "draft",
+            "text": "Teka foto loko bed yi byariwile."
+          },
+          {
+            "sourceEnglish": " Then come back after ten days",
+            "status": "draft",
+            "text": " Kutani vuya endzhaku ka masiku ya khume"
+          },
+          {
+            "sourceEnglish": " with what you observed.",
+            "status": "draft",
+            "text": " u ri na leswi u swi xiyeke.",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 79,
+          "segmentIndex": 2,
+          "sourceFragment": " with what you observed.",
+          "candidateText": " u ri na leswi u swi xiyeke.",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Teka foto loko bed yi byariwile. Kutani vuya endzhaku ka masiku ya khume u ri na leswi u swi xiyeke."
+    },
+    {
+      "file": "docs/narration/market-community.ts.paired-draft.json",
+      "fileSHA256": "b081ddf874bd0b40eabceabff104a346d09cea629f0d24256c6c377dc925cdfd",
+      "slide": 17,
+      "field": "body[2]",
+      "sourceEnglish": "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Compare the money received after ",
+            "status": "draft",
+            "text": "Pimanisa mali leyi amukeriweke endzhaku ka ",
+            "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+          },
+          {
+            "sourceEnglish": "fees",
+            "status": "english-hold",
+            "reason": "Exact English technical or business precision retained; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": ", transport and ",
+            "status": "draft",
+            "text": ", vutleketli ni ",
+            "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+          },
+          {
+            "sourceEnglish": "spoilage",
+            "status": "english-hold",
+            "reason": "Exact English technical or business precision retained; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " for each option. ",
+            "status": "draft",
+            "text": " eka option yin’wana ni yin’wana. ",
+            "reason": "Existing option is retained contextual borrowed noun; each-option qualifier follows that noun in Xitsonga, so this complete qualifier clause stays together."
+          },
+          {
+            "sourceEnglish": "Do not assume the ",
+            "status": "draft",
+            "text": "U nga ehleketi leswaku ",
+            "reason": "Checked source-bound native negative instruction."
+          },
+          {
+            "sourceEnglish": "nearest buyer",
+            "status": "english-hold",
+            "reason": "Nearest superlative retained exactly."
+          },
+          {
+            "sourceEnglish": " always gives the ",
+            "status": "draft",
+            "text": " u nyika ",
+            "reason": "Shared predicate context: source always gives the best return. maps to target u nyika best return minkarhi hinkwato.; the always qualifier is realized after the held return noun in the following context segment.",
+            "semanticContext": "nearest-return-predicate"
+          },
+          {
+            "sourceEnglish": "best return",
+            "status": "english-hold",
+            "reason": "Precise best-return comparison retained exactly.",
+            "semanticContext": "nearest-return-predicate"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": " minkarhi hinkwato.",
+            "reason": "Completes the same nearest-return predicate context; minkarhi hinkwato translates the source always qualifier from its preceding source span, in checked native target order. This segment is not a standalone punctuation translation.",
+            "semanticContext": "nearest-return-predicate"
+          }
+        ],
+        "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed; root-approved TS17 native warning supplement d3a4e5d3, first comparison unchanged"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Compare the money received after ",
+            "status": "draft",
+            "text": "Pimanisa mali leyi amukeriweke endzhaku ka ",
+            "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+          },
+          {
+            "sourceEnglish": "fees",
+            "status": "draft",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+            "text": "tihakelo"
+          },
+          {
+            "sourceEnglish": ", transport and ",
+            "status": "draft",
+            "text": ", vutleketli ni ",
+            "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+          },
+          {
+            "sourceEnglish": "spoilage",
+            "status": "english-hold",
+            "reason": "Exact English technical or business precision retained; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " for each option. ",
+            "status": "draft",
+            "text": " eka option yin’wana ni yin’wana. ",
+            "reason": "Existing option is retained contextual borrowed noun; each-option qualifier follows that noun in Xitsonga, so this complete qualifier clause stays together."
+          },
+          {
+            "sourceEnglish": "Do not assume the ",
+            "status": "draft",
+            "text": "U nga ehleketi leswaku ",
+            "reason": "Checked source-bound native negative instruction."
+          },
+          {
+            "sourceEnglish": "nearest buyer",
+            "status": "draft",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+            "text": "muxavi loyi a nga ekusuhi swinene"
+          },
+          {
+            "sourceEnglish": " always gives the ",
+            "status": "draft",
+            "text": " u nyika ",
+            "reason": "Shared predicate context: source always gives the best return. maps to target u nyika best return minkarhi hinkwato.; the always qualifier is realized after the held return noun in the following context segment.",
+            "semanticContext": "nearest-return-predicate"
+          },
+          {
+            "sourceEnglish": "best return",
+            "status": "english-hold",
+            "reason": "Precise best-return comparison retained exactly.",
+            "semanticContext": "nearest-return-predicate"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": " minkarhi hinkwato.",
+            "reason": "Completes the same nearest-return predicate context; minkarhi hinkwato translates the source always qualifier from its preceding source span, in checked native target order. This segment is not a standalone punctuation translation.",
+            "semanticContext": "nearest-return-predicate"
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 80,
+          "segmentIndex": 1,
+          "sourceFragment": "fees",
+          "candidateText": "tihakelo",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        },
+        {
+          "independentRowIndex": 81,
+          "segmentIndex": 6,
+          "sourceFragment": "nearest buyer",
+          "candidateText": "muxavi loyi a nga ekusuhi swinene",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Pimanisa mali leyi amukeriweke endzhaku ka tihakelo, vutleketli ni spoilage eka option yin’wana ni yin’wana. U nga ehleketi leswaku muxavi loyi a nga ekusuhi swinene u nyika best return minkarhi hinkwato."
+    },
+    {
+      "file": "docs/narration/market-community.ts.paired-draft.json",
+      "fileSHA256": "b081ddf874bd0b40eabceabff104a346d09cea629f0d24256c6c377dc925cdfd",
+      "slide": 18,
+      "field": "body[1]",
+      "sourceEnglish": "Record the method, conditions and result so others can judge whether it may suit their land.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Record the method, conditions and result so others can judge ",
+            "status": "draft",
+            "text": "Tsala maendlelo, swiyimo ni mbuyelo leswaku van’wana va kota ku kambela "
+          },
+          {
+            "sourceEnglish": "whether",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " it may suit their ",
+            "status": "draft",
+            "text": " swi nga ha faneleka eka "
+          },
+          {
+            "sourceEnglish": "land",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": " ya vona."
+          }
+        ],
+        "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Record the method, conditions and result so others can judge ",
+            "status": "draft",
+            "text": "Tsala maendlelo, swiyimo ni mbuyelo leswaku van’wana va kota ku kambela "
+          },
+          {
+            "sourceEnglish": "whether",
+            "status": "draft",
+            "text": "loko",
+            "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " it may suit their ",
+            "status": "draft",
+            "text": " swi nga ha faneleka eka "
+          },
+          {
+            "sourceEnglish": "land",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": " ya vona."
+          }
+        ],
+        "provenance": "2026-10-06 source-bound root-reviewed ordinary machine draft; exact English paired; no fluent/local farming approval; facilitator review pending."
+      },
+      "changes": [
+        {
+          "independentRowIndex": 82,
+          "segmentIndex": 1,
+          "sourceFragment": "whether",
+          "candidateText": "loko",
+          "rootReason": "Root read exact complete source and composed target; source meaning retained as visibly unreviewed draft."
+        }
+      ],
+      "visibleCandidate": "Tsala maendlelo, swiyimo ni mbuyelo leswaku van’wana va kota ku kambela loko swi nga ha faneleka eka land ya vona."
+    }
+  ],
+  "deferredRootRisks": [
+    {
+      "independentRowIndex": 35,
+      "source": "slopes",
+      "reason": "Independent acceptance incorrectly treats tintshava (mountains/hills) as slopes; keep exact slope anchor until checked."
+    },
+    {
+      "independentRowIndex": 53,
+      "source": "permanent position",
+      "reason": "Independent recommended tshoṱhe is Tshivenda contamination; do not apply."
+    },
+    {
+      "independentRowIndex": 66,
+      "source": "They do better",
+      "reason": "Independent accepted Swi kula kahle means grows well and omits better comparative; repair required."
+    },
+    {
+      "independentRowIndex": 64,
+      "source": "deeper cultivation",
+      "reason": "Independent accepted cultivation candidate omits deeper comparison."
+    },
+    {
+      "independentRowIndex": 72,
+      "source": "broad chemical use",
+      "reason": "Large amount of chemicals can change broad use into dosage. Preserve breadth without implying strength."
+    },
+    {
+      "independentRowIndex": 23,
+      "source": "wild.",
+      "reason": "Combined draft duplicates existing yi tshikiwa yi ri with new stays clause."
+    },
+    {
+      "independentRowIndex": 21,
+      "source": "main",
+      "reason": "Combined main garden puts modifier before noun; root grammatical repair required."
+    },
+    {
+      "independentRowIndex": 22,
+      "source": "main",
+      "reason": "Combined main field puts modifier before noun; root grammatical repair required."
+    },
+    {
+      "independentRowIndex": 42,
+      "source": "warmer and drier",
+      "reason": "Comparative construction ku tlurisa needs precise comparison, not excessive intensity."
+    },
+    {
+      "independentRowIndex": 44,
+      "source": "cooler and moister",
+      "reason": "Comparative construction ku tlurisa needs precise comparison, not excessive intensity."
+    },
+    {
+      "independentRowIndex": 51,
+      "source": "shelter",
+      "reason": "Wind-only shelter narrows broad source shelter."
+    },
+    {
+      "independentRowIndex": 62,
+      "source": "least disturbance",
+      "reason": "Very little is not necessarily least disturbance."
+    },
+    {
+      "independentRowIndex": 68,
+      "source": "A Sowing Rhythm",
+      "reason": "Sequenced time is not necessarily rhythm; retain rhythm anchor in a revised localized heading."
+    }
+  ],
+  "invariants": {
+    "allSelectedCurrentFileHashesVerified": true,
+    "allSelectedExactSourcesAndCurrentSegmentsVerified": true,
+    "allUnlistedSegmentsPreserved": true,
+    "canonicalAndTrackedFilesChanged": false,
+    "fluencyApproved": false
+  }
+}

@@ -26,6 +26,17 @@ import { numberLabel, randLabel, kgTotalLabel } from '@/lib/format-figures';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 
+test('a finite entered quantity stays finite when its decimal formatting would overflow', () => {
+  for (const quantity of [Number.MAX_VALUE, -Number.MAX_VALUE, 1e307]) {
+    for (const precision of [0, 1, 3, 20]) {
+      const label = numberLabel(quantity, precision);
+      assert.doesNotMatch(label, /Infinity|NaN/);
+      assert.equal(Number(label.replaceAll(' ', '')), quantity);
+    }
+  }
+  assert.equal(numberLabel(0.4, 1), '0.4', 'small measured output remains visible');
+});
+
 /** Every .ts/.tsx under app, components and lib except the API routes (server-only, no hydration). */
 function sourceFiles(): string[] {
   return execSync("find app components lib -name '*.tsx' -o -name '*.ts'", { cwd: ROOT })

@@ -15,25 +15,30 @@
 //   node scripts/make-lesson-slides.mjs seeds-sovereignty zu
 //   node scripts/make-lesson-slides.mjs intro-permaculture ts OUT --paired-draft draft.json --validate-only
 //   node scripts/make-lesson-slides.mjs intro-permaculture ts OUT --paired-draft draft.json --paired-art art.json
+//   node scripts/make-lesson-slides.mjs seeds-sovereignty zu OUT --paired-draft draft.json --slides 6,11,14
 //   art.json: {"10":"docs/media/studies-illustrated-release/art/reading-landscape/landscape-walk.jpg"}
 //   draft.json: {"language":"ts","sourceLanguage":"en","reviewStatus":"unreviewed",
 //     "slides":[{"n":1,"english":{"heading":"...","body":["..."]},
 //       "target":{"heading":{"status":"draft","text":"..."},
 //                 "body":[{"status":"draft","text":"..."}]}}]}
 //   Each target heading/paragraph can instead be {"status":"english-hold"}.
+//   --slides selects original source slide numbers after the complete packet is validated.
 //
-// Then assemble the video with the narration already in the repo:
+// Paired-draft output is a silent review card. Never assemble a corrected draft with the legacy
+// recording; the old recording remains bound only to its original transcript snapshot.
+// The video command is for unchanged recorded-transcript slide sets only:
 //   node scripts/build-lesson-video.mjs seeds-sovereignty zu ~/Downloads/seeds-sovereignty-zu-slides
 //
 // Requires python3 with Pillow (already present on this machine).
 
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { homedir, tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
-import { englishSlideRecords, pairedDraftLanguageLabel, validatePairedDraft } from './paired-draft-slides.mjs';
+import { englishSlideRecords, pairedDraftLanguageLabel, pairedSlideSelection, pairedTargetHasEnglishHolds, selectPairedSlides, validatePairedDraft } from './paired-draft-slides.mjs';
 
 const argv = process.argv.slice(2);
 const imgFlag = argv.indexOf('--images');
@@ -43,6 +48,8 @@ const brandingFlag = argv.indexOf('--branding');
 const sourceFlag = argv.indexOf('--source');
 const pairedFlag = argv.indexOf('--paired-draft');
 const pairedArtFlag = argv.indexOf('--paired-art');
+const pairedNativeFlag = argv.indexOf('--paired-native-source');
+const slidesFlag = argv.indexOf('--slides');
 const validateOnly = argv.includes('--validate-only');
 const overridesPath = overrideFlag >= 0 ? resolve(argv[overrideFlag + 1]) : null;
 const brandingPath = brandingFlag >= 0 ? resolve(argv[brandingFlag + 1]) : null;
@@ -51,8 +58,12 @@ const pairedPath = pairedFlag >= 0 && argv[pairedFlag + 1] ? resolve(argv[paired
 const pairedArtPath = pairedArtFlag >= 0 && argv[pairedArtFlag + 1] ? resolve(argv[pairedArtFlag + 1]) : null;
 if (pairedFlag >= 0 && !pairedPath) throw new Error('--paired-draft requires a JSON file');
 if (pairedArtFlag >= 0 && !pairedArtPath) throw new Error('--paired-art requires a JSON file');
-const skipped = new Set(['--images', '--art-overrides', '--branding', '--source', '--paired-draft', '--paired-art', '--validate-only']);
-const valueFlags = new Set([imgFlag, overrideFlag, brandingFlag, sourceFlag, pairedFlag, pairedArtFlag].filter((i) => i >= 0).map((i) => i + 1));
+if (pairedNativeFlag >= 0 && !pairedPath) throw new Error('--paired-native-source requires --paired-draft');
+if (argv.filter((arg) => arg === '--slides').length > 1) throw new Error('--slides may be specified only once');
+if (slidesFlag >= 0 && !pairedPath) throw new Error('--slides requires --paired-draft');
+if (slidesFlag >= 0 && !argv[slidesFlag + 1]) throw new Error('--slides needs a comma-separated list of slide numbers');
+const skipped = new Set(['--images', '--art-overrides', '--branding', '--source', '--paired-draft', '--paired-art', '--paired-native-source', '--slides', '--validate-only']);
+const valueFlags = new Set([imgFlag, overrideFlag, brandingFlag, sourceFlag, pairedFlag, pairedArtFlag, slidesFlag].filter((i) => i >= 0).map((i) => i + 1));
 const positional = argv.filter((a, i) => !skipped.has(a) && !valueFlags.has(i));
 const [moduleId, lang, outRaw] = positional;
 if (!moduleId || !lang) {
@@ -61,10 +72,13 @@ if (!moduleId || !lang) {
 }
 
 if (pairedPath && (!pairedDraftLanguageLabel(lang) || sourcePath || brandingPath || overridesPath || imagesDir)) {
-  throw new Error('--paired-draft supports st, ts and ve with the authored English source only, without art or branding overrides');
+  throw new Error('--paired-draft supports st, ts, ve and zu with the authored English source only, without art or branding overrides');
 }
 if (pairedArtPath && !pairedPath) throw new Error('--paired-art requires --paired-draft');
 if (validateOnly && !pairedPath) throw new Error('--validate-only requires --paired-draft');
+if (pairedNativeFlag >= 0 && moduleId !== 'seeds-sovereignty') {
+  throw new Error('--paired-native-source is currently limited to Seeds and Seed Sovereignty');
+}
 const scriptPath = sourcePath || resolve(join(process.cwd(), 'docs', 'narration', `${moduleId}.${pairedPath ? 'en' : lang}.md`));
 if (!existsSync(scriptPath)) {
   console.error(`\n  ✗ no narration script at ${scriptPath}\n`);
@@ -72,15 +86,32 @@ if (!existsSync(scriptPath)) {
 }
 
 const raw = readFileSync(scriptPath, 'utf8');
-const pairedSlides = pairedPath
+const validatedPairedSlides = pairedPath
   ? validatePairedDraft(JSON.parse(readFileSync(pairedPath, 'utf8')), englishSlideRecords(raw), lang)
   : null;
+const selectedSlideNumbers = pairedPath
+  ? pairedSlideSelection(slidesFlag >= 0 ? argv[slidesFlag + 1] : undefined, validatedPairedSlides.length)
+  : null;
+const pairedSlides = validatedPairedSlides
+  ? selectPairedSlides(validatedPairedSlides, selectedSlideNumbers)
+  : null;
+for (const pair of pairedSlides ?? []) {
+  if (!pair.supplementalImageCue) continue;
+  const cueSource = resolve(join(process.cwd(), 'public', pair.supplementalImageCue.sourceImageUrl.slice(1)));
+  const actualCueSourceSha256 = createHash('sha256').update(readFileSync(cueSource)).digest('hex');
+  const selectedSource = resolve(join(process.cwd(), 'public', 'course-decks', moduleId, 'en',
+    `slide-${String(pair.n).padStart(2, '0')}.jpg`));
+  if (moduleId !== 'reading-landscape' || pair.n !== 7 || cueSource !== selectedSource ||
+      actualCueSourceSha256 !== pair.supplementalImageCue.sourceImageSha256) {
+    throw new Error(`slide ${pair.n} supplemental image cue source identity drifted`);
+  }
+}
 const pairedArt = pairedArtPath ? JSON.parse(readFileSync(pairedArtPath, 'utf8')) : {};
 if (!pairedArt || typeof pairedArt !== 'object' || Array.isArray(pairedArt)) {
   throw new Error('--paired-art must be a slide-number-to-image-path object');
 }
 for (const [slide, path] of Object.entries(pairedArt)) {
-  if (!/^[1-9]\d*$/.test(slide) || Number(slide) > (pairedSlides?.length ?? 0) ||
+  if (!/^[1-9]\d*$/.test(slide) || Number(slide) > (validatedPairedSlides?.length ?? 0) ||
       typeof path !== 'string' || !path.trim()) {
     throw new Error(`--paired-art has an invalid slide or path: ${slide}`);
   }
@@ -91,9 +122,16 @@ for (const [slide, path] of Object.entries(pairedArt)) {
 }
 const pairedSourceSlides = pairedSlides?.map(({ n }) => pairedArt[n]
   ? resolve(pairedArt[n])
-  : resolve(join(process.cwd(), 'public', 'course-decks', moduleId, 'en', `slide-${String(n).padStart(2, '0')}.jpg`))) ?? null;
+  : resolve(join(process.cwd(), 'public', 'course-decks', moduleId, 'en', `slide-${String(n).padStart(2, '0')}.webp`))) ?? null;
 for (const sourceSlide of pairedSourceSlides ?? []) {
   if (!existsSync(sourceSlide)) throw new Error(`paired draft needs its illustrated English source slide: ${sourceSlide}`);
+}
+for (const [index, pair] of (pairedSlides ?? []).entries()) {
+  if (!pair.supplementalImageCue) continue;
+  const expected = resolve(join(process.cwd(), 'public', pair.supplementalImageCue.sourceImageUrl.slice(1)));
+  if (pairedSourceSlides[index] !== expected) {
+    throw new Error(`slide ${pair.n} supplemental cue must stay paired to its exact English source image`);
+  }
 }
 const artPlanPath = resolve('docs/course-deck-art.json');
 const artPlan = !pairedSlides && existsSync(artPlanPath) ? JSON.parse(readFileSync(artPlanPath, 'utf8'))[moduleId] ?? {} : {};
@@ -247,6 +285,7 @@ writeFileSync(
   jsonPath,
   JSON.stringify({
     slides: payload,
+    repoRoot: process.cwd(),
     outDir,
     moduleId,
     lang,
@@ -254,9 +293,15 @@ writeFileSync(
     artPlan,
     lessonArt,
     moduleNumber,
-    pairedSlides,
+    pairedSlides: pairedSlides?.map((pair) => ({
+      ...pair,
+      hasEnglishHolds: pairedTargetHasEnglishHolds(pair.target),
+    })) ?? null,
     pairedLanguageLabel: pairedPath ? pairedDraftLanguageLabel(lang) : null,
+    pairedTotalSlides: validatedPairedSlides?.length ?? null,
+    pairedSelectedSlides: selectedSlideNumbers,
     pairedSourceSlides,
+    pairedNativeSource: pairedNativeFlag >= 0,
     pairedArtSlides: Object.keys(pairedArt).map(Number),
     validateOnly,
     footer: branding.footer || 'ImbewuField · Imbewu Yoshintso',
@@ -270,9 +315,19 @@ import json, os, sys
 from PIL import Image, ImageDraw, ImageFont
 
 cfg = json.load(open(sys.argv[1]))
+sys.path.insert(0, os.path.join(cfg['repoRoot'], 'scripts'))
+from paired_text_flow import body_pitches, layout_mixed_segments
 PAIRED = cfg.get('pairedSlides')
 PAIRED_LANGUAGE = cfg.get('pairedLanguageLabel') or 'TARGET LANGUAGE'
-W, H = (1440, 5400) if PAIRED else (1920, 1080)
+PAIRED_NATIVE_SOURCE = cfg.get('pairedNativeSource', False)
+PAIRED_BASE_HEIGHT = 5400
+PAIRED_TARGET_TOP = 1070
+PAIRED_TARGET_BOTTOM = 3060
+PAIRED_SOURCE_TOP = 3090
+PAIRED_SOURCE_BOTTOM = 5080
+PAIRED_FOOTER_Y = 5220
+PAIRED_MAX_TARGET_EXTENSION = 800
+W, H = (1440, PAIRED_BASE_HEIGHT) if PAIRED else (1920, 1080)
 
 # Palette read off the produced Seeds deck, which is the standard the rest of the course is
 # measured against — warm paper, forest green for anything structural, ochre for the small
@@ -368,21 +423,56 @@ if PAIRED:
     F_PAIR_LABEL = font(SANS_B, 43)
     F_PAIR_STATUS = font(SANS_B, 48)
 
-    def panel_plan(draw, heading, body, top, bottom, n):
+    # Headings can retain a technical English phrase while translating its ordinary
+    # framing. The same exact-source segments checked for body text also bind titles.
+    def paired_heading_text(pair):
+        part = pair['target']['heading']
+        if part['status'] == 'english-hold':
+            return pair['english']['heading']
+        if part['status'] == 'mixed':
+            return ''.join(segment['sourceEnglish'] if segment['status'] == 'english-hold'
+                           else segment['text'] for segment in part['segments'])
+        return part['text']
+
+    def panel_plan(draw, heading, body, top, bottom, n, max_extra=0, supplemental=None):
         width = W - 192
         heading_lines = paired_lines(draw, heading, F_PAIR_TITLE, width, n)
-        if len(heading_lines) > 2:
-            raise ValueError('slide %d heading needs more than two lines' % n)
+        # The complete Xitsonga Market heading needs three lines at the readable
+        # title size. Keep its wording and type size; the full-panel check below
+        # still rejects any title/body combination that would hide a paragraph.
+        if len(heading_lines) > 3:
+            raise ValueError('slide %d heading needs more than three lines' % n)
         y = top + 120 + len(heading_lines) * 92 + 22
         paragraphs = []
         for para in body:
-            lines = paired_lines(draw, para, F_PAIR_BODY, width, n)
-            paragraphs.append(lines)
-            y += len(lines) * 66 + 12
-        if y > bottom - 48:
-            raise ValueError('slide %d paired text needs %d px but panel has %d px at phone-readable type size' %
-                             (n, y - top, bottom - 48 - top))
-        return heading_lines, paragraphs
+            if isinstance(para, list):
+                lines, _ = layout_mixed_segments(
+                    para, lambda text: draw.textlength(text, font=F_PAIR_BODY), width, n)
+                visible_lines = [''.join(run['text'] for run in line) for line in lines]
+                pitches = body_pitches(visible_lines)
+                paragraphs.append({'mixedRuns': lines, 'pitches': pitches})
+                y += sum(pitches) + 8
+                continue
+            segments = para if isinstance(para, list) else [para]
+            segment_plans = []
+            for segment in segments:
+                text = segment['text'] if isinstance(segment, dict) else segment
+                lines = paired_lines(draw, text, F_PAIR_BODY, width, n)
+                segment_plans.append({'lines': lines, 'status': segment.get('status') if isinstance(segment, dict) else None})
+                y += sum(body_pitches(lines)) + 8
+            paragraphs.append(segment_plans)
+            y += 4
+        supplemental_plan = None
+        if supplemental:
+            cue_label_lines = paired_lines(draw, supplemental['label'], F_PAIR_LABEL, width, n)
+            cue_text_lines = paired_lines(draw, supplemental['text'], F_PAIR_BODY, width, n)
+            y += 24 + len(cue_label_lines) * 54 + 8 + sum(body_pitches(cue_text_lines))
+            supplemental_plan = {'labelLines': cue_label_lines, 'textLines': cue_text_lines}
+        required_extra = max(0, y - (bottom - 48))
+        if required_extra > max_extra:
+            raise ValueError('slide %d paired text needs %d px but panel has %d px at phone-readable type size (maximum extra space %d px)' %
+                             (n, y - top, bottom - 48 - top, max_extra))
+        return heading_lines, paragraphs, required_extra, supplemental_plan
 
     # Measure the complete deck before writing any image. A partial deck can look complete
     # enough to register by mistake, especially when its remaining source claims are hidden.
@@ -390,36 +480,75 @@ if PAIRED:
     paired_plans = []
     for pair, source_image in zip(PAIRED, cfg['pairedSourceSlides']):
         with Image.open(source_image) as original:
-            if original.width < 1000 or original.height < 560:
+            # Seeds' authored JPEGs are 960x540. The explicit native mode places those pixels
+            # whole at 1:1 on the tall frame; it never resamples them to fill the illustration box.
+            native_seed_source = PAIRED_NATIVE_SOURCE and original.size == (960, 540)
+            if PAIRED_NATIVE_SOURCE and not native_seed_source:
+                raise ValueError('slide %d native Seeds illustration must be exactly 960x540' % pair['n'])
+            if not native_seed_source and (original.width < 1000 or original.height < 560):
                 raise ValueError('slide %d English illustration is too small for the paired proof' % pair['n'])
         target = pair['target']
-        held = target['heading']['status'] == 'english-hold' or any(
-            part['status'] == 'english-hold' for part in target['body'])
-        target_heading = pair['english']['heading'] if target['heading']['status'] == 'english-hold' else target['heading']['text']
-        target_body = [(source if part['status'] == 'english-hold' else part['text'])
-                       for source, part in zip(pair['english']['body'], target['body'])]
-        paired_plans.append((
-            panel_plan(probe, target_heading, target_body, 1070, 3060, pair['n']),
-            panel_plan(probe, pair['english']['heading'], pair['english']['body'], 3090, 5080, pair['n']),
-            held,
-        ))
+        held = pair.get('hasEnglishHolds', False)
+        target_heading = paired_heading_text(pair)
+        target_body = []
+        for source, part in zip(pair['english']['body'], target['body']):
+            if part['status'] == 'mixed':
+                target_body.append([{
+                    'status': segment['status'],
+                    'text': segment['sourceEnglish'] if segment['status'] == 'english-hold' else segment['text'],
+                } for segment in part['segments']])
+            else:
+                target_body.append(source if part['status'] == 'english-hold' else part['text'])
+        target_plan = panel_plan(probe, target_heading, target_body, PAIRED_TARGET_TOP, PAIRED_TARGET_BOTTOM,
+                                 pair['n'], PAIRED_MAX_TARGET_EXTENSION)
+        source_plan = panel_plan(probe, pair['english']['heading'], pair['english']['body'],
+                                 PAIRED_SOURCE_TOP + target_plan[2], PAIRED_SOURCE_BOTTOM + target_plan[2],
+                                 pair['n'], PAIRED_MAX_TARGET_EXTENSION if pair.get('supplementalImageCue') else 0,
+                                 pair.get('supplementalImageCue'))
+        paired_plans.append((target_plan, source_plan, held))
 
-    def draw_panel(draw, label, heading, body, top, bottom, plan, target=None):
+    def draw_panel(draw, label, heading, body, top, bottom, plan, target=None, supplemental=None):
         draw.rounded_rectangle([64, top, W - 64, bottom], radius=26, fill=(255, 252, 246), outline=RULE, width=4)
         draw.text((96, top + 32), label, font=F_PAIR_LABEL, fill=AMBER)
-        heading_lines, paragraphs = plan
+        heading_lines, paragraphs, _, supplemental_plan = plan
         y = top + 120
         title_color = RUST if target and target['heading']['status'] == 'english-hold' else GREEN
         for line in heading_lines:
             draw.text((96, y), line, font=F_PAIR_TITLE, fill=title_color)
             y += 92
         y += 22
-        for index, lines in enumerate(paragraphs):
-            color = RUST if target and target['body'][index]['status'] == 'english-hold' else INK
-            for line in lines:
-                draw.text((96, y), line, font=F_PAIR_BODY, fill=color)
-                y += 66
-            y += 12
+        for index, segment_plans in enumerate(paragraphs):
+            part = target['body'][index] if target else None
+            if part and part['status'] == 'mixed':
+                for line, pitch in zip(segment_plans['mixedRuns'], segment_plans['pitches']):
+                    x = 96
+                    for run in line:
+                        color = RUST if run['status'] == 'english-hold' else INK
+                        draw.text((x, y), run['text'], font=F_PAIR_BODY, fill=color)
+                        x += draw.textlength(run['text'], font=F_PAIR_BODY)
+                    y += pitch
+                y += 8
+                continue
+            for segment_index, segment_plan in enumerate(segment_plans):
+                if part and part['status'] == 'mixed':
+                    status = part['segments'][segment_index]['status']
+                else:
+                    status = part['status'] if part else None
+                color = RUST if status == 'english-hold' else INK
+                for line, pitch in zip(segment_plan['lines'], body_pitches(segment_plan['lines'])):
+                    draw.text((96, y), line, font=F_PAIR_BODY, fill=color)
+                    y += pitch
+                y += 8
+            y += 4
+        if supplemental and supplemental_plan:
+            y += 24
+            for line in supplemental_plan['labelLines']:
+                draw.text((96, y), line, font=F_PAIR_LABEL, fill=AMBER)
+                y += 54
+            y += 8
+            for line, pitch in zip(supplemental_plan['textLines'], body_pitches(supplemental_plan['textLines'])):
+                draw.text((96, y), line, font=F_PAIR_BODY, fill=INK)
+                y += pitch
 
     if cfg.get('validateOnly'):
         print('  validated %d source-paired slides; no images written' % len(PAIRED))
@@ -428,7 +557,9 @@ if PAIRED:
         raise ValueError('paired draft output directory must be empty to avoid stale slides')
     os.makedirs(cfg['outDir'], exist_ok=True)
     for pair, source_image, (target_plan, source_plan, held) in zip(PAIRED, cfg['pairedSourceSlides'], paired_plans):
-        image = Image.new('RGB', (W, H), PAPER)
+        target_extra = target_plan[2]
+        source_extra = source_plan[2]
+        image = Image.new('RGB', (W, H + target_extra + source_extra), PAPER)
         draw = ImageDraw.Draw(image)
         draw.rounded_rectangle([64, 40, W - 64, 175], radius=20, fill=RUST)
         draw.text((96, 75), PAIRED_LANGUAGE + ' AI DRAFT / NOT REVIEWED', font=F_PAIR_STATUS, fill=(255, 255, 255))
@@ -437,18 +568,29 @@ if PAIRED:
         draw.text((96, 220), art_label, font=F_PAIR_LABEL, fill=AMBER)
         with Image.open(source_image) as original:
             original = original.convert('RGB')
-            original.thumbnail((1280, 720), Image.Resampling.LANCZOS)
+            if not PAIRED_NATIVE_SOURCE:
+                original.thumbnail((1280, 720), Image.Resampling.LANCZOS)
             image.paste(original, ((W - original.width) // 2, 290))
         target = pair['target']
-        target_heading = pair['english']['heading'] if target['heading']['status'] == 'english-hold' else target['heading']['text']
-        target_body = [(source if part['status'] == 'english-hold' else part['text'])
-                       for source, part in zip(pair['english']['body'], target['body'])]
+        target_heading = paired_heading_text(pair)
+        target_body = []
+        for source, part in zip(pair['english']['body'], target['body']):
+            if part['status'] == 'mixed':
+                target_body.append([{
+                    'status': segment['status'],
+                    'text': segment['sourceEnglish'] if segment['status'] == 'english-hold' else segment['text'],
+                } for segment in part['segments']])
+            else:
+                target_body.append(source if part['status'] == 'english-hold' else part['text'])
         draw_panel(draw, PAIRED_LANGUAGE + ' · RUST TEXT = ENGLISH HOLD' if held else PAIRED_LANGUAGE + ' · AI DRAFT',
-                   target_heading, target_body, 1070, 3060, target_plan, target)
-        draw_panel(draw, 'ENGLISH SOURCE · EXACT NARRATION', pair['english']['heading'],
-                   pair['english']['body'], 3090, 5080, source_plan)
-        draw.text((96, 5220), '%d / %d' % (pair['n'], len(PAIRED)), font=F_PAIR_LABEL, fill=GREEN)
-        draw.text((W - 96, 5220), 'IMBEWU FIELD · STUDY DRAFT', font=F_PAIR_LABEL, fill=GREEN, anchor='ra')
+                   target_heading, target_body, PAIRED_TARGET_TOP, PAIRED_TARGET_BOTTOM + target_extra,
+                   target_plan, target)
+        draw_panel(draw, 'ENGLISH SOURCE · EXACT TEXT', pair['english']['heading'],
+                   pair['english']['body'], PAIRED_SOURCE_TOP + target_extra,
+                   PAIRED_SOURCE_BOTTOM + target_extra + source_extra, source_plan,
+                   supplemental=pair.get('supplementalImageCue'))
+        draw.text((96, PAIRED_FOOTER_Y + target_extra + source_extra), '%d / %d' % (pair['n'], cfg.get('pairedTotalSlides') or len(PAIRED)), font=F_PAIR_LABEL, fill=GREEN)
+        draw.text((W - 96, PAIRED_FOOTER_Y + target_extra + source_extra), 'IMBEWU FIELD · STUDY DRAFT', font=F_PAIR_LABEL, fill=GREEN, anchor='ra')
         image.save(os.path.join(cfg['outDir'], 'slide-%02d.png' % pair['n']), 'PNG')
         print('  %2d  %s' % (pair['n'], pair['english']['heading'][:58]))
     sys.exit(0)

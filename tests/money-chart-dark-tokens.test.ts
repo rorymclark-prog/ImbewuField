@@ -39,7 +39,7 @@ test('CashflowChart and FinanceGraphs set SVG text fill via style, not a fill="{
       `${rel} still sets fill={FAINT} as an SVG presentation attribute — CSS variables there are unreliable across engines; use a style object instead`,
     );
     assert.ok(
-      /style=\{\{ fill: FAINT, fontFamily: 'monospace' \}\}/.test(src),
+      /style=\{\{ fill: FAINT, fontFamily: 'var\(--font-sans\)' \}\}/.test(src),
       `${rel} should carry the axis-label fill through a style object so the CSS variable resolves`,
     );
   }

@@ -182,8 +182,12 @@ test('every code the classifier can emit carries a description and a grower note
 
 test('the rainfall pattern bridge matches the planner\'s four patterns', () => {
   const lat = -29;
-  const summerRain = seasonal({ summerTemp: 24, winterTemp: 14, summerRain: 140, winterRain: 10, lat });
+  // Summer rain with a frosty (but not hard-frost) winter: the interior frost column.
+  const summerRain = seasonal({ summerTemp: 24, winterTemp: 9, summerRain: 140, winterRain: 10, lat });
   assert.equal(rainPatternFor(summerRain, classifyKoppen(summerRain)), 'summer');
+  // Summer rain with a light-frost-at-most winter: KZN DARD's warm-area column.
+  const warmSummerRain = seasonal({ summerTemp: 24, winterTemp: 14, summerRain: 140, winterRain: 10, lat });
+  assert.equal(rainPatternFor(warmSummerRain, classifyKoppen(warmSummerRain)), 'mild-frost');
 
   const winterRain = seasonal({ summerTemp: 24, winterTemp: 14, summerRain: 10, winterRain: 140, lat });
   assert.equal(rainPatternFor(winterRain, classifyKoppen(winterRain)), 'winter');
@@ -191,10 +195,12 @@ test('the rainfall pattern bridge matches the planner\'s four patterns', () => {
   const evenRain = seasonal({ summerTemp: 24, winterTemp: 16, summerRain: 100, winterRain: 100, lat });
   assert.equal(rainPatternFor(evenRain, classifyKoppen(evenRain)), 'all-year');
 
-  // A cold month implies frost nights, and the planner treats that as the binding
-  // constraint regardless of when the rain falls.
+  // A hard-frost winter decides the calendar whatever the rain timing: the frost-waiting
+  // 'summer' column — never the LIGHT-frost one (the pre-2026-09-27 inversion).
   const frosty = seasonal({ summerTemp: 22, winterTemp: 2, summerRain: 140, winterRain: 10, lat });
-  assert.equal(rainPatternFor(frosty, classifyKoppen(frosty)), 'mild-frost');
+  assert.equal(rainPatternFor(frosty, classifyKoppen(frosty)), 'summer');
+  const frostyWinterRain = seasonal({ summerTemp: 22, winterTemp: 2, summerRain: 10, winterRain: 140, lat });
+  assert.equal(rainPatternFor(frostyWinterRain, classifyKoppen(frostyWinterRain)), 'summer');
 
   // ...but a tropical climate is never called mild-frost, however the numbers fall.
   const tropical = flat(26, 200, -10);

@@ -1,0 +1,26 @@
+{
+  "packetId": "IMBEWU-ST-MARKET-L1-L2-REMAINING-ORDINARY-BACKCHECK-2026-10-03",
+  "checkedPacket": "/tmp/imbewu-st-market-remaining-ordinary-20261003.json",
+  "liveCheckoutHead": "5b6ab5d8823c9f5f9c195d170792b34fdc898453",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-st-market-community.ts",
+  "verification": {
+    "languageCode": "st",
+    "moduleAndLessonIds": "Market Community L1 and L2 match the current canonical lesson IDs.",
+    "canonicalSource": "Packet source paragraphs match the live English lesson paragraphs in order.",
+    "currentRegistry": "Packet currentRegionalParagraphs exactly match the live Sesotho body arrays at this checkout.",
+    "arrayLengths": "L1 17/17/17 and L2 12/12/12 source/current/candidate paragraphs.",
+    "existingLocalizedText": "L1 paragraphs 0–4, 6–7, 10, 12, and 14 remain byte-for-byte as current; L2 all 12 paragraphs remain unchanged."
+  },
+  "candidateReview": [
+    {"lessonId":"market-community-l1","paragraphIndex":5,"result":"Accept meaning. The candidate keeps the four source categories explicit: food kept at home, produce sold, gifted, and composted. The category labels remain English."},
+    {"lessonId":"market-community-l1","paragraphIndex":8,"result":"Accept meaning. It preserves both questions and keeps best yield per bed and the return-per-hour comparison explicit in English."},
+    {"lessonId":"market-community-l1","paragraphIndex":9,"result":"Accept meaning. It preserves the comparison of seeds, water and compost used against what crops return."},
+    {"lessonId":"market-community-l1","paragraphIndex":11,"result":"Accept meaning. The before-price and record/include framing is localized; all production, packing, selling, labour and transport cost categories remain present."},
+    {"lessonId":"market-community-l1","paragraphIndex":13,"result":"Accept meaning. Review, next planting and actual-customer-check framing are localized. The exact higher-asking-price/no-guaranteed-sale limitation remains English."},
+    {"lessonId":"market-community-l1","paragraphIndex":15,"result":"Accept meaning. Local suitability and working backward from the needed harvest are retained; planting conditions and expected time to harvest stay exact English."},
+    {"lessonId":"market-community-l1","paragraphIndex":16,"result":"Accept meaning. It preserves the may-not-work-here comparison and backup plan, with all three failure triggers (rain, water, crops) unchanged."}
+  ],
+  "unchangedL2": "The packet proposes no L2 change. Its current mixed Sesotho already localizes ordinary framing and preserves exact business, compliance, customer-agreement and supply conditions. The unchanged candidate array equals current registry text.",
+  "limits": "This is an independent semantic/source check only; it does not certify fluent naturalness or facilitator readiness."
+}

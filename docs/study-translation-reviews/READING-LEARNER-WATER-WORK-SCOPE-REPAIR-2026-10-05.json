@@ -1,0 +1,40 @@
+{
+  "audit": "Reading learner water-work scope qualifier",
+  "head": "ee62279c19b198c93c7bfe7943b0958e1cde87c0",
+  "readOnly": true,
+  "canonicalSourceSentence": "Choose any water works for the site and plan a safe route for excess water.",
+  "sharedRiskClauses": {
+    "poorlyPlacedContours": "can increase erosion",
+    "slowIntakeSoil": "can hold too much",
+    "safeOverflowRoute": "plan a safe route for excess water",
+    "assessment": "No changes recommended to the existing modal and safety clauses."
+  },
+  "languages": {
+    "st": {
+      "registry": "lib/course-translation-drafts-st-reading-landscape.ts",
+      "candidateSentence": "Kgetha mosebetsi ofe kapa ofe wa metsi o loketseng setsha mme o rale tsela e sireletsehileng ya metsi a mangata haholo.",
+      "finding": "Explicitly retains any (ofe kapa ofe), site suitability (o loketseng setsha), and safe route for excess water. No repair indicated.",
+      "testFile": "tests/course-translation-drafts-st-reading-landscape.test.ts"
+    },
+    "ve": {
+      "registry": "lib/course-translation-drafts-ve-reading-landscape.ts",
+      "candidateSentence": "Nangani mishumo ya maḓi u ya nga fhethu nahone ni pulane nḓila yo tsireledzeaho ya u bvisa maḓi a re manzhisa.",
+      "finding": "Keeps the site-specific selection idea (u ya nga fhethu) and the safe excess-water route, but does not explicitly retain the breadth qualifier any. The site-scoped sense is implicit. Recommend narrowly retaining the exact English phrase 'Choose any water works for the site' before the existing Tshivenda safe-route clause, without changing the surrounding localized paragraph.",
+      "testFile": "tests/course-translation-drafts-ve-reading-landscape.test.ts",
+      "currentGuardLine": 344,
+      "guardFinding": "Current assertion checks the site phrase and safe route, but does not require the source's any qualifier. After an authorized registry repair, require exact 'Choose any water works for the site' and the unchanged Tshivenda safe-route clause."
+    },
+    "ts": {
+      "registry": "lib/course-translation-drafts-ts.ts",
+      "candidateSentence": "Hlawula any water works for the site, kutani u kunguhata ndlela leyi hlayisekeke yo humesa mati lama taleke.",
+      "finding": "Already retains exact English 'any water works for the site' and localizes the planning verb and safe route. No repair indicated.",
+      "testFile": "tests/course-translation-drafts-ts.test.ts",
+      "currentGuardLine": 308
+    }
+  },
+  "recommendation": "Only the Tshivenda sentence appears to need a narrow explicit scope hold. Preserve all existing may/can wording, paragraph framing, and safe overflow route. No files were edited.",
+  "rootAppliedRepair": {
+    "before": "Nangani mishumo ya maḓi u ya nga fhethu",
+    "after": "Nangani any water works for the site"
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "base": "4e2f1078eaa1a2cd505cb293f13c4b0ada6b8625",
+  "assets": {
+    "/course-decks/reading-landscape/ve/slide-01.webp": {
+      "beforeSha256": "9fbdaf74d820aed35d26729daa47be8e397c17addba51b7ac1941451da3a6849",
+      "afterSha256": "9fbdaf74d820aed35d26729daa47be8e397c17addba51b7ac1941451da3a6849",
+      "beforeBytes": 267454,
+      "afterBytes": 267454,
+      "changed": false
+    },
+    "/course-decks/reading-landscape/ve/slide-02.webp": {
+      "beforeSha256": "818afcc081231561c8f1541fccfab4d4b333012880b6ce1d900954f5a8febc20",
+      "afterSha256": "818afcc081231561c8f1541fccfab4d4b333012880b6ce1d900954f5a8febc20",
+      "beforeBytes": 259786,
+      "afterBytes": 259786,
+      "changed": false
+    },
+    "/course-decks/reading-landscape/ve/slide-03.webp": {
+      "beforeSha256": "0bed481dac56e81bb023e7f97bbce11bc6622dcf94647509e19f96c3a59eef89",
+      "afterSha256": "0bed481dac56e81bb023e7f97bbce11bc6622dcf94647509e19f96c3a59eef89",
+      "beforeBytes": 249222,
+      "afterBytes": 249222,
+      "changed": false
+    },
+    "/course-decks/reading-landscape/ve/slide-04.webp": {
+      "beforeSha256": "776858cecf6eedf068c248881aab8c38e8ead16796516af021c5144dca181ba1",
+      "afterSha256": "776858cecf6eedf068c248881aab8c38e8ead16796516af021c5144dca181ba1",
+      "beforeBytes": 261798,
+      "afterBytes": 261798,
+      "changed": false
+    },
+    "/course-decks/reading-landscape/ve/slide-05.webp": {
+      "beforeSha256": "abde581b7804c2915e27b805fb90d40c96d308a8246c055ef5bda798c9726c2b",
+      "afterSha256": "abde581b7804c2915e27b805fb90d40c96d308a8246c055ef5bda798c9726c2b",
+      "beforeBytes": 194744,
+      "afterBytes": 194744,
+      "changed": false
+    },
+    "/course-decks/reading-landscape/ve/slide-06.webp": {
+      "beforeSha256": "ba58e946b512a65756b3da16ab4fb46935e9cf0d1cebdd52367c2b23f9386b86",
+      "afterSha256": "ba58e946b512a65756b3da16ab4fb46935e9cf0d1cebdd52367c2b23f9386b86",
+      "beforeBytes": 622838,
+      "afterBytes": 622838,
+      "changed": false
+    },
+    "/course-decks/reading-landscape/ve/slide-07.webp": {
+      "beforeSha256": "542c4b566cd8f6f16a77b2fdfb73c63d75a6e40b606033ed96a04ad19f0dfe47",
+      "afterSha256": "542c4b566cd8f6f16a77b2fdfb73c63d75a6e40b606033ed96a04ad19f0dfe47",
+      "beforeBytes": 292534,
+      "afterBytes": 292534,
+      "changed": false
+    },
+    "/course-decks/reading-landscape/ve/slide-08.webp": {
+      "beforeSha256": "482671a00bb5921f847c870ef84896426b1fe3cda5c70a51559c28e7dc455646",
+      "afterSha256": "482671a00bb5921f847c870ef84896426b1fe3cda5c70a51559c28e7dc455646",
+      "beforeBytes": 350196,
+      "afterBytes": 350196,
+      "changed": false
+    },
+    "/course-decks/reading-landscape/ve/slide-09.webp": {
+      "beforeSha256": "e4392a619cd9ef1521a69b105092be8ffcf0e9fc77e801bfbe7debc616f534ba",
+      "afterSha256": "e4392a619cd9ef1521a69b105092be8ffcf0e9fc77e801bfbe7debc616f534ba",
+      "beforeBytes": 185054,
+      "afterBytes": 185054,
+      "changed": false
+    },
+    "/course-decks/reading-landscape/ve/slide-10.webp": {
+      "beforeSha256": "c72d12db5b60d6b9a1135f3ec240ab74e90757f45cc960694842b6f2c2185366",
+      "afterSha256": "c72d12db5b60d6b9a1135f3ec240ab74e90757f45cc960694842b6f2c2185366",
+      "beforeBytes": 590562,
+      "afterBytes": 590562,
+      "changed": false
+    },
+    "/course-decks/reading-landscape/ve/slide-11.webp": {
+      "beforeSha256": "96d48148c9fba44a876b59f21ea07c216b73febfc5552d8a9bbcb3ff4e51de10",
+      "afterSha256": "96d48148c9fba44a876b59f21ea07c216b73febfc5552d8a9bbcb3ff4e51de10",
+      "beforeBytes": 209186,
+      "afterBytes": 209186,
+      "changed": false
+    },
+    "/course-decks/reading-landscape/ve/slide-12.webp": {
+      "beforeSha256": "64e9c9405fa997e9117efed5a873feac0dda91434462fad58c1ce35f27bbd231",
+      "afterSha256": "64e9c9405fa997e9117efed5a873feac0dda91434462fad58c1ce35f27bbd231",
+      "beforeBytes": 475656,
+      "afterBytes": 475656,
+      "changed": false
+    },
+    "/course-decks/reading-landscape/ve/slide-13.webp": {
+      "beforeSha256": "349690a45c6cc5f23ea1df32365e0764757c74c6273e41a9ce21eb6142b795a7",
+      "afterSha256": "349690a45c6cc5f23ea1df32365e0764757c74c6273e41a9ce21eb6142b795a7",
+      "beforeBytes": 193226,
+      "afterBytes": 193226,
+      "changed": false
+    },
+    "/course-decks/reading-landscape/ve/slide-14.webp": {
+      "beforeSha256": "7db0b4d2a34304a6ea2fca088e06ae3f375966a8fdf19df7a067609814e141e8",
+      "afterSha256": "5966a497ad12cb5e7d5dedf95b9a842912f88f9c4849e1018f7e44938e8d0d30",
+      "beforeBytes": 471954,
+      "afterBytes": 473972,
+      "changed": true
+    },
+    "/course-decks/reading-landscape/ve/slide-15.webp": {
+      "beforeSha256": "03143d8c2f56902c7477867ffac737979a3f0b819fd2fcee59b3ac5f7e30294d",
+      "afterSha256": "d3284617e12349d2dca3d86c61e4dc40652bac89aee762f7358e5fc94058a365",
+      "beforeBytes": 428172,
+      "afterBytes": 422634,
+      "changed": true
+    },
+    "/course-decks/reading-landscape/ve/slide-16.webp": {
+      "beforeSha256": "39505f9de57f802c75d53b394da5d09138d2cb51e60102749fd5264850e00f4f",
+      "afterSha256": "39505f9de57f802c75d53b394da5d09138d2cb51e60102749fd5264850e00f4f",
+      "beforeBytes": 289542,
+      "afterBytes": 289542,
+      "changed": false
+    },
+    "/course-decks/reading-landscape/ve/slide-17.webp": {
+      "beforeSha256": "efdb81dd1d7240d00c314bbbc0616172027c899071ea1378e383ceff4a09da3f",
+      "afterSha256": "efdb81dd1d7240d00c314bbbc0616172027c899071ea1378e383ceff4a09da3f",
+      "beforeBytes": 199666,
+      "afterBytes": 199666,
+      "changed": false
+    },
+    "/course-decks/reading-landscape/ve/slide-18.webp": {
+      "beforeSha256": "b82bb5e3a67f43eacdf64ebe33bfb52e573cf4cd081adcae1b867e513b4f6c5c",
+      "afterSha256": "b82bb5e3a67f43eacdf64ebe33bfb52e573cf4cd081adcae1b867e513b4f6c5c",
+      "beforeBytes": 591494,
+      "afterBytes": 591494,
+      "changed": false
+    },
+    "/course-decks/reading-landscape/ve/slide-19.webp": {
+      "beforeSha256": "ff88ec52d89eb80ccc853e82c218a26d3e413a770e6dbcb5420797674ce27422",
+      "afterSha256": "ff88ec52d89eb80ccc853e82c218a26d3e413a770e6dbcb5420797674ce27422",
+      "beforeBytes": 270550,
+      "afterBytes": 270550,
+      "changed": false
+    },
+    "/course-decks/reading-landscape/ve/slide-20.webp": {
+      "beforeSha256": "0b222bfad9bce7417f4a8ebd4155d49c312abfbdecba0d746792819e12b0bfa8",
+      "afterSha256": "0b222bfad9bce7417f4a8ebd4155d49c312abfbdecba0d746792819e12b0bfa8",
+      "beforeBytes": 689360,
+      "afterBytes": 689360,
+      "changed": false
+    },
+    "/course-decks/reading-landscape/ve/slide-21.webp": {
+      "beforeSha256": "a9bbffb804edb1f1615d4cedde1b0cd3758c973be293bcfec4a2efd9a2e60c81",
+      "afterSha256": "a9bbffb804edb1f1615d4cedde1b0cd3758c973be293bcfec4a2efd9a2e60c81",
+      "beforeBytes": 297858,
+      "afterBytes": 297858,
+      "changed": false
+    }
+  }
+}

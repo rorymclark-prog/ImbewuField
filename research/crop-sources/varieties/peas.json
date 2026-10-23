@@ -1,0 +1,125 @@
+{
+  "key": "peas",
+  "varieties": [
+    {
+      "name": "Cape Freezer",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Popular processing (freezing/canning/dehydration) cultivar",
+      "type": null,
+      "note": "No zone stated by the source; grouped only by end-use (processing vs fresh vs edible-podded), not by region.",
+      "evidence": [{ "quote": "For processing, popular cultivars include Cape Freezer, Combi, Dark Skinned Perfection, Greenfeast, Puget.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/green_peas.pdf", "page": 1, "doc": "GREEN PEAS, KZN DARD" }]
+    },
+    {
+      "name": "Combi",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Popular processing cultivar",
+      "type": null,
+      "note": null,
+      "evidence": [{ "quote": "For processing, popular cultivars include Cape Freezer, Combi, Dark Skinned Perfection, Greenfeast, Puget.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/green_peas.pdf", "page": 1, "doc": "GREEN PEAS, KZN DARD" }]
+    },
+    {
+      "name": "Dark Skinned Perfection",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Popular processing cultivar",
+      "type": null,
+      "note": null,
+      "evidence": [{ "quote": "For processing, popular cultivars include Cape Freezer, Combi, Dark Skinned Perfection, Greenfeast, Puget.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/green_peas.pdf", "page": 1, "doc": "GREEN PEAS, KZN DARD" }]
+    },
+    {
+      "name": "Greenfeast",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Used both as a processing cultivar and as a main fresh garden pea",
+      "type": null,
+      "note": "The only cultivar the source lists in both the processing group and the fresh-garden-pea group.",
+      "evidence": [
+        { "quote": "For processing, popular cultivars include Cape Freezer, Combi, Dark Skinned Perfection, Greenfeast, Puget.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/green_peas.pdf", "page": 1, "doc": "GREEN PEAS, KZN DARD" },
+        { "quote": "Greenfeast, Kelvedon Wonder and Onward are the main fresh garden peas.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/green_peas.pdf", "page": 1, "doc": "GREEN PEAS, KZN DARD" }
+      ]
+    },
+    {
+      "name": "Puget",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Popular processing cultivar",
+      "type": null,
+      "note": null,
+      "evidence": [{ "quote": "For processing, popular cultivars include Cape Freezer, Combi, Dark Skinned Perfection, Greenfeast, Puget.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/green_peas.pdf", "page": 1, "doc": "GREEN PEAS, KZN DARD" }]
+    },
+    {
+      "name": "Kelvedon Wonder",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Main fresh garden pea; young tender seeds eaten",
+      "type": null,
+      "note": null,
+      "evidence": [{ "quote": "Greenfeast, Kelvedon Wonder and Onward are the main fresh garden peas. Only the young, tender seeds are eaten.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/green_peas.pdf", "page": 1, "doc": "GREEN PEAS, KZN DARD" }]
+    },
+    {
+      "name": "Onward",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Main fresh garden pea",
+      "type": null,
+      "note": null,
+      "evidence": [{ "quote": "Greenfeast, Kelvedon Wonder and Onward are the main fresh garden peas.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/green_peas.pdf", "page": 1, "doc": "GREEN PEAS, KZN DARD" }]
+    },
+    {
+      "name": "Oregon Sugar Pod II",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Edible-podded (mange tout) type; harvested fully sized but before seeds swell (snow pea use)",
+      "type": null,
+      "note": null,
+      "evidence": [{ "quote": "Edible podded peas (mange tout): Oregon Sugar Pod II is sometimes grown for its edible pods, and is harvested when the pods are fully sized, but before the young seeds start swelling (snow peas).", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/green_peas.pdf", "page": 1, "doc": "GREEN PEAS, KZN DARD" }]
+    },
+    {
+      "name": "Sugar Daddy",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Edible-podded type; harvested after seeds have swollen (sugar pea use)",
+      "type": null,
+      "note": null,
+      "evidence": [{ "quote": "Sugar Daddy is also grown for its edible pod, but is harvested when the seeds have swollen (sugar peas).", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/green_peas.pdf", "page": 1, "doc": "GREEN PEAS, KZN DARD" }]
+    }
+  ],
+  "zoneAdvice": {
+    "highveld": {
+      "text": "Cold areas with late frosts: plant in July, so flowering starts after frost risk passes — flowers and young pods are frost-sensitive even though mature plants tolerate cold.",
+      "evidence": [{ "quote": "In cold areas which experience late frosts, planting in July is usually best.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/green_peas.pdf", "page": 2, "doc": "GREEN PEAS, KZN DARD" }]
+    },
+    "high-mountain": {
+      "text": "Treated as the same 'cold areas, late frosts' case as highveld (July planting) — not separately confirmed for this zone.",
+      "evidence": []
+    },
+    "midlands-mistbelt": {
+      "text": "Falls under the source's general 'most other areas' guidance: plant May-June.",
+      "evidence": [{ "quote": "In most other areas, planting is done from May to June.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/green_peas.pdf", "page": 2, "doc": "GREEN PEAS, KZN DARD" }]
+    },
+    "western-cape": {
+      "text": "Matches the source's 'few selected areas with cool autumns, winters and early summers, light or no frost' — planting can stretch March-July. This is this pass's zone assignment (winter-rainfall Mediterranean fits that climate description); the source itself names no province.",
+      "evidence": [{ "quote": "In a few selected areas, with cool autumns, winters and early summers, and which experience only light or no frosts, planting may stretch from March to July.", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/green_peas.pdf", "page": 2, "doc": "GREEN PEAS, KZN DARD" }]
+    },
+    "southern-cape": {
+      "text": "Same inferred fit as western-cape (mild, light/no-frost climate) — not independently confirmed for this zone by name.",
+      "evidence": []
+    }
+  },
+  "gaps": [
+    "No cultivar is tied to a named zone anywhere in the source — cultivars are grouped only by end-use (processing / fresh / edible-podded), so all 'zones' arrays above are empty rather than guessed.",
+    "No sourced recommendation at all for lowveld-bushveld, subtropical-coast or karoo-arid — peas are described as a cool-season crop throughout and the source does not address hot/frost-free or arid production.",
+    "Length-of-crop (70-120 days depending on temperature) and yield (1.5-10 t/ha depending on market/type) are sourced but not broken out by zone or cultivar."
+  ]
+}

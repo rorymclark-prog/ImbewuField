@@ -1,0 +1,1729 @@
+{
+  "title": "Reading Landscape slides 3–14 source-bound next learner deck batch",
+  "baseHead": "d4bc29f88de5921e9aa770277dc6f9e962131390",
+  "scope": {
+    "targetFields": 20,
+    "uniqueFrames": 17,
+    "languageCodes": [
+      "st",
+      "ve",
+      "ts"
+    ]
+  },
+  "candidateFields": [
+    {
+      "language": "ve",
+      "slide": 3,
+      "bodyIndex": 0,
+      "sourceEnglish": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateReason": "Root accepted translating only the end-of-module capability and follow-water lead-in; retain the full source phrase naming the land-wide scope and exit location because localization could shift either meaning.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 3,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateText": "Musi modulu uyu u tshi fhela, ni ḓo kona u tevhela maḓi across your land and find where it leaves.",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "By the end of this module, you will be able to follow water ",
+          "status": "draft",
+          "text": "Musi modulu uyu u tshi fhela, ni ḓo kona u tevhela maḓi "
+        },
+        {
+          "sourceEnglish": "across your land and find where it leaves.",
+          "status": "english-hold"
+        }
+      ],
+      "independentRepair": "Root accepted narrower mixed scope on 2026-10-03; only lead-in translated, land-wide scope and exit clause held exactly."
+    },
+    {
+      "language": "ts",
+      "slide": 3,
+      "bodyIndex": 0,
+      "sourceEnglish": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateReason": "Root accepted translating only the end-of-module capability and follow-water lead-in; retain the full source phrase naming the land-wide scope and exit location because localization could shift either meaning.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 3,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateText": "Loko modula lowu wu hela, u ta kota ku landzelela mati across your land and find where it leaves.",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "By the end of this module, you will be able to follow water ",
+          "status": "draft",
+          "text": "Loko modula lowu wu hela, u ta kota ku landzelela mati "
+        },
+        {
+          "sourceEnglish": "across your land and find where it leaves.",
+          "status": "english-hold"
+        }
+      ],
+      "independentRepair": "Root accepted narrower mixed scope on 2026-10-03; only lead-in translated, land-wide scope and exit clause held exactly."
+    },
+    {
+      "language": "st",
+      "slide": 4,
+      "bodyIndex": 1,
+      "sourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateReason": "Localize only the safe-afterward walk instruction using the exact matching current resolver sentence; keep the heavy-rain safety warning and water-feature/property checklist exact.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 4,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Watch from a safe place during heavy rain. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "When it is safe afterward, walk your land. ",
+          "status": "draft",
+          "text": "Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. "
+        },
+        {
+          "sourceEnglish": "Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Watch from a safe place during heavy rain. Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "resolverReuse": {
+        "lessonId": "reading-landscape-l1",
+        "canonicalBodyIndex": 0,
+        "canonicalParagraphEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+        "resolverParagraphText": "Pele o kotula metsi, ithute moo a seng a ntse a ya teng. Shebella o le sebakeng se sireletsehileng nakong ya pula e matla. Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. Batla dikotopo tse nyane (rills), dibaka tseo metsi a phallelang ho tsona a hasana, moo a emang teng, le moo a tlohang setsheng sa hao. Metsi a mang a mangata haholo a hloka tsela e sireletsehileng ya ho tswa e le hore a se ke a baka tshenyo.",
+        "exactEnglishClause": "When it is safe afterward, walk your land.",
+        "reuseType": "sentence-level source span within current resolver paragraph",
+        "resolverCandidateText": "Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. "
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "bodyIndex": 1,
+      "sourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateReason": "Localize only the safe-afterward walk instruction using the exact matching current resolver sentence; keep the heavy-rain safety warning and water-feature/property checklist exact.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 4,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Watch from a safe place during heavy rain. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "When it is safe afterward, walk your land. ",
+          "status": "draft",
+          "text": "Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. "
+        },
+        {
+          "sourceEnglish": "Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Watch from a safe place during heavy rain. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "resolverReuse": {
+        "lessonId": "reading-landscape-l1",
+        "canonicalBodyIndex": 0,
+        "canonicalParagraphEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+        "resolverParagraphText": "Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.",
+        "exactEnglishClause": "When it is safe afterward, walk your land.",
+        "reuseType": "sentence-level source span within current resolver paragraph",
+        "resolverCandidateText": "Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. "
+      }
+    },
+    {
+      "language": "st",
+      "slide": 4,
+      "bodyIndex": 2,
+      "sourceEnglish": "Some excess water needs a safe route away so it does not cause damage.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateReason": "Exact sentence-level reuse from the current learner resolver; retains excess water, safe route away, and the no-damage purpose.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 4,
+        "pairedEnglishBodyIndex": 2,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateText": "Metsi a mang a mangata haholo a hloka tsela e sireletsehileng ya ho tswa e le hore a se ke a baka tshenyo.",
+      "resolverReuse": {
+        "lessonId": "reading-landscape-l1",
+        "canonicalBodyIndex": 0,
+        "canonicalParagraphEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+        "resolverParagraphText": "Pele o kotula metsi, ithute moo a seng a ntse a ya teng. Shebella o le sebakeng se sireletsehileng nakong ya pula e matla. Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. Batla dikotopo tse nyane (rills), dibaka tseo metsi a phallelang ho tsona a hasana, moo a emang teng, le moo a tlohang setsheng sa hao. Metsi a mang a mangata haholo a hloka tsela e sireletsehileng ya ho tswa e le hore a se ke a baka tshenyo.",
+        "exactEnglishClause": "Some excess water needs a safe route away so it does not cause damage.",
+        "reuseType": "sentence-level source span within current resolver paragraph",
+        "resolverCandidateText": "Metsi a mang a mangata haholo a hloka tsela e sireletsehileng ya ho tswa e le hore a se ke a baka tshenyo."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "bodyIndex": 2,
+      "sourceEnglish": "Some excess water needs a safe route away so it does not cause damage.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateReason": "Exact sentence-level reuse from the current learner resolver; retains excess water, safe route away, and the no-damage purpose.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 4,
+        "pairedEnglishBodyIndex": 2,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateText": "Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.",
+      "resolverReuse": {
+        "lessonId": "reading-landscape-l1",
+        "canonicalBodyIndex": 0,
+        "canonicalParagraphEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+        "resolverParagraphText": "Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Sedzani rills, hune maḓi a phaḓaladzana hone (fans out), hune a kuvhangana hone (ponds), na hune a bva hone kha your property. Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.",
+        "exactEnglishClause": "Some excess water needs a safe route away so it does not cause damage.",
+        "reuseType": "sentence-level source span within current resolver paragraph",
+        "resolverCandidateText": "Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "bodyIndex": 2,
+      "sourceEnglish": "Some excess water needs a safe route away so it does not cause damage.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateReason": "Independent review found the candidate could lose the away-direction of the safe route. Translate only the current resolver prefix and retain the exact source clause about the safe route away and preventing damage.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 4,
+        "pairedEnglishBodyIndex": 2,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateText": "Mati man'wana lama taleke ma lava a safe route away so it does not cause damage.",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Some excess water needs ",
+          "status": "draft",
+          "text": "Mati man'wana lama taleke ma lava "
+        },
+        {
+          "sourceEnglish": "a safe route away so it does not cause damage.",
+          "status": "english-hold"
+        }
+      ],
+      "independentRepair": "2026-10-03: narrowed translation to keep the uncertain source-scope/direction phrase exact in English."
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "bodyIndex": 1,
+      "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateReason": "Reuse the current resolver wording for the exact two source sentences; it makes no slope placement prescription and directs the learner to observe water movement.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 7,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateText": "Ha ho na molao o le mong wa sebaka bakeng sa letswapo le leng le le leng. Hlokomela moo metsi a tsamayang le ho bokellana teng.",
+      "resolverReuse": {
+        "lessonId": "reading-landscape-l1",
+        "canonicalBodyIndex": 2,
+        "canonicalParagraphEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+        "exactEnglishClauses": [
+          "There is no one placement rule for every slope.",
+          "Observe where water moves and gathers."
+        ],
+        "resolverParagraphText": "Ha ho na molao o le mong wa sebaka bakeng sa letswapo le leng le le leng. Hlokomela moo metsi a tsamayang le ho bokellana teng. Di-contour tse entsweng hampe di ka eketsa kgoholeho ya mobu, mme mobu o monyang metsi butle o ka tshwara metsi a mangata haholo. Kgetha mosebetsi ofe kapa ofe wa metsi o loketseng setsha mme o rale tsela e sireletsehileng ya metsi a mangata haholo.",
+        "reuseType": "complete candidate source equals the exact first two source sentences; both translated clauses taken in order from current resolver paragraph",
+        "resolverCandidateText": "Ha ho na molao o le mong wa sebaka bakeng sa letswapo le leng le le leng. Hlokomela moo metsi a tsamayang le ho bokellana teng."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 1,
+      "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateReason": "Reuse the current resolver wording for the exact two source sentences; it makes no slope placement prescription and directs the learner to observe water movement.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 7,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateText": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone.",
+      "resolverReuse": {
+        "lessonId": "reading-landscape-l1",
+        "canonicalBodyIndex": 2,
+        "canonicalParagraphEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+        "exactEnglishClauses": [
+          "There is no one placement rule for every slope.",
+          "Observe where water moves and gathers."
+        ],
+        "resolverParagraphText": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Nangani water works u ya nga tshitentsi nahone ni pulane nḓila yo tsireledzeaho ya maḓi a re manzhisa.",
+        "reuseType": "complete candidate source equals the exact first two source sentences; both translated clauses taken in order from current resolver paragraph",
+        "resolverCandidateText": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone."
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "bodyIndex": 1,
+      "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateReason": "Reuse the current resolver wording for the exact two source sentences; it makes no slope placement prescription and directs the learner to observe water movement.",
+      "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedRecordN": 7,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "candidateText": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona.",
+      "resolverReuse": {
+        "lessonId": "reading-landscape-l1",
+        "canonicalBodyIndex": 2,
+        "canonicalParagraphEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+        "exactEnglishClauses": [
+          "There is no one placement rule for every slope.",
+          "Observe where water moves and gathers."
+        ],
+        "resolverParagraphText": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+        "reuseType": "complete candidate source equals the exact first two source sentences; both translated clauses taken in order from current resolver paragraph",
+        "resolverCandidateText": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona."
+      }
+    },
+    {
+      "language": "st",
+      "slide": 8,
+      "bodyIndex": 0,
+      "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "In much of South Africa, especially in winter, ",
+          "status": "draft",
+          "text": "Dikarolong tse ngata tsa South Africa, haholo mariha, "
+        },
+        {
+          "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Dikarolong tse ngata tsa South Africa, haholo mariha, the sun is to the north. Its path changes with the season and your location.",
+      "sourceMarkdownSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedSlideN": 8,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "reason": "Localize the ordinary observation/framing language while retaining source-specific directional, seasonal, wind-risk, or slope claims exactly in English where translation could alter technical meaning. Draft remains unreviewed.",
+      "currentResolverEvidence": {
+        "lessonId": "reading-landscape-l2",
+        "canonicalBodyIndex": 0,
+        "exactEnglishClause": "In much of South Africa, especially in winter,",
+        "resolverTextClause": "Dikarolong tse ngata tsa South Africa, haholo mariha,"
+      },
+      "rootAcceptanceReason": "The localized introductory qualifier preserves “much of South Africa” and “especially in winter.” The northward sun and changing seasonal/location path remain in exact English; no translated directional claim was introduced."
+    },
+    {
+      "language": "st",
+      "slide": 12,
+      "bodyIndex": 0,
+      "sourceEnglish": "Wind can damage crops on a smallholding.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Wind can damage crops on a smallholding.",
+          "status": "draft",
+          "text": "Moya o ka senya dijalo polasing e nyane."
+        }
+      ],
+      "candidateText": "Moya o ka senya dijalo polasing e nyane.",
+      "sourceMarkdownSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedSlideN": 12,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "reason": "Localize the ordinary observation/framing language while retaining source-specific directional, seasonal, wind-risk, or slope claims exactly in English where translation could alter technical meaning. Draft remains unreviewed.",
+      "currentResolverEvidence": {
+        "lessonId": "reading-landscape-l3",
+        "canonicalBodyIndex": 0,
+        "exactEnglishClause": "Wind can damage crops on a smallholding.",
+        "resolverTextClause": "Moya o ka senya dijalo polasing e nyane."
+      },
+      "rootAcceptanceReason": "The modal “can” is retained by ka/nga; damage, crops, and smallholding scope are present. VE keeps smallholding exact in English; ST and TS translate it as a small farm. This is a bounded ordinary-prose candidate."
+    },
+    {
+      "language": "st",
+      "slide": 12,
+      "bodyIndex": 1,
+      "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Walk the land on windy days. ",
+          "status": "draft",
+          "text": "Tsamaya lefatsheng matsatsing a nang le moya. "
+        },
+        {
+          "sourceEnglish": "Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Tsamaya lefatsheng matsatsing a nang le moya. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "sourceMarkdownSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedSlideN": 12,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "reason": "Localize the ordinary observation/framing language while retaining source-specific directional, seasonal, wind-risk, or slope claims exactly in English where translation could alter technical meaning. Draft remains unreviewed.",
+      "currentResolverEvidence": {
+        "lessonId": "reading-landscape-l3",
+        "canonicalBodyIndex": 0,
+        "exactEnglishClause": "Walk the land on windy days.",
+        "resolverTextClause": "Tsamaya lefatsheng matsatsing a nang le moya."
+      },
+      "rootAcceptanceReason": "Only “Walk the land on windy days” is translated; damaging-wind direction/strength variation by region/season/site ridges and gaps, recording where it comes from/what it affects, and checking local weather records before placement remain exact in source order. “Le fatshe” is broad land/ground but context of site observation bounds it; tentative machine check."
+    },
+    {
+      "language": "st",
+      "slide": 14,
+      "bodyIndex": 0,
+      "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "On a clear, still night, ",
+          "status": "draft",
+          "text": "Bosiu bo hlakileng, bo kgutsitseng, "
+        },
+        {
+          "sourceEnglish": "cold air can flow downhill and collect in low places.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " These places can be colder than nearby slopes.",
+          "status": "draft",
+          "text": " Dibaka tsena di ka bata ho feta matswapo a haufi."
+        }
+      ],
+      "candidateText": "Bosiu bo hlakileng, bo kgutsitseng, cold air can flow downhill and collect in low places. Dibaka tsena di ka bata ho feta matswapo a haufi.",
+      "sourceMarkdownSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedSlideN": 14,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "reason": "Localize the ordinary observation/framing language while retaining source-specific directional, seasonal, wind-risk, or slope claims exactly in English where translation could alter technical meaning. Draft remains unreviewed.",
+      "currentResolverEvidence": {
+        "lessonId": "reading-landscape-l3",
+        "canonicalBodyIndex": 1,
+        "exactEnglishClause": "On a clear, still night,",
+        "resolverTextClause": "Bosiu bo hlakileng, bo kgutsitseng,"
+      },
+      "rootAcceptanceReason": "The clear/still-night framing and “can be colder than nearby slopes” comparison are represented. Remove “haholo” (“very”) because it intensifies source without support. Keep exact English for cold-air downhill flow and low-place collection."
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 0,
+      "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "In much of South Africa, especially in winter, ",
+          "status": "draft",
+          "text": "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), "
+        },
+        {
+          "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), the sun is to the north. Its path changes with the season and your location.",
+      "sourceMarkdownSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedSlideN": 8,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "reason": "Localize the ordinary observation/framing language while retaining source-specific directional, seasonal, wind-risk, or slope claims exactly in English where translation could alter technical meaning. Draft remains unreviewed.",
+      "currentResolverEvidence": {
+        "lessonId": "reading-landscape-l2",
+        "canonicalBodyIndex": 0,
+        "exactEnglishClause": "In much of South Africa, especially in winter,",
+        "resolverTextClause": "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter),"
+      },
+      "rootAcceptanceReason": "The localized introductory qualifier preserves “much of South Africa” and “especially in winter.” The northward sun and changing seasonal/location path remain in exact English; no translated directional claim was introduced."
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "bodyIndex": 0,
+      "sourceEnglish": "Wind can damage crops on a smallholding.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Wind can damage crops on a smallholding.",
+          "status": "draft",
+          "text": "Muya u nga tshinyadza zwimela kha smallholding."
+        }
+      ],
+      "candidateText": "Muya u nga tshinyadza zwimela kha smallholding.",
+      "sourceMarkdownSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedSlideN": 12,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "reason": "Localize the ordinary observation/framing language while retaining source-specific directional, seasonal, wind-risk, or slope claims exactly in English where translation could alter technical meaning. Draft remains unreviewed.",
+      "currentResolverEvidence": {
+        "lessonId": "reading-landscape-l3",
+        "canonicalBodyIndex": 0,
+        "exactEnglishClause": "Wind can damage crops on a smallholding.",
+        "resolverTextClause": "Muya u nga tshinyadza zwimela kha smallholding."
+      },
+      "rootAcceptanceReason": "The modal “can” is retained by ka/nga; damage, crops, and smallholding scope are present. VE keeps smallholding exact in English; ST and TS translate it as a small farm. This is a bounded ordinary-prose candidate."
+    },
+    {
+      "language": "ve",
+      "slide": 14,
+      "bodyIndex": 0,
+      "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "On a clear, still night, ",
+          "status": "draft",
+          "text": "Vhusiku vhu sa na makole, hu si na muya, "
+        },
+        {
+          "sourceEnglish": "cold air can flow downhill and collect in low places.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " These places can be colder than nearby slopes.",
+          "status": "draft",
+          "text": " Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini."
+        }
+      ],
+      "candidateText": "Vhusiku vhu sa na makole, hu si na muya, cold air can flow downhill and collect in low places. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini.",
+      "sourceMarkdownSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedSlideN": 14,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "reason": "Localize the ordinary observation/framing language while retaining source-specific directional, seasonal, wind-risk, or slope claims exactly in English where translation could alter technical meaning. Draft remains unreviewed.",
+      "currentResolverEvidence": {
+        "lessonId": "reading-landscape-l3",
+        "canonicalBodyIndex": 1,
+        "exactEnglishClause": "On a clear, still night,",
+        "resolverTextClause": "Vhusiku vhu sa na makole, hu si na muya,"
+      },
+      "rootAcceptanceReason": "“Vhusiku vhu sa na makole, hu si na muya” conveys clear/still conditions. The cold-air flow-downhill/low-place mechanism remains exact English. The final translated clause preserves these places can be colder than nearby slopes; “can” remains potential."
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 0,
+      "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "In much of South Africa, especially in winter, ",
+          "status": "draft",
+          "text": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, "
+        },
+        {
+          "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, the sun is to the north. Its path changes with the season and your location.",
+      "sourceMarkdownSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedSlideN": 8,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "reason": "Localize the ordinary observation/framing language while retaining source-specific directional, seasonal, wind-risk, or slope claims exactly in English where translation could alter technical meaning. Draft remains unreviewed.",
+      "currentResolverEvidence": {
+        "lessonId": "reading-landscape-l2",
+        "canonicalBodyIndex": 0,
+        "exactEnglishClause": "In much of South Africa, especially in winter,",
+        "resolverTextClause": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika,"
+      },
+      "rootAcceptanceReason": "The localized introductory qualifier preserves “much of South Africa” and “especially in winter.” The northward sun and changing seasonal/location path remain in exact English; no translated directional claim was introduced."
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "bodyIndex": 0,
+      "sourceEnglish": "Wind can damage crops on a smallholding.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "draft",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Wind can damage crops on a smallholding.",
+          "status": "draft",
+          "text": "Moya wu nga onha swibyariwa eka purasi leritsongo."
+        }
+      ],
+      "candidateText": "Moya wu nga onha swibyariwa eka purasi leritsongo.",
+      "sourceMarkdownSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedSlideN": 12,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "reason": "Localize the ordinary observation/framing language while retaining source-specific directional, seasonal, wind-risk, or slope claims exactly in English where translation could alter technical meaning. Draft remains unreviewed.",
+      "currentResolverEvidence": {
+        "lessonId": "reading-landscape-l3",
+        "canonicalBodyIndex": 0,
+        "exactEnglishClause": "Wind can damage crops on a smallholding.",
+        "resolverTextClause": "Moya wu nga onha swibyariwa eka purasi leritsongo."
+      },
+      "rootAcceptanceReason": "The modal “can” is retained by ka/nga; damage, crops, and smallholding scope are present. VE keeps smallholding exact in English; ST and TS translate it as a small farm. This is a bounded ordinary-prose candidate."
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "bodyIndex": 0,
+      "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "On a clear, still night, ",
+          "status": "draft",
+          "text": "Loko ku ri vusiku byo basa, ku nga ri na moya, "
+        },
+        {
+          "sourceEnglish": "cold air can flow downhill and collect in low places.",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " These places can be colder than nearby slopes.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Loko ku ri vusiku byo basa, ku nga ri na moya, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "sourceMarkdownSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceBinding": {
+        "pairedSlideN": 14,
+        "pairedEnglishBodyIndex": 0,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "reason": "Localize the ordinary observation/framing language while retaining source-specific directional, seasonal, wind-risk, or slope claims exactly in English where translation could alter technical meaning. Draft remains unreviewed.",
+      "rootAcceptanceReason": "Candidate localizes clear/still-night framing and keeps the complete cold-air mechanism and comparative claim exact in English. This preserves direction, collection location and potential comparison without adding specificity."
+    }
+  ],
+  "additionalHeldFields": [
+    {
+      "language": "ve",
+      "slide": 12,
+      "bodyIndex": 1,
+      "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "sourceBinding": {
+        "pairedSlideN": 12,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "originalCandidateText": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Tshimbilani kha shango nga maḓuvha a re na muya. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "finalSegments": [
+        {
+          "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+          "status": "english-hold"
+        }
+      ],
+      "finalCandidateText": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "decision": "revise-to-exact-English-hold-for-windy-day-clause",
+      "independentBackTranslation": "“Shango” can mean country and may expand an ordinary site walk to the country. Preserve the whole source paragraph exactly; all conditions, observation, recording and pre-placement weather check stay in order.",
+      "exactEnglishSourceSegmentConcatenates": true,
+      "candidateRecompositionMatchesSegments": true,
+      "riskChecks": {
+        "seasonalScopePreserved": true,
+        "windModalityCanPreserved": true,
+        "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+        "coldAirDirectionAndLowCollectionExact": true,
+        "sourceOrderPreserved": true
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "bodyIndex": 1,
+      "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "sourceBinding": {
+        "pairedSlideN": 12,
+        "pairedEnglishBodyIndex": 1,
+        "exactMatchToCurrentMarkdown": true
+      },
+      "originalCandidateText": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Fambafamba eka misava hi masiku ya moya. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "finalSegments": [
+        {
+          "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+          "status": "english-hold"
+        }
+      ],
+      "finalCandidateText": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "decision": "revise-to-exact-English-hold-for-windy-day-clause",
+      "independentBackTranslation": "“Misava” can mean soil/ground/earth and may shift “walk the land” toward walking in/on soil. Preserve the whole source paragraph exactly; retain conditions, recording task, and weather-record check before placement.",
+      "exactEnglishSourceSegmentConcatenates": true,
+      "candidateRecompositionMatchesSegments": true,
+      "riskChecks": {
+        "seasonalScopePreserved": true,
+        "windModalityCanPreserved": true,
+        "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+        "coldAirDirectionAndLowCollectionExact": true,
+        "sourceOrderPreserved": true
+      }
+    }
+  ],
+  "independentChecks": [
+    {
+      "title": "Independent semantic review: Reading Landscape first water-observation block candidates",
+      "date": "2026-10-03",
+      "sourcePacket": "/tmp/imbewu-reading-landscape-deck-fuller-candidates-20261003.json",
+      "baseHead": "d4bc29f88de5921e9aa770277dc6f9e962131390",
+      "scope": {
+        "slideRange": [
+          3,
+          7
+        ],
+        "languageCodes": [
+          "st",
+          "ve",
+          "ts"
+        ],
+        "candidateFieldCount": 10,
+        "changedTargetsByLanguage": {
+          "st": 3,
+          "ve": 3,
+          "ts": 4
+        },
+        "coherentGroup": "learning outcome, safe field observation, and the no-single-placement/observe-water rule",
+        "repoEdits": 0,
+        "rendered": false
+      },
+      "sourceProvenance": {
+        "englishHash": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+        "pairedHashes": {
+          "docs/narration/reading-landscape.st.paired-draft.json": "d9422924d24574c57b927ac7cdb2fe584be1d9695d31df996d8213debbced2de",
+          "docs/narration/reading-landscape.ve.paired-draft.json": "751fe87b0ee28d5d4d079e8351efe20f02b06c1e5ac6802f055d85312fb27f7e",
+          "docs/narration/reading-landscape.ts.paired-draft.json": "b55b72b44df963f261386737a6e84909f6e8b76ea131850185035f6cb20945e5"
+        },
+        "resolverSourceHashes": {
+          "englishMarkdown": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "canonicalModule": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+          "currentResolverDraft-st": "c715838def50a0cea744281255f7a5c93cf7812d6e306aae86d63f1ba1ef0360",
+          "currentResolverDraft-ve": "5d7087f834eb2586557b133b40d826d2e0819f0bd67ae59cc09f822704c80b67",
+          "currentResolverDraft-ts": "4da845821ec081cd9d19ae94c67540fe2a4a9da34d84f9e544a51efc0b00a021"
+        },
+        "sourceSentenceBindingFromPacket": true,
+        "reviewMethod": "Clause-level back-translation against exact English source; checked safe timing, land/property scope, route-away direction, damage negation, ordered checklist, and no-single-placement-rule/no-prescription meaning."
+      },
+      "summary": {
+        "reviewedFields": 10,
+        "retainDraftCandidate": 7,
+        "repairedEnglishHolds": 3,
+        "repairs": {
+          "ve-slide3-body0": "exact English hold (land vs country scope)",
+          "ts-slide3-body0": "exact English hold (land vs soil/ground scope)",
+          "ts-slide4-body2": "exact English hold (away direction uncertain)"
+        }
+      },
+      "fields": [
+        {
+          "language": "ve",
+          "slide": 3,
+          "bodyIndex": 0,
+          "sourceEnglish": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "draft",
+          "candidateReason": "Ordinary learning outcome; preserve the future capability and the source destination where water leaves the land.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 3,
+            "pairedEnglishBodyIndex": 0,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateText": "Musi modulu uyu u tshi fhela, ni ḓo kona u tevhela maḓi kha shango ḽaṋu na u wana hune a bva hone.",
+          "independentDecision": "revise-to-exact-English-hold",
+          "recommendedText": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+          "independentBackTranslation": "“Shango” can be read as country; source “your land” is a local property/plot, not necessarily country. Retain source wording rather than guess at range. Future ability and destination are retained exactly.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        },
+        {
+          "language": "ts",
+          "slide": 3,
+          "bodyIndex": 0,
+          "sourceEnglish": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "draft",
+          "candidateReason": "Ordinary learning outcome; preserve the future capability and the source destination where water leaves the land.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 3,
+            "pairedEnglishBodyIndex": 0,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateText": "Loko modula lowu wu hela, u ta kota ku landzelela mati eka misava ya wena ni ku kuma laha ma humaka kona.",
+          "independentDecision": "revise-to-exact-English-hold",
+          "recommendedText": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+          "independentBackTranslation": "“Misava” can point to soil/earth/ground and may narrow or shift the source “your land.” Preserve exact English to retain future capability, across-land scope, and where water leaves.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        },
+        {
+          "language": "st",
+          "slide": 4,
+          "bodyIndex": 1,
+          "sourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "mixed",
+          "candidateReason": "Localize only the safe-afterward walk instruction using the exact matching current resolver sentence; keep the heavy-rain safety warning and water-feature/property checklist exact.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 4,
+            "pairedEnglishBodyIndex": 1,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Watch from a safe place during heavy rain. ",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": "When it is safe afterward, walk your land. ",
+              "status": "draft",
+              "text": "Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. "
+            },
+            {
+              "sourceEnglish": "Look for rills, places where water fans out, ponds, and where water leaves your property.",
+              "status": "english-hold"
+            }
+          ],
+          "candidateText": "Watch from a safe place during heavy rain. Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "resolverReuse": {
+            "lessonId": "reading-landscape-l1",
+            "canonicalBodyIndex": 0,
+            "canonicalParagraphEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+            "resolverParagraphText": "Pele o kotula metsi, ithute moo a seng a ntse a ya teng. Shebella o le sebakeng se sireletsehileng nakong ya pula e matla. Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. Batla dikotopo tse nyane (rills), dibaka tseo metsi a phallelang ho tsona a hasana, moo a emang teng, le moo a tlohang setsheng sa hao. Metsi a mang a mangata haholo a hloka tsela e sireletsehileng ya ho tswa e le hore a se ke a baka tshenyo.",
+            "exactEnglishClause": "When it is safe afterward, walk your land.",
+            "reuseType": "sentence-level source span within current resolver paragraph",
+            "resolverCandidateText": "Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. "
+          },
+          "independentDecision": "retain-mixed-candidate",
+          "recommendedText": "Watch from a safe place during heavy rain. Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "independentBackTranslation": "The localized sentence keeps the required later timing (“when safe afterward”) before walking. Rain-time safety and the whole observation checklist/property boundary remain exact English holds and in source order.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        },
+        {
+          "language": "ts",
+          "slide": 4,
+          "bodyIndex": 1,
+          "sourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "mixed",
+          "candidateReason": "Localize only the safe-afterward walk instruction using the exact matching current resolver sentence; keep the heavy-rain safety warning and water-feature/property checklist exact.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 4,
+            "pairedEnglishBodyIndex": 1,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateSegments": [
+            {
+              "sourceEnglish": "Watch from a safe place during heavy rain. ",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": "When it is safe afterward, walk your land. ",
+              "status": "draft",
+              "text": "Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. "
+            },
+            {
+              "sourceEnglish": "Look for rills, places where water fans out, ponds, and where water leaves your property.",
+              "status": "english-hold"
+            }
+          ],
+          "candidateText": "Watch from a safe place during heavy rain. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "resolverReuse": {
+            "lessonId": "reading-landscape-l1",
+            "canonicalBodyIndex": 0,
+            "canonicalParagraphEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+            "resolverParagraphText": "Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.",
+            "exactEnglishClause": "When it is safe afterward, walk your land.",
+            "reuseType": "sentence-level source span within current resolver paragraph",
+            "resolverCandidateText": "Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. "
+          },
+          "independentDecision": "retain-mixed-candidate",
+          "recommendedText": "Watch from a safe place during heavy rain. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+          "independentBackTranslation": "The localized sentence keeps the later safe timing before walking. Rain-time safety and complete checklist/property destination remain exact English holds in source order.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        },
+        {
+          "language": "st",
+          "slide": 4,
+          "bodyIndex": 2,
+          "sourceEnglish": "Some excess water needs a safe route away so it does not cause damage.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "draft",
+          "candidateReason": "Exact sentence-level reuse from the current learner resolver; retains excess water, safe route away, and the no-damage purpose.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 4,
+            "pairedEnglishBodyIndex": 2,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateText": "Metsi a mang a mangata haholo a hloka tsela e sireletsehileng ya ho tswa e le hore a se ke a baka tshenyo.",
+          "resolverReuse": {
+            "lessonId": "reading-landscape-l1",
+            "canonicalBodyIndex": 0,
+            "canonicalParagraphEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+            "resolverParagraphText": "Pele o kotula metsi, ithute moo a seng a ntse a ya teng. Shebella o le sebakeng se sireletsehileng nakong ya pula e matla. Ha ho se ho sireletsehile kamora moo, tsamaya lefatsheng la hao. Batla dikotopo tse nyane (rills), dibaka tseo metsi a phallelang ho tsona a hasana, moo a emang teng, le moo a tlohang setsheng sa hao. Metsi a mang a mangata haholo a hloka tsela e sireletsehileng ya ho tswa e le hore a se ke a baka tshenyo.",
+            "exactEnglishClause": "Some excess water needs a safe route away so it does not cause damage.",
+            "reuseType": "sentence-level source span within current resolver paragraph",
+            "resolverCandidateText": "Metsi a mang a mangata haholo a hloka tsela e sireletsehileng ya ho tswa e le hore a se ke a baka tshenyo."
+          },
+          "independentDecision": "retain-resolver-sentence-candidate",
+          "recommendedText": "Metsi a mang a mangata haholo a hloka tsela e sireletsehileng ya ho tswa e le hore a se ke a baka tshenyo.",
+          "independentBackTranslation": "“Metsi a mangata haholo” conveys excess water; “tsela e sireletsehileng ya ho tswa” conveys a safe route to exit; the final clause preserves the no-damage purpose. Whole source sentence remains present.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        },
+        {
+          "language": "ve",
+          "slide": 4,
+          "bodyIndex": 2,
+          "sourceEnglish": "Some excess water needs a safe route away so it does not cause damage.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "draft",
+          "candidateReason": "Exact sentence-level reuse from the current learner resolver; retains excess water, safe route away, and the no-damage purpose.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 4,
+            "pairedEnglishBodyIndex": 2,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateText": "Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.",
+          "resolverReuse": {
+            "lessonId": "reading-landscape-l1",
+            "canonicalBodyIndex": 0,
+            "canonicalParagraphEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+            "resolverParagraphText": "Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Sedzani rills, hune maḓi a phaḓaladzana hone (fans out), hune a kuvhangana hone (ponds), na hune a bva hone kha your property. Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.",
+            "exactEnglishClause": "Some excess water needs a safe route away so it does not cause damage.",
+            "reuseType": "sentence-level source span within current resolver paragraph",
+            "resolverCandidateText": "Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo."
+          },
+          "independentDecision": "retain-resolver-sentence-candidate",
+          "recommendedText": "Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.",
+          "independentBackTranslation": "“Maḓi maṅwe a re manzhisa” preserves some excess water; “nḓila yo tsireledzeaho ya u bva ngayo” denotes a safe way/route to exit; the no-damage result remains. Whole source sentence retained.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        },
+        {
+          "language": "ts",
+          "slide": 4,
+          "bodyIndex": 2,
+          "sourceEnglish": "Some excess water needs a safe route away so it does not cause damage.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "draft",
+          "candidateReason": "Exact sentence-level reuse from the current learner resolver; retains excess water, safe route away, and the no-damage purpose.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 4,
+            "pairedEnglishBodyIndex": 2,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateText": "Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.",
+          "resolverReuse": {
+            "lessonId": "reading-landscape-l1",
+            "canonicalBodyIndex": 0,
+            "canonicalParagraphEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+            "resolverParagraphText": "Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.",
+            "exactEnglishClause": "Some excess water needs a safe route away so it does not cause damage.",
+            "reuseType": "sentence-level source span within current resolver paragraph",
+            "resolverCandidateText": "Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo."
+          },
+          "independentDecision": "revise-to-exact-English-hold",
+          "recommendedText": "Some excess water needs a safe route away so it does not cause damage.",
+          "independentBackTranslation": "“Yo famba” reads as a way to travel/move and may omit that the route carries excess water away. The no-harm clause survives, but retain the exact English sentence to protect the away direction.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        },
+        {
+          "language": "st",
+          "slide": 7,
+          "bodyIndex": 1,
+          "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "draft",
+          "candidateReason": "Reuse the current resolver wording for the exact two source sentences; it makes no slope placement prescription and directs the learner to observe water movement.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 7,
+            "pairedEnglishBodyIndex": 1,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateText": "Ha ho na molao o le mong wa sebaka bakeng sa letswapo le leng le le leng. Hlokomela moo metsi a tsamayang le ho bokellana teng.",
+          "resolverReuse": {
+            "lessonId": "reading-landscape-l1",
+            "canonicalBodyIndex": 2,
+            "canonicalParagraphEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+            "exactEnglishClauses": [
+              "There is no one placement rule for every slope.",
+              "Observe where water moves and gathers."
+            ],
+            "resolverParagraphText": "Ha ho na molao o le mong wa sebaka bakeng sa letswapo le leng le le leng. Hlokomela moo metsi a tsamayang le ho bokellana teng. Di-contour tse entsweng hampe di ka eketsa kgoholeho ya mobu, mme mobu o monyang metsi butle o ka tshwara metsi a mangata haholo. Kgetha mosebetsi ofe kapa ofe wa metsi o loketseng setsha mme o rale tsela e sireletsehileng ya metsi a mangata haholo.",
+            "reuseType": "complete candidate source equals the exact first two source sentences; both translated clauses taken in order from current resolver paragraph",
+            "resolverCandidateText": "Ha ho na molao o le mong wa sebaka bakeng sa letswapo le leng le le leng. Hlokomela moo metsi a tsamayang le ho bokellana teng."
+          },
+          "independentDecision": "retain-resolver-two-sentence-candidate",
+          "recommendedText": "Ha ho na molao o le mong wa sebaka bakeng sa letswapo le leng le le leng. Hlokomela moo metsi a tsamayang le ho bokellana teng.",
+          "independentBackTranslation": "Both translated sentences preserve that there is no single placement rule for every slope and ask the learner to observe where water moves and gathers. No placement prescription is added.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        },
+        {
+          "language": "ve",
+          "slide": 7,
+          "bodyIndex": 1,
+          "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "draft",
+          "candidateReason": "Reuse the current resolver wording for the exact two source sentences; it makes no slope placement prescription and directs the learner to observe water movement.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 7,
+            "pairedEnglishBodyIndex": 1,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateText": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone.",
+          "resolverReuse": {
+            "lessonId": "reading-landscape-l1",
+            "canonicalBodyIndex": 2,
+            "canonicalParagraphEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+            "exactEnglishClauses": [
+              "There is no one placement rule for every slope.",
+              "Observe where water moves and gathers."
+            ],
+            "resolverParagraphText": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Nangani water works u ya nga tshitentsi nahone ni pulane nḓila yo tsireledzeaho ya maḓi a re manzhisa.",
+            "reuseType": "complete candidate source equals the exact first two source sentences; both translated clauses taken in order from current resolver paragraph",
+            "resolverCandidateText": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone."
+          },
+          "independentDecision": "retain-resolver-two-sentence-candidate",
+          "recommendedText": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone.",
+          "independentBackTranslation": "The wording preserves no one rule working for all slope sites and the instruction to observe where water moves and gathers. It does not add a placement prescription.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        },
+        {
+          "language": "ts",
+          "slide": 7,
+          "bodyIndex": 1,
+          "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers.",
+          "currentTarget": {
+            "status": "english-hold"
+          },
+          "candidateStatus": "draft",
+          "candidateReason": "Reuse the current resolver wording for the exact two source sentences; it makes no slope placement prescription and directs the learner to observe water movement.",
+          "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+          "sourceBinding": {
+            "pairedRecordN": 7,
+            "pairedEnglishBodyIndex": 1,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "candidateText": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona.",
+          "resolverReuse": {
+            "lessonId": "reading-landscape-l1",
+            "canonicalBodyIndex": 2,
+            "canonicalParagraphEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+            "exactEnglishClauses": [
+              "There is no one placement rule for every slope.",
+              "Observe where water moves and gathers."
+            ],
+            "resolverParagraphText": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+            "reuseType": "complete candidate source equals the exact first two source sentences; both translated clauses taken in order from current resolver paragraph",
+            "resolverCandidateText": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona."
+          },
+          "independentDecision": "retain-mixed-two-sentence-candidate",
+          "recommendedText": "A ku na placement rule yin’we ya slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona.",
+          "independentBackTranslation": "“Placement rule” and “slope” are preserved exactly in English; the negative universal rule remains, followed by localized observation of both water movement and gathering. No design instruction is added.",
+          "semanticRisk": "Medium: technical landform and water-flow phrasing is consequential; exact source wording is retained where direction or scope is uncertain."
+        }
+      ],
+      "limitations": [
+        "Machine semantic check only; not fluent/local farming approval.",
+        "Unreviewed localized text remains draft candidate for facilitator review after publication.",
+        "Source segments marked English hold remain byte-exact in the proposed recomposition.",
+        "No repository files, tests, or rendered assets were changed."
+      ]
+    },
+    {
+      "title": "Independent check of three repaired Reading Landscape fields",
+      "date": "2026-10-03",
+      "inputPacket": "/tmp/imbewu-reading-landscape-deck-three-repaired-candidates-20261003.json",
+      "sourceEnglishSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "sourceCommit": "d4bc29f88de5921e9aa770277dc6f9e962131390",
+      "checkedFields": 3,
+      "fields": [
+        {
+          "language": "ve",
+          "slide": 3,
+          "bodyIndex": 0,
+          "sourceEnglish": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+          "canonicalSourceBinding": {
+            "pairedRecordN": 3,
+            "pairedEnglishBodyIndex": 0,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "packetCandidateBeforeReview": "Musi modulu uyu u tshi fhela, ni ḓo kona u tevhela maḓi across your land na u wana hune a bva hone.",
+          "candidateAfterIndependentCheck": "Musi modulu uyu u tshi fhela, ni ḓo kona u tevhela maḓi across your land and find where it leaves.",
+          "candidateSegmentsAfterIndependentCheck": [
+            {
+              "sourceEnglish": "By the end of this module, you will be able to follow water ",
+              "status": "draft",
+              "text": "Musi modulu uyu u tshi fhela, ni ḓo kona u tevhela maḓi "
+            },
+            {
+              "sourceEnglish": "across your land",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " and find where it leaves.",
+              "status": "english-hold"
+            }
+          ],
+          "decision": "retain-mixed-after-second-narrowing",
+          "reason": "The translated frame preserves end-of-module timing and future capability, while “across your land” remains exact. “Hune a bva hone” may mean where water comes from/originates; the English destination clause avoids reversing or obscuring where water exits the plot.",
+          "status": "unreviewed machine semantic candidate; local grammar approval pending"
+        },
+        {
+          "language": "ts",
+          "slide": 3,
+          "bodyIndex": 0,
+          "sourceEnglish": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+          "canonicalSourceBinding": {
+            "pairedRecordN": 3,
+            "pairedEnglishBodyIndex": 0,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "packetCandidateBeforeReview": "Loko modula lowu wu hela, u ta kota ku landzelela mati across your land ni ku kuma laha ma humaka kona.",
+          "candidateAfterIndependentCheck": "Loko modula lowu wu hela, u ta kota ku landzelela mati across your land and find where it leaves.",
+          "candidateSegmentsAfterIndependentCheck": [
+            {
+              "sourceEnglish": "By the end of this module, you will be able to follow water ",
+              "status": "draft",
+              "text": "Loko modula lowu wu hela, u ta kota ku landzelela mati "
+            },
+            {
+              "sourceEnglish": "across your land",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " and find where it leaves.",
+              "status": "english-hold"
+            }
+          ],
+          "decision": "retain-mixed-after-second-narrowing",
+          "reason": "The translated frame preserves end-of-module timing and future capability. Keep “across your land” exact as scoped to a plot; “laha ma humaka kona” can read as where water comes from/originates, so retain exact English for the exit location.",
+          "status": "unreviewed machine semantic candidate; local grammar approval pending"
+        },
+        {
+          "language": "ts",
+          "slide": 4,
+          "bodyIndex": 2,
+          "sourceEnglish": "Some excess water needs a safe route away so it does not cause damage.",
+          "canonicalSourceBinding": {
+            "pairedRecordN": 4,
+            "pairedEnglishBodyIndex": 2,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "packetCandidateBeforeReview": "Mati man'wana lama taleke ma lava a safe route away so it does not cause damage.",
+          "candidateAfterIndependentCheck": "Mati man'wana lama taleke ma lava a safe route away so it does not cause damage.",
+          "candidateSegmentsAfterIndependentCheck": [
+            {
+              "sourceEnglish": "Some excess water ",
+              "status": "draft",
+              "text": "Mati man'wana lama taleke "
+            },
+            {
+              "sourceEnglish": "needs ",
+              "status": "draft",
+              "text": "ma lava "
+            },
+            {
+              "sourceEnglish": "a safe route away so it does not cause damage.",
+              "status": "english-hold"
+            }
+          ],
+          "decision": "retain-prefix-plus-exact-source-clause",
+          "reason": "The Xitsonga prefix conveys some plentiful/excess water needing a route; exact English keeps the required safe direction away and the no-damage result, avoiding the ambiguous “yo famba” (travel/move). This mixed construction is a semantic candidate only; local grammar remains unverified.",
+          "status": "unreviewed machine semantic candidate; local grammar approval pending"
+        }
+      ],
+      "summary": "VE and TS slide 3 body 0 keep “across your land” exact and now also keep “and find where it leaves” exact because the localized destination wording may invert exit and origin. TS slide 4 body 2 retains the exact safe-route-away and no-damage clause after a localized excess-water lead-in. Candidate punctuation/order follow source. This is a machine semantic check, not local-language approval.",
+      "limitations": [
+        "No repository changes.",
+        "Mixed-language grammar and farmer comprehension were not validated by a fluent speaker.",
+        "Source clause segmentation must concatenate in the original order."
+      ]
+    },
+    {
+      "title": "Independent semantic backcheck: Reading Landscape slides 8–14 candidates",
+      "date": "2026-10-04",
+      "inputPacket": "/tmp/imbewu-reading-landscape-slides8-14-candidates-20261003.json",
+      "sourceProvenance": {
+        "sourceCommit": "d4bc29f88de5921e9aa770277dc6f9e962131390",
+        "sourceMarkdownPath": "docs/narration/reading-landscape.en.md",
+        "sourceMarkdownSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+        "matchesPacketHash": true,
+        "sourceSegmentsMatchedPacketAssertions": {
+          "allCandidateEnglishExactlyMatchesPairedSource": true,
+          "allCandidateTargetFieldsWereEnglishHolds": true,
+          "allSegmentsConcatenateExactly": true,
+          "everyEnglishHoldIsVerbatimSource": true
+        }
+      },
+      "scope": {
+        "candidateFieldsReviewed": 12,
+        "languages": [
+          "st",
+          "ve",
+          "ts"
+        ],
+        "slides": [
+          8,
+          12,
+          14
+        ],
+        "repositoryFilesChanged": false
+      },
+      "summary": {
+        "acceptedAsCandidate": 10,
+        "revisedToExactEnglishHold": 2,
+        "repairTextAdjustment": 1,
+        "specificRepairs": [
+          "VE slide12 body1: exact English hold for site walk due shango land/country ambiguity",
+          "TS slide12 body1: exact English hold for site walk due misava soil/ground scope",
+          "ST slide14 body0: remove unsupported intensity word “haholo” from comparative clause"
+        ]
+      },
+      "fields": [
+        {
+          "language": "st",
+          "slide": 8,
+          "bodyIndex": 0,
+          "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+          "sourceBinding": {
+            "pairedSlideN": 8,
+            "pairedEnglishBodyIndex": 0,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "originalCandidateText": "Dikarolong tse ngata tsa South Africa, haholo mariha, the sun is to the north. Its path changes with the season and your location.",
+          "finalSegments": [
+            {
+              "sourceEnglish": "In much of South Africa, especially in winter, ",
+              "status": "draft",
+              "text": "Dikarolong tse ngata tsa South Africa, haholo mariha, "
+            },
+            {
+              "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
+              "status": "english-hold"
+            }
+          ],
+          "finalCandidateText": "Dikarolong tse ngata tsa South Africa, haholo mariha, the sun is to the north. Its path changes with the season and your location.",
+          "decision": "retain-candidate",
+          "independentBackTranslation": "The localized introductory qualifier preserves “much of South Africa” and “especially in winter.” The northward sun and changing seasonal/location path remain in exact English; no translated directional claim was introduced.",
+          "exactEnglishSourceSegmentConcatenates": true,
+          "candidateRecompositionMatchesSegments": true,
+          "riskChecks": {
+            "seasonalScopePreserved": true,
+            "windModalityCanPreserved": true,
+            "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+            "coldAirDirectionAndLowCollectionExact": true,
+            "sourceOrderPreserved": true
+          }
+        },
+        {
+          "language": "st",
+          "slide": 12,
+          "bodyIndex": 0,
+          "sourceEnglish": "Wind can damage crops on a smallholding.",
+          "sourceBinding": {
+            "pairedSlideN": 12,
+            "pairedEnglishBodyIndex": 0,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "originalCandidateText": "Moya o ka senya dijalo polasing e nyane.",
+          "finalSegments": [
+            {
+              "sourceEnglish": "Wind can damage crops on a smallholding.",
+              "status": "draft",
+              "text": "Moya o ka senya dijalo polasing e nyane."
+            }
+          ],
+          "finalCandidateText": "Moya o ka senya dijalo polasing e nyane.",
+          "decision": "retain-candidate",
+          "independentBackTranslation": "The modal “can” is retained by ka/nga; damage, crops, and smallholding scope are present. VE keeps smallholding exact in English; ST and TS translate it as a small farm. This is a bounded ordinary-prose candidate.",
+          "exactEnglishSourceSegmentConcatenates": true,
+          "candidateRecompositionMatchesSegments": true,
+          "riskChecks": {
+            "seasonalScopePreserved": true,
+            "windModalityCanPreserved": false,
+            "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+            "coldAirDirectionAndLowCollectionExact": true,
+            "sourceOrderPreserved": true
+          }
+        },
+        {
+          "language": "st",
+          "slide": 12,
+          "bodyIndex": 1,
+          "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+          "sourceBinding": {
+            "pairedSlideN": 12,
+            "pairedEnglishBodyIndex": 1,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "originalCandidateText": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Tsamaya lefatsheng matsatsing a nang le moya. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+          "finalSegments": [
+            {
+              "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. ",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": "Walk the land on windy days. ",
+              "status": "draft",
+              "text": "Tsamaya lefatsheng matsatsing a nang le moya. "
+            },
+            {
+              "sourceEnglish": "Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+              "status": "english-hold"
+            }
+          ],
+          "finalCandidateText": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Tsamaya lefatsheng matsatsing a nang le moya. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+          "decision": "retain-candidate",
+          "independentBackTranslation": "Only “Walk the land on windy days” is translated; damaging-wind direction/strength variation by region/season/site ridges and gaps, recording where it comes from/what it affects, and checking local weather records before placement remain exact in source order. “Le fatshe” is broad land/ground but context of site observation bounds it; tentative machine check.",
+          "exactEnglishSourceSegmentConcatenates": true,
+          "candidateRecompositionMatchesSegments": true,
+          "riskChecks": {
+            "seasonalScopePreserved": true,
+            "windModalityCanPreserved": true,
+            "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+            "coldAirDirectionAndLowCollectionExact": true,
+            "sourceOrderPreserved": true
+          }
+        },
+        {
+          "language": "st",
+          "slide": 14,
+          "bodyIndex": 0,
+          "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+          "sourceBinding": {
+            "pairedSlideN": 14,
+            "pairedEnglishBodyIndex": 0,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "originalCandidateText": "Bosiu bo hlakileng, bo kgutsitseng, cold air can flow downhill and collect in low places. Dibaka tsena di ka bata haholo ho feta matswapo a haufi.",
+          "finalSegments": [
+            {
+              "sourceEnglish": "On a clear, still night, ",
+              "status": "draft",
+              "text": "Bosiu bo hlakileng, bo kgutsitseng, "
+            },
+            {
+              "sourceEnglish": "cold air can flow downhill and collect in low places.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " These places can be colder than nearby slopes.",
+              "status": "draft",
+              "text": " Dibaka tsena di ka bata ho feta matswapo a haufi."
+            }
+          ],
+          "finalCandidateText": "Bosiu bo hlakileng, bo kgutsitseng, cold air can flow downhill and collect in low places. Dibaka tsena di ka bata ho feta matswapo a haufi.",
+          "decision": "retain-candidate",
+          "independentBackTranslation": "The clear/still-night framing and “can be colder than nearby slopes” comparison are represented. Remove “haholo” (“very”) because it intensifies source without support. Keep exact English for cold-air downhill flow and low-place collection.",
+          "exactEnglishSourceSegmentConcatenates": true,
+          "candidateRecompositionMatchesSegments": true,
+          "riskChecks": {
+            "seasonalScopePreserved": true,
+            "windModalityCanPreserved": true,
+            "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+            "coldAirDirectionAndLowCollectionExact": true,
+            "sourceOrderPreserved": true
+          }
+        },
+        {
+          "language": "ve",
+          "slide": 8,
+          "bodyIndex": 0,
+          "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+          "sourceBinding": {
+            "pairedSlideN": 8,
+            "pairedEnglishBodyIndex": 0,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "originalCandidateText": "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), the sun is to the north. Its path changes with the season and your location.",
+          "finalSegments": [
+            {
+              "sourceEnglish": "In much of South Africa, especially in winter, ",
+              "status": "draft",
+              "text": "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), "
+            },
+            {
+              "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
+              "status": "english-hold"
+            }
+          ],
+          "finalCandidateText": "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), the sun is to the north. Its path changes with the season and your location.",
+          "decision": "retain-candidate",
+          "independentBackTranslation": "The localized introductory qualifier preserves “much of South Africa” and “especially in winter.” The northward sun and changing seasonal/location path remain in exact English; no translated directional claim was introduced.",
+          "exactEnglishSourceSegmentConcatenates": true,
+          "candidateRecompositionMatchesSegments": true,
+          "riskChecks": {
+            "seasonalScopePreserved": true,
+            "windModalityCanPreserved": true,
+            "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+            "coldAirDirectionAndLowCollectionExact": true,
+            "sourceOrderPreserved": true
+          }
+        },
+        {
+          "language": "ve",
+          "slide": 12,
+          "bodyIndex": 0,
+          "sourceEnglish": "Wind can damage crops on a smallholding.",
+          "sourceBinding": {
+            "pairedSlideN": 12,
+            "pairedEnglishBodyIndex": 0,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "originalCandidateText": "Muya u nga tshinyadza zwimela kha smallholding.",
+          "finalSegments": [
+            {
+              "sourceEnglish": "Wind can damage crops on a smallholding.",
+              "status": "draft",
+              "text": "Muya u nga tshinyadza zwimela kha smallholding."
+            }
+          ],
+          "finalCandidateText": "Muya u nga tshinyadza zwimela kha smallholding.",
+          "decision": "retain-candidate",
+          "independentBackTranslation": "The modal “can” is retained by ka/nga; damage, crops, and smallholding scope are present. VE keeps smallholding exact in English; ST and TS translate it as a small farm. This is a bounded ordinary-prose candidate.",
+          "exactEnglishSourceSegmentConcatenates": true,
+          "candidateRecompositionMatchesSegments": true,
+          "riskChecks": {
+            "seasonalScopePreserved": true,
+            "windModalityCanPreserved": false,
+            "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+            "coldAirDirectionAndLowCollectionExact": true,
+            "sourceOrderPreserved": true
+          }
+        },
+        {
+          "language": "ve",
+          "slide": 12,
+          "bodyIndex": 1,
+          "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+          "sourceBinding": {
+            "pairedSlideN": 12,
+            "pairedEnglishBodyIndex": 1,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "originalCandidateText": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Tshimbilani kha shango nga maḓuvha a re na muya. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+          "finalSegments": [
+            {
+              "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+              "status": "english-hold"
+            }
+          ],
+          "finalCandidateText": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+          "decision": "revise-to-exact-English-hold-for-windy-day-clause",
+          "independentBackTranslation": "“Shango” can mean country and may expand an ordinary site walk to the country. Preserve the whole source paragraph exactly; all conditions, observation, recording and pre-placement weather check stay in order.",
+          "exactEnglishSourceSegmentConcatenates": true,
+          "candidateRecompositionMatchesSegments": true,
+          "riskChecks": {
+            "seasonalScopePreserved": true,
+            "windModalityCanPreserved": true,
+            "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+            "coldAirDirectionAndLowCollectionExact": true,
+            "sourceOrderPreserved": true
+          }
+        },
+        {
+          "language": "ve",
+          "slide": 14,
+          "bodyIndex": 0,
+          "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+          "sourceBinding": {
+            "pairedSlideN": 14,
+            "pairedEnglishBodyIndex": 0,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "originalCandidateText": "Vhusiku vhu sa na makole, hu si na muya, cold air can flow downhill and collect in low places. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini.",
+          "finalSegments": [
+            {
+              "sourceEnglish": "On a clear, still night, ",
+              "status": "draft",
+              "text": "Vhusiku vhu sa na makole, hu si na muya, "
+            },
+            {
+              "sourceEnglish": "cold air can flow downhill and collect in low places.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " These places can be colder than nearby slopes.",
+              "status": "draft",
+              "text": " Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini."
+            }
+          ],
+          "finalCandidateText": "Vhusiku vhu sa na makole, hu si na muya, cold air can flow downhill and collect in low places. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini.",
+          "decision": "retain-candidate",
+          "independentBackTranslation": "“Vhusiku vhu sa na makole, hu si na muya” conveys clear/still conditions. The cold-air flow-downhill/low-place mechanism remains exact English. The final translated clause preserves these places can be colder than nearby slopes; “can” remains potential.",
+          "exactEnglishSourceSegmentConcatenates": true,
+          "candidateRecompositionMatchesSegments": true,
+          "riskChecks": {
+            "seasonalScopePreserved": true,
+            "windModalityCanPreserved": true,
+            "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+            "coldAirDirectionAndLowCollectionExact": true,
+            "sourceOrderPreserved": true
+          }
+        },
+        {
+          "language": "ts",
+          "slide": 8,
+          "bodyIndex": 0,
+          "sourceEnglish": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+          "sourceBinding": {
+            "pairedSlideN": 8,
+            "pairedEnglishBodyIndex": 0,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "originalCandidateText": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, the sun is to the north. Its path changes with the season and your location.",
+          "finalSegments": [
+            {
+              "sourceEnglish": "In much of South Africa, especially in winter, ",
+              "status": "draft",
+              "text": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, "
+            },
+            {
+              "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
+              "status": "english-hold"
+            }
+          ],
+          "finalCandidateText": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, the sun is to the north. Its path changes with the season and your location.",
+          "decision": "retain-candidate",
+          "independentBackTranslation": "The localized introductory qualifier preserves “much of South Africa” and “especially in winter.” The northward sun and changing seasonal/location path remain in exact English; no translated directional claim was introduced.",
+          "exactEnglishSourceSegmentConcatenates": true,
+          "candidateRecompositionMatchesSegments": true,
+          "riskChecks": {
+            "seasonalScopePreserved": true,
+            "windModalityCanPreserved": true,
+            "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+            "coldAirDirectionAndLowCollectionExact": true,
+            "sourceOrderPreserved": true
+          }
+        },
+        {
+          "language": "ts",
+          "slide": 12,
+          "bodyIndex": 0,
+          "sourceEnglish": "Wind can damage crops on a smallholding.",
+          "sourceBinding": {
+            "pairedSlideN": 12,
+            "pairedEnglishBodyIndex": 0,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "originalCandidateText": "Moya wu nga onha swibyariwa eka purasi leritsongo.",
+          "finalSegments": [
+            {
+              "sourceEnglish": "Wind can damage crops on a smallholding.",
+              "status": "draft",
+              "text": "Moya wu nga onha swibyariwa eka purasi leritsongo."
+            }
+          ],
+          "finalCandidateText": "Moya wu nga onha swibyariwa eka purasi leritsongo.",
+          "decision": "retain-candidate",
+          "independentBackTranslation": "The modal “can” is retained by ka/nga; damage, crops, and smallholding scope are present. VE keeps smallholding exact in English; ST and TS translate it as a small farm. This is a bounded ordinary-prose candidate.",
+          "exactEnglishSourceSegmentConcatenates": true,
+          "candidateRecompositionMatchesSegments": true,
+          "riskChecks": {
+            "seasonalScopePreserved": true,
+            "windModalityCanPreserved": false,
+            "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+            "coldAirDirectionAndLowCollectionExact": true,
+            "sourceOrderPreserved": true
+          }
+        },
+        {
+          "language": "ts",
+          "slide": 12,
+          "bodyIndex": 1,
+          "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+          "sourceBinding": {
+            "pairedSlideN": 12,
+            "pairedEnglishBodyIndex": 1,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "originalCandidateText": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Fambafamba eka misava hi masiku ya moya. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+          "finalSegments": [
+            {
+              "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+              "status": "english-hold"
+            }
+          ],
+          "finalCandidateText": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+          "decision": "revise-to-exact-English-hold-for-windy-day-clause",
+          "independentBackTranslation": "“Misava” can mean soil/ground/earth and may shift “walk the land” toward walking in/on soil. Preserve the whole source paragraph exactly; retain conditions, recording task, and weather-record check before placement.",
+          "exactEnglishSourceSegmentConcatenates": true,
+          "candidateRecompositionMatchesSegments": true,
+          "riskChecks": {
+            "seasonalScopePreserved": true,
+            "windModalityCanPreserved": true,
+            "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+            "coldAirDirectionAndLowCollectionExact": true,
+            "sourceOrderPreserved": true
+          }
+        },
+        {
+          "language": "ts",
+          "slide": 14,
+          "bodyIndex": 0,
+          "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+          "sourceBinding": {
+            "pairedSlideN": 14,
+            "pairedEnglishBodyIndex": 0,
+            "exactMatchToCurrentMarkdown": true
+          },
+          "originalCandidateText": "Loko ku ri vusiku byo basa, ku nga ri na moya, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+          "finalSegments": [
+            {
+              "sourceEnglish": "On a clear, still night, ",
+              "status": "draft",
+              "text": "Loko ku ri vusiku byo basa, ku nga ri na moya, "
+            },
+            {
+              "sourceEnglish": "cold air can flow downhill and collect in low places.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " These places can be colder than nearby slopes.",
+              "status": "english-hold"
+            }
+          ],
+          "finalCandidateText": "Loko ku ri vusiku byo basa, ku nga ri na moya, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+          "decision": "retain-candidate",
+          "independentBackTranslation": "Candidate localizes clear/still-night framing and keeps the complete cold-air mechanism and comparative claim exact in English. This preserves direction, collection location and potential comparison without adding specificity.",
+          "exactEnglishSourceSegmentConcatenates": true,
+          "candidateRecompositionMatchesSegments": true,
+          "riskChecks": {
+            "seasonalScopePreserved": true,
+            "windModalityCanPreserved": true,
+            "windDirectionStrengthRidgesGapsAndWeatherCheckExact": true,
+            "coldAirDirectionAndLowCollectionExact": true,
+            "sourceOrderPreserved": true
+          }
+        }
+      ],
+      "limitations": [
+        "Machine semantic check, not fluent/local farming approval.",
+        "All directional, seasonal, wind-risk, weather-record, and cold-air process source clauses remain exact English where technically important.",
+        "ST/VE/TS ordinary localized clauses are draft candidates for facilitator review."
+      ]
+    }
+  ],
+  "rootReview": {
+    "status": "machine drafts accepted for fresh source-bound batch, not learner-wired or facilitator approved",
+    "qualifiers": "All technical direction, timing, weather-record and safety clauses stay source-exact; unsupported colder intensifier removed. Land and exit clauses stay English where ambiguous.",
+    "scannerLimit": "The independent check flags for wind-modality scanning report false on ST/TS localized statements despite ka/nga preserving can. Root reviewed these localized modal words directly; scanner booleans are not proof of semantic approval."
+  },
+  "sourceSHA256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f"
+}

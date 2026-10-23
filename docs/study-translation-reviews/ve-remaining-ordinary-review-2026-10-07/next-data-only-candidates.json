@@ -1,0 +1,1591 @@
+{
+  "title": "Revised next source-bound Tshivenda ordinary-prose candidates",
+  "date": "2026-10-07",
+  "status": "read-only semantic drafts; not learner-wired",
+  "authority": "Every proposal is unreviewed. Retained English technical terms are not counted as translated. No fluent-speaker approval or independent external Tshivenda authority is claimed.",
+  "summary": {
+    "revisedComposedProposalFields": 11,
+    "indexedSegmentProposals": 13,
+    "wholeFieldSentenceProposals": 1,
+    "outstandingUnappliedExactOrChangedBindingsInventoried": 63,
+    "alreadyAppliedCandidateRowsExcluded": 18,
+    "blindSemanticBackchecks": 4
+  },
+  "structuralAssertionsPassed": [
+    "All indexed proposals validate the current target segmentIndex and exact sourceEnglish before editing the /tmp composition.",
+    "Each segmented before/after field is rebuilt from the complete current segment array; only listed indexes change.",
+    "The whole-field bed clause replacement is limited to one exact target sentence; three preceding target sentences are preserved.",
+    "The 18 already applied candidate rows are explicitly excluded from new proposals.",
+    "Root-rejected candidate meanings for design, acceleration, permanent paths, do better, photograph, lightest intervention, and bed hardening are withdrawn or replaced with explicit holds/corrected options.",
+    "Every proposed technical physical term retained in English is identified as an English hold in the reasoning; no identity string is described as translated."
+  ],
+  "blindSemanticBackcheck": [
+    {
+      "proposalId": "VE-N04",
+      "exactSource": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "composedTarget": "Frost ndi ice ine ya vhumbwa kha cold surface. Mist fhedzi a i sumbedzi uri ice yo no vhumbwa, nahone frost damage i nga bvelela hu si na visible ice.",
+      "backTranslation": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "checks": [
+        "Definition preserved.",
+        "Mist alone remains insufficient evidence.",
+        "“Has formed” remains completed.",
+        "Frost damage remains possible without visible ice."
+      ],
+      "result": "No identified source-condition loss in composition; linguistic fluency remains unverified."
+    },
+    {
+      "proposalId": "VE-N05",
+      "exactSource": "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+      "composedTarget": "Vhuyelelani nga dawn on a cold June morning. Swayani mist, frozen dew, na fhethu hune frost ya dzula hone lwa tshifhinga tshilapfusesa.",
+      "backTranslation": "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places where frost lasts the longest.",
+      "checks": [
+        "Dawn/cold/June timing is kept exactly in English.",
+        "Observation list order remains mist, frozen dew, longest frost locations.",
+        "Duration superlative “lasts longest” remains."
+      ],
+      "result": "No identified source-condition loss; the retained timing and frost-sign terms remain English holds."
+    },
+    {
+      "proposalId": "VE-N14",
+      "exactSource": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "composedTarget": "Tendelanani nga zwine zwa vha kha box, mutengo, mbadelo na zwine zwa itea musi zwimela zwi sa eḓani. Regular orders dzi thusa u dzudzanya fhedzi musi vharengi na vhalimi vha tshi kona u tevhedza thendelano.",
+      "backTranslation": "Agree on contents, price, payment, and what happens when crops are insufficient. Regular orders help planning only when customers and growers can keep the agreement.",
+      "checks": [
+        "Contents, price, payment remain in source order.",
+        "Crop shortage remains a condition, not crop failure or total absence.",
+        "“Only when” restriction and both agreement parties remain."
+      ],
+      "result": "No identified source-condition loss in composed proposal; shortage wording remains unreviewed Tshivenda."
+    },
+    {
+      "proposalId": "VE-N15",
+      "exactSource": "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+      "composedTarget": "Murengi wa tsini a nga fhungudza lwendo, fhedzi ndozwo na selling costs zwi kha ḓi tea u kaliwa.",
+      "backTranslation": "A nearby buyer may reduce the journey, but losses and selling costs still need to be measured.",
+      "checks": [
+        "“May” possibility remains.",
+        "Journey reduction is not made certain.",
+        "Losses and selling costs remain separate.",
+        "Selling costs is not replaced by sale price.",
+        "“Still need measuring” remains a measurement requirement."
+      ],
+      "result": "No identified source-condition loss in composition; modal strength and fluent agreement still need reviewer confirmation."
+    }
+  ],
+  "withdrawnOrHeldCandidates": [
+    {
+      "proposalId": "VE-N12",
+      "source": "the lightest thing that works",
+      "disposition": "hold",
+      "reason": "The candidate vhuṱuku reduced the source’s least/lightest effective intervention to a small action; exact phrase remains English."
+    },
+    {
+      "proposalId": "VE-N13",
+      "source": "The bed gets harder to work every season.",
+      "disposition": "repaired-in-VE-N18",
+      "reason": "Revised clause explicitly preserves progressive getting harder and every season; English bed term remains."
+    }
+  ],
+  "proposals": [
+    {
+      "proposalId": "VE-N03",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "module": "reading-landscape",
+      "slide": 14,
+      "field": "body",
+      "fieldIndex": 0,
+      "sourceBinding": {
+        "fullEnglishField": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+        "candidateRowIndexes": [
+          43
+        ]
+      },
+      "currentTargetField": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "On a clear, still night, ",
+            "status": "draft",
+            "text": "Vhusiku vhu sa na makole, hu si na muya, "
+          },
+          {
+            "sourceEnglish": "cold air can flow downhill and collect in low places.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " These places can be colder than nearby slopes.",
+            "status": "draft",
+            "text": " Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "completeComposedBefore": "Vhusiku vhu sa na makole, hu si na muya, cold air can flow downhill and collect in low places. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini.",
+      "changes": [
+        {
+          "segmentIndex": 1,
+          "exactSourceEnglishSegment": "cold air can flow downhill and collect in low places.",
+          "currentTargetSegment": "cold air can flow downhill and collect in low places.",
+          "proposedTargetSegment": "muya wo rotholelaho u nga elela u tshi ya fhasi wa kuvhangana kha low places.",
+          "candidateRowIndex": 43,
+          "sourceBindingVerified": true
+        }
+      ],
+      "completeComposedAfter": "Vhusiku vhu sa na makole, hu si na muya, muya wo rotholelaho u nga elela u tshi ya fhasi wa kuvhangana kha low places. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini.",
+      "independentSemanticReasoning": "This preserves the source’s possible flow (“can”), downhill direction, collection, and low-place location. “low places” remains the exact physical feature in English; the following sentence’s colder-than-nearby-slopes comparison remains untouched.",
+      "remainingUncertainty": "Confirm the low-place landform and Tshivenda agreement. The lower-case start follows the preceding comma in the composed field.",
+      "reviewStatus": "unreviewed source-paired machine candidate; no fluent approval"
+    },
+    {
+      "proposalId": "VE-N04",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "module": "reading-landscape",
+      "slide": 14,
+      "field": "body",
+      "fieldIndex": 1,
+      "sourceBinding": {
+        "fullEnglishField": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+        "candidateRowIndexes": [
+          56,
+          57
+        ]
+      },
+      "currentTargetField": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Frost",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " is ",
+            "status": "draft",
+            "text": " ndi "
+          },
+          {
+            "sourceEnglish": "ice that forms on a cold surface.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Mist",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " alone",
+            "status": "draft",
+            "text": " fhedzi"
+          },
+          {
+            "sourceEnglish": " does not show that ",
+            "status": "draft",
+            "text": " a i sumbedzi uri "
+          },
+          {
+            "sourceEnglish": "ice has formed",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and",
+            "status": "draft",
+            "text": ", nahone"
+          },
+          {
+            "sourceEnglish": " frost damage can happen without visible ice.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open."
+      },
+      "completeComposedBefore": "Frost ndi ice that forms on a cold surface. Mist fhedzi a i sumbedzi uri ice has formed, nahone frost damage can happen without visible ice.",
+      "changes": [
+        {
+          "segmentIndex": 2,
+          "exactSourceEnglishSegment": "ice that forms on a cold surface.",
+          "currentTargetSegment": "ice that forms on a cold surface.",
+          "proposedTargetSegment": "ice ine ya vhumbwa kha cold surface.",
+          "candidateRowIndex": 56,
+          "sourceBindingVerified": true
+        },
+        {
+          "segmentIndex": 7,
+          "exactSourceEnglishSegment": "ice has formed",
+          "currentTargetSegment": "ice has formed",
+          "proposedTargetSegment": "ice yo no vhumbwa",
+          "candidateRowIndex": 57,
+          "sourceBindingVerified": true
+        },
+        {
+          "segmentIndex": 9,
+          "exactSourceEnglishSegment": " frost damage can happen without visible ice.",
+          "currentTargetSegment": " frost damage can happen without visible ice.",
+          "proposedTargetSegment": " frost damage i nga bvelela hu si na visible ice.",
+          "candidateRowIndex": null,
+          "sourceBindingVerified": true
+        }
+      ],
+      "completeComposedAfter": "Frost ndi ice ine ya vhumbwa kha cold surface. Mist fhedzi a i sumbedzi uri ice yo no vhumbwa, nahone frost damage i nga bvelela hu si na visible ice.",
+      "independentSemanticReasoning": "Blind back-translation: “Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.” The definition remains a definition; mist alone remains insufficient evidence; formed remains completed; damage still can happen without visible ice. Frost, ice, cold surface, mist, frost damage, and visible ice stay English precision anchors.",
+      "remainingUncertainty": "Confirm passive formation and completed aspect with a fluent reviewer; these drafts are not linguistic approval.",
+      "reviewStatus": "unreviewed source-paired machine candidate; no fluent approval"
+    },
+    {
+      "proposalId": "VE-N05",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "module": "reading-landscape",
+      "slide": 20,
+      "field": "body",
+      "fieldIndex": 1,
+      "sourceBinding": {
+        "fullEnglishField": "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+        "candidateRowIndexes": []
+      },
+      "currentTargetField": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Return at ",
+            "status": "draft",
+            "text": "Vhuyelelani nga "
+          },
+          {
+            "sourceEnglish": "dawn on a cold June morning. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Mark ",
+            "status": "draft",
+            "text": "Swayani "
+          },
+          {
+            "sourceEnglish": "mist, frozen dew, and the places frost lasts longest.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed mixed machine draft; exact source clauses remain paired, with uncertain timing and observation/site terms held verbatim in English. Facilitator review pending."
+      },
+      "completeComposedBefore": "Vhuyelelani nga dawn on a cold June morning. Swayani mist, frozen dew, and the places frost lasts longest.",
+      "changes": [
+        {
+          "segmentIndex": 3,
+          "exactSourceEnglishSegment": "mist, frozen dew, and the places frost lasts longest.",
+          "currentTargetSegment": "mist, frozen dew, and the places frost lasts longest.",
+          "proposedTargetSegment": "mist, frozen dew, na fhethu hune frost ya dzula hone lwa tshifhinga tshilapfusesa.",
+          "candidateRowIndex": null,
+          "sourceBindingVerified": true
+        }
+      ],
+      "completeComposedAfter": "Vhuyelelani nga dawn on a cold June morning. Swayani mist, frozen dew, na fhethu hune frost ya dzula hone lwa tshifhinga tshilapfusesa.",
+      "independentSemanticReasoning": "Blind back-translation of the revised field: “Return at dawn on a cold June morning. Mark mist, frozen dew, and the places where frost lasts the longest.” The retained dawn/cold/June morning phrase remains exact English; this change preserves the observation order and “lasts longest” duration, without claiming that mist or dew proves frost.",
+      "remainingUncertainty": "Confirm locative construction and the duration expression. Dawn, cold June morning, mist, frozen dew, and frost remain exact English where held.",
+      "reviewStatus": "unreviewed source-paired machine candidate; no fluent approval"
+    },
+    {
+      "proposalId": "VE-N06",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "module": "vegetables-staples",
+      "slide": 3,
+      "field": "body",
+      "fieldIndex": 4,
+      "sourceBinding": {
+        "fullEnglishField": "Four. Read a pest problem before you treat it.",
+        "candidateRowIndexes": [
+          66
+        ]
+      },
+      "currentTargetField": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four. ",
+            "status": "draft",
+            "text": "Tsha vhuṋa. "
+          },
+          {
+            "sourceEnglish": "Read a pest problem",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " before you ",
+            "status": "draft",
+            "text": " ni sa athu u "
+          },
+          {
+            "sourceEnglish": "treat it.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "completeComposedBefore": "Tsha vhuṋa. Read a pest problem ni sa athu u treat it.",
+      "changes": [
+        {
+          "segmentIndex": 1,
+          "exactSourceEnglishSegment": "Read a pest problem",
+          "currentTargetSegment": "Read a pest problem",
+          "proposedTargetSegment": "Ṱolani pest problem",
+          "candidateRowIndex": 66,
+          "sourceBindingVerified": true
+        }
+      ],
+      "completeComposedAfter": "Tsha vhuṋa. Ṱolani pest problem ni sa athu u treat it.",
+      "independentSemanticReasoning": "Back-translation: “Four. Inspect a pest problem before you treat it.” The ordinary diagnostic verb is localized, while “pest problem” and “treat it” remain English holds. This avoids narrowing the broad pest category to insects and does not prescribe a treatment.",
+      "remainingUncertainty": "Check whether Ṱolani conveys reading/diagnosing rather than only looking. The pest category and treatment verb are deliberately retained.",
+      "reviewStatus": "unreviewed source-paired machine candidate; no fluent approval"
+    },
+    {
+      "proposalId": "VE-N07",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "module": "vegetables-staples",
+      "slide": 3,
+      "field": "body",
+      "fieldIndex": 5,
+      "sourceBinding": {
+        "fullEnglishField": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+        "candidateRowIndexes": [
+          67
+        ]
+      },
+      "currentTargetField": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "These four belong together. ",
+            "status": "draft",
+            "text": "Zwithu izwi zwiṋa zwi tshimbila zwoṱhe. "
+          },
+          {
+            "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+            "status": "draft",
+            "text": "U ṱavha mifuda yo fhambanaho hu kha ḓi konḓelwa arali na dzhia every yellow leaf sa thaidzo ya zwikhokhonono."
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
+      },
+      "completeComposedBefore": "Zwithu izwi zwiṋa zwi tshimbila zwoṱhe. A well-shaped bed still fails if everything goes in on one day. U ṱavha mifuda yo fhambanaho hu kha ḓi konḓelwa arali na dzhia every yellow leaf sa thaidzo ya zwikhokhonono.",
+      "changes": [
+        {
+          "segmentIndex": 1,
+          "exactSourceEnglishSegment": "A well-shaped bed still fails if everything goes in on one day. ",
+          "currentTargetSegment": "A well-shaped bed still fails if everything goes in on one day. ",
+          "proposedTargetSegment": "A well-shaped bed i kha ḓi kundelwa arali zwoṱhe zwa ṱavhiwa nga ḓuvha ḽithihi. ",
+          "candidateRowIndex": 67,
+          "sourceBindingVerified": true
+        }
+      ],
+      "completeComposedAfter": "Zwithu izwi zwiṋa zwi tshimbila zwoṱhe. A well-shaped bed i kha ḓi kundelwa arali zwoṱhe zwa ṱavhiwa nga ḓuvha ḽithihi. U ṱavha mifuda yo fhambanaho hu kha ḓi konḓelwa arali na dzhia every yellow leaf sa thaidzo ya zwikhokhonono.",
+      "independentSemanticReasoning": "Back-translation: “A well-shaped bed can still fail if everything is planted on one day.” The exact well-shaped-bed geometry phrase remains English; still, conditional if, all items, planting, and the one-day condition remain explicit. The neighboring diverse-planting caution is unchanged.",
+      "remainingUncertainty": "Check the agreement and that kundelwa has the intended fail sense; no bed geometry wording is translated or inferred.",
+      "reviewStatus": "unreviewed source-paired machine candidate; no fluent approval"
+    },
+    {
+      "proposalId": "VE-N10",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "module": "vegetables-staples",
+      "slide": 8,
+      "field": "heading",
+      "fieldIndex": 0,
+      "sourceBinding": {
+        "fullEnglishField": "A Sowing Rhythm Keeps Food Moving",
+        "candidateRowIndexes": [
+          77,
+          77
+        ]
+      },
+      "currentTargetField": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "A Sowing Rhythm",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Keeps Food Moving",
+            "status": "draft",
+            "text": " i ita uri zwiliwa zwi bvele phanḓa zwi tshi wanala."
+          }
+        ]
+      },
+      "completeComposedBefore": "A Sowing Rhythm i ita uri zwiliwa zwi bvele phanḓa zwi tshi wanala.",
+      "changes": [
+        {
+          "segmentIndex": 0,
+          "exactSourceEnglishSegment": "A Sowing Rhythm",
+          "currentTargetSegment": "A Sowing Rhythm",
+          "proposedTargetSegment": "Tshifhinga tsha u ṱavha tshine tsha dovhololwa",
+          "candidateRowIndex": 77,
+          "sourceBindingVerified": true
+        },
+        {
+          "segmentIndex": 1,
+          "exactSourceEnglishSegment": " Keeps Food Moving",
+          "currentTargetSegment": " i ita uri zwiliwa zwi bvele phanḓa zwi tshi wanala.",
+          "proposedTargetSegment": " tshi ita uri zwiliwa zwi bvele phanḓa zwi tshi wanala.",
+          "candidateRowIndex": 77,
+          "sourceBindingVerified": true
+        }
+      ],
+      "completeComposedAfter": "Tshifhinga tsha u ṱavha tshine tsha dovhololwa tshi ita uri zwiliwa zwi bvele phanḓa zwi tshi wanala.",
+      "independentSemanticReasoning": "Back-translation: “A sowing time that repeats keeps food continuing to be available.” Both segments are changed together so the singular-subject agreement follows the new phrase. Repetition remains explicit rather than collapsing the heading to one planting time.",
+      "remainingUncertainty": "The source rhythm may mean a recurring planting cadence, not simply a sowing time that repeats. This is an unreviewed candidate pending facilitator wording and agreement review.",
+      "reviewStatus": "unreviewed source-paired machine candidate; no fluent approval"
+    },
+    {
+      "proposalId": "VE-N14",
+      "file": "docs/narration/market-community.ve.paired-draft.json",
+      "module": "market-community",
+      "slide": 11,
+      "field": "body",
+      "fieldIndex": 2,
+      "sourceBinding": {
+        "fullEnglishField": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+        "candidateRowIndexes": [
+          95
+        ]
+      },
+      "currentTargetField": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Agree the contents, price, payment and ",
+            "status": "draft",
+            "text": "Tendelanani nga zwine zwa vha kha box, mutengo, mbadelo na ",
+            "reason": "Preserve existing Tendelanani prefix; box is retained contextual borrowed packaging noun."
+          },
+          {
+            "sourceEnglish": "what happens when crops are short. Regular orders",
+            "status": "english-hold",
+            "reason": "Crop-shortage predicate and regular-order frequency retained exact English, not narrowed to few plants or always."
+          },
+          {
+            "sourceEnglish": " help planning only when customers and growers can keep the agreement.",
+            "status": "draft",
+            "text": " dzi thusa u dzudzanya fhedzi musi vharengi na vhalimi vha tshi kona u tevhedza thendelano.",
+            "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+          }
+        ],
+        "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+      },
+      "completeComposedBefore": "Tendelanani nga zwine zwa vha kha box, mutengo, mbadelo na what happens when crops are short. Regular orders dzi thusa u dzudzanya fhedzi musi vharengi na vhalimi vha tshi kona u tevhedza thendelano.",
+      "changes": [
+        {
+          "segmentIndex": 1,
+          "exactSourceEnglishSegment": "what happens when crops are short. Regular orders",
+          "currentTargetSegment": "what happens when crops are short. Regular orders",
+          "proposedTargetSegment": "zwine zwa itea musi zwimela zwi sa eḓani. Regular orders",
+          "candidateRowIndex": 95,
+          "sourceBindingVerified": true
+        }
+      ],
+      "completeComposedAfter": "Tendelanani nga zwine zwa vha kha box, mutengo, mbadelo na zwine zwa itea musi zwimela zwi sa eḓani. Regular orders dzi thusa u dzudzanya fhedzi musi vharengi na vhalimi vha tshi kona u tevhedza thendelano.",
+      "independentSemanticReasoning": "Blind back-translation: “Agree on the contents, price, payment, and what happens when crops are insufficient. Regular orders help with planning only when customers and growers can keep the agreement.” The item order is unchanged; shortage remains a condition; only remains before when; both customer and grower remain parties to the agreement. Regular orders is still an English hold.",
+      "remainingUncertainty": "Confirm whether “crops are short” is naturally expressed as crops being insufficient. No crop failure or absolute absence is added.",
+      "reviewStatus": "unreviewed source-paired machine candidate; no fluent approval"
+    },
+    {
+      "proposalId": "VE-N15",
+      "file": "docs/narration/market-community.ve.paired-draft.json",
+      "module": "market-community",
+      "slide": 17,
+      "field": "body",
+      "fieldIndex": 1,
+      "sourceBinding": {
+        "fullEnglishField": "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+        "candidateRowIndexes": [
+          96
+        ]
+      },
+      "currentTargetField": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "A nearby buyer may reduce the journey, but losses and ",
+            "status": "draft",
+            "text": "Murengi wa tsini a nga fhungudza lwendo, fhedzi ndozwo na ",
+            "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+          },
+          {
+            "sourceEnglish": "selling costs still need measuring.",
+            "status": "english-hold",
+            "reason": "Root-accepted independent repair: source-exact still need measuring, not should try/test."
+          }
+        ],
+        "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+      },
+      "completeComposedBefore": "Murengi wa tsini a nga fhungudza lwendo, fhedzi ndozwo na selling costs still need measuring.",
+      "changes": [
+        {
+          "segmentIndex": 1,
+          "exactSourceEnglishSegment": "selling costs still need measuring.",
+          "currentTargetSegment": "selling costs still need measuring.",
+          "proposedTargetSegment": "selling costs zwi kha ḓi tea u kaliwa.",
+          "candidateRowIndex": 96,
+          "sourceBindingVerified": true
+        }
+      ],
+      "completeComposedAfter": "Murengi wa tsini a nga fhungudza lwendo, fhedzi ndozwo na selling costs zwi kha ḓi tea u kaliwa.",
+      "independentSemanticReasoning": "Blind back-translation: “A nearby buyer may reduce the journey, but losses and selling costs still need to be measured.” May remains possible, but remains in contrast, losses and selling costs remain separate, and measuring is still required. Selling costs stays exact English, avoiding a shift to sale price.",
+      "remainingUncertainty": "Confirm agreement and whether kha ḓi tea carries “still need” without strengthening it to a new obligation.",
+      "reviewStatus": "unreviewed source-paired machine candidate; no fluent approval"
+    },
+    {
+      "proposalId": "VE-N16",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "module": "reading-landscape",
+      "slide": 14,
+      "field": "body",
+      "fieldIndex": 2,
+      "sourceBinding": {
+        "fullEnglishField": "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+        "candidateRowIndexes": []
+      },
+      "currentTargetField": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. ",
+            "status": "draft",
+            "text": "Ṱolani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. "
+          },
+          {
+            "sourceEnglish": "Mark places where cold or damage lasts longest.",
+            "status": "draft",
+            "text": "Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa."
+          },
+          {
+            "sourceEnglish": " Keep sensitive plants away from the cold pockets ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "you observe.",
+            "status": "draft",
+            "text": "dzine na dzi vhona."
+          }
+        ]
+      },
+      "completeComposedBefore": "Ṱolani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Keep sensitive plants away from the cold pockets dzine na dzi vhona.",
+      "changes": [
+        {
+          "segmentIndex": 2,
+          "exactSourceEnglishSegment": " Keep sensitive plants away from the cold pockets ",
+          "currentTargetSegment": " Keep sensitive plants away from the cold pockets ",
+          "proposedTargetSegment": " Dzisani sensitive plants kule na cold pockets ",
+          "candidateRowIndex": null,
+          "sourceBindingVerified": true
+        }
+      ],
+      "completeComposedAfter": "Ṱolani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Dzisani sensitive plants kule na cold pockets dzine na dzi vhona.",
+      "independentSemanticReasoning": "Back-translation: “Keep sensitive plants away from the cold pockets you observe.” “sensitive plants” and “cold pockets” remain exact English holds, so no specific sensitivity such as cold-damage susceptibility is inferred; only the protective action is localized. The next “you observe” clause remains unchanged.",
+      "remainingUncertainty": "Confirm dzisani means keep/place at a distance here and agreement with the retained English noun phrase.",
+      "reviewStatus": "unreviewed source-paired machine candidate; no fluent approval"
+    },
+    {
+      "proposalId": "VE-N17",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "module": "vegetables-staples",
+      "slide": 15,
+      "field": "body",
+      "fieldIndex": 1,
+      "sourceBinding": {
+        "fullEnglishField": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+        "candidateRowIndexes": []
+      },
+      "currentTargetField": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plants under ",
+            "status": "draft",
+            "text": "Zwimela zwi re na "
+          },
+          {
+            "sourceEnglish": "stress.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " One crop dominating the ground.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Or ",
+            "status": "draft",
+            "text": " Kana "
+          },
+          {
+            "sourceEnglish": "broad chemical use",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that has already removed the ",
+            "status": "draft",
+            "text": " yo no bvisa "
+          },
+          {
+            "sourceEnglish": "predators",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that were helping you.",
+            "status": "draft",
+            "text": " dze dza vha dzi tshi ni thusa."
+          }
+        ]
+      },
+      "completeComposedBefore": "Zwimela zwi re na stress. One crop dominating the ground. Kana broad chemical use yo no bvisa predators dze dza vha dzi tshi ni thusa.",
+      "changes": [
+        {
+          "segmentIndex": 2,
+          "exactSourceEnglishSegment": " One crop dominating the ground.",
+          "currentTargetSegment": " One crop dominating the ground.",
+          "proposedTargetSegment": " Crop nthihi i khou vhusa mavu.",
+          "candidateRowIndex": null,
+          "sourceBindingVerified": true
+        }
+      ],
+      "completeComposedAfter": "Zwimela zwi re na stress. Crop nthihi i khou vhusa mavu. Kana broad chemical use yo no bvisa predators dze dza vha dzi tshi ni thusa.",
+      "independentSemanticReasoning": "Back-translation: “One crop is dominating the ground.” Crop stays an exact English category; one remains singular; the statement stays a diagnostic sign between plant stress and broad chemical use. No all/only claim is added.",
+      "remainingUncertainty": "The metaphorical verb for dominating and whether mavu is the correct ground referent need fluent review; retain the current exact source hold if either is uncertain.",
+      "reviewStatus": "unreviewed source-paired machine candidate; no fluent approval"
+    },
+    {
+      "proposalId": "VE-N18",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "module": "vegetables-staples",
+      "slide": 4,
+      "field": "body",
+      "fieldIndex": 0,
+      "sourceBinding": {
+        "fullEnglishField": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+        "candidateRowIndexes": []
+      },
+      "currentTargetField": {
+        "status": "draft",
+        "text": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe."
+      },
+      "completeComposedBefore": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe.",
+      "changes": [
+        {
+          "segmentIndex": null,
+          "sourceSentenceIndex": 3,
+          "exactSourceEnglishSegment": "The bed gets harder to work every season.",
+          "currentTargetSentence": "Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe.",
+          "proposedTargetSentence": "Bed i ya i tshi konḓa u shuma nayo kha khalaṅwaha iṅwe na iṅwe.",
+          "sourceBindingVerified": true
+        }
+      ],
+      "completeComposedAfter": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed i ya i tshi konḓa u shuma nayo kha khalaṅwaha iṅwe na iṅwe.",
+      "independentSemanticReasoning": "Back-translation: “The bed keeps becoming harder to work with each season.” The progressive increase (“gets harder”) and every-season repetition are both retained; bed remains exact English farm terminology. The preceding three soil, root, and water sentences are preserved.",
+      "remainingUncertainty": "Confirm that the repeated i ya i tshi conveys progressive increase rather than habitual difficulty.",
+      "reviewStatus": "unreviewed source-paired machine candidate; no fluent approval"
+    }
+  ],
+  "changedBindingAssessment": {
+    "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+    "slide": 3,
+    "field": "body",
+    "fieldIndex": 3,
+    "sourceBinding": {
+      "source": "Three. Choose staples that protect you when one crop fails.",
+      "changedCandidateRows": [
+        64,
+        65
+      ]
+    },
+    "currentTargetField": {
+      "status": "mixed",
+      "segments": [
+        {
+          "sourceEnglish": "Three. ",
+          "status": "draft",
+          "text": "Tsha vhuraru. "
+        },
+        {
+          "sourceEnglish": "Choose ",
+          "status": "draft",
+          "text": "Nangani "
+        },
+        {
+          "sourceEnglish": "staples",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " that protect you ",
+          "status": "draft",
+          "text": " dzi ni tsireledzaho "
+        },
+        {
+          "sourceEnglish": "when one crop fails.",
+          "status": "draft",
+          "text": "musi crop iṅwe i tshi kundelwa."
+        }
+      ],
+      "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
+    },
+    "completeComposedBefore": "Tsha vhuraru. Nangani staples dzi ni tsireledzaho musi crop iṅwe i tshi kundelwa.",
+    "disposition": "no new candidate proposed for changed row 65",
+    "reason": "The current target already localizes the conditional as “musi crop iṅwe i tshi kundelwa” (when one crop fails), preserving the condition and singular crop while keeping crop as a visible English hold. Do not rewrite a current source-bound draft merely to restate it. Row 64 staples remains an unresolved crop/food-security category and stays English-held."
+  },
+  "remainingBindingInventory": [
+    {
+      "candidateRowIndex": 1,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "slide": 4,
+      "field": "body[1]",
+      "segmentIndex": 3,
+      "sourceFragment": "resources",
+      "candidateAsSubmitted": "zwishumiswa",
+      "sourceContext": "It means treating soil, water, plants and animals as living systems to protect, not resources to use up.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Hold: It means treating soil, water, plants and animals as living systems to protect, not resources to use up. Candidate “zwishumiswa” is not applied. Check systems-as-resources rather than equipment/tools; full living-system sentence required. Keep the exact English source fragment until a source-bound Tshivenda equivalent is established."
+    },
+    {
+      "candidateRowIndex": 8,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "slide": 10,
+      "field": "body[1]",
+      "segmentIndex": 2,
+      "sourceFragment": "pattern",
+      "candidateAsSubmitted": "maitele",
+      "sourceContext": "One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "“Pattern” summarizes recurring water behaviour over a full wet season, then the sentence explains that pattern with runoff, pooling, and non-reach. “maitele” may instead mean methods/practices; retain the English source until a checked equivalent covers this observed recurring pattern."
+    },
+    {
+      "candidateRowIndex": 11,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "slide": 11,
+      "field": "body[0]",
+      "segmentIndex": 0,
+      "sourceFragment": "Harvest",
+      "candidateAsSubmitted": "Khaṋani",
+      "sourceContext": "Harvest rain, sun and biomass before they leave your property.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "“Harvest” is metaphorical here and takes rain, sun, and biomass as objects. The candidate may be crop-specific; retain the English verb until its range across all three resources is checked."
+    },
+    {
+      "candidateRowIndex": 13,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "slide": 12,
+      "field": "body[0]",
+      "segmentIndex": 0,
+      "sourceFragment": "The edge",
+      "candidateAsSubmitted": "Muṅwelela",
+      "sourceContext": "The edge is where two things meet — a fence line or the strip beside a path.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "“The edge” is immediately defined as the place where two things meet, such as a fence line or strip beside a path. The proposed single term is not demonstrated to preserve that defined boundary/intersection sense; hold the defined English phrase."
+    },
+    {
+      "candidateRowIndex": 17,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "slide": 13,
+      "field": "body[1]",
+      "segmentIndex": 11,
+      "sourceFragment": "bed",
+      "candidateAsSubmitted": "bed",
+      "sourceContext": "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Hold: Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all. Candidate “bed” is not applied. Identity English term must remain english-hold, never labelled translated. Keep the exact English source fragment until a source-bound Tshivenda equivalent is established."
+    },
+    {
+      "candidateRowIndex": 18,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "slide": 14,
+      "field": "body[1]",
+      "segmentIndex": 1,
+      "sourceFragment": "chicken run",
+      "candidateAsSubmitted": "fhethu ha khuhu",
+      "sourceContext": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Hold: A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen. Candidate “fhethu ha khuhu” is not applied. Place for chickens may lose bounded run/enclosure meaning; retain technical chicken run until repaired. Keep the exact English source fragment until a source-bound Tshivenda equivalent is established."
+    },
+    {
+      "candidateRowIndex": 19,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "slide": 15,
+      "field": "body[2]",
+      "segmentIndex": 4,
+      "sourceFragment": "chicken run",
+      "candidateAsSubmitted": "fhethu ha khuhu",
+      "sourceContext": "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Hold: Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Candidate “fhethu ha khuhu” is not applied. Place for chickens may lose bounded run/enclosure meaning; retain technical chicken run until repaired. Keep the exact English source fragment until a source-bound Tshivenda equivalent is established."
+    },
+    {
+      "candidateRowIndex": 22,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "slide": 14,
+      "field": "body[1]",
+      "segmentIndex": 10,
+      "sourceFragment": "crops",
+      "candidateAsSubmitted": "zwimela",
+      "sourceContext": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Here “crops” means cultivated plants being harvested for food, and the instruction keeps chickens away from those crops. “zwimela” may broaden this to plants generally; retain the precise English category pending checked wording."
+    },
+    {
+      "candidateRowIndex": 23,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "slide": 19,
+      "field": "body[1]",
+      "segmentIndex": 3,
+      "sourceFragment": "crops",
+      "candidateAsSubmitted": "zwimela",
+      "sourceContext": "The trees and shrubs stand between that wind and the crops.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Here crops are what the windbreak protects. A general “plants” term may broaden the source category; keep “crops” until the crop-production referent is confirmed."
+    },
+    {
+      "candidateRowIndex": 24,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "slide": 15,
+      "field": "body[2]",
+      "segmentIndex": 2,
+      "sourceFragment": "main garden",
+      "candidateAsSubmitted": "ḓaraṱa khulwane",
+      "sourceContext": "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "“Main garden” is the primary cultivated garden in Zone 2, contrasted with the main field in Zone 3. The candidate may mean a large yard, adding size and changing garden type; hold."
+    },
+    {
+      "candidateRowIndex": 25,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "slide": 15,
+      "field": "body[2]",
+      "segmentIndex": 8,
+      "sourceFragment": "main field",
+      "candidateAsSubmitted": "masimu mahulwane",
+      "sourceContext": "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "“Main field” is the principal field in Zone 3, contrasted with the main garden. The candidate may mean large fields and adds size/plurality; hold the exact source phrase."
+    },
+    {
+      "candidateRowIndex": 26,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "slide": 15,
+      "field": "body[3]",
+      "segmentIndex": 8,
+      "sourceFragment": "wild",
+      "candidateAsSubmitted": "ḽo litshwaho ḽi tshi sokou aluwa",
+      "sourceContext": "Zone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "“Zone 5 is left wild” describes a deliberate management status. The proposal describes a place left to grow by itself; that may imply unmanaged growth rather than the source’s wild-zone category. Hold."
+    },
+    {
+      "candidateRowIndex": 27,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "slide": 19,
+      "field": "body[1]",
+      "segmentIndex": 1,
+      "sourceFragment": "shrubs",
+      "candidateAsSubmitted": "miri mipfufhi",
+      "sourceContext": "The trees and shrubs stand between that wind and the crops.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Hold: The trees and shrubs stand between that wind and the crops. Candidate “miri mipfufhi” is not applied. Short trees is not sufficient proof of shrubs species/category equivalence. Keep the exact English source fragment until a source-bound Tshivenda equivalent is established."
+    },
+    {
+      "candidateRowIndex": 28,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "slide": 20,
+      "field": "body[0]",
+      "segmentIndex": 3,
+      "sourceFragment": "rings",
+      "candidateAsSubmitted": "zwitendeledzi",
+      "sourceContext": "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Accept for source-semantic scope only: The map instruction explicitly asks for rings drawn outward according to visit frequency. “zwitendeledzi” is applied only to the geometric rings, while the visit-frequency rule stays in the surrounding target. Risk: confirm it denotes drawn circular zones in Tshivenda."
+    },
+    {
+      "candidateRowIndex": 29,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "slide": 21,
+      "field": "body[1]",
+      "segmentIndex": 5,
+      "sourceFragment": "land",
+      "candidateAsSubmitted": "shango",
+      "sourceContext": "Mark Zone 0 and Zone 1 first, then work outward as far as your land goes.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Hold: In this sentence, “your land” is the physical extent of the smallholding used to mark design zones. The proposed “shango” risks country/world scope; keep exact English."
+    },
+    {
+      "candidateRowIndex": 30,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 2,
+      "field": "body[1]",
+      "segmentIndex": 1,
+      "sourceFragment": "land",
+      "candidateAsSubmitted": "shango",
+      "sourceContext": "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Hold: Rain follows lines across the land as part of a description of site features. A country/world reading of “shango” would change the physical terrain referent; hold."
+    },
+    {
+      "candidateRowIndex": 31,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 2,
+      "field": "body[2]",
+      "segmentIndex": 1,
+      "sourceFragment": "land",
+      "candidateAsSubmitted": "shango",
+      "sourceContext": "When you read these patterns first, you place water, crops, trees, and buildings where they can work with the land.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Hold: The water, crops, trees, and buildings are placed where they can work with the land as a physical site. The proposed term may mean country/world and does not safely preserve the property-scale referent; hold."
+    },
+    {
+      "candidateRowIndex": 32,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 3,
+      "field": "body[0]",
+      "segmentIndex": 1,
+      "sourceFragment": "land",
+      "candidateAsSubmitted": "shango",
+      "sourceContext": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Hold: Water is followed across “your land” to find where it leaves. This is the farmer’s bounded property, not the country; retain exact English."
+    },
+    {
+      "candidateRowIndex": 33,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 4,
+      "field": "body[1]",
+      "segmentIndex": 1,
+      "sourceFragment": "land",
+      "candidateAsSubmitted": "shango",
+      "sourceContext": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Hold: The farmer walks their land and then identifies where water leaves their property. “shango” does not establish either physical property boundary; keep both property/land concepts in English."
+    },
+    {
+      "candidateRowIndex": 34,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 6,
+      "field": "body[1]",
+      "segmentIndex": 1,
+      "sourceFragment": "land",
+      "candidateAsSubmitted": "shango",
+      "sourceContext": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Hold: The contour instruction walks an A-frame across a bounded site to find equal-height points. “shango” risks country scope and is not established for this physical terrain referent; hold."
+    },
+    {
+      "candidateRowIndex": 35,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 20,
+      "field": "body[0]",
+      "segmentIndex": 1,
+      "sourceFragment": "land",
+      "candidateAsSubmitted": "shango",
+      "sourceContext": "When it is safe after heavy rain, walk your land. Mark rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Hold: The flood-observation instruction has the farmer walk their land and mark water exits from their property. The candidate may mean country/world, so retain both exact source terms."
+    },
+    {
+      "candidateRowIndex": 36,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "slide": 22,
+      "field": "body[0]",
+      "segmentIndex": 1,
+      "sourceFragment": "ground",
+      "candidateAsSubmitted": "mavu",
+      "sourceContext": "Walk out and check your sketch against the ground.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "The sketch is checked against the physical ground at the site. “mavu” means soil in the proposed fragment and may omit the ground surface/terrain comparison; hold."
+    },
+    {
+      "candidateRowIndex": 37,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 4,
+      "field": "body[1]",
+      "segmentIndex": 5,
+      "sourceFragment": "ponds",
+      "candidateAsSubmitted": "madzivha",
+      "sourceContext": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "These are ponds identified in a runoff survey, a specific water feature. The supplied equivalent may denote a larger lake or other standing-water body; keep “ponds” until the feature size/category is checked."
+    },
+    {
+      "candidateRowIndex": 38,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 20,
+      "field": "body[0]",
+      "segmentIndex": 5,
+      "sourceFragment": "ponds",
+      "candidateAsSubmitted": "madzivha",
+      "sourceContext": "When it is safe after heavy rain, walk your land. Mark rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "This second occurrence also lists ponds among runoff features on the farm. Retain the exact feature label until the target is confirmed not to change pond into lake/dam."
+    },
+    {
+      "candidateRowIndex": 39,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 5,
+      "field": "body[0]",
+      "segmentIndex": 4,
+      "sourceFragment": "sinks",
+      "candidateAsSubmitted": "a nwea nga fhasi",
+      "sourceContext": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "The source lists where water speeds up, spreads, sinks into the ground, gathers, and leaves. The candidate can read as “drink underneath,” which is not the hydrological sinking process; exact-English hold."
+    },
+    {
+      "candidateRowIndex": 43,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 14,
+      "field": "body[0]",
+      "segmentIndex": 1,
+      "sourceFragment": "cold air can flow downhill and collect in low places.",
+      "candidateAsSubmitted": "muya wo rotholelaho u nga elela u tshi ya fhasi wa kuvhangana fhethu ho tsaho.",
+      "sourceContext": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "disposition": "included-in-revised-composed-proposal",
+      "reason": "See revised proposal VE-N03."
+    },
+    {
+      "candidateRowIndex": 44,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 20,
+      "field": "body[1]",
+      "segmentIndex": 1,
+      "sourceFragment": "dawn on a cold June morning. ",
+      "candidateAsSubmitted": "nga matsheloni-tsheloni nga ḓuvha ḽa June ḽi rotholelaho. ",
+      "sourceContext": "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "The return time is specifically dawn on a cold June morning. The candidate may shift this to early morning on a cold June day, losing the precise dawn point; hold the exact time phrase."
+    },
+    {
+      "candidateRowIndex": 45,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 20,
+      "field": "body[2]",
+      "segmentIndex": 1,
+      "sourceFragment": "fences",
+      "candidateAsSubmitted": "miḓagasi",
+      "sourceContext": "On paper, draw your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Hold: “Fences” is a physical boundary feature in a property map list. The proposed term is not verified as a fence and risks changing a physical boundary into an electrical fence; retain English."
+    },
+    {
+      "candidateRowIndex": 46,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 20,
+      "field": "body[2]",
+      "segmentIndex": 3,
+      "sourceFragment": "slopes",
+      "candidateAsSubmitted": "maswika",
+      "sourceContext": "On paper, draw your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Hold: “Slopes” is a terrain feature to map. The proposed term may identify a different physical landform; retain the exact terrain label."
+    },
+    {
+      "candidateRowIndex": 49,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 1,
+      "field": "body[2]",
+      "segmentIndex": 3,
+      "sourceFragment": "design",
+      "candidateAsSubmitted": "nḓila ya u pulana",
+      "sourceContext": "These observations guide practical choices for crops, trees, buildings, roads, and water. They are the start of good design.",
+      "disposition": "retain-exact-english-hold",
+      "reason": "“design” is a technical/discipline concept; “way of planning” narrows its permaculture sense. Neighboring target wording already localizes ordinary framing."
+    },
+    {
+      "candidateRowIndex": 52,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 5,
+      "field": "body[0]",
+      "segmentIndex": 2,
+      "sourceFragment": "speeds up, ",
+      "candidateAsSubmitted": "u gidima nga luvhilo, ",
+      "sourceContext": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
+      "disposition": "retain-exact-english-hold",
+      "reason": "“gidima nga luvhilo” means move/run fast, not increase in speed; retain exact “speeds up” until an acceleration verb is source-checked."
+    },
+    {
+      "candidateRowIndex": 53,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 6,
+      "field": "body[1]",
+      "segmentIndex": 3,
+      "sourceFragment": "points at the same height",
+      "candidateAsSubmitted": "fhethu hune ha lingana nga vhulapfu",
+      "sourceContext": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "These are surveyed points at equal elevation for tracing a contour line, not simply places with equal physical height. The proposal may collapse elevation into general height; keep the technical phrase pending checked terminology."
+    },
+    {
+      "candidateRowIndex": 54,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 6,
+      "field": "body[2]",
+      "segmentIndex": 2,
+      "sourceFragment": "points at the same height",
+      "candidateAsSubmitted": "fhethu hune ha lingana nga vhulapfu",
+      "sourceContext": "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "The A-frame marks equal-elevation points used to trace a contour line. Because the phrase is a measurement criterion, retain it until “height” is confirmed as elevation rather than object height."
+    },
+    {
+      "candidateRowIndex": 55,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 21,
+      "field": "body[1]",
+      "segmentIndex": 1,
+      "sourceFragment": "points at the same height",
+      "candidateAsSubmitted": "fhethu hune ha lingana nga vhulapfu",
+      "sourceContext": "Use it to mark points at the same height and trace a contour line. This is an observation, not a design for earthworks. Before digging, ask a trained local adviser to assess the site and plan a safe route for excess water.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "This is the same contour-marking measurement in an earthworks safety instruction. The candidate may say equal general height rather than equal elevation; keep exact English."
+    },
+    {
+      "candidateRowIndex": 56,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 14,
+      "field": "body[1]",
+      "segmentIndex": 2,
+      "sourceFragment": "ice that forms on a cold surface.",
+      "candidateAsSubmitted": "ice ine ya vhumbwa kha surface yo rotholelaho.",
+      "sourceContext": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "disposition": "included-in-revised-composed-proposal",
+      "reason": "See revised proposal VE-N04."
+    },
+    {
+      "candidateRowIndex": 57,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 14,
+      "field": "body[1]",
+      "segmentIndex": 7,
+      "sourceFragment": "ice has formed",
+      "candidateAsSubmitted": "ice yo no vhumbwa",
+      "sourceContext": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "disposition": "included-in-revised-composed-proposal",
+      "reason": "See revised proposal VE-N04."
+    },
+    {
+      "candidateRowIndex": 58,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 16,
+      "field": "body[2]",
+      "segmentIndex": 1,
+      "sourceFragment": "design skeleton for the whole smallholding",
+      "candidateAsSubmitted": "mutheo wa u pulana ha shamba ḽoṱhe ḽiṱuku",
+      "sourceContext": "Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Accept for source-semantic scope only: The map is called the design skeleton for the whole smallholding. The candidate uses a foundation/framework idea and keeps the whole small farm in scope. Risk: verify that “smallholding” is not reduced to a small plot and that the framework metaphor is natural."
+    },
+    {
+      "candidateRowIndex": 60,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 19,
+      "field": "body[1]",
+      "segmentIndex": 1,
+      "sourceFragment": "the same base map",
+      "candidateAsSubmitted": "mapu nthihi ya mutheo",
+      "sourceContext": "Overlay your zones and sectors on the same base map.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "“The same base map” requires zones and sectors to share one identical underlying map. “mapu nthihi ya mutheo” may say one base map, but does not clearly preserve “same”; hold."
+    },
+    {
+      "candidateRowIndex": 61,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 19,
+      "field": "body[2]",
+      "segmentIndex": 2,
+      "sourceFragment": "a perfect map drawn once.",
+      "candidateAsSubmitted": "mapu yo fhelelaho yo oliwaho luthihi.",
+      "sourceContext": "Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "The source values a used pencil map above a “perfect map drawn once.” The proposal may mean a complete map rather than a perfect/ideal one, weakening the comparison; retain exact English."
+    },
+    {
+      "candidateRowIndex": 62,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 1,
+      "field": "heading",
+      "segmentIndex": null,
+      "sourceFragment": "Vegetables and Staple Crops",
+      "candidateAsSubmitted": "Zwimela zwa miroho na zwiliwa zwa ndeme",
+      "sourceContext": "Vegetables and Staple Crops",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "The heading names a crop category, “staple crops,” not merely important foods. The proposed wording appears to shift crops into food items; retain exact English heading pending a category-preserving term."
+    },
+    {
+      "candidateRowIndex": 63,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 1,
+      "field": "body[0]",
+      "segmentIndex": 1,
+      "sourceFragment": "Vegetables and Staple Crops.",
+      "candidateAsSubmitted": "Zwimela zwa miroho na zwiliwa zwa ndeme.",
+      "sourceContext": "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "The welcome sentence repeats the module title “Vegetables and Staple Crops.” The same crop-category ambiguity applies in this sentence; hold the exact title."
+    },
+    {
+      "candidateRowIndex": 64,
+      "binding": "changed-target-needs-rebase",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 3,
+      "field": "body[3]",
+      "segmentIndex": 2,
+      "sourceFragment": "staples",
+      "candidateAsSubmitted": "zwiliwa zwa ndeme",
+      "sourceContext": "Three. Choose staples that protect you when one crop fails.",
+      "disposition": "retain-english-hold",
+      "reason": "Staples is a crop/food-security category; no checked Tshivenda category equivalent is present. The dependent crop-failure condition is audited separately."
+    },
+    {
+      "candidateRowIndex": 65,
+      "binding": "changed-target-needs-rebase",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 3,
+      "field": "body[3]",
+      "segmentIndex": 4,
+      "sourceFragment": "when one crop fails.",
+      "candidateAsSubmitted": "musi tshiṅwe tshimela tshi sa bveledzi.",
+      "sourceContext": "Three. Choose staples that protect you when one crop fails.",
+      "disposition": "current-draft-already-covers-condition; no new wording",
+      "reason": "The current target already localizes the conditional as “musi crop iṅwe i tshi kundelwa” (when one crop fails), preserving the condition and singular crop while keeping crop as a visible English hold. Do not rewrite a current source-bound draft merely to restate it. Row 64 staples remains an unresolved crop/food-security category and stays English-held."
+    },
+    {
+      "candidateRowIndex": 66,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 3,
+      "field": "body[4]",
+      "segmentIndex": 1,
+      "sourceFragment": "Read a pest problem",
+      "candidateAsSubmitted": "Ṱhogomelani thaidzo ya zwikhokhonono",
+      "sourceContext": "Four. Read a pest problem before you treat it.",
+      "disposition": "included-in-revised-composed-proposal",
+      "reason": "See revised proposal VE-N06."
+    },
+    {
+      "candidateRowIndex": 67,
+      "binding": "changed-target-needs-rebase",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 3,
+      "field": "body[5]",
+      "segmentIndex": 1,
+      "sourceFragment": "A well-shaped bed still fails if everything goes in on one day. ",
+      "candidateAsSubmitted": "Bed yo dzudzanyiwaho zwavhuḓi i kha ḓi kundelwa arali zwoṱhe zwa ṱavhiwa nga ḓuvha ḽithihi. ",
+      "sourceContext": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "disposition": "included-in-revised-composed-proposal",
+      "reason": "See revised proposal VE-N07."
+    },
+    {
+      "candidateRowIndex": 68,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 4,
+      "field": "body[1]",
+      "segmentIndex": 1,
+      "sourceFragment": "Permanent paths",
+      "candidateAsSubmitted": "Nḓila dza tshifhinga tshoṱhe",
+      "sourceContext": "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+      "disposition": "retain-exact-english-hold",
+      "reason": "The proposed all-time path phrase did not defensibly preserve “permanent paths”; retain exact term until a stable-path meaning is checked."
+    },
+    {
+      "candidateRowIndex": 69,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 5,
+      "field": "body[1]",
+      "segmentIndex": 1,
+      "sourceFragment": "least disturbance",
+      "candidateAsSubmitted": "u kwasha zwiṱuku zwine zwa shuma",
+      "sourceContext": "Start with the least disturbance that solves your problem.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Hold: “Least disturbance that solves your problem” is a minimum-intervention rule. The candidate can mean breaking/crushing a little that works, shifting from disturbance to breakage; hold."
+    },
+    {
+      "candidateRowIndex": 73,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 6,
+      "field": "heading",
+      "segmentIndex": null,
+      "sourceFragment": "Seed or Seedling?",
+      "candidateAsSubmitted": "Mbeu kana mudalo?",
+      "sourceContext": "Seed or Seedling?",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "The heading contrasts seed with seedling. The supplied term “mudalo” is not verified as seedling rather than a seedbed/planting term; hold the contrast in English."
+    },
+    {
+      "candidateRowIndex": 74,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 6,
+      "field": "body[0]",
+      "segmentIndex": 1,
+      "sourceFragment": "They do better",
+      "candidateAsSubmitted": "Zwi aluwa zwavhuḓi",
+      "sourceContext": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "disposition": "retain-exact-english-hold",
+      "reason": "“Zwi aluwa better” changes “They do better” to a narrower claim about growing; retain explicit comparative in English until a source-bounded comparative candidate exists."
+    },
+    {
+      "candidateRowIndex": 77,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 8,
+      "field": "heading",
+      "segmentIndex": 0,
+      "sourceFragment": "A Sowing Rhythm",
+      "candidateAsSubmitted": "Tshifhinga tsha u ṱavha",
+      "sourceContext": "A Sowing Rhythm Keeps Food Moving",
+      "disposition": "included-in-revised-composed-proposal",
+      "reason": "See revised proposal VE-N10."
+    },
+    {
+      "candidateRowIndex": 78,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 11,
+      "field": "heading",
+      "segmentIndex": 1,
+      "sourceFragment": "Your Hungry Gap",
+      "candidateAsSubmitted": "Tshifhinga tshine zwiliwa zwa vha zwi siho",
+      "sourceContext": "Plan Backwards From Your Hungry Gap",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Hold: The heading is a seasonal “hungry gap” from which planning works backwards. The candidate risks saying food is absent altogether, not a limited seasonal shortage; hold."
+    },
+    {
+      "candidateRowIndex": 79,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 12,
+      "field": "heading",
+      "segmentIndex": null,
+      "sourceFragment": "Staples Are Food Insurance",
+      "candidateAsSubmitted": "Zwiliwa zwa ndeme ndi tsireledzo ya zwiliwa",
+      "sourceContext": "Staples Are Food Insurance",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "“Staples are food insurance” is a food-security metaphor about staple crops. The candidate may say important foods protect food, losing the security/insurance relation; hold."
+    },
+    {
+      "candidateRowIndex": 80,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 15,
+      "field": "body[1]",
+      "segmentIndex": 1,
+      "sourceFragment": "stress.",
+      "candidateAsSubmitted": "mutsiko.",
+      "sourceContext": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "“Plants under stress” is a crop-health state in a diagnostic list alongside monocropping and chemical use. “mutsiko” may mean pressure rather than plant stress; retain the technical source."
+    },
+    {
+      "candidateRowIndex": 81,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 15,
+      "field": "body[1]",
+      "segmentIndex": 4,
+      "sourceFragment": "broad chemical use",
+      "candidateAsSubmitted": "u shumisa mishonga ya u vhulaha zwikhokhonono nga vhuḓalo",
+      "sourceContext": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Hold: This is “broad chemical use” that has removed beneficial predators, not only insect-killing medicine used extensively. The candidate narrows chemicals to insecticide; keep exact scope."
+    },
+    {
+      "candidateRowIndex": 85,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 17,
+      "field": "body[3]",
+      "segmentIndex": 2,
+      "sourceFragment": "ten-day photograph",
+      "candidateAsSubmitted": "tshifanyiso tsha maḓuvha a fumi",
+      "sourceContext": "Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "The ten-day photograph is an assignment checkpoint, not a reason to delay care. “Picture of ten days” may not mean a photograph taken ten days after planting; hold the timing phrase."
+    },
+    {
+      "candidateRowIndex": 87,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 3,
+      "field": "body[2]",
+      "segmentIndex": 2,
+      "sourceFragment": "harvests",
+      "candidateAsSubmitted": "mikulo",
+      "sourceContext": "Two. Keep harvests moving, using succession planting and intercropping.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Here “harvests” are successive crop yields that continue over time through succession planting/intercropping. The supplied term is not established for harvest events/outputs; hold."
+    },
+    {
+      "candidateRowIndex": 88,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 3,
+      "field": "body[4]",
+      "segmentIndex": 3,
+      "sourceFragment": "treat it.",
+      "candidateAsSubmitted": "ni sa athu u i lafha.",
+      "sourceContext": "Four. Read a pest problem before you treat it.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "“Treat it” refers to acting on a diagnosed pest problem, not healing an organism. The proposal uses a heal/treat verb whose scope for pest management is unverified; keep English."
+    },
+    {
+      "candidateRowIndex": 89,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 5,
+      "field": "body[4]",
+      "segmentIndex": 2,
+      "sourceFragment": "wet ground",
+      "candidateAsSubmitted": "mavu o nukalaho",
+      "sourceContext": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "Hold: The source’s wet ground is the condition for raised beds and drainage. The proposed phrase risks “smelling ground,” changing moisture into smell; keep exact English."
+    },
+    {
+      "candidateRowIndex": 90,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 15,
+      "field": "body[3]",
+      "segmentIndex": 2,
+      "sourceFragment": "compacted",
+      "candidateAsSubmitted": "o khwathiswaho",
+      "sourceContext": "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "“Compacted” is a soil-structure condition in a plant-health diagnosis. The candidate can mean strengthened/hardened, which may not identify soil compaction; hold the technical term."
+    },
+    {
+      "candidateRowIndex": 91,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 16,
+      "field": "body[1]",
+      "segmentIndex": 1,
+      "sourceFragment": "damage pattern",
+      "candidateAsSubmitted": "nyolo ya tshinyadzo",
+      "sourceContext": "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+      "disposition": "hold-pending-semantic-or-lexical-repair",
+      "reason": "The diagnostic step is to inspect the damage pattern, underside of the leaf, stem, and nearby plants. The candidate may mean a drawing/picture of damage, not its spatial pattern; hold."
+    },
+    {
+      "candidateRowIndex": 92,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 17,
+      "field": "body[4]",
+      "segmentIndex": 0,
+      "sourceFragment": "Photograph it",
+      "candidateAsSubmitted": "Itani tshifanyiso tsha yo",
+      "sourceContext": "Photograph it when it's planted. Then come back after ten days with what you observed.",
+      "disposition": "retain-exact-english-hold",
+      "reason": "“Itani tshifanyiso” means make/take an image and may be broader than photograph; retain “Photograph it” until a precise ordinary candidate is checked."
+    },
+    {
+      "candidateRowIndex": 95,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/market-community.ve.paired-draft.json",
+      "slide": 11,
+      "field": "body[2]",
+      "segmentIndex": 1,
+      "sourceFragment": "what happens when crops are short. Regular orders",
+      "candidateAsSubmitted": "na zwine zwa itea musi zwimela zwi sa eḓani. Dzioda dza tshifhinga tshoṱhe",
+      "sourceContext": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "disposition": "included-in-revised-composed-proposal",
+      "reason": "See revised proposal VE-N14."
+    },
+    {
+      "candidateRowIndex": 96,
+      "binding": "exact-pending-candidate",
+      "file": "docs/narration/market-community.ve.paired-draft.json",
+      "slide": 17,
+      "field": "body[1]",
+      "segmentIndex": 1,
+      "sourceFragment": "selling costs still need measuring.",
+      "candidateAsSubmitted": "mutengo wa u rengisa u kha ḓi tea u kala.",
+      "sourceContext": "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+      "disposition": "included-in-revised-composed-proposal",
+      "reason": "See revised proposal VE-N15."
+    }
+  ],
+  "appliedCandidateRowsExcluded": [
+    2,
+    7,
+    9,
+    10,
+    12,
+    21,
+    47,
+    48,
+    50,
+    51,
+    59,
+    72,
+    75,
+    76,
+    84,
+    86,
+    93,
+    94
+  ],
+  "rootStatus": "Data only; no authoring or publication approval; source-bound options for next fresh batch",
+  "rootPlausibleMixedProposals": [
+    "VE-N03",
+    "VE-N04",
+    "VE-N05",
+    "VE-N06",
+    "VE-N07",
+    "VE-N14",
+    "VE-N15",
+    "VE-N18"
+  ],
+  "rootFurtherReview": {
+    "VE-N10": "Repeated sowing time may narrow rhythm; retain noun until further agreement/source-scope review.",
+    "VE-N16": "Protective keep-away action still needs lexical check; no new action is authorized.",
+    "VE-N17": "Dominating-ground predicate needs independent lexical review."
+  }
+}

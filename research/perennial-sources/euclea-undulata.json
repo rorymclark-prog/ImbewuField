@@ -1,0 +1,62 @@
+{
+  "speciesId": "euclea-undulata",
+  "commonName": "Small-leaved guarri",
+  "botanicalName": "Euclea undulata",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "ripe berries",
+  "supplementaryReferences": [
+    {
+      "title": "Edible part and local use",
+      "quote": "the fruits are eaten by birds, antelope and humans although not very tasty",
+      "url": "https://pza.sanbi.org/euclea-undulata",
+      "doc": "SANBI PlantZAfrica, euclea-undulata",
+      "page": null,
+      "note": "Food is the ripe berry. Fruit appearance from February and overlapping flowers/fruit do not establish a complete ripe-picking window."
+    }
+  ],
+  "productionGuidance": {
+    "products": "ripe berries",
+    "care": [
+      "This slow-growing plant suits dry gardens and a range of southern African habitats. Give it space for its natural bushy form."
+    ],
+    "purchase": [
+      "Ask for correctly identified Euclea undulata and record the actual planting date and local ripe-picking months."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/euclea-undulata",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    }
+  ],
+  "gaps": [
+    "Fruit appears from February, but an end date and ripe-picking interval are not stated."
+  ]
+}

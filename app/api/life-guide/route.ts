@@ -3,6 +3,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import type { LocationData } from '@/lib/types';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
+import { parseJsonBody } from '@/lib/api-json-body';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -101,7 +102,9 @@ export async function POST(req: NextRequest) {
   const metered = await meteredAi(req, auth, '/api/life-guide', client);
   if (metered.response) return metered.response;
   const { ai } = metered;
-  const { locationData }: { locationData: LocationData } = await req.json();
+  const parsed = await parseJsonBody<{ locationData?: LocationData }>(req);
+  if (parsed.response) return parsed.response;
+  const { locationData } = parsed.data;
   if (!locationData?.biome) return NextResponse.json({ error: 'No location data' }, { status: 400 });
 
   const { biome, rainfall, climate, soil, vegetation, bru } = locationData;

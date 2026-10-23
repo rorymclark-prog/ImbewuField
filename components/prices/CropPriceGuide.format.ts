@@ -10,6 +10,7 @@
  */
 import { CROPS, type CropDef } from '@/lib/crop-catalog';
 import { priceFor, type CropPrice } from '@/lib/crop-prices';
+import { produceLabel } from '@/lib/produce-label';
 
 /**
  * The price book (lib/crop-prices.ts) is a researched snapshot, not a live feed — see that file's
@@ -29,7 +30,7 @@ export const PRICE_SNAPSHOT_DATE = '14 July 2026';
  * date actually in the book falls outside the months named here, so the sentence cannot go stale
  * silently the next time a crop is priced.
  */
-export const PRICE_SNAPSHOT_MONTHS = 'July–August 2026';
+export const PRICE_SNAPSHOT_MONTHS = 'July, August and September 2026';
 
 /**
  * The date to print on one crop's price card: that price's own research date when it has one, else
@@ -58,10 +59,14 @@ export interface PricedCrop {
  * Sorted by name so a farmer can find a crop by scanning, not by remembering catalog planting
  * order — same reasoning as components/exchange/NewListingForm.tsx's cropOptions.
  */
-export function pricedCropList(overrides: Record<string, CropPrice>): PricedCrop[] {
+// zu-11 / ux-18: `name` now comes from the shared produceLabel() helper (lib/produce-label.ts)
+// rather than the catalog's own English-only `crop.name`, so /prices spells a crop the same way
+// Home, /calendar and Records do, once an isiZulu name is known. `lang` defaults to 'en' so the
+// existing (English-only) callers — tests/farm-gate-prices.test.ts among them — are unaffected.
+export function pricedCropList(overrides: Record<string, CropPrice>, lang: string = 'en'): PricedCrop[] {
   return CROPS.map((crop) => ({ crop, price: priceFor(crop.key, overrides) }))
     .filter((entry): entry is { crop: CropDef; price: CropPrice } => entry.price !== null)
-    .map(({ crop, price }) => ({ key: crop.key, name: crop.name, icon: crop.icon, price }))
+    .map(({ crop, price }) => ({ key: crop.key, name: produceLabel(crop.key, lang), icon: crop.icon, price }))
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 

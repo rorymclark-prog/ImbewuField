@@ -1,0 +1,31 @@
+{
+  "key": "true-spinach",
+  "varieties": [
+    {
+      "name": "Helios",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Oval shaped, dark green smooth leaves; upright growth habit; good disease resistance package (downy mildew); wide adaptability",
+      "type": "hybrid",
+      "note": "Sakata F1 hybrid — confirmed to be true spinach (Spinacia oleracea), not Swiss chard: the brochure's table of contents lists 'Spinach' and 'Swiss Chard' as separate product categories, and this cultivar sits under the 'SPINACH - F1 Hybrid' heading. 'Wide adaptability' is the only climate-fitness claim; no SA zone or region is named.",
+      "evidence": [{ "quote": "SPINACH - F1 Hybrid\nHELIOS: Oval shaped, dark green smooth leaves. Upright growth habit. Good disease resistance package. Wide adaptability", "url": "https://sakata.co.za/wp-content/uploads/2024/03/Sakata-Product-Brochure-2024-2025.pdf", "page": 28, "doc": "Sakata Seed Southern Africa Product Overview 2024-2025" }]
+    },
+    {
+      "name": "Riverside",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Spade shaped, dark green smooth leaves; upright growth habit; wide adaptability; excellent quality, ideally suited for baby leaf production",
+      "type": "hybrid",
+      "note": "Same source/crop confirmation as Helios; no SA zone or region named.",
+      "evidence": [{ "quote": "RIVERSIDE: Spade shaped, dark green smooth leaves. Upright growth habit. Wide adaptability. Excellent quality ideally suited for baby leaf production", "url": "https://sakata.co.za/wp-content/uploads/2024/03/Sakata-Product-Brochure-2024-2025.pdf", "page": 28, "doc": "Sakata Seed Southern Africa Product Overview 2024-2025" }]
+    }
+  ],
+  "zoneAdvice": {},
+  "gaps": [
+    "No cultivar is tied to a South African zone or region in the only source found (Sakata's commercial brochure) — both named cultivars are described only as 'wide adaptability' with no bolt-tolerance or heat-tolerance distinction stated, so this pass cannot honestly split them by zone the way the task brief asks for leafy greens (heat/bolting tolerance by zone).",
+    "The general sowMonths/days-to-harvest/spacing/yield data already in crop-catalog.ts for true-spinach (cited to a 'KZN DARD Table 6' / 'Length of Growing Period' document from an earlier research pass) was NOT re-verified in this pass — this file adds only cultivar names, which that earlier data did not include.",
+    "No sourced recommendation at all for any of the 8 zones — every zone in the required output is an honest gap for this crop."
+  ]
+}

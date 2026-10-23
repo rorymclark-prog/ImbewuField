@@ -12,9 +12,9 @@
 // without a browser; lib/offline-cache.ts does the actual fetching.
 
 import { COURSE_MODULES } from '@/lib/course-modules';
-import { APP_GUIDE_NARRATION, appGuideTrack, COURSE_NARRATION, resolveNarrationLang } from '@/lib/course-audio';
+import { APP_GUIDE_NARRATION, appGuideTrack, COURSE_NARRATION, resolveNarrationLang, trackUrl } from '@/lib/course-audio';
 import { APP_GUIDES } from '@/lib/course-app-guides';
-import { COURSE_DECKS, slideImageUrl, animationUrls } from '@/lib/course-deck';
+import { COURSE_DECKS, slideImageFor, animationUrls } from '@/lib/course-deck';
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
 
 export interface PackEntry {
@@ -47,6 +47,20 @@ export interface OfflinePack {
  * lesson, at the quality the assets were made at, at roughly double the size.
  */
 export type PackQuality = 'standard' | 'high';
+
+/** A slide-only pack keeps the stills a regional learner sees and any matching poster. */
+export type OfflinePackVariant = 'full' | 'slides';
+
+/** Silent regional decks must not download fallback English audio without a choice. */
+export function regionalPackNeedsNarrationChoice(moduleIds: readonly string[], lang: string): boolean {
+  return ['st', 've', 'ts'].includes(lang) && moduleIds.some(id =>
+    Boolean(COURSE_DECKS[id]) && resolveNarrationLang(id, lang)?.exact !== true,
+  );
+}
+
+export function defaultOfflinePackVariant(moduleIds: readonly string[], lang: string): OfflinePackVariant {
+  return regionalPackNeedsNarrationChoice(moduleIds, lang) ? 'slides' : 'full';
+}
 
 /**
  * The high-quality twin of an asset, where one exists.
@@ -86,8 +100,14 @@ function entry(url: string, kind: PackEntry['kind'], missing: string[], quality:
  *
  * `full.mp3` is excluded on the same principle: it is the slide clips concatenated, so including
  * it would spend another 6–7 MB of a farmer's data on a second copy of audio they already have.
+ * The optional 'slides' variant keeps only the resolved stills and posters a deck can display.
  */
-export function offlinePack(moduleId: string, lang: string, quality: PackQuality = 'standard'): OfflinePack {
+export function offlinePack(
+  moduleId: string,
+  lang: string,
+  quality: PackQuality = 'standard',
+  variant: OfflinePackVariant = 'full',
+): OfflinePack {
   const missing: string[] = [];
   const entries: PackEntry[] = [];
   const push = (e: PackEntry | null) => { if (e) entries.push(e); };
@@ -96,32 +116,37 @@ export function offlinePack(moduleId: string, lang: string, quality: PackQuality
   const deck = COURSE_DECKS[moduleId];
   if (deck) {
     for (const slide of deck.slides) {
-      // Per slide, not per deck. The player falls back to English when a localized image is
-      // absent, so the pack must include that fallback too or the module has a gap offline.
-      const own = slideImageUrl(moduleId, lang, slide.slide);
-      const url = own ?? slideImageUrl(moduleId, 'en', slide.slide);
-      if (url) push(at(url, 'slide'));
+      // Per slide, not per deck. This uses the same source-review-aware resolver as the player:
+      // a held isiZulu row is visibly paired with its English still, and that exact displayed
+      // still must be in the pack for offline use.
+      const image = slideImageFor(moduleId, lang, slide.slide);
+      if (image) push(at(image.url, 'slide'));
 
       const animation = animationUrls(moduleId, slide.slide, lang);
       if (animation) {
-        push(at(animation.video, 'animation'));
+        if (variant === 'full') push(at(animation.video, 'animation'));
         push(at(animation.poster, 'poster'));
       }
     }
   }
 
   const narration = COURSE_NARRATION[moduleId];
-  // Save the same disclosed fallback the player uses, or English-only decks go silent offline
-  // for a learner whose app is set to isiZulu.
+  // The full pack saves the same disclosed fallback the player uses, or English-only decks go
+  // silent offline for a learner whose app is set to another language.
   const spokenLang = resolveNarrationLang(moduleId, lang);
-  if (narration && spokenLang) {
+  if (variant === 'full' && narration && spokenLang) {
     for (const track of narration.tracks) {
-      push(at(`/course-audio/${moduleId}/${spokenLang.lang}/slide-${String(track.slide).padStart(2, '0')}.mp3`, 'audio'));
+      // A held isiZulu clip is intentionally unavailable, not a missing file. trackUrl owns
+      // that decision and never substitutes English audio for the held row.
+      const url = trackUrl(moduleId, spokenLang.lang, track.slide);
+      if (url) push(at(url, 'audio'));
     }
   }
 
-  for (const lesson of COURSE_MODULES.find((m) => m.id === moduleId)?.lessons ?? []) {
-    if (lesson.infographicUrl) push(at(lesson.infographicUrl, 'image'));
+  if (variant === 'full') {
+    for (const lesson of COURSE_MODULES.find((m) => m.id === moduleId)?.lessons ?? []) {
+      if (lesson.infographicUrl) push(at(lesson.infographicUrl, 'image'));
+    }
   }
 
   // A slide can be reached twice — its own file plus an English fallback pointing at the same
@@ -143,7 +168,7 @@ export function offlinePack(moduleId: string, lang: string, quality: PackQuality
 export function downloadableModules(lang: string, quality: PackQuality = 'standard'): Array<{ moduleId: string; bytes: number; count: number }> {
   return COURSE_MODULES
     .map((m) => {
-      const pack = offlinePack(m.id, lang, quality);
+      const pack = offlinePack(m.id, lang, quality, defaultOfflinePackVariant([m.id], lang));
       return { moduleId: m.id, bytes: pack.bytes, count: pack.entries.length };
     })
     .filter((p) => p.count > 0);

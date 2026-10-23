@@ -1,0 +1,223 @@
+{
+  "sourceSha256": "8f87f58c538a9d7df478b2211cac147e46214af9dee2454bd658c56d1efaa6be",
+  "sourceBase": "2731fe76f2e8e7d1bc9a0be0dce66be497904401",
+  "status": "Data-only root review; no learner wiring or fluent approval. Fresh exact-source checks required for any later batch.",
+  "fields": [
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "st",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "body.paragraph[8]",
+        "candidateIndexes": [
+          25
+        ]
+      },
+      "rootDisposition": "hold",
+      "reason": "“Metsi a hlokang sebaka sa ho phallela teng” may say water needs a place to flow, but the source specifically requires a destination for drainage away. Preserve the exact drainage clause until its direction is unambiguous."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "body.paragraph[10]",
+        "candidateIndexes": [
+          26
+        ]
+      },
+      "rootDisposition": "repair",
+      "reason": "The proposal opener “Musi ho na” is not Tshivenda. This correction says to observe after heavy rain; it changes only the opener and preserves the water-location questions and before-choosing condition."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "infographicAlt",
+        "candidateIndexes": [
+          27
+        ]
+      },
+      "rootDisposition": "accepted-draft-candidate",
+      "reason": "The proposal “a sa athu u vhuya a ima” can read as “before the person ever stands,” which weakens the source’s never-standing constraint. “A sa vhuye a ima” makes the prohibition continuous; the approximate width, two-sided access, and growing-soil reference remain. Diagram evidence remains required before learner application.",
+      "actualDiagramReview": "Root opened1200x800 L1JPEG: two paths, person standing on path and reaching towardmiddle. No numberlabel: approximate1.2m retained from canonical. Never-standing condition independentchecked. Fresh-source and learnerUI gates remain."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "body.paragraph[10]",
+        "candidateIndexes": [
+          28
+        ]
+      },
+      "rootDisposition": "repair",
+      "reason": "The proposal leaves the ordinary weather phrase “heavy rain” in English. This localizes that phrase and keeps the water observation, soil/drainage advice, and before-bed-choice sequence."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "infographicAlt",
+        "candidateIndexes": [
+          29
+        ]
+      },
+      "rootDisposition": "accepted-draft-candidate",
+      "reason": "The Xitsonga proposal preserves the approximate 1.2-metre width, paths on both sides, reach to the middle from either side, and never-standing constraint. It adds no dimension or farming instruction. Diagram evidence remains required before learner application.",
+      "actualDiagramReview": "Root opened1200x800 L1JPEG: two paths, person standing on path and reaching towardmiddle. No numberlabel: approximate1.2m retained from canonical. Never-standing condition independentchecked. Fresh-source and learnerUI gates remain."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "body.paragraph[14]",
+        "candidateIndexes": [
+          30
+        ]
+      },
+      "rootDisposition": "hold",
+      "reason": "The source wording “store as protein” is ambiguous: translating it as “store protein” can turn a storable protein source into a claim that the beans themselves store protein. Preserve the exact source phrase pending a defensible reading."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "body.paragraph[17]",
+        "candidateIndexes": [
+          31
+        ]
+      },
+      "rootDisposition": "hold",
+      "reason": "The proposal changes “immediately feed” to “give nutrients quickly.” That risks weakening the timing and interpreting “feed” more narrowly. Preserve the exact source-bound biological clause; earlier localized competition and resource-allocation sentences remain."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "infographicAlt",
+        "candidateIndexes": [
+          32
+        ]
+      },
+      "rootDisposition": "hold",
+      "reason": "The proposed alt text is Xitsonga rather than Tshivenda (“eka tinguva…”, “ximilana…swimilana”). Keep the current exact English description until a Tshivenda proposal is available; do not expose the wrong language as a learner label."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "quiz[1].question",
+        "candidateIndexes": [
+          33
+        ]
+      },
+      "rootDisposition": "hold",
+      "reason": "This is already a precision hold, not a full-target translation proposal. Keep the exact current source-paired wording: the nitrogen-in-residues availability question contains technical terminology and a timing relation that this pass does not independently translate."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "quiz[1].rationale",
+        "candidateIndexes": [
+          34,
+          35
+        ]
+      },
+      "rootDisposition": "hold",
+      "reason": "Root found the same immediately-versus-quickly timing difference that the supplement rejected in the body. Preserve immediate feeding in exact English until a precise localized timing clause is checked; do not apply either rationale as accepted."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "body.paragraph[14]",
+        "candidateIndexes": [
+          36
+        ]
+      },
+      "rootDisposition": "hold",
+      "reason": "As with the paired Tshivenda field, “store as protein” is ambiguous and “store protein” risks asserting a different biological/storage mechanism. Preserve the exact source phrase pending a defensible reading."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "body.paragraph[17]",
+        "candidateIndexes": [
+          37
+        ]
+      },
+      "rootDisposition": "hold",
+      "reason": "The proposal changes “immediately feed” to “give nutrients quickly,” risking a weaker timing claim and a narrower interpretation. Preserve the exact biological clause while keeping the preceding localized sentences."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "infographicAlt",
+        "candidateIndexes": [
+          38
+        ]
+      },
+      "rootDisposition": "repair-required",
+      "reason": "Replace the Tshivenda “nthihi” with Xitsonga “yin’we”. Keep “over three seasons” in exact English because “misimu” alone does not make the crop-season duration unambiguous. The sequence, beside relation, continued growth, and never-empty condition are retained. Diagram evidence remains required before learner application.",
+      "actualDiagramReview": "Root opened L2three-panelharvest/growth diagram. No visualcontradiction; generic planting does not preserve new sowing source. Hold exact then a new sowing goes in beside clause pending precise independent localization."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "quiz[1].rationale",
+        "candidateIndexes": [
+          39,
+          40
+        ]
+      },
+      "rootDisposition": "hold",
+      "reason": "Root found the same immediately-versus-quickly timing difference that the supplement rejected in the body. Preserve immediate feeding in exact English until a precise localized timing clause is checked; do not apply either rationale as accepted."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l3",
+        "fieldLocator": "title",
+        "candidateIndexes": [
+          41
+        ]
+      },
+      "rootDisposition": "hold",
+      "reason": "The proposed Tshivenda title begins with Xitsonga (“Zwibyariwa zwa swakudya zwa nkoka”). The current exact English title safely preserves the crop-category wording and named crops; retain it until a Tshivenda title is available."
+    }
+  ],
+  "diagramReviewSHA256": "fa74fc061af307f935a6d4d7f299fddc6db1fea17f304691de0790c9f26ccaf4"
+}

@@ -66,20 +66,22 @@ import FarmerPanel from '@/components/network/FarmerPanel';
 import { CohortTimeline, CohortTrainingChart } from './CohortCharts';
 import type { GardenStatus } from '@/lib/db/types';
 
-/* Programme surfaces match the assessment cards; chart meanings retain their colours. */
-const INK = '#183427';
-const INK_SOFT = '#44574B';
-const INK_MUTED = '#506158';
-const LINE = '#D7E3D9';
-const PAPER = '#FFFFFF';
-const FIELD = '#EFF4EF';
-const FOREST = '#1F4D2B';
-const ATTENTION = '#C0531E';
+/* Programme surfaces match the assessment cards; chart meanings retain their colours.
+   Theme-aware (var(--token, fallback)) so this dashboard follows dark mode instead of
+   staying a light sheet between a dark header and dark bottom nav. */
+const INK = 'var(--text-primary)';
+const INK_SOFT = 'var(--text-secondary)';
+const INK_MUTED = 'var(--text-muted)';
+const LINE = 'var(--border)';
+const PAPER = 'var(--bg-1)';
+const FIELD = 'var(--bg-0)';
+const FOREST = 'var(--emerald)';
+const ATTENTION = 'var(--orange)';
 
 const STATUS_COLOR: Record<GardenStatus, string> = {
-  thriving: '#1F4D2B',
-  establishing: '#9E5C08',
-  support: '#C0531E',
+  thriving: 'var(--emerald)',
+  establishing: 'var(--gold)',
+  support: 'var(--orange)',
 };
 
 /** Micro-label floor. Nothing in this file goes under it. */
@@ -265,10 +267,10 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
       {portfolio.error && (
           <div
             className="flex items-center gap-2 px-3 md:px-5 py-2.5"
-            style={{ background: 'rgba(158,92,8,0.08)', borderBottom: `1px solid ${LINE}` }}
+            style={{ background: 'color-mix(in srgb, var(--gold) 8%, var(--bg-0))', borderBottom: `1px solid ${LINE}` }}
           >
-            <AlertTriangle size={14} style={{ color: '#9E5C08', flexShrink: 0 }} />
-            <span className="font-sans" style={{ fontSize: 12.5, color: '#7A4A06', lineHeight: 1.45 }}>
+            <AlertTriangle size={14} style={{ color: 'var(--gold)', flexShrink: 0 }} />
+            <span className="font-sans" style={{ fontSize: 12.5, color: 'var(--gold-dim)', lineHeight: 1.45 }}>
               {portfolio.error}
             </span>
             <button
@@ -276,8 +278,8 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
               onClick={portfolio.reload}
               className="font-sans font-semibold"
               style={{
-                fontSize: MICRO, color: '#7A4A06', background: 'transparent',
-                border: '1px solid rgba(158,92,8,0.35)', borderRadius: 7,
+                fontSize: MICRO, color: 'var(--gold-dim)', background: 'transparent',
+                border: '1px solid color-mix(in srgb, var(--gold) 35%, var(--border))', borderRadius: 7,
                 padding: '3px 10px', cursor: 'pointer', marginLeft: 'auto', flexShrink: 0,
               }}
             >
@@ -297,8 +299,8 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
           <div
             className="px-3 md:px-5 py-2 font-sans"
             style={{
-              fontSize: MICRO, color: '#7A4A06', lineHeight: 1.5,
-              background: 'rgba(158,92,8,0.10)', borderBottom: '1px solid rgba(158,92,8,0.25)',
+              fontSize: MICRO, color: 'var(--gold-dim)', lineHeight: 1.5,
+              background: 'color-mix(in srgb, var(--gold) 10%, var(--bg-0))', borderBottom: '1px solid color-mix(in srgb, var(--gold) 25%, var(--border))',
             }}
           >
             {ui(DEMO_NETWORK_NOTICE,'Iphothifoliyo yesibonelo')}
@@ -371,11 +373,11 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                       disabled={sorted.length === 0}
                       className="flex items-center gap-1.5 font-sans font-semibold"
                       style={{
-                        fontSize: 12.5, borderRadius: 9, padding: '6px 11px',
-                        minHeight: 34,
+                        fontSize: 13, borderRadius: 9, padding: '6px 11px',
+                        minHeight: 44,
                         cursor: sorted.length === 0 ? 'not-allowed' : 'pointer',
                         opacity: sorted.length === 0 ? 0.45 : 1,
-                        background: FOREST, color: '#F7F2E9', border: `1px solid ${FOREST}`,
+                        background: FOREST, color: 'var(--on-forest-800)', border: `1px solid ${FOREST}`,
                       }}
                     >
                       <Download size={13} />
@@ -394,7 +396,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                       onChange={(e) => setQuery(e.target.value)}
                       placeholder={ui('Farmer, site, district or cohort…','Umlimi, indawo, isifunda noma iqembu…')}
                       aria-label={ui('Search the cohort','Sesha iqembu')}
-                      className="flex-1 font-sans bg-transparent outline-none"
+                      className="flex-1 font-sans bg-transparent outline-none rounded focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
                       style={{ fontSize: 13, color: INK, border: 'none', minWidth: 0 }}
                     />
                     {query && (
@@ -422,8 +424,8 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                           className="font-sans font-semibold"
                           style={{
                             fontSize: MICRO, borderRadius: 999, padding: '5px 10px', cursor: 'pointer',
-                            background: on ? FOREST : 'rgba(32,25,15,0.05)',
-                            color: on ? '#F7F2E9' : INK_SOFT,
+                            background: on ? FOREST : 'var(--bg-2)',
+                            color: on ? 'var(--on-forest-800)' : INK_SOFT,
                             border: `1px solid ${on ? FOREST : LINE}`,
                           }}
                         >
@@ -438,7 +440,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                       className="flex items-center gap-1.5 font-sans font-semibold"
                       style={{
                         fontSize: MICRO, borderRadius: 999, padding: '5px 10px', cursor: 'pointer',
-                        background: attentionOnly ? 'rgba(192,83,30,0.12)' : 'rgba(32,25,15,0.05)',
+                        background: attentionOnly ? 'rgba(192,83,30,0.12)' : 'var(--bg-2)',
                         color: attentionOnly ? ATTENTION : INK_SOFT,
                         border: `1px solid ${attentionOnly ? 'rgba(192,83,30,0.45)' : LINE}`,
                       }}
@@ -581,7 +583,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
           <div className="flex items-center justify-between px-4 pt-2.5 pb-1.5 flex-shrink-0">
             <div
               className="md:hidden absolute left-1/2 -translate-x-1/2 top-2"
-              style={{ width: 40, height: 4, borderRadius: 2, background: '#D5C9AE' }}
+              style={{ width: 40, height: 4, borderRadius: 2, background: 'var(--border-strong)' }}
             />
             <span
               className="font-sans font-bold uppercase"
@@ -594,7 +596,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
               onClick={() => setSelectedId(null)}
               aria-label={ui('Close farmer record','Vala irekhodi lomlimi')}
               style={{
-                background: 'rgba(32,25,15,0.06)', border: `1px solid ${LINE}`, borderRadius: 8,
+                background: 'var(--bg-2)', border: `1px solid ${LINE}`, borderRadius: 8,
                 padding: 6, cursor: 'pointer', color: INK_SOFT, display: 'flex', marginTop: 4,
               }}
             >

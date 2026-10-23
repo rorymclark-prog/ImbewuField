@@ -5,7 +5,7 @@ import workspace from '@/components/layout/Workspace.module.css';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, Camera, Loader2, Check, Trash2, X } from 'lucide-react';
+import { Camera, Loader2, Check, Trash2, X } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
@@ -16,11 +16,9 @@ import { resizeFileForUpload } from '@/lib/site-evidence';
 import {
   getMyCommunityProfile, upsertCommunityProfile, deleteCommunityProfile, jitterToNeighbourhood,
 } from '@/lib/db/community-queries';
-import BrandLogo from '@/components/BrandLogo';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
+import AppHeader from '@/components/layout/AppHeader';
 
 const CROP_OPTIONS = [
   'maize', 'beans', 'tomato', 'spinach', 'cabbage', 'potato', 'pumpkin',
@@ -192,18 +190,16 @@ export default function CommunityProfilePage() {
 
   return (
     <div className="h-[100dvh] flex flex-col font-sans" style={{ background: 'var(--bg-0)', color: 'var(--text-primary)' }}>
-      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}>
-        <MenuButton /><BackButton fallback="/home" />
-        <Link href="/community" style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text-secondary)', textDecoration: 'none' }}>
-          <ChevronLeft size={18} strokeWidth={1.7} />
-        </Link>
-        <BrandLogo />
-        <div style={{ flex: 1 }} />
-        <LessonLink id="community:profile" label="Learn" />
-        <h1 className="font-display font-semibold m-0" style={{ fontSize: 15, color: 'var(--text-primary)' }}>{t('communityEditProfileTitle')}</h1>
-      </header>
+      <AppHeader
+        backFallback="/community"
+        title={t('communityEditProfileTitle')}
+        right={<LessonLink id="community:profile" label="Learn" />}
+      />
 
       <main className={`${workspace.workspace} ${workspace.formWidth} flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6`}>
+        {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own
+            real, visible <h1> now that the old header's h1 is gone. */}
+        <h1 className="font-display font-bold m-0" style={{ fontSize: 20, color: 'var(--text-primary)', marginBottom: 12 }}>{t('communityEditProfileTitle')}</h1>
         <p className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: 20 }}>
           {lang === 'zu' && <span className="block font-sans" style={{ marginBottom: 8, color: 'var(--text-muted)' }}>{t('communityDraftReviewNotice')} / isiZulu draft — not reviewed by a fluent speaker</span>}
           {privacyText('Share as much or as little as you like. Nothing here is visible until you save it.', 'communityEditProfileIntro')}
@@ -211,50 +207,53 @@ export default function CommunityProfilePage() {
 
         <div className={workspace.twoColumns}>
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
+            <label htmlFor="community-profile-display-name" className="block font-sans uppercase tracking-widest" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
               {t('communityDisplayNameLabel')}
-            </div>
+            </label>
             <input
+              id="community-profile-display-name"
               type="text"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
               placeholder={t('communityDisplayNamePlaceholder')}
-              className="w-full rounded-xl px-3 py-2.5 font-sans"
+              className="w-full rounded-xl px-3 py-2.5 font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
               style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', outline: 'none' }}
             />
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
+            <label htmlFor="community-profile-area" className="block font-sans uppercase tracking-widest" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
               {t('communityAreaLabel')}
-            </div>
+            </label>
             <input
+              id="community-profile-area"
               type="text"
               value={areaText}
               onChange={(e) => setAreaText(e.target.value)}
               placeholder={t('communityAreaPlaceholder')}
-              className="w-full rounded-xl px-3 py-2.5 font-sans"
+              className="w-full rounded-xl px-3 py-2.5 font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
               style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', outline: 'none' }}
             />
-            <div className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-muted)', marginTop: 4 }}>{privacyText('Town or district — not your exact address', 'communityAreaHint')}</div>
+            <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>{privacyText('Town or district — not your exact address', 'communityAreaHint')}</div>
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
+            <label htmlFor="community-profile-bio" className="block font-sans uppercase tracking-widest" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
               {t('communityBioLabel')}
-            </div>
+            </label>
             <textarea
+              id="community-profile-bio"
               value={bio}
               onChange={(e) => setBio(e.target.value.slice(0, 240))}
               placeholder={t('communityBioPlaceholder')}
               rows={3}
-              className="w-full rounded-xl px-3 py-2.5 font-sans"
+              className="w-full rounded-xl px-3 py-2.5 font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
               style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', outline: 'none', resize: 'none', lineHeight: 1.5 }}
             />
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 8 }}>
+            <div id="community-profile-crops-label" className="font-sans uppercase tracking-widest" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 8 }}>
               {t('communityCropsLabel')}
             </div>
             {(() => {
@@ -265,7 +264,7 @@ export default function CommunityProfilePage() {
                 || crops.some((c) => !COMMON_CROP_OPTIONS.includes(c));
               const visible = cropsExpanded ? CROP_OPTIONS : COMMON_CROP_OPTIONS;
               return (
-                <div className="flex flex-wrap gap-2">
+                <div role="group" aria-labelledby="community-profile-crops-label" className="flex flex-wrap gap-2">
                   {visible.map((c) => (
                     <Chip key={c} label={c} on={crops.includes(c)} onClick={() => toggleCrop(c)} />
                   ))}
@@ -288,13 +287,13 @@ export default function CommunityProfilePage() {
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 8 }}>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.1em', marginBottom: 8 }}>
               {t('communityPhotosLabel')} <span style={{ textTransform: 'none', letterSpacing: 0 }}>· {t('communityPhotosHint')}</span>
             </div>
             <div className="flex flex-wrap gap-2">
               {photos.map((url, i) => (
                 <div key={i} style={{ position: 'relative', width: 72, height: 72, borderRadius: 10, overflow: 'hidden' }}>
-                  <img src={url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={url} alt={`Profile photo ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   <button
                     onClick={() => setPhotos((p) => p.filter((_, idx) => idx !== i))}
                     style={{ position: 'absolute', top: 2, right: 2, background: 'rgba(0,0,0,0.55)', border: 'none', borderRadius: '50%', width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
@@ -347,7 +346,7 @@ export default function CommunityProfilePage() {
         </div>
       </main>
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

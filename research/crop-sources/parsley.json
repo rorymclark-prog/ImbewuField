@@ -1,0 +1,122 @@
+{
+  "key": "parsley",
+  "name": "Parsley",
+  "localNames": null,
+  "botanicalName": "Petroselinum crispum",
+  "family": "Apiaceae",
+  "role": "food",
+  "foodGroup": "leafy_green",
+  "harvestProduct": "leaves (fresh herb)",
+  "frostTender": null,
+  "frostTenderNotes": "Not stated directly by the sourced KZN DARD documents. Parsley is sown across the 'Cold areas / Moderate frosts' window (Aug-Mar) per Table 6, and EcoCrop's KTMP (killing temperature) of 0°C for Petroselinum crispum suggests only light frost tolerance, but no SA source gives an explicit statement, so left null.",
+  "transplant": {
+    "value": false,
+    "evidence": [
+      {
+        "quote": "Parsley 550 - 800 [Seed/g] 3 kg [Direct] 15 - 20 [depth mm] 100 [Plant mm] 300 [Rows mm]",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 6,
+        "doc": "KZN DARD, 'Plant Establishment', Table 5"
+      }
+    ],
+    "notes": "Parsley is not named in the document's list of crops that 'transplant comparatively easily', and Table 5 gives it only a Direct-sow rate with no Seedtray/Seedbed figures — the same pattern shown for other direct-sown crops (radish, parsnip) in that table."
+  },
+  "sowMonths": {
+    "summer": { "months": [8, 9, 10, 11, 12, 1, 2, 3], "evidence": [{"quote": "Parsley Aug - Mar Jul - Apr Feb - Sept", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 8, "doc": "KZN DARD, 'Plant Establishment', Table 6 — Cold areas / Moderate frosts column"}] },
+    "winter": { "months": [8, 9, 10, 11, 12, 1, 2, 3], "evidence": [], "notes": "No Western Cape/winter-rainfall-specific source found; set equal to 'summer' (Cold areas) by inference, following this catalog's existing precedent, not a direct quote." },
+    "all-year": { "months": [2, 3, 4, 5, 6, 7, 8, 9], "evidence": [{"quote": "Parsley Aug - Mar Jul - Apr Feb - Sept", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 8, "doc": "KZN DARD, 'Plant Establishment', Table 6 — Hot areas / Frost-free column"}] },
+    "mild-frost": { "months": [7, 8, 9, 10, 11, 12, 1, 2, 3, 4], "evidence": [{"quote": "Parsley Aug - Mar Jul - Apr Feb - Sept", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 8, "doc": "KZN DARD, 'Plant Establishment', Table 6 — Warm areas / Light frosts column"}] }
+  },
+  "daysToHarvestRange": {
+    "value": [70, 80],
+    "evidence": [
+      {
+        "quote": "Parsley 70 - 80 4 - 10 weeks",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/length_of_growing_period.pdf",
+        "page": 3,
+        "doc": "KZN DARD, 'Length of Growing Period', Table 4"
+      },
+      {
+        "quote": "A large-leaved strain of parsley with flat, dark green serrated leaves. Biennial. ... DAYS TO MATURITY: 70-80",
+        "url": "https://www.starkeayresgc.co.za/wp-content/uploads/2022/04/SeedsFertilizer-Care-Catalogue-A4-DEC2020-min.pdf",
+        "page": 27,
+        "doc": "Starke Ayres Seed & Garden Care Catalogue, First Edition — 'Parsley Plain'"
+      }
+    ],
+    "notes": "KZN's 70-80 day figure is the primary source, corroborated exactly by the Starke Ayres 'Parsley Plain' cultivar. A second catalogue entry on the same page, printed as 'DAYS TO MATURITY: 12-14' next to 'PARSLEY MOSS CURLED', is almost certainly a PDF-layout extraction artefact (a curly parsley cultivar reaching full maturity in 12-14 days is agronomically implausible and inconsistent with every other parsley source found) and was not used."
+  },
+  "harvestPeriodWeeksOrMonths": {
+    "value": "4-10 weeks",
+    "evidence": [{"quote": "Parsley 70 - 80 4 - 10 weeks", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/length_of_growing_period.pdf", "page": 3, "doc": "KZN DARD, 'Length of Growing Period', Table 4"}]
+  },
+  "rowSpacingRangeCm": {
+    "value": [30, 30],
+    "evidence": [{"quote": "Parsley ... 100 [Plant mm] 300 [Rows mm]", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 6, "doc": "KZN DARD, 'Plant Establishment', Table 5"}]
+  },
+  "inRowSpacingRangeCm": {
+    "value": [10, 10],
+    "evidence": [{"quote": "Parsley ... 100 [Plant mm]", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 6, "doc": "KZN DARD, 'Plant Establishment', Table 5"}]
+  },
+  "sowDepthRangeCm": {
+    "value": [1.5, 2],
+    "evidence": [{"quote": "Parsley ... 15 - 20 [Sowing depth mm]", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 6, "doc": "KZN DARD, 'Plant Establishment', Table 5"}]
+  },
+  "seedRateKgPerHaRange": {
+    "value": [3, 3],
+    "evidence": [{"quote": "Parsley ... 3 kg [Direct]", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 6, "doc": "KZN DARD, 'Plant Establishment', Table 5"}]
+  },
+  "yield": {
+    "tPerHaRange": [2, 4],
+    "product": "fresh leaves",
+    "conditions": "commercial, South Africa — conservative to target yield spread",
+    "evidence": [{"quote": "Parsley 2 3 4", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/expected_yields.pdf", "page": 2, "doc": "KZN DARD, 'Expected Yields', Table 8 (Conservative / Likely / Target columns)"}]
+  },
+  "ecocrop": {
+    "row": "Petroselinum crispum",
+    "TOPMN": 11,
+    "TOPMX": 20,
+    "TMIN": 7,
+    "TMAX": 28,
+    "GMIN": 70,
+    "GMAX": 365,
+    "KTMP": 0
+  },
+  "coverCrop": null,
+  "varieties": [
+    {
+      "name": "Parsley Plain",
+      "zones": ["highveld", "lowveld-bushveld", "subtropical-coast", "midlands-mistbelt", "western-cape", "southern-cape"],
+      "maturity": "medium",
+      "season": "Spring, Summer, Autumn & Winter",
+      "note": "A large-leaved strain of parsley with flat, dark green serrated leaves. Biennial.",
+      "evidence": [{"quote": "A large-leaved strain of parsley with flat, dark green serrated leaves. Biennial. SOWING SEASON: Spring, Summer, Autumn & Winter DAYS TO GERMINATION 14-28 DAYS TO MATURITY: 70-80 SOW DEPTH: 5mm", "url": "https://www.starkeayresgc.co.za/wp-content/uploads/2022/04/SeedsFertilizer-Care-Catalogue-A4-DEC2020-min.pdf", "page": 27, "doc": "Starke Ayres Seed & Garden Care Catalogue, First Edition"}]
+    },
+    {
+      "name": "Parsley Moss Curled",
+      "zones": ["highveld", "lowveld-bushveld", "subtropical-coast", "midlands-mistbelt", "western-cape", "southern-cape"],
+      "maturity": null,
+      "season": "Spring, Summer, Autumn & Winter",
+      "note": "An improved strain of parsley with dark green curly leaves. Biennial. The catalogue's printed days-to-maturity figure for this entry (12-14) is judged an extraction artefact and not used (see daysToHarvestRange notes) — maturity left null rather than recording an implausible figure.",
+      "evidence": [{"quote": "An improved strain of parsley with dark green curly leaves. Biennial. SOWING SEASON: Spring, Summer, Autumn & Winter", "url": "https://www.starkeayresgc.co.za/wp-content/uploads/2022/04/SeedsFertilizer-Care-Catalogue-A4-DEC2020-min.pdf", "page": 27, "doc": "Starke Ayres Seed & Garden Care Catalogue, First Edition"}]
+    }
+  ],
+  "varietiesNotes": "Zones are the catalogue's own generic 'grows in all seasons' claim applied broadly, since the source does not name specific SA regions; karoo-arid and high-mountain are left out as this claim and the KZN sowing table do not address those extreme-climate zones.",
+  "zoneNotes": {
+    "highveld": "KZN's 'Cold areas / Moderate frosts' window (Aug-Mar) applies per the sourced 3-tier table.",
+    "lowveld-bushveld": "Falls under 'Hot areas / Frost-free' (Feb-Sept) per the sourced table.",
+    "subtropical-coast": "Falls under 'Hot areas / Frost-free' (Feb-Sept); not separately confirmed.",
+    "midlands-mistbelt": "KZN's own 'Warm areas / Light frosts' window (Jul-Apr, nearly year-round) applies directly.",
+    "western-cape": "Not covered by a Western Cape-specific source; 'winter' sowMonths inferred equal to 'summer' — flagged gap.",
+    "southern-cape": "Not confirmed by source.",
+    "karoo-arid": "Not confirmed by source; EcoCrop's TMAX of 28°C suggests some heat sensitivity that could be a concern in this zone's summer extremes.",
+    "high-mountain": "Not confirmed by source; EcoCrop's KTMP of 0°C suggests limited frost tolerance, a concern in a severe-frost zone."
+  },
+  "gaps": [
+    "No Western Cape/winter-rainfall-specific sowing calendar found; 'winter' sowMonths inferred equal to 'summer'.",
+    "frostTender left null — no explicit cold-tolerance statement found; EcoCrop's KTMP=0°C is the only climate signal available.",
+    "One Starke Ayres catalogue entry ('Parsley Moss Curled') has an implausible printed days-to-maturity figure (12-14 days), judged a PDF-extraction artefact and left out rather than recorded as fact.",
+    "No DAFF or provincial government (rather than seed-catalogue) source for named parsley cultivars was found."
+  ],
+  "verdict": "ready",
+  "summary": "Sourced from three KZN DARD 'Vegetable Production Guidelines' chapters (Plant Establishment, Length of Growing Period, Expected Yields) plus a Starke Ayres home-garden catalogue for varieties. SowMonths (all four columns), row/in-row spacing, sow depth, seed rate, days-to-harvest (70-80 days) and yield (2-4 t/ha) are all directly quoted and cross-validated between the KZN and seed-catalogue sources. Remaining gaps are a Western Cape-specific sowing calendar and an explicit frost-tolerance statement."
+}

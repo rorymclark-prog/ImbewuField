@@ -1,0 +1,56 @@
+{
+  "speciesId": "garcinia-livingstonei",
+  "commonName": "African mangosteen / imbe",
+  "botanicalName": "Garcinia livingstonei",
+  "harvestMonths": [
+    {
+      "region": "Kenya coast / East Africa",
+      "months": [],
+      "evidence": {
+        "quote": "Flowers in September at the Kenya coast and fruits in February-March. Elsewhere it flowers in June and fruit ripens in August.",
+        "url": "https://apps.worldagroforestry.org/treedb2/AFTPDFS/Garcinia_livingstonei.PDF",
+        "doc": "ICRAF Agroforestree Database - Garcinia livingstonei (Orwa C, Mutua A, Kindt R, Jamnadass R, Anthony S. 2009. Agroforestree Database v4.0)",
+        "page": 1
+      },
+      "notes": "This is East African (Kenya) phenology, NOT South Africa specific - no South-Africa-region month data could be found for this species (see gaps). Given as the best available regional data point; the same source also gives an alternate 'elsewhere' cycle of June flowering / August fruiting (months [8] for that variant, not added as a separate entry since the region is unspecified beyond 'elsewhere'). Editor review: excluded from the app (months emptied). It is a Kenya-coast window, and the table only holds South African windows.",
+      "kenyaMonths": [
+        2,
+        3
+      ]
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "Set to null in editor review: the quote is DAFF's text reproduced in a Hawai'i weed-risk assessment (secondary), the cited URL is a different species' GISD page, and the DAFF guideline itself could not be fetched. Withdrawn value: [5, 6]."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": ""
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": ""
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "Tropical/subtropical, frost-sensitive tree ('These trees are notably sensitive to cold' - PlantZAfrica, https://pza.sanbi.org/garcinia-livingstonei); no source explicitly stated 'no chill requirement' in those words, so left null rather than adding that note myself."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Genuine unresolved conflict between sources, so left null rather than picking one: Lim, T.K. (2012, Edible Medicinal and Non-Medicinal Plants Vol. 2) and Martin et al. (1987, USDA Handbook 642) both independently describe the species as 'dioecious (male and female tree)'; Cooper, W.E. (2013, Austrobaileya 9(1)) describes it as 'monoecious' in a formal taxonomic revision; National Research Council (2008, Lost Crops of Africa Vol. III) raises the possibility of apomixis ('female flowers that have been bagged... can produce normal fruits and set viable seed'). SANBI PlantZAfrica separately describes 'male and bisexual flowers of different structure' on the same tree (andromonoecious-like) and notes insect (nectar) pollination. All quotes as reproduced with citations in the Plant Pono / GISD-style Weed Risk Assessment dossier, https://www.iucngisd.org/gisd/pdf.php?sc=1010, pages 6-11, and https://pza.sanbi.org/garcinia-livingstonei."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "The primary SA source, DAFF (2016) Production Guideline: African Mangosteen PDF, is blocked: curl gets 'Recv failure: Connection reset by peer' via the proxy, WebFetch gets 503, and the Wayback Machine has no archived snapshot of https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/African%20mangosteen.pdf. Its 'five to six years to fruiting' figure was recovered only via a secondary compilation (Plant Pono WRA) that quotes it verbatim with citation.",
+    "No South-Africa-specific flowering/fruiting month data found (PZA, ICRAF Agroforestree, PROTA-style sources); only Kenya-coast/East-Africa month data was available.",
+    "yearsToFullBearing and yieldKgPerTreeMature: not found in PZA, ICRAF Agroforestree (speciesprofile Spid=18041, AFTPDFS PDF), the ICRAF Tanzania 'usefultrees' PDF, or the Plant Pono WRA dossier.",
+    "Pollination system is genuinely disputed across peer-reviewed and technical sources (dioecious vs monoecious vs andromonoecious-like vs possible apomixis) - recorded as null rather than resolved.",
+    "Editor review 2026-09-28: Kenya-coast harvest window excluded, since there is no South African window.",
+    "Editor review 2026-09-28: yearsToFirstCrop withdrawn — the quote is DAFF's text reproduced in a Hawai'i weed-risk assessment (secondary), the cited URL is a different species' GISD page, and the DAFF guideline itself could not be fetched."
+  ]
+}

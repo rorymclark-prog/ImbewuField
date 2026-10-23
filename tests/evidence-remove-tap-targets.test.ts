@@ -21,7 +21,7 @@ function inset(decl: string): { top: number; right: number; bottom: number; left
 
 test('the photo remove button keeps its 20px painted size but clears the 44px hit-area floor', () => {
   const src = source('../components/EvidenceSheet.tsx');
-  const at = src.indexOf("aria-label={`Remove ${ev.name || 'photo'}`}");
+  const at = src.indexOf("aria-label={t('evidenceSheetRemoveItem').replace('{name}', ev.name || t('evidenceSheetRemovePhotoFallback'))}");
   assert.ok(at > 0, 'the photo remove button moved — recheck this guard by hand');
   const nearby = src.slice(at, at + 900);
 
@@ -40,7 +40,7 @@ test('the photo remove button keeps its 20px painted size but clears the 44px hi
 
 test('the document remove button clears the 44px floor and keeps its aria-label', () => {
   const src = source('../components/EvidenceSheet.tsx');
-  const at = src.indexOf("aria-label={`Remove ${ev.name || 'document'}`}");
+  const at = src.indexOf("aria-label={t('evidenceSheetRemoveItem').replace('{name}', ev.name || t('evidenceSheetRemoveDocumentFallback'))}");
   assert.ok(at > 0, 'the document remove button moved — recheck this guard by hand');
   const nearby = src.slice(at, at + 300);
   const width = nearby.match(/minWidth:\s*(\d+)/);

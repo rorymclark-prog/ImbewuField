@@ -1,0 +1,34 @@
+# References — 10-natural-pest-control
+
+- Clark, R. (comp.) (2021). *The Permaculture Gardening Handbook*. RVCC project, UNDP / Government of Lesotho.
+- African Conservation Trust (2014). *Introduction to Permaculture and Homestead Gardening*. African Conservation Trust.
+- Holmgren, D. (2002). *Permaculture: Principles and Pathways Beyond Sustainability*. Holmgren Design Services.
+- ReliefWeb (2017). *Pest alert: detection of Spodoptera frugiperda (fall armyworm) for the first time in South Africa*. ReliefWeb. https://reliefweb.int/report/south-africa/pest-alert-detection-spodoptera-frugiperda-fall-army-worm-first-time-south-0
+- ARC Plant Protection Research Institute (2017). *Fall Armyworm* (fact sheet 4). Agricultural Research Council. https://www.arc.agric.za/arc-ppri/Fact%20Sheets%20Library/Fall%20Armyworm%20English%20FS%204%20(2017).pdf
+- Pacific Pests, Pathogens and Weeds (n.d.). *Fall armyworm*. Lucidcentral. https://apps.lucidcentral.org/ppp/text/web_full/entities/fall_armyworm_401.htm
+- Pacific Pests, Pathogens and Weeds (n.d.). *Cabbage diamondback moth*. Lucidcentral. https://apps.lucidcentral.org/ppp/text/web_full/entities/cabbage_diamondback_moth_020.htm
+- Insect Science (n.d.). *Brassicas: diamond-back moth*. Insect Science (South Africa). https://insectscience.co.za/pest/brassicas-diamond-back-moth/
+- Infonet-Biovision (n.d.). *Diamondback moth (DBM)*. Infonet-Biovision. https://infonet-biovision.org/plant_pests/diamondback-moth-dbm
+- Manrakhan, A., Venter, J.H. and Hattingh, V. (2015). *The progressive invasion of Bactrocera dorsalis (Diptera: Tephritidae) in South Africa*. Biological Invasions 17: 2803–2809. https://link.springer.com/article/10.1007/s10530-015-0923-2
+- University of Minnesota Extension (n.d.). *Spotted wing drosophila*. UMN Extension. https://extension.umn.edu/yard-and-garden-insects/spotted-wing-drosophila
+- South African Medical Journal (2011). *The rat lung-worm Angiostrongylus cantonensis: a first report in South Africa*. SciELO South Africa. https://www.scielo.org.za/scielo.php?script=sci_arttext&pid=S0256-95742011000300016
+- Centers for Disease Control and Prevention (n.d.). *Preventing rat lungworm*. CDC. https://cdc.gov/angiostrongylus/prevention/index.html
+- Merck Veterinary Manual (n.d.). *Metaldehyde poisoning in animals*. Merck & Co. https://www.merckvetmanual.com/toxicology/metaldehyde-poisoning/metaldehyde-poisoning-in-animals
+- FAO (n.d.). *Quelea birds and the case for safer control*. Food and Agriculture Organization of the United Nations. https://www.fao.org/one-health/highlights/quelea-birds-and-the-case-for-safer-control/en
+- UC Statewide IPM Program (n.d.). *Sooty mold*. University of California Agriculture and Natural Resources. https://ipm.ucanr.edu/home-and-landscape/sooty-mold/
+- Encyclopaedia Britannica (n.d.). *Aphid*. Britannica. https://www.britannica.com/animal/aphid
+- Blackman, R. and Eastop, V. (n.d.). *Eggs and embryos: how aphids develop without sex*. Aphids on the World's Plants. https://aphidsonworldsplants.info/cloning_experts_3/
+- The Old Farmer's Almanac (n.d.). *Cutworms: how to protect seedlings from cutworms*. Almanac.com. https://www.almanac.com/pest/cutworms
+- SANBI (n.d.). *Cape dune mole-rat: species assessment*. South African National Biodiversity Institute. https://speciesstatus.sanbi.org/assessment/last-assessment/1823/
+- Encyclopedia.com (n.d.). *Golden moles: Chrysochloridae*. Encyclopedia.com. https://www.encyclopedia.com/science/encyclopedias-almanacs-transcripts-and-maps/golden-moles-chrysochloridae
+- Wikipedia (n.d.). *Juliana's golden mole* (endangered, endemic to South Africa). Wikipedia. https://en.wikipedia.org/wiki/Juliana%27s_golden_mole
+- Biodiversity Explorer (n.d.). *Epilachna dregei (potato ladybird)*. Iziko Museums of South Africa. https://www.biodiversityexplorer.info//beetles/coccinellidae/epilachna_dregei.htm
+- Uvah, I.I.I. and Coaker, T.H. (1984). *Effect of mixed cropping on some insect pests of carrots and onions*. Entomologia Experimentalis et Applicata 36: 159–167. https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1570-7458.1984.tb03422.x
+- Krueger, R., Dover, K.E., McSorley, R. and Wang, K.-H. (2024). *Marigolds (Tagetes spp.) for Nematode Management* (ENY-056/NG045). UF/IFAS Extension. https://ask.ifas.ufl.edu/publication/NG045
+- University of Hawaii CTAHR (2007). *Protecting Crops from Nematode Pests: Using Marigold as an Alternative to Chemical Nematicides* (PD-35). https://www.ctahr.hawaii.edu/oc/freepubs/pdf/pd-35.pdf
+- Grow Perma (n.d.). *The science of companion planting: what actually works*. Grow Perma. https://growperma.com/blog/the-science-of-companion-planting-what-actually-works
+- Colorado State University Extension (n.d.). *Insect control: insecticidal soap*. CSU Extension. https://extension.colostate.edu/resource/insect-control-insecticidal-soap/
+- University of California ANR (n.d.). *Soap sprays as insecticides*. UC ANR. https://ucanr.edu/sites/default/files/2015-05/212467.pdf
+- CDC NIOSH (n.d.). *Nicotine: systemic agent* (emergency response card). Centers for Disease Control and Prevention. https://www.cdc.gov/niosh/ershdb/emergencyresponsecard_29750028.html
+- Wikipedia (n.d.). *Nicotine poisoning*. Wikipedia. https://en.wikipedia.org/wiki/Nicotine_poisoning
+- Kobisi, K., Seleteng-Kose, L. and Moteetee, A. (2019). *Invasive alien plants occurring in Lesotho: their ethnobotany, potential risks, distribution and origin*. Bothalia 49(1). https://journals.abcjournal.aosis.co.za/index.php/abc/article/view/2453

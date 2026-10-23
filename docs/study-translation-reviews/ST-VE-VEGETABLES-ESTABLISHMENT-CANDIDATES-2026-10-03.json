@@ -1,0 +1,207 @@
+{
+  "title": "Sesotho and Tshivenda Vegetables establishment remaining body candidates",
+  "date": "2026-10-03",
+  "sourceRevision": "a692325d4420c1d445fb5cba6a7450211dcc51c1",
+  "sourceAuthority": "Canonical COURSE_MODULES and current resolveLearnerLessonPresentation from lib/course-localization.ts",
+  "scope": {
+    "moduleId": "vegetables-staples",
+    "fieldCount": 7,
+    "languages": [
+      "st",
+      "ve"
+    ],
+    "writeToRepository": true,
+    "zeroBasedTargets": [
+      {
+        "language": "st",
+        "lessonId": "vegetables-staples-l1",
+        "paragraphIndex": 7
+      },
+      {
+        "language": "st",
+        "lessonId": "vegetables-staples-l1",
+        "paragraphIndex": 12
+      },
+      {
+        "language": "st",
+        "lessonId": "vegetables-staples-l1",
+        "paragraphIndex": 17
+      },
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "paragraphIndex": 0
+      },
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "paragraphIndex": 7
+      },
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "paragraphIndex": 17
+      },
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "paragraphIndex": 8
+      }
+    ]
+  },
+  "provenance": {
+    "publicationStatus": "machine-draft for facilitator review only",
+    "fluentApproval": false,
+    "languageQuality": "Machine-proposed mixed wording; requires independent source-faithfulness check and later fluent review.",
+    "appliedAs": "Unreviewed machine draft for facilitator review only."
+  },
+  "preservation": {
+    "canonicalEnglishUnchanged": true,
+    "bodyParagraphCountAndOrderUnchanged": true,
+    "sourceAndCurrentWereExactEnglishAtCapture": true,
+    "prohibitionsAndConditionsPreserved": true,
+    "cropNamesAndDimensionsUnchanged": true,
+    "noNewPrescriptionSpeciesOrNumber": true,
+    "quizIndicesUntouched": true
+  },
+  "entries": [
+    {
+      "language": "st",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 8",
+      "paragraphIndexZeroBased": 7,
+      "paragraphCount": 20,
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "currentLearnerText": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "candidateText": "U se ke ua cheka wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "targetReviewStatus": "machine-draft",
+      "retainedEnglish": [
+        "wet clay",
+        "If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation."
+      ],
+      "reason": "Localizes the prohibition framing while keeping the soil term and complete severe-condition/adviser/before-deeper-cultivation clause exact, because shifting that decision threshold or timing could affect soil work."
+    },
+    {
+      "language": "st",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 13",
+      "paragraphIndexZeroBased": 12,
+      "paragraphCount": 20,
+      "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "currentLearnerText": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "candidateText": "Others do better with a protected start in a nursery, then transplanting. Tomatoes le brassicas ke tsa sehlopha seo.",
+      "targetReviewStatus": "machine-draft",
+      "retainedEnglish": [
+        "nursery",
+        "transplanting",
+        "Tomatoes",
+        "brassicas"
+      ],
+      "reason": "Localizes the establishment and grouping framing while retaining nursery/transplanting terminology and exact crop names."
+    },
+    {
+      "language": "st",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 18",
+      "paragraphIndexZeroBased": 17,
+      "paragraphCount": 20,
+      "sourceEnglish": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "currentLearnerText": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "candidateText": "Jwale lokisetsa ho ya ka mobu wa hao — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "targetReviewStatus": "machine-draft",
+      "retainedEnglish": [
+        "no-dig first, and dig deeper only if your ground genuinely needs it"
+      ],
+      "reason": "Localizes the lead-in but preserves the source priority, the complete only-if/genuinely-needed condition, and the difficult no-dig/deeper-cultivation instruction verbatim."
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 1",
+      "paragraphIndexZeroBased": 0,
+      "paragraphCount": 20,
+      "sourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "currentLearnerText": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "candidateText": "Compacted soil loses its air spaces. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe.",
+      "targetReviewStatus": "machine-draft",
+      "retainedEnglish": [
+        "Compacted soil loses its air spaces."
+      ],
+      "reason": "Retains the difficult compaction/air-space mechanism verbatim, while localizing the effects on roots, water movement and seasonal bed work."
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 8",
+      "paragraphIndexZeroBased": 7,
+      "paragraphCount": 20,
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "currentLearnerText": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "candidateText": "Ni songo bwa wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "targetReviewStatus": "machine-draft",
+      "retainedEnglish": [
+        "wet clay",
+        "If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation."
+      ],
+      "reason": "Localizes the do-not-dig framing while retaining the soil term and complete severity/adviser/timing condition exactly to avoid changing a soil-work decision."
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 18",
+      "paragraphIndexZeroBased": 17,
+      "paragraphCount": 20,
+      "sourceEnglish": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "currentLearnerText": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "candidateText": "Nga murahu ni lugiselele u ya nga mavu aṋu — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "targetReviewStatus": "machine-draft",
+      "retainedEnglish": [
+        "no-dig first, and dig deeper only if your ground genuinely needs it"
+      ],
+      "reason": "Localizes the lead-in but keeps the source priority and full only-if/genuinely-needed safeguard with the difficult cultivation instruction exact."
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "fieldPath": "body paragraph 9",
+      "paragraphIndexZeroBased": 8,
+      "paragraphCount": 23,
+      "sourceEnglish": "With suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.",
+      "currentLearnerText": "With suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.",
+      "candidateText": "Arali crop timing yo tea, harvests dzi nga thoma u overlap. The first batch will not always be ready by the fourth sowing.",
+      "targetReviewStatus": "machine-draft",
+      "retainedEnglish": [
+        "crop timing",
+        "harvests",
+        "overlap",
+        "First batch",
+        "sowing"
+      ],
+      "reason": "Localizes the suitability/possibility/timing relationship while retaining the technical crop-timing and sowing terms. The Tshivenda negative-frequency wording is only a draft and needs independent checking against “will not always be ready by the fourth sowing.”"
+    }
+  ],
+  "reviewRequirements": [
+    "Independently check all candidate meanings against each exact source before any application.",
+    "Especially verify the Tshivenda “not always ready by the fourth sowing” negative-frequency meaning.",
+    "Verify Xitsonga/Sesotho/Tshivenda establishment verbs and soil terminology with fluent reviewers; machine wording is not approved."
+  ],
+  "rootRepairs": {
+    "originalPacket": "/tmp/imbewu-st-ve-vegetables-establishment-remaining-body-20261003.json",
+    "independentCheck": "/tmp/imbewu-st-ve-vegetables-establishment-independent-check-20261003.json",
+    "reason": "Keep better/nurserysequence, not-always qualifier and progressive gets-harder comparative as exact English anchors; water Maḓi diacritic restored. Other current/source pairs unchanged."
+  },
+  "branch": "codex/regional-vegetables-establishment-next-20261003",
+  "implementationRecord": {
+    "baseRevision": "a692325d4420c1d445fb5cba6a7450211dcc51c1",
+    "appliedFields": 7,
+    "canonicalSourceUnchanged": true,
+    "TS8FieldsVerifiedUnchanged": true
+  }
+}

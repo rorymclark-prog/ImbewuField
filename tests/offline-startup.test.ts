@@ -46,7 +46,10 @@ function harness(failAsset = false) {
     },
   };
   const worker = vm.runInNewContext(literal, { BUILD_ID: 'new', APP_GUIDES, STUDIES_PATHWAY_PAGES });
-  vm.runInNewContext(worker, { URL, Response, Map, Set, fetch: fetcher, caches,
+  // bug-08's navigation timeout races fetch against setTimeout; unref so a timer that loses the
+  // race (the mock fetcher above always resolves immediately) cannot hold the test process open.
+  const timers = { setTimeout: (fn: () => void, ms: number) => { const t = global.setTimeout(fn, ms); t.unref?.(); return t; }, clearTimeout: global.clearTimeout };
+  vm.runInNewContext(worker, { URL, Response, Map, Set, fetch: fetcher, caches, ...timers,
     self: { location: { origin }, addEventListener: (name: string, cb: any) => { listeners[name] = cb; },
       skipWaiting: async () => { activated = true; }, clients: { claim: async () => {} } },
   });
@@ -162,4 +165,50 @@ test('updates preserve one old build and lesson downloads while preferring the n
   assert.ok(h.buckets.has('imbewufield-runtime-old'));
   assert.ok(h.buckets.has('imbewu-course-v1'));
   assert.match(await (await h.request('/unvisited', true))!.text(), /home.js/);
+});
+
+test('worker activation retires replaced Reading and Market cards while preserving other saved downloads', async () => {
+  const h = harness();
+  const course = await h.caches.open('imbewu-course-v1');
+  const old = ['st', 've', 'ts'].flatMap(language => Array.from({ length: 21 }, (_, index) =>
+    `/course-decks/reading-landscape/${language}/slide-${String(index + 1).padStart(2, '0')}.webp`));
+  assert.equal(new Set(old).size, 63);
+  const queryVariants = [
+    `${old[0]}?revision=old`,
+    `${old[62]}?revision=old`,
+  ];
+  const kept = [
+    '/course-decks/reading-landscape/en/slide-01.jpg',
+    '/course-decks/reading-landscape/zu/slide-01.jpg',
+    '/course-audio/reading-landscape/en/slide-01.mp3',
+    '/course-audio/reading-landscape/st/slide-01.mp3',
+    // The final paired batch also replaces Market ST6; preserve an unrelated
+    // Seeds still while explicitly checking ST6 retirement and its later replacement.
+    '/course-decks/seeds-sovereignty/st/slide-06.webp',
+    '/course-decks/market-community/ve/slide-01.webp',
+  ];
+  const marketReplaced = [
+    '/course-decks/market-community/st/slide-06.webp',
+    '/course-decks/market-community/st/slide-06.webp?revision=old',
+    '/course-decks/market-community/st/slide-01.webp',
+    '/course-decks/market-community/ts/slide-07.webp?revision=old',
+  ];
+  for (const path of [...old, ...queryVariants, ...marketReplaced, ...kept]) await course.put(path, new Response(path));
+
+  await h.lifecycle('activate');
+
+  for (const path of [...old, ...queryVariants, ...marketReplaced]) {
+    assert.equal(await course.match(path), undefined, `${path} must be retired on activation`);
+  }
+  for (const path of kept) assert.ok(await course.match(path), `${path} must remain downloaded`);
+  assert.ok(await course.match('/course-decks/reading-landscape/.regional-stills-20261003'),
+    'activation records the migration so a later install does not sweep newly chosen slides');
+
+  await course.put(old[1], new Response('replacement chosen after activation'));
+  await course.put('/course-decks/market-community/st/slide-06.webp', new Response('current Market replacement'));
+  await h.lifecycle('activate');
+  assert.equal(await (await course.match(old[1]))!.text(), 'replacement chosen after activation',
+    'the shipped worker’s later activation must respect the one-time marker');
+  assert.equal(await (await course.match('/course-decks/market-community/st/slide-06.webp'))!.text(),
+    'current Market replacement', 'the new migration must not evict a later selected Market card');
 });

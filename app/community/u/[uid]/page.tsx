@@ -5,18 +5,16 @@ import workspace from '@/components/layout/Workspace.module.css';
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, Loader2, MapPin, MessageCircle, Flag, ChevronDown, ChevronUp } from 'lucide-react';
+import { Loader2, MapPin, MessageCircle, Flag, ChevronDown, ChevronUp } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
 import { communityEnabled } from '@/lib/community/flag';
 import { getCommunityProfile, getOrCreateThread, reportContent } from '@/lib/db/community-queries';
 import type { CommunityProfile } from '@/lib/db/types';
-import BrandLogo from '@/components/BrandLogo';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
+import AppHeader from '@/components/layout/AppHeader';
 
 export default function PublicCommunityProfilePage() {
   const { user, loading } = useAuth();
@@ -85,22 +83,18 @@ export default function PublicCommunityProfilePage() {
   if (busy || loading || !communityEnabled()) {
     return (
       <div role="status" aria-label={lang === 'zu' ? t('communityLoadingStatus') : 'Loading community profile'} className="h-[100dvh] flex items-center justify-center" style={{ background: 'var(--bg-0)' }}>
-        <Loader2 size={24} className="animate-spin" style={{ color: '#1F4D2B' }} />
+        <Loader2 size={24} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
       </div>
     );
   }
 
   return (
     <div className="h-[100dvh] flex flex-col font-sans" style={{ background: 'var(--bg-0)', color: 'var(--text-primary)' }}>
-      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}>
-        <MenuButton /><BackButton fallback="/home" />
-        <Link href="/community" style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text-secondary)', textDecoration: 'none' }}>
-          <ChevronLeft size={18} strokeWidth={1.7} />
-        </Link>
-        <BrandLogo />
-        <div style={{ flex: 1 }} />
-        <LessonLink id="community:profile" label={lang === 'zu' ? 'Funda' : 'Learn'} />
-      </header>
+      <AppHeader
+        backFallback="/community"
+        title={lang === 'zu' ? 'Iphrofayela' : 'Profile'}
+        right={<LessonLink id="community:profile" label={lang === 'zu' ? 'Funda' : 'Learn'} />}
+      />
 
       <main className={`${workspace.workspace} ${workspace.readingWidth} flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6`}>
         {!profile ? (
@@ -110,10 +104,10 @@ export default function PublicCommunityProfilePage() {
         ) : (
           <>
             <div className="flex items-center gap-4" style={{ marginBottom: 18 }}>
-              <div style={{ width: 64, height: 64, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, background: '#1F4D2B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: 64, height: 64, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, background: 'var(--color-forest-800)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {profile.photos?.[0]
                   ? <img data-photo-preview src={profile.photos[0]} alt={profile.display_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  : <span style={{ color: '#F7F2E9', fontWeight: 700, fontSize: 22 }}>{(profile.display_name?.[0] ?? '?').toUpperCase()}</span>}
+                  : <span style={{ color: 'var(--on-forest)', fontWeight: 700, fontSize: 22 }}>{(profile.display_name?.[0] ?? '?').toUpperCase()}</span>}
               </div>
               <div>
                 <h1 className="font-display font-bold" style={{ margin: 0, fontSize: 20, color: 'var(--text-primary)' }}>{profile.display_name}</h1>
@@ -134,7 +128,7 @@ export default function PublicCommunityProfilePage() {
                 onClick={() => setMoreOpen((s) => !s)}
                 aria-expanded={moreOpen}
                 className="flex items-center gap-1 font-sans font-semibold"
-                style={{ fontSize: 12.5, color: '#1F4D2B', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0, marginBottom: 14 }}
+                style={{ fontSize: 12.5, color: 'var(--color-forest-800)', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0, marginBottom: 14 }}
               >
                 {moreOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                 {moreOpen ? t('communityLessLabel') : t('communityMoreLabel')}
@@ -148,7 +142,7 @@ export default function PublicCommunityProfilePage() {
             {profile.crops?.length > 0 && (
               <div className="flex flex-wrap gap-2" style={{ marginBottom: 18 }}>
                 {profile.crops.map((c) => (
-                  <span key={c} className="font-sans" style={{ fontSize: 12.5, padding: '5px 12px', borderRadius: 999, background: 'rgba(31,77,43,0.08)', color: '#1F4D2B', border: '1px solid rgba(31,77,43,0.2)' }}>{c}</span>
+                  <span key={c} className="font-sans" style={{ fontSize: 12.5, padding: '5px 12px', borderRadius: 999, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.2)' }}>{c}</span>
                 ))}
               </div>
             )}
@@ -156,7 +150,7 @@ export default function PublicCommunityProfilePage() {
             {(!simple || moreOpen) && profile.photos?.length > 0 && (
               <div className="flex flex-wrap gap-2" style={{ marginBottom: 20 }}>
                 {profile.photos.map((url, i) => (
-                  <img key={i} src={url} alt="" style={{ width: 96, height: 96, objectFit: 'cover', borderRadius: 12 }} />
+                  <img key={i} src={url} alt={`Photo of ${profile.display_name}, ${i + 1} of ${profile.photos.length}`} style={{ width: 96, height: 96, objectFit: 'cover', borderRadius: 12 }} />
                 ))}
               </div>
             )}
@@ -167,7 +161,7 @@ export default function PublicCommunityProfilePage() {
                   onClick={handleMessage}
                   disabled={messaging}
                   className="flex items-center justify-center gap-2 font-display font-semibold rounded-xl"
-                  style={{ flex: 1, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: messaging ? 'default' : 'pointer', padding: '12px 16px', fontSize: 14, opacity: messaging ? 0.7 : 1 }}
+                  style={{ flex: 1, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: 'none', cursor: messaging ? 'default' : 'pointer', padding: '12px 16px', fontSize: 14, opacity: messaging ? 0.7 : 1 }}
                 >
                   {messaging ? <Loader2 size={16} className="animate-spin" /> : <MessageCircle size={16} />}
                   {t('communityMessageButton')}
@@ -176,7 +170,7 @@ export default function PublicCommunityProfilePage() {
                   <button
                     onClick={() => setReportOpen((s) => !s)}
                     className="flex items-center justify-center gap-2 font-sans font-semibold rounded-xl"
-                    style={{ background: 'transparent', color: '#8B2020', border: '1px solid rgba(139,32,32,0.3)', cursor: 'pointer', padding: '12px 16px', fontSize: 13 }}
+                    style={{ background: 'transparent', color: 'var(--danger)', border: '1px solid rgba(139,32,32,0.3)', cursor: 'pointer', padding: '12px 16px', fontSize: 13 }}
                   >
                     <Flag size={14} /> {t('communityReportButton')}
                   </button>
@@ -185,7 +179,7 @@ export default function PublicCommunityProfilePage() {
             )}
 
             {messageError && (
-              <p className="font-sans" style={{ fontSize: 12, color: '#8B2020', margin: '8px 0 0' }}>
+              <p className="font-sans" style={{ fontSize: 12, color: 'var(--danger)', margin: '8px 0 0' }}>
                 {t('communityContactError')}
               </p>
             )}
@@ -197,19 +191,19 @@ export default function PublicCommunityProfilePage() {
                   onChange={(e) => setReportReason(e.target.value.slice(0, 300))}
                   placeholder={t('communityReportReasonPlaceholder')}
                   rows={3}
-                  className="w-full rounded-xl px-3 py-2.5 font-sans"
+                  className="w-full rounded-xl px-3 py-2.5 font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
                   style={{ fontSize: 13.5, background: 'var(--bg-1)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)', outline: 'none', resize: 'none', marginBottom: 10 }}
                 />
                 <button
                   onClick={handleReport}
                   disabled={!reportReason.trim() || reportBusy}
                   className="font-sans font-semibold rounded-xl"
-                  style={{ padding: '9px 16px', fontSize: 13, background: reportReason.trim() ? '#8B2020' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : 'var(--text-muted)', border: 'none', cursor: reportReason.trim() && !reportBusy ? 'pointer' : 'default' }}
+                  style={{ padding: '9px 16px', fontSize: 13, background: reportReason.trim() ? 'var(--danger)' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : 'var(--text-muted)', border: 'none', cursor: reportReason.trim() && !reportBusy ? 'pointer' : 'default' }}
                 >
                   {reportSent ? t('communityReportSent') : t('communityReportSubmit')}
                 </button>
                 {reportError && (
-                  <p className="font-sans" style={{ fontSize: 12, color: '#8B2020', margin: '8px 0 0' }}>
+                  <p className="font-sans" style={{ fontSize: 12, color: 'var(--danger)', margin: '8px 0 0' }}>
                     {t('communityReportError')}
                   </p>
                 )}
@@ -219,7 +213,7 @@ export default function PublicCommunityProfilePage() {
         )}
       </main>
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

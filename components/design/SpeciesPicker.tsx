@@ -6,6 +6,7 @@ import { BIOMES } from '@/lib/biome';
 import { useLanguage } from '@/lib/i18n';
 import { formatDesignTranslation, translatedSpeciesSection, translatedSpeciesUse } from '@/lib/design-studio-i18n';
 import { speciesPickerArtworkUrl } from '@/lib/species-art';
+import { formatMonthSpan, formatRange, perennialHarvestFor, sourcedSeasonMonths } from '@/lib/perennial-harvest';
 
 interface SpeciesPickerProps {
   /** A lib/biome.ts BIOMES registry key ("IOCB"), never the display name — see biomeKeyForName. */
@@ -24,6 +25,19 @@ export default function SpeciesPicker({
   onClose,
 }: SpeciesPickerProps) {
   const { t } = useLanguage();
+
+  // One line of sourced harvest facts under a fruit tree; nothing at all where none is sourced,
+  // rather than a row of dashes on every shrub (lib/perennial-harvest.ts holds the citations).
+  const harvestLine = (id: string): string | null => {
+    const h = perennialHarvestFor(id);
+    if (!h) return null;
+    const parts: string[] = [];
+    const months = formatMonthSpan(sourcedSeasonMonths(h));
+    if (months) parts.push(formatDesignTranslation(t('speciesPickerHarvest'), { months }));
+    if (h.yearsToFirstCrop) parts.push(formatDesignTranslation(t('speciesPickerFirstCrop'), { years: formatRange(h.yearsToFirstCrop.value) }));
+    if (h.yieldKgPerTree) parts.push(formatDesignTranslation(t('speciesPickerYield'), { kg: formatRange(h.yieldKgPerTree.value.map(Math.round) as [number, number]) }));
+    return parts.length ? parts.join(' · ') : null;
+  };
 
   // The registry key is what filtering needs; the farmer reads its name, not "IOCB".
   const siteBiomeName = siteBiome ? (BIOMES[siteBiome]?.name ?? siteBiome) : undefined;
@@ -138,6 +152,9 @@ export default function SpeciesPicker({
                           {formatDesignTranslation(t('designSpeciesSize'), { height: s.matureHeightM, width: s.matureWidthM })}
                         </div>
                       </div>
+                      {harvestLine(s.id) && (
+                        <div style={{ fontSize: 11.5, color: '#2F5E36', marginTop: 3 }}>{harvestLine(s.id)}</div>
+                      )}
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 4 }}>
                         {s.uses.map(u => (
                           <span key={u} style={{ background: '#E0E0E0', borderRadius: 4, padding: '2px 6px', fontSize: 10, color: '#333' }}>

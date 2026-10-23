@@ -1,0 +1,718 @@
+{
+  "source": "independent report recommendedDeckRows",
+  "rows": [
+    {
+      "language": "st",
+      "slide": 15,
+      "bodyIndex": 1,
+      "paragraphIndex": 1,
+      "sourceEnglish": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "currentTargetText": "Dimela tse nang le stress. One crop dominating the ground. Kapa broad chemical use e seng e tlositse predators tse neng di o thusa.",
+      "recommendedTargetText": "Dimela tse nang le stress. Sejalo se le seng se laolang sebaka. Kapa broad chemical use e seng e tlositse predators tse neng di o thusa.",
+      "matchesBodyRecommendation": true,
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plants under ",
+            "status": "draft",
+            "text": "Dimela tse nang le "
+          },
+          {
+            "sourceEnglish": "stress.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " One crop dominating the ground.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Or ",
+            "status": "draft",
+            "text": " Kapa "
+          },
+          {
+            "sourceEnglish": "broad chemical use",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that has already removed the ",
+            "status": "draft",
+            "text": " e seng e tlositse "
+          },
+          {
+            "sourceEnglish": "predators",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that were helping you.",
+            "status": "draft",
+            "text": " tse neng di o thusa."
+          }
+        ]
+      }
+    },
+    {
+      "language": "st",
+      "slide": 16,
+      "bodyIndex": 4,
+      "paragraphIndex": 9,
+      "sourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "currentTargetText": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — qala ka the lightest thing that works. Physical removal, barriers kapa diphetoho ho crop care di ka thusa. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong.",
+      "recommendedTargetText": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — qala ka the lightest thing that works. Physical removal, barriers kapa diphetoho tlhokomelong ya dijalo di ka thusa. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong.",
+      "matchesBodyRecommendation": true,
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four.",
+            "status": "draft",
+            "text": "Ntlha ya bone."
+          },
+          {
+            "sourceEnglish": " Only then, act — and start with ",
+            "status": "draft",
+            "text": " Ke ka morao feela moo o nkang kgato — qala ka "
+          },
+          {
+            "sourceEnglish": "the lightest thing that works.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Physical removal",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", barriers",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " or changes in ",
+            "status": "draft",
+            "text": " kapa diphetoho ho "
+          },
+          {
+            "sourceEnglish": "crop care",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " may help.",
+            "status": "draft",
+            "text": " di ka thusa."
+          },
+          {
+            "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+            "status": "draft",
+            "text": " Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong."
+          }
+        ]
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 2,
+      "paragraphIndex": 2,
+      "sourceEnglish": "So before you treat anything, look at the whole system.",
+      "currentTargetText": "Ngazwenezwo, before you treat anything, sedzani system yoṱhe.",
+      "recommendedTargetText": "Ngazwenezwo, ni sa athu u thoma u lafha tshithu, sedzani system yoṱhe.",
+      "matchesBodyRecommendation": true,
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "So ",
+            "status": "draft",
+            "text": "Ngazwenezwo, "
+          },
+          {
+            "sourceEnglish": "before you treat anything, ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "look at the whole system.",
+            "status": "draft",
+            "text": "sedzani system yoṱhe."
+          }
+        ]
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 3,
+      "paragraphIndex": 3,
+      "sourceEnglish": "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+      "currentTargetText": "Is the plant short of water? Soil yo compacted kana yo “hungry”? Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?",
+      "recommendedTargetText": "Naa tshimela tshi khou shaya maḓi? Mavu o compacted kana a si na pfushi? Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?",
+      "matchesBodyRecommendation": true,
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Is the plant short of water?",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Is the soil ",
+            "status": "draft",
+            "text": " Soil yo "
+          },
+          {
+            "sourceEnglish": "compacted",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", or ",
+            "status": "draft",
+            "text": " kana yo “"
+          },
+          {
+            "sourceEnglish": "hungry",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "?",
+            "status": "draft",
+            "text": "”?"
+          },
+          {
+            "sourceEnglish": " Are predators already working on the problem for you?",
+            "status": "draft",
+            "text": " Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?"
+          }
+        ]
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 4,
+      "paragraphIndex": 4,
+      "sourceEnglish": "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.",
+      "currentTargetText": "Yellow leaf a i ambi automatically uri ndi insect. Zwenezwo zwi nga vha water, nutrition, kana root damage. Wanani uri ndi zwifhio ni sa athu dzhia vhukando.",
+      "recommendedTargetText": "Yellow leaf a i ambi automatically uri ndi insect. Zwenezwo zwi nga vha maḓi, nutrition, kana u vhaisala ha midzi. Wanani uri ndi zwifhio ni sa athu dzhia vhukando.",
+      "matchesBodyRecommendation": true,
+      "currentTarget": {
+        "status": "draft",
+        "text": "Yellow leaf a i ambi automatically uri ndi insect. Zwenezwo zwi nga vha water, nutrition, kana root damage. Wanani uri ndi zwifhio ni sa athu dzhia vhukando."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "bodyIndex": 4,
+      "paragraphIndex": 9,
+      "sourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "currentTargetText": "Tsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga the lightest thing that works. Physical removal, barriers kana tshanduko kha crop care zwi nga thusa. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo.",
+      "recommendedTargetText": "Tsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga the lightest thing that works. Physical removal, barriers kana tshanduko kha nḓila ya u ṱhogomela zwimela zwi nga thusa. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo.",
+      "matchesBodyRecommendation": true,
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four.",
+            "status": "draft",
+            "text": "Tsha vhuṋa."
+          },
+          {
+            "sourceEnglish": " Only then, act — and start with ",
+            "status": "draft",
+            "text": " Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga "
+          },
+          {
+            "sourceEnglish": "the lightest thing that works.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Physical removal",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", barriers",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " or changes in ",
+            "status": "draft",
+            "text": " kana tshanduko kha "
+          },
+          {
+            "sourceEnglish": "crop care",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " may help.",
+            "status": "draft",
+            "text": " zwi nga thusa."
+          },
+          {
+            "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+            "status": "draft",
+            "text": " Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo."
+          }
+        ]
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 1,
+      "paragraphIndex": 1,
+      "sourceEnglish": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "currentTargetText": "Swibyariwa leswi nga na stress. One crop dominating the ground. Kumbe broad chemical use leyi se yi suseke predators leti a ti ku pfuna.",
+      "recommendedTargetText": "Swibyariwa leswi nga na stress. Xibyariwa xin’we lexi lawulaka ndhawu. Kumbe broad chemical use leyi se yi suseke predators leti a ti ku pfuna.",
+      "matchesBodyRecommendation": true,
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plants under ",
+            "status": "draft",
+            "text": "Swibyariwa leswi nga na "
+          },
+          {
+            "sourceEnglish": "stress.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " One crop dominating the ground.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Or ",
+            "status": "draft",
+            "text": " Kumbe "
+          },
+          {
+            "sourceEnglish": "broad chemical use",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that has already removed the ",
+            "status": "draft",
+            "text": " leyi se yi suseke "
+          },
+          {
+            "sourceEnglish": "predators",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that were helping you.",
+            "status": "draft",
+            "text": " leti a ti ku pfuna."
+          }
+        ]
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 3,
+      "paragraphIndex": 3,
+      "sourceEnglish": "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+      "currentTargetText": "Xana xibyariwa xi pfumala mati? Soil yi compacted kumbe yi “hungry”? Xana predators se ti ku pfuna hi ku tirha eka xiphiqo lexi?",
+      "recommendedTargetText": "Xana xibyariwa xi pfumala mati? Misava yi compacted kumbe yi pfumala swakudya? Xana predators se ti ku pfuna hi ku tirha eka xiphiqo lexi?",
+      "matchesBodyRecommendation": true,
+      "currentTarget": {
+        "status": "draft",
+        "text": "Xana xibyariwa xi pfumala mati? Soil yi compacted kumbe yi “hungry”? Xana predators se ti ku pfuna hi ku tirha eka xiphiqo lexi?"
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "bodyIndex": 4,
+      "paragraphIndex": 9,
+      "sourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "currentTargetText": "Vumune. Hi kona ntsena u tekaka goza — sungula hi the lightest thing that works. Physical removal, barriers kumbe ku cinca crop care swi nga pfuna. Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo.",
+      "recommendedTargetText": "Vumune. Hi kona ntsena u tekaka goza — sungula hi the lightest thing that works. Physical removal, barriers kumbe ku cinca ndlela yo hlayisa swibyariwa swi nga pfuna. Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo.",
+      "matchesBodyRecommendation": true,
+      "currentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four.",
+            "status": "draft",
+            "text": "Vumune."
+          },
+          {
+            "sourceEnglish": " Only then, act — and start with ",
+            "status": "draft",
+            "text": " Hi kona ntsena u tekaka goza — sungula hi "
+          },
+          {
+            "sourceEnglish": "the lightest thing that works.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Physical removal",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", barriers",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " or changes in ",
+            "status": "draft",
+            "text": " kumbe ku cinca "
+          },
+          {
+            "sourceEnglish": "crop care",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " may help.",
+            "status": "draft",
+            "text": " swi nga pfuna."
+          },
+          {
+            "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+            "status": "draft",
+            "text": " Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo."
+          }
+        ]
+      }
+    }
+  ],
+  "acceptedRows": [
+    {
+      "language": "st",
+      "slide": 15,
+      "bodyIndex": 1,
+      "target": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plants under ",
+            "status": "draft",
+            "text": "Dimela tse nang le "
+          },
+          {
+            "sourceEnglish": "stress.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " One crop dominating the ground.",
+            "status": "draft",
+            "text": " Sejalo se le seng se laolang sebaka."
+          },
+          {
+            "sourceEnglish": " Or ",
+            "status": "draft",
+            "text": " Kapa "
+          },
+          {
+            "sourceEnglish": "broad chemical use",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that has already removed the ",
+            "status": "draft",
+            "text": " e seng e tlositse "
+          },
+          {
+            "sourceEnglish": "predators",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that were helping you.",
+            "status": "draft",
+            "text": " tse neng di o thusa."
+          }
+        ]
+      }
+    },
+    {
+      "language": "st",
+      "slide": 16,
+      "bodyIndex": 4,
+      "target": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four.",
+            "status": "draft",
+            "text": "Ntlha ya bone."
+          },
+          {
+            "sourceEnglish": " Only then, act — and start with ",
+            "status": "draft",
+            "text": " Ke ka morao feela moo o nkang kgato — qala ka "
+          },
+          {
+            "sourceEnglish": "the lightest thing that works.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Physical removal",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", barriers",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " or changes in ",
+            "status": "draft",
+            "text": " kapa diphetoho "
+          },
+          {
+            "sourceEnglish": "crop care",
+            "status": "draft",
+            "text": "tlhokomelong ya dijalo"
+          },
+          {
+            "sourceEnglish": " may help.",
+            "status": "draft",
+            "text": " di ka thusa."
+          },
+          {
+            "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+            "status": "draft",
+            "text": " Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong."
+          }
+        ]
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 2,
+      "target": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "So ",
+            "status": "draft",
+            "text": "Ngazwenezwo, "
+          },
+          {
+            "sourceEnglish": "before you treat anything, ",
+            "status": "draft",
+            "text": "ni sa athu u thoma u lafha tshithu, "
+          },
+          {
+            "sourceEnglish": "look at the whole system.",
+            "status": "draft",
+            "text": "sedzani system yoṱhe."
+          }
+        ]
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 3,
+      "target": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Is the plant short of water?",
+            "status": "draft",
+            "text": "Naa tshimela tshi khou shaya maḓi?"
+          },
+          {
+            "sourceEnglish": " Is the soil ",
+            "status": "draft",
+            "text": " Mavu o "
+          },
+          {
+            "sourceEnglish": "compacted",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", or ",
+            "status": "draft",
+            "text": " kana "
+          },
+          {
+            "sourceEnglish": "hungry",
+            "status": "draft",
+            "text": "a si na pfushi"
+          },
+          {
+            "sourceEnglish": "?",
+            "status": "draft",
+            "text": "?"
+          },
+          {
+            "sourceEnglish": " Are predators already working on the problem for you?",
+            "status": "draft",
+            "text": " Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?"
+          }
+        ]
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 4,
+      "target": {
+        "status": "draft",
+        "text": "Yellow leaf a i ambi automatically uri ndi insect. Zwenezwo zwi nga vha maḓi, nutrition, kana u vhaisala ha midzi. Wanani uri ndi zwifhio ni sa athu dzhia vhukando."
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "bodyIndex": 4,
+      "target": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four.",
+            "status": "draft",
+            "text": "Tsha vhuṋa."
+          },
+          {
+            "sourceEnglish": " Only then, act — and start with ",
+            "status": "draft",
+            "text": " Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga "
+          },
+          {
+            "sourceEnglish": "the lightest thing that works.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Physical removal",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", barriers",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " or changes in ",
+            "status": "draft",
+            "text": " kana tshanduko kha nḓila ya u ṱhogomela "
+          },
+          {
+            "sourceEnglish": "crop care",
+            "status": "draft",
+            "text": "zwimela"
+          },
+          {
+            "sourceEnglish": " may help.",
+            "status": "draft",
+            "text": " zwi nga thusa."
+          },
+          {
+            "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+            "status": "draft",
+            "text": " Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo."
+          }
+        ]
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 1,
+      "target": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plants under ",
+            "status": "draft",
+            "text": "Swibyariwa leswi nga na "
+          },
+          {
+            "sourceEnglish": "stress.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " One crop dominating the ground.",
+            "status": "draft",
+            "text": " Xibyariwa xin’we lexi lawulaka ndhawu."
+          },
+          {
+            "sourceEnglish": " Or ",
+            "status": "draft",
+            "text": " Kumbe "
+          },
+          {
+            "sourceEnglish": "broad chemical use",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that has already removed the ",
+            "status": "draft",
+            "text": " leyi se yi suseke "
+          },
+          {
+            "sourceEnglish": "predators",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that were helping you.",
+            "status": "draft",
+            "text": " leti a ti ku pfuna."
+          }
+        ]
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 3,
+      "target": {
+        "status": "draft",
+        "text": "Xana xibyariwa xi pfumala mati? Misava yi compacted kumbe yi pfumala swakudya? Xana predators se ti ku pfuna hi ku tirha eka xiphiqo lexi?"
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "bodyIndex": 4,
+      "target": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four.",
+            "status": "draft",
+            "text": "Vumune."
+          },
+          {
+            "sourceEnglish": " Only then, act — and start with ",
+            "status": "draft",
+            "text": " Hi kona ntsena u tekaka goza — sungula hi "
+          },
+          {
+            "sourceEnglish": "the lightest thing that works.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Physical removal",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", barriers",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " or changes in ",
+            "status": "draft",
+            "text": " kumbe ku cinca ndlela yo hlayisa "
+          },
+          {
+            "sourceEnglish": "crop care",
+            "status": "draft",
+            "text": "swibyariwa"
+          },
+          {
+            "sourceEnglish": " may help.",
+            "status": "draft",
+            "text": " swi nga pfuna."
+          },
+          {
+            "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+            "status": "draft",
+            "text": " Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,486 @@
+{
+  "title": "Seeds and Small Livestock narration repairs and all-240 title flags second check",
+  "date": "2026-10-05",
+  "reviewType": "independent second semantic backcheck; not fluent approval",
+  "provenance": {
+    "narrationFirstCheck": "/tmp/imbewu-zu-seeds-livestock-slide-source-semantic-check-20261005.json",
+    "all240TitleCheck": "/tmp/imbewu-zu-all240-slide-title-source-check-20261005.json",
+    "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+    "head": "d9ec7c77b8591ba675f7672ef4af69fb3790a749",
+    "scopeSha256": {
+      "docs/narration/seeds-sovereignty.en.md": "0f93ad6a9584bdf63b0a5280acb1fe181f5f1645b806527dbdb5a8520d5f2278",
+      "docs/narration/seeds-sovereignty.zu.md": "633d795d58be391bd2cb72b17f0795d8b5391990ed0344d94b36e1ad5486c59a",
+      "docs/narration/small-livestock.en.md": "c04c0bae009ee2cd79368aca3fb576507f8e2741343861178f2892fe4c55f251",
+      "docs/narration/small-livestock.zu.md": "4632446a6db8a181ab8cf6edbf510bac849f54634e3d7654fc4f4d4beb055ffb",
+      "lib/course-transcripts.ts": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+      "lib/course-audio.ts": "82e375452c4034588a526938e350234ed746dc14956adad1cb6d8d548b01ab12",
+      "scripts/gen-course-transcripts.mjs": "d554ba43e293a180fb57bc582942d043cb60895d1b5f3065bae08033d7bbdac9"
+    },
+    "all240TitlesSha256": "1e98a9ccb03fb5ca20e9030462cb8142d3379b2caee78040638dd7bbf854206e"
+  },
+  "summary": {
+    "narrationFlaggedBlocks": 10,
+    "narrationRepairsConfirmed": 9,
+    "narrationUncertainConfirmed": 1,
+    "titleFlaggedRowsSecondChecked": 7,
+    "titleRepairs": 3,
+    "titleUncertain": 2,
+    "titleAcceptedAsConciseSummary": 2,
+    "cueOnlyRows": 3,
+    "overall": "Confirmed the seed fermentation/plant-material/seed-collection and bee-movement wording concerns; confirmed duck comparative and livestock nutrient-movement concerns. For titles, confirmed two material meaning repairs and tractor-rotation scope loss; treated Intro 16 and Market 14 as non-material concise summaries, Guinea fowl omission as review-dependent, and Soil Health Watch/Buka omissions as media-cue differences rather than a reason to suppress ZU audio."
+  },
+  "narrationBlocks": [
+    {
+      "moduleId": "seeds-sovereignty",
+      "slide": 6,
+      "manifestTitle": "Seed Sovereignty",
+      "sourceEnglish": [
+        "Seed sovereignty does not live in a slogan.",
+        "It lives in a dry packet, a written record and knowledge of how the seed behaves.",
+        "Your household begins it. Neighbours extend it. The seasons make the local seed collection more useful.",
+        "Which seed does your household already save best?",
+        "Draw a small map of the homes near you. Beside each home, write one crop that household could bring to a seed exchange.",
+        "Sovereignty needs three things: usable seed, written information and exchange."
+      ],
+      "currentRegisteredIsiZulu": [
+        "Ubukhosi bembewu abuhlali esiqubulweni.",
+        "Buhlala ephaketheni elomile, emlandweni obhaliwe nasolwazini lokuthi imbewu iziphatha kanjani.",
+        "Ikhaya lakho liyakuqala. Omakhelwane bayakunweba. Izizini zenza uhlu lwembewu yendawo lube usizo kakhulu.",
+        "Iyiphi imbewu ikhaya lakho eliyilondoloza kahle kakhulu?",
+        "Dweba imephu encane yemizi eseduze nawe. Eduze komuzi ngamunye, bhala isitshalo lowo muzi ongasiletha ekushintshaneni ngembewu.",
+        "Ubukhosi budinga izinto ezintathu: imbewu esebenzisekayo, ulwazi olubhaliwe nokushintshisana."
+      ],
+      "firstCheckDisposition": "repair",
+      "secondCheckDisposition": "repair",
+      "firstCheckIssues": [
+        "The source means a collection of saved local seed. `uhlu lwembewu yendawo` reads as a list of seed; it can shift the seasonal value from saved seed stock to a written list."
+      ],
+      "independentSecondCheck": "Confirmed. “Uhlu” means a list, whereas the source’s local seed collection is the saved seed resource. Hold just “local seed collection” in English; retain household/neighbour/season clauses.",
+      "conservativeSourceBoundAction": "Retain the exact English technical noun phrase `local seed collection` until a precise, independently checked isiZulu term is available. Keep the family, neighbour, and season clauses localized.",
+      "proposedDraftForReview": null
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "slide": 11,
+      "manifestTitle": "Dry and Wet Processing",
+      "sourceEnglish": [
+        "There are two broad ways to process seed.",
+        "Dry seed matures in a pod, head or cob. It is collected when fully mature.",
+        "Seed inside a fleshy fruit must first be separated from the flesh.",
+        "Brief fermentation is especially useful for tomato seed. It is not a rule for every wet-seeded crop.",
+        "Think about the crops in your area. Which fit the dry method? Which fit the wet method?",
+        "If you have seed or fruit nearby, sort the examples into these two types. Explain the difference by describing what the seed is like at harvest."
+      ],
+      "currentRegisteredIsiZulu": [
+        "Kunezindlela ezimbili ezibanzi zokulungisa imbewu.",
+        "Imbewu eyomile ivuthwa emgodleni, ekhanda noma esikhwebini. Iqoqwa lapho isivuthwe ngokuphelele.",
+        "Imbewu engaphakathi kwesithelo esinenyama kufanele iqale ihlukaniswe nenyama.",
+        "Ukubilisa kancane kusiza kakhulu embewini katamatisi. Akuwona umthetho wazo zonke izitshalo ezinembewu emanzi.",
+        "Cabanga ngezitshalo zasendaweni yakho. Yiziphi ezihambisana nendlela eyomile? Yiziphi ezihambisana nendlela emanzi?",
+        "Uma unembewu noma izithelo eziseduze, zihlukanise zibe yilezi zinhlobo ezimbili. Chaza umehluko ngokuthi imbewu injani ngesikhathi sokuvuna."
+      ],
+      "firstCheckDisposition": "repair",
+      "secondCheckDisposition": "repair",
+      "firstCheckIssues": [
+        "`Ukubilisa kancane` means boiling a little, while the source describes brief fermentation. This changes the seed-processing method."
+      ],
+      "independentSecondCheck": "Confirmed. “Ukubilisa” means boiling; it changes brief fermentation into a different process. “Ukuvutshelisa isikhashana” is a semantically plausible minimal candidate for “brief fermentation”; the restriction that this is not a rule for every wet-seeded crop remains intact. Candidate remains unreviewed.",
+      "conservativeSourceBoundAction": "Use `Ukuvutshelisa isikhashana` for brief fermentation, as proposed in the existing Seeds L2 comparison draft; this remains a machine-draft candidate pending fluent listening review.",
+      "proposedDraftForReview": [
+        "Kunezindlela ezimbili ezibanzi zokulungisa imbewu.",
+        "Imbewu eyomile ivuthwa emgodleni, ekhanda noma esikhwebini. Iqoqwa lapho isivuthwe ngokuphelele.",
+        "Imbewu engaphakathi kwesithelo esinenyama kufanele iqale ihlukaniswe nenyama.",
+        "Ukuvutshelisa isikhashana kusiza kakhulu embewini katamatisi. Akuwona umthetho wazo zonke izitshalo ezinembewu emanzi.",
+        "Cabanga ngezitshalo zasendaweni yakho. Yiziphi ezihambisana nendlela eyomile? Yiziphi ezihambisana nendlela emanzi?",
+        "Uma unembewu noma izithelo eziseduze, zihlukanise zibe yilezi zinhlobo ezimbili. Chaza umehluko ngokuthi imbewu injani ngesikhathi sokuvuna."
+      ]
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "slide": 12,
+      "manifestTitle": "Process Dry Seed",
+      "sourceEnglish": [
+        "Leave dry-seeded crops on the plant until the seed is fully mature.",
+        "Collect it before weather, birds or bursting pods take the harvest.",
+        "Remove chaff and damaged seed.",
+        "Then spread the clean seed in a single layer in moving air and shade.",
+        "What tells you that dry seed is mature enough to collect?",
+        "If you have a dry pod or seed head, handle it. Listen for the seed. Compare green, flexible plant material with brown, brittle material.",
+        "Wait for maturity. For final drying, use shade and airflow."
+      ],
+      "currentRegisteredIsiZulu": [
+        "Shiya izitshalo ezinembewu eyomile kuze imbewu ivuthwe ngokuphelele.",
+        "Qoqa ngaphambi kokuba isimo sezulu, izinyoni noma ukuqhuma kwemigodla kuthathe isivuno.",
+        "Susa amakhoba nembewu eyonakele.",
+        "Bese wendlala imbewu ehlanzekile ibe ungqimba olulodwa emthunzini lapho kuhamba umoya.",
+        "Yini ekutshela ukuthi imbewu eyomile isivuthwe ngokwanele ukuthi iqoqwe?",
+        "Uma unomgodla noma ikhanda lembewu elomile, libambe. Lalela umsindo wembewu. Qhathanisa inyama eluhlaza egobekayo neyinsundu ephukayo.",
+        "Linda ukuvuthwa. Ekomiseni kokugcina, sebenzisa umthunzi nokuhamba komoya."
+      ],
+      "firstCheckDisposition": "repair",
+      "secondCheckDisposition": "repair",
+      "firstCheckIssues": [
+        "The source says green, flexible plant material; the target says `inyama eluhlaza` (green flesh/meat), changing the comparison material."
+      ],
+      "independentSecondCheck": "Confirmed. “Inyama eluhlaza” is green flesh/meat, not green flexible plant material. Keep only the comparison clause in English; surrounding dry-seed collection and shade/airflow instructions remain.",
+      "conservativeSourceBoundAction": "Keep only the comparison clause in exact English until the plant-material wording is independently checked; retain the surrounding localized activity.",
+      "proposedDraftForReview": [
+        "Shiya izitshalo ezinembewu eyomile kuze imbewu ivuthwe ngokuphelele.",
+        "Qoqa ngaphambi kokuba isimo sezulu, izinyoni noma ukuqhuma kwemigodla kuthathe isivuno.",
+        "Susa amakhoba nembewu eyonakele.",
+        "Bese wendlala imbewu ehlanzekile ibe ungqimba olulodwa emthunzini lapho kuhamba umoya.",
+        "Yini ekutshela ukuthi imbewu eyomile isivuthwe ngokwanele ukuthi iqoqwe?",
+        "Uma unomgodla noma ikhanda lembewu elomile, libambe. Lalela umsindo wembewu. Compare green, flexible plant material with brown, brittle material.",
+        "Linda ukuvuthwa. Ekomiseni kokugcina, sebenzisa umthunzi nokuhamba komoya."
+      ]
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "slide": 14,
+      "manifestTitle": "Wet Processing for Tomato Seed",
+      "sourceEnglish": [
+        "Scoop tomato seed and flesh into a clean jar with a little water.",
+        "Leave it open or loosely covered. Keep it out of direct sun.",
+        "After two to three days, a light film and a sour smell may appear.",
+        "Rinse promptly. Remove debris. Then spread the clean seed thinly to dry.",
+        "Do not seal an actively fermenting jar.",
+        "Think about the signs that tell you the process has begun. Also think about signs that would make you discard the batch.",
+        "Find a jar, a sieve and a drying plate. When you are ready, start a small batch. Remember the order: scoop, ferment briefly, rinse and dry completely."
+      ],
+      "currentRegisteredIsiZulu": [
+        "Kha imbewu katamatisi nenyama uyifake embizeni ehlanzekile namanzi amancane.",
+        "Yishiye ivulekile noma imbozwe ngokuxega. Ingabi selangeni eliqondile.",
+        "Emva kwezinsuku ezimbili kuya kwezintathu kungavela ulwelwesi oluncane nephunga elimuncu.",
+        "Hlambulula ngokushesha. Susa udoti. Bese wendlala imbewu ehlanzekile ibe mncane ukuze yome.",
+        "Ungavali imbiza esabilayo.",
+        "Cabanga ngezimpawu ezikutshela ukuthi inqubo isiqalile. Cabanga nangezimpawu ezingenza ulahle iqoqo.",
+        "Thola imbiza, isisefo nepuleti lokomisa. Uma usukulungele, qala iqoqo elincane. Khumbula ukulandelana: kha, bilisa kancane, hlambulula, bese womisa ngokuphelele."
+      ],
+      "firstCheckDisposition": "repair",
+      "secondCheckDisposition": "repair",
+      "firstCheckIssues": [
+        "The active-fermentation warning is rendered as an actively boiling jar (`imbiza esabilayo`), which changes what the learner is told not to seal. The action list also says boil instead of ferment."
+      ],
+      "independentSecondCheck": "Confirmed. “Esabilayo” means boiling; the jar warning is therefore materially wrong. Retain “Do not seal an actively fermenting jar” in English until the terminology is checked; retain open/loose cover, direct-sun exclusion, may, 2–3 days, rinse and discard cues.",
+      "conservativeSourceBoundAction": "Use the existing Seeds L2 review draft's `Ukuvutshelisa` terminology; candidate replacements below preserve the open/loosely covered condition, two-to-three-day observation window, may, prompt rinse, and no-sealing instruction.",
+      "proposedDraftForReview": [
+        "Kha imbewu katamatisi nenyama uyifake embizeni ehlanzekile namanzi amancane.",
+        "Yishiye ivulekile noma imbozwe ngokuxega. Ingabi selangeni eliqondile.",
+        "Emva kwezinsuku ezimbili kuya kwezintathu kungavela ulwelwesi oluncane nephunga elimuncu.",
+        "Hlambulula ngokushesha. Susa udoti. Bese wendlala imbewu ehlanzekile ibe mncane ukuze yome.",
+        "Ungayivali imbiza esavutshelayo.",
+        "Cabanga ngezimpawu ezikutshela ukuthi inqubo isiqalile. Cabanga nangezimpawu ezingenza ulahle iqoqo.",
+        "Thola imbiza, isisefo nepuleti lokomisa. Uma usukulungele, qala iqoqo elincane. Khumbula ukulandelana: kha, vutshelisa isikhashana, hlambulula, bese womisa ngokuphelele."
+      ]
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "slide": 15,
+      "manifestTitle": "Watch: Wet Processing for Tomato Seed",
+      "sourceEnglish": [
+        "Watch the whole process in order.",
+        "A ripe tomato is opened. The seed and gel are scooped into a clean jar. Only a little water is added.",
+        "The jar is left open or loosely covered for two to three days.",
+        "When a light film and sour smell appear, the contents are poured through a sieve. The seed is rinsed until it is clean.",
+        "Finally, the seed is spread in a single layer in the shade until completely dry.",
+        "Repeat the steps to yourself: scoop, ferment briefly, rinse, dry completely."
+      ],
+      "currentRegisteredIsiZulu": [
+        "Buka yonke inqubo ngokulandelana.",
+        "Utamatisi ovuthiwe uyavulwa. Imbewu nejeli kukhelwa embizeni ehlanzekile. Kufakwa amanzi amancane kuphela.",
+        "Imbiza ishiywa ivulekile noma imbozwe ngokuxega izinsuku ezimbili kuya kwezintathu.",
+        "Lapho kuvela ulwelwesi oluncane nephunga elimuncu, okuqukethwe kuthelwa ngesisefo. Imbewu iyahlanzwa kuze kusale ehlanzekile.",
+        "Ekugcineni, imbewu yendlalwa ibe ungqimba olulodwa emthunzini ukuze yome ngokuphelele.",
+        "Phinda izinyathelo kuwe: kha, bilisa kancane, hlambulula, yomisa ngokuphelele."
+      ],
+      "firstCheckDisposition": "repair",
+      "secondCheckDisposition": "repair",
+      "firstCheckIssues": [
+        "The demonstration repeats `bilisa kancane` for the fermentation step, so it again instructs boiling rather than fermenting."
+      ],
+      "independentSecondCheck": "Confirmed. The recap again says boil instead of ferment. Retain “ferment briefly” in English or use the checked draft verb; all sequence and drying conditions remain.",
+      "conservativeSourceBoundAction": "Replace only that step with `vutshelisa isikhashana`; preserve ripe tomato, little water, open/loose cover, two-to-three days, film-and-sour-smell cue, sieve/rinse, shade, and full drying.",
+      "proposedDraftForReview": [
+        "Buka yonke inqubo ngokulandelana.",
+        "Utamatisi ovuthiwe uyavulwa. Imbewu nejeli kukhelwa embizeni ehlanzekile. Kufakwa amanzi amancane kuphela.",
+        "Imbiza ishiywa ivulekile noma imbozwe ngokuxega izinsuku ezimbili kuya kwezintathu.",
+        "Lapho kuvela ulwelwesi oluncane nephunga elimuncu, okuqukethwe kuthelwa ngesisefo. Imbewu iyahlanzwa kuze kusale ehlanzekile.",
+        "Ekugcineni, imbewu yendlalwa ibe ungqimba olulodwa emthunzini ukuze yome ngokuphelele.",
+        "Phinda izinyathelo kuwe: kha, vutshelisa isikhashana, hlambulula, yomisa ngokuphelele."
+      ]
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "slide": 20,
+      "manifestTitle": "Ten-Seed Germination Test",
+      "sourceEnglish": [
+        "A seed packet can look perfect even when the seed is losing life.",
+        "Ten seeds make the calculation easy.",
+        "Keep them warm and moist. Do not submerge them in water.",
+        "Then count the normal seedlings.",
+        "Six out of ten is about sixty percent. That tells you to sow more heavily, use the seed only as a trial, or replace it.",
+        "If eight seeds out of ten germinate, what percentage is that?",
+        "The answer is eighty percent.",
+        "Start a ten-seed test with an old packet. Write down the date and the day when you will count."
+      ],
+      "currentRegisteredIsiZulu": [
+        "Iphakethe lembewu lingabukeka liphelele, kodwa imbewu ibe ilahlekelwa ukuphila.",
+        "Imbewu eyishumi yenza ukubala kube lula.",
+        "Yigcine ifudumele futhi imanzi. Ungayicwilisi emanzini.",
+        "Bese ubala amahlumela ajwayelekile.",
+        "Okuyisithupha kokuyishumi cishe kungamaphesenti angamashumi ayisithupha. Lokho kukutshela ukuthi utshale kakhulu, usebenzise imbewu njengokuhlola kuphela, noma uyishintshe.",
+        "Uma imbewu eyisishiyagalombili kokuyishumi ihluma, singamaphesenti amangaki?",
+        "Impendulo ingamaphesenti angamashumi ayisishiyagalombili.",
+        "Qala ukuhlolwa kwembewu eyishumi ngephakethe elidala. Bhala usuku nangesikhathi ozobala ngaso."
+      ],
+      "firstCheckDisposition": "uncertain",
+      "secondCheckDisposition": "uncertain",
+      "firstCheckIssues": [
+        "`utshale kakhulu` may mean plant a lot, while the source specifically says sow more heavily as an adjustment after the roughly 60% result. The final instruction renders “the day when you will count” as `isikhathi` (time), which may imply time of day rather than the day/date."
+      ],
+      "independentSecondCheck": "Confirmed as a conservative hold. “Sow more heavily” could be understood as sow more seed/densely, but exact action is uncertain; “day when you will count” is rendered as a time, potentially time of day. Keep both exact source clauses in English. The 10-seed, 6/10≈60%, 8/10=80%, warm/moist/no-submersion figures and options remain intact.",
+      "conservativeSourceBoundAction": "Keep the complete source sentence `That tells you to sow more heavily, use the seed only as a trial, or replace it.` and the final sentence `Write down the date and the day when you will count.` in exact English until those actions are checked. Preserve all numeric claims exactly.",
+      "proposedDraftForReview": null
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "slide": 24,
+      "manifestTitle": "Field Action",
+      "sourceEnglish": [
+        "Select.",
+        "Process.",
+        "Protect.",
+        "Verify.",
+        "Those four actions carry a seed collection from this field into the next season.",
+        "Begin with one crop and do it well.",
+        "Which crop will you begin with?",
+        "Say it aloud. Then choose one action you will take next.",
+        "The next season is already inside the seed you choose today."
+      ],
+      "currentRegisteredIsiZulu": [
+        "Khetha.",
+        "Lungisa.",
+        "Vikela.",
+        "Qinisekisa.",
+        "Lezo zenzo ezine zithwala uhlu lwembewu kusukela kule nsimu ziye kwisizini elandelayo.",
+        "Qala ngesitshalo esisodwa futhi ukwenze kahle.",
+        "Yisiphi isitshalo ozoqala ngaso?",
+        "Sisho ngokuzwakalayo. Bese ukhetha isenzo esisodwa ozosenza ngokulandelayo.",
+        "Isizini elandelayo isivele ingaphakathi kwembewu oyikhetha namuhla."
+      ],
+      "firstCheckDisposition": "repair",
+      "secondCheckDisposition": "repair",
+      "firstCheckIssues": [
+        "`uhlu lwembewu` means a list of seed; the source’s “seed collection” means the collected seed resource carried into the next season."
+      ],
+      "independentSecondCheck": "Confirmed. “Uhlu lwembewu” means a seed list, not the seed collection/resource carried into next season. Hold only “seed collection” in English; preserve Select/Process/Protect/Verify and the remaining localized actions.",
+      "conservativeSourceBoundAction": "Retain the technical noun `seed collection` in English in this sentence until an exact local term is checked; keep all four action verbs and the rest of the sentence localized.",
+      "proposedDraftForReview": [
+        "Khetha.",
+        "Lungisa.",
+        "Vikela.",
+        "Qinisekisa.",
+        "Lezo zenzo ezine zithwala seed collection kusukela kule nsimu ziye kwisizini elandelayo.",
+        "Qala ngesitshalo esisodwa futhi ukwenze kahle.",
+        "Yisiphi isitshalo ozoqala ngaso?",
+        "Sisho ngokuzwakalayo. Bese ukhetha isenzo esisodwa ozosenza ngokulandelayo.",
+        "Isizini elandelayo isivele ingaphakathi kwembewu oyikhetha namuhla."
+      ]
+    },
+    {
+      "moduleId": "small-livestock",
+      "slide": 2,
+      "manifestTitle": "Why This Matters",
+      "sourceEnglish": [
+        "Small livestock can do work beyond producing meat, eggs, or honey.",
+        "Chickens eat some insects and weed seeds. Their manure can become compost.",
+        "Ducks scratch less than chickens, but can still damage plants.",
+        "Bees and other pollinators help many crops. Each animal still needs suitable food, water, shelter and care."
+      ],
+      "currentRegisteredIsiZulu": [
+        "Imfuyo encane ingenza okunye ngaphandle kokukhiqiza inyama, amaqanda noma uju.",
+        "Izinkukhu zidla ezinye izinambuzane nembewu yokhula. Umquba wazo ungenziwa i-compost.",
+        "Amadada awaklwebhi njengezinkukhu, kodwa nawo angalimaza izitshalo.",
+        "Izinyosi nezinye izinambuzane ezithutha impova zisiza izitshalo eziningi. Isilwane ngasinye sisadinga ukudla okufanele, amanzi, indawo yokukhosela nokunakekelwa."
+      ],
+      "firstCheckDisposition": "repair",
+      "secondCheckDisposition": "repair",
+      "firstCheckIssues": [
+        "“Ducks scratch less than chickens” is rendered as `Amadada awaklwebhi njengezinkukhu` (“ducks do not scratch like chickens”), which does not clearly preserve the comparative less."
+      ],
+      "independentSecondCheck": "Confirmed. The current wording says ducks do not scratch like chickens and does not encode “less.” The proposed “Amadada aklwebha kancane kunezinkukhu” explicitly preserves the comparison; the following “but can still damage plants” remains.",
+      "conservativeSourceBoundAction": "Use an explicit comparative: `Amadada aklwebha kancane kunezinkukhu, kodwa nawo angalimaza izitshalo.`",
+      "proposedDraftForReview": [
+        "Imfuyo encane ingenza okunye ngaphandle kokukhiqiza inyama, amaqanda noma uju.",
+        "Izinkukhu zidla ezinye izinambuzane nembewu yokhula. Umquba wazo ungenziwa i-compost.",
+        "Amadada aklwebha kancane kunezinkukhu, kodwa nawo angalimaza izitshalo.",
+        "Izinyosi nezinye izinambuzane ezithutha impova zisiza izitshalo eziningi. Isilwane ngasinye sisadinga ukudla okufanele, amanzi, indawo yokukhosela nokunakekelwa."
+      ]
+    },
+    {
+      "moduleId": "small-livestock",
+      "slide": 3,
+      "manifestTitle": "Learning Outcomes",
+      "sourceEnglish": [
+        "By the end of this module, you will understand how chickens, ducks, bees, and guinea fowl fit into a working system.",
+        "You will know when chickens help a bed, and when their scratching can cause damage.",
+        "You will understand pollination, hive placement, and how livestock move nutrients around a farm."
+      ],
+      "currentRegisteredIsiZulu": [
+        "Ekupheleni kwalesi sifundo, uzokwazi ukuthi izinkukhu, amadada, izinyosi, ne-guinea fowl zingena kanjani ohlelweni olusebenzayo.",
+        "Uzokwazi ukuthi izinkukhu zisiza nini umbhede, nokuthi ukuklwebha kwazo kungadala nini umonakalo.",
+        "Uzoqonda ukuthuthwa kwempova, ukubekwa kwe-hive, nokubaluleka kokuvala imijikelezo yezakhamzimba."
+      ],
+      "firstCheckDisposition": "repair",
+      "secondCheckDisposition": "repair",
+      "firstCheckIssues": [
+        "The source says learners will understand how livestock move nutrients around a farm. The target changes this to the broader conclusion “the importance of closing nutrient cycles.”"
+      ],
+      "independentSecondCheck": "Confirmed. The current target replaces the concrete process “how livestock move nutrients around a farm” with the abstract idea of closing nutrient cycles. The candidate “nokuthi imfuyo ihambisa kanjani izakhamzimba epulazini” restores source actors/action/place without adding a claim; still a machine candidate.",
+      "conservativeSourceBoundAction": "Restore the described farm process: `Uzoqonda ukuthuthwa kwempova, ukubekwa kwe-hive, nokuthi imfuyo ihambisa kanjani izakhamzimba epulazini.`",
+      "proposedDraftForReview": [
+        "Ekupheleni kwalesi sifundo, uzokwazi ukuthi izinkukhu, amadada, izinyosi, ne-guinea fowl zingena kanjani ohlelweni olusebenzayo.",
+        "Uzokwazi ukuthi izinkukhu zisiza nini umbhede, nokuthi ukuklwebha kwazo kungadala nini umonakalo.",
+        "Uzoqonda ukuthuthwa kwempova, ukubekwa kwe-hive, nokuthi imfuyo ihambisa kanjani izakhamzimba epulazini."
+      ]
+    },
+    {
+      "moduleId": "small-livestock",
+      "slide": 11,
+      "manifestTitle": "South Africa’s Native Honeybees",
+      "sourceEnglish": [
+        "South Africa has two native honeybee subspecies.",
+        "The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa.",
+        "These broad natural ranges are not a guide for moving bees. The Department's control measures set a demarcation line for bee movement. Check current rules before moving bees or hives."
+      ],
+      "currentRegisteredIsiZulu": [
+        "INingizimu Afrika inezinhlobo ezimbili zezinyosi zoju zomdabu ezingaphansi kohlobo olulodwa.",
+        "Inyosi yoju yaseKapa itholakala eNtshonalanga Kapa nasezingxenyeni zeMpumalanga Kapa. Inyosi yoju yase-Afrika idabuka enkabeni nasezingxenyeni eziningi zeningizimu ye-Afrika.",
+        "Lezi izindawo ezibanzi ezivamile; aziyona imingcele yokuthi izinyosi zingahanjiswa kuphi. Imithetho yoMnyango ibeka umngcele olawula ukuhanjiswa kwezinyosi. Ngaphambi kokuhambisa izinyosi noma ama-hive, hlola imithetho yamanje noMnyango kanye nomfuyi wezinyosi wendawo onolwazi."
+      ],
+      "firstCheckDisposition": "repair",
+      "secondCheckDisposition": "repair",
+      "firstCheckIssues": [
+        "“Not a guide for moving bees” is weakened/changed to “not boundaries for where bees may be moved,” which can imply movement permission. The final target also adds advice to check with a local beekeeper; the source only says to check current rules before moving bees or hives."
+      ],
+      "independentSecondCheck": "Confirmed, material regulatory scope. “Not boundaries for where bees may be moved” does not clearly preserve “not a guide for moving bees” and could imply broad natural ranges are movement boundaries. Hold exact English “These broad natural ranges are not a guide for moving bees” and “Check current rules before moving bees or hives.” The Department demarcation sentence is accurate. Added local-beekeeper advice is unsupported and should be removed from this passage.",
+      "conservativeSourceBoundAction": "Keep the exact movement-rule sentences in English pending precise terminology. Preserve the already-localized Department-demarcation sentence. Remove the added beekeeper as a source of current movement rules.",
+      "proposedDraftForReview": null
+    }
+  ],
+  "titleRows": [
+    {
+      "moduleId": "seeds-sovereignty",
+      "slide": 1,
+      "sourceEnglishHeading": "Seeds and Seed Sovereignty",
+      "isiZuluScriptHeadingRaw": "Isihloko (Slide 1 — Title)",
+      "isiZuluScriptDisplayHeading": "Isihloko",
+      "isiZuluScriptEmbeddedEnglishHeading": "Title",
+      "registeredTrackEnglishTitle": "Seeds and Seed Sovereignty",
+      "registeredTrackIsiZuluTitle": "Ubukhosi Bembewu",
+      "secondCheckDisposition": "uncertain",
+      "independentSecondCheck": "Confirmed source-binding discrepancy: script heading/embedded English say generic “Title,” while English source is “Seeds and Seed Sovereignty.” Registered ZU audio title is the reviewer-signed “Ubukhosi Bembewu,” with an explicit registry comment against coining a longer form. Preserve that registered audio title and use English source presentation for the heading until the script/title relationship is resolved; do not replace the reviewer-signed audio text."
+    },
+    {
+      "moduleId": "intro-permaculture",
+      "slide": 16,
+      "sourceEnglishHeading": "Keep Daily Crops Close",
+      "isiZuluScriptHeadingRaw": "Gcina Izinto Ozikha Kaningi Ziseduze (Slide 16 — Keep Daily Crops Close)",
+      "isiZuluScriptDisplayHeading": "Gcina Izinto Ozikha Kaningi Ziseduze",
+      "isiZuluScriptEmbeddedEnglishHeading": "Keep Daily Crops Close",
+      "registeredTrackEnglishTitle": "Keep Daily Crops Close",
+      "registeredTrackIsiZuluTitle": "Gcina Izinto Ozikha Kaningi Ziseduze",
+      "secondCheckDisposition": "accepted",
+      "independentSecondCheck": "The paraphrase “things you pick often” is a concise summary of “daily crops” in this zones lesson. It softens a frequency but does not alter an instruction or create a harmful scope change; no temporary English fallback needed."
+    },
+    {
+      "moduleId": "reading-landscape",
+      "slide": 5,
+      "sourceEnglishHeading": "Watch: Water Slows, Sinks, and Leaves",
+      "isiZuluScriptHeadingRaw": "Buka: Amanzi Ayancipha, Angene, Aphume (Slide 5 — Watch: Water Slows, Sinks, and Leaves)",
+      "isiZuluScriptDisplayHeading": "Buka: Amanzi Ayancipha, Angene, Aphume",
+      "isiZuluScriptEmbeddedEnglishHeading": "Watch: Water Slows, Sinks, and Leaves",
+      "registeredTrackEnglishTitle": "Watch: Water Slows, Sinks, and Leaves",
+      "registeredTrackIsiZuluTitle": "Buka: Amanzi Ayancipha, Angene, Aphume",
+      "secondCheckDisposition": "repair",
+      "independentSecondCheck": "Confirmed material concept mismatch: “slows” is flow speed, while “ayancipha” can say the water decreases. Retain a checked equivalent for slower flow or exact English “slows.”"
+    },
+    {
+      "moduleId": "soil-health",
+      "slide": 13,
+      "sourceEnglishHeading": "Keep Seed Pods and Contaminants Out",
+      "isiZuluScriptHeadingRaw": "Gcina Ama-Pod Embewu Nezinto Ezingcolile Ngaphandle",
+      "isiZuluScriptDisplayHeading": "Gcina Ama-Pod Embewu Nezinto Ezingcolile Ngaphandle",
+      "isiZuluScriptEmbeddedEnglishHeading": null,
+      "registeredTrackEnglishTitle": "Keep Seed Pods and Contaminants Out",
+      "registeredTrackIsiZuluTitle": "Gcina Ama-Pod Embewu Nezinto Ezingcolile Ngaphandle",
+      "secondCheckDisposition": "repair",
+      "independentSecondCheck": "Confirmed scope broadening: the source names wattle seed pods; the ZU title says seed pods generally. Restore wattle or retain “wattle seed pods” in English."
+    },
+    {
+      "moduleId": "small-livestock",
+      "slide": 8,
+      "sourceEnglishHeading": "Rotate the Tractor Across the Plot",
+      "isiZuluScriptHeadingRaw": "Hambisa Ihhoko Endaweni (Slide 8 — Rotate the Tractor Across the Plot)",
+      "isiZuluScriptDisplayHeading": "Hambisa Ihhoko Endaweni",
+      "isiZuluScriptEmbeddedEnglishHeading": "Rotate the Tractor Across the Plot",
+      "registeredTrackEnglishTitle": "Rotate the Tractor Across the Plot",
+      "registeredTrackIsiZuluTitle": "Hambisa Ihhoko Endaweni",
+      "secondCheckDisposition": "repair",
+      "independentSecondCheck": "Confirmed action/scope loss: title says move the coop to a place, omitting rotation across the plot and the chicken-tractor practice. Retain “rotate the chicken tractor across the plot” in English unless checked wording preserves it."
+    },
+    {
+      "moduleId": "small-livestock",
+      "slide": 16,
+      "sourceEnglishHeading": "Guinea Fowl Forage, but Health Checks Still Matter",
+      "isiZuluScriptHeadingRaw": "Ukuzifunela Ukudla Akuthathi Indawo Yokuhlola Impilo (Slide 16 — Guinea Fowl Forage, but Health Checks Still Matter)",
+      "isiZuluScriptDisplayHeading": "Ukuzifunela Ukudla Akuthathi Indawo Yokuhlola Impilo",
+      "isiZuluScriptEmbeddedEnglishHeading": "Guinea Fowl Forage, but Health Checks Still Matter",
+      "registeredTrackEnglishTitle": "Guinea Fowl Forage, but Health Checks Still Matter",
+      "registeredTrackIsiZuluTitle": "Ukuzifunela Ukudla Akuthathi Indawo Yokuhlola Impilo",
+      "secondCheckDisposition": "uncertain",
+      "independentSecondCheck": "Species scope is omitted from the short title, but the sentence is a title summary rather than an instruction and the narration/body names Guinea fowl. Flag for title review; preserve “Guinea fowl” in English if a species-specific title is required."
+    },
+    {
+      "moduleId": "market-community",
+      "slide": 14,
+      "sourceEnglishHeading": "Watch: How Neighbours Strengthen a Harvest",
+      "isiZuluScriptHeadingRaw": "Buka: Ukubambisana Komakhelwane (Slide 14 — Watch: How Neighbours Strengthen a Harvest)",
+      "isiZuluScriptDisplayHeading": "Buka: Ukubambisana Komakhelwane",
+      "isiZuluScriptEmbeddedEnglishHeading": "Watch: How Neighbours Strengthen a Harvest",
+      "registeredTrackEnglishTitle": "Watch: How Neighbours Strengthen a Harvest",
+      "registeredTrackIsiZuluTitle": "Buka: Ukubambisana Komakhelwane",
+      "secondCheckDisposition": "accepted",
+      "independentSecondCheck": "This is a short title summary (“neighbour collaboration”) of how neighbours strengthen a harvest. It omits the result phrase but does not create a contrary meaning or change instruction scope; treat as editorial compression, not a material title error."
+    }
+  ],
+  "nonMaterialTitleCueDifferences": [
+    {
+      "moduleId": "soil-health",
+      "slide": 5,
+      "sourceEnglishHeading": "Watch: Read Your Soil",
+      "isiZuluScriptDisplayHeading": "Buka: Bheka Umhlabathi",
+      "registeredTrackIsiZuluTitle": "Bheka Umhlabathi",
+      "judgment": "cue omission only; not a material scope change",
+      "note": "Registered audio title omits Watch/Buka, but preserves the subject/action. Do not temporarily suppress ZU audio solely for this media-cue difference."
+    },
+    {
+      "moduleId": "soil-health",
+      "slide": 10,
+      "sourceEnglishHeading": "Watch: Build the Compost Heap",
+      "isiZuluScriptDisplayHeading": "Buka: Yakha Inqwaba Ye-Compost",
+      "registeredTrackIsiZuluTitle": "Yakha Inqwaba Ye-Compost",
+      "judgment": "cue omission only; not a material scope change",
+      "note": "Registered audio title omits Watch/Buka, but preserves the subject/action. Do not temporarily suppress ZU audio solely for this media-cue difference."
+    },
+    {
+      "moduleId": "soil-health",
+      "slide": 14,
+      "sourceEnglishHeading": "Watch: Bare Soil and Mulch",
+      "isiZuluScriptDisplayHeading": "Buka: Umhlabathi Ongenalutho Ne-Mulch",
+      "registeredTrackIsiZuluTitle": "Umhlabathi Ongenalutho Ne-Mulch",
+      "judgment": "cue omission only; not a material scope change",
+      "note": "Registered audio title omits Watch/Buka, but preserves the subject/action. Do not temporarily suppress ZU audio solely for this media-cue difference."
+    }
+  ]
+}

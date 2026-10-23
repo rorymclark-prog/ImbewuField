@@ -1,3 +1,5 @@
+import { productContextFromItems, productPurchasingMarkdown } from '@/lib/production-product-guidance';
+import { growingZonesForClimate } from '@/lib/growing-zones';
 import { PLANTING_SUITABILITY_PROMPT, reportSectionsForGeneration } from '@/lib/report-planting-guide';
 import { listedPlantMentions, reportPlantingCandidates, REPORT_PLANTING_SAFETY_RULE } from '@/lib/report-planting-safety';
 import { NextRequest } from 'next/server';
@@ -249,6 +251,7 @@ export async function POST(req: NextRequest) {
       : `\n\n📏 LENGTH — STANDARD: A focused, practical report. Cover each section usefully but stay concise — keep tables small and explanations tight.`;
 
   const d = locationData;
+  const purchasingGuidance = productPurchasingMarkdown({ ...productContextFromItems(facts?.productionItems ?? []), animalChoices: facts?.productionEnterpriseChoices }, growingZonesForClimate(d.climate.monthlyTemp, d.rainfall.monthly, d.lat), surveyData?.productionConditions);
   // ONE ANSWER TO "WHAT GROWS HERE" — see lib/site-ecology.ts. Before this, sections took the
   // site's name from whichever lookup was nearest: the coarse biome polygon (d.biome.name) or the
   // precise SANBI vegetation unit (d.vegetation). They disagree near boundaries, and one exported
@@ -482,7 +485,7 @@ When to build each earthwork relative to the ${d.rainfall.wetSeason} wet season.
 
 The app supplies one visual sowing calendar from the saved crop plan. Do not create another month-by-month crop table or repeat bed allocations. Explain briefly how recorded water availability and seasonal conditions affect planned starts. Highlight conflicts or unknowns and refer to the separate crop-plan report for the detailed schedule. If no dated plan exists, say so; do not invent calendar dates or claim proposed work is completed.
 
-` : ''}${sections.includes('Suitable Plants for This Site') ? PLANTING_SUITABILITY_PROMPT : ''}${sections.includes('Crop Rotation') ? `## Crop Rotation Plan
+` : ''}${sections.includes('Suitable Plants for This Site') ? `${PLANTING_SUITABILITY_PROMPT}\nSOURCE-GROUNDED PURCHASING REFERENCE (translate and adapt to the reported conditions; do not extend months or invent varieties):\n${purchasingGuidance}\n` : ''}${sections.includes('Crop Rotation') ? `## Crop Rotation Plan
 
 A simple rotation to keep soil healthy and cut pests and disease WITHOUT chemicals, matched to the planting calendar and ${d.rainfall.pattern} rainfall.
 
@@ -844,6 +847,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     body: batchResults,
     backMatter: zuluMatter?.backMatter ?? [
       `## Saved crop plan\n\n${reportSummaryPages(facts, d, 5)[1].lines.join('\n\n')}`,
+      ...(purchasingGuidance ? [purchasingGuidance] : []),
       billOfQuantitiesMarkdown(boq),
       monitoringMarkdown(buildMonitoringPlan(facts)),
       riskRegisterMarkdown(risks),

@@ -1,0 +1,69 @@
+{
+  "speciesId": "aponogeton-distachyos",
+  "commonName": "Waterblommetjie / Cape pondweed",
+  "botanicalName": "Aponogeton distachyos",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No food-production pollination classification verified in the checked primary source."
+  },
+  "harvestProduct": "flowers and flower buds",
+  "supplementaryReferences": [
+    {
+      "title": "Waterblommetjie food product and establishment",
+      "quote": "Only the flowers and buds are used.",
+      "url": "https://pza.sanbi.org/aponogeton-distachyos",
+      "doc": "SANBI PlantZAfrica: Aponogeton distachyos",
+      "page": null,
+      "note": "Western Cape pond food; vigorous winter/spring flowering and winter shop availability are qualitative seasonal evidence, not a numeric picking calendar. Seedlings reach flowering size in one season under ideal conditions, not a universal age-in-years guarantee."
+    },
+    {
+      "title": "Ideal seedling establishment",
+      "quote": "flowering size in one season",
+      "url": "https://pza.sanbi.org/aponogeton-distachyos",
+      "doc": "SANBI PlantZAfrica: Aponogeton distachyos",
+      "page": null,
+      "note": "Qualitative ideal-condition establishment duration; it is not inserted into a generic tree-age curve."
+    }
+  ],
+  "productionGuidance": {
+    "products": "flowers and flower buds",
+    "care": [
+      "Start tubers in loam in shallow pond water; move deeper into sun after strong growth.",
+      "Record edible flowers/buds and pond area. Dormant tubers resume growth as autumn water returns in the winter-rainfall cycle."
+    ],
+    "purchase": [
+      "Obtain correctly identified pond plants. Confirm local pond conditions and actual picking dates; no pond-area yield or planting density is sourced."
+    ]
+  },
+  "householdFoodStatus": "confirmed-food",
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/aponogeton-distachyos",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary article text retrieved through the search index; the direct PlantZAfrica endpoint returned 403 during this session."
+    }
+  ],
+  "gaps": []
+}

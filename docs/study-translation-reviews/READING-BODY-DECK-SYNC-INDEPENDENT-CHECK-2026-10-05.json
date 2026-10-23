@@ -1,0 +1,432 @@
+{
+  "title": "Reading Landscape paired-deck sync independent semantic/source check",
+  "date": "2026-10-05",
+  "readOnly": true,
+  "packetPath": "/tmp/imbewu-reading-body-deck-sync-root-candidates-20261004.json",
+  "packetSha256": "07cebda96d9a24957a7523841fec36b2bd1cfadba576b7da72f9527d58966bcd",
+  "reviewedBase": "68719a788e0041da32eccfbbf36ca821eadfd321",
+  "authorityHashes": {
+    "lib/course-modules.ts": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+    "lib/course-localization.ts": "503f628a1c0679c5247558887e7438260fead024b67ac5112626e6e52bb1ff9f",
+    "lib/course-translation-drafts-st-reading-landscape.ts": "77333a434341b09859625e47763242eb524882912463e1c611cc8a9b3daef44f",
+    "lib/course-translation-drafts-ve-reading-landscape.ts": "126c85da4cc6263b9f5a25a8d98ff9a4766b80f7d967b8bc1a8520d0bfca4b48",
+    "lib/course-translation-drafts-ts.ts": "ef38b5b71127d98ae51dbad1cdf1334a916f3f1116f2da0fb0377a813a6b4bf0",
+    "docs/narration/reading-landscape.st.paired-draft.json": "33055517c34aecf45cbcaf96a1029869ac41192c1a1877b690d6d99a21779fa9",
+    "docs/narration/reading-landscape.ve.paired-draft.json": "a748a2179d8ed74a6c9b60296e7eab3dbf1630eb63e8269cee32476244ef941b",
+    "docs/narration/reading-landscape.ts.paired-draft.json": "ec5a4e6becc4180a725477dd50a4d481451f302ccf95413b0a743e79e1dec3c7"
+  },
+  "summary": {
+    "candidateFields": 7,
+    "sourceMatchesCurrentDeck": 7,
+    "currentTargetsMatch": 7,
+    "sourceSegmentConcatsExact": 7,
+    "targetSegmentConcatsExact": 7,
+    "heldSegmentsEqualSource": 7,
+    "canonicalExactSourceMatches": 6,
+    "semanticChecksPassed": 7,
+    "semanticChecks": 7,
+    "decision": "Accept all seven source-bound compositions as unreviewed deck drafts; preserve the VE18 source article discrepancy as documented paired-source drift."
+  },
+  "candidates": [
+    {
+      "language": "st",
+      "slide": 11,
+      "bodyParagraphIndexZeroBased": 0,
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "slides[10].target.body[0]",
+      "reviewStatus": "english-hold",
+      "actualEnglishSource": "Pawpaw and young citrus are sensitive to frost.",
+      "packetEnglishSource": "Pawpaw and young citrus are sensitive to frost.",
+      "sourceMatchesActualPairedDeck": true,
+      "sourceOccursInCanonicalExact": true,
+      "sourceOccursInCanonicalWhitespaceNormalized": true,
+      "actualCurrentTarget": {
+        "status": "english-hold"
+      },
+      "packetCurrentTarget": {
+        "status": "english-hold"
+      },
+      "currentTargetMatchesActual": true,
+      "sourceSegmentsJoinExactly": true,
+      "targetSegmentsJoinExactly": true,
+      "proposedTarget": "Pawpaw and young citrus di ameha habonolo ke serame (frost).",
+      "heldSegmentsRetainExactSource": true,
+      "allSegmentsHaveAllowedStatus": true,
+      "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open.",
+      "learnerDraftSegmentEvidence": [
+        {
+          "source": " are sensitive to frost.",
+          "target": " di ameha habonolo ke serame (frost).",
+          "foundInApprovedLearner": true
+        }
+      ],
+      "reason": "Full source sentence aligned exactly; no species, age qualifier, or frost condition changed."
+    },
+    {
+      "language": "st",
+      "slide": 11,
+      "bodyParagraphIndexZeroBased": 1,
+      "lessonId": "reading-landscape-l2",
+      "fieldPath": "slides[10].target.body[1]",
+      "reviewStatus": "english-hold",
+      "actualEnglishSource": "Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+      "packetEnglishSource": "Keep tender plants out of known low frost pockets. Observe local frost before planting.",
+      "sourceMatchesActualPairedDeck": true,
+      "sourceOccursInCanonicalExact": true,
+      "sourceOccursInCanonicalWhitespaceNormalized": true,
+      "actualCurrentTarget": {
+        "status": "english-hold"
+      },
+      "packetCurrentTarget": {
+        "status": "english-hold"
+      },
+      "currentTargetMatchesActual": true,
+      "sourceSegmentsJoinExactly": true,
+      "targetSegmentsJoinExactly": true,
+      "proposedTarget": "Boloka tender plants di le hole le known low frost pockets. Hlokomela serame sa lehae pele o jala.",
+      "heldSegmentsRetainExactSource": true,
+      "allSegmentsHaveAllowedStatus": true,
+      "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open.",
+      "learnerDraftSegmentEvidence": [
+        {
+          "source": "Keep ",
+          "target": "Boloka ",
+          "foundInApprovedLearner": true
+        },
+        {
+          "source": " out of ",
+          "target": " di le hole le ",
+          "foundInApprovedLearner": true
+        },
+        {
+          "source": " Observe local frost before planting.",
+          "target": " Hlokomela serame sa lehae pele o jala.",
+          "foundInApprovedLearner": true
+        }
+      ],
+      "reason": "Both source sentences are covered: the keep-away sentence is mixed as before, and the exact checked local-frost observation sentence is localized in its original before-planting order."
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "bodyParagraphIndexZeroBased": 0,
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "slides[13].target.body[0]",
+      "reviewStatus": "mixed",
+      "actualEnglishSource": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "packetEnglishSource": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "sourceMatchesActualPairedDeck": true,
+      "sourceOccursInCanonicalExact": true,
+      "sourceOccursInCanonicalWhitespaceNormalized": true,
+      "actualCurrentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "On a clear, still night, ",
+            "status": "draft",
+            "text": "Loko ku ri vusiku byo basa, ku nga ri na moya, "
+          },
+          {
+            "sourceEnglish": "cold air can flow downhill and collect in low places.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " These places can be colder than nearby slopes.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "packetCurrentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "On a clear, still night, ",
+            "status": "draft",
+            "text": "Loko ku ri vusiku byo basa, ku nga ri na moya, "
+          },
+          {
+            "sourceEnglish": "cold air can flow downhill and collect in low places.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " These places can be colder than nearby slopes.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "currentTargetMatchesActual": true,
+      "sourceSegmentsJoinExactly": true,
+      "targetSegmentsJoinExactly": true,
+      "proposedTarget": "Loko ku ri vusiku byo basa, ku nga ri na moya, cold air can flow downhill and collect in low places. Tindhawu leti ti nga va colder than nearby slopes.",
+      "heldSegmentsRetainExactSource": true,
+      "allSegmentsHaveAllowedStatus": true,
+      "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open.",
+      "learnerDraftSegmentEvidence": [
+        {
+          "source": "On a clear, still night, ",
+          "target": "Loko ku ri vusiku byo basa, ku nga ri na moya, ",
+          "foundInApprovedLearner": false
+        },
+        {
+          "source": " These places can be",
+          "target": " Tindhawu leti ti nga va",
+          "foundInApprovedLearner": true
+        }
+      ],
+      "reason": "Change only “These places can be”, retaining current no-wind condition, exact airflow clause, and English comparative."
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "bodyParagraphIndexZeroBased": 1,
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "slides[13].target.body[1]",
+      "reviewStatus": "english-hold",
+      "actualEnglishSource": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "packetEnglishSource": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "sourceMatchesActualPairedDeck": true,
+      "sourceOccursInCanonicalExact": true,
+      "sourceOccursInCanonicalWhitespaceNormalized": true,
+      "actualCurrentTarget": {
+        "status": "english-hold"
+      },
+      "packetCurrentTarget": {
+        "status": "english-hold"
+      },
+      "currentTargetMatchesActual": true,
+      "sourceSegmentsJoinExactly": true,
+      "targetSegmentsJoinExactly": true,
+      "proposedTarget": "Frost i ice that forms on a cold surface. Mist ntsena a yi kombisi leswaku ice has formed, naswona frost damage can happen without visible ice.",
+      "heldSegmentsRetainExactSource": true,
+      "allSegmentsHaveAllowedStatus": true,
+      "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open.",
+      "learnerDraftSegmentEvidence": [
+        {
+          "source": " is ",
+          "target": " i ",
+          "foundInApprovedLearner": true
+        },
+        {
+          "source": " alone",
+          "target": " ntsena",
+          "foundInApprovedLearner": true
+        },
+        {
+          "source": " does not show that ",
+          "target": " a yi kombisi leswaku ",
+          "foundInApprovedLearner": true
+        },
+        {
+          "source": ", and",
+          "target": ", naswona",
+          "foundInApprovedLearner": true
+        }
+      ],
+      "reason": "Exact accepted two-sentence learner draft: ordinary definition/diagnostic framing and conjunction localized, while Frost/Mist terms, physical definition, ice-formed condition, and complete can-without-visible-ice clause remain exact English."
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "bodyParagraphIndexZeroBased": 2,
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "slides[13].target.body[2]",
+      "reviewStatus": "draft",
+      "actualEnglishSource": "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "packetEnglishSource": "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "sourceMatchesActualPairedDeck": true,
+      "sourceOccursInCanonicalExact": true,
+      "sourceOccursInCanonicalWhitespaceNormalized": true,
+      "actualCurrentTarget": {
+        "status": "draft",
+        "text": "Languta ice ni ku onhaka ka swimilani, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe."
+      },
+      "packetCurrentTarget": {
+        "status": "draft",
+        "text": "Languta ice ni ku onhaka ka swimilani, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe."
+      },
+      "currentTargetMatchesActual": true,
+      "sourceSegmentsJoinExactly": true,
+      "targetSegmentsJoinExactly": true,
+      "proposedTarget": "Languta ice ni ku onhaka ka swimilani, compare low ground with slopes, and check minimum temperatures where you can. Fungha tindhawu laha cold or damage swi tshamaka kona nkarhi wo leha ngopfu. Keep sensitive plants away from the cold pockets you observe.",
+      "heldSegmentsRetainExactSource": true,
+      "allSegmentsHaveAllowedStatus": true,
+      "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open.",
+      "learnerDraftSegmentEvidence": [
+        {
+          "source": "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. ",
+          "target": "Languta ice ni ku onhaka ka swimilani, compare low ground with slopes, and check minimum temperatures where you can. ",
+          "foundInApprovedLearner": false
+        },
+        {
+          "source": "Mark places where cold or damage lasts longest.",
+          "target": "Fungha tindhawu laha cold or damage swi tshamaka kona nkarhi wo leha ngopfu.",
+          "foundInApprovedLearner": true
+        }
+      ],
+      "reason": "Only middle source sentence changes; prefix and safety instruction remain as they are."
+    },
+    {
+      "language": "ve",
+      "slide": 14,
+      "bodyParagraphIndexZeroBased": 1,
+      "lessonId": "reading-landscape-l3",
+      "fieldPath": "slides[13].target.body[1]",
+      "reviewStatus": "english-hold",
+      "actualEnglishSource": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "packetEnglishSource": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "sourceMatchesActualPairedDeck": true,
+      "sourceOccursInCanonicalExact": true,
+      "sourceOccursInCanonicalWhitespaceNormalized": true,
+      "actualCurrentTarget": {
+        "status": "english-hold"
+      },
+      "packetCurrentTarget": {
+        "status": "english-hold"
+      },
+      "currentTargetMatchesActual": true,
+      "sourceSegmentsJoinExactly": true,
+      "targetSegmentsJoinExactly": true,
+      "proposedTarget": "Frost ndi ice that forms on a cold surface. Mist fhedzi a i sumbedzi uri ice has formed, nahone frost damage can happen without visible ice.",
+      "heldSegmentsRetainExactSource": true,
+      "allSegmentsHaveAllowedStatus": true,
+      "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open.",
+      "learnerDraftSegmentEvidence": [
+        {
+          "source": " is ",
+          "target": " ndi ",
+          "foundInApprovedLearner": true
+        },
+        {
+          "source": " alone",
+          "target": " fhedzi",
+          "foundInApprovedLearner": true
+        },
+        {
+          "source": " does not show that ",
+          "target": " a i sumbedzi uri ",
+          "foundInApprovedLearner": true
+        },
+        {
+          "source": ", and",
+          "target": ", nahone",
+          "foundInApprovedLearner": true
+        }
+      ],
+      "reason": "Exact accepted two-sentence learner draft: ordinary definition/diagnostic framing and conjunction localized, while Frost/Mist terms, physical definition, ice-formed condition, and complete can-without-visible-ice clause remain exact English."
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "bodyParagraphIndexZeroBased": 2,
+      "lessonId": "reading-landscape-l4",
+      "fieldPath": "slides[17].target.body[2]",
+      "reviewStatus": "mixed",
+      "actualEnglishSource": "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Check the soil before deciding what the patch means for your design.",
+      "packetEnglishSource": "These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Check the soil before deciding what the patch means for your design.",
+      "sourceMatchesActualPairedDeck": true,
+      "sourceOccursInCanonicalExact": false,
+      "sourceOccursInCanonicalWhitespaceNormalized": false,
+      "actualCurrentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "These plants ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "can grow in disturbed places, but their presence alone does not show whether the soil is compacted. ",
+            "status": "draft",
+            "text": "zwi nga mela fhethu ho vhilinganywaho (disturbed places), fhedzi u vha hone hazwo fhedzi a zwi sumbedzi arali mavu o tsitsikana (compacted). "
+          },
+          {
+            "sourceEnglish": "Check the soil before deciding what the patch means for your design.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed mixed learner draft; exact source subject and ambiguous patch decision are held in English. Facilitator review pending."
+      },
+      "packetCurrentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "These plants ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "can grow in disturbed places, but their presence alone does not show whether the soil is compacted. ",
+            "status": "draft",
+            "text": "zwi nga mela fhethu ho vhilinganywaho (disturbed places), fhedzi u vha hone hazwo fhedzi a zwi sumbedzi arali mavu o tsitsikana (compacted). "
+          },
+          {
+            "sourceEnglish": "Check the soil before deciding what the patch means for your design.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed mixed learner draft; exact source subject and ambiguous patch decision are held in English. Facilitator review pending."
+      },
+      "currentTargetMatchesActual": true,
+      "sourceSegmentsJoinExactly": true,
+      "targetSegmentsJoinExactly": true,
+      "proposedTarget": "Zwimela izwi zwi nga mela fhethu ho vhilinganywaho (disturbed places), fhedzi u vha hone hazwo fhedzi a zwi sumbedzi arali mavu o tsitsikana (compacted). Check the soil before deciding what the patch means for your design.",
+      "heldSegmentsRetainExactSource": true,
+      "allSegmentsHaveAllowedStatus": true,
+      "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open.",
+      "learnerDraftSegmentEvidence": [
+        {
+          "source": "These plants ",
+          "target": "Zwimela izwi ",
+          "foundInApprovedLearner": true
+        },
+        {
+          "source": "can grow in disturbed places, but their presence alone does not show whether the soil is compacted. ",
+          "target": "zwi nga mela fhethu ho vhilinganywaho (disturbed places), fhedzi u vha hone hazwo fhedzi a zwi sumbedzi arali mavu o tsitsikana (compacted). ",
+          "foundInApprovedLearner": true
+        }
+      ],
+      "reason": "Only exact source subject is localized; current predicate and separate patch/design decision stay unchanged."
+    }
+  ],
+  "semanticChecks": [
+    {
+      "id": "all-7-bindings-and-concats",
+      "ok": true,
+      "detail": "All candidates are bound to the exact current paired-deck source/current target; source and target segments concatenate exactly; held segments equal source."
+    },
+    {
+      "id": "st11-species-sensitivity-direction-observation",
+      "ok": true,
+      "detail": "Exact crop names and young qualifier remain; the draft phrase “di ameha habonolo ke serame (frost)” carries the sensitivity meaning; keep-away direction, known low-pocket condition and observe-local-frost-before-planting remain."
+    },
+    {
+      "id": "ts14-clear-still-cold-air-and-colder-comparison",
+      "ok": true,
+      "detail": "Existing clear/still opening retained, full cold-air/can/downhill/collection clause exact English, colder-than-nearby comparison preserved with localized demonstrative/modal."
+    },
+    {
+      "id": "frost-definition-and-mist-negative-no-visible-ice",
+      "ok": true,
+      "detail": "The exact definition and ice-forming surface, Mist-alone limitation, negative diagnostic, and can/without-visible-ice condition are preserved."
+    },
+    {
+      "id": "ts14-checklist-order-and-sensitive-plants",
+      "ok": true,
+      "detail": "Existing check action order remains; cold OR damage and longest are retained; keep-away instruction and observed-pocket condition remain exact."
+    },
+    {
+      "id": "ve18-subject-only-and-patch-hold",
+      "ok": true,
+      "detail": "Only “These plants” is newly localized; existing predicate is preserved byte-for-byte; uncertain patch/design sentence remains exact English."
+    },
+    {
+      "id": "ve18-canonical-article-discrepancy-contained",
+      "ok": true,
+      "detail": "The paired slide source includes “the soil” while canonical learner source omits “the”; proposal remains paired-source exact and does not normalize or copy the rest wholesale."
+    }
+  ],
+  "limitations": [
+    "The VE slide 18 paired source says “whether the soil is compacted”; canonical learner English says “whether soil is compacted.” The proposed deck text remains bound to the paired source and holds the source-sensitive check sentence unchanged. This is a one-word source discrepancy, not evidence to rewrite canonical or deck source.",
+    "Review validates source/target composition and named meaning conditions; it does not claim fluent approval or facilitator review. No repository files were changed."
+  ]
+}

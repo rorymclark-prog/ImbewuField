@@ -1,0 +1,268 @@
+{
+  "packetId": "TS-VEGETABLES-L1-ASSESSMENT-CANDIDATES-2026-10-02",
+  "language": "Xitsonga",
+  "languageCode": "ts",
+  "sourceRevision": "0cffac8c885842bea221ec43185697e9f868274a",
+  "registryRevision": "0cffac8c885842bea221ec43185697e9f868274a",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+  "lessonId": "vegetables-staples-l1",
+  "existingBodySourceMatchesCanonical": true,
+  "bodyCandidateIncluded": false,
+  "sourceCorrectIndices": [
+    1,
+    2
+  ],
+  "title": {
+    "fieldPath": "title",
+    "sourceEnglish": "Preparing and Planting Your Beds",
+    "currentRegistry": {
+      "sourceEnglish": "Preparing and Planting Your Beds",
+      "xitsongaDraft": "Preparing and Planting Your Beds",
+      "reviewStatus": "hold"
+    },
+    "xitsongaDraft": "Ku Lulamisa ni ku Byala Mabedhe ya Wena.",
+    "draftStatus": "machine-draft",
+    "independentBacktranslation": "Preparing and planting your beds.",
+    "uncertainty": "Verify preferred local term for garden beds and capitalization."
+  },
+  "infographicAlt": {
+    "fieldPath": "infographicAlt",
+    "sourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+    "currentRegistry": {
+      "sourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "xitsongaDraft": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "reviewStatus": "hold"
+    },
+    "xitsongaDraft": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+    "draftStatus": "hold",
+    "independentBacktranslation": "A raised bed, about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+    "uncertainty": "Uncertain raised-bed noun concord; hold exact English."
+  },
+  "keyPoints": [
+    {
+      "fieldPath": "keyPoints[0]",
+      "sourceEnglish": "Keep beds 1-1.2m wide so you never need to step on the growing area",
+      "currentRegistry": {
+        "sourceEnglish": "Keep beds 1-1.2m wide so you never need to step on the growing area",
+        "xitsongaDraft": "Keep beds 1-1.2m wide so you never need to step on the growing area",
+        "reviewStatus": "hold"
+      },
+      "xitsongaDraft": "Keep beds 1-1.2m wide so you never need to step on the growing area",
+      "draftStatus": "hold",
+      "independentBacktranslation": "Keep beds 1-1.2m wide so you never need to step on the growing area.",
+      "uncertainty": "Held exact because the measurement and no-stepping geometry are exact recommendations."
+    },
+    {
+      "fieldPath": "keyPoints[1]",
+      "sourceEnglish": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay",
+      "currentRegistry": {
+        "sourceEnglish": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay",
+        "xitsongaDraft": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay",
+        "reviewStatus": "hold"
+      },
+      "xitsongaDraft": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay",
+      "draftStatus": "hold",
+      "independentBacktranslation": "Assess compaction and drainage before choosing deeper cultivation; do not work wet clay.",
+      "uncertainty": "Held exact because the soil diagnosis, deeper cultivation prerequisite and wet-clay prohibition are safety-sensitive."
+    },
+    {
+      "fieldPath": "keyPoints[2]",
+      "sourceEnglish": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
+      "currentRegistry": {
+        "sourceEnglish": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
+        "xitsongaDraft": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
+        "reviewStatus": "hold"
+      },
+      "xitsongaDraft": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
+      "draftStatus": "hold",
+      "independentBacktranslation": "Transplant crops needing a head start; direct-seed crops that resent root disturbance.",
+      "uncertainty": "Held exact to preserve the distinct crop-establishment methods and root-disturbance condition."
+    },
+    {
+      "fieldPath": "keyPoints[3]",
+      "sourceEnglish": "Crowded plants underperform — space generously for your local climate",
+      "currentRegistry": {
+        "sourceEnglish": "Crowded plants underperform — space generously for your local climate",
+        "xitsongaDraft": "Crowded plants underperform — space generously for your local climate",
+        "reviewStatus": "hold"
+      },
+      "xitsongaDraft": "Crowded plants underperform — space generously for your local climate",
+      "draftStatus": "hold",
+      "independentBacktranslation": "Crowded plants do not do well — space generously for your local climate.",
+      "uncertainty": "Too many plants does not clearly preserve physical crowding; hold exact English."
+    }
+  ],
+  "quiz": [
+    {
+      "quizIndex": 0,
+      "sourceCorrectIndex": 1,
+      "question": {
+        "fieldPath": "quiz[0].question",
+        "sourceEnglish": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
+        "currentRegistry": {
+          "sourceEnglish": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
+          "xitsongaDraft": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
+          "reviewStatus": "hold"
+        },
+        "xitsongaDraft": "Hikokwalaho ka yini u hlayisa vegetable bed e le 1-1.2m wide ku ri na ku yi endla yi anama ku tlurisa?",
+        "draftStatus": "machine-draft",
+        "independentBacktranslation": "Why keep a vegetable bed 1-1.2m wide rather than make it wider?",
+        "uncertainty": "Keep vegetable bed and exact width English; verify the comparative question framing."
+      },
+      "options": [
+        {
+          "fieldPath": "quiz[0].options[0]",
+          "sourceEnglish": "Wider beds get too much sun",
+          "currentRegistry": {
+            "sourceEnglish": "Wider beds get too much sun",
+            "xitsongaDraft": "Wider beds get too much sun",
+            "reviewStatus": "hold"
+          },
+          "xitsongaDraft": "Mabedhe lama anameke ma kuma dyambu ro tala ngopfu.",
+          "draftStatus": "machine-draft",
+          "independentBacktranslation": "Wider beds get too much sun.",
+          "uncertainty": "Straightforward distractor translation; verify comparative form."
+        },
+        {
+          "fieldPath": "quiz[0].options[1]",
+          "sourceEnglish": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
+          "currentRegistry": {
+            "sourceEnglish": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
+            "xitsongaDraft": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
+            "reviewStatus": "hold"
+          },
+          "xitsongaDraft": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
+          "draftStatus": "hold",
+          "independentBacktranslation": "You can reach the centre from either side without stepping on the growing area, avoiding compaction.",
+          "uncertainty": "Held exact because access geometry and compaction consequence are the correct answer."
+        },
+        {
+          "fieldPath": "quiz[0].options[2]",
+          "sourceEnglish": "Narrow beds drain better in all conditions",
+          "currentRegistry": {
+            "sourceEnglish": "Narrow beds drain better in all conditions",
+            "xitsongaDraft": "Narrow beds drain better in all conditions",
+            "reviewStatus": "hold"
+          },
+          "xitsongaDraft": "Narrow beds drain better in all conditions",
+          "draftStatus": "hold",
+          "independentBacktranslation": "Narrow beds drain better in all conditions.",
+          "uncertainty": "Held exact to preserve the deliberately overbroad drainage distractor."
+        },
+        {
+          "fieldPath": "quiz[0].options[3]",
+          "sourceEnglish": "It's a fixed rule with no practical reason",
+          "currentRegistry": {
+            "sourceEnglish": "It's a fixed rule with no practical reason",
+            "xitsongaDraft": "It's a fixed rule with no practical reason",
+            "reviewStatus": "hold"
+          },
+          "xitsongaDraft": "It's a fixed rule with no practical reason",
+          "draftStatus": "hold",
+          "independentBacktranslation": "It is a fixed rule, but it has no reason for working.",
+          "uncertainty": "No reason for working differs from no practical reason; hold exact English."
+        }
+      ],
+      "rationale": {
+        "fieldPath": "quiz[0].rationale",
+        "sourceEnglish": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+        "currentRegistry": {
+          "sourceEnglish": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+          "xitsongaDraft": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+          "reviewStatus": "hold"
+        },
+        "xitsongaDraft": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+        "draftStatus": "hold",
+        "independentBacktranslation": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+        "uncertainty": "Held exact because it states the geometry and compaction/root-damage rationale."
+      }
+    },
+    {
+      "quizIndex": 1,
+      "sourceCorrectIndex": 2,
+      "question": {
+        "fieldPath": "quiz[1].question",
+        "sourceEnglish": "Which crop is best suited to direct-seeding rather than transplanting?",
+        "currentRegistry": {
+          "sourceEnglish": "Which crop is best suited to direct-seeding rather than transplanting?",
+          "xitsongaDraft": "Which crop is best suited to direct-seeding rather than transplanting?",
+          "reviewStatus": "hold"
+        },
+        "xitsongaDraft": "Hi xihi xibyariwa lexi faneleke ngopfu ku byariwa hi direct-seeding ku ri na transplanting?",
+        "draftStatus": "machine-draft",
+        "independentBacktranslation": "Which crop is best suited to being direct-seeded rather than transplanted?",
+        "uncertainty": "Retain the technical establishment terms; verify the Xitsonga interrogative and comparison."
+      },
+      "options": [
+        {
+          "fieldPath": "quiz[1].options[0]",
+          "sourceEnglish": "Tomatoes, which need an early start",
+          "currentRegistry": {
+            "sourceEnglish": "Tomatoes, which need an early start",
+            "xitsongaDraft": "Tomatoes, which need an early start",
+            "reviewStatus": "hold"
+          },
+          "xitsongaDraft": "Tomatoes, which need an early start",
+          "draftStatus": "hold",
+          "independentBacktranslation": "Tomatoes, which need an early start.",
+          "uncertainty": "Held exact to preserve crop identity and establishment claim."
+        },
+        {
+          "fieldPath": "quiz[1].options[1]",
+          "sourceEnglish": "Brassicas, which need protection while small",
+          "currentRegistry": {
+            "sourceEnglish": "Brassicas, which need protection while small",
+            "xitsongaDraft": "Brassicas, which need protection while small",
+            "reviewStatus": "hold"
+          },
+          "xitsongaDraft": "Brassicas, which need protection while small",
+          "draftStatus": "hold",
+          "independentBacktranslation": "Brassicas, which need protection while small.",
+          "uncertainty": "Held exact to preserve crop identity and establishment claim."
+        },
+        {
+          "fieldPath": "quiz[1].options[2]",
+          "sourceEnglish": "Beans, which resent root disturbance",
+          "currentRegistry": {
+            "sourceEnglish": "Beans, which resent root disturbance",
+            "xitsongaDraft": "Beans, which resent root disturbance",
+            "reviewStatus": "hold"
+          },
+          "xitsongaDraft": "Beans, which resent root disturbance",
+          "draftStatus": "hold",
+          "independentBacktranslation": "Beans, which resent root disturbance.",
+          "uncertainty": "Held exact to preserve crop identity and root-disturbance reason."
+        },
+        {
+          "fieldPath": "quiz[1].options[3]",
+          "sourceEnglish": "Peppers, which are slow to germinate",
+          "currentRegistry": {
+            "sourceEnglish": "Peppers, which are slow to germinate",
+            "xitsongaDraft": "Peppers, which are slow to germinate",
+            "reviewStatus": "hold"
+          },
+          "xitsongaDraft": "Peppers, which are slow to germinate",
+          "draftStatus": "hold",
+          "independentBacktranslation": "Peppers, which are slow to germinate.",
+          "uncertainty": "Held exact to preserve crop identity and germination claim."
+        }
+      ],
+      "rationale": {
+        "fieldPath": "quiz[1].rationale",
+        "sourceEnglish": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+        "currentRegistry": {
+          "sourceEnglish": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+          "xitsongaDraft": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+          "reviewStatus": "hold"
+        },
+        "xitsongaDraft": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+        "draftStatus": "hold",
+        "independentBacktranslation": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+        "uncertainty": "Held exact because transplant shock, sensitive roots and establishment outcome are precise cultivation claims."
+      }
+    }
+  ],
+  "reviewNote": "Source-paired machine-draft candidates only; no fluent approval. Option order and source answer indices are unchanged. Geometry, dimensions, soil restrictions, and species/establishment claims remain exact English where precision matters.",
+  "independentCheck": "Sources/order/indices1,2 verified; title and question framing checked. Alt/KP3/Q0option3 held after independent semantic concerns. Data-only for fresh next learner batch; not fluent approval."
+}

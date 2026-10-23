@@ -1,0 +1,445 @@
+{
+  "title": "Independent second check of flagged isiZulu narration clauses",
+  "date": "2026-10-05",
+  "reviewScope": "All repair and uncertain flags in the specified four reports (Intro/Reading, Soil/Water, Vegetables/Market, Forest/Guilds). Seeds/Livestock excluded. This checks registered narration, not learner-body text, and is not fluent-speaker approval.",
+  "base": {
+    "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+    "head": "d9ec7c77b8591ba675f7672ef4af69fb3790a749"
+  },
+  "sourceBindingNote": "All report source-file hashes match current files at this HEAD. Every flagged block was directly compared with current COURSE_TRANSCRIPTS English and isiZulu entries; both arrays match exactly for all 12 flagged blocks.",
+  "summary": {
+    "flaggedReportBlocks": 12,
+    "individualFlags": 13,
+    "acceptedFlags": 12,
+    "rejectedFlags": 1,
+    "repairsApplied": 0,
+    "repositoryOrMediaChanges": 0
+  },
+  "findings": [
+    {
+      "module": "Introduction",
+      "lessonId": "intro-permaculture",
+      "slide": 10,
+      "language": "zu",
+      "contentKind": "registered narration transcript; separate from learner text",
+      "sourceEnglishBlock": [
+        "Watch your land through a full season before you commit to major earthworks.",
+        "One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.",
+        "This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
+        "Where does water leave your land? Do you actually know, or are you guessing?"
+      ],
+      "registeredZuluBlock": [
+        "Bheka umhlaba wakho isizini yonke ngaphambi kokunquma ukwenza umsebenzi omkhulu wokumba noma wokushintsha umhlaba.",
+        "Isiphepho esisodwa sikukhombisa isikhathi esisodwa. Isizini yemvula yonke ikukhombisa iphethini — lapho amanzi egeleza khona, lapho ehlala khona, nalapho engafiki khona.",
+        "Lokhu kukusiza uqonde indawo yakho. Kodwa ukubuka kukodwa akusho ukuthi ukumba ama-swale kulungele noma kuphephile kuleyo ndawo. Ngaphambi kokumba, hlola umhlabathi, umthambeka, ukugeleza kwamanzi nendlela ephephile amanzi angaphuma ngayo, engeke ibangele ukuguguleka komhlaba noma ithumele amanzi alimazayo komakhelwane. Cela umeluleki wendawo oqeqeshiwe ahlole indawo.",
+        "Amanzi aphuma ngakuphi emhlabeni wakho? Uyazi ngempela, noma uyaqagela?"
+      ],
+      "reportDisposition": "uncertain",
+      "independentDecision": "reject-flag",
+      "sourceClause": "major earthworks",
+      "flaggedMeaning": "The complete ZU clause says “umsebenzi omkhulu wokumba noma wokushintsha umhlaba” (major work of digging or changing land). The source qualifier major and the earth-moving/digging action are retained. The report’s broader-scope concern is not supported strongly enough to warrant a repair.",
+      "recommendation": "Keep existing ZU; no change.",
+      "authority": {
+        "transcriptRegistryPath": "lib/course-transcripts.ts",
+        "transcriptRegistrySha256": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+        "englishBlockMatchesCurrentRegistry": true,
+        "zuluBlockMatchesCurrentRegistry": true,
+        "englishNarrationPath": "docs/narration/intro-permaculture.en.md",
+        "isiZuluNarrationPath": "docs/narration/intro-permaculture.zu.md",
+        "englishSourceSha256": "312fce3eb18c46b04d9353eac636c3b66013b7e17d1cf2ce18a1446d2900914d",
+        "isiZuluSourceSha256": "b31f633b6e307cf400be55343d433eb847016b089aae589f75439d38c6af6555"
+      }
+    },
+    {
+      "module": "Introduction",
+      "lessonId": "intro-permaculture",
+      "slide": 22,
+      "language": "zu",
+      "contentKind": "registered narration transcript; separate from learner text",
+      "sourceEnglishBlock": [
+        "Walk out and check your sketch against the ground.",
+        "Stand at the kitchen door and count what is really in Zone 1 today.",
+        "Find one thing planted further away than how often you use it, and write down where it should move to.",
+        "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow."
+      ],
+      "registeredZuluBlock": [
+        "Hamba uyohlola umdwebo wakho emhlabeni wangempela.",
+        "Yima emnyango wasekhishini ubale okukhona ngempela ku-Zone 1 namuhla.",
+        "Thola into eyodwa etshalwe kude uma uqhathanisa nokuthi uyisebenzisa\nkaningi kangakanani. Bhala ukuthi ingabekwa kuphi.",
+        "Bese ubuza umakhelwane osekhulile ukuthi umoya olimazayo uvela\nngakuphi. Qhathanisa impendulo yakhe nomcibisholo wakho."
+      ],
+      "reportDisposition": "repair",
+      "independentDecision": "accept-flag",
+      "sourceClause": "the worst wind",
+      "flaggedMeaning": "“umoya olimazayo” expresses damaging/harmful wind but omits the source superlative worst.",
+      "recommendation": "Retain exact English “worst wind” unless a checked equivalent preserves the superlative. Keep “older neighbour” and comparison with the arrow.",
+      "authority": {
+        "transcriptRegistryPath": "lib/course-transcripts.ts",
+        "transcriptRegistrySha256": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+        "englishBlockMatchesCurrentRegistry": true,
+        "zuluBlockMatchesCurrentRegistry": true,
+        "englishNarrationPath": "docs/narration/intro-permaculture.en.md",
+        "isiZuluNarrationPath": "docs/narration/intro-permaculture.zu.md",
+        "englishSourceSha256": "312fce3eb18c46b04d9353eac636c3b66013b7e17d1cf2ce18a1446d2900914d",
+        "isiZuluSourceSha256": "b31f633b6e307cf400be55343d433eb847016b089aae589f75439d38c6af6555"
+      }
+    },
+    {
+      "module": "Introduction",
+      "lessonId": "intro-permaculture",
+      "slide": 22,
+      "language": "zu",
+      "contentKind": "registered narration transcript; separate from learner text",
+      "sourceEnglishBlock": [
+        "Walk out and check your sketch against the ground.",
+        "Stand at the kitchen door and count what is really in Zone 1 today.",
+        "Find one thing planted further away than how often you use it, and write down where it should move to.",
+        "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow."
+      ],
+      "registeredZuluBlock": [
+        "Hamba uyohlola umdwebo wakho emhlabeni wangempela.",
+        "Yima emnyango wasekhishini ubale okukhona ngempela ku-Zone 1 namuhla.",
+        "Thola into eyodwa etshalwe kude uma uqhathanisa nokuthi uyisebenzisa\nkaningi kangakanani. Bhala ukuthi ingabekwa kuphi.",
+        "Bese ubuza umakhelwane osekhulile ukuthi umoya olimazayo uvela\nngakuphi. Qhathanisa impendulo yakhe nomcibisholo wakho."
+      ],
+      "reportDisposition": "repair",
+      "independentDecision": "accept-flag",
+      "sourceClause": "where it should move to",
+      "flaggedMeaning": "“ingabekwa kuphi” asks where it can be placed; source asks for the destination it should move to and to write it down.",
+      "recommendation": "Retain exact English “where it should move to” unless a checked equivalent preserves the requested destination. Preserve write-it-down instruction.",
+      "authority": {
+        "transcriptRegistryPath": "lib/course-transcripts.ts",
+        "transcriptRegistrySha256": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+        "englishBlockMatchesCurrentRegistry": true,
+        "zuluBlockMatchesCurrentRegistry": true,
+        "englishNarrationPath": "docs/narration/intro-permaculture.en.md",
+        "isiZuluNarrationPath": "docs/narration/intro-permaculture.zu.md",
+        "englishSourceSha256": "312fce3eb18c46b04d9353eac636c3b66013b7e17d1cf2ce18a1446d2900914d",
+        "isiZuluSourceSha256": "b31f633b6e307cf400be55343d433eb847016b089aae589f75439d38c6af6555"
+      }
+    },
+    {
+      "module": "Reading Landscape",
+      "lessonId": "reading-landscape",
+      "slide": 15,
+      "language": "zu",
+      "contentKind": "registered narration transcript; separate from learner text",
+      "sourceEnglishBlock": [
+        "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+        "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too."
+      ],
+      "registeredZuluBlock": [
+        "Beka inkulisa yezithombo ezizwela isithwathwa ngaphandle kwezindawo ezibandayo ozibonile. Qhathanisa izindawo ezingakhethwa kuyo yonke inkathi yesithwathwa yasendaweni. Hlola amarekhodi endawo okushisa okuphansi noma ubuze umeluleki wezolimo ngaphambi kokukhetha indawo ehlala njalo. Hlola nelanga nomoya olimazayo. Ayikho indawo esentabeni eqinisekisa ukuthi ngeke ibe nesithwathwa.",
+        "Kumatamatisi ahlaselwe yi-late blight, ukuhamba komoya nelanga lasekuseni kungasiza amaqabunga ome. Isimo sezulu esibandayo nesinomswakama esiqhubeka isikhathi eside sisengasivumela lesi sifo ukuba sisabalale. Ukususa umbhede uwuyise kwenye indawo kukodwa ngeke kusilawule i-late blight. Funa neseluleko sendawo ngempilo yezitshalo."
+      ],
+      "reportDisposition": "repair",
+      "independentDecision": "accept-flag",
+      "sourceClause": "Prolonged cool, damp weather can still favour the disease.",
+      "flaggedMeaning": "Target says the weather may allow disease to spread. Source says the conditions can favour the disease, not that spread occurs.",
+      "recommendation": "Retain this exact English sentence until a checked equivalent preserves the conditional favouring relationship; keep can still.",
+      "authority": {
+        "transcriptRegistryPath": "lib/course-transcripts.ts",
+        "transcriptRegistrySha256": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+        "englishBlockMatchesCurrentRegistry": true,
+        "zuluBlockMatchesCurrentRegistry": true,
+        "englishNarrationPath": "docs/narration/reading-landscape.en.md",
+        "isiZuluNarrationPath": "docs/narration/reading-landscape.zu.md",
+        "englishSourceSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+        "isiZuluSourceSha256": "a22e0b20fa037fe3ff7be065cc9423868fe1e74aca542fa4b881295bc6c8e26b"
+      }
+    },
+    {
+      "module": "Reading Landscape",
+      "lessonId": "reading-landscape",
+      "slide": 16,
+      "language": "zu",
+      "contentKind": "registered narration transcript; separate from learner text",
+      "sourceEnglishBlock": [
+        "A site map needs paper, a tape measure, a compass, and time to walk your land.",
+        "Walk the boundary and make a first sketch. Mark it not to scale until you have checked its distances. Mark north. Add the house, trees, water, roads, and fences.",
+        "Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding."
+      ],
+      "registeredZuluBlock": [
+        "Ukuze wenze i-site map, udinga iphepha, i-tape measure, i-compass nesikhathi sokuhamba emhlabeni wakho.",
+        "Hamba emngceleni wenze umdwebo wokuqala. Maka ukuthi awukabi ngesikali kuze kube usuwahlolile amabanga. Maka inyakatho. Faka indlu, izihlahla, amanzi, imigwaqo nezicingo.",
+        "Bese udweba amaphethini owabonile. Imephu yakho iba uhlaka lomklamo wesiqeshana sakho sonke somhlaba."
+      ],
+      "reportDisposition": "uncertain",
+      "independentDecision": "accept-flag",
+      "sourceClause": "the whole smallholding",
+      "flaggedMeaning": "“isiqeshana sakho sonke somhlaba” means the whole piece/plot of land and may not preserve the scope of the whole smallholding.",
+      "recommendation": "Keep only “smallholding” in English if property scope cannot be established; other map instructions may remain localized.",
+      "authority": {
+        "transcriptRegistryPath": "lib/course-transcripts.ts",
+        "transcriptRegistrySha256": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+        "englishBlockMatchesCurrentRegistry": true,
+        "zuluBlockMatchesCurrentRegistry": true,
+        "englishNarrationPath": "docs/narration/reading-landscape.en.md",
+        "isiZuluNarrationPath": "docs/narration/reading-landscape.zu.md",
+        "englishSourceSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+        "isiZuluSourceSha256": "a22e0b20fa037fe3ff7be065cc9423868fe1e74aca542fa4b881295bc6c8e26b"
+      }
+    },
+    {
+      "module": "Soil Health",
+      "lessonId": "soil-health",
+      "slide": 1,
+      "language": "zu",
+      "contentKind": "registered narration transcript; separate from learner text",
+      "sourceEnglishBlock": [
+        "Soil is more than the ground under your feet.",
+        "It is a living place that feeds crops, holds water, and carries your harvest.",
+        "In this module, learn to read soil, make safe compost, protect bare ground, and use cover crops and worm farms."
+      ],
+      "registeredZuluBlock": [
+        "Umhlabathi ungaphezu kokuba yindawo engaphansi kwezinyawo zakho.",
+        "Uyindawo ephilayo esiza izitshalo zikhule, ebamba amanzi, futhi esekela isivuno sakho.",
+        "Kule modyuli, funda ukubheka nokufunda umhlabathi, ukwenza i-compost, ukuvikela umhlabathi ongenalutho, nokusebenzisa izitshalo zokumboza umhlabathi nama-worm farm."
+      ],
+      "reportDisposition": "repair",
+      "independentDecision": "accept-flag",
+      "sourceClause": "make safe compost",
+      "flaggedMeaning": "Target says making compost and omits the safety qualifier safe.",
+      "recommendation": "Retain “safe compost” in English or use a verified equivalent for the safety modifier; do not imply every compost process is safe.",
+      "authority": {
+        "transcriptRegistryPath": "lib/course-transcripts.ts",
+        "transcriptRegistrySha256": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+        "englishBlockMatchesCurrentRegistry": true,
+        "zuluBlockMatchesCurrentRegistry": true,
+        "englishNarrationPath": "docs/narration/soil-health.en.md",
+        "isiZuluNarrationPath": "docs/narration/soil-health.zu.md",
+        "englishSourceSha256": "9c0eb67c153b0ff35fce26d9e97fb36ee4ebe196e9a38e695c31adb7de4d47ea",
+        "isiZuluSourceSha256": "edcd21bc1b0cf8c043dbbfcaf76e0d3d4215272a09e45ee4009a542c2d9d6d51"
+      }
+    },
+    {
+      "module": "Water Harvesting",
+      "lessonId": "water-harvesting",
+      "slide": 10,
+      "language": "zu",
+      "contentKind": "registered narration transcript; separate from learner text",
+      "sourceEnglishBlock": [
+        "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.",
+        "Rainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.",
+        "Before changing a watercourse or building storage works, check the required authorisation with the water authority."
+      ],
+      "registeredZuluBlock": [
+        "Idamu noma ichibi lingagcina amanzi agelezayo, kodwa inani lamanzi atholakalayo lincike emvuleni yasendaweni, endaweni eqoqa amanzi, emanzini alahleka endleleni nasekutheni usebenzisa amanzi angakanani.",
+        "Izinkathi zemvula ziyahlukahluka eNingizimu Afrika. Sebenzisa amarekhodi endawo, uhlele nezikhathi ezomile; akuqinisekisiwe ukuthi idamu liyohlala ligcwele.",
+        "Ngaphambi kokushintsha umfula noma ukwakha indawo yokugcina amanzi, hlola nesiphathimandla samanzi ukuthi iyiphi imvume edingekayo."
+      ],
+      "reportDisposition": "uncertain",
+      "independentDecision": "accept-flag",
+      "sourceClause": "changing a watercourse",
+      "flaggedMeaning": "“umfula” means river and may narrow watercourse, which can include smaller streams or channels. The water-authority authorization check remains.",
+      "recommendation": "Retain “watercourse” in English unless a checked broader equivalent is available; preserve the before-action and authorization instructions.",
+      "authority": {
+        "transcriptRegistryPath": "lib/course-transcripts.ts",
+        "transcriptRegistrySha256": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+        "englishBlockMatchesCurrentRegistry": true,
+        "zuluBlockMatchesCurrentRegistry": true,
+        "englishNarrationPath": "docs/narration/water-harvesting.en.md",
+        "isiZuluNarrationPath": "docs/narration/water-harvesting.zu.md",
+        "englishSourceSha256": "08b70c0807e4e4ed053262a04bbe021c126de848ab9fbb479ed758966f8fd62c",
+        "isiZuluSourceSha256": "f666c9241f20a25fd52d399efe03c32d4d5b3bff24ab1b0ed2ce86290c54b255"
+      }
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "lessonId": "vegetables-staples",
+      "slide": 16,
+      "language": "zu",
+      "contentKind": "registered narration transcript; separate from learner text",
+      "sourceEnglishBlock": [
+        "Work through four steps, in order.",
+        "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+        "Two. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.",
+        "Three. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.",
+        "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+        "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+        "Be honest with yourself about which step you usually skip."
+      ],
+      "registeredZuluBlock": [
+        "Landela izinyathelo ezine ngokulandelana.",
+        "Okokuqala. Bheka. Bheka iphethini yokulimala, ngaphansi kweqabunga, isiqu nezitshalo eziseduze.",
+        "Okwesibili. Hlola ukucindezeleka kwesitshalo. Hlola umswakama womhlabathi, izimpande, isikhala phakathi kwezitshalo, izakhamzimba nokuphuma kwamanzi.",
+        "Okwesithathu. Vikela okusizayo. Izinambuzane ezizuzisayo zenza umsebenzi obungase uwenze wena.",
+        "Okwesine. Yilapho kuphela osuthatha khona isinyathelo; qala ngesenzo esilula kunazo zonke esifanele. Ukususa izinambuzane ngesandla, ukubeka izithiyo noma ukushintsha indlela yokunakekela izitshalo kungasiza. Hlola ukuthi isenzo siyayifanele yini inkinga, bese ubheka umphumela.",
+        "Uma kudingeka ukwelapha ngomkhiqizo, sebenzisa umkhiqizo obhaliswe ukuthi usetshenziswe kuleso sitshalo nakuleso sinambuzane, bese ulandela yonke imiyalelo eselebulini lawo. Lokhu kuhlanganisa nemikhiqizo ye-neem. Hlola imiyalelo yokuzivikela kanye nesikhathi sokulinda ngaphambi kokuvuna. Ungazenzeli izingxube noma usebenzise imithamo enamandla kunaleyo eselebulini.",
+        "Zitshele iqiniso ngokuthi yisiphi isinyathelo ovame ukusishiya."
+      ],
+      "reportDisposition": "repair",
+      "independentDecision": "accept-flag",
+      "sourceClause": "start with the lightest thing that works",
+      "flaggedMeaning": "Target says the simplest action that is suitable. Suitability alone does not preserve the least-intensive action that is effective.",
+      "recommendation": "Retain “the lightest thing that works” in English unless a checked equivalent preserves intensity comparison and effectiveness threshold. Four-step order and “only then” remain.",
+      "authority": {
+        "transcriptRegistryPath": "lib/course-transcripts.ts",
+        "transcriptRegistrySha256": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+        "englishBlockMatchesCurrentRegistry": true,
+        "zuluBlockMatchesCurrentRegistry": true,
+        "englishNarrationPath": "docs/narration/vegetables-staples.en.md",
+        "isiZuluNarrationPath": "docs/narration/vegetables-staples.zu.md",
+        "englishSourceSha256": "9cfb6fc5784818d529fdfeecb28f367183fce8a28b6dee28c8f88142640d5bd3",
+        "isiZuluSourceSha256": "9a617e6eb54544534c216268cd8db402cd311f12e8436f97a3d4a4ed5ad5566d"
+      }
+    },
+    {
+      "module": "Vegetables and Staple Crops",
+      "lessonId": "vegetables-staples",
+      "slide": 18,
+      "language": "zu",
+      "contentKind": "registered narration transcript; separate from learner text",
+      "sourceEnglishBlock": [
+        "This week, put one bed into production.",
+        "One. Mark the bed and the paths.",
+        "Two. Plant, with your spacing and your sowing rhythm.",
+        "Three. Return after ten days, with a photo.",
+        "Then observe. Adjust. And write it down.",
+        "Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.",
+        "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+        "Use your record with reliable local advice when making the next decision."
+      ],
+      "registeredZuluBlock": [
+        "Kuleli sonto, sebenzisa umbhede owodwa.",
+        "Okokuqala. Maka umbhede nezindlela.",
+        "Okwesibili. Tshala, usebenzise isikhala nesigqi sakho sokuhlwanyela.",
+        "Okwesithathu. Buya ngemva kwezinsuku eziyishumi nesithombe.",
+        "Bese ubheka, ulungise, ubhale phansi.",
+        "Bhala usuku lokuhlwanyela, imvula, okumilile, ukwanda kwezinambuzane, nokuvunile.",
+        "Inkathi ngayinye, ingadi yakho ingancika kancane ekuqageleni futhi incike kakhulu kulokho okubonile kwenzeka emhlabeni wakho. Sebenzisa amarekhodi akho kanye neseluleko esithembekile sendawo lapho uthatha isinqumo esilandelayo."
+      ],
+      "reportDisposition": "repair",
+      "independentDecision": "accept-flag",
+      "sourceClause": "Pest pressure.",
+      "flaggedMeaning": "“ukwanda kwezinambuzane” means increase in pests rather than level or pressure of pest activity, adding a direction of change.",
+      "recommendation": "Retain “Pest pressure” or use a checked equivalent; leave the ordered other record items unchanged.",
+      "authority": {
+        "transcriptRegistryPath": "lib/course-transcripts.ts",
+        "transcriptRegistrySha256": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+        "englishBlockMatchesCurrentRegistry": true,
+        "zuluBlockMatchesCurrentRegistry": true,
+        "englishNarrationPath": "docs/narration/vegetables-staples.en.md",
+        "isiZuluNarrationPath": "docs/narration/vegetables-staples.zu.md",
+        "englishSourceSha256": "9cfb6fc5784818d529fdfeecb28f367183fce8a28b6dee28c8f88142640d5bd3",
+        "isiZuluSourceSha256": "9a617e6eb54544534c216268cd8db402cd311f12e8436f97a3d4a4ed5ad5566d"
+      }
+    },
+    {
+      "module": "Market and Community",
+      "lessonId": "market-community",
+      "slide": 14,
+      "language": "zu",
+      "contentKind": "registered narration transcript; separate from learner text",
+      "sourceEnglishBlock": [
+        "One farm can produce food.",
+        "A group can share seed, tools, skills, and transport.",
+        "Separate growers become a stronger local food network, with each household contributing what it can."
+      ],
+      "registeredZuluBlock": [
+        "Ipulazi elilodwa lingakhiqiza ukudla.",
+        "Iqembu lingabelana ngembewu, amathuluzi, amakhono nezokuthutha.",
+        "Abalimi abahlukene baba inethiwekhi yokudla yasendaweni enamandla."
+      ],
+      "reportDisposition": "repair",
+      "independentDecision": "accept-flag",
+      "sourceClause": "with each household contributing what it can.",
+      "flaggedMeaning": "The entire final source clause and ability-based qualifier are absent from the ZU narration.",
+      "recommendation": "Retain this exact source clause in English after the localized network sentence until a checked equivalent is available; preserve per-household scope and ability qualifier.",
+      "authority": {
+        "transcriptRegistryPath": "lib/course-transcripts.ts",
+        "transcriptRegistrySha256": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+        "englishBlockMatchesCurrentRegistry": true,
+        "zuluBlockMatchesCurrentRegistry": true,
+        "englishNarrationPath": "docs/narration/market-community.en.md",
+        "isiZuluNarrationPath": "docs/narration/market-community.zu.md",
+        "englishSourceSha256": "3a8ea6cdc78eadb556744a09df2037cb9924443d9f10992be90bab7d0d8825d4",
+        "isiZuluSourceSha256": "31c0990885544d52893fc113cff84f9a11c8d37d79153ab1b83b1e50a67c60ca"
+      }
+    },
+    {
+      "module": "Plant Guilds",
+      "lessonId": "plant-guilds",
+      "slide": 22,
+      "language": "zu",
+      "contentKind": "registered narration transcript; separate from learner text",
+      "sourceEnglishBlock": [
+        "Keep an open establishment basin and access to the fruit tree. Place temporary support plants where their size and water use can be managed.  Put leafy cuttings where mulch is needed. Neighbouring fruit trees can share support strips between them. Can you reach both plants as they grow?"
+      ],
+      "registeredZuluBlock": [
+        "Shiya indawo ezungeze isiqu ingenazitshalo, kanye nendlela yokunakekela umuthi. Beka izitshalo ezisekelayo lapho ukukhula nokusebenzisa kwazo amanzi kungalawuleka khona.  Beka amaqabunga asikiwe lapho kudingeka khona i-mulch. Izihlahla zezithelo zingasebenzisa izitshalo ezisekelayo eziphakathi kwazo. Uzokwazi ukufinyelela kuzo zombili izitshalo njengoba zikhula?"
+      ],
+      "reportDisposition": "uncertain",
+      "independentDecision": "accept-flag",
+      "sourceClause": "Keep an open establishment basin",
+      "flaggedMeaning": "Target leaves the area around the trunk without plants, but does not clearly preserve the basin as a water-management feature.",
+      "recommendation": "Retain “open establishment basin” in English until the basin feature is reliably expressed; keep access and support-plant instructions localized.",
+      "authority": {
+        "transcriptRegistryPath": "lib/course-transcripts.ts",
+        "transcriptRegistrySha256": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+        "englishBlockMatchesCurrentRegistry": true,
+        "zuluBlockMatchesCurrentRegistry": true,
+        "englishNarrationPath": "docs/narration/plant-guilds.en.md",
+        "isiZuluNarrationPath": "docs/narration/plant-guilds.zu.md",
+        "englishSourceSha256": "d0bee6137098ddeafaca5332db7dd0d85ccae212e65be641e19e57828f4a8b5b",
+        "isiZuluSourceSha256": "63224cd110b99ac475963e8e78d2b08e18f27f5825db6b1e5d2d476502854baa"
+      }
+    },
+    {
+      "module": "Plant Guilds",
+      "lessonId": "plant-guilds",
+      "slide": 28,
+      "language": "zu",
+      "contentKind": "registered narration transcript; separate from learner text",
+      "sourceEnglishBlock": [
+        "Prune a support tree and return suitable leafy cuttings to the soil. The clip shows a branch cut: the support tree remains standing. Leave enough healthy foliage for the plant to recover.  Match cutting to the species. Avoid frequent severe cuts on pigeon pea, especially when growing it for peas. Which plant needs a cut—and how much?"
+      ],
+      "registeredZuluBlock": [
+        "Buyisela amagatsha anamaqabunga afanele emhlabathini njenge-mulch. Kule vidiyo kusikwa igatsha; umuthi osekelayo uyasala umile. Shiya amaqabunga anempilo anele ukuze ululame.  Thena ngokohlobo lwesitshalo. Gwema ukuthena kakhulu i-pigeon pea njalo, ikakhulukazi uma ufuna ukuvuna izinhlamvu. Yisiphi isitshalo esidinga ukuthenwa?"
+      ],
+      "reportDisposition": "repair",
+      "independentDecision": "accept-flag",
+      "sourceClause": "Which plant needs a cut—and how much?",
+      "flaggedMeaning": "Target asks which plant needs pruning but omits the requested amount/intensity decision.",
+      "recommendation": "Retain “and how much?” in English or use a checked equivalent. Keep species-specific pruning cautions unchanged.",
+      "authority": {
+        "transcriptRegistryPath": "lib/course-transcripts.ts",
+        "transcriptRegistrySha256": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+        "englishBlockMatchesCurrentRegistry": true,
+        "zuluBlockMatchesCurrentRegistry": true,
+        "englishNarrationPath": "docs/narration/plant-guilds.en.md",
+        "isiZuluNarrationPath": "docs/narration/plant-guilds.zu.md",
+        "englishSourceSha256": "d0bee6137098ddeafaca5332db7dd0d85ccae212e65be641e19e57828f4a8b5b",
+        "isiZuluSourceSha256": "63224cd110b99ac475963e8e78d2b08e18f27f5825db6b1e5d2d476502854baa"
+      }
+    },
+    {
+      "module": "Plant Guilds",
+      "lessonId": "plant-guilds",
+      "slide": 40,
+      "language": "zu",
+      "contentKind": "registered narration transcript; separate from learner text",
+      "sourceEnglishBlock": [
+        "Keep its vines away from the young fruit tree and retain a route for care. Its roots also use water and nutrients.  Where resources are tight, compare living cover with an ordinary mulch basin. Is this cover helping the tree establish?"
+      ],
+      "registeredZuluBlock": [
+        "Gcina iziqu ezinabayo zobhatata kude nomuthi omncane wezithelo, ushiye nendlela yokuwunakekela. Izimpande zawo nazo zisebenzisa amanzi nezakhamzimba.  Lapho lezi zidingo zinganele, qhathanisa izitshalo eziphilayo ezimboza umhlabathi nesitsha sokunisela esimbozwe nge-mulch evamile. Lokhu okumbozayo kuyawusiza umuthi ukuthi umile kahle?"
+      ],
+      "reportDisposition": "uncertain",
+      "independentDecision": "accept-flag",
+      "sourceClause": "an ordinary mulch basin",
+      "flaggedMeaning": "Target describes a watering container covered with mulch, which could change a basin around a plant into a container.",
+      "recommendation": "Retain “ordinary mulch basin” in English until the local term is checked; preserve comparison with living cover and the water/nutrient context.",
+      "authority": {
+        "transcriptRegistryPath": "lib/course-transcripts.ts",
+        "transcriptRegistrySha256": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+        "englishBlockMatchesCurrentRegistry": true,
+        "zuluBlockMatchesCurrentRegistry": true,
+        "englishNarrationPath": "docs/narration/plant-guilds.en.md",
+        "isiZuluNarrationPath": "docs/narration/plant-guilds.zu.md",
+        "englishSourceSha256": "d0bee6137098ddeafaca5332db7dd0d85ccae212e65be641e19e57828f4a8b5b",
+        "isiZuluSourceSha256": "63224cd110b99ac475963e8e78d2b08e18f27f5825db6b1e5d2d476502854baa"
+      }
+    }
+  ]
+}

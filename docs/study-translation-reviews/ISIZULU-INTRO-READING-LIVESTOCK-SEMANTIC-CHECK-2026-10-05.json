@@ -1,0 +1,444 @@
+{
+  "title": "Independent isiZulu canonical-to-resolved semantic audit: Introduction, Reading Landscape, Small Livestock",
+  "date": "2026-10-05",
+  "readOnly": true,
+  "repository": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "branch": "codex/regional-study-outcomes-next-20261005",
+  "head": "a5fd76db64e70fd69d6c5e449cc6b8ce4dda7a0b",
+  "method": {
+    "canonicalAuthority": "Current lesson objects from lib/course-modules.ts; isiZulu content obtained through resolveLearnerLessonPresentation(lesson, \"zu\") with current COURSE_TRANSLATION_DRAFTS.",
+    "resolvedStatus": "All ten scoped lessons resolve as status=draft. This is a semantic comparison only; no fluent, farmer, beekeeper, legal, or learner approval is claimed.",
+    "snapshot": "/tmp/imbewu-zu-current-source-draft-all33-20261005.json",
+    "sourceAndTargetHashes": {
+      "lib/course-modules.ts": {
+        "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "bytes": 113494
+      },
+      "lib/course-translation-drafts.ts": {
+        "sha256": "92bf741ea9e8bc4d17c414e00571398014cf4877fc2298aa29e2593af6456b46",
+        "bytes": 119611
+      },
+      "lib/course-localization.ts": {
+        "sha256": "503f628a1c0679c5247558887e7438260fead024b67ac5112626e6e52bb1ff9f",
+        "bytes": 18399
+      },
+      "docs/narration/small-livestock.en.md": {
+        "sha256": "c04c0bae009ee2cd79368aca3fb576507f8e2741343861178f2892fe4c55f251",
+        "bytes": 7235
+      },
+      "docs/narration/small-livestock.zu.md": {
+        "sha256": "4632446a6db8a181ab8cf6edbf510bac849f54634e3d7654fc4f4d4beb055ffb",
+        "bytes": 10809
+      },
+      "/tmp/imbewu-zu-current-source-draft-all33-20261005.json": {
+        "sha256": "867fc3c2422106d110cc21c70f5f9e1bbda083b611d601e3885b248fee5f7034",
+        "bytes": 233056
+      }
+    },
+    "counts": {
+      "lessons": 10,
+      "scope": "Only the 10 lessons in the three requested modules were audited."
+    }
+  },
+  "lessonShapeAudit": [
+    {
+      "moduleId": "intro-permaculture",
+      "lessonId": "intro-permaculture-l1",
+      "resolvedDraftStatus": "draft",
+      "sourceTitle": "The Three Ethics: Earth Care, People Care, Fair Share",
+      "resolvedTitle": "Izimiso Ezintathu Zokuziphatha: Ukunakekela Umhlaba, Abantu Nokubuyisela Okusele",
+      "sourceBodyParagraphCount": 3,
+      "resolvedBodyParagraphCount": 3,
+      "sourceKeyPointCount": 4,
+      "resolvedKeyPointCount": 4,
+      "sourceQuizCount": 2,
+      "resolvedQuizCount": 2,
+      "sourceCorrectIndices": [
+        2,
+        2
+      ],
+      "resolvedCorrectIndices": [
+        2,
+        2
+      ],
+      "quizOptionCounts": [
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          4
+        ]
+      ]
+    },
+    {
+      "moduleId": "intro-permaculture",
+      "lessonId": "intro-permaculture-l2",
+      "resolvedDraftStatus": "draft",
+      "sourceTitle": "Twelve Principles: Designing with Nature",
+      "resolvedTitle": "Izimiso Eziyishumi Nambili: Ukuklama Ngokusebenzisana Nemvelo",
+      "sourceBodyParagraphCount": 3,
+      "resolvedBodyParagraphCount": 3,
+      "sourceKeyPointCount": 4,
+      "resolvedKeyPointCount": 4,
+      "sourceQuizCount": 2,
+      "resolvedQuizCount": 2,
+      "sourceCorrectIndices": [
+        1,
+        1
+      ],
+      "resolvedCorrectIndices": [
+        1,
+        1
+      ],
+      "quizOptionCounts": [
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          4
+        ]
+      ]
+    },
+    {
+      "moduleId": "intro-permaculture",
+      "lessonId": "intro-permaculture-l3",
+      "resolvedDraftStatus": "draft",
+      "sourceTitle": "Zones and Sectors: Organising Your Farm by Energy",
+      "resolvedTitle": "Ama-Zone Nama-Sector: Ukuhlela Ipulazi Ngokuthi Uhamba Kangaki",
+      "sourceBodyParagraphCount": 3,
+      "resolvedBodyParagraphCount": 3,
+      "sourceKeyPointCount": 4,
+      "resolvedKeyPointCount": 4,
+      "sourceQuizCount": 2,
+      "resolvedQuizCount": 2,
+      "sourceCorrectIndices": [
+        1,
+        1
+      ],
+      "resolvedCorrectIndices": [
+        1,
+        1
+      ],
+      "quizOptionCounts": [
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          4
+        ]
+      ]
+    },
+    {
+      "moduleId": "reading-landscape",
+      "lessonId": "reading-landscape-l1",
+      "resolvedDraftStatus": "draft",
+      "sourceTitle": "Understanding Water Flow: Where Rain Goes on Your Land",
+      "resolvedTitle": "Ukuqonda Ukugeleza Kwamanzi: Lapho Imvula Iya Khona Emhlabeni Wakho",
+      "sourceBodyParagraphCount": 3,
+      "resolvedBodyParagraphCount": 3,
+      "sourceKeyPointCount": 4,
+      "resolvedKeyPointCount": 4,
+      "sourceQuizCount": 2,
+      "resolvedQuizCount": 2,
+      "sourceCorrectIndices": [
+        0,
+        1
+      ],
+      "resolvedCorrectIndices": [
+        0,
+        1
+      ],
+      "quizOptionCounts": [
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          4
+        ]
+      ]
+    },
+    {
+      "moduleId": "reading-landscape",
+      "lessonId": "reading-landscape-l2",
+      "resolvedDraftStatus": "draft",
+      "sourceTitle": "Sun Angles, Shade, and Aspect: Getting the Most from Sunlight",
+      "resolvedTitle": "Indlela Ilanga Elihamba Ngayo, Umthunzi Nokuma Komthambeka: Ukusebenzisa Ukukhanya Kwelanga",
+      "sourceBodyParagraphCount": 3,
+      "resolvedBodyParagraphCount": 3,
+      "sourceKeyPointCount": 4,
+      "resolvedKeyPointCount": 4,
+      "sourceQuizCount": 2,
+      "resolvedQuizCount": 2,
+      "sourceCorrectIndices": [
+        2,
+        0
+      ],
+      "resolvedCorrectIndices": [
+        2,
+        0
+      ],
+      "quizOptionCounts": [
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          4
+        ]
+      ]
+    },
+    {
+      "moduleId": "reading-landscape",
+      "lessonId": "reading-landscape-l3",
+      "resolvedDraftStatus": "draft",
+      "sourceTitle": "Wind, Frost, and Topography: Reading the Invisible Forces",
+      "resolvedTitle": "Umoya, Isithwathwa Nokuma Komhlaba: Ukuqonda Amandla Angabonakali",
+      "sourceBodyParagraphCount": 4,
+      "resolvedBodyParagraphCount": 4,
+      "sourceKeyPointCount": 4,
+      "resolvedKeyPointCount": 4,
+      "sourceQuizCount": 2,
+      "resolvedQuizCount": 2,
+      "sourceCorrectIndices": [
+        2,
+        1
+      ],
+      "resolvedCorrectIndices": [
+        2,
+        1
+      ],
+      "quizOptionCounts": [
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          4
+        ]
+      ]
+    },
+    {
+      "moduleId": "reading-landscape",
+      "lessonId": "reading-landscape-l4",
+      "resolvedDraftStatus": "draft",
+      "sourceTitle": "Making a Simple Site Map: Your Design Starts on Paper",
+      "resolvedTitle": "Ukwenza Imephu Elula Yendawo: Uhlelo Lwakho Luqala Ephepheni",
+      "sourceBodyParagraphCount": 3,
+      "resolvedBodyParagraphCount": 3,
+      "sourceKeyPointCount": 4,
+      "resolvedKeyPointCount": 4,
+      "sourceQuizCount": 2,
+      "resolvedQuizCount": 2,
+      "sourceCorrectIndices": [
+        2,
+        1
+      ],
+      "resolvedCorrectIndices": [
+        2,
+        1
+      ],
+      "quizOptionCounts": [
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          4
+        ]
+      ]
+    },
+    {
+      "moduleId": "small-livestock",
+      "lessonId": "small-livestock-l1",
+      "resolvedDraftStatus": "draft",
+      "sourceTitle": "Chickens in the System: Pest Control, Fertility, and Food",
+      "resolvedTitle": "Izinkukhu Ohlelweni Lwepulazi: Ukulawula Izinambuzane, Ukuvunda Komhlabathi Nokudla",
+      "sourceBodyParagraphCount": 3,
+      "resolvedBodyParagraphCount": 3,
+      "sourceKeyPointCount": 4,
+      "resolvedKeyPointCount": 4,
+      "sourceQuizCount": 2,
+      "resolvedQuizCount": 2,
+      "sourceCorrectIndices": [
+        1,
+        1
+      ],
+      "resolvedCorrectIndices": [
+        1,
+        1
+      ],
+      "quizOptionCounts": [
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          4
+        ]
+      ]
+    },
+    {
+      "moduleId": "small-livestock",
+      "lessonId": "small-livestock-l2",
+      "resolvedDraftStatus": "draft",
+      "sourceTitle": "Bees: Pollination, Honey, and System Ecology",
+      "resolvedTitle": "Izinyosi: Ukuthutha Impova, Uju Nokuphila Kwepulazi",
+      "sourceBodyParagraphCount": 3,
+      "resolvedBodyParagraphCount": 4,
+      "sourceKeyPointCount": 4,
+      "resolvedKeyPointCount": 4,
+      "sourceQuizCount": 2,
+      "resolvedQuizCount": 2,
+      "sourceCorrectIndices": [
+        2,
+        0
+      ],
+      "resolvedCorrectIndices": [
+        2,
+        0
+      ],
+      "quizOptionCounts": [
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          4
+        ]
+      ]
+    },
+    {
+      "moduleId": "small-livestock",
+      "lessonId": "small-livestock-l3",
+      "resolvedDraftStatus": "draft",
+      "sourceTitle": "Integrating Livestock Cycles: Nutrients Moving Through the Farm",
+      "resolvedTitle": "Ukuhlanganisa Imijikelezo Yemfuyo: Izakhamzimba Ezihamba Epulazini",
+      "sourceBodyParagraphCount": 4,
+      "resolvedBodyParagraphCount": 4,
+      "sourceKeyPointCount": 4,
+      "resolvedKeyPointCount": 4,
+      "sourceQuizCount": 2,
+      "resolvedQuizCount": 2,
+      "sourceCorrectIndices": [
+        1,
+        0
+      ],
+      "resolvedCorrectIndices": [
+        1,
+        0
+      ],
+      "quizOptionCounts": [
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          4
+        ]
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "intro-l3-title-scope",
+      "classification": "repair-or-hold-title",
+      "severity": "meaning-scope",
+      "field": "intro-permaculture-l3.title",
+      "source": "Zones and Sectors: Organising Your Farm by Energy",
+      "resolved": "Ama-Zone Nama-Sector: Ukuhlela Ipulazi Ngokuthi Uhamba Kangaki",
+      "finding": "The title describes organising by visit frequency, which is the zone principle, while the English title also names energy/sectors. The lesson body does cover zones and incoming sectors, but this title narrows the scope. Keep the body; review the title for a reference to both visit frequency and incoming energies, or retain “energy” in English pending wording review."
+    },
+    {
+      "id": "intro-l2-intensity",
+      "classification": "minor-meaning-softening",
+      "severity": "low",
+      "field": "intro-permaculture-l2.body paragraph 3",
+      "source": "Pick two or three principles that speak to your biggest problem and apply them hard.",
+      "resolved": "Khetha izimiso ezimbili noma ezintathu ezihambisana nenkinga yakho enkulu, uzisebenzise.",
+      "finding": "The target keeps selecting two or three principles tied to the biggest problem but omits the emphasis “apply them hard.” The rest of the paragraph, including the idea that other principles become clearer as you continue, is present."
+    },
+    {
+      "id": "reading-l3-disease-weather-causality",
+      "classification": "review-nuance",
+      "severity": "medium",
+      "field": "reading-landscape-l3.quiz[1].rationale",
+      "source": "Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+      "resolved": "Isimo sezulu esibandayo nesinomswakama esiqhubeka isikhathi eside singayisiza i-late blight ukuba isabalale. Ukususa umbhede uwuyise kwenye indawo kukodwa akulona uhlelo oluphelele lokulawula lesi sifo.",
+      "finding": "The body and rationale use “spread” for the source’s “favoured by” relation. This shifts from weather supporting disease pressure to disease spread. The source condition and “bed move alone is not complete control” safeguard remain. Consider keeping the exact clause “is favoured by prolonged cool, damp weather” until a local reviewer confirms a faithful wording."
+    },
+    {
+      "id": "small-l1-adviser-timing",
+      "classification": "repair-required",
+      "severity": "high",
+      "field": "small-livestock-l1.body paragraph 3",
+      "source": "Ask an extension adviser how to manage manure safely before the next crop.",
+      "resolved": "Buza umeluleki wezolimo ukuthi ungawuphatha kanjani ngokuphepha ngaphambi kokutshala isivuno esilandelayo.",
+      "finding": "“Before the next crop” becomes “before planting the next harvest” (isivuno). This changes the manure-safety timing and may suggest a different interval. Preserve the intended anchor exactly until checked: localize the adviser and safe-handling clause, then hold “before the next crop.” as exact English; do not use “before the next harvest.”"
+    },
+    {
+      "id": "small-l2-extra-route-crossfield",
+      "classification": "cross-field-source-mismatch",
+      "severity": "medium",
+      "field": "small-livestock-l2.body paragraph 3",
+      "source": "Canonical lesson body p3 includes: “Morning sun can help; a safe location comes first. Provide flowering plants through the seasons...” It has no instruction to plan routes.",
+      "resolved": "After “Ilanga lasekuseni lingasiza, kodwa indawo ephephile iza kuqala.” the body adds “Hlela indlela abantu nezilwane abazohamba ngayo kule ndawo.” (Plan how people and animals will move around the site.)",
+      "finding": "This route sentence is absent from the canonical learner lesson but is exactly present in the current English narration Slide 12 source and the current ZU narration Slide 12. It is a cross-field carryover, not an unsupported invention in the deck. For a source-bound learner lesson, remove only this sentence from the L2 body and join the neighboring source-backed siting and flowering-plant copy in order. Preserve the ZU narration Slide 12 sentence and its English source unchanged."
+    },
+    {
+      "id": "small-l2-subspecies-term",
+      "classification": "technical-term-hold",
+      "severity": "low",
+      "field": "small-livestock-l2.body paragraph 2",
+      "source": "South Africa has two native honeybee subspecies.",
+      "resolved": "INingizimu Afrika inezinhlobo ezimbili zezinyosi zoju zomdabu ezingaphansi kohlobo olulodwa.",
+      "finding": "The draft expresses two native honeybee types under one type, which appears to preserve the subspecies relation, but the category wording is technical and should be checked by an isiZulu reviewer. Do not broaden the geographic ranges or bee-movement permission; those conditions and the current Department/adviser check remain in the target."
+    }
+  ],
+  "acceptedAlignment": [
+    {
+      "scope": "Introduction L1–L3",
+      "finding": "Body paragraph counts, key-point counts, quiz counts, option counts, and correct-answer indices match. Earth Care/People Care/Fair Share definitions, borehole permission and adequate-supply conditions, monitoring-not-permission safeguard, examples and zone visit frequencies remain. Incoming sectors retain sun, wind, rain, flood and fire."
+    },
+    {
+      "scope": "Reading Landscape L1–L4",
+      "finding": "Paragraph/key-point/quiz/option counts and correct indices match. Safe observation before walking, site assessment and trained-adviser-before-digging conditions, overflow route, seasonal/location qualifiers, often/can wording, actual 8am/midday/4pm checks, crop identities, frost uncertainty, adviser/records alternatives, no-compaction-diagnosis caveat, and season-specific wind/map instructions are retained."
+    },
+    {
+      "scope": "Small Livestock L1 and L3",
+      "finding": "Body, key-point and quiz structure and answer indices match. Chickens are some insects/weed seeds; feed/water/shelter/daily-care cautions persist; tractor movement depends on birds/soil/weather and no universal number is promised; fresh-manure warning, parasite-plan/adviser, continued health checks and do-not-stop-treatment conditions remain. L1 manure adviser timing is the noted exception."
+    },
+    {
+      "scope": "Small Livestock L2 besides flagged route sentence",
+      "finding": "All canonical content is present in the resolved draft, including current movement rules checked with the Department and an experienced beekeeper before moving bees/hives; safe siting away from public paths/homes/children; morning sun secondary to safety; seasonal flowers/pesticides; no chemical/disease inference from active bees; limited registration list and Department check; repeated-swarm inspection and crowding only a possible cause, not diagnosis."
+    }
+  ],
+  "crossFieldRouteEvidence": {
+    "learnerSourceHasRouteInstruction": false,
+    "canonicalNarrationEnglishSlide12ContainsExactSource": true,
+    "resolvedNarrationZuSlide12ContainsExactTarget": true,
+    "englishSlide12SourceExcerpt": "Plan how people and animals will move around the site.",
+    "zuSlide12TargetExcerpt": "Hlela indlela abantu nezilwane abazohamba ngayo kule ndawo.",
+    "recommendedConservativeAction": "Remove the sentence from the learner L2 body only; retain it in the Slide 12 narration pair where it has exact source support."
+  },
+  "preservationAndLimits": {
+    "canonicalEnglishAndResolvedTargetsWereReadFromCurrentLiveResolverSnapshot": true,
+    "noRepositoryFilesChangedByThisAudit": true,
+    "noSourceOrTranslationWasRewritten": true,
+    "allTenDraftStatusesRemainUnreviewed": true,
+    "fluentApprovalClaimed": false
+  }
+}

@@ -1,0 +1,338 @@
+{
+  "title": "Lossless paired whole-draft schema normalization",
+  "date": "2026-10-06",
+  "originalCandidatePacket": {
+    "path": "/tmp/imbewu-native-paired-13-root-final-accepted-candidates-20261006.json",
+    "sha256": "384e275beca6a12e71065feef19e9b8b7c8792e5c52c2ac2cf8e7878394b2a9b"
+  },
+  "originalImplementationProofSha256": "4edae7a76ce03bfee7b153e814f7606e2942b1001975c3011ff232a2c2d9c95f",
+  "reason": "The established paired-draft contract accepts source-aligned segment arrays only with outer status mixed. These six accepted targets have all-draft segments and no English-hold segment. To avoid a misleading mixed status, retain the whole-draft status and exact concatenated target text. Keep every original source segment and review note here for audit.",
+  "counts": {
+    "normalizedWholeDraftTargets": 6
+  },
+  "rows": [
+    {
+      "order": 26,
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 5,
+      "bodyIndex": 6,
+      "language": "ve",
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "originalSegmentedTarget": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Look after ",
+            "status": "draft",
+            "text": "Nga murahu ha "
+          },
+          {
+            "sourceEnglish": "heavy rain",
+            "status": "draft",
+            "text": "mvula khulu, ṱhogomelani"
+          },
+          {
+            "sourceEnglish": ". Where does water sit or run off? Combine that observation with ",
+            "status": "draft",
+            "text": ". Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na nyeletshedzo nga ha "
+          },
+          {
+            "sourceEnglish": "soil and drainage advice",
+            "status": "draft",
+            "text": "soil and drainage",
+            "retainedEnglishSourceSubstrings": [
+              "soil and drainage"
+            ],
+            "segmentAlignmentNote": "“advice” is translated in the preceding target chunk so the target language order stays readable; exact source phrase remains bound."
+          },
+          {
+            "sourceEnglish": " before choosing the bed.",
+            "status": "draft",
+            "text": " ni sa athu khetha bed."
+          }
+        ],
+        "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
+      },
+      "sourceSegments": [
+        {
+          "sourceEnglish": "Look after ",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": "heavy rain",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": ". Where does water sit or run off? Combine that observation with ",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": "soil and drainage advice",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": " before choosing the bed.",
+          "status": "draft"
+        }
+      ],
+      "targetText": "Nga murahu ha mvula khulu, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na nyeletshedzo nga ha soil and drainage ni sa athu khetha bed.",
+      "sourceJoinSha256": "fb06f73ce10b01a4862118fc1d46ebcec5df84f3e601c91e3846678e0887c4df",
+      "targetTextSha256": "719ff1fac1d8a8266b3a0919245608a2a4e80622862a7ff08bb9d5d041907e0b",
+      "preservedReason": "The accepted target uses source-aligned draft segments, but the paired-draft renderer contract requires a whole draft target to use {status:\"draft\", text}. The exact target text and every original source-bound segment/review reason are preserved here."
+    },
+    {
+      "order": 28,
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "slide": 5,
+      "bodyIndex": 6,
+      "language": "ts",
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "originalSegmentedTarget": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Look after ",
+            "status": "draft",
+            "text": "Endzhaku ka "
+          },
+          {
+            "sourceEnglish": "heavy rain",
+            "status": "draft",
+            "text": "mpfula leyikulu"
+          },
+          {
+            "sourceEnglish": ". Where does water sit or run off? Combine that observation with ",
+            "status": "draft",
+            "text": ", kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni switsundzuxo swa misava ni "
+          },
+          {
+            "sourceEnglish": "soil and drainage advice",
+            "status": "draft",
+            "text": "drainage",
+            "retainedEnglishSourceSubstrings": [
+              "drainage"
+            ],
+            "segmentAlignmentNote": "“soil” and “advice” are localized around the retained exact technical word; this target chunk reorders those ordinary words."
+          },
+          {
+            "sourceEnglish": " before choosing the bed.",
+            "status": "draft",
+            "text": " u nga si hlawula bed."
+          }
+        ],
+        "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
+      },
+      "sourceSegments": [
+        {
+          "sourceEnglish": "Look after ",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": "heavy rain",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": ". Where does water sit or run off? Combine that observation with ",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": "soil and drainage advice",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": " before choosing the bed.",
+          "status": "draft"
+        }
+      ],
+      "targetText": "Endzhaku ka mpfula leyikulu, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni switsundzuxo swa misava ni drainage u nga si hlawula bed.",
+      "sourceJoinSha256": "fb06f73ce10b01a4862118fc1d46ebcec5df84f3e601c91e3846678e0887c4df",
+      "targetTextSha256": "23c81f2210df8f845af5acd235965a7a79141b2b7a5e3b71289e1de8052e71c2",
+      "preservedReason": "The accepted target uses source-aligned draft segments, but the paired-draft renderer contract requires a whole draft target to use {status:\"draft\", text}. The exact target text and every original source-bound segment/review reason are preserved here."
+    },
+    {
+      "order": 65,
+      "path": "docs/narration/market-community.st.paired-draft.json",
+      "slide": 6,
+      "bodyIndex": 1,
+      "language": "st",
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "originalSegmentedTarget": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Which crops give the best yield per bed?",
+            "status": "draft",
+            "text": "Ke dijalo dife tse fanang ka best yield per bed?",
+            "retainedEnglishTargetPhrases": [
+              "best yield per bed"
+            ],
+            "loanEnglishReviewReason": "Exact accepted native wording restored verbatim. Source orders “return the most” while the established loan phrase is “the most return”; retain the accepted complete draft segment instead of inventing reordered English or a new predicate. Not wholly translated and not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " Which return the most for each hour of work?",
+            "status": "draft",
+            "text": " Ke dife tse fanang ka the most return bakeng sa hora e nngwe le e nngwe ya mosebetsi?",
+            "retainedEnglishTargetPhrases": [
+              "the most return"
+            ],
+            "loanEnglishReviewReason": "The exact source clause says “return the most”; the accepted native target loan phrase is “the most return.” Keep the accepted target verbatim rather than invent a translated return predicate or reorder source English. This draft remains mixed-language and unreviewed."
+          }
+        ],
+        "provenance": "unreviewed accepted native wording paired to exact source; metric loan terms retained; no fluent approval"
+      },
+      "sourceSegments": [
+        {
+          "sourceEnglish": "Which crops give the best yield per bed?",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": " Which return the most for each hour of work?",
+          "status": "draft"
+        }
+      ],
+      "targetText": "Ke dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return bakeng sa hora e nngwe le e nngwe ya mosebetsi?",
+      "sourceJoinSha256": "cd3871f7de848f1e5b0146bffde97c1e0ccc9b30f8e4308bbf59ee5a4f11cdec",
+      "targetTextSha256": "a5086a0eef2344b7f215cdf9daa83aa91a9b574440b5fc2eb762d61732d6625a",
+      "preservedReason": "The accepted target uses source-aligned draft segments, but the paired-draft renderer contract requires a whole draft target to use {status:\"draft\", text}. The exact target text and every original source-bound segment/review reason are preserved here."
+    },
+    {
+      "order": 66,
+      "path": "docs/narration/market-community.ve.paired-draft.json",
+      "slide": 6,
+      "bodyIndex": 1,
+      "language": "ve",
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "originalSegmentedTarget": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Which crops give the best yield per bed?",
+            "status": "draft",
+            "text": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed?",
+            "retainedEnglishTargetPhrases": [
+              "best yield per bed"
+            ],
+            "loanEnglishReviewReason": "Exact accepted native wording restored verbatim. Source orders “return the most” while the established loan phrase is “the most return”; retain the accepted complete draft segment instead of inventing reordered English or a new predicate. Not wholly translated and not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " Which return the most for each hour of work?",
+            "status": "draft",
+            "text": " Ndi zwifhio zwine zwa vhuisa the most return nga awara iṅwe na iṅwe ya mushumo?",
+            "retainedEnglishTargetPhrases": [
+              "the most return"
+            ],
+            "loanEnglishReviewReason": "The exact source clause says “return the most”; the accepted native target loan phrase is “the most return.” Keep the accepted target verbatim rather than invent a translated return predicate or reorder source English. This draft remains mixed-language and unreviewed."
+          }
+        ],
+        "provenance": "unreviewed accepted native wording paired to exact source; metric loan terms retained; no fluent approval"
+      },
+      "sourceSegments": [
+        {
+          "sourceEnglish": "Which crops give the best yield per bed?",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": " Which return the most for each hour of work?",
+          "status": "draft"
+        }
+      ],
+      "targetText": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwifhio zwine zwa vhuisa the most return nga awara iṅwe na iṅwe ya mushumo?",
+      "sourceJoinSha256": "cd3871f7de848f1e5b0146bffde97c1e0ccc9b30f8e4308bbf59ee5a4f11cdec",
+      "targetTextSha256": "094eee1c7d1471a71bb0a9d3370240975ff3908c9083c568e9621bc47bf818e8",
+      "preservedReason": "The accepted target uses source-aligned draft segments, but the paired-draft renderer contract requires a whole draft target to use {status:\"draft\", text}. The exact target text and every original source-bound segment/review reason are preserved here."
+    },
+    {
+      "order": 67,
+      "path": "docs/narration/market-community.ts.paired-draft.json",
+      "slide": 6,
+      "bodyIndex": 1,
+      "language": "ts",
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "originalSegmentedTarget": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Which crops give the best yield per bed?",
+            "status": "draft",
+            "text": "Hi swihi swibyariwa leswi nyikaka best yield per bed?",
+            "retainedEnglishTargetPhrases": [
+              "best yield per bed"
+            ],
+            "loanEnglishReviewReason": "Exact accepted native wording restored verbatim. Source orders “return the most” while the established loan phrase is “the most return”; retain the accepted complete draft segment instead of inventing reordered English or a new predicate. Not wholly translated and not fluent reviewed."
+          },
+          {
+            "sourceEnglish": " Which return the most for each hour of work?",
+            "status": "draft",
+            "text": " Hi swihi leswi vuyisaka the most return hi awara yin'wana na yin'wana ya ku tirha?",
+            "retainedEnglishTargetPhrases": [
+              "the most return"
+            ],
+            "loanEnglishReviewReason": "The exact source clause says “return the most”; the accepted native target loan phrase is “the most return.” Keep the accepted target verbatim rather than invent a translated return predicate or reorder source English. This draft remains mixed-language and unreviewed."
+          }
+        ],
+        "provenance": "unreviewed accepted native wording paired to exact source; metric loan terms retained; no fluent approval"
+      },
+      "sourceSegments": [
+        {
+          "sourceEnglish": "Which crops give the best yield per bed?",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": " Which return the most for each hour of work?",
+          "status": "draft"
+        }
+      ],
+      "targetText": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return hi awara yin'wana na yin'wana ya ku tirha?",
+      "sourceJoinSha256": "cd3871f7de848f1e5b0146bffde97c1e0ccc9b30f8e4308bbf59ee5a4f11cdec",
+      "targetTextSha256": "a2922956149e003affd659e003dc1f2a952911294581ca4fe7f30b8da049a3b7",
+      "preservedReason": "The accepted target uses source-aligned draft segments, but the paired-draft renderer contract requires a whole draft target to use {status:\"draft\", text}. The exact target text and every original source-bound segment/review reason are preserved here."
+    },
+    {
+      "order": 71,
+      "path": "docs/narration/market-community.ts.paired-draft.json",
+      "slide": 12,
+      "bodyIndex": 2,
+      "language": "ts",
+      "sourceEnglish": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+      "originalSegmentedTarget": {
+        "status": "draft",
+        "segments": [
+          {
+            "sourceEnglish": "Garden area or customer count alone does not predict ",
+            "status": "draft",
+            "text": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbeli "
+          },
+          {
+            "sourceEnglish": "income",
+            "status": "draft",
+            "text": "mali leyi nghenaka"
+          },
+          {
+            "sourceEnglish": ". Try a manageable arrangement and record the results.",
+            "status": "draft",
+            "text": ". Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke."
+          }
+        ],
+        "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
+      },
+      "sourceSegments": [
+        {
+          "sourceEnglish": "Garden area or customer count alone does not predict ",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": "income",
+          "status": "draft"
+        },
+        {
+          "sourceEnglish": ". Try a manageable arrangement and record the results.",
+          "status": "draft"
+        }
+      ],
+      "targetText": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbeli mali leyi nghenaka. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke.",
+      "sourceJoinSha256": "736653e7642bde9c212352669c0b972198502af5c0eebdee05630ba98fff2e4b",
+      "targetTextSha256": "ab190cf1bb956254b6a839a18b80bd92b11a5e2e0f85a557872eaf5abdb5246d",
+      "preservedReason": "The accepted target uses source-aligned draft segments, but the paired-draft renderer contract requires a whole draft target to use {status:\"draft\", text}. The exact target text and every original source-bound segment/review reason are preserved here."
+    }
+  ]
+}

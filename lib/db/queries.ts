@@ -29,11 +29,11 @@ import { DEFAULT_TRACK, enrollmentDocId, newEnrollment } from '@/lib/course-enro
 import type { CourseAssignment } from '@/lib/course-assignments';
 import { assignmentDocId } from '@/lib/course-assignments';
 import type { CourseSubmission } from '@/lib/course-gating';
-import { courseSubmissionDocId } from '@/lib/course-gating';
 import type { SavedInvoice } from '@/lib/invoices';
 import { saveSaleInvoice } from '@/lib/sale-invoice';
 import { invoiceSaleDocumentId, invoiceSalesForPaidInvoice } from '@/lib/invoice-sales';
 import { recordedSaleInvoiceError } from '@/lib/invoice-entry';
+import { recordQuantity } from '@/lib/farm-records';
 
 // Every function below is a real Firestore/Storage writer or a reader that could
 // surface the real signed-in user's data. Each checks isSampleMode() FIRST and
@@ -198,6 +198,7 @@ export async function getGardenerProfile(profileId: string): Promise<GardenerPro
 
 // ---- production / sales ----
 export async function addProduction(row: Partial<ProductionLog>): Promise<void> {
+  if (recordQuantity(row) === null) throw Error('Check the produce quantity and unit.');
   if (isSampleMode()) { addSandboxProduction(row); return; }
   const f = fb(); const u = uid(); if (!f || !u) return;
   await withWriteTimeout((async () => {
@@ -297,6 +298,8 @@ export async function linkInvoiceToRecordedSale(invoice: SavedInvoice): Promise<
 export async function updateSale(id: string, patch: Partial<SalesLog>): Promise<void> {
   if (isSampleMode()) {
     if (getSandboxSales().find(sale => sale.id === id)?.invoice_id) throw new Error('Open the linked invoice to change this sale.');
+    const existing = getSandboxSales().find(sale => sale.id === id);
+    if (!existing || recordQuantity({ ...existing, ...patch }) === null) throw Error('Check the produce quantity and unit.');
     updateSandboxSale(id, patch); return;
   }
   const f = fb(); const u = uid(); if (!f || !u) throw new Error('Sign in before editing this sale.');
@@ -308,6 +311,7 @@ export async function updateSale(id: string, patch: Partial<SalesLog>): Promise<
     if (snapshot.data().invoice_id) throw new Error('Open the linked invoice to change this sale.');
     // Linking is only authorised by linkInvoiceToRecordedSale, never by a stale editor patch.
     const { invoice_id: _invoiceId, invoice_line: _line, invoice_source_sale: _source, profile_id: _owner, id: _id, ...changes } = patch;
+    if (recordQuantity({ ...snapshot.data(), ...changes }) === null) throw Error('Check the produce quantity and unit.');
     transaction.update(target, changes);
   });
 }
@@ -945,6 +949,7 @@ export async function submitCourseModule(input: {
   if (isSampleMode()) return;
   const f = fb(); const u = uid(); if (!f || !u) return;
   const me = await getMyProfile();
+  const { courseSubmissionDocId } = await import('@/lib/course-gating');
   await setDoc(doc(f.db, 'course_submissions', courseSubmissionDocId(u, input.module)), {
     profile_id: u,
     org_id: me?.org_id ?? null,

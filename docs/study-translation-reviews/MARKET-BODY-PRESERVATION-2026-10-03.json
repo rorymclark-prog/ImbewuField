@@ -1,0 +1,144 @@
+{
+  "packetId": "IMBEWU-MARKET-PREPUBLICATION-SOURCE-AUDIT-2026-10-03",
+  "baseCommit": "00abeeb7ae967e733971f5af70d9da9fa2d5d0c0",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "registryPaths": {
+    "st": "lib/course-translation-drafts-st-market-community.ts",
+    "ve": "lib/course-translation-drafts-ve-market-community.ts",
+    "ts": "lib/course-translation-drafts-ts-market-community.ts"
+  },
+  "gitShowBaseBlobProof": {
+    "lib/course-modules.ts": {
+      "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "bytes": 113494
+    },
+    "lib/course-translation-drafts-st-market-community.ts": {
+      "sha256": "e7c29248518c38c71d95b5d457c114e25027356de6b4053273696257dda6c3c5",
+      "bytes": 17890
+    },
+    "lib/course-translation-drafts-ve-market-community.ts": {
+      "sha256": "2a4e5972749a6f5352241f7aa10559511e1bd972d669a797d2c3cf462be9b009",
+      "bytes": 22447
+    },
+    "lib/course-translation-drafts-ts-market-community.ts": {
+      "sha256": "0319f6672d1a15cbc0b1524a61b31bb3e926f8eb05950527016b48a818cd9c68",
+      "bytes": 25467
+    }
+  },
+  "targets": {
+    "st": "market-community-l2",
+    "ve": "market-community-l1",
+    "ts": "market-community-l2"
+  },
+  "comparisonRules": [
+    "Canonical module must remain deeply equal to canonicalModuleSnapshot.",
+    "All target regional lesson fields other than the target body text must remain deeply equal to nonBodyLessonFields; title, key points, quizzes/options/indices/rationales and media remain unchanged.",
+    "Target body sourceEnglish remains exact; only explicitly authorized target body draft content may differ.",
+    "Every non-target lesson object in each registry remains deeply equal to its baseline snapshot.",
+    "No registry IDs, language codes, metadata, lesson ordering or media fields may change."
+  ],
+  "postImplementationComparison": {
+    "checkedAt": "2026-10-02T23:31:09.029Z",
+    "currentHead": "00abeeb7ae967e733971f5af70d9da9fa2d5d0c0",
+    "canonicalModuleExactAgainstBaseline": true,
+    "lessons": {
+      "st": {
+        "lessonId": "market-community-l2",
+        "approvedCheckedInPacket": "docs/study-translation-reviews/ST-MARKET-L2-BODY-CANDIDATES-2026-10-03.json",
+        "canonicalSourceUnchanged": true,
+        "paragraphOrderAndCountUnchanged": true,
+        "sourceParagraphsExact": true,
+        "finalBodyExactlyMatchesCheckedInPacket": true,
+        "actualChangedIndices": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          8,
+          11
+        ],
+        "packetChangedIndices": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          8,
+          11
+        ],
+        "canonicalQuizFieldsExact": true,
+        "regionalQuizAndAllOtherLessonFieldsExact": true,
+        "allNonTargetLessonsExact": true,
+        "registryExactOutsideTargetBody": true
+      },
+      "ve": {
+        "lessonId": "market-community-l1",
+        "approvedCheckedInPacket": "docs/study-translation-reviews/VE-MARKET-L1-BODY-CANDIDATES-2026-10-03.json",
+        "canonicalSourceUnchanged": true,
+        "paragraphOrderAndCountUnchanged": true,
+        "sourceParagraphsExact": true,
+        "finalBodyExactlyMatchesCheckedInPacket": true,
+        "actualChangedIndices": [
+          2,
+          5,
+          7,
+          11,
+          13,
+          15,
+          16
+        ],
+        "packetChangedIndices": [
+          2,
+          5,
+          7,
+          11,
+          13,
+          15,
+          16
+        ],
+        "canonicalQuizFieldsExact": true,
+        "regionalQuizAndAllOtherLessonFieldsExact": true,
+        "allNonTargetLessonsExact": true,
+        "registryExactOutsideTargetBody": true
+      },
+      "ts": {
+        "lessonId": "market-community-l2",
+        "approvedCheckedInPacket": "docs/study-translation-reviews/TS-MARKET-L2-BODY-CANDIDATES-2026-10-03.json",
+        "canonicalSourceUnchanged": true,
+        "paragraphOrderAndCountUnchanged": true,
+        "sourceParagraphsExact": true,
+        "finalBodyExactlyMatchesCheckedInPacket": true,
+        "actualChangedIndices": [
+          3,
+          5,
+          6,
+          7,
+          8,
+          10
+        ],
+        "packetChangedIndices": [
+          3,
+          5,
+          6,
+          7,
+          8,
+          10
+        ],
+        "canonicalQuizFieldsExact": true,
+        "regionalQuizAndAllOtherLessonFieldsExact": true,
+        "allNonTargetLessonsExact": true,
+        "registryExactOutsideTargetBody": true
+      }
+    },
+    "approvedPunctuationOverride": {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "paragraphIndex": 5,
+      "implementedAndCheckedInCandidate": "Dumellanang ka contents, price, payment le what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "sourceEnglish": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "provenance": "Root approved this punctuation/wording form before implementation; checked-in candidate and backcheck documents agree with registry. Older /tmp backcheck candidate retained an earlier comma variant; no learner change needed."
+    }
+  },
+  "status": "Unreviewed machine drafts; programmatic preservation and independent semantic checks are not fluent approval."
+}

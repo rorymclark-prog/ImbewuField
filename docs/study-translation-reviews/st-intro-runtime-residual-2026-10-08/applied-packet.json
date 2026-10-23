@@ -1,0 +1,378 @@
+{
+  "title": "Applied root-reviewed ST Introduction runtime residual batch",
+  "date": "2026-10-08",
+  "baseHead": "c8c27502ec38255eee16c20bcb40aa9a1827741e",
+  "scope": "Runtime silent edition only. Exactly the 17 non-null proposedText fields from the root-reviewed residual packet were applied after exact source, target, status and input-SHA checks.",
+  "reviewedPacket": {
+    "path": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/st-intro-runtime-residual-root-reviewed-2026-10-08.json",
+    "sha256": "142f0f8e0be6b10952d4dbdeaca25c4c8210345701006f1fd148a45beb8f7090",
+    "runtimePairSha256": "7ae36d7d49004a25aadbe1ffa73d07e129afd4723e46572ee68bc23f4e1e2621"
+  },
+  "pair": {
+    "path": "docs/narration/intro-permaculture.st.silent-draft.json",
+    "beforeSha256": "7ae36d7d49004a25aadbe1ffa73d07e129afd4723e46572ee68bc23f4e1e2621",
+    "afterSha256": "e476474a58deab53f4d360524a53fb214d7aab19b10dd0b43aaff490ea63a310",
+    "slides": 22,
+    "targetStatusCounts": {
+      "draft": 110,
+      "english-hold": 0
+    }
+  },
+  "beforeSnapshot": {
+    "path": "docs/study-translation-reviews/st-intro-runtime-residual-2026-10-08/before-intro-permaculture.st.silent-draft.json",
+    "sha256": "7ae36d7d49004a25aadbe1ffa73d07e129afd4723e46572ee68bc23f4e1e2621",
+    "byteExact": true
+  },
+  "appliedRows": [
+    {
+      "slide": 10,
+      "field": "body",
+      "index": 0,
+      "sourceEnglish": "Watch your land through a full season before you commit to major earthworks.",
+      "beforeStatus": "draft",
+      "beforeText": "Shebella setsha sa hao sehleng sohle pele o itlama ka major earthworks.",
+      "afterText": "Shebella setsha sa hao sehleng sohle pele o itlama ka earthworks tse kgolo.",
+      "decision": "accept",
+      "acceptedMinimalSubstitutions": [
+        "major → tse kgolo"
+      ],
+      "heldSpans": [],
+      "reason": "Retains the full-season observation and before-commitment qualification; the candidate changes only the English modifier to a Sesotho equivalent.",
+      "rootStatus": "accepted-data-only",
+      "rootReason": "Preserve existing before-commitment prefix; replace only major modifier, not commit with starting."
+    },
+    {
+      "slide": 10,
+      "field": "body",
+      "index": 2,
+      "sourceEnglish": "This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
+      "beforeStatus": "draft",
+      "beforeText": "Sena se thusa ho utlwisisa setsha. Ka bosona ha se bontshe hore swale e loketse kapa e bolokehile ho aha. Pele o cheka, lekola mobu, slope, drainage le safe overflow route e ke keng ya baka erosion kapa ya romela metsi a senyang ho baahisani. Kopa trained local adviser ho lekola setsha.",
+      "afterText": "Sena se thusa ho utlwisisa setsha. Ka bosona ha se bontshe hore swale e loketse kapa e bolokehile ho aha. Pele o cheka, lekola mobu, slope, drainage le safe overflow route e ke keng ya baka erosion kapa ya romela metsi a senyang ho baahisani. Kopa moeletsi wa lehae ya kwetlisitsweng ho lekola setsha.",
+      "decision": "accept",
+      "acceptedMinimalSubstitutions": [
+        "trained local adviser → moeletsi wa lehae ya kwetlisitsweng"
+      ],
+      "heldSpans": [],
+      "reason": "The candidate preserves the explicit before-digging checks and the warning that observation alone does not establish suitability or safety.",
+      "rootStatus": "accepted-data-only",
+      "rootReason": null
+    },
+    {
+      "slide": 13,
+      "field": "body",
+      "index": 0,
+      "sourceEnglish": "Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.",
+      "beforeStatus": "draft",
+      "beforeText": "Sebedisa diversity mme o e nke e le bohlokwa. Tshenyo ya sefako pooneng e itshetlehile ka sefefo le growth stage ya crop. Molao-motheo ona ha o tshepise hore crop e tla pholoha ketsahalo e nngwe le e nngwe.",
+      "afterText": "Sebedisa diversity mme o e nke e le bohlokwa. Tshenyo ya sefako pooneng e itshetlehile ka sefefo le boemo ba kgolo ya sejalo. Molao-motheo ona ha o tshepise hore crop e tla pholoha ketsahalo e nngwe le e nngwe.",
+      "decision": "accept",
+      "acceptedMinimalSubstitutions": [
+        "growth stage of crop → boemo ba kgolo ya sejalo"
+      ],
+      "heldSpans": [],
+      "reason": "Translate only the ordinary growth-stage and crop wording. Keep the already-present canonical diversity label and remaining target wording intact.",
+      "rootStatus": "accepted-data-only",
+      "rootReason": null
+    },
+    {
+      "slide": 13,
+      "field": "body",
+      "index": 1,
+      "sourceEnglish": "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+      "beforeStatus": "draft",
+      "beforeText": "Tse ding tse pedi tseo ho leng molemo ho di tseba: produce no waste, kahoo masalla a fetoha compost mme compost e fetoha mobu. Hape, use small and slow solutions — bakete e ka nosetsa bed ntle le motlakase ho hang.",
+      "afterText": "Tse ding tse pedi tseo ho leng molemo ho di tseba: produce no waste, kahoo masalla a fetoha compost mme compost e fetoha mobu. Hape, use small and slow solutions — bakete e ka nosetsa bethe ya dimela ntle le motlakase ho hang.",
+      "decision": "accept",
+      "acceptedMinimalSubstitutions": [
+        "bed → bethe ya dimela"
+      ],
+      "heldSpans": [],
+      "reason": "Leaves the two canonical design-principle names and compost wording in place; only the ordinary bed noun is substituted.",
+      "rootStatus": "accepted-data-only",
+      "rootReason": null
+    },
+    {
+      "slide": 14,
+      "field": "body",
+      "index": 1,
+      "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+      "beforeStatus": "draft",
+      "beforeText": "Serapa, difate tsa ditholwana le chicken run di hlophisitswe hore dikgoho rotate through the beds after harvest — hoo ke integration. Boloka dikgoho hole le dijalo tse kotulwang bakeng sa dijo. Manyoro a foreshe a ka jara germs. Kopa extension adviser hore a hlalose kamoo bed e lokelang ho laolwa ka polokeho pele dijalo tse jewang di kgutla. Dikgoho di ka clean up pests le ho eketsa fertility ho ena le ho dula di sa sebetse ka pen e sa fetoheng.",
+      "afterText": "Serapa, difate tsa ditholwana le chicken run di hlophisitswe hore dikgoho di ye ka tatellano dibetheng ka mora kotulo — hoo ke integration. Boloka dikgoho hole le dijalo tse kotulwang bakeng sa dijo. Manyoro a foreshe a ka jara dikokwana-hloko tse bakang malwetse. Kopa extension adviser hore a hlalose kamoo bethe e lokelang ho laolwa ka polokeho pele dijalo tse jewang di kgutla. Dikgoho di ka tlosa dikokonyana tse senyang le ho eketsa monono wa mobu ho ena le ho dula di sa sebetse ka lesaka le sa fetoheng.",
+      "decision": "accept",
+      "acceptedMinimalSubstitutions": [
+        "chicken run → lesaka la dikgoho",
+        "rotate through the beds after harvest → di ye ka tatellano dibetheng ka mora kotulo",
+        "germs → dikokwana-hloko tse bakang malwetse",
+        "extension adviser → moeletsi wa temo",
+        "bed → bethe",
+        "clean up pests → tlosa dikokonyana tse senyang",
+        "fertility → monono wa mobu",
+        "pen → lesaka"
+      ],
+      "heldSpans": [],
+      "reason": "Preserves the safeguards: keep chickens away from food crops, fresh manure can carry germs, and obtain advice before edible crops return. Omits the candidate-added “local” modifier on extension adviser; renders “clean up” as remove without adding an eating claim.",
+      "rootStatus": "accepted-data-only",
+      "rootReason": "Retain specific chicken run and extension adviser pending glossary distinction from fixed pen and generic farming adviser."
+    },
+    {
+      "slide": 15,
+      "field": "body",
+      "index": 1,
+      "sourceEnglish": "Zone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.",
+      "beforeStatus": "draft",
+      "beforeText": "Zone 0 ke ntlo. Mohlaleng ona, Zone 1 e haufi le ntlo mme e na le herbs le salad greens tse kotulwa kgafetsa.",
+      "afterText": "Zone 0 ke ntlo. Mohlaleng ona, Zone 1 e haufi le ntlo mme e na le ditlama le meroho ya salate e kotulwang kgafetsa.",
+      "decision": "accept",
+      "acceptedMinimalSubstitutions": [
+        "herbs → ditlama",
+        "salad greens → meroho ya salate"
+      ],
+      "heldSpans": [],
+      "reason": "Substitutions preserve the Zone 1 location and frequent-picking description.",
+      "rootStatus": "accepted-data-only",
+      "rootReason": null
+    },
+    {
+      "slide": 15,
+      "field": "body",
+      "index": 2,
+      "sourceEnglish": "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+      "beforeStatus": "draft",
+      "beforeText": "Zone 2 ke main garden le chicken run, tse etelwang hang kapa habedi ka letsatsi. Zone 3 ke main field, e etelwang beke le beke.",
+      "afterText": "Zone 2 ke main garden le lesaka la dikgoho, tse etelwang hang kapa habedi ka letsatsi. Zone 3 ke main field, e etelwang beke le beke.",
+      "decision": "accept-with-hold",
+      "acceptedMinimalSubstitutions": [
+        "chicken run → lesaka la dikgoho"
+      ],
+      "heldSpans": [
+        "main garden",
+        "main field"
+      ],
+      "reason": "“Main” means primary here; the candidate’s serapa se seholo/tshimo e kgolo can mean large and would change the distinction. Translate only chicken run and preserve both main labels pending an exact Sesotho equivalent.",
+      "rootStatus": "accepted-data-only",
+      "rootReason": null
+    },
+    {
+      "slide": 15,
+      "field": "body",
+      "index": 3,
+      "sourceEnglish": "Zone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild.",
+      "beforeStatus": "draft",
+      "beforeText": "Zone 4 ke semi-wild — difate tsa ditholwana le fodder tse hlokang tlhokomelo ka dinako tse ding. Zone 5 e tlohelwa e le wild.",
+      "afterText": "Zone 4 ke semi-wild — difate tsa ditholwana le fodder tse hlokang tlhokomelo ka dinako tse ding. Zone 5 e tlohelwa e le hlaha.",
+      "decision": "accept-with-hold",
+      "acceptedMinimalSubstitutions": [
+        "fodder → furu",
+        "wild → hlaha"
+      ],
+      "heldSpans": [
+        "semi-wild"
+      ],
+      "reason": "Fodder and “left wild” can be rendered without changing the category. Preserve semi-wild as glossary-dependent instead of replacing it with “almost wild.”",
+      "rootStatus": "accepted-data-only",
+      "rootReason": "Retain fodder because hay-specific reading would narrow source."
+    },
+    {
+      "slide": 16,
+      "field": "body",
+      "index": 0,
+      "sourceEnglish": "Herbs you pick often are easier to tend near the house.",
+      "beforeStatus": "draft",
+      "beforeText": "Herbs tseo o di kotulang kgafetsa ho bonolo ho di hlokomela haufi le ntlo.",
+      "afterText": "Ditlama tseo o di kotulang kgafetsa ho bonolo ho di hlokomela haufi le ntlo.",
+      "decision": "accept",
+      "acceptedMinimalSubstitutions": [
+        "Herbs → Ditlama"
+      ],
+      "heldSpans": [],
+      "reason": "A direct ordinary-word substitution.",
+      "rootStatus": "accepted-data-only",
+      "rootReason": null
+    },
+    {
+      "slide": 16,
+      "field": "body",
+      "index": 1,
+      "sourceEnglish": "Put them far away, and the long walk may mean you miss a visit. The herbs may be neglected.",
+      "beforeStatus": "draft",
+      "beforeText": "Ha o di beha hole, leeto le lelelele le ka etsa hore o fetwe ke ketelo. Herbs di ka hlokomolohwa.",
+      "afterText": "Ha o di beha hole, leeto le lelelele le ka etsa hore o fetwe ke ketelo. Ditlama di ka hlokomolohwa.",
+      "decision": "accept",
+      "acceptedMinimalSubstitutions": [
+        "Herbs → Ditlama"
+      ],
+      "heldSpans": [],
+      "reason": "The candidate’s alternative for “miss a visit” is plausible, but is not needed to clear this row; preserve runtime wording around the scoped gap.",
+      "rootStatus": "accepted-data-only",
+      "rootReason": null
+    },
+    {
+      "slide": 18,
+      "field": "body",
+      "index": 1,
+      "sourceEnglish": "Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.",
+      "beforeStatus": "draft",
+      "beforeText": "Letsatsi, moya, pula, flood le mollo di fihla ka mose ho moedi wa hao ho sa tsotellehe hore na o a di rera kapa tjhe.",
+      "afterText": "Letsatsi, moya, pula, morwallo le mollo di fihla ka mose ho moedi wa hao ho sa tsotellehe hore na o a di rera kapa tjhe.",
+      "decision": "accept",
+      "acceptedMinimalSubstitutions": [
+        "flood → morwallo"
+      ],
+      "heldSpans": [],
+      "reason": "A direct ordinary-word substitution; source list and boundary meaning are preserved.",
+      "rootStatus": "accepted-data-only",
+      "rootReason": null
+    },
+    {
+      "slide": 18,
+      "field": "body",
+      "index": 2,
+      "sourceEnglish": "Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land.",
+      "beforeStatus": "draft",
+      "beforeText": "Shebella moo moya o matla o tswang teng polasing ya hao. Direkoto tsa weather station e haufi di ka o thusa ho lekola moo moya o tswang teng. Shebella moo metsi a pula a kenang teng le moo a phallang teng setsheng sa hao.",
+      "afterText": "Shebella moo moya o matla o tswang teng polasing ya hao. Direkoto tsa seteishene sa boemo ba lehodimo se haufi di ka o thusa ho lekola moo moya o tswang teng. Shebella moo metsi a pula a kenang teng le moo a phallang teng setsheng sa hao.",
+      "decision": "accept",
+      "acceptedMinimalSubstitutions": [
+        "weather station → seteishene sa boemo ba lehodimo"
+      ],
+      "heldSpans": [],
+      "reason": "Translates the institution name while retaining both wind-direction and rainwater observation instructions.",
+      "rootStatus": "accepted-data-only",
+      "rootReason": null
+    },
+    {
+      "slide": 19,
+      "field": "body",
+      "index": 0,
+      "sourceEnglish": "Look at this example. The wind comes from the north-west.",
+      "beforeStatus": "draft",
+      "beforeText": "Sheba mohlala ona. Moya o tswa north-west.",
+      "afterText": "Sheba mohlala ona. Moya o tswa leboya-bophirima.",
+      "decision": "accept",
+      "acceptedMinimalSubstitutions": [
+        "north-west → leboya-bophirima"
+      ],
+      "heldSpans": [],
+      "reason": "The directional term is translated without changing the example.",
+      "rootStatus": "accepted-data-only",
+      "rootReason": null
+    },
+    {
+      "slide": 19,
+      "field": "body",
+      "index": 1,
+      "sourceEnglish": "The trees and shrubs stand between that wind and the crops.",
+      "beforeStatus": "draft",
+      "beforeText": "Difate le shrubs di eme pakeng tsa moya oo le dijalo.",
+      "afterText": "Difate le dihlahla di eme pakeng tsa moya oo le dijalo.",
+      "decision": "accept",
+      "acceptedMinimalSubstitutions": [
+        "shrubs → dihlahla"
+      ],
+      "heldSpans": [],
+      "reason": "A direct ordinary-word substitution.",
+      "rootStatus": "accepted-data-only",
+      "rootReason": null
+    },
+    {
+      "slide": 20,
+      "field": "heading",
+      "index": 0,
+      "sourceEnglish": "Sketch It And You Have A Design",
+      "beforeStatus": "draft",
+      "beforeText": "E take mme o be le design.",
+      "afterText": "E take mme o be le moralo.",
+      "decision": "accept-with-retained-span",
+      "acceptedMinimalSubstitutions": [
+        "design → moralo"
+      ],
+      "heldSpans": [],
+      "reason": "Do not count “take” as ordinary English solely by spelling: it may be the Sesotho drawing verb in this heading. Retain it and translate only design; fluent-language confirmation remains open.",
+      "rootStatus": "accepted-data-only",
+      "rootReason": null
+    },
+    {
+      "slide": 21,
+      "field": "body",
+      "index": 2,
+      "sourceEnglish": "Add an arrow for each energy that arrives from outside, and label where it comes from.",
+      "beforeStatus": "draft",
+      "beforeText": "Kenya motsu bakeng sa energy e nngwe le e nngwe e fihlang e tswa kantle, mme o ngole moo e tswang teng.",
+      "afterText": "Kenya motsu bakeng sa matla a mang le a mang a fihlang a tswa kantle, mme o ngole moo a tswang teng.",
+      "decision": "accept",
+      "acceptedMinimalSubstitutions": [
+        "energy → matla"
+      ],
+      "heldSpans": [],
+      "reason": "Here “energy” is ordinary diagram-instruction wording, not the named “catch and store energy” principle. The translation preserves one arrow per arriving energy and labeling its origin.",
+      "rootStatus": "accepted-data-only",
+      "rootReason": null
+    },
+    {
+      "slide": 22,
+      "field": "body",
+      "index": 0,
+      "sourceEnglish": "Walk out and check your sketch against the ground.",
+      "beforeStatus": "draft",
+      "beforeText": "Tsamaya ka ntle mme o bapise sketch ya hao le ground ya sebele.",
+      "afterText": "Tsamaya ka ntle mme o bapise setshwantsho sa hao le setsha sa sebele.",
+      "decision": "accept",
+      "acceptedMinimalSubstitutions": [
+        "sketch → setshwantsho",
+        "ground → setsha"
+      ],
+      "heldSpans": [],
+      "reason": "Do not use “mobu” here: that means soil and can narrow “ground” incorrectly. “Setsha sa sebele” expresses comparison with the actual site in this design exercise.",
+      "rootStatus": "accepted-data-only",
+      "rootReason": null
+    }
+  ],
+  "heldUnchangedRows": [
+    {
+      "slide": 22,
+      "field": "body",
+      "index": 2,
+      "sourceEnglish": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+      "status": "draft",
+      "text": "Fumana ntho e le nngwe e lenngweng further away than how often you use it, mme o ngole moo e lokelang ho iswa teng.",
+      "reason": "The English itself compares physical distance with frequency of use. The candidate turns that compression into a norm (“farther than it should be for the number of times used”); source intent needs clarification before replacing the existing target span."
+    },
+    {
+      "slide": 22,
+      "field": "body",
+      "index": 3,
+      "sourceEnglish": "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow.",
+      "status": "draft",
+      "text": "Ebe o botse older neighbour a le mong hore worst wind e tswa ka lehlakoreng lefe, mme o bapise karabo ya hae le motsu wa hao.",
+      "reason": "“Older neighbour” may mean older than the learner or an elderly neighbour; the proposed “ya hodileng” can imply elderly. “Worst wind” may mean most damaging or strongest; the candidate silently chooses strongest. Hold both spans rather than add either interpretation."
+    }
+  ],
+  "preservation": {
+    "recordedPairedFile": "docs/narration/intro-permaculture.st.paired-draft.json",
+    "recordedPairedSha256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+    "libCourseAudioSha256": "36baa7b8e6ffb452a1fee06f3358d4b2050c80101200da8f1dda77cb5f356d64",
+    "audioAssetsChanged": false,
+    "canonicalSourceChanged": false,
+    "statusesOrderIndicesAndUnlistedFieldsPreserved": true,
+    "planVersionChanged": false
+  },
+  "deferredByInstruction": [
+    "Release binding data/hash regeneration",
+    "renders",
+    "manifests",
+    "worker",
+    "tests",
+    "commit",
+    "push"
+  ],
+  "checks": [
+    "Input hash equals root-reviewed runtimePairSha256.",
+    "All 19 rows were checked against exact current source English, current target text and draft status before writing.",
+    "Exactly 17 non-null proposal texts were applied.",
+    "The two null hold rows at slide 22 body[2] and body[3] remain unchanged.",
+    "Deep comparison confirms only approved target text slots changed.",
+    "Recorded paired file and course audio manifest hashes stayed unchanged."
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "title": "Vegetables and Staple Crops L3 implementation record",
+  "date": "2026-10-03",
+  "branch": "codex/regional-staples-prose-next-20261003",
+  "baseRevision": "0c214618ef8aa6b2ed5dfada8eb67ef18e1542ad",
+  "scope": {
+    "moduleId": "vegetables-staples",
+    "lessonId": "vegetables-staples-l3",
+    "languages": {
+      "st": {
+        "paragraphIndexesZeroBased": [
+          3,
+          4,
+          6,
+          7,
+          8,
+          9
+        ],
+        "count": 6
+      },
+      "ve": {
+        "paragraphIndexesZeroBased": [
+          6,
+          7,
+          8,
+          9
+        ],
+        "count": 4
+      },
+      "ts": {
+        "paragraphIndexesZeroBased": [
+          4,
+          6,
+          7,
+          8,
+          9,
+          14
+        ],
+        "count": 6
+      }
+    },
+    "totalChangedParagraphs": 16
+  },
+  "filesChanged": [
+    "lib/course-translation-drafts-st-vegetables-staples.ts",
+    "lib/course-translation-drafts-ve-vegetables-staples.ts",
+    "lib/course-translation-drafts-ts-vegetables-staples.ts",
+    "tests/course-translation-drafts-st-vegetables-staples.test.ts",
+    "tests/course-translation-drafts-ts-vegetables-staples.test.ts",
+    "tests/course-translation-drafts-ve.test.ts"
+  ],
+  "sourceIntegrity": {
+    "canonicalEnglishUnchanged": true,
+    "eachTargetSourceAndPriorCurrentTextValidatedBeforeWrite": true,
+    "allNonTargetParagraphsEqualBase": true,
+    "quizOrderAndCorrectIndexesUnchanged": true,
+    "reviewStatus": "machine-draft",
+    "fluencyOrLocalApproval": false
+  },
+  "testChanges": "Replaced stale exact-English-hold claims with assertions for the two-crop threshold, household reliance counterfactual, conditional open-pollinated seed saving, dry storage, storable protein harvest, sweet-potato root-formation/water/stress timing and exact young-leaf clause, and bounded Amadumbe wetter-ground comparison. Preserved source drift, body count/order, pre-existing localized paragraphs, and quiz binding coverage.",
+  "evidenceFiles": [
+    "docs/study-translation-reviews/VEGETABLES-STAPLES-L3-ORDINARY-CLOSURE-CANDIDATES-2026-10-03.json",
+    "docs/study-translation-reviews/VEGETABLES-STAPLES-L3-ORDINARY-CLOSURE-INDEPENDENT-CHECK-2026-10-03.json",
+    "docs/study-translation-reviews/VEGETABLES-STAPLES-L3-ORDINARY-CLOSURE-PRESERVATION-2026-10-03.json"
+  ],
+  "verification": {
+    "focusedRegisteredTests": "20 passed, 0 failed",
+    "typecheck": "passed",
+    "fullSuite": "4,527 passed, 0 failed, 1 existing shape-sync TODO",
+    "diffCheck": "passed"
+  },
+  "publication": "Unreviewed machine drafts for facilitator review. No commit or push in this implementation step."
+}

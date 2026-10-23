@@ -1,0 +1,62 @@
+{
+  "speciesId": "mimusops-afra",
+  "commonName": "Coastal red milkwood",
+  "botanicalName": "Mimusops afra",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "ripe fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Edible part and local use",
+      "quote": "They are edible and pleasantly sweet.",
+      "url": "https://pza.sanbi.org/mimusops-afra",
+      "doc": "SANBI PlantZAfrica, mimusops-afra",
+      "page": null,
+      "note": "The source describes bright orange-red mature fruit. It does not give a picking calendar."
+    }
+  ],
+  "productionGuidance": {
+    "products": "ripe fruit",
+    "care": [
+      "SANBI records this tree in east-coast dune forest from Eastern Cape through KwaZulu-Natal, with tolerance of salty sea spray."
+    ],
+    "purchase": [
+      "Confirm Mimusops afra and lawful nursery provenance. Check current protected-tree collection requirements before taking plants or products from existing trees."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/mimusops-afra",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    }
+  ],
+  "gaps": [
+    "No ripe-picking dates or food ages/kg; current collection requirements need a site-specific check."
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-06",
+  "renderProofSHA256": "8aa54419967d85c0519b923fae8875009b32f82e244d81b0df6aef3adcc029fe",
+  "reviewer": "root agent",
+  "evidence": "Root messages confirm actual viewing of all18 compressed contacts containing36 complete frames; target/source/status/counters readable, no observed clipping.",
+  "scope": "Local compressed-frame pixel layout only; phone preview and fluent-language review not claimed.",
+  "contacts": [
+    {
+      "path": "/tmp/imbewu-final-language-next-render-20261006/contact-01.png",
+      "sha256": "9ff6ced0972a4fb02a340a9fe338ead2afd3935b4e0419430c0f671c37ca64a0"
+    },
+    {
+      "path": "/tmp/imbewu-final-language-next-render-20261006/contact-02.png",
+      "sha256": "c7d2f4df9afdbb65ac2cb1429d359f68beee23c1728a5a28c5dec51f87ee17fe"
+    },
+    {
+      "path": "/tmp/imbewu-final-language-next-render-20261006/contact-03.png",
+      "sha256": "7fc03bdbafe79185db4cc6dc02d83947d542aa396bfe4afc448e81eb8338629a"
+    },
+    {
+      "path": "/tmp/imbewu-final-language-next-render-20261006/contact-04.png",
+      "sha256": "b37f33a8c613f3d19f8796240226cdb04cd1a97fa8ff763bdc000aaedc91e395"
+    },
+    {
+      "path": "/tmp/imbewu-final-language-next-render-20261006/contact-05.png",
+      "sha256": "07446c9763869a13a7e0b8a194b31f125280276613b670f80034aaa3d04f6cb4"
+    },
+    {
+      "path": "/tmp/imbewu-final-language-next-render-20261006/contact-06.png",
+      "sha256": "f48ae09e8549f707063ebea0e8cd7f8b39d7b73ef3d42a695e923c69195dceb0"
+    },
+    {
+      "path": "/tmp/imbewu-final-language-next-render-20261006/contact-07.png",
+      "sha256": "b07fbd64dbbb588e7b15dd29eb56e6157dfbf29b40fe673c03fd30e41737b624"
+    },
+    {
+      "path": "/tmp/imbewu-final-language-next-render-20261006/contact-08.png",
+      "sha256": "0ba43d6fe149c7b21209f174f8496964ab47e382c4e7ae2c25b02d3cf6703695"
+    },
+    {
+      "path": "/tmp/imbewu-final-language-next-render-20261006/contact-09.png",
+      "sha256": "a8d6300b08a45fad300b23d194b70a31d1f93615a95cb41877d2f2d6978afb13"
+    },
+    {
+      "path": "/tmp/imbewu-final-language-next-render-20261006/contact-10.png",
+      "sha256": "854ebcf942529330643ac806a703848422b9692a752ee920ad04231a2385bfb2"
+    },
+    {
+      "path": "/tmp/imbewu-final-language-next-render-20261006/contact-11.png",
+      "sha256": "a28a91bafaedc74720e1cf088eb89c61bdbd8fb97338c781d863b2b788468a90"
+    },
+    {
+      "path": "/tmp/imbewu-final-language-next-render-20261006/contact-12.png",
+      "sha256": "03213e17ac014bdcd4268695125c44384909de598e00bb9ede465e70d573f0d2"
+    },
+    {
+      "path": "/tmp/imbewu-final-language-next-render-20261006/contact-13.png",
+      "sha256": "0b2629191e0a18b98b058b6cf22ec476de02e1782863d59624a19bd3a7d0fa9e"
+    },
+    {
+      "path": "/tmp/imbewu-final-language-next-render-20261006/contact-14.png",
+      "sha256": "6b9f4aadb6b9e5e8a59a9bbbfc545caaff2bf685233ad0b312b656ff5b763dc6"
+    },
+    {
+      "path": "/tmp/imbewu-final-language-next-render-20261006/contact-15.png",
+      "sha256": "9addd8fcd8a6e9ca2635ff5fbfec197b40757df9068a4f13fb69d36143672c2a"
+    },
+    {
+      "path": "/tmp/imbewu-final-language-next-render-20261006/contact-16.png",
+      "sha256": "d91dcaa295012cf201ad0a912aaae6b36e4bc686406463cbd0c92d8ef1061314"
+    },
+    {
+      "path": "/tmp/imbewu-final-language-next-render-20261006/contact-17.png",
+      "sha256": "d6c8128c55be66cac7d0253fda063ebaa7aa3a78d03b6c4d8420d7292f30888e"
+    },
+    {
+      "path": "/tmp/imbewu-final-language-next-render-20261006/contact-18.png",
+      "sha256": "17a193b0ae80c771f646cfefb9d8e2457ce39d056ba35bc21b887e2154847242"
+    }
+  ]
+}

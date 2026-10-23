@@ -1,0 +1,604 @@
+{
+  "reviewer": "Codex root",
+  "method": "Target-first reading in an existing source-exposed project conversation. NOT a fresh independent blind review. English identifier names were visible. No Claude/provider retry or synthetic reviewer provenance.",
+  "sourceComparisonNotYetReadForThisFile": true,
+  "fluentSpeakerApproval": false,
+  "createdAt": "2026-10-12T07:27:50.650227+00:00",
+  "packetSha256": "d75a082dbc21f6d2e0025da799b18d2fc9397d5c05138508f1e4809c7c20fac0",
+  "rows": [
+    {
+      "id": "study-ui/st/offlineOnThisPhone",
+      "language": "st",
+      "target": "E fonong ena · {size}",
+      "targetSha256": "b0cd8a7db41c36d0a674356edf65eca4c3922336c1c3aff02e3cf38ac0244706",
+      "englishBackTranslation": "On this phone · {size}",
+      "confidence": "high",
+      "uncertaintyReason": "Location on this specific phone; size token retained."
+    },
+    {
+      "id": "study-ui/st/offlineRemovePack",
+      "language": "st",
+      "target": "Tlosa dithuto tse bolokilweng",
+      "targetSha256": "476abbd0782e94b1a52411013c911f61a77fe99eb4da7762098d09bba1dfa96f",
+      "englishBackTranslation": "Remove the saved lessons",
+      "confidence": "high",
+      "uncertaintyReason": "Removal applies to lessons that have been saved, not the account."
+    },
+    {
+      "id": "study-ui/st/offlineStopDownload",
+      "language": "st",
+      "target": "Emisa",
+      "targetSha256": "7157ff843c5fa54efdd2c105d221a943042243e88dd53cf0a217500a5221c839",
+      "englishBackTranslation": "Stop",
+      "confidence": "high",
+      "uncertaintyReason": "A stop imperative; it does not say delete."
+    },
+    {
+      "id": "study-ui/st/offlineFinishDownload",
+      "language": "st",
+      "target": "Qetella ho jarolla · {size} e setse",
+      "targetSha256": "553db42e4a69592119b96bc3ddccf6863a14ccee0b397366d8ad827035cf0e12",
+      "englishBackTranslation": "Finish downloading · {size} remains",
+      "confidence": "high",
+      "uncertaintyReason": "Finish action and remaining quantity both explicit."
+    },
+    {
+      "id": "study-ui/st/offlineDownloadPack",
+      "language": "st",
+      "target": "Jarolla · {size}",
+      "targetSha256": "04bc4c6ad6871b463909a227e3b5b4439f64dac1334bf8e4563f60694c85f4e7",
+      "englishBackTranslation": "Download · {size}",
+      "confidence": "high",
+      "uncertaintyReason": "Download action with unchanged size token."
+    },
+    {
+      "id": "study-ui/st/offlineDownloadQuality",
+      "language": "st",
+      "target": "Boleng ba ho jarolla",
+      "targetSha256": "a80d596d3c51a1ec2df423f7154578c8a3c7da1f465cede1ef879b04584a896a",
+      "englishBackTranslation": "Quality of downloading",
+      "confidence": "medium",
+      "uncertaintyReason": "Boleng is quality/value; as a UI label this can denote download quality."
+    },
+    {
+      "id": "study-ui/st/offlineQualityStandard",
+      "language": "st",
+      "target": "Tlwaelehileng",
+      "targetSha256": "188e8dcd590dc1d4c235120d4872c82d1e5171a18bec8c923a3e4f8ea7a07f67",
+      "englishBackTranslation": "Usual / ordinary",
+      "confidence": "medium",
+      "uncertaintyReason": "Tlwaelehileng means usual or customary; the quality tier is contextual."
+    },
+    {
+      "id": "study-ui/st/offlineQualityStandardNote",
+      "language": "st",
+      "target": "bakeng sa difono tse sebedisang data",
+      "targetSha256": "26978447eed4077591815259c6dc7a6f1f41fadc1033f7d20b4bbf68e9efa9f5",
+      "englishBackTranslation": "For phones that use data",
+      "confidence": "high",
+      "uncertaintyReason": "Says using data; no explicit economical or data-saving qualifier."
+    },
+    {
+      "id": "study-ui/st/offlineQualityHigher",
+      "language": "st",
+      "target": "Boleng bo hodimo",
+      "targetSha256": "6c175d8bf48dd6758fb622f88f1c6e4055c65525cbbc153be971c66f56dfce9e",
+      "englishBackTranslation": "Higher quality",
+      "confidence": "high",
+      "uncertaintyReason": "Boleng bo hodimo literally quality above/high; tier comparison is contextual."
+    },
+    {
+      "id": "study-ui/st/offlineQualityHigherNote",
+      "language": "st",
+      "target": "batsamaisi le bafani ba ditjhelete · wifi",
+      "targetSha256": "a6f86f7ece50e46f0b239815a7aab9ad06e840e9e6807fce752bf108870fd820",
+      "englishBackTranslation": "Managers / administrators and providers of money · wifi",
+      "confidence": "medium",
+      "uncertaintyReason": "Batsamaisi can denote managers/administrators; facilitation specifically is not explicit."
+    },
+    {
+      "id": "study-ui/st/offlineDownloadBytesProgress",
+      "language": "st",
+      "target": "{current} ho {total}",
+      "targetSha256": "2ef0fff4e8b44e9f542b637b69d3457d4e92dfafdfd2eabace0de38e47af7d34",
+      "englishBackTranslation": "{current} out of {total}",
+      "confidence": "high",
+      "uncertaintyReason": "Both progress tokens preserved; denominator relation ho."
+    },
+    {
+      "id": "study-ui/st/offlineEnglishMediaFallback",
+      "language": "st",
+      "target": "Sephuthelo sena se na le diselaete kapa tlhaloso e buuwang ka Senyesemane moo puo eo o e kgethileng e so fumanehe.",
+      "targetSha256": "cf4548d6699d438770db3a7bf907f3ff02a03b1087a9b9cb3d0cfcb24a87986b",
+      "englishBackTranslation": "This package has slides or spoken explanation in English where the language you selected is not yet available.",
+      "confidence": "high",
+      "uncertaintyReason": "Or, selected language and not-yet availability remain; no claim all material is English."
+    },
+    {
+      "id": "study-ui/st/offlineEnglishSlidesFallback",
+      "language": "st",
+      "target": "Diselaete tse ding di ntse di le ka Senyesemane moo puo eo o e kgethileng e so fumanehe.",
+      "targetSha256": "d147fdc52ba5e5461244b4b2736ed3bef535c386053022bbdf1984ad1be43b3c",
+      "englishBackTranslation": "Some slides are still in English where the language you selected is not yet available.",
+      "confidence": "high",
+      "uncertaintyReason": "Some and still preserved; applies to slides."
+    },
+    {
+      "id": "study-ui/st/offlineGetSlidesWhileSignal",
+      "language": "st",
+      "target": "Boloka diselaete le ditshwantsho tse bontshwang fonong ena. Jwale diselaete di sebetsa ntle le marang-rang, empa ha di na tlhaloso e buuwang kapa video.",
+      "targetSha256": "8238e12988278748b0665c4b0603089f5ffa2fdd0df7863dde1d4e0fd1d8c62f",
+      "englishBackTranslation": "Save the slides and pictures displayed on this phone. Now the slides work without the internet, but they have no spoken explanation or video.",
+      "confidence": "high",
+      "uncertaintyReason": "Save, displayed material, phone scope and absence of narration/video preserved."
+    },
+    {
+      "id": "study-ui/st/offlineRegionalPackChoice",
+      "language": "st",
+      "target": "Dintho tse jarollwang bakeng sa diselaete tsa puo eo o e kgethileng",
+      "targetSha256": "c0b69ec0ddd0c08b61d25bdb351d804ae070583b2a2f3e85fe27c54617c291f5",
+      "englishBackTranslation": "Things downloaded for the slides of the language you selected",
+      "confidence": "medium",
+      "uncertaintyReason": "A noun label for contents of the selected-language slide download."
+    },
+    {
+      "id": "study-ui/st/offlineRegionalSlidesOnly",
+      "language": "st",
+      "target": "Diselaete feela",
+      "targetSha256": "dd3becec2306dfff9193d731c3ca6d310747a2ae3b35584a8babeabec5e2f5e7",
+      "englishBackTranslation": "Slides only",
+      "confidence": "high",
+      "uncertaintyReason": "Only retained; no narration promise."
+    },
+    {
+      "id": "study-ui/st/offlineRegionalFullMedia",
+      "language": "st",
+      "target": "Diselaete + tlhaloso e buuwang ya Senyesemane le dikotwana",
+      "targetSha256": "3914517f74b7b184dd27b9cec43920683ec330782cbf68385918b9cb0abc9aa8",
+      "englishBackTranslation": "Slides + English spoken explanation and clips",
+      "confidence": "high",
+      "uncertaintyReason": "English modifies spoken explanation; clips are separate."
+    },
+    {
+      "id": "study-ui/st/offlineRegionalFullMediaNote",
+      "language": "st",
+      "target": "Sephuthelo se felletseng se kenyeletsa tlhaloso e buuwang ya mohlodi wa Senyesemane e fumanehang, di-animation le ditshwantsho tsa dithuto.",
+      "targetSha256": "bae0ee343ca53f01f9d0d601ba13fb1ca133d171ee1120590eb0cbef00d02cf5",
+      "englishBackTranslation": "The complete package includes the available spoken explanation of the English source, animations and lesson pictures.",
+      "confidence": "high",
+      "uncertaintyReason": "Available qualifier binds spoken explanation; English source retained."
+    },
+    {
+      "id": "study-ui/st/offlineFilesProgress",
+      "language": "st",
+      "target": "Difaele tse {done} ho tse {total}",
+      "targetSha256": "0076f605e0150ed4fcf0b3138c9a00b199aaeadbdf7a9477872dd423b79a2345",
+      "englishBackTranslation": "{done} files out of {total}",
+      "confidence": "high",
+      "uncertaintyReason": "Files and both counts preserved."
+    },
+    {
+      "id": "study-ui/st/offlineFilesFailed",
+      "language": "st",
+      "target": "Difaele tse {count} ha di a jarollwa. Tlanya Qetella ho jarolla hape ha o ntse o na le kgokelo — tse ding di se di bolokilwe.",
+      "targetSha256": "5c803bc2969818bff508a28e00bf7741207462e9fbb6f1490e88fb8ddaa72037",
+      "englishBackTranslation": "{count} files were not downloaded. Tap Finish downloading again while you still have a connection — the others are already saved.",
+      "confidence": "high",
+      "uncertaintyReason": "Failure negation, retry while connected and already-saved others all remain."
+    },
+    {
+      "id": "study-ui/st/offlineSavedMayClear",
+      "language": "st",
+      "target": "Di bolokilwe, empa fono ena e ka di hlakola ha sebaka sa polokelo se fokotseha. Hlahloba dithuto tse bolokilweng hape pele o tloha moo kgokelo e leng teng.",
+      "targetSha256": "ef542de91f709d4c43da5705d76e94538f60bb683f0c68c9b7ec32486a4a918e",
+      "englishBackTranslation": "They are saved, but this phone can erase them when storage space becomes low. Check the saved lessons again before leaving where a connection is available.",
+      "confidence": "high",
+      "uncertaintyReason": "Possibility can, low-storage trigger, again and before departure retained."
+    },
+    {
+      "id": "study-ui/st/offlineLowStorage",
+      "language": "st",
+      "target": "Sebaka sa polokelo fonong ena se a fokola — ho ka etsahala hore download e se lekane.",
+      "targetSha256": "b01467df2bdcc4c2b9049d190b5627e95ba32ec186a5b144c3c7273577b5d211",
+      "englishBackTranslation": "Storage space on this phone is becoming low — it is possible that the download will not fit.",
+      "confidence": "high",
+      "uncertaintyReason": "Low storage and possible non-fit, not certain failure; English download retained."
+    },
+    {
+      "id": "study-ui/ve/offlineOnThisPhone",
+      "language": "ve",
+      "target": "Kha founu iyi · {size}",
+      "targetSha256": "c9bfbbb18162b5f27cb9f471216f7f98f3d4772a57e18fd7a20f529fb7181012",
+      "englishBackTranslation": "On this phone · {size}",
+      "confidence": "high",
+      "uncertaintyReason": "Specific-phone location and token retained."
+    },
+    {
+      "id": "study-ui/ve/offlineRemovePack",
+      "language": "ve",
+      "target": "Bvisani ngudo dzo vhulungwaho",
+      "targetSha256": "334095cc60624d33fd593bd832c9bfc39c6a811dbd1777306fd3dcb3f93fc6f5",
+      "englishBackTranslation": "Remove saved lessons",
+      "confidence": "medium",
+      "uncertaintyReason": "Bvisani is plural/polite imperative remove; dzo vhulungwaho qualifies saved lessons."
+    },
+    {
+      "id": "study-ui/ve/offlineStopDownload",
+      "language": "ve",
+      "target": "Imisani",
+      "targetSha256": "65c237c3c13b026ccac4789ba714721639c90ecd92490d75c901b72cbc3b8332",
+      "englishBackTranslation": "Stop",
+      "confidence": "medium",
+      "uncertaintyReason": "Imisani is a plural/polite stop imperative."
+    },
+    {
+      "id": "study-ui/ve/offlineFinishDownload",
+      "language": "ve",
+      "target": "Fhedzisani download · {size} yo salaho",
+      "targetSha256": "c676b2aba93d7e8373550d948baa5889a238d02a6171ce0d43704b50891cde53",
+      "englishBackTranslation": "Finish the download · {size} remaining",
+      "confidence": "medium",
+      "uncertaintyReason": "Fhedzisani finish; yo salaho denotes remaining quantity."
+    },
+    {
+      "id": "study-ui/ve/offlineDownloadPack",
+      "language": "ve",
+      "target": "Download · {size}",
+      "targetSha256": "bac55841e1a93d55b2934a1827d10d650e2009983c81729a84764a5e401fbea5",
+      "englishBackTranslation": "Download · {size}",
+      "confidence": "high",
+      "uncertaintyReason": "English Download is already in the target; no invented translation."
+    },
+    {
+      "id": "study-ui/ve/offlineDownloadQuality",
+      "language": "ve",
+      "target": "Vhuvha ha download",
+      "targetSha256": "7ef4e5b2ce7c804fe8feff0ba05d925450910c9805c7dc9074a45269a5f9bb0b",
+      "englishBackTranslation": "The quality / condition of the download",
+      "confidence": "medium",
+      "uncertaintyReason": "Vhuvha can mean state/condition as well as quality; UI tier context needed."
+    },
+    {
+      "id": "study-ui/ve/offlineQualityStandard",
+      "language": "ve",
+      "target": "Ya nḓowelo",
+      "targetSha256": "c5e0b7014c115fda4f5bccb97dff8632c6fbb5c09ef7cfaa181d329af70da658",
+      "englishBackTranslation": "The usual / customary one",
+      "confidence": "medium",
+      "uncertaintyReason": "Ya ndowelo means customary/usual; standard tier is contextual."
+    },
+    {
+      "id": "study-ui/ve/offlineQualityStandardNote",
+      "language": "ve",
+      "target": "Kha dzifounu dzi shumisaho data",
+      "targetSha256": "db686bebcd362f4e78f2595a9c4ccd58c9d7513db6e461b27fa61290080c95bd",
+      "englishBackTranslation": "For phones using data",
+      "confidence": "high",
+      "uncertaintyReason": "Using data is explicit; conserving it is not."
+    },
+    {
+      "id": "study-ui/ve/offlineQualityHigher",
+      "language": "ve",
+      "target": "Vhuvha ha nṱha",
+      "targetSha256": "a354fc24005816c92804da3ce53885de27a891d7327200481f957335e06a43d1",
+      "englishBackTranslation": "High / higher quality",
+      "confidence": "medium",
+      "uncertaintyReason": "Vhuvha ha ntha denotes quality/state above/high; explicit comparative morphology is uncertain."
+    },
+    {
+      "id": "study-ui/ve/offlineQualityHigherNote",
+      "language": "ve",
+      "target": "facilitators na vhaṋei vha tshelede · wifi",
+      "targetSha256": "b114179962543f894613ce676657ff26d9b85d228a698d65579c3db3fd882057",
+      "englishBackTranslation": "Facilitators and providers of money · wifi",
+      "confidence": "medium",
+      "uncertaintyReason": "facilitators is unchanged English; vhanei vha tshelede supplies money providers."
+    },
+    {
+      "id": "study-ui/ve/offlineDownloadBytesProgress",
+      "language": "ve",
+      "target": "{current} kha {total}",
+      "targetSha256": "37e06e79c632ac5684f930162d42f0fb43419a787ba1e73a278076a63ca2d3bc",
+      "englishBackTranslation": "{current} out of / within {total}",
+      "confidence": "medium",
+      "uncertaintyReason": "Kha is in/within/from; a progress denominator reading needs UI context."
+    },
+    {
+      "id": "study-ui/ve/offlineEnglishMediaFallback",
+      "language": "ve",
+      "target": "Pack iyi i na slides kana ṱhalutshedzo nga ipfi nga English hune luambo lwe na lu nanga lu sa athu wanala.",
+      "targetSha256": "6f0f26dd522ddbee55c9b10b096f758ecb4215fe364bcaa3f4dc2462554f742c",
+      "englishBackTranslation": "This pack has slides or spoken explanation in English where the language you selected is not yet available.",
+      "confidence": "medium",
+      "uncertaintyReason": "Has/or/not-yet/selected language preserved; English pack/slides/English remain."
+    },
+    {
+      "id": "study-ui/ve/offlineEnglishSlidesFallback",
+      "language": "ve",
+      "target": "Dziṅwe slides dzi kha ḓi vha nga English hune luambo lwe na lu nanga lu sa athu wanala.",
+      "targetSha256": "454c1a02601dfa5f7bd88d7ad9b149ffb75a7c09570c9b1428f691bf3dd455c7",
+      "englishBackTranslation": "Some slides are still in English where the language you selected is not yet available.",
+      "confidence": "medium",
+      "uncertaintyReason": "Dzine/dzinwe some and kha di still, rather than every slide."
+    },
+    {
+      "id": "study-ui/ve/offlineGetSlidesWhileSignal",
+      "language": "ve",
+      "target": "Vhulungani slides na posters dzine dza sumbedzwa kha founu iyi. Nga murahu deck i ḓo shuma ni si na inthanethe hu si na ṱhalutshedzo nga ipfi kana video.",
+      "targetSha256": "24e6eb302549ea6caeaf90c8c418b811baac460d8ad2fb85baed329fa11697af",
+      "englishBackTranslation": "Save the slides and posters shown on this phone. Afterwards the deck will work without internet, with no spoken explanation or video.",
+      "confidence": "medium",
+      "uncertaintyReason": "Afterwards and no narration/video retained; exact asset nouns slides/posters/deck already English."
+    },
+    {
+      "id": "study-ui/ve/offlineRegionalPackChoice",
+      "language": "ve",
+      "target": "Zwi re kha download ya slides dza luambo lwe na lu nanga",
+      "targetSha256": "0da067422cc059abec392e3a08ebb2fb6858b8453896c46ee4436bcf0394588f",
+      "englishBackTranslation": "What is in the download of slides for the language you selected",
+      "confidence": "medium",
+      "uncertaintyReason": "Contents label, not assertion download has finished."
+    },
+    {
+      "id": "study-ui/ve/offlineRegionalSlidesOnly",
+      "language": "ve",
+      "target": "Slides fhedzi",
+      "targetSha256": "3ca135fac499d5acdf7b8d5a822ecd145b2651fccd28d14eb531d51250ba4e3a",
+      "englishBackTranslation": "Slides only",
+      "confidence": "high",
+      "uncertaintyReason": "Fhedzi means only; English Slides unchanged."
+    },
+    {
+      "id": "study-ui/ve/offlineRegionalFullMedia",
+      "language": "ve",
+      "target": "Slides + ṱhalutshedzo nga ipfi ya English source na clips",
+      "targetSha256": "890bcce5fb21a531e28d0386d8e74179d4617cc46f570bbb63e2a69787140c50",
+      "englishBackTranslation": "Slides + spoken explanation of the English source and clips",
+      "confidence": "medium",
+      "uncertaintyReason": "English source and clips retained exactly; spoken modality explicit."
+    },
+    {
+      "id": "study-ui/ve/offlineRegionalFullMediaNote",
+      "language": "ve",
+      "target": "Pack yoṱhe i katela ṱhalutshedzo nga ipfi ya English source ine ya vha hone, animations na zwifanyiso zwa ngudo.",
+      "targetSha256": "ad1cc27d4952202512520bf6ff315a1c3b626fec1e10566a6e2dc5dcca9dcbbc",
+      "englishBackTranslation": "The whole pack includes the available English-source spoken explanation, animations and lesson pictures.",
+      "confidence": "medium",
+      "uncertaintyReason": "Yothe whole and ine ya vha hone available preserved."
+    },
+    {
+      "id": "study-ui/ve/offlineFilesProgress",
+      "language": "ve",
+      "target": "{done} kha {total} files",
+      "targetSha256": "d2256549ad5cf1ab1b4ad9f5a7dbc7c257af452b94d6c1dc8064bd54ee5678c1",
+      "englishBackTranslation": "{done} out of {total} files",
+      "confidence": "medium",
+      "uncertaintyReason": "Progress denominator context; English files unchanged."
+    },
+    {
+      "id": "study-ui/ve/offlineFilesFailed",
+      "language": "ve",
+      "target": "Files {count} a dzo ngo download-a. Tobani Fhedzisani download hafhu musi signal i kha hone — dziṅwe dzo no vhulungwa.",
+      "targetSha256": "9ddacaf791fed34f7174c29aebbc70d7027a70688f595f2dc4f6ae24761ad110",
+      "englishBackTranslation": "{count} files were not downloaded. Tap Finish download again while the signal is still present — others have already been saved.",
+      "confidence": "medium",
+      "uncertaintyReason": "Negation, again, still signal and already saved all present."
+    },
+    {
+      "id": "study-ui/ve/offlineSavedMayClear",
+      "language": "ve",
+      "target": "Zwo vhulungwa, fhedzi founu iyi i nga zwi bvisa arali storage i tshi vha ṱhukhu. Ṱolani hafhu ngudo dzo vhulungwaho musi ni sa athu ṱuwa hune signal ya wanala.",
+      "targetSha256": "7d47d53bcb68119073bcd928781fadad903f1b65e95f912107956abfb5948244",
+      "englishBackTranslation": "Saved, but this phone may remove them if storage becomes small. Check the saved lessons again before leaving where signal is available.",
+      "confidence": "medium",
+      "uncertaintyReason": "Conditional arali if and may/can, again and before retained."
+    },
+    {
+      "id": "study-ui/ve/offlineLowStorage",
+      "language": "ve",
+      "target": "Founu iyi yo sala na fhethu huṱuku — download i nga vha khulwane u fhira fhethu ho salaho.",
+      "targetSha256": "3989258a9f4c045284fd63992a2d1afb859061dea1dbae05025d92645e795704",
+      "englishBackTranslation": "This phone has little space remaining — the download may be bigger than the space remaining.",
+      "confidence": "medium",
+      "uncertaintyReason": "May and larger-than comparison retained; not an assertion no space remains."
+    },
+    {
+      "id": "study-ui/ts/offlineOnThisPhone",
+      "language": "ts",
+      "target": "Eka riqingho leri · {size}",
+      "targetSha256": "2c77d3709cec9d13da20df39834cbfe96982e22de2e4be457188ccc1b7dcee91",
+      "englishBackTranslation": "On this phone · {size}",
+      "confidence": "high",
+      "uncertaintyReason": "Specific-phone location, token preserved."
+    },
+    {
+      "id": "study-ui/ts/offlineRemovePack",
+      "language": "ts",
+      "target": "Susa tidyondzo leti hlayisiweke",
+      "targetSha256": "8d098ac97c4f5dc2b11d9eca718e380d96298edc7d3106dcaaee417b2a06b14e",
+      "englishBackTranslation": "Remove the saved lessons",
+      "confidence": "high",
+      "uncertaintyReason": "Susa remove; saved lessons rather than profile deletion."
+    },
+    {
+      "id": "study-ui/ts/offlineStopDownload",
+      "language": "ts",
+      "target": "Yimisa",
+      "targetSha256": "e077872f06d343d0d870d2ee9a6a7266c91bceacd216895526a5b114d20ce24b",
+      "englishBackTranslation": "Stop",
+      "confidence": "high",
+      "uncertaintyReason": "Yimisa is stop imperative."
+    },
+    {
+      "id": "study-ui/ts/offlineFinishDownload",
+      "language": "ts",
+      "target": "Hetisa ku dawuniloda · ku sele {size}",
+      "targetSha256": "599816d456b11c22061f7129b88f33864efb704bb83797e34e6ac7761285bcce",
+      "englishBackTranslation": "Finish downloading · {size} is left",
+      "confidence": "high",
+      "uncertaintyReason": "Finish verb and remaining amount preserved."
+    },
+    {
+      "id": "study-ui/ts/offlineDownloadPack",
+      "language": "ts",
+      "target": "Dawuniloda · {size}",
+      "targetSha256": "ddce550d68e91c22716e4ee94b4c443b980abaabdea8e00b318abfe6ad198b6d",
+      "englishBackTranslation": "Download · {size}",
+      "confidence": "high",
+      "uncertaintyReason": "Dawuniloda borrowing functions as download command."
+    },
+    {
+      "id": "study-ui/ts/offlineDownloadQuality",
+      "language": "ts",
+      "target": "Quality ya download",
+      "targetSha256": "5f8dc1e88ee38b4991ad6ae2981f09e21c1d0dcaeb86a9b5021d4f11046482b1",
+      "englishBackTranslation": "Quality of the download",
+      "confidence": "high",
+      "uncertaintyReason": "Quality and download are already English; ya links them."
+    },
+    {
+      "id": "study-ui/ts/offlineQualityStandard",
+      "language": "ts",
+      "target": "Ya ntolovelo",
+      "targetSha256": "4ca680c85dea627f6ce8242a257747fd8c491a7f7caf2eb0de84968d77d02331",
+      "englishBackTranslation": "The usual / customary one",
+      "confidence": "medium",
+      "uncertaintyReason": "Ya ntolovelo means customary/usual; tier label standard inferred only in context."
+    },
+    {
+      "id": "study-ui/ts/offlineQualityStandardNote",
+      "language": "ts",
+      "target": "eka tifoni leti tirhisaka data",
+      "targetSha256": "1e01d17d5fa94776912192f71ffcab58a9947f54ca22c42c77d3be14e33ad9f2",
+      "englishBackTranslation": "For phones that use data",
+      "confidence": "high",
+      "uncertaintyReason": "No explicit data-saving or data-conscious qualifier."
+    },
+    {
+      "id": "study-ui/ts/offlineQualityHigher",
+      "language": "ts",
+      "target": "Quality ya le henhla",
+      "targetSha256": "b6d5494319a58da2e0fb9e11e3f8a6b153f39c4eb1854056dcac32ac4c7d3f57",
+      "englishBackTranslation": "Higher / upper quality",
+      "confidence": "medium",
+      "uncertaintyReason": "Ya le henhla is at/above/high; comparison is contextual rather than explicit than-clause."
+    },
+    {
+      "id": "study-ui/ts/offlineQualityHigherNote",
+      "language": "ts",
+      "target": "vafambisi ni vaseketeri hi timali · wifi",
+      "targetSha256": "70316079aa54b77191859a2100bf90050091f3ed10a02596f0da74dfccb71c6d",
+      "englishBackTranslation": "Managers / facilitators and financial supporters · wifi",
+      "confidence": "medium",
+      "uncertaintyReason": "Vafambisi can be managers/administrators; exact facilitator role is not guaranteed."
+    },
+    {
+      "id": "study-ui/ts/offlineDownloadBytesProgress",
+      "language": "ts",
+      "target": "{current} eka {total}",
+      "targetSha256": "ee288e646ed002ffafa36f2493642498ad8a8873605677afb287794627331722",
+      "englishBackTranslation": "{current} out of {total}",
+      "confidence": "high",
+      "uncertaintyReason": "Eka can mean in/from; UI progress relation is clear with two tokens."
+    },
+    {
+      "id": "study-ui/ts/offlineEnglishMediaFallback",
+      "language": "ts",
+      "target": "Pack leyi yi katsa slides kumbe narration hi Xinghezi laha ririmi leri u ri hlawuleke ri nga si kumekaka.",
+      "targetSha256": "28c446485696789cf93531ae2390b74ba9d4ee0631e7aeb7a7f9b4f76a2930ca",
+      "englishBackTranslation": "This pack includes slides or narration in English where the language you selected is not yet available.",
+      "confidence": "high",
+      "uncertaintyReason": "Includes/or/not-yet/selected-language scope preserved."
+    },
+    {
+      "id": "study-ui/ts/offlineEnglishSlidesFallback",
+      "language": "ts",
+      "target": "Slides tin’wana ti ha ri hi Xinghezi laha ririmi leri u ri hlawuleke ri nga si kumekaka.",
+      "targetSha256": "6bcc0ce8a713f52da965d65e8a2a4997e2e357ebd65609a9b312f820956da4c7",
+      "englishBackTranslation": "Some slides are still in English where the language you selected is not yet available.",
+      "confidence": "high",
+      "uncertaintyReason": "Some, still and not yet; English slides unchanged."
+    },
+    {
+      "id": "study-ui/ts/offlineGetSlidesWhileSignal",
+      "language": "ts",
+      "target": "Hlayisa slides ni ti-poster leti kombisiwaka eka riqingho leri. Kutani deck yi ta tirha offline handle ka narration kumbe vhidiyo.",
+      "targetSha256": "384e23d8a79a3ab46c750d429ee790880c98b7be3fd9b7459d9c87313de5c3dd",
+      "englishBackTranslation": "Save the slides and posters displayed on this phone. Then the deck will work offline without narration or video.",
+      "confidence": "high",
+      "uncertaintyReason": "Then, displayed-on-this-phone and without narration/video preserved."
+    },
+    {
+      "id": "study-ui/ts/offlineRegionalPackChoice",
+      "language": "ts",
+      "target": "Leswi swi dawunilodiwaka eka slides ta ririmi leri u ri hlawuleke.",
+      "targetSha256": "b3faf967a91fed2331ee8694bf31e17237e89bab952c599369f0ca3813d36911",
+      "englishBackTranslation": "What is downloaded for slides of the language you selected.",
+      "confidence": "medium",
+      "uncertaintyReason": "Passive content label; does not itself order a download."
+    },
+    {
+      "id": "study-ui/ts/offlineRegionalSlidesOnly",
+      "language": "ts",
+      "target": "Slides ntsena",
+      "targetSha256": "14694d3ae567e93599f3bc02777d78e4eb9d60dfdb415167beaed35f38586117",
+      "englishBackTranslation": "Slides only",
+      "confidence": "high",
+      "uncertaintyReason": "Ntsena only retained."
+    },
+    {
+      "id": "study-ui/ts/offlineRegionalFullMedia",
+      "language": "ts",
+      "target": "Slides + nhlamuselo hi rito ya Xinghezi ni ti-clip",
+      "targetSha256": "a1180c6547fed716b7d83c2bff37e258e51a13edab8d6ca4536cbd44c2e10428",
+      "englishBackTranslation": "Slides + English spoken explanation and clips",
+      "confidence": "high",
+      "uncertaintyReason": "English-language spoken explanation explicit; clips separate."
+    },
+    {
+      "id": "study-ui/ts/offlineRegionalFullMediaNote",
+      "language": "ts",
+      "target": "Pack leyi heleleke yi katsa nhlamuselo hi rito ya English source leyi kumekaka, ti-animation ni swifaniso swa tidyondzo.",
+      "targetSha256": "7cbf0fc0a6ddc53d5cfd2d73421c5e165d4475b8df3542d2ed115efda4cea29b",
+      "englishBackTranslation": "The complete pack includes the available English-source spoken explanation, animations and lesson pictures.",
+      "confidence": "high",
+      "uncertaintyReason": "Heleleke complete; leyi kumekaka available qualifies narration."
+    },
+    {
+      "id": "study-ui/ts/offlineFilesProgress",
+      "language": "ts",
+      "target": "{done} eka {total} wa tifayela",
+      "targetSha256": "c102a59fad60169f020ac380c8fec601090646eaf671303b8eac2c8dff10631d",
+      "englishBackTranslation": "{done} out of {total} files",
+      "confidence": "high",
+      "uncertaintyReason": "Both placeholders and file unit retained."
+    },
+    {
+      "id": "study-ui/ts/offlineFilesFailed",
+      "language": "ts",
+      "target": "{count} wa tifayela a ma dawunilodiwanga. Tinya Hetisa ku dawuniloda nakambe loko u ri na signal — letin’wana se ti hlayisiwile.",
+      "targetSha256": "9f9227c9362fed05f189e596edc9d522d494b1aae0b9af8cf48bc84863b27832",
+      "englishBackTranslation": "{count} files were not downloaded. Tap Finish downloading again while you have signal — the others are already saved.",
+      "confidence": "high",
+      "uncertaintyReason": "Not downloaded, again, connection prerequisite and saved remainder all explicit."
+    },
+    {
+      "id": "study-ui/ts/offlineSavedMayClear",
+      "language": "ts",
+      "target": "Swi hlayisiwile, kambe riqingho leri ri nga swi susa loko ndhawu yo hlayisa yi ri yitsongo. Kambela tidyondzo leti hlayisiweke nakambe u nga si suka eka signal.",
+      "targetSha256": "960a003f4722192489ae8f3f2e3117ae910bbf68d1765cc22b7ab7d290555579",
+      "englishBackTranslation": "Saved, but this phone may remove them if its storage space is small. Check the saved lessons again before leaving the signal.",
+      "confidence": "high",
+      "uncertaintyReason": "May/if, saved lessons, again and before preserved."
+    },
+    {
+      "id": "study-ui/ts/offlineLowStorage",
+      "language": "ts",
+      "target": "Riqingho leri ri sala ri nga ri na ndhawu yo enela — download yi nga ha ka yi nga ringani.",
+      "targetSha256": "3c889b6e25926646737f3f9ed530d2471cd5769c3fcdd178f6490e21fe001c10",
+      "englishBackTranslation": "This phone has insufficient space left — the download may not fit.",
+      "confidence": "high",
+      "uncertaintyReason": "Insufficient rather than merely diminishing; may-not-fit qualifier retained."
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "base": "0a6544fa701faf481f1dba9cd82b897c81552891",
+  "branch": "codex/study-deadline-phone-wrap-20261012",
+  "rootReviewRows": 66,
+  "targetAndEnglishPlaceholdersVerified": 66,
+  "semantics": {
+    "consistentInContext": 60,
+    "originalFlags": 6,
+    "exactEnglishRuntimeHold": 1,
+    "remainingFacilitatorWordingNotes": 5
+  },
+  "independentBlindCoverageNotClaimedFor66": true,
+  "sourceContextExposed": true,
+  "originalClaudeClassifierFailurePreservedNoRetry": true,
+  "fluentFarmingPronunciationShanganiApproval": false,
+  "translationsAdded": 0,
+  "fixes": [
+    "Limit deadline badge and text to card width, preserving icon size and readable font.",
+    "Wrap locked/unlocked draft-status and current-module badges without losing wording.",
+    "Display only the TS low-space warning from existing exact English authority; insufficient-space wording is withheld."
+  ],
+  "storageWarningProof": "Controlled12MiB estimate,8.5MB pack; headroom rule free<1.5*bytes can warn even where pack fits. Real component rendered canonical may-not-fit warning in simulated-offline partial state; all API/network overrides restored.",
+  "authenticatedScreenProof": "Real local Firebase Auth/Firestore emulator demo account with farmer role. Deadline today/tomorrow/in3days/2overdue/27Oct/undated; finish/submit locks; mentor override; sequential Reading unlock; all-complete capstone in zu/st/ve/ts. Fictional records are not learner fieldwork or production-account proof.",
+  "observedViewport": [
+    390,
+    844
+  ],
+  "rootActualPixelsViewed": true,
+  "sourceFiles": [
+    {
+      "path": "app/student/page.tsx",
+      "baseSha256": "80cade6be466373646766110a9d0d49767393a3cd4249216368da4f23051bf56",
+      "afterSha256": "9a6399a8ac7930a33a8b8d3617d87bed483d5e1fa30934627902842a4cefc297",
+      "qaCopyByteIdentical": true
+    },
+    {
+      "path": "components/course/OfflineDownload.tsx",
+      "baseSha256": "b5f8e1b5a6aded1ebe58cc4f92d851c60449e336bbdeee63b60008b05aff51ac",
+      "afterSha256": "755f184c90cbbe1d7b9c6537b14f6d048795c27523ca023fc2165838ff19c4d5",
+      "qaCopyByteIdentical": true
+    }
+  ],
+  "applicationLogicPreserved": [
+    "deadline calculations and counts",
+    "module/prerequisite/mentor access rules",
+    "pack sizes and download/cache/storage behavior",
+    "canonical lessons and English sources",
+    "species/numbers/quiz indices",
+    "saved geometry and PLAN_VERSION",
+    "recorded Sesotho narration and slides"
+  ],
+  "verificationPending": [
+    "original final typecheck",
+    "one original full suite",
+    "whitespace/notes",
+    "both exact-head PR and push test/rules",
+    "native preview and source identity",
+    "history merge/main/deploy/both domains/issue35"
+  ]
+}

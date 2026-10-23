@@ -1,0 +1,603 @@
+[
+ {
+  "id": "R285",
+  "back": "The pattern surrounded by dashed/cut lines (mikolo) means more was sold in that month than what was recorded as harvested, so what remained is not known — usually it is harvest that was not recorded, or sales coming from the harvest of an earlier month.",
+  "flags": [
+   "'mikolo' is unclear to me (could be lines/outlines, but may also read as ceremonies/events)",
+   "'Xivumbeko' = pattern/shape: plausible but unusual for a chart hatch"
+  ]
+ },
+ {
+  "id": "R286",
+  "back": "Records go into the month in which you recorded them; the recording forms have had no place for a date up to now.",
+  "flags": []
+ },
+ {
+  "id": "R287",
+  "back": "Record a sale or a payment, and this chart will show itself. Records of two or three months are enough to see the pattern.",
+  "flags": [
+   "'xihakelo' = payment/wage/fee, not clearly 'cost/expense'"
+  ]
+ },
+ {
+  "id": "R288",
+  "back": "Record what you harvest and what you sell, and this chart will show how much of your harvest leaves the farm and how much stays on it.",
+  "flags": []
+ },
+ {
+  "id": "R289",
+  "back": "Record the 'mikolo' of your beds in Design Studio, and plan the time, and this chart will compare the plan with what you actually harvested.",
+  "flags": [
+   "'mikolo ya mibhede' unclear (outlines/lines of beds? or dates?)",
+   "'kunguhata nguva' = plan the time: vague, no object (what is being planned?)",
+   "English 'Design Studio' left (proper name, probably fine)"
+  ]
+ },
+ {
+  "id": "R290",
+  "back": "Your crop plan has nothing in it, so there is nothing your harvest can be compared with.",
+  "flags": []
+ },
+ {
+  "id": "R291",
+  "back": "'What remained' is what you harvested minus what you sold — food eaten at home, given to others, fed to livestock, kept to be seed, or that rotted. The app cannot tell these apart, so it does not guess them.",
+  "flags": [
+   "'App' left in English (ordinary loanword)"
+  ]
+ },
+ {
+  "id": "R292",
+  "back": "Return by growing area",
+  "flags": [
+   "'Mbuyelo' = return/what comes back; could be read as returns/yield rather than sales minus costs"
+  ]
+ },
+ {
+  "id": "R293",
+  "back": "This calendar year",
+  "flags": []
+ },
+ {
+  "id": "R294",
+  "back": "This month",
+  "flags": []
+ },
+ {
+  "id": "R295",
+  "back": "This period/time",
+  "flags": [
+   "'Nguva' = time/period; fine"
+  ]
+ },
+ {
+  "id": "R296",
+  "back": "Return of your growing area",
+  "flags": [
+   "'Mbuyelo' ambiguity as above"
+  ]
+ },
+ {
+  "id": "R297",
+  "back": "Recorded sales minus the payments that were allocated, per m² of each [growing area] shown on the map. Compare one time and one place by the passing of time.",
+  "flags": [
+   "Last sentence is garbled/unclear ('hi ku famba ka nkarhi' = by the going of time)",
+   "'tihakelo' = payments, used for costs"
+  ]
+ },
+ {
+  "id": "R298",
+  "back": "All together",
+  "flags": []
+ },
+ {
+  "id": "R299",
+  "back": "{area} m² shown on the map · {n} records allocated",
+  "flags": []
+ },
+ {
+  "id": "R300",
+  "back": "Allocate sales and payments/costs so that you see the return.",
+  "flags": [
+   "'tihakelo' = payments, used for costs"
+  ]
+ },
+ {
+  "id": "R301",
+  "back": "Sales: {sales} · Payments/costs: {costs}",
+  "flags": [
+   "'tihakelo' = payments, used for costs"
+  ]
+ },
+ {
+  "id": "R302",
+  "back": "{n} records are not yet allocated: sales {sales} and payments/costs {costs}. Change the Sales or Costs record to choose its growing area.",
+  "flags": [
+   "'Cinca xitsalwa xa Ku xavisa kumbe xa Tihakelo' wording heavy but understandable"
+  ]
+ },
+ {
+  "id": "R304",
+  "back": "Money that comes in and money that goes out, month by month, from what you recorded.",
+  "flags": []
+ },
+ {
+  "id": "R305",
+  "back": "Reading your records…",
+  "flags": [
+   "'Ku hlaya' = to read/count; fine"
+  ]
+ },
+ {
+  "id": "R306",
+  "back": "No money recorded so far",
+  "flags": [
+   "Does not say whether in or out"
+  ]
+ },
+ {
+  "id": "R307",
+  "back": "Nothing recorded in these months",
+  "flags": []
+ },
+ {
+  "id": "R308",
+  "back": "Your records begin in {month}. Try a longer time above so that you reach them.",
+  "flags": []
+ },
+ {
+  "id": "R309",
+  "back": "Money coming in, {n} months",
+  "flags": []
+ },
+ {
+  "id": "R312",
+  "back": "Money you got minus what you paid, which was recorded in these months. Costs that were not recorded were not included.",
+  "flags": [
+   "'mali leyi u yi kumeke' = money you received/obtained: could be read as income, not as a net result - check against English"
+  ]
+ },
+ {
+  "id": "R314",
+  "back": "Records go into the month in which you recorded them. There is no place for a date on the recording forms so far, so if you record later, it will stay in the month in which you recorded it.",
+  "flags": []
+ },
+ {
+  "id": "R316",
+  "back": "{month} — money coming in {moneyIn}, money going out {moneyOut}",
+  "flags": []
+ },
+ {
+  "id": "R317",
+  "back": "{month}, {amount} came in",
+  "flags": []
+ },
+ {
+  "id": "R318",
+  "back": "{month}, {amount} went out",
+  "flags": []
+ },
+ {
+  "id": "R319",
+  "back": "The bars for these months are very long in this chart, cut off at the marker so that the other months can still be read: {list}.",
+  "flags": []
+ },
+ {
+  "id": "R320",
+  "back": "came in",
+  "flags": []
+ },
+ {
+  "id": "R321",
+  "back": "went out",
+  "flags": []
+ },
+ {
+  "id": "R323",
+  "back": "there is nothing recorded this month",
+  "flags": []
+ },
+ {
+  "id": "R324",
+  "back": "Movement/flow of money",
+  "flags": []
+ },
+ {
+  "id": "R325",
+  "back": "There is no growing area shown on the map so far",
+  "flags": []
+ },
+ {
+  "id": "R326",
+  "back": "Record the bed outlines (mikolo) in Design Studio and this card will show what should be harvested and how much money it comes to, by estimating.",
+  "flags": [
+   "'mikolo' unclear as above",
+   "'mali yingani' = how much money: fine"
+  ]
+ },
+ {
+  "id": "R327",
+  "back": "Open Design Studio",
+  "flags": []
+ },
+ {
+  "id": "R328",
+  "back": "Two crops are placed in one place",
+  "flags": []
+ },
+ {
+  "id": "R329",
+  "back": "{beds} — before these are sorted out, each harvest figure here will be only a guess about which crop might be lost to/for the place.",
+  "flags": [
+   "'lahlekeriwa hi ndhawu' ('lost to the place') is unclear/garbled"
+  ]
+ },
+ {
+  "id": "R330",
+  "back": "Fix in the crop production plan",
+  "flags": [
+   "'humesa' = produce/bring out"
+  ]
+ },
+ {
+  "id": "R331",
+  "back": "There is nothing to be harvested so far",
+  "flags": []
+ },
+ {
+  "id": "R332",
+  "back": "Your crop plan has nothing in it. Plan the time and this card will fill itself.",
+  "flags": [
+   "'Kunguhata nguva' again has no object"
+  ]
+ },
+ {
+  "id": "R333",
+  "back": "There is nothing in the plan that begins to be harvested in the next {n} months.",
+  "flags": []
+ },
+ {
+  "id": "R334",
+  "back": "Open the crop production plan",
+  "flags": []
+ },
+ {
+  "id": "R335",
+  "back": "Plan your crops",
+  "flags": []
+ },
+ {
+  "id": "R336",
+  "back": "What is expected to be harvested",
+  "flags": []
+ },
+ {
+  "id": "R337",
+  "back": "If it were sold",
+  "flags": []
+ },
+ {
+  "id": "R338",
+  "back": "What remained at home, at prices of the shops",
+  "flags": []
+ },
+ {
+  "id": "R339",
+  "back": "Set what you have expected with loss and selling to see how much money it comes to",
+  "flags": [
+   "'lahlekeka' = be lost; wording unusual for 'loss allowance'"
+  ]
+ },
+ {
+  "id": "R340",
+  "back": "Each figure is the whole harvest of a crop counted in the month in which harvesting begins — not what you harvest in that month. They are planning estimates, not promises.",
+  "flags": []
+ },
+ {
+  "id": "R341",
+  "back": "{n} crops",
+  "flags": []
+ },
+ {
+  "id": "R342",
+  "back": "harvesting continues up to {month}",
+  "flags": []
+ },
+ {
+  "id": "R343",
+  "back": "Harvest that is coming",
+  "flags": []
+ },
+ {
+  "id": "R344",
+  "back": "What your crop plan says should be harvested in the next {n} month.",
+  "flags": []
+ },
+ {
+  "id": "R345",
+  "back": "What your crop plan says should be harvested in the next {n} months.",
+  "flags": []
+ },
+ {
+  "id": "R346",
+  "back": "Reading your crop plan…",
+  "flags": []
+ },
+ {
+  "id": "R347",
+  "back": "Harvest charts",
+  "flags": []
+ },
+ {
+  "id": "R348",
+  "back": "Harvest & selling",
+  "flags": [
+   "~21 chars, long for a tab"
+  ]
+ },
+ {
+  "id": "R349",
+  "back": "Plan and what was done/made",
+  "flags": [
+   "'leswi endleke' = what was done/happened, not 'harvested'; ~23 chars, long for a tab"
+  ]
+ },
+ {
+  "id": "R350",
+  "back": "{n} months",
+  "flags": []
+ },
+ {
+  "id": "R351",
+  "back": "Fruits, nuts and other things that come out of the tree garden/orchard are included in these kg. Tap to show vegetable beds only.",
+  "flags": []
+ },
+ {
+  "id": "R352",
+  "back": "Only vegetable beds are counted. Tap to include fruits, nuts and all other food trees.",
+  "flags": []
+ },
+ {
+  "id": "R353",
+  "back": "Recorded production (what was produced), {n} months",
+  "flags": [
+   "'humesiweke' = produced, not 'harvested'"
+  ]
+ },
+ {
+  "id": "R354",
+  "back": "Harvested: {qty}",
+  "flags": []
+ },
+ {
+  "id": "R355",
+  "back": "Sold: {qty}",
+  "flags": []
+ },
+ {
+  "id": "R356",
+  "back": "There is no [vutika] of production that was recorded in these months. The count of eggs and packets stays in their units; the total kg and the [vutika] of what remained are not known.",
+  "flags": [
+   "'vutika' is not a word I know; meaning unclear (breakdown? total?) - possible invented/wrong word",
+   "Whole sentence cannot be read with confidence"
+  ]
+ },
+ {
+  "id": "R357",
+  "back": "See your records",
+  "flags": []
+ },
+ {
+  "id": "R358",
+  "back": "No harvest has been recorded so far",
+  "flags": []
+ },
+ {
+  "id": "R359",
+  "back": "Nothing harvested or sold in these months",
+  "flags": []
+ },
+ {
+  "id": "R360",
+  "back": "Record harvest",
+  "flags": []
+ },
+ {
+  "id": "R361",
+  "back": "Harvested (measured), {n} months",
+  "flags": []
+ },
+ {
+  "id": "R362",
+  "back": "Sold (measured)",
+  "flags": []
+ },
+ {
+  "id": "R363",
+  "back": "Measured that remained on the farm",
+  "flags": []
+ },
+ {
+  "id": "R364",
+  "back": "This chart shows only kg that were recorded. What is counted stays in its recorded units.",
+  "flags": []
+ },
+ {
+  "id": "R365",
+  "back": "And what was harvested: {qty}",
+  "flags": [
+   "Fragment starts 'Ni' (and/with) - check it reads after a figure"
+  ]
+ },
+ {
+  "id": "R366",
+  "back": "And what was sold: {qty}",
+  "flags": []
+ },
+ {
+  "id": "R367",
+  "back": "Kg harvested each month over {n} months, divided into those sold and those that stayed on the farm.",
+  "flags": []
+ },
+ {
+  "id": "R368",
+  "back": "{month} — harvested {picked}, sold {sold}",
+  "flags": []
+ },
+ {
+  "id": "R369",
+  "back": "sold (what was sold)",
+  "flags": []
+ },
+ {
+  "id": "R370",
+  "back": "more was sold than what is recorded as harvested",
+  "flags": []
+ },
+ {
+  "id": "R371",
+  "back": "what remained",
+  "flags": []
+ },
+ {
+  "id": "R372",
+  "back": "all that was harvested",
+  "flags": [
+   "'hinkwaswo' = all of them: reads as a total"
+  ]
+ },
+ {
+  "id": "R373",
+  "back": "The orchard/tree garden has been 'timiwile' (switched off?), so this card does not include {picked} harvested and {sold} sold: {names}. The rands on this page still count this selling — it is only the kg here that are not included.",
+  "flags": [
+   "'timiwile' uncertain: 'tima' normally = extinguish/switch off; unclear for 'hidden/turned off'",
+   "'Tirhandi' = rands: fine but 'papila' = paper (page?)"
+  ]
+ },
+ {
+  "id": "R374",
+  "back": "The orchard has been 'timiwile', so this card does not include {picked} harvested: {names}. The rands on this page still count this selling — it is only the kg here that are not included.",
+  "flags": [
+   "as R373; also says 'this selling' although only harvest is excluded here"
+  ]
+ },
+ {
+  "id": "R375",
+  "back": "The orchard has been 'timiwile', so this card does not include {sold} sold: {names}. The rands on this page still count this selling — it is only the kg here that are not included.",
+  "flags": [
+   "as R373"
+  ]
+ },
+ {
+  "id": "R376",
+  "back": "There is nothing that has been compared so far",
+  "flags": []
+ },
+ {
+  "id": "R377",
+  "back": "There is nothing in your plan that has a confirmed harvest figure to be compared so far — {names}.",
+  "flags": []
+ },
+ {
+  "id": "R380",
+  "back": "what was harvested that was recorded",
+  "flags": []
+ },
+ {
+  "id": "R381",
+  "back": "after the {pct}% to allow for loss that you set",
+  "flags": []
+ },
+ {
+  "id": "R382",
+  "back": "Set an allowable loss measure to be shown on these bars",
+  "flags": []
+ },
+ {
+  "id": "R385",
+  "back": "Long on these bars, cut off at the marker so that small crops can still have a bar: {list}.",
+  "flags": []
+ },
+ {
+  "id": "R386",
+  "back": "They were removed — there is no confirmed harvest figure so far: {names}.",
+  "flags": []
+ },
+ {
+  "id": "R387",
+  "back": "They were harvested but were not in the plan, so were not compared: {names}.",
+  "flags": []
+ },
+ {
+  "id": "R388",
+  "back": "of {benchmark}",
+  "flags": []
+ },
+ {
+  "id": "R389",
+  "back": "After the {pct}% to allow for loss: {kg}",
+  "flags": []
+ },
+ {
+  "id": "R390",
+  "back": "Sold {kg} — more than was recorded as harvested, so the green bar does not equal what was truly harvested.",
+  "flags": []
+ },
+ {
+  "id": "R391",
+  "back": "Harvested {kg}",
+  "flags": []
+ },
+ {
+  "id": "R392",
+  "back": "Sold {kg}",
+  "flags": []
+ },
+ {
+  "id": "R393",
+  "back": "'{label}' may be many crops — write the fullest name so it is counted under the right crop.",
+  "flags": []
+ },
+ {
+  "id": "R395",
+  "back": "Loading… (literally 'carrying')",
+  "flags": [
+   "'rhwala' = carry; unusual for loading"
+  ]
+ },
+ {
+  "id": "R396",
+  "back": "There is no crop plan so far — build one in Design & Plan so that you see the plan next to the records of the actual harvest.",
+  "flags": [
+   "'aka' = build (as a structure): odd for creating a plan"
+  ]
+ },
+ {
+  "id": "R397",
+  "back": "Another job/work that is not in your crop plan",
+  "flags": [
+   "'ntirho' = work/job, not crop/item - likely wrong word"
+  ]
+ },
+ {
+  "id": "R398",
+  "back": "Harvested {harvested} · Sold {sold}",
+  "flags": []
+ },
+ {
+  "id": "R400",
+  "back": "Harvested {harvested}, sold {sold} — what remained is {kept}: eaten at home, given to others, fed to livestock, kept to be seed, or rotted.",
+  "flags": []
+ },
+ {
+  "id": "R401",
+  "back": "Sold {sold} but only {harvested} recorded as harvested, so what remained is not known — either some harvest that was not recorded was taken, or this selling comes from an earlier harvest.",
+  "flags": [
+   "'ntsena {harvested} leyi' - 'leyi' agreement odd"
+  ]
+ },
+ {
+  "id": "R402",
+  "back": "No harvest recorded this year",
+  "flags": []
+ }
+]

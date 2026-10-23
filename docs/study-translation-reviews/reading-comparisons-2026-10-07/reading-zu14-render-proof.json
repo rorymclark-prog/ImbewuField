@@ -1,0 +1,15 @@
+{
+  "status": "Rendered and root visually inspected, not registered or released",
+  "slide": 14,
+  "dimensions": [
+    1440,
+    5482
+  ],
+  "bytes": 491432,
+  "sha256": "262d51fe8a03b5bf46355b79d95a73eb0271f225c5082fd135c903fa71ae5562",
+  "rootReviewImage": "/tmp/imbewu-reading-zu14-silent-render-20261007/review.png",
+  "noClippingObserved": true,
+  "sourcePairVisible": true,
+  "fluentApproval": false,
+  "audioBinding": "none"
+}

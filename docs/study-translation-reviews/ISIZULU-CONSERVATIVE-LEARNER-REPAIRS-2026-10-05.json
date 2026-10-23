@@ -1,0 +1,190 @@
+{
+  "title": "isiZulu conservative learner source-paired repairs",
+  "date": "2026-10-05",
+  "status": "machine draft; facilitator review pending; no fluent approval claimed",
+  "implementationBase": "ee4afe0d05acdb4f22ea0de046cb1e63d47fd79a",
+  "scope": "19 source-bound learner target operations (18 unique lesson fields) in lib/course-translation-drafts.ts, including four independently checked technical-anchor repairs. Canonical English, quiz order/correct indices, narration/audio, slide decks and the already aligned Reading L3 body remain unchanged.",
+  "independentCheck": "/tmp/imbewu-zu-conservative-learner-repair-independent-check-20261005.json (14 accepted; Water L4 KP1 repaired and separately checked at /tmp/imbewu-zu-water-l4-kp1-final-check-20261005.json); supplemental four-field semantic check: docs/study-translation-reviews/ISIZULU-SUPPLEMENTAL-TECHNICAL-REPAIRS-CHECK-2026-10-05.json",
+  "preservationProof": {
+    "path": "docs/study-translation-reviews/ISIZULU-CONSERVATIVE-LEARNER-REPAIRS-PRESERVATION-PROOF-2026-10-05.json",
+    "changedTargets": 19,
+    "allUnlistedRegistryFieldsUnchanged": true,
+    "uniqueLessonFields": 18
+  },
+  "readingBodyDisposition": "No Reading L3 body repair. The canonical body sentence is “Late blight can still spread during prolonged cool, damp weather.” Existing resolved isiZulu already expresses that spread meaning; retain it unchanged.",
+  "fields": [
+    {
+      "lessonId": "soil-health-l3",
+      "field": "body[1]",
+      "sourceEnglish": "Mulch can reduce evaporation, soften the impact of rain and suppress weeds.",
+      "previousTarget": "I-mulch inganciphisa ukuhwamuka, ithambise ukushaya kwamaconsi emvula futhi icindezele ukhula. Uma imvula ishaya i-mulch esikhundleni somhlabathi ongenalutho, ingxenye enkulu yamandla amaconsi emvula ingadamba.",
+      "finalTarget": "I-mulch inganciphisa ukuhwamuka, ithambise ukushaya kwamaconsi emvula futhi icindezele ukhula.",
+      "decision": "accepted-unreviewed",
+      "reason": "Canonical source and live resolved isiZulu match the packet. Removing the added rain-impact-energy explanation leaves only the three source-backed mulch effects. No irrigation/mulch condition is lost."
+    },
+    {
+      "lessonId": "market-community-l1",
+      "field": "body[10]",
+      "sourceEnglish": "The record also shows which months leave the household buying food.",
+      "previousTarget": "Irekhodi libuye libonise izinyanga umuzi othenga ngazo ukudla ngoba esawo siphelile.",
+      "finalTarget": "Irekhodi libuye libonise izinyanga umuzi othenga ngazo ukudla.",
+      "decision": "accepted-unreviewed",
+      "reason": "Source and live resolver match. Removing “because its own [food] ran out” removes an unsupported causal claim; the record’s month-of-buying observation remains."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[1].rationale",
+      "sourceEnglish": "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+      "previousTarget": "Ukuhamba komoya nelanga lasekuseni kungasiza amaqabunga ome. Isimo sezulu esibandayo nesinomswakama esiqhubeka isikhathi eside singayisiza i-late blight ukuba isabalale. Ukususa umbhede uwuyise kwenye indawo kukodwa akulona uhlelo oluphelele lokulawula lesi sifo.",
+      "finalTarget": "Ukuhamba komoya nelanga lasekuseni kungasiza amaqabunga ome. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+      "decision": "accepted-unreviewed",
+      "reason": "Keep the exact canonical “favoured by prolonged cool, damp weather” and incomplete-control relation after the localized airflow sentence. The separate proposed body repair was excluded; canonical body says “can still spread” and the current ZU body already preserves that meaning."
+    },
+    {
+      "lessonId": "soil-health-l3",
+      "field": "quiz[1].rationale",
+      "sourceEnglish": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.",
+      "previousTarget": "I-leachate iwuketshezi oluphuma ngokwemvelo emgqonyeni wemisundu. Ukwakheka kwalo kuyahlukahluka. Ukuluxuba namanzi akuqinisekisi ukuthi luphephile, ngakho ungalusebenzisi ezitshalweni ezidliwayo.",
+      "finalTarget": "I-leachate iwuketshezi oluphuma ngokwemvelo emgqonyeni wemisundu. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.",
+      "decision": "accepted-unreviewed",
+      "reason": "Source and live resolver match. The localized definition of naturally draining leachate remains, followed by the exact variability/no-guaranteed-safe-feed warning. This removes the unsupported dilution claim and categorical “do not use” phrasing."
+    },
+    {
+      "lessonId": "seeds-sovereignty-l2",
+      "field": "keyPoints[2]",
+      "sourceEnglish": "Tomatoes mostly self-pollinate but can cross; maize is wind-pollinated. Check crop- and variety-specific isolation guidance before saving seed",
+      "previousTarget": "Utamatisi uvame ukuzithuthela impova kodwa ungaxubana; ummbila uthola impova ethwalwa umoya. Hlola isiqondiso sesitshalo nohlobo ngaphambi kokulondoloza imbewu.",
+      "finalTarget": "Utamatisi uvame ukuzithuthela impova kodwa ungaxubana; ummbila uthola impova ethwalwa umoya. Hlola crop- and variety-specific isolation guidance ngaphambi kokulondoloza imbewu.",
+      "decision": "accepted-unreviewed",
+      "reason": "Source and live resolver match; this key point is not a quiz answer. The retained crop- and variety-specific isolation guidance keeps the full scope and before-saving order. Existing crop names and pollination claims stay unchanged."
+    },
+    {
+      "lessonId": "market-community-l2",
+      "field": "quiz[1].options[2]",
+      "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+      "previousTarget": "Ama-oda avunyelwene ngawo akunikeza ulwazi ngesidingo sangempela, ukuze uhlele ukukhiqiza esikhundleni sokutshala ungazi ukuthi kuzothengwa yini",
+      "finalTarget": "Committed subscription income ikuvumela ukuthi uhlele ukukhiqiza ngokwesidingo sangempela esikhundleni sokutshala ungazi ukuthi kuzothengwa yini",
+      "decision": "accepted-unreviewed",
+      "reason": "Source and live resolver match. This is option index 2, which remains the canonical correct answer. The English committed-subscription-income premise is exact; the localized remainder retains real-demand planning versus speculative growing. Quiz order/index are unchanged."
+    },
+    {
+      "lessonId": "intro-permaculture-l3",
+      "field": "title",
+      "sourceEnglish": "Zones and Sectors: Organising Your Farm by Energy",
+      "previousTarget": "Ama-Zone Nama-Sector: Ukuhlela Ipulazi Ngokuthi Uhamba Kangaki",
+      "finalTarget": "Ama-Zone Nama-Sector: Ukuhlela Ipulazi by Energy",
+      "decision": "accepted-unreviewed",
+      "reason": "Source and live resolver match. The title restores the canonical “by Energy” scope rather than narrowing the organizing principle to visit frequency. Formal Zone/Sector labels remain unchanged."
+    },
+    {
+      "lessonId": "intro-permaculture-l2",
+      "field": "body[2]",
+      "sourceEnglish": "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+      "previousTarget": "Khetha izimiso ezimbili noma ezintathu ezihambisana nenkinga yakho enkulu, uzisebenzise. Ezinye uzoziqonda njengoba uqhubeka.",
+      "finalTarget": "Khetha izimiso ezimbili noma ezintathu ezihambisana nenkinga yakho enkulu, apply them hard. Ezinye uzoziqonda njengoba uqhubeka.",
+      "decision": "accepted-unreviewed",
+      "reason": "Source and live resolver match. “apply them hard” restores the source emphasis missing from current target; the two-or-three count, biggest-problem condition, and next-sentence relation remain unchanged."
+    },
+    {
+      "lessonId": "small-livestock-l1",
+      "field": "body[2]",
+      "sourceEnglish": "Keep chickens away from seedlings and crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage manure safely before the next crop. Ducks scratch less, but can still damage plants and make wet ground muddy. Watch the birds and move them when needed.",
+      "previousTarget": "Gcina izinkukhu zikude nezithombo nezitshalo ezivunelwa ukudliwa. Umquba omusha ungathwala amagciwane. Buza umeluleki wezolimo ukuthi ungawuphatha kanjani ngokuphepha ngaphambi kokutshala isivuno esilandelayo. Amadada awaklwebhi kakhulu njengezinkukhu, kodwa nawo angalimaza izitshalo futhi enze umhlabathi omanzi ube nodaka. Wabheke, uwahambise uma kudingeka.",
+      "finalTarget": "Gcina izinkukhu zikude nezithombo nezitshalo ezivunelwa ukudliwa. Umquba omusha ungathwala amagciwane. Buza umeluleki wezolimo ukuthi ungawuphatha kanjani ngokuphepha before the next crop. Amadada awaklwebhi kakhulu njengezinkukhu, kodwa nawo angalimaza izitshalo futhi enze umhlabathi omanzi ube nodaka. Wabheke, uwahambise uma kudingeka.",
+      "decision": "accepted-unreviewed",
+      "reason": "Source and live resolver match. The exact adviser timing “before the next crop” replaces a narrower “before planting the next harvest.” The chicken distance, fresh-manure germ warning, ducks-scratch-less comparison, remaining damage risks, and move-when-needed instruction remain."
+    },
+    {
+      "lessonId": "small-livestock-l2",
+      "field": "body",
+      "sourceEnglish": "Honeybees and other insects carry pollen between flowers. This helps many fruit and vegetable crops, including avocado. Different crops and varieties have different pollination needs. A hive does not guarantee higher yields everywhere: weather, water, plant health and other pollinators also matter.\n\nSouth Africa has two native honeybee subspecies. The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa. These broad natural ranges are not a guide for moving bees. The Department's control measures set a demarcation line for bee movement. Check current movement rules with the Department and an experienced local beekeeper before moving bees or hives.\n\nLearn from an experienced local beekeeper before getting a hive. Keep hives away from busy paths, homes and places where children play. Morning sun can help; a safe location comes first. Provide flowering plants through the seasons and avoid exposing bees to pesticides. Active bees do not prove that the farm is free of chemicals or disease. The national honey-bee control measures require registration for defined beekeeping activities, including managed hives for bee products, queen rearing, commercial pollination, and colony removal, eradication or relocation. Check with the Department if you are unsure whether the rules apply to your activity. If a colony swarms repeatedly, ask a trained beekeeper to inspect it. Crowding is one possible cause, not a diagnosis.",
+      "previousTarget": "Izinyosi zoju nezinye izinambuzane zithwala impova phakathi kwezimbali. Lokhu kusiza izitshalo eziningi zezithelo nemifino, kuhlanganise nokwatapheya. Izitshalo nezinhlobo zazo zinezidingo ezingafani zokuthuthwa kwempova. Ukuba ne-hive akuqinisekisi ukuthi isivuno sizokwanda yonke indawo. Isimo sezulu, amanzi, impilo yezitshalo nezinye izinambuzane ezithutha impova nakho kunendima.\n\nINingizimu Afrika inezinhlobo ezimbili zezinyosi zoju zomdabu ezingaphansi kohlobo olulodwa. Inyosi yoju yaseKapa itholakala eNtshonalanga Kapa nasezingxenyeni zeMpumalanga Kapa. Inyosi yoju yase-Afrika idabuka enkabeni nasezingxenyeni eziningi zeningizimu ye-Afrika. Lezi izindawo ezibanzi ezivamile; aziyona imingcele yokuthi izinyosi zingahanjiswa kuphi. Imithetho yoMnyango ibeka umngcele olawula ukuhanjiswa kwezinyosi. Ngaphambi kokuhambisa izinyosi noma ama-hive, hlola imithetho yamanje noMnyango kanye nomfuyi wezinyosi wendawo onolwazi.\n\nNgaphambi kokuthola i-hive, funda kumfuyi wezinyosi wendawo onolwazi. Beka ama-hive kude nezindlela ezihanjwa abantu abaningi, amakhaya nezindawo ezidlalwa kuzo izingane. Ilanga lasekuseni lingasiza, kodwa indawo ephephile iza kuqala. Hlela indlela abantu nezilwane abazohamba ngayo kule ndawo.\n\nHlinzeka ngezitshalo eziqhakaza ngezikhathi ezahlukene zonyaka, futhi ugweme ukubeka izinyosi engozini yezibulala-zinambuzane. Ukubona izinyosi zisebenza akufakazeli ukuthi ipulazi alinawo amakhemikhali noma izifo. Imithetho kazwelonke yokulawula izinyosi zoju idinga ukubhalisa emisebenzini ethile yokufuya izinyosi. Lokhu kuhlanganisa ukugcina ama-hive aphethwe ukuze kukhiqizwe imikhiqizo yezinyosi, ukukhulisa izindlovukazi, ukuhambisa impova ngokohwebo, nokususa, ukuqeda noma ukuhambisa ikoloni lezinyosi. Uma ungaqiniseki ukuthi umsebenzi wakho uyathinteka yini, buza uMnyango. Uma ikoloni liphuma ngamaqoqo kaningi, cela umfuyi wezinyosi oqeqeshiwe alihlole. Ukuminyana kungenye yezimbangela ezingaba khona; akusikho ukuxilongwa.",
+      "finalTarget": "Izinyosi zoju nezinye izinambuzane zithwala impova phakathi kwezimbali. Lokhu kusiza izitshalo eziningi zezithelo nemifino, kuhlanganise nokwatapheya. Izitshalo nezinhlobo zazo zinezidingo ezingafani zokuthuthwa kwempova. Ukuba ne-hive akuqinisekisi ukuthi isivuno sizokwanda yonke indawo. Isimo sezulu, amanzi, impilo yezitshalo nezinye izinambuzane ezithutha impova nakho kunendima.\n\nINingizimu Afrika inezinhlobo ezimbili zezinyosi zoju zomdabu ezingaphansi kohlobo olulodwa. Inyosi yoju yaseKapa itholakala eNtshonalanga Kapa nasezingxenyeni zeMpumalanga Kapa. Inyosi yoju yase-Afrika idabuka enkabeni nasezingxenyeni eziningi zeningizimu ye-Afrika. Lezi izindawo ezibanzi ezivamile; aziyona imingcele yokuthi izinyosi zingahanjiswa kuphi. Imithetho yoMnyango ibeka umngcele olawula ukuhanjiswa kwezinyosi. Ngaphambi kokuhambisa izinyosi noma ama-hive, hlola imithetho yamanje noMnyango kanye nomfuyi wezinyosi wendawo onolwazi.\n\nNgaphambi kokuthola i-hive, funda kumfuyi wezinyosi wendawo onolwazi. Beka ama-hive kude nezindlela ezihanjwa abantu abaningi, amakhaya nezindawo ezidlalwa kuzo izingane. Ilanga lasekuseni lingasiza, kodwa indawo ephephile iza kuqala. Hlinzeka ngezitshalo eziqhakaza ngezikhathi ezahlukene zonyaka, futhi ugweme ukubeka izinyosi engozini yezibulala-zinambuzane. Ukubona izinyosi zisebenza akufakazeli ukuthi ipulazi alinawo amakhemikhali noma izifo. Imithetho kazwelonke yokulawula izinyosi zoju idinga ukubhalisa emisebenzini ethile yokufuya izinyosi. Lokhu kuhlanganisa ukugcina ama-hive aphethwe ukuze kukhiqizwe imikhiqizo yezinyosi, ukukhulisa izindlovukazi, ukuhambisa impova ngokohwebo, nokususa, ukuqeda noma ukuhambisa ikoloni lezinyosi. Uma ungaqiniseki ukuthi umsebenzi wakho uyathinteka yini, buza uMnyango. Uma ikoloni liphuma ngamaqoqo kaningi, cela umfuyi wezinyosi oqeqeshiwe alihlole. Ukuminyana kungenye yezimbangela ezingaba khona; akusikho ukuxilongwa.",
+      "decision": "accepted-unreviewed",
+      "reason": "Source and live resolver match. Candidate removes only an extra route-planning instruction absent from the full canonical body. All canonical paragraphs remain in order: pollen/crop scope and no-yield-guarantee; native subspecies/ranges and movement rules; hive safety; flowering plants/pesticides; registration activities; department/adviser and swarm/crowding qualifications. No species or regulatory claim is changed."
+    },
+    {
+      "lessonId": "water-harvesting-l1",
+      "field": "keyPoints[0]",
+      "sourceEnglish": "A level contour swale can hold runoff for infiltration on a suitable site; other swales need a designed grade and safe outlet",
+      "previousTarget": "I-swale elandela umugqa olinganayo ingabambezela amanzi agelezayo ukuze angene emhlabathini ofanele; amanye ama-swale adinga umthambeka olawulwayo nendawo ephephile yokuphuma.",
+      "finalTarget": "A level contour swale can hold runoff for infiltration on a suitable site; amanye ama-swale adinga a designed grade and safe outlet",
+      "decision": "accepted-unreviewed",
+      "reason": "Source and live resolver match. Exact English retains the technical level-contour/runoff/infiltration/suitable-site relation; the localized remainder retains that other swales need a designed grade and safe outlet. Source scope and order are preserved."
+    },
+    {
+      "lessonId": "water-harvesting-l1",
+      "field": "keyPoints[2]",
+      "sourceEnglish": "Assess soil, drainage, slope and storm flow before digging",
+      "previousTarget": "Ngaphambi kokumba, hlola umhlabathi, ukugeleza kwamanzi, umthambeka nokugeleza kwamanzi emvula enamandla.",
+      "finalTarget": "Ngaphambi kokumba, hlola umhlabathi, drainage, umthambeka kanye storm flow.",
+      "decision": "accepted-unreviewed",
+      "reason": "Source and live resolver match. “before digging” and the assessment action remain localized; soil, drainage, slope, and storm flow remain the exact four ordered site factors. No factor or timing is dropped."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "keyPoints[3]",
+      "sourceEnglish": "Maintain bank cover and keep trees off an earth dam wall",
+      "previousTarget": "Nakekela izitshalo ezimboze ibhange, futhi ungatshali izihlahla odongeni lwedamu lomhlabathi.",
+      "finalTarget": "Nakekela bank cover futhi keep trees off an earth dam wall.",
+      "decision": "accepted-unreviewed",
+      "reason": "Source and live resolver match; this is a key point, not an assessment answer. The exact English technical/prohibition clause preserves maintaining designed bank cover and keeping trees off the earth-dam wall. The current correct-answer index is 1 for a separate quiz item and is unaffected."
+    },
+    {
+      "lessonId": "water-harvesting-l4",
+      "field": "keyPoints[1]",
+      "sourceEnglish": "Check the source, service status, intended use and site locally before any reuse",
+      "previousTarget": "Ngaphambi kokuphinda usebenzise amanzi, hlola umthombo, izinsiza zasekhaya, ukusetshenziswa okuhlosiwe nendawo nochwepheshe bendawo.",
+      "finalTarget": "Hlola umthombo, service status, ukusetshenziswa okuhlosiwe and site locally before any reuse.",
+      "decision": "accepted-unreviewed",
+      "reason": "Final independent follow-up accepts removal of the unsupported local-expert addition while preserving source item order and the before-reuse timing."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "quiz[1].options[1]",
+      "sourceEnglish": "Maintain the designed bank cover and keep the spillway clear",
+      "previousTarget": "Nakekela izitshalo ezimboze ibhange ngokomklamo, ugcine ne-spillway ingenamfucumfucu",
+      "finalTarget": "Nakekela the designed bank cover futhi keep the spillway clear.",
+      "decision": "accepted-unreviewed",
+      "reason": "Source and live resolver match. This is option index 1 and remains the canonical correct answer. The mixed wording preserves designed bank cover and keeping the spillway clear in source order; no competing option/order/index changes."
+    }
+  ],
+  "supplementalFields": [
+    {
+      "lessonId": "water-harvesting-l1",
+      "field": "body[0]",
+      "sourceEnglish": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.",
+      "previousTarget": "Olunye uhlobo lwe-swale luwumsele osendaweni elinganayo, ulandele umugqa we-contour. Lubambezela amanzi agelezayo bese luwasabalalisa, ukuze amanye amanzi akwazi ukungena emhlabathini ofanele. Amanye ama-swale aklanywa abe nomthambeka omncane olawulwayo, ohambisa amanzi amaningi kancane aye endaweni ephephile yokuphuma. Ukuthi iyiphi indlela efanele umhlaba wakho kuncike emhlabathini, emthambekeni, ekugelezeni kwamanzi nasekugelezeni kwamanzi ezikhukhula zemvula. Ngaphambi kokumba, cela umeluleki wendawo oqeqeshiwe ahlole umugqa, indlela yokuchichima nendawo ezokwamukela amanzi.",
+      "finalTarget": "One kind of swale is a level trench on contour. Lubambezela amanzi agelezayo bese luwasabalalisa, ukuze amanye amanzi akwazi ukungena emhlabathini ofanele. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Ukuthi iyiphi indlela efanele umhlaba wakho kuncike emhlabathini, emthambekeni, drainage kanye storm flow. Ngaphambi kokumba, cela umeluleki wendawo oqeqeshiwe ahlole umugqa, overflow and receiving point.",
+      "decision": "accepted-unreviewed",
+      "reason": "Separately checked technical wording repair; source condition, order and exact held term are retained. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "field": "body[7]",
+      "sourceEnglish": "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
+      "previousTarget": "Gcina i-spillway ingenamfucumfucu, futhi unakekele izitshalo ezimboze ibhange ngendlela eshiwo emklamweni. Ungatshali izihlahla odongeni lwedamu lomhlabathi.",
+      "finalTarget": "Keep the spillway clear, futhi unakekele the bank cover specified in the design. Ungatshali izihlahla odongeni lwedamu lomhlabathi.",
+      "decision": "accepted-unreviewed",
+      "reason": "Separately checked technical wording repair; source condition, order and exact held term are retained. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "small-livestock-l2",
+      "field": "body[1].sentence[0]",
+      "sourceEnglish": "South Africa has two native honeybee subspecies.",
+      "previousTarget": "INingizimu Afrika inezinhlobo ezimbili zezinyosi zoju zomdabu ezingaphansi kohlobo olulodwa.",
+      "finalTarget": "South Africa has two native honeybee subspecies.",
+      "decision": "accepted-exact-English-technical-hold",
+      "reason": "Separately checked technical wording repair; source condition, order and exact held term are retained. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "soil-health-l3",
+      "field": "title",
+      "sourceEnglish": "Mulching and Cover Crops: Protecting and Building Soil",
+      "previousTarget": "I-Mulch Nezitshalo Zokumboza Umhlabathi: Ukuvikela Nokwakha Umhlabathi",
+      "finalTarget": "I-Mulch Nezitshalo Zokumboza Umhlabathi: Ukuvikela Umhlabathi kanye Building Soil",
+      "decision": "accepted-unreviewed",
+      "reason": "Separately checked technical wording repair; source condition, order and exact held term are retained. Facilitator review remains pending."
+    }
+  ]
+}

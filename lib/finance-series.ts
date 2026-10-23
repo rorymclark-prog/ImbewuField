@@ -1,3 +1,4 @@
+import { recordWeightKg, quantityTotals, type RecordUnit } from './farm-records';
 // The Finance screen's history, bucketed by month.
 //
 // Rory: "I want a graph option for actual production actual sales actual usage
@@ -83,6 +84,8 @@ export interface FinanceMonthPoint {
 export interface FinanceSeries {
   months: FinanceMonthPoint[];
   windowMonths: number;
+  productionQuantities: Array<{ unit: RecordUnit; quantity: number }>;
+  salesQuantities: Array<{ unit: RecordUnit; quantity: number }>;
 
   totalInZar: number;
   totalOutZar: number;
@@ -113,6 +116,9 @@ export interface FinanceSeries {
   earlierRecords: boolean;
   /** 'Mar 2026' — the first month this farmer ever recorded anything, or null. */
   firstRecordLabel: string | null;
+  /** The same month and year as numbers (month 1-12), so a screen can name the month in the farmer's language. */
+  firstRecordMonth: number | null;
+  firstRecordYear: number | null;
 }
 
 const MONTH_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -207,7 +213,7 @@ export function buildFinanceSeries(
   let excludedProducedKg = 0;
   let excludedSoldKg = 0;
   const excludedNames = new Set<string>();
-  const kgOf = (name: string, kg: number, side: 'picked' | 'sold'): number => {
+  const kgOf = (name: string, kg: number | null, side: 'picked' | 'sold'): number => {
     const value = positive(kg);
     if (countsKg(name)) return value;
     if (value > 0) {
@@ -270,7 +276,7 @@ export function buildFinanceSeries(
     sawRecord(key);
     if (!key || !inWindow.has(key)) continue;
     const b = bucket(key);
-    b.producedKg += kgOf(row.crop, row.kg, 'picked');
+    b.producedKg += kgOf(row.crop, recordWeightKg(row), 'picked');
     b.records += 1;
   }
 
@@ -280,7 +286,7 @@ export function buildFinanceSeries(
     if (!key || !inWindow.has(key)) continue;
     const b = bucket(key);
     b.moneyInSales.push(row);
-    b.soldKg += kgOf(row.crop, row.kg, 'sold');
+    b.soldKg += kgOf(row.crop, recordWeightKg(row), 'sold');
     b.records += 1;
   }
 
@@ -295,7 +301,7 @@ export function buildFinanceSeries(
   for (const line of invoiceKgLines) {
     const key = monthKeyOf(line.sold_at);
     if (!key || !inWindow.has(key)) continue;
-    bucket(key).soldKg += kgOf(line.crop, line.kg, 'sold');
+    bucket(key).soldKg += kgOf(line.crop, recordWeightKg(line), 'sold');
   }
 
   for (const row of expenseRows) {
@@ -350,6 +356,14 @@ export function buildFinanceSeries(
   return {
     months,
     windowMonths,
+    productionQuantities: quantityTotals(productionRows.filter(row => {
+      const key = monthKeyOf(row.logged_at);
+      return key !== null && inWindow.has(key) && countsKg(row.crop);
+    })),
+    salesQuantities: quantityTotals([...ledgerSales, ...invoiceKgLines].filter(row => {
+      const key = monthKeyOf(row.sold_at);
+      return key !== null && inWindow.has(key) && countsKg(row.crop);
+    })),
     totalInZar,
     totalOutZar,
     totalNetZar: totalInZar - totalOutZar,
@@ -362,6 +376,8 @@ export function buildFinanceSeries(
     hasRecords: months.some((m) => m.hasRecords),
     earlierRecords: recordedKeys.some((key) => !inWindow.has(key)),
     firstRecordLabel,
+    firstRecordMonth: earliest ? Number(earliest.slice(5, 7)) : null,
+    firstRecordYear: earliest ? Number(earliest.slice(0, 4)) : null,
     excludedProducedKg,
     excludedSoldKg,
     // Sorted so the card's wording does not reshuffle every time a row is logged.

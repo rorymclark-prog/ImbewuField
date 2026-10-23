@@ -1,379 +1,238 @@
 # Sisiteme dza zwifuwo
 
-## Ndi ngani zwipuka zwi tshi fanela kha permaculture
+Zwifuwo zwi vala mutevhe. Khuhu i shandukisa makwati a khishini a vha makumba na manyaga. Nguluvhe i shandukisa mitshelo yo wa ya vha nama na ndima yo kunakiswaho. Ṋotshi i shandukisa maluvha a re tsini na lufhenḓe lwaṋu a vha ṋotshi dza u ḽiwa na khaṋo khulwane ya phuri.
 
-Bulasi nnzhi na mimuḓi minzhi zwi fuwa zwiṅwe zwipuka. Musi zwo pulaniwa zwavhuḓi nahone zwi tshi ṱhogomelwa zwavhuḓi, zwipuka ndi miraḓo ya ndeme ya bulasi ya **permaculture** (vhulimi ha tshoṱhe vhu tevhelaho mupo). Zwi thusa u ita uri bulasi i vhe sisiteme yo fhelelaho, yo linganaho.
+Zwifuwo zwi sa ṱhogomelwi zwavhuḓi ndi mushumo na vhuvhilaelo. Zwi tshi ṱhogomelwa zwavhuḓi, zwi ni itela vhunzhi ha mushumo. Phambano i kha pulane: hune tshifuwo tsha dzula hone, zwine tsha ḽa, na uri ndi maitele afhio a tshone a mupo e na a ṋea mushumo.
 
-Zwipuka, zwa ḓaka na zwifuwo, zwi ṋea zwivhuya zwinzhi:
+**Musi ni tshi fhedza ino ndima ni ḓo kona u:**
 
-- **Manyaga.** Manyaga a zwipuka ndi manyoro o nonaho. Manyaga a khuhu ndi aṅwe a manyaga a re na naiṱirodzheni (nitrogen) nnzhi vhukuma.
-- **Mushumo muṱuku kha vhathu.** Zwipuka zwi nga ita mishumo ine vhathu vha vha vha tshi ḓo i ita nga zwanḓa.
-- **U lugiselela mavu.** Nguluvhe dzi gwa na u pendukisa mavu nga ningo dzadzo.
-- **U langa zwimela.** Zwipuka zwi fulaho zwi ita uri hatsi na zwimela zwi sa ṱoḓei zwi dzule zwi zwipfufhi.
-- **U lugisa mavu o tshinyalaho.** Zwipuka zwi ṱhogomelwaho zwavhuḓi zwi nga thusa u vhuedzedza mavu o tshinyalaho kha vhuimo havhuḓi.
-- **Zwibveledzwa.** Nama, makumba, mafhi, wulu (wool), vhoya ha zwiṋoni (feathers) na ṋotshi (honey).
-- **Tshumelo dza mupo (ecosystem services).** Ṋotshi dzi phaḓaladza mupfumbu wa maluvha a zwiliṅwa (pollination); madada na khuhu zwi ḽa zwikukumi.
-- **U shumisa hafhu malaṱwa.** Zwipuka zwi shandukisa zwiḽiwa zwo salaho khishini na mitshelo yo tshinyalaho zwa vha manyaga. Nguluvhe dzi dzheniswaho ngade ya miri ya mitshelo lwa tshifhinga tshipfufhi dzi kunakisa mitshelo yo waho.
-- **U fhaṱa mavu.** Zwipuka zwi vhuisa zwiḽiwa zwa zwimela mavuni nahone zwi fhedzisa mutevhe wa zwiḽiwa zwa zwimela (nutrient cycle).
-- **Manyoro a maḓi.** **Dzi-worm farm** (mabodo a zwivhungu) dzi bveledza **worm tea** (maḓi a zwivhungu o ḓalaho zwiḽiwa zwa zwimela).
-- **U tshinya mutevhe wa zwikukumi.** Khuhu dzi tevhelaho kholomo dzi kwenya (scratch) vhulongo nahone dzi ḽa zwivhungu zwa nzhinzhi (fly larvae).
-- **U kokodza na u hwala.** Mbongola, mabere na kholomo dza u lima (oxen) zwi kokodza migomo na ngoloi.
-- **Tsireledzo.** Mmbwa, na dzigusi (geese), dzi ni sevhedza musi hu tshi ḓa vhathu vha sa ḓivhei.
-- **Vhukonani.** Zwipuka zwinzhi ndi vhakonani vhavhuḓi (zwivhungu zwone, khamusi, a zwi ngo ralo nga maanḓa).
+- Vhala ṱhoḓea, zwibveledzwa na maitele a tshifuwo, na u tshi vhea hune zwa ita mushumo u shumaho
+- Fhaṱa na u pfukisa animal tractor ya khuhu kana nguluvhe
+- Ṋea zwiḽiwa, vhudzulo na tsireledzo kha tshigwada tshiṱuku tsha khuhu, na u thivhela vhulwadze ha Newcastle
+- Fuwa nguluvhe na dada hune dza thusa bulasi nahone dzi sa kone u i tshinyadza
+- Vhea nnḓu ya ṋotshi fhethu ho tsireledzeaho na u ita mavu aṋu hayani havhuḓi ha ṋotshi
 
-## Vheani zwipuka hune zwa ni shumela
+## Vhewani zwifuwo hune zwa ni shumela hone
 
-Sa zwimela, ri vhea zwipuka fhethu hune zwa leluwa u ṱhogomelwa, hune zwibveledzwa zwazwo zwa leluwa u kuvhanganywa, na hune maitele azwo a mupo a nga ri shumela.
+Mbudzi i ḽa maṱari a miri. Nguluvhe i a gwa. Khuhu i kwenya ya ḽa zwivhungu zwoṱhe zwine ya zwi wana. Arali zwi tshi litshelwa zwoṱhe, aya maitele a ḓisa tshinyalelo. Arali a pulanelwa, a ni vhulungela maḓuvha a mushumo.
 
-Kha permaculture ri ita izwi nga u sedza **ṱhoḓea** dza tshipuka tshiṅwe na tshiṅwe (zwine tsha fanela u vha nazwo: zwiḽiwa, maḓi, fhethu ha u ḓitsireledza, fhethu ha u tshimbila, vhakonani), **zwibveledzwa** zwatsho (zwine tsha ṋea: makumba, manyaga, nama, mufhiso) na **maitele** atsho (zwine tsha ita nga mupo: u kwenya, u gwa, u fula, u ḽa zwikukumi). Nga murahu ri zwi ṱumanya na zwiṅwe zwipiḓa zwa bulasi. Sa tsumbo, ṱhoḓea ya khuhu ya zwiḽiwa na mukhwa wayo wa u kwenya zwi nga ṱumanywa na ndima ine ya ṱoḓa u bviswa zwimela zwi sa ṱoḓei na zwikukumi.
+Zwifuwo zwo vhewaho zwavhuḓi zwi ṋea manyaga, mavu o gwiwaho, mahatsi mapfufhi, zwikukumi zwiṱuku, na nama, makumba, mafhi, wulu na ṋotshi dza u ḽiwa. Mbongola na kholomo dza u lima dzi kokodza migomo, nahone mmbwa, na maseṱhe, zwi ni sevhedza musi hu tshi ḓa vhaeni.
 
-Tshipuka tshiṅwe na tshiṅwe, u katela na vhathu, tshi kwama zwi tshi tshi mona. Ri nga shumisa maitele a mupo a zwipuka u tshinya mutevhe wa zwikukumi, u lugiselela mavu na u ita uri hatsi hu dzule hu hupfufhi.
+U vhea tshifuwo fhethu ho teaho, sedzani zwithu zwiraru:
 
-Khethani tshaka dza zwipuka zwi tendelanaho na mutsho waṋu na ṱhoḓea dzaṋu. Samusi mutsho u tshi khou konḓa u humbulelwa, ndi vhuṱali u takalela zwipuka zwi konḓelelaho zwiimo zwo fhambanaho.
+1. **Ṱhoḓea**: zwine tsha fanela u vha nazwo. Zwiḽiwa, maḓi, vhudzulo, tshikhala, vhukonani.
+2. **Zwibveledzwa**: zwine tsha ṋea. Makumba, nama, manyaga, vhoya ha zwiṋoni, mufhiso.
+3. **Maitele**: zwine tsha zwi ita nga mupo. U kwenya, u gwa, u fula, u ṱoḓa zwikukumi.
+
+Nga murahu ṱumanyani tshiṅwe na tshiṅwe tsha izwi na tshiṅwe tshipiḓa tsha bulasi. Khuhu i ṱoḓa zwiḽiwa nahone i funa u kwenya. Ndima nga murahu ha khaṋo i ṱoḓa u kunakiswa zwimela zwi sa ṱoḓei na zwikukumi. Vhewani zwoṱhe zwivhili khathihi, ṱhoḓea dzoṱhe dzi ḓo swikelwa.
+
+Samusi mutsho u tshi khou konḓa u lavhelelwa, nangani tshaka dzo khwaṱhaho dzi konḓelelaho mufhiso, mahalwa na gomelelo.
 
 ## Dzi-animal tractor
 
-**Animal tractor** (danga ḽi pfukiswaho) ndi danga ḽine ḽa pfukiswa, kana fhethu hu re na lufhenḓe hu pfukiswaho, hune zwipuka sa khuhu, madada, dzituruki (turkeys), dzigusi (geese), nguluvhe kana mbudzi zwa ita mushumo wa ndeme. Zwi ṋea manyaga, zwi kwenya, zwi fula na u gwa sa zwine zwa ita nga mupo, nahone nga u ralo zwi kunakisa, zwi lugiselela na u ṱhogomela zwipiḓa zwa bulasi. Musi fhethu huthihi ho no fhela, ni pfukisela danga fhethu hu tevhelaho.
+**Animal tractor** (danga ḽi pfukiswaho) ndi danga ḽine ḽa pfukiswa: zwifuwo zwi shuma tshipiḓa tshithihi tsha mavu, nga murahu na pfukisela danga kha tshi tevhelaho. Khuhu, dada, maseṱhe, nguluvhe na mbudzi zwoṱhe zwi shuma nga yeneyi nḓila. Zwi ṋea manyaga, zwa kwenya, zwa fula nahone zwa gwa sa zwine zwa zwi ita, fhedzi zwino zwi itea hune na zwi ṱoḓa hone: kha ndima ya ngade vhukati ha zwiliṅwa, fhasi ha miri ya mitshelo, kha madambaya o netaho, kha mavu o aluwaho mahatsi, kana kha fhasi ha tshidziva tshiswa, tshine nguluvhe dza tshi gwa na u tshi khwaṱhisa.
 
-Dzi-animal tractor dzi dovha dza vha dzavhuḓi kha zwipuka. Dzi zwi tsireledza kha **dzi-predator** (zwipuka zwi ḽaho zwiṅwe), dzi zwi ṋea zwiḽiwa zwo fhambanaho, mavu maswa na tshikhala tsha u tshila nga mupo.
+Animal tractor yo valwaho ndi furemu ya mapulanga kana matanda yo fukedzwaho nga neṱe ya waya, yo fulelwa kha thungo nthihi u itela murunzi na mvula, i si na vhulemu lune vhathu vhavhili vha nga i kokodza. Animal tractor yo vulwaho ndi tshitendeledzi tsha neṱe ya muḓagasi i pfukiswaho, i ṋewaho maanḓa nga tshiṋea-maanḓa tshiṱuku tsha ḓuvha.
 
-Mishumo yawo i katela:
+1. Vhewani animal tractor kha tshipiḓa tshine na ṱoḓa tshi tshi shumiwa.
+2. Litshani zwifuwo u swikela mavu o kwenywa nahone o ṋewa manyaga, fhedzi a sa athu u vha a si na tshithu nahone o tikanywa nga u tambalelwa. Kha khuhu dzi si nngana kha ndima ya ngade, kanzhi ndi maḓuvha mashoni.
+3. Pfukiselani animal tractor kha tshipiḓa tshi tevhelaho.
+4. Ṱavhani kha tshipiḓa tsho shumiwaho, kana ni litshe mahatsi atsho a vusuluwe.
 
-- u kunakisa na u ṋea manyaga ndima vhukati ha zwiliṅwa
-- u kunakisa fhasi ha miri ya mitshelo
-- u khwinifhadza madambaya
-- u lugiselela fhethu ha tshidziva (nguluvhe dzi gwa nahone dzi tikisa mavu)
-- u kunakisa mavu o ḓalaho zwimela zwo aluwaho nga maanḓa
-
-Animal tractor i nga vha furemu yo valwaho i leluwaho yo fukedzwaho nga neṱe ya tshiṱei (wire mesh), yo fhaṱwaho nga zwishumiswa zwa vhengele ḽa hardware. I nga dovha ya vha yo vulea, hu tshi shumiswa lufhenḓe lwa muḓagasi lu pfukiswaho.
-
-Dzi-animal tractor dzo fhambanaho dzi shuma zwavhuḓi dzi tshi tevhekana. Sa tsumbo, pfukiselani khuhu fhethu nga murahu ha nguluvhe, mbudzi kana kholomo: khuhu dzi kwenya manyaga dza a dzhenisa mavuni nahone dzi ḽa zwivhungu zwa nzhinzhi.
+Tevhelisani nguluvhe, mbudzi kana kholomo nga khuhu: dzi phaḓaladza manyaga, dza a kwenyela mavuni nahone dza ḽa zwivhungu zwa nzhinzhi.
 
 ## Khuhu
 
-Khuhu khamusi ndi zwone zwipuka zwa ndeme vhukuma kha **Zone** 1 na 2 (zwipiḓa zwa bulasi zwine na zwi dalela lunzhi). Dzi zwiṱuku, a dzi tshinyi mavu nga maanḓa nahone kanzhi ndi zwone zwipuka zwa u thoma zwine muṱa wa zwi fuwa. Dzi ṋea nama, makumba, vhoya ha zwiṋoni, u lwisana na zwikukumi na u thusa u kunakisa mavu. Manyaga adzo ndi aṅwe a manyaga o nonaho vhukuma a bulasi.
+Kanzhi khuhu ndi zwifuwo zwa u thoma zwa muṱa. Dzi ṱhukhu, a dzi ḓuri nahone a dzi tshinyadzi mavu, nahone dzi ṋea makumba, nama, vhoya ha zwiṋoni, u langa zwikukumi, mavu o kunakiswaho na maṅwe a manyaga o nonesaho kha bulasi. Dzi fanela u vha kha **Zone** (tshipiḓa tsha bulasi tsho kovhiwaho nga u ya nga uri ni tshi dalela lunzhi hani) ya 1 na 2, zwipiḓa zwi re tsini na nnḓu zwine na zwi dalela ḓuvha ḽiṅwe na ḽiṅwe.
 
-### U ḽisa khuhu
+### U ṋea khuhu zwiḽiwa
 
-Khuhu ndi **zwipuka zwi ḽaho zwimela na nama (omnivores)**: dzi ḽa zwiḽiwa zwa zwimela na zwa zwipuka. Zwiḽiwa zwi re na mutakalo zwi katela:
+Khuhu ndi **omnivore**: dzi ḽa zwimela na zwipuka. Khuhu i ikhelaho i ṱoḓa:
 
-- **Phirotheini (protein)**, u bva kha zwikukumi, zwivhungu na **dzi-legume** (zwimela zwa lushaka lwa nawa) sa nawa (dzo bikwaho) na mbeu dza pigeon pea
-- **Maanḓa**, u bva kha thoro sa mavhele, mabele, goroi na bali (barley)
-- **Zwimela zwitala**, u bva kha hatsi, zwimela zwi sa ṱoḓei na zwiṅwe zwimela
-- **Khalisiamu (calcium)** u itela makwati a makumba o khwaṱhaho, u bva kha makwati a oyster o pwashiwaho, zwiṱukana zwa limestone kana makwati a makumba o omiswaho a pwashiwa
-- **Matombo maṱuku (grit)**, matombo maṱuku o khwaṱhaho kana muṱavha wa zwiṱukana zwihulwane, ane khuhu dza a vhea kha tshiṱumbu (gizzard) u itela u sila zwiḽiwa zwadzo
-- **Vhithamini (vitamins)**, nga maanḓa vhithamini A (u bva kha maṱari matala na mavhele a yelo) na vhithamini D (u bva kha ḓuvha)
+- **Phurotheini**, u bva kha zwikukumi, zwivhungu, nawa dzo bikwaho na mbeu ya pigeon pea
+- **Maanḓa**, u bva kha thoro i ngaho mavhele, mafhi na goroi
+- **Zwitala**, u bva kha mahatsi, zwimela zwi sa ṱoḓei na malaṱwa a ngade
+- **Khalisiamu** ya makwati a khwaṱhaho, u bva kha makwati a oyster o kwashiwaho, matombo a limestone o ṱhukhuwaho kana makwati a makumba o omiswaho, o kwashiwaho
+- **Mateya** (grit), matombo maṱuku a khwaṱhaho kana muṱavha u sa ṱhukhuwi une ya u vhulunga kha tshihwifhi tshayo u ṱhukhula zwiḽiwa
+- **Vhithamini**, nga maanḓa A u bva kha maṱari matala na mavhele a mavhala a tshiṱaḓa, na D u bva kha tshedza tsha ḓuvha
 - **Maḓi o kunaho** tshifhinga tshoṱhe
 
-Khuhu i ikhelaho i ḽa zwiḽiwa zwa 110–140 g nga ḓuvha nahone i nwa maḓi a lemelaho kavhili ha zwenezwo, na u fhira arali hu tshi fhisa.
+Khuhu i ikhelaho i ḽa zwiḽiwa zwa hu ḓo nga 110 u swika 140 g nga ḓuvha nahone i nwa maḓi a lemaho hu ḓo nga kavhili ha zwenezwo, manzhi nga maḓuvha a mufhiso.
 
-**Zwiḽiwa zwo rengwaho.** Saga ḽa zwiḽiwa zwa khuhu dzi ikhelaho kana zwa u hulisa (layer / grower feed) ḽi na zwiḽiwa zwo linganaho nahone ḽi a leluwa, fhedzi ḽi ṱoḓa tshelede. Mavhele na soya zwinzhi zwi limiwaho Afrika Tshipembe zwo shandukiswa dzhenetiki (genetically modified, GM), nahone zwiḽiwa zwo rengwaho kanzhi zwi na zwoṱhe. Vhaṅwe vhalimi vha permaculture vha khetha u sa shumisa zwiḽiwa zwa GM.
+Zwiḽiwa zwa khuhu zwi ikhelaho zwi rengiwaho zwo linganyiswa, fhedzi zwi ḓura tshelede. Vhunzhi ha mavhele a Afrika Tshipembe na hu ḓo nga soya yoṱhe zwo shandukiswa nga zwa genetiki (GM), nahone zwiḽiwa zwi rengiwaho kanzhi zwi na zwoṱhe, ngauralo vhaṅwe vhalimi vha permaculture vha nanga u lima zwavho. Zwiḽiwa zwi limiwaho hayani zwi kha ḓi fanela u linganyiswa: khuhu dzi ṋewaho thoro fhedzi dzi ikhela makumba maṱuku. Arali u ikhela hu tshi fhungudzea, engedzani phurotheini kana zwiṅwe zwiḽiwa zwi rengiwaho zwa khuhu dzi ikhelaho.
 
-**Zwiḽiwa zwo limiwaho hayani.** Ni nga fhungudza masheleni a zwiḽiwa nga **dzi-chicken tractor** (madanga a khuhu a pfukiswaho), nga fhethu hu re na lufhenḓe hu reidzanaho (rotating yards) na nga u lima tshipiḓa tsha zwiḽiwa zwadzo. Khuhu dzi sa valelwi (free-range) dzi ḽaho zwimela zwitala na zwikukumi zwinzhi kanzhi dzi ikhela makumba ane tshipiḓa tshawo tsha vhukati (yolk) tsha vha tsha muvhala wa yelo o dzikaho kana wa orenzhi. Zwiḽiwa zwo limiwaho hayani zwi kha ḓi fanela u linganela: khuhu dzi ḽiswaho thoro fhedzi dzi ḓo ikhela makumba a si manzhi. Arali makumba a tshi fhungudzea, engedzani tshiko tsha phirotheini kana zwiḽiwa zwiṅwe zwo rengwaho zwa khuhu dzi ikhelaho.
+Zwiḽiwa zwa mahala zwi hoṱhe kha bulasi: zwo salaho khishini na vhurotho ho ṱahalaho; khumba na zwivhungu; maṱari o ḓalaho zwikukumi zwiṱuku zwi mamaho maṱari (aphids); maṱari o kuvhanganywaho o ḓalaho zwikukumi na mbeu; nnḓa ha mulundu wa **compost** (malaṱwa a zwimela na zwipuka o vholaho a nontshisaho mavu), hune zwo salaho zwa khou vhola; vhulongo ho ḓalaho zwivhungu; na ṱhoho dza sonobolomo, dzo fhaṱiwaho dzo vhibva uri zwiṋoni zwi dzi phuphe.
 
-### Zwiḽiwa zwa mahala bulasini
+> **Tsevhedzo:** Omisani ni kwashe makwati a makumba phanḓa ha u a vhuisa kha khuhu. Khuhu dzi ḓivhaho kwati ḽoṱhe dzi nga thoma u ḽa makumba adzo.
 
-- Zwiḽiwa zwo salaho khishini: makwati a miroho, vhurotho ho omaho na thoro ya kale
-- Zwikukumi zwa ngade: khumba (slugs, snails), zwivhungu zwihulwane (grubs) na maṱari o fukwaho nga zwikukumi zwiṱuku zwi mamaho maṱari (aphids)
-- **Mulch** (tshifukedzi tsha mavu): hatsi ho remiwaho kana maṱari o kuvhanganywaho nga reike zwi na zwikukumi zwiṱuku na mbeu dza zwimela zwi sa ṱoḓei
-- Mulundu wa **compost** (manyoro a zwithu zwo vholaho) (dzi tendeleni dzi kwenye nnḓa hawo)
-- Zwimela zwitala zwa madambaya na zwimela zwi sa ṱoḓei
-- Sanifulawa (sunflowers) dzo ṱavhiwaho kha magumo a tsimu; fhelekedzani ṱhoho dzo vibvaho uri zwiṋoni zwi ḽe mbeu
-- Zwikukumi zwi re kha vhulongo ha kholomo na zwiṅwe zwipuka zwihulwane
+Dzi ṋeeni fhethu ho tsireledzeaho ha mavu o omaho, o vhofholowaho, muṱavha kana mulora wa khuni u itela **u ḓiṱamba nga mavu** (dust bath). U ḓikhukhunya khao zwi ita uri vhoya hadzo vhu dzule vhu tshi kuna.
 
-> **Tsevhedzo:** Omisani ni pwashe makwati a makumba musi ni sa athu a vhuedzedza kha khuhu. Arali dza ḓivha makwati o fhelelaho sa makumba, dzi nga thoma u ḽa makumba adzo.
+### Vhudzulo, maḓi na dzi-predator
 
-Khuhu dzi funa **u ḓiṱamba nga mavu (dust bath)**: fhethu ho omaho ha mavu o vhofholowaho, muṱavha kana mulora wa khuni hune dza ḓipendula-pendula u itela u kunakisa vhoya hadzo. Dzi ṋeeni fhethu ho tsireledzeaho ha izwi.
+Ṋowa, dzi-mongoose, dzi-genet, dzikatsi dza ḓaka, mmbwa, mbevha khulwane na zwiṋoni zwi ḽaho zwiṅwe zwoṱhe zwi dzhia khuhu. Mahayani, nnḓu yavhuḓi ndi vhunzhi ha u kunda.
 
-### Maḓi
+1. **Tshikhala.** Ṋeani zwiṋoni zwi 3 u swika 4 kha mitha ya tshikwea ya fhasi. Zwiṋoni zwo ṱanganaho zwi a lwa, zwa lwala nahone zwa ikhela zwiṱuku.
+2. **Mitanda ya u lala.** Khuhu dzi lala nṱha, sa muri. Ṋeani tshiṋoni tshiṅwe na tshiṅwe 15 u swika 20 cm ya lutanda, yoṱhe i kha vhuimo vhuthihi, kana dzi ḓo lwela lwa nṱha. Vhewani mitanda ya u lala nṱha ha mabokisi a u ikhela.
+3. **Mabokisi a u ikhela.** Hu ḓo nga 30 cm nga vhuphara, vhudzivha na vhulapfu, ḽithihi kha khuhu iṋa kana ṱhanu. Mabokisi a kale a mitshelo a a shuma. A fukedzeni nga mahatsi o omaho kana zwiṱukana zwa mapulanga.
+4. **Muya.** Litshani muya u tshi pfuka nnḓu, hu si na muya u rotholaho u vhuvhelaho zwiṋoni nga vhusiku.
+5. **Neṱe.** Shumisani neṱe ya waya yo khwaṱhaho i re na maburanngo maṱuku. I vhulungeni mavuni, kana ni i kotamisele nnḓa kha mavu, uri hu si vhe na tshithu tshi gwaho tshi tshi dzhena nga fhasi.
+6. **Vhusiku.** Valelani zwiṋoni vhusiku vhuṅwe na vhuṅwe. Vhewani mafuvhu kha fhethu ho fukedzwaho.
+7. **Maḓi.** Bodelo ḽa zwinwiwa ḽo dzhenisa ṱhoho fhasi ḽo imiswaho kha ndilo ḽi si na vhudzivha ḽi ita tshinwiselo tshi leluwaho. Ḽi vheeni murunzini nahone ni ḽi ṱanzwe kanzhi.
 
-Khuhu dzi fanela u dzula dzi na maḓi o kunaho, maswa, nga maanḓa vhana vha khuhu (chicks). Zwinwelo (drinkers) zwi dzhenaho maḓi a eḓanaho ḓuvha kana u fhira zwi fhungudza mushumo. Ni nga ita tshinwelo tshi leluwaho nga bodelo ḽa plastiki ḽa zwinwiwa (cold-drink) ḽo pendulwaho ḽa imiswa kha ndilo i si na vhudzivha. Vheani zwinwelo murunzini nahone ni zwi kunakise kanzhi.
-
-### Nnḓu ya khuhu
-
-Khuhu dzi ṱoḓa nnḓu yo tsireledzeaho nga vhusiku.
-
-- **Fhethu:** ṋeani tshiṋoni tshiṅwe na tshiṅwe fhethu ha fhasi ha 0.25–0.33 m² nga ngomu ha nnḓu (zwiṋoni 3–4 nga mithara ya skwea). Khuhu dzo tsitsikanaho dzi a lwa, dzi a lwala nahone dzi ikhela makumba a si manzhi.
-- **Lutanda lwa u lala (roosts, perches):** khuhu dzi funa u lala nṱha, sa kha ḽiṱavhi ḽa muri. Ṋeani tshiṋoni tshiṅwe na tshiṅwe 15–20 cm ya lutanda. Vheani matanda oṱhe **vhuimoni vhuthihi**, arali zwi si nga u ralo, zwiṋoni zwi ḓo lwela lwa nṱha-nṱha. Vheani matanda nṱha ha mabokisi a u ikhela.
-- **Mabokisi a u ikhela (nest boxes):** khuhu dzi ikhelaho dzi ṱoḓa bokisi ḽa u ikhela ḽi re na mulalo, ḽi re na swiswi. Itani uri bokisi ḽiṅwe na ḽiṅwe ḽi vhe na vhuphara ha 30 cm, vhudzivha ha 30 cm na vhulapfu ha 30 cm, nahone ni ṋee bokisi ḽithihi kha khuhu iṅwe na iṅwe nṋa kana ṱhanu. Mabokisi a kale a mapulanga a mitshelo a shuma zwavhuḓi, kana ni a fhaṱe nga mapulanga. A adzeni hatsi ho kunaho ho omaho, mahatsi o omaho kana zwiṱukana zwa mapulanga (wood shavings).
-- **Muya:** muya u fanela u dzhena u tshi bva nnḓuni, fhedzi hu si na muya u rothaho u vhuvhelaho zwiṋoni nga vhusiku.
-
-### Dzi-predator dza khuhu
-
-Mahayani, dzi-predator kanzhi ndi thaidzo khulwane. Ṋowa, mongoose, genet, kaṱe dza ḓaka (wild cats), mmbwa, mbevha na zwiṋoni zwi ḽaho zwiṅwe (birds of prey) zwoṱhe zwi dzhia khuhu na vhana vha khuhu.
-
-- Valelani khuhu kha nnḓu yo tsireledzeaho ine zwipuka zwa sa kone u dzhena khayo vhusiku vhuṅwe na vhuṅwe.
-- Shumisani neṱe ya tshiṱei yo khwaṱhaho i re na maburo maṱuku, ni i vhulunge fhasi kana ni i ṱanḓavhudze nnḓa fhasi uri zwipuka zwi sa kone u gwa zwa dzhena nga fhasi.
-- Tsireledzani vhana vha khuhu kha fhethu ho fukedzwaho hune dza tshimbila hone (covered run).
-
-Zwi nga dzhia tshifhinga na u xelelwa nga khuhu dzi si gathi uri ni fhaṱe nnḓu ya khuhu kana animal tractor yo teaho. Sedzani pulane dzine vhaṅwe vhalimi vha henefho vha dzi shumisa zwavhuḓi.
-
-### U reidzanya khuhu ngadeni
-
-Khuhu dzi a thusa ngadeni, fhedzi dzi dovha dza kwenya zwimela zwiṱuku na mulch. Dzi pfukiseni nga u reidzana: tendelani tshigwada tshi shume kha ndima lwa tshifhinga tsho vhewaho (sa tsumbo nga murahu ha u kaṋa), nga murahu ni dzi vhuise kha u sa valelwa kana kha fhethu hadzo hu re na lufhenḓe u swikela ndima i tevhelaho yo lugela.
-
-> **Ḓivhani:** Kha bulasi khulwane dza u rengisa, khuhu kanzhi dzi ṱhahelwa mafhelo a milomo yadzo u fhungudza u lwa. Permaculture i lavhelesa u thivhela u lwa, nga u ṋea zwiṋoni fhethu ho eḓanaho, zwiḽiwa zwo fhambanaho na vhutshilo ha mupo.
+Khuhu dzi dovha dza kwenya zwimela zwiṱuku na **mulch** (mahatsi o omaho na maṱari zwi fukedzaho na u tsireledza mavu), ngauralo dzi pfukiseni: ndima nga murahu ha khaṋo, nga murahu dzi vhuyelele kha danga ḽadzo u swikela ndima i tevhelaho yo lugela.
 
 ### Khuhu dzifhio?
 
-Khethani lushaka lu ni ṋeaho zwine na zwi ṱoḓa: makumba, nama, kana zwoṱhe.
+**Tshaka dza henefho** dzo fuwiwa kha Tshipembe tsha Afrika mirafho na mirafho. Dzo khwaṱha, dzi ṱoḓa zwiḽiwa zwavhuḓi nahone ndi vhomme vhavhuḓi, fhedzi dzi aluwa zwiṱuku-zwiṱuku nahone dzi ikhela zwiṱuku u fhira zwiṋoni zwa vhubindudzi. Tshaka dza Afrika Tshipembe dzi ḓivhiwaho ndi **Potchefstroom Koekoek**, **Venda**, **Ovambo**, **Naked Neck** na **Boschveld**, lushaka luswa lwo bveledzwaho ngei Limpopo u bva kha khuhu dza Venda, Matabele na Ovambo.
 
-**Tshaka dza sialala na dza henefho** dzo fuwiwa Tshipembe tsha Afrika lwa mirafho minzhi. Dzi a konḓelela, dzi tendelana na zwiimo zwa henefho, dzi a kona u ḓiṱoḓela zwiḽiwa nahone ndi vhomme vhavhuḓi. Dzi aluwa zwiṱuku-zwiṱuku nahone kanzhi dzi ikhela makumba a si manzhi u fhira khuhu dza haibiridi dza u rengisa. Tshaka dza Afrika Tshipembe dzi ḓivheaho dzi katela:
+Kha ndingo dza ARC dzo vhaho na zwiḽiwa na vhudzulo zwavhuḓi, idzi tshaka dzo thoma u ikhela dzi na vhege dza hu ḓo nga 24 u swika 26. Khuhu dza Koekoek dzo ikhela makumba a hu ḓo nga 196 nga ṅwaha, Venda hu ḓo nga 154, Naked Neck hu ḓo nga 139 na Ovambo hu ḓo nga 126. Khuhu ya mahayani ine ya ḓiṱoḓela zwiḽiwa zwayo zwoṱhe i ikhela zwiṱuku vhukuma, kanzhi lwa luraru lwa makumba a hu ḓo nga 10 nga ṅwaha, ngauri i litsha u ikhela uri i fukumele na u aluwisa mafuvhu ayo.
 
-- **Potchefstroom Koekoek**
-- **Venda**
-- **Ovambo**
-- **Naked Neck** (khuhu ya mulala u si na vhoya)
-- **Boschveld**, lushaka luswa lwo bveledzwaho Limpopo u bva kha khuhu dza Venda, Matabele na Ovambo
+**Tshaka dza vhubindudzi dzo ṱanganyiswaho** (commercial hybrids), **dza u ikhela** (layers) makumba na **dza nama** (broilers), dzi bveledza zwinzhi fhedzi dzi ṱoḓa zwiḽiwa na u ṱhogomelwa zwavhuḓi, nahone a dzo ngo khwaṱha musi dzi sa valelwi.
 
-Musi dzi tshi ḽiswa zwavhuḓi nahone dzi na nnḓu yavhuḓi kha tsedzuluso dza ARC (Agricultural Research Council), tshaka idzi dzo thoma u ikhela dzi na vhege dza 24–26. Khuhu dza Koekoek dzo ikhela makumba a 196 nga ṅwaha, Venda a 154, Naked Neck a 139 na Ovambo a 126. Khuhu dza mahayani dzi ḓiṱoḓelaho zwiḽiwa zwadzo zwoṱhe dzi ikhela makumba a si manzhi: kanzhi zwigwada zwiraru zwa makumba a 10 nga ṅwaha, ngauri dzi litsha u ikhela uri dzi fukame na u aluwisa vhana.
+### U dzula khuhu dzi na mutakalo
 
-**Khuhu dza haibiridi dza u rengisa** dzi bveledzwa nga khamphani khulwane dza khuhu. **Khuhu dza makumba (layers)** dzi bveledzwa u itela makumba fhedzi nahone dzi ikhela makumba manzhi u fhira tshaka dza henefho. **Khuhu dza nama (broilers)** dzi bveledzwa u itela nama fhedzi nahone dzi aluwa nga u ṱavhanya vhukuma. Haibiridi dzi ṱoḓa zwiḽiwa zwavhuḓi na ṱhogomelo, a dzi konḓeleli nga maanḓa nahone a dzi fanelani na u sa valelwa u fhira tshaka dza henefho, ngauralo vhalimi vhanzhi vha permaculture vha takalela tshaka dza henefho.
+**Vhulwadze ha Newcastle** ndi tshivhulahi tshihulwane tsha khuhu dza mahayani kha Tshipembe tsha Afrika. Vhu nga fhelisa vhunzhi ha tshigwada tshi songo ṱhavhelwaho nga maḓuvha mashoni.
 
-### U ita uri khuhu dzi vhe na mutakalo
+1. **Ṱhavhelani.** Ṱhavhelo dza Newcastle dza zwigwada zwiṱuku dzi rengiswa kha dzikhoporasi na mavhengele a zwa vhulimi. Maḓontsi a maṱo a tsireledza zwavhuḓi vhukuma; ṱhavhelo kha maḓi a u nwa na yone i a shuma. Tevhelani ndaela dzi re kha phakhethe.
+2. **Dovholani.** Tsireledzo i a fhela, ngauralo zwigwada zwa mahayani kanzhi zwi ṱhavhelwa hafhu nga murahu ha miṅwedzi miraru.
 
-Vhulwadze vhu nga fhelisa tshigwada tshoṱhe tsha khuhu nga maḓuvha a si gathi.
+**Biosecurity** (maitele a ḓuvha ḽiṅwe na ḽiṅwe a thivhelaho malwadze kha bulasi yaṋu) i amba:
 
-**Vhulwadze ha Newcastle (Newcastle disease)** ndi vhulwadze vhu re khombo vhukuma ha khuhu dza mahayani Tshipembe tsha Afrika. Vhu nga vhulaya khuhu nnzhi dzi songo ṱhavhelwaho kha tshigwada.
+- Vhewani zwiṋoni zwiswa kule na tshigwada tshaṋu lwa hu ḓo nga ṅwedzi, ni zwi sedze arali zwi tshi lwala.
+- Vhewani zwiṋoni zwa ḓaka kule na zwiḽiwa na maḓi a khuhu dzaṋu.
+- Dzulani ni tshi kunakisa nahone ni tshi omisa nnḓu, ni shandukise zwa mabokisi a u ikhela kanzhi.
+- Ṱanzwani zwanḓa nga murahu ha u fara zwiṋoni kana manyaga.
+- Vhulungani kana ni fhise zwiṋoni zwo faho, hune mmbwa dza sa kone u zwi gwa.
 
-1. **Ṱhavhelani.** Ṱhavhelo (vaccines) dza vhulwadze ha Newcastle dza zwigwada zwiṱuku dzi rengiswa kha khoporasi na zwiṱoro zwa zwa vhulimi. U ṱhavhela nga matonsi a maṱoni zwi ṋea tsireledzo yavhuḓi vhukuma; u ṱhavhela nga maḓi a u nwa na hone zwi a shuma.
-2. **Dovholani.** Tsireledzo i a fhela. Zwigwada zwa mahayani kanzhi zwi ṱhavhelwa hafhu miṅwedzi miraru miṅwe na miṅwe. Tevhelani ndaela dzi re kha ṱhavhelo na nyeletshedzo ya thekhinisheni wa mutakalo wa zwifuwo wa henefho kana dokotela wa zwifuwo wa muvhuso (state veterinarian).
-3. **Vhikani.** Vhulwadze ha Newcastle ndi **vhulwadze vhu langwaho nga mulayo (controlled disease)** nga fhasi ha Animal Diseases Act (Act 35 of 1984) (Mulayo wa Malwadze a Zwifuwo). Arali khuhu dzaṋu nnzhi dzo lwala kana dza fa nga u ṱavhanya, zwi vhikeni kha dokotela wa zwifuwo wa muvhuso a re tsini naṋu nga u ṱavhanya.
-
-**Biosecurity** (tsireledzo ya mutakalo) ya ḓuvha ḽiṅwe na ḽiṅwe yavhuḓi (mikhwa i thivhelaho malwadze):
-
-- Vheani khuhu ntswa kule na tshigwada tshaṋu lwa vhege mbili u swika tharu musi ni sa athu dzi ṱanganya, ni sedze zwiga zwa vhulwadze.
-- Ni songo tendela zwiṋoni zwa ḓaka zwi ḽe zwiḽiwa na u nwa maḓi a khuhu dzaṋu.
-- Itani uri nnḓu dzi dzule dzo kuna nahone dzo oma, ni shandukise zwithu zwa mabokisi a u ikhela kanzhi.
-- Ṱanzwani zwanḓa nga murahu ha u fara khuhu kana manyaga.
-- Vhulungani kana ni fhise khuhu dzo fhaho; ni songo dzi laṱela hune mmbwa kana zwiṅwe zwipuka zwa nga dzi swikela.
-
-### U ṱanganya khuhu ntswa
-
-Khuhu dzi na maimo a vhuhulwane o khwaṱhaho, a vhidzwaho **u tevhekana ha vhuhulwane (pecking order)**. Musi khuhu ntswa i tshi dzhena, dziṅwe dzi ḓo i lwa, nga zwiṅwe zwifhinga nga maanḓa, lwa ḓuvha kana maḓuvha mavhili u swikela maimo maswa o dzudzanyea.
-
-- Ṱanganyani khuhu ntswa nga madekwana, nga murahu ha musi tshigwada tsho no lala.
-- Engedzani khuhu mbili kana u fhira khathihi. Khuhu nthihi ntswa kana mukukulume muthihi u ḓo tambudzwa nga dziṅwe dzoṱhe.
-- Ṋeani fhethu ho eḓanaho uri khuhu i tambudzwaho i kone u shavha.
+Musi zwiṋoni zwiswa zwi tshi dzhena, lavhelelani ḓuvha ḽithihi kana mavhili a u lwa u swikela **mutevhe wa u phupha** (pecking order) u tshi dzika. Zwi dzheniseni nga madekwana, nga murahu ha musi tshigwada tsho no ya u lala, zwivhili kana u fhira nga tshifhinga tshithihi uri hu si vhe na tshiṋoni tshithihi tshine tsha tambudzwa, hu na tshikhala tsha uri tshiṋoni tshi tambudzwaho tshi kone u shavha.
 
 ## Nguluvhe
 
-Nguluvhe dzi nga thusa vhukuma, nga maanḓa kha ngade dza miri ya mitshelo, kha **food forest** (ḓaka ḽa zwiḽiwa) na kha mavu a songo lugiswaho. Dzi fanela Zone 2, 3 na 4 nahone dzi tshila zwavhuḓi na zwiṅwe zwipuka.
+Nguluvhe ndi vhakunakisi vhahulwane. Dzi vheeni kha mavu a si naho kunakiswa, o aluwaho zwimela, nga vhege nthihi dzi ḓo vha dzo a pendela zwavhuḓi u fhira mbado kana foroko. Dzi tea Zone 2, 3 na 4, nahone dzi shuma zwavhuḓi kha ngade dza miri ya mitshelo na kha **food forest** (ngade yo ṱavhiwaho nga miṱaṱo sa ḓaka ḽa mupo).
 
-### Zwine nguluvhe dza ḽa
+### U ṋea nguluvhe zwiḽiwa
 
-Nguluvhe dzi ḽa zwiḽiwa zwa tshaka nnzhi. Kha bulasi i re na zwithu zwo fhambanaho dzi ḓo ḽa hatsi, zwimela zwi gonyaho (vines), mitshelo yo waho na nḓuhu dza miri, nahone dzi ḓo takala u gwa zwiṱambi na miṅwe midzi. Dzi ṱoḓa maḓi o kunaho na murunzi tshifhinga tshoṱhe.
+Nguluvhe dzi ḽa mahatsi, mivhino, mitshelo yo wa, nḓuhu dza miri na midzi yoṱhe ine dza kona u i gwa. Dzi ṋeeni maḓi o kunaho na murunzi tshifhinga tshoṱhe. Dzi ṋeeni malaṱwa a miroho na a ngade u bva kha bulasi yaṋu, na thoro kana zwiḽiwa zwi rengiwaho. Ni songo vhuya na dzi ṋea zwo salaho zwa nama kana malaṱwa a khishini u bva kha dziṅwe nnḓu, ṱhoḓela kana dzihotele. Izwo zwiḽiwa zwi nga hwala **African swine fever**, vhulwadze vhu vhulahaho nguluvhe vhu si na mushonga kana ṱhavhelo.
 
-> **Tsireledzo:** Kha Afrika Tshipembe ndi u pfuka mulayo u ḽisa nguluvhe malaṱwa a zwiḽiwa a bvaho khishini, kha dzihotela, kha dziresiṱorente kana fhethu ho raloho (hu vhidzwaho **swill**) arali a songo vhiliswa lwa awara nthihi nga u ṱukusa. Nama ya nguluvhe i songo bikwaho kana yo bikwaho zwiṱuku, na maṅwe masalela a nama, zwi nga vha na **African swine fever**, vhulwadze vhu vhulahaho nguluvhe vhu si na mushonga kana ṱhavhelo. Ḽisani nguluvhe malaṱwa a miroho na a ngade a bvaho bulasini yaṋu, na thoro kana zwiḽiwa zwo rengwaho.
+### Nguluvhe sa animal tractor
 
-### Dzi-animal tractor dza nguluvhe (pig tractors)
+1. Pfalelani tshipiḓa nga lufhenḓe lwa muḓagasi lu pfukiswaho: waya nthihi kana mbili kha vhulapfu ha ṋungo.
+2. Litshani nguluvhe dzi ḽe vhunzhi ha zwimela zwi re nṱha ha mavu u thoma. A dzi nga gwi musi hu na zwiḽiwa zwinzhi nṱha.
+3. Vhonani uri mavu o nowa. Nguluvhe dzi gwa kha mavu o vhofholowaho, hu si kha mavu o omaho, o khwaṱhaho.
+4. Nga murahu ha hu ḓo nga vhege, tshipiḓa tsho no gwiwa. Pfukisani lufhenḓe.
+5. Tevhelisani nguluvhe nga chicken tractor (danga ḽa khuhu ḽi pfukiswaho) u phaḓaladza manyaga adzo.
 
-Nguluvhe dzi shuma zwavhuḓi vhukuma sa "vhakunakisi vha u thoma" vha mavu a songo lugiswaho.
+Kha ngade ya miri ya mitshelo, nguluvhe dzi ḽa mitshelo yo wa na zwivhungu zwa nzhinzhi dza mitshelo zwi re ngomu hayo, zwine zwa thusa u kwasha mutevhe wa nzhinzhi dza mitshelo.
 
-- Vheani nguluvhe nga ngomu ha lufhenḓe lwa muḓagasi lu pfukiswaho kha fhethu ho ḓalaho zwimela zwo aluwaho nga maanḓa lwa vhege nthihi, nahone dzi ḓo bvisa zwimela na midzi yazwo dza kunakisa fhethu u fhira garafu kana foroko.
-- Uri dzi gwe, dzi tendeleni dzi thome dzi ḽe zwinzhi zwa zwimela zwi re nṱha ha mavu, nahone ni vhone uri mavu o noka. Nguluvhe a dzi gwi arali hu na zwiḽiwa zwinzhi nṱha.
-- Kha ngade dza miri ya mitshelo na kha food forest, nguluvhe dzi ḽa mitshelo yo waho, na zwivhungu zwa nzhinzhi dza mitshelo (fruit-fly larvae) zwi re ngomu hayo. Izwi zwi thusa u tshinya mutevhe wa nzhinzhi dza mitshelo.
-- Tevhedzani nguluvhe nga chicken tractor uri khuhu dzi phaḓaladze manyaga a nguluvhe.
+> **Tsevhedzo:** Gudisani mafuvhu a nguluvhe lufhenḓe lwa muḓagasi musi a tshi kha ḓi vha maṱuku, kha danga ḽo khwaṱhaho ḽine waya ya muḓagasi ya tshimbila ngomu haḽo. Nguluvhe ine ya si athu u pfa waya i ḓo tou sundedza ya pfuka.
 
 ### U valela nguluvhe
 
-Thaidzo khulwane ya nguluvhe ndi uri dzi tshinya vhukuma musi dzo shavha. Dzi nga tshinya miri miṱuku na ngade ya miroho nga vhusiku vhuthihi nga u leluwa.
+Nguluvhe yo vhofholowaho i nga tshinyadza miri miṱuku na ngade yoṱhe ya miroho nga vhusiku vhuthihi. Dzi pfaleleni zwavhuḓi, ni nange nga vhuronwane hune dza nga ya hone.
 
-- Dzi valeleni zwavhuḓi, nahone ni khethe nga ṱhogomelo fhethu hune dza tendelwa u dzhena hone.
-- Lufhenḓe lwa muḓagasi lwa nguluvhe lu ṱoḓa waya nthihi kana mbili dzi re vhuimoni ha ningo dzadzo.
-- Gudisani nguluvhe ṱhukhu u ṱhonifha lufhenḓe lwa muḓagasi dzi tshi kha ḓi vha ṱhukhu, kha danga ḽo khwaṱhaho ḽi re na waya ya muḓagasi nga ngomu. Nguluvhe dzi songo gudaho dzi ḓo lingedza u pfuka nga maanḓa.
+Nguluvhe dzi funa u dzula dzoṱhe, ngauralo fuwani dzi si ṱhukhu ha mbili. Arali ni sa ṱoḓi u dzi aṱisa, fuwani dza tshisadzi fhedzi kana dza tshinnani dzo **ṱhenwaho** (castrated). Dzi ṋeeni vhudzulo ho omaho, hu si na muya u rotholaho nga vhuria na murunzi nga tshilimo.
 
-### Vhukonani na fhethu ha u ḓitsireledza
+## Dada
 
-Nguluvhe ndi zwipuka zwi funaho u tshila na zwiṅwe nahone dzi takala vhukuma dzi na nguluvhe iṅwe nthihi nga u ṱukusa. Arali ni sa ṱoḓi u dzi aluwisa vhana, fuwani dza tshisadzi fhedzi kana dza tshinna dzo ṱhenwaho (castrated). Nga vhuria vhu rothaho nguluvhe dzi ṱoḓa fhethu ho omaho hu si na muya u rothaho, nahone nga tshilimo dzi ṱoḓa murunzi.
+"A ni na thaidzo ya khumba, ni na ṱhahelelo ya dada." Murero uyu u anzela u ambiwa uri ndi wa Bill Mollison.
 
-## Madada
+Dada dzi tea Zone 2. A dzi kwenyi sa khuhu, ngauralo a dzi tshinyadzi mulch. Dzi litsheni dzi tshimbile kha ngade ya miri ya mitshelo, na kha ngade ya miroho nga murahu ha khaṋo, fhedzi dzi vheeni kule na zwimela zwiṱuku, zwine dza zwi tambalela kana dza zwi ḽa.
 
-> **Ḓivhani:** "A ni na thaidzo ya khumba, ni na ṱhahelelo ya madada." Murero uyu vhanzhi vha amba uri ndi wa Bill Mollison.
+Dada dzi ḽa khumba na zwikukumi. Muscovy dzi dovha dza fula mahatsi a vha mapfufhi. Makumba a dada a hulwane u fhira vhunzhi ha makumba a khuhu, nahone dada kanzhi dzi ikhela nga matsheloni a vhukuma: dzi valeleni u swika vhukati ha matsheloni ni ḓo wana makumba nnḓuni, a songo dzumbamiswa ngadeni. Nama ya Muscovy i si na mafhuṱa manzhi nahone yo swifhala.
 
-Madada a bvelela zwavhuḓi kha bulasi ya permaculture nahone ndi tshipuka tshavhuḓi tsha Zone 2. A a kwenyi sa khuhu, ngauralo a tshinya mulch zwiṱuku. Ni nga a tendela a tshimbile ngade ya miri ya mitshelo, na ngade ya miroho nga murahu ha u kaṋa. A ṱhogomeleni tsini ha zwimela zwiṱuku, ngauri a nga zwi tshinya nga milenzhe kana a zwi ḽa.
+Zwine dada dza zwi ṱoḓa:
 
-### Zwine madada a ṋea
+1. **Nnḓu yo tsireledzeaho nga vhusiku**, u fana na khuhu.
+2. **Maḓi a dzikaho lune dza nga nwedza ṱhoho yoṱhe.** Dada dzi ṱanzwa zwiḽiwa zwi re maṱoni na ṋungoni. Beseni ḽi dzikaho kana bakede zwi a lingana; a dzi ṱoḓi tshidziva.
+3. **Maḓi maswa kanzhi.** Dada dzi tshikafhadza maḓi adzo nga u ṱavhanya. A shandukiseni ḓuvha ḽiṅwe na ḽiṅwe ni shele maḓi a kale kha miri ya mitshelo na zwiliṅwa zwine na zwi bika. A na manyaga, ngauralo a vheeni kule na muroho na zwiṅwe zwoṱhe zwi ḽiwaho zwi songo bikwa.
+4. **Lufhenḓe.** Vhunzhi ha dada dza bulasi, dzi ngaho Pekin, runner na Khaki Campbell, dzi bva kha mallard ya ḓaka. Dzi-mallard dzi shavhaho dzi aṱisana na dada dza ḓaka dza sialala dzi ngaho yellow-billed duck dza dzi pandela. Pfalelani dada dzaṋu, kule vhukuma na milambo, madamu na mavu a re na maḓi (wetlands). Muscovy ndi lushaka lwo fhambanaho.
 
-- **U lwisana na zwikukumi.** Madada a funa khumba (slugs, snails) na zwikukumi.
-- **U fula.** Maṅwe madada, sa Muscovy, a dovha a ḽa hatsi nahone a thusa uri hu dzule hu hupfufhi.
-- **Makumba.** Makumba a dada a hulwane u fhira manzhi a makumba a khuhu. Madada kanzhi a ikhela nga matsheloni a vhuya, ngauralo a valeleni u swika nga vhukati ha matsheloni nahone ni ḓo wana makumba nnḓuni, a songo dzumbiwa ngadeni.
-- **Nama na vhoya ha zwiṋoni.** Nama ya Muscovy a i na mapfura manzhi nahone i na muvhala wo dzikaho; vhathu vhanzhi vha a i funa.
-- **Mukhwa wa ḓuvha ḽiṅwe na ḽiṅwe.** Madada a guda nga u ṱavhanya zwine zwa itwa ḓuvha ḽiṅwe na ḽiṅwe nahone a ḓo lindela u dzheniswa kana u bviswa.
-
-### Zwine madada a zwi ṱoḓa
-
-- **Tsireledzo kha dzi-predator**, nga maanḓa nga vhusiku, u fana na khuhu.
-- **Maḓi a re na vhudzivha ha u linganela u dzhenisa ṱhoho yoṱhe.** Madada a ṱoḓa u ṱanzwa zwiḽiwa zwi re kha ningo na maṱo awo. Beseni kana bakede ḽi re na vhudzivha ḽi a linganela kha madada manzhi; a a ṱoḓi tshidziva.
-- **Maḓi maswa kanzhi.** Madada a ṱavhanya u tshikafhadza maḓi awo. Shandukisani maḓi kanzhi. Maḓi o tshikafhalaho ndi manyoro a maḓi avhuḓi a miri ya mitshelo na a zwiliṅwa zwine zwa bikwa musi zwi sa athu ḽiwa.
-
-> **Tsireledzo:** Maḓi a madada a na manyaga. Ni songo a shumisa kha miroho ya maṱari kana zwiṅwe zwiliṅwa zwi ḽiwaho zwi songo bikwa, nahone ni songo tendela vhana vha tshi tamba ngao.
-
-Madada a nga vha na phosho, ngauralo a nga si fanele ngade dza ḓoroboni dzi re na vhahura vha re tsini. Madada a Muscovy ndi o fhambanaho: a dzikile vhukuma, nahone a tshinna kanzhi a fhefhedza fhedzi (hiss).
-
-> **Ḓivhani:** Tshaka nnzhi dza madada a hayani, sa Pekin, runner na Khaki Campbell, dzo bva kha **mallard**. Mallard ndi **invasive species** (lushaka lu phaḓaladzeaho lu tshinyadzaho) yo ṅwaliwaho kha Afrika Tshipembe (Category 2 nga fhasi ha NEMBA), ngauri ḽi bveledza vhana na madada a ḓaka a sialala, sa dada ḽa mulomo wa yelo (yellow-billed duck), nahone izwi zwi shushedza madada a sialala. Farani madada nga ngomu ha lufhenḓe, kule na milambo, madamu na mavu a re na maḓi (wetlands), nahone ni songo vhuya na a litsha a tshi vha a ḓaka. Vhudziseni ofisi ya tsireledzo ya mupo ya vundu ḽaṋu arali ni tshi ṱoḓa phemithi ya madada ane na a fuwa. Muscovy ndi lushaka lwo fhambanaho.
+Vhunzhi ha dada dzi na phosho. Muscovy ndi dzone dzi re dzo fhumula: dza tshinnani kanzhi dzi a tou fhefhela.
 
 ## Ṋotshi
 
-Ṋotshi dzi na ndeme khulwane ngadeni na kha ngade dza miri ya mitshelo ngauri dzi **phaḓaladza mupfumbu wa maluvha (pollination)**: dzi hwala mupfumbu (pollen) u bva kha ḽuvha ḽiṅwe u ya kha ḽiṅwe uri mitshelo na mbeu zwi kone u bveledzea. Mitshelo minzhi, miroho, mbeu dza mapfura (oil seeds) na nḓuhu dza miri zwi ṋea khaṋo khulwane na ya khwine musi ṋotshi dzi tshi zwi dalela.
+Ṋotshi ndi **dzi-pollinator** (zwipuka zwi phaḓaladzaho mupfumbu): dzi hwala mupfumbu u bva kha ḽuvha u ya kha ḽiṅwe uri mitshelo na mbeu zwi kone u vhumbea. Ḽifhasi ḽoṱhe, hu ḓo nga zwipiḓa zwiraru zwa zwiṋa zwa zwiliṅwa zwa zwiḽiwa zwa ndeme zwi vhuyelwa nga u phaḓaladzwa ha mupfumbu nga zwipuka. Mavhele, goroi na mafhi zwi phaḓaladzelwa mupfumbu nga muya, fhedzi vhunzhi ha mitshelo na miroho yashu zwi ṱoḓa dzi-pollinator.
 
-Kha ḽifhasi ḽoṱhe, zwipiḓa zwiraru kha zwiṋa (three-quarters) zwa zwiliṅwa zwa zwiḽiwa zwa ndeme zwi wana mbuelo kha u phaḓaladzwa ha mupfumbu nga zwipuka, nahone zwiliṅwa izwi zwi ita tshipiḓa tshithihi kha zwiraru (a third) tsha zwiliṅwa zwoṱhe zwi bveledzwaho. Zwiliṅwa zwihulwane zwa thoro (mavhele, goroi, raisi na mabele) zwi phaḓaladzwa mupfumbu nga muya, hu si nga ṋotshi, fhedzi vhunzhi ha mitshelo na miroho zwi ri ṋeaho vhithamini zwi ṱoḓa **dzi-pollinator** (zwipuka zwi phaḓaladzaho mupfumbu).
+### Ṋeani ṋotshi zwiḽiwa
 
-### Ḽisani ṋotshi
+Ṱoḓani u vha na tshithu tshi re na maluvha khalaṅwaha iṅwe na iṅwe.
 
-Ṋotshi dzi dalela khamusi ḽuvha ḽiṅwe na ḽiṅwe ḽi re na nekhitha (nectar) kana mupfumbu. Lingedzani uri ngadeni yaṋu hu vhe na tshiṅwe tshithu tshi re na maluvha khalaṅwahani iṅwe na iṅwe.
+- Ṱavhani mafhenḓe a zwimela a re na maluvha a miri ya **indigenous** (sialala, i melaho fhano nga mupo), i ngaho karee (*Searsia lancea*) na muunga (*Vachellia karroo*).
+- Ṱavhani zwikhopha (aloes). Zwi vha na maluvha nga vhuria, musi hu si na zwiṅwe zwinzhi.
+- Limani lavender, rosemary, borage, rocket, miri ya mitshelo na zwiṱaka zwa berry.
+- Siani tshipiḓa tsha mahatsi a ḓaka na zwimela zwi sa ṱoḓei uri zwi vhe na maluvha.
+- Vhewani ndilo ḽi si na vhudzivha ḽa maḓi ḽi re na matombo ngomu, uri ṋotshi dzi kone u nwa dzi sa nwi.
+- Litshani u shumisa mishonga ya u pfafadza zwikukumi. Arali ni tshi fanela u pfafadza, shumisani mushonga u si na maanḓa, nga madekwana a vhukuma musi ṋotshi dzi sa khou fhufha, nahone ni songo pfafadza kha maluvha o vulea.
 
-- Ṱavhani lufhenḓe lwa zwimela (hedges, living fences) lu re na maluvha nga zwiṱaka na miri ya sialala, sa karee (*Searsia lancea*) na sweet thorn (*Vachellia karroo*).
-- Zwikhopha (aloes) zwi vha na maluvha nga vhuria, musi zwimela zwiṅwe zwinzhi zwi si na maluvha.
-- Mihaṱa (herbs) sa lavender, rosemary, borage na rocket, na miri ya mitshelo na zwiṱaka zwa mitshelo miṱuku (berry bushes), zwoṱhe zwi ḽisa ṋotshi.
-
-Ṋotshi dzi ri ṋea ṋotshi dza u ḽiwa (honey), wekisi (wax) na mupfumbu, zwoṱhe zwi re zwiḽiwa na zwibveledzwa zwa ndeme.
-
-### Ndi ngani ṋotshi dzi khombeni
-
-Kha ḽifhasi ḽoṱhe, zwigwada zwa ṋotshi (honeybee colonies) zwi khou fhela. Zwiitisi zwi katela **varroa mite** (tshikukumi tshiṱuku tshi tshilaho nga u mama ṋotshi — parasite), vairasi na maṅwe malwadze, u sa wana zwiḽiwa zwo linganaho, u fhela ha maluvha a ḓaka na u shumisa zwivhulahi zwa zwikukumi (pesticides) nga u sa ṱhogomela.
-
-Tsimu khulwane dza tshiliṅwa tshithihi fhedzi (monocultures — tshiliṅwa tshithihi kha fhethu hu hulwane vhukuma) dzi bvisa zwimela zwa ḓaka zwi re na maluvha zwine ṋotshi dza zwi ṱoḓa. U pfafadza zwivhulahi zwa zwikukumi (insecticides) na zwivhulahi zwa zwimela zwi sa ṱoḓei (weedkillers) zwi ita uri mavu a sa tsha vha avhuḓi kha ṋotshi na zwiṅwe zwikukumi.
-
-Kha Afrika Tshipembe:
-
-- **Varroa mite** yo swika nga 1997. Ṋotshi dza Afrika Tshipembe dzo thoma u i konḓelela nga miṅwaha i si gathi, nahone vhafuwi vha ṋotshi fhano kanzhi a vha ṱoḓi u dzi alafha kha varroa.
-- **American foulbrood** (AFB), vhulwadze ha bakitheria vhu vhulahaho ṋotshi ṱhukhu (brood), vho khwaṱhisedzwa kha Kapa Vhukovhela (Western Cape) nga 2009, nahone u bva zwenezwo vho wanala na kha maṅwe mavundu a shango. Mbeu dza vhulwadze uhu (spores) dzi tshila lwa miṅwaha ya mahumi kha ṋotshi dza u ḽiwa, wekisi na zwishumiswa zwa nnḓu dza ṋotshi zwo shumiswaho. AFB i fanela u vhigwa kha Muhasho wa Vhulimi (Department of Agriculture), nahone nnḓu dza ṋotshi dzi re na vhulwadze uhu kanzhi dzi fanela u fhiswa.
+Ḽifhasi ḽoṱhe, ṋotshi dzi khou fa nga zwikukumi, malwadze, nḓala na zwivhulahi zwa zwikukumi. Mafhungo a Afrika Tshipembe a na fulufhelo. **Varroa mite** (tshikukumi tshiṱuku tshi tshilaho nga ṋotshi) tsho swika fhano nga 1997, nahone ṋotshi dzashu dzo kona u tshi konḓelela nga miṅwaha mishoni, ngauralo vhafuwi vha ṋotshi fhano kanzhi a vha tshi alafhi. Khombo khulwane ndi **American foulbrood**, vhulwadze ha bakitheria vhu vhulahaho ṋotshi ṱhukhu. Ho thoma u khwaṱhisedzwa Kapa Vhukovhela nga 2009, nahone mbeu dzaho dzi tshila lwa mahumi a miṅwaha kha ṋotshi dza u ḽiwa, wekisi na zwishumiswa zwa kale zwa nnḓu dza ṋotshi.
 
 ### Ṋotshi dza Afrika Tshipembe
 
-Afrika Tshipembe ḽi na tshaka mbili dza ṋotshi:
-
-- **ṋotshi ya Afrika** kana **ṋotshi ya savanna** (*Apis mellifera scutellata*), i wanalaho kha vhunzhi ha shango
-- **ṋotshi ya Kapa** (*Apis mellifera capensis*), i wanalaho Kapa Vhukovhela na kha fhethu hu re tsini
-
-Dzoṱhe dzi **a ḓitsireledza nga maanḓa** (defensive). Dzi fhindula nga u ṱavhanya musi nnḓu yadzo i tshi dzhenelelwa, dzi luma dzo vha nnzhi, nahone dzi nga tevhela muthu kana tshipuka lwa maḓana a mithara.
-
-### U fuwa ṋotshi na mulayo
-
-U fuwa ṋotshi ndi vhutsila vhu ṱoḓaho u gudiswa na u ḓowela. Musi ni sa athu thoma:
-
-1. **Gudani u thoma.** Itani khoso ya u fuwa ṋotshi nahone ni wane mufuwi wa ṋotshi wa henefho a re na tshenzhemo ane a ḓo vha mueletshedzi waṋu. Vhafuwi vhanzhi vha ṋotshi vha takala u kovhela zwine vha zwi ḓivha.
-2. **Ḓiṅwaliseni.** Nga fhasi ha Agricultural Pests Act (1983) (Mulayo wa Zwikukumi zwa Vhulimi) na maga awo a u langa ṋotshi, muthu muṅwe na muṅwe ane a fuwa ṋotshi, naho ndi nnḓu ya ṋotshi nthihi ya u ḓitakadza, u fanela u ḓiṅwalisa sa mufuwi wa ṋotshi kha Muhasho wa Vhulimi wa lushaka (national Department of Agriculture). U ḓiṅwalisa a hu badelwi, nahone hu fanela u vusuludzwa musi tshifhinga tsho fhela; sedzani tshifhinga tsha zwino kha fomo ya u ḓiṅwalisa.
-3. **Ni songo pfukisa ṋotshi vhukati ha zwipiḓa.** Ni songo pfukisa ṋotshi vhukati ha tshipiḓa tsha ṋotshi dza Kapa na shango ḽoṱhe ḽo salaho, kana u fuwa ṋotshi dza Kapa nnḓa ha tshipiḓa tshadzo, ni si na thendelo yo ṅwalwaho i bvaho kha Muhasho. Ṋotshi dza Kapa dzi nga dzhia vhuvhusi dza tshinya zwigwada zwa ṋotshi dza Afrika.
-4. **Sedzani milayo ya masipala (bylaws).** Masipala manzhi a na milayo nga ha u fuwa ṋotshi ḓoroboni.
+Ri na ṋotshi mbili: ṋotshi ya Afrika kana ya savanna (*Apis mellifera scutellata*) kha vhunzhi ha shango, na ṋotshi ya Kapa (*Apis mellifera capensis*) Kapa Vhukovhela na tsini hayo. Dzoṱhe dzi a ḓitsireledza. Kwamani nnḓu yadzo dzi ḓo luma dzi nnzhi, nahone dzi nga tevhela muthu kana tshipuka lwa maḓana a mitha. Gudani kha ngudo na kha mufuwi wa ṋotshi wa henefho o tshenzhelaho phanḓa ha u vula nnḓu yaṋu ya u thoma ya ṋotshi.
 
 ### U vhea nnḓu dza ṋotshi
 
-1. **Kule na vhathu na zwipuka.** Vheani nnḓu dza ṋotshi kule vhukuma na nnḓu dza vhathu, nḓila, bada, zwikolo na fhethu hune zwipuka zwa vhofhiwa kana zwa valelwa madangani hone. Lufhenḓe lwa zwimela kana lufhenḓe phanḓa ha nnḓu dza ṋotshi zwi ita uri ṋotshi dzi fhufhele nṱha, dzi pfuke nṱha ha ṱhoho dza vhathu.
-2. **Dzo linganaho nahone dzo gonyiswa.** Vheani nnḓu iṅwe na iṅwe ya ṋotshi yo lingana (level) kha tshiimiso tsho khwaṱhaho (stand) uri i sa wele nahone zwiṱaṱo zwa wekisi (combs) zwi sa vunde. I gonyiseni nṱha ha mavu u thivhela mbevha, zwiṅwe zwipuka na u noka. Thayara dza kale (old tyres) kana tshiimiso tsho khwaṱhaho zwi shuma zwavhuḓi.
-3. **Zwisusu (ants).** Arali zwisusu zwi thaidzo, imisani milenzhe ya tshiimiso kha makheni a re na maḓi kana mapfura, kana ni i tshele girisi.
-4. **Ḓuvha na muya.** Ṋotshi dzi shumisa maanḓa manzhi u ita uri nnḓu yadzo i dzule i na mufhiso wo teaho. Khethani fhethu ho tsireledzeaho kha muya muhulwane nahone hu na murunzi kha ḓuvha ḽi fhisaho nga maanḓa nga masiari nga tshilimo. Lavhelesisani mulomo wa u dzhena (entrance) thungo ya vhubvaḓuvha, kha ḓuvha ḽa matsheloni.
-5. **Tsireledzo.** Ṋotshi dza u ḽiwa dzi kokodza mbava na zwipuka. Itani lufhenḓe u mona na fhethu arali ni na nnḓu nnzhi dza ṋotshi, kana ni vhofhe nnḓu nthihi nga tshenene (chain) nahone ni i khiye.
+Vhafuwi vha ṋotshi nga nḓila ya mupo vha vula nnḓu ya ṋotshi lu si gathi nga ṅwaha, ngauralo i nga vha magumoni a Zone 2, kana kha Zone 3 kana 4.
 
-Ngauri vhafuwi vha ṋotshi nga nḓila ya mupo vha vula nnḓu dzavho dza ṋotshi lwa zwifhinga zwi si gathi nga ṅwaha, nnḓu dza ṋotshi dzi nga vhewa kha magumo a nnḓa a Zone 2, kha Zone 3 kana na kha Zone 4.
+1. **Kule na vhathu na zwifuwo.** Vhewani nnḓu dza ṋotshi kule vhukuma na nnḓu, nḓila, bada, zwikolo, vhana, na zwifuwo zwo vhofhiwaho kana zwo valelwaho. Lufhenḓe lwa zwimela kana lufhenḓe phanḓa ha nnḓu dza ṋotshi lu ita uri ṋotshi dzi fhufhe dzi tshi gonya nṱha ha ṱhoho dza vhathu.
+2. **Dzo lingana nahone dzo gonyiswa.** Vhewani nnḓu iṅwe na iṅwe yo lingana kha tshiimo tsho khwaṱhaho, uri i sa kone u wa nahone zwiṱaṱo zwa wekisi zwi songo kwashea. I gonyiseni nṱha ha mavu u thivhela mbevha na u nowa. Mathaere a kale o dzhiwaho nṱha ha maṅwe a a shuma.
+3. **Zwisusu.** Vhewani milenzhe ya tshiimo tsha nnḓu ya ṋotshi kha thini dza maḓi kana mapfura, kana ni i ṱodze giriisi.
+4. **Ḓuvha na muya.** Tsireledzani nnḓu ya ṋotshi kha muya wa maanḓa na ḓuvha ḽi fhisaho ḽa masiari, uri ṋotshi dzi shumise maanḓa maṱuku u i rotholisa na u i dudedza. Livhisani vothi vhubvaḓuvha, kha ḓuvha ḽa matsheloni.
+5. **Tsireledzo.** Ṋotshi dza u ḽiwa dzi kokodza mbava na zwipuka. Pfalelani tshigwada tsha nnḓu dza ṋotshi, kana ni vhofhe nga ketani na u khiya nnḓu nthihi.
 
-### U fuwa ṋotshi nga nḓila ya mupo (natural beekeeping)
+### U fuwa ṋotshi nga nḓila ya mupo
 
-U fuwa ṋotshi nga nḓila ya mupo hu lavhelesa u sa dzhenelela ṋotshi nga maanḓa na u tendela tshigwada tsha ṋotshi tshi tshile nga mupo nga hune zwa konadzea ngaho. Mihumbulo yaho mihulwane ndi:
+U fuwa ṋotshi nga nḓila ya mupo zwi kwama tshigwada tsha ṋotshi zwiṱuku nga hune zwa konadzea. Farani tshigwada sa tshithu tshithihi tshi tshilaho. Tshi vuleni lu si gathi, uri tshisiku tshi dzule tshi na munukho na mufhiso watsho. Litshani ṋotshi dzi fhaṱe zwiṱaṱo zwadzo nahone dzi ande nga u phaḓalala hadzo (swarming). Fuwani ṋotshi dza henefho, nahone nnḓu dzi linganaho zwine maluvha a henefho a nga dzi ṋea zwiḽiwa. Ni songo dzhenisa tshithu na tshithihi nnḓuni ya ṋotshi tshi songo bva kha ṋotshi, dzhiani ṋotshi dza u ḽiwa dzine dza nga dzi litsha fhedzi, nahone ni litshe zwine ṋotshi dza zwi ita zwi ni livhise.
 
-- Farani tshigwada tsha ṋotshi sa tshithu tshithihi tshi tshilaho.
-- Ṱhonifhani maitele a mupo a ṋotshi nahone ni vhulunge munukho na mufhiso wa nnḓu yadzo; vulani nnḓu ya ṋotshi lwa zwifhinga zwi si gathi nga hune zwa konadzea ngaho.
-- Tendelani ṋotshi dzi fhaṱe zwiṱaṱo zwa wekisi zwadzo nahone dzi khethe vhuhulu ha zwikhala zwadzo (cell size).
-- Tendelani u phaḓalala ha tshigwada (swarming) hu dzhie tsheo ya nḓila ine tsha andela ngayo.
-- Siani ṋotshi dza u ḽiwa na mupfumbu zwo linganaho zwa ṋotshi uri zwi dzi fhirise vhuria na zwifhinga zwo omaho. Dzhiani fhedzi zwine dza nga zwi ṋea.
-- Shumisani ṋotshi dza henefho dzo ḓowelaho zwiimo zwa henefho.
-- Fuwani nnḓu dza ṋotshi dzi linganaho na dzine maluvha a henefho a nga dzi ḽisa.
-- Ni songo dzhenisa tshithu nnḓuni ya ṋotshi tshi sa bvi kha ṋotshi, nahone ni tevhele zwine na vhona ṋotshi dzi tshi zwi ita.
+Dzi siieni ṋotshi dza u ḽiwa na mupfumbu zwo linganaho vhuria na zwifhinga zwo omaho, nṱhani ha u dzi ṋea maḓi a swigiri. Ni songo vhuya na ṋea ṋotshi ṋotshi dza u ḽiwa, nahone ni songo shumisa nnḓu dza ṋotshi, mafuremu kana wekisi zwo shumiswaho nga vhaṅwe arali ni sa ḓivhi hune zwa bva hone: zwoṱhe zwi nga hwala mbeu dza foulbrood.
 
-Vhafuwi vha ṋotshi nga nḓila ya mupo a vha ḽisi ṋotshi maḓi a swigiri sa mukhwa. Arali tshigwada tshi tshi khou fa nga nḓala nga tshifhinga tsha gomelelo, humbelani nyeletshedzo kha mufuwi wa ṋotshi a re na tshenzhemo.
+### U lumiwa nga ṋotshi
 
-> **Tsireledzo:** Ni songo vhuya na ṋea ṋotshi dza u ḽiwa (honey) kha ṋotshi, nahone ni songo shumisa nnḓu dza ṋotshi, furemu kana wekisi zwo shumiswaho nga vhaṅwe, nga nnḓa ha musi ni tshi ḓivha uri a zwi na vhulwadze. Ṋotshi dza u ḽiwa na zwishumiswa zwa kale zwi nga vha na mbeu dza vhulwadze ha American foulbrood (spores).
+U lumiwa lunzhi nga tshifhinga tshithihi, kana u lumiwa luthihi kha muthu ane a vha na aleredzhi, zwi nga vhulaha.
 
-### U lumiwa nga ṋotshi na aledzhi (allergy)
+1. Ambarani tshifukedzi tsha tshifhaṱuwo, suṱu ya ṋotshi kana zwiambaro zwa zwanḓa zwilapfu na bulukhwe, na magilavu.
+2. Shumani no dzika, na tshibvisi tsha vhutsi (smoker). Ni songo vula nnḓu dza ṋotshi nga mutsho u rotholaho, u re na mvula kana muya, kana nga vhusiku.
+3. Arali muthu o lumiwa, ṱuwani kule na nnḓu ya ṋotshi. Kwenyani tshiluma tshi bve nga thungo nga ṋala kana lufhanga; ni songo tshi kama. Ṱanzwani fhethu henefho ni ho rotholise.
+4. Arali tshifhaṱuwo, milomo, lulimi kana mukulo zwi tshi zwimba, arali u fema kana u mitsha zwi tshi konḓa, kana arali muthu a tshi pfa ṱhoho i tshi mona, a tshi ṱalala kana lukanda lwawe lu tshi vha na zwiṱhavhi zwitswuku zwi phaḓalalaho, founelani ambulentsi nga u ṱavhanya: 10177, kana 112 u bva kha selefouni. Itani zwenezwo na kha muthu o lumiwaho lunzhi.
 
-> **Tsireledzo:** U lumiwa nga ṋotshi zwi nga vhulaya. Muthu a nga fa nga u lumiwa nga ṋotshi nnzhi nga tshifhinga tshithihi, kana nga u fhindula ha muvhili nga maanḓa (**anaphylaxis**, severe allergic reaction) naho o lumiwa luthihi fhedzi. Mufuwi muṅwe na muṅwe wa ṋotshi na vhathusi vhawe vha fanela u ḓivha zwiga zwa khombo zwi re afho fhasi.
+Muthu we a vha na nyito i si yavhuḓi nga murahu ha u lumiwa kale a songo shuma na ṋotshi.
 
-Ḓitsireledzeni:
+## Zwimela zwa fodder
 
-- Tshifhinga tshoṱhe ambarani tshifukedzi tsha tshifhaṱuwo (veil), zwiambaro zwa u fuwa ṋotshi (bee suit) (kana hembe ya zwanḓa zwilapfu na bulukhwe ḽilapfu) na magiravhu musi ni tshi shuma na ṋotshi.
-- Shumani no ḓidzikisa nahone ni shumise tshibvisi tsha vhutsi (smoker). Ni songo vula nnḓu dza ṋotshi musi hu tshi rotha, hu tshi na mvula kana muya, kana nga vhusiku.
-- Vheani vhana na zwipuka kule vhukuma na nnḓu dza ṋotshi.
+**Fodder** (zwiḽiwa zwa zwifuwo) ndi zwiḽiwa zwa zwimela zwi limiwaho kana zwi kuvhanganywaho u itela zwifuwo. Zwimela zwavhuḓi vhukuma zwa fodder zwi ita u fhira mushumo muthihi. Zwinzhi ndi **dzi-legume** (lushaka lwa nawa) na **dzi-nitrogen fixer** (zwimela zwi engedzaho naiṱirodzheni i bvaho muyani mavuni). **Annual** i tshila khalaṅwaha nthihi; **perennial** i tshila miṅwaha minzhi.
 
-Arali muthu o lumiwa:
-
-1. Tshimbilani ni tshi ṱuwa kha nnḓu ya ṋotshi ni ye fhethu ho tsireledzeaho.
-2. Bvisani tshiluma (sting) nga u tshi kwenya nga thungo nga ṋala kana nga mulomo wa lufhanga. Ni songo tshi kama.
-3. Ṱanzwani fhethu ho lumiwaho nahone ni vhee tshithu tshi rothaho khaho.
-
-> **Tsireledzo:** Wanani thuso ya shishi (emergency) nga u ṱavhanya (founelani 10177 u wana ambulentsi, kana 112 u bva kha selifouni) arali muthu o lumiwa lunzhi, kana a na tshiṅwe tsha zwiga izwi: u zwimba ha tshifhaṱuwo, milomo, lulimi kana mukulo (throat); u konḓelwa u fema kana u mila; u lumana ha luṱanda (itchy rash) kana u zwimba hu phaḓalalaho muvhilini; u zwimbelwa (dizziness), u ṱalala (fainting) kana u rwa ha mbilu hu si na maanḓa hu ṱavhanyaho (weak, fast pulse); u tanza (vomiting). Anaphylaxis i nga vhulaya nga mimunithi i si gathi.
-
-Muthu muṅwe na muṅwe o no vhuya a vha na u fhindula ha muvhili hu si havhuḓi musi o lumiwa u fanela u sa shuma na ṋotshi, nahone u fanela u vhudzisa dokotela nga ha u hwala mushonga wa shishi.
-
-### Vhani khonani ya ṋotshi
-
-- Litshani u shumisa zwipfafadzi zwa nzhinzhi na zwikukumi.
-- Ṱavhani maluvha manzhi, nga maanḓa a sialala.
-- Arali ni tshi fanela u pfafadza, shumisani nḓila i si na maanḓa nga maanḓa, pfafadzani nga madekwana-kwana musi ṋotshi dzi sa fhufhi, nahone ni songo vhuya na pfafadza maluvha o vulea.
-- Vheani ndilo i si na vhudzivha i re na maḓi na matombo kana zwiṱanda ngomu hayo, uri ṋotshi dzi kone u ima dza nwa dzi sa nweli.
-- Siani tshipiḓa tsha hatsi ha ḓaka na zwimela zwi sa ṱoḓei tshi tshi vha na maluvha.
-
-## Zwimela zwa fodder (zwiḽiwa zwa zwifuwo)
-
-Zwimela izwi zwi nga ḽisa zwifuwo nga u fula, nga u zwi rema na u zwi hwalela zwifuwo (cut-and-carry), sa hatsi ho omiswaho (hay) kana silitshi (silage), kana sa maṱari a miri ane zwifuwo zwa a ḽa (browse) na zwikhwama zwa mbeu (pods). Zwinzhi zwi dovha zwa khwinifhadza mavu kana zwa ḽisa ṋotshi. Vhulapfu ho ṋewaho ndi ha u humbulela.
-
-### Dzi-groundcover (zwimela zwi fukedzaho mavu) na zwiliṅwa zwa tsimu
-
-| Tshimela | Lushaka | Mishumo |
+| Tshimela | Ndi mini | Mishumo |
 |---|---|---|
-| Thenipi (turnip) (*Brassica rapa*) | Tshiliṅwa tsha midzi tsha **annual** (tshi tshilaho ṅwaha muthihi) | Zwiḽiwa zwa nngu na kholomo nga vhuria; u fula ha nguluvhe |
-| Chicory (*Cichorium intybus*) | Muhaṱa wa **perennial** (u tshilaho miṅwaha minzhi), u na mudzi muhulwane u yaho fhasi (taproot) | Madambaya a u fula; u aluwa nga tshifhinga tshi rothaho |
-| Italian ryegrass (*Lolium multiflorum*) | Hatsi ha annual kana hu tshilaho tshifhinga tshipfufhi | U fula nga vhuria, hatsi ho omiswaho na silitshi |
-| Sweet lupin (*Lupinus albus*) | Legume ya annual, i na mudzi muhulwane u yaho fhasi | Thoro na u fula; tshi shuma zwavhuḓi musi tshi tshi reidzana na zwiliṅwa zwa thoro |
-| Lucerne (*Medicago sativa*) | Legume ya perennial | Hatsi ho omiswaho, silitshi na zwiḽiwa zwa u rema na u hwala zwi re na zwiḽiwa zwinzhi vhukuma |
-| Fodder radish (*Raphanus sativus*) | Annual | Fodder i zwalwaho nga ṱhanḓalaṅwaha; mudzi muhulu u vhofholowisa mavu |
-| Rye (*Secale cereale*) | Thoro ya vhuria ya annual | U fula nga vhuria na tshiliṅwa tsha u fukedza (cover crop) |
-| White clover (*Trifolium repens*) | Legume ya perennial i re fhasi | U fula, tshi engedza naiṱirodzheni mavuni, zwiḽiwa zwa ṋotshi |
-| Broad bean (*Vicia faba*) | Legume ya annual | Hatsi ho omiswaho, silitshi na **green manure** (zwimela zwa u nontshisa mavu) i reidzanaho na zwiliṅwa zwa thoro |
-| Nawa (cowpea) (*Vigna unguiculata*) | Legume ya annual | Maṱari na zwimela zwi gonyaho zwi ḽiswa zwi zwiswa, sa hatsi ho omiswaho kana sa silitshi |
-| Vetiver (*Chrysopogon zizanioides*), tshaka dzi sa bveledzi mbeu fhedzi | Hatsi ha perennial hu melaho nga zwiṱumbu (clumps) | U thivhela **erosion** (u khukhulwa ha mavu), mulch; maṱari maswa sa tshiengedzi tsha zwiḽiwa |
+| Lucerne (*Medicago sativa*) | Legume ya perennial | Hatsi ho omiswaho ho nonaho, silitshi na fodder i remiwaho ya hwalwa |
+| Nawa dza sialala, cowpea (*Vigna unguiculata*) | Legume ya annual | Maṱari na mivhino zwi ṋewa zwi zwiswa, sa hatsi ho omiswaho kana silitshi |
+| Sweet lupin (*Lupinus albus*) | Legume ya annual | Thoro na u fula; i shandukiswa zwavhuḓi na thoro |
+| White clover (*Trifolium repens*) | Legume ya perennial ya fhasi | U fula, i engedza naiṱirodzheni, i ṋea ṋotshi zwiḽiwa |
+| Rye (*Secale cereale*) | Thoro ya vhuria | U fula nga vhuria na tshiliṅwa tsha u fukedza |
+| Thanipi (*Brassica rapa*) | Tshiliṅwa tsha midzi | Zwiḽiwa zwa vhuria zwa nngu na kholomo; u fula ha nguluvhe |
+| Radishi ya fodder (*Raphanus sativus*) | Tshiliṅwa tsha midzi tsha annual | I zwalwa nga ṱhanḓalaṅwaha; mudzi wayo muhulu u vhofholola mavu |
+| Pigeon pea (*Cajanus cajan*) | Tshiṱaka tshi tshilaho tshifhinga tshipfufhi, tshi sa konḓeleli tshando | Maṱari na zwikhwama zwa mbeu zwi re na phurotheini nnzhi; mbeu ya zwiṋoni zwa hayani |
+| Vetiver (*Chrysopogon zizanioides*), tshaka dzi sa ṋei mbeu fhedzi | Mahatsi a melaho nga zwiṱumba | A fara mavu, a ṋea mulch; maṱari maṱuku sa zwiḽiwa zwa u engedza |
+| Muunga (*Vachellia karroo*) | Muri wa indigenous, 7 u swika 12 m | U engedza naiṱirodzheni; zwikhwama zwa mbeu na maṱari ndi zwiḽiwa zwa zwifuwo |
+| Puzzle bush (*Ehretia rigida*) | Muri wa indigenous, 5 u swika 12 m | Maṱari a zwifuwo; u kokodza zwiṋoni |
+| Karee (*Searsia lancea*) | Muri wa indigenous, hu ḓo nga 7 m | Lufhenḓe lwa zwimela; u ṋea ṋotshi zwiḽiwa; u fara mavu; u konḓelela tshando |
 
-### Zwiṱaka
+## Lingani
 
-| Tshimela | Lushaka | Mishumo |
-|---|---|---|
-| Pigeon pea (*Cajanus cajan*) | Tshiṱaka tshi tshilaho tshifhinga tshipfufhi, tshi sa konḓeleli tshando | Maṱari na zwikhwama zwa mbeu ndi fodder i re na phirotheini nnzhi; mbeu ndi zwiḽiwa zwa zwiṋoni zwa hayani (poultry) |
-| Sunn hemp (*Crotalaria juncea*) | Legume ya annual ya tshilimo | Green manure (i dzheniseni mavuni kana ni i reme sa mulch) |
+Ṋeani tshifuwo tshithihi mushumo ino vhege.
 
-### Miri
-
-| Tshimela | Vhulapfu ha u humbulela | Mishumo |
-|---|---|---|
-| Torchwood (*Balanites maughamii*) | 15–20 m | Mapfura a mbeu a ḽiwaho, khuni |
-| Pride-of-De Kaap (*Bauhinia galpinii*) | 3–5 m | Lufhenḓe lwa zwimela; u kokodza zwipuka zwa ḓaka |
-| False olive (*Buddleja saligna*) | 4–12 m | Mapulanga; u kokodza bataflai (butterflies) |
-| Carob (*Ceratonia siliqua*), a si wa sialala | 5–10 m | Zwikhwama zwa mbeu ndi fodder yavhuḓi; u konḓelela gomelelo; **windbreak** (mutalo wa miri u thivhelaho muya) |
-| Bluebush (*Diospyros lycioides*) | 3–7 m | Mitshelo i ḽiwaho, **biomass** (maṱari na maṱavhi manzhi) |
-| Puzzle bush (*Ehretia rigida*) | 5–12 m | Maṱari ane zwifuwo zwa a ḽa (browse); u kokodza zwiṋoni |
-| Blue guarri (*Euclea crispa*) | 8–20 m | Mitshelo i ḽiwaho, mapulanga a shumaho |
-| Cross-berry (*Grewia occidentalis*) | 6–10 m | Mitshelo i ḽiwaho |
-| Ouhout (*Leucosidea sericea*) | 6–9 m | Khuni, zwiṱanda zwa lufhenḓe; muri wa u thoma (pioneer) u konḓelelaho tshando |
-| Wild olive (*Olea europaea* subsp. *cuspidata*) | 8–14 m | Khuni; u a konḓelela; u shuma zwavhuḓi kha **coppicing** (u ṱumbula musi wo remiwa tsini na mavu) |
-| African wattle (*Peltophorum africanum*) | 9–14 m | U aluwa nga u ṱavhanya; khuni; murunzi |
-| English oak (*Quercus robur*), a si wa sialala | 10–20 m | Mitshelo yawo (acorns) ndi zwiḽiwa zwa nguluvhe; mapulanga |
-| River willow (*Salix mucronata*) | u swika 12 m | U khwaṱhisa khunzi dza mikulo |
-| Thorn pear (*Scolopia zeyheri*) | 7–20 m | U kokodza zwipuka zwa ḓaka |
-| Karee (*Searsia lancea*) | nga 7 m | Lufhenḓe lwa zwimela; u kokodza ṋotshi; u fara mavu; u konḓelela tshando |
-| Common hook-thorn (*Senegalia caffra*) | 12–18 m | Lufhenḓe lwa zwimela, khuni; u kokodza zwipuka zwa ḓaka |
-| Silver cluster-leaf (*Terminalia sericea*) | 10–16 m | Khuni, biomass |
-| Sweet thorn (*Vachellia karroo*) | 7–12 m | U engedza naiṱirodzheni; zwikhwama zwa mbeu na maṱari ndi fodder; gamu (gum) |
-| Large sourplum (*Ximenia caffra*) | 5–7 m | Mitshelo i re na vhithamini C nnzhi; lufhenḓe lwa zwimela |
-
-> **Ḓivhani:** English oak a u ngo ṅwaliwa kha mitevhe ya Afrika Tshipembe ya invasive species, fhedzi wo phaḓalala tsini ha milambo kha Kapa Vhukovhela. Ni songo u ṱavha tsini ha mikulo kana mavu a re na maḓi. Miri ya sialala i re kha tafula iyi ndi yone khetho ya khwine hune ya aluwa zwavhuḓi hone.
+1. Nangani tshifuwo tshine na tshi fuwa, kana tshine na khou pulana u tshi fuwa.
+2. Kha bammbiri, olani khoḽomu tharu: **Ṱhoḓea**, **Zwibveledzwa**, **Maitele**. Ḓadzani iṅwe na iṅwe.
+3. Tshimbilani mavu aṋu no fara mutevhe. Kha tshibveledzwa tshiṅwe na tshiṅwe, wanani fhethu hu tshi ṱoḓaho: manyaga a ndima, u kwenya ha fhethu ho ḓalaho zwimela zwi sa ṱoḓei.
+4. Kha ṱhoḓea iṅwe na iṅwe, wanani tshithu kha bulasi tshine tsha i ṋea kale: zwo salaho, zwimela zwi sa ṱoḓei, murunzi, maḓi.
+5. Lingani u ṱumanya havhuḓi vhukuma lwa maḓuvha mashoni. Kha khuhu, valelani tshigwada tshiṱuku kha ndima yo kaṋiwaho.
+6. Ṅwalani zwine na zwi vhona: zwimela zwi sa ṱoḓei zwo fhela, mavu o kwenywa, makumba o ikhelwa, tshinyalelo iṅwe na iṅwe.
 
 ## Zwithu zwa ndeme
 
-- Sedzani ṱhoḓea, zwibveledzwa na maitele a tshipuka tshiṅwe na tshiṅwe, ni zwi ṱumanye na zwiṅwe zwipiḓa zwa bulasi.
-- Dzi-animal tractor dzi pfukisa zwipuka kha mavu uri manyaga, u kwenya na u gwa hazwo zwi ite mushumo wa ndeme.
-- Khuhu dzi ṱoḓa zwiḽiwa zwo linganaho, maḓi o kunaho, matombo maṱuku (grit) na khalisiamu, nnḓu yo tsireledzeaho, lutanda lwa 15–20 cm nga khuhu nthihi na bokisi ḽithihi ḽa u ikhela kha khuhu nṋa kana ṱhanu.
-- Tshaka dza henefho sa Koekoek, Venda, Ovambo, Naked Neck na Boschveld dzi a konḓelela; haibiridi dza u rengisa dzi ikhela makumba manzhi fhedzi dzi ṱoḓa ṱhogomelo nnzhi.
-- Ṱhavhelani kha vhulwadze ha Newcastle, ni dovholole nga misi yoṱhe, vheani khuhu ntswa kule nga u thoma, nahone ni vhige lufu lwa u ṱavhanya kha dokotela wa zwifuwo wa muvhuso.
-- Nguluvhe dzi kunakisa mavu zwavhuḓi fhedzi dzi fanela u valelwa nga lufhenḓe lwavhuḓi; nga mulayo, swill ya khishini i fanela u vhiliswa lwa awara nthihi phanḓa ha uri nguluvhe dzi i ḽe.
-- Madada a ḽa khumba (slugs, snails) fhedzi a ṱoḓa maḓi a dzhenaho ṱhoho yoṱhe; a valeleni, kule na mavu a re na maḓi.
-- Ṋotshi dza Afrika Tshipembe dzi a ḓitsireledza nga maanḓa; ḓiṅwaliseni sa mufuwi wa ṋotshi, vheani nnḓu dza ṋotshi kule na vhathu na zwipuka, nahone ni songo vhuya na ṋea ṋotshi dza u ḽiwa kha ṋotshi.
-- U lumiwa nga ṋotshi zwi nga ita uri muvhili u fhindule nga nḓila i vhulahaho (allergic reaction); ambarani zwiambaro zwa tsireledzo nahone ni wane thuso ya shishi musi hu na u zwimba kana u konḓelwa u fema.
+- Sedzani ṱhoḓea, zwibveledzwa na maitele a tshifuwo tshiṅwe na tshiṅwe, ni zwi ṱumanye na bulasi yoṱhe.
+- Dzi-animal tractor dzi pfukisa zwifuwo kha mavu uri manyaga, u kwenya na u gwa hazwo zwi ite mushumo u shumaho.
+- Khuhu dzi ṱoḓa zwiḽiwa zwo linganyiswaho, mateya, khalisiamu, maḓi o kunaho na nnḓu ine dzi-predator (zwipuka zwi ḽaho zwiṅwe) dza sa kone u dzhena khayo, na ṱhavhelo ya Newcastle nga murahu ha miṅwedzi mishoni.
+- Nguluvhe dzi kunakisa mavu nahone dada dzi fhelisa khumba, fhedzi zwoṱhe zwi fanela u pfalelwa zwavhuḓi.
+- Vhewani nnḓu dza ṋotshi kule na vhathu, ṋeani ṋotshi zwiḽiwa nga maluvha ṅwaha woṱhe, nahone ni songo vhuya na dzi ṋea ṋotshi dza u ḽiwa.
+
+Thomani nga tshifuwo tshithihi na mushumo muthihi. Mushumo wa vhuvhili u ḓo ḓisumbedza, nga murahu wa vhuraru.

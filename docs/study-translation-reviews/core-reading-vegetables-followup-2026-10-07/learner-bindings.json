@@ -1,0 +1,20 @@
+{
+  "base": "c4c6d4c847e04adfc47992841ef481d22f497df4",
+  "bindings": [
+    {
+      "language": "st",
+      "lessonId": "reading-landscape-l3",
+      "field": "body paragraph3 first sentence",
+      "preserve": "remaining body/source/status/quiz indices"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "field": "quiz1 rationale first sentence",
+      "correctIndex": 2,
+      "preserve": "second sentence/exact source/options/status/indices"
+    }
+  ],
+  "checkpointCorrection": "Prior conversation checkpoint called VE rationale L2. Actual source registry and canonical bind this accepted sentence to L3 quiz1. No content was moved or source changed.",
+  "fluentApproval": false
+}

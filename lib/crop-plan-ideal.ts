@@ -24,6 +24,7 @@
  */
 import {
   autoSuggestPlan,
+  chosenButUnplacedNote,
   fillFirstSeasonGaps,
   recomputeLaterThisYear,
   type AutoSuggestAnswers,
@@ -132,7 +133,9 @@ export const IDEAL_PLAN_COPY = {
   // was which — a ↻ glyph and a fade, both explained in small print below the
   // grid, were the whole signal. Named on the axis instead.
   yearOneBand: 'Year one — from this month',
-  yearTwoBand: 'Year two — the full year, and every year after',
+  // The production grid also carries perennial plants: their ages and yields change rather
+  // than repeating year two forever. Only the saved annual sowings are recurring.
+  yearTwoBand: 'Year two — repeat crops; check plant ages',
   twoYearHeading: 'Your first year, and the year it settles into',
   twoYearLine:
     'This plan covers two years. The first fills your beds from today, so some months in it are still thin while crops get into the ground. The second is the full repeating year — that is the one to work towards.',
@@ -272,6 +275,28 @@ function insertNoteOrdered(notes: readonly PlanNote[], note: PlanNote): PlanNote
   return [...notes.slice(0, at), note, ...notes.slice(at)];
 }
 
+/** The engine's "chosen but didn't fit anywhere" warning is written before the first-season
+ * starters exist. A crop a starter then places printed as "didn't fit anywhere" in the same PDF
+ * that sowed it in four beds, so it moves to its own, true sentence: in this year as a starter,
+ * absent from the repeating plan. */
+function reconcileUnplacedNote(notes: readonly PlanNote[], starters: readonly Planting[], beds: readonly PlanBed[]): PlanNote[] {
+  const starterKeys = new Set(starters.map((planting) => planting.cropKey));
+  const out: PlanNote[] = [];
+  for (const note of notes) {
+    if (!note.unplacedCropKeys?.some((key) => starterKeys.has(key))) { out.push(note); continue; }
+    const crops = note.unplacedCropKeys.map((key) => cropByKey(key)).filter((crop) => crop !== undefined);
+    const still = chosenButUnplacedNote(crops.filter((crop) => !starterKeys.has(crop.key)), beds);
+    if (still) out.push(still);
+    const starterOnly = crops.filter((crop) => starterKeys.has(crop.key));
+    const one = starterOnly.length === 1;
+    out.push({
+      kind: 'warning',
+      text: `${starterOnly.map((crop) => crop.name).join(', ')} ${one ? 'goes' : 'go'} in only as a first-season starter — the repeating plan had no room for ${one ? 'it' : 'them'}, so add ${one ? 'it' : 'them'} by hand for later years if you want ${one ? 'it' : 'them'}.`,
+    });
+  }
+  return out;
+}
+
 /** Beds where the winning cycle's proposed plantings may collide with a crop
  * the farmer confirmed is REALLY growing right now. Every anchor run ages
  * existing rows against its own synthetic month, so the winner was chosen on
@@ -374,7 +399,7 @@ export function suggestIdealYearPlan(
   const finalPlantings = [...winner.result.plantings, ...fill.starters];
 
   // ---- truthfulness pass (on copies — the raw engine result is not mutated)
-  let notes = winner.result.notes;
+  let notes = reconcileUnplacedNote(winner.result.notes, fill.starters, beds);
   for (const note of fill.notes) notes = insertNoteOrdered(notes, note);
   let laterThisYear = winner.result.laterThisYear;
   if (winner.result.plantings.length) {

@@ -5,12 +5,10 @@ import { useRouter } from 'next/navigation';
 import {
   ClipboardList, Plus, Check, Send, ChevronDown, ChevronUp, Loader2, X,
 } from 'lucide-react';
-import BackButton from '@/components/BackButton';
-import BrandLogo from '@/components/BrandLogo';
-import SettingsButton from '@/components/SettingsButton';
+import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
-import MenuButton from '@/components/MenuButton';
+import workspace from '@/components/layout/Workspace.module.css';
 import { useAuth } from '@/lib/auth';
 import { useAppLevel } from '@/lib/app-level';
 import { isBackendConfigured } from '@/lib/firebase/init';
@@ -24,7 +22,6 @@ import {
 } from '@/lib/db/queries';
 import type { Survey, SurveyQuestion, SurveyQType } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n';
-import { APP_HEADER_STYLE } from '@/lib/app-header';
 
 function localUi(en: string, zu: string, lang: string) {
   return lang === 'zu' ? zu : en;
@@ -172,7 +169,7 @@ function QuestionBuilder({
           onChange={(e) => onChange({ ...q, text: e.target.value })}
           placeholder={localUi('Question text...', 'Umbhalo wombuzo...', lang)}
           aria-label={localUi('Question text', 'Umbhalo wombuzo', lang)}
-          className="flex-1 font-sans text-sm rounded-xl px-3 py-2 outline-none"
+          className="flex-1 font-sans text-sm rounded-xl px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
           style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
         />
         <button
@@ -191,7 +188,7 @@ function QuestionBuilder({
           onChange={(e) => onChange({ ...q, text_zu: e.target.value })}
           placeholder="Umbhalo wesiZulu (uyazikhethela)"
           aria-label="Umbhalo wesiZulu wombuzo (uyazikhethela)"
-          className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
+          className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
           style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
         />
       )}
@@ -228,7 +225,7 @@ function QuestionBuilder({
                 value={opt}
                 onChange={(e) => setOption(i, e.target.value)}
                 placeholder={`Option ${i + 1}`}
-                className="flex-1 font-sans text-xs rounded-lg px-2.5 py-1.5 outline-none"
+                className="flex-1 font-sans text-xs rounded-lg px-2.5 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                 style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
               />
               {lang === 'zu' && (
@@ -237,7 +234,7 @@ function QuestionBuilder({
                   onChange={(e) => setOptionZu(i, e.target.value)}
                   placeholder={`Impendulo ${i + 1} ngesiZulu (uyazikhethela)`}
                   aria-label={`Impendulo ${i + 1} ngesiZulu (uyazikhethela)`}
-                  className="flex-1 font-sans text-xs rounded-lg px-2.5 py-1.5 outline-none"
+                  className="flex-1 font-sans text-xs rounded-lg px-2.5 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                   style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
                 />
               )}
@@ -355,7 +352,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
               onChange={(e) => setTitle(e.target.value)}
               placeholder={localUi('Survey title...', 'Isihloko senhlolovo...', lang)}
               aria-label={localUi('Survey title', 'Isihloko senhlolovo', lang)}
-              className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2.5 outline-none"
+              className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
               style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
             />
             {lang === 'zu' && (
@@ -364,7 +361,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
                 onChange={(e) => setTitleZu(e.target.value)}
                 placeholder="Isihloko ngesiZulu (uyazikhethela)"
                 aria-label="Isihloko senhlolovo ngesiZulu (uyazikhethela)"
-                className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2.5 outline-none"
+                className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                 style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
               />
             )}
@@ -373,7 +370,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
               onChange={(e) => setOrgName(e.target.value)}
               placeholder={localUi('Organisation name...', 'Igama lenhlangano...', lang)}
               aria-label={localUi('Organisation name', 'Igama lenhlangano', lang)}
-              className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
+              className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
               style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
             />
           </div>
@@ -403,7 +400,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
 
           {sampleNote && (
             <p className="text-xs font-sans rounded-xl px-3 py-2" style={{ background: 'rgba(192,122,30,0.09)', color: 'var(--gold-dim)', border: '1px solid rgba(192,122,30,0.2)' }}>
-              {localUi('tour mode — connect Firebase to save surveys live.', 'Imodi yokubonisa — xhuma i-Firebase ukuze ulondoloze izinhlolovo.', lang)}
+              {localUi('Sample data — your surveys are not saved yet.', 'Idatha yesibonelo — izinhlolovo zakho azikagcini okwamanje.', lang)}
             </p>
           )}
 
@@ -475,7 +472,7 @@ function SurveyLabelEditor({ survey, onSaved }: { survey: Survey; onSaved: () =>
           onChange={(e) => setTitleZu(e.target.value)}
           placeholder="Isihloko senhlolovo ngesiZulu"
           aria-label={`Isihloko ngesiZulu: ${survey.title}`}
-          className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2 outline-none"
+          className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
           style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
         />
       </div>
@@ -488,7 +485,7 @@ function SurveyLabelEditor({ survey, onSaved }: { survey: Survey; onSaved: () =>
             onChange={(e) => setQuestionsZu((current) => current.map((q, index) => index === questionIndex ? { ...q, text_zu: e.target.value } : q))}
             placeholder="Umbuzo ngesiZulu"
             aria-label={`Umbuzo ngesiZulu: ${question.text}`}
-            className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
+            className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
             style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
           />
           {question.options.map((option, optionIndex) => (
@@ -501,7 +498,7 @@ function SurveyLabelEditor({ survey, onSaved }: { survey: Survey; onSaved: () =>
                   : q))}
                 placeholder="Impendulo ngesiZulu"
                 aria-label={`Impendulo ngesiZulu: ${option}`}
-                className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
+                className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                 style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
               />
             </div>
@@ -717,7 +714,7 @@ function FarmerSurveyCard({
                   placeholder={localUi('Your answer...', 'Impendulo yakho...', lang)}
                   aria-label={localUi('Your answer', 'Impendulo yakho', lang)}
                   rows={3}
-                  className="w-full font-sans text-sm rounded-xl px-3 py-2.5 outline-none resize-none"
+                  className="w-full font-sans text-sm rounded-xl px-3 py-2.5 outline-none resize-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                   style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
                 />
               )}
@@ -798,23 +795,14 @@ export default function SurveysPage() {
   }
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-      {/* Header */}
-      <header
-        className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3"
-        style={APP_HEADER_STYLE}
-      >
-        <MenuButton />
-        <BackButton fallback="/home" />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{localUi('Surveys', 'Izinhlolovo', lang)}</span>
-        <div className="flex-1" />
-        <LessonLink id="surveys:overview" label={localUi('Learn', 'Funda', lang)} />
-        <SettingsButton />
-      </header>
+    <div className="flex flex-col overflow-hidden h-[100dvh] lg:h-auto lg:min-h-0 lg:overflow-visible" style={{ background: 'var(--bg-0)' }}>
+      <AppHeader
+        title={localUi('Surveys', 'Izinhlolovo', lang)}
+        right={<LessonLink id="surveys:overview" label={localUi('Learn', 'Funda', lang)} />}
+      />
 
-      <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
+      {/* code-14: no max-width at all, so content ran edge to edge at 1280px. */}
+      <main className={`flex-1 overflow-y-auto lg:flex-none lg:overflow-visible px-4 md:px-6 py-4 space-y-4 ${workspace.workspace}`} style={{ paddingBottom: 'var(--lima-fab-clearance, 96px)' }}>
 
         {lang === 'zu' && (
           <p role="note" className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
@@ -827,7 +815,7 @@ export default function SurveysPage() {
         {/* Section heading */}
         <div className="flex items-center gap-2.5">
           <ClipboardList size={16} style={{ color: 'var(--color-forest-800)' }} strokeWidth={1.7} />
-          <h1 className="font-display font-bold text-lg leading-tight" style={{ color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
+          <h1 className="t-h1 font-display" style={{ color: 'var(--text-primary)' }}>
             {isStaff ? localUi('Survey builder', 'Ukwakha inhlolovo', lang) : canAnswer ? localUi('Available surveys', 'Izinhlolovo ezitholakalayo', lang) : localUi('Surveys', 'Izinhlolovo', lang)}
           </h1>
         </div>
@@ -853,7 +841,11 @@ export default function SurveysPage() {
                 <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-muted)', letterSpacing: '0.08em' }}>
                   {localUi('Existing surveys', 'Izinhlolovo ezikhona', lang)}
                 </div>
-                <div className="space-y-3">
+                {/* sdesk-06: at 1280 a single-column stack of surveys left most of the frame
+                    blank below a short list. Workspace's auto-fit card grid (one column on
+                    phone, several at md+) fills that width instead, with align-items:start so
+                    each card's own accordion can open without stretching its row-mates. */}
+                <div className={workspace.cards}>
                   {surveys.map((s) => (
                     <StaffSurveyCard key={s.id} survey={s} isLive={isLive} canEditLabels={s.created_by === user?.uid} onSaved={load} />
                   ))}
@@ -879,7 +871,7 @@ export default function SurveysPage() {
                 </p>
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className={workspace.cards}>
                 {surveys.map((s) => (
                   <FarmerSurveyCard
                     key={s.id}
@@ -911,12 +903,12 @@ export default function SurveysPage() {
 
         {!isLive && (
           <p className="text-center text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
-            {localUi('demonstration records — connect Firebase to go live', 'Amarekhodi okuboniswayo — xhuma i-Firebase ukuze usebenzise uhlelo olubukhoma', lang)}
+            {localUi('Sample data', 'Idatha yesibonelo', lang)}
           </p>
         )}
       </main>
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

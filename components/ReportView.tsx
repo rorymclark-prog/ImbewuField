@@ -39,6 +39,7 @@ import { collectReportSiteFacts } from '@/lib/report-site-facts-collect';
 import type { ReportSiteFacts } from '@/lib/report-site-facts';
 import { reportSummaryPages, buildInkSummaryPdf, sampleFullSiteReport } from '@/lib/report-summary';
 import { REPORT_ZU } from '@/lib/report-localisation';
+import { loadLocale, translate } from '@/lib/i18n';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { recordReportAttempt, reportAttemptSurvived, reportShouldGoLight } from '@/lib/report-attempts';
 import { useAppLevel } from '@/lib/app-level';
@@ -297,10 +298,39 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const simple = useAppLevel() === 'simple';
   const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
   const label = (en: string) => language === 'zu' ? REPORT_ZU[en] ?? en : en;
+  // The report's own language picker (LANGUAGE_OPTIONS) is independent of the app-wide language,
+  // so its locale chunk may never have been fetched — load it so translate() below has real text
+  // to find rather than always falling back to English.
+  useEffect(() => { loadLocale(language); }, [language]);
+  // Climate-footnote values (lib/koppen-global.ts, lib/nasa-power.ts) come from a small fixed set
+  // of English strings, not from tr()/REPORT_ZU's proper-noun-sized dictionary — translate() falls
+  // back to the key itself when neither this language nor English has it, so comparing against
+  // the key catches a code the pending dict hasn't been told about and shows the real description
+  // instead of a raw key name.
+  const koppenDescLabel = (code: string, fallback: string) => {
+    const key = `reportKoppenDesc${code}`;
+    const result = translate(language, key);
+    return result === key ? fallback : result;
+  };
+  const rainfallPatternLabel = (pattern: 'summer' | 'winter' | 'year-round') => translate(language, pattern === 'summer' ? 'reportRainfallPatternSummer' : pattern === 'winter' ? 'reportRainfallPatternWinter' : 'reportRainfallPatternYearRound');
+  const SEASON_MONTH_KEYS: Record<string, string> = { Jan: 'surveyMonthJan', Feb: 'surveyMonthFeb', Mar: 'surveyMonthMar', Apr: 'surveyMonthApr', May: 'surveyMonthMay', Jun: 'surveyMonthJun', Jul: 'surveyMonthJul', Aug: 'surveyMonthAug', Sep: 'surveyMonthSep', Oct: 'surveyMonthOct', Nov: 'surveyMonthNov', Dec: 'surveyMonthDec' };
+  const seasonRangeLabel = (range: string) => {
+    if (range === 'year-round') return translate(language, 'reportSeasonYearRound');
+    if (range === 'none') return translate(language, 'reportSeasonNone');
+    const [start, end] = range.split('–');
+    const startKey = SEASON_MONTH_KEYS[start];
+    const endKey = SEASON_MONTH_KEYS[end];
+    if (!startKey || !endKey) return range;
+    return `${translate(language, startKey)}–${translate(language, endKey)}`;
+  };
   const displayError = (message: string) => {
     if (language !== 'zu') return message;
     const known: Record<string, string> = {
       'Could not build the PDF.': 'Umbiko we-PDF awukwazanga ukwakhiwa.',
+      // copy-16: reuses the same two already-translated halves above/below rather than coining
+      // new phrasing — 'Could not build the PDF.' and the 'Check your connection…' sentence
+      // already used verbatim elsewhere (e.g. app/community/page.tsx).
+      'Could not build the PDF. Check your connection and try again.': 'Umbiko we-PDF awukwazanga ukwakhiwa. Hlola uxhumano lwakho bese uzama futhi.',
       'No signal — writing the report needs internet. Your section choices are kept; try again when you have bars.': 'Ayikho inethiwekhi — kudingeka i-inthanethi ukuze kubhalwe umbiko. Izigaba ozikhethile zigciniwe; zama futhi uma inethiwekhi isibuya.',
     };
     return known[message] ?? message;
@@ -813,9 +843,13 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       setPdfState('done');
       setTimeout(() => setPdfState('idle'), 2500);
     } catch (err) {
-      // Never fail silently again — that was the whole bug.
+      // Never fail silently again — that was the whole bug. copy-16: the raw JavaScript message
+      // ('Failed to fetch', 'NetworkError when attempting to fetch resource...') used to be
+      // appended straight onto the farmer-facing sentence. It still goes to the console for
+      // whoever debugs this; the farmer only sees the translated sentence.
+      if (err instanceof Error) console.error('PDF export failed:', err.message);
       setPdfState('error');
-      setError(displayError(err instanceof Error ? `${tr('Could not build the PDF', 'Umbiko we-PDF awukwazanga ukwakhiwa')}: ${err.message}` : 'Could not build the PDF.'));
+      setError(displayError('Could not build the PDF. Check your connection and try again.'));
       setTimeout(() => setPdfState('idle'), 4000);
     }
   }, [report, d, reading, language, facts, includeImages, activeSaved, ecology.placeName, photoGallery, reportDate, presentation, mapCapture, chapterVisuals, siteName, contentLanguage, coverPhoto, captureCover, useCoverMap, cropMapMonth, includeCropWorkingPlan, pdfVisuals, siteKey, selectedMapIds]);
@@ -844,7 +878,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         className={`${styles.toolbar} no-print flex-shrink-0 flex flex-wrap items-center gap-x-3 gap-y-2 px-3 md:px-6 py-2.5 md:py-3`}
         style={{ background: 'var(--report-panel)', borderBottom: '1px solid var(--report-border)' }}
       >
-        <button onClick={onClose} className="text-xs font-mono px-3 py-1.5 rounded-lg transition-all flex-shrink-0"
+        <button onClick={onClose} className="min-h-11 text-xs font-sans px-3 py-1.5 rounded-lg transition-all flex-shrink-0"
                 style={{ color: 'var(--report-muted)', background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
           {tr('Back', 'Emuva')}
         </button>
@@ -853,7 +887,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           <div className="text-sm font-display font-semibold truncate" style={{ color: 'var(--report-ink)' }}>
             {siteName} · {tr('Site report', 'Umbiko wendawo')}
           </div>
-          <div className="text-xs font-mono truncate" style={{ color: 'var(--report-muted)' }}>
+          <div className="text-xs font-sans truncate" style={{ color: 'var(--report-muted)' }}>
             {ecology.label} · {Math.abs(d.lat).toFixed(3)}°S {d.lon.toFixed(3)}°E
           </div>
         </div>
@@ -863,7 +897,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         {!isWide && (
           <button
             onClick={() => setPanelOpen((v) => !v)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-medium transition-all flex-shrink-0"
+            className="min-h-11 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-medium transition-all flex-shrink-0"
             style={panelOpen
               ? { background: 'rgba(31,77,43,0.15)', border: '1px solid rgba(31,77,43,0.4)', color: 'var(--report-green)' }
               : { background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-muted)' }}
@@ -881,7 +915,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {generated && (
             <button
               onClick={handleSaveReport}
-              className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
+              className="min-h-11 flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
               style={saveFailed
                 ? { background: 'rgba(154,52,18,0.12)', border: '1px solid rgba(154,52,18,0.45)', color: '#9A3412' }
                 : justSaved
@@ -900,7 +934,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             <button
               onClick={exportPdf}
               disabled={pdfState === 'working'}
-              className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
+              className="min-h-11 flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
               style={{
                 background: 'linear-gradient(135deg, rgba(192,122,30,0.15), rgba(192,122,30,0.06))',
                 border: '1px solid rgba(192,122,30,0.35)',
@@ -916,7 +950,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {generated && (
             <button
               onClick={shareReport}
-              className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
+              className="min-h-11 flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
               style={{
                 background: copied ? 'rgba(35,94,134,0.15)' : 'rgba(35,94,134,0.08)',
                 border: '1px solid rgba(35,94,134,0.3)',
@@ -937,14 +971,14 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           <button
             onClick={generate}
             disabled={loading || selected.size === 0 || plateSet.scope !== sheetScope}
-            className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-semibold transition-all"
+            className="min-h-11 flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-semibold transition-all"
             style={
               loading || selected.size === 0
                 ? { background: 'rgba(226,216,196,0.6)', color: 'var(--report-muted)', border: '1px solid var(--report-border)' }
                 : {
                     background: 'var(--report-button)',
                     border: '1px solid rgba(31,77,43,0.6)',
-                    color: '#F7F2E9',
+                    color: 'var(--on-forest)',
                     boxShadow: '0 0 16px rgba(31,77,43,0.2)',
                   }
             }
@@ -981,7 +1015,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             <button
               onClick={() => setPanelOpen(false)}
               className="w-full flex items-center justify-center gap-2 mb-4 py-2.5 rounded-lg text-sm font-display font-semibold"
-              style={{ background: 'var(--report-button)', color: '#F7F2E9', border: 'none' }}
+              style={{ background: 'var(--report-button)', color: 'var(--on-forest)', border: 'none' }}
             >
               <FileText size={14} />{tr('Read the report', 'Funda umbiko')}
             </button>
@@ -990,18 +1024,18 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {/* Saved reports — reopen a past report without regenerating */}
           {savedList.length > 0 && (
             <div className="mb-4">
-              <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Saved reports')}</div>
+              <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Saved reports')}</div>
               <div className="flex flex-col gap-1.5">
                 {savedList.map((r) => (
                   <div key={r.id} className="flex items-center gap-1 rounded-lg" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
                     <button disabled={loading} onClick={() => openSaved(r)}
-                      className="flex-1 min-w-0 text-left px-2.5 py-1.5 rounded-lg"
+                      className="min-h-11 flex-1 min-w-0 text-left px-2.5 py-1.5 rounded-lg"
                       style={{ color: activeSaved?.id === r.id ? 'var(--report-green)' : 'var(--report-ink)' }}>
                       <div className="text-xs font-display">{reportSiteName(r, savedPlaces)}</div>
                       <div className="text-xs">{new Date(r.savedAt).toLocaleString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { dateStyle: 'medium', timeStyle: 'medium' })} · {tr('Ref', 'Inombolo')} {r.id.slice(-5)}</div>
                     </button>
                     <button onClick={() => deleteReport(r.id)} title={tr('Delete', 'Susa')}
-                      className="px-2 py-1.5 text-xs font-display" style={{ color: 'var(--report-muted)' }}>{tr('Delete', 'Susa')}</button>
+                      className="min-h-11 px-2 py-1.5 text-xs font-display" style={{ color: 'var(--report-muted)' }}>{tr('Delete', 'Susa')}</button>
                   </div>
                 ))}
               </div>
@@ -1014,11 +1048,11 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           </div>
           <fieldset disabled={loading}>
           {/* Language */}
-          <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Language')}</div>
+          <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Language')}</div>
           <select
             value={language}
             onChange={(e) => { setLanguage(e.target.value); if (e.target.value === 'en') setBilingual(false); }}
-            className="w-full text-xs font-display rounded-lg px-2.5 py-1.5 mb-2 outline-none cursor-pointer"
+            className="min-h-11 w-full text-xs font-display rounded-lg px-2.5 py-1.5 mb-2 outline-none cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--report-panel)]"
             style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-ink)' }}
           >
             {LANGUAGE_OPTIONS.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
@@ -1026,7 +1060,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {language !== 'en' && (
             <button
               onClick={() => setBilingual(!bilingual)}
-              className="w-full flex items-center justify-between px-2.5 py-1.5 mb-4 rounded-lg text-xs font-display transition-all"
+              className="min-h-11 w-full flex items-center justify-between px-2.5 py-1.5 mb-4 rounded-lg text-xs font-display transition-all"
               style={bilingual
                 ? { background: 'rgba(45,107,60,0.12)', border: '1px solid rgba(45,107,60,0.35)', color: 'var(--report-green)' }
                 : { background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-muted)' }}
@@ -1037,11 +1071,11 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           )}
 
           {/* Tone */}
-          <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Wording')}</div>
+          <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Wording')}</div>
           <div className="flex gap-1.5 mb-4">
             {([['simple', 'Simple'], ['professional', 'Detailed']] as const).map(([val, optionLabel]) => (
               <button key={val} aria-pressed={tone === val} onClick={() => setTone(val)}
-                className="flex-1 py-1.5 rounded-lg text-xs font-display transition-all"
+                className="min-h-11 flex-1 py-1.5 rounded-lg text-xs font-display transition-all"
                 style={tone === val
                   ? { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--report-green)' }
                   : { background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-muted)' }}>
@@ -1051,7 +1085,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           </div>
 
           {/* Length */}
-          <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{tr('Advice depth', 'Ukujula kwezeluleko')}</div>
+          <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{tr('Advice depth', 'Ukujula kwezeluleko')}</div>
           <div className="flex flex-col gap-1.5 mb-4">
             {([
               ['one-pager', 'Brief advice', 'Generate brief advice. Choose At a glance for a 1-page summary PDF.'] as const,
@@ -1064,7 +1098,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 else if (val === 'comprehensive') setSelected(new Set(ALL_SECTIONS));
                 else setSelected(prev => prev.size <= 1 ? new Set(FARMER_ESSENTIALS) : prev);
               }}
-                className="w-full py-1.5 rounded-lg text-xs font-display transition-all text-left px-2.5"
+                className="min-h-11 w-full py-1.5 rounded-lg text-xs font-display transition-all text-left px-2.5"
                 title={language === 'zu' ? ({
                   'Generate brief advice. Choose At a glance for a 1-page summary PDF.': 'Khiqiza izeluleko ezimfushane. Khetha Ngokubheka nje ukuze uthole i-PDF yesifinyezo sekhasi elilodwa.',
                   'Core sections for the farmer': 'Izigaba ezisemqoka zomlimi.',
@@ -1079,22 +1113,22 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           </div>
 
           <div className="flex items-center justify-between mb-2">
-            <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--report-muted)' }}>{label('Sections')}</div>
+            <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--report-muted)' }}>{label('Sections')}</div>
             <div className="flex gap-1">
               <button onClick={() => setSelected(new Set(FARMER_ESSENTIALS))}
-                className="text-xs font-mono px-1.5 py-0.5 rounded transition-all"
+                className="min-h-11 text-xs font-sans px-1.5 py-0.5 rounded transition-all"
                 style={{ color: 'var(--report-green)', background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.2)' }}
                 title={tr('Select the sections most useful to a small-scale farmer', 'Khetha izigaba eziwusizo kakhulu kumlimi omncane')}>
                 {tr('Farmer', 'Umlimi')}
               </button>
               <button onClick={() => setSelected(new Set(ALL_SECTIONS))}
-                className="text-xs font-mono px-1.5 py-0.5 rounded transition-all"
+                className="min-h-11 text-xs font-sans px-1.5 py-0.5 rounded transition-all"
                 style={{ color: 'var(--report-muted)', background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}
                 title={tr('Select all sections', 'Khetha zonke izigaba')}>
                 {tr('All', 'Zonke')}
               </button>
               <button onClick={() => setSelected(new Set())}
-                className="text-xs font-mono px-1.5 py-0.5 rounded transition-all"
+                className="min-h-11 text-xs font-sans px-1.5 py-0.5 rounded transition-all"
                 style={{ color: 'var(--report-danger)', background: 'rgba(155,64,64,0.1)', border: '1px solid rgba(155,64,64,0.2)' }}
                 title={tr('Deselect all sections', 'Susa ukukhetha kuzo zonke izigaba')}>
                 {tr('None', 'Azikho')}
@@ -1102,7 +1136,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             </div>
           </div>
           {length === 'one-pager' && (
-            <div className="text-xs font-mono px-2 py-1.5 rounded-lg mb-1" style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--report-gold)' }}>
+            <div className="text-xs font-sans px-2 py-1.5 rounded-lg mb-1" style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--report-gold)' }}>
               {tr('Brief advice = Executive Summary only. Choose At a glance or Field guide for a fixed-page summary PDF.', 'Izeluleko ezimfushane = isifinyezo kuphela. Khetha inani lamakhasi ezinkinobheni zesifinyezo ezingenhla.')}
             </div>
           )}
@@ -1115,7 +1149,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                   next.has(s) ? next.delete(s) : next.add(s);
                   return next;
                 })}
-                className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-display text-left transition-all"
+                className="min-h-11 w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-display text-left transition-all"
                 style={
                   selected.has(s)
                     ? { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--report-green)' }
@@ -1133,17 +1167,19 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {photoAnalysis && (
             <div className="mt-4 p-2.5 rounded-lg" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.2)' }}>
               <div className="text-xs font-display font-medium mb-0.5" style={{ color: 'var(--report-green)' }}>{label('Photos included')}</div>
-              <div className="text-xs font-mono" style={{ color: 'var(--report-muted)' }}>{label('Photo analysis will inform the report')}</div>
+              <div className="text-xs font-sans" style={{ color: 'var(--report-muted)' }}>{label('Photo analysis will inform the report')}</div>
             </div>
           )}
 
           {/* Satellite capture status */}
           <div className="mt-3 p-2.5 rounded-lg" style={{ background: mapCapture ? 'rgba(31,77,43,0.06)' : 'rgba(226,216,196,0.4)', border: `1px solid ${mapCapture ? 'rgba(31,77,43,0.2)' : 'var(--report-border)'}` }}>
-            <div className="text-xs font-display font-medium mb-0.5" style={{ color: mapCapture ? 'var(--report-green)' : 'var(--report-muted)' }}>
-              {mapCapture ? tr('✓ Aerial snapshot captured', '✓ Isithombe sasemoyeni sigciniwe') : tr('No aerial snapshot', 'Asikho isithombe sasemoyeni')}
+            <div className="text-xs font-display font-medium mb-0.5 flex items-center gap-1" style={{ color: mapCapture ? 'var(--report-green)' : 'var(--report-muted)' }}>
+              {/* code-11: a literal '✓' text glyph — Lucide only. */}
+              {mapCapture && <Check size={12} aria-hidden />}
+              {mapCapture ? tr('Aerial snapshot captured', 'Isithombe sasemoyeni sigciniwe') : tr('No aerial snapshot', 'Asikho isithombe sasemoyeni')}
             </div>
             {!mapCapture && (
-              <div className="text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
+              <div className="text-xs font-sans" style={{ color: 'var(--report-muted)' }}>
                 {tr('Close report → zoom into your site on the map → tap Capture → reopen', 'Vala umbiko → sondeza indawo ebalazweni → thepha Capture → uvule umbiko futhi')}
               </div>
             )}
@@ -1155,7 +1191,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             if (!tocItems.length) return null;
             return (
               <div className="mt-6 pt-4" style={{ borderTop: '1px solid var(--report-border)' }}>
-                <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>
+                <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>
                   {tr('In this report', 'Kulo mbiko')}
                 </div>
                 <div className="space-y-0.5">
@@ -1163,7 +1199,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                     <button
                       key={id}
                       onClick={() => jumpToChapter(id)}
-                      className="w-full text-left px-2 py-1.5 rounded-lg text-xs font-display transition-all"
+                      className="min-h-11 w-full text-left px-2 py-1.5 rounded-lg text-xs font-display transition-all"
                       style={{ color: 'var(--report-muted)', background: 'transparent', border: '1px solid transparent' }}
                       onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = 'var(--report-ink)'; (e.target as HTMLButtonElement).style.background = 'var(--report-panel)'; }}
                       onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = 'var(--report-muted)'; (e.target as HTMLButtonElement).style.background = 'transparent'; }}
@@ -1242,14 +1278,14 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
 
               {/* Coords */}
               {simple ? (
-                <div className="mt-3 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
+                <div className="mt-3 text-xs font-sans" style={{ color: 'var(--report-muted)' }}>
                   {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E
                 </div>
               ) : (
                 <>
-                  <div className="mt-3 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
-                    {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E · {tr('Köppen climate class', 'Uhlobo lwesimo sezulu i-Köppen')} {d.climate.koppen} ({d.climate.koppenDesc}) ·
-                    {' '}{d.rainfall.pattern} {tr('rainfall', 'imvula')} · {d.rainfall.wetSeason} {tr('wet', 'manzi')} / {d.rainfall.drySeason} {tr('dry', 'omile')} ·
+                  <div className="mt-3 text-xs font-sans" style={{ color: 'var(--report-muted)' }}>
+                    {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E · {tr('Köppen climate class', 'Uhlobo lwesimo sezulu i-Köppen')} {d.climate.koppen} ({koppenDescLabel(d.climate.koppen, d.climate.koppenDesc)}) ·
+                    {' '}{rainfallPatternLabel(d.rainfall.pattern)} {tr('rainfall', 'imvula')} · {seasonRangeLabel(d.rainfall.wetSeason)} {tr('wet', 'manzi')} / {seasonRangeLabel(d.rainfall.drySeason)} {tr('dry', 'omile')} ·
                     {' '}{d.climate.meanTemp}°C {tr('mean', 'isilinganiso')} ({d.climate.minTemp}–{d.climate.maxTemp}°C)
                   </div>
 
@@ -1257,7 +1293,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                     // Rainfall intentionally omitted from this footnote — the "Rainfall" summary tile above
                     // is the single measured annual figure for this site; restating BRU's zone-average mm/yr
                     // here reads as a second, conflicting rainfall claim for a non-expert reader.
-                    <div className="mt-1 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
+                    <div className="mt-1 text-xs font-sans" style={{ color: 'var(--report-muted)' }}>
                       {d.bru.attribution} — {tr('BRU zone', 'Isigodi se-BRU')} {d.bru.brucode} ({tr('parent zone', 'isigodi esiyisisekelo')} {d.bru.bruParent}): {d.bru.tmean}°C {tr('mean', 'isilinganiso')} ({d.bru.tmin}–{d.bru.tmax}°C).
                       {' '}{tr(
                         `Zone name "${d.bru.nearestBrg}" is a best-effort climate match, not a verified BRU→Bioresource Group crosswalk.`,
@@ -1274,17 +1310,22 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             {/* Captured satellite view */}
             {showVisuals && mapCapture && !activeSaved && (
               <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
-                <div className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: 'var(--report-muted)' }}>
+                <div className="text-xs font-sans uppercase tracking-wider mb-3" style={{ color: 'var(--report-muted)' }}>
                   {label('Site Satellite View')}
                 </div>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={`data:image/jpeg;base64,${mapCapture}`}
-                  alt={tr('Captured satellite view of the site', 'Isithombe sesathelayithi esithathwe sendawo')}
-                  className="w-full rounded-lg"
-                  style={{ border: '1px solid var(--report-border)' }}
-                />
-                <div className="text-xs font-mono mt-2" style={{ color: 'var(--report-muted)', opacity: 0.7 }}>
+                {/* code-20: no width/height (the capture's pixel size isn't known at this call
+                    site), so an aspect-ratio on the wrapper holds the layout's height before the
+                    image decodes instead of the card collapsing then jumping. */}
+                <div style={{ aspectRatio: '4 / 3', overflow: 'hidden', borderRadius: 8 }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`data:image/jpeg;base64,${mapCapture}`}
+                    alt={tr('Captured satellite view of the site', 'Isithombe sesathelayithi esithathwe sendawo')}
+                    className="w-full h-full rounded-lg"
+                    style={{ border: '1px solid var(--report-border)', objectFit: 'cover' }}
+                  />
+                </div>
+                <div className="text-xs font-sans mt-2" style={{ color: 'var(--report-muted)', opacity: 0.7 }}>
                   {tr('Maxar satellite imagery', 'Imifanekiso yesathelayithi yakwa-Maxar')} · {Math.abs(d.lat).toFixed(4)}°S {d.lon.toFixed(4)}°E
                 </div>
               </div>
@@ -1693,7 +1734,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             margin-top: 32pt !important;
             padding-top: 8pt !important;
             border-top: 1px solid #cccccc !important;
-            font-family: var(--font-mono), monospace !important;
+            font-family: var(--font-sans), sans-serif !important;
             font-size: 8pt !important;
             color: #888888 !important;
             text-align: center !important;

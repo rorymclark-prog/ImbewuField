@@ -2613,7 +2613,8 @@ export default function DesignCanvas({
                         textOverflow: 'ellipsis',
                       }}
                     >
-                      {adopted ? `✓ ${layer.name}` : layer.name}
+                      {adopted && <Check size={11} aria-hidden style={{ display: 'inline-block', verticalAlign: '-1px', marginRight: 3 }} />}
+                      {layer.name}
                     </div>
                   </foreignObject>
                   </g>
@@ -2859,6 +2860,7 @@ export default function DesignCanvas({
                                 onChange={(e) => setEditingText(e.target.value)}
                                 onPointerDown={(e) => e.stopPropagation()}
                                 {...keyHandlers}
+                                className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                                 style={fieldStyle}
                               />
                               <input
@@ -2868,6 +2870,7 @@ export default function DesignCanvas({
                                 {...keyHandlers}
                                 placeholder={t('designCanvasLevelPlaceholder')}
                                 inputMode="decimal"
+                                className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                                 style={fieldStyle}
                               />
                               {isTerraceBank && (
@@ -2880,6 +2883,7 @@ export default function DesignCanvas({
                                     average: wholeSiteAvg != null ? wholeSiteAvg.toFixed(0) : '—',
                                   })}
                                   inputMode="decimal"
+                                  className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                                   style={fieldStyle}
                                 />
                               )}
@@ -3186,6 +3190,7 @@ export default function DesignCanvas({
                             >
                               <input
                                 autoFocus
+                                className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                                 value={editingText}
                                 onChange={(e) => setEditingText(e.target.value)}
                                 onPointerDown={(e) => e.stopPropagation()}
@@ -3214,6 +3219,7 @@ export default function DesignCanvas({
                                 <label style={{ display: 'block', marginTop: 3 }}>
                                   <span style={labelStyle}>{t('designCanvasSwaleWidthLabel')}</span>
                                   <input
+                                    className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                                     value={editingSwaleWidthText}
                                     onChange={(e) => setEditingSwaleWidthText(e.target.value)}
                                     onPointerDown={(e) => e.stopPropagation()}

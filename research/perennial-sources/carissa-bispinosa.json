@@ -1,0 +1,62 @@
+{
+  "speciesId": "carissa-bispinosa",
+  "commonName": "Num-num / forest num-num",
+  "botanicalName": "Carissa bispinosa",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "edible ripe berries",
+  "supplementaryReferences": [
+    {
+      "title": "Edible part and local use",
+      "quote": "The whole fruit, including the seed, is edible",
+      "url": "https://pza.sanbi.org/carissa-bispinosa",
+      "doc": "SANBI PlantZAfrica, carissa-bispinosa",
+      "page": null,
+      "note": "The edible berry must be distinguished from bark, which the source describes as containing a poisonous glucoside."
+    }
+  ],
+  "productionGuidance": {
+    "products": "edible ripe berries",
+    "care": [
+      "Protect young plants from cold; use well-drained soil in sun or semi-shade. SANBI describes frost tenderness and tolerance of sea breezes."
+    ],
+    "purchase": [
+      "Ask for botanically identified Carissa bispinosa and local provenance. The checked source supplies no named fruit cultivar."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/carissa-bispinosa",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    }
+  ],
+  "gaps": [
+    "March–October is edible-berry production, not an explicitly measured ripe-picking interval; record the actual farm's ripe months. No ages or kg."
+  ]
+}

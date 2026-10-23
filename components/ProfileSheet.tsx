@@ -4,14 +4,15 @@ import { X, Camera, Check, Loader2, User } from 'lucide-react';
 import { uploadProfilePhoto, updateMyProfile } from '@/lib/db/queries';
 import { resizeFileForUpload } from '@/lib/site-evidence';
 import type { Profile } from '@/lib/db/types';
+import { useLanguage } from '@/lib/i18n';
 
-const ROLE_LABEL: Record<string, string> = {
-  farmer: 'Farmer',
-  mentor: 'Mentor',
-  student: 'Student',
-  ngo: 'NGO Staff',
-  funder: 'Funder',
-  admin: 'Admin',
+const ROLE_LABEL_KEY: Record<string, string> = {
+  farmer: 'profileRoleFarmer',
+  mentor: 'profileRoleMentor',
+  student: 'profileRoleStudent',
+  ngo: 'profileRoleNgo',
+  funder: 'profileRoleFunder',
+  admin: 'profileRoleAdmin',
 };
 
 const ROLE_COLOR: Record<string, string> = {
@@ -23,15 +24,17 @@ const ROLE_COLOR: Record<string, string> = {
   admin: '#5C5040',
 };
 
-const SKILL_OPTIONS = [
-  'soil health',
-  'water harvesting',
-  'agroforestry',
-  'livestock',
-  'composting',
-  'food forest',
-  'market gardening',
-  'seed saving',
+// The value saved to profile.skills stays the canonical English slug; only the on-screen label
+// is translated, the same split SKILL_OPTIONS used for its own static strings before.
+const SKILL_OPTIONS: Array<{ value: string; labelKey: string }> = [
+  { value: 'soil health', labelKey: 'profileSkillSoilHealth' },
+  { value: 'water harvesting', labelKey: 'profileSkillWaterHarvesting' },
+  { value: 'agroforestry', labelKey: 'profileSkillAgroforestry' },
+  { value: 'livestock', labelKey: 'profileSkillLivestock' },
+  { value: 'composting', labelKey: 'profileSkillComposting' },
+  { value: 'food forest', labelKey: 'profileSkillFoodForest' },
+  { value: 'market gardening', labelKey: 'profileSkillMarketGardening' },
+  { value: 'seed saving', labelKey: 'profileSkillSeedSaving' },
 ];
 
 interface Props {
@@ -69,9 +72,9 @@ function SkillChip({
         borderRadius: 999,
         fontSize: 13.5,
         cursor: 'pointer',
-        background: on ? '#1F4D2B' : 'rgba(226,216,196,0.5)',
-        color: on ? '#fff' : '#5C5040',
-        border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`,
+        background: on ? 'var(--color-forest-800)' : 'color-mix(in srgb, var(--border) 50%, transparent)',
+        color: on ? 'var(--on-forest-800)' : 'var(--text-muted)',
+        border: `1px solid ${on ? 'var(--color-forest-800)' : 'var(--border)'}`,
       }}
     >
       {label}
@@ -161,16 +164,19 @@ function InitialsAvatar({ name, size = 80 }: { name: string | null; size?: numbe
         width: size,
         height: size,
         borderRadius: '50%',
-        background: '#1F4D2B',
+        background: 'var(--color-forest-800)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         flexShrink: 0,
       }}
     >
+      {/* code-18: Leaf is a fill colour, not type — DESIGN.md puts it at ~1.2:1 on paper and
+          around 3:1 on this role fill, both well under the AA floor. var(--on-forest) is the
+          token already used for white text on a forest fill elsewhere in this file. */}
       <span
         className="font-display font-semibold"
-        style={{ fontSize: size * 0.35, color: '#A8D88A', lineHeight: 1 }}
+        style={{ fontSize: size * 0.35, color: 'var(--on-forest-800)', lineHeight: 1 }}
       >
         {initials}
       </span>
@@ -179,6 +185,7 @@ function InitialsAvatar({ name, size = 80 }: { name: string | null; size?: numbe
 }
 
 export default function ProfileSheet({ open, onClose, profile, mapCenter, onSaved }: Props) {
+  const { t, lang } = useLanguage();
   const [fullName, setFullName] = useState(profile?.full_name ?? '');
   const [bio, setBio] = useState(profile?.bio ?? '');
   const [skills, setSkills] = useState<string[]>(profile?.skills ?? []);
@@ -265,7 +272,8 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
   if (!open) return null;
 
   const roleColor = ROLE_COLOR[profile?.role ?? 'farmer'] ?? '#5C5040';
-  const roleLabel = ROLE_LABEL[profile?.role ?? 'farmer'] ?? profile?.role ?? '';
+  const roleLabelKey = ROLE_LABEL_KEY[profile?.role ?? 'farmer'];
+  const roleLabel = roleLabelKey ? t(roleLabelKey) : profile?.role ?? '';
   const bioRemaining = 200 - bio.length;
   const hasCoords = !!(profile?.mapLat && profile?.mapLon);
   const needsMapCentre = showOnMap && !hasCoords && !mapCenter;
@@ -276,7 +284,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
     <div
       role="dialog"
       aria-modal="true"
-      aria-label="Your profile"
+      aria-label={t('profileTitle')}
       className="fixed inset-0 z-50 flex flex-col"
       style={{ background: 'var(--bg-0)' }}
     >
@@ -288,8 +296,11 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close"
+          aria-label={t('profileClose')}
+          // 38px paint, 44px hit area (a11y-08).
+          className="u-tap-target"
           style={{
+            ['--tap-inset' as string]: '-3px',
             width: 38,
             height: 38,
             borderRadius: 11,
@@ -310,7 +321,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
             className="font-display font-semibold"
             style={{ fontSize: 16, color: 'var(--text-primary)' }}
           >
-            Your profile
+            {t('profileTitle')}
           </div>
         </div>
       </div>
@@ -321,6 +332,9 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
         style={{ padding: '24px 20px 120px' }}
       >
         <div className="space-y-6">
+          {lang === 'zu' && (
+            <p role="note" className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{t('profileZuluDraftNotice')}</p>
+          )}
 
           {/* ── Photo section ── */}
           <div className="flex flex-col items-center gap-3">
@@ -328,7 +342,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
               {photoUrl ? (
                 <img data-photo-preview
                   src={photoUrl}
-                  alt={fullName || 'Profile photo'}
+                  alt={fullName || t('profilePhotoAlt')}
                   style={{
                     width: 80,
                     height: 80,
@@ -384,19 +398,67 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
               }}
             >
               <Camera size={14} />
-              Change photo
+              {t('profileChangePhoto')}
             </button>
+          </div>
+
+          {/* ── Show on map toggle — first, per lang-06: the location-sharing switch's label
+              and explanation come before any other field. ── */}
+          <div>
+            <SectionLabel>{t('profileMapVisibilityLabel')}</SectionLabel>
+            <div className="space-y-2">
+              <Toggle
+                label={t('profileShowOnMapLabel')}
+                sub={t('profileShowOnMapExplanation')}
+                on={showOnMap}
+                onChange={setShowOnMap}
+              />
+              {showOnMap && !hasCoords && mapCenter && (
+                <div
+                  style={{
+                    background: 'rgba(31,77,43,0.06)',
+                    borderRadius: 11,
+                    padding: '10px 14px',
+                    border: '1px solid rgba(31,77,43,0.2)',
+                  }}
+                >
+                  <p
+                    className="font-sans"
+                    style={{ fontSize: 12.5, color: 'var(--color-forest-800)', lineHeight: 1.5 }}
+                  >
+                    {t('profileLocationWillBePlaced')}
+                  </p>
+                </div>
+              )}
+              {needsMapCentre && (
+                <div
+                  style={{
+                    background: 'rgba(192,122,30,0.07)',
+                    borderRadius: 11,
+                    padding: '10px 14px',
+                    border: '1px solid rgba(192,122,30,0.25)',
+                  }}
+                >
+                  <p
+                    className="font-sans"
+                    style={{ fontSize: 12.5, color: 'var(--gold)', lineHeight: 1.5 }}
+                  >
+                    {t('profilePanMapFirst')}
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* ── Name ── */}
           <div>
-            <SectionLabel>Full name</SectionLabel>
+            <SectionLabel>{t('profileFullNameLabel')}</SectionLabel>
             <input
               type="text"
               value={fullName}
               onChange={e => setFullName(e.target.value)}
-              placeholder="Your name"
-              className="w-full font-sans"
+              placeholder={t('profileFullNamePlaceholder')}
+              className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 w-full font-sans"
               style={{
                 padding: '10px 14px',
                 borderRadius: 11,
@@ -411,7 +473,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
 
           {/* ── Role chip (non-editable) ── */}
           <div>
-            <SectionLabel>Role</SectionLabel>
+            <SectionLabel>{t('profileRoleLabel')}</SectionLabel>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <span
                 className="font-sans font-semibold"
@@ -434,7 +496,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
                 className="font-sans"
                 style={{ fontSize: 12, color: 'var(--text-muted)' }}
               >
-                Roles are set by your programme admin
+                {t('profileRoleSetByAdmin')}
               </span>
             </div>
           </div>
@@ -442,23 +504,23 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
           {/* ── Bio ── */}
           <div>
             <div className="flex items-baseline justify-between mb-2">
-              <SectionLabel>About you</SectionLabel>
+              <SectionLabel>{t('profileAboutYouLabel')}</SectionLabel>
               <span
                 className="font-sans"
                 style={{
                   fontSize: 12,
-                  color: bioRemaining < 20 ? '#B83A18' : '#755942',
+                  color: bioRemaining < 20 ? 'var(--danger)' : 'var(--text-muted)',
                 }}
               >
-                {bioRemaining} left
+                {t('profileBioCharsLeft').replace('{n}', String(bioRemaining))}
               </span>
             </div>
             <textarea
               value={bio}
               onChange={e => setBio(e.target.value.slice(0, 200))}
-              placeholder="A short introduction — your background, what you grow, what you love about permaculture…"
+              placeholder={t('profileBioPlaceholder')}
               rows={3}
-              className="w-full font-sans"
+              className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 w-full font-sans"
               style={{
                 padding: '10px 14px',
                 borderRadius: 11,
@@ -475,62 +537,16 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
 
           {/* ── Skills ── */}
           <div>
-            <SectionLabel>Skills &amp; interests</SectionLabel>
+            <SectionLabel>{t('profileSkillsLabel')}</SectionLabel>
             <div className="flex flex-wrap gap-2">
               {SKILL_OPTIONS.map(skill => (
                 <SkillChip
-                  key={skill}
-                  label={skill}
-                  on={skills.includes(skill)}
-                  onClick={() => toggleSkill(skill)}
+                  key={skill.value}
+                  label={t(skill.labelKey)}
+                  on={skills.includes(skill.value)}
+                  onClick={() => toggleSkill(skill.value)}
                 />
               ))}
-            </div>
-          </div>
-
-          {/* ── Show on map toggle ── */}
-          <div>
-            <SectionLabel>Map visibility</SectionLabel>
-            <div className="space-y-2">
-              <Toggle
-                label="Show my location on the project map"
-                on={showOnMap}
-                onChange={setShowOnMap}
-              />
-              {showOnMap && !hasCoords && mapCenter && (
-                <div
-                  style={{
-                    background: 'rgba(31,77,43,0.06)',
-                    borderRadius: 11,
-                    padding: '10px 14px',
-                    border: '1px solid rgba(31,77,43,0.2)',
-                  }}
-                >
-                  <p
-                    className="font-sans"
-                    style={{ fontSize: 12.5, color: 'var(--color-forest-800)', lineHeight: 1.5 }}
-                  >
-                    Your location will be placed at the current map view centre when you save.
-                  </p>
-                </div>
-              )}
-              {needsMapCentre && (
-                <div
-                  style={{
-                    background: 'rgba(192,122,30,0.07)',
-                    borderRadius: 11,
-                    padding: '10px 14px',
-                    border: '1px solid rgba(192,122,30,0.25)',
-                  }}
-                >
-                  <p
-                    className="font-sans"
-                    style={{ fontSize: 12.5, color: 'var(--gold)', lineHeight: 1.5 }}
-                  >
-                    Pan the map to where you want to appear, then return here to save.
-                  </p>
-                </div>
-              )}
             </div>
           </div>
 
@@ -560,7 +576,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
               : isBusy
               ? 'rgba(32,25,15,0.1)'
               : '#1F4D2B',
-            color: isBusy && !savedFlash ? 'rgba(32,25,15,0.3)' : '#F7F2E9',
+            color: isBusy && !savedFlash ? 'rgba(32,25,15,0.3)' : 'var(--on-forest)',
             border: 'none',
             fontSize: 15,
             cursor: isBusy ? 'default' : 'pointer',
@@ -573,7 +589,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
             />
           )}
           {savedFlash && <Check size={17} style={{ flexShrink: 0 }} />}
-          <span>{savedFlash ? 'Saved!' : 'Save'}</span>
+          <span>{savedFlash ? t('profileSavedFlash') : t('profileSaveButton')}</span>
         </button>
       </div>
 

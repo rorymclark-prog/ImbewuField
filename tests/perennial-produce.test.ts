@@ -82,8 +82,11 @@ test('perennial produce: a cultivar list is not part of the name', () => {
 test('perennial produce: a second language name is not a second produce', () => {
   // "Kei apple / umqokolo" is one fruit written twice, not two picker rows.
   assert.ok(!PERENNIAL_PRODUCE.some((p) => p.label.includes('/')), 'a slashed name leaked through');
-  const kei = PERENNIAL_PRODUCE.find((p) => p.label === 'Kei apple');
-  assert.ok(kei && kei.speciesIds.length >= 2, 'the two Kei apple entries did not merge');
+  // The catalogue once held the Kei apple under both D. afra and D. caffra; it is one entry now
+  // (lib/species-aliases.ts), and still exactly one produce row under its leading name.
+  const kei = PERENNIAL_PRODUCE.filter((p) => p.label === 'Kei apple');
+  assert.strictEqual(kei.length, 1, 'Kei apple is not exactly one produce row');
+  assert.deepStrictEqual(kei[0].speciesIds, ['dovyalis-afra']);
 });
 
 function fixture(over: Partial<Species> & Pick<Species, 'id' | 'commonName'>): Species {

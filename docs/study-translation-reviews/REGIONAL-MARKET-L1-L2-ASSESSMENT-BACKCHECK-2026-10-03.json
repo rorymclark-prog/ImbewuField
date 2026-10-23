@@ -1,0 +1,390 @@
+{
+  "title": "Independent semantic backcheck: Market Community L1/L2 assessment candidates",
+  "date": "2026-10-03",
+  "input": "/tmp/imbewu-regional-market-l1-l2-assessment-candidates-20261003.json",
+  "canonicalSource": "lib/course-modules.ts at review time",
+  "scope": "Assessment translation candidates only; no repository files changed.",
+  "summary": {
+    "candidateCount": 22,
+    "accept": 22,
+    "repair": 0,
+    "hold": 0,
+    "allCandidateSourcesMatchCanonical": true,
+    "seasonalFoodGapPreserved": true,
+    "localCropAndHarvestConditionsPreserved": true,
+    "falseDistractorsRemainFalseOptions": true,
+    "noAddedGuaranteesDetected": true,
+    "correctIndicesMatchCanonical": true,
+    "financialPriceGuidanceHeldEnglish": true,
+    "fluencyApproved": false
+  },
+  "semanticAudit": [
+    {
+      "topic": "Seasonal food gap",
+      "result": "All three L1 question candidates retain the repeated June and July shortage (each year); no extra season or date was introduced."
+    },
+    {
+      "topic": "Useful action",
+      "result": "All three correct option candidates retain working backwards from the gap, locally suitable crops, and crop harvest timing. Their paired rationales retain local climate, water, and expected harvest time."
+    },
+    {
+      "topic": "False distractors",
+      "result": "The translated distractors preserve buying vegetables in the named months, the absolute claim that the farm cannot produce in winter, and the unsupported soil-fertility diagnosis. They remain options under the existing question and do not become recommendations."
+    },
+    {
+      "topic": "Market arrangement keypoints",
+      "result": "The four new L2 candidates retain product, quantity, quality, delivery, and payment agreement (ST/VE/TS), plus comparing costs and losses with selling price (TS). No guarantee of income, sale, or dependable supply is added."
+    },
+    {
+      "topic": "Financial guidance held",
+      "result": "15 price/example-related fields in the packet remain exact English holds, including the R15/R18 quiz and its answer choices and rationale."
+    }
+  ],
+  "indexChecks": [
+    {
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "packetCorrectIndices": [
+        2,
+        1
+      ],
+      "canonicalCorrectIndices": [
+        2,
+        1
+      ],
+      "match": true
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "packetCorrectIndices": [
+        2,
+        2
+      ],
+      "canonicalCorrectIndices": [
+        2,
+        2
+      ],
+      "match": true
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "packetCorrectIndices": [
+        2,
+        1
+      ],
+      "canonicalCorrectIndices": [
+        2,
+        1
+      ],
+      "match": true
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "packetCorrectIndices": [
+        2,
+        2
+      ],
+      "canonicalCorrectIndices": [
+        2,
+        2
+      ],
+      "match": true
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "packetCorrectIndices": [
+        2,
+        1
+      ],
+      "canonicalCorrectIndices": [
+        2,
+        1
+      ],
+      "match": true
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "packetCorrectIndices": [
+        2,
+        2
+      ],
+      "canonicalCorrectIndices": [
+        2,
+        2
+      ],
+      "match": true
+    }
+  ],
+  "candidates": [
+    {
+      "candidateId": "st:market-community-l1:quiz[1].question",
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].question",
+      "verdict": "accept",
+      "sourceEnglish": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+      "sourceMatchesCanonical": true,
+      "candidate": "Direkoto tsa molemi di bontsha hore meroho ya hae e a haella ka June le July selemo se seng le se seng. Ke kgato efe e thusang?",
+      "semanticCheck": "Keeps the repeated June/July food shortage and asks for a useful response; no new timing claim.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "st:market-community-l1:quiz[1].options[0]",
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[0]",
+      "verdict": "accept",
+      "sourceEnglish": "Buy vegetables at market each June and July",
+      "sourceMatchesCanonical": true,
+      "candidate": "Reka meroho mmarakeng ka June le July e nngwe le e nngwe.",
+      "semanticCheck": "Preserves buying vegetables at market in each named month; remains the intentionally unhelpful distractor.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "st:market-community-l1:quiz[1].options[1]",
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[1]",
+      "verdict": "accept",
+      "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "sourceMatchesCanonical": true,
+      "candidate": "Rera o kgutlela morao ho tloha kgaellong ya dijo, o sebedisa dijalo tse loketseng sebaka sa heno le nako ya tsona ya kotulo.",
+      "semanticCheck": "Preserves working backwards from the food gap, suitable local crops, and their harvest timing.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "st:market-community-l1:quiz[1].options[2]",
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[2]",
+      "verdict": "accept",
+      "sourceEnglish": "Accept her farm can't produce in winter",
+      "sourceMatchesCanonical": true,
+      "candidate": "Amohela hore polasi ya hae e ke ke ya hlahisa dijalo mariha.",
+      "semanticCheck": "Preserves the source distractor’s absolute winter claim as a false option; it does not assert it as guidance.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "st:market-community-l1:quiz[1].options[3]",
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[3]",
+      "verdict": "accept",
+      "sourceEnglish": "The records show a soil fertility problem",
+      "sourceMatchesCanonical": true,
+      "candidate": "Direkoto di bontsha bothata ba monono wa mobu.",
+      "semanticCheck": "Preserves the unsupported soil-fertility inference as the same false distractor.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "st:market-community-l1:quiz[1].rationale",
+      "language": "st",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].rationale",
+      "verdict": "accept",
+      "sourceEnglish": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
+      "sourceMatchesCanonical": true,
+      "candidate": "Direkoto di bontsha kgaello. Kgetho ya dijalo le matsatsi a ho jala di lokela ho dumellana le tlelaemete ya sebaka, metsi le nako e lebelletsweng ya kotulo.",
+      "semanticCheck": "Retains local climate, water, and expected harvest time as conditions for crop choice and sowing dates.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "st:market-community-l2:keyPoints[0]",
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[0]",
+      "verdict": "accept",
+      "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
+      "sourceMatchesCanonical": true,
+      "candidate": "Dumellanang ka sehlahiswa, bongata, boleng, thomello le tefo.",
+      "semanticCheck": "Retains agreement on product, quantity, quality, delivery, and payment; no sale or supply guarantee added.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ve:market-community-l1:quiz[1].question",
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].question",
+      "verdict": "accept",
+      "sourceEnglish": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+      "sourceMatchesCanonical": true,
+      "candidate": "Rekhodo dza mulimi dzi sumbedza uri u fhelelwa nga miroho nga June na July ṅwaha muṅwe na muṅwe. Ndi vhukando vhufhio vhune ha thusa?",
+      "semanticCheck": "Keeps the repeated June/July food shortage and asks for a useful response; no new timing claim.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ve:market-community-l1:quiz[1].options[0]",
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[0]",
+      "verdict": "accept",
+      "sourceEnglish": "Buy vegetables at market each June and July",
+      "sourceMatchesCanonical": true,
+      "candidate": "Rengani miroho makete nga June na July ṅwaha muṅwe na muṅwe.",
+      "semanticCheck": "Preserves buying vegetables at market in each named month; remains the intentionally unhelpful distractor.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ve:market-community-l1:quiz[1].options[1]",
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[1]",
+      "verdict": "accept",
+      "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "sourceMatchesCanonical": true,
+      "candidate": "Dzudzanyani ni tshi humela murahu u bva kha u shaya zwiḽiwa, ni tshi shumisa zwimela zwi fanaho na vhupo haṋu na tshifhinga tshazwo tsha u kaṋa.",
+      "semanticCheck": "Preserves working backwards from the food gap, suitable local crops, and their harvest timing.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ve:market-community-l1:quiz[1].options[2]",
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[2]",
+      "verdict": "accept",
+      "sourceEnglish": "Accept her farm can't produce in winter",
+      "sourceMatchesCanonical": true,
+      "candidate": "Tanganedzani uri bulasi ḽawe a ḽi nga bveledzi zwimela nga vhuria.",
+      "semanticCheck": "Preserves the source distractor’s absolute winter claim as a false option; it does not assert it as guidance.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ve:market-community-l1:quiz[1].options[3]",
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[3]",
+      "verdict": "accept",
+      "sourceEnglish": "The records show a soil fertility problem",
+      "sourceMatchesCanonical": true,
+      "candidate": "Rekhodo dzi sumbedza thaidzo ya pfushi ya mavu.",
+      "semanticCheck": "Preserves the unsupported soil-fertility inference as the same false distractor.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ve:market-community-l1:quiz[1].rationale",
+      "language": "ve",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].rationale",
+      "verdict": "accept",
+      "sourceEnglish": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
+      "sourceMatchesCanonical": true,
+      "candidate": "Rekhodo dzi sumbedza u shaya. U nanga zwimela na maḓuvha a u zwala zwi tea u tendelana na mutsho wa henefho, maḓi na tshifhinga tsho lavhelelwaho tsha u kaṋa.",
+      "semanticCheck": "Retains local climate, water, and expected harvest time as conditions for crop choice and sowing dates.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ve:market-community-l2:keyPoints[0]",
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[0]",
+      "verdict": "accept",
+      "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
+      "sourceMatchesCanonical": true,
+      "candidate": "Tendelani nga ha tshibveledzwa, tshivhalo, quality, delivery na payment.",
+      "semanticCheck": "Retains agreement on product, quantity, quality, delivery, and payment; no sale or supply guarantee added.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ts:market-community-l1:quiz[1].question",
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].question",
+      "verdict": "accept",
+      "sourceEnglish": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+      "sourceMatchesCanonical": true,
+      "candidate": "Switsari swa murimi swi komba leswaku u kayivela matsavu hi June na July lembe rin'wana na rin'wana. Hi rihi goza leri pfunaka?",
+      "semanticCheck": "Keeps the repeated June/July food shortage and asks for a useful response; no new timing claim.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ts:market-community-l1:quiz[1].options[0]",
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[0]",
+      "verdict": "accept",
+      "sourceEnglish": "Buy vegetables at market each June and July",
+      "sourceMatchesCanonical": true,
+      "candidate": "Xava matsavu emakete hi June na July lembe rin’wana ni rin’wana.",
+      "semanticCheck": "Preserves buying vegetables at market in each named month; remains the intentionally unhelpful distractor.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ts:market-community-l1:quiz[1].options[1]",
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[1]",
+      "verdict": "accept",
+      "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "sourceMatchesCanonical": true,
+      "candidate": "Hlela u tlhelela endzhaku ku suka eka mpfumaleko wa swakudya, u tirhisa swibyariwa leswi lulameleke ndhawu ya wena ni nkarhi wa swona wa ntshovelo.",
+      "semanticCheck": "Preserves working backwards from the food gap, suitable local crops, and their harvest timing.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ts:market-community-l1:quiz[1].options[2]",
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[2]",
+      "verdict": "accept",
+      "sourceEnglish": "Accept her farm can't produce in winter",
+      "sourceMatchesCanonical": true,
+      "candidate": "Amukela leswaku purasi ra yena a ri nge humesi swibyariwa hi xixika.",
+      "semanticCheck": "Preserves the source distractor’s absolute winter claim as a false option; it does not assert it as guidance.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ts:market-community-l1:quiz[1].options[3]",
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].options[3]",
+      "verdict": "accept",
+      "sourceEnglish": "The records show a soil fertility problem",
+      "sourceMatchesCanonical": true,
+      "candidate": "Switsari swi komba xiphiqo xa ku nona ka misava.",
+      "semanticCheck": "Preserves the unsupported soil-fertility inference as the same false distractor.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ts:market-community-l1:quiz[1].rationale",
+      "language": "ts",
+      "lessonId": "market-community-l1",
+      "field": "quiz[1].rationale",
+      "verdict": "accept",
+      "sourceEnglish": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
+      "sourceMatchesCanonical": true,
+      "candidate": "Switsari swi komba mpfumaleko. Ku hlawula swibyariwa ni masiku yo byala swi fanele swi fambisana ni maxelo ya ndhawu, mati ni nkarhi lowu languteriweke wa ntshovelo.",
+      "semanticCheck": "Retains local climate, water, and expected harvest time as conditions for crop choice and sowing dates.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ts:market-community-l2:keyPoints[0]",
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[0]",
+      "verdict": "accept",
+      "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
+      "sourceMatchesCanonical": true,
+      "candidate": "Pfumelelanani hi xitirhisiwa, nhlayo, khwalithi, ku yisa ni ku hakela.",
+      "semanticCheck": "Retains agreement on product, quantity, quality, delivery, and payment; no sale or supply guarantee added.",
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ts:market-community-l2:keyPoints[1]",
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "field": "keyPoints[1]",
+      "verdict": "accept",
+      "sourceEnglish": "Compare costs and losses as well as selling price",
+      "sourceMatchesCanonical": true,
+      "candidate": "Pimanisa costs ni losses xikan’we ni selling price.",
+      "semanticCheck": "Retains comparing costs and losses alongside the selling price; the listed financial comparison remains intact.",
+      "fluencyApproved": false
+    }
+  ],
+  "reviewLimit": "Semantic preservation check only. This does not establish fluent or learner-ready Sesotho, Tshivenda, or Xitsonga; qualified language review remains required."
+}

@@ -1,0 +1,53 @@
+{
+  "packetId": "IMBEWU-READING-ORDINARY-CLAUSE-BACKCHECK-2026-10-03",
+  "checkedAt": "2026-10-03",
+  "currentHead": "e0a87b57731eb7bfbca9b08cfa01dc4fd46c680d",
+  "packetSourceRevision": "e0a87b57731eb7bfbca9b08cfa01dc4fd46c680d",
+  "decision": "VE repaired candidate accepted with review flags; TS accepted with review flags",
+  "entries": [
+    {
+      "language": "ve",
+      "lessonId": "reading-landscape-l1",
+      "paragraphIndex": 0,
+      "exactSourceParagraph": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.",
+      "currentRegistryParagraph": "Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho. Musi zwo no tsireledzea nga murahu, walk your land. Sedzani rills, hune maḓi a phaḓaladzana hone (fans out), hune a kuvhangana hone (ponds), na hune a bva hone kha your property. Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.",
+      "originalCandidate": "Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho. Musi zwo no tsireledzea nga murahu, tshimbilani kha shango ḽaṋu. Sedzani rills, hune maḓi a phaḓaladzana hone (fans out), hune a kuvhangana hone (ponds), na hune a bva hone kha your property. Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.",
+      "repairedCandidate": "Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Sedzani rills, hune maḓi a phaḓaladzana hone (fans out), hune a kuvhangana hone (ponds), na hune a bva hone kha your property. Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.",
+      "backtranslation": "When it is safe afterward, walk your land.",
+      "checks": {
+        "sourcePairMatchesCanonical": true,
+        "safeAfterwardClauseUntouched": true,
+        "landReferentPreserved": true,
+        "technicalObservationsAndSafeRouteUntouched": true
+      },
+      "repairReason": "“shango ḽaṋu” can be read as “your country”; use the already-supported mixed phrase “land yaṋu” to retain the local property referent without changing the safety timing.",
+      "uncertainty": [
+        "Unreviewed Tshivenda wording; locally confirm respectful imperative and natural phrasing."
+      ],
+      "candidateRegionalParagraph": "Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Sedzani rills, hune maḓi a phaḓaladzana hone (fans out), hune a kuvhangana hone (ponds), na hune a bva hone kha your property. Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.",
+      "minimalReplacement": "Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu.",
+      "independentRepair": "Use “land yaṋu” instead of “shango ḽaṋu” to retain a property/holding referent; leave the safe-afterward condition and all excess-water guidance unchanged."
+    },
+    {
+      "language": "ts",
+      "lessonId": "reading-landscape-l3",
+      "paragraphIndex": 2,
+      "exactSourceParagraph": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+      "currentRegistryParagraph": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Mark places where cold or damage lasts longest. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.",
+      "candidateRegionalParagraph": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Languta ayisi ni ku onhaka ka swimilani, pimanisa low ground na slopes, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu where cold or damage lasts longest. Hlayisa swimilani leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.",
+      "checks": {
+        "sourcePairMatchesCanonical": true,
+        "FunghaConsistentWithCurrentRegistry": true,
+        "frostOrDamageAndLongestCriterionUntouched": true,
+        "diagnosticIceAndSensitivePlantClausesUntouched": true
+      },
+      "decision": "accept; no repair",
+      "uncertainty": [
+        "Unreviewed Xitsonga wording; the bounded Fungha instruction is consistent with current registry use."
+      ],
+      "minimalReplacement": "Fungha tindhawu where cold or damage lasts longest."
+    }
+  ],
+  "scope": "Independent checked bounded phrase candidates, applied as unreviewed machine drafts. Safety and technical clauses remain exact English.",
+  "repositoryEdits": false
+}\n

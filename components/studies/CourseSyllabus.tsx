@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { useAppLevel } from '@/lib/app-level';
 import OfflinePageLink from './OfflinePageLink';
 import styles from './FinanceCourse.module.css';
+import ArrowLabel from './ArrowLabel';
 
 export interface SyllabusLesson {
   id: string;
@@ -67,7 +68,7 @@ export default function CourseSyllabus({ id, units, basePath, eyebrowPrefix, con
           <p className={styles.eyebrow}>{continueEyebrow}</p>
           <h2>{first.title}</h2>
           <div className={styles.actions}>
-            <OfflinePageLink className={styles.primary} href={hrefFor(first.id)}>{first.title} →</OfflinePageLink>
+            <OfflinePageLink className={styles.primary} href={hrefFor(first.id)}><ArrowLabel>{first.title}</ArrowLabel></OfflinePageLink>
           </div>
         </section>
       )}

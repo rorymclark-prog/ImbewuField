@@ -1,438 +1,261 @@
 # Izinhlelo zezihlahla
 
-Izihlahla nezihlahlana eziphila iminyaka eminingi zingakunika ukudla, izinkuni, **i-fodder** (ukudla kwemfuyo), indawo yokukhosela nemithi impilo yakho yonke. Lesi sahluko sikhuluma ngezinhlelo ezintathu zezihlahla: **i-food forest** (ihlathi lokudla, ingadi etshalwe ngezingqimba njengehlathi), **i-windbreak** (umugqa wezihlahla ovimba umoya) nokuthi **ungasitshala kanjani kahle isihlahla esisodwa**.
+Izihlahla ngumdlalo omude. Umbhede wemifino ukondla isizini eyodwa. Isihlahla esitshalwe kahle sondla izingane zakho nezingane zazo, ngezithelo, izinkuni, **i-fodder** (ukudla kwemfuyo), umthunzi nomuthi, futhi asisoze sadinga ukumbelwa noma ukuhlwanyelwa futhi.
 
-> **Qaphela:** Izihlahla eziningi ezithandwayo ezincwadini ze-permaculture zamanye amazwe **zimenyezelwe njengama-invasive species eNingizimu Afrika** (izitshalo zangaphandle ezisakazeka zingalawuleki). Akuvumelekile ngokomthetho ukuzitshala. Lesi sahluko sincoma kuphela izitshalo zomdabu (ezimila ngokwemvelo eNingizimu ne-Afrika) noma ezingekho ohlwini lwama-invasive species aseNingizimu Afrika. Ngaphambi kokuthenga noma yisiphi isitshalo, buza enkulisa (nursery) igama laso lesayensi (lesiLatini), bese uhlola ukuthi asikho ohlwini lwama-invasive species.
+Izihlahla ziphinde zenze umsebenzi othule. Izimpande zazo zibamba umhlabathi futhi zifinyelele amanzi imifino engakwazi ukuwafinyelela. Amaqabunga azo ayawa ondle umhlabathi. Amagatsha azo aphula umoya futhi avikele izinyoni ezidla izinambuzane zakho. Ihlathi lakhelwa phezu kwehlathi: isitshalo ngasinye senza umhlabathi ube ngcono kwesilandelayo.
+
+Izinhlelo ezintathu zezihlahla zithwala ingxenye enkulu yalo msebenzi epulazini elincane: **i-food forest** (ingadi etshalwe ngezingqimba njengehlathi lemvelo); **i-windbreak** (umugqa wezihlahla nezihlahlana onciphisa umoya); nesihlahla esisodwa, esitshalwe kahle. Zonke izitshalo ezinconywa lapha ngezomdabu (zikhula ngokwemvelo eNingizimu ne-Afrika) noma azimenyezelwe njengezihlaselayo eNingizimu Afrika. Izihlahla eziningi ezinconywa ezincwadini ze-permaculture zaphesheya lapha **ziyi-invasive species** (izitshalo ezivela kwenye indawo ezisabalala zingalawuleki). Thenga ngegama lesiLatini.
+
+**Ekupheleni kwalesi sahluko uzokwazi:**
+
+- Ukukhetha indawo ye-food forest nokukhetha izihlahla zezithelo ezihambisana nesithwathwa namakhaza asebusika akini
+- Ukutshala i-food forest ngokulandelana okufanele, uqala ngezitshalo eziqala ukumila ezibopha i-nitrogen
+- Ukuhlela i-windbreak enqamula umoya wakho olimazayo, ngezihlahla nezihlahlana zomdabu
+- Ukutshala isihlahla esisodwa ukuze sishone izimpande futhi siphile inkathi yaso yokuqala yokoma
 
 ## Ama-food forest
 
-### Iyini i-food forest
+Imifino nezitshalo eziyisisekelo kudinga okuningi kithi: ukumba, ukuhlwanyela nokunisela, isizini ngesizini. Ngenxa yokuthi umhlabathi uphendulwa futhi utshalwa kabusha unyaka nonyaka, awukaze ukhule wedlule isigaba sokuqala **se-succession** (ushintsho lwemvelo, isinyathelo ngesinyathelo, olusuka emhlabathini ongenalutho luye otshanini, ezihlahlaneni nasezihlahleni). Izitshalo zonyaka owodwa ziphinde zihlupheke kakhulu ngenxa yezinambuzane nezikhathi zokoma.
 
-**I-food forest** (ihlathi lokudla, eyaziwa nangokuthi **ingadi eyihlathi** — forest garden) ayifani nensimu yezihlahla zezithelo evamile (orchard). Ilingisa indlela ihlathi lemvelo elakhiwe ngayo: izitshalo eziningi zobude obuhlukene zikhula ndawonye **ngezingqimba**, kusukela ezihlahleni ezinde kuze kufike **kuma-groundcover** (izitshalo eziphansi ezimboza umhlabathi) nasezimpandeni. Iningi lezitshalo **ngama-perennial** (izitshalo eziphila iminyaka engaphezu kwemibili).
+I-food forest yingadi etshalwe njengehlathi lemvelo, ngezingqimba, kusukela ezihlahleni ezinde kuya ezitshalweni eziphansi nasezimpandeni. Akuyona ingadi yezithelo enezihlahla ezimi emhlabathini ongenalutho. Iningi lezitshalo zayo **ngama-perennial** (izitshalo eziphila iminyaka engaphezu kwemibili). Uma isimile, i-food forest:
 
-Uma isimile kahle, i-food forest eklanywe kahle idinga umsebenzi omncane kunengadi yemifino. Amaqabunga awayo namagatsha athenwe ondla umhlabathi. Izinyoni, izinambuzane nezinye izilwane ezihlala lapho zisiza ukulawula izinambuzane ezilimaza izitshalo. Futhi ikunika nokudla.
+- ayidingi ukutshalwa kabusha isizini ngayinye
+- ikhulisa izimpande ezijulile ezifinyelela amanzi nezakhamzimba imifino enezimpande ezingajulile engakwazi ukukufinyelela
+- igcina umhlabathi umbozekile unyaka wonke
+- iyazondla ngamaqabunga ayo awile nangamagatsha athenwe
+- inika amakhaya ezinyoni nezinambuzane ezilawula izinambuzane ezilimazayo
 
-Abantu sebenesikhathi eyizinkulungwane zeminyaka betshala amahlathi okudla. Isibonelo, ososayensi bathole ukuthi abantu basempumalanga ye-Amazon babenakekela izingxenye zehlathi ukuze bathole izitshalo zokudla okungenani iminyaka engu-4,500.
+Ku-food forest eyodwa ungavuna izithelo, amantongomane, amajikijolo, amakhambi, izinongo, izinkuni, izigxobo, i-fodder, izitshalo zezimpande ne-**mulch** (izinto ezisakazwa phezu komhlabathi ukuze uhlale umanzi futhi uvikelekile). Umsebenzi osala ngowezinkathi zonyaka: ukuthena, **i-chop and drop** (ukusika izitshalo bese uzishiya phansi njenge-mulch), ukwandisa izitshalo ezintsha nokudlulisa **i-animal tractor** (isibaya sezinkukhu esithuthekayo) ngezikhathi ezithile. Izihlahla ezincane zisadinga amanzi ezinkathini zazo zokuqala eyodwa noma ezimbili zokoma, futhi ezindaweni ezomile iningi lezihlahla zezithelo lidinga amanzi athile unyaka nonyaka.
 
-Ku-food forest eyodwa ungavuna izithelo, amantongomane, amajikijolo (berries), amakhambi, izinongo, izinkuni, izigxobo, **i-mulch** (isembozo somhlabathi), i-fodder, izitshalo ezikhuphukayo, izitshalo zezimpande namakhowe. Ku-food forest yasekhaya, uma isimile, imisebenzi emikhulu yile:
+Abantu sebelime ngale ndlela isikhathi eside kakhulu. Empumalanga ye-Amazon, abantu banakekela ihlathi ukuze lithole izitshalo zokudla okungenani iminyaka engu-4 500, futhi ihlathi lakhona lisagcwele izihlahla ezidliwayo ababezithanda.
 
-- ukuthena ngezinkathi zonyaka
-- ukufaka i-mulch ngendlela **ye-chop and drop** (ukusika amagatsha bese uwashiya phansi njenge-mulch)
-- ukwandisa izitshalo ezintsha
-- ukuhambisa **i-chicken tractor** (ihhoko elihambayo lezinkukhu) phakathi kwehlathi ngezikhathi ezithile
+### Lapho ungatshala khona i-food forest
 
-I-food forest ingatshalwa futhi njengomugqa omncane eduze kothango, lapho ingasebenza khona njenge-windbreak.
+Engxenyeni enkulu yeNingizimu Afrika, ihlathi akusilo isiphetho semvelo se-succession. Amadlelo otshani bemvelo, i-fynbos, izihlahlana ze-Karoo ne-savanna kuyizinhlelo ezindala eziphelele ngokwazo, hhayi ihlathi elisalindile ukuba khona. Izihlahla ezitshalwe otshanini bemvelo obuphilile noma ku-fynbos zixosha izitshalo eziyivelakancane futhi zisebenzisa amanzi amaningi.
 
-### Kungani kufanele utshale izihlahla kanye nemifino?
-
-Imifino nezitshalo eziyisisekelo zidla isikhathi esiningi, amanzi nezinsiza eziningi. Umhlabathi uyambiwa futhi utshalwe kabusha njalo ngenkathi yonyaka, ngakho awuze ukhule udlule esigabeni sokuqala. **Ama-annual** (izitshalo eziphila isizini eyodwa) avame ukuhlaselwa kakhulu yizinambuzane nezifo, futhi adinga ukuniselwa njalo.
-
-Izinhlelo zama-perennial, njengama-food forest:
-
-- azidingi ukutshalwa kabusha njalo ngenkathi yonyaka
-- zikhulisa izimpande ezijulile, ngakho uma sezimile zingafinyelela amanzi nezakhamzimba imifino enezimpande ezingajulile engakwazi ukuzifinyelela
-- zisekela izinhlobo eziningi zokuphila emazingeni amaningi
-- zivikela umhlabathi unyaka wonke
-- zingaqhubeka zikhiqiza iminyaka eminingi
-
-Izihlahla ezisencane zisadinga ukuniselwa njalo ezinkathini zazo zokuqala zokoma, eyodwa noma ezimbili. Ezindaweni ezomile, iningi lezihlahla zezithelo lizodinga ukuniselwa kancane unyaka nonyaka.
-
-### Lapho kufanele utshale khona i-food forest
-
-Ehlathini lemvelo, isigaba esisodwa sokuphila kwezitshalo silandelwa esinye phakathi neminyaka eminingi. Lokhu kubizwa ngokuthi **i-succession** (ukulandelana kwezitshalo emvelweni). Izitshalo eziqala ukumila (pioneer plants — izitshalo zokuqala ukukhula emhlabathini ongenalutho) zithuthukisa umhlabathi futhi zinikeze indawo yokukhosela, bese kamuva kulandela izihlahla eziphila isikhathi eside.
-
-ENingizimu Afrika, ihlathi **aliyona** into yokugcina yemvelo yonke indawo. Utshani bemvelo (grassland), i-fynbos, izihlahlana zaseKaroo ne-savanna yizinhlelo zemvelo eziphelele nezindala ngokwazo. Azilona "ihlathi elingakaqedwa". Ukutshala izihlahla otshanini bemvelo obuphilile noma ku-fynbos kubhubhisa izitshalo eziyivelakancane, kusebenzisa amanzi amaningi futhi kunganciphisa ukugeleza kwemifudlana.
-
-- Tshala i-food forest yakho emhlabeni **osuvele uphazamisekile**: amasimu amadala, amagceke angenalutho, umhlaba ozungeze umuzi, umhlaba ogugulekile, noma umhlaba osuhlanzwe ama-invasive species.
-- **Ungalimi** futhi ungatshali izihlahla edlelweni lemvelo eliphilile (veld), otshanini bemvelo, ku-fynbos noma exhaphozini.
-- Gcina izihlahla zikude nemifudlana namaxhaphozi, ngaphandle uma kuyizihlahla zomdabu ezikhula osebeni lomfula.
+1. Tshala emhlabeni **osuvele uphazamisekile**: amasimu amadala, amagceke angenalutho, umhlaba odliwe yi-erosion, umhlaba ozungeze umuzi, noma umhlaba osuhlanziwe ama-invasive species.
+2. Shiya idlelo lemvelo eliphilile, utshani bemvelo, i-fynbos namaxhaphozi njengoba enjalo.
+3. Gcina izihlahla kude nemifudlana namaxhaphozi, ngaphandle uma kuyizihlahla zomdabu zasosebeni lomfula.
 
 ### Izinhlobo ezimbili ze-food forest
 
-**I-food forest yasekhaya (i-Zone 2).** Le itshalwa eduze kwendlu, lapho uyivakashela kanye noma kabili ngosuku. Ikakhulu ingeyomndeni: izithelo, amantongomane, amajikijolo, amakhambi okwelapha nawokupheka, iningi lama-perennial akho kanye namanye ama-annual azihlwanyelayo. Inezinhlobo eziningi ezahlukene. Uma indawo incane, tshala izihlahla ezinkulu ezimbalwa kuphela. Ungakhulisa futhi izinkuni **nge-coppicing** (ukusika izihlahla phansi ukuze zihlume kabusha) ku-Zone 2.
+I-permaculture ihlela ipulazi ngama-**zone**, ngokuthi uvakashela ingxenye ngayinye kangaki.
 
-**I-food forest enkulu (i-Zone 3).** I-food forest ye-Zone 2 ingakhiqiza okuningi, kodwa ingaba yincane kakhulu ukuthi uthengise umkhiqizo. Ku-Zone 3 ungatshala i-food forest enkulu enezihlahla ezinkulu, noma **insimu yezithelo ye-permaculture** (permaculture orchard).
+**I-food forest yasekhaya (i-Zone 2).** Iseduze nendlu, lapho udlula khona kanye noma kabili ngosuku. Yondla umuzi: izithelo, amantongomane, amajikijolo, amakhambi okupheka nawokwelapha, nezitshalo zonyaka ezizihlwanyelayo. Inezinhlobo eziningi. Lapho indawo incane, tshala izihlahla ezinkulu ezimbalwa kuphela.
 
-Insimu yezithelo ye-permaculture iyi-food forest elula enezinhlobo ezimbalwa, etshalwe ngezinga elikhulu ukuze kuthengiswe. Isenazo izitshalo ezisekelayo, njengezihlahla **ezingama-nitrogen fixer** (izihlahla ezithatha i-nitrogen emoyeni ziyifake emhlabathini) nezimbali zezinambuzane. Ivamise ukunakekelwa kakhulu futhi ivame ukuniselwa. Ungayitshala ngemigqa enamadlelo phakathi, okwenza nokuvuna kube lula.
+**I-food forest enkulu noma ingadi yezithelo (i-Zone 3).** Iqhelile, inezihlahla ezinkulu, ezokuthengisa. **Ingadi yezithelo ye-permaculture** yi-food forest elula enezinhlobo ezimbalwa, etshalwe ngobukhulu futhi evame ukuniselwa. Isaphethe **ama-nitrogen fixer** (izitshalo ezifaka i-nitrogen evela emoyeni emhlabathini) nezimbali zezinambuzane. Yitshale ngemigqa enamadlelo phakathi kwayo, okwenza nokuvuna kube lula.
 
 ### I-coppicing
 
-**I-coppicing** kusho ukusika isihlahla eduze komhlabathi ukuze sihlume amahlumela amaningi amasha. Ungaphinda uwasike lawa mahlumela njalo emva kweminyaka embalwa ngaphandle kokubulala isihlahla. Ezinhlotsheni eziningi, i-coppicing iyasisiza nokuthi isihlahla siphile isikhathi eside.
-
-- Amahlumela e-coppicing anikeza izinkuni, izigxobo zothango, izikhonkwane nezibambo zamathuluzi.
-- Amahlumela aphinda akhule ngokushesha kakhulu kunesihlahla esisha esikhula embewini, ngoba izimpande sezivele zinkulu.
-- Akusona sonke isihlahla esiphinda sihlume. Izihlahla zomdabu ezikwazi kahle ukuhluma kabusha zifaka umnqumo wasendle (wild olive, *Olea europaea* subsp. *cuspidata*).
+**I-coppicing** kusho ukusika isihlahla eduze kwaphansi ukuze sihlume amahlumela amaningi amasha. Uphinda usike amahlumela njalo eminyakeni embalwa ukuze uthole izinkuni, izigxobo zothango, izikhonkwane nezibambo zamathuluzi, bese isihlahla siqhubeka siphila. Amahlumela abuya ngokushesha kakhulu kunesihlahla esisha esivela embewini, ngoba izimpande sezivele zinkulu. Akuzona zonke izihlahla eziphinda zihlume. Umnqumo wasendle (wild olive, *Olea europaea* subsp. *cuspidata*) yisihlahla somdabu esilungele i-coppicing, futhi isiqeshana sawo se-coppicing ku-Zone 2 sinika izinkuni unyaka nonyaka.
 
 ## Ukuklama i-food forest
 
-1. **Bhala izidingo zakho.** Yini edingwa umndeni wakho, ipulazi lakho, imfuyo yakho nezilwane zasendle zendawo? Lokhu kukusiza ukhethe izitshalo ozozitshala.
-2. **Khetha izitshalo ezifanele isimo sezulu sakho.** Khetha izitshalo zomdabu nezangaphandle ezifanele imvula yakini, isithwathwa nokushisa. Engeza ezimbalwa ezikwazi nje ukumelana nesimo sezulu sakho. Njengoba isimo sezulu sishintsha, lezi zikuvikela ezinkathini zonyaka ezingavamile.
-3. **Khetha ingxube yezinhlobo zezitshalo:** izithelo, amantongomane, amajikijolo, ama-nitrogen fixer, izitshalo zokwelapha, izitshalo ezondla izinyosi nezinyoni, nezitshalo zokwenza i-mulch.
-4. **Sabalalisa isivuno unyaka wonke.** Bheka ukuthi isitshalo ngasinye sivunwa nini. Isibonelo, izithelo ezifana nolamula nowolintshi (citrus) zivunwa kakhulu ekwindla nasebusika, nokwatapheya ekwindla nasebusika, kuyilapho amagilebhisi namapentshisi evunwa ehlobo, ama-almond ekupheleni kwehlobo. Iningi lezithelo linezinhlobo ezivuthwa kusenesikhathi, phakathi nesizini nasekupheleni. Faka ezimbalwa zohlobo ngalunye.
-5. **Cabanga ngomsoco.** Hlela ingxube enikeza umndeni wakho amavithamini namaminerali ahlukahlukene unyaka wonke.
-6. **Hlola umhlabathi wakho.** Izihlahla zezithelo zenziwa **i-grafting** (zixhunyelwa) **kuma-rootstock** (ingxenye yezimpande yesihlahla esixhunyelwe) afanele imihlabathi ehlukene. Buza enkulisa ukuthi iyiphi i-rootstock efanele umhlabathi wakho.
-7. **Hlola ukuthi sonke isitshalo asisona i-invasive species.** Izitshalo eziningi zangaphandle eziwusizo zimenyezelwe njengama-invasive species eNingizimu Afrika. Ukuzitshala akuvumelekile ngokomthetho.
-8. **Khetha kuqala izitshalo ezisekelayo zomdabu.** Kuma-nitrogen fixer, kuma-groundcover nasezitshalweni zezilwane zasendle, khetha izinhlobo zomdabu kuqala.
+Klama ephepheni kuqala. Isihlahla esisendaweni engafanele sibiza iminyaka.
 
-> **Icebiso:** Vakashela ihlathi noma isiqiwu semvelo eduze kwakho, uthathe isikhathi sakho. Bheka ukuthi yimaphi ama-groundcover akhula emthunzini nakhula elangeni, nokuthi yiziphi izihlahla eziqala ukumila kuqala emhlabathini ophazamisekile. Ungaqoqa imbewu encane yasendle kuphela uma unemvume yomnikazi womhlaba. Udinga imvume esemthethweni (permit) ukuze uqoqe izitshalo noma imbewu ezindaweni ezigciniwe zemvelo (nature reserves) nokuqoqa izinhlobo ezivikelwe ngumthetho. Inkulisa yendawo yakini ingakunika amanani nezeluleko lapho wenza uhlu lwakho lwezitshalo.
+1. **Bhala izidingo zakho.** Umndeni wakho, izilwane zakho nezilwane zasendle zendawo kudingani? Ukudla, izinkuni, i-fodder, umuthi, umthunzi?
+2. **Hambisanisa izitshalo nesimo sezulu sakho.** Khetha izitshalo zomdabu nezangaphandle ezifanele imvula yakho, isithwathwa nokushisa. Engeza ezimbalwa ezisamelana kancane nje lapho uhlala khona. Njengoba isimo sezulu sishintsha, lezi zikunika isivikelo.
+3. **Xuba izinhlobo:** izithelo, amantongomane, amajikijolo, ama-nitrogen fixer, izitshalo zokwelapha, izimbali zezinyosi nezinyoni, nezitshalo ze-mulch.
+4. **Sabalalisa isivuno.** ENingizimu Afrika ukwatapheya uvela ikakhulu cishe kusukela kuNdasa kuya kuMandulo nama-citrus ekwindla nasebusika, kanti amagilebhisi namapentshisi avuthwa ehlobo nama-almond ekupheleni kwehlobo. Iningi lezithelo linezinhlobo ezivuthwa kusenesikhathi, phakathi nesizini nasekugcineni. Tshala ezimbalwa kulolo nalolo hlobo.
+5. **Cabanga ngokudla okunempilo.** Hlela ukuze umndeni udle izinhlobo eziningi zezithelo nemifino unyaka wonke.
+6. **Hambisanisa i-rootstock nomhlabathi wakho.** Izihlahla zezithelo zenziwa nge-**grafting** (ukuxhumela uhlobo oluhle lwesithelo ezimpandeni zesinye isitshalo). **I-rootstock** yileyo ngxenye yezimpande, futhi ama-rootstock ahlukene afanele imihlabathi ehlukene. Buza enkulisa ukuthi iyiphi i-rootstock efanele owakho.
+7. **Khetha izitshalo zomdabu ezisekelayo.** Kuma-nitrogen fixer, **ama-groundcover** (izitshalo eziphansi ezisabalala phezu komhlabathi) nezitshalo zezilwane zasendle, qala ngokukhetha izinhlobo zomdabu.
 
-### Khetha izihlahla zezithelo ezifanele isimo sezulu sakho
+> **Icebiso:** Ngaphambi kokuthi ubhale uhlu lwakho lwezitshalo, hamba kancane endle noma ehlathini lemvelo eliseduze. Bona ukuthi yimaphi ama-groundcover akhula emthunzini nayiphi elangeni, nokuthi yiziphi izihlahla eziqala ukumila eziqala ukuvela emhlabathini ophazamisekile. Indle nguthisha ongcono kakhulu walokho okuzokhula kahle emhlabeni wakho.
 
-INingizimu Afrika inezimo zezulu ezehluke kakhulu. Umbuzo omkhulu kunayo yonke ngezihlahla zezithelo **yisithwathwa**.
+### Hambisanisa izihlahla zezithelo nesimo sezulu sakho
+
+Umbuzo omkhulu wezihlahla zezithelo eNingizimu Afrika **yisithwathwa**.
 
 | Isimo sezulu | Izithelo ezivame ukukhula kahle | Amanothi |
 |---|---|---|
-| Highveld ebandayo, iFreyistata, iLesotho, izindawo eziphakeme zaseMpumalanga Kapa (isithwathwa esinamandla ebusika) | Ama-apula, amapheya, ama-quince, amapentshisi, ama-nectarine, amaplamu, ama-apricot, amakhiwane, ama-persimmon, amagilebhisi, ama-pecan | Lezi zihlahla ezihlubula amaqabunga ebusika zidinga ubusika obubandayo. Isithwathwa sasekupheleni kwentwasahlobo singabulala izimbali zama-apricot, ama-almond namapentshisi avuthwa kusenesikhathi, ngakho zitshale emthambekeni, hhayi **ku-frost pocket** (indawo ephansi lapho umoya obandayo uhlala khona). |
-| INtshonalanga Kapa (imvula yasebusika, ihlobo elomile) | Ama-apula, amapheya, amaplamu, ama-apricot, amapentshisi, amakhiwane, amagilebhisi, ama-almond, ama-carob, izithelo ze-citrus, amahalananda (pomegranate) | Kudingeka ukunisela ehlobo. Ama-almond nama-carob afanele amahlobo omile. |
-| Izindawo eziphansi nogu olungenaso isithwathwa (izindawo eziphansi zaseLimpopo naseMpumalanga, ugu lwaKwaZulu-Natali) | Umango, ubhanana, uphopho (papaya), ukwatapheya, ama-litchi, izithelo ze-citrus, i-black sapote, i-custard apple, umthoma (jackalberry), i-turmeric | Iningi lezihlahla zezithelo ezihlubula amaqabunga alitholi amakhaza anele ebusika lapha. Khetha izinhlobo ezidinga amakhaza amancane (low-chill). |
-| Izindawo ezinesithwathwa esincane (maphakathi neKwaZulu-Natali, izingxenye zaseGauteng) | Izithelo ze-citrus, ukwatapheya (izinhlobo ezimelana namakhaza njenge-Fuerte), amakhiwane, ama-pecan, ama-persimmon, amapentshisi namaplamu adinga amakhaza amancane | Vikela izihlahla ezisencane ze-citrus nokwatapheya esithwathweni ebusika bazo bokuqala obubili noma obuthathu. |
+| I-Highveld ebandayo, iFreistata, iLesotho, izindawo eziphakeme zaseMpumalanga Kapa (isithwathwa esinamandla) | I-apula, ipheya, i-quince, ipentshisi, i-nectarine, ipulamu, i-apricot, ikhiwane, i-persimmon, amagilebhisi, i-pecan | Lezi zihlahla ezihlubula amaqabunga zidinga ubusika obubandayo. Isithwathwa esifika sekwephuzile sibulala izimbali ze-apricot, i-almond nepentshisi elivuthwa kusenesikhathi, ngakho zitshale emthambekeni, hhayi **ku-frost pocket** (indawo ephansi lapho kuhlala khona umoya obandayo). |
+| INtshonalanga Kapa (imvula yasebusika, ihlobo elomile) | I-apula, ipheya, ipulamu, i-apricot, ipentshisi, ikhiwane, amagilebhisi, i-almond, i-carob, ama-citrus, ihalananda | Kudinga amanzi ehlobo. I-almond ne-carob zifanele amahlobo omile. |
+| I-lowveld nogu olungenasithwathwa (i-lowveld yaseLimpopo neyaseMpumalanga, ugu lwaKwaZulu-Natal) | Umango, ubhanana, uphopho (papaya), ukwatapheya, i-litchi, ama-citrus, i-black sapote, umthoma (jackalberry) | Iningi lezithelo ezihlubula amaqabunga alitholi amakhaza anele asebusika lapha. Khetha izinhlobo ezidinga amakhaza amancane. |
+| Isithwathwa esincane (amaphakathi aKwaZulu-Natal, izingxenye zaseGauteng) | Ama-citrus, ukwatapheya, ikhiwane, i-pecan, i-persimmon, ipentshisi nepulamu okudinga amakhaza amancane | Ukwatapheya we-Fuerte umelana namakhaza kangcono kune-Hass. Vikela ama-citrus nokwatapheya abasebancane esithwathweni ebusika obubili noma obuthathu. |
 
-> **Icebiso:** Izinhlobo zezithelo ezihlubula amaqabunga zithengiswa ngokwesidingo sazo samakhaza (chill requirement — amahora amakhaza angaki eziwadingayo ebusika). Buza enkulisa izinhlobo ezifanele indawo yakini.
+Izinhlobo zezithelo ezihlubula amaqabunga zithengiswa ngesidingo sazo samakhaza (chill requirement): mangaki amahora abandayo azidingayo ebusika. Cela izinhlobo ezihambisana nendawo yakho.
 
 ### Amaphethini okutshala namabanga
 
-Kunezindlela eziningi zokuhlela i-food forest: amaqoqo ezitshalo ahlakazekile, uthango lwezihlahla, imigqa eqondile, ukutshala phakathi kwemigqa yezihlahla (alley cropping — izitshalo ezitshalwa ngemigqa phakathi kwemigqa yezihlahla) noma imigqa yezihlahlana. Khetha iphethini efanele indawo yakho nezidingo zakho.
-
-- Qinisekisa ukuthi zonke izihlahla zithola ilanga elanele. ENingizimu ne-Afrika ilanga **lisenyakatho**, ngakho beka izihlahla ezinde ezihlala ziluhlaza (evergreen) **ohlangothini oluseningizimu** lwe-food forest, lapho umthunzi wazo uwela ngaphandle kwengadi.
-- Ungabeka futhi izihlahla ezihlala ziluhlaza phakathi kwezihlahla ezihlubula amaqabunga (deciduous — izihlahla ezilahla amaqabunga ebusika).
-- Sebenzisa **ama-edge** (imiphetho) anelanga ehlathi kumakhambi nakuma-perennial athanda ilanga, njenge-edge yehlathi lemvelo.
-
-Bala ukuthi isihlahla ngasinye sidinga indawo engakanani uma sesikhule ngokugcwele.
+Hlela ihlathi ngamaqoqo, ngothango lwezihlahla, ngemigqa eqondile, noma ngemigqa yezitshalo phakathi kwemigqa yezihlahla. Khetha okufanele indawo yakho. Noma ngabe yiliphi iphethini, sonke isihlahla sidinga ilanga. ENingizimu ne-Afrika ilanga **lisenyakatho**, ngakho beka izihlahla ezinde ezihlala ziluhlaza ohlangothini **oluseningizimu**, lapho umthunzi wazo uwela ngaphandle kwengadi, noma phakathi kwezihlahla ezihlubula amaqabunga ebusika. Sebenzisa **i-edge** enelanga (indawo lapho izindawo ezimbili zihlangana khona) kumakhambi athanda ilanga, njengoba kwenza ihlathi lemvelo.
 
 1. Linganisa indawo yakho.
-2. Thola ububanzi obugcwele **be-canopy** yesihlahla ngasinye (ububanzi bengxenye yaso enamaqabunga).
-3. Dweba uhlelo olulula ephepheni, noma umake indawo ngezikhonkwane.
-4. Shiya indawo eyengeziwe phakathi kwezihlahla. Isibonelo, isihlahla esine-canopy engu-4 m ububanzi sidinga cishe u-6 kuya ku-7 m phakathi kwaso nesihlahla esilandelayo, ngaphandle uma utshala uthango lwezihlahla. Indawo ephakathi isetshenziselwa izindlela, ama-nitrogen fixer nezitshalo ezincane.
-5. Kusukela ohlelweni lwakho, yenza uhlu lwezitshalo ozozithenga.
+2. Thola ububanzi obugcwele be-**canopy** yesihlahla ngasinye: ububanzi bomqhele waso wamaqabunga uma sesikhulile.
+3. Dweba uhlelo ephepheni, noma ubethele izikhonkwane endaweni.
+4. Shiya indawo. Isihlahla esine-canopy engu-4 m sidinga cishe u-6 kuya ku-7 m ukuya esihlahleni esilandelayo, ngaphandle uma utshala uthango. Isikhala esiphakathi siphethe izindlela, ama-nitrogen fixer nezitshalo ezincane.
+5. Yenza uhlu lwakho lokuthenga ngokuya ngohlelo.
 
 ## Ukutshala i-food forest
 
-### Qala ngama-nitrogen fixer
+Ihlathi lemvelo lithatha amashumi eminyaka, ngisho namakhulu eminyaka, ukukhula. Siyalisheshisa ngokutshala izitshalo eziqala ukumila kuqala.
 
-Ihlathi lemvelo lithatha amashumi eminyaka noma amakhulu eminyaka ukuze likhule. Singakusheshisa lokhu ngokutshala kuqala **izitshalo eziningi eziqala ukumila** (pioneer plants).
+Cabanga ngokubasa umlilo. Izinkunyana zibasa izinti, izinti zibase amagatsha, bese ekugcineni izingodo ezinkulu ziyavutha. Ku-food forest, izitshalo eziqala ukumila ezikhula ngokushesha zakha umvundo kuqala, bese izihlahla zezithelo zithatha izintambo njengoba zikhula.
 
-Kufana nokubasa umlilo. Kuqala ubasa izinkunyana ezincane, zibase izinti, bese kuba amagatsha, ekugcineni kuvutha izingodo ezinkulu. Ngendlela efanayo, kuqala sakha ukuvunda komhlabathi ngezitshalo eziqala ukumila ezikhula ngokushesha. Bese izihlahla zezithelo ezinkulu ziyathatha njengoba zikhula.
-
-Izitshalo eziqala ukumila ezingcono kakhulu **ama-legume** (izitshalo zohlobo lukabhontshisi). Ama-legume amaningi asebenzisana namagciwane asezimpandeni zawo ukuthatha i-nitrogen emoyeni ayifake emhlabathini. Lokhu kubizwa ngokuthi **ukubopha i-nitrogen** (nitrogen fixing). Ama-legume abo bonke ubukhulu akhiqiza **ne-biomass** eningi (amaqabunga namagatsha) yokwenza i-mulch.
+Izitshalo eziqala ukumila ezingcono kakhulu **ngama-legume** (izitshalo zomndeni kabhontshisi nophizi). Iningi lazo libopha i-nitrogen: izimpande zazo zisebenzisana namagciwane ukuthatha i-nitrogen emoyeni bese ziyifaka emhlabathini. Ziphinde zenze **i-biomass** eningi kakhulu (amaqabunga namagatsha) ye-mulch.
 
 | Isitshalo | Ukusetshenziswa | Amanothi |
 |---|---|---|
-| Umunga (sweet thorn) *Vachellia karroo* | Isihlahla esiyi-nitrogen fixer, i-fodder, izinkuni, inhlaka (gum) | Esomdabu futhi siqine kakhulu. Singasabalala edlelweni elidliwe ngokweqile, ngakho ungasitshali otshanini bemvelo obuphilile. |
-| Umtholo (common hook thorn) *Senegalia caffra* | Isihlahla esiyi-nitrogen fixer, i-fodder, izinkuni, uthango lwezihlahla | Esomdabu; izindawo ezinemvula yasehlobo. |
-| Umkhamba (paperbark thorn) *Vachellia sieberiana* | Isihlahla somthunzi esiyi-nitrogen fixer, i-fodder | Esomdabu; isihlahla esikhulu sezindawo ezinkulu. |
-| I-keurboom *Virgilia oroboides* | I-nitrogen fixer eqala ukumila ekhula ngokushesha, izimbali zezinyosi | Esomdabu eningizimu naseNtshonalanga Kapa; siphila isikhathi esifushane. |
-| I-pigeon pea *Cajanus cajan* | I-nitrogen fixer, uphizi odliwayo, i-mulch ye-chop and drop | Isihlahlana esiphila isikhathi esifushane (iminyaka embalwa); sibulawa yisithwathwa esinamandla. |
-| I-cowpea *Vigna unguiculata* | I-groundcover eyi-annual, eyi-nitrogen fixer, ukudla | Isitshalo sasehlobo. |
-| Ubhontshisi we-lablab *Lablab purpureus* | Isitshalo esikhuphukayo esiyi-annual noma esiphila isikhathi esifushane, i-nitrogen fixer, i-fodder | Isitshalo sasehlobo; asimelani nesithwathwa. |
-| I-lupin *Lupinus angustifolius* | I-groundcover yasebusika eyi-nitrogen fixer | Sifanele ubusika baseNtshonalanga Kapa. Eminye imbewu ye-lupin iyababa futhi inobuthi; ungayidli noma uyiphe izilwane ngaphandle uma kuwuhlobo olumnandi (oludliwayo). |
+| Umunga (sweet thorn) *Vachellia karroo* | I-nitrogen fixer, i-fodder, izinkuni, inhlaka | Esomdabu futhi siqine kakhulu. Siyaminyana edlelweni elidliwe ngokweqile, ngakho sitshale ku-food forest yakho, ungalokothi usitshale otshanini bemvelo obuphilile. |
+| Umtholo (common hook thorn) *Senegalia caffra* | I-nitrogen fixer, i-fodder, izinkuni, uthango | Esomdabu; izindawo ezinemvula yasehlobo. |
+| I-keurboom *Virgilia oroboides* | I-nitrogen fixer esheshayo, izimbali zezinyosi | Esomdabu eNingizimu Kapa naseNtshonalanga Kapa; siphila isikhathi esifushane. |
+| I-pigeon pea *Cajanus cajan* | I-nitrogen fixer, uphizi odliwayo, i-chop and drop | Isihlahlana esiphila iminyaka embalwa; sibulawa yisithwathwa esinamandla. |
+| I-cowpea *Vigna unguiculata* | I-groundcover ebopha i-nitrogen, ukudla | I-annual yasehlobo. |
+| Ubhontshisi we-lablab *Lablab purpureus* | I-nitrogen fixer ekhuphukayo, i-fodder | Ehlobo; uzwela isithwathwa. |
+| I-lupin *Lupinus angustifolius* | I-groundcover yasebusika ebopha i-nitrogen | Ifanele ubusika baseNtshonalanga Kapa. Imbewu ye-lupin ebabayo inobuthi, ngakho yidla noma wondle ngezinhlobo ezimnandi (sweet) kuphela. |
 
-> **Qaphela:** Ungawatshali eNingizimu Afrika lawa ma-nitrogen fixer aziwayo e-permaculture. Amenyezelwe njengama-invasive species: i-black wattle namanye ama-wattle (*Acacia mearnsii* nezinye izinhlobo ze-*Acacia* zase-Australia), i-leucaena (*Leucaena leucocephala*), i-red sesbania (*Sesbania punicea*), i-black locust (*Robinia pseudoacacia*) ne-stinkbean (*Paraserianthes lophantha*). Esikhundleni sazo sebenzisa izihlahla zomdabu ezinameva ezingenhla.
+Uwatela, i-leucaena ne-sesbania kwenza lo msebenzi ezincwadini eziningi zaphesheya, kodwa lapha kuyi-invasive species. Izihlahla zomdabu ezinameva ezingenhla zenza umsebenzi ofanayo.
 
 ### Izinyathelo zokutshala
 
-1. **Hlela izitshalo zakho.** Linganisa amabanga aphakathi kwazo ngokobukhulu be-canopy yazo. Maka izindawo ngezikhonkwane noma ngempuphu encane ye-lime. Shiya izikhala ezinkulu phakathi kwezihlahla.
-2. **Faka amagama kukho konke.** Beka uphawu olumise okuka-T noma ilebula enegama eduze kwesitshalo ngasinye esibalulekile. Uma ungakwenzi, ungakhohlwa ukuthi yini ikuphi.
-3. **Mba yonke imigodi yokutshala nemigodi yokuqoqa amanzi (basins).**
-4. **Lungisa i-compost, i-mulch nanoma yini ethuthukisa umhlabathi** (i-compost yizinsalela zezitshalo ezibolile ezondla umhlabathi).
-5. **Tshala kuqala izihlahla zezithelo ezinkulu nezinye izihlahla eziphila isikhathi eside.** Bese utshala izihlahla ezingama-nitrogen fixer.
-6. **Tshala izihlahla ezimaphakathi** phakathi kwezihlahla ezine-canopy enkulu.
-7. **Tshala izihlahlana namakhambi**, cishe ku-1 m kude nezihlahla zezithelo ezinkulu.
-8. **Tshala izitshalo zezimpande ezingama-perennial.**
-9. **Tshala ama-groundcover angama-perennial** phakathi kwemigodi yokuqoqa amanzi.
-10. **Hlwanyela ekugcineni ama-legume angama-annual angama-groundcover**, njenge-cowpea ehlobo noma i-lupin ebusika. Ngaphambi nje kokuhlwanyela, manzisa imbewu kancane bese uyixuba ne-**inoculant** efanele (impuphu yamagciwane abopha i-nitrogen yalolo hlobo lwe-legume; ithengiswa nembewu ye-legume noma ezitolo zezolimo). Gcina imbewu exutshwe ne-inoculant ingashayi ilanga. Hlakaza imbewu kakhulu emhlabathini bese uyimboza kancane nge-mulch.
-11. **Nisela** izihlahla, izitshalo nembewu kahle.
+1. **Bethela izikhonkwane lapho kuzoba khona izitshalo.** Linganisa izikhala ngobukhulu be-canopy bese umaka indawo ngayinye ngesikhonkwane noma ngomcako omncane. Shiya izikhala ezinkulu phakathi kwezihlahla ezinkulu.
+2. **Bhala amagama kukho konke.** Beka uphawu olunegama eduze kwesitshalo ngasinye esibalulekile. Uzokhohlwa ukuthi yini ikuphi.
+3. **Mba yonke imigodi nezitsha zokutshala.**
+4. **Lungisa i-compost ne-mulch.** **I-compost** yizinsalela zezitshalo nezilwane ezibole zaba ukudla komhlabathi okumnyama nokuhlakazekayo.
+5. **Tshala izihlahla ezinkulu eziphila isikhathi eside kuqala,** bese kuba yizihlahla ezibopha i-nitrogen.
+6. **Tshala izihlahla eziphakathi nendawo** phakathi kwezinkulu.
+7. **Tshala izihlahlana namakhambi** cishe ku-1 m ukusuka ezihlahleni ezinkulu zezithelo.
+8. **Tshala izitshalo zezimpande eziyi-perennial,** bese kuba **ama-groundcover ayi-perennial** phakathi kwezitsha.
+9. **Hlwanyela ama-groundcover e-legume ayi-annual ekugcineni:** i-cowpea ehlobo, i-lupin ebusika. Ngaphambi nje kokuhlwanyela, manzisa imbewu kancane bese uyixuba ne-**inoculant** efanele (impuphu yamagciwane abopha i-nitrogen yaleyo legume, ethengiswa nembewu noma ezitolo zezolimo). Gcina imbewu efakwe i-inoculant kude nelanga. Yisakaze iminyene bese uyimboza kancane nge-mulch.
+10. **Nisela** konke kahle.
 
-## Indlela i-food forest ekhula ngayo
+## Ukuthi i-food forest ikhula kanjani
 
-I-food forest yakho izodlula ezigabeni eziningana ngaphambi kokuthi ibe wuhlelo oluzinzile. Singachaza izigaba ezimbili ezinkulu.
+I-food forest idlula ezigabeni eziningana ngaphambi kokuthi izinze. Singacabanga ngezigaba ezimbili.
 
-### Isigaba 1: Ukumila (iminyaka engu-0 kuya ku-5)
+**Isigaba 1: ukumila (iminyaka engu-0 kuya ku-5).** Ama-legume aqala ukumila akhula ngokushesha ahola. Agcwalisa izikhala ezivulekile, avimbe ukhula ngomthunzi futhi avikele izihlahla zezithelo ezisencane. Ngenkathi yemvula, uma esemakhulu ngokwanele, yenza i-chop and drop: sika amagatsha awo kakhulu bese ushiya okusikiwe phansi njenge-mulch. Kuyabola kondle umhlabathi nesikhunta esidingwa yizihlahla zehlathi. Ezinye izimpande ezincane nama-nodule e-legume nazo ziyafa ngemva kokusikwa bese zikhipha i-nitrogen encane. Ngeke ukhe izithelo eziningi okwamanje, kodwa ngemva konyaka wokuqala kukhona amajikijolo, imifino ezihlwanyelayo, izitshalo zezimpande, amakhambi nezinkuni ezivela emagatsheni athenwe.
 
-- Ama-legume aqala ukumila akhula ngokushesha yiwo izitshalo ezinkulu. Akha ukuvunda komhlabathi ne-biomass, agcwalisa izikhala ezivulekile, embozela ukhula ngomthunzi futhi avikele izihlahla zezithelo ezisencane.
-- Enkathini yemvula, uma izihlahla eziqala ukumila sezinkulu ngokwanele, yenza **i-chop and drop**: thena amagatsha azo kakhulu bese ushiya amagatsha namaqabunga asikiwe phansi.
-- I-mulch iyabola yondle umhlabathi nesikhunta sawo, izihlahla zehlathi ezisidingayo ukuze zikhule kahle. Ezinye izimpande ezincane nama-nodule asezimpandeni ze-legume nazo ziyafa ngemva kokuthenwa, zikhiphe i-nitrogen ethile emhlabathini.
-- Ngeke uvune amantongomane amaningi noma izithelo eziningi okwamanje. Kodwa ngemva konyaka wokuqala ungavuna amajikijolo akhula ngokushesha, imifino ezihlwanyelayo, izitshalo zezimpande ezingama-perennial, amakhambi nezinkuni ezivela ku-chop and drop.
+**Isigaba 2: isimile (kusukela onyakeni wesi-5).** Izihlahla ezixhunyelwe zingathela eminyakeni yazo emithathu yokuqala; ezinye kuphela onyakeni wesi-5 kuya kowesi-7. Iningi lama-food forest liqala ukuvuthwa cishe ngonyaka wesi-5.
 
-### Isigaba 2: Isimile (kusukela onyakeni wesi-5 kuya phambili)
+1. Njengoba izihlahla zezithelo zikhula zigcwala, sika izitshalo eziqala ukumila kakhulu unyaka ngamunye, kuze kusale izihlahla ezimbalwa ezibopha i-nitrogen eziphila isikhathi eside.
+2. Vumela izinkukhu, izingulube noma ezinye izilwane zidle kuyo isikhashana esifushane. Vikela iziqu ezincane ezimbuzini nasezingulubeni, ezihlubula amagxolo.
+3. Thena ukuze ungenise ukukhanya lapho kudingeka khona, futhi usebenzise **ama-microclimate** avikelekile (izindawo ezincane ezinesimo sezulu sazo) asakhekile.
+4. Qala ukusika izihlahla ze-coppicing ukuze uthole izinkuni.
 
-- Izihlahla zezithelo ezixhunyelwe zingaqala ukuthela eminyakeni emithathu yokuqala. Ezinye ziqala kuphela onyakeni wesi-5 kuya kowesi-7. Ngokwesilinganiso, i-food forest iqala ukuvuthwa cishe ngonyaka wesihlanu.
-- Njengoba izihlahla zezithelo zikhula zigcwala, nciphisa kancane kancane izihlahla eziqala ukumila. Ekugcineni kusala kuphela izihlahla ezimbalwa ezingama-nitrogen fixer eziphila isikhathi esimaphakathi nesiside.
-- Manje ungavumela izingulube, izinkukhu noma ezinye izilwane ukuthi zidle ehlathini isikhashana ukuze zisize ekulinakekeleni. Vikela iziqu zezihlahla ezisencane ezimbuzini nasezingulubeni.
-- Uzobona izilwane zasendle eziningi kakhulu njengoba izitshalo zakho zinikeza ukudla nendawo yokukhosela.
-- Thena ukuze ungenise ukukhanya okwengeziwe lapho kudingeka khona, futhi usebenzise **ama-microclimate** (izindawo ezincane ezinesimo sezulu sazo) avikelekile asezakhekile.
-- Izithelo, amantongomane namajikijolo kuyanda njengoba izihlahla zikhula, futhi izihlahla ezenziwe i-coppicing manje zingavunelwa izinkuni.
+Izilwane zasendle zifika zodwa. Izinyoni, izibankwa nezinambuzane ziyangena njengoba izingqimba zivaleka, bese izithelo, amantongomane namajikijolo kwanda unyaka nonyaka.
 
 ## Izingqimba ze-food forest
 
-I-food forest ivame ukuchazwa ngokuthi inezi**ngqimba eziyisikhombisa**. Izitshalo ezingezansi yizibonelo. Khetha lezo ezifanele isimo sezulu sakho. Izitshalo okuthiwa ezomdabu zimila ngokwemvelo eNingizimu ne-Afrika.
+I-food forest ivame ukuchazwa ngezingqimba eziyisikhombisa. Khetha izitshalo zongqimba ngalunye ezifanele isimo sezulu sakho. **I-understorey** wungqimba lwezihlahla ezincane nezihlahlana ezingaphansi kwezihlahla ezinde kakhulu.
 
-### Ungqimba 1: Izihlahla ezinde (i-canopy)
-
-Lezi yizihlahla ezinde kunazo zonke. Ku-food forest encane yasekhaya, tshala ezimbalwa kuphela.
-
-| Isitshalo | Ukusetshenziswa | Amanothi |
+| Ungqimba | Okukhula lapho | Izibonelo |
 |---|---|---|
-| Umgwenya (wild plum) *Harpephyllum caffrum* | Izithelo zokwenza ujamu, ukudla kwezinyoni, umthunzi | Esomdabu. Izihlahla ezisencane azimelani nesithwathwa. Izimbali zeduna nezensikazi zisezihlahleni ezahlukene. |
-| Umthoma (jackalberry) *Diospyros mespiliformis* | Izithelo, izingodo zokwakha, umthunzi, umuthi | Esomdabu; ihlanze elishisayo elingenaso isithwathwa nezindawo eziphansi. Isihlahla esikhulu. |
-| I-black sapote *Diospyros digyna* | Izithelo | Izindawo ezifudumele ezingenaso isithwathwa kuphela. |
-| I-pecan *Carya illinoinensis* | Amantongomane, umthunzi | Idinga umhlabathi ojulile namanzi; isihlahla esikhulu kakhulu. |
-| Umbhaba (Cape chestnut) *Calodendrum capense* | Amafutha embewu, umthunzi, izimbali zezinambuzane | Esomdabu. |
+| 1. Izihlahla ezinde (i-canopy) | Izihlahla ezinde kakhulu. Tshala ezimbalwa kuphela ku-food forest encane. | Umgwenya (wild plum) *Harpephyllum caffrum*, umbhaba (Cape chestnut) *Calodendrum capense*, i-pecan; umthoma (jackalberry) *Diospyros mespiliformis* ne-black sapote ezindaweni ezishisayo ezingenasithwathwa |
+| 2. Izihlahla ezincane (i-understorey) | Iningi lezihlahla zezithelo, ezigcinwa zizincane ngokuthena | I-apula, ipheya, i-quince, ipentshisi, ipulamu, i-apricot, ikhiwane, i-persimmon, ama-citrus, ukwatapheya, i-carob; ezomdabu: umqokolo (Kei apple) *Dovyalis caffra*, umthunduluka (sour plum) *Ximenia caffra*, umphafa (buffalo thorn) *Ziziphus mucronata*, i-monkey plum *Diospyros lycioides*, umneyi (red ivory) *Berchemia zeyheri* |
+| 3. Izihlahlana | Izitshalo ezinokhuni ezisukela cishe ku-0.5 kuya ku-3 m | I-forest num-num *Carissa bispinosa*, i-pigeon pea, umhlonyane (wilde als) *Artemisia afra*, i-wild rosemary *Eriocephalus africanus*, i-spekboom *Portulacaria afra*, inkalane (krantz aloe) *Aloe arborescens*, i-rosemary, i-lavender, i-Cape gooseberry |
+| 4. Amakhambi nemifino | Izitshalo ezineziqu ezithambile, eziningi zazo zingama-**annual** (eziphila isizini eyodwa) | Imbuya (amaranth) yemifino nokusanhlamvu, i-okra, amabele, ubhekilanga, i-kale, i-Swiss chard, ubhontshisi obanzi (broad bean), i-basil, i-sage, i-oregano, i-yarrow, i-French marigold |
+| 5. I-groundcover | Izitshalo eziphansi ezimboza umhlabathi | Ithanga, ikhabe lasendle (tsamma melon) *Citrullus lanatus*, i-sour fig *Carpobrotus dimidiatus*, i-wild garlic *Tulbaghia violacea*, i-pennywort *Centella asiatica*, ama-strawberry, i-thyme, i-nasturtium, i-mint embhedeni obiyelwe |
+| 6. Izimpande | Izimpande, ama-tuber nama-bulb | Ubhatata, amazambane, u-anyanisi, isaqathe, ubhitrudi; i-turmeric ezindaweni ezifudumele ezingenasithwathwa |
+| 7. Izitshalo ezikhuphukayo | Imicu ekhuphuka izihlahla, uthango nezisekelo | Amagilebhisi, iselwa (calabash) *Lagenaria siceraria*, ubhontshisi we-lablab |
 
-### Ungqimba 2: Izihlahla ezincane (ungqimba lwezihlahla eziphansi)
-
-Iningi lezihlahla zezithelo lingena kulolu ngqimba. Eziningi zigcinwa zizincane ngokuthenwa.
-
-| Isitshalo | Ukusetshenziswa | Amanothi |
-|---|---|---|
-| I-apula *Malus domestica* | Izithelo | Lidinga ubusika obubandayo. Khetha izinhlobo ezidinga amakhaza amancane ezindaweni ezifudumele. |
-| Ipheya *Pyrus communis* | Izithelo | Lidinga ubusika obubandayo. |
-| I-quince *Cydonia oblonga* | Izithelo zokwenza ujamu nokupheka | Imelana kakhulu nesithwathwa. |
-| Ipentshisi ne-nectarine *Prunus persica* | Izithelo | Khetha uhlobo oluhambisana namakhaza asebusika endaweni yakini. |
-| Uplamu *Prunus salicina* ne-*Prunus domestica* | Izithelo | Eziningi zidinga olunye uhlobo eduze ukuze kuthuthwe impova. |
-| I-apricot *Prunus armeniaca* | Izithelo | Iqhakaza kusenesikhathi, ngakho isithwathwa sasekupheleni singasibhubhisa isivuno. |
-| I-almond *Prunus dulcis* | Amantongomane | Ikhula kangcono eNtshonalanga Kapa enehlobo elomile. |
-| Umkhiwane *Ficus carica* | Izithelo | Uqine kakhulu. Izinyoni zisabalalisa imbewu yawo endle, ngakho hlukula izithombo zomkhiwane wasendle ozithola kude nengadi. |
-| I-persimmon *Diospyros kaki* | Izithelo | Ihlubula amaqabunga ebusika; imelana nesithwathwa. |
-| Uwolintshi, ulamula, i-grapefruit *Citrus* spp. | Izithelo, i-vitamin C | Vikela izihlahla ezisencane esithwathweni. Thenga izihlahla eziqinisekisiwe ukuthi azinazo izifo (certified disease-free). |
-| Ukwatapheya *Persea americana* | Izithelo | Izindawo ezingenaso isithwathwa noma ezinesithwathwa esincane kuphela. I-Fuerte imelana namakhaza kangcono kune-Hass. Udinga umhlabathi okhipha amanzi kahle. |
-| I-carob *Ceratonia siliqua* | Amakhasi amnandi okudla nokondla imfuyo, izingodo | Ifanele izindawo ezomile nezishisayo neNtshonalanga Kapa. Idinga izihlahla zeduna nezensikazi, ngaphandle uma uthenga uhlobo oluzithelayo lodwa. |
-| Umphafa (buffalo thorn) *Ziziphus mucronata* | Izithelo ezidliwayo, umuthi, i-fodder | Esomdabu. Ameva agobile: kuhle othangweni oluphilayo. |
-| Umqokolo (Kei apple) *Dovyalis caffra* | Izithelo zokwenza ujamu, uthango lwezihlahla olunameva | Esomdabu. Udinga isihlahla sensikazi ukuze uthole izithelo kanye nesiduna eduze ukuze uthole isivuno esihle. |
-| Umthunduluka (sour plum) *Ximenia caffra* | Izithelo ezimuncu ezicebile nge-vitamin C, uthango lwezihlahla | Esomdabu. |
-| Umneyi (red ivory) *Berchemia zeyheri* | Izithelo (ezintsha noma ezomisiwe), izingodo zokwakha | Esomdabu; ihlanze (bushveld). |
-| I-monkey plum *Diospyros lycioides* | Izithelo, umuthi; amagatsha amancane asetshenziswa njengebhulashi lamazinyo | Esomdabu futhi siqinile. |
-| I-wild custard apple *Annona senegalensis* | Izithelo, umuthi | Esomdabu; izindawo ezishisayo ezingenaso isithwathwa. |
-| Isibhaha (pepperbark) *Warburgia salutaris* | Umuthi wesintu | Esomdabu futhi **sisengozini yokushabalala endle**. Thenga kuphela izitshalo ezikhuliswe enkulisa. Asimelani nesithwathwa. |
-
-> **Qaphela:** Ungatshali i-elderberry (*Sambucus*) noma i-white mulberry (*Morus alba*), ezivame ukuthengiswa njengezitshalo zezithelo. I-elderberry yaseMelika iyi-invasive species ye-Category 1b, kanti i-white mulberry iyi-invasive species ye-Category 3 eNingizimu Afrika, ngakho akuvumelekile ngokomthetho ukuzitshala. Izitshalo zomdabu ezinamajikijolo, njengomqokolo, umsiphane (cross-berry) ne-num-num, ziyizindlela ezinhle zokuzithatha isikhundla.
-
-### Ungqimba 3: Izihlahlana
-
-Izihlahlana yizitshalo ezinokhuni ezinobude obucishe bube ngu-50 cm kuya ku-3 m.
-
-| Isitshalo | Ukusetshenziswa | Amanothi |
-|---|---|---|
-| I-forest num-num *Carissa bispinosa* | Izithelo zokwenza ujamu, uthango lwezihlahla | Esomdabu; sinameva. |
-| I-Cape gooseberry *Physalis peruviana* | Izithelo zokudliwa zintsha nezokwenza ujamu | Siphila isikhathi esifushane; asimelani nesithwathwa. |
-| I-globe artichoke *Cynara cardunculus* (iqembu le-Scolymus) | Izihlumela zezimbali ezidliwayo | Vuna izihlumela ngaphambi kokuba ziqhakaze. Ungalokothi uvumele izitshalo zenze imbewu: i-cardoon yasendle, eyinhlobo efanayo, iwukhula ezindaweni ezinesimo sezulu sase-Mediterranean, kuhlanganise nezingxenye zeNtshonalanga Kapa. |
-| I-pigeon pea *Cajanus cajan* | I-nitrogen fixer, uphizi odliwayo | Bheka ithebula lama-nitrogen fixer ngenhla. |
-| Umhlonyane (wilde als) *Artemisia afra* | Umuthi, isifutho esixosha izinambuzane | Esomdabu; siqine kakhulu. |
-| I-wild rosemary *Eriocephalus africanus* | Ikhambi, izimbali zezinyosi | Esomdabu. |
-| I-rosemary *Salvia rosmarinus* | Ikhambi lokupheka, izimbali zezinyosi | Iqinile futhi imelana nesomiso. |
-| I-lavender *Lavandula* spp. | Ikhambi, izimbali zezinyosi | Idinga umhlabathi okhipha amanzi kahle. |
-| I-pineapple sage *Salvia elegans* | Ikhambi, izimbali zezinyoni nezinyosi | Isithwathwa singayisika phansi. |
-| I-spekboom (porkbush) *Portulacaria afra* | Amaqabunga amuncu adliwayo, i-fodder, ukulawula **i-erosion** (ukukhukhuleka komhlabathi) | Isitshalo somdabu esinamanzi (succulent). Simelana nesithwathwa esincane kuphela. |
-| Inkalane (krantz aloe) *Aloe arborescens* | Umuthi, izimbali zasebusika zezinyoni nezinyosi | Esomdabu. |
-| Isitshalo seqanda (brinjal, eggplant) *Solanum melongena* | Umfino | Singaphila iminyaka eminingana lapho kungekho isithwathwa. |
-| Upelepele (chilli) *Capsicum frutescens* | Isinongo | Ungaphila iminyaka eminingana lapho kungekho isithwathwa. |
-
-### Ungqimba 4: Amakhambi nemifino (ungqimba lwezitshalo ezineziqu ezithambile)
-
-Izitshalo ezineziqu ezithambile, eziningi zazo zingama-annual.
-
-| Isitshalo | Ukusetshenziswa | Amanothi |
-|---|---|---|
-| Imbuya yokusanhlamvu neyamaqabunga (amaranth) *Amaranthus cruentus*, *A. caudatus* | Umfino onamaqabunga (imifino, morogo), okusanhlamvu | I-annual; siyazihlwanyela. |
-| I-okra *Abelmoschus esculentus* | Umfino | I-annual yasehlobo. |
-| Amabele (sorghum) *Sorghum bicolor* | Okusanhlamvu | I-annual yasehlobo; simelana nesomiso. |
-| Ubhekilanga *Helianthus annuus* | Imbewu, izimbali zezinambuzane | I-annual yasehlobo. |
-| I-Jerusalem artichoke *Helianthus tuberosus* | Izigaxa ezidliwayo | I-perennial. Sisabalala ngezigaxa zaso, ngakho sitshale lapho singavinjelwa khona. |
-| I-kale, iklabishi, i-mustard greens, i-Swiss chard, isipinashi, ulethisi | Imifino enamaqabunga | Ikakhulu zitshalwa njengama-annual. |
-| Ubhontshisi obubanzi (broad bean) *Vicia faba* | Ubhontshisi, **i-green manure** (izitshalo ezimbelwa emhlabathini ukuze ziwondle), i-nitrogen fixer | I-annual yasebusika. |
-| I-oats, ibhali, i-rye | Okusanhlamvu, i-green manure, i-fodder | Ama-annual asebusika. |
-| I-buckwheat *Fagopyrum esculentum* | Isitshalo sokumboza umhlabathi, okusanhlamvu, izimbali zezinambuzane | I-annual yasehlobo ekhula ngokushesha; asimelani nesithwathwa. |
-| I-sesame *Sesamum indicum* | Imbewu, isitshalo sokumboza umhlabathi | I-annual yasehlobo. |
-| Utamatisi, upelepele omnandi (sweet pepper) | Imifino | Zitshalwa njengama-annual asehlobo. |
-| I-basil *Ocimum basilicum* | Ikhambi lokupheka | I-annual yasehlobo; ezinye izinhlobo ze-basil ezingama-perennial ziphila isikhathi eside lapho kungekho isithwathwa. |
-| I-fennel *Foeniculum vulgare* | Ikhambi | I-perennial. Sika amakhanda ezimbali ngaphambi kokuba kwakheke imbewu; i-fennel isiphunyukele endle ezingxenyeni zaseMpumalanga Kapa. |
-| I-sage *Salvia officinalis* | Ikhambi lokupheka | I-perennial. |
-| I-oregano *Origanum vulgare* | Ikhambi lokupheka | I-perennial. |
-| I-rocket *Eruca sativa* | Ikhambi lesaladi | I-annual yenkathi epholile. |
-| I-French marigold *Tagetes patula* | Izimbali ezisiza ukuxosha ezinye izinambuzane | I-annual. |
-| I-yarrow *Achillea millefolium* | Ikhambi, izimbali zezinambuzane eziwusizo | I-perennial. |
-| I-leek *Allium ampeloprasum* | Umfino | Esiphila iminyaka emibili (sihlala izinkathi ezimbili). |
-| I-aloe vera *Aloe vera* | Umuthi wesikhumba | Asimelani nesithwathwa. |
-| I-turmeric *Curcuma longa* | Isinongo, umuthi | Izindawo ezingenaso isithwathwa, ezifudumele nezimanzi kuphela. |
-
-### Ungqimba 5: Ama-groundcover
-
-Izitshalo eziphansi ezisabalalayo ezimboza futhi zivikele umhlabathi.
-
-| Isitshalo | Ukusetshenziswa | Amanothi |
-|---|---|---|
-| Ithanga, i-butternut, i-squash *Cucurbita* spp. | Izithelo namaqabunga adliwayo | Ama-annual asehlobo. |
-| Ikhabe lasendle (tsamma) *Citrullus lanatus* | Izithelo, i-groundcover | Esomdabu; i-annual yasehlobo. |
-| I-sour fig *Carpobrotus dimidiatus* | Izithelo zokwenza ujamu, umuthi | Isitshalo somdabu esinamanzi (succulent); siyawehlisa nomlilo. |
-| Ugalikhi wasendle *Tulbaghia violacea* | Ikhambi, umuthi, singadida izinambuzane | Esomdabu. |
-| Icishamlilo (pennywort, gotu kola) *Centella asiatica* | Umuthi | Esomdabu; sithanda izindawo ezimanzi. |
-| I-strawberry *Fragaria × ananassa* | Izithelo | I-perennial. |
-| I-thyme *Thymus vulgaris* | Ikhambi lokupheka | I-perennial. |
-| Iminti ne-peppermint *Mentha* spp. | Ikhambi, itiye | I-perennial. Sisabalala ngokushesha; sitshale embhedeni ovinjelwe. |
-| I-lemon balm *Melissa officinalis* | Ikhambi, itiye | I-perennial. |
-| Ama-chives *Allium schoenoprasum* | Ikhambi | I-perennial. |
-| Ipasili (parsley) *Petroselinum crispum* | Ikhambi | Esiphila iminyaka emibili. |
-| I-coriander *Coriandrum sativum* | Ikhambi | I-annual yenkathi epholile. |
-| I-marjoram *Origanum majorana* | Ikhambi | I-perennial. |
-| I-nasturtium *Tropaeolum majus* | Amaqabunga nezimbali ezidliwayo; isitshalo sokuheha ama-aphid (trap plant) | I-annual; siyazihlwanyela. |
-| I-pot marigold *Calendula officinalis* | Izimbali ezidliwayo, umuthi | I-annual yasebusika. |
-
-### Ungqimba 6: Izimpande
-
-Izitshalo ezitshalelwa izimpande zazo, izigaxa nezilimo zazo ezingaphansi komhlabathi (bulbs).
-
-| Isitshalo | Ukusetshenziswa | Amanothi |
-|---|---|---|
-| Ubhatata *Ipomoea batatas* | Izigaxa namaqabunga adliwayo | Uyi-perennial lapho kungekho isithwathwa; kwezinye izindawo utshalwa njengesitshalo sasehlobo. Sebenzisa izinhlobo ezivuthwa ngokushesha ezindaweni ezibandayo. |
-| Amazambane *Solanum tuberosum* | Izigaxa | Atshalwa njenge-annual. |
-| Ubhitrudi, isaqathe, i-radish, u-anyanisi | Imifino yezimpande | Zitshalwa njengama-annual. |
-| Inkomfe (African potato) *Hypoxis hemerocallidea* | Umuthi wesintu | Esomdabu. Sivunwe ngokweqile endle: thenga kuphela izitshalo ezikhuliswe enkulisa. |
-
-### Ungqimba 7: Izitshalo ezikhuphukayo (ungqimba lwemivini)
-
-Izitshalo ezikhuphukayo zisebenzisa izihlahla, izintango nezisekelo (trellises) ukuze zifinyelele ukukhanya.
-
-| Isitshalo | Ukusetshenziswa | Amanothi |
-|---|---|---|
-| Igilebhisi *Vitis vinifera* (isibonelo i-Hanepoot) | Izithelo, umthunzi phezu kwe-pergola | Lihlubula amaqabunga ebusika; likhula kangcono lapho amahlobo omile. |
-| Igilebhisi lohlobo lwe-Catawba (ama-hybrid e-*Vitis labrusca*) | Izithelo | Limelana kangcono nemvula yasehlobo nezifo. |
-| Iselwa (calabash) *Lagenaria siceraria* | Izithelo ezisencane namaqabunga njengokudla; amaselwa omisiwe njengeziqukathi | I-annual yasehlobo. |
-| Ubhontshisi we-lablab *Lablab purpureus* | Ubhontshisi, ubopha i-nitrogen | Isitshalo esikhuphukayo sasehlobo. |
-
-> **Ukuphepha:** Izitshalo zokwelapha zingaba yingozi uma zisetshenziswe ngobuningi, ngesikhathi sokukhulelwa nasezinganeni ezincane. Ezinye zingaphambana nemithi evela emtholampilo. Ungazisebenzisi esikhundleni sokwelashwa kwasesibhedlela. Buza isisebenzi sezempilo ngaphambi kokuzisebenzisa.
+Emajikijolweni, tshala umqokolo, umsiphane (cross-berry) noma i-num-num esikhundleni se-elderberry noma i-white mulberry, eziyi-invasive species lapha. Izinyoni zithwala imbewu yamakhiwane ziyise endle, ngakho hlukula izithombo zamakhiwane ozithola kude nengadi. Emithini, isibhaha (pepperbark) *Warburgia salutaris* sifanele izingadi ezingenasithwathwa; thenga izitshalo ezikhuliswe enkulisa, ngoba lesi sihlahla sesihlutshwe kakhulu endle ngenxa yamagxolo aso.
 
 ## Ama-windbreak
 
-### I-windbreak isebenza kanjani
+Umoya womisa izitshalo, wephule izihlahla ezincane futhi uthwale umhlabathi ongamboziwe. E-Karoo, eNtshonalanga Kapa nasethafeni eliphakeme eliphakathi nezwe, ungenye yezinto ezinzima kakhulu ingadi ebhekana nazo.
 
-**I-windbreak** (isivikela-moya, noma **ibhande lezihlahla lokuvikela** — shelter belt) ngumugqa noma ibhande lezihlahla, izihlahlana nezinye izitshalo elivikela izindlu, izitshalo nezilwane emoyeni. Awukho umklamo owodwa olingana nazo zonke izindawo. Hlela i-windbreak yakho ukuze ifanele umhlaba wakho nezidingo zakho.
+I-windbreak wumugqa noma ibhande lezihlahla, izihlahlana noma utshani obude olunciphisa umoya futhi luvikele izitshalo, izilwane namakhaya. Awukho umklamo owodwa; indawo ngayinye idinga owayo. I-windbreak enhle:
 
-Ama-windbreak awusizo kakhulu ezindaweni ezinomoya omningi nezomile, njengezingxenye zeNtshonalanga Kapa, iKaroo nethafa eliphakathi eNingizimu ne-Afrika, lapho umoya womisa izitshalo futhi uphephule umhlabathi.
-
-I-windbreak enhle inga:
-
-- nciphisa amandla emimoya enamandla nevunguzayo
-- nciphisa i-erosion ebangelwa umoya
-- vikela izihlahla zezithelo ezisencane, izitshalo ze-food forest nemifino
-- nikeza i-fodder eyengeziwe: izilwane ezinkulu zingadla emaphethelweni, izinkukhu zingazicingela ukudla ngaphansi (gcina izilwane zingangeni ngesikhathi i-windbreak isencane)
-- nikeza izinkuni nezigxobo lapho amagatsha angaphansi ethenwa
-- khuphula izakhamzimba ezijulile emhlabathini ngezimpande zayo, ezibuyela phezulu ngamaqabunga awayo
-- nikeza izithelo namantongomane, kodwa lokho kuyinzuzo eyengeziwe nje, ngoba umoya wehlisa ubukhulu nekhwalithi yesivuno
-- nikeza indawo yokukhosela, umpe (nectar) nempova yezinyosi, izinambuzane nezinyoni
+- inciphisa imimoya enamandla evunguza ngamagagasi futhi ivimbe **i-erosion** yomoya (umhlabathi ophephulwayo noma okhukhulwayo)
+- ivikela izihlahla zezithelo ezisencane, i-food forest nemifino
+- inika i-fodder emaphethelweni ayo (gcina izilwane ngaphandle isesencane) nezinkuni ezivela ekuthenweni
+- ikhuphula izakhamzimba ngezimpande ezijulile, ezibuyela ngaphezulu emaqabungeni awile
+- yondla futhi ivikele izinyosi, izinambuzane nezinyoni
+- inika izithelo namantongomane athile, nakuba umoya wehlisa isivuno, ngakho thatha izithelo njengenzuzo eyengeziwe
 
 ### Indlela yokuhlela i-windbreak
 
-1. **Thola umoya owenza umonakalo.** Bheka ukuthi imimoya enamandla kakhulu nomile kakhulu ivela ngakuphi enkathini ngayinye yonyaka. Sebenzisa ikhampasi noma indawo elikuyo ilanga ukuze ubize uhlangothi. Imimoya ingashintsha ngokwenkathi yonyaka; isibonelo, eNtshonalanga Kapa imimoya enamandla evela eningizimu-mpumalanga ivunguza ehlobo, kanti imimoya evela enyakatho-ntshonalanga iletha imvula yasebusika.
-2. **Tshala unqamule umoya.** Tshala i-windbreak iqonde ngqo (ku-engeli engu-90°) emoyeni owenza umonakalo, ohlangothini lwengadi oluvela kulo umoya.
-3. **Yenze ibe nde futhi ingabi nezikhala.** Umoya ushesha kakhulu uma udlula ezikhaleni nasemaphethelweni e-windbreak.
-4. **Vumela umoya omncane ukuthi udlule.** I-windbreak evumela umoya othile ukuthi udlule (eminyene cishe njengengxenye yodonga oluqinile) isebenza kangcono kunodonga oluqinile. Isithiyo esiqinile senza izivunguvungu ezijikelezayo ohlangothini oluvikelekile.
-5. **Sebenzisa imigqa eminingana.** Tshala izihlahla ezinde ngemuva (ohlangothini oluvela kulo umoya), izihlahla ezimaphakathi phakathi, nezihlahlana eziminyene ngaphambili.
-6. **Shiya indawo yokukhanya.** Indawo evikelekile idlulela phansi komoya izikhathi eziningi kunobude be-windbreak. Ngakho akudingeki uyitshale khona eduze kwengadi. Izimpande zezihlahla nazo ziqhudelana nezitshalo ngamanzi. ENingizimu ne-Afrika ilanga lisenyakatho, ngakho i-windbreak esohlangothini **olusenyakatho** lwengadi iyiphonsa umthunzi. Ohlangothini oluseningizimu iphonsa umthunzi omncane.
+1. **Thola umoya olimazayo.** Buka lapho imimoya enamandla kakhulu neyomile kakhulu ivela khona isizini ngayinye. ENtshonalanga Kapa, isibonelo, umoya waseningizimu-mpumalanga uvunguza ehlobo, kanti owasenyakatho-ntshonalanga uletha imvula yasebusika.
+2. **Tshala uwunqamule,** ngokwe-engeli eqondile kumoya olimazayo, ohlangothini lwengadi olusuka kulo.
+3. **Yenze ibe nde, ingabi nezikhala.** Umoya uyashesha uma udlula ezikhaleni nasemaphethelweni.
+4. **Vumela umoya othile udlule.** I-windbreak eminyene cishe ngokwengxenye yodonga ivikela ibanga elide kunodonga oluqinile, olwenza umoya uwe futhi uzungeze ngemuva kwalo.
+5. **Tshala imigqa eminingana:** izihlahla ezinde ngemuva (ohlangothini oluvela kulo umoya), izihlahla eziphakathi nendawo maphakathi, izihlahlana eziminyene phambili.
+6. **Shiya indawo yokukhanya.** Isivikelo sifinyelela ngasemuva kwayo amabanga aphindwe kaningi ubude be-windbreak, kaningi ukuphindwe ka-10 kuya ku-20, ngakho akudingeki ime eduze nengadi. Izimpande zezihlahla ziphinde zincintisane nezitshalo ngamanzi. Ngoba ilanga lisenyakatho, i-windbreak **esenyakatho** yenza umthunzi engadini; eseningizimu yenza umthunzi omncane.
 
-> **Qaphela:** Amapulazi ezentengiselwano avame ukutshala i-beefwood (*Casuarina* spp.), ama-gum (*Eucalyptus*) noma amaphayini njengama-windbreak. I-beefwood (*Casuarina cunninghamiana* ne-*C. equisetifolia*) nezinhlobo eziningi zama-gum namaphayini **ngama-invasive species e-Category 2**. Zingatshalwa kuphela uma kunemvume kahulumeni, endaweni ephawulwe, futhi zingalokothi zibe ngaphakathi kuka-30 m womfula, idamu noma ixhaphozi. Abalimi abancane kufanele basebenzise izitshalo zomdabu zama-windbreak esikhundleni salokho.
+I-beefwood (*Casuarina*), ugamthilini nophayini kuvamile njengama-windbreak asemapulazini, kodwa kuyasabalala endle nasemifuleni. Izihlahla nezihlahlana zomdabu zenza lo msebenzi futhi zondla nezilwane zasendle.
 
 ### Ama-windbreak nomlilo
 
-I-windbreak eluhlaza neniselwe kahle ingawehlisa umlilo. Kodwa **ayiyona i-firebreak** (umzila ohlanziwe ovimba umlilo), futhi ingaze idlulisele umlilo emzini wakho. Izitshalo eziningi ezinephunga elimnandi, njengomhlonyane (wilde als), i-wild rosemary, i-rosemary, i-lavender ne-camphor bush, zinamafutha avutha kakhulu. Izitshalo ezinamanzi (succulents) ezifana ne-spekboom, izinhlaba ne-sour fig azivuthi kalula.
+I-windbreak eluhlaza neniselwe ingawunciphisa umlilo, kodwa ayiyona **i-firebreak** (umzila ohlanziwe umlilo wasendle ongeke uwudlule), futhi ingadlulisela umlilo endlini yakho. Izitshalo ezinephunga elinamandla njengomhlonyane, i-wild rosemary, i-rosemary, i-lavender ne-camphor bush zigcwele amafutha avutha kakhulu. Izitshalo ezinamanzi (succulents) njenge-spekboom, izinhlaba ne-sour fig azivuthi kalula.
 
-- Lapho kunengozi yomlilo, gcina i-firebreak ehlanziwe phakathi kwendle ne-windbreak yakho.
-- Susa izinto ezomile nezifile ngaphansi kwe-windbreak.
-- Ngaphansi kwe-National Veld and Forest Fire Act (uMthetho kaZwelonke Wemililo Yasendle Nasemahlathini), abanikazi bomhlaba ezindaweni ezisengozini yomlilo kufanele benze futhi banakekele ama-firebreak emingceleni yabo. Buza i-Fire Protection Association (inhlangano yokuvikela umlilo) yendawo yakini.
+1. Lapho imililo yasendle idlula khona, gcina i-firebreak ehlanziwe phakathi kwendle ne-windbreak.
+2. Susa izinto ezomile nezifile ngaphansi kwe-windbreak ngaphambi kwenkathi yomlilo.
+3. Gcina izihlahlana ezinephunga kude nohlangothi imililo evela kulo.
 
-### Izitshalo ezine zomdabu ezinhle zama-windbreak
+### Izitshalo zama-windbreak
 
-**Utshwala-bezinyoni (wild dagga)** (*Leonotis leonurus*). Isihlahlana esikhula ngokushesha, esivame ukuba nobude obungu-2 kuya ku-3 m, esinezimbali ezisawolintshi eziheha izinyoni ezincela umpe (sunbirds). Simelana nesomiso nomoya futhi senza isihlahla esigcwele nesiminyene. Singatshalwa eduze kwengadi. Sisetshenziswa emithini yesintu. Uma sisikiwe noma sishile, siphinde sihlume phansi esiqwini.
+**Utshwala-bezinyoni (wild dagga)** (*Leonotis leonurus*) yisihlahlana esikhula ngokushesha, esingu-2 kuya ku-5 m ubude, esinezimbali ezisawolintshi eziheha izinyoni ezincela umpe (sunbirds). Simelana nesomiso nomoya, senza isihlahla esiminyene, futhi singatshalwa eduze kwengadi. Uma sisikiwe noma sishile, siphinde sihlume phansi esiqwini.
 
-**I-false olive** (*Buddleja saligna*). Isihlahla esincane esiminyene nesigcwele, esinezimbali ezincane ezimhlophe ngokuphuzi ezinuka kamnandi, kusukela ekupheleni kobusika kuze kube sehlobo. Izinyosi nezinye izinambuzane zivakashela izimbali. Sikhula emihlabathini eminingi futhi simelana nomoya, isithwathwa nesomiso. Singafinyelela ku-4 m noma ngaphezulu uma singathenwa, ngakho sisebenzise emugqeni ongemuva. Singathenwa futhi sibe uthango lwezihlahla olucocekile noluminyene.
+**I-false olive** (*Buddleja saligna*) yisihlahla esincane esiminyene, ngokuvamile esingu-4 kuya ku-5 m e-Highveld, esinezimbali ezimhlophe ngokuphuzi ezinuka njengoju kusukela ekupheleni kobusika kuze kube sehlobo, izinyosi ezizithandayo. Simelana nomoya, isithwathwa nesomiso, futhi singathenwa sibe uthango oluminyene.
 
-**I-karee** (*Searsia lancea*, phambilini eyayibizwa ngokuthi *Rhus lancea*). Esinye sezihlahla eziqine kakhulu eNingizimu ne-Afrika. Sikhula **kuma-habitat** (amakhaya emvelo ezitshalo nezilwane) amaningi ahlukene, simelana nesithwathwa nesomiso, futhi sinezimpande ezingalimazi lutho. Singafinyelela cishe ku-7 kuya ku-9 m, ngakho sitshale emugqeni ongemuva. Sinikeza umthunzi, i-fodder nezinkuni.
+**I-karee** (*Searsia lancea*) ingesinye sezihlahla eziqine kakhulu eNingizimu ne-Afrika. Simelana nesithwathwa nesomiso, sikhula size sifike cishe ku-8 m, futhi izimpande zaso zimnene. Sibeke emugqeni ongemuva ukuze uthole umthunzi, i-fodder nezinkuni.
 
-**Isiqalaba (king protea)** (*Protea cynaroides*), ezindaweni ze-fynbos kuphela. Ama-protea akhula ngokwemvelo eKapa elinomoya futhi amelana kahle nomoya. I-king protea yisihlahlana esincane, esivame ukuba nobude obungu-0.5 kuya ku-2 m, esinamaqabunga abanzi nezimbali ezinkulu kakhulu. Sitshale emugqeni ophakathi. Sidinga umhlabathi one-asidi okhipha amanzi kahle, ilanga eligcwele nomoya ohamba kahle, ngakho ngeke sikhule kahle emihlabathini yobumba yamapulazi amaningi anemvula yasehlobo. Izimbali ezisikiwe zingaletha imali eyengeziwe, kodwa udinga imvume evela kuziphathimandla zokongiwa kwemvelo zesifundazwe sakho ukuze ukhe izimbali endle noma uthengise izitshalo ezivikelwe. Izitshalo ezindala ziphinde zihlume ngemva kokushiswa kwendle.
+Zonke izitshalo ezisethebuleni zingezomdabu, ngaphandle kwe-rosemary ne-lavender, ezingasabalali.
 
-### Izitshalo zama-windbreak: izihlahlana
-
-Zonke izitshalo ezikuleli thebula ngezomdabu eNingizimu Afrika, ngaphandle kwe-rosemary ne-lavender, ezingewona ama-invasive species.
-
-| Isitshalo | Ubukhulu (ubude) | Ukusetshenziswa | Amanothi |
+| Isitshalo | Umugqa | Ukusetshenziswa | Amanothi |
 |---|---|---|---|
-| Umhlonyane (wilde als) *Artemisia afra* | 1 kuya ku-2 m | Umuthi, isifutho esixosha izinambuzane | Sinephunga; sivutha kalula. |
-| I-bush-tick berry *Chrysanthemoides monilifera* | 2 kuya ku-3 m | Amajikijolo adliwayo, umuthi, ukudla kwezinyoni, i-biomass | Simelana kakhulu nomoya, nasogwini. |
-| I-confetti bush *Coleonema pulchellum* | Cishe 1 m | I-windbreak ephansi, i-mulch, izimbali zezinyosi | Isitshalo se-fynbos. |
-| I-wild rosemary *Eriocephalus africanus* | Cishe 1 m | I-windbreak ephansi, i-mulch, izimbali zezinyosi | Sinephunga. |
-| Utshwala-bezinyoni (wild dagga) *Leonotis leonurus* | 2 kuya ku-3 m | Umuthi, i-mulch, izimbali zezinyoni | Sikhula ngokushesha. |
-| I-plumbago *Plumbago auriculata* | 2 kuya ku-3 m | Uthango lwezihlahla, izimbali zezimvemvane, i-biomass | Simelana nesithwathwa esincane. |
-| Uchwasha (Cape honeysuckle) *Tecoma capensis* (sibizwa nangokuthi *Tecomaria capensis*) | 2 kuya ku-3 m | Uthango lwezihlahla, izimbali zezinyoni ezincela umpe | Sikhula ngokushesha; simelana nesithwathwa esincane. |
-| I-sand olive *Dodonaea viscosa* var. *angustifolia* | 2 kuya ku-5 m | Uthango lwezihlahla, ukulawula i-erosion, umuthi | Siqine kakhulu futhi simelana nomoya. |
-| I-blue mountain sage *Salvia stenophylla* | Cishe 1 m | Umuthi, izimbali zezinyosi | Sinephunga. |
-| I-rosemary *Salvia rosmarinus* | Cishe 1 m | Ikhambi lokupheka, izimbali zezinyosi, izinkunyana zokubasa | Asisona esomdabu; asisona i-invasive species. |
-| I-lavender *Lavandula* spp. | Ngaphansi kuka-1 m | Umuthi, izimbali zezinyosi, i-mulch | Asisona esomdabu; asisona i-invasive species. |
-| Utshani be-vetiver *Chrysopogon zizanioides* | 1 kuya ku-1.5 m | Ukulawula i-erosion, i-mulch, utshani bokufulela | Tshala kuphela uhlobo olungatheli imbewu (sterile), olukhuliswa ngamahlumela (slips). |
-| I-climbing flat-bean *Dalbergia obovata* | Isitshalo esikhuphukayo noma isihlahlana esigaxekayo | I-legume; esiqala ukumila, izinti, i-fodder | Amahlathi asogwini nasempumalanga; asimelani nesithwathwa. |
-
-> **Ukuphepha:** I-rue (*Ruta graveolens*), evame ukutshalwa ukuxosha izinambuzane, ayikho kulolu hlu. Ubisi lwayo lungabangela amabhamuza amabi esikhumbeni esibe sesishaywa yilanga, futhi inobuthi uma idliwe, ikakhulukazi ngesikhathi sokukhulelwa. Uma uyitshala, gqoka amagilavu nemikhono emide lapho uyiphatha, futhi uyigcine kude nezingane.
-
-### Izitshalo zama-windbreak: izihlahla
-
-Zonke izihlahla ezikuleli thebula ngezomdabu eNingizimu ne-Afrika.
-
-| Isitshalo | Ubukhulu (ubude) | Ukusetshenziswa | Amanothi |
-|---|---|---|---|
-| Umdakane (white pear) *Apodytes dimidiata* | 5 kuya ku-20 m | Izingodo zokwakha, ukudla kwezinyoni | Isihlahla sehlathi; sikhula kangcono ezindaweni ezimanzi. |
-| I-torchwood *Balanites maughamii* | 10 kuya ku-20 m | Amafutha embewu, i-fodder, umuthi | Izindawo eziphansi ezishisayo ezingenaso isithwathwa kuphela. |
-| I-pride-of-De Kaap *Bauhinia galpinii* | 3 kuya ku-5 m | Uthango oluphilayo, izimbali zezimvemvane | Isihlahlana esigaxekayo; simelana nesomiso nesithwathwa esincane. |
-| Iphahla (coast silver oak) *Brachylaena discolor* | 4 kuya ku-10 m | Izingodo zokwakha, uthango lwezihlahla, izimbali zezinyosi | I-windbreak enhle kakhulu yasogwini; simelana nomoya onosawoti. |
-| I-false olive *Buddleja saligna* | 3 kuya ku-7 m | I-chop and drop, i-fodder, izimbali zezinambuzane | Simelana nesithwathwa nesomiso. |
-| I-sagewood *Buddleja salviifolia* | 3 kuya ku-8 m | Siqinisa umhlabathi, izimbali zezinambuzane nezinyoni | Simelana nesithwathwa; sithanda izindawo ezimanzi. |
-| Umbhaba (Cape chestnut) *Calodendrum capense* | 7 kuya ku-20 m | Amafutha embewu, umthunzi, izimbali zezinambuzane | Sikhula kancane ekuqaleni. |
-| I-monkey plum (bluebush) *Diospyros lycioides* | 2 kuya ku-7 m | Izithelo, umuthi, i-fodder, i-biomass | Siqinile. |
-| Umklele (puzzle bush) *Ehretia rigida* | 2 kuya ku-6 m | Izithelo zezinyoni, i-fodder, umuthi | Simelana nesomiso nesithwathwa. |
-| Umshekisane (blue guarri) *Euclea crispa* | 2 kuya ku-8 m | Izithelo, umuthi, i-fodder | Siqinile. |
-| Umsiphane (cross-berry) *Grewia occidentalis* | 2 kuya ku-5 m | Izithelo ezidliwayo, i-fodder, umuthi | Siqinile. |
-| I-wild peach *Kiggelaria africana* | 6 kuya ku-13 m | Izingodo zokwakha, ukudla kwezinyoni nezimvemvane, i-biomass | Amacimbi ezimvemvane angawaqeda amaqabunga; isihlahla siyaphinde silulame. |
-| Umtshitshi (ouhout) *Leucosidea sericea* | 4 kuya ku-7 m | Izinkuni, izigxobo zothango, i-fodder | Isihlahla sezindawo eziphakeme esimelana nesithwathwa. Sisabalala otshanini bezintaba obudliwe ngokweqile, ngakho sitshale kuphela njenge-windbreak ehleliwe, ungalokothi usitshale otshanini bemvelo obuphilile. |
-| Umnqumo wasendle (wild olive) *Olea europaea* subsp. *cuspidata* | 5 kuya ku-10 m | Izinkuni, i-fodder, itiye, silungele i-coppicing | Esinye sezihlahla eziqine kakhulu nezingcono zama-windbreak. |
-| I-mountain hard-pear *Olinia emarginata* | 5 kuya ku-15 m | Izingodo zokwakha, ukudla kwezinyoni | Izindawo eziphakeme nezezintaba. |
-| Umsehle (African wattle) *Peltophorum africanum* | 5 kuya ku-10 m | Izinkuni, i-fodder, umthunzi | Iyi-legume, kodwa akwaziwa ukuthi iyayibopha i-nitrogen. Ayihlobene nama-wattle angama-invasive species. Imelana nesithwathwa esincane. |
-| Umsonti (Outeniqua yellowwood) *Afrocarpus falcatus* (phambilini *Podocarpus falcatus*) | 20 m nangaphezulu | Isihlahla somthunzi sesikhathi eside, umuthi | Sikhula kancane size sibe yisihlahla esikhulu kakhulu; esezindawo ezinkulu kuphela. |
-| Umnyezane (Cape willow) *Salix mucronata* subsp. *capensis* | 6 kuya ku-12 m | Siqinisa osebeni lwemifudlana, i-fodder | Sitshale eduze kwamanzi kuphela. Ungasididanisi ne-weeping willow eyi-invasive species nezinye izinhlobo ze-willow zangaphandle. |
-| I-thorn pear *Scolopia zeyheri* | 5 kuya ku-10 m | Ukudla kwezinyoni, i-fodder | Sinameva; kuhle othangweni lwezihlahla. |
-| I-karee *Searsia lancea* | 7 kuya ku-9 m | Umthunzi, i-fodder, izimbali zezinyosi, siqinisa umhlabathi | Simelana kakhulu nesithwathwa nesomiso. |
-| I-blinkblaar-taaibos *Searsia lucida* | 1 kuya ku-5 m | Izinkuni, izithelo ezidliwayo, ukudla kwezinyoni, ukulawula i-erosion | Esiqala ukumila; simelana nomoya. |
-| Umtholo (common hook thorn) *Senegalia caffra* | 3 kuya ku-10 m | I-nitrogen fixer, uthango lwezihlahla, i-fodder, izinkuni | Izindawo ezinemvula yasehlobo. |
-| I-camphor bush *Tarchonanthus camphoratus* | 3 kuya ku-9 m | Umuthi; uboya bembewu bokugxusha imicamelo | Simelana kakhulu nesomiso nomoya; sinephunga, ngakho sivutha kalula. |
-| Amangwe (silver cluster-leaf) *Terminalia sericea* | 5 kuya ku-12 m | Izinkuni, i-fodder, umuthi | Imihlabathi ejulile enesihlabathi ehlanzeni (bushveld). |
-| Umunga (sweet thorn) *Vachellia karroo* | 5 kuya ku-12 m | I-nitrogen fixer, inhlaka (gum), i-fodder, izinkuni | Sikhula ngokushesha. Ungasitshali otshanini bemvelo obuphilile. |
-| Umthunduluka (sour plum) *Ximenia caffra* | 2 kuya ku-6 m | Izithelo ezimuncu ezicebile nge-vitamin C, uthango lwezihlahla, i-fodder | Siqinile. |
-
-> **Qaphela:** Izihlahla eziningi zomdabu zivikelwe ngumthetho. Udinga ilayisensi ukuze usike, ulimaze noma ususe isihlahla esivikelwe endle. Thenga izihlahla enkulisa kunokuba uzimbe endle.
+| I-karee *Searsia lancea* | Ngemuva | Umthunzi, i-fodder, izinkuni | Simelana kakhulu nesithwathwa nesomiso. |
+| Umnqumo wasendle (wild olive) *Olea europaea* subsp. *cuspidata* | Ngemuva | Izinkuni, i-fodder, i-coppicing | Esinye sezihlahla eziqinile ezingcono kakhulu zama-windbreak. |
+| I-false olive *Buddleja saligna* | Ngemuva | I-chop and drop, izimbali zezinyosi | Siqinile; senza uthango oluhle. |
+| Umtholo (common hook thorn) *Senegalia caffra* | Ngemuva | I-nitrogen fixer, i-fodder, izinkuni | Izindawo ezinemvula yasehlobo. |
+| Iphahla (coast silver oak) *Brachylaena discolor* | Ngemuva | Uthango, izimbali zezinyosi | Simelana nomoya onosawoti ogwini. |
+| I-camphor bush *Tarchonanthus camphoratus* | Ngemuva | Umuthi | Simelana kakhulu nesomiso nomoya; sivutha kalula. |
+| Umtshitshi (ouhout) *Leucosidea sericea* | Ngemuva | Izinkuni, izigxobo zothango, i-fodder | Isihlahla sezindawo eziphakeme esimelana nesithwathwa. Siyaminyana otshanini bezintaba obudliwe ngokweqile, ngakho sitshale kuphela njenge-windbreak ehleliwe. |
+| I-blinkblaar-taaibos *Searsia lucida* | Phakathi | Izinkuni, izithelo ezidliwayo, ukudla kwezinyoni | Esiqala ukumila; simelana nomoya. |
+| Umsiphane (cross-berry) *Grewia occidentalis* | Phakathi | Izithelo ezidliwayo, i-fodder | Siqinile. |
+| Umshekisane (blue guarri) *Euclea crispa* | Phakathi | Izithelo, i-fodder | Siqinile. |
+| Umklele (puzzle bush) *Ehretia rigida* | Phakathi | Izithelo zezinyoni, i-fodder | Simelana nesomiso nesithwathwa. |
+| I-sand olive *Dodonaea viscosa* var. *angustifolia* | Phakathi | Uthango, ukulawula i-erosion | Siqine kakhulu futhi simelana nomoya. |
+| I-bush-tick berry *Chrysanthemoides monilifera* | Phakathi | Amajikijolo adliwayo, ukudla kwezinyoni | Simelana kakhulu nomoya, ngisho nasogwini. |
+| Utshwala-bezinyoni (wild dagga) *Leonotis leonurus* | Phakathi | Umuthi, izimbali zezinyoni ezincela umpe | Sikhula ngokushesha. |
+| I-plumbago *Plumbago auriculata* | Phakathi | Uthango, izimbali zezimvemvane | Simelana nesithwathwa esincane. |
+| Uchwasha (Cape honeysuckle) *Tecoma capensis* | Phakathi | Uthango, izimbali zezinyoni ezincela umpe | Sikhula ngokushesha; simelana nesithwathwa esincane. |
+| Isiqalaba (king protea) *Protea cynaroides* | Phakathi | Izimbali | Ezindaweni ze-fynbos kuphela: sidinga umhlabathi one-asidi okhipha amanzi kahle. Siphinde sihlume ngemva komlilo. |
+| Umhlonyane (wilde als) *Artemisia afra* | Phambili | Umuthi, isifutho esixosha izinambuzane | Sinephunga; sivutha kalula. |
+| I-wild rosemary *Eriocephalus africanus* | Phambili | I-mulch, izimbali zezinyosi | Sinephunga. |
+| I-confetti bush *Coleonema pulchellum* | Phambili | I-mulch, izimbali zezinyosi | Isitshalo se-fynbos. |
+| I-rosemary *Salvia rosmarinus*, i-lavender *Lavandula* spp. | Phambili | Amakhambi, izimbali zezinyosi | Kunephunga. |
+| Utshani be-vetiver *Chrysopogon zizanioides* | Phambili | Ukulawula i-erosion, i-mulch, utshani bokufulela | Tshala kuphela uhlobo olungatheli imbewu (sterile), olukhuliswa ngamahlumela. |
 
 ## Ukutshala isihlahla
 
-Tshala ekuqaleni kwenkathi yemvula. Ezindaweni ezinemvula yasehlobo lokhu kuvame ukuba ngu-Okthoba kuya kuDisemba, ngemva kwezimvula zokuqala ezinhle. ENtshonalanga Kapa, tshala ekupheleni kwekwindla nasebusika (cishe ngo-Ephreli kuya kuJulayi). Tshala izihlahla ezingamelani nesithwathwa ngemva kwesithwathwa sokugcina. Izihlahla zezithelo ezihlubula amaqabunga zingatshalwa futhi maphakathi nobusika ngesikhathi zingenawo amaqabunga.
+Isikhathi esinzima kakhulu sesihlahla esisencane yinkathi yaso yokuqala yokoma. Umgodi omncane kakhulu, noma amanzi amanzisa ngaphezulu kuphela, kwanele ukusibulala. Sitshale kahle kanye, bese isihlahla sizinakekela amashumi eminyaka.
 
-1. **Khetha isihlahla esihle.** Thenga enkulisa ethembekile. Khetha isihlahla esiqinile esinesiqu esiwugqinsi namaqabunga aphilile. Gwema izihlahla ezinezimpande ezizungeza ngaphakathi esikhwameni. Lapho kungenzeka khona, thenga izihlahla eziqinisekisiwe ukuthi azinazo izifo, ikakhulukazi ze-citrus.
-2. **Sitshale masinyane.** Tshala ngokushesha okukhulu ngemva kokuthenga, ukuze izimpande ziqale ukukhula.
-3. **Susa okuncintisana naso.** Susa ukhula notshani, ikakhulukazi utshani be-kikuyu, endingilizini ecishe ibe ngu-1 m ububanzi, ukuze kungancintisani naso ngamanzi nokudla. (I-kikuyu uqobo lwayo isohlwini lwama-invasive species ezindaweni ezivikelwe zemvelo nasemaxhaphozini.)
-4. **Mba umgodi.** Wenze ube **ubanzi kabili kuya kathathu** okungenani kunesigaxa sezimpande (root ball — inhlabathi nezimpande ezaziphuma esikhwameni), futhi ujule cishe njengesigaxa sezimpande. Emhlabathini oqinile noma ominyene, mba umgodi ocishe ube ngu-60 cm ububanzi nokujula, bese uqhekeza umhlabathi ophansi nasezinhlangothini.
-5. **Gcina imihlabathi ihlukene.** Beka **i-topsoil** (umhlabathi ongaphezulu) emnyama ohlangothini olulodwa, bese ubeka umhlabathi ongaphansi okhanyayo (subsoil) kolunye uhlangothi.
-6. **Faka isikhonkwane (ezindaweni ezinomoya).** Shaya isikhonkwane cishe ngo-50 cm emhlabathini, ohlangothini oluvela kulo umoya, **ngaphambi** kokuba utshale, ukuze ungazilimazi izimpande.
-7. **Hlola ukuphuma kwamanzi.** Gcwalisa umgodi ngamanzi bese uwayeka ashone. Uma amanzi esemile ngosuku olulandelayo, ukuphuma kwamanzi kubi: tshala isihlahla enqwabeni yomhlabathi ephakanyisiwe esikhundleni salokho.
-8. **Xuba umhlabathi wokugcwalisa.** Xuba i-topsoil ne-compost ethile, umquba wezilwane omncane obole kahle nendle yezikelemu (castings), cishe ingxenye eyodwa ye-compost ezingxenyeni ezintathu zomhlabathi. I-compost eningi kakhulu emgodini ingenza izimpande zihlale ngaphakathi emgodini.
-9. **Khipha isihlahla esikhwameni saso.** Phatha isigaxa sezimpande kahle. Xegisa noma yiziphi izimpande ezizungeza ngaphandle.
-10. **Lungisa ukuphakama.** Misa isihlahla emgodini ukuze ingaphezulu lesigaxa sezimpande lilingane nomhlabathi oluzungezile. Gcina indawo yokuxhumela (graft union — iqhubu lapho isihlahla sezithelo saxhunyelwa khona) iphakeme kahle ngaphezu komhlabathi.
-11. **Gcwalisa umgodi.** Gcwalisa ngengxube yomhlabathi bese uyicindezela kancane ezungeze izimpande ngezandla noma ngezinyawo. Ungagxobi ngamandla.
-12. **Bopha isihlahla.** Bopha isiqu kancane esikhonkwaneni ngentambo ethambile ngendlela yesibalo esingu-8, ukuze sikwazi ukunyakaza kancane. Susa intambo ngemva konyaka owodwa cishe.
-13. **Yenza umgodi wokuqoqa amanzi (basin).** Yenza umgodi ongajulile ozungeza isihlahla, cishe ongu-1 m ububanzi, onodonga oluphansi lomhlabathi oluwuzungezile ukuze lubambe amanzi. Wandise njengoba isihlahla sikhula.
-14. **Faka i-mulch.** Mboza umgodi wokuqoqa amanzi ngongqimba olujiyile lwe-mulch (5 kuya ku-10 cm), kodwa uyigcine cishe ku-10 cm kude nesiqu, ukuze kuvimbeke ukubola.
-15. **Nisela kahle.** Nisela kakhulu ngokujulile ngokushesha ngemva kokutshala, cishe ibhakede eligcwele (20 L) noma ngaphezulu.
-16. **Qhubeka unisela ngokujulile.** Uma ingekho imvula, nisela njalo ezinsukwini ezimbili kuya kwezintathu emavikini amabili okuqala. Bese unisela kakhulu ngokujulile cishe kanye ngesonto phakathi nayo yonke inkathi yokuqala yokoma, kaningi uma umhlabathi unesihlabathi noma kushisa kakhulu. Faka umunwe emhlabathini eceleni kwesihlahla: nisela uma uzwa womile ku-5 kuya ku-10 cm ngaphansi. Ukunisela ngokujulile ngezikhathi ezithile kukhulisa izimpande ezijulile; amanzi amancane nsuku zonke akhulisa izimpande ezingajulile futhi angabolisa izimpande emhlabathini wobumba.
+Tshala ekuqaleni kwemvula: kusukela kuMfumfu kuya kuZibandlela ngemva kwemvula yokuqala enhle ezindaweni ezinemvula yasehlobo, kanti eNtshonalanga Kapa cishe kusukela kuMbasa kuya kuNtulikazi. Tshala izihlahla ezizwela isithwathwa ngemva kwesithwathwa sokugcina. Izihlahla zezithelo ezihlubula amaqabunga zingatshalwa maphakathi nobusika, lapho zingenawo amaqabunga.
+
+1. **Khetha isihlahla esihle.** Thenga isihlahla esiqinile esinesiqu esiwugqinsi namaqabunga aphilile. Gwema izihlahla ezinezimpande ezizungeza ngaphakathi esikhwameni. Kuma-citrus, thenga izihlahla eziqinisekisiwe ukuthi azinazo izifo.
+2. **Sitshale masinyane** ngemva kokusithenga.
+3. **Hlanza indilinga** ecishe ibe ngu-1 m ububanzi ukhula notshani, ikakhulukazi i-kikuyu, ukuze kungantshontshi amanzi.
+4. **Mba ububanzi, hhayi ukujula.** Yenza umgodi ube banzi kabili kuya kathathu kunesigaxa sezimpande (root ball) futhi ujule cishe njengaso. Emhlabathini oqinile, mba cishe u-60 cm ububanzi nokujula bese uxegisa phansi nezinhlangothi. Beka **i-topsoil** emnyama (ungqimba olungaphezulu, olumnyama kakhulu) ohlangothini olulodwa nomhlabathi ongaphansi okhanyayo kolunye.
+5. **Hlola ukuphuma kwamanzi.** Gcwalisa umgodi ngamanzi. Uma amanzi esemile ngosuku olulandelayo, tshala isihlahla enqwabeni yomhlabathi ephakanyisiwe esikhundleni salokho.
+6. **Sifakele isikhonkwane ezindaweni ezinomoya.** Shaya isikhonkwane cishe ngo-50 cm emhlabathini ohlangothini oluvela kulo umoya ngaphambi kokuba utshale, ukuze ungagwazi izimpande.
+7. **Xuba umhlabathi wokugcwalisa:** cishe ingxenye eyodwa ye-compost ezingxenyeni ezintathu ze-topsoil, nomquba omncane obole kahle. I-compost eningi kakhulu igcina izimpande ngaphakathi emgodini, sengathi yibhodwe.
+8. **Setha ukuphakama.** Xegisa noma yiziphi izimpande ezizungezayo. Misa isihlahla ukuze ingaphezulu lesigaxa sezimpande lilingane nomhlabathi olizungezile, futhi indawo yokuxhumela (isigaxana lapho isihlahla sezithelo saxhunyelwa khona) ihlale ngaphezu komhlabathi kakhulu.
+9. **Gcwalisa ucindezele** kancane ngezandla noma ngezinyawo. Unganyathelisi.
+10. **Sibophe** kalula esikhonkwaneni ngentambo ethambile ngendlela yenombolo 8, ukuze isiqu sinyakaze kancane. Susa intambo ngemva konyaka owodwa.
+11. **Yenza isitsha** esicishe sibe ngu-1 m ububanzi esinomgqa ophansi womhlabathi ukubamba amanzi. Sandise njengoba isihlahla sikhula.
+12. **Faka i-mulch** esitsheni ijiye ngo-5 kuya ku-10 cm, uyigcine cishe u-10 cm kude nesiqu ukuze singaboli.
+13. **Nisela kakhulu:** ibhakede eligcwele lamalitha angu-20 noma ngaphezulu ngokushesha ngemva kokutshala. Uma imvula ingani, nisela njalo ezinsukwini ezimbili kuya kwezintathu amasonto amabili, bese unisela kakhulu cishe kanye ngesonto phakathi nenkathi yokuqala yokoma, kaningi esihlabathini noma lapho kushisa kakhulu. Faka umunwe emhlabathini: nisela uma womile ku-5 kuya ku-10 cm ngaphansi.
+
+Ukunisela kakhulu ngezikhathi ezithile kwehlisa izimpande zilandele amanzi. Okuncane nsuku zonke kuzigcina eduze kwaphezulu, lapho zoma khona ekushiseni kokuqala, futhi obumbeni kungazibolisa.
+
+## Zama lokhu
+
+Bethela izikhonkwane zesiqeshana sakho sokuqala se-food forest kuleli sonto.
+
+1. Khetha isiqeshana somhlaba ophazamisekile eduze kwendlu, okungenani u-10 m ngo-10 m, esithola ilanga elivela enyakatho.
+2. Yima kuso ntambama enomoya bese ubhala lapho umoya olimazayo uvela khona.
+3. Khetha izihlahla zezithelo ezimbili noma ezintathu ezifanele isithwathwa sakho, bese ubhala ububanzi be-canopy yesihlahla ngasinye uma sesikhulile.
+4. Bethela izikhonkwane zezindawo zazo, zihlukene ngo-6 kuya ku-7 m ezihlahleni ezine-canopy engu-4 m. Beka isikhonkwane se-nitrogen fixer phakathi kwazo ezimbili ngazimbili.
+5. Mba umgodi owodwa wokutshala, obanzi kabili kuya kathathu kunesikhwama senkulisa, bese uhlola ukuphuma kwamanzi.
+6. Dweba isiqeshana encwajaneni: izikhonkwane, indlela yomoya, inyakatho, nalokho ukuhlolwa kokuphuma kwamanzi okukhombisile.
 
 ## Amaphuzu amqoka
 
-- I-food forest ilingisa ihlathi lemvelo, inezingqimba zezihlahla, izihlahlana, amakhambi, ama-groundcover, izimpande nezitshalo ezikhuphukayo.
-- Tshala ama-food forest emhlabeni osuvele uphazamisekile. Utshani bemvelo ne-fynbos yaseNingizimu Afrika yizinhlelo zemvelo, hhayi ihlathi elingakaqedwa; ungatshali izihlahla edlelweni lemvelo eliphilile.
-- Khetha izihlahla zezithelo ezihambisana nesithwathwa namakhaza asebusika endaweni yakini: izithelo ezihlubula amaqabunga ezindaweni ezibandayo, izithelo zezindawo ezifudumele (subtropical) ezindaweni ezingenaso isithwathwa kuphela.
-- Qala ngama-nitrogen fixer aqala ukumila, njengomunga, umtholo, i-pigeon pea ne-cowpea, bese wenza i-chop and drop kuwo njengoba izihlahla zezithelo zikhula.
-- Ungalokothi utshale ama-invasive species asohlwini, njengama-wattle, i-leucaena, i-sesbania, i-elderberry, i-beefwood noma i-white mulberry. Khetha izitshalo zomdabu zokusekela, zama-windbreak nezezilwane zasendle.
-- Tshala ama-windbreak anqamule umoya owenza umonakalo, ngemigqa eminingana, angenazo izikhala futhi avuleke kancane. Wagcine kude nohlangothi olusenyakatho lwengadi, lapho aphonsa khona umthunzi.
-- I-windbreak ayiyona i-firebreak. Izihlahlana ezinephunga zivutha kakhulu.
-- Tshala isihlahla emgodini obanzi, ekujuleni okufanayo nalokho esasikhula kukho esikhwameni, usimboze nge-mulch, bese usinisela kakhulu ngokujulile kanye ngesonto kunokuba usinisele kancane nsuku zonke.
+- Tshala ama-food forest emhlabeni ophazamisekile eduze kwekhaya. Utshani bemvelo obuphilile ne-fynbos kuyizinhlelo eziphelele, hhayi ihlathi elingakaqedwa.
+- Hambisanisa izihlahla zezithelo nesithwathwa namakhaza asebusika akini, futhi usabalalise isivuno unyaka wonke.
+- Qala ngezitshalo eziqala ukumila ezibopha i-nitrogen, uzenze i-chop and drop njengoba izihlahla zezithelo zikhula, futhi ukhethe izitshalo zomdabu ezisekelayo kune-invasive species.
+- Tshala ama-windbreak anqamula umoya olimazayo, ngemigqa eminingana, engenazo izikhala futhi evuleke kancane, futhi uwagcine kude nohlangothi lwengadi olusenyakatho.
+- Mba ububanzi, tshala ekujuleni isihlahla esasikhula kukho, faka i-mulch, futhi unisele kakhulu kanye ngesonto kunokunisela kancane nsuku zonke.
+
+Tshala izitshalo eziqala ukumila kule sizini nezihlahla zezithelo ngemuva kwazo. Eminyakeni emihlanu ungahamba emthunzini lapho bekungumhlabathi ongenalutho khona, izinyoni ziletha imbewu yehlathi elilandelayo.

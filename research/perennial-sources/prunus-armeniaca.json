@@ -1,0 +1,106 @@
+{
+  "speciesId": "prunus-armeniaca",
+  "commonName": "Apricot",
+  "botanicalName": "Prunus armeniaca",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [
+    {
+      "region": "Bien Donne, Simondium, Western Cape — Solitaire first pick",
+      "months": [
+        11
+      ],
+      "evidence": {
+        "quote": "Week 45-46 (2nd week November)",
+        "url": "https://culdevco.co.za/apricots-cultivar-info-solitaire/",
+        "doc": "Culdevco / ARC Infruitec-Nietvoorbij, Solitaire apricot cultivar sheet",
+        "page": null
+      },
+      "notes": "The source explicitly warns that Bien Donne data need not represent other regions. First pick does not define the entire harvest duration."
+    },
+    {
+      "region": "Tierhoek Organic Farm, Robertson, Breede River Valley, Western Cape — Imperial trial",
+      "months": [
+        12
+      ],
+      "evidence": {
+        "quote": "Imperial ... Dec",
+        "url": "https://www.frontiersin.org/journals/sustainable-food-systems/articles/10.3389/fsufs.2019.00107/full",
+        "doc": "Birkhofer et al. (2019), Effects of Ground Cover Management in Organic Deciduous Fruit Orchards in South Africa, Table 1",
+        "page": null
+      },
+      "notes": "Observed named orchard in the 2016/17 study. Planting year is not an age-to-first-crop or full-bearing result."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No locally qualified numeric first-crop age was established in the checked primary sources. Record planting date, nursery starting age and propagation method."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured local numeric full-bearing age was established. No yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified mature per-plant food kg with age, product basis and management context was established. Missing output remains unknown rather than zero."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No universal numeric chilling requirement is assigned. Check the actual cultivar and site's winter conditions."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Check the actual cultivar's pollen needs; no universal classification is inferred from a named cultivar."
+  },
+  "harvestProduct": "fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Solitaire winter and pollen context",
+      "quote": "Low to medium (200-400 Infruitec Chilling Units)",
+      "url": "https://culdevco.co.za/apricots-cultivar-info-solitaire/",
+      "doc": "Culdevco / ARC Infruitec-Nietvoorbij, Solitaire apricot cultivar sheet",
+      "page": null,
+      "note": "Solitaire is listed as self-compatible. Its chilling units are named-cultivar requirements and are not a numeric range for every apricot."
+    },
+    {
+      "title": "Irrigated Robertson trial context",
+      "quote": "All orchard plots are irrigated throughout summer on demand",
+      "url": "https://www.frontiersin.org/journals/sustainable-food-systems/articles/10.3389/fsufs.2019.00107/full",
+      "doc": "Birkhofer et al. (2019), Effects of Ground Cover Management in Organic Deciduous Fruit Orchards in South Africa, Table 1",
+      "page": null,
+      "note": "The field experiment used managed organic orchards and found trade-offs in mulch effects; it does not justify a universal yield improvement from mulch."
+    }
+  ],
+  "productionGuidance": {
+    "products": "fruit",
+    "care": [
+      "Keep each cultivar's picking reference separate. The Robertson example used summer irrigation.",
+      "Confirm winter chilling, water and the actual planting material before using a reference as a local plan."
+    ],
+    "purchase": [
+      "Solitaire has a sourced November first-pick reference and named chilling context at Simondium; discuss its local fit with the nursery.",
+      "Imperial has a December reference at Robertson. This is a local trial candidate, not advice for frost-free coastal KZN."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://culdevco.co.za/apricots-cultivar-info-solitaire/",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    },
+    {
+      "url": "https://www.frontiersin.org/journals/sustainable-food-systems/articles/10.3389/fsufs.2019.00107/full",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    }
+  ],
+  "gaps": [
+    "No measured first-bearing age, full-bearing age or mature per-tree kg established.",
+    "Excellent production and source spacing do not establish a numeric weight.",
+    "Do not combine Solitaire and Imperial into the season of an unspecified single tree."
+  ]
+}

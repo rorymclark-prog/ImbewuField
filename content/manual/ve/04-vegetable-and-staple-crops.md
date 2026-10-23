@@ -1,179 +1,148 @@
 # Miroho na zwiliṅwa zwa ndeme
 
-## U lima zwiḽiwa kha mitsho ya tshipembe ha Afrika
+Muṱa u ḽa ḓuvha ḽiṅwe na ḽiṅwe, ngauralo ngade i fanela u u ṋea zwiḽiwa ḓuvha ḽiṅwe na ḽiṅwe. Zwiṅwe zwiḽiwa ri zwi ka tshanḓa tshithihi nga tshifhinga: muroho, parsley, ndilo ḽa nawa. Zwiṅwe zwiḽiwa ri zwi kaṋa luthihi nga khalaṅwaha ra zwi vhulunga: mavhele o omaho, nawa, patata.
 
-Afrika Tshipembe i na mitsho yo fhambanaho, ngauralo a hu na khalanḓara ya u zwala nthihi fhedzi ine ya shuma fhethu hoṱhe.
+Lushaka luṅwe na luṅwe lwa zwiḽiwa lu ṱoḓa ngade yalwo, fhethu halwo. Vhewani iṅwe na iṅwe hune ya fanela u vha hone, bulasi yoṱhe i ḓo shuma nga maanḓa maṱuku.
 
-- **Vhukati ha shango hune mvula ya na nga tshilimo** (Highveld, Free State, tshipiḓa tshihulwane tsha Eastern Cape, KwaZulu-Natal Midlands, Lesotho): mvula nnzhi i na u bva nga Tshimedzi (October) u swika nga Ṱhafamuhwe (March). Vhuria ho oma nahone hu a rotha, hu na tshando (frost) fhethu hunzhi. Tshifhinga tshihulwane tsha u lima ndi ṱhaṱula na tshilimo.
-- **Western Cape hune mvula ya na nga vhuria**: mvula nnzhi i na u bva nga Shundunthule (May) u swika nga Khubvumedzi (September). Tshilimo hu a fhisa nahone ho oma, ngauralo zwiliṅwa zwa tshilimo zwi ṱoḓa u sheledzwa.
-- **Lowveld na tsini ha lwanzhe hu si na tshando** (sa tsumbo tsini ha lwanzhe ha KwaZulu-Natal na lowveld ya Limpopo na Mpumalanga): ni nga lima zwiliṅwa zwinzhi tshifhinga tshinzhi tsha ṅwaha arali ni na maḓi.
+**Musi ni tshi fhedza ino ndima ni ḓo kona u:**
 
-Fhethu hu rothaho, tshifhinga tsha u lima ndi tshipfufhi nahone tshando tsha vhuria ndi khombo khulwane. Musi ni tshi pulana ngade dzaṋu dza zwiḽiwa, humbulani nga ha zwi tevhelaho.
+- Vhea ngade dzaṋu u ya nga mutsho waṋu na u vhea zwiliṅwa kule na tshando
+- Linganyisa vhuhulu ha ngade yaṋu na tshifhinga na tshelede zwine na vha nazwo zwa vhukuma
+- Dzudzanya ngade ya tsini ha nnḓu, ngade ya miroho, ngade ya u rengisa na ngade ya zwiliṅwa zwa ndeme
+- Ṱavha mavhele, mafhi, nawa dzo omaho, patata na mufarinya nga tshifhinga tsho teaho na tshikhala tsho teaho
 
-### Tsireledzani zwiliṅwa kha tshando
+## U lima zwiḽiwa kha mitsho ya Tshipembe tsha Afrika
 
-Muya u rothaho u a lemela. Nga vhusiku ho dzikaho hu si na makole, u elela u tsa sa maḓi nahone u kuvhangana fhethu ho tsaho. Fhethu henefho hu vhidzwa **dzi-frost pocket** (milindi ya tshando).
+A hu na khalanḓara nthihi ya u zwala fhano. Ḓivhani mutsho waṋu:
 
-- Ni songo valela muya u rothaho murahu ha mavhondo, zwifhaṱo kana lufhenḓe lwa zwimela lwo tikanaho kha thungo ya nṱha ya ngade yaṋu. Siani vulo fhasi uri muya u rothaho u bvele phanḓa u tshi elela u tsa u ya kule.
-- Ṱavhani zwiliṅwa zwi sa konḓelelaho tshando nṱha kha u sendama ha mavu, hu si fhasi-fhasi mupatani.
-- U sendama ho lavhelesaho devhula hu wana ḓuvha ḽinzhi nga vhuria nahone ndi hone fhethu hu dudelaho vhukuma kha zwiliṅwa zwa u thoma na zwa u fhedza.
+- **Vhukati ha shango hune mvula ya na nga tshilimo** (Highveld, Free State, vhunzhi ha Kapa Vhubvaḓuvha, vhukati ha KwaZulu-Natal, Lesotho): mvula i na u bva hu ḓo nga Tshimedzi (October) u swika Ṱhafamuhwe (March); vhuria ho oma nahone vhu a rothola, kanzhi hu na tshando.
+- **Kapa Vhukovhela hune mvula ya na nga vhuria**: mvula i na u bva hu ḓo nga Shundunthule (May) u swika Khubvumedzi (September). Zwiliṅwa zwa tshilimo zwi ṱoḓa u sheledzwa.
+- **Lowveld na lwanzhe hu si na tshando** (lwanzhe lwa KwaZulu-Natal, Lowveld ya Limpopo na Mpumalanga): arali hu na maḓi, ni nga lima vhunzhi ha ṅwaha.
 
-### Engedzani tshifhinga tsha u lima
+Kha fhethu ho rotholaho, tshando ndi khombo khulwane. Muya u rotholaho u a lema. Nga vhusiku vhu si na muya, vhu si na makole, u elela u tshi tsa sa maḓi wa kuvhangana fhethu ha fhasi hu vhidzwaho **dzi-frost pocket** (milindi hune muya u rotholaho na tshando zwa kuvhangana hone). Shumani nawo:
 
-Thanele ya plastiki kana nnḓu ya zwimela (greenhouse) i dzula i tshi dudedza zwimela nahone i ni tendela u lima tshifhinga tshilapfu nga ṱhanḓalaṅwaha na vhuria. Galasi ḽi ḓura vhukuma; plastiki a i ḓuri nga maanḓa.
+1. Siani tshikhala fhasi kha maanḓa na mafhenḓe a zwimela thungo ya nṱha, uri muya u rotholaho u bvele phanḓa u tshi elela u tshi pfuka u tshi ṱuwa.
+2. Ṱavhani zwiliṅwa zwi sa konḓeleli tshando nṱha ha fhethu ho sendamaho, zwi si kha fhasi ha mukovha.
+3. Shumisani fhethu ho sendamaho ho lavhelesaho devhula kha zwiliṅwa zwa u ṱavhanya na zwa u lenga. Hu wana ḓuvha ḽinzhi ḽa vhuria.
+4. Lapfisani khalaṅwaha nga thanele ya plastiki, i sa ḓuri u fana na gilasi. Musi yo fhaṱwa tsini na luvhondo lwa devhula lwa nnḓu, i thusa u dudedza nnḓu. Vhaṅwe vhalimi vha vhea khuhu dzi si nngana kha khona yayo yo pfalelwaho nga vhuria u itela u dudela na manyaga; dzi ṋeeni muya muswa munzhi, ngauri manyaga a bvisa ammonia.
 
-- Thanele kana nnḓu ya zwimela yo fhaṱwaho i tshi nambatela luvhondo lwa devhula lwa nnḓu i vhulunga mufhiso wa ḓuvha nahone i nga thusa u dudedza nnḓu nga vhuria.
-- Vhaṅwe vhalimi vha vhea khuhu dzi si nngana kha tshipiḓa tsha thanele tsho fhambanaho tsho khakhwaho nga lufhenḓe nga vhuria. Mufhiso wa mivhili yadzo u engedza u dudela hu si hunzhi, nahone manyaga adzo a ṋea mavu zwiḽiwa. Iteni uri muya u dzule u tshi dzhena na u bva zwavhuḓi, ngauri manyaga a khuhu a bvisa amonia (ammonia), ine ya huvhadza khuhu na zwimela.
+## Pulanani u ya nga vhutshilo vhune na vha naho
 
-## Pulanani u ya nga vhutshilo hune na vha naho
+Ngade khulwane ine na sa kone u i ṱhogomela i ṱavhanya u vha ngade yo ḓalaho zwimela zwi sa ṱoḓei, yo xelaho. Phanḓa ha u gwa, ambani ngoho nga ha **tshifhinga**, **tshelede** na **dzangalelo** zwaṋu.
 
-Musi ni sa athu thoma, vhonani uri zwine na khou zwi ita ndi zwine na zwi ṱoḓa vhukuma. Ambani ngoho nga ha uri ni na **tshifhinga**, **tshelede** na **dzangalelo** zwingafhani zwa vhulimi.
+1. Itani **tsedzuluso ya vhutshilo haṋu** (lifestyle audit) i leluwaho. Ṅwalani uri ni nga ṋea ngade awara nngana nga vhege, zwine na zwi ṱoḓa khayo (zwiḽiwa, mbuelo kana zwoṱhe) na zwine na nga shumisa.
+2. Arali tshifhinga tshi tshiṱuku, zwi itani zwi leluwe. Ṱavhani **dzi-perennial** (zwimela zwi tshilaho miṅwaha minzhi) nnzhi, zwi ngaho miri ya mitshelo, mihaṱa na asparagus. Vhulungani mushumo nga **drip irrigation** (phaiphi dzi rothisaho maḓi zwiṱuku-zwiṱuku kha tshimela tshiṅwe na tshiṅwe), na tshilangi tsha tshifhinga tsha pompi.
+3. Arali ni tshi ṱoḓa mbuelo nahone ni na tshifhinga na maanḓa, itani ngade khulwane i ṱoḓaho mushumo munzhi.
 
-1. Itani **tsedzuluso ya nḓila ya u tshila (lifestyle audit)** i leluwaho. Ṅwalani uri ni nga ṋea ngade awara nngana nga vhege, zwine na zwi ṱoḓa khayo (zwiḽiwa zwa muṱa, mbuelo, kana zwoṱhe) na tshelede ine na nga i shumisa.
-2. Arali ni na tshifhinga tshiṱuku, itani uri sisiteme i dzule yo leluwa. Ṱavhani **dzi-perennial** (zwimela zwi tshilaho miṅwaha minzhi) nnzhi, sa miri ya mitshelo, mihaṱa na asparagasi (asparagus), nahone ni fhungudze mushumo nga zwishumiswa sa **drip irrigation** (u sheledza nga matonsi) na tshishumiswa tshi vulaho na u vala thepe nga tshifhinga (tap timer).
-3. Arali ni tshi ṱoḓa u lima u itela mbuelo nahone ni na tshifhinga, maanḓa na zwishumiswa, ngade khulwane ine ya shumiwa nga maanḓa i nga ni fanela.
-
-Pulanani ngade dzaṋu dzi tshi tendelana na phindulo dzaṋu. Ngade khulwane ine na sa kone u i ṱhogomela i ḓo fhedza yo ḓala zwimela zwi sa ṱoḓei, ya vha ya lozwea.
-
-Tshaka nṋa dza ngade dza zwiḽiwa dzi re afho fhasi dzi tevhela **dzi-zone** (zwipiḓa zwa bulasi zwo pulanwaho u ya nga uri ni zwi dalela lungana) dza **permaculture** (vhulimi ha tshoṱhe vhu tevhelaho mupo): zwipiḓa zwa bulasi zwine na zwi dalela lunzhi zwi vhewa tsini-tsini ha nnḓu.
+Ngade nṋa dzi re fhasi dzi tevhela **dzi-zone** dza permaculture (zwipiḓa zwa bulasi zwo kovhiwaho nga u ya nga uri ni zwi dalela lunzhi hani): zwipiḓa zwa bulasi zwine na zwi dalela lunzhi zwi tsini na nnḓu.
 
 ## 1. Ngade ya tsini ha nnḓu (Zone 1)
 
-Ngade ya tsini ha nnḓu (kitchen garden) ndi tshipiḓa tsha **Zone 1**, fhethu hu re u mona na nnḓu, kanzhi hu si kule ha mimethara i si gathi u bva kha vothi ḽa khishi. Ndi ngade ya zwiḽiwa i re tsini-tsini na khishi nahone ndi yone ine na i dalela lunzhi, ngauralo i fanela u swikelelwa nga u ṱavhanya na nga u leluwa.
+Ngade ya tsini ha nnḓu i kha **Zone 1**, milenzhe mishoni u bva kha vothi ḽa khishini. Ni i fhira lunzhi nga ḓuvha, ngauralo kani khayo lunzhi nga ḓuvha.
 
-Ṱavhani zwimela zwine na zwi ka ḓuvha ḽiṅwe na ḽiṅwe:
+Limani zwine na zwi shumisa ḓuvha ḽiṅwe na ḽiṅwe:
 
-- muroho wa saladi une wa **kiwa wa dovha wa mela hafhu (cut and come again)** (kani maṱari a si gathi ni tende tshimela tshi mele hafhu), sa letisi (lettuce), sipinashi na Swiss chard
-- nawa na dziphizi (peas)
+- muroho na maṱari a saladi ane na nga **a ka ni vhuya hafhu** (kani maṱari mashoni ni litshe tshimela tshi mele hafhu): sipinashi, Swiss chard, letisi
+- nawa na phizi
 - matamati maṱuku (cherry tomatoes)
-- mihaṱa ine na i shumisa kha u bika, sa phasili (parsley), khoriyanda (coriander), anyanisi ṱhukhu (spring onions) na thaimi (thyme)
+- mihaṱa ya u bika: parsley, coriander, anyanisi dza ṱhaṱula, thyme
 
-Zwimela zwinzhi henefha ndi **dzi-annual** (zwimela zwi tshilaho khalaṅwaha nthihi fhedzi), na mihaṱa mi si gathi ya perennial.
+Vhunzhi hazwo ndi **dzi-annual** (zwimela zwi tshilaho khalaṅwaha nthihi), na mihaṱa mishoni ya perennial.
 
-### Ṱavhani zwo tikana, ni ṱhogomele tsini-tsini
+Ṱavhani zwo ṱanganana. Shumisani tshipiḓa tshiṅwe na tshiṅwe tsha mavu, ni dovhe ni lime u ya nṱha, na nawa kha lufhenḓe. Kha mitha ya tshikwea, iyi ndi ngade yaṋu i bveledzaho vhukuma, ngauralo i ṱoḓa u ṱhogomelwa vhukuma: u zwala, u ṱumula zwimela zwi sa ṱoḓei, u fukedza nga **mulch** (u fukedza mavu nga zwimela zwo omaho), u ṋea mavu zwiḽiwa na u bvisa zwikukumi.
 
-Ngade ya tsini ha nnḓu i ṱavhiwa zwimela zwo tikana vhukuma, hu tshi shumiswa fhethu hoṱhe, fhasi na nṱha (sa tsumbo nawa dzi tshi gonya lufhenḓe kana tshiṱanda tsha u gonya (trellis)). Nga mithara ya skwea, ndi yone ngade i bveledzaho zwinzhi kha ngade dzaṋu dzoṱhe, ngauralo i dovha ya ṱoḓa ṱhogomelo nnzhi. U bvisa zwimela zwi sa ṱoḓei, u zwala, u ṱavha, u fukedza mavu, u kaṋa, u lwisana na zwikukumi na u ṋea mavu zwiḽiwa ndi zwipiḓa zwa mushumo wa ḓuvha na ḓuvha.
-
-### I iteni i shume nahone i nake
-
-Ngade dza tsini ha nnḓu dzi na zwivhumbeo na mivhumbeleo yo fhambanaho. Zwa ndeme vhukuma ndi uri ngade i shume zwavhuḓi. Samusi i tsini-tsini na nnḓu, i iteni i dovhe i vhonale yavhuḓi. Fhethu ndi huṱuku, ngauralo ni nga dzhia tshifhinga tshinzhi u khakha ndima nga maṱanda, zwitina zwa kale kana matombo, na u fukedza nḓila nga matombo maṱuku (gravel) kana zwiṱukana zwa khuni (wood chips).
+I itani i nake. I ṱhukhu nahone i tsini na nnḓu, ngauralo dzhiani tshifhinga tsha u mona ndima nga matanda, zwitina zwa kale kana matombo, ni fukedze nḓila nga matshekiṱe kana zwiṱukana zwa khuni.
 
 ## 2. Ngade ya miroho (Zone 2)
 
-Ngade ya miroho i hulwane u fhira ngade ya tsini ha nnḓu. Henefha ni lima miroho i ṱoḓaho fhethu hunzhi kana i dzhiaho tshifhinga tshilapfu uri i kaṋwe, sa tsumbo khabishi, bitirudu (beetroot), liki (leeks), anyanisi, phepha (peppers), matamati na delele (okra).
+Ngade ya miroho i khulwane. I na zwiliṅwa zwi ṱoḓaho tshikhala tshinzhi kana zwi aluwaho tshifhinga tshilapfu: khabishi, bitiruthu, leeks, anyanisi, phiriphiri, matamati na okhura. Ni i dalela luthihi nga ḓuvha kana nga murahu ha maḓuvha mashoni, ngauralo i ya kule zwiṱuku, kha **Zone 2**. Dzithanele dza muṱa na nnḓu dza neṱe ya murunzi na dzone dzi fanela u vha fhano.
 
-Ni i dalela lwa si gathi u fhira ngade ya tsini ha nnḓu, khamusi luthihi nga ḓuvha kana nga murahu ha maḓuvha a si gathi, ngauralo i vhewa kule zwiṱuku na nnḓu, kha **Zone 2**.
+1. Dzudzanyani ndima dzi vhonalaho na nḓila vhukati hadzo. Fhethu ho sendamaho, itani ndima na nḓila zwi tshimbile na **contour** (mutalo u pfukaho fhethu ho sendamaho u re kha vhuimo vhuthihi), uri maḓi a dzhene mavuni nṱhani ha u elela a tshi ṱuwa.
+2. Limani zwiliṅwa zwinzhi khathihi. Engedzani tshidziva tshiṱuku tsha maḓula na maluvha ane a ṋea zwikukumi zwi thusaho zwiḽiwa (Ndima ya 10).
+3. Ni songo mona ndima. Vhumbani ndima hafhu nga zwanḓa lunzhi lu si gathi nga ṅwaha.
 
-### Nḓila ine ya dzudzanywa ngayo
+Mushumo u a bvela phanḓa: u sedza mitalo ya drip, u fukedza nga mulch, u engedza **compost** (malaṱwa a zwimela na zwipuka o vholaho), u ṱumula zwimela zwi sa ṱoḓei na u zwala.
 
-- Limani tshaka nnzhi dza zwiliṅwa khathihi. Engedzani zwithu zwi thusaho u lwisana na zwikukumi, sa tshidziva tshiṱuku (tsha maḓula na dziṅwe **dzi-predator** (zwipuka zwi ḽaho zwiṅwe)) na zwimela zwi re na maluvha zwi kokodzaho zwikukumi zwi thusaho.
-- Dzudzanyani ndima dza u lima dzi vhonalaho dzi na nḓila vhukati hadzo. Kha u sendama ha mavu, itani uri ndima na nḓila zwi tevhele **contour** (mutalo u fhiraho u sendama hu na vhulapfu vhuthihi), uri maḓi a dzhene mavuni hu si u elela a tshi ya.
-- Samusi fhethu hu hulwane, a ni ṱoḓi u khakha ndima. Ni dzi vhumbe hafhu nga tshanḓa lwa si gathi nga ṅwaha.
+## 3. U lima miroho ya u rengisa nga tshikalo tshiṱuku (Zone 3)
 
-Mushumo u kha ḓi vha munzhi: u pfukisa zwipfafadzi kana u ṱola mitalo ya drip irrigation, u fukedza mavu, u engedza **compost** (manyoro a zwithu zwo vholaho), u lwisana na zwikukumi, u bvisa zwimela zwi sa ṱoḓei na u zwala mbeu kana u ṱavha zwimela zwiṱuku tshifhinga tshoṱhe.
+Ngade ya miroho ine ya limelwa u rengisa nga maanḓa ndi **ngade ya u rengisa** (market garden). U bva kha hu ḓo nga 0.4 hekhithara (eka nthihi) u ya nṱha, i fanela u vha kha **Zone 3**, fhethu ha u lima hohulwane.
 
-Dzithanele khulwane dza plastiki, nnḓu dza zwimela na dzithanele dza murunzi (shade-net tunnels) dza muṱa na dzone dzi fanela kha Zone 2, tsini ha ngade ya miroho.
+1. Ṱavhani tshiliṅwa tshithihi kha ndima iṅwe na iṅwe. U zwala, u ṱumula zwimela zwi sa ṱoḓei na u kaṋa zwi ṱavhanya. Shandukisani tshiliṅwa kha ndima iṅwe na iṅwe khalaṅwaha iṅwe na iṅwe (Ndima ya 10).
+2. Ṱavhani zwo ṱanganana kha ndima dzi dzikaho dzo ṋewaho compost nnzhi. U ṱavha zwo ṱanganana zwi ṋea zwiḽiwa zwinzhi kha mitha ya tshikwea nahone zwi ita murunzi une wa thivhela zwimela zwi sa ṱoḓei.
+3. Shumisani zwishumiswa zwi vhulungaho tshifhinga: mutshini wa u zwala u sundedzwaho na **broadfork** (foroko khulwane ine ya vha na zwifaro zwivhili, i vhofhololaho mavu i sa a pendeli). Bulasi khulwane i nga engedza theraka ṱhukhu ya vhili mbili i tshimbilwaho nga murahu.
 
-Ngade ya miroho ya muṱa a i ṱoḓi u vha khulwane vhukuma. Ni nga i hulisa nga murahu arali ni tshi ṱoḓa u rengisa zwo salaho (surplus) na u engedza mbuelo yaṋu.
+Ngade dza u rengisa dzi a shuma ngauri vharengi vha ṱoḓa zwiḽiwa zwiswa zwo limiwaho tsini. Rengisani nga u livha kha vharengi, kha khoro ya bulasi, makete, zwikolo, mavhengele a spaza kana ṱhoḓela, ni ḓo wana mutengo wa **retail** (wa u rengisela muthu nga u livha), hu si mutengo wa fhasi wa **wholesale** une mubindudzi a u badela. Tshelede ya u thoma i a fhungudzea, nahone zwibveledzwa zwo fhambanaho (miroho, mitshelo, makumba, ṋotshi dza u ḽiwa, jamu) zwi ita uri tshelede i dzule i tshi dzhena.
 
-## 3. Vhulimi ha miroho ha u rengisa nga tshikalo tshiṱuku (Zone 3)
-
-Ngade ya miroho khulwane ine ya limiwa nga maanḓa u itela u rengisa kanzhi i vhidzwa **ngade ya u rengisa (market garden)**. U bva kha 0.4 hekithara (eka nthihi) u ya nṱha, i vhewa zwavhuḓi kha **Zone 3**, fhethu hukuluhulu ha u lima.
-
-### Dzudzanyani u itela u bveledza
-
-Ngade ya u rengisa i dzudzanywa uri i bveledze zwinzhi nga hune zwa konadzea ngaho, hu si na mushumo u xelaho.
-
-- Ṱavhani lushaka luthihi lwa muroho kha ndima nthihi. Izwi zwi ita uri u zwala, u kaṋa na miṅwe mishumo zwi ṱavhanye. Shandukisani tshiliṅwa kha ndima iṅwe na iṅwe u bva kha khalaṅwaha nthihi u ya kha iṅwe (**crop rotation** (u reidzana ha zwiliṅwa)).
-- Ṱavhani zwo tikana kha ndima dzo lugiswaho zwavhuḓi dzo ṋewaho compost nnzhi. U ṱavha zwo tikana zwi ṋea zwiḽiwa zwinzhi nga mithara ya skwea nahone zwi ita murunzi une wa thivhela zwimela zwi sa ṱoḓei.
-- Shumisani zwishumiswa zwi leluwaho zwi vhulungaho tshifhinga, sa tshizwali tsha tshanḓa tshi sudzwaho (hand push-seeder) na **broadfork** (foroko khulwane i re na zwifaro zwivhili ine ya vhofholola mavu i sa a pendukisi). Bulasi khulwane i nga shumisa theraka ṱhukhu ya mavhili i sudzwaho nga muthu (walk-behind tractor) u itela u lima hu si nga maanḓa na u rema zwiliṅwa zwa u fukedza (cover crops).
-
-### Ndi ngani ngade dza u rengisa dzi tshi nga shuma
-
-Ngade dza u rengisa dzo ḓivhalea shangoni ḽoṱhe, na kha tshipembe ha Afrika, ngauri vharengi vhanzhi zwino vha ṱoḓa zwiḽiwa zwiswa zwo limiwaho tsini na hayani.
-
-- **Rengisani nga ho livhaho.** Musi ni tshi rengisela vharengi nga ho livhaho (kha gethe ya bulasi, kha makete wa henefho, kha vhahura, zwikolo, zwiṱoro zwa spaza kana restorente) ni wana mutengo wa **u rengisela muthu muthihi (retail)** hu si mutengo wa fhasi wa **u rengisa nga vhunzhi (wholesale)** une wa badelwa nga vhavhambadzi.
-- **Tshelede ṱhukhu ya u thoma.** Fhethu huṱuku na zwishumiswa zwa tshanḓa zwi ḓura zwiṱuku vhukuma u thoma u fhira bulasi khulwane i shumisaho mitshini.
-- **Ṋeani zwithu zwo fhambanaho.** Vhalimi vha ngade dza u rengisa vha bvelelaho kanzhi vha rengisa zwibveledzwa zwinzhi: miroho, mitshelo, zwiberi (berries), makumba, ṋotshi (honey), nama kana mafhi. Vhaṅwe vha dovha vha engedza ndeme nga u ita jamu, zwo vhulungwaho nga vhinega (pickles), mitshelo yo omiswaho na zwiṅwe zwibveledzwa.
-
-> **Tsevhedzo:** Musi ni sa athu ṱavha u itela u rengisa, ambani na vharengi vhaṋu. Wanani uri vha ṱoḓa mini, zwingafhani, lungafhani na nga mutengo ufhio. Limelani makete une na u ḓivha, hu si une na khou u fulufhela.
+> **Tsevhedzo:** Ambani na vharengi vhaṋu phanḓa ha u ṱavha. Wanani zwine vha zwi ṱoḓa, zwingafhani, lunzhi hani na nga mutengo ufhio. Limelani makete une na u ḓivha, hu si une na fulufhela.
 
 ## 4. Ngade ya zwiliṅwa zwa ndeme (Zone 3)
 
-**Zwiliṅwa zwa ndeme (staple crops)** ndi zwiḽiwa zwine zwa vha tshipiḓa tshihulwane tsha zwiḽiwa zwa muṱa, sa mavhele, mabele (sorghum), nawa na patata.
+**Zwiliṅwa zwa ndeme** (staple crops) ndi zwiḽiwa zwine zwa ḓadza ndilo ḽa muṱa maḓuvha manzhi. Thoro, zwiṱambi na miṅwe midzi zwi ṋea maanḓa. Nawa na dziṅwe **dzi-legume** (lushaka lwa nawa) dzi ṋea phurotheini.
 
-- **Zwiliṅwa zwa thoro (grains), zwiṱambi na zwiṅwe zwimela zwa midzi** zwi ṋea **khabohaidireiti (carbohydrates)**: zwiḽiwa zwa maanḓa.
-- **Nawa na dziṅwe dzi-legume** (zwimela zwa lushaka lwa nawa) zwi ṋea **phirotheini (protein)**: zwiḽiwa zwi fhaṱaho muvhili.
-
-Zwiliṅwa zwa ndeme zwi ṱoḓa fhethu hunzhi u itela khaṋo ya vhukati. Zwinzhi zwi dzhia miṅwedzi minzhi u vibva, nahone kanzhi zwi kaṋwa zwoṱhe nga tshifhinga tshithihi, sa mavhele o omaho kana nawa dzo omaho. Ngauralo ri vhea ngade ya zwiliṅwa zwa ndeme fhethu ha u lima, kha **Zone 3**.
-
-Ngade ya zwiliṅwa zwa ndeme i ṱoḓa mushumo muṱuku u fhira ngade ya tsini ha nnḓu kana ya miroho, nahone ni i dalela lwa si gathi. Zwiṅwe zwiliṅwa zwi sheledzwa nga zwiṅwe zwifhinga, fhedzi zwinzhi zwi limiwa nga mvula fhedzi. Khethani zwiliṅwa zwi tendelanaho na mutsho waṋu, nahone ni zwi ṱavhe nga tshifhinga tsho teaho uri zwi shumise mvula nga nḓila yavhuḓi.
-
-### Zwiliṅwa zwa ndeme zwa tshipembe ha Afrika
+Zwiliṅwa zwa ndeme zwi ṱoḓa tshikhala tshihulwane kha khaṋo ya vhukati, zwi dzhia miṅwedzi u vhibva nahone zwi vhibva zwoṱhe nga tshifhinga tshithihi, ngauralo zwi ya kha Zone 3. I ṱoḓa mushumo muṱuku nahone i aluwa nga maanḓa nga mvula, ngauralo nangani zwiliṅwa zwi teaho mutsho waṋu ni zwi ṱavhe uri zwi fare mvula.
 
 | Tshigwada | Zwiliṅwa |
 |---|---|
-| Thoro | mavhele, mabele, luvhele (pearl millet); goroi, outsi (oats) na bali (barley) (kanzhi ndi zwiliṅwa zwa vhuria) |
-| Nawa na dziṅwe dzi-legume | nawa dzo omaho sa sugar beans, nawa dza cowpea, phonḓa (jugo bean, Bambara groundnut), nḓuhu (groundnut), soya, nawa dza pigeon pea, nawa dza mung bean, nawa dza chickpea |
-| Zwimela zwa midzi na magavhu (tubers) | zwiṱambi (potato), patata, madumbe (amadumbe, taro), mufarinya (cassava) (fhethu hu si na tshando fhedzi) |
-| Miroho i ṱoḓaho fhethu hunzhi | phuri, bathanathi (butternut), khavhe, mamelone maṅwe na zwiṅwe zwa lushaka lwa phuri (gourds) |
+| Thoro | mavhele, mafhi, mhuṱa; goroi, oats na barley (nga maanḓa zwiliṅwa zwa vhuria) |
+| Nawa na dziṅwe dzi-legume | nawa dza swigiri (sugar beans) na dziṅwe nawa dzo omaho, nawa dza sialala (cowpeas), phonḓa, nḓuhu, soya, pigeon peas, mung beans, chickpeas |
+| Midzi na zwiṱambi | zwiṱambi, patata, amadumbe, mufarinya (fhethu hu si na tshando fhedzi) |
+| Miroho i ṱoḓaho tshikhala tshinzhi | phuri, bathanathi, khavhe, mamelone na mikumbu |
 
 ### Mavhele
 
-Mavhele ndi tshiliṅwa tsha ndeme tshihulwane kha zwipiḓa zwinzhi zwa Afrika Tshipembe.
+1. Kha fhethu hune mvula ya na nga tshilimo, ṱavhani nga murahu ha musi mvula yavhuḓi yo nowisa mavu nahone tshando tsho fhela, kanzhi Tshimedzi (October) u swika Nyendavhusiku (December).
+2. Ṱavhani nga mitalo yo fhambanaho nga hu ḓo nga 90 cm. Kha fhethu ho omaho siani hu ḓo nga 50 cm vhukati ha zwimela kha mutalo, uri tshiṅwe na tshiṅwe tshi vhe na maḓi o linganaho. Arali hu na mvula yavhuḓi, u sheledza kana mavu o nonaho, zwi ṱavheni zwo fhambana nga hu ḓo nga 30 cm.
+3. Nangani mbeu ya **open-pollinated** (mbeu ya sialala i ṋeaho mbeu i fanaho na yone) arali ni tshi ṱoḓa u vhulunga yaṋu. Mbeu ya hybrid i ṋea khaṋo yavhuḓi lwa u thoma, fhedzi mbeu yo vhulungwaho u bva kha tshiliṅwa tsha hybrid i ṋea khaṋo i fhungudzeaho nga hu ḓo nga tshipiḓa tshiraru.
 
-- Fhethu hune mvula ya na nga tshilimo, ṱavhani musi mvula yavhuḓi yo no ita uri mavu a nuvhe nahone khombo ya tshando yo no fhela, kanzhi u bva nga Tshimedzi (October) u swika nga Nyendavhusiku (December).
-- Ṱavhani nga mitalo i re na vhukule ha 90 cm vhukati hayo. Fhethu ho omaho, ṱavhani zwimela zwi kule na zwiṅwe (tshimela tshithihi nga 50 cm kha mutalo) uri tshimela tshiṅwe na tshiṅwe tshi wane maḓi a eḓanaho. Arali mvula i yavhuḓi, hu na u sheledza kana mavu o nona, zwimela zwi nga vha tsini (vhukule ha 30 cm).
-- Mbeu dza **open-pollinated** (dzine mupfumbu wa maluvha wadzo wa phaḓaladzwa nga mupo) dzi nga limiwa hafhu u bva kha mbeu dzaṋu dze na dzi vhulunga. Mavhele a haibiridi (hybrid) a ṋea khaṋo khulwane u bva kha mbeu dzo rengwaho, fhedzi mbeu dzo vhulungwaho dza haibiridi a dzi bveledzi zwimela zwi fanaho na zwa u thoma nahone dzi ṋea khaṋo ṱhukhu.
+### Mafhi
 
-### Mabele
+Mafhi a konḓelela mufhiso na gomelelo u fhira mavhele. Hune maḓi a sa lingani, a ṱavheni nga mitalo yo fhambanaho vhukuma, hu ḓo nga 0.9 m u swika 2.3 m u ya nga mvula na mavu, uri tshimela tshiṅwe na tshiṅwe tshi vhe na mavu manzhi a u nwa khao.
 
-Mabele a konḓelela mufhiso na gomelelo u fhira mavhele nahone ndi khetho yavhuḓi fhethu ho omaho. Hune maḓi a si vhe manzhi, a ṱavheni nga **mitalo ya vhukule vhuhulwane (wide rows)** (vhukule ha 0.9 m u swika 2.3 m, zwi tshi ya nga mvula na mavu aṋu) uri tshimela tshiṅwe na tshiṅwe tshi vhe na mavu manzhi a u wana maḓi khao. Fhethu hune mvula ya na nnzhi, mitalo i re tsini-tsini i a shuma.
+### Nawa dzo omaho, nawa dza sialala na phonḓa
 
-### Nawa dzo omaho na nawa dza cowpea
-
-- Ṱavhani nawa dzo omaho musi mavu o no dudela (nṱha ha 15 °C) nga murahu ha mvula dza u thoma dzavhuḓi: fhethu hunzhi hune mvula ya na nga tshilimo hezwi ndi u bva vhukati ha Tshimedzi (October) u swika Nyendavhusiku (December), nahone fhethu hune ha vha na tshando u swika vhukati ha Phando (January).
-- Nawa dzi mela zwavhuḓi kha mitalo i re vhukati kana tsini ha mavhele. Sa dziṅwe dzi-legume, dzi thusa u ṋea mavu naiṱirodzheni (nitrogen).
-- Nawa dza cowpea na phonḓa (jugo bean) dzi konḓelela mufhiso na gomelelo u fhira nawa dzo omaho.
+1. Ṱavhani nawa dzo omaho nga murahu ha mvula dza u thoma dzavhuḓi, musi mavu o dudela u fhira hu ḓo nga 15 °C: vhukati ha Tshimedzi (October) u swika Nyendavhusiku (December) kha vhunzhi ha fhethu hune mvula ya na nga tshilimo, na u swika hu ḓo nga vhukati ha Phando (January) hune ha vha na tshando.
+2. Dzi limeni tsini kana vhukati ha mavhele. Dzi ṋea mavu zwiḽiwa nga naiṱirodzheni.
+3. Kha fhethu hu fhisaho, ho omaho, limani nawa dza sialala (cowpeas) na phonḓa (jugo beans), dzine dza konḓelela gomelelo zwavhuḓi.
 
 ### Patata
 
-Patata i limiwa nga **zwipiḓa zwa luṱanga (vine cuttings)**, hu si nga mbeu.
+1. Remani zwipiḓa zwa mivhino zwa 20 u swika 30 cm u bva kha zwimela zwo takalaho.
+2. Zwi ṱavheni kha zwiluvhi zwo fhambanaho nga hu ḓo nga 1 m, zwo fhambana nga 30 cm kha tshiluvhi.
+3. Hune ha vha na tshando, ṱavhani u bva vhukati ha Lara (November) u swika mathomo a Nyendavhusiku (December). Kha fhethu hu si na tshando, ṱavhani u bva Ṱhangule (August) u swika Ṱhafamuhwe (March).
 
-1. Remani zwipiḓa zwa luṱanga zwa 20–30 cm u bva kha zwimela zwi re na mutakalo.
-2. Zwi ṱavheni kha mitalo ya mavu yo gonyiswaho (ridges) kana milundu ya mavu (mounds) i re na vhukule ha 1 m, zwipiḓa zwi tshi vha na vhukule ha 30 cm kha mutalo.
-3. Fhethu hune ha vha na tshando, ṱavhani u bva vhukati ha Ḽara (November) u swika mathomoni a Nyendavhusiku (December). Fhethu hu si na tshando ni nga ṱavha u bva nga Ṱhangule (August) u swika nga Ṱhafamuhwe (March).
-
-Patata ine nga ngomu ya vha ya muvhala wa orenzhi i na vhithamini A nnzhi nahone i vhavhuḓi nga maanḓa kha vhana.
+Limani patata ya ngomu ha orenzhi. I na vhithamini A nnzhi nahone i a vhuyelwa vhana.
 
 ### Mufarinya
 
-Mufarinya u mela zwavhuḓi fhethu hu dudelaho **hu si na tshando** fhedzi, sa zwipiḓa zwa KwaZulu-Natal na lowveld ya Mpumalanga na Limpopo. U konḓelela gomelelo vhukuma musi wo no dzika.
-
-> **Tsireledzo:** Midzi na maṱari a mufarinya zwi na khemikhali dza mupo dzi bvisaho **sayanaidi (cyanide)**, tshivhulahi. Mufarinya u "vhavhaho" (bitter) u na sayanaidi nnzhi u fhira u "ṱapfu" (sweet), nahone zwimela zwo shengeliswaho nga gomelelo zwi na nnzhi. Ni songo ḽa mufarinya u sa bikwa. Bvisani makwati a midzi ni i bike zwavhuḓi. Mufarinya u vhavhaho u fanela u dovha wa dzheniswa maḓini maḓuvha a si gathi (maḓi a laṱwe), kana wa pwashiwa zwiṱukuṱuku wa lugiswa, musi u sa athu bikwa. Vhudzisani mueletshedzi wa zwa vhulimi (extension officer) uri ni na lushaka lufhio.
+Mufarinya u aluwa fhedzi kha fhethu hu dudelaho hu si na tshando, hu ngaho lwanzhe lwa KwaZulu-Natal na Lowveld, nahone u konḓelela gomelelo zwavhuḓi musi wo no khwaṱha. Midzi yawo i bvisa cyanide, tshivhulahi, ngauralo a ri tou ḽa mufarinya u songo bikwa: vhalani midzi ni i bike zwavhuḓi, nahone tshaka dzi vhavhaho dzi nwedzeni maḓini maḓuvha manzhi u thoma, ni tshi laṱa maḓi.
 
 ### Maitele a ngade ya zwiliṅwa zwa ndeme
 
-Hu na nḓila nnzhi dza u lima zwiliṅwa zwa ndeme. Ine ya vha yavhuḓi kha inwi i ya nga mutsho waṋu, sialala ḽa vhulimi ḽa henefho, zwishumiswa zwine na vha nazwo na zwiliṅwa zwine na zwi khetha. Maitele aya a thusa kha zwiimo zwoṱhe:
+1. **Ṱanganyani zwiliṅwa.** Limani mavhele na nawa na phuri, hu si tshiliṅwa tshithihi fhedzi.
+2. **Ni songo kwama mavu nga maanḓa.**
+3. **Siani thanda na maṱari nṱha ha mavu sa mulch.** I tsireledza mavu nahone ya a ṋea zwiḽiwa musi i tshi vhola.
+4. **Limani zwiliṅwa zwa u fukedza** (cover crops) vhukati ha zwiliṅwa zwihulwane.
+5. **Ṱavhani kha contour** uri mvula i dzhene mavuni nahone mavu a dzule hone.
+6. **Itani crop rotation** (u shandukisa zwiliṅwa nga ṅwaha kha ndima nthihi) uri hu si vhe na tshiliṅwa tshi vhuyaho fhethu hu fanaho ṅwaha nga ṅwaha.
+7. **Awedzani mavu** nga zwiliṅwa zwa u fukedza kana madambaya nga murahu ha khalaṅwaha mishoni.
 
-1. **Ṱavhani zwiliṅwa zwinzhi khathihi (polycultures), hu si tshiliṅwa tshithihi fhedzi (monocultures).** Limani zwiliṅwa zwo fhambanaho khathihi, sa tsumbo mavhele na nawa na phuri.
-2. **Kwamani mavu zwiṱuku nga hune zwa konadzea.** Ni songo lima nga mugomo u dzhenaho fhasi arali zwi tshi konadzea.
-3. **Siani zwo salaho zwa zwiliṅwa mavuni sa mulch** (tshifukedzi tsha mavu). Mahuvhu na maṱari zwi tsireledza mavu nahone zwi a ṋea zwiḽiwa musi zwi tshi vhola.
-4. **Limani zwiliṅwa zwa u fukedza** u tsireledza na u ṋea mavu zwiḽiwa vhukati ha zwiliṅwa zwihulwane.
-5. **Ṱavhani nga contour** uri mvula i dzhene mavuni nahone mavu a dzule fhethu haḽo.
-6. **Itani crop rotation.** Ni songo lima tshiliṅwa tshithihi fhethu huthihi ṅwaha nga ṅwaha.
-7. **Awedzani mavu.** Nga murahu ha khalaṅwaha dzi si gathi, tendelani tsimu i awele i na zwiliṅwa zwa u fukedza kana madambaya.
+## Lingani
 
-> **Ḓivhani:** Nawa ndi zwiḽiwa zwa ḓuvha ḽiṅwe na ḽiṅwe kha zwipiḓa zwinzhi zwa Afrika. Rwanda na Burundi, muthu muṅwe na muṅwe u ḽa nawa dza 27–31 kg nga ṅwaha nga vhukati, nnzhi u fhira shangoni ḽoṱhe.
+Olani mmapa wa ngade dzaṋu nṋa ino vhege.
+
+1. Olani nnḓu yaṋu na mavu a i monaho kha bammbiri.
+2. Imani kha vothi ḽa khishini ni ele milenzhe ya 10. Swayani fhethu havhuḓi ha ngade ya tsini ha nnḓu ngomu ha honoho vhulapfu.
+3. Swayani fhethu ha ngade ya miroho, hu tshimbilwaho nga u leluwa nahone tsini na maḓi.
+4. Swayani tshikhala tsha zwiliṅwa zwa ndeme, ni ṅwale uri mavu o sendama u ya ngafhi.
+5. Nga madekwana a si na muya, a rotholaho, pfani hune muya u rotholaho wa dzula hone. Swayani iyo frost pocket.
+6. Tsini ha ngade iṅwe na iṅwe, ṅwalani awara dzine na nga i ṋea nga vhege.
 
 ## Zwithu zwa ndeme
 
-- Ḓivhani mutsho waṋu: mvula ya tshilimo vhukati ha shango, mvula ya vhuria Western Cape, lowveld na tsini ha lwanzhe hu si na tshando.
-- Tendelani muya u rothaho u elele u tsa; ni songo ṱavha zwiliṅwa zwi sa konḓelelaho tshando kha dzi-frost pocket.
-- Pulanani ngade dzi tshi tendelana na tshifhinga, tshelede na dzangalelo zwine na vha nazwo vhukuma.
-- Ngade ya tsini ha nnḓu (Zone 1): ṱhukhu, yo tikana, muroho na mihaṱa zwa ḓuvha ḽiṅwe na ḽiṅwe, tsini-tsini na khishi.
-- Ngade ya miroho (Zone 2): zwiliṅwa zwihulwane, ndima na nḓila zwi tevhelaho contour.
-- Ngade ya u rengisa (Zone 3): tshiliṅwa tshithihi kha ndima, u ṱavha zwo tikana, rengisani nga ho livhaho u itela mutengo wavhuḓi.
-- Ngade ya zwiliṅwa zwa ndeme (Zone 3): mavhele, mabele, nawa, patata na zwiṅwe zwiliṅwa zwa maanḓa na phirotheini, zwi limiwaho nga mvula nga maanḓa.
-- Ni songo ḽa mufarinya u sa bikwa; bvisani makwati, ni u dzhenise maḓini nahone ni u bike zwavhuḓi.
-- Ṱanganyani zwiliṅwa, ni kwame mavu zwiṱuku, ni fukedze mavu, ni ite crop rotation, ni ṱavhe nga contour nahone ni awedze mavu.
+- Ḓivhani mutsho waṋu, ni litshe muya u rotholaho u elele kule na zwiliṅwa zwi sa konḓeleli.
+- Linganyisani ngade dzaṋu na tshifhinga, tshelede na dzangalelo zwine na vha nazwo zwa vhukuma.
+- Ngade ya tsini ha nnḓu i tsini nahone yo ṱanganana; ngade ya miroho kha contour; ngade ya u rengisa kha ndima dza tshiliṅwa tshithihi, i rengiswaho nga u livha.
+- Ṱavhani zwiliṅwa zwa ndeme uri zwi fare mvula, nahone ni songo tou ḽa mufarinya u songo bikwa.
+- Ṱanganyani zwiliṅwa, kwamani mavu zwiṱuku, fukedzani nga mulch, shandukisani zwiliṅwa nahone ni awedze mavu.
+
+Thomani nga ngade i re tsini na vothi ḽa khishini. Musi i tshi ni ṋea zwiḽiwa ḓuvha ḽiṅwe na ḽiṅwe, ni ḓo ḓivha musi no lugela i tevhelaho.

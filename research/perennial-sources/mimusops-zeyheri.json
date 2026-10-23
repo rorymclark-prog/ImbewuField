@@ -1,0 +1,51 @@
+{
+  "speciesId": "mimusops-zeyheri",
+  "commonName": "Red milkwood (moepel)",
+  "botanicalName": "Mimusops zeyheri",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general; SA distribution given as Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West)",
+      "months": [4, 5, 6, 7, 8, 9],
+      "evidence": {
+        "quote": "Small, white, sweetly scented flowers are borne in October to February. Fruits are oval with a pointed tip ripening yellow or orange from April to September.",
+        "url": "https://pza.sanbi.org/mimusops-zeyheri",
+        "doc": "Mimusops zeyheri | PlantZAfrica (SANBI)",
+        "page": null
+      },
+      "notes": ""
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "SANBI describes SAPLING growth rate ('Growth rate of seedlings is fast and saplings of a metre or more can be obtained within three to four years of sowing... Saplings are usually ready to be planted out after four or more years from sowing') but this is about seedling/sapling size, not years to first fruiting, so it was not used for this field. A peer-reviewed review paper, 'Review of Mimusops zeyheri Sond. (Milkwood): Distribution, Utilisation, Ecology and Population Genetics' (PMC11511078), was fetched and read in full; it covers distribution, ethnomedicinal uses, ecology and population genetics but was confirmed to contain no information on flowering/fruiting phenology, years to bearing, yield, chilling, or pollination biology."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found; see yearsToFirstCrop notes (PMC11511078 review paper confirmed to lack this data)."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in any fetched source (PZA page, or PMC11511078 review paper, which does not cover yield)."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source states a chilling requirement or explicitly says the (evergreen) species has none."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No fetched source (SANBI PlantZAfrica or the PMC11511078 review) states whether flowers are borne on separate male/female trees, are self-fertile, or require cross-pollination. SANBI describes the flowers only as 'Small, white, sweetly scented flowers' without specifying sex distribution, and does not name a pollinating agent."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "yearsToFirstCrop and yearsToFullBearing: not stated by any source found, including a full read of a dedicated peer-reviewed review paper on this species (PMC11511078), which was confirmed to cover distribution/ethnomedicine/ecology/genetics but not reproductive phenology or production.",
+    "yieldKgPerTreeMature: not found in any source.",
+    "chillUnits: not stated by any source found.",
+    "Pollination biology (self-fertile / dioecious / needs cross-pollinator / pollinating agent): not stated by any source found for this species.",
+    "No ICRAF Agroforestree Database PDF fact sheet exists for this species (apps.worldagroforestry.org/treedb2/AFTPDFS/Mimusops_zeyheri.PDF returns HTTP 500)."
+  ]
+}

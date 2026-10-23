@@ -1,0 +1,67 @@
+{
+  "status": "Read-only native candidate review; not applied",
+  "conversation": "48686326-d31a-4a61-a252-ae3bc13ca69c",
+  "fluentApproval": false,
+  "sourcePacketFiles": [
+    "/tmp/imbewu-agy-reading-l2-st-semantic-source-20261007.json",
+    "/tmp/imbewu-agy-reading-l2-ve-semantic-source-20261007.json",
+    "/tmp/imbewu-agy-reading-l2-ts-semantic-source-20261007.json"
+  ],
+  "rows": [
+    {
+      "language": "st",
+      "field": "body paragraph1",
+      "proposedClauseChanges": [
+        "letsatsi le lengata haholwanyane",
+        "mongobo o mongata haholwanyane"
+      ],
+      "disposition": "pending independent exact clause/composition check; preserve all other bytes"
+    },
+    {
+      "language": "st",
+      "field": "keypoint0",
+      "proposedClauseChanges": [
+        "letsatsi le tobileng le lengata haholwanyane",
+        "mongobo o mongata haholwanyane"
+      ],
+      "disposition": "pending independent exact clause/composition check"
+    },
+    {
+      "language": "ve",
+      "field": "body paragraph1",
+      "proposedClauseChanges": [
+        "hu nga duderanesa ha dovha ha omesa",
+        "hu fholesa ha dovha ha vha na vhunyisi vhunzhisa"
+      ],
+      "disposition": "rejected as release-ready; possible intensifier/superlative introduces degree uncertainty"
+    },
+    {
+      "language": "ve",
+      "field": "keypoint0",
+      "proposedClauseChanges": [
+        "hu a fholesa ha dovha ha vha na vhunyisi vhunzhisa"
+      ],
+      "disposition": "rejected as release-ready; comparative morphology not proven"
+    },
+    {
+      "language": "ts",
+      "field": "body paragraph1",
+      "proposedClauseChanges": [
+        "dyambu ro tlula",
+        "ti nga hisa no oma swinene ngopfu",
+        "ku titimela no tsakama ngopfu"
+      ],
+      "disposition": "rejected as release-ready; intensifiers do not establish comparative scope; exact visible ro tlula construction needs grammar and composition review"
+    },
+    {
+      "language": "ts",
+      "field": "keypoint0",
+      "proposedClauseChanges": [
+        "dyambu ro kongoma ro tlula",
+        "ku titimela no tsakama ngopfu"
+      ],
+      "disposition": "rejected as release-ready; comparative scope and grammar need repair"
+    }
+  ],
+  "rootNote": "Earlier JSON added than elsewhere/others not in exact source; rejected. Subsequent plain candidates changed intensity; do not copy into learner registry. Model claims of rigorous proof do not constitute fluent or primary-source verification."
+}

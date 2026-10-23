@@ -38,11 +38,11 @@ function mkuzeLocationData() {
   };
 }
 
-test('the demo farm’s own satellite reading resolves pattern summer — not Durban’s mild-frost', () => {
+test('the demo farm’s own satellite reading resolves the warm-area column, not the hard-frost interior', () => {
   const derived = siteClimateFromLocationData(mkuzeLocationData(), MKUZE_LAT);
   assert.ok(derived, 'a real per-site reading must derive');
-  assert.equal(derived.pattern, 'summer',
-    'frost-free Mkuze lowveld with 80% summer rain is the summer pattern');
+  assert.equal(derived.pattern, 'mild-frost',
+    'frost-free Mkuze lowveld (coldest month 16.8 °C, 80% summer rain) gets KZN DARD’s warm/light-frost windows');
   assert.equal(derived.annualMm, 770, 'annual mm is the sum of the monthly normals, rounded');
   assert.equal(derived.rainfallSource, 'nasa-power');
   // The Köppen code is recomputed from the monthly numbers, not read from the payload.

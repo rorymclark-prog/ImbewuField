@@ -1,0 +1,26 @@
+{
+  "key": "maize",
+  "varieties": [],
+  "zoneAdvice": {
+    "highveld": {
+      "text": "No SA source found naming specific maize cultivars recommended for the highveld by name. General agronomic logic (not itself a citable number) says a hard-frost interior needs an early-to-medium relative-maturity hybrid that finishes grain fill before the first frost, but no cultivar-to-zone table was reached to confirm which named hybrids that means in practice.",
+      "evidence": []
+    },
+    "lowveld-bushveld": { "text": "Not sourced.", "evidence": [] },
+    "subtropical-coast": { "text": "Not sourced.", "evidence": [] },
+    "midlands-mistbelt": { "text": "Not sourced.", "evidence": [] },
+    "western-cape": {
+      "text": "crop-catalog.ts already records winter (Western Cape) sowMonths as empty for maize, i.e. it is not a Western Cape crop in this catalog; no variety research was needed or attempted for this zone.",
+      "evidence": []
+    },
+    "southern-cape": { "text": "Not sourced; maize is a minor crop here.", "evidence": [] },
+    "karoo-arid": { "text": "Not sourced.", "evidence": [] },
+    "high-mountain": { "text": "Not sourced; likely marginal for grain maize given severe frost and short season, but no source confirms this or names an early enough cultivar.", "evidence": [] }
+  },
+  "gaps": [
+    "This is the weakest file in the set. ARC-GCI runs annual National Cultivar Trials (NCT) that produce exactly the region-by-cultivar recommendation this task needs, and the trial methodology/existence is confirmed (ARC 'The value of National Cultivar Trials in South Africa', https://www.arc.agric.za/Economic%20Impact%20Assessment%20Studies/The%20value%20of%20National%20Cultivar%20Trials%20in%20South%20Africa.pdf), but the actual NCT results leaflet (obtainable, per a KZN DARD source, free from ARC-GCI Potchefstroom, tel 018 299 6100) was not reachable via web search/fetch in this pass.",
+    "Pannar's product site (https://www.pannar.com/products/white-maize, fetched 2026-09-28) publishes per-hybrid relative-maturity and irrigation/dryland suitability (e.g. PAN 3A-173: relative maturity 114 days, 'well adapted to irrigation and high-potential dryland regions, performing well across various planting densities'), and its own region picker lists categories matching this catalog's zones closely (e.g. 'Eastern Highveld & KZN Irrigation', 'West Highveld, Limpopo & EC Irrigation', 'Mist Belt', 'NE Free State'), but the page did not expose an explicit per-hybrid 'recommended for region X' statement in the fetched content, so no hybrid-to-zone pairing here would be honestly sourced rather than inferred.",
+      "No open-pollinated smallholder maize variety (e.g. CIMMYT-released ZM 521) was confirmed as sold/recommended specifically for South African smallholders by a South African source; ZM 521 material found was regional (SADC/Zimbabwe) CIMMYT literature, not ARC or an SA seed company.",
+    "Given the above, maize varieties are left empty rather than populated with unsourced or weakly-sourced cultivar-zone pairings. This is a clear candidate for a follow-up research pass focused specifically on obtaining the ARC-GCI NCT leaflet or a Grain SA cultivar guide PDF."
+  ]
+}

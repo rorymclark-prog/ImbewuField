@@ -126,8 +126,19 @@ test('a farmer’s own price does not inherit the book’s research date', () =>
 test('every entry carries the confidence field a farmer needs before trusting the number', () => {
   for (const crop of pricedCropList({})) {
     assert.ok(
-      crop.price.confidence === 'sourced' || crop.price.confidence === 'estimated',
+      crop.price.confidence === 'sourced' || crop.price.confidence === 'estimated' || crop.price.confidence === 'recommended',
       `${crop.key} has no readable confidence value`,
     );
+  }
+});
+
+// A 'recommended' price is an average of cited prices from one dated research pass
+// (research/crop-sources/). The card prints "Priced <date>" under it, so it must carry its own
+// date rather than borrowing the book's July headline.
+test('every recommended (averaged) price carries its own research date', () => {
+  const recommended = Object.entries(DEFAULT_CROP_PRICES).filter(([, p]) => p.confidence === 'recommended');
+  for (const [key, price] of recommended) {
+    assert.ok(price.pricedAt, `${key} is a recommended average but has no pricedAt`);
+    assert.ok(price.wholesalePerKg < price.retailPerKg, `${key}: recommended wholesale must sit below retail`);
   }
 });

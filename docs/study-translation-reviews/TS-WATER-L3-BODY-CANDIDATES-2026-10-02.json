@@ -1,0 +1,224 @@
+{
+  "packet": "TS Water Harvesting L3 body candidate",
+  "language": "ts (itsonga)",
+  "lessonId": "water-harvesting-l3",
+  "sourceMainSha": "c65fe4f824e392aa7c934d8486db36fe59b29f0d",
+  "currentSourceCheckedAt": "94a2fb4baf5bf801a12647ea8c2d53a4af045223",
+  "canonicalPath": "lib/course-modules.ts",
+  "registryPath": "lib/course-translation-drafts-ts-water-harvesting.ts",
+  "sourceBody": [
+    "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.",
+    "Check whether the roof material is suitable for rainwater collection before connecting a tank.",
+    "Use the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
+    "An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.",
+    "Roof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.",
+    "The required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
+    "A diverter does not make the remaining water safe to drink.",
+    "Tank size depends on water demand, rain, roof area and the length of dry periods.",
+    "List the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.",
+    "Plan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.",
+    "Keep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.",
+    "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
+    "A basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment."
+  ],
+  "currentDraftBody": [
+    "Lwangu ra wena ri nga hlengeleta mati ya mpfula. Ntsengo wu titshege hi vukulu bya lwangu, mpfula na ku lahleka ka mati.",
+    "Kamba loko switirhisiwa swa lwangu swi faneleka ku hlengeleta mati ya mpfula u nga si hlanganisa thanki.",
+    "Tirhisa vukulu bya lwangu loko ri langutiwa hi le henhla na tirhekhodo ta mpfula ya le kusuhi. Kutani u tekela enhlokweni mati lama hundzaka gatara, lama hambukisiwaka kumbe lama halakaka loko thanki yi tele.",
+    "Ntsengo wa lembe hinkwaro a wu ku byeli leswaku ku ta va na mati yo tanihi kwihi hi nkarhi wa dyandza. Pimanisa mati lama nga kona na mitirho leyi u yi kunguhataka.",
+    "Roof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.",
+    "The required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
+    "A diverter does not make the remaining water safe to drink.",
+    "Sayizi ya thanki yi titshege hi xilaveko xa mati, mpfula, vukulu bya lwangu na vulehi bya minkarhi ya dyandza.",
+    "Tsala mitirho leyi kunguhatiweke kutani u ringanisa xilaveko ku suka eka tirhekhodo ta wena n'wini. Pimanisa sweswo na mati lama kumekaka hi tinguva hinkwato.",
+    "Kunguhatela leswi u nga ta swi endla loko mati lama hlayisiweke ma hunguteka. Vito ra phurovhinse ntsena a ri nge ku byeli sayizi ya thanki leyi u yi lavaka.",
+    "Hlayisa thanki yi funengetiwile, sefa tindhawu leti pfulekeke ku sivela switsotswana, naswona u hlayisa lwangu, tigatara na diverter. Hlayisa mati ya mpfula ma hambanile na tiphayiphi ta mati yo nwa.",
+    "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
+    "A basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment."
+  ],
+  "candidateBody": [
+    "Lwangu ra wena ri nga hlengeleta mati ya mpfula. Ntsengo wu titshege hi vukulu bya lwangu, mpfula na ku lahleka ka mati.",
+    "Kamba loko switirhisiwa swa lwangu swi faneleka ku hlengeleta mati ya mpfula u nga si hlanganisa thanki.",
+    "Tirhisa vukulu bya lwangu loko ri langutiwa hi le henhla na tirhekhodo ta mpfula ya le kusuhi. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
+    "An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.",
+    "Roof runoff can carry dust, droppings and other contamination. First-flush diverter yi endla leswaku some of the first runoff yi nga ngheni etankini.",
+    "The required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
+    "Diverter a yi endli leswaku mati lawa ma saleke ma hlayiseka ku nwa.",
+    "Sayizi ya thanki yi titshege hi xilaveko xa mati, mpfula, vukulu bya lwangu na vulehi bya dry periods.",
+    "Tsala intended uses kutani u estimate demand ya wona u tirhisa tirhekhodo ta wena n'wini. Compare that with supply through the seasons.",
+    "Kunguhatela leswi u nga ta swi endla loko mati lama hlayisiweke ma sungula ku va matsongo. A province name alone cannot tell you the tank size you need.",
+    "Hlayisa thanki yi funengetiwile. Screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.",
+    "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
+    "Basic filter ntsena a yi tiyisisi leswaku mati ma hlayisekile ku nwa. Mati lawa ya tirhisiwaka eka food crops na wona ya lava safety assessment."
+  ],
+  "paragraphs": [
+    {
+      "index": 1,
+      "sourceEnglish": "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.",
+      "currentDraft": "Lwangu ra wena ri nga hlengeleta mati ya mpfula. Ntsengo wu titshege hi vukulu bya lwangu, mpfula na ku lahleka ka mati.",
+      "candidateDraft": "Lwangu ra wena ri nga hlengeleta mati ya mpfula. Ntsengo wu titshege hi vukulu bya lwangu, mpfula na ku lahleka ka mati.",
+      "status": "preserve existing localized draft",
+      "literalBacktranslation": "Your roof may collect rainwater. The amount depends on roof area, rainfall and water losses.",
+      "uncertainty": "Current localized draft is preserved without change; candidate backtranslation matches its meaning to the extent reviewed, but no fluent approval is claimed."
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "Check whether the roof material is suitable for rainwater collection before connecting a tank.",
+      "currentDraft": "Kamba loko switirhisiwa swa lwangu swi faneleka ku hlengeleta mati ya mpfula u nga si hlanganisa thanki.",
+      "candidateDraft": "Kamba loko switirhisiwa swa lwangu swi faneleka ku hlengeleta mati ya mpfula u nga si hlanganisa thanki.",
+      "status": "preserve existing localized draft",
+      "literalBacktranslation": "Check whether roof materials are suitable for collecting rainwater before connecting a tank.",
+      "uncertainty": "Current localized draft is preserved without change; candidate backtranslation matches its meaning to the extent reviewed, but no fluent approval is claimed."
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "Use the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
+      "currentDraft": "Tirhisa vukulu bya lwangu loko ri langutiwa hi le henhla na tirhekhodo ta mpfula ya le kusuhi. Kutani u tekela enhlokweni mati lama hundzaka gatara, lama hambukisiwaka kumbe lama halakaka loko thanki yi tele.",
+      "candidateDraft": "Tirhisa vukulu bya lwangu loko ri langutiwa hi le henhla na tirhekhodo ta mpfula ya le kusuhi. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
+      "status": "localized candidate with exact technical/safety clauses retained",
+      "literalBacktranslation": "Use roof area viewed from above and local rainfall records. Allow for water missing the gutter, diverted or overflowing a full tank.",
+      "uncertainty": "The existing “water that passes the gutter” phrasing is ambiguous for water that misses the gutter; retain the exact source loss clause."
+    },
+    {
+      "index": 4,
+      "sourceEnglish": "An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.",
+      "currentDraft": "Ntsengo wa lembe hinkwaro a wu ku byeli leswaku ku ta va na mati yo tanihi kwihi hi nkarhi wa dyandza. Pimanisa mati lama nga kona na mitirho leyi u yi kunguhataka.",
+      "candidateDraft": "An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.",
+      "status": "localized candidate with exact technical/safety clauses retained",
+      "literalBacktranslation": "An annual total does not show how much water will be available during a dry spell. Compare supply with planned uses.",
+      "uncertainty": "Existing wording narrows dry spell to “dyandza” and uses a word for tasks in place of uses; retain exact source for this availability comparison."
+    },
+    {
+      "index": 5,
+      "sourceEnglish": "Roof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.",
+      "currentDraft": "Roof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.",
+      "candidateDraft": "Roof runoff can carry dust, droppings and other contamination. First-flush diverter yi endla leswaku some of the first runoff yi nga ngheni etankini.",
+      "status": "localized candidate with exact technical/safety clauses retained",
+      "literalBacktranslation": "Roof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.",
+      "uncertainty": "Keep “some” explicit and first-flush scope limited to some first runoff. Technical contamination terms remain in English where useful."
+    },
+    {
+      "index": 6,
+      "sourceEnglish": "The required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
+      "currentDraft": "The required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
+      "candidateDraft": "The required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
+      "status": "localized candidate with exact technical/safety clauses retained",
+      "literalBacktranslation": "The diversion needed depends on roof and system. Use supplier sizing/maintenance instructions; no one volume works for every roof.",
+      "uncertainty": "Supplier sizing/maintenance instruction and no-universal-volume limit retained verbatim in English for accuracy."
+    },
+    {
+      "index": 7,
+      "sourceEnglish": "A diverter does not make the remaining water safe to drink.",
+      "currentDraft": "A diverter does not make the remaining water safe to drink.",
+      "candidateDraft": "Diverter a yi endli leswaku mati lawa ma saleke ma hlayiseka ku nwa.",
+      "status": "localized candidate with exact technical/safety clauses retained",
+      "literalBacktranslation": "A diverter does not make remaining water safe to drink.",
+      "uncertainty": "Retains direct no-drinking-safety caveat; local clause is machine-draft."
+    },
+    {
+      "index": 8,
+      "sourceEnglish": "Tank size depends on water demand, rain, roof area and the length of dry periods.",
+      "currentDraft": "Sayizi ya thanki yi titshege hi xilaveko xa mati, mpfula, vukulu bya lwangu na vulehi bya minkarhi ya dyandza.",
+      "candidateDraft": "Sayizi ya thanki yi titshege hi xilaveko xa mati, mpfula, vukulu bya lwangu na vulehi bya dry periods.",
+      "status": "localized candidate with exact technical/safety clauses retained",
+      "literalBacktranslation": "Tank size depends on demand, rain, roof area and duration of dry periods.",
+      "uncertainty": "Retain the precise duration phrase “dry periods” instead of the narrower “times of drought.”"
+    },
+    {
+      "index": 9,
+      "sourceEnglish": "List the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.",
+      "currentDraft": "Tsala mitirho leyi kunguhatiweke kutani u ringanisa xilaveko ku suka eka tirhekhodo ta wena n'wini. Pimanisa sweswo na mati lama kumekaka hi tinguva hinkwato.",
+      "candidateDraft": "Tsala intended uses kutani u estimate demand ya wona u tirhisa tirhekhodo ta wena n'wini. Compare that with supply through the seasons.",
+      "status": "localized candidate with exact technical/safety clauses retained",
+      "literalBacktranslation": "List intended uses and estimate their demand from your own records. Compare supply across the seasons.",
+      "uncertainty": "Keep intended uses and seasonal supply comparison explicit in English; the localized word for tasks could narrow the scope."
+    },
+    {
+      "index": 10,
+      "sourceEnglish": "Plan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.",
+      "currentDraft": "Kunguhatela leswi u nga ta swi endla loko mati lama hlayisiweke ma hunguteka. Vito ra phurovhinse ntsena a ri nge ku byeli sayizi ya thanki leyi u yi lavaka.",
+      "candidateDraft": "Kunguhatela leswi u nga ta swi endla loko mati lama hlayisiweke ma sungula ku va matsongo. A province name alone cannot tell you the tank size you need.",
+      "status": "localized candidate with exact technical/safety clauses retained",
+      "literalBacktranslation": "Plan what to do when stored water gets low. A province name alone cannot tell you needed tank size.",
+      "uncertainty": "The “screen openings” and maintenance clause plus separate plumbing instruction remain exact English. “Separate” is retained to avoid implying merely distant pipes."
+    },
+    {
+      "index": 11,
+      "sourceEnglish": "Keep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.",
+      "currentDraft": "Hlayisa thanki yi funengetiwile, sefa tindhawu leti pfulekeke ku sivela switsotswana, naswona u hlayisa lwangu, tigatara na diverter. Hlayisa mati ya mpfula ma hambanile na tiphayiphi ta mati yo nwa.",
+      "candidateDraft": "Hlayisa thanki yi funengetiwile. Screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.",
+      "status": "localized candidate with exact technical/safety clauses retained",
+      "literalBacktranslation": "Keep tank covered. Screen openings against insects; maintain roof, gutters, diverter. Keep rainwater separate from drinking-water pipes.",
+      "uncertainty": "“Looks clear” is not translated as clean; both water-safety warning and intended-use testing/treatment clause stay exact English."
+    },
+    {
+      "index": 12,
+      "sourceEnglish": "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
+      "currentDraft": "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
+      "candidateDraft": "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
+      "status": "localized candidate with exact technical/safety clauses retained",
+      "literalBacktranslation": "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
+      "uncertainty": "Direct no-guarantee and food-crop assessment terms kept explicit; machine-draft wording needs language review."
+    },
+    {
+      "index": 13,
+      "sourceEnglish": "A basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
+      "currentDraft": "A basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
+      "candidateDraft": "Basic filter ntsena a yi tiyisisi leswaku mati ma hlayisekile ku nwa. Mati lawa ya tirhisiwaka eka food crops na wona ya lava safety assessment.",
+      "status": "localized candidate with exact technical/safety clauses retained",
+      "literalBacktranslation": "A basic filter alone does not guarantee drinking water. Water used on food crops also needs a safety assessment.",
+      "uncertainty": "Current localized draft is preserved without change; candidate backtranslation matches its meaning to the extent reviewed, but no fluent approval is claimed."
+    }
+  ],
+  "paragraphGaps": [
+    5,
+    6,
+    7,
+    12,
+    13
+  ],
+  "preservedLocalizedParagraphs": [
+    1,
+    2
+  ],
+  "partialEnglishRetained": [
+    3,
+    4,
+    5,
+    6,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "materialRepairs": [
+    3,
+    4,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "literalBacktranslation": "Your roof may collect rainwater. The amount depends on roof area, rainfall and water losses.\n\nCheck whether roof materials are suitable for collecting rainwater before connecting a tank.\n\nUse roof area viewed from above and local rainfall records. Allow for water missing the gutter, diverted or overflowing a full tank.\n\nAn annual total does not show how much water will be available during a dry spell. Compare supply with planned uses.\n\nRoof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.\n\nThe diversion needed depends on roof and system. Use supplier sizing/maintenance instructions; no one volume works for every roof.\n\nA diverter does not make remaining water safe to drink.\n\nTank size depends on demand, rain, roof area and duration of dry periods.\n\nList intended uses and estimate their demand from your own records. Compare supply across the seasons.\n\nPlan what to do when stored water gets low. A province name alone cannot tell you needed tank size.\n\nKeep tank covered. Screen openings against insects; maintain roof, gutters, diverter. Keep rainwater separate from drinking-water pipes.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nA basic filter alone does not guarantee drinking water. Water used on food crops also needs a safety assessment.",
+  "scope": "Draft candidate only. Exact 13 source paragraphs/order preserved. Existing localized paragraphs 1–2 are unchanged. Paragraphs 3, 4, 5, 6, 9, 10, 11, 12 and 13 retain selected English clauses for scope or safety precision. Current exact-English holds are paragraphs 5, 6, 7, 12 and 13; candidate paragraphs that remain wholly exact English are 4, 6 and 12. No repository edits; no claim of fluent approval.",
+  "currentExactEnglishHoldParagraphs": [
+    5,
+    6,
+    7,
+    12,
+    13
+  ],
+  "candidateExactEnglishParagraphs": [
+    4,
+    6,
+    12
+  ],
+  "draftOrigin": "Independently prepared Xitsonga candidate from the exact English source; no Agy/third-party draft provenance.",
+  "implementationBaseSha": "94a2fb4baf5bf801a12647ea8c2d53a4af045223",
+  "authorizationNote": "Rory explicitly authorized regional lesson and quiz translations on 2026-10-02 (“ok yes”); canonical English sources remain unchanged.",
+  "learnerStatusNote": "Machine draft for facilitator review; this is not fluent-speaker or local practitioner approval."
+}

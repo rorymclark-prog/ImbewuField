@@ -1,0 +1,1023 @@
+{
+  "title": "IsiZulu Food Forest and Plant Guilds narration semantic check",
+  "date": "2026-10-05",
+  "reviewType": "independent semantic backcheck; not fluent approval",
+  "binding": {
+    "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+    "head": "58dddd8e064387a4eddb9adb521fedae7e5a1c83",
+    "registeredTranscript": "lib/course-transcripts.ts",
+    "sourceAndRegistrySha256": {
+      "food_forest_en": "ed16fe05d1608259c293e4957f939095515fbfb9f1ed6a97a9ebc27b490fcfc5",
+      "food_forest_zu": "6390548164490a05f96553201ce048eddbb84fb349746371268bb36271ab697e",
+      "plant_guilds_en": "d0bee6137098ddeafaca5332db7dd0d85ccae212e65be641e19e57828f4a8b5b",
+      "plant_guilds_zu": "63224cd110b99ac475963e8e78d2b08e18f27f5825db6b1e5d2d476502854baa",
+      "transcript_registry": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08"
+    },
+    "registeredCounts": {
+      "Food Forest": 20,
+      "Plant Guilds": 51
+    },
+    "method": "Compared each exact registered English and isiZulu narration block with current source files. Reviewed species identity, counts, geometry, spacing, mature size, conditional benefits, local suitability, order and safety. No narration, audio or media changed."
+  },
+  "summary": {
+    "totalBlocks": 71,
+    "accepted": 68,
+    "repair": 1,
+    "uncertain": 2,
+    "overall": "The registered narration preserves the named species and cultivars, quantities and conditions, mature-size/spacing limits, conditional benefits, and local-suitability safeguards. Three targeted issues remain: Plant Guilds 22 may drop an establishment-basin feature, Plant Guilds 28 omits the requested pruning amount from its prompt, and Plant Guilds 40 may turn a mulch basin into a container."
+  },
+  "blocks": [
+    {
+      "module": "Food Forest",
+      "slide": 1,
+      "sourceEnglish": [
+        "Build a living food system in layers.",
+        "Grow food from tall canopy down to root crops.",
+        "Use vertical space, soil life, shade, and moisture together.",
+        "Learn how to design and establish a food forest for your farm."
+      ],
+      "registeredIsiZulu": [
+        "Yakha uhlelo lokudla oluphilayo olunezingqimba. Khulisa ukudla kusukela ku-canopy ende kuye ezitshalweni zezimpande. Sebenzisa indawo eya phezulu, ukuphila komhlabathi, umthunzi nomswakama ndawonye. Funda ukuklama nokusungula i-food forest yepulazi lakho."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 2,
+      "sourceEnglish": [
+        "A food forest grows useful plants at different heights.",
+        "Good design can combine harvests, shade and soil cover. Plants still compete for light, water and nutrients.",
+        "Plan the care you can provide and watch how the planting changes."
+      ],
+      "registeredIsiZulu": [
+        "I-food forest ikhula izitshalo eziwusizo ezindaweni eziphakeme ezahlukene. Umklamo omuhle ungahlanganisa isivuno, umthunzi nesembozo somhlabathi. Izitshalo zisancintisana ngokukhanya, amanzi nezakhamzimba. Hlela ukunakekela ongakwazi ukukwenza, bese ubheka ukuthi ukutshala kushintsha kanjani."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 3,
+      "sourceEnglish": [
+        "Name the seven commonly described food-forest layers.",
+        "Check plants against your site, local ecology and the approved project list.",
+        "Plan establishment and ongoing care without assuming a fixed date for harvest or canopy closure."
+      ],
+      "registeredIsiZulu": [
+        "Yisho izingxenye eziyisikhombisa ezivame ukuchazwa ze-food forest. Hlola ukuthi izitshalo ziyifanele yini indawo yakho, imvelo yangakini nohlu lwezitshalo olugunyazwe yiphrojekthi. Hlela ukunakekelwa ngesikhathi izitshalo zimila nangemva kwalokho, ungacabangi ukuthi kukhona usuku olumisiwe lokuvuna noma lokuvaleka kophahla lwezihlahla."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 4,
+      "sourceEnglish": [
+        "An indigenous forest fills the space from the highest branches to the roots.",
+        "Different plants use the light and moisture available at their level.",
+        "A food forest copies this pattern with productive species.",
+        "The result is not one crop in one row, but many useful layers growing together."
+      ],
+      "registeredIsiZulu": [
+        "Ihlathi lezitshalo zomdabu ligcwalisa indawo kusukela emagatsheni aphakeme kakhulu kuze kufike ezimpandeni. Izitshalo ezahlukene zisebenzisa ukukhanya nomswakama okutholakala ezingeni ezikhula kulo. I-food forest ilingisa le ndlela ngezitshalo ezikhiqizayo: izingqimba eziningi eziwusizo zikhula ndawonye esikhundleni sesitshalo esisodwa emugqeni owodwa."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 5,
+      "sourceEnglish": [
+        "Find seven planting layers.",
+        "Tall trees form the canopy.",
+        "Smaller trees grow below it.",
+        "Then look for woody shrubs.",
+        "Herbaceous plants have soft stems.",
+        "Ground cover spreads across the surface.",
+        "Root crops grow below the surface.",
+        "Climbers use suitable supports.",
+        "These are planning layers, not fixed height bands. Choose plants and spacing for your site."
+      ],
+      "registeredIsiZulu": [
+        "Isithombe esimile nokulandisa kuveza izingxenye eziyisikhombisa zokuhlela: Uphahla lwezihlahla ezinde, Izihlahla ezincane, Izihlahlana ezinamagatsha aqinile, Izitshalo ezineziqu ezithambile, Izitshalo ezimboza umhlabathi, Izitshalo zezimpande nezitshalo ezikhuphukayo. Lezi akuzona izilinganiso zokuphakama ezimisiwe; khetha izitshalo nezikhala ngokwendawo yakho."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 6,
+      "sourceEnglish": [
+        "Think of tall canopy, smaller trees, shrubs and herbaceous plants.",
+        "Ground cover protects the surface, root crops grow below it, and climbers use suitable supports.",
+        "The heights and spacing depend on the plants and site. These are planning layers, not fixed height bands."
+      ],
+      "registeredIsiZulu": [
+        "Cabanga ngophahla lwezihlahla ezinde, izihlahla ezincane, izihlahlana nezitshalo ezineziqu ezithambile. Izitshalo ezimboza umhlabathi zivikela ingaphezulu lawo, izitshalo zezimpande zikhula ngaphansi kwalo, kanti izitshalo ezikhuphukayo zidinga izisekelo ezifanele. Ukuphakama nezikhala kuncike ezitshalweni nasendaweni; lezi yizingxenye zokuhlela, azizona izilinganiso zokuphakama ezimisiwe."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 7,
+      "sourceEnglish": [
+        "The original Highveld example includes Wild Fig or pecan above lemon, naartjie and black mulberry.",
+        "It places Cape gooseberry and Wild Medlar with vegetables, wild garlic, sweet potato and granadilla.",
+        "Treat this as a layout example, not permission to plant every species. Check identity, frost tolerance, mature size and local restrictions first."
+      ],
+      "registeredIsiZulu": [
+        "Isibonelo sokuqala sase-Highveld sifaka i-Wild Fig noma i-pecan ngaphezu kukalamula, i-naartjie ne-black mulberry. Sihlanganisa i-Cape gooseberry ne-Wild Medlar nemifino, i-wild garlic, ubhatata ne-granadilla. Lesi yisibonelo sokuhlela kuphela; asiyona imvume yokutshala zonke izinhlobo zezitshalo ezisohlwini. Qinisekisa ukuthi isitshalo siyini, siyakwazi yini ukumelana nesithwathwa, sizoba sikhulu kangakanani nokuthi ayikho yini imingcele yendawo ngaphambi kokutshala."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 8,
+      "sourceEnglish": [
+        "Young plants need establishment care: moisture checks, weed control and protection from damage.",
+        "As plants grow, shade and leaf litter change conditions below them.",
+        "Check competition and access. Prune, thin or adjust lower planting when observations call for it; the system does not become care-free on a fixed birthday."
+      ],
+      "registeredIsiZulu": [
+        "Izitshalo ezisencane zidinga ukuhlolwa komswakama, ukulawulwa kokhula nokuvikelwa ekulimaleni. Njengoba zikhula, umthunzi namaqabunga awelayo kushintsha izimo ezingaphansi kwazo. Hlola ukuncintisana phakathi kwezitshalo nokufinyelela kuzo. Thena, nciphisa noma ulungise izitshalo ezingezansi lapho okubukayo kukukhombisa ukuthi kudingeka; ukunakekela akupheli ngosuku olumisiwe."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 9,
+      "sourceEnglish": [
+        "Check local rainfall, frost, heat, soil and water availability before choosing plants.",
+        "Mango can suffer frost damage. Quince needs suitable winter chilling for reliable cropping.",
+        "A regional label or a sheltered corner is not enough. Confirm each plant and variety with reliable local guidance."
+      ],
+      "registeredIsiZulu": [
+        "Ngaphambi kokukhetha izitshalo, hlola imvula yasendaweni, isithwathwa, ukushisa, umhlabathi namanzi atholakalayo. Umango ungonakaliswa yisithwathwa. I-quince idinga amakhaza asebusika afanele ukuze ithele ngokuthembekile. Igama lesifunda noma indawo evikelekile yodwa akwanele; qinisekisa isitshalo ngasinye nohlobo lwaso ngokweseluleko esithembekile sendawo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 10,
+      "sourceEnglish": [
+        "Climate decides which species belong.",
+        "On the Highveld, choose cold-tolerant trees and shrubs; on the KZN coast and Lowveld, choose warm-climate species.",
+        "Match every plant to your site."
+      ],
+      "registeredIsiZulu": [
+        "Isimo sezulu siyasiza ekunqumeni ukuthi yiziphi izitshalo ezingase ziyifanele indawo. E-Highveld, khetha izihlahla nezihlahlana ezimelana namakhaza; ogwini lwase-KZN nase-Lowveld khetha izitshalo ezithanda izindawo ezifudumele. Qondanisa isitshalo ngasinye nendawo yakho."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 11,
+      "sourceEnglish": [
+        "The original list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry.",
+        "This list is not a blanket recommendation. Check each plant against frost, soil, mature size and the approved local species list.",
+        "Keep existing legal and project restrictions in force. Do not plant from a picture alone."
+      ],
+      "registeredIsiZulu": [
+        "Izibonelo zokuqala zifaka i-pecan, i-walnut ne-indigenous fig; i-apple, i-pear, i-plum, i-black mulberry ne-loquat; i-rosemary, i-Wild Medlar, i-Cape gooseberry ne-Barbados cherry. Lezi akuzona izincomo ezisebenza kuzo zonke izindawo. Hlola isitshalo ngasinye ngokuphathelene nesithwathwa, umhlabathi, ubukhulu esizofinyelela kubo nohlu lwendawo olugunyaziwe. Qhubeka ulandela imingcele ekhona yezomthetho neyephrojekthi; ungatshali isitshalo ngokubuka isithombe kuphela."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 12,
+      "sourceEnglish": [
+        "The original warm-region examples include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga.",
+        "Marula, Mopane and baobab also appear in the Limpopo examples. Local suitability still needs checking.",
+        "Useful trees are not automatically edible. Confirm identity and safe use; a landscape photograph is not a food-identification guide."
+      ],
+      "registeredIsiZulu": [
+        "Izibonelo zokuqala zezindawo ezifudumele zihlanganisa i-mango, i-avocado, i-Natal Mahogany, i-banana, i-pawpaw, i-litchi, i-Wild Fig, i-Barbados cherry ne-Wild Dagga. I-Marula, i-Mopane ne-baobab nazo zikhona ezibonelweni zase-Limpopo. Hlola ukufaneleka kwendawo yangakini. Ukuba wusizo kwesihlahla akusho ukuthi singadliwa; qinisekisa ukuthi isitshalo siyini nokuthi siphephile yini ukusetshenziswa, ngoba isithombe sendawo asiwona umhlahlandlela wokuhlonza ukudla."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 13,
+      "sourceEnglish": [
+        "Locally appropriate indigenous plants can support habitat as part of the design.",
+        "Choose for your ecosystem and the useful role of each plant. There is no sourced percentage target in this lesson.",
+        "Protect existing natural vegetation. Do not turn healthy grassland into a food forest simply because trees are useful elsewhere."
+      ],
+      "registeredIsiZulu": [
+        "Izitshalo zomdabu eziyifanele indawo zingasiza indawo yokuhlala yezilwane nezinye izinto eziphilayo. Khetha izitshalo ngokwemvelo yakini nangomsebenzi wesitshalo ngasinye; lesi sifundo asibeki iphesenti elithile elisekelwe emthonjeni. Vikela izitshalo zemvelo esezikhona. Ungaguquli indawo enotshani bemvelo obunempilo ibe yi-food forest ngoba nje izihlahla ziwusizo kwezinye izindawo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 14,
+      "sourceEnglish": [
+        "Start by checking the site, water supply and care available. Protect exposed soil early.",
+        "Temporary support plants may provide shelter and useful cut material where appropriate.",
+        "Main trees and lower layers can be introduced as conditions allow. Ground cover need not wait until the end; avoid plants competing with young trees."
+      ],
+      "registeredIsiZulu": [
+        "Hlola indawo, amanzi nokunakekela okutholakalayo; vikela umhlabathi oveziwe kusenesikhathi. Izitshalo zesikhashana ezisiza ezinye zingase zinikeze indawo yokukhosela nezinto eziwusizo zokuzisika lapho kufanele khona. Tshala izihlahla eziyinhloko nezingqimba ezingezansi njengoba izimo zivuma. Izitshalo ezimboza umhlabathi zingatshalwa ngaphambi kokufika ekugcineni; gwema ukuncintisana nezihlahla ezisencane."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 15,
+      "sourceEnglish": [
+        "This picture shows a young food forest. Start with an area you can care for.",
+        "Protect exposed soil early. Here, loose mulch covers the soil.",
+        "Keep mulch away from the trunk. Notice the clear space at the tree's base.",
+        "Watch for competition. The farmer is removing grass near the young tree.",
+        "Before adding more plants, check moisture, shelter and the care you can provide. Let what you observe guide your next step."
+      ],
+      "registeredIsiZulu": [
+        "Isithombe sibonisa i-food forest esencane. Qala ngendawo okwazi ukuyinakekela. Vikela umhlabathi oveziwe nge-mulch exegayo. Shiya indawo engenalutho ezungeze isiqu sesihlahla. Bheka ukuncintisana; kulesi sithombe umlimi ususa utshani eduze kwesihlahla esincane. Ngaphambi kokufaka ezinye izitshalo, hlola umswakama, indawo yokukhosela nokunakekela okutholakalayo. Vumela okubukayo kuqondise isinyathelo esilandelayo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 16,
+      "sourceEnglish": [
+        "Begin with an area you can water and maintain. Check existing vegetation before clearing.",
+        "Where appropriate, plain cardboard under suitable mulch can suppress unwanted growth. Keep water able to enter the soil and leave trunks clear.",
+        "Plan spacing from mature plant size. Prepare nursery plants for the next suitable planting opportunity."
+      ],
+      "registeredIsiZulu": [
+        "Qala ngendawo ongakwazi ukuyinisela nokuyinakekela; hlola izitshalo ezikhona ngaphambi kokususa noma yini. Lapho kufanele khona, amakhadibhodi angenalutho ngaphansi kwe-mulch efanele angasiza ukunciphisa ukukhula kwezinto ongazifuni. Vumela amanzi angene emhlabathini futhi ushiye indawo engenalutho ezungeze iziqu. Hlela izikhala ngokobukhulu izitshalo ezizofinyelela kubo sezikhulile; lungiselela izitshalo zasenkulisa ithuba elilandelayo elifanele."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 17,
+      "sourceEnglish": [
+        "Watch how shade, roots and available water affect neighbouring plants.",
+        "Comfrey and wild garlic appear in the original underplanting example; check their local suitability before use.",
+        "Prune or thin support plants when needed, using methods suited to each species. Suitable clean cuttings can return as mulch. Do not wait for a fixed year if competition is already harming plants."
+      ],
+      "registeredIsiZulu": [
+        "Bheka ukuthi umthunzi, izimpande namanzi kuthinta kanjani izitshalo ezingomakhelwane. I-Comfrey ne-wild garlic kuvela esibonelweni sokuqala; hlola ukuthi kuyifanele yini indawo yakho. Thena noma unciphise izitshalo ezisiza ezinye uma kudingeka, usebenzise izindlela ezifanele uhlobo lwesitshalo. Izingcezu ezihlanzekile ezifanele zingasetshenziswa njenge-mulch. Ungalindi unyaka omisiwe uma ukuncintisana sekulimaza izitshalo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 18,
+      "sourceEnglish": [
+        "Choose a planting opportunity when soil moisture and expected weather support establishment.",
+        "Rain can help, but check the root zone and keep a backup watering plan. Avoid planting into waterlogged ground.",
+        "Check young plants after planting. Harvest timing and outside inputs depend on the species, site and care; there is no guaranteed fifth-year result."
+      ],
+      "registeredIsiZulu": [
+        "Khetha isikhathi sokutshala lapho umswakama womhlabathi nesimo sezulu esilindelekile kungasiza izitshalo zimile. Imvula ingasiza, kodwa hlola umswakama endaweni yezimpande futhi ugcine olunye uhlelo lokunisela. Gwema umhlabathi ogcwele amanzi. Hlola izitshalo ezisencane ngemva kokutshala. Isikhathi sokuvuna nezinto zangaphandle ezidingekayo kuncike ohlotsheni lwesitshalo, endaweni nasekunakekelweni; asikho isiqinisekiso somphumela ngonyaka wesihlanu."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 19,
+      "sourceEnglish": [
+        "Draw the layers for your own proposed planting. Mark access, water and existing natural vegetation.",
+        "Record local frost, rain, soil and available care.",
+        "For each plant from the approved list, record its intended role and the local advice still needed before planting."
+      ],
+      "registeredIsiZulu": [
+        "Dweba izendlalelo zokutshala ozihlelile. Maka izindlela zokungena, amanzi nezitshalo zemvelo ezikhona.",
+        "Bhala phansi isithwathwa sendawo, imvula, umhlabathi nokunakekela okutholakalayo.",
+        "Esitshalweni ngasinye esisohlwini olugunyaziwe, bhala umsebenzi osihlelele wona neseluleko sendawo esisadingeka ngaphambi kokutshala."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Food Forest",
+      "slide": 20,
+      "sourceEnglish": [
+        "Inspect a manageable area and choose one next step.",
+        "Protect exposed soil, check plant suitability, or prepare nursery plants.",
+        "Plant only when conditions and follow-up care are suitable. Return to the same spot to check survival, soil moisture and competition."
+      ],
+      "registeredIsiZulu": [
+        "Hlola indawo ongakwazi ukuyinakekela, bese ukhetha isinyathelo esisodwa esilandelayo.",
+        "Vikela umhlabathi oveziwe, hlola ukufaneleka kwesitshalo, noma lungiselela izithombo zasenkulisa.",
+        "Tshala kuphela uma izimo nokunakekela okulandelayo kufanelekile. Buyela endaweni efanayo uhlole ukuthi izitshalo zisaphila yini, umswakama womhlabathi nokuncintisana."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 1,
+      "sourceEnglish": [
+        "Choose plants that work together—and change the planting as it grows."
+      ],
+      "registeredIsiZulu": [
+        "Khetha izitshalo ezisebenzisana kahle—ulungise ukutshala njengoba zikhula."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 2,
+      "sourceEnglish": [
+        "A fruit tree needs light, water, soil nutrients and room. Support plants can supply food, leafy mulch, flowers and living cover.  Give each plant a useful job. Keep observing whether it helps the tree and the household. Which jobs does your planting need?"
+      ],
+      "registeredIsiZulu": [
+        "Umuthi wezithelo udinga ukukhanya, amanzi, izakhamzimba zomhlabathi nendawo. Izitshalo eziwusekelayo zinganika ukudla, amaqabunga okumboza umhlabathi, izimbali nezitshalo ezimboza umhlabathi.  Nikeza isitshalo ngasinye umsebenzi owusizo. Qhubeka ubheka ukuthi sisiza kanjani umuthi nabantu basekhaya. Yimiphi imisebenzi edingwa yile ndawo oyitshalayo?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 3,
+      "sourceEnglish": [
+        "Find out what is limiting growth before choosing a plant."
+      ],
+      "registeredIsiZulu": [
+        "Thola ukuthi yini evimbela ukukhula ngaphambi kokukhetha isitshalo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 4,
+      "sourceEnglish": [
+        "Check sunlight, drainage, soil condition and water availability. Nitrogen is only one possible limitation.  Compare the soil beneath mulch with exposed soil. Choose support plants that fit the actual conditions. What does this site need first?"
+      ],
+      "registeredIsiZulu": [
+        "Hlola ukukhanya kwelanga, ukuphuma kwamanzi emhlabathini, isimo somhlabathi nokutholakala kwamanzi. Ukushoda kwe-nitrogen kungenye nje yezinto ezingavimbela ukukhula.  Qhathanisa umhlabathi ongaphansi kwe-mulch nongamboziwe. Khetha izitshalo ezisekelayo ezifanele izimo ezikhona. Yini edingwa yile ndawo kuqala?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 5,
+      "sourceEnglish": [
+        "A useful guild produces benefits you can observe."
+      ],
+      "registeredIsiZulu": [
+        "I-guild ewusizo iletha izinzuzo ongazibona."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 6,
+      "sourceEnglish": [
+        "Choose members for food, nitrogen fixation, mulch, flowers or ground cover. One plant may do several jobs.  By the end, plan a guild, explain how residues feed soil, and decide which support plants to keep, cut or remove. Which job is still missing?"
+      ],
+      "registeredIsiZulu": [
+        "Khetha izitshalo zokudla, zokubopha i-nitrogen, ze-mulch, zezimbali noma zokumboza umhlabathi. Isitshalo esisodwa singenza imisebenzi eminingana.  Ekupheleni kwesifundo, hlela i-guild, uchaze ukuthi izinsalela zondla kanjani umhlabathi, unqume nokuthi yiziphi izitshalo ezisekelayo ozozigcina, ozozisika noma ozozisusa. Yimuphi umsebenzi osashodayo?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 7,
+      "sourceEnglish": [
+        "Legumes work with rhizobia in nodules on their roots."
+      ],
+      "registeredIsiZulu": [
+        "Ama-legumes asebenzisana nama-rhizobia kuma-nodule asezimpandeni zawo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 8,
+      "sourceEnglish": [
+        "These bacteria convert nitrogen from the air into forms the legume can use.  Find nodules on a spare legume plant. Nodulation and growth depend on the plant, suitable bacteria and growing conditions. Can you find the nodules?"
+      ],
+      "registeredIsiZulu": [
+        "La mabhaktheriya aguqula i-nitrogen esemoyeni ibe yizinhlobo i-legume engazisebenzisa.  Bheka ama-nodule esitshalweni se-legume esingasetshenziswa ukuhlola. Ukwakheka kwama-nodule nokukhula kuncike esitshalweni, emabhaktheriyeni afanele nasezimweni zokukhula. Uyawabona ama-nodule?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 9,
+      "sourceEnglish": [
+        "Nitrogen in plant material becomes useful as that material breaks down."
+      ],
+      "registeredIsiZulu": [
+        "I-nitrogen esezingxenyeni zezitshalo iyatholakala njengoba lezo zingxenye zibola."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 10,
+      "sourceEnglish": [
+        "Return suitable leafy prunings, fallen leaves and crop residues as mulch. Soil organisms release nutrients during decomposition.  This takes time. A living legume is not an instant fertiliser pipe into the fruit tree. Which residues can you return?"
+      ],
+      "registeredIsiZulu": [
+        "Buyisela amagatsha athenwe anamaqabunga, amaqabunga awile nezinsalela zezitshalo ezifanele emhlabathini njenge-mulch. Izidalwa zomhlabathi zikhulula izakhamzimba ngesikhathi sokubola.  Lokhu kuthatha isikhathi. I-legume ephilayo ayilona ipayipi eliyisa umanyolo ngokushesha emuthini wezithelo. Yiziphi izinsalela ongazibuyisela emhlabathini?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 11,
+      "sourceEnglish": [
+        "Sesbania sesban can supply fast growth and leafy mulch."
+      ],
+      "registeredIsiZulu": [
+        "I-Sesbania sesban ingakhula ngokushesha inike namaqabunga e-mulch."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 12,
+      "sourceEnglish": [
+        "It is indigenous to KwaZulu-Natal. In suitable warm conditions, manage this short-lived shrub or small tree as a support plant.  Allow room for its growth. Prune for mulch and reassess it when shade or water competition increases. Where could you manage its growth?"
+      ],
+      "registeredIsiZulu": [
+        "Idabuka kwaZulu-Natali. Ezimweni ezifudumele ezifanele, phatha lesi sihlahlana noma umuthi omncane ophila isikhathi esifushane njengesitshalo esisekelayo.  Shiya indawo yokukhula kwayo. Yithene ukuze uthole i-mulch, uphinde uyihlole uma umthunzi noma ukuncintisana ngamanzi kukhula. Ungakwazi ukuphatha ukukhula kwayo kuphi?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 13,
+      "sourceEnglish": [
+        "Sesbania sesban and Sesbania punicea are different species."
+      ],
+      "registeredIsiZulu": [
+        "I-Sesbania sesban ne-Sesbania punicea yizinhlobo ezahlukene."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 14,
+      "sourceEnglish": [
+        "Sesbania punicea is the invasive red sesbania. Its pods have four lengthwise wings. Confirm identity using reliable botanical guidance.  Check the full name before planting. Respect the agreed project species list, including any restriction on Sesbania sesban. Can the supplier verify the species?"
+      ],
+      "registeredIsiZulu": [
+        "I-Sesbania punicea yisitshalo esihlaselayo esibizwa nge-red sesbania. Izithelo zayo ezomile zinamaphiko amane ahamba ngobude. Qinisekisa uhlobo ngomhlahlandlela othembekile.  Hlola igama eligcwele. Landela uhlu lwezitshalo oluvunyelwe yiphrojekthi, kuhlanganise nemikhawulo ye-Sesbania sesban. Umthengisi angaluqinisekisa yini uhlobo lwesitshalo?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 15,
+      "sourceEnglish": [
+        "Pigeon pea—Cajanus cajan—can provide peas, leafy material and nitrogen fixation."
+      ],
+      "registeredIsiZulu": [
+        "I-pigeon pea (Cajanus cajan) inganika uphizi, amaqabunga futhi ibophe i-nitrogen."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 16,
+      "sourceEnglish": [
+        "Use a sunny, freely draining position. It is a short-lived support shrub; frost and waterlogging can limit it.  Decide whether each plant mainly supplies peas or leafy material. Frequent severe cutting can damage it and reduce the food harvest. Are you growing this plant for peas or mulch?"
+      ],
+      "registeredIsiZulu": [
+        "Yitshale endaweni enelanga nalapho amanzi ephuma kahle emhlabathini. Iyisihlahlana esisekelayo esiphila isikhathi esifushane; isithwathwa namanzi ame emhlabathini kungayiphazamisa.  Nquma ukuthi isitshalo ngasinye sisetshenziselwa kakhulu uphizi noma amaqabunga. Ukusika kakhulu nangokuvamile kungasilimaza kunciphise nesivuno sokudla. Lesi sitshalo usitshalele uphizi noma i-mulch?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 17,
+      "sourceEnglish": [
+        "A useful support tree in one place may be too large or unsuitable in another."
+      ],
+      "registeredIsiZulu": [
+        "Umuthi osekela kahle endaweni ethile ungaba mkhulu kakhulu noma ungafaneleki kwenye."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 18,
+      "sourceEnglish": [
+        "Compare mature crown, roots, shade, rainfall and temperature. Check locally appropriate species and planting rules.  Put large support trees where they have space. For a small young guild, a manageable shrub may be easier to maintain. How large will this plant become?"
+      ],
+      "registeredIsiZulu": [
+        "Qhathanisa ukusabalala kwamagatsha uma umuthi usukhulile, izimpande, umthunzi, imvula nezinga lokushisa. Hlola izinhlobo ezifanele indawo nemithetho yokutshala.  Beka imithi emikhulu esekelayo lapho inendawo eyanele khona. Ku-guild encane esaqala, isihlahlana esilawulekayo singaba lula ukusinakekela. Lesi sitshalo sizoba sikhulu kangakanani?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 19,
+      "sourceEnglish": [
+        "Sunn hemp can cover a suitable warm-season gap before the next crop."
+      ],
+      "registeredIsiZulu": [
+        "I-sunn hemp ingamboza indawo engenazitshalo ngesikhathi esifudumele, ngaphambi kwesitshalo esilandelayo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 20,
+      "sourceEnglish": [
+        "Grow it where its season and space fit the plan. Its contribution depends on growth, nodulation and the material returned.  After cutting, allow for decomposition. An annual cover crop plays a different role from a longer-lived support shrub. When will this space be needed again?"
+      ],
+      "registeredIsiZulu": [
+        "Yitshale lapho isizini yayo nendawo ekuyo kuhambisana nohlelo. Usizo lwayo luncike ekukhuleni, ekwakhekeni kwama-nodule nasezinsaleleni ezibuyiselwa emhlabathini.  Ngemva kokusika, nikeza izinsalela isikhathi sokubola. Isitshalo sonyaka esimboza umhlabathi senza umsebenzi ohlukile kowesihlahlana esisekelayo esiphila isikhathi eside. Le ndawo izodingeka nini futhi?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 21,
+      "sourceEnglish": [
+        "Keep the young fruit tree in light and retain access for care."
+      ],
+      "registeredIsiZulu": [
+        "Gcina umuthi omncane wezithelo uthola ukukhanya, ushiye nendlela yokuwunakekela."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 22,
+      "sourceEnglish": [
+        "Keep an open establishment basin and access to the fruit tree. Place temporary support plants where their size and water use can be managed.  Put leafy cuttings where mulch is needed. Neighbouring fruit trees can share support strips between them. Can you reach both plants as they grow?"
+      ],
+      "registeredIsiZulu": [
+        "Shiya indawo ezungeze isiqu ingenazitshalo, kanye nendlela yokunakekela umuthi. Beka izitshalo ezisekelayo lapho ukukhula nokusebenzisa kwazo amanzi kungalawuleka khona.  Beka amaqabunga asikiwe lapho kudingeka khona i-mulch. Izihlahla zezithelo zingasebenzisa izitshalo ezisekelayo eziphakathi kwazo. Uzokwazi ukufinyelela kuzo zombili izitshalo njengoba zikhula?"
+      ],
+      "disposition": "uncertain",
+      "issues": [
+        {
+          "issue": "“Keep an open establishment basin” is rendered as leaving the area around the trunk free of plants. This may preserve a clear trunk zone, but it may not preserve the basin as a water-management feature/shape.",
+          "recommendation": "Retain “open establishment basin” in English, or use a checked term for the basin feature; keep the access clause localized."
+        }
+      ],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 23,
+      "sourceEnglish": [
+        "Combine seasonal cover, support shrubs and temporary small trees."
+      ],
+      "registeredIsiZulu": [
+        "Hlanganisa izitshalo ezimbozayo, izihlahlana nemithi emincane yesikhashana."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 24,
+      "sourceEnglish": [
+        "Cowpea covers sunny gaps. Pigeon pea provides food and leafy material. Managed Sesbania sesban can supply taller temporary support.  Add suitable flowering and mulch plants. Keep the mango trunk clear and manage light, water and access. Which layers fit your site?"
+      ],
+      "registeredIsiZulu": [
+        "I-cowpea imboza izikhala ezinelanga. I-pigeon pea inikeza ukudla namaqabunga. I-Sesbania sesban elawulwayo inikeza ukusekela okude kwesikhashana.  Faka izitshalo zezimbali ne-mulch. Gcina isiqu sikamango sivulekile; lawula umthunzi, amanzi nendlela yokungena. Yiziphi izingqimba ezifanele indawo yakho?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 25,
+      "sourceEnglish": [
+        "Plan abundant support where the site and your care can sustain it."
+      ],
+      "registeredIsiZulu": [
+        "Tshala eziningi lapho indawo nokunakekela kwakho kungazisekela khona."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 26,
+      "sourceEnglish": [
+        "Count woody supports across the spaces between fruit trees. Sow suitable ground cover by area.  There is no universal number per fruit tree. Adjust density to water, soil, plant size and your ability to prune and thin. How much support can you maintain?"
+      ],
+      "registeredIsiZulu": [
+        "Bala izihlahlana nemithi ezisekelayo phakathi kwezihlahla zezithelo. Hlwayela izitshalo ezimbozayo ngokwendawo.  Alikho inani elilodwa elifanele zonke izihlahla. Bheka amanzi, umhlabathi, ubukhulu bezitshalo namandla akho okuthena nokunciphisa. Zingaki ongakwazi ukuzinakekela?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 27,
+      "sourceEnglish": [
+        "Watch the branch fall onto the cut leaves."
+      ],
+      "registeredIsiZulu": [
+        "Buka igatsha liwela phezu kwamaqabunga asikiwe."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 28,
+      "sourceEnglish": [
+        "Prune a support tree and return suitable leafy cuttings to the soil. The clip shows a branch cut: the support tree remains standing. Leave enough healthy foliage for the plant to recover.  Match cutting to the species. Avoid frequent severe cuts on pigeon pea, especially when growing it for peas. Which plant needs a cut—and how much?"
+      ],
+      "registeredIsiZulu": [
+        "Buyisela amagatsha anamaqabunga afanele emhlabathini njenge-mulch. Kule vidiyo kusikwa igatsha; umuthi osekelayo uyasala umile. Shiya amaqabunga anempilo anele ukuze ululame.  Thena ngokohlobo lwesitshalo. Gwema ukuthena kakhulu i-pigeon pea njalo, ikakhulukazi uma ufuna ukuvuna izinhlamvu. Yisiphi isitshalo esidinga ukuthenwa?"
+      ],
+      "disposition": "repair",
+      "issues": [
+        {
+          "issue": "The closing prompt asks “Which plant needs a cut—and how much?” The ZU asks only which plant needs pruning and omits the amount/intensity decision.",
+          "recommendation": "Restore “and how much?” in English or add a checked ZU equivalent so the prompt retains the pruning-extent decision."
+        }
+      ],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 29,
+      "sourceEnglish": [
+        "Spread suitable cut material over the soil, with the trunk and root collar clear."
+      ],
+      "registeredIsiZulu": [
+        "Sabalalisa izinsalela ezifanele ezisikiwe phezu komhlabathi, ushiye isiqu nendawo lapho sihlangana khona nezimpande kungamboziwe."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 30,
+      "sourceEnglish": [
+        "Mulch protects the surface, helps conserve moisture and returns organic material.  Leave access for watering and inspection. Cut material into manageable pieces and keep observing moisture and decomposition. Is the root collar still clear?"
+      ],
+      "registeredIsiZulu": [
+        "I-mulch ivikela ubuso bomhlabathi, isize ukugcina umswakama futhi ibuyisele izinsalela zezinto eziphilayo emhlabathini.  Shiya indawo yokunisela nokuhlola. Sika izinsalela zibe izingcezu ezilawulekayo, uqhubeke ubheka umswakama nokubola. Indawo lapho isiqu sihlangana nezimpande isavulekile?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 31,
+      "sourceEnglish": [
+        "Bocking 14 comfrey can supply cut leaves for mulch."
+      ],
+      "registeredIsiZulu": [
+        "I-Bocking 14 comfrey inganika amaqabunga asikwayo asetshenziswe njenge-mulch."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 32,
+      "sourceEnglish": [
+        "Obtain the correct cultivar. Bocking 14 does not spread by viable seed, but root pieces can regrow.  Place it where it has room and sufficient moisture. Cut leaves as it recovers; do not crowd the young fruit tree. Is this a good permanent place for the clump?"
+      ],
+      "registeredIsiZulu": [
+        "Thola uhlobo olulinywayo oluqondile. I-Bocking 14 ayisakazeki ngembewu ekwazi ukuhluma, kodwa izingcezu zezimpande zingaphinde zikhule.  Yibeke lapho inendawo nomswakama owanele khona. Sika amaqabunga njengoba isibuyela esimweni sayo; ungaminyanisi umuthi omncane wezithelo. Le yindawo enhle yini yokuthi lesi sixha sihlale isikhathi eside?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 33,
+      "sourceEnglish": [
+        "Flowers can provide resources for useful insects."
+      ],
+      "registeredIsiZulu": [
+        "Izimbali zinganika izinambuzane eziwusizo izinto ezizidingayo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 34,
+      "sourceEnglish": [
+        "Many ladybirds eat aphids; some parasitoid wasps attack crop pests. Flowering members such as African basil can add resources.  Watch which insects visit and whether damage changes. A flowering plant does not guarantee pest control. What is the insect actually doing?"
+      ],
+      "registeredIsiZulu": [
+        "Ama-ladybird amaningi adla ama-aphid; amanye ama-parasitoid wasp ahlasela izinambuzane ezilimaza izitshalo. Izitshalo eziqhakazayo njenge-African basil zinganika lezi zinambuzane izinto ezizidingayo.  Bheka ukuthi yiziphi izinambuzane ezivakashelayo nokuthi umonakalo uyashintsha yini. Isitshalo esiqhakazayo asiqinisekisi ukulawula izinambuzane ezilimazayo. Inambuzane yenzani ngempela?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 35,
+      "sourceEnglish": [
+        "Wild garlic can be a flowering member where the site suits it."
+      ],
+      "registeredIsiZulu": [
+        "I-wild garlic ingaba isitshalo esiqhakazayo ku-guild lapho indawo iyifanele."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 36,
+      "sourceEnglish": [
+        "Tulbaghia violacea has narrow leaves and lilac flowers. Place a clump where it has light and room to grow.  Observe visiting insects. Do not promise that a ring of wild garlic will repel pests or cure an outbreak. Where can flowers grow without crowding?"
+      ],
+      "registeredIsiZulu": [
+        "I-Tulbaghia violacea inamaqabunga amancane ngobubanzi nezimbali ezinsomi ngokukhanyayo. Beka isixha lapho sithola ukukhanya nendawo yokukhula.  Bheka izinambuzane ezivakashelayo. Ungathembisi ukuthi indilinga ye-wild garlic izoxosha izinambuzane ezilimazayo noma iqede ukuhlasela kwazo. Izimbali zingakhula kuphi ngaphandle kokuminyanisa ezinye izitshalo?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 37,
+      "sourceEnglish": [
+        "Choose useful partners while protecting the mango's growing space."
+      ],
+      "registeredIsiZulu": [
+        "Khetha izitshalo eziwusizo, uvikele indawo yokukhula kukamango."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 38,
+      "sourceEnglish": [
+        "Combine the support functions your site needs: nitrogen fixation, food, mulch, flowers and ground cover. Some plants serve several functions.  Keep the trunk area and path open. Reassess each member as the mango and its neighbours grow. Does each member have space and a job?"
+      ],
+      "registeredIsiZulu": [
+        "Hlanganisa imisebenzi edingekayo: ukufaka i-nitrogen, ukudla, i-mulch, izimbali nokumboza umhlabathi. Isitshalo esisodwa singaba nemisebenzi eminingi.  Gcina indawo yesiqu nendlela kuvulekile. Hlola ilungu ngalinye njengoba umango nezinye izitshalo zikhula. Isitshalo ngasinye sinendawo nomsebenzi?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 39,
+      "sourceEnglish": [
+        "Sweet potato can cover ground and provide food in a suitable sunny space."
+      ],
+      "registeredIsiZulu": [
+        "Ubhatata ungamboza umhlabathi unike nokudla endaweni efanele enelanga."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 40,
+      "sourceEnglish": [
+        "Keep its vines away from the young fruit tree and retain a route for care. Its roots also use water and nutrients.  Where resources are tight, compare living cover with an ordinary mulch basin. Is this cover helping the tree establish?"
+      ],
+      "registeredIsiZulu": [
+        "Gcina iziqu ezinabayo zobhatata kude nomuthi omncane wezithelo, ushiye nendlela yokuwunakekela. Izimpande zawo nazo zisebenzisa amanzi nezakhamzimba.  Lapho lezi zidingo zinganele, qhathanisa izitshalo eziphilayo ezimboza umhlabathi nesitsha sokunisela esimbozwe nge-mulch evamile. Lokhu okumbozayo kuyawusiza umuthi ukuthi umile kahle?"
+      ],
+      "disposition": "uncertain",
+      "issues": [
+        {
+          "issue": "“Ordinary mulch basin” is rendered as a watering container/basin covered with ordinary mulch. This could be understood as a container rather than a basin formed/maintained around a plant, changing the compared practice.",
+          "recommendation": "Retain “ordinary mulch basin” in English unless the local term is checked; preserve the comparison with living cover and the water/nutrient competition clause."
+        }
+      ],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 41,
+      "sourceEnglish": [
+        "Start while the young fruit tree and its support plants have enough light and water."
+      ],
+      "registeredIsiZulu": [
+        "Qala ngesikhathi lapho kunokukhanya namanzi okwanele umuthi omncane wezithelo nezitshalo eziwusekelayo."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 42,
+      "sourceEnglish": [
+        "Plant into a suitable season, mulch and maintain establishment water. Keep the access gap open.  Start with the number of support plants you can care for. Observe survival and growth before adding more. Can you care for every plant through establishment?"
+      ],
+      "registeredIsiZulu": [
+        "Tshala ngesizini efanele, faka i-mulch futhi unike amanzi adingekayo ngesikhathi izitshalo ziqala ukumila. Gcina indlela yokungena ivulekile.  Qala ngenani lezitshalo ezisekelayo ongakwazi ukuzinakekela. Bheka ukuthi ziyasinda futhi zikhula kanjani ngaphambi kokwengeza ezinye. Ungakwazi ukunakekela zonke izitshalo zize zimile kahle?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 43,
+      "sourceEnglish": [
+        "When pruning is no longer enough, reduce selected support plants. Cut down selected competing supports to open space. Suitable cut material can stay as mulch: this is thinning through chop-and-drop.  Manage regrowth to keep the opening. Check light, soil moisture and growth; thinning does not instantly stop root competition. Which support plants should now give way?"
+      ],
+      "registeredIsiZulu": [
+        "Uma ukuthena kungasanele, nciphisa izitshalo ezisekelayo ezikhethiwe. Sika ezinye ezincintisanayo phansi ukuze kuvuleke indawo. Izinsalela ezifanele zingasala njenge-mulch.  Lawula amahlumela amasha. Bheka ukukhanya, umswakama nokukhula. Ukusika akukuqedi ngokushesha ukuncintisana kwezimpande. Yiziphi ezisekelayo okufanele zisuswe manje?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 44,
+      "sourceEnglish": [
+        "As shade increases, renew sun-loving support plants in open edges and younger plantings."
+      ],
+      "registeredIsiZulu": [
+        "Njengoba umthunzi wanda, tshala kabusha izitshalo ezisekelayo ezithanda ilanga emaphethelweni avulekile nasezindaweni ezinemithi emincane."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 45,
+      "sourceEnglish": [
+        "Carry useful prunings back to established trees. Keep nearby plants only where they still perform well.  Mature fruit trees still need nutrients. Monitor growth, harvest and soil conditions; support plants do not remove that need. Where is the next useful sunny space?"
+      ],
+      "registeredIsiZulu": [
+        "Thwala amagatsha athenwe awusizo uwabuyisele emithini esikhulile. Gcina izitshalo eziseduze kuphela lapho zisaqhubeka zenza kahle.  Imithi yezithelo esikhulile isazidinga izakhamzimba. Bheka ukukhula, isivuno nesimo somhlabathi; izitshalo ezisekelayo azisiqedi leso sidingo. Ikuphi enye indawo enelanga engasetshenziswa?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 46,
+      "sourceEnglish": [
+        "Keep a short record of how the guild performs."
+      ],
+      "registeredIsiZulu": [
+        "Gcina umbhalo omfushane wokuthi i-guild isebenza kanjani."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 47,
+      "sourceEnglish": [
+        "Check fruit-tree growth, shade, soil moisture, useful harvests and pest damage. Note what was cut, returned or removed.  Use these observations to change the layout and care. A plant earns its place through what it does here. What evidence would make you change the guild?"
+      ],
+      "registeredIsiZulu": [
+        "Hlola ukukhula komuthi wezithelo, umthunzi, umswakama womhlabathi, izivuno eziwusizo nomonakalo wezinambuzane. Bhala ukuthi yini esikiwe, ebuyiselwe emhlabathini noma esusiwe.  Sebenzisa lokho okubonile ukulungisa ukuhlelwa kwendawo nokunakekela. Isitshalo sifanele indawo yaso ngalokho esikwenzayo lapha. Yibuphi ubufakazi obungakwenza ushintshe i-guild?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 48,
+      "sourceEnglish": [
+        "Choose one fruit tree and mark a layout you can manage."
+      ],
+      "registeredIsiZulu": [
+        "Khetha umuthi owodwa wezithelo, umake ukuhlelwa kwendawo ongakwazi ukukuphatha."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 49,
+      "sourceEnglish": [
+        "Record the tree, site conditions and missing jobs. Name the support species fully, mark the starting number and leave access.  Write down what will trigger pruning or thinning. Agree the species list with the project team where required. Can someone else explain your plan back to you?"
+      ],
+      "registeredIsiZulu": [
+        "Bhala umuthi, izimo zendawo nemisebenzi eshodayo. Bhala amagama agcwele ezinhlobo ezisekelayo, umake inani lokuqala, ushiye nendlela yokufinyelela.  Bhala ukuthi yiziphi izimpawu ezizokwenza uthene noma unciphise izitshalo. Vumelanani nohlu lwezitshalo nethimba lephrojekthi lapho kudingeka khona. Omunye umuntu angakwazi ukukuchazela uhlelo lwakho ngendlela ayiluqonda ngayo?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 50,
+      "sourceEnglish": [
+        "Start one suitable guild and care for it through its first stage."
+      ],
+      "registeredIsiZulu": [
+        "Qala i-guild eyodwa efanele, uyinakekele esigabeni sayo sokuqala."
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    },
+    {
+      "module": "Plant Guilds",
+      "slide": 51,
+      "sourceEnglish": [
+        "Use the right species, a manageable number of plants and room to grow. Return useful biomass and protect the fruit tree.  Review the planting as crowns expand. Keep, cut, replace or remove each support plant when its role changes. What will you do first—and when will you review it?"
+      ],
+      "registeredIsiZulu": [
+        "Sebenzisa izinhlobo ezifanele, inani lezitshalo olilawulekayo nendawo yokukhula. Buyisela izinsalela zezitshalo eziwusizo, uvikele umuthi wezithelo.  Buyekeza okutshaliwe njengoba amagatsha esabalala. Gcina, sika, shintsha noma ususe isitshalo ngasinye esisekelayo lapho umsebenzi waso ushintsha. Uzokwenzani kuqala—futhi uzokubuyekeza nini?"
+      ],
+      "disposition": "accepted",
+      "issues": [],
+      "reviewScope": "bounded semantic comparison of this registered narration block; not fluent-speaker approval"
+    }
+  ]
+}

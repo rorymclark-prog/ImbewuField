@@ -1,0 +1,395 @@
+{
+  "title": "Vegetables L3 repaired candidate final independent check",
+  "date": "2026-10-03",
+  "inputPacket": "/tmp/imbewu-regional-staples-l3-next-root-repaired-candidates-20261003.json",
+  "comparisonPacket": "/tmp/imbewu-regional-staples-l3-next-candidates-20261003.json",
+  "sourceRevision": "0c214618ef8aa6b2ed5dfada8eb67ef18e1542ad",
+  "authority": "Canonical source module plus ST/VE/TS draft registries and localization resolver at stated revision; source/current/binding fields compared against original candidate packet.",
+  "sourceFileProof": {
+    "lib/course-modules.ts": {
+      "revision": "ca71c2db3416442f9c1d76ce70e5cf9ebaad7c1e",
+      "blobSha1": "62bbbce287d9a0e07e19709f6ac98e49797e6f0d",
+      "bytes": 113494
+    },
+    "lib/course-translation-drafts-st-vegetables-staples.ts": {
+      "revision": "ca71c2db3416442f9c1d76ce70e5cf9ebaad7c1e",
+      "blobSha1": "466119c158c112c93b9b8db58d0c9be849b2077a",
+      "bytes": 39329
+    },
+    "lib/course-translation-drafts-ve-vegetables-staples.ts": {
+      "revision": "ca71c2db3416442f9c1d76ce70e5cf9ebaad7c1e",
+      "blobSha1": "e20215334dc37ab33a17f0455b34bc15332d09b6",
+      "bytes": 29732
+    },
+    "lib/course-translation-drafts-ts-vegetables-staples.ts": {
+      "revision": "ca71c2db3416442f9c1d76ce70e5cf9ebaad7c1e",
+      "blobSha1": "f44e5f4f4357a154202b1ed6a5ac7ff960bb8900",
+      "bytes": 23703
+    },
+    "lib/course-localization.ts": {
+      "revision": "ca71c2db3416442f9c1d76ce70e5cf9ebaad7c1e",
+      "blobSha1": "f320d22c25e1462f78d38f95ed74e640b80bf70f",
+      "bytes": 18399
+    }
+  },
+  "scope": {
+    "expectedFields": 16,
+    "checkedFields": 16,
+    "unchangedCandidates": 9,
+    "repairedCandidates": 7,
+    "allCandidatesContainTargetLanguageFraming": true,
+    "repositoryWrites": false
+  },
+  "overall": "All seven repaired entries pass the requested content and binding checks. The other nine candidate strings are byte-for-byte unchanged from the original packet. All 16 source/current pairs, language, lesson id, paragraph index, paragraph count, and order flags match. No candidate is wholly English. Two rootRepairs metadata strings use curly apostrophes where candidate fields use straight apostrophes; they otherwise match exactly. Candidates remain unreviewed machine drafts, without fluency or local approval.",
+  "repairMetadataChecks": [
+    {
+      "language": "st",
+      "fieldPath": "body paragraph 5",
+      "exactMatch": false,
+      "apostropheNormalizedMatch": true
+    },
+    {
+      "language": "st",
+      "fieldPath": "body paragraph 9",
+      "exactMatch": true,
+      "apostropheNormalizedMatch": true
+    },
+    {
+      "language": "st",
+      "fieldPath": "body paragraph 10",
+      "exactMatch": true,
+      "apostropheNormalizedMatch": true
+    },
+    {
+      "language": "ve",
+      "fieldPath": "body paragraph 9",
+      "exactMatch": true,
+      "apostropheNormalizedMatch": true
+    },
+    {
+      "language": "ts",
+      "fieldPath": "body paragraph 5",
+      "exactMatch": false,
+      "apostropheNormalizedMatch": true
+    },
+    {
+      "language": "ts",
+      "fieldPath": "body paragraph 9",
+      "exactMatch": true,
+      "apostropheNormalizedMatch": true
+    },
+    {
+      "language": "ts",
+      "fieldPath": "body paragraph 10",
+      "exactMatch": true,
+      "apostropheNormalizedMatch": true
+    }
+  ],
+  "entries": [
+    {
+      "entryIndex": 0,
+      "language": "st",
+      "fieldPath": "body paragraph 4",
+      "paragraphIndexZeroBased": 3,
+      "paragraphCount": 16,
+      "sourceEnglish": "Grow at least two. Not one.",
+      "currentLearnerText": "Grow at least two. Not one.",
+      "candidateText": "Lema bonyane tse pedi. E seng se le seng.",
+      "changedFromOriginalPacket": false,
+      "finding": "Verified candidate binding and content composition.",
+      "checks": {
+        "exact_source_current": true,
+        "lesson_and_paragraph_binding": true,
+        "candidate_contains_target_language_framing": true
+      },
+      "result": "pass"
+    },
+    {
+      "entryIndex": 1,
+      "language": "st",
+      "fieldPath": "body paragraph 5",
+      "paragraphIndexZeroBased": 4,
+      "paragraphCount": 16,
+      "sourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentLearnerText": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "candidateText": "Ke staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "changedFromOriginalPacket": true,
+      "finding": "Question remains in target-language framing; the source counterfactual failure/companion tail is exact English.",
+      "checks": {
+        "exact_source_current": true,
+        "lesson_and_paragraph_binding": true,
+        "candidate_contains_target_language_framing": true,
+        "counterfactual_companion_tail_exact": true
+      },
+      "result": "pass"
+    },
+    {
+      "entryIndex": 2,
+      "language": "st",
+      "fieldPath": "body paragraph 7",
+      "paragraphIndexZeroBased": 6,
+      "paragraphCount": 16,
+      "sourceEnglish": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "currentLearnerText": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "candidateText": "Maize e fana ka calories, ’me e ka bolokoa e omme. Open-pollinated maize e boetse e u lumella ho boloka peo ea hao, haeba u laola isolation le selection.",
+      "changedFromOriginalPacket": false,
+      "finding": "Verified candidate binding and content composition.",
+      "checks": {
+        "exact_source_current": true,
+        "lesson_and_paragraph_binding": true,
+        "candidate_contains_target_language_framing": true
+      },
+      "result": "pass"
+    },
+    {
+      "entryIndex": 3,
+      "language": "st",
+      "fieldPath": "body paragraph 8",
+      "paragraphIndexZeroBased": 7,
+      "paragraphCount": 16,
+      "sourceEnglish": "Beans and cowpeas give a storable protein harvest.",
+      "currentLearnerText": "Beans and cowpeas give a storable protein harvest.",
+      "candidateText": "Beans le cowpeas li fana ka protein harvest e ka bolokoang.",
+      "changedFromOriginalPacket": false,
+      "finding": "Verified candidate binding and content composition.",
+      "checks": {
+        "exact_source_current": true,
+        "lesson_and_paragraph_binding": true,
+        "candidate_contains_target_language_framing": true
+      },
+      "result": "pass"
+    },
+    {
+      "entryIndex": 4,
+      "language": "st",
+      "fieldPath": "body paragraph 9",
+      "paragraphIndexZeroBased": 8,
+      "paragraphCount": 16,
+      "sourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "currentLearnerText": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "candidateText": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too.",
+      "changedFromOriginalPacket": true,
+      "finding": "Exact source clause restores the young-leaves claim after localized agronomic clauses.",
+      "checks": {
+        "exact_source_current": true,
+        "lesson_and_paragraph_binding": true,
+        "candidate_contains_target_language_framing": true,
+        "young_leaves_clause_exact": true
+      },
+      "result": "pass"
+    },
+    {
+      "entryIndex": 5,
+      "language": "st",
+      "fieldPath": "body paragraph 10",
+      "paragraphIndexZeroBased": 9,
+      "paragraphCount": 16,
+      "sourceEnglish": "Amadumbe handles wetter ground, where other staples struggle.",
+      "currentLearnerText": "Amadumbe handles wetter ground, where other staples struggle.",
+      "candidateText": "Amadumbe e khona ho mamella wetter ground, moo lijalo tse ling tsa staple li thatafalloang teng.",
+      "changedFromOriginalPacket": true,
+      "finding": "Wetter-ground comparison is explicitly retained; tolerating and other-staples framing remain target-language text.",
+      "checks": {
+        "exact_source_current": true,
+        "lesson_and_paragraph_binding": true,
+        "candidate_contains_target_language_framing": true,
+        "wetter_ground_anchor_and_target_framing": true
+      },
+      "result": "pass"
+    },
+    {
+      "entryIndex": 6,
+      "language": "ve",
+      "fieldPath": "body paragraph 7",
+      "paragraphIndexZeroBased": 6,
+      "paragraphCount": 16,
+      "sourceEnglish": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "currentLearnerText": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "candidateText": "Maize i ṋea calories nahone i a vhulungea yo oma. Open-pollinated maize i dovha ya ni tendela ni vhulunga mbeu yaṋu, arali ni tshi langula isolation na selection.",
+      "changedFromOriginalPacket": false,
+      "finding": "Verified candidate binding and content composition.",
+      "checks": {
+        "exact_source_current": true,
+        "lesson_and_paragraph_binding": true,
+        "candidate_contains_target_language_framing": true
+      },
+      "result": "pass"
+    },
+    {
+      "entryIndex": 7,
+      "language": "ve",
+      "fieldPath": "body paragraph 8",
+      "paragraphIndexZeroBased": 7,
+      "paragraphCount": 16,
+      "sourceEnglish": "Beans and cowpeas give a storable protein harvest.",
+      "currentLearnerText": "Beans and cowpeas give a storable protein harvest.",
+      "candidateText": "Beans na cowpeas zwi ṋea protein harvest ine ya nga vhulungwa.",
+      "changedFromOriginalPacket": false,
+      "finding": "Verified candidate binding and content composition.",
+      "checks": {
+        "exact_source_current": true,
+        "lesson_and_paragraph_binding": true,
+        "candidate_contains_target_language_framing": true
+      },
+      "result": "pass"
+    },
+    {
+      "entryIndex": 8,
+      "language": "ve",
+      "fieldPath": "body paragraph 9",
+      "paragraphIndexZeroBased": 8,
+      "paragraphCount": 16,
+      "sourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "currentLearnerText": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "candidateText": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too.",
+      "changedFromOriginalPacket": true,
+      "finding": "Exact source clause restores the young-leaves claim after localized agronomic clauses.",
+      "checks": {
+        "exact_source_current": true,
+        "lesson_and_paragraph_binding": true,
+        "candidate_contains_target_language_framing": true,
+        "young_leaves_clause_exact": true
+      },
+      "result": "pass"
+    },
+    {
+      "entryIndex": 9,
+      "language": "ve",
+      "fieldPath": "body paragraph 10",
+      "paragraphIndexZeroBased": 9,
+      "paragraphCount": 16,
+      "sourceEnglish": "Amadumbe handles wetter ground, where other staples struggle.",
+      "currentLearnerText": "Amadumbe handles wetter ground, where other staples struggle.",
+      "candidateText": "Amadumbe i a konḓelela mavu ane a vha na maḓi manzhi u fhira, hune zwiṅwe zwimela zwa vhuthogwa zwa konḓelwa.",
+      "changedFromOriginalPacket": false,
+      "finding": "Verified candidate binding and content composition.",
+      "checks": {
+        "exact_source_current": true,
+        "lesson_and_paragraph_binding": true,
+        "candidate_contains_target_language_framing": true
+      },
+      "result": "pass"
+    },
+    {
+      "entryIndex": 10,
+      "language": "ts",
+      "fieldPath": "body paragraph 5",
+      "paragraphIndexZeroBased": 4,
+      "paragraphCount": 16,
+      "sourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentLearnerText": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "candidateText": "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "changedFromOriginalPacket": true,
+      "finding": "Question remains in target-language framing; the source counterfactual failure/companion tail is exact English.",
+      "checks": {
+        "exact_source_current": true,
+        "lesson_and_paragraph_binding": true,
+        "candidate_contains_target_language_framing": true,
+        "counterfactual_companion_tail_exact": true
+      },
+      "result": "pass"
+    },
+    {
+      "entryIndex": 11,
+      "language": "ts",
+      "fieldPath": "body paragraph 7",
+      "paragraphIndexZeroBased": 6,
+      "paragraphCount": 16,
+      "sourceEnglish": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "currentLearnerText": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "candidateText": "Maize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection.",
+      "changedFromOriginalPacket": false,
+      "finding": "Verified candidate binding and content composition.",
+      "checks": {
+        "exact_source_current": true,
+        "lesson_and_paragraph_binding": true,
+        "candidate_contains_target_language_framing": true
+      },
+      "result": "pass"
+    },
+    {
+      "entryIndex": 12,
+      "language": "ts",
+      "fieldPath": "body paragraph 8",
+      "paragraphIndexZeroBased": 7,
+      "paragraphCount": 16,
+      "sourceEnglish": "Beans and cowpeas give a storable protein harvest.",
+      "currentLearnerText": "Beans and cowpeas give a storable protein harvest.",
+      "candidateText": "Beans na cowpeas swi nyika protein harvest leyi nga hlayisiwa.",
+      "changedFromOriginalPacket": false,
+      "finding": "Verified candidate binding and content composition.",
+      "checks": {
+        "exact_source_current": true,
+        "lesson_and_paragraph_binding": true,
+        "candidate_contains_target_language_framing": true
+      },
+      "result": "pass"
+    },
+    {
+      "entryIndex": 13,
+      "language": "ts",
+      "fieldPath": "body paragraph 9",
+      "paragraphIndexZeroBased": 8,
+      "paragraphCount": 16,
+      "sourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "currentLearnerText": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "candidateText": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too.",
+      "changedFromOriginalPacket": true,
+      "finding": "Exact source clause restores the young-leaves claim after localized agronomic clauses.",
+      "checks": {
+        "exact_source_current": true,
+        "lesson_and_paragraph_binding": true,
+        "candidate_contains_target_language_framing": true,
+        "young_leaves_clause_exact": true
+      },
+      "result": "pass"
+    },
+    {
+      "entryIndex": 14,
+      "language": "ts",
+      "fieldPath": "body paragraph 10",
+      "paragraphIndexZeroBased": 9,
+      "paragraphCount": 16,
+      "sourceEnglish": "Amadumbe handles wetter ground, where other staples struggle.",
+      "currentLearnerText": "Amadumbe handles wetter ground, where other staples struggle.",
+      "candidateText": "Amadumbe yi kota ku tiyisela eka wetter ground, laha swibyariwa swin’wana swa nkoka swi tikaka.",
+      "changedFromOriginalPacket": true,
+      "finding": "Wetter-ground anchor replaces country/land wording and the intensifier; tolerance and other-staples framing remain localized.",
+      "checks": {
+        "exact_source_current": true,
+        "lesson_and_paragraph_binding": true,
+        "candidate_contains_target_language_framing": true,
+        "wetter_ground_anchor_and_target_framing": true
+      },
+      "result": "pass"
+    },
+    {
+      "entryIndex": 15,
+      "language": "ts",
+      "fieldPath": "body paragraph 15",
+      "paragraphIndexZeroBased": 14,
+      "paragraphCount": 16,
+      "sourceEnglish": "Two or more staples give you more ways to keep eating.",
+      "currentLearnerText": "Two or more staples give you more ways to keep eating.",
+      "candidateText": "Swakudya swa nkoka swimbirhi kumbe ku tlurisa swi ku nyika tindlela to tala ta ku ya mahlweni u dya.",
+      "changedFromOriginalPacket": false,
+      "finding": "Verified candidate binding and content composition.",
+      "checks": {
+        "exact_source_current": true,
+        "lesson_and_paragraph_binding": true,
+        "candidate_contains_target_language_framing": true
+      },
+      "result": "pass"
+    }
+  ],
+  "implementation": {
+    "branch": "codex/regional-staples-prose-next-20261003",
+    "baseRevision": "0c214618ef8aa6b2ed5dfada8eb67ef18e1542ad",
+    "actualResolver": "resolveLearnerLessonPresentation",
+    "runtimeVerified": true,
+    "fieldsApplied": 16,
+    "canonicalEnglishUnchanged": false,
+    "allLanguagesRemainMachineDraft": true,
+    "fluentApproval": false
+  }
+}

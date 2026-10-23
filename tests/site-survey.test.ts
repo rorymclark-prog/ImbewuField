@@ -1,7 +1,10 @@
 import test from 'node:test';
+import { activeAccountLocalStorageKey, bindMountedAccountLocalStorageUid } from '../lib/account-local-storage.ts';
 import assert from 'node:assert/strict';
 
 import {
+  readSurveyDraft, writeSurveyDraft, clearSurveyDraft, surveyDraftScope, surveyRevision,
+  type SiteSurveyDraft,
   canonicalSurveySiteId,
   loadSurvey,
   reportedFoodGroups,
@@ -311,4 +314,228 @@ test('translated adult-count ranges keep the same household key used by water es
   const saved = saveSurvey(survey({ adults: '2–5' }));
   assert.equal(saved?.adults, '2-5');
   assert.equal(loadSurvey(saved!.siteId)?.adults, '2-5');
+});
+
+test('old surveys do not acquire frost, dependable irrigation, hens or a production year from their save date', () => {
+  installBrowser();
+  const saved = saveSurvey(survey({ savedAt: `${new Date().getFullYear()}-01-01T00:00:00.000Z` }));
+  assert.ok(saved);
+  const loaded = loadSurvey(saved.siteId);
+  assert.ok(loaded);
+  assert.equal(loaded.productionConditions, undefined);
+  assert.equal(loaded.poultryManagement, undefined);
+  assert.equal(loaded.productionYear, undefined);
+  const prompt = surveyToPrompt(loaded, 800);
+  assert.match(prompt, /Local frost: not recorded/);
+  assert.match(prompt, /Dry-season growing water: not recorded/);
+  assert.match(prompt, /Hens laying now: not recorded/);
+  assert.match(prompt, /Reporting year for these annual production figures: not recorded/);
+  assert.doesNotMatch(prompt, /Hens laying now: 0|Local frost: not observed/);
+});
+
+test('saved site observations keep actual frost months and current birds without converting them into forecasts', () => {
+  installBrowser();
+  const saved = saveSurvey(survey({
+    productionYear: new Date().getFullYear() - 1,
+    productionConditions: {
+      frost: 'yes', frostMonths: [8, 6, 6, 0, 13, 7.5],
+      drySeasonWater: 'limited', drainage: 'stays-wet', sunlight: 'part-shade',
+    },
+    poultryManagement: {
+      purpose: 'both', recordedBreed: '  Supplier record name  ', layingHens: 7,
+      drinkingWater: 'sometimes', feeding: 'mostly-scavenging', nightProtection: 'partial',
+    },
+    reportedProduction: [{ category: 'eggs', quantityPerYear: 120, unit: 'eggs', usedByHousehold: 120, sold: 0, incomeZar: null, harvestMonths: [1, 12] }],
+  }));
+  assert.ok(saved);
+  const loaded = loadSurvey(saved.siteId);
+  assert.ok(loaded);
+  assert.deepEqual(loaded.productionConditions, { frost: 'yes', frostMonths: [6, 8], drySeasonWater: 'limited', drainage: 'stays-wet', sunlight: 'part-shade' });
+  assert.deepEqual(loaded.poultryManagement, { purpose: 'both', recordedBreed: 'Supplier record name', layingHens: 7, drinkingWater: 'sometimes', feeding: 'mostly-scavenging', nightProtection: 'partial' });
+  assert.equal(loaded.productionYear, new Date().getFullYear() - 1);
+  assert.deepEqual(saveSurvey(loaded)?.productionConditions, loaded.productionConditions);
+  const prompt = surveyToPrompt(loaded, 800);
+  assert.match(prompt, /Months when frost was observed .*: 6, 8/);
+  assert.match(prompt, /available, but not enough or not dependable/);
+  assert.match(prompt, /Breed or strain recorded by the farmer: Supplier record name/);
+  assert.match(prompt, /Hens laying now: 7/);
+  assert.match(prompt, /not a promised egg yield/);
+  assert.match(prompt, /reported annual eggs remain separate from plan forecasts/);
+  assert.match(prompt, /Quantity per year: 120 eggs/);
+  assert.deepEqual(loaded.reportedProduction?.[0].harvestMonths, [1, 12]);
+  assert.doesNotMatch(prompt, /NaN|Infinity|undefined|\[object Object\]/);
+});
+
+test('an explicit zero laying-hen count stays zero, while an unknown count stays unrecorded', () => {
+  installBrowser();
+  const zero = saveSurvey(survey({ poultryManagement: { layingHens: 0 } }));
+  assert.ok(zero);
+  assert.equal(loadSurvey(zero.siteId)?.poultryManagement?.layingHens, 0);
+  assert.match(surveyToPrompt(zero, 800), /Hens laying now: 0/);
+  const blank = saveSurvey(survey({ poultryManagement: { layingHens: null, purpose: 'unknown' } }));
+  assert.ok(blank);
+  assert.equal(loadSurvey(blank.siteId)?.poultryManagement?.layingHens, undefined);
+  assert.match(surveyToPrompt(blank, 800), /Hens laying now: not recorded/);
+});
+
+test('malformed production observations cannot claim frost absence, safe water or fractional laying hens', () => {
+  installBrowser();
+  const malformed = survey({
+    productionConditions: { frost: 'false', frostMonths: [6], drySeasonWater: true, drainage: 0, sunlight: 'Sunny' } as unknown as SiteSurvey['productionConditions'],
+    poultryManagement: { purpose: 'layer', recordedBreed: {}, layingHens: '7', drinkingWater: true, feeding: ['balanced-feed'], nightProtection: 'safe' } as unknown as SiteSurvey['poultryManagement'],
+  });
+  const saved = saveSurvey(malformed);
+  assert.ok(saved);
+  assert.equal(saved.productionConditions, undefined);
+  assert.equal(saved.poultryManagement, undefined);
+  for (const value of [-1, 1.5, Number.NaN, Infinity, Number.MAX_SAFE_INTEGER + 1]) {
+    const badCount = saveSurvey(survey({ poultryManagement: { layingHens: value } }));
+    assert.ok(badCount);
+    assert.equal(badCount.poultryManagement, undefined);
+    assert.match(surveyToPrompt(survey({ poultryManagement: { layingHens: value } }), 800), /Hens laying now: not recorded/);
+  }
+  for (const value of [null, [], 'yes']) {
+    const badShape = saveSurvey(survey({ productionConditions: value as SiteSurvey['productionConditions'], poultryManagement: value as SiteSurvey['poultryManagement'] }));
+    assert.ok(badShape);
+    assert.equal(badShape.productionConditions, undefined);
+    assert.equal(badShape.poultryManagement, undefined);
+  }
+});
+
+test('frost months require observed frost and never turn not-observed into a frost-free promise', () => {
+  installBrowser();
+  for (const frost of ['no', 'unknown'] as const) {
+    const saved = saveSurvey(survey({ productionConditions: { frost, frostMonths: [6, 7] } }));
+    assert.ok(saved);
+    assert.deepEqual(saved.productionConditions, { frost });
+    assert.equal(loadSurvey(saved.siteId)?.productionConditions?.frostMonths, undefined);
+    assert.match(surveyToPrompt(saved, 800), /Months when frost was observed .*: not recorded/);
+    assert.doesNotMatch(surveyToPrompt(saved, 800), /frost-free|safe to plant/);
+  }
+});
+
+test('reporting years round-trip independently of survey dates and future or invalid years stay unknown', () => {
+  installBrowser();
+  const currentYear = new Date().getFullYear();
+  for (const year of [1900, currentYear - 1, currentYear]) {
+    const saved = saveSurvey(survey({ productionYear: year, savedAt: '2020-01-01T00:00:00.000Z' }));
+    assert.ok(saved);
+    assert.equal(loadSurvey(saved.siteId)?.productionYear, year);
+    assert.match(surveyToPrompt(saved, 800), new RegExp(`Reporting year for these annual production figures: ${year}`));
+  }
+  for (const year of [1899, currentYear + 1, currentYear + .5, Number.NaN, Infinity, '2020', null]) {
+    const saved = saveSurvey(survey({ productionYear: year as number, savedAt: `${currentYear}-01-01T00:00:00.000Z` }));
+    assert.ok(saved);
+    assert.equal(saved.productionYear, undefined);
+    assert.equal(loadSurvey(saved.siteId)?.productionYear, undefined);
+    assert.match(surveyToPrompt(saved, 800), /Reporting year for these annual production figures: not recorded/);
+  }
+});
+
+
+function draftFor(answers = survey()): SiteSurveyDraft {
+  return {
+    version: 1, answers,
+    inputs: { roofMain: '-2', roofSecondary: '', growingArea: '0', layingHens: '', productionYear: '1899' },
+    mode: 'full', step: 3, started: true, baseRevision: surveyRevision(answers),
+  };
+}
+
+test('unfinished answers survive a new read without becoming saved report facts', () => {
+  const { target } = installBrowser();
+  const saved = saveSurvey(survey({ notes: 'Saved observation' }));
+  let savedEvents = 0;
+  target.addEventListener('imbewu-surveys-changed', () => savedEvents++);
+  const draft = draftFor(survey({ notes: 'Unfinished observation', roofMainM2: -2, existingGrowingAreaM2: 0,
+    reportedProduction: [{ category: 'eggs', quantityPerYear: 0, unit: 'eggs', usedByHousehold: null, sold: null, incomeZar: null }] }));
+  const scope = surveyDraftScope(draft.answers.siteId);
+  const token = writeSurveyDraft(scope, draft, null);
+  assert.ok(token);
+  assert.deepEqual(readSurveyDraft(scope).draft, draft);
+  assert.deepEqual(loadSurvey(draft.answers.siteId), saved);
+  assert.doesNotMatch(surveyToPrompt(loadSurvey(draft.answers.siteId)!, 800), /Unfinished observation/);
+  assert.equal(savedEvents, 0, 'keeping a draft must not announce a saved survey');
+});
+
+test('draft recovery isolates farms and signed-in accounts, including a late callback after account change', () => {
+  installBrowser();
+  bindMountedAccountLocalStorageUid('first-farmer');
+  const draft = draftFor();
+  const firstScope = surveyDraftScope(draft.answers.siteId);
+  const token = writeSurveyDraft(firstScope, draft, null);
+  assert.ok(token);
+  assert.equal(readSurveyDraft(surveyDraftScope('site:-28.00000,31.00000')).draft, null);
+  bindMountedAccountLocalStorageUid('second-farmer');
+  assert.equal(readSurveyDraft(surveyDraftScope(draft.answers.siteId)).draft, null);
+  assert.equal(readSurveyDraft(firstScope).draft, null);
+  assert.equal(writeSurveyDraft(firstScope, draft, token), null);
+  assert.equal(clearSurveyDraft(firstScope, draft.answers.siteId, token), false);
+  bindMountedAccountLocalStorageUid('first-farmer');
+  assert.deepEqual(readSurveyDraft(firstScope).draft, draft);
+  assert.equal(surveyDraftScope('site:-29,31'), '', 'noncanonical IDs must not create orphan drafts');
+  bindMountedAccountLocalStorageUid(null);
+});
+
+test('discard removes only the chosen draft and retains saved answers and another farm draft', () => {
+  installBrowser();
+  const first = draftFor();
+  const second = draftFor(survey({ siteId: 'site:-28.00000,31.00000' }));
+  const saved = saveSurvey(first.answers);
+  const scope = surveyDraftScope(first.answers.siteId);
+  const token = writeSurveyDraft(scope, first, null);
+  writeSurveyDraft(surveyDraftScope(second.answers.siteId), second, null);
+  assert.equal(clearSurveyDraft(scope, first.answers.siteId, token), true);
+  assert.equal(readSurveyDraft(scope).draft, null);
+  assert.deepEqual(loadSurvey(first.answers.siteId), saved);
+  assert.deepEqual(readSurveyDraft(surveyDraftScope(second.answers.siteId)).draft, second);
+});
+
+test('a failed final save leaves recovery intact and a successful retry can clear it', () => {
+  const { local } = installBrowser();
+  const draft = draftFor();
+  const scope = surveyDraftScope(draft.answers.siteId);
+  const token = writeSurveyDraft(scope, draft, null);
+  local.failKey = activeAccountLocalStorageKey('imbewu_site_survey_' + draft.answers.siteId);
+  assert.equal(saveSurvey(draft.answers), null);
+  assert.deepEqual(readSurveyDraft(scope).draft, draft);
+  local.failKey = null;
+  assert.ok(saveSurvey(draft.answers));
+  assert.equal(clearSurveyDraft(scope, draft.answers.siteId, token), true);
+  assert.equal(readSurveyDraft(scope).draft, null);
+});
+
+test('full or unavailable browser storage reports draft failure without erasing its previous answers', () => {
+  const { local } = installBrowser();
+  const draft = draftFor();
+  const scope = surveyDraftScope(draft.answers.siteId);
+  const token = writeSurveyDraft(scope, draft, null);
+  local.failKey = scope;
+  assert.equal(writeSurveyDraft(scope, { ...draft, step: 4 }, token), null);
+  assert.deepEqual(readSurveyDraft(scope).draft, draft);
+});
+
+test('an older open tab cannot overwrite or clear newer recovered work', () => {
+  installBrowser();
+  const draft = draftFor();
+  const scope = surveyDraftScope(draft.answers.siteId);
+  const oldToken = writeSurveyDraft(scope, draft, null);
+  const newer = { ...draft, answers: { ...draft.answers, notes: 'Newer answers' } };
+  assert.ok(writeSurveyDraft(scope, newer, oldToken));
+  assert.equal(writeSurveyDraft(scope, draft, oldToken), null);
+  assert.equal(clearSurveyDraft(scope, draft.answers.siteId, oldToken), false);
+  assert.deepEqual(readSurveyDraft(scope).draft, newer);
+});
+
+test('a damaged draft cannot crash recovery and stays available for deliberate discard', () => {
+  const { local } = installBrowser();
+  const scope = surveyDraftScope(survey().siteId);
+  for (const value of ['broken json', JSON.stringify({version:1}), JSON.stringify({...draftFor(), inputs: null}),
+    JSON.stringify({...draftFor(), answers:{...survey(), reportedProduction:[{}]}})]) {
+    local.setItem(scope, value);
+    const result = readSurveyDraft(scope);
+    assert.equal(result.draft, null);
+    assert.equal(result.error, true);
+    assert.equal(local.getItem(scope), value);
+    assert.equal(clearSurveyDraft(scope, survey().siteId, result.token), true);
+  }
 });

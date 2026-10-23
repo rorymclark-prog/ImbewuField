@@ -1,0 +1,87 @@
+{
+  "speciesId": "cyclopia-genistoides",
+  "commonName": "Honeybush / heuningbos",
+  "botanicalName": "Cyclopia genistoides",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No food-production pollination classification verified in the checked primary source."
+  },
+  "harvestProduct": "leafy shoots for dried honeybush tea",
+  "supplementaryReferences": [
+    {
+      "title": "Honeybush harvest and processed-product basis",
+      "quote": "leaves and stems",
+      "url": "https://www.arc.agric.za/arc-infruitec-nietvoorbij/honeybush/Pages/Farming-and-processing.aspx",
+      "doc": "ARC Infruitec-Nietvoorbij: Honeybush farming and processing",
+      "page": null,
+      "note": "Cut shoots are chopped, heat-oxidised, dried and sieved; green tea is dried without oxidation. Fresh shoot kg is not dried tea kg. C. genistoides is a specific commercial species, not every honeybush species."
+    },
+    {
+      "title": "Seasonal wording needs local validation",
+      "quote": "harvested in summer and autumn, respectively",
+      "url": "https://www.arc.agric.za/arc-infruitec-nietvoorbij/honeybush/Pages/News/Press-Release-May2021.aspx",
+      "doc": "ARC Honeybush press release, May 2021",
+      "page": null,
+      "note": "Text discusses summer for C. genistoides and autumn for C. subternata, but the caption conflicts. No exact month array is inferred."
+    },
+    {
+      "title": "Species culture",
+      "quote": "Cyclopia genistoides",
+      "url": "https://pza.sanbi.org/cyclopia-genistoides",
+      "doc": "SANBI PlantZAfrica: Cyclopia genistoides",
+      "page": null,
+      "note": "Source describes the tea species and sunny, acidic, well-drained southern Cape cultivation; it does not provide transferable food kg/plant or full-production age."
+    }
+  ],
+  "productionGuidance": {
+    "products": "leafy shoots for dried honeybush tea",
+    "care": [
+      "Use species-suitable, well-drained acidic fynbos conditions and confirm local frost exposure.",
+      "Record fresh cuttings and dried tea output separately; no automatic drying conversion or safe storage duration is assigned."
+    ],
+    "purchase": [
+      "Ask a specialist local nursery for identified C. genistoides and a locally proven selection; different ecotypes do not perform equally."
+    ]
+  },
+  "householdFoodStatus": "confirmed-food",
+  "sourceChecks": [
+    {
+      "url": "https://www.arc.agric.za/arc-infruitec-nietvoorbij/honeybush/Pages/Farming-and-processing.aspx",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified primary page, institutional abstract or downloaded primary PDF; product, region, age and native-unit limits retained."
+    },
+    {
+      "url": "https://www.arc.agric.za/arc-infruitec-nietvoorbij/honeybush/Pages/News/Press-Release-May2021.aspx",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified primary page, institutional abstract or downloaded primary PDF; product, region, age and native-unit limits retained."
+    },
+    {
+      "url": "https://pza.sanbi.org/cyclopia-genistoides",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary article text retrieved through the search index; the direct PlantZAfrica endpoint returned 403 during this session."
+    }
+  ],
+  "gaps": []
+}

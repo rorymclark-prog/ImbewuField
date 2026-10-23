@@ -1,0 +1,126 @@
+{
+  "title": "Independent focused recheck of five remaining introduction translation proposals",
+  "date": "2026-10-04",
+  "input": "/tmp/imbewu-introduction-remaining-holds-candidates-20261004.json",
+  "scope": "Separate follow-up; does not overwrite the initial 65-row independent check. Read-only review of five repair suggestions and live paired records.",
+  "actualBindingAudit": {
+    "all65CandidateSourcesExactInCurrentPairedJson": true,
+    "all65CandidateCurrentTargetsExactInCurrentPairedJson": true,
+    "all65RowsChecked": 65,
+    "mismatches": [],
+    "livePairedFileSHA256": {
+      "ve": "0909f825959051bdf84cffad22ee946e8af244d10ca9e93cea59a15d67045afc",
+      "ts": "742e7e715ee1020ee0e2d5829ef4165305627ecf1289a0a2cd32889af21933cf"
+    },
+    "checkedFrom": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+    "note": "These are direct reads and comparisons against the current paired JSON files, not packet-declared boolean flags."
+  },
+  "counts": {
+    "reviewed": 5,
+    "accept": 2,
+    "hold": 3,
+    "byLanguage": {
+      "ve": {
+        "accept": 1,
+        "hold": 2
+      },
+      "ts": {
+        "accept": 1,
+        "hold": 1
+      }
+    }
+  },
+  "rows": [
+    {
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 1,
+      "decision": "accept",
+      "sourceEnglish": "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+      "priorProposal": "Thomani nga u wana arali u kovhelana ho tendelwa. Check whether the borehole can serve all users without taking too much. Arali u kovhelana ho tendelwa nahone hu na maḓi o eḓanaho, tendelanani uri ni kovhelane nga ndinganyo ni dzule ni tshi sedza water level. People Care na Fair Share zwi livhisa u tendelana. Earth Care zwi amba u tsireledza the source. U sedza water level fhedzi a zwi ambi uri u shumisa maḓi o engedzeaho zwi safe kana zwo tendelwa.",
+      "review": "The retained English-only sentence is an ordinary instruction, so the earlier all-English retention is not desirable. The supplied replacement correctly expresses checking whether the borehole can serve every user without taking too much, while the surrounding passage retains both permission conditions, adequate water, fair agreement, continued level checks, source protection, and the explicit safety/permission disclaimer. I would tighten the Tshivenda verb so it says the borehole provides water to all users, not merely helps them.",
+      "replacementOrRetainedText": "Sedzani arali borehole i tshi ngaṋea vhashumisi vhoṱhe maḓi hu sa dzhiiwi maḓi manzhi nga maanḓa.",
+      "focusedConditionDirectionAndNumbersCheck": "Fluent speaker should confirm “ngaṋea” in context; preserve all users and the no-overdraw limit.",
+      "actualPairedRecord": {
+        "sourceExact": true,
+        "currentTargetExact": true,
+        "currentTarget": {
+          "status": "english-hold"
+        }
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 22,
+      "bodyIndex": 2,
+      "decision": "hold",
+      "sourceEnglish": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+      "priorProposal": "Wanani tshithu tshithihi tsho limiwaho “planted further away than how often you use it,” ni ṅwale hune tsha tea u pfuluselwa hone.",
+      "review": "The English clause is ordinary and should eventually be localized, but this proposal was rejected: “kule u ya nga lunzhi lune na tshi shumisa ngalo” does not securely retain the source’s comparative condition, “further away than how often you use it.” The source itself has an unusual distance/frequency comparison. Keep the exact English sentence visible until a fluent reviewer can translate that relation without flattening or reversing it.",
+      "replacementOrRetainedText": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+      "focusedConditionDirectionAndNumbersCheck": "No safe minimal target-language replacement established; retain full exact English source pending fluent review.",
+      "actualPairedRecord": {
+        "sourceExact": true,
+        "currentTargetExact": true,
+        "currentTarget": {
+          "status": "english-hold"
+        }
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 22,
+      "bodyIndex": 3,
+      "decision": "hold",
+      "sourceEnglish": "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow.",
+      "priorProposal": "Nga murahu ni humbele one older neighbour uri a ni vhudze direction ine worst wind ya bva ngaḽo, ni vhambedze phindulo yawe na arrow yaṋu.",
+      "review": "Reject “mudzulapo wa kale” because it can mean a long-time/old resident rather than an older neighbour, and reject “muya u sa takadziho” because unpleasant wind weakens the superlative “worst wind.” Keep both exact English anchors pending a precise fluent alternative.",
+      "replacementOrRetainedText": "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow.",
+      "focusedConditionDirectionAndNumbersCheck": "Retain exact English “one older neighbour” and “the worst wind”; preserve direction question and comparison.",
+      "actualPairedRecord": {
+        "sourceExact": true,
+        "currentTargetExact": true,
+        "currentTarget": {
+          "status": "english-hold"
+        }
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 1,
+      "decision": "accept",
+      "sourceEnglish": "Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.",
+      "priorProposal": "Sun, wind, rain, flood na fire swi fika across your boundary hambi u swi pulanile kumbe a wu swi pulananga.",
+      "review": "“tsemakanya ndzilakana wa wena” is a precise crossing relation for “across your boundary.” It preserves the direction of movement and all five hazards arriving, with the regardless-of-planning condition. It does not add an impact claim or safety promise.",
+      "replacementOrRetainedText": "Sun, wind, rain, flood na fire swi tsemakanya ndzilakana wa wena hambi u swi pulanile kumbe a wu swi pulananga.",
+      "focusedConditionDirectionAndNumbersCheck": "Use this instead of leaving the directional relation in English; fluent confirmation of idiom still required.",
+      "actualPairedRecord": {
+        "sourceExact": true,
+        "currentTargetExact": true,
+        "currentTarget": {
+          "status": "english-hold"
+        }
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 22,
+      "bodyIndex": 2,
+      "decision": "hold",
+      "sourceEnglish": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+      "priorProposal": "Kuma xilo xin’we lexi “planted further away than how often you use it,” kutani u tsala laha xi faneleke ku rhurhiseriwa kona.",
+      "review": "The English clause is ordinary and should eventually be localized, but the proposed “ekule ku hundza ndlela leyi u xi tirhisaka ha yona kangani” remains semantically uncertain: it may compare distance with manner of use rather than distance against use frequency. The source’s odd comparative is intentional and must not be reduced to simply “far away” or changed to “used more often.” Retain the exact English sentence until fluent review resolves that comparative.",
+      "replacementOrRetainedText": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+      "focusedConditionDirectionAndNumbersCheck": "No safe minimal target-language replacement established; retain full exact English source pending fluent review.",
+      "actualPairedRecord": {
+        "sourceExact": true,
+        "currentTargetExact": true,
+        "currentTarget": {
+          "status": "english-hold"
+        }
+      }
+    }
+  ],
+  "reviewLimit": "Semantic review is not fluent-speaker approval. Keep the target fields unreviewed and exact English source visible until facilitator and fluent review."
+}

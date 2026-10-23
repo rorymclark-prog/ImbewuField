@@ -1,0 +1,126 @@
+{
+  "key": "brinjal",
+  "name": "Brinjal (Eggplant)",
+  "localNames": ["eggplant", "aubergine"],
+  "botanicalName": "Solanum melongena",
+  "family": "Solanaceae",
+  "role": "vegetable",
+  "foodGroup": "fruiting-vegetable",
+  "harvestProduct": "fruit",
+  "frostTender": {
+    "value": true,
+    "evidence": {
+      "quote": "2. Very Tender (very sensitive to low temperatures)\nChili Okra Sweet pepper\nCucumber Pumpkin Sweet potato\nEggplant Squash Vegetable marrow\nLima bean Sweet melon Watermelon",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/climatic_requirements.pdf",
+      "page": 2,
+      "doc": "KZN DARD, 'Climatic Requirements' (Vegetable Production series), Table 1"
+    }
+  },
+  "transplant": {
+    "value": true,
+    "evidence": {
+      "quote": "A long growing season of 80 days is required for the transplanted crop. Optimal temperatures for eggplant production are 26°C days and 20°C nights.",
+      "url": "https://web.archive.org/web/20240926225534id_/https://www.dalrrd.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Brochure%20Eggplant.pdf",
+      "page": 5,
+      "doc": "DAFF/DALRRD, 'Eggplant (Solanum melongena L.)' brochure, 2011"
+    }
+  },
+  "sowMonths": {
+    "summer": {
+      "months": [10, 11],
+      "evidence": {
+        "quote": "Brinjal (Eggplant) Oct - Nov Sept - Dec/Jan Jan - Sept",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 7,
+        "doc": "KZN DARD, 'Plant Establishment' (Vegetable Production series), Table 6, 'Cold areas (moderate frosts)' column"
+      },
+      "notes": "Cross-validated by Starke Ayres' own establishment-period table: 'Highveld (cold areas) – October to November' (see zoneNotes)."
+    },
+    "winter": {
+      "months": [10, 11, 12],
+      "evidence": {
+        "quote": "Western Cape – October to December",
+        "url": "https://www.starkeayres.com/uploads/files/Eggplant-Production-Guideline-2019.pdf",
+        "page": 3,
+        "doc": "Starke Ayres, 'Eggplant Production Guideline', 2019, planting-period-by-region table"
+      }
+    },
+    "all-year": {
+      "months": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      "evidence": {
+        "quote": "Brinjal (Eggplant) Oct - Nov Sept - Dec/Jan Jan - Sept",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 7,
+        "doc": "KZN DARD, 'Plant Establishment' (Vegetable Production series), Table 6, 'Hot areas (frost-free)' column"
+      }
+    },
+    "mild-frost": {
+      "months": [9, 10, 11, 12, 1],
+      "evidence": {
+        "quote": "Brinjal (Eggplant) Oct - Nov Sept - Dec/Jan Jan - Sept",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 7,
+        "doc": "KZN DARD, 'Plant Establishment' (Vegetable Production series), Table 6, 'Warm areas (light frosts)' column"
+      }
+    }
+  },
+  "daysToHarvestRange": {
+    "value": [60, 85],
+    "evidence": {
+      "quote": "Brinjal 60 - 85 * 2 - 3 months",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/length_of_growing_period.pdf",
+      "page": 2,
+      "doc": "KZN DARD, 'Length of Growing Period' (Vegetable Production series), Table 4 (row starts p2, footnote on p3: '* denotes time from transplanting')"
+    },
+    "notes": "Days measured from transplanting, not sowing. Corroborated by DAFF: 'A long growing season of 80 days is required for the transplanted crop' and 'Harvest of eggplant usually starts 75 to 90 days after transplanting' (same DALRRD brochure, p5/p8), and by Starke Ayres' Black King and Violet Moon cultivars, both quoted as '70 - 80 days to first pick after transplanting'."
+  },
+  "harvestPeriodWeeksOrMonths": "2-3 months",
+  "rowSpacingRangeCm": [70, 80],
+  "inRowSpacingRangeCm": [50, 50],
+  "sowDepthRangeCm": [1.5, 2.0],
+  "seedRateKgPerHaRange": null,
+  "yield": {
+    "tPerHaRange": [12, 25],
+    "product": "fruit ('Egg-fruit')",
+    "conditions": "Conservative 12-15 t/ha, likely 20 t/ha, target 25 t/ha under good commercial management (KZN)",
+    "evidence": {
+      "quote": "Egg-fruit 12 - 15 20 25",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/expected_yields.pdf",
+      "page": 2,
+      "doc": "KZN DARD, 'Expected Yields' (Vegetable Production series), Table 8"
+    }
+  },
+  "ecocrop": {
+    "row": "Solanum melongena",
+    "TOPMN": 20,
+    "TOPMX": 35,
+    "TMIN": 9,
+    "TMAX": 40,
+    "GMIN": 70,
+    "GMAX": 120
+  },
+  "coverCrop": false,
+  "varieties": [
+    {
+      "name": "Black King",
+      "supplier": "Starke Ayres",
+      "maturity": "70-80 days to first pick after transplanting",
+      "zones": [],
+      "notes": "Large oval fruit (500-600g), dark purple, early cultivar; recommended plant population 18,000-25,000/ha, row spacing 0.9-1.5m x in-row 45-90cm (Starke Ayres, Eggplant Production Guideline 2019, p2-3). Supplier does not attribute the cultivar to a specific SA zone."
+    },
+    {
+      "name": "Violet Moon",
+      "supplier": "Starke Ayres",
+      "maturity": "70-80 days to first pick after transplanting",
+      "zones": [],
+      "notes": "Medium half-long fruit (300-500g), spineless calyx, early cultivar; same population/spacing recommendation as Black King. Supplier does not attribute the cultivar to a specific SA zone."
+    }
+  ],
+  "zoneNotes": "Starke Ayres' Eggplant Production Guideline (2019) gives explicit establishment periods by region: 'Lowveld – February to May', 'Middleveld – September to December', 'Highveld (cold areas) – October to November', 'Western Cape – October to December' (p3). Its commercial row spacing (0.9-1.5m) is wider than KZN DARD's Table 5 figure (700-800mm row), reflecting different production intensities/mechanisation assumptions between the two sources; both are reported rather than reconciled into a single number.",
+  "gaps": [
+    "Seed rate in kg/ha not available as a standalone figure because brinjal is normally transplanted: KZN DARD's Table 5 gives only seedtray (140-200g) and seedbed (300-500g) rates, plus a 3kg/ha figure for the atypical direct-sown case, none of which is an appropriate single 'seed rate per ha' value for a transplanted crop.",
+    "DAFF/DALRRD's 'Brochure Eggplant' (2011) leans on general/US extension references (e.g. USDA, ARS Magazine) for some of its content rather than SA field trial data, so it was used only to corroborate transplant-to-harvest timing, not as the sole source for any core number."
+  ],
+  "verdict": "ready",
+  "summary": "All four rain-pattern sowMonths, daysToHarvestRange, row+in-row spacing and yield are sourced from KZN DARD's Vegetable Production series (Tables 4, 5, 6, 8), corroborated by the DAFF/DALRRD 2011 Eggplant brochure and Starke Ayres' 2019 Eggplant Production Guideline (which also supplied the Western Cape winter sowing window and two named cultivars)."
+}

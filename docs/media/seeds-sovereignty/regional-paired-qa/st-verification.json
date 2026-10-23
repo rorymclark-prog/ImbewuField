@@ -1,0 +1,321 @@
+{
+  "module": "seeds-sovereignty",
+  "language": "st",
+  "reviewStatus": "unreviewed-machine-draft",
+  "humanLanguageReview": false,
+  "localFarmingReview": false,
+  "narration": null,
+  "pairedSource": "docs/narration-reviews/seeds-sovereignty.st.paired.json",
+  "pairedSourceSha256": "3fabd5c2866821791f57c799abda0bdce50fbb01dec023722b4803d928c3b473",
+  "englishSource": "docs/narration/seeds-sovereignty.en.md",
+  "englishSourceSha256": "0f93ad6a9584bdf63b0a5280acb1fe181f5f1645b806527dbdb5a8520d5f2278",
+  "nativeSourceMode": true,
+  "slides": [
+    {
+      "slide": 1,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-01.webp",
+      "pixels": "1440x5400",
+      "bytes": 403772,
+      "sha256": "c1091704f3cd03b61af99c22f9b480732d0fd0b27e8de504f2e8a62a38c85ae7",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 2,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-02.webp",
+      "pixels": "1440x5400",
+      "bytes": 354428,
+      "sha256": "ddeb6a412e64c107b933d4ad3cd41509e503ffb00e5515a3494e2004736d7145",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 3,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-03.webp",
+      "pixels": "1440x5400",
+      "bytes": 251838,
+      "sha256": "26e6c2b2e7ebfc5f329d9537e3f11999e7aa7c9e30b4df91c0352e8ddcbb503d",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 4,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-04.webp",
+      "pixels": "1440x5400",
+      "bytes": 400026,
+      "sha256": "94fe131d32110d445b1d7605f4818544571f71f6bab9b586303845294193cb4d",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 5,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-05.webp",
+      "pixels": "1440x5400",
+      "bytes": 341742,
+      "sha256": "96e4b4d059f3f55a1322b02821b804d04c5ee61d5ef8eab4fcbed8ac6c955622",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 6,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-06.webp",
+      "pixels": "1440x5400",
+      "bytes": 352496,
+      "sha256": "50968eac0dc18affa4182e654d9c770d53ec18fa5e065951dc36795e7d10d5aa",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 7,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-07.webp",
+      "pixels": "1440x5400",
+      "bytes": 356452,
+      "sha256": "68fd69f8ceedc81053a921b4f4eac7c8f1905738a76d8e0d049377e08119b542",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 8,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-08.webp",
+      "pixels": "1440x5400",
+      "bytes": 418310,
+      "sha256": "bd07bc80f4d9883d0fe9004b7d9a61cdba45a55461c59512481cfa20a8e0d667",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 9,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-09.webp",
+      "pixels": "1440x5400",
+      "bytes": 380238,
+      "sha256": "e713bb06c663199700c894e65c80822e5f5b696e85072a05ab9fe59ee3c2b05a",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 10,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-10.webp",
+      "pixels": "1440x5400",
+      "bytes": 307814,
+      "sha256": "8d4b8245379b6130972e7911ee88a85a8d4788ef148d2ce78dadd22610812677",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 11,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-11.webp",
+      "pixels": "1440x5400",
+      "bytes": 352354,
+      "sha256": "c9beb701fbeacf7b9d4032a5d4ce170d5aaf067fe16853763caed9571d35465e",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 12,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-12.webp",
+      "pixels": "1440x5400",
+      "bytes": 356664,
+      "sha256": "1ad0bcd01a929668ac82135d124dde653958f32859d92971ea3733a548b674be",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 13,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-13.webp",
+      "pixels": "1440x5400",
+      "bytes": 286564,
+      "sha256": "f96cfd86a3895f3e09802ea812a734f5158867c9a31c9cd216211032b307b596",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 14,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-14.webp",
+      "pixels": "1440x5400",
+      "bytes": 400052,
+      "sha256": "2b39bec3b3a7f7403daed5c5f20b528b78a726c60a173f34614049df5c196f39",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 15,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-15.webp",
+      "pixels": "1440x5400",
+      "bytes": 330282,
+      "sha256": "9c5d121713364721ad9b49727b90ab33aeb9057e213ecc880b893170d0c4c8ce",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 16,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-16.webp",
+      "pixels": "1440x5400",
+      "bytes": 343492,
+      "sha256": "7caae8823a81c96c00e7509368050d61d82e863ef5dbdb85ac60d1e9d7c16643",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 17,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-17.webp",
+      "pixels": "1440x5400",
+      "bytes": 293012,
+      "sha256": "d010a2c8ea43cd7b5da3e3cdd626c716b0ef567f4e2bd60d5a97ed7294494d6b",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 18,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-18.webp",
+      "pixels": "1440x5400",
+      "bytes": 381112,
+      "sha256": "ade9dfc1ac2c7b3a1925eefc64ae3542fba02847fe16b4ae4033acd3e27f4bb9",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 19,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-19.webp",
+      "pixels": "1440x5400",
+      "bytes": 329742,
+      "sha256": "435b36dd59cf7da1679dda2d801107e02fc79c6235f588f388c4d1e7bb5a61b2",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 20,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-20.webp",
+      "pixels": "1440x5400",
+      "bytes": 366882,
+      "sha256": "0ebce955d6ffb0d7eecc94b32e1ed33b4fb79e42f81f02527869d3b0901c4f2f",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 21,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-21.webp",
+      "pixels": "1440x5400",
+      "bytes": 303770,
+      "sha256": "50198ced5646c10962b64272e4d828a6b5a062c67bece165f14f0ced7e10f080",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 22,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-22.webp",
+      "pixels": "1440x5400",
+      "bytes": 364166,
+      "sha256": "ad3944c72cce756c77c9ad46d1f139c9a118c2520e6560abdb7d8ac1471d3bd4",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 23,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-23.webp",
+      "pixels": "1440x5400",
+      "bytes": 404934,
+      "sha256": "28ebe0eaa5ed94f328e1f701c8a39720a9a38733222c8743e03798dee81e96c0",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    },
+    {
+      "slide": 24,
+      "path": "public/course-decks/seeds-sovereignty/st/slide-24.webp",
+      "pixels": "1440x5400",
+      "bytes": 231830,
+      "sha256": "82dc7e18a3bc8e5d7fb06a9a359944fa4b149b0ff868d760424742625e6bdbef",
+      "sourceImagePixels": "960x540",
+      "sourceImageDisplayPixels": "960x540; native pixels, no resampling"
+    }
+  ],
+  "contactSheet": "docs/media/seeds-sovereignty/regional-paired-qa/st-contact-sheet.jpg",
+  "phoneSamples": [
+    {
+      "slide": 1,
+      "path": "docs/media/seeds-sovereignty/regional-paired-qa/st-slide-01-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "cac968c0ddcc40ab3fa6b9a1e333b4b796bd81022b193f5e77502bd47694e24a"
+    },
+    {
+      "slide": 2,
+      "path": "docs/media/seeds-sovereignty/regional-paired-qa/st-slide-02-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "a25b4e2c9477f7ac3cb85624f6a226e35c8e81c4df1c5751e34ac29d26b7fe06"
+    },
+    {
+      "slide": 3,
+      "path": "docs/media/seeds-sovereignty/regional-paired-qa/st-slide-03-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "c7c9e322de6c35d7dd7f51a81eda8885dc25bfc55c14b2fedfca6d9779f8c1c8"
+    },
+    {
+      "slide": 4,
+      "path": "docs/media/seeds-sovereignty/regional-paired-qa/st-slide-04-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "b81bfea699ecb744b6fa722f52e450abb6e5db36c38c9e1ad5dbfd87470d1a12"
+    },
+    {
+      "slide": 5,
+      "path": "docs/media/seeds-sovereignty/regional-paired-qa/st-slide-05-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "175843a7a373e8ec25444549936005acbcc35680522c01efd4b02d4ad56d7751"
+    },
+    {
+      "slide": 6,
+      "path": "docs/media/seeds-sovereignty/regional-paired-qa/st-slide-06-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "0964cc172054af6290c28361f3654928dc42a7d338b0884ef885b9f2e08d4343"
+    },
+    {
+      "slide": 7,
+      "path": "docs/media/seeds-sovereignty/regional-paired-qa/st-slide-07-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "e4fa40bc3cf5d6ff0f50e68959f2d982bad568ec970ca9ce260b3811be29a77c"
+    },
+    {
+      "slide": 8,
+      "path": "docs/media/seeds-sovereignty/regional-paired-qa/st-slide-08-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "9ce93664536547106f607f3ae3d612d21f0ec23e163fba696e31b69a04a607e3"
+    },
+    {
+      "slide": 9,
+      "path": "docs/media/seeds-sovereignty/regional-paired-qa/st-slide-09-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "6f2ff7a697078d7ce8aa51f586f28ce6adf789ea67c1f1f76e6ea8fd97ee10d8"
+    },
+    {
+      "slide": 13,
+      "path": "docs/media/seeds-sovereignty/regional-paired-qa/st-slide-13-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "b608cd797c921e54a36e78814681a4c1dc0fef238f6dd1b1e0824620f924af25"
+    },
+    {
+      "slide": 21,
+      "path": "docs/media/seeds-sovereignty/regional-paired-qa/st-slide-21-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "f2961d8dda365b92bfc7688dd75753a27645cf13808b85aabda0e58d48745e81"
+    },
+    {
+      "slide": 22,
+      "path": "docs/media/seeds-sovereignty/regional-paired-qa/st-slide-22-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "09ededc0a2a0eff782cf731452b4b382d55d75ab1b94caad2a62e85c73f2d8c0"
+    },
+    {
+      "slide": 23,
+      "path": "docs/media/seeds-sovereignty/regional-paired-qa/st-slide-23-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "3d2cd0604335a145cd3b2e430f777f395be8aeb11335658350067120a0a033b5"
+    },
+    {
+      "slide": 24,
+      "path": "docs/media/seeds-sovereignty/regional-paired-qa/st-slide-24-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "0466bf3b560c416df8a3908cc255dbf60e7e99d2565bf1b4193b0bc5d5833a33"
+    }
+  ],
+  "draftPassageCount": 178,
+  "englishHoldCount": 0,
+  "note": "178 of 178 headings and passages are unreviewed machine drafts from the paired review packet, each beside its exact English source; no English holds remain. Difficult technical terms stay in English inside translated sentences. The 960x540 English illustrations are shown at native pixels without resampling. Optional narration stays exact English. No fluent-speaker, local-farming or translation approval is claimed."
+}

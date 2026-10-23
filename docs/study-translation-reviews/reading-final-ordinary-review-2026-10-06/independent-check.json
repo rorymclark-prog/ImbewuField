@@ -1,0 +1,331 @@
+{
+  "title": "Independent source and semantic backcheck of Reading final12 ordinary candidates",
+  "date": "2026-10-06",
+  "readOnly": true,
+  "candidatePacket": "/tmp/imbewu-reading-final-12-candidates-20261006.json",
+  "candidateSHA256": "5dee1bca865cf9b1fbf1a4e25fed5eb7becb85f4303f10d0f612edf25cda4228",
+  "worktree": "/Users/roryclark/.codex/worktrees/soil-water-residual-20261006/ImbewuField",
+  "actualHEAD": "2b99ef74291e0fc67189d342808a656443505eff",
+  "bindings": {
+    "rows": 12,
+    "uniqueFieldIDs": 12,
+    "mismatches": [],
+    "pairedFiles": [
+      {
+        "path": "docs/narration/reading-landscape.st.paired-draft.json",
+        "sha256": "0d1426088e50962f0200e9c97998984be7a5eaace8366191d1ac2ad720100de2",
+        "slideCount": 21
+      },
+      {
+        "path": "docs/narration/reading-landscape.ve.paired-draft.json",
+        "sha256": "aafdcf1a482fd3c16619479f60b2765b4975a2a67fafd01f81ae375033c1e579",
+        "slideCount": 21
+      },
+      {
+        "path": "docs/narration/reading-landscape.ts.paired-draft.json",
+        "sha256": "c0f3c6a1baca0e23b8ef3462367180638696e2c25ea69b812de0976baf9b1655",
+        "slideCount": 21
+      }
+    ]
+  },
+  "counts": {
+    "accept": 3,
+    "repair": 9,
+    "hold": 0
+  },
+  "rows": [
+    {
+      "row": 1,
+      "language": "st",
+      "fieldLocator": "slide[9].heading",
+      "sourceEnglish": "Watch: Follow the Sun Across the Site",
+      "currentTarget": "Shebella: Follow the Sun Across the Site",
+      "originalCandidate": "Shebella: Latela letsatsi ho pholletsa le sebaka",
+      "bindingChecks": {
+        "fileSHA256Exact": true,
+        "slideNumberAndIndexExact": true,
+        "sourceExact": true,
+        "currentTargetExact": true,
+        "statusExact": true
+      },
+      "candidateBacktranslation": "Watch: Follow the sun throughout the site.",
+      "verdict": "accept",
+      "recommendedTarget": "Shebella: Latela letsatsi ho pholletsa le sebaka",
+      "recommendedBacktranslation": "Watch: Follow the sun across the site.",
+      "reason": "Preserves existing Watch prefix and follow/sun/across-site scope; no extra spatial geometry or seasonal claim. Site context makes ordinary place wording defensible.",
+      "precisionAndLimits": "Unreviewed semantic draft only; no fluent-language approval.",
+      "retainedEnglishAnchors": []
+    },
+    {
+      "row": 2,
+      "language": "st",
+      "fieldLocator": "slide[10].body[1]",
+      "sourceEnglish": "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+      "currentTarget": "A wall or shade cloth can shade a bed longer in winter than in summer. Hlahloba shadows tsa sebele before you build or fix a shade structure in place.",
+      "originalCandidate": "Lebota kapa shade cloth li ka etsa moriti betheng nako e telele mariha ho feta hlabula. Hlahloba meriti ea sebele pele u haha kapa u tiisa shade structure sebakeng sa eona.",
+      "bindingChecks": {
+        "fileSHA256Exact": true,
+        "slideNumberAndIndexExact": true,
+        "sourceExact": true,
+        "currentTargetExact": true,
+        "statusExact": true
+      },
+      "candidateBacktranslation": "Wall or shade cloth can make shade on a bed a long time in winter than summer; check actual shadows before building or strengthening the shade structure in its place.",
+      "verdict": "repair",
+      "recommendedTarget": "Lebota kapa shade cloth di ka etsa moriti ho bed nako e telele mariha ho feta lehlabula. Hlahloba meriti ya sebele pele o haha kapa o fix shade structure sebakeng sa yona.",
+      "recommendedBacktranslation": "A wall or shade cloth can make shade on a bed for a longer time in winter than summer. Check actual shadows before you build or fix a shade structure in its place.",
+      "reason": "Use established South African o/ya spelling. Preserve Hlahloba and exact can/OR/winter-versus-summer/before/OR structure. Retain bed explicitly so technical-term metadata matches the actual target; retain fix as the precise fastening-in-place action rather than risk strengthen or introduce tying/bolting.",
+      "precisionAndLimits": "Wall = Lebota; fix and shade structure retained English with translated in-place context. This is unreviewed code-switching, not a claim that fix is translated.",
+      "retainedEnglishAnchors": [
+        "shade cloth",
+        "bed",
+        "fix",
+        "shade structure"
+      ]
+    },
+    {
+      "row": 3,
+      "language": "st",
+      "fieldLocator": "slide[13].heading",
+      "sourceEnglish": "Watch: See Wind and Cold Air on the Map",
+      "currentTarget": "Shebella: See Wind and Cold Air on the Map",
+      "originalCandidate": "Shebella: Bona phefo le moea o batang mmapeng",
+      "bindingChecks": {
+        "fileSHA256Exact": true,
+        "slideNumberAndIndexExact": true,
+        "sourceExact": true,
+        "currentTargetExact": true,
+        "statusExact": true
+      },
+      "candidateBacktranslation": "Watch: See wind and cold air on the map.",
+      "verdict": "repair",
+      "recommendedTarget": "Shebella: Bona moya le moya o batang mmapeng",
+      "recommendedBacktranslation": "Watch: See wind and cold air on the map.",
+      "reason": "Use native established moya rather than Lesotho moea; both wind and air use moya in this current module. Bona supplies the explicit See action. Retain Shebella: exactly.",
+      "precisionAndLimits": "Native L3 body uses Moya for wind and moya o batang for cold air; this is same-module lexical precedent, not fluency certification.",
+      "retainedEnglishAnchors": []
+    },
+    {
+      "row": 4,
+      "language": "st",
+      "fieldLocator": "slide[17].heading",
+      "sourceEnglish": "Watch: Draw the Land You Already Have",
+      "currentTarget": "Shebella: Taka the Land You Already Have",
+      "originalCandidate": "Shebella: Thala sebaka seo u seng u e-na le sona",
+      "bindingChecks": {
+        "fileSHA256Exact": true,
+        "slideNumberAndIndexExact": true,
+        "sourceExact": true,
+        "currentTargetExact": true,
+        "statusExact": true
+      },
+      "candidateBacktranslation": "Watch: Draw the area you already have.",
+      "verdict": "repair",
+      "recommendedTarget": "Shebella: Taka lefatshe leo o seng o ntse o e-na le lona",
+      "recommendedBacktranslation": "Watch: Draw the land that you already have.",
+      "reason": "Preserve existing Shebella: Taka, replace only the English remainder. Lefatshe retains land rather than generic area; seng o ntse preserves already-state, not merely now.",
+      "precisionAndLimits": "Current native Reading body uses lefatsheng la hao for walk your land. No expansion to ownership title or cultivated field.",
+      "retainedEnglishAnchors": []
+    },
+    {
+      "row": 5,
+      "language": "ve",
+      "fieldLocator": "slide[9].heading",
+      "sourceEnglish": "Watch: Follow the Sun Across the Site",
+      "currentTarget": "Sedzani: Follow the Sun Across the Site",
+      "originalCandidate": "Sedzani: Tevhedzani ḓuvha fhethu haṋu hoṱhe",
+      "bindingChecks": {
+        "fileSHA256Exact": true,
+        "slideNumberAndIndexExact": true,
+        "sourceExact": true,
+        "currentTargetExact": true,
+        "statusExact": true
+      },
+      "candidateBacktranslation": "Watch: Follow the sun throughout your place.",
+      "verdict": "accept",
+      "recommendedTarget": "Sedzani: Tevhedzani ḓuvha fhethu haṋu hoṱhe",
+      "recommendedBacktranslation": "Watch: Follow the sun across the site.",
+      "reason": "Preserves existing Watch prefix and follow/sun/across-site scope; no extra spatial geometry or seasonal claim. Site context makes ordinary place wording defensible.",
+      "precisionAndLimits": "Unreviewed semantic draft only; no fluent-language approval.",
+      "retainedEnglishAnchors": []
+    },
+    {
+      "row": 6,
+      "language": "ve",
+      "fieldLocator": "slide[10].body[1]",
+      "sourceEnglish": "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+      "currentTarget": "A wall or shade cloth can shade a bed longer in winter than in summer. Sedzani shadows dza vhukuma before you build or fix a shade structure in place.",
+      "originalCandidate": "Luṱango kana shade cloth zwi nga ita murunzi kha bed tshifhinga tshilapfu nga tshifhinga tsha vhuria u fhira tsha tshilimo. Sedzani murunzi wa vhukuma musi ni sa athu fhaṱa kana u khwaṱhisa shade structure fhethu hayo.",
+      "bindingChecks": {
+        "fileSHA256Exact": true,
+        "slideNumberAndIndexExact": true,
+        "sourceExact": true,
+        "currentTargetExact": true,
+        "statusExact": true
+      },
+      "candidateBacktranslation": "Fence or shade cloth can make shade on a bed longer in winter than summer; inspect real shade before building or strengthening the structure in its place.",
+      "verdict": "repair",
+      "recommendedTarget": "Luvhondo kana shade cloth zwi nga ita murunzi kha bed tshifhinga tshilapfu nga tshifhinga tsha vhuria u fhira tsha tshilimo. Sedzani mirunzi ya vhukuma musi ni sa athu fhaṱa kana u fix shade structure fhethu hayo.",
+      "recommendedBacktranslation": "A wall or shade cloth can make shade on a bed for a longer time in winter than summer. Check actual shadows before building or fixing a shade structure in its place.",
+      "reason": "Luṱango risks fence instead of wall. Luvhondo is the exact same-module wall precedent. Keep fix English because khwaṱhisa strengthens and does not independently prove fastening in place. Plural mirunzi preserves shadows. Preserve Sedzani and before/build OR fix.",
+      "precisionAndLimits": "Native Reading L2 body uses Luvhondo kana lilaṱa ḽa murunzi and rationale uses mirunzi ya vhukuma. Borrowed fix stays English; no fastening method added.",
+      "retainedEnglishAnchors": [
+        "shade cloth",
+        "bed",
+        "fix",
+        "shade structure"
+      ]
+    },
+    {
+      "row": 7,
+      "language": "ve",
+      "fieldLocator": "slide[13].heading",
+      "sourceEnglish": "Watch: See Wind and Cold Air on the Map",
+      "currentTarget": "Sedzani: See Wind and Cold Air kha Map",
+      "originalCandidate": "Sedzani: Phepho na muya u rotholelaho kha mapa",
+      "bindingChecks": {
+        "fileSHA256Exact": true,
+        "slideNumberAndIndexExact": true,
+        "sourceExact": true,
+        "currentTargetExact": true,
+        "statusExact": true
+      },
+      "candidateBacktranslation": "Watch: Wind and cooling/cold air on the map.",
+      "verdict": "repair",
+      "recommendedTarget": "Sedzani: Vhonani muya na muya wo rotholaho kha mapa",
+      "recommendedBacktranslation": "Watch: See wind and cold air on the map.",
+      "reason": "Original candidate names wind/cold air but omits explicit See; add Vhonani. Use same-module muya/wo rotholaho lexical precedent and preserve existing kha locative prefix.",
+      "precisionAndLimits": "Native Reading L3 uses muya for wind; native L2 uses muya wo rotholaho for cold air. Repeated muya has the same context disambiguation as native, not a new weather category.",
+      "retainedEnglishAnchors": []
+    },
+    {
+      "row": 8,
+      "language": "ve",
+      "fieldLocator": "slide[17].heading",
+      "sourceEnglish": "Watch: Draw the Land You Already Have",
+      "currentTarget": "Sedzani: Draw the Land You Already Have",
+      "originalCandidate": "Sedzani: Olani fhethu hune na vha naho",
+      "bindingChecks": {
+        "fileSHA256Exact": true,
+        "slideNumberAndIndexExact": true,
+        "sourceExact": true,
+        "currentTargetExact": true,
+        "statusExact": true
+      },
+      "candidateBacktranslation": "Watch: Draw the place you have.",
+      "verdict": "repair",
+      "recommendedTarget": "Sedzani: Olani land ine na vha nayo already",
+      "recommendedBacktranslation": "Watch: Draw the land that you already have.",
+      "reason": "Candidate lacks explicit already and substitutes generic place. Preserve Olani ordinary action, retain precise land/already anchors where possession/aspect concord is not independently certain; avoid introducing owned-title/property legal meaning.",
+      "precisionAndLimits": "This is a bounded mixed-language draft, not a whole-English hold. Exact land and already anchors expressly disclosed; a fluent ordinary replacement can follow later.",
+      "retainedEnglishAnchors": [
+        "land",
+        "already"
+      ]
+    },
+    {
+      "row": 9,
+      "language": "ts",
+      "fieldLocator": "slide[9].heading",
+      "sourceEnglish": "Watch: Follow the Sun Across the Site",
+      "currentTarget": "Languta: Follow the Sun Across the Site",
+      "originalCandidate": "Languta: Landzelela dyambu hinkwako endhawini ya wena",
+      "bindingChecks": {
+        "fileSHA256Exact": true,
+        "slideNumberAndIndexExact": true,
+        "sourceExact": true,
+        "currentTargetExact": true,
+        "statusExact": true
+      },
+      "candidateBacktranslation": "Watch: Follow the sun everywhere on your site.",
+      "verdict": "accept",
+      "recommendedTarget": "Languta: Landzelela dyambu hinkwako endhawini ya wena",
+      "recommendedBacktranslation": "Watch: Follow the sun across the site.",
+      "reason": "Preserves existing Watch prefix and follow/sun/across-site scope; no extra spatial geometry or seasonal claim. Site context makes ordinary place wording defensible.",
+      "precisionAndLimits": "Unreviewed semantic draft only; no fluent-language approval.",
+      "retainedEnglishAnchors": []
+    },
+    {
+      "row": 10,
+      "language": "ts",
+      "fieldLocator": "slide[10].body[1]",
+      "sourceEnglish": "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+      "currentTarget": "A wall or shade cloth can shade a bed longer in winter than in summer. Kambela shadows ta xiviri before you build or fix a shade structure in place.",
+      "originalCandidate": "Rirhangu kumbe shade cloth swi nga endla ndzhuti ehenhla ka bed nkarhi wo leha hi xixika ku hundza hi le ximumu. Kambela mindzhuti ya xiviri u nga si aka kumbe u tiyisa shade structure endhawini ya yona.",
+      "bindingChecks": {
+        "fileSHA256Exact": true,
+        "slideNumberAndIndexExact": true,
+        "sourceExact": true,
+        "currentTargetExact": true,
+        "statusExact": true
+      },
+      "candidateBacktranslation": "Wall or shade cloth can make shade over a bed longer in winter than summer; inspect actual shadows before building or strengthening the shade structure in its place.",
+      "verdict": "repair",
+      "recommendedTarget": "Rirhangu kumbe shade cloth swi nga endla ndzhuti ehenhla ka bed nkarhi wo leha hi xixika ku hundza hi le ximumu. Kambela mindzhuti ya xiviri u nga si aka kumbe u fix shade structure endhawini ya yona.",
+      "recommendedBacktranslation": "A wall or shade cloth can make shade over a bed for longer in winter than summer. Check actual shadows before building or fixing a shade structure in its place.",
+      "reason": "Can swi nga, alternative kumbe and ku hundza comparison are present. Tiyisa may strengthen rather than fix in place; retain fix English while translating before/build/OR/in-place framing. Preserve Kambela.",
+      "precisionAndLimits": "Rirhangu is wall; shade cloth, bed, fix, shade structure remain English. No means of anchoring, duration number or guaranteed shade introduced.",
+      "retainedEnglishAnchors": [
+        "shade cloth",
+        "bed",
+        "fix",
+        "shade structure"
+      ]
+    },
+    {
+      "row": 11,
+      "language": "ts",
+      "fieldLocator": "slide[13].heading",
+      "sourceEnglish": "Watch: See Wind and Cold Air on the Map",
+      "currentTarget": "Languta: See Wind and Cold Air eka Map",
+      "originalCandidate": "Languta: Mheho ni moya wo titimela emepeni",
+      "bindingChecks": {
+        "fileSHA256Exact": true,
+        "slideNumberAndIndexExact": true,
+        "sourceExact": true,
+        "currentTargetExact": true,
+        "statusExact": true
+      },
+      "candidateBacktranslation": "Watch: Wind and cold air on the map.",
+      "verdict": "repair",
+      "recommendedTarget": "Languta: Vona moya ni moya wo titimela eka mepe",
+      "recommendedBacktranslation": "Watch: See wind and cold air on the map.",
+      "reason": "Original candidate omits explicit See; add Vona. Use existing native moya for wind and preserve the current eka locative instead of unnecessary locative rewrite.",
+      "precisionAndLimits": "Current native Intro/Reading use moya for wind and mepe for map. This preserves wind AND cold air without changing to temperature or frost.",
+      "retainedEnglishAnchors": []
+    },
+    {
+      "row": 12,
+      "language": "ts",
+      "fieldLocator": "slide[17].heading",
+      "sourceEnglish": "Watch: Draw the Land You Already Have",
+      "currentTarget": "Languta: Dirowa the Land You Already Have",
+      "originalCandidate": "Languta: Dirowa ndhawu leyi u nga na yona sweswi",
+      "bindingChecks": {
+        "fileSHA256Exact": true,
+        "slideNumberAndIndexExact": true,
+        "sourceExact": true,
+        "currentTargetExact": true,
+        "statusExact": true
+      },
+      "candidateBacktranslation": "Watch: Draw the place you have now.",
+      "verdict": "repair",
+      "recommendedTarget": "Languta: Dirowa misava leyi se u nga na yona",
+      "recommendedBacktranslation": "Watch: Draw the land you already have.",
+      "reason": "Sweswi is now rather than already. Se supplies the existing state; misava is land in this mapping context. Preserve existing Languta: Dirowa.",
+      "precisionAndLimits": "Native Reading uses misava ya wena for your land. Mapping context disambiguates land from a soil-material instruction; no replanting/property acquisition meaning added.",
+      "retainedEnglishAnchors": []
+    }
+  ],
+  "preservationRequirements": [
+    "Exact canonical English and all unlisted native/paired fields must remain untouched.",
+    "Three existing Watch prefixes and existing ST Taka / TS Dirowa must remain.",
+    "Retained English technical/action anchors must have truthful provenance; not marked individually as translated.",
+    "Do not copy these full targets into learner fields with different source sentences."
+  ],
+  "limits": [
+    "Language review uses separate backtranslation and same-module lexical precedent; no fluent speaker approval.",
+    "No repository edits, renders, tests, browser actions, commits or publication.",
+    "No new farming numbers, methods, species or geometry prescriptions."
+  ]
+}

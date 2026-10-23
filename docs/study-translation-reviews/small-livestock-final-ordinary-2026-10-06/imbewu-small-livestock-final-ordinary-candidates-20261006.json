@@ -1,0 +1,542 @@
+{
+  "title": "Small-livestock final ordinary translation candidates",
+  "date": "2026-10-06",
+  "readOnly": true,
+  "repositoryEdits": false,
+  "sourceAuthority": {
+    "worktree": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField",
+    "head": "3341019a39a081a33348b2f73f9275285918f618",
+    "auditFile": "/tmp/imbewu-core-final-scope-residual-audit-20261006.json",
+    "auditSHA256": "949f7826bdb12ad7ce65209feef23ddee2aaca4f34da7f942b277ae021d32626",
+    "leadCount": 23,
+    "pairedFileSHA256": {
+      "st": "f8f2d214aa226debd7f49a9b8dbed05fd82f5928eeb0da4575e9f75070d90dc9",
+      "ve": "e4475b959cd91a1465cc4ef6142c5b65b547d190780056205d2c0f9abdf939c4",
+      "ts": "50295e9b92477e2211bb5aae0b569d233c7c1f206a2b5b187fed8e2bc485de34"
+    },
+    "method": "Every lead was rebound to the actual current source/target before disposition. Paired deck target objects were read from live JSON. Native registry objects were imported from their actual TypeScript modules under Node and inspected as runtime objects."
+  },
+  "candidateFields": [
+    {
+      "kind": "paired-slide-field",
+      "language": "st",
+      "languageName": "Sesotho",
+      "file": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/docs/study-translation-reviews/small-livestock-regional/small-livestock.st.paired-draft.json",
+      "fileSHA256": "f8f2d214aa226debd7f49a9b8dbed05fd82f5928eeb0da4575e9f75070d90dc9",
+      "locator": {
+        "moduleId": "small-livestock",
+        "slide": 4,
+        "field": "body",
+        "index": 0
+      },
+      "sourceEnglish": "Watch the hens peck at the ground among dry plant remains.",
+      "currentTargetObject": {
+        "status": "draft",
+        "text": "Sheba dikgoho tse tshehadi (hens) di kgotha (peck) fatshe hara masalla a dimela a omileng.",
+        "provenance": "unreviewed-machine-draft; blind back-translation checked",
+        "backTranslation": "Watch the hens (hens) peck (peck) on the ground among dry plant remains."
+      },
+      "currentTargetObjectSHA256": "8e23a898bc7c643b48111aa05329f86f2fd70865a4c6486b3d737744805a04e4",
+      "candidateTargetObject": {
+        "status": "draft",
+        "text": "Sheba dikgoho tse tshehadi di kobola fatshe hara masalla a dimela a omileng.",
+        "provenance": "unreviewed machine candidate; exact source-bound ordinary action correction; glossary checked; fluent review not performed",
+        "backTranslation": "Watch the female chickens peck at the ground among dry plant remains."
+      },
+      "backTranslation": "Watch the female chickens peck at the ground among dry plant remains.",
+      "disposition": "candidate",
+      "reason": "The current wording in Tshivenda and Xitsonga says the hens look for food, which changes the visible action. The Sesotho draft retains English peck in parentheses; this candidate uses the official multilingual glossary verb in each language. The field preserves hens, the ground, the dry plant remains and the instruction to watch; it adds no care guidance or condition. Noun-class agreement, idiom and register still need local review."
+    },
+    {
+      "kind": "paired-slide-field",
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "file": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/docs/study-translation-reviews/small-livestock-regional/small-livestock.ve.paired-draft.json",
+      "fileSHA256": "e4475b959cd91a1465cc4ef6142c5b65b547d190780056205d2c0f9abdf939c4",
+      "locator": {
+        "moduleId": "small-livestock",
+        "slide": 4,
+        "field": "body",
+        "index": 0
+      },
+      "sourceEnglish": "Watch the hens peck at the ground among dry plant remains.",
+      "currentTargetObject": {
+        "status": "draft",
+        "text": "Lavhelesani dzikhuhu dzi tshi ṱoḓa zwiḽiwa fhasi vhukati ha zwo salaho zwa zwimela zwo omaho.",
+        "provenance": "unreviewed-machine-draft; blind back-translation checked",
+        "backTranslation": "Watch chickens looking for food on the ground among the remains of dry plants."
+      },
+      "currentTargetObjectSHA256": "3507f884b59b6a0bfda3a53c0ddc8a1a0c8ecf5a44103a30007195da659a8bdb",
+      "candidateTargetObject": {
+        "status": "draft",
+        "text": "Lavhelesani dzikhuhu (hens) dzi tshi khokhonya fhasi vhukati ha masalela a zwimela zwo omaho.",
+        "provenance": "unreviewed machine candidate; exact source-bound ordinary action correction; glossary checked; fluent review not performed",
+        "backTranslation": "Watch hens peck at the ground among dry plant remains."
+      },
+      "backTranslation": "Watch hens peck at the ground among dry plant remains.",
+      "disposition": "candidate",
+      "reason": "The current wording in Tshivenda and Xitsonga says the hens look for food, which changes the visible action. The Sesotho draft retains English peck in parentheses; this candidate uses the official multilingual glossary verb in each language. The field preserves hens, the ground, the dry plant remains and the instruction to watch; it adds no care guidance or condition. Noun-class agreement, idiom and register still need local review."
+    },
+    {
+      "kind": "paired-slide-field",
+      "language": "ts",
+      "languageName": "standard Xitsonga",
+      "file": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/docs/study-translation-reviews/small-livestock-regional/small-livestock.ts.paired-draft.json",
+      "fileSHA256": "50295e9b92477e2211bb5aae0b569d233c7c1f206a2b5b187fed8e2bc485de34",
+      "locator": {
+        "moduleId": "small-livestock",
+        "slide": 4,
+        "field": "body",
+        "index": 0
+      },
+      "sourceEnglish": "Watch the hens peck at the ground among dry plant remains.",
+      "currentTargetObject": {
+        "status": "draft",
+        "text": "Languta tihuku (hens) ti lava swakudya emisaveni exikarhi ka masalela ya swimilana leswi omeke.",
+        "provenance": "unreviewed-machine-draft; blind back-translation checked",
+        "backTranslation": "Look at hens looking for food on the soil among dry plant remains."
+      },
+      "currentTargetObjectSHA256": "d3f263b474336764be88bb0cdeae6beded671d8a84fcc5df4a3090d4e5397246",
+      "candidateTargetObject": {
+        "status": "draft",
+        "text": "Languta tihuku (hens) ti ri karhi ti jovota ehansi, exikari ka masalela ya swimilana leswi omeke.",
+        "provenance": "unreviewed machine candidate; exact source-bound ordinary action correction; glossary checked; fluent review not performed",
+        "backTranslation": "Watch hens peck at the ground among dry plant remains."
+      },
+      "backTranslation": "Watch hens peck at the ground among dry plant remains.",
+      "disposition": "candidate",
+      "reason": "The current wording in Tshivenda and Xitsonga says the hens look for food, which changes the visible action. The Sesotho draft retains English peck in parentheses; this candidate uses the official multilingual glossary verb in each language. The field preserves hens, the ground, the dry plant remains and the instruction to watch; it adds no care guidance or condition. Noun-class agreement, idiom and register still need local review."
+    },
+    {
+      "language": "ve",
+      "kind": "paired-slide-field",
+      "file": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/docs/study-translation-reviews/small-livestock-regional/small-livestock.ve.paired-draft.json",
+      "fileSHA256": "e4475b959cd91a1465cc4ef6142c5b65b547d190780056205d2c0f9abdf939c4",
+      "locator": {
+        "moduleId": "small-livestock",
+        "slide": 2,
+        "field": "body",
+        "index": 1
+      },
+      "sourceEnglish": "Chickens eat some insects and weed seeds. Their manure can become compost.",
+      "currentTargetObject": {
+        "status": "draft",
+        "text": "Dzikhuhu (chickens) dzi ḽa zwiṅwe zwikhokhonono (insects) na dziṅwe mbeu dza weeds. Manure yadzo i nga vha compost.",
+        "provenance": "unreviewed-machine-draft; blind back-translation checked",
+        "backTranslation": "Chickens (chickens) eat some insects (insects) and some weed (weeds) seeds. Their manure may become compost."
+      },
+      "currentTargetObjectSHA256": "eca6896c01fd8935173d9c51604e98cb25e511f039fa274a257c29d751ec6284",
+      "candidateTargetObject": {
+        "status": "draft",
+        "text": "Dzikhuhu (chickens) dzi ḽa zwiṅwe zwikhokhonono (insects) na dziṅwe mbeu dza zwimela zwi sa ṱoḓeaho. Manure yadzo i nga vha compost.",
+        "provenance": "unreviewed-machine-draft; blind back-translation checked",
+        "backTranslation": "Chickens eat some insects and seeds of unwanted plants. Their manure can become compost."
+      },
+      "backTranslation": "Chickens eat some insects and seeds of unwanted plants. Their manure can become compost.",
+      "disposition": "candidate",
+      "reason": "“Weeds” is an ordinary term, not a technical species label; the source context explicitly refers to weed seeds. Candidate preserves the “some” quantity and the complete second clause without changing the technical compost/balanced-feed wording.",
+      "candidateTargetObjectSHA256": "e35a106042d5625d8b452d4e9f6a3de14484ea122785ed7ef0112b65c7980d92"
+    },
+    {
+      "language": "ve",
+      "kind": "paired-slide-field",
+      "file": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/docs/study-translation-reviews/small-livestock-regional/small-livestock.ve.paired-draft.json",
+      "fileSHA256": "e4475b959cd91a1465cc4ef6142c5b65b547d190780056205d2c0f9abdf939c4",
+      "locator": {
+        "moduleId": "small-livestock",
+        "slide": 4,
+        "field": "body",
+        "index": 1
+      },
+      "sourceEnglish": "Chickens may eat some insects and weed seeds. They still need balanced feed, clean water and shelter.",
+      "currentTargetObject": {
+        "status": "draft",
+        "text": "Dzikhuhu (chickens) dzi nga ḽa zwiṅwe zwikhokhonono (insects) na dziṅwe mbeu dza weeds. Dzi kha ḓi ṱoḓa zwiḽiwa zwi fanelaho (balanced feed), maḓi o kunaho na vhudzulo.",
+        "provenance": "unreviewed-machine-draft; blind back-translation checked",
+        "backTranslation": "Chickens (chickens) may eat some insects (insects) and some weed (weeds) seeds. They still need balanced feed (balanced feed), clean water and space."
+      },
+      "currentTargetObjectSHA256": "dcbc82bfdf6ad8453ec1bd4a126123454421e242626612dfc501cca5caf69876",
+      "candidateTargetObject": {
+        "status": "draft",
+        "text": "Dzikhuhu (chickens) dzi nga ḽa zwiṅwe zwikhokhonono (insects) na dziṅwe mbeu dza zwimela zwi sa ṱoḓeaho. Dzi kha ḓi ṱoḓa zwiḽiwa zwi fanelaho (balanced feed), maḓi o kunaho na vhudzulo.",
+        "provenance": "unreviewed-machine-draft; blind back-translation checked",
+        "backTranslation": "Chickens may eat some insects and seeds of unwanted plants. They still need balanced feed, clean water and shelter."
+      },
+      "backTranslation": "Chickens may eat some insects and seeds of unwanted plants. They still need balanced feed, clean water and shelter.",
+      "disposition": "candidate",
+      "reason": "“Weeds” is an ordinary term, not a technical species label; the source context explicitly refers to weed seeds. Candidate preserves the “some” quantity and the complete second clause without changing the technical compost/balanced-feed wording.",
+      "candidateTargetObjectSHA256": "700c230d4ca706dd89f07c990faab1c647670f2c3ac1aaa833c4ab74f1d6ab1f"
+    },
+    {
+      "language": "ve",
+      "kind": "native-lesson-field",
+      "file": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/lib/course-translation-drafts-ve-small-livestock.ts",
+      "fileSHA256": "4e9ff324b75c63fa0daf22ff31cf7c050115ff2d9971424336228183dd239958",
+      "locator": {
+        "moduleId": "small-livestock",
+        "lessonId": "small-livestock-l1",
+        "field": "body",
+        "targetField": "tshivendaDraft"
+      },
+      "sourceEnglish": "Chickens can help an empty bed after harvest. They scratch through plant remains and eat some insects and weed seeds. Their manure and bedding can be composted and returned to the soil. Foraging does not replace a balanced diet, clean water, shelter or daily care.\n\nA chicken tractor is a moveable, floorless pen. Move it before the ground becomes bare, muddy or heavily covered with manure. The right time depends on the birds, soil and weather. There is no single number of chickens that guarantees enough fertility for every plot.\n\nKeep chickens away from seedlings and crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage manure safely before the next crop. Ducks scratch less, but can still damage plants and make wet ground muddy. Watch the birds and move them when needed.",
+      "currentTarget": "Dzikhuhu (chickens) dzi nga thusa bede ḽa tsimu (garden bed) ḽi si na zwilimiwa murahu ha khaṋo. Dzi pala fhasi kha zwo salaho zwa zwimela nahone dzi ḽa zwiṅwe zwikhokhonono (insects) na dziṅwe mbeu dza weeds. Manure yadzo na bedding zwi nga itwa compost nahone zwa vhuyiswa kha mavu. U ḓiṱoḓela zwiḽiwa a hu dzhii fhethu ha zwiḽiwa zwi fanelaho (balanced diet), maḓi o kunaho, vhudzulo kana u londwa ḓuvha na ḓuvha.\n\nChicken tractor ndi pen ine ya nga sudzuluswa, i si na fhasi (floorless). Ni i sudzuluse phanḓa ha uri mavu a sale a si na tshithu (bare), a vhe na matope kana a fukedzwe nga manure nnzhi. Tshifhinga tsho teaho tshi ya nga zwiṋoni, mavu na mutsho (weather). A hu na nomboro nthihi ya dzikhuhu (chickens) ine ya fulufhedzisa fertility i ḓadzaho ṱhoḓea dza plot iṅwe na iṅwe.\n\nThivhelani dzikhuhu (chickens) u swika kha seedlings na zwilimiwa zwine zwa khou kuvhanganywa u itela zwiḽiwa. Manure ntswa i nga vha na germs. Vhudzisani extension adviser nḓila ya u langa manure nga tsireledzo phanḓa ha zwilimiwa zwi tevhelaho. Dakisi (ducks) a dzi pali fhasi nga maanḓa sa dzikhuhu, fhedzi dzi nga kha ḓi tshinya zwimela na u ita uri mavu a re na maḓi (wet) a vhe matope. Lavhelesani zwiṋoni ni zwi sudzuluse musi zwi tshi ṱoḓea.",
+      "currentTargetSHA256": "acb00b6c1b1b83f982ed86bdf11b44d50d9a0b804d43a3a46831ea52a28bf36b",
+      "candidateTarget": "Dzikhuhu (chickens) dzi nga thusa bede ḽa tsimu (garden bed) ḽi si na zwilimiwa murahu ha khaṋo. Dzi pala fhasi kha zwo salaho zwa zwimela nahone dzi ḽa zwiṅwe zwikhokhonono (insects) na dziṅwe mbeu dza zwimela zwi sa ṱoḓeaho. Manure yadzo na bedding zwi nga itwa compost nahone zwa vhuyiswa kha mavu. U ḓiṱoḓela zwiḽiwa a hu dzhii fhethu ha zwiḽiwa zwi fanelaho (balanced diet), maḓi o kunaho, vhudzulo kana u londwa ḓuvha na ḓuvha.\n\nChicken tractor ndi pen ine ya nga sudzuluswa, i si na fhasi (floorless). Ni i sudzuluse phanḓa ha uri mavu a sale a si na tshithu (bare), a vhe na matope kana a fukedzwe nga manure nnzhi. Tshifhinga tsho teaho tshi ya nga zwiṋoni, mavu na mutsho (weather). A hu na nomboro nthihi ya dzikhuhu (chickens) ine ya fulufhedzisa fertility i ḓadzaho ṱhoḓea dza plot iṅwe na iṅwe.\n\nThivhelani dzikhuhu (chickens) u swika kha seedlings na zwilimiwa zwine zwa khou kuvhanganywa u itela zwiḽiwa. Manure ntswa i nga vha na germs. Vhudzisani extension adviser nḓila ya u langa manure nga tsireledzo phanḓa ha zwilimiwa zwi tevhelaho. Dakisi (ducks) a dzi pali fhasi nga maanḓa sa dzikhuhu, fhedzi dzi nga kha ḓi tshinya zwimela na u ita uri mavu a re na maḓi (wet) a vhe matope. Lavhelesani zwiṋoni ni zwi sudzuluse musi zwi tshi ṱoḓea.",
+      "backTranslation": "Changed span only: “some insects and some seeds of unwanted plants.” The complete current source and target objects are included; every other span remains byte-identical in the candidate composition.",
+      "disposition": "candidate",
+      "reason": "Only the ordinary word “weeds” changes to the transparent phrase “unwanted plants”; the surrounding actions, some/quantity, bedding/compost technical anchors, no-replacement warning and later care instructions are byte-preserved.",
+      "currentTargetObject": {
+        "sourceEnglish": "Chickens can help an empty bed after harvest. They scratch through plant remains and eat some insects and weed seeds. Their manure and bedding can be composted and returned to the soil. Foraging does not replace a balanced diet, clean water, shelter or daily care.\n\nA chicken tractor is a moveable, floorless pen. Move it before the ground becomes bare, muddy or heavily covered with manure. The right time depends on the birds, soil and weather. There is no single number of chickens that guarantees enough fertility for every plot.\n\nKeep chickens away from seedlings and crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage manure safely before the next crop. Ducks scratch less, but can still damage plants and make wet ground muddy. Watch the birds and move them when needed.",
+        "tshivendaDraft": "Dzikhuhu (chickens) dzi nga thusa bede ḽa tsimu (garden bed) ḽi si na zwilimiwa murahu ha khaṋo. Dzi pala fhasi kha zwo salaho zwa zwimela nahone dzi ḽa zwiṅwe zwikhokhonono (insects) na dziṅwe mbeu dza weeds. Manure yadzo na bedding zwi nga itwa compost nahone zwa vhuyiswa kha mavu. U ḓiṱoḓela zwiḽiwa a hu dzhii fhethu ha zwiḽiwa zwi fanelaho (balanced diet), maḓi o kunaho, vhudzulo kana u londwa ḓuvha na ḓuvha.\n\nChicken tractor ndi pen ine ya nga sudzuluswa, i si na fhasi (floorless). Ni i sudzuluse phanḓa ha uri mavu a sale a si na tshithu (bare), a vhe na matope kana a fukedzwe nga manure nnzhi. Tshifhinga tsho teaho tshi ya nga zwiṋoni, mavu na mutsho (weather). A hu na nomboro nthihi ya dzikhuhu (chickens) ine ya fulufhedzisa fertility i ḓadzaho ṱhoḓea dza plot iṅwe na iṅwe.\n\nThivhelani dzikhuhu (chickens) u swika kha seedlings na zwilimiwa zwine zwa khou kuvhanganywa u itela zwiḽiwa. Manure ntswa i nga vha na germs. Vhudzisani extension adviser nḓila ya u langa manure nga tsireledzo phanḓa ha zwilimiwa zwi tevhelaho. Dakisi (ducks) a dzi pali fhasi nga maanḓa sa dzikhuhu, fhedzi dzi nga kha ḓi tshinya zwimela na u ita uri mavu a re na maḓi (wet) a vhe matope. Lavhelesani zwiṋoni ni zwi sudzuluse musi zwi tshi ṱoḓea.",
+        "reviewStatus": "machine-draft"
+      },
+      "currentTargetObjectSHA256": "41793a664960d9d116fbfc04881da4cde527e7109bc52b2a88747698e91cbe3d",
+      "candidateTargetObject": {
+        "sourceEnglish": "Chickens can help an empty bed after harvest. They scratch through plant remains and eat some insects and weed seeds. Their manure and bedding can be composted and returned to the soil. Foraging does not replace a balanced diet, clean water, shelter or daily care.\n\nA chicken tractor is a moveable, floorless pen. Move it before the ground becomes bare, muddy or heavily covered with manure. The right time depends on the birds, soil and weather. There is no single number of chickens that guarantees enough fertility for every plot.\n\nKeep chickens away from seedlings and crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage manure safely before the next crop. Ducks scratch less, but can still damage plants and make wet ground muddy. Watch the birds and move them when needed.",
+        "tshivendaDraft": "Dzikhuhu (chickens) dzi nga thusa bede ḽa tsimu (garden bed) ḽi si na zwilimiwa murahu ha khaṋo. Dzi pala fhasi kha zwo salaho zwa zwimela nahone dzi ḽa zwiṅwe zwikhokhonono (insects) na dziṅwe mbeu dza zwimela zwi sa ṱoḓeaho. Manure yadzo na bedding zwi nga itwa compost nahone zwa vhuyiswa kha mavu. U ḓiṱoḓela zwiḽiwa a hu dzhii fhethu ha zwiḽiwa zwi fanelaho (balanced diet), maḓi o kunaho, vhudzulo kana u londwa ḓuvha na ḓuvha.\n\nChicken tractor ndi pen ine ya nga sudzuluswa, i si na fhasi (floorless). Ni i sudzuluse phanḓa ha uri mavu a sale a si na tshithu (bare), a vhe na matope kana a fukedzwe nga manure nnzhi. Tshifhinga tsho teaho tshi ya nga zwiṋoni, mavu na mutsho (weather). A hu na nomboro nthihi ya dzikhuhu (chickens) ine ya fulufhedzisa fertility i ḓadzaho ṱhoḓea dza plot iṅwe na iṅwe.\n\nThivhelani dzikhuhu (chickens) u swika kha seedlings na zwilimiwa zwine zwa khou kuvhanganywa u itela zwiḽiwa. Manure ntswa i nga vha na germs. Vhudzisani extension adviser nḓila ya u langa manure nga tsireledzo phanḓa ha zwilimiwa zwi tevhelaho. Dakisi (ducks) a dzi pali fhasi nga maanḓa sa dzikhuhu, fhedzi dzi nga kha ḓi tshinya zwimela na u ita uri mavu a re na maḓi (wet) a vhe matope. Lavhelesani zwiṋoni ni zwi sudzuluse musi zwi tshi ṱoḓea.",
+        "reviewStatus": "machine-draft"
+      },
+      "candidateTargetObjectSHA256": "c09eccf19f7e46106291e7bd6861beb73293994117b5fb06d9e6ced2d88fd6fe"
+    }
+  ],
+  "leadDispositions": [
+    {
+      "leadIndex": 0,
+      "language": "ve",
+      "slide": 9,
+      "sourceEnglish": "Watch one bee move from one blossom to another.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Lavhelesani ṋotshi nthihi i tshi bva kha luvha ḽithihi i tshi ya kha ḽiṅwe.",
+        "provenance": "unreviewed-machine-draft; blind back-translation checked",
+        "backTranslation": "Watch one bee leaving one flower and going to another."
+      },
+      "proposal": "Vhonani ṋotshi nthihi i tshi bva kha luvha i tshi ya kha ḽiṅwe.",
+      "disposition": "skip-current-field-already-localized",
+      "reason": "Exact current field already expresses this source in localized wording; this lead does not justify a new translation. Difficult domain terms/species labels may remain as bounded English anchors."
+    },
+    {
+      "leadIndex": 1,
+      "language": "ve",
+      "slide": 9,
+      "field": "body",
+      "sourceEnglish": "Watch one bee move from one blossom to another.",
+      "proposedCandidate": "Dziṋotshi dzi nga hwala pollen musi dzi tshi dalela maluvha.",
+      "disposition": "skip-misbound-proposal",
+      "reason": "Proposal source does not equal this indexed current paired field source; discard without using proposal wording."
+    },
+    {
+      "leadIndex": 2,
+      "language": "ve",
+      "slide": 1,
+      "sourceEnglish": "Small livestock integration turns chickens, ducks, and bees into working parts of the farm.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "U ṱanganyisa zwifuwo zwiṱuku hu ita uri dzikhuhu (chickens), dakisi (ducks) na dziṋotshi (bees) dzi vhe zwipiḓa zwi shumaho zwa bulasi.",
+        "provenance": "unreviewed-machine-draft; blind back-translation checked",
+        "backTranslation": "Integrating small livestock makes chickens (chickens), ducks (ducks) and bees (bees) become working parts of the farm."
+      },
+      "proposal": "U ṱanganya zwifuwo zwiṱuku zwi ngaho chickens, ducks na bees zwi ita uri zwi shume na kha purasi.",
+      "disposition": "skip-current-field-already-localized",
+      "reason": "Exact current field already expresses this source in localized wording; this lead does not justify a new translation. Difficult domain terms/species labels may remain as bounded English anchors."
+    },
+    {
+      "leadIndex": 3,
+      "language": "ve",
+      "slide": 1,
+      "field": "body",
+      "sourceEnglish": "Small livestock integration turns chickens, ducks, and bees into working parts of the farm.",
+      "proposedCandidate": "Gudani uri zwifuwo zwi nga langa pests, zwa engedza soil fertility, zwa thusa pollination, na u vhuedzedza ndeme mavuni.",
+      "disposition": "skip-misbound-proposal",
+      "reason": "Proposal source does not equal this indexed current paired field source; discard without using proposal wording."
+    },
+    {
+      "leadIndex": 4,
+      "language": "ve",
+      "slide": 2,
+      "sourceEnglish": "Small livestock can do work beyond producing meat, eggs, or honey.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Zwifuwo zwiṱuku zwi nga ita mushumo u fhiraho u bveledza nama, makumba kana mutoli (honey).",
+        "provenance": "unreviewed-machine-draft; blind back-translation checked",
+        "backTranslation": "Small livestock can do a job beyond producing meat, eggs or honey (honey)."
+      },
+      "proposal": "Zwifuwo zwiṱuku zwi nga ita mishumo iṅwe nga nnḓa ha u bveledza nyama, eggs kana honey.",
+      "disposition": "skip-current-field-already-localized",
+      "reason": "Exact current field already expresses this source in localized wording; this lead does not justify a new translation. Difficult domain terms/species labels may remain as bounded English anchors."
+    },
+    {
+      "leadIndex": 5,
+      "language": "ve",
+      "slide": 2,
+      "field": "body",
+      "sourceEnglish": "Small livestock can do work beyond producing meat, eggs, or honey.",
+      "proposedCandidate": "Chickens dziḽa dziṅwe insects na seeds dza weeds.",
+      "disposition": "skip-misbound-proposal",
+      "reason": "Proposal source does not equal this indexed current paired field source; discard without using proposal wording."
+    },
+    {
+      "leadIndex": 6,
+      "language": "ve",
+      "slide": 2,
+      "field": "body",
+      "sourceEnglish": "Small livestock can do work beyond producing meat, eggs, or honey.",
+      "proposedCandidate": "Ducks dzi ṱharamudza fhasi nga zwiṱuku u fhira chickens, fhedzi dzi nga kha ḓi tshinya zwimela.",
+      "disposition": "skip-misbound-proposal",
+      "reason": "Proposal source does not equal this indexed current paired field source; discard without using proposal wording."
+    },
+    {
+      "leadIndex": 7,
+      "language": "ve",
+      "slide": 2,
+      "field": "body",
+      "sourceEnglish": "Small livestock can do work beyond producing meat, eggs, or honey.",
+      "proposedCandidate": "Bees na dziṅwe pollinators dzi thusa zwimela zwinzhi.",
+      "disposition": "skip-misbound-proposal",
+      "reason": "Proposal source does not equal this indexed current paired field source; discard without using proposal wording."
+    },
+    {
+      "leadIndex": 8,
+      "language": "ve",
+      "slide": 3,
+      "sourceEnglish": "By the end of this module, you will understand how chickens, ducks, bees, and guinea fowl fit into a working system.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Mafheleloni a ngudo iyi, ni ḓo pfesesa nḓila ine dzikhuhu (chickens), dakisi (ducks), dziṋotshi (bees) na guinea fowl dza vha ngayo tshipiḓa tsha system i shumaho.",
+        "provenance": "unreviewed-machine-draft; blind back-translation checked",
+        "backTranslation": "At the end of this lesson, you will understand the way chickens (chickens), ducks (ducks), bees (bees) and guinea fowl (guinea fowl) become part of a working system."
+      },
+      "proposal": "Musi module iyi i tshi fhela, ni ḓo pfesesa uri chickens, ducks, bees na guinea fowl zwi shuma hani kha sisiteme i shumaho.",
+      "disposition": "skip-current-field-already-localized",
+      "reason": "Exact current field already expresses this source in localized wording; this lead does not justify a new translation. Difficult domain terms/species labels may remain as bounded English anchors."
+    },
+    {
+      "leadIndex": 9,
+      "language": "ve",
+      "slide": 4,
+      "field": "body",
+      "sourceEnglish": "Watch the hens peck at the ground among dry plant remains.",
+      "proposedCandidate": "Sedzani hens dzi tshi runga fhasi vhukati ha masalela a zwimela o omileyo.",
+      "disposition": "candidate-reviewed-above",
+      "reason": "Exact current source and paired object were reread and bound above; prior proposed wording still requires the action correction recorded there."
+    },
+    {
+      "leadIndex": 10,
+      "language": "ve",
+      "slide": 5,
+      "field": "body",
+      "sourceEnglish": "Chickens can help an empty bed after harvest.",
+      "proposedCandidate": "Dzi runga vhukati ha masalela a zwimela nahone dziḽa dziṅwe insects na seeds dza weeds.",
+      "disposition": "skip-misbound-proposal",
+      "reason": "Proposal source does not equal this indexed current paired field source; discard without using proposal wording."
+    },
+    {
+      "leadIndex": 11,
+      "language": "ve",
+      "slide": 7,
+      "sourceEnglish": "Ducks eat slugs and snails without the heavy scratching of chickens.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Dakisi (ducks) dzi ḽa slugs na snails hu si na u pala fhasi nga maanḓa sa dzikhuhu.",
+        "provenance": "unreviewed-machine-draft; blind back-translation checked",
+        "backTranslation": "Ducks (ducks) eat slugs (slugs) and snails (snails) without scratching the ground much like chickens."
+      },
+      "proposal": "Ducks dziḽa slugs na snails, fhedzi a dzi runga fhasi nga maanḓa u fana na chickens.",
+      "disposition": "skip-current-field-already-localized",
+      "reason": "Exact current field already expresses this source in localized wording; this lead does not justify a new translation. Difficult domain terms/species labels may remain as bounded English anchors."
+    },
+    {
+      "leadIndex": 12,
+      "language": "ts",
+      "slide": 9,
+      "sourceEnglish": "Watch one bee move from one blossom to another.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Languta nyoxi (bee) yin'we yi suka eka xiluva yi ya eka xin'wana.",
+        "provenance": "unreviewed-machine-draft; blind back-translation checked",
+        "backTranslation": "Look at one bee leaving a flower and going to another."
+      },
+      "proposal": "Languta nyoxi yin’we yi suka eka xiluva yi ya eka xin’wana.",
+      "disposition": "skip-current-field-already-localized",
+      "reason": "Exact current field already expresses this source in localized wording; this lead does not justify a new translation. Difficult domain terms/species labels may remain as bounded English anchors."
+    },
+    {
+      "leadIndex": 13,
+      "language": "ts",
+      "slide": 9,
+      "field": "body",
+      "sourceEnglish": "Watch one bee move from one blossom to another.",
+      "proposedCandidate": "Tinyoxi ti nga rhwala pollen loko ti endzela swiluva.",
+      "disposition": "skip-misbound-proposal",
+      "reason": "Proposal source does not equal this indexed current paired field source; discard without using proposal wording."
+    },
+    {
+      "leadIndex": 14,
+      "language": "ts",
+      "slide": 1,
+      "sourceEnglish": "Small livestock integration turns chickens, ducks, and bees into working parts of the farm.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Ku hlanganisa swifuwo leswitsongo swi endla leswaku tihuku (chickens), masekwa (ducks) na tinyoxi (bees) swi va swiphemu leswi tirhaka swa purasi.",
+        "provenance": "unreviewed-machine-draft; blind back-translation checked",
+        "backTranslation": "Integrating small livestock makes chickens, ducks and bees become working parts of the farm."
+      },
+      "proposal": "Ku hlanganisa swifuwo leswitsongo swo fana na tihuku, masekwe na tinyoxi swi endla leswaku swi tirha swin’we na purasi.",
+      "disposition": "skip-current-field-already-localized",
+      "reason": "Exact current field already expresses this source in localized wording; this lead does not justify a new translation. Difficult domain terms/species labels may remain as bounded English anchors."
+    },
+    {
+      "leadIndex": 15,
+      "language": "ts",
+      "slide": 1,
+      "field": "body",
+      "sourceEnglish": "Small livestock integration turns chickens, ducks, and bees into working parts of the farm.",
+      "proposedCandidate": "Dyondza ndlela leyi swifuwo swi nga lawulaka pests, swi antswisaka soil fertility, swi pfunaka pollination ni ku tlherisela nkoka emisaveni.",
+      "disposition": "skip-misbound-proposal",
+      "reason": "Proposal source does not equal this indexed current paired field source; discard without using proposal wording."
+    },
+    {
+      "leadIndex": 16,
+      "language": "ts",
+      "slide": 2,
+      "field": "body",
+      "sourceEnglish": "Small livestock can do work beyond producing meat, eggs, or honey.",
+      "proposedCandidate": "Tihuku ti dya switsotswana swin’wana ni mbewu ya nhova.",
+      "disposition": "skip-misbound-proposal",
+      "reason": "Proposal source does not equal this indexed current paired field source; discard without using proposal wording."
+    },
+    {
+      "leadIndex": 17,
+      "language": "ts",
+      "slide": 2,
+      "field": "body",
+      "sourceEnglish": "Small livestock can do work beyond producing meat, eggs, or honey.",
+      "proposedCandidate": "Masekwe ma cela misava katsongo ku hundza tihuku, kambe ma nga ha onha swimilana.",
+      "disposition": "skip-misbound-proposal",
+      "reason": "Proposal source does not equal this indexed current paired field source; discard without using proposal wording."
+    },
+    {
+      "leadIndex": 18,
+      "language": "ts",
+      "slide": 2,
+      "field": "body",
+      "sourceEnglish": "Small livestock can do work beyond producing meat, eggs, or honey.",
+      "proposedCandidate": "Tinyoxi ni swin’wana leswi pfunaka pollination swi pfuna swibyariwa swo tala.",
+      "disposition": "skip-misbound-proposal",
+      "reason": "Proposal source does not equal this indexed current paired field source; discard without using proposal wording."
+    },
+    {
+      "leadIndex": 19,
+      "language": "ts",
+      "slide": 3,
+      "sourceEnglish": "By the end of this module, you will understand how chickens, ducks, bees, and guinea fowl fit into a working system.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Loko module leyi yi hela, u ta twisisa ndlela leyi tihuku (chickens), masekwa (ducks), tinyoxi (bees) na guinea fowl swi tirhaka ha yona eka sisiteme leyi tirhaka.",
+        "provenance": "unreviewed-machine-draft; blind back-translation checked",
+        "backTranslation": "When this module ends, you will understand how chickens, ducks, bees and guinea fowl work in a working system."
+      },
+      "proposal": "Loko module leyi yi hela, u ta twisisa ndlela leyi tihuku, masekwe, tinyoxi na guinea fowl swi tirhaka ha yona eka sisiteme leyi tirhaka.",
+      "disposition": "skip-current-field-already-localized",
+      "reason": "Exact current field already expresses this source in localized wording; this lead does not justify a new translation. Difficult domain terms/species labels may remain as bounded English anchors."
+    },
+    {
+      "leadIndex": 20,
+      "language": "ts",
+      "slide": 4,
+      "field": "body",
+      "sourceEnglish": "Watch the hens peck at the ground among dry plant remains.",
+      "proposedCandidate": "Languta tihuku ti ri karhi ti peck-a ehansi, exikari ka masalela ya swimilana leswi omeke.",
+      "disposition": "candidate-reviewed-above",
+      "reason": "Exact current source and paired object were reread and bound above; prior proposed wording still requires the action correction recorded there."
+    },
+    {
+      "leadIndex": 21,
+      "language": "ts",
+      "slide": 5,
+      "field": "body",
+      "sourceEnglish": "Chickens can help an empty bed after harvest.",
+      "proposedCandidate": "Ti cela-cela exikari ka masalela ya swimilana, ti dya switsotswana swin’wana ni mbewu ya nhova.",
+      "disposition": "skip-misbound-proposal",
+      "reason": "Proposal source does not equal this indexed current paired field source; discard without using proposal wording."
+    },
+    {
+      "leadIndex": 22,
+      "language": "ts",
+      "slide": 7,
+      "sourceEnglish": "Ducks eat slugs and snails without the heavy scratching of chickens.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Masekwa (ducks) ma dya slugs na snails, kambe a ma cela-celi misava hi matimba ku fana na tihuku.",
+        "provenance": "unreviewed-machine-draft; blind back-translation checked",
+        "backTranslation": "Ducks eat slugs and snails, but they do not scratch the soil hard like chickens."
+      },
+      "proposal": "Masekwe ma dya slugs na snails, kambe a ma cela-celi misava hi ndlela yo tika ku fana na tihuku.",
+      "disposition": "skip-current-field-already-localized",
+      "reason": "Exact current field already expresses this source in localized wording; this lead does not justify a new translation. Difficult domain terms/species labels may remain as bounded English anchors."
+    }
+  ],
+  "nativeRegistryContext": [
+    {
+      "language": "st",
+      "file": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/lib/course-translation-drafts-st-small-livestock.ts",
+      "locator": {
+        "lessonId": "small-livestock-l1",
+        "field": "body",
+        "targetField": "sesothoDraft"
+      },
+      "sourceEnglish": "Chickens can help an empty bed after harvest. They scratch through plant remains and eat some insects and weed seeds. Their manure and bedding can be composted and returned to the soil. Foraging does not replace a balanced diet, clean water, shelter or daily care.\n\nA chicken tractor is a moveable, floorless pen. Move it before the ground becomes bare, muddy or heavily covered with manure. The right time depends on the birds, soil and weather. There is no single number of chickens that guarantees enough fertility for every plot.\n\nKeep chickens away from seedlings and crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage manure safely before the next crop. Ducks scratch less, but can still damage plants and make wet ground muddy. Watch the birds and move them when needed.",
+      "currentTarget": "Dikgoho (chickens) di ka thusa bethe ya dijalo (bed) e se nang letho kamora kotulo. Di fata hara masala a dimela mme di ja dikokwanyana tse ding le dipeo tsa dimela tse sa batleheng (weeds). Manyolo a tsona le bedding di ka etswa kompost mme tsa kgutlisetswa mobung. Ho phetla dijo (foraging) ha ho nke sebaka sa dijo tse leka-lekaneng, metsi a hlwekileng, bodulo kapa tlhokomelo ya letsatsi le letsatsi.\n\nChicken tractor ke lesaka le ka suthiswang, le se nang mokato (floorless). Le suthise pele mobu o ba o se nang letho, o fetohile seretse kapa o kwahetswe haholo ke manyolo. Nako e nepahetseng e ya ka dinonyana, mobu le boemo ba lehodimo. Ha ho palo e le nngwe ya dikgoho (chickens) e netefatsang monono o lekaneng wa mobu bakeng sa sebaka se seng le se seng.\n\nBoloka dikgoho (chickens) hole le dimela tse nyenyane tse sa tswa mela (seedlings) le dijalo tse kotulwang bakeng sa dijo. Manyolo a matjha a ka jara dikokwanahloko tse bakang malwetse (germs). Botsa extension adviser mokgwa wa ho tshwara manyolo ka polokeho pele ho sejalo se latelang. Dipidipidi (ducks) ha di fate haholo jwaloka dikgoho, empa di ntse di ka senya dimela mme di ka etsa hore mobu o metsi o be seretse. Shebella dinonyana mme o di suthise ha ho hlokeha.",
+      "reviewStatus": "machine-draft",
+      "note": "The exact slide-4 source sentence does not occur in this native lesson body; do not mirror the paired-slide candidate into this distinct field."
+    },
+    {
+      "language": "ve",
+      "file": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/lib/course-translation-drafts-ve-small-livestock.ts",
+      "locator": {
+        "lessonId": "small-livestock-l1",
+        "field": "body",
+        "targetField": "tshivendaDraft"
+      },
+      "sourceEnglish": "Chickens can help an empty bed after harvest. They scratch through plant remains and eat some insects and weed seeds. Their manure and bedding can be composted and returned to the soil. Foraging does not replace a balanced diet, clean water, shelter or daily care.\n\nA chicken tractor is a moveable, floorless pen. Move it before the ground becomes bare, muddy or heavily covered with manure. The right time depends on the birds, soil and weather. There is no single number of chickens that guarantees enough fertility for every plot.\n\nKeep chickens away from seedlings and crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage manure safely before the next crop. Ducks scratch less, but can still damage plants and make wet ground muddy. Watch the birds and move them when needed.",
+      "currentTarget": "Dzikhuhu (chickens) dzi nga thusa bede ḽa tsimu (garden bed) ḽi si na zwilimiwa murahu ha khaṋo. Dzi pala fhasi kha zwo salaho zwa zwimela nahone dzi ḽa zwiṅwe zwikhokhonono (insects) na dziṅwe mbeu dza weeds. Manure yadzo na bedding zwi nga itwa compost nahone zwa vhuyiswa kha mavu. U ḓiṱoḓela zwiḽiwa a hu dzhii fhethu ha zwiḽiwa zwi fanelaho (balanced diet), maḓi o kunaho, vhudzulo kana u londwa ḓuvha na ḓuvha.\n\nChicken tractor ndi pen ine ya nga sudzuluswa, i si na fhasi (floorless). Ni i sudzuluse phanḓa ha uri mavu a sale a si na tshithu (bare), a vhe na matope kana a fukedzwe nga manure nnzhi. Tshifhinga tsho teaho tshi ya nga zwiṋoni, mavu na mutsho (weather). A hu na nomboro nthihi ya dzikhuhu (chickens) ine ya fulufhedzisa fertility i ḓadzaho ṱhoḓea dza plot iṅwe na iṅwe.\n\nThivhelani dzikhuhu (chickens) u swika kha seedlings na zwilimiwa zwine zwa khou kuvhanganywa u itela zwiḽiwa. Manure ntswa i nga vha na germs. Vhudzisani extension adviser nḓila ya u langa manure nga tsireledzo phanḓa ha zwilimiwa zwi tevhelaho. Dakisi (ducks) a dzi pali fhasi nga maanḓa sa dzikhuhu, fhedzi dzi nga kha ḓi tshinya zwimela na u ita uri mavu a re na maḓi (wet) a vhe matope. Lavhelesani zwiṋoni ni zwi sudzuluse musi zwi tshi ṱoḓea.",
+      "reviewStatus": "machine-draft",
+      "note": "The exact slide-4 source sentence does not occur in this native lesson body; do not mirror the paired-slide candidate into this distinct field."
+    },
+    {
+      "language": "ts",
+      "file": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/lib/course-translation-drafts-ts-small-livestock.ts",
+      "locator": {
+        "lessonId": "small-livestock-l1",
+        "field": "body",
+        "targetField": "xitsongaDraft"
+      },
+      "sourceEnglish": "Chickens can help an empty bed after harvest. They scratch through plant remains and eat some insects and weed seeds. Their manure and bedding can be composted and returned to the soil. Foraging does not replace a balanced diet, clean water, shelter or daily care.\n\nA chicken tractor is a moveable, floorless pen. Move it before the ground becomes bare, muddy or heavily covered with manure. The right time depends on the birds, soil and weather. There is no single number of chickens that guarantees enough fertility for every plot.\n\nKeep chickens away from seedlings and crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage manure safely before the next crop. Ducks scratch less, but can still damage plants and make wet ground muddy. Watch the birds and move them when needed.",
+      "currentTarget": "Tihuku (chickens) ti nga pfuna bedi ra ku byala leri nga riki na nchumu endzhaku ka ntshovelo. Ti cela eka masalela ya swimilana, ti dya switsotswana swin'wana na mbewu ya weeds. Mavi ya tona na bedding swi nga endliwa compost kutani swi tlheriseriwa emisaveni. Ku tilavela swakudya a ku tekeli ndhawu ya swakudya leswi hlanganeke kahle, mati yo tenga, vutumbelo kumbe vukorhokeri bya siku na siku.\n\nChicken tractor i xivaka lexi tshukisekaka, lexi nga riki na hansi (floor). Xi tshukise loko misava yi nga si fika ku nga ri na swimilana, ku va na mati ni ndzhope (mud) kumbe ku funengetiwa hi mavi swinene. Nkarhi lowu faneleke wu titshege hi tihuku, misava na maxelo. A ku na nhlayo yin'we ya tihuku leyi tiyisekisaka leswaku swakudya swa misava swi lokwaneleke eka ndhawu yin'wana ni yin'wana ya ku byala.\n\nHlayisa tihuku (chickens) ekule na swimilana leswintshwa (seedlings) na swibyariwa leswi tshoveriwaka leswaku swi dyiwa. Mavi lamantshwa ma nga rhwala germs. Vutisa extension adviser leswaku mavi ma lawuriwa njhani hi ku hlayiseka loko ku nga si va ku byariwa swibyariwa leswi landzelaka. Masekwa (ducks) a ma celi ngopfu kukota tihuku, kambe ma nga ha onha swimilana ni ku endla misava leyi tele hi mati yi va na ndzhope (mud). Languta swinyenyana kutani u swi tshukisa loko swi laveka.",
+      "reviewStatus": "machine-draft",
+      "note": "The exact slide-4 source sentence does not occur in this native lesson body; do not mirror the paired-slide candidate into this distinct field."
+    }
+  ],
+  "classification": {
+    "ordinaryResiduals": [
+      "Slide 4 verb “peck” is an ordinary observable action. The official South African multilingual Natural Sciences and Technology glossary returns Sesotho kobola, Tshivenda -khokhonya, Xitsonga jovota; candidates preserve this exact beak-strike action and are explicitly unapproved drafts.",
+      "Tshivenda “weeds” in paired slides 2/4 and native small-livestock-l1 is an ordinary agricultural word, not a protected species/technical term; the candidate says seeds of unwanted plants."
+    ],
+    "difficultTechnicalAnchorsToKeep": [
+      "pollen/pollination",
+      "compost",
+      "balanced feed/diet",
+      "bedding",
+      "chicken tractor",
+      "species/common-name labels where taxonomy or animal identity is uncertain (especially guinea fowl, ducks, hens); no species substitutions."
+    ],
+    "heldOrAlreadyLocalized": [
+      "All source-bound leads outside slide 4 were rechecked and the current target already expresses the source in localized wording; exclude their stale proposals. The exact slide-4 sentence does not appear in the native lesson body, so the correction remains slide-only.",
+      "No claim of fluent approval, learner comprehension, or module-wide completion. Noun-class agreement, idiom and local register require independent regional-language review."
+    ]
+  },
+  "lexicalEvidence": {
+    "reference": "South African Department of Sport, Arts and Culture / Department of Basic Education, multilingual Natural Sciences and Technology terminology (peck verb entries): Sesotho “kobola”, Tshivenda “-khokhonya”, Xitsonga “jovota”.",
+    "limitation": "Earlier read-only web search returned official document snippets; the PDF page itself did not open during that inspection. The entries are lexical evidence only, not validation of sentence grammar or local idiom."
+  }
+}

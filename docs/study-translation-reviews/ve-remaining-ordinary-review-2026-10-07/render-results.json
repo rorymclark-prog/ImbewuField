@@ -1,0 +1,45 @@
+[
+  {
+    "module": "intro-permaculture",
+    "slides": [
+      6,
+      7,
+      10,
+      11,
+      14
+    ],
+    "output": "/tmp/imbewu-ve-ordinary-render-20261007/intro-permaculture",
+    "exitCode": 0
+  },
+  {
+    "module": "market-community",
+    "slides": [
+      11
+    ],
+    "output": "/tmp/imbewu-ve-ordinary-render-20261007/market-community",
+    "exitCode": 0
+  },
+  {
+    "module": "reading-landscape",
+    "slides": [
+      1,
+      4,
+      18,
+      20,
+      21
+    ],
+    "output": "/tmp/imbewu-ve-ordinary-render-20261007/reading-landscape",
+    "exitCode": 0
+  },
+  {
+    "module": "vegetables-staples",
+    "slides": [
+      5,
+      6,
+      16,
+      18
+    ],
+    "output": "/tmp/imbewu-ve-ordinary-render-20261007/vegetables-staples",
+    "exitCode": 0
+  }
+]

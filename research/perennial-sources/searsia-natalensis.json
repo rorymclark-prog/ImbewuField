@@ -1,0 +1,62 @@
+{
+  "speciesId": "searsia-natalensis",
+  "commonName": "Natal currant",
+  "botanicalName": "Searsia natalensis",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No food-production pollination classification verified in the checked primary source."
+  },
+  "harvestProduct": "ripe fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Edible Natal currant fruit and local phenology",
+      "quote": "Fruits are edible.",
+      "url": "https://pza.sanbi.org/searsia-natalensis",
+      "doc": "SANBI PlantZAfrica: Searsia natalensis",
+      "page": null,
+      "note": "The primary account establishes edible ripe fruit and February–July fruit appearance. That interval includes developing fruit and is retained only as phenology, not a ripe picking calendar. No annual food kg or bearing age is supplied."
+    }
+  ],
+  "productionGuidance": {
+    "products": "ripe fruit",
+    "care": [
+      "Allow fruit to ripen. This drought-resistant shrub can form a hedge; prune to suit the space."
+    ],
+    "purchase": [
+      "Confirm the exact species with a local indigenous-plant nursery; no tested regional cultivar or quantified yield selection is established."
+    ]
+  },
+  "householdFoodStatus": "confirmed-food",
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/searsia-natalensis",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified primary page, institutional abstract or downloaded primary PDF; product, region, age and native-unit limits retained."
+    }
+  ],
+  "gaps": [
+    "Fruit-appearance months are not an exact ripe-food picking window; local ripening dates remain unverified."
+  ]
+}

@@ -1,6 +1,8 @@
 # Crop Art Brief
 
-**Status:** deployed and guarded by `tests/element-art.test.ts`
+**Status:** done (2026-09-28). All 49 crops have finished art at the deployed size of
+**256×256**; the 20 Batch 2 placeholders were replaced in PR #779.
+Guarded by `tests/element-art.test.ts`.
 **Requested by:** Rory, 2026-08-15 — flagged the Farm-gate Prices screen showing a
 raw 🧡 orange-heart emoji for Butternut ("that's just an orange heart... we can do
 better than that").
@@ -176,3 +178,60 @@ contrast needs more separation, not a color tweak.
 4. Add the matching `lib/crop-art.ts` entry in the same commit. The automated
    guard requires every catalog key, mapping and on-disk filename to agree.
 5. Do not change a crop name while doing artwork; the checked catalog is the authority.
+
+## Batch 2 — new catalog crops (2026-09-28)
+
+The crop-catalog expansion (PR #754) adds these crops. Each is currently shipped with a
+**temporary generated placeholder** so the guard test passes — replace every one with real art
+under the rules above (produce view, three-quarter angle, soft-shaded illustration matching the
+existing set, 256×256 RGBA, transparent corners, readable at 24px). The filename is already
+correct; overwrite the PNG in place. `lib/crop-art.ts` already maps the key. The placeholders are easy to spot: flat single-colour
+shapes under 35 KB, where the finished files are shaded and 60–130 KB.
+
+Chinese cabbage, leeks and cassava were researched but NOT added to `CROPS` (no primary SA source
+for their missing values), so they need no art. If they are added later, their rows go back here.
+
+| key | name | anchor hex | what to draw (and how it must differ from its look-alike) |
+|---|---|---|---|
+| amaranth | Amaranth (imifino / thepe) | `#6E8B3D` | loose bunch of pointed-oval leaves, some red-flushed stems; not spinach-smooth, not kale-crinkled |
+| african-nightshade | African nightshade (umsobo) | `#2F4F2A` | bunch of small dark oval leaves with a few purple-black berries; darkest leafy green of the batch |
+| spider-plant | Spider plant (Cleome, lerotho) | `#4E7F3A` | bunch of stems with 5-fingered (palmate) leaves — the hand shape is the silhouette |
+| cowpea | Cowpea | `#E6D8B8` | small pile of cream kidney-shaped seeds each with a black "eye"; must not read as dry-beans' speckled pile |
+| bambara-groundnut | Bambara groundnut (izindlubu) | `#B5654A` | pile of round, mottled red-brown and cream seeds; rounder than beans, no shell (unlike groundnuts) |
+| mung-bean | Mung bean | `#6B8E23` | small pile of tiny olive-green round beans; smaller and greener than every other legume |
+| soybean | Soybean | `#E3C77A` | small pile of round pale-yellow beans, 2–3 fuzzy tan pods beside them |
+| sorghum | Sorghum (amabele) | `#A0522D` | one dense upright grain head of rounded red-brown seeds on a short stalk; not oats' loose golden stalks |
+| sunflower | Sunflower | `#E8B923` | flower head, yellow petals round a dark seed disc; the disc is the product so keep it large |
+| sweetcorn | Sweetcorn | `#F2DC6B` | fresh cob, bright green husk peeled back, pale glossy kernels; maize is dry gold with papery husk |
+| gem-squash | Gem squash | `#2F4A2A` | small round dark-green ball, one half cut showing yellow flesh; smaller and darker than pumpkin |
+| baby-marrow | Baby marrow (courgette) | `#4F7F3A` | 2 small straight speckled courgettes with stem ends; matte speckle vs cucumber's smooth waxy skin |
+| spanspek | Spanspek (cantaloupe) | `#D8B86A` | round melon with beige netted rind, one wedge cut to show orange flesh; not watermelon's green/red |
+| brinjal | Brinjal (eggplant) | `#3D1E4A` | one glossy deep-purple brinjal with green calyx cap; the only purple fruit in the set |
+| cauliflower | Cauliflower | `#F2EEDC` | white knobbly curd head framed by a few green leaves; white is the read, not the leaves |
+| parsley | Parsley | `#3F8F3A` | tight bunch of CURLY leaves; coriander is flat and lighter, so the curl is the differentiator |
+| radish | Radish | `#C8283C` | 3–4 small round red radishes, white tips, tops trimmed short |
+| fodder-radish | Fodder radish (cover crop) | `#EDE6D6` | one long white tapering taproot with a leafy top; long and white vs radish's small round red |
+| sunn-hemp | Sunn hemp (cover crop) | `#E3B81F` | a few upright stems with yellow pea-flower spikes and narrow leaves |
+| medic | Medic (cover crop) | `#5E8C3A` | small clump of three-part (trefoil) leaves with coiled spiral seed pods — the spiral is the read |
+
+Hue check for the batch: purple (brinjal), red (radish), red-brown (sorghum, bambara), gold/yellow
+(sunflower, sunn hemp, sweetcorn, soybean), cream/white (cowpea, cauliflower, fodder radish),
+six greens differentiated by silhouette first (palmate, curly, trefoil, berries, speckled
+courgette, round gem) — follow the three-axis rule above for the greens.
+
+### Ready-to-paste Codex prompt (batch 2)
+
+> Run `git fetch origin && git checkout origin/main -b codex/crop-art-batch-2` first. The 20 files
+> below exist and are already mapped, but they are flat placeholder shapes, not finished art.
+> Replace the 20 placeholder PNGs in `public/crop-art/` listed in the Batch 2 table of
+> `docs/CROP-ART-BRIEF.md` with real produce art. Read the whole brief first and match the style of
+> the existing 29 crop PNGs (open 4–5 of them, e.g. `butternut.png`, `kale.png`, `dry-beans.png`).
+> For each key: draw only the harvested product, three-quarter view, soft-shaded illustration,
+> soft light from upper left, anchor hex as the dominant colour. The PNG must be 256×256 RGBA with
+> all four corners fully transparent, no shadow or ground, and the subject filling the frame
+> (≤3% margin). Overwrite the file in place and keep the filename. After each file, run the
+> brief's self-check script and do the 24×24 downscale look test. Do not edit `lib/crop-art.ts`
+> or `lib/crop-catalog.ts`; the mapping already exists. When all 20 are done, run
+> `node --import ./tests/register-alias.mjs --test tests/element-art.test.ts` and commit only the
+> PNGs.
+

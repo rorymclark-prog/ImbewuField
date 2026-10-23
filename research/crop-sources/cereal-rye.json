@@ -1,0 +1,140 @@
+{
+  "key": "cereal-rye",
+  "name": "Cereal Rye (Stooling Rye)",
+  "localNames": { "af": "stoelrog" },
+  "botanicalName": "Secale cereale",
+  "family": "Poaceae",
+  "role": "cover",
+  "foodGroup": null,
+  "harvestProduct": "winter grazing/fodder/silage and green-manure biomass, killed at early boot stage before summer grain planting",
+  "frostTender": {
+    "value": false,
+    "evidence": [
+      {
+        "quote": "Once well-established, it can withstand very cold conditions (down to -35°C).",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-19-stooling-rye-secale-cereale-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 19: Stooling rye, SA Grain/Grain SA (Truter, Dannhauser, Smith & Trytsman), 2019"
+      }
+    ]
+  },
+  "transplant": { "value": false, "evidence": [] },
+  "sowMonths": {
+    "summer": {
+      "months": [2, 3],
+      "evidence": [
+        {
+          "quote": "The best time to seed this species is February/March.",
+          "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-19-stooling-rye-secale-cereale-l/",
+          "page": null,
+          "doc": "Integrated crop and pasture-based livestock production systems – Part 19: Stooling rye, SA Grain/Grain SA, 2019"
+        }
+      ]
+    },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": {
+      "months": [2, 3],
+      "evidence": [
+        {
+          "quote": "The best time to seed this species is February/March.",
+          "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-19-stooling-rye-secale-cereale-l/",
+          "page": null,
+          "doc": "Integrated crop and pasture-based livestock production systems – Part 19: Stooling rye, SA Grain/Grain SA, 2019"
+        }
+      ]
+    }
+  },
+  "daysToHarvestRange": {
+    "value": [75, 139],
+    "evidence": [
+      {
+        "quote": "It is recommended to harvest rye no later than at early boot stage (before heading) in order to maintain good palatability, intake and nutritive value.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-19-stooling-rye-secale-cereale-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 19: Stooling rye, SA Grain/Grain SA, 2019"
+      },
+      {
+        "quote": "It is used as a cover crop and killed two weeks before planting summer grain.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-19-stooling-rye-secale-cereale-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 19: Stooling rye, SA Grain/Grain SA, 2019"
+      },
+      {
+        "quote": "Cultivars varied in the number of days it took from planting to harvest at soft dough stage (Figure 2). The earliest silage harvest was Josefina barley and KM 10 triticale (83 days after planting) and the cultivars that had the latest silage harvest were Elisabet oats, Overberg oats and Estero 1430 red oat (166 days after planting). The time to flowering for the short duration cultivars was between 75 and 139 days after sowing.",
+        "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/Short-medium-and-long-duration-cereals-for-cover-crops-and-winter-forage.pdf",
+        "page": 2,
+        "doc": "Berjak D. 'Short, medium and long duration cereals for cover crops and winter forage', KZN DARD Research & Technology Bulletin 2020/21-09, published Feb 2021"
+      },
+      {
+        "quote": "Short duration Medium duration Long duration\nEarly flowering Medium flowering Late flowering\n... LS 35 (R) ... SSR 1 (R) SSR 727 (R) Southern Green (R) ... Forage cereals (Rye (R), Oats (O), Black oats (BO), Red oats (RO), Triticale (T), Barley (B))",
+        "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/Short-medium-and-long-duration-cereals-for-cover-crops-and-winter-forage.pdf",
+        "page": 4,
+        "doc": "Berjak D., Figure 4 cultivar-classification schematic, KZN DARD Research & Technology Bulletin 2020/21-09, 2021"
+      }
+    ],
+    "notes": "Value [75,139] is days-from-sowing-to-FLOWERING for the 'short duration' category of a 2019 Cedara (KZN DARD) forage-cereal cultivar trial. Four of the ~12 short-duration cultivars tested were stooling/spring rye lines (LS 35, SSR 1, SSR 727, Southern Green -- see Figure 4), so the 75-139 day figure is an SA institutional, trial-derived range that includes cereal rye but is not isolated to rye alone (the trial's other short-duration cultivars were oats, triticale and barley); this scope limitation is recorded honestly rather than presenting it as rye-only. The same bulletin's Figure 4 also shows several OTHER named rye cultivars (Southern Blue, Barpower, NCD Grazer, AgriBlue, LS 62, SSR 729, Barfuro, Sorom) falling in the medium/long-duration (later-flowering) categories, so 75-139 days should be read as the EARLY end of cereal rye's real flowering-time spread, not a ceiling for every rye cultivar sold in SA. The pre-existing SA Grain quotes (early-boot-stage harvest cue; killed 2 weeks before summer-grain planting) remain the operative FIELD MANAGEMENT rule -- rye is meant to be grazed/terminated well BEFORE the 75-139 day flowering point, so that figure is an upper bound on when flowering (and the end of good forage quality) occurs, not a recommended termination day itself."
+  },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": null,
+  "inRowSpacingRangeCm": null,
+  "sowDepthRangeCm": null,
+  "seedRateKgPerHaRange": {
+    "value": [25, 75],
+    "evidence": [
+      {
+        "quote": "Seeding rates can be between 25 kg/ha – 50 kg/ha (dryland) and 50 kg/ha – 75 kg/ha (irrigated) and depends upon whether it is sown in a mixture or not.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-19-stooling-rye-secale-cereale-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 19: Stooling rye, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "yield": {
+    "tPerHaRange": [7, 10],
+    "product": "dry matter (fodder/green-manure biomass) at boot stage",
+    "conditions": "optimal management",
+    "evidence": [
+      {
+        "quote": "When the plant reaches boot stage, the species should yield in the order of 7 tons – 10 tons of dry matter (DM)/ha under optimal management conditions.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-19-stooling-rye-secale-cereale-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 19: Stooling rye, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "ecocrop": {
+    "row": "Secale cereale",
+    "TOPMN": 15,
+    "TOPMX": 20,
+    "TMIN": 3,
+    "TMAX": 31,
+    "GMIN": 110,
+    "GMAX": 270
+  },
+  "coverCrop": {
+    "nFixedKgPerHa": null,
+    "biomassTPerHa": 10,
+    "terminateAfterDays": null,
+    "evidence": [
+      {
+        "quote": "It is used as a cover crop and killed two weeks before planting summer grain.",
+        "url": "https://sagrainmag.co.za/2019/03/04/integrated-crop-and-pasture-based-livestock-production-systems-part-19-stooling-rye-secale-cereale-l/",
+        "page": null,
+        "doc": "Integrated crop and pasture-based livestock production systems – Part 19: Stooling rye, SA Grain/Grain SA, 2019"
+      }
+    ]
+  },
+  "varieties": [],
+  "zoneNotes": {
+    "highveld": "Grown in areas with cold winters/warm dry summers; tolerates -35°C once established; sown Feb/March ahead of winter grazing and killed before the next summer grain crop.",
+    "karoo-arid": "Relatively drought-resistant, can tolerate annual rainfall as low as 400mm."
+  },
+  "gaps": [
+    "No row/in-row spacing or sow-depth figures found (this cereal is drilled/broadcast, not spaced as a row crop in the source) -- this is why verdict stays 'partial' even though days-to-harvest is now sourced.",
+    "The 75-139 day flowering-time figure is drawn from a 'short duration' forage-cereal category that includes 4 named rye cultivars alongside oats/triticale/barley, not an isolated rye-only trial; other named SA rye cultivars fall in the later-flowering medium/long-duration categories of the same trial (see daysToHarvestRange.notes) and were not numerically dated.",
+        "No named SA rye cultivars carried into this dossier's own 'varieties' list yet, despite several now being identifiable by name from the KZN DARD bulletin (e.g. LS 35, Southern Green, Southern Blue, AgriBlue)."
+  ],
+  "verdict": "partial",
+  "summary": "Sow window (Feb/Mar), seed rate (25-75 kg/ha dryland/irrigated) and DM biomass yield at boot stage (7-10 t/ha) are all directly sourced from Grain SA's Part 19 (Stooling rye) article. Not a legume, so N-fixed is null. Days-to-harvest is now sourced (75-139 days sowing-to-flowering for short-duration cultivars, incl. 4 named rye lines, from a 2019 KZN DARD Cedara cultivar trial), with the SA Grain early-boot-stage/two-weeks-before-summer-grain cues retained as the field termination rule (i.e. terminate well before the 75-139 day flowering point). Verdict stays 'partial' solely because no row/in-row spacing figure exists for this drilled/broadcast cereal in any source checked."
+}

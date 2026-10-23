@@ -143,3 +143,42 @@ Note for when figures return: Fig 28 ("multiple nitrogen fixers") should be chec
 - Relative cold tolerance of Fuerte vs Hass avocado; windbreak porosity and shelter-distance figures; tree-hole and watering guidance; inoculant method — all standard extension advice, not re-checked online this session.
 - Red List status of *Warburgia salutaris* (Endangered) — stated in text only as "threatened in the wild".
 - Legal references (National Veld and Forest Fire Act 101 of 1998; National Forests Act 84 of 1998 protected trees; provincial permits for wild seed and flowers) — not re-checked online.
+
+## Second pass (27 Sep 2026)
+
+Rewrite to REWRITE.md (6,974 → about 4,440 words). WebFetch was still blocked (dffe.gov.za egress-blocked), so checks below are from WebSearch results.
+
+### Verified (with source)
+
+- Eastern Amazon food forests "at least 4,500 years": Maezumi et al. (2018), *The legacy of 4,500 years of polyculture agroforestry in the eastern Amazon*, Nature Plants — https://www.nature.com/articles/s41477-018-0205-y. Added that the forest still carries the edible trees they favoured (the paper reports an enduring legacy of edible-plant hyperdominance).
+- Grassy biomes are not "unfinished forest"; tree planting there harms biodiversity and water: Veldman et al. (2015), BioScience 65(10):1011–1018 — https://academic.oup.com/bioscience/article/65/10/1011/245863.
+- *Buddleja saligna*: usually 4–5 m on the Highveld (to 10 m in warm, moist areas); honey-scented cream flowers August–January — https://pza.sanbi.org/buddleja-saligna. Text now "usually 4 to 5 m on the Highveld", "late winter into summer".
+- *Searsia lancea*: to about 8 m, frost-hardy, drought-resistant, non-aggressive roots — https://pza.sanbi.org/searsia-lancea. Text changed from "7 to 9 m" to "about 8 m".
+- *Leonotis leonurus*: 2–5 m, bird-pollinated, sunbirds — https://pza.sanbi.org/leonotis-leonurus. Text changed from "usually 2 to 3 m" to "2 to 5 m".
+- *Protea cynaroides*: 0.35–2 m, resprouts from a thick underground stem after fire — https://pza.sanbi.org/protea-cynaroides.
+- *Warburgia salutaris*: threatened by over-harvesting of bark (about 50% decline); recently downlisted from Endangered to Vulnerable — https://redlist.sanbi.org/species.php?species=925-2 ; https://www.nature.com/articles/s41598-020-76654-6. Text says only "stripped from the wild for its bark"; "buy nursery-grown" kept.
+- Fuerte more cold-tolerant than Hass — UC ANR *Cold Tolerant Avocado Varieties?* https://ucanr.edu/blog/topics-subtropics/article/cold-tolerant-avocado-varieties and other growers' guides.
+- SA avocado season: bulk March–September — https://avocado.co.za/sa-avocado-industry-overview/ ; https://southafrica.co.za/avocado-seasons.html. Text changed from "autumn and winter" to "about March to September". Citrus left as "autumn and winter" (not re-checked).
+- *Peltophorum africanum* is non-nodulating (does not fix nitrogen) — Useful Tropical Plants and legume nodulation literature (search results). The row was dropped from the shorter windbreak table anyway.
+- *Vachellia karroo* is the main woody encroacher of SA grassland (E Cape, Free State, North West) — https://www.intechopen.com/chapters/56901 ; https://en.wikipedia.org/wiki/Vachellia_karroo. Warning kept. The same sources name paperbark thorn (*V. sieberiana*) as an encroacher in the Eastern Cape, so **paperbark thorn was dropped** from the nitrogen-fixer table.
+- *Leucosidea sericea* encroaches overgrazed high-altitude grassland — https://pza.sanbi.org/leucosidea-sericea ; https://www.sciencedirect.com/science/article/abs/pii/S0254629924005453. Warning kept.
+- Windbreak porosity about 40–50% gives the longest shelter; shelter reaches 10–20 times the height downwind — USDA NAC *Windbreak Density: Rules of Thumb* https://www.fs.usda.gov/nac/assets/documents/agroforestrynotes/an36w03.pdf and SDSU Extension. Text now gives "often 10 to 20 times" the height.
+- Planting hole 2–3 times as wide as the root ball and no deeper; wide shallow hole or raised planting on poor drainage — Iowa State Extension https://yardandgarden.extension.iastate.edu/faq/how-large-hole-should-be-dug-when-planting-tree.
+- Mulch 5–10 cm, kept off the trunk — Penn State Extension https://extension.psu.edu/mulching-landscape-trees ; Colorado State GardenNotes #658.
+- Deep, less frequent watering grows deeper roots; frequent at first, then about weekly — Arbor Day Foundation https://www.arborday.org/perspectives/how-properly-water-your-trees.
+- Inoculant: coat seed just before sowing, pre-wetting helps it stick, sunlight kills the bacteria — UMN Extension https://extension.umn.edu/yard-and-garden-news/inoculating-garden-legumes ; USDA NRCS technical note.
+
+### Cut
+
+- Artichoke / cardoon (*Cynara cardunculus*) and fennel (*Foeniculum vulgare*): NEMBA status still could not be confirmed and both run wild in parts of the Cape, so both were dropped rather than kept with containment notes.
+- *Dalbergia obovata* (nitrogen fixing unconfirmed), *Peltophorum africanum*, *Afrocarpus falcatus*, *Apodytes dimidiata*, *Balanites maughamii*, *Bauhinia galpinii*, *Buddleja salviifolia*, *Calodendrum capense* (windbreak row; still in the canopy layer), *Kiggelaria africana*, *Olinia emarginata*, *Salix mucronata*, *Scolopia zeyheri*, *Terminalia sericea*, *Salvia stenophylla* dropped from the windbreak table for length. The "Size (height)" column (mostly unverified values) was replaced by a Row column (back / middle / front).
+- *Vachellia sieberiana* (encroacher — see above), *Hypoxis hemerocallidea*, *Annona senegalensis*, black sapote's and many vegetables' separate rows: the seven long per-layer tables were merged into one seven-row layer table that names examples only.
+- Medicinal-plant Safety box and rue Safety box (rue no longer in the chapter): moved to `research/manual/rewrite/06-tree-systems-endnote.md`.
+- All legal remarks (NEMBA categories, Casuarina Category 2 permit and 30 m rule, protected-tree licence, wild-seed and protea-picking permits, National Veld and Forest Fire Act, kikuyu 1b status): moved to the endnote file.
+
+### Generalised
+
+- Fig: kept, with "pull out fig seedlings you find away from the garden" (naturalised; NEMBA listing still not confirmed).
+- Casuarina, gum and pine: now "common farm windbreaks, but they spread into veld and rivers" — no category or permit detail.
+- Citrus harvest season kept as "autumn and winter" (general, not re-checked).
+- NEMBA "not found as listed" rows remain unconfirmed against the gazette itself (dffe.gov.za still blocked); the chapter now says only that recommended plants are indigenous or "not a declared invader in South Africa".

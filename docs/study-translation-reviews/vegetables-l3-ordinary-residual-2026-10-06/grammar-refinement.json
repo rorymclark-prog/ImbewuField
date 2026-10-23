@@ -1,0 +1,160 @@
+{
+  "reportType": "read-only independent grammar/semantic refinement; no fluent approval",
+  "date": "2026-10-06",
+  "input": {
+    "path": "/tmp/imbewu-vegetables-l3-ordinary-final-spans-actual-drafts-20261006.json",
+    "sha256": "b923828a75a583df8fabe51a8264b121ed066b17ec356cc36a0e7861fc768f9a",
+    "expectedSha256": "b923828a75a583df8fabe51a8264b121ed066b17ec356cc36a0e7861fc768f9a",
+    "matchesExpected": true
+  },
+  "repository": {
+    "head": "68f955a1227b1a9bfc659e8a7908fee099f8ab9b",
+    "readOnly": true,
+    "grammarEvidenceFiles": [
+      {
+        "path": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+        "sha256": "179c9d7cd9dffbc1a139d82e67c734a39c9b4d0f4cc5b7d2013471a413b0609f",
+        "bytes": 29418
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "st:vegetables-staples-l3:body[8]:young_leaves_edible",
+      "language": "st",
+      "decision": "accept semantic span; retain unreviewed status; native concord review remains pending",
+      "sourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "currentFullParagraph": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too.",
+      "candidateFullParagraph": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. young leaves tsa yona le tsona di a jeha.",
+      "candidateSpan": "young leaves tsa yona le tsona di a jeha.",
+      "semanticAssessment": "Accept candidate span semantically. “young leaves” leaves the age explicit; “tsa yona” ties them to the sweet potato in this paragraph; “le tsona” retains too; “di a jeha” states edible. The exact current/draft module keypoint has the same young-leaves sweet-potato referent and confirms the intended claim. No other crop is added.",
+      "conditionsPreserved": {
+        "sameSweetPotatoParagraphOnly": true,
+        "youngAge": true,
+        "leafPart": true,
+        "possessiveReferent": true,
+        "edible": true,
+        "additiveToo": true,
+        "precedingDroughtRootAndWaterStressClausesByteExact": true
+      },
+      "physicalDeckBinding": {
+        "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+        "slide": 13,
+        "bodyIndex": 3,
+        "exactSourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+        "currentTargetPair": {
+          "status": "draft",
+          "text": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too."
+        },
+        "proposedTargetText": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. young leaves tsa yona le tsona di a jeha.",
+        "sourceWholeParagraphEqualsLearner": true,
+        "statusIfLaterApplied": "unreviewed draft/mixed per exact English holds; not reviewed",
+        "publicationSegmentStatus": "Not wired. Segment boundaries must follow semantic source clauses and retained terms; no character-diff status inference."
+      },
+      "fluencyApproval": false
+    },
+    {
+      "id": "ve:vegetables-staples-l3:body[8]:young_leaves_edible",
+      "language": "ve",
+      "decision": "accept semantic span; retain unreviewed status; native concord review remains pending",
+      "sourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "currentFullParagraph": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too.",
+      "candidateFullParagraph": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. young leaves ayo na one a a ḽiwa.",
+      "candidateSpan": "young leaves ayo na one a a ḽiwa.",
+      "semanticAssessment": "Accept candidate span semantically. “young leaves” retains age; “ayo” ties them to the sweet-potato referent; “na one” retains too; “a a ḽiwa” states edible. Keep young in English rather than risk changing it to small/new. No other crop is added.",
+      "conditionsPreserved": {
+        "sameSweetPotatoParagraphOnly": true,
+        "youngAge": true,
+        "leafPart": true,
+        "possessiveReferent": true,
+        "edible": true,
+        "additiveToo": true,
+        "precedingDroughtRootAndWaterStressClausesByteExact": true
+      },
+      "physicalDeckBinding": {
+        "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "slide": 13,
+        "bodyIndex": 3,
+        "exactSourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+        "currentTargetPair": {
+          "status": "draft",
+          "text": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too."
+        },
+        "proposedTargetText": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. young leaves ayo na one a a ḽiwa.",
+        "sourceWholeParagraphEqualsLearner": true,
+        "statusIfLaterApplied": "unreviewed draft/mixed per exact English holds; not reviewed",
+        "publicationSegmentStatus": "Not wired. Segment boundaries must follow semantic source clauses and retained terms; no character-diff status inference."
+      },
+      "fluencyApproval": false
+    },
+    {
+      "id": "ts:vegetables-staples-l3:body[8]:young_leaves_edible",
+      "language": "ts",
+      "decision": "accept semantic span; retain unreviewed status; native concord review remains pending",
+      "sourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "currentFullParagraph": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too.",
+      "candidateFullParagraph": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. young leaves ya yona na yona ya dyiwa.",
+      "candidateSpan": "young leaves ya yona na yona ya dyiwa.",
+      "semanticAssessment": "Accept the candidate span as a meaning-preserving draft: “young leaves” explicitly preserves age; “ya yona” supplies the sweet-potato link; “na yona” adds too; “ya dyiwa” gives the edible predicate. The same module keypoint uses “young leaves ya yona ya dyiwa,” supporting reuse, but that draft is not a fluent concord authority. Keep this mixed phrase pending fluent Xitsonga concord review; do not replace young with small/new.",
+      "conditionsPreserved": {
+        "sameSweetPotatoParagraphOnly": true,
+        "youngAge": true,
+        "leafPart": true,
+        "possessiveReferent": true,
+        "edible": true,
+        "additiveToo": true,
+        "precedingDroughtRootAndWaterStressClausesByteExact": true
+      },
+      "physicalDeckBinding": {
+        "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "slide": 13,
+        "bodyIndex": 3,
+        "exactSourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+        "currentTargetPair": {
+          "status": "draft",
+          "text": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too."
+        },
+        "proposedTargetText": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. young leaves ya yona na yona ya dyiwa.",
+        "sourceWholeParagraphEqualsLearner": true,
+        "statusIfLaterApplied": "unreviewed draft/mixed per exact English holds; not reviewed",
+        "publicationSegmentStatus": "Not wired. Segment boundaries must follow semantic source clauses and retained terms; no character-diff status inference."
+      },
+      "fluencyApproval": false
+    },
+    {
+      "id": "ts:vegetables-staples-l3:body[1]:stores_or_stays_in_ground",
+      "decision": "accept exact repair: remove the extra “a” before “hlayiseka”",
+      "sourceEnglish": "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+      "currentFullParagraph": "Yi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory.",
+      "candidateFullParagraph": "Yi nyika energy kumbe protein. Yi a hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava. Hakanyingi yi tlhela yi rhwala cultural memory.",
+      "evidence": {
+        "sameModuleTsongaUsage": "Maize yi nyika calories naswona yi hlayiseka loko yi omile.",
+        "evidencePath": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+        "evidenceRole": "The same active Vegetables L3 TS native draft uses “yi hlayiseka” for maize storage; it supports the lean construction. It is not evidence for any storage duration.",
+        "semantics": {
+          "storesClause": "“Yi hlayiseka” is a plausible “it stores/keeps” construction consistent with the module parallel.",
+          "orAlternative": "“kumbe” retains the source OR.",
+          "groundAlternative": "“yi sala yi ri emavuni” retains stays in the ground.",
+          "untilNeed": "“ku fikela loko u yi lava” retains until you need it.",
+          "addedGuarantee": false
+        }
+      },
+      "physicalDeckBinding": {
+        "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "slide": 12,
+        "bodyIndex": 1,
+        "exactSourceEnglish": "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+        "currentTargetPair": {
+          "status": "draft",
+          "text": "Yi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory."
+        },
+        "proposedTargetText": "Yi nyika energy kumbe protein. Yi a hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava. Hakanyingi yi tlhela yi rhwala cultural memory.",
+        "sourceWholeParagraphEqualsLearner": true,
+        "statusIfLaterApplied": "unreviewed draft/mixed per exact English holds; not reviewed",
+        "publicationSegmentStatus": "Not wired. Segment boundaries must follow semantic source clauses and retained terms; no character-diff status inference."
+      },
+      "fluencyApproval": false
+    }
+  ],
+  "scopeConclusion": "The TS storage refinement should be exactly “Yi hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava.” The matching in-module “yi hlayiseka” supports removing a. It preserves both alternatives and the until-needed boundary with no duration claim. All three young-leaves spans preserve young/leaf/possessive/edible/too and the exact sweet-potato referent. Retaining the English age phrase avoids an unsupported young→small/new shift. The mixed-language possessive/agreement should remain draft pending fluent checks, especially TS class concord. No repository edits."
+}

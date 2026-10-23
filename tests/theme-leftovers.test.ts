@@ -13,6 +13,12 @@
 // components/PopiaConsent.tsx, components/Onboarding.tsx and app/login/page.tsx were touched in
 // the same wave but already have their own dedicated guard tests (tests/firstrun-theme-tokens.test.ts,
 // tests/pre-auth-theme-tokens.test.ts) — updated alongside this file rather than duplicated here.
+//
+// swarm/w13-student — "Study area: dark theme" (code-01 + dark-02) extended this file to the
+// Studies screens: app/student/page.tsx and app/student/Studies.module.css had 157 hardcoded
+// light-mode hexes between them and zero var(--...) colour uses in the module.css, so the whole
+// /student area stayed a cream/white page under a dark shell in dark mode. The same literal-hex
+// regression also affected the Finance course and Teach-the-Teachers refresher stylesheets.
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -23,6 +29,16 @@ const RELATIVE_PATHS = [
   'app/community/page.tsx',
   'app/community/profile/page.tsx',
   'app/contact/page.tsx',
+  'app/student/page.tsx',
+  'app/student/Studies.module.css',
+  'components/studies/FinanceCourse.module.css',
+  'app/student/teach-the-teachers/Refresher.module.css',
+  // w16-04: the four design/guide CSS modules, now on theme tokens (the two diagram viewports keep
+  // one fixed paper colour because their SVGs draw in fixed dark inks).
+  'components/studies/AppGuide.module.css',
+  'components/studies/DesignScalePractice.module.css',
+  'components/studies/DesignPortfolio.module.css',
+  'components/studies/DesignWorkedDiagram.module.css',
 ];
 const FILES = RELATIVE_PATHS.map((p) => fileURLToPath(new URL(`../${p}`, import.meta.url)));
 
@@ -34,10 +50,21 @@ const FILES = RELATIVE_PATHS.map((p) => fileURLToPath(new URL(`../${p}`, import.
 //    swatches (the same role var(--info)/var(--ochre) play elsewhere as root-only status
 //    colours), not the forest brand colour this test polices. Only KIND_COLOR.have (the forest
 //    swatch) was converted to var(--color-forest-800).
+//  - '#C07A1E' on app/student/page.tsx is the progress-ring's "not yet complete" stroke colour —
+//    the same deliberately-literal ochre fill role CLAUDE.md documents ("Ochre is a FILL"), not
+//    text painted with it.
 const ALLOWED_HEX: Record<string, Set<string>> = {
   'app/community/page.tsx': new Set(['#FFF', '#235E86', '#C07A1E']),
   'app/community/profile/page.tsx': new Set(['#FFF']),
   'app/contact/page.tsx': new Set(['#FFF']),
+  'app/student/page.tsx': new Set(['#C07A1E']),
+  'app/student/Studies.module.css': new Set(),
+  'components/studies/FinanceCourse.module.css': new Set(),
+  'app/student/teach-the-teachers/Refresher.module.css': new Set(),
+  'components/studies/AppGuide.module.css': new Set(),
+  'components/studies/DesignScalePractice.module.css': new Set(['#FAF7EE']),
+  'components/studies/DesignPortfolio.module.css': new Set(),
+  'components/studies/DesignWorkedDiagram.module.css': new Set(['#F7F1E3']),
 };
 
 // The forest/paper/error hexes this wave removed. Any of these creeping back into these three

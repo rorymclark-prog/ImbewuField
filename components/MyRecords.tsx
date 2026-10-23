@@ -1,6 +1,6 @@
 'use client';
 
-import { numberLabel } from '@/lib/format-figures';
+import { randCentsLabel } from '@/lib/format-figures';
 import { sampleProducePhoto } from '@/lib/sample-media';
 import { resizeFileForUpload } from '@/lib/site-evidence';
 
@@ -9,7 +9,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage, translate } from '@/lib/i18n';
+import { recordsFill, recordsPaired, recordsTemplate, recordsQuantityLabel, recordsDraft, samePlaceholders } from '@/lib/records-regional-drafts';
+import { recordsDate } from '@/lib/records-months';
 import {
   myProduction,
   mySales,
@@ -42,6 +44,7 @@ import type { ProductionLog, SalesLog, ExpenseLog, Design, Profile } from '@/lib
 import CropSelect from '@/components/CropSelect';
 import CropIcon from '@/components/CropIcon';
 import { buildCropAliasIndex, cropIdentityOf } from '@/lib/crop-identity';
+import { produceLabel } from '@/lib/produce-label';
 import { getCropArt } from '@/lib/crop-art';
 import { loadCropPriceOverrides, priceFor, type CropPrice } from '@/lib/crop-prices';
 import { parseDecimalInput } from '@/lib/decimal-input';
@@ -55,6 +58,9 @@ import {
   DEFAULT_INCLUDE_PERENNIALS,
 } from '@/lib/produce-scope';
 import { produceDisplayName } from '@/lib/perennial-produce';
+import RecordQuantityFields from '@/components/records/RecordQuantityFields';
+import RecordQuantitySummary from '@/components/records/RecordQuantitySummary';
+import { recordQuantityPayload, recordQuantity, recordWeightKg, quantityTotals, type RecordUnit } from '@/lib/farm-records';
 import {
   buildCreditPackPdf,
   buildCreditPackPreviewPdf,
@@ -64,19 +70,46 @@ import {
 } from '@/lib/credit-pack-pdf';
 
 function recordsUi(lang: string, english: string, isiZulu: string, paired = false): string {
-  if (lang !== 'zu') return english;
+  // Sesotho, Tshivenda and Xitsonga read the source-keyed drafts (lib/records-regional-drafts.ts).
+  if (lang !== 'zu') return paired ? recordsPaired(lang, english) : recordsFill(lang, english);
   return paired ? `${english} — ${isiZulu}` : isiZulu;
+}
+
+// zu-11: the lender card's longer sentences used to lead with the English paragraph and only
+// then the isiZulu one (recordsUi's `paired` order above), on a card specifically meant to be
+// shown to a lender who may read isiZulu first. Same pairing, isiZulu first.
+function recordsUiZuFirst(lang: string, english: string, isiZulu: string): string {
+  if (lang !== 'zu') return recordsPaired(lang, english);
+  return `${isiZulu} — ${english}`;
 }
 
 /** Keep the English control label visible until this transactional copy has fluent review. */
 function RecordZuluDraft({ lang, english, isiZulu }: { lang: string; english: string; isiZulu: string }) {
-  if (lang !== 'zu') return <>{english}</>;
+  const local = lang === 'zu' ? isiZulu : recordsDraft(lang, english);
+  if (!local) return <>{english}</>;
   return (
     <span className="inline-flex min-w-0 flex-col" style={{ textTransform: 'none', letterSpacing: 'normal', lineHeight: 1.25 }}>
-      <span lang="zu">{isiZulu}</span>
+      <span lang={lang}>{local}</span>
       <span lang="en" className="text-xs font-normal" style={{ color: 'inherit' }}>English source: {english}</span>
     </span>
   );
+}
+
+/**
+ * t(), with the money book's drafts filling only the keys this locale still shows in English.
+ * A real locale translation is never replaced, and a draft whose {placeholders} differ from the
+ * English (the guide-price lines substitute rands and kilograms into them) is refused.
+ */
+function useRecordsT(): { t: (key: string) => string; lang: string } {
+  const { t, lang } = useLanguage();
+  return {
+    lang,
+    t: (key: string) => {
+      const english = translate('en', key);
+      const filled = recordsFill(lang, english, t(key));
+      return samePlaceholders(english, filled) ? filled : english;
+    },
+  };
 }
 
 // Shown when addProduction/addSale (lib/db/queries.ts) time out waiting for the server — see the
@@ -146,11 +179,12 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
       {...props}
-      className={`dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none transition-all ${props.className ?? ''}`}
+      className={`dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] transition-all ${props.className ?? ''}`}
       style={{
         background: 'var(--bg-1)',
         border: '1px solid var(--border)',
         color: 'var(--text-primary)',
+        colorScheme: 'light dark',
         ...props.style,
       }}
     />
@@ -164,7 +198,7 @@ function SubmitBtn({
   loading: boolean;
   children: React.ReactNode;
 }) {
-  const { t, lang } = useLanguage();
+  const { t, lang } = useRecordsT();
   return (
     <button
       type="submit"
@@ -196,23 +230,23 @@ function SubmitBtn({
 }
 
 function Divider() {
-  return <div className="h-px my-4" style={{ background: '#E2D8C4' }} />;
+  return <div className="h-px my-4" style={{ background: 'var(--border)' }} />;
 }
 
 /* ── Format helpers ──────────────────────────────────────────────────────── */
 
-function fmtDate(raw: string | null | undefined): string {
+function fmtDate(raw: string | null | undefined, lang = 'en'): string {
   if (!raw) return '—';
   const d = new Date(raw);
   return isNaN(d.getTime())
     ? raw
-    : d.toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' });
+    : recordsDate(lang, d, true);
 }
 
 /* ── Sign-in prompt ──────────────────────────────────────────────────────── */
 
 function SignInPrompt() {
-  const { t } = useLanguage();
+  const { t } = useRecordsT();
   return (
     <div className="flex flex-col items-center justify-center gap-4 py-12 px-6 text-center">
       <div
@@ -231,7 +265,7 @@ function SignInPrompt() {
         >
           {t('myRecordsSignInTitle')}
         </p>
-        <p className="font-display text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+        <p className="font-display text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
           {t('myRecordsSignInBody')}
         </p>
       </div>
@@ -255,7 +289,8 @@ function SignInPrompt() {
 interface ProdFormState {
   crop: string;
   cropKey: string | null;
-  kg: string;
+  quantity: string;
+  unit: RecordUnit;
   photoFile: File | null;
   photoPreview: string;
   loading: boolean;
@@ -263,11 +298,11 @@ interface ProdFormState {
 }
 
 function LogProductionForm({ onSaved }: { onSaved: () => void }) {
-  const { t, lang } = useLanguage();
+  const { t, lang } = useRecordsT();
   const [form, setForm] = useState<ProdFormState>({
     crop: '',
     cropKey: null,
-    kg: '',
+    quantity: '', unit: 'kg',
     photoFile: null,
     photoPreview: '',
     loading: false,
@@ -290,14 +325,16 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (form.loading) return;
     const crop = form.crop.trim();
-    const kg = parseDecimalInput(form.kg);
-    if (!crop || isNaN(kg) || kg <= 0) {
-      setForm((f) => ({ ...f, error: t('myRecordsProdValidationError') }));
+    const quantity = parseDecimalInput(form.quantity);
+    if (!crop || !Number.isFinite(quantity) || quantity <= 0) {
+      setForm((f) => ({ ...f, error: 'Enter a product and a quantity greater than zero.' }));
       return;
     }
     setForm((f) => ({ ...f, loading: true, error: '' }));
     try {
+      const quantityFields = recordQuantityPayload(quantity, form.unit);
       let photo_url: string | null = null;
       if (form.photoFile) {
         const resized = await resizeFileForUpload(form.photoFile);
@@ -305,7 +342,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
       }
       await addProduction({
         crop,
-        kg,
+        ...quantityFields,
         logged_at: new Date().toISOString(),
         ...(photo_url ? { photo_url } : {}),
       });
@@ -314,7 +351,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
         return {
           crop: '',
           cropKey: null,
-          kg: '',
+          quantity: '', unit: 'kg',
           photoFile: null,
           photoPreview: '',
           loading: false,
@@ -335,7 +372,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           return {
             crop: '',
             cropKey: null,
-            kg: '',
+            quantity: '', unit: 'kg',
             photoFile: null,
             photoPreview: '',
             loading: false,
@@ -346,7 +383,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
         onSaved();
         return;
       }
-      setForm((f) => ({ ...f, loading: false, error: t('myRecordsSaveError') }));
+      setForm((f) => ({ ...f, loading: false, error: err instanceof Error ? err.message : t('myRecordsSaveError') }));
     }
   }
 
@@ -356,24 +393,15 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
       <form onSubmit={handleSubmit} className="space-y-3 u-form-column">
         {sampleProducePhoto(form.crop) && <figure className="flex items-center gap-3"><img src={sampleProducePhoto(form.crop)!} alt={form.crop} width={56} height={56} style={{ width: 56, height: 56, borderRadius: 8, objectFit: 'cover' }} /><figcaption className="text-xs">{recordsUi(lang, 'AI-generated crop reference · add your own harvest photo below.', 'Isithombe sesitshalo esenziwe nge-AI · faka esakho isithombe sesivuno ngezansi.')}</figcaption></figure>}
         <div>
-          <FieldLabel>{t('myRecordsCropLabel')}</FieldLabel>
+          <FieldLabel>{recordsFill(lang, 'Produce / product')}</FieldLabel>
           <CropSelect
-            ariaLabel={t('myRecordsCropLabel')}
+            ariaLabel={recordsFill(lang, 'Produce / product')}
             language={lang === 'zu' ? 'zu' : 'en'}
             value={form.crop}
             onChange={(crop, cropKey) => setForm((f) => ({ ...f, crop, cropKey }))}
           />
         </div>
-        <div>
-          <FieldLabel>{t('myRecordsKgHarvestedLabel')}</FieldLabel>
-          <Input
-            type="text"
-            inputMode="decimal"
-            placeholder="0.0"
-            value={form.kg}
-            onChange={(e) => setForm((f) => ({ ...f, kg: e.target.value }))}
-          />
-        </div>
+        <RecordQuantityFields idPrefix="picked" label="Quantity picked" quantity={form.quantity} unit={form.unit} onQuantityChange={(quantity) => setForm((f) => ({ ...f, quantity }))} onUnitChange={(unit) => setForm((f) => ({ ...f, unit }))} />
         <div>
           <FieldLabel>{t('myRecordsPhotoLabel')}</FieldLabel>
           {form.photoPreview && (
@@ -381,7 +409,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img data-photo-preview
                 src={form.photoPreview}
-                alt="Preview"
+                alt={recordsFill(lang, 'Preview')}
                 className="w-full h-full object-cover"
               />
               <button
@@ -393,7 +421,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
                   });
                   if (fileRef.current) fileRef.current.value = '';
                 }}
-                className="absolute top-1 right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-mono"
+                className="absolute top-1 right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs"
                 style={{ background: 'rgba(31,25,15,0.12)', color: 'var(--text-primary)' }}
               >
                 <X size={14} />
@@ -421,8 +449,8 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           </label>
         </div>
         {form.error && (
-          <p className="text-xs font-mono" style={{ color: 'var(--danger)' }}>
-            {form.error}
+          <p className="text-xs" style={{ color: 'var(--danger)' }}>
+            {recordsPaired(lang, form.error)}
           </p>
         )}
         <SubmitBtn loading={form.loading}><Star size={14} /> {t('myRecordsSaveHarvest')}</SubmitBtn>
@@ -437,7 +465,8 @@ interface SaleFormState {
   enterprise?: SalesLog['enterprise'];
   crop: string;
   cropKey: string | null;
-  kg: string;
+  quantity: string;
+  unit: RecordUnit;
   amount: string;
   buyer: string;
   loading: boolean;
@@ -446,11 +475,11 @@ interface SaleFormState {
 
 function LogSaleForm({ onSaved }: { onSaved: () => void }) {
   const router = useRouter();
-  const { t, lang } = useLanguage();
+  const { t, lang } = useRecordsT();
   const [form, setForm] = useState<SaleFormState>({
     crop: '',
     cropKey: null,
-    kg: '',
+    quantity: '', unit: 'kg',
     amount: '',
     buyer: '',
     loading: false,
@@ -460,20 +489,21 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
 
   useEffect(() => setPriceOverrides(loadCropPriceOverrides()), []);
 
-  const guide = form.cropKey ? priceFor(form.cropKey, priceOverrides) : null;
-  const saleKg = parseDecimalInput(form.kg);
+  const guide = form.unit === 'kg' && form.cropKey ? priceFor(form.cropKey, priceOverrides) : null;
+  const saleKg = form.unit === 'kg' ? parseDecimalInput(form.quantity) : Number.NaN;
   const guideLow = guide ? Math.min(guide.wholesalePerKg, guide.retailPerKg) : null;
   const guideHigh = guide ? Math.max(guide.wholesalePerKg, guide.retailPerKg) : null;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (form.loading) return;
     const crop = form.crop.trim();
-    const kg = parseDecimalInput(form.kg);
+    const quantity = parseDecimalInput(form.quantity);
     const amount = parseDecimalInput(form.amount);
-    if (!crop || isNaN(kg) || kg <= 0 || isNaN(amount) || amount < 0) {
+    if (!crop || !Number.isFinite(quantity) || quantity <= 0 || !Number.isFinite(amount) || amount < 0) {
       setForm((f) => ({
         ...f,
-        error: t('myRecordsSaleValidationError'),
+        error: 'Enter a product, a quantity greater than zero and the sale amount.',
       }));
       return;
     }
@@ -482,12 +512,12 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
       const invoice = await addSale({
         enterprise: form.enterprise ?? null,
         crop,
-        kg,
+        ...recordQuantityPayload(quantity, form.unit),
         amount,
         buyer: form.buyer.trim() || null,
         sold_at: new Date().toISOString(),
       });
-      setForm({ crop: '', cropKey: null, kg: '', amount: '', buyer: '', loading: false, error: '' });
+      setForm({ crop: '', cropKey: null, quantity: '', unit: 'kg', amount: '', buyer: '', loading: false, error: '' });
       onSaved();
       router.push(`/invoice?view=${encodeURIComponent(invoice.id)}`);
     } catch (err) {
@@ -498,14 +528,14 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
         // fields (not just the spinner) so re-reading this message and tapping Save again can't
         // log the same sale twice.
         setForm({
-          crop: '', cropKey: null, kg: '', amount: '', buyer: '',
+          crop: '', cropKey: null, quantity: '', unit: 'kg', amount: '', buyer: '',
           loading: false,
           error: saveQueuedMessage(),
         });
         onSaved();
         return;
       }
-      setForm((f) => ({ ...f, loading: false, error: t('myRecordsSaveError') }));
+      setForm((f) => ({ ...f, loading: false, error: err instanceof Error ? err.message : t('myRecordsSaveError') }));
     }
   }
 
@@ -513,28 +543,19 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
     <Card accent="#9E5C08">
       <SectionLabel>{t('myRecordsLogSaleHeader')}</SectionLabel>
       <form onSubmit={handleSubmit} className="space-y-3 u-form-column">
-        <div className="grid grid-cols-2 gap-2">
+        <div>
           <div>
-            <FieldLabel>{t('myRecordsCropLabel')}</FieldLabel>
+            <FieldLabel>{recordsFill(lang, 'Produce / product')}</FieldLabel>
             <CropSelect
-              ariaLabel={t('myRecordsCropLabel')}
+              ariaLabel={recordsFill(lang, 'Produce / product')}
               language={lang === 'zu' ? 'zu' : 'en'}
               value={form.crop}
               onChange={(crop, cropKey) => setForm((f) => ({ ...f, crop, cropKey }))}
             />
           </div>
-          <div>
-            <FieldLabel>{t('myRecordsKgSoldLabel')}</FieldLabel>
-            <Input
-              type="text"
-              inputMode="decimal"
-              placeholder="0.0"
-              value={form.kg}
-              onChange={(e) => setForm((f) => ({ ...f, kg: e.target.value }))}
-            />
-          </div>
         </div>
-        {form.crop && (
+        <RecordQuantityFields idPrefix="quick-sale" label="Quantity sold" quantity={form.quantity} unit={form.unit} onQuantityChange={(quantity) => setForm((f) => ({ ...f, quantity }))} onUnitChange={(unit) => setForm((f) => ({ ...f, unit }))} />
+        {form.crop && form.unit === 'kg' && (
           <div
             className="rounded-lg px-3 py-2 text-xs font-sans leading-relaxed"
             style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
@@ -556,7 +577,9 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
                 )}{' '}
                 {guide.confidence === 'estimated'
                   ? t('myRecordsGuideEstimated')
-                  : t('myRecordsGuideSourced')}
+                  : guide.confidence === 'recommended'
+                    ? t('myRecordsGuideRecommended')
+                    : t('myRecordsGuideSourced')}
               </>
             ) : (
               <>{t('myRecordsGuideMissing')}</>
@@ -564,7 +587,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
           </div>
         )}
         <label className="block text-sm">{recordsUi(lang, 'Growing area for this sale (optional)', 'Indawo yokulima yalokhu kuthengisa (akuphoqelekile)')}
-          <select className="w-full rounded-lg border px-3 py-2 mt-1" value={form.enterprise ?? ''} onChange={e => setForm(f => ({ ...f, enterprise: e.target.value ? e.target.value as SalesLog['enterprise'] : null }))}>
+          <select className="dark-input w-full rounded-lg border px-3 py-2 mt-1" style={{ background: 'var(--bg-1)', borderColor: 'var(--border)', color: 'var(--text-primary)', colorScheme: 'light dark' }} value={form.enterprise ?? ''} onChange={e => setForm(f => ({ ...f, enterprise: e.target.value ? e.target.value as SalesLog['enterprise'] : null }))}>
             <option value="">{recordsUi(lang, 'Unassigned', 'Ayikabelwanga')}</option><option value="vegetables">{recordsUi(lang, 'Vegetable beds', 'Imibhede yemifino')}</option><option value="staples">{recordsUi(lang, 'Staple plots', 'Amasimu ezitshalo eziyisisekelo')}</option><option value="other">{recordsUi(lang, 'Orchard / other', 'Ingadi yezihlahla zezithelo / okunye')}</option>
           </select>
         </label>
@@ -590,8 +613,8 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
           </div>
         </div>
         {form.error && (
-          <p className="text-xs font-mono" style={{ color: 'var(--danger)' }}>
-            {form.error}
+          <p className="text-xs" style={{ color: 'var(--danger)' }}>
+            {recordsPaired(lang, form.error)}
           </p>
         )}
         <SubmitBtn loading={form.loading}><Star size={14} /> {t('myRecordsSaveSale')}</SubmitBtn>
@@ -634,9 +657,13 @@ function OrchardSwitch({ on, onChange, t }: {
       style={{
         fontSize: 12,
         fontWeight: on ? 600 : 400,
-        border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`,
-        background: on ? 'rgba(31,77,43,0.08)' : 'transparent',
-        color: on ? '#1F4D2B' : '#755942',
+        // zu-11: var(--color-forest-800) flips to a pale, near-highlighter green in the dark
+        // theme column (#82C844), and a 10% color-mix of that same pale green behind pale-green
+        // text left the "on" chip ("Isivande sezithelo sifakiwe") almost unreadable there.
+        // --emerald on --bg-1 both move with the theme instead.
+        border: `1px solid ${on ? 'var(--emerald)' : 'var(--border-strong)'}`,
+        background: on ? 'var(--bg-1)' : 'transparent',
+        color: on ? 'var(--emerald)' : 'var(--text-secondary)',
         cursor: 'pointer',
       }}
     >
@@ -652,7 +679,7 @@ function OrchardNote({ kg, names, t, money = false }: {
 }) {
   const figure = kg % 1 === 0 ? String(kg) : kg.toFixed(1);
   return (
-    <p className="font-sans mt-2" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }}>
+    <p className="font-sans mt-2" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
       {t(money ? 'recordsOrchardOutNoteMoney' : 'recordsOrchardOutNote')
         .replace('{kg}', figure)
         .replace('{names}', names.join(', '))}
@@ -685,25 +712,41 @@ function ExampleBadge({ label }: { label: string }) {
 
 const harvestArtAliases = buildCropAliasIndex();
 
+// zu-11 / ux-18: item.crop is free text — what a farmer typed, or lib/demo-farm.ts's
+// deliberately lowercase demo rows (DEMO_CROP_LABEL: 'carrots', 'swiss chard', 'green beans' —
+// lowercase on purpose there, to prove the alias index matches real farmer typing; see that
+// file's comment). Resolve it back to a catalog key with the same alias index
+// HarvestCropPicture already uses for icon lookup, then render through the shared
+// produceLabel() helper, so Records spells a crop the same way Home, /calendar and /prices do.
+// A perennial match from produceDisplayName (lib/perennial-produce.ts, Codex's own catalogue)
+// takes priority, since it already returns that catalogue's own display label.
+function harvestCropLabel(crop: string, lang: string): string {
+  const perennial = produceDisplayName(crop);
+  if (perennial !== crop) return perennial;
+  const { key } = cropIdentityOf(crop, harvestArtAliases);
+  return key ? produceLabel(key, lang) : crop;
+}
+
 function HarvestCropPicture({ name }: { name: string }) {
+  const { lang } = useLanguage();
   // The demo prefix labels fiction; it is not part of the crop's identity.
   const lookup = isSampleMode() ? name.replace(/^Sample\s*[—–-]\s*/i, '') : name;
   const photo = isSampleMode() ? sampleProducePhoto(lookup) : null;
-  if (photo) return <img src={photo} alt={`${lookup} · AI-generated reference`} title="AI-generated crop reference, not harvest evidence" width={40} height={40} style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 8 }} data-photo-preview="true" />;
+  if (photo) return <img src={photo} alt={`${lookup} · ${recordsFill(lang, 'AI-generated reference')}`} title={recordsFill(lang, 'AI-generated crop reference, not harvest evidence')} width={40} height={40} style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 8 }} data-photo-preview="true" />;
   const { key } = cropIdentityOf(lookup, harvestArtAliases);
   return key && getCropArt(key)
-    ? <CropIcon cropKey={key} icon="🌱" size={32} />
+    ? <CropIcon cropKey={key} icon="" size={32} />
     : <Leaf size={18} style={{ color: 'var(--color-forest-800)' }} />;
 }
 
 /* ── Production list ─────────────────────────────────────────────────────── */
 
 function ProductionList({ items }: { items: ProductionLog[] }) {
-  const { t } = useLanguage();
+  const { t, lang } = useRecordsT();
   if (items.length === 0) {
     if (isSampleMode()) {
       return (
-        <p className="text-xs font-mono text-center py-4" style={{ color: 'var(--text-muted)' }}>
+        <p className="text-xs text-center py-4" style={{ color: 'var(--text-secondary)' }}>
           {t('myRecordsNoHarvests')}
         </p>
       );
@@ -723,9 +766,9 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-display font-medium leading-tight truncate" style={{ color: 'var(--text-primary)' }}>
-              {EXAMPLE_PRODUCTION.crop}
+              {recordsFill(lang, EXAMPLE_PRODUCTION.crop)}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>{EXAMPLE_PRODUCTION.dateLabel}</p>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>{recordsFill(lang, EXAMPLE_PRODUCTION.dateLabel)}</p>
           </div>
           <div className="text-sm font-display font-semibold flex-shrink-0" style={{ color: 'var(--color-forest-800)' }}>
             {EXAMPLE_PRODUCTION.kg} kg
@@ -768,17 +811,17 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
               className="text-sm font-display font-medium leading-tight truncate"
               style={{ color: 'var(--text-primary)' }}
             >
-              {item.crop}
+              {harvestCropLabel(item.crop, lang)}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
-              {fmtDate(item.logged_at)}
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
+              {fmtDate(item.logged_at, lang)}
             </p>
           </div>
           <div
             className="text-sm font-display font-semibold flex-shrink-0"
             style={{ color: 'var(--color-forest-800)' }}
           >
-            {item.kg} kg
+            {recordsQuantityLabel(item, lang)}
           </div>
         </div>
       ))}
@@ -789,11 +832,11 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
 /* ── Sales list ──────────────────────────────────────────────────────────── */
 
 function SalesList({ items }: { items: SalesLog[] }) {
-  const { t, lang } = useLanguage();
+  const { t, lang } = useRecordsT();
   if (items.length === 0) {
     if (isSampleMode()) {
       return (
-        <p className="text-xs font-mono text-center py-4" style={{ color: 'var(--text-muted)' }}>
+        <p className="text-xs text-center py-4" style={{ color: 'var(--text-secondary)' }}>
           {t('myRecordsNoSales')}
         </p>
       );
@@ -813,11 +856,11 @@ function SalesList({ items }: { items: SalesLog[] }) {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-display font-medium leading-tight truncate" style={{ color: 'var(--text-primary)' }}>
-              {EXAMPLE_SALE.crop}
-              <span className="font-normal" style={{ color: 'var(--text-muted)' }}> → {EXAMPLE_SALE.buyer}</span>
+              {recordsFill(lang, EXAMPLE_SALE.crop)}
+              <span className="font-normal" style={{ color: 'var(--text-secondary)' }}> → {recordsFill(lang, EXAMPLE_SALE.buyer)}</span>
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
-              {EXAMPLE_SALE.kg} kg &nbsp;·&nbsp; {EXAMPLE_SALE.dateLabel}
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
+              {EXAMPLE_SALE.kg} kg &nbsp;·&nbsp; {recordsFill(lang, EXAMPLE_SALE.dateLabel)}
             </p>
           </div>
           <div className="text-sm font-display font-semibold flex-shrink-0" style={{ color: 'var(--gold)' }}>
@@ -850,18 +893,18 @@ function SalesList({ items }: { items: SalesLog[] }) {
               className="text-sm font-display font-medium leading-tight truncate"
               style={{ color: 'var(--text-primary)' }}
             >
-              {item.crop}
+              {harvestCropLabel(item.crop, lang)}
               {item.buyer ? (
-                <span className="font-normal" style={{ color: 'var(--text-muted)' }}>
+                <span className="font-normal" style={{ color: 'var(--text-secondary)' }}>
                   {' '}→ {item.buyer}
                 </span>
               ) : null}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
-              {item.kg} kg &nbsp;·&nbsp; {fmtDate(item.sold_at)}
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
+              {recordsQuantityLabel(item, lang)} &nbsp;·&nbsp; {fmtDate(item.sold_at, lang)}
             </p>
             {item.invoice_id && loadInvoices().some((invoice) => invoice.id === item.invoice_id) && <Link href={`/invoice?view=${encodeURIComponent(item.invoice_id)}`} aria-label={`${recordsUi(lang, 'View invoice for', 'Buka i-invoyisi ka')} ${item.crop}`} style={{ display: 'inline-flex', gap: 6, alignItems: 'center', minHeight: 44, fontSize: 12, color: '#315939' }}><Eye size={16} />{recordsUi(lang, 'Invoice', 'I-invoyisi')} #{loadInvoices().find((invoice) => invoice.id === item.invoice_id)?.no} · {recordsUi(lang, 'View', 'Buka')}</Link>}
-            {(!item.invoice_id || (item.invoice_source_sale && !loadInvoices().some(invoice => invoice.id === item.invoice_id))) && item.kg > 0 && item.amount >= 0 && <Link href={`/invoice?sale=${encodeURIComponent(item.id)}`} aria-label={`${recordsUi(lang, item.invoice_source_sale ? 'Recover invoice for' : 'Create invoice for', item.invoice_source_sale ? 'Buyisa i-invoyisi ka' : 'Dala i-invoyisi ka')} ${item.crop}`} className="inline-flex items-center gap-1.5 text-xs font-semibold min-h-11" style={{ color: '#315939' }}><FileText size={16} />{recordsUi(lang, item.invoice_source_sale ? 'Recover invoice' : 'Create invoice', item.invoice_source_sale ? 'Buyisa i-invoyisi' : 'Dala i-invoyisi')}</Link>}
+            {(!item.invoice_id || (item.invoice_source_sale && !loadInvoices().some(invoice => invoice.id === item.invoice_id))) && (recordQuantity(item) ?? 0) > 0 && item.amount >= 0 && <Link href={`/invoice?sale=${encodeURIComponent(item.id)}`} aria-label={`${recordsUi(lang, item.invoice_source_sale ? 'Recover invoice for' : 'Create invoice for', item.invoice_source_sale ? 'Buyisa i-invoyisi ka' : 'Dala i-invoyisi ka')} ${item.crop}`} className="inline-flex items-center gap-1.5 text-xs font-semibold min-h-11" style={{ color: '#315939' }}><FileText size={16} />{recordsUi(lang, item.invoice_source_sale ? 'Recover invoice' : 'Create invoice', item.invoice_source_sale ? 'Buyisa i-invoyisi' : 'Dala i-invoyisi')}</Link>}
           </div>
           <div
             className="text-sm font-display font-semibold flex-shrink-0"
@@ -878,10 +921,10 @@ function SalesList({ items }: { items: SalesLog[] }) {
 /* ── Shared designs list ─────────────────────────────────────────────────── */
 
 function SharedDesignsList({ items }: { items: Design[] }) {
-  const { t } = useLanguage();
+  const { t } = useRecordsT();
   if (items.length === 0) {
     return (
-      <p className="text-xs font-mono text-center py-4" style={{ color: 'var(--text-muted)' }}>
+      <p className="text-xs text-center py-4" style={{ color: 'var(--text-secondary)' }}>
         {t('myRecordsNoDesigns')}
       </p>
     );
@@ -910,7 +953,7 @@ function SharedDesignsList({ items }: { items: Design[] }) {
             >
               {design.title || t('myRecordsUntitledDesign')}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
               {t('myRecordsSharedPrefix')} {fmtDate(design.created_at)}
             </p>
           </div>
@@ -960,7 +1003,7 @@ function CreditPackCard({
   const [previewOpen, setPreviewOpen] = useState(false);
   const months = buildMonthlyCashFlow(sales, expenses, new Date(), undefined, invoices);
   const totals = months.reduce((sum, month) => ({ income: sum.income + month.incomeZar, spent: sum.spent + month.expensesZar }), { income: 0, spent: 0 });
-  const money = (value: number) => `R ${numberLabel(value, 0)}`;
+  const money = (value: number) => randCentsLabel(value);
 
   async function handleExport() {
     setError('');
@@ -1000,7 +1043,7 @@ function CreditPackCard({
             {recordsUi(lang, 'Records for a lender', 'Amarekhodi okubolekwa imali')}
           </p>
           <p className="text-xs font-sans mt-0.5 leading-relaxed" style={{ color: 'var(--color-muted-strong)' }}>
-            {recordsUi(lang, 'A summary of your logged harvests, sales and costs — income consistency, cash flow and a track record, built only from what you have entered. Material for a conversation with a lender, not a credit score or a loan approval.', 'Isifinyezo sezivuno, ukuthengisa nezindleko ozirekhodile — ukungaguquguquki kwemali engenayo, ukuhamba kwemali nomlando, okwakhiwe ngolwazi olufakile kuphela. Lokhu kungasiza engxoxweni nombolekisi; akusona isikolo sesikweletu noma ukuvunyelwa kwemalimboleko.', true)}
+            {recordsUiZuFirst(lang, 'A summary of your logged harvests, sales and costs — income consistency, cash flow and a track record, built only from what you have entered. Material for a conversation with a lender, not a credit score or a loan approval.', 'Isifinyezo sezivuno, ukuthengisa nezindleko ozirekhodile — ukungaguquguquki kwemali engenayo, ukuhamba kwemali nomlando, okwakhiwe ngolwazi olufakile kuphela. Lokhu kungasiza engxoxweni nombolekisi; akusona isikolo sesikweletu noma ukuvunyelwa kwemalimboleko.')}
           </p>
         </div>
       </div>
@@ -1012,13 +1055,13 @@ function CreditPackCard({
       ) : (
         <>
         <div className="grid grid-cols-3 gap-2 my-3">
-          {[[recordsUi(lang, 'Income', 'Imali engenayo'), money(totals.income)], [recordsUi(lang, 'Costs', 'Izindleko'), money(totals.spent)], [recordsUi(lang, 'Harvested', 'Okuvunyiwe'), `${numberLabel(production.reduce((n, p) => n + (p.kg ?? 0), 0))} kg`]].map(([label, value]) => (
-            <div key={label} className="rounded-xl p-3" style={{ background: '#F0F5EA', color: '#214D32' }}>
+          {[[recordsUi(lang, 'Income', 'Imali engenayo'), money(totals.income)], [recordsUi(lang, 'Costs', 'Izindleko'), money(totals.spent)], [recordsUi(lang, 'Harvested', 'Okuvunyiwe'), <RecordQuantitySummary key="picked" compact totals={quantityTotals(production)} />]].map(([label, value], index) => (
+            <div key={index} className="rounded-xl p-3" style={{ background: 'var(--bg-1)', color: 'var(--text-primary)' }}>
               <span className="block font-sans text-xs">{label}</span><strong className="block font-display text-lg mt-1">{value}</strong>
             </div>
           ))}
         </div>
-        <button type="button" onClick={() => setPreviewOpen(v => !v)} aria-expanded={previewOpen} className="w-full rounded-xl px-4 py-3 mb-2 font-sans text-sm font-semibold" style={{ background: '#1F4D2B', color: '#FFFEFA' }}>{recordsUi(lang, previewOpen ? 'Close summary' : 'View summary', previewOpen ? 'Vala isifinyezo' : 'Buka isifinyezo')}</button>
+        <button type="button" onClick={() => setPreviewOpen(v => !v)} aria-expanded={previewOpen} className="w-full rounded-xl px-4 py-3 mb-2 font-sans text-sm font-semibold" style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800)' }}>{recordsUi(lang, previewOpen ? 'Close summary' : 'View summary', previewOpen ? 'Vala isifinyezo' : 'Buka isifinyezo')}</button>
         {previewOpen && <div className="overflow-x-auto mb-3">
           <table className="w-full text-sm font-sans" style={{ color: 'var(--color-ink)' }}>
             <caption className="text-left py-2 font-semibold">{recordsUi(lang, 'Monthly income and costs', 'Imali engenayo nezindleko zenyanga')}</caption>
@@ -1032,15 +1075,19 @@ function CreditPackCard({
           disabled={loading}
           className="w-full py-2 rounded-xl text-xs font-display font-semibold flex items-center justify-center gap-2 transition-all"
           style={{
-            background: loading ? 'rgba(46,107,58,0.06)' : 'rgba(46,107,58,0.14)',
-            border: '1px solid rgba(46,107,58,0.32)',
-            color: loading ? '#755942' : '#2E6B3A',
+            // zu-11: a fixed rgba(46,107,58,…) tint stayed dark-green in every theme while
+            // var(--color-forest-700) (the text colour) flipped to a pale green in the dark
+            // column — pale text on a background that never got paler with it. --emerald on
+            // --bg-1 both move with the theme, so this button stays legible in dark mode too.
+            background: 'var(--bg-1)',
+            border: '1px solid var(--emerald)',
+            color: loading ? 'var(--text-muted)' : 'var(--emerald)',
             cursor: loading ? 'not-allowed' : 'pointer',
           }}
         >
           {loading ? (
             <>
-              <Loader2 size={14} className="animate-spin" style={{ color: 'var(--color-forest-700)' }} />
+              <Loader2 size={14} className="animate-spin" style={{ color: 'var(--emerald)' }} />
               {recordsUi(lang, 'Building document…', 'Kwakhiwa idokhumenti…')}
             </>
           ) : (
@@ -1053,8 +1100,8 @@ function CreditPackCard({
       )}
 
       {error && (
-        <p className="text-xs font-mono mt-2" style={{ color: 'var(--danger)' }}>
-          {error}
+        <p className="text-xs mt-2" style={{ color: 'var(--danger)' }}>
+          {recordsPaired(lang, error)}
         </p>
       )}
     </Card>
@@ -1097,7 +1144,7 @@ export default function MyRecords({
 }) {
   const showPicked = section === 'all' || section === 'picked';
   const showSold = section === 'all' || section === 'sold';
-  const { t, lang } = useLanguage();
+  const { t, lang } = useRecordsT();
   const [user, setUser] = useState<User | null | 'loading'>('loading');
   const [production, setProduction] = useState<ProductionLog[]>([]);
   const [sales, setSales] = useState<SalesLog[]>([]);
@@ -1262,7 +1309,7 @@ export default function MyRecords({
             >
               {t('myRecordsTitle')}
             </h2>
-            <p className="font-display text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="font-display text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
               {t('myRecordsSubtitle')}
             </p>
           </div>
@@ -1296,29 +1343,27 @@ export default function MyRecords({
         </div>
       )}
 
-      {/* ── Log production — THE harvest form. Crop, kilograms, optional photo, save.
-             The audit's "do not touch" list names this shape exactly; the merge moved its
-             front door and left every field and every branch of its save path alone. ── */}
+      {/* Counts need an explicit unit so eggs and jars cannot become kilogram evidence. */}
       {showPicked && <LogProductionForm onSaved={handleSaved} />}
 
       {/* ── Harvest summary ─────────────────────────── */}
       {showPicked && production.length > 0 && (() => {
         // Scoped, not filtered-away: what the switch removes is counted separately and named
         // underneath, so a total that suddenly drops has its missing kilograms on the same card.
-        const counted = production.filter((p) => inScope(p.crop));
-        const left = production.filter((p) => !inScope(p.crop));
+        const counted = production.filter((p) => recordWeightKg(p) === null || inScope(p.crop));
+        const left = production.filter((p) => recordWeightKg(p) !== null && !inScope(p.crop));
         const excludedKg = left.reduce((s, p) => s + (p.kg ?? 0), 0);
         // Named by the catalogue, so one fruit is one name however the picker and the sale form
         // each spelt it.
-        const excludedNames = [...new Set(left.filter((p) => (p.kg ?? 0) > 0).map((p) => produceDisplayName(p.crop)))]
+        const excludedNames = [...new Set(left.filter((p) => (p.kg ?? 0) > 0).map((p) => harvestCropLabel(p.crop, lang)))]
           .sort((a, b) => a.localeCompare(b, 'en-ZA'));
-        const totalKg = counted.reduce((s, p) => s + (p.kg ?? 0), 0);
+        const pickedQuantities = quantityTotals(counted);
         const byCrop: Record<string, number> = {};
         // Same grouping rule, so two spellings of one fruit cannot split its kilograms and cost it
         // the top-crop line it earned.
-        counted.forEach((p) => { const n = produceDisplayName(p.crop); byCrop[n] = (byCrop[n] ?? 0) + (p.kg ?? 0); });
+        counted.filter((p) => recordWeightKg(p) !== null).forEach((p) => { const n = harvestCropLabel(p.crop, lang); byCrop[n] = (byCrop[n] ?? 0) + (recordWeightKg(p) ?? 0); });
         const topCrop = Object.entries(byCrop).sort((a, b) => b[1] - a[1])[0];
-        const recent = counted.slice(0, 12);
+        const recent = counted.filter((p) => recordWeightKg(p) !== null).slice(0, 12);
         const maxKg = Math.max(...recent.map((p) => p.kg ?? 0), 1);
         const W = 180; const H = 36; const pts = recent.map((p, i) => {
           const x = (i / Math.max(recent.length - 1, 1)) * W;
@@ -1327,13 +1372,13 @@ export default function MyRecords({
         }).join(' ');
         return (
           <Card>
-            <div className="flex items-center justify-between gap-4 mb-3">
-              <div>
+            <div className="space-y-3 mb-3">
+              <div className="min-w-0">
                 <div className="font-display font-bold" style={{ fontSize: 22, color: 'var(--color-forest-800)', lineHeight: 1 }}>
-                  {totalKg % 1 === 0 ? totalKg : totalKg.toFixed(1)} kg
+                  <RecordQuantitySummary totals={pickedQuantities} />
                 </div>
-                <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
-                  {t('myRecordsTotalHarvested')}{topCrop ? ` · ${topCrop[0]} ${t('myRecordsTopsLabel')}` : ''}
+                <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
+                  {t('myRecordsTotalHarvested')}{topCrop ? ` · ${recordsTemplate(lang, 'Top by weight: {crop}', null, { crop: topCrop[0] })}` : ''}
                 </div>
                 <OrchardSwitch
                   on={includePerennials}
@@ -1341,7 +1386,7 @@ export default function MyRecords({
                   t={t}
                 />
               </div>
-              <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
+              {recent.length > 0 && <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
                 <polyline points={pts} fill="none" stroke="rgba(31,77,43,0.25)" strokeWidth="1.5" strokeLinejoin="round" />
                 <polyline points={pts} fill="none" stroke="#1F4D2B" strokeWidth="1.5" strokeLinejoin="round" strokeDasharray="3 2" />
                 {recent.map((p, i) => {
@@ -1349,7 +1394,7 @@ export default function MyRecords({
                   const y = H - ((p.kg ?? 0) / maxKg) * H;
                   return <circle key={i} cx={x} cy={y} r="2.5" fill="#1F4D2B" />;
                 })}
-              </svg>
+              </svg>}
             </div>
             {excludedKg > 0 && (
               <OrchardNote kg={excludedKg} names={excludedNames} t={t} />
@@ -1390,23 +1435,21 @@ export default function MyRecords({
 
       {/* ── Sales summary ────────────────────────────── */}
       {showSold && (sales.length > 0 || invoices.some((i) => i.status === 'paid')) && (() => {
-        // Summing `sales` alone double-counted a paid invoice's kg lines (also synced into
-        // `sales` by syncInvoiceSales) while missing its bags/crates/other non-kg lines entirely
-        // (they never create a sales row — their weight is unknown). cashIncomeTotal is the one
-        // place that combines sales and invoices correctly; see lib/invoice-sales.ts.
+        // Invoice-linked rows and paid invoices represent the same cash. Unit choice
+        // must not change the authority that counts that payment once.
         const totalRev = cashIncomeTotal(sales, invoices);
         // The rand total is NEVER scoped. An invoice can carry delivery, a discount or crate
         // lines, so splitting it between the beds and the orchard would be a claim the invoice
         // does not make — and cashIncomeTotal is the one place that counts a paid invoice once.
         // Only the kilogram figure beside it follows the switch, and says so when it does.
-        const soldLeftOut = sales.filter((p) => !inScope(p.crop));
+        const soldLeftOut = sales.filter((p) => recordWeightKg(p) !== null && !inScope(p.crop));
         const soldExcludedKg = soldLeftOut.reduce((s, p) => s + (p.kg ?? 0), 0);
         // Through the catalogue, exactly as the harvest note above does. These two notes sit on the
         // same screen: with one spelling raw and one canonical, one avocado tree read as "Avocado"
         // in the note above and "Avocados" in this one.
-        const soldExcludedNames = [...new Set(soldLeftOut.filter((p) => (p.kg ?? 0) > 0).map((p) => produceDisplayName(p.crop)))]
+        const soldExcludedNames = [...new Set(soldLeftOut.filter((p) => (p.kg ?? 0) > 0).map((p) => harvestCropLabel(p.crop, lang)))]
           .sort((a, b) => a.localeCompare(b, 'en-ZA'));
-        const totalKgSold = sales.filter((p) => inScope(p.crop)).reduce((s, p) => s + (p.kg ?? 0), 0);
+        const soldQuantities = quantityTotals(sales.filter((p) => recordWeightKg(p) === null || inScope(p.crop)));
         const recent = sales.slice(0, 12);
         const maxAmt = Math.max(...recent.map((p) => p.amount ?? 0), 1);
         const W = 180; const H = 36;
@@ -1417,14 +1460,15 @@ export default function MyRecords({
         }).join(' ');
         return (
           <Card>
-            <div className="flex items-center justify-between gap-4 mb-3">
-              <div>
+            <div className="space-y-3 mb-3">
+              <div className="min-w-0">
                 <div className="font-display font-bold" style={{ fontSize: 22, color: 'var(--gold)', lineHeight: 1 }}>
                   R{totalRev % 1 === 0 ? totalRev : totalRev.toFixed(2)}
                 </div>
-                <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
-                  {t('myRecordsTotalRevenue')} · {totalKgSold % 1 === 0 ? totalKgSold : totalKgSold.toFixed(1)} {t('myRecordsKgSoldSuffix')}
+                <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
+                  {t('myRecordsTotalRevenue')}
                 </div>
+                <div className="font-sans mt-2" style={{ color: 'var(--text-secondary)' }}><RecordQuantitySummary compact totals={soldQuantities} /></div>
               </div>
               <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
                 <polyline points={pts} fill="none" stroke="rgba(192,122,30,0.25)" strokeWidth="1.5" strokeLinejoin="round" />

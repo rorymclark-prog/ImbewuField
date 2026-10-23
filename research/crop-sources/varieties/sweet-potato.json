@@ -1,0 +1,106 @@
+{
+  "key": "sweet-potato",
+  "varieties": [
+    {
+      "name": "Blesbok",
+      "zones": ["highveld", "lowveld-bushveld", "midlands-mistbelt", "subtropical-coast", "karoo-arid"],
+      "maturity": "medium",
+      "season": null,
+      "traits": "Very high yield and wide adaptability; cream/pale flesh; today's most widely grown local cultivar",
+      "type": "OP",
+      "note": "ARC release, 1989, from the 1985 polycross. Given as the benchmark wide-adaptability variety with no single zone restriction stated, so listed broadly rather than narrowed to zones the source does not name.",
+      "evidence": [
+        { "quote": "Originating from the 1985-polycross, Blesbok was released in 1989 (Fig. 3c), a variety with very high yield and wide adaptability (Bester et al., 1991). It is today still the major local sweet potato cultivar grown in South Africa, also produced in the SADC region and in Honduras.", "url": "https://www.arc.agric.za/arc-vopi/Newsletter%20Library/ARC-VIMP%20Newsletter%2019,%20March%202024.pdf", "page": 1, "doc": "History of Sweet Potato Breeding in South Africa: 1952-2024, ARC-VIMP Newsletter 19, March 2024" }
+      ]
+    },
+    {
+      "name": "Ndou",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Cream-fleshed; strong informal-market share",
+      "type": "OP",
+      "note": "One of seven cream-fleshed cultivars released in 2003; source gives informal-market popularity but no named zone.",
+      "evidence": [
+        { "quote": "Seven cream-fleshed cultivars were released in 2003 (Laurie et al. 2015). Of these, Ndou and Monate are still popular in the informal market.", "url": "https://www.arc.agric.za/arc-vopi/Newsletter%20Library/ARC-VIMP%20Newsletter%2019,%20March%202024.pdf", "page": 2, "doc": "History of Sweet Potato Breeding in South Africa: 1952-2024, ARC-VIMP Newsletter 19, March 2024" }
+      ]
+    },
+    {
+      "name": "Bophelo",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Orange-fleshed, provitamin-A enriched; pleasant flavour, medium dry texture, good root quality; 66g portion meets a 1-3 year old's daily vitamin A requirement",
+      "type": "OP",
+      "note": "No named growing zone in the source — included for its nutritional/food-security relevance, not a zone claim.",
+      "evidence": [
+        { "quote": "Impilo and Bophelo became popular, having a pleasant flavour, medium dry texture, and good root quality. A 66g portion of Bophelo meets the daily requirement of vitamin A for 1-3 year olds (Laurie et al., 2018).", "url": "https://www.arc.agric.za/arc-vopi/Newsletter%20Library/ARC-VIMP%20Newsletter%2019,%20March%202024.pdf", "page": 2, "doc": "History of Sweet Potato Breeding in South Africa: 1952-2024, ARC-VIMP Newsletter 19, March 2024" }
+      ]
+    },
+    {
+      "name": "Khumo",
+      "zones": ["lowveld-bushveld"],
+      "maturity": null,
+      "season": null,
+      "traits": "Orange-fleshed; 2020 release; now roughly half the sweet potatoes sold in Venda-area informal markets",
+      "type": "OP",
+      "note": "Zone assigned as lowveld-bushveld because Venda is in Limpopo's lowveld/bushveld belt (frost-free/light-frost summer-rain interior per the brief's zone key), which the source's own caption ties the cultivar to.",
+      "evidence": [
+        { "quote": "Figure 4. ARC orange-fleshed cultivar, Khumo (two front rows), now 50% of the sweet potatoes sold in markets in the Venda area", "url": "https://www.arc.agric.za/arc-vopi/Newsletter%20Library/ARC-VIMP%20Newsletter%2019,%20March%202024.pdf", "page": 2, "doc": "History of Sweet Potato Breeding in South Africa: 1952-2024, ARC-VIMP Newsletter 19, March 2024" },
+        { "quote": "Khumo (Fig. 4), a 2020 release, is particularly popular on the informal market in Venda area.", "url": "https://www.arc.agric.za/arc-vopi/Newsletter%20Library/ARC-VIMP%20Newsletter%2019,%20March%202024.pdf", "page": 3, "doc": "History of Sweet Potato Breeding in South Africa: 1952-2024, ARC-VIMP Newsletter 19, March 2024" }
+      ]
+    },
+    {
+      "name": "Impala",
+      "zones": ["lowveld-bushveld", "highveld"],
+      "maturity": null,
+      "season": null,
+      "traits": "Historic (1960s-released) OP cultivar",
+      "type": "OP",
+      "note": "Source says only 'popular in the northern provinces', which spans Limpopo/Mpumalanga lowveld and highveld areas under the brief's zone key — recorded broadly rather than picking one zone the source doesn't specify.",
+      "evidence": [
+        { "quote": "Six cultivars followed during the 1960s (i.e. Impala which was popular in the northern provinces and Kudu in the Western Cape).", "url": "https://www.arc.agric.za/arc-vopi/Newsletter%20Library/ARC-VIMP%20Newsletter%2019,%20March%202024.pdf", "page": 2, "doc": "History of Sweet Potato Breeding in South Africa: 1952-2024, ARC-VIMP Newsletter 19, March 2024" }
+      ]
+    },
+    {
+      "name": "Kudu",
+      "zones": ["western-cape"],
+      "maturity": null,
+      "season": null,
+      "traits": "Historic (1960s-released) OP cultivar",
+      "type": "OP",
+      "note": "Explicitly named to Western Cape in the source.",
+      "evidence": [
+        { "quote": "Six cultivars followed during the 1960s (i.e. Impala which was popular in the northern provinces and Kudu in the Western Cape).", "url": "https://www.arc.agric.za/arc-vopi/Newsletter%20Library/ARC-VIMP%20Newsletter%2019,%20March%202024.pdf", "page": 2, "doc": "History of Sweet Potato Breeding in South Africa: 1952-2024, ARC-VIMP Newsletter 19, March 2024" }
+      ]
+    },
+    {
+      "name": "Bosbok",
+      "zones": ["lowveld-bushveld"],
+      "maturity": null,
+      "season": null,
+      "traits": "Still grown on a small scale today; was formerly also exported",
+      "type": "OP",
+      "note": "Explicitly named to the Lowveld in the source.",
+      "evidence": [
+        { "quote": "At the time, Bosbok was very popular in the Lowveld and was also exported.", "url": "https://www.arc.agric.za/arc-vopi/Newsletter%20Library/ARC-VIMP%20Newsletter%2019,%20March%202024.pdf", "page": 2, "doc": "History of Sweet Potato Breeding in South Africa: 1952-2024, ARC-VIMP Newsletter 19, March 2024" }
+      ]
+    }
+  ],
+  "zoneAdvice": {
+    "lowveld-bushveld": {
+      "text": "Best-sourced zone for this crop: Bosbok historically dominant, Khumo now ~50% of informal-market sales in the Venda area, and Impala historically popular across the 'northern provinces'.",
+      "evidence": []
+    },
+    "western-cape": {
+      "text": "Kudu is the one cultivar the source explicitly ties to the Western Cape (1960s release); no current-day Western Cape recommendation was found.",
+      "evidence": []
+    }
+  },
+  "gaps": [
+    "No zone-specific data found at all for subtropical-coast, midlands-mistbelt, southern-cape, karoo-arid or high-mountain beyond Blesbok's generic 'wide adaptability' claim — the ARC-VIMP newsletter is a breeding-history piece, not a regional cultivar guide, so it names markets/provinces for only five of the ~33 released cultivars.",
+    "The DAFF Sweet Potato Production Guideline (which would likely have zone/region detail) could not be fetched this session — nda.gov.za and dalrrd.gov.za refused direct connections and Wayback Machine returned 'Temporarily Offline' for the relevant snapshots.",
+    "No maturity length (days) or explicit season/sowing-window data found for any named cultivar in the sources used.",
+    "high-mountain and karoo-arid zones have no sourced recommendation at all — sweet potato is frost-tender and the sources consulted do not address cold-zone cultivar choice."
+  ]
+}

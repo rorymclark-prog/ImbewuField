@@ -1,0 +1,147 @@
+{
+  "packet": "ST Water Harvesting L2 body candidate",
+  "language": "st (Sesotho)",
+  "lessonId": "water-harvesting-l2",
+  "sourceMainSha": "f28fecd60d2339d7f05657773a62993655811b3a",
+  "currentSourceCheckedAt": "f76814b2aa256a9610f7bd02d36a4c04183955db",
+  "canonicalPath": "lib/course-modules.ts",
+  "registryPath": "lib/course-translation-drafts-st-water-harvesting.ts",
+  "sourceBody": [
+    "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.",
+    "Rainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.",
+    "Before changing a watercourse or building storage works, check the required authorisation with the water authority.",
+    "A dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.",
+    "Do not assume that annual rainfall tells you the size of a flood or the storage you will have.",
+    "An uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.",
+    "Water can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.",
+    "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
+    "Animals can damage banks and add manure to the water. Their presence does not make the water clean or safe."
+  ],
+  "currentDraftBody": [
+    "Letamo kapa letangwana le ka boloka metsi a phallang, empa bongata bo fumanehang bo itshetlehile ka pula ya sebaka seo, sebaka se kgoboketsang metsi (catchment), tahlehelo le hore na o sebedisa metsi a makae.",
+    "Dihla tsa pula di fapana ho pholletsa le Afrika Borwa (South Africa). Sebedisa ditlaleho tsa sebaka seo mme o rale bakeng sa dinako tsa komelelo; letamo le tletseng ha le a tiisetswa.",
+    "Pele o fetola tsela ya noka kapa molatswana (watercourse) kapa o haha meaho ya polokelo, hlahloba tumello e hlokahalang le balaodi ba metsi.",
+    "Letamo le hloka dipatlisiso tsa setsha le moralo o entsweng ke motho ya nang le ditshwaneleho tse loketseng. Metsi a phallang ho tswa sebakeng sa pokellelo (catchment runoff), mobu, metheo, kotsi e ka tlase (downstream risk) le tsela e bolokehileng ya metsi a tletseng (safe spillway) kaofela a bohlokwa.",
+    "O se ke wa nka hore pula ya selemo le selemo e o jwetsa boholo ba morwallo kapa polokelo eo o tla ba le yona.",
+    "Phallo e sa laolweng ya metsi a tletseng e ka kgohola le ho pshatla lerako. Rala tsela e bolokehileng bakeng sa metsi a feteletseng pele ho kaho.",
+    "Metsi a ka lahleha ka mouwane le ho dutla. Hlahloba boemo ba metsi mme o batle dibaka tse dutlang kapa kgoholeho.",
+    "Boloka tsela ya metsi a tletseng (spillway) e hlwekile mme o hlokomele sekwahelo sa lebopo se boletsweng moralong. O se ke wa jala difate hodima lerako la letamo la mobu.",
+    "Diphoofolo di ka senya mabopo mme tsa eketsa mantle ka hara metsi. Ho ba teng ha tsona ha ho etse hore metsi a hlweke kapa a bolokehe."
+  ],
+  "candidateBody": [
+    "Letamo kapa letangwana le ka boloka metsi a phallang, empa bongata bo fumanehang bo itshetlehile ka pula ya sebaka seo, sebaka se kgoboketsang metsi (catchment), tahlehelo le hore na o sebedisa metsi a makae.",
+    "Dihla tsa pula di fapana ho pholletsa le Afrika Borwa (South Africa). Sebedisa ditlaleho tsa sebaka seo mme o rale bakeng sa dry periods; letamo le tletseng ha le a tiisetswa.",
+    "Pele o fetola tsela ya noka kapa molatswana (watercourse) kapa o haha meaho ya polokelo, hlahloba tumello e hlokahalang le balaodi ba metsi.",
+    "Letamo le hloka dipatlisiso tsa setsha le moralo o entsweng ke motho ya nang le ditshwaneleho tse loketseng. Metsi a phallang ho tswa sebakeng sa pokellelo (catchment runoff), mobu, metheo, kotsi e ka tlase (downstream risk) le tsela e bolokehileng ya metsi a tletseng (safe spillway) kaofela a bohlokwa.",
+    "O se ke wa nka hore pula ya selemo le selemo e o jwetsa boholo ba morwallo kapa polokelo eo o tla ba le yona.",
+    "Phallo e sa laolweng ya metsi a tletseng e ka kgohola le ho pshatla lerako. Rala tsela e bolokehileng bakeng sa metsi a feteletseng pele ho kaho.",
+    "Metsi a ka lahleha ka evaporation and seepage. Hlahloba boemo ba metsi mme o batle dibaka tse dutlang kapa kgoholeho.",
+    "Keep the spillway clear and maintain the bank cover specified in the design. O se ke wa jala difate hodima lerako la letamo la mobu.",
+    "Diphoofolo di ka senya mabopo mme tsa eketsa mantle ka hara metsi. Ho ba teng ha tsona ha ho etse hore metsi a hlweke kapa a bolokehe."
+  ],
+  "paragraphGaps": [],
+  "localizedParagraphs": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "materialRepairParagraphs": [
+    2,
+    7,
+    8
+  ],
+  "paragraphs": [
+    {
+      "index": 1,
+      "sourceEnglish": "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.",
+      "currentDraft": "Letamo kapa letangwana le ka boloka metsi a phallang, empa bongata bo fumanehang bo itshetlehile ka pula ya sebaka seo, sebaka se kgoboketsang metsi (catchment), tahlehelo le hore na o sebedisa metsi a makae.",
+      "candidateDraft": "Letamo kapa letangwana le ka boloka metsi a phallang, empa bongata bo fumanehang bo itshetlehile ka pula ya sebaka seo, sebaka se kgoboketsang metsi (catchment), tahlehelo le hore na o sebedisa metsi a makae.",
+      "status": "preserve existing localized draft",
+      "literalBacktranslation": "A dam or pond may store runoff, but amount available depends on local rain, catchment, losses and how much water is used.",
+      "uncertainty": "Existing Sesotho draft appears to preserve the source meaning; this is a machine-draft semantic check, not fluent approval."
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "Rainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.",
+      "currentDraft": "Dihla tsa pula di fapana ho pholletsa le Afrika Borwa (South Africa). Sebedisa ditlaleho tsa sebaka seo mme o rale bakeng sa dinako tsa komelelo; letamo le tletseng ha le a tiisetswa.",
+      "candidateDraft": "Dihla tsa pula di fapana ho pholletsa le Afrika Borwa (South Africa). Sebedisa ditlaleho tsa sebaka seo mme o rale bakeng sa dry periods; letamo le tletseng ha le a tiisetswa.",
+      "status": "localized candidate with precision repair",
+      "literalBacktranslation": "Rainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.",
+      "uncertainty": "Existing wording translates dry periods as “dinako tsa komelelo” (drought periods), which can be narrower than dry periods. Retaining the exact English phrase preserves the source scope."
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "Before changing a watercourse or building storage works, check the required authorisation with the water authority.",
+      "currentDraft": "Pele o fetola tsela ya noka kapa molatswana (watercourse) kapa o haha meaho ya polokelo, hlahloba tumello e hlokahalang le balaodi ba metsi.",
+      "candidateDraft": "Pele o fetola tsela ya noka kapa molatswana (watercourse) kapa o haha meaho ya polokelo, hlahloba tumello e hlokahalang le balaodi ba metsi.",
+      "status": "preserve existing localized draft",
+      "literalBacktranslation": "Before changing a watercourse or building storage works, check required authorisation with the water authority.",
+      "uncertainty": "Existing Sesotho draft appears to preserve the source meaning; this is a machine-draft semantic check, not fluent approval."
+    },
+    {
+      "index": 4,
+      "sourceEnglish": "A dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.",
+      "currentDraft": "Letamo le hloka dipatlisiso tsa setsha le moralo o entsweng ke motho ya nang le ditshwaneleho tse loketseng. Metsi a phallang ho tswa sebakeng sa pokellelo (catchment runoff), mobu, metheo, kotsi e ka tlase (downstream risk) le tsela e bolokehileng ya metsi a tletseng (safe spillway) kaofela a bohlokwa.",
+      "candidateDraft": "Letamo le hloka dipatlisiso tsa setsha le moralo o entsweng ke motho ya nang le ditshwaneleho tse loketseng. Metsi a phallang ho tswa sebakeng sa pokellelo (catchment runoff), mobu, metheo, kotsi e ka tlase (downstream risk) le tsela e bolokehileng ya metsi a tletseng (safe spillway) kaofela a bohlokwa.",
+      "status": "preserve existing localized draft",
+      "literalBacktranslation": "A dam requires a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.",
+      "uncertainty": "Existing Sesotho draft appears to preserve the source meaning; this is a machine-draft semantic check, not fluent approval."
+    },
+    {
+      "index": 5,
+      "sourceEnglish": "Do not assume that annual rainfall tells you the size of a flood or the storage you will have.",
+      "currentDraft": "O se ke wa nka hore pula ya selemo le selemo e o jwetsa boholo ba morwallo kapa polokelo eo o tla ba le yona.",
+      "candidateDraft": "O se ke wa nka hore pula ya selemo le selemo e o jwetsa boholo ba morwallo kapa polokelo eo o tla ba le yona.",
+      "status": "preserve existing localized draft",
+      "literalBacktranslation": "Do not assume annual rainfall tells you flood size or the storage you will have.",
+      "uncertainty": "Existing Sesotho draft appears to preserve the source meaning; this is a machine-draft semantic check, not fluent approval."
+    },
+    {
+      "index": 6,
+      "sourceEnglish": "An uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.",
+      "currentDraft": "Phallo e sa laolweng ya metsi a tletseng e ka kgohola le ho pshatla lerako. Rala tsela e bolokehileng bakeng sa metsi a feteletseng pele ho kaho.",
+      "candidateDraft": "Phallo e sa laolweng ya metsi a tletseng e ka kgohola le ho pshatla lerako. Rala tsela e bolokehileng bakeng sa metsi a feteletseng pele ho kaho.",
+      "status": "preserve existing localized draft",
+      "literalBacktranslation": "Uncontrolled overflow may erode and breach the wall. Plan a safe excess-water route before construction.",
+      "uncertainty": "Existing Sesotho draft appears to preserve the source meaning; this is a machine-draft semantic check, not fluent approval."
+    },
+    {
+      "index": 7,
+      "sourceEnglish": "Water can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.",
+      "currentDraft": "Metsi a ka lahleha ka mouwane le ho dutla. Hlahloba boemo ba metsi mme o batle dibaka tse dutlang kapa kgoholeho.",
+      "candidateDraft": "Metsi a ka lahleha ka evaporation and seepage. Hlahloba boemo ba metsi mme o batle dibaka tse dutlang kapa kgoholeho.",
+      "status": "localized draft with exact technical terms retained",
+      "literalBacktranslation": "Water may be lost through evaporation and seepage. Check the water level and look for leaks or erosion.",
+      "uncertainty": "The existing rendering used a word meaning steam for evaporation; the candidate retains the exact technical terms “evaporation and seepage” while preserving the existing checks."
+    },
+    {
+      "index": 8,
+      "sourceEnglish": "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
+      "currentDraft": "Boloka tsela ya metsi a tletseng (spillway) e hlwekile mme o hlokomele sekwahelo sa lebopo se boletsweng moralong. O se ke wa jala difate hodima lerako la letamo la mobu.",
+      "candidateDraft": "Keep the spillway clear and maintain the bank cover specified in the design. O se ke wa jala difate hodima lerako la letamo la mobu.",
+      "status": "partial English hold for spillway/design-cover clause",
+      "literalBacktranslation": "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
+      "uncertainty": "The existing rendering of “clear” could mean clean rather than unobstructed; retain the exact source clause. Preserve the existing Sesotho no-tree prohibition."
+    },
+    {
+      "index": 9,
+      "sourceEnglish": "Animals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
+      "currentDraft": "Diphoofolo di ka senya mabopo mme tsa eketsa mantle ka hara metsi. Ho ba teng ha tsona ha ho etse hore metsi a hlweke kapa a bolokehe.",
+      "candidateDraft": "Diphoofolo di ka senya mabopo mme tsa eketsa mantle ka hara metsi. Ho ba teng ha tsona ha ho etse hore metsi a hlweke kapa a bolokehe.",
+      "status": "preserve existing localized draft",
+      "literalBacktranslation": "Animals may damage banks and add manure to water. Their presence does not make water clean or safe.",
+      "uncertainty": "Existing Sesotho draft appears to preserve the source meaning; this is a machine-draft semantic check, not fluent approval."
+    }
+  ],
+  "literalBacktranslation": "A dam or pond may store runoff, but amount available depends on local rain, catchment, losses and how much water is used.\n\nRainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.\n\nBefore changing a watercourse or building storage works, check required authorisation with the water authority.\n\nA dam requires a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.\n\nDo not assume annual rainfall tells you flood size or the storage you will have.\n\nUncontrolled overflow may erode and breach the wall. Plan a safe excess-water route before construction.\n\nWater may be lost through evaporation and seepage. Check the water level and look for leaks or erosion.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nAnimals may damage banks and add manure to water. Their presence does not make water clean or safe.",
+  "scope": "No full paragraph is wholly held in English. Paragraph 2 restores the broader “dry periods” scope; paragraph 7 retains the exact evaporation/seepage terms; paragraph 8 retains the exact spillway/design-cover clause and the existing Sesotho tree prohibition. Other draft text remains unchanged. Candidate only; no repository files edited; no claim of fluent approval.",
+  "packetStatus": "wired-machine-draft",
+  "wiringStatus": "Wired only to the source-matched learner body; other lesson fields, assessments and media are unchanged.",
+  "finalIndependentBackcheck": "Root and independent review accepted the final nine-paragraph candidate. Paragraph 2 retains exact “dry periods”; paragraph 7 retains “evaporation and seepage” while preserving the checks; paragraph 8 keeps the spillway-clear and design-specified bank-cover sentence exact English while preserving the existing no-tree instruction. No fluent-speaker approval is claimed."
+}

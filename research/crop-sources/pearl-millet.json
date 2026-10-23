@@ -1,0 +1,104 @@
+{
+  "key": "pearl-millet",
+  "name": "Pearl Millet",
+  "localNames": { "zu": "Unyaluthi / Inyawuthi", "st": "Leotja", "ts": "Mhunga", "generic": "Babala" },
+  "botanicalName": "Pennisetum glaucum",
+  "family": "Poaceae",
+  "role": "dual",
+  "foodGroup": "staple_grain",
+  "harvestProduct": "dry grain (whole plant also used as fodder/silage)",
+  "frostTender": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "It is generally sensitive to low temperatures at the seedling stage and at flowering.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Pearl%20millet%20-%20production%20guideline.pdf",
+        "page": 9,
+        "doc": "Pearl Millet Production Guideline, DAFF, 2011"
+      }
+    ],
+    "notes": "Source describes cold sensitivity but does not state an explicit frost-kill temperature; corroborated by FAO ECOCROP's killing temperature (KTMP = 0 degC) for Pennisetum glaucum."
+  },
+  "transplant": {
+    "value": false,
+    "evidence": [
+      {
+        "quote": "Pearl millet is propagated by seed.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Pearl%20millet%20-%20production%20guideline.pdf",
+        "page": 10,
+        "doc": "Pearl Millet Production Guideline, DAFF, 2011"
+      }
+    ]
+  },
+  "sowMonths": {
+    "summer": {
+      "months": [10, 11],
+      "evidence": [
+        {
+          "quote": "Optimum planting time should be early October to November, and this is greatly dependent on the intended use.",
+          "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Pearl%20millet%20-%20production%20guideline.pdf",
+          "page": 10,
+          "doc": "Pearl Millet Production Guideline, DAFF, 2011"
+        }
+      ]
+    },
+    "winter": { "months": [], "evidence": [] },
+    "all-year": { "months": [], "evidence": [] },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "daysToHarvestRange": {
+    "value": [65, 85],
+    "evidence": [
+      {
+        "quote": "Pearl millet usually flowers from 40 to 55 days.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Pearl%20millet%20-%20production%20guideline.pdf",
+        "page": 8,
+        "doc": "Pearl Millet Production Guideline, DAFF, 2011"
+      },
+      {
+        "quote": "The seed begins developing after fertilisation and matures 25 to 30 days later.",
+        "url": "https://web.archive.org/web/2024id_/https://www.dalrrd.gov.za/Portals/0/Brochures%20and%20Production%20guidelines/Pearl%20millet%20-%20production%20guideline.pdf",
+          "page": 8,
+          "doc": "Pearl Millet Production Guideline, DAFF, 2011"
+      }
+    ],
+    "notes": "Computed as flowering (40-55 days from planting) plus grain maturation (25-30 days after flowering) = 65-85 days to grain maturity. Source separately notes 'Grain can be harvested as early as 40 days after flowering' (p.7 of the guideline / page 13 of PDF) as a minimum-moisture early-harvest option."
+  },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": null,
+  "inRowSpacingRangeCm": null,
+  "sowDepthRangeCm": null,
+  "seedRateKgPerHaRange": null,
+  "yield": {
+    "tPerHaRange": null,
+    "product": null,
+    "conditions": null,
+    "evidence": []
+  },
+  "ecocrop": {
+    "row": "Pennisetum glaucum",
+    "TOPMN": 25,
+    "TOPMX": 35,
+    "TMIN": 12,
+    "TMAX": 40,
+    "GMIN": 60,
+    "GMAX": 120
+  },
+  "coverCrop": null,
+  "varieties": [],
+  "zoneNotes": {
+    "lowveld-bushveld": "Limpopo is named as a major production area.",
+    "subtropical-coast": "KwaZulu-Natal is named as a major production area.",
+    "highveld": "Free State is named as a major production area, alongside the crop's stated sensitivity to low temperatures at seedling and flowering stages."
+  },
+  "gaps": [
+    "'No known varieties have been developed in South Africa to date.' -- direct quote from the source; varieties list is empty because none exist to cite.",
+    "No row spacing, in-row spacing, or numeric sowing-depth figures given -- only 'shallow planting is recommended' (non-numeric) and a plant-density figure of 100 000 to 175 000 plants/ha ('similar or slightly higher... than for sorghum').",
+    "No seed rate (kg/ha) given.",
+    "No yield figure: the source explicitly states 'There are no records with regard to the size of land under production and the quantities produced' for South Africa.",
+    "No winter-rainfall, all-year, or mild-frost specific sowing windows; only one national window given.",
+    "No explicit frost-kill temperature stated in the DAFF guideline (inferred cold sensitivity + FAO ECOCROP KTMP=0 used instead)."
+  ],
+  "verdict": "partial",
+  "summary": "DAFF's 2011 Pearl Millet production guideline gives a sowing window and a days-to-maturity figure that can be computed from its flowering/seed-maturation data, but has no row/in-row spacing, sowing depth, seed rate, or yield figures, and explicitly states no SA varieties exist and no production/area records are kept. Verdict is partial, held back mainly by the missing spacing and yield data required for 'ready'."
+}

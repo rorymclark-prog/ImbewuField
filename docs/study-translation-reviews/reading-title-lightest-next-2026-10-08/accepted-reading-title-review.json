@@ -1,0 +1,141 @@
+{
+  "title": "Independent final semantic backcheck: Reading Landscape slide 12 titles",
+  "date": "2026-10-08",
+  "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "head": "970b527243064052fbaae47915f5359a327d1d36",
+  "scope": "Read-only source/title verification at the requested current worktree. No repository writes, rendering, tests, commits or publication. VE slide 20 dawn remains excluded.",
+  "sourceAuthority": {
+    "canonicalPath": "docs/narration/reading-landscape.en.md",
+    "canonicalHeading": "Lesson 3: Read Wind, Frost, and Slope",
+    "pairedSources": "docs/narration/reading-landscape.{st,ve,ts}.paired-draft.json slides[11].english.heading"
+  },
+  "rows": [
+    {
+      "language": "st",
+      "slide": 12,
+      "field": "target.heading",
+      "verdict": "REPAIRED_CANDIDATE",
+      "canonicalEnglishSource": "Lesson 3: Read Wind, Frost, and Slope",
+      "currentTarget": "Thuto 3: Read Wind, Frost, and Slope",
+      "originalCandidate": "Thuto 3: Ho Bala Moya, Frost le Letswapo",
+      "repairedCandidate": "Thuto 3: Bala Moya, Frost le Letswapo",
+      "concreteBackTranslation": {
+        "literal": "Lesson 3: Read Wind, Frost, and Slope.",
+        "contextual": "Lesson 3: Interpret the wind, frost, and slope signs on the site."
+      },
+      "semanticChecks": {
+        "imperative": "The original Ho Bala / U Vhala / Ku Hlaya constructions are infinitive or nominal title forms. The repaired Bala / Vhalani / Hlaya forms retain the source imperative. Same-module titles supply evidence that reading invisible forces is metaphorical in this course; with weather and landform objects and the slide body context, the construction is not about reading written text.",
+        "windIdentity": "Moya/Muya is supported by same-module references to damaging wind and wind direction. The word can also denote air (and in some usage spirit); the ordered weather/land-sign list and source body disambiguate it as wind here.",
+        "objectOrder": "Wind, Frost, Slope retained in source order.",
+        "lessonNumber": "Lesson 3 retained as Thuto 3 / Ngudo 3 / Dyondzo 3.",
+        "slope": "ST Letswapo is used in the same module for the land slope; VE u sendama ha mavu is explicitly paired with “slope” in same-module text and describes ground inclination, not soil slippage. TS keeps Slope in English.",
+        "frost": "Frost remains exactly in English in all three repaired candidates; ST Serame and VE Tshando are not substituted because they can refer to cold generally. TS xirhami is also a cold term and is not treated as an exact frost equivalent."
+      },
+      "existingLearnerEvidence": {
+        "path": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/lib/course-translation-drafts-st-reading-landscape.ts",
+        "sha256": "02a8df01086660d680acaaced99c43d4865442375be68b5e55bea2113e148d1a",
+        "reviewStatus": "machine-draft evidence only; no fluent or publication acceptance."
+      },
+      "hashes": {
+        "canonicalEnglishMarkdownFileSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+        "canonicalEnglishFieldSha256": "e238cdd0d7039507ec22b92b080d0963706aa3d5aaa6603fba713fca0f72636d",
+        "currentPairedJsonFileSha256": "0c0d7932aa3e9d03c13472490cc14a89aad6e64c66ae241197c080eacb97ebfa",
+        "currentSourceFieldSha256": "e238cdd0d7039507ec22b92b080d0963706aa3d5aaa6603fba713fca0f72636d",
+        "currentTargetFieldSha256": "72588847f686ec221dcf9e88a53ed85728bfea2c066e25d735bd61be121f3e9d",
+        "candidateFieldSha256": "1dfe3a3ca66342169b9fccc332111d66f2467e18b26f8fef957a616e9c57c516",
+        "repairedCandidateFieldSha256": "52badcba9bfa6da8255c71c7138b6dd61ef234eae4eef945793c948cb57a2c37"
+      },
+      "specificEvidence": "Same-module title uses “Ho Bala Matla a sa Bonweng” for reading invisible forces; course uses Moya for damaging wind/wind direction and letswapo for slope.",
+      "remainingUncertainty": "Imperative morphology and title idiom need fluent-speaker review; semantic recommendation is not fluency approval."
+    },
+    {
+      "language": "ve",
+      "slide": 12,
+      "field": "target.heading",
+      "verdict": "REPAIRED_CANDIDATE",
+      "canonicalEnglishSource": "Lesson 3: Read Wind, Frost, and Slope",
+      "currentTarget": "Ngudo 3: Read Wind, Frost, and Slope",
+      "originalCandidate": "Ngudo 3: U Vhala Muya, Frost, na u sendama ha mavu",
+      "repairedCandidate": "Ngudo 3: Vhalani Muya, Frost, na u sendama ha mavu",
+      "concreteBackTranslation": {
+        "literal": "Lesson 3: Read Wind, Frost, and Slope.",
+        "contextual": "Lesson 3: Interpret the wind, frost, and slope signs on the site."
+      },
+      "semanticChecks": {
+        "imperative": "The original Ho Bala / U Vhala / Ku Hlaya constructions are infinitive or nominal title forms. The repaired Bala / Vhalani / Hlaya forms retain the source imperative. Same-module titles supply evidence that reading invisible forces is metaphorical in this course; with weather and landform objects and the slide body context, the construction is not about reading written text.",
+        "windIdentity": "Moya/Muya is supported by same-module references to damaging wind and wind direction. The word can also denote air (and in some usage spirit); the ordered weather/land-sign list and source body disambiguate it as wind here.",
+        "objectOrder": "Wind, Frost, Slope retained in source order.",
+        "lessonNumber": "Lesson 3 retained as Thuto 3 / Ngudo 3 / Dyondzo 3.",
+        "slope": "ST Letswapo is used in the same module for the land slope; VE u sendama ha mavu is explicitly paired with “slope” in same-module text and describes ground inclination, not soil slippage. TS keeps Slope in English.",
+        "frost": "Frost remains exactly in English in all three repaired candidates; ST Serame and VE Tshando are not substituted because they can refer to cold generally. TS xirhami is also a cold term and is not treated as an exact frost equivalent."
+      },
+      "existingLearnerEvidence": {
+        "path": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/lib/course-translation-drafts-ve-reading-landscape.ts",
+        "sha256": "fab9be70796ad512750ee9f5940f8f436e6908ed09eef0aef85c89b19b4f0f5f",
+        "reviewStatus": "machine-draft evidence only; no fluent or publication acceptance."
+      },
+      "hashes": {
+        "canonicalEnglishMarkdownFileSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+        "canonicalEnglishFieldSha256": "e238cdd0d7039507ec22b92b080d0963706aa3d5aaa6603fba713fca0f72636d",
+        "currentPairedJsonFileSha256": "0588311fe71775c599c101bd6e9c6556ae6ddbbb40a4cedea4647c4141423e65",
+        "currentSourceFieldSha256": "e238cdd0d7039507ec22b92b080d0963706aa3d5aaa6603fba713fca0f72636d",
+        "currentTargetFieldSha256": "65e9056fe244ac6612531c2e583049de44e816cc80dfa2dc8f267a7a3310e0cf",
+        "candidateFieldSha256": "a15cd5c9bb0c90d9f12070812cf8dbf2f59303cda20094ef0f4c98daeb7feb21",
+        "repairedCandidateFieldSha256": "40b3ea0ae8fa474ff557bb611ec389df1d9bf3eee4ee81d829d1e1db8a22d1f7"
+      },
+      "specificEvidence": "Same-module title uses “U Vhala Maanḓa a sa Vhonali”; uses Muya for wind, u sendama ha mavu explicitly glossed as slope.",
+      "remainingUncertainty": "Imperative morphology and title idiom need fluent-speaker review; semantic recommendation is not fluency approval."
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "field": "target.heading",
+      "verdict": "REPAIRED_CANDIDATE_WITH_FROST_AND_SLOPE_HELD",
+      "canonicalEnglishSource": "Lesson 3: Read Wind, Frost, and Slope",
+      "currentTarget": "Dyondzo 3: Read Wind, Frost, and Slope",
+      "originalCandidate": "Dyondzo 3: Ku Hlaya Moya, Frost, na Slope",
+      "repairedCandidate": "Dyondzo 3: Hlaya Moya, Frost, na Slope",
+      "concreteBackTranslation": {
+        "literal": "Lesson 3: Read Wind, Frost, and Slope.",
+        "contextual": "Lesson 3: Interpret the wind, frost, and slope signs on the site."
+      },
+      "semanticChecks": {
+        "imperative": "The original Ho Bala / U Vhala / Ku Hlaya constructions are infinitive or nominal title forms. The repaired Bala / Vhalani / Hlaya forms retain the source imperative. Same-module titles supply evidence that reading invisible forces is metaphorical in this course; with weather and landform objects and the slide body context, the construction is not about reading written text.",
+        "windIdentity": "Moya/Muya is supported by same-module references to damaging wind and wind direction. The word can also denote air (and in some usage spirit); the ordered weather/land-sign list and source body disambiguate it as wind here.",
+        "objectOrder": "Wind, Frost, Slope retained in source order.",
+        "lessonNumber": "Lesson 3 retained as Thuto 3 / Ngudo 3 / Dyondzo 3.",
+        "slope": "ST Letswapo is used in the same module for the land slope; VE u sendama ha mavu is explicitly paired with “slope” in same-module text and describes ground inclination, not soil slippage. TS keeps Slope in English.",
+        "frost": "Frost remains exactly in English in all three repaired candidates; ST Serame and VE Tshando are not substituted because they can refer to cold generally. TS xirhami is also a cold term and is not treated as an exact frost equivalent."
+      },
+      "existingLearnerEvidence": {
+        "path": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/lib/course-translation-drafts-ts.ts",
+        "sha256": "f606ddfbaecc8cd0126d7bc3550eb596424d52ddd84db84c503e93af74d74151",
+        "reviewStatus": "machine-draft evidence only; no fluent or publication acceptance."
+      },
+      "hashes": {
+        "canonicalEnglishMarkdownFileSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+        "canonicalEnglishFieldSha256": "e238cdd0d7039507ec22b92b080d0963706aa3d5aaa6603fba713fca0f72636d",
+        "currentPairedJsonFileSha256": "b43d4435fcb77ca7f74accf359ae93990a537543091ffbb7946bbd37d64dd732",
+        "currentSourceFieldSha256": "e238cdd0d7039507ec22b92b080d0963706aa3d5aaa6603fba713fca0f72636d",
+        "currentTargetFieldSha256": "528d2b2311a86dd44e38629367cbf89271e0ecfce37d77bbbb2bd805bb1460ef",
+        "candidateFieldSha256": "fe2f339438dcb5bc20cdc558e4d5649fbfc83c65e2fb4b96ed00c660419271f9",
+        "repairedCandidateFieldSha256": "e6ccc10144707523f572fb6894b2920808129ef4d292ca9577267b3d3328efe3"
+      },
+      "specificEvidence": "Same-module title uses “Ku Hlaya Matimba Lama nga Vonekiki”; uses Moya for damaging wind. Current draft offers xirhami for cold and descriptive sloped-place wording, but no accepted exact replacements for Frost or Slope.",
+      "remainingUncertainty": "Imperative morphology and title idiom need fluent-speaker review; semantic recommendation is not fluency approval."
+    }
+  ],
+  "overallFinding": "Repair all three proposed nominal Ho Bala / U Vhala / Ku Hlaya openings to imperative forms to match canonical Read. Preserve Frost in English; use existing same-module slope terms only where explicit source-paired context supports them. Current module language files are machine drafts, so no row is fluent-approved.",
+  "fluencyApproval": false,
+  "excludedReview": "Candidate packet VE slide 20 dawn row is unchanged and not reviewed.",
+  "rootReview": {
+    "acceptedSemanticCandidates": [
+      "Thuto 3: Bala Moya, Frost le Letswapo",
+      "Ngudo 3: Vhalani Muya, Frost, na u sendama ha mavu",
+      "Dyondzo 3: Hlaya Moya, Frost, na Slope"
+    ],
+    "basis": "Canonical Read imperative, same-module land-sign interpretation, weather/landform ordered objects preserved; Frost retained exact English due cold ambiguity. Source-bound unreviewed drafts only. VE20 excluded.",
+    "fluentApproval": false,
+    "publication": "Not wired or published; requires scoped diff, source/unlisted guards, rendering and all release gates."
+  }
+}

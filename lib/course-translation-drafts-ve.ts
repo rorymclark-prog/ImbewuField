@@ -84,7 +84,7 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
         ),
         pair(
           "People Care: your family's needs come before market production",
-          "U Ṱhogomela Vhathu: ṱhoḓea dza muṱa waṋu dzi ranga zwi no bviselwa makete",
+          "U Ṱhogomela Vhathu: ṱhoḓea dza muṱa waṋu dzi ranga zwine zwa bveledzwa u ya makete.",
         ),
         pair(
           "Fair Share: return surplus to the system — seeds, water, food, knowledge",
@@ -160,66 +160,68 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
       id: "intro-permaculture-l2",
       infographicAlt: pair(
         "Twelve design principles arranged as segments around a central seedling, each shown as a simple picture — an eye for observing, a droplet for catching water, a sun for energy, a loop for returning waste.",
-        "Maitele a fumi na mavhili a mufhaṱo o vhekanywaho sa zwipiḓa u monymona na tshimela tshiṱuku tsha vhukati, tshiṅwe na tshiṅwe tsho sumbedzwa sa tshifanyiso tsho leluwaho — iṱo ḽa u sedza, ḓoḓi ḽa u fara maḓi, ḓuvha ḽa maanḓa, na mudzinginyo wa u vhuedzedza mitshelo na malaṱwa.",
+        "Maitele a fumi na mavhili a design o vhekanywaho sa zwipiḓa around a central seedling, tshiṅwe na tshiṅwe tsho sumbedzwa sa tshifanyiso tsho leluwaho — iṱo ḽa u sedza, ḓoḓi ḽa u fara maḓi, ḓuvha ḽa maanḓa, na loop for returning waste.",
       ),
       title: pair(
         "Twelve Principles: Designing with Nature",
-        "Maitele a Fumi na Mavhili: U Fhaṱa na Mupo",
+        "Maitele a Fumi na Mavhili: U Ita design na Mupo",
       ),
-      body: hold(
+      body: pair(
         "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+        "David Holmgren o vhea maitele a design a fumi na mavhili kha Essence of Permaculture. Bill Mollison na David Holmgren vho thoma muhumbulo wa permaculture vhoṱhe. Maitele mararu a vhuedzaho u thoma ngao kha hei ngudo ndi haya: observe and interact — sedzani land yaṋu kha khalaṅwaha yoṱhe ni sa athu ita major earthworks; catch and store energy — ṱhogomelani mvula, ḓuvha na biomass zwi sa athu bva kha ndaka yaṋu; na use edges and value the marginal — muduba wa fence kana tshipiḓa tshi re tsini na nḓila (strip) tshi nga vha fhethu hu vhuedzaho ha u sedza.\n\nMaṅwe maitele ane zwa vhuedza u a ḓivha ndi haya: produce no waste (masalela a vha compost, compost ya vha mavu); use small and slow solutions (bakete ḽi nga sheledza planting bed hu si na muḓagasi); na use and value diversity. Hail injury kha maize i ya nga ḓumbu na growth stage ya crop.\n\nKhethani maitele mavhili kana mararu ane a tshimbidzana na thaidzo yaṋu khulwanesa, nahone ni a shumise nga mafulufulu. Maṅwe a ḓo tou vha khagala musi ni tshi khou bvela phanḓa.",
       ),
       keyPoints: [
         pair(
           "Observe your land for a full season before major earthworks",
-          "Sedzani mavu aṋu tshifhinga tshoṱhe tsha khalaṅwaha musi ni sa athu ita mishumo mihulwane ya mavu",
+          "Sedzani land yaṋu kha khalaṅwaha yoṱhe ni sa athu ita major earthworks",
         ),
         pair(
           "Catch and store rain, sun, and biomass before they leave your property",
-          "Farani nahone ni vhulunge mvula, ḓuvha, na biomass musi zwi sa athu bva tshitentsini tshaṋu",
+          "Farani nahone ni vhulunge mvula, ḓuvha na biomass zwi sa athu bva kha ndaka yaṋu",
         ),
         pair(
           "Edges and margins can be useful places to observe what grows well",
-          "Magumo na thungo zwi nga vha fhethu hu no vhuedza ha u sedza zwine zwa aluwa zwavhuḓi",
+          "Edges na margins zwi nga vha fhethu hu vhuedzaho ha u sedza zwine zwa aluwa zwavhuḓi",
         ),
         pair(
           "Hail injury to maize depends on the storm and the crop’s growth stage",
-          "Tshenyo ya tshifhango kha mavhele (maize) i bva kha dumbu na vhuimo ha u aluwa ha zwimela",
+          "Hail injury kha maize i ya nga ḓumbu na growth stage ya crop",
         ),
       ],
       quiz: [
         {
           question: pair(
             "A farmer wants to dig swales to harvest rainwater. What should she do first, following 'observe and interact'?",
-            "Mulimi u ṱoḓa u bwa dzi-swale u itela u kuvhanganya maḓi a mvula. Ndi mini zwine a fanela u ranga u zwi ita a tshi tevhedza 'sedzani nahone ni shumisane' (observe and interact)?",
+            "Mulimi u ṱoḓa u bwa swales u itela u kuvhanganya maḓi a mvula. Ndi mini zwine a fanela u ranga u zwi ita a tshi tevhedza observe and interact?",
           ),
           options: [
             pair(
               "Dig immediately after the first good rain",
               "Bwani nga u ṱavhanya nga murahu ha mvula ya u ranga yavhuḓi",
             ),
-            hold(
+            pair(
               "Watch where water flows and pools across at least one wet season",
+              "Sedzani hune maḓi a elela hone na hune a kuvhangana hone kha khalaṅwaha ya mvula nthihi kana u fhira nthihi",
             ),
             pair(
               "Copy a neighbour's swale layout",
-              "Kopisani kuitele kwa dzi-swale dza muhura",
+              "Kopisani kuitele kwa swale ya muhura",
             ),
             pair(
               "Assume the same swale design fits every site",
-              "Humbulani uri muvhumbeleo muthihi wa swale u lingana fhethu hoṱhe",
+              "Humbulani uri design nthihi ya swale i lingana na site iṅwe na iṅwe",
             ),
           ],
           sourceCorrectIndex: 1,
           rationale: pair(
             "A wet season shows more than one storm, but observation is only a first step. Check the soil, slope, drainage and safe overflow route with a trained local adviser before digging.",
-            "Khalaṅwaha ya mvula i sumbedza madumbu a no fhira ḽithihi, fhedzi u sedza ndi vhukando ha u ranga fhedzi. Tolani mavu, u sendama ha mavu (slope), u elela ha maḓi (drainage) na gondo ḽo tsireledzeaho ḽa maḓi o kalaho na mueletshedzi wa henefho o gudedzwaho musi ni sa athu bwa.",
+            "Khalaṅwaha ya mvula i sumbedza madumbu a no fhira ḽithihi, fhedzi u sedza ndi vhukando ha u ranga fhedzi. Musi ni sa athu bwa, na mueletshedzi wa henefho o gudedzwaho, tolani mavu, slope, drainage na safe overflow route.",
           ),
         },
         {
           question: pair(
             "Which layout best applies 'integrate rather than segregate'?",
-            "Ndi ufhio muvhumbeleo une wa shumisa zwavhuḓi 'ṱanganyani u fhira u fhambanya' (integrate rather than segregate)?",
+            "Ndi layout ifhio ine ya shumisa zwavhuḓi integrate rather than segregate?",
           ),
           options: [
             pair(
@@ -228,21 +230,21 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
             ),
             pair(
               "Garden, fruit trees and a chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return",
-              "Tsimu, miri ya mitshelo na danga ḽa khuhu zwo vhekanywaho uri khuhu dzi shumise ndima i si na tshithu nga murahu ha khaṋo, mulimi a kona u tola ndaulo yo tsireledzeaho musi zwimela zwi ḽiwaho zwi sa athu vhuya",
+              "Tsimu, miri ya mitshelo na chicken run zwo vhekanywa nga nḓila ine khuhu dza shumisa planting bed i si na zwimela nga murahu ha harvest; nga murahu mulimi u tola safe management musi crops dzine dza ḽiwa dzi sa athu vhuya",
             ),
             pair(
               "Separate paddocks for each crop",
-              "Zwipiḓa zwo fhambanaho zwa tshimela tshiṅwe na tshiṅwe",
+              "Paddocks dzo fhambanaho dza crop iṅwe na iṅwe",
             ),
             pair(
               "All animals kept off the cultivated zone",
-              "Zwipuka zwoṱhe zwo thivhelwa kule ha fhethu hu no khou limiwa",
+              "Zwipuka zwoṱhe zwi vhetshelwe kule na zone yo limiwaho.",
             ),
           ],
           sourceCorrectIndex: 1,
           rationale: pair(
             "Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops return.",
-            "U ṱanganya zwi ita uri tshipiḓa tshiṅwe na tshiṅwe tshi shumele vhahura vhatsho — hafha, khuhu dzi laṱa zwikhokhonono nahone dza nontshisa mavu nṱhani ha u dzula zwo ralo dangani ḽo imaho. Manyaga maswa a nga hwalela zwitzhili, nga zwenezwo tolani ndaulo yo tsireledzeaho musi zwimela zwi ḽiwaho zwi sa athu vhuya.",
+            "Integration i ita uri element iṅwe na iṅwe i shumele zwine zwa vha tsini nayo — hafha, khuhu dzi bvisa pests na u engedza fertility, nṱhani ha u dzula dzi sa shumi kha pen yo dzulaho fhethu huthihi. Fresh manure i nga hwalela germs, ngauralo tola safe management musi crops dzine dza ḽiwa dzi sa athu vhuya.",
           ),
         },
       ],
@@ -250,18 +252,20 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
     {
       id: "intro-permaculture-l3",
       // The earlier draft described rings that the replacement picture does not show.
-      infographicAlt: hold("Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances."),
+      infographicAlt: pair("Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.", "Bulasi ḽa tsumbo ḽo sumbedzwaho nga zwifanyiso: markers dzi re na nomboro 0 u ya kha 5 dzi tevhela nḓila ya u tshimbila nga milenzhe i monamonaho u bva kha nnḓu na serapa ḽa tsini, dzi tshi fhira khuhu na tsimu, dzi tshi ya kha miri na a wilder riverside area. Markers idzi ndi tsumbo, not fixed boundaries or distances."),
       title: pair(
         "Zones and Sectors: Organising Your Farm by Energy",
         "Zoune na Sekithara: U Dzudzanya Bulasi Yaṋu nga Maanḓa",
       ),
-      body: hold(
-        "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.\n\nSketch zones and sectors on paper and you have the skeleton of your design."
+      // Keep field observations paired to their exact source while the Tshivenda prose remains a marked review draft.
+      body: pair(
+        "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
+        "Zones na sectors zwi thusa u fhungudza mushumo u sa ṱoḓei. Zones dzi bva kha 0 u ya kha 5, zwi tshi tevhedza uri ni dalela fhethu honoho lunzhi-lini. Zone 0 ndi nnḓu. Kha tsumbo iyi, Zone 1 i tsini na nnḓu nahone i na zwine na zwi ka lunzhi — herbs na muroho wa saladi. Zone 2 ndi serapa tshihulwane na chicken run, zwine zwa dalelwa luthihi kana luvhili nga ḓuvha. Zone 3 ndi tsimu khulwane, ine ya dalelwa vhege iṅwe na iṅwe. Zone 4 ndi semi-wild — miri ya mitshelo na fodder zwine zwa ṱoḓa ṱhogomelo nga zwiṅwe zwifhinga. Zone 5 yo siwa i wild.\n\nSectors ndi energy dzi no swika dzi tshi bva nnḓa — ḓuvha, muya, mvula, mandindi na mulilo. Sedzani hune muya u re na maanḓa wa bva hone bulasini yaṋu. Rekhodo dza weather station ya tsini dzi nga thusa u sedza thungo ya muya. Sedzani hune maḓi a mvula a dzhena hone na hune a elela hone kha land yaṋu. Olani misevhe u sumbedza zwe na zwi vhona.\n\nOlani zones na sectors kha bammbiri, nahone ni vha ni na motheo wa pulane yaṋu.",
       ),
       keyPoints: [
         pair(
           "In this example, Zone 1 near the house holds often-picked herbs",
-          "Kha tsumbo iyi, Zoune 1 i re tsini na nnḓu i fara zwilavhele zwine zwa kiwa lunzhi",
+          "Kha tsumbo iyi, Zone 1 i re tsini na nnḓu i na herbs dzine na dzi ka lunzhi.",
         ),
         pair(
           "Zones organise labour by how often you need to visit",
@@ -273,64 +277,67 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
         ),
         pair(
           "A simple sketch of zones and sectors is enough to start designing",
-          "Muolo wo leluwaho wa zoune na sekithara wo lingana u thoma mufhaṱo",
+          "Nyolo yo leluwaho ya zones na sectors yo lingana u thoma design.",
         ),
       ],
       quiz: [
         {
           question: pair(
             "You plant herbs in Zone 3, the main field far from the house. What problem does this create?",
-            "Ni ṱavha zwilavhele kha Zoune 3, tsimu khulwane i re kule na nnḓu. Hezwi zwi vhanga thaidzo-ḓe?",
+            "Ni ṱavha herbs kha Zone 3, main field i re kule na nnḓu. Hezwi zwi vhanga thaidzo-ḓe?",
           ),
           options: [
             pair(
               "Herbs grow too large",
-              "Zwilavhele zwi aluwa zwihulwane lwo kalaho",
+              "Herbs dzi aluwa zwihulwane lwo kalaho",
             ),
             pair(
               "The extra walk may mean you pick or check them less often",
-              "Lwendo lwo engedzeaho lu nga amba uri ni zwi ka kana u zwi tola lwa si gathi",
+              "Lwendo lwo engedzeaho lu nga amba uri ni nga ka kana u sedza herbs less often",
             ),
             pair(
               "Herbs cross-pollinate with main crops",
-              "Zwilavhele zwi ṱanganyisa mbeu (cross-pollinate) na zwimela zwihulwane",
+              "Herbs dzi cross-pollinate na zwimela zwihulwane",
             ),
             pair(
               "Zone 3 gets too much sun for herbs",
-              "Zoune 3 i wana ḓuvha ḽinzhisa kha zwilavhele",
+              "Zone 3 i wana ḓuvha ḽinzhi lwo kalaho kha herbs",
             ),
           ],
           sourceCorrectIndex: 1,
           rationale: pair(
             "Put a crop you pick often near a daily path. A distant bed adds walking and may be checked less often.",
-            "Vheani tshimela tshine na tshi ka lunzhi tsini ha nḓila ya ḓuvha ḽiṅwe na ḽiṅwe. Ndima i re kule i engedza u tshimbila nahone i nga tolwa lwa si gathi.",
+            "Vheani tshimela tshine na tshi ka lunzhi tsini ha nḓila ya ḓuvha ḽiṅwe na ḽiṅwe. Bed i re kule i engedza u tshimbila nahone i nga tolwa less often.",
           ),
         },
         {
-          question: hold(
-            "You observe damaging wind coming from the north-west on a Highveld farm. Where should a windbreak go?"
+          // Keep the observed north-west condition paired with its boundary answer and rationale.
+          question: pair(
+            "You observe damaging wind coming from the north-west on a Highveld farm. Where should a windbreak go?",
+            "Musi ni tshi vhona muya u tshinyadzaho u tshi bva north-west kha bulasi ḽa Highveld, windbreak i fanela u vhewa ngafhi?",
           ),
           options: [
             pair(
               "South-east boundary",
-              "Mukano wa tshipembe-vhubvaḓuvha (south-east)",
+              "Moedi wa South-east",
             ),
-            hold(
-              "North-west boundary, between the wind and the crops"
+            pair(
+              "North-west boundary, between the wind and the crops",
+              "Moedi wa North-west, vhukati ha muya na zwimela",
             ),
             pair(
               "Centre of the property",
-              "Vhukati ha tshitentsi",
+              "Vhukati ha land yaṋu",
             ),
             pair(
               "Windbreaks aren't needed since winds are seasonal",
-              "Zwithivhela-muya a zwi ṱoḓei ngauri mimiya ndi ya zwifhinga zwa khalaṅwaha",
+              "Windbreaks a dzi ṱoḓei ngauri mimuya i ya nga khalaṅwaha",
             ),
           ],
           sourceCorrectIndex: 1,
           rationale: pair(
             "A windbreak works by standing between the wind source and what it would damage — so it belongs on the side the wind actually comes from.",
-            "Tshithivhela-muya tshi shuma nga u ima vhukati ha tshiko tsha muya na zwine zwa nga tshinyala — ngauralo tshi fanela u vha kha thungo ine muya wa khou bva khayo.",
+            "Windbreak i shuma nga u ima vhukati ha hune muya wa bva hone na tshine ya nga tshi tshinya — ngauralo i fanela u vha kha sia ḽine muya wa bva khaḽo zwa vhukuma.",
           ),
         },
       ],

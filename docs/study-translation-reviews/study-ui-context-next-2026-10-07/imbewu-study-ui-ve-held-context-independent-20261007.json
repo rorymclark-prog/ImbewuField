@@ -1,0 +1,103 @@
+{
+  "packetHead": "25f6baaefc56e82a4fae5f679a43aa5f605d66f0",
+  "auditedWorktree": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField",
+  "currentHead": "fe3cb3c1437c60e8659d3c82b073f63c78b1ef63",
+  "sourceCandidatePacket": "/tmp/imbewu-study-ui-ve-held-context-candidates-20261007.json",
+  "language": "ve",
+  "scope": "Independent source-bound check of the six DRAFT_REPAIR rows only. Checked exact English keys in current source and current locale neighbors; no fluent approval.",
+  "fluencyApproval": false,
+  "counts": {
+    "ACCEPT": 3,
+    "REPAIR": 0,
+    "HOLD": 3
+  },
+  "rows": [
+    {
+      "language": "ve",
+      "key": "studentProgressError",
+      "exactSource": "Progress could not be loaded or saved. Check your connection or account access.",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 922,
+        "displayCondition": "progressError",
+        "otherSourceLocations": []
+      },
+      "candidate": "Mvelaphanḓa a yo ngo kona u laisiwa kana u vhulungwa. Ṱolani vhuṱumani haṋu kana account access yaṋu.",
+      "candidatePlaceholders": [],
+      "decision": "ACCEPT",
+      "literalMeaning": "The candidate preserves both failure modes (loaded OR saved) and both recovery checks (connection OR account access). `mvelaphanḓa` and `laisa` are present in the current Tshivenda locale; `account access` is an intentional technical loan. Literal meaning: Progress could not be loaded or saved. Check your connection or account access.",
+      "rootProposalReason": "Uses the existing Tshivenda progress term mvelaphanḓa, the existing load verb laisa (“Ho kundelwa u laisa data”), and save term vhulunga. It preserves both failure modes and the connection/account-access recovery choices.",
+      "rootRisk": "The passive form laisiwa is derived from the existing load verb but needs Tshivenda grammar review. “account access” remains a technical loan."
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkComplete",
+      "exactSource": "Mark as complete",
+      "sourceBinding": {
+        "file": "app/student/page.tsx",
+        "line": 1225,
+        "displayCondition": "not (done)",
+        "otherSourceLocations": []
+      },
+      "candidate": "Tshwayani uri modulu iyi yo fhela",
+      "candidatePlaceholders": [],
+      "decision": "HOLD",
+      "literalMeaning": "The completion state itself is source-consistent: current locale uses `Yo fhela`, `Zwo fhela`, and `Khoso yo fhela!` for done/complete. However, the candidate relies on `Tshwayani` as “mark”; that form is not present in the current `lib/locales/ve.ts`, despite the packet’s claim that it is an existing locale anchor. Hold the action verb pending verification. Literal meaning: Mark that this module is finished/complete.",
+      "rootProposalReason": "This aria label and studentMarkDone name the same action on the not-done button. Reusing one source-bound phrase keeps visible and accessible actions aligned.",
+      "rootRisk": "Shares the same completion-verb uncertainty as studentMarkDone; fluent review should check the paired actions together."
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalFullMedia",
+      "exactSource": "Slides + English narration and clips",
+      "sourceBinding": {
+        "file": "components/course/OfflineDownload.tsx",
+        "line": 241,
+        "displayCondition": "regionalSlidePack && !busy",
+        "otherSourceLocations": []
+      },
+      "candidate": "Slides + ṱhalutshedzo nga ipfi ya English source na clips",
+      "candidatePlaceholders": [],
+      "decision": "ACCEPT",
+      "literalMeaning": "This is an explicit full-pack option beside “Slides only”; the selected-language silent pack remains the default. “English source” is explicit, so this does not promise Tshivenda/regional narration. Literal meaning: Slides plus English source narration and clips.",
+      "rootProposalReason": "The UI presents this as an explicit full-pack choice alongside the slides-only default for learners whose selected-language narration is not exact. The full-pack note says available English source narration; naming English source avoids implying regional-language narration.",
+      "rootRisk": "Keep the technical terms and plus-list scope clear; do not shorten this to generic narration or imply every regional deck has a local voice."
+    },
+    {
+      "language": "ve",
+      "key": "studentCheckUnderstanding",
+      "exactSource": "Check your understanding",
+      "sourceBinding": null,
+      "candidate": "Ṱolani u pfesesa haṋu",
+      "candidatePlaceholders": [],
+      "decision": "ACCEPT",
+      "literalMeaning": "`Ṱolani` matches current Tshivenda imperative usage such as `Ṱolani vhuṱumani haṋu`; the phrase targets understanding, with no Xitsonga wording contamination. Literal meaning: Check your understanding.",
+      "rootProposalReason": "This is the heading immediately above the lesson quiz. Ṱolani (“check”) is anchored by current Tshivenda UI phrases such as “Ṱolani vhuṱumani haṋu”; it does not reuse Xitsonga Kambela.",
+      "rootRisk": "The noun construction u pfesesa haṋu is a draft without a matching existing locale key; verify the Tshivenda word/form for understanding."
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkDone",
+      "exactSource": "Mark done",
+      "sourceBinding": null,
+      "candidate": "Tshwayani uri modulu iyi yo fhela",
+      "candidatePlaceholders": [],
+      "decision": "HOLD",
+      "literalMeaning": "Same source-bound concern as studentMarkComplete: the completion state `yo fhela` matches existing completion labels, but `Tshwayani` is not evidenced in the current locale. Keep the paired visible and accessible action under review together. Literal meaning: Mark done / mark that this module is finished.",
+      "rootProposalReason": "Uses Tshivenda Tshwaya (“mark”) already in the locale and the same fhela completion state used by accepted studentComplete/studentDone labels. The context is a module progress toggle.",
+      "rootRisk": "The completion pair needs a fluent grammar check; fhela can describe finishing, so confirm that the surrounding “mark” verb clearly makes this a progress-state action."
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkNotDone",
+      "exactSource": "Mark as not done",
+      "sourceBinding": null,
+      "candidate": "Tshwayani uri modulu iyi a yo ngo fhela",
+      "candidatePlaceholders": [],
+      "decision": "HOLD",
+      "literalMeaning": "The negation `a yo ngo fhela` clearly negates the current finished state and does not add “yet.” The action verb `Tshwayani` lacks a current locale anchor, so hold the paired toggle wording pending verification. Literal meaning: Mark that this module is not finished.",
+      "rootProposalReason": "Pairs the positive done-state draft with explicit negation, without adding “yet.” This aria label appears only when the module is currently marked done and the action will undo that state.",
+      "rootRisk": "Confirm negative concord and that the phrase communicates unmarking completion rather than a claim about whether work has ever been attempted."
+    }
+  ]
+}

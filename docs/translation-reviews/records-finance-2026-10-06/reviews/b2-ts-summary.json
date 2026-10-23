@@ -1,0 +1,13 @@
+{"language":"ts","counts":{"ok":11,"repair":0,"hold":3},
+"top_issues":[
+"R284 Mobile = 'Foni' reads as telephone only - HOLD",
+"R282 Cash = 'Mali ya voko' (money of the hand) may read as pocket/hand money, unconfirmed - HOLD",
+"R275 'swimilana swa mirhi ya swakudya' muddled food-forest rendering - HOLD",
+"R274 'ndhavuko' = tradition, narrower than indigenous (reused from existing locale)",
+"R271/R277-R281 'xilo/swilo' = thing/item used for 'product' - generic but consistent",
+"R273 'tinati' nuts loan, attested in existing locale",
+"R283 'Khadi' bare loan",
+"R276 descriptive phrase 'swilo leswi humaka eka swifuwo' is wordy for a heading",
+"No placeholders in this batch",
+"No negation/tense issues found"],
+"confidence":"Machine review only; Xitsonga (provisional standard) at limited competence. Ok means no detectable meaning error, not native approval."}

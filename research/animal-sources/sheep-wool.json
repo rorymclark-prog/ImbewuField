@@ -1,0 +1,194 @@
+{
+  "enterpriseId": "sheep-wool",
+  "commonName": "Wool sheep (Merino / Dohne Merino, incl. communal wool growers)",
+  "animal": "sheep",
+  "animalUnit": "sheep",
+  "product": "wool",
+  "outputUnit": "kg greasy wool/sheep/year",
+  "outputPerAnimal": {
+    "value": [
+      4,
+      5
+    ],
+    "evidence": {
+      "quote": "Average Merino fleece weights vary from 4 kg to 5 kg per year in the semi-arid regions, to up to 8 kg per year from sheep grazing on cultivated pastures.",
+      "url": "https://www.scielo.org.za/scielo.php?script=sci_arttext&pid=S0301-603X2019000400006",
+      "doc": "Assessing Socio-economic Factors Influencing Wool Production in Kolomana Villages of Eastern Cape, South Africa (South African Journal of Agricultural Extension), citing Bot et al., 2004",
+      "page": null
+    },
+    "notes": "Semi-arid/extensive-veld range (4-5 kg greasy wool/sheep/year) used as the primary value; the same sentence's 8 kg/year figure is for a different system (sheep grazing CULTIVATED pastures) and is deliberately excluded from the range rather than averaged in. A Western Cape Government (Elsenburg) Dohne Merino Extensive enterprise budget (Ceres-Karoo, 2024) separately reports total flock wool sold as 4439.64 kg from a flock of '1 519' Smallstock Units, i.e. 4439.64/1519 = 2.92 kg per Smallstock Unit/year - not used as the primary value because the source does not state that 1 Smallstock Unit = 1 sheep (SSU is a standardised stock-class weighting, not a literal head count), so converting it to kg/sheep would require an unstated conversion factor. A separate NWGA/Mandela Initiative paper on the Eastern Cape communal Wool Sheep Development Program reports a Grootfontein ADI progeny-test 'Greasy fleece weight (kg) 2.8 [commercial rams] 2.4 [communal rams]' for communal Eastern Cape flocks - not merged into the primary value because that table is explicitly for '6-month old lambs' (a different life stage from a mature sheep's full annual clip), consistent with the rule against mixing figures across life stages; kept here only as EC-communal context: commercial-ram-sired lambs at 6 months averaged 2.8 kg, communal-ram-sired lambs 2.4 kg, a +16% difference."
+  },
+  "productionMonths": [
+    {
+      "region": "South Africa (national wool industry aggregate, all shearing sheds/regions combined)",
+      "months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "evidence": {
+        "quote": "The shearing season usually runs from the end of July up to mid-May and falls in line with the selling season, which runs from mid-August to early June.",
+        "url": "https://nwga.co.za/the-abcs-of-wool-processing/",
+        "doc": "National Wool Growers' Association: The ABCs of Wool Processing (article)",
+        "page": null
+      },
+      "notes": "The source's own words are 'end of July up to mid-May', i.e. only June falls clearly outside the stated season; July and May are partial (end-of/mid-) so are included as the closest whole months the source names. This is a NATIONAL AGGREGATE season across all shearing sheds/regions/farms shearing on staggered dates, not one sheep's own shearing frequency - see seasonalPattern for the per-flock shearing-interval detail."
+    }
+  ],
+  "seasonalPattern": {
+    "value": "Nationally sheep are shorn from around end-July to mid-May (aggregate across sheds); many farms now shear every 6-8 months rather than once a year.",
+    "evidence": {
+      "quote": "The shearing season usually runs from the end of July up to mid-May and falls in line with the selling season, which runs from mid-August to early June. ... although some producers still stick to a twelve-month shearing pattern, many are moving to either an eight-month or even a six-month interval in some cases.",
+      "url": "https://nwga.co.za/the-abcs-of-wool-processing/",
+      "doc": "National Wool Growers' Association: The ABCs of Wool Processing (article)",
+      "page": null
+    },
+    "notes": "South Africa (general, national wool industry). Both quoted fragments are from the same article, joined with '...'."
+  },
+  "timeToFirstProductWeeks": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced. A Western Cape Government Dohne Merino enterprise budget (Elsenburg) states 'Growing period of an animal (Months) 12' but does not define this as time-to-first-shearing/first-fleece specifically (it reads as a general lamb growing/finishing period used for the budget's lamb-sale income line), so it was not used to avoid asserting a meaning the source does not state (see gaps)."
+  },
+  "productiveLifeYears": {
+    "value": null,
+    "evidence": null,
+    "notes": "Withdrawn in editor review: 5 years was 1/0.20 from the Elsenburg Dohne Merino budget's 20% ewe replacement rate; the budget does not state a productive life."
+  },
+  "feedKgPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced for a mature wool sheep on veld. The Dohne Merino Elsenburg budget gives feed-SUPPLEMENT purchase quantities for the whole flock (e.g. 'Voermol maxiwol KG 8,60 36 270,00' for 1 519 Smallstock Units) but this is a lick/supplement on top of unquantified veld grazing, not the animal's total as-fed daily intake, so using it as feedKgPerAnimalPerDay would misrepresent a partial ration as the whole diet (see gaps)."
+  },
+  "waterLPerAnimalPerDay": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not sourced. A '2.27 to 18 litres/day' figure attributed by web search results to 'SheepConnect SA' traces to sheepconnectsa.com.au, an Australian (South Australian) site, not South African, so it was excluded (see gaps)."
+  },
+  "spaceM2PerAnimal": {
+    "value": null,
+    "evidence": null,
+    "notes": "Withdrawn in editor review: 0.56 m² is the Livestock Welfare Coordinating Committee code's minimum for a holding pen (all animals able to lie down at once), not space to keep a sheep in. It stays as a welfare point about penning. No source gives housing or camp space per sheep."
+  },
+  "welfare": [
+    {
+      "point": "Sheep must not be penned overcrowded: at least 0.56 square metres of floor space per sheep so every animal can lie down.",
+      "evidence": {
+        "quote": "Livestock shall not be penned in overcrowded conditions. ... Penning space provided shall be enough to permit all livestock to lie down at the same time and shall not be less than: ... for bacon and small porker pigs, sheep and goats: 0, 56 sq.m of floor area;",
+        "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+        "doc": "Livestock Welfare Co-ordinating Committee, Code of Practice for the Handling and Transport of Livestock (2018), s.1.2",
+        "page": 4
+      }
+    },
+    {
+      "point": "Electric prodders, sticks or goads may not be used on sheep.",
+      "evidence": {
+        "quote": "Electric prodders, sticks or goads shall not be used on sheep, pigs, horses, mules, donkeys, goats and un-weaned calves.",
+        "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+        "doc": "Livestock Welfare Co-ordinating Committee, Code of Practice for the Handling and Transport of Livestock (2018), s.2.7",
+        "page": 5
+      }
+    },
+    {
+      "point": "Sheep driven on the hoof may not be moved more than 20 km in a single day (25 km is regarded as excessive).",
+      "evidence": {
+        "quote": "during a journey of not more than one day's duration in the case of: a) sheep and goats: 20 Kilometers (25 km is excessive) and;",
+        "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+        "doc": "Livestock Welfare Co-ordinating Committee, Code of Practice for the Handling and Transport of Livestock (2018), s.3.4.1",
+        "page": 6
+      }
+    },
+    {
+      "point": "Injured, disabled or blind sheep must be given priority slaughter, or emergency slaughter, to prevent further pain or distress.",
+      "evidence": {
+        "quote": "Injured, disabled and blind livestock shall be priority slaughtered. If necessary and to prevent further pain or distress, emergency slaughter may be required.",
+        "url": "http://lwcc.org.za/wp-content/uploads/2020/07/Code-Of-Practice-Handling-And-Transport-of-Livestock-2018.pdf",
+        "doc": "Livestock Welfare Co-ordinating Committee, Code of Practice for the Handling and Transport of Livestock (2018), s.2.13",
+        "page": 5
+      }
+    },
+    {
+      "point": "A sheep-scab treatment plan should be in place: the disease carries a high economic and welfare cost.",
+      "evidence": {
+        "quote": "A treatment plan against sheep scab should be in place because of the high economic and welfare cost of the disease.",
+        "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/Research_and_Technology_Bulletin/Sheep-Scab.pdf",
+        "doc": "KZN Department of Agriculture and Rural Development, Research & Technology Bulletin 2017-18/01: Sheep Scab",
+        "page": 3
+      }
+    }
+  ],
+  "legal": [
+    {
+      "point": "Despite foot-and-mouth disease (FMD) in South Africa, wool exports continue under the inactivation clause of the OIE (World Organisation for Animal Health) rules.",
+      "evidence": {
+        "quote": "The foot and mouth disease (FMD) status for South Africa has not changed and wool exports are continuing under the inactivation clause of the OIE regulations.",
+        "url": "https://www.capewools.co.za/assets/annual_report/20202021annualreport.pdf",
+        "doc": "Cape Wools SA Annual Review 2020/2021",
+        "page": 8
+      }
+    },
+    {
+      "point": "Inside a declared FMD zone, sheep and their products cannot be moved into, out of, or within it without a state veterinary permit.",
+      "evidence": {
+        "quote": "No cloven-hoofed animals, their products, or genetic material may be moved from, to, or within the DMA unless authorised by a state veterinary permit and in full compliance with the stipulated conditions of such [a] permit.",
+        "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+        "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+        "page": null
+      }
+    },
+    {
+      "point": "Sheep scab is a controlled disease by law: a suspected or positive case must be reported to the State Veterinarian immediately.",
+      "evidence": {
+        "quote": "Sheep scab is an extremely infectious disease, and by law, a positive case has to be immediately reported to the local State Veterinarian.",
+        "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/Research_and_Technology_Bulletin/Sheep-Scab.pdf",
+        "doc": "KZN Department of Agriculture and Rural Development, Research & Technology Bulletin 2017-18/01: Sheep Scab",
+        "page": 1
+      }
+    },
+    {
+      "point": "Wool from scab-infected sheep must be destroyed rather than sent to the buyer, where it would be marked as scab wool.",
+      "evidence": {
+        "quote": "Wool from infected animals must be destroyed rather than send ing it to the buyer (i.e. BKB). If the wool is sent to the buyer, the wool will be marked as scab wool as it is heavier than normal wool.",
+        "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/Research_and_Technology_Bulletin/Sheep-Scab.pdf",
+        "doc": "KZN Department of Agriculture and Rural Development, Research & Technology Bulletin 2017-18/01: Sheep Scab",
+        "page": 3
+      }
+    },
+    {
+      "point": "Every sheep owner must register an official identification mark and mark their sheep with it, under the Animal Identification Act.",
+      "evidence": {
+        "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+        "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+        "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+        "page": 4
+      }
+    },
+    {
+      "point": "A sheep may be slaughtered only at an abattoir, except for the farmer's own consumption or for cultural or religious purposes.",
+      "evidence": {
+        "quote": "slaughter any animal at any place other than an abattoir; ... Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+        "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+        "page": 6
+      }
+    }
+  ],
+  "gaps": [
+    "No smallholder/communal-specific ADULT annual fleece-weight figure was found (only the Kolomana article's general semi-arid-region range, and a 6-month-old lamb progeny-test figure from the NWGA/Mandela Initiative Eastern Cape communal paper, which is a different life stage and kept only as context, not as outputPerAnimal).",
+    "Elsenburg's Dohne Merino Extensive (Ceres-Karoo) 2024 enterprise budget gives total flock wool (4439.64 kg) and a flock size in 'Smallstock Units' (1 519), but the document never states that 1 Smallstock Unit = 1 sheep, so a kg/sheep figure could not be safely derived from it without an unstated conversion factor; left unused for outputPerAnimal.",
+    "capewools.co.za/documentlibrary/wool-production-history reset the connection on every attempt; a woolinsabooklet.pdf on capewools.co.za downloaded successfully (7.4 MB, 40 pages) but pypdf extracted essentially zero characters of text on every page (a scanned/image-only PDF with no text layer), so it could not be used for verbatim quotes.",
+    "nda.gov.za's 2012 wool market value chain profile PDF, and a SASAS (sasas.co.za) paper, could not be reached (connection reset / 403 respectively).",
+    "No SA-specific feed kg/day or water L/day figure for a mature wool sheep was found; an Australian 'SheepConnect SA' water-intake figure surfaced in web search but was excluded as non-South African.",
+    "No age-to-first-shearing (timeToFirstProductWeeks) figure was found; the closest candidate ('Growing period of an animal (Months) 12' in the Elsenburg Dohne Merino budget) is not defined by the source as a shearing-age figure, so it was left unused rather than assumed.",
+    "No permanent on-farm shearing-shed or camp stocking-density figure (as opposed to a pre-transport holding pen) was found for wool sheep.",
+    "Editor review 2026-09-28 (round 2): spaceM2PerAnimal withdrawn (a holding-pen minimum from the handling and transport code, kept as a welfare point). Legal points trimmed to their quotes: the FMD point no longer claims a reporting duty, the Meat Safety Act point now quotes the abattoir rule itself and drops 'for sale' and 'may not then be sold', and the scab points drop 'declared outbreak' and 'financially penalised'. productiveLifeYears withdrawn: 5 years was 1 divided by the budget's 20% ewe replacement rate, which the budget does not state as a lifespan."
+  ]
+}

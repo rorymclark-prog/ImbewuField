@@ -16,6 +16,7 @@ export const SPECIES_ART = {
   'coffea-arabica': { picker: 'tree_arabica_coffee.png', plan: 'arabica-coffee-tree-v1.png' },
   'musa-acuminata-aaa-group': { picker: 'tree_banana_dwarf_cavendish_williams.png', plan: 'banana-dwarf-cavendish-williams-v1.png' },
   'morus-nigra': { picker: 'tree_black_mulberry.png', plan: 'black-mulberry-tree-v1.png' },
+  'moringa-oleifera': { picker: 'tree_moringa.png', plan: 'moringa-tree-v1.png' },
   'ceratonia-siliqua': { picker: 'tree_carob.png', plan: 'carob-tree-v1.png' },
   'phoenix-dactylifera': { picker: 'tree_date_palm.png', plan: 'date-palm-v1.png' },
   'carya-illinoinensis': { picker: 'tree_pecan.png', plan: 'pecan-tree-v1.png' },
@@ -66,6 +67,30 @@ export const SPECIES_ART = {
   'searsia-lancea-rhus-lancea': { picker: 'tree_karee.png', plan: 'karee-v1.png' },
   'sideroxylon-inerme': { picker: 'tree_white_milkwood.png', plan: 'white-milkwood-v1.png' },
   'olea-europaea-subsp-europaea': { picker: 'tree_olive.png', plan: 'olive-v1.png' },
+  // Fruit trees with harvest data (lib/perennial-harvest-data.ts) that already had artwork under
+  // their design element but no species entry, so the picker showed them with no picture.
+  'carica-papaya': { picker: 'tree_pawpaw.png', plan: 'pawpaw-tree-v2.png' },
+  'carissa-macrocarpa': { picker: 'tree_natal_plum-v3.png', plan: 'natal-plum-v2.png' },
+  'citrus-limon': { picker: 'tree_lemon.png', plan: 'citrus-tree-v3.png' },
+  'citrus-reticulata': { picker: 'tree_citrus.png', plan: 'citrus-tree-v3.png' },
+  'dovyalis-afra': { picker: 'tree_kei_apple.png', plan: 'kei-apple-tree-v2.png' },
+  'ficus-carica': { picker: 'tree_fig.png', plan: 'fig-tree-v1.png' },
+  'harpephyllum-caffrum': { picker: 'tree_wild_plum.png', plan: 'wild-plum-v2.png' },
+  'litchi-chinensis': { picker: 'tree_litchi.png', plan: 'litchi-tree-v5.png' },
+  'macadamia-integrifolia': { picker: 'tree_macadamia.png', plan: 'macadamia-tree-v2.png' },
+  'mangifera-indica': { picker: 'tree_mango.png', plan: 'mango-tree-v2.png' },
+  'persea-americana': { picker: 'tree_avocado.png', plan: 'avocado-tree-v5.png' },
+  'prunus-persica': { picker: 'tree_peach.png', plan: 'peach-tree-v1.png' },
+  'prunus-salicina': { picker: 'tree_plum.png', plan: 'plum-tree-v1.png' },
+  'psidium-guajava': { picker: 'tree_guava.png', plan: 'guava-v2.png' },
+  'punica-granatum': { picker: 'tree_pomegranate.png', plan: 'pomegranate-tree-v1.png' },
+  'sclerocarya-birrea-subsp-caffra': { picker: 'tree_marula.png', plan: 'marula-tree-v2.png' },
+  'syzygium-cordatum': { picker: 'tree_waterberry.png', plan: 'waterberry-v2.png' },
+  'carpobrotus-edulis': { picker: 'tree_sour_fig.png', plan: 'sour-fig-v1.png' },
+  'englerophytum-magalismontanum': { picker: 'tree_transvaal_milkplum.png', plan: 'transvaal-milkplum-v1.png' },
+  'garcinia-livingstonei': { picker: 'tree_african_mangosteen.png', plan: 'african-mangosteen-v1.png' },
+  'pappea-capensis': { picker: 'tree_jacket_plum.png', plan: 'jacket-plum-v1.png' },
+  'strychnos-spinosa': { picker: 'tree_spiny_monkey_orange.png', plan: 'spiny-monkey-orange-v1.png' },
 } as const satisfies Readonly<Record<string, SpeciesArtwork>>;
 
 export type SpeciesReferenceArtwork = Exclude<
@@ -99,4 +124,95 @@ export function speciesPickerArtworkUrl(speciesId?: string | null): string | nul
 export function speciesReferenceArtworkFor(speciesId?: string | null): SpeciesReferenceArtwork | null {
   if (!speciesId) return null;
   return (SPECIES_ART as Readonly<Record<string, SpeciesArtwork>>)[speciesId]?.plan as SpeciesReferenceArtwork ?? null;
+}
+
+// ── fruit art ────────────────────────────────────────────────────────────────
+// The crop calendar shows what a tree GIVES in a month — the fruit, nut, berry or pod — not the
+// tree. One icon per species in lib/perennial-harvest-data.ts, all present in public/fruit-art/.
+// The SVGs are flat placeholders from scripts/build-fruit-placeholder-art.mjs; when Codex paints a
+// PNG per docs/FRUIT-ART-BRIEF.md, list its speciesId in FRUIT_ART_PNG and the PNG is used instead.
+
+export const FRUIT_ART_ROOT = '/fruit-art';
+
+// A mapped edible plant can have product art even while its harvest dates remain unknown.
+export const MAPPED_FOOD_PRODUCT_ART: Readonly<Record<string, string>> = {
+  'cajanus-cajan': `${FRUIT_ART_ROOT}/cajanus-cajan.png`,
+  'pyrus-communis': `${FRUIT_ART_ROOT}/pyrus-communis.png`,
+  'prunus-armeniaca': `${FRUIT_ART_ROOT}/prunus-armeniaca.png`,
+  'prunus-dulcis': `${FRUIT_ART_ROOT}/prunus-dulcis.png`,
+  'pistacia-vera': `${FRUIT_ART_ROOT}/pistacia-vera.png`,
+  'prunus-avium': `${FRUIT_ART_ROOT}/prunus-avium.png`,
+  'phoenix-dactylifera': `${FRUIT_ART_ROOT}/phoenix-dactylifera.png`,
+  'olea-europaea-subsp-europaea': `${FRUIT_ART_ROOT}/olea-europaea-subsp-europaea.png`,
+  'morus-nigra': `${FRUIT_ART_ROOT}/morus-nigra.png`,
+  'cydonia-oblonga': `${FRUIT_ART_ROOT}/cydonia-oblonga.png`,
+  'ceratonia-siliqua': `${FRUIT_ART_ROOT}/ceratonia-siliqua.png`,
+  'acca-sellowiana': `${FRUIT_ART_ROOT}/acca-sellowiana.png`,
+  'coffea-arabica': `${FRUIT_ART_ROOT}/coffea-arabica.png`,
+  'ananas-comosus': `${FRUIT_ART_ROOT}/ananas-comosus.png`,
+  'aspalathus-linearis': `${FRUIT_ART_ROOT}/aspalathus-linearis.png`,
+  'euclea-pseudebenus': `${FRUIT_ART_ROOT}/euclea-pseudebenus.png`,
+  'ficus-sur': `${FRUIT_ART_ROOT}/ficus-sur.png`,
+  'rhoicissus-digitata': `${FRUIT_ART_ROOT}/rhoicissus-digitata.png`,
+  'schotia-afra-var-afra': `${FRUIT_ART_ROOT}/schotia-afra-var-afra.png`,
+  'tulbaghia-violacea': `${FRUIT_ART_ROOT}/tulbaghia-violacea.png`,
+};
+
+export const FRUIT_ART_SPECIES = [
+  'carica-papaya', 'carissa-macrocarpa', 'carpobrotus-edulis', 'carya-illinoinensis', 'citrus-limon',
+  'citrus-reticulata', 'dovyalis-afra', 'englerophytum-magalismontanum', 'ficus-carica',
+  'fragaria-x-ananassa', 'garcinia-livingstonei', 'grewia-occidentalis', 'harpephyllum-caffrum',
+  'litchi-chinensis', 'macadamia-integrifolia', 'malus-domestica', 'mangifera-indica', 'mimusops-zeyheri',
+  'moringa-oleifera', 'musa-acuminata-aaa-group', 'pappea-capensis', 'passiflora-edulis',
+  'persea-americana', 'phoenix-reclinata', 'physalis-peruviana', 'prunus-persica', 'prunus-salicina',
+  'psidium-guajava', 'punica-granatum', 'rhoicissus-tomentosa', 'rubus-idaeus',
+  'sclerocarya-birrea-subsp-caffra', 'strychnos-spinosa', 'syzygium-cordatum', 'vaccinium-corymbosum',
+  'vangueria-infausta', 'vitis-vinifera',
+] as const;
+
+/** Species whose painted PNG has landed in public/fruit-art/ (replaces the placeholder SVG). */
+export const FRUIT_ART_PNG: ReadonlySet<string> = new Set<string>([
+  'carica-papaya',
+  'carissa-macrocarpa',
+  'carpobrotus-edulis',
+  'carya-illinoinensis',
+  'citrus-limon',
+  'citrus-reticulata',
+  'dovyalis-afra',
+  'englerophytum-magalismontanum',
+  'ficus-carica',
+  'fragaria-x-ananassa',
+  'garcinia-livingstonei',
+  'grewia-occidentalis',
+  'harpephyllum-caffrum',
+  'litchi-chinensis',
+  'macadamia-integrifolia',
+  'malus-domestica',
+  'mangifera-indica',
+  'mimusops-zeyheri',
+  'moringa-oleifera',
+  'musa-acuminata-aaa-group',
+  'pappea-capensis',
+  'passiflora-edulis',
+  'persea-americana',
+  'phoenix-reclinata',
+  'physalis-peruviana',
+  'prunus-persica',
+  'prunus-salicina',
+  'psidium-guajava',
+  'punica-granatum',
+  'rhoicissus-tomentosa',
+  'rubus-idaeus',
+  'sclerocarya-birrea-subsp-caffra',
+  'strychnos-spinosa',
+  'syzygium-cordatum',
+  'vaccinium-corymbosum',
+  'vangueria-infausta',
+  'vitis-vinifera',
+]);
+
+export function speciesFruitArtworkUrl(speciesId?: string | null): string | null {
+  if (speciesId && MAPPED_FOOD_PRODUCT_ART[speciesId]) return MAPPED_FOOD_PRODUCT_ART[speciesId];
+  if (!speciesId || !(FRUIT_ART_SPECIES as readonly string[]).includes(speciesId)) return null;
+  return `${FRUIT_ART_ROOT}/${speciesId}.${FRUIT_ART_PNG.has(speciesId) ? 'png' : 'svg'}`;
 }

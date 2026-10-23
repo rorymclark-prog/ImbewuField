@@ -1,0 +1,74 @@
+{
+  "key": "oats",
+  "varieties": [
+    {
+      "name": "Overberg",
+      "zones": ["midlands-mistbelt", "highveld"],
+      "maturity": "late",
+      "season": null,
+      "traits": "Highest mean yield in the short-duration cereal trial (6.98 t DM/ha), but among the LATEST to reach silage harvest (166 days after planting) and lowest seed-head uniformity (only 50% seed heads, high variability) — better suited to grazing or hay than silage",
+      "type": null,
+      "note": "Directly sources and extends the existing crop-catalog.ts 'daysToHarvest: 166' figure and comment, which this pass confirms comes from a KZN DARD Cedara forage-cereal trial rather than a food-oat context. Zones are this pass's inference from the trial location (KZN Midlands, Cedara) plus general applicability to the wider cold summer-rain interior; the source does not itself name zones.",
+      "evidence": [
+        { "quote": "The highest mean yield in the short-duration trial was produced by Overberg oats at 6.98 tons DM ha-1", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/Short-medium-and-long-duration-cereals-for-cover-crops-and-winter-forage.pdf", "page": 1, "doc": "Short, medium and long duration cereals for cover crops and winter forage, KZN DARD Research & Technology Bulletin 2020/21-09" },
+        { "quote": "the cultivars that had the latest silage harvest were Elisabet oats, Overberg oats and Estero 1430 red oat (166 days after planting).", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/Short-medium-and-long-duration-cereals-for-cover-crops-and-winter-forage.pdf", "page": 2, "doc": "Short, medium and long duration cereals for cover crops and winter forage, KZN DARD Research & Technology Bulletin 2020/21-09" },
+        { "quote": "Overberg oats, with only 50% seed heads and high variability, may be less desirable for silage and probably more suited to grazing or hay.", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/Short-medium-and-long-duration-cereals-for-cover-crops-and-winter-forage.pdf", "page": 2, "doc": "Short, medium and long duration cereals for cover crops and winter forage, KZN DARD Research & Technology Bulletin 2020/21-09" }
+      ]
+    },
+    {
+      "name": "Elisabet",
+      "zones": ["midlands-mistbelt", "highveld"],
+      "maturity": "late",
+      "season": null,
+      "traits": "One of the three latest-maturing cultivars in the short-duration trial (166 days after planting)",
+      "type": null,
+      "note": "Same trial/zone inference as Overberg.",
+      "evidence": [{ "quote": "the cultivars that had the latest silage harvest were Elisabet oats, Overberg oats and Estero 1430 red oat (166 days after planting).", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/Short-medium-and-long-duration-cereals-for-cover-crops-and-winter-forage.pdf", "page": 2, "doc": "Short, medium and long duration cereals for cover crops and winter forage, KZN DARD Research & Technology Bulletin 2020/21-09" }]
+    },
+    {
+      "name": "Estero 1430",
+      "zones": ["midlands-mistbelt", "highveld"],
+      "maturity": "late",
+      "season": null,
+      "traits": "Red oat (Avena byzantina); one of the three latest-maturing cultivars in the short-duration trial (166 days after planting)",
+      "type": null,
+      "note": "This is a red oat (A. byzantina), not the white oat (A. sativa) type used for Overberg/Elisabet — distinguished in the source. Same trial/zone inference as Overberg.",
+      "evidence": [{ "quote": "the cultivars that had the latest silage harvest were Elisabet oats, Overberg oats and Estero 1430 red oat (166 days after planting).", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/Short-medium-and-long-duration-cereals-for-cover-crops-and-winter-forage.pdf", "page": 2, "doc": "Short, medium and long duration cereals for cover crops and winter forage, KZN DARD Research & Technology Bulletin 2020/21-09" }]
+    },
+    {
+      "name": "Saddle",
+      "zones": ["midlands-mistbelt", "highveld"],
+      "maturity": "medium",
+      "season": null,
+      "traits": "White oat; among the quickest to establish in the medium/long-duration grazing trial (2.67 t DM/ha in the first cut)",
+      "type": null,
+      "note": "From the separate medium/long-duration (repeated grazing) trial at the same Cedara site.",
+      "evidence": [{ "quote": "Saddle oats, Moby barley and Saia black oats, with yields of 2.67, 2.64 and 2.63 tons DM ha-1, respectively, are considered quick to establish", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/Short-medium-and-long-duration-cereals-for-cover-crops-and-winter-forage.pdf", "page": 3, "doc": "Short, medium and long duration cereals for cover crops and winter forage, KZN DARD Research & Technology Bulletin 2020/21-09" }]
+    },
+    {
+      "name": "Saia",
+      "zones": ["midlands-mistbelt", "highveld"],
+      "maturity": "medium",
+      "season": null,
+      "traits": "Black oat (Avena strigosa); among the quickest to establish in the medium/long-duration grazing trial (2.63 t DM/ha in the first cut)",
+      "type": null,
+      "note": null,
+      "evidence": [{ "quote": "Saddle oats, Moby barley and Saia black oats, with yields of 2.67, 2.64 and 2.63 tons DM ha-1, respectively, are considered quick to establish", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/Short-medium-and-long-duration-cereals-for-cover-crops-and-winter-forage.pdf", "page": 3, "doc": "Short, medium and long duration cereals for cover crops and winter forage, KZN DARD Research & Technology Bulletin 2020/21-09" }]
+    }
+  ],
+  "zoneAdvice": {
+    "midlands-mistbelt": {
+      "text": "Directly sourced: this is where the Cedara trial ran. Short-duration cultivars (e.g. Overberg, Elisabet, Estero 1430) sown end Feb/March give autumn/early-winter grazing or an autumn silage cut; sowing later in autumn shifts grazing to early/mid-winter.",
+      "evidence": [{ "quote": "Short duration cultivars are usually quick to establish and, if planted in early autumn (end of Feb/March), will provide grazing in late autumn/early winter.", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/Short-medium-and-long-duration-cereals-for-cover-crops-and-winter-forage.pdf", "page": 3, "doc": "Short, medium and long duration cereals for cover crops and winter forage, KZN DARD Research & Technology Bulletin 2020/21-09" }]
+    },
+    "highveld": {
+      "text": "Extrapolated from the same Cedara trial to the wider cold summer-rain interior for the March-May cover-crop window already used in crop-catalog.ts — not independently confirmed for the highveld itself.",
+      "evidence": []
+    }
+  },
+  "gaps": [
+    "All cultivar data comes from a single KZN Midlands (Cedara) trial; no independent source confirms these specific cultivars' performance in the highveld, lowveld-bushveld, subtropical-coast, western-cape, southern-cape, karoo-arid or high-mountain zones.",
+    "The bulletin is about forage/cover-crop oats (matching this catalog entry's 'winter cover crop' framing), not grain oats for human consumption — if a food-oat use is ever added to the catalog, none of this evidence would carry over.",
+    "Medium/long-duration trial yields (Saddle, Saia, Moby barley) are given only for the first cut, not a full-season total, so a full-season yield-per-cultivar figure is a gap."
+  ]
+}

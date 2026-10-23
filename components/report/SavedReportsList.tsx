@@ -56,7 +56,11 @@ const LABEL_STYLE: React.CSSProperties = {
 export default function SavedReportsList({
   reports, places, canGenerate, onOpenReport, onViewReport, onDeleted,
 }: Props) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  // copy-14: toLocaleDateString/toLocaleTimeString with no locale argument read the device's
+  // browser locale, which prints the en-US '10/16/2026' on a phone set to that rather than
+  // 'en-ZA'.
+  const dateLocale = lang === 'zu' ? 'zu-ZA' : 'en-ZA';
   const [openSiteId, setOpenSiteId] = useState<string | null>(null);
 
   const groups = groupReportsBySite(reports, places);
@@ -132,9 +136,9 @@ export default function SavedReportsList({
                     <div className="text-sm font-display font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
                       {g.place ? g.place.name : t('unsavedSiteGroupLabel')}
                     </div>
-                    <div className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>
+                    <div className="text-xs" style={{ color: 'var(--text-secondary)' }}>
                       {count} {count === 1 ? t('savedReportCountSingular') : t('savedReportCountPlural')}
-                      {' · '}{new Date(g.reports[0].savedAt).toLocaleDateString()}
+                      {' · '}{new Date(g.reports[0].savedAt).toLocaleDateString(dateLocale)}
                     </div>
                   </div>
                   <ChevronRight size={16} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
@@ -150,7 +154,7 @@ export default function SavedReportsList({
             {groups.length > 1 && (
               <button
                 onClick={() => setOpenSiteId(null)}
-                className="flex items-center gap-1 text-xs font-mono"
+                className="flex items-center gap-1 text-xs"
                 style={{ background: 'none', border: 'none', padding: 0, color: 'var(--text-secondary)', cursor: 'pointer' }}
               >
                 <ChevronLeft size={13} /> {t('savedSitesBackLink')}
@@ -170,13 +174,13 @@ export default function SavedReportsList({
                   <button onClick={() => onViewReport?.(r)} className="flex-1 min-w-0 text-left">
                     <div className="text-sm font-display font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
                       {known
-                        ? new Date(r.savedAt).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })
+                        ? new Date(r.savedAt).toLocaleDateString(dateLocale, { day: 'numeric', month: 'long', year: 'numeric' })
                         : r.name}
                     </div>
-                    <div className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>
+                    <div className="text-xs" style={{ color: 'var(--text-secondary)' }}>
                       {known
-                        ? new Date(r.savedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                        : `${new Date(r.savedAt).toLocaleDateString()} · ${Math.abs(r.location.lat).toFixed(3)}°S ${r.location.lon.toFixed(3)}°E`}
+                        ? new Date(r.savedAt).toLocaleTimeString(dateLocale, { hour: '2-digit', minute: '2-digit' })
+                        : `${new Date(r.savedAt).toLocaleDateString(dateLocale)} · ${Math.abs(r.location.lat).toFixed(3)}°S ${r.location.lon.toFixed(3)}°E`}
                     </div>
                   </button>
                   <button

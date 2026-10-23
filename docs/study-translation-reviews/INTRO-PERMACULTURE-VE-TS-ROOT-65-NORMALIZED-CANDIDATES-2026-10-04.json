@@ -1,0 +1,2775 @@
+{
+  "title": "Introduction VE/TS candidate packet — source-aligned proposals",
+  "date": "2026-10-04",
+  "basedOn": "/tmp/imbewu-introduction-remaining-holds-candidates-20261004.json",
+  "scope": {
+    "candidateFields": 65,
+    "repositoryEdits": 0,
+    "published": false,
+    "status": "Unreviewed source-paired proposals for facilitator feedback after publication; fluent review remains open."
+  },
+  "sourceFiles": {
+    "livePairedJSONSHA256": {
+      "ve": "0909f825959051bdf84cffad22ee946e8af244d10ca9e93cea59a15d67045afc",
+      "ts": "742e7e715ee1020ee0e2d5829ef4165305627ecf1289a0a2cd32889af21933cf"
+    },
+    "currentSourceAndTargetRechecked": true
+  },
+  "segmentContract": {
+    "mixedRequires": "at least two segments",
+    "allowedSegmentStatuses": [
+      "draft",
+      "english-hold"
+    ],
+    "draftSegmentRequires": "non-empty translated text",
+    "englishHoldRequires": "sourceEnglish only; omit target text",
+    "sourceConcatenation": "segment sourceEnglish strings must concatenate byte-for-byte to sourceEnglish",
+    "technicalEnglish": "Technical English anchors may remain inside localized draft text."
+  },
+  "summary": {
+    "rows": 65,
+    "byLanguage": {
+      "ve": 33,
+      "ts": 32
+    },
+    "proposalStatuses": {
+      "draft": 57,
+      "mixed": 8
+    },
+    "mixedRows": 8,
+    "englishHoldSegments": 9,
+    "liveSourceMatches": 65,
+    "liveCurrentTargetMatches": 65,
+    "sourceConcatenationsExact": 65,
+    "contractErrors": []
+  },
+  "candidateFields": [
+    {
+      "language": "ve",
+      "slide": 2,
+      "bodyIndex": 0,
+      "sourceEnglish": "A good design saves work before you pick up a spade.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Design yavhuḓi i fhungudza mushumo ni sa athu u fara spade."
+      },
+      "displayProposalWithHolds": "Design yavhuḓi i fhungudza mushumo ni sa athu u fara spade.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "The ordinary claim is localized; “spade” remains the concrete tool anchor.",
+      "retainedEnglishAnchors": [
+        "spade"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 2,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 2,
+      "bodyIndex": 2,
+      "sourceEnglish": "Permaculture is a way of deciding where things go, so the land works with you instead of against you.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Permaculture ndi nḓila ya u dzhia tsheo ya hune zwithu zwa tea u vha hone, uri mavu a shume na inwi, hu si u ni thivhela."
+      },
+      "displayProposalWithHolds": "Permaculture ndi nḓila ya u dzhia tsheo ya hune zwithu zwa tea u vha hone, uri mavu a shume na inwi, hu si u ni thivhela.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Keeps the named approach and preserves the with-you/instead-of-against-you contrast.",
+      "retainedEnglishAnchors": [
+        "Permaculture"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 2,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 3,
+      "bodyIndex": 1,
+      "sourceEnglish": "Name the three ethics, and use them to settle a decision that has no obvious answer.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Bulani the three ethics, ni dzi shumise u dzhia tsheo ine ya si vhe na phindulo i vhonalaho."
+      },
+      "displayProposalWithHolds": "Bulani the three ethics, ni dzi shumise u dzhia tsheo ine ya si vhe na phindulo i vhonalaho.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "The instructional verb and no-obvious-answer condition are stated; named ethics remain an English anchor.",
+      "retainedEnglishAnchors": [
+        "the three ethics"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 3,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "bodyIndex": 1,
+      "sourceEnglish": "It means treating soil, water, plants and animals as living systems to protect, not resources to use up.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Zwi amba u dzhia soil, water, plants and animals sa “living systems to protect, not resources to use up.”"
+      },
+      "displayProposalWithHolds": "Zwi amba u dzhia soil, water, plants and animals sa “living systems to protect, not resources to use up.”",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Localizes the ordinary framing while retaining the complete technical contrast verbatim.",
+      "retainedEnglishAnchors": [
+        "soil, water, plants and animals",
+        "living systems to protect, not resources to use up"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 4,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "bodyIndex": 2,
+      "sourceEnglish": "A system you use up stops paying you. A system you protect keeps paying you.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "System ine na shumisa na fhedza i a ima: “stops paying you.” System ine na tsireledza i bvela phanda: “keeps paying you.”"
+      },
+      "displayProposalWithHolds": "System ine na shumisa na fhedza i a ima: “stops paying you.” System ine na tsireledza i bvela phanda: “keeps paying you.”",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Keeps the source metaphor verbatim so it is not narrowed to cash or yield.",
+      "retainedEnglishAnchors": [
+        "stops paying you",
+        "keeps paying you"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 4,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 2,
+      "sourceEnglish": "A farmer who sells all his surplus mielies and keeps nothing back for compost or for seed is breaking this one. Nothing goes back.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Mulimi ane a rengisa mielies dzawe dzoṱhe dza surplus, a si vhulunge na tshithu tsha compost kana seed, u khou pfuka uyu mulayo. A hu na tshithu tshi vhuyelelaho."
+      },
+      "displayProposalWithHolds": "Mulimi ane a rengisa mielies dzawe dzoṱhe dza surplus, a si vhulunge na tshithu tsha compost kana seed, u khou pfuka uyu mulayo. A hu na tshithu tshi vhuyelelaho.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves all surplus, both things kept back, and the consequence; crop and practice terms remain anchors.",
+      "retainedEnglishAnchors": [
+        "mielies",
+        "surplus",
+        "compost",
+        "seed"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 6,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 3,
+      "sourceEnglish": "A community that fences off a shared spring is breaking it too.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Tshitshavha tshi vhofhaho tsime ḽine ḽa shumiswa nga vhoṱhe nga fence tshi khou pfuka Fair Share na tshone."
+      },
+      "displayProposalWithHolds": "Tshitshavha tshi vhofhaho tsime ḽine ḽa shumiswa nga vhoṱhe nga fence tshi khou pfuka Fair Share na tshone.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Retains shared access and fencing as source concepts while translating the actor and violation.",
+      "retainedEnglishAnchors": [
+        "fence"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 6,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 1,
+      "sourceEnglish": "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "mixed",
+        "segments": [
+          {
+            "status": "draft",
+            "sourceEnglish": "First find out if sharing is allowed.",
+            "text": "Thomani nga u wana arali u kovhelana ho tendelwa."
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": " Check whether the borehole can serve all users without taking too much."
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": " If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+            "text": " Arali u kovhelana ho tendelwa nahone hu na maḓi o eḓanaho, tendelanani uri ni kovhelane nga ndinganyo ni dzule ni tshi sedza water level. People Care na Fair Share zwi livhisa u tendelana. Earth Care zwi amba u tsireledza the source. U sedza water level fhedzi a zwi ambi uri u shumisa maḓi o engedzeaho zwi safe kana zwo tendelwa."
+          }
+        ]
+      },
+      "displayProposalWithHolds": "Thomani nga u wana arali u kovhelana ho tendelwa. Check whether the borehole can serve all users without taking too much. Arali u kovhelana ho tendelwa nahone hu na maḓi o eḓanaho, tendelanani uri ni kovhelane nga ndinganyo ni dzule ni tshi sedza water level. People Care na Fair Share zwi livhisa u tendelana. Earth Care zwi amba u tsireledza the source. U sedza water level fhedzi a zwi ambi uri u shumisa maḓi o engedzeaho zwi safe kana zwo tendelwa.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Exact source sentence retained as an explicit English hold; translated spans remain draft.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Keeps permission twice, adequate water, all users, fair agreement, continued monitoring, and the explicit no-safety/no-permission guarantee. Independent safety repair: retained exact English anchor for the uncertain directional/action term to avoid a possible meaning shift.",
+      "retainedEnglishAnchors": [
+        "Check whether the borehole can serve all users without taking too much.",
+        "Check whether the borehole can serve all users without taking too much"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 7,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 2,
+      "sourceEnglish": "Who could help you check the rules and the water supply?",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Ndi nnyi ane a nga ni thusa u sedza milayo na water supply?"
+      },
+      "displayProposalWithHolds": "Ndi nnyi ane a nga ni thusa u sedza milayo na water supply?",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Localizes who can help and both checks; water supply remains an anchor.",
+      "retainedEnglishAnchors": [
+        "water supply"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 7,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 3,
+      "sourceEnglish": "Build these three into how you think before you build anything on the ground.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Dzhiani ethics idzi tharu ni dzi ite tshipiḓa tsha nḓila ine na humbula ngayo, ni sa athu fhaṱa zwithu kha mavu."
+      },
+      "displayProposalWithHolds": "Dzhiani ethics idzi tharu ni dzi ite tshipiḓa tsha nḓila ine na humbula ngayo, ni sa athu fhaṱa zwithu kha mavu.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "draft",
+      "originalReason": "Keeps before-building order and the ordinary invitation to make the ethics part of thinking.",
+      "retainedEnglishAnchors": [],
+      "sourceBinding": {
+        "pairedSlideN": 8,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "bodyIndex": 1,
+      "sourceEnglish": "One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "One storm i sumbedza tshifhinga tshithihi. Full wet season i sumbedza pattern: hune maḓi a elela, hune a kuvhangana, na hune a sa swike hone."
+      },
+      "displayProposalWithHolds": "One storm i sumbedza tshifhinga tshithihi. Full wet season i sumbedza pattern: hune maḓi a elela, hune a kuvhangana, na hune a sa swike hone.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves the one-storm/full-season contrast and all three water observations.",
+      "retainedEnglishAnchors": [
+        "pattern"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 10,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "bodyIndex": 2,
+      "sourceEnglish": "This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Izwi zwi thusa uri ni pfesese site. Fhedzi izwi fhedzi a zwi sumbedzi uri swale yo tea kana yo safe u fhaṱiwa. Ni sa athu cela, sedzani soil, slope, drainage na safe overflow route ine ya sa ise kha erosion kana u rumela maḓi a tshinyadzaho kha vhahura. Humbelani trained local adviser uri a sedze site."
+      },
+      "displayProposalWithHolds": "Izwi zwi thusa uri ni pfesese site. Fhedzi izwi fhedzi a zwi sumbedzi uri swale yo tea kana yo safe u fhaṱiwa. Ni sa athu cela, sedzani soil, slope, drainage na safe overflow route ine ya sa ise kha erosion kana u rumela maḓi a tshinyadzaho kha vhahura. Humbelani trained local adviser uri a sedze site.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Localizes the ordinary framing and before-digging instruction; preserves non-sufficiency, checks, safe discharge, harm limits and adviser condition.",
+      "retainedEnglishAnchors": [
+        "site",
+        "swale",
+        "soil",
+        "slope",
+        "drainage",
+        "safe overflow route",
+        "erosion",
+        "trained local adviser"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 10,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "bodyIndex": 0,
+      "sourceEnglish": "Harvest rain, sun and biomass before they leave your property.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Harvest rain, sun na biomass ni sa athu u zwi xedza kha property yaṋu."
+      },
+      "displayProposalWithHolds": "Harvest rain, sun na biomass ni sa athu u zwi xedza kha property yaṋu.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Keeps resource-capture terms as anchors and translates the imperative/timing. Independent safety repair: retained exact English anchor for the uncertain directional/action term to avoid a possible meaning shift.",
+      "retainedEnglishAnchors": [],
+      "sourceBinding": {
+        "pairedSlideN": 11,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "bodyIndex": 1,
+      "sourceEnglish": "Every one of those arrives free and leaves free. Water runs off, leaves blow away, sun falls on bare ground.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Zwoṱhe izwi zwi swika mahala, zwa dovha zwa ṱuwa mahala. Water i a tsela, leaves dzi a fhufha, sun i wela kha mavu a songo fukedzwaho."
+      },
+      "displayProposalWithHolds": "Zwoṱhe izwi zwi swika mahala, zwa dovha zwa ṱuwa mahala. Water i a tsela, leaves dzi a fhufha, sun i wela kha mavu a songo fukedzwaho.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves each example and free-arrive/free-leave framing without treating “leaves” as a single sense.",
+      "retainedEnglishAnchors": [
+        "Water",
+        "leaves",
+        "sun"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 11,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "bodyIndex": 3,
+      "sourceEnglish": "Name one thing that arrives on your land free and leaves again without being used.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Bulani tshithu tshithihi tshine tsha swika kha mavu aṋu mahala tsha dovha tsha ṱuwa tshi songo shumiswa."
+      },
+      "displayProposalWithHolds": "Bulani tshithu tshithihi tshine tsha swika kha mavu aṋu mahala tsha dovha tsha ṱuwa tshi songo shumiswa.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "draft",
+      "originalReason": "A direct ordinary question; arrival, no-cost and unused departure remain explicit.",
+      "retainedEnglishAnchors": [],
+      "sourceBinding": {
+        "pairedSlideN": 11,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 13,
+      "bodyIndex": 0,
+      "sourceEnglish": "Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "mixed",
+        "segments": [
+          {
+            "status": "draft",
+            "sourceEnglish": "Use and value diversity.",
+            "text": "Shumisani diversity ni i dzhiele nṱha."
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": " Hail injury to maize depends on the storm and the crop’s growth stage."
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": " This principle does not promise that a crop will survive every event.",
+            "text": " Principle iyi a i fulufhedzisi uri crop i ḓo ponyoka kha event iṅwe na iṅwe."
+          }
+        ]
+      },
+      "displayProposalWithHolds": "Shumisani diversity ni i dzhiele nṱha. Hail injury to maize depends on the storm and the crop’s growth stage. Principle iyi a i fulufhedzisi uri crop i ḓo ponyoka kha event iṅwe na iṅwe.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Exact source sentence retained as an explicit English hold; translated spans remain draft.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Translates the directive and no-guarantee caveat; preserves the conditional hail/crop statement and its scope.",
+      "retainedEnglishAnchors": [
+        "diversity",
+        "Hail injury to maize depends on the storm and the crop’s growth stage",
+        "crop",
+        "event"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 13,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 13,
+      "bodyIndex": 2,
+      "sourceEnglish": "What would one bad day cost you right now?",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Ḓuvha ḽithihi ḽivhi ḽi nga ni durisa mini zwino?"
+      },
+      "displayProposalWithHolds": "Ḓuvha ḽithihi ḽivhi ḽi nga ni durisa mini zwino?",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "draft",
+      "originalReason": "Keeps the one-day and right-now scope in a plain question about cost.",
+      "retainedEnglishAnchors": [],
+      "sourceBinding": {
+        "pairedSlideN": 13,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 14,
+      "bodyIndex": 1,
+      "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "mixed",
+        "segments": [
+          {
+            "status": "draft",
+            "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food.",
+            "text": "A garden, fruit trees na chicken run zwi nga dzudzanywa uri chickens dzi rotate through the beds after harvest; izwi ndi integration. Ni songo tendela chickens dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe."
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": " Fresh manure can carry germs."
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": " Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+            "text": " Vhudzisani extension adviser uri bed i langulwe hani safely, edible crops dzi sa athu dovha u hula. Chickens dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha fixed pen."
+          }
+        ]
+      },
+      "displayProposalWithHolds": "A garden, fruit trees na chicken run zwi nga dzudzanywa uri chickens dzi rotate through the beds after harvest; izwi ndi integration. Ni songo tendela chickens dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe. Fresh manure can carry germs. Vhudzisani extension adviser uri bed i langulwe hani safely, edible crops dzi sa athu dovha u hula. Chickens dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha fixed pen.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Exact source sentence retained as an explicit English hold; translated spans remain draft.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Localizes ordinary sequence and retains crop-harvest exclusion, germ risk, adviser/safe timing, ability (can), and comparison to an idle fixed pen. Independent safety repair: retained exact English anchor for the uncertain directional/action term to avoid a possible meaning shift.",
+      "retainedEnglishAnchors": [
+        "Fresh manure can carry germs.",
+        "rotate through the beds after harvest",
+        "Fresh manure can carry germs"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 14,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 14,
+      "bodyIndex": 2,
+      "sourceEnglish": "The same three things, fenced apart, do only their own job.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Izwi zwithu zwiraru, zwo fhandekanywaho nga fence, zwi ita mushumo wa tshone tshithihi tshithihi fhedzi."
+      },
+      "displayProposalWithHolds": "Izwi zwithu zwiraru, zwo fhandekanywaho nga fence, zwi ita mushumo wa tshone tshithihi tshithihi fhedzi.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves the three elements, separation and their independent roles.",
+      "retainedEnglishAnchors": [
+        "fence"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 14,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 14,
+      "bodyIndex": 3,
+      "sourceEnglish": "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Khethani principles mbili kana tharu dzine dza amba na thaidzo yaṋu khulwane ni dzi shumise nga maanḓa. Dziṅwe dzi ḓo tou vha khagala musi ni tshi bvela phanḓa."
+      },
+      "displayProposalWithHolds": "Khethani principles mbili kana tharu dzine dza amba na thaidzo yaṋu khulwane ni dzi shumise nga maanḓa. Dziṅwe dzi ḓo tou vha khagala musi ni tshi bvela phanḓa.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves the two-or-three choice, biggest-problem criterion, strong application, and later understanding.",
+      "retainedEnglishAnchors": [
+        "principles"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 14,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 2,
+      "sourceEnglish": "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Zone 2 ndi main garden na chicken run, ni zwi dalela once or twice a day. Zone 3 ndi main field, ni i dalela weekly."
+      },
+      "displayProposalWithHolds": "Zone 2 ndi main garden na chicken run, ni zwi dalela once or twice a day. Zone 3 ndi main field, ni i dalela weekly.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Keeps all zone identities and exact visit frequencies.",
+      "retainedEnglishAnchors": [
+        "Zone 2",
+        "main garden",
+        "chicken run",
+        "once or twice a day",
+        "Zone 3",
+        "main field",
+        "weekly"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 15,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 3,
+      "sourceEnglish": "Zone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Zone 4 ndi semi-wild: fruit trees na fodder zwine zwa ṱoḓa attention from time to time. Zone 5 i sala i wild."
+      },
+      "displayProposalWithHolds": "Zone 4 ndi semi-wild: fruit trees na fodder zwine zwa ṱoḓa attention from time to time. Zone 5 i sala i wild.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Keeps the zone labels, examples, occasional-care qualifier, and wild status.",
+      "retainedEnglishAnchors": [
+        "Zone 4",
+        "semi-wild",
+        "fruit trees",
+        "fodder",
+        "Zone 5",
+        "wild"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 15,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "bodyIndex": 1,
+      "sourceEnglish": "Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Sun, wind, rain, flood na fire zwi pfuka boundary yaṋu hu sa londwi arali ni tshi zwi pulanela kana hai."
+      },
+      "displayProposalWithHolds": "Sun, wind, rain, flood na fire zwi pfuka boundary yaṋu hu sa londwi arali ni tshi zwi pulanela kana hai.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Translates the unconditional arrival while retaining the full list and boundary.",
+      "retainedEnglishAnchors": [
+        "Sun",
+        "wind",
+        "rain",
+        "flood",
+        "fire",
+        "boundary"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 18,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "bodyIndex": 2,
+      "sourceEnglish": "Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Sedzani hune strong wind ya bva hone kha farm yaṋu. Nearby weather-station records dzi nga ni thusa u sedza wind direction. Sedzani hune rainwater ya dzhena hone na hune ya elela hone kha mavu aṋu."
+      },
+      "displayProposalWithHolds": "Sedzani hune strong wind ya bva hone kha farm yaṋu. Nearby weather-station records dzi nga ni thusa u sedza wind direction. Sedzani hune rainwater ya dzhena hone na hune ya elela hone kha mavu aṋu.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Localizes site observation and rain-entry/flow checks; preserves nearby records as evidence and the exact wind direction to check.",
+      "retainedEnglishAnchors": [
+        "Nearby weather-station records",
+        "wind direction",
+        "strong wind",
+        "rainwater"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 18,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 19,
+      "bodyIndex": 0,
+      "sourceEnglish": "Look at this example. The wind comes from the north-west.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Sedzani uyu tsumbo. Wind i bva north-west."
+      },
+      "displayProposalWithHolds": "Sedzani uyu tsumbo. Wind i bva north-west.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Keeps example status and exact direction.",
+      "retainedEnglishAnchors": [
+        "north-west"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 19,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 19,
+      "bodyIndex": 1,
+      "sourceEnglish": "The trees and shrubs stand between that wind and the crops.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Trees na shrubs dzi ima vhukati ha wind iyo na crops."
+      },
+      "displayProposalWithHolds": "Trees na shrubs dzi ima vhukati ha wind iyo na crops.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves the between-wind-and-crops relation.",
+      "retainedEnglishAnchors": [
+        "shrubs",
+        "wind",
+        "crops"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 19,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 19,
+      "bodyIndex": 2,
+      "sourceEnglish": "Some air passes through the windbreak. Other air moves over it or around its ends.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Muṅwe muya u fhira nga ngomu ha windbreak. Muṅwe u ya nṱha ha yone kana u mona na magumo ayo."
+      },
+      "displayProposalWithHolds": "Muṅwe muya u fhira nga ngomu ha windbreak. Muṅwe u ya nṱha ha yone kana u mona na magumo ayo.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves all three air paths and identifies the structure.",
+      "retainedEnglishAnchors": [
+        "windbreak"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 19,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 19,
+      "bodyIndex": 3,
+      "sourceEnglish": "The shelter can reduce wind speed behind it. The design and care of the windbreak matter.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Shelter i nga fhungudza wind speed nga murahu hayo. Design na u ṱhogomela windbreak ndi zwa ndeme."
+      },
+      "displayProposalWithHolds": "Shelter i nga fhungudza wind speed nga murahu hayo. Design na u ṱhogomela windbreak ndi zwa ndeme.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves “can,” behind-shelter location, speed reduction, and design/maintenance importance.",
+      "retainedEnglishAnchors": [
+        "windbreak"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 19,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 19,
+      "bodyIndex": 4,
+      "sourceEnglish": "On your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Kha site yaṋu, ṱhogomelani damaging winds ni sa athu khetha hune na ḓo lima hone. Tshifanyiso itshi a si planting plan."
+      },
+      "displayProposalWithHolds": "Kha site yaṋu, ṱhogomelani damaging winds ni sa athu khetha hune na ḓo lima hone. Tshifanyiso itshi a si planting plan.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Keeps the before-choice sequence and explicit no-planting-plan warning.",
+      "retainedEnglishAnchors": [
+        "site",
+        "damaging winds",
+        "planting plan"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 19,
+        "pairedEnglishBodyIndex": 4,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 20,
+      "bodyIndex": 0,
+      "sourceEnglish": "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Olani boundary yaṋu. Maka nnḓu. Olani rings dzi tshi ya nnḓa u ya nga uri ni dalela hani lunzhi."
+      },
+      "displayProposalWithHolds": "Olani boundary yaṋu. Maka nnḓu. Olani rings dzi tshi ya nnḓa u ya nga uri ni dalela hani lunzhi.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves all three drawing actions, outward direction, and visit-frequency basis.",
+      "retainedEnglishAnchors": [
+        "boundary",
+        "rings"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 20,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 21,
+      "bodyIndex": 2,
+      "sourceEnglish": "Add an arrow for each energy that arrives from outside, and label where it comes from.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Engedzani arrow nthihi kha energy iṅwe na iṅwe ine ya swika i tshi bva nnḓa, ni ṅwale hune ya bva hone."
+      },
+      "displayProposalWithHolds": "Engedzani arrow nthihi kha energy iṅwe na iṅwe ine ya swika i tshi bva nnḓa, ni ṅwale hune ya bva hone.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Keeps one arrow per outside energy and its origin label.",
+      "retainedEnglishAnchors": [
+        "arrow",
+        "energy"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 21,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 22,
+      "bodyIndex": 2,
+      "sourceEnglish": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "mixed",
+        "segments": [
+          {
+            "status": "draft",
+            "sourceEnglish": "Find one thing ",
+            "text": "Wanani tshithu tshithihi "
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": "planted further away than how often you use it, "
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": "and write down where it should move to.",
+            "text": "ni ṅwale hune tsha tea u pfuluselwa hone."
+          }
+        ]
+      },
+      "displayProposalWithHolds": "Wanani tshithu tshithihi planted further away than how often you use it, ni ṅwale hune tsha tea u pfuluselwa hone.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Human review requested for the unusual distance/frequency comparison; preserve exact held phrase.",
+      "originalCandidateStatus": "draft",
+      "originalReason": "Preserves one planted item, the distance/use-frequency comparison, and write-down rather than immediate movement.",
+      "retainedEnglishAnchors": [],
+      "sourceBinding": {
+        "pairedSlideN": 22,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ve",
+      "slide": 22,
+      "bodyIndex": 3,
+      "sourceEnglish": "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "mixed",
+        "segments": [
+          {
+            "status": "draft",
+            "sourceEnglish": "Then ask ",
+            "text": "Nga murahu ni humbele "
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": "one older neighbour"
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": " which direction the ",
+            "text": " uri a ni vhudze direction ine "
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": "worst wind"
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": " comes from, and compare their answer with your arrow.",
+            "text": " ya bva ngaḽo, ni vhambedze phindulo yawe na arrow yaṋu."
+          }
+        ]
+      },
+      "displayProposalWithHolds": "Nga murahu ni humbele one older neighbour uri a ni vhudze direction ine worst wind ya bva ngaḽo, ni vhambedze phindulo yawe na arrow yaṋu.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Exact English anchors “one older neighbour” and “worst wind” preserve who to ask and which wind factor to identify. The translated text retains asking which direction it comes from and comparing the neighbour’s answer with the learner’s arrow. Facilitator review follows publication; this note does not require fluent approval before publication.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves one older neighbour, worst/damaging wind direction inquiry, and comparison to learner arrow.",
+      "retainedEnglishAnchors": [
+        "one older neighbour",
+        "arrow"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 22,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ve.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "bodyIndex": 1,
+      "sourceEnglish": "It means treating soil, water, plants and animals as living systems to protect, not resources to use up.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Swi vula ku teka soil, water, plants na animals tani hi “living systems to protect, not resources to use up.”"
+      },
+      "displayProposalWithHolds": "Swi vula ku teka soil, water, plants na animals tani hi “living systems to protect, not resources to use up.”",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Localizes ordinary framing while retaining the complete living-system/resource contrast verbatim.",
+      "retainedEnglishAnchors": [
+        "living systems to protect, not resources to use up"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 4,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "bodyIndex": 2,
+      "sourceEnglish": "A system you use up stops paying you. A system you protect keeps paying you.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "System leyi u yi tirhisaka yi hela, kutani “stops paying you.” System leyi u yi sirhelelaka ya ya mahlweni, kutani “keeps paying you.”"
+      },
+      "displayProposalWithHolds": "System leyi u yi tirhisaka yi hela, kutani “stops paying you.” System leyi u yi sirhelelaka ya ya mahlweni, kutani “keeps paying you.”",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Keeps the metaphor verbatim so it is not narrowed to cash or yield.",
+      "retainedEnglishAnchors": [
+        "stops paying you",
+        "keeps paying you"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 4,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 2,
+      "sourceEnglish": "A farmer who sells all his surplus mielies and keeps nothing back for compost or for seed is breaking this one. Nothing goes back.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Murimi loyi a xaviselaka mielies ya yena leyi saleke yi hundzaka leswi a swi lavaka hinkwaro, a nga hlayisi ni xin’we xa compost kumbe seed, u tshova nawu lowu. A ku na lexi tlheleleke."
+      },
+      "displayProposalWithHolds": "Murimi loyi a xaviselaka mielies ya yena leyi saleke yi hundzaka leswi a swi lavaka hinkwaro, a nga hlayisi ni xin’we xa compost kumbe seed, u tshova nawu lowu. A ku na lexi tlheleleke.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves all-surplus/no-reserve-for-either-use and the consequence; crop/practice terms remain anchors.",
+      "retainedEnglishAnchors": [
+        "mielies",
+        "compost",
+        "seed"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 6,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 3,
+      "sourceEnglish": "A community that fences off a shared spring is breaking it too.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Vaaki lava va pfangaka xihlovo lexi va xi tirhisaka swin’we hi fence na vona va tshova Fair Share."
+      },
+      "displayProposalWithHolds": "Vaaki lava va pfangaka xihlovo lexi va xi tirhisaka swin’we hi fence na vona va tshova Fair Share.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves community actor, shared spring, fence exclusion, and “too” implication.",
+      "retainedEnglishAnchors": [
+        "fence"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 6,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "bodyIndex": 1,
+      "sourceEnglish": "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Sungula hi ku kuma leswaku ku avelana swa pfumeleriwa kumbe e-e. Kambela loko borehole yi nga tirhela vatirhisi hinkwavo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona ku ri na mati yo ringana, pfumelelani ndlela ya ku avelana hi ku ringana, mi ya mahlweni mi languta water level. People Care na Fair Share swi kongomisa ntwanano. Earth Care swi vula ku sirhelela the source. Ku languta water level ntsena a swi endli leswaku ku tirhisa mati yo engetela swi va safe kumbe swi pfumeleriwa."
+      },
+      "displayProposalWithHolds": "Sungula hi ku kuma leswaku ku avelana swa pfumeleriwa kumbe e-e. Kambela loko borehole yi nga tirhela vatirhisi hinkwavo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona ku ri na mati yo ringana, pfumelelani ndlela ya ku avelana hi ku ringana, mi ya mahlweni mi languta water level. People Care na Fair Share swi kongomisa ntwanano. Earth Care swi vula ku sirhelela the source. Ku languta water level ntsena a swi endli leswaku ku tirhisa mati yo engetela swi va safe kumbe swi pfumeleriwa.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Keeps permission twice, adequate supply, all users, fair agreement, ongoing checks and explicit no-safety/no-permission guarantee.",
+      "retainedEnglishAnchors": [
+        "borehole",
+        "water level",
+        "People Care",
+        "Fair Share",
+        "Earth Care",
+        "safe"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 7,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 3,
+      "sourceEnglish": "Build these three into how you think before you build anything on the ground.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Veka ethics leti tinharhu eka ndlela leyi u ehleketaka ha yona u nga si sungula ku aka ehandle."
+      },
+      "displayProposalWithHolds": "Veka ethics leti tinharhu eka ndlela leyi u ehleketaka ha yona u nga si sungula ku aka ehandle.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "draft",
+      "originalReason": "Preserves “think first” and physical-building sequence.",
+      "retainedEnglishAnchors": [],
+      "sourceBinding": {
+        "pairedSlideN": 8,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 9,
+      "bodyIndex": 0,
+      "sourceEnglish": "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "David Holmgren u hlamusele twelve design principles eka Essence of Permaculture. Bill Mollison na David Holmgren va sungula permaculture concept swin’we."
+      },
+      "displayProposalWithHolds": "David Holmgren u hlamusele twelve design principles eka Essence of Permaculture. Bill Mollison na David Holmgren va sungula permaculture concept swin’we.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Localizes attribution verbs while retaining exact names, count, book title and co-origin claim.",
+      "retainedEnglishAnchors": [
+        "David Holmgren",
+        "twelve design principles",
+        "Essence of Permaculture",
+        "Bill Mollison",
+        "David Holmgren",
+        "permaculture concept"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 9,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "bodyIndex": 1,
+      "sourceEnglish": "One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Storm yin’we yi ku komba nkarhi wun’we. Full wet season yi ku komba pattern: laha mati ya khulukaka, laha ya hlengeletanaka kona, ni laha ma nga fiki kona nikatsongo."
+      },
+      "displayProposalWithHolds": "Storm yin’we yi ku komba nkarhi wun’we. Full wet season yi ku komba pattern: laha mati ya khulukaka, laha ya hlengeletanaka kona, ni laha ma nga fiki kona nikatsongo.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves one-storm/full-season contrast and all three water observations. Independent safety repair: retained exact English anchor for the uncertain directional/action term to avoid a possible meaning shift.",
+      "retainedEnglishAnchors": [],
+      "sourceBinding": {
+        "pairedSlideN": 10,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "bodyIndex": 2,
+      "sourceEnglish": "This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Leswi swi ku pfuna ku twisisa ndhawu. Kambe leswi ntsena a swi kombisi loko swale yi faneleka kumbe yi safe ku akiwa. U nga si cela, kambela soil, slope, drainage na safe overflow route leyi nga ta ka yi nga vangisi erosion kumbe ku rhumela mati lama onhaka eka vaakelani. Kombela trained local adviser a kambela ndhawu."
+      },
+      "displayProposalWithHolds": "Leswi swi ku pfuna ku twisisa ndhawu. Kambe leswi ntsena a swi kombisi loko swale yi faneleka kumbe yi safe ku akiwa. U nga si cela, kambela soil, slope, drainage na safe overflow route leyi nga ta ka yi nga vangisi erosion kumbe ku rhumela mati lama onhaka eka vaakelani. Kombela trained local adviser a kambela ndhawu.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Localizes ordinary framing and timing; preserves non-sufficiency, pre-dig checks, safe discharge, harm limits and adviser condition.",
+      "retainedEnglishAnchors": [
+        "swale",
+        "soil",
+        "slope",
+        "drainage",
+        "safe overflow route",
+        "erosion",
+        "trained local adviser"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 10,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 11,
+      "bodyIndex": 0,
+      "sourceEnglish": "Harvest rain, sun and biomass before they leave your property.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Harvest rain, sun na biomass u nga si swi lahla swi huma eka property ya wena."
+      },
+      "displayProposalWithHolds": "Harvest rain, sun na biomass u nga si swi lahla swi huma eka property ya wena.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Keeps resource-capture terms as anchors and translates the imperative/timing. Independent safety repair: retained exact English anchor for the uncertain directional/action term to avoid a possible meaning shift.",
+      "retainedEnglishAnchors": [],
+      "sourceBinding": {
+        "pairedSlideN": 11,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 11,
+      "bodyIndex": 1,
+      "sourceEnglish": "Every one of those arrives free and leaves free. Water runs off, leaves blow away, sun falls on bare ground.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Hinkwato swi fika mahala swi tlhela swi famba mahala. Water yi khuluka yi huma, leaves ti haha ti ya, sun yi wela eka bare ground."
+      },
+      "displayProposalWithHolds": "Hinkwato swi fika mahala swi tlhela swi famba mahala. Water yi khuluka yi huma, leaves ti haha ti ya, sun yi wela eka bare ground.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves each source example and the free-arrive/free-leave framing. Independent safety repair: retained exact English anchor for the uncertain directional/action term to avoid a possible meaning shift.",
+      "retainedEnglishAnchors": [
+        "bare ground"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 11,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 13,
+      "bodyIndex": 0,
+      "sourceEnglish": "Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "mixed",
+        "segments": [
+          {
+            "status": "draft",
+            "sourceEnglish": "Use and value diversity.",
+            "text": "Tirhisa diversity u tlhela u yi teka yi ri ya nkoka."
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": " Hail injury to maize depends on the storm and the crop’s growth stage."
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": " This principle does not promise that a crop will survive every event.",
+            "text": " Principle leyi a yi tiyisisi leswaku crop yi ta pona eka event yin’wana ni yin’wana."
+          }
+        ]
+      },
+      "displayProposalWithHolds": "Tirhisa diversity u tlhela u yi teka yi ri ya nkoka. Hail injury to maize depends on the storm and the crop’s growth stage. Principle leyi a yi tiyisisi leswaku crop yi ta pona eka event yin’wana ni yin’wana.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Exact source sentence retained as an explicit English hold; translated spans remain draft.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Localizes directive and no-guarantee caveat; preserves conditional hail/crop statement and scope.",
+      "retainedEnglishAnchors": [
+        "diversity",
+        "Hail injury to maize depends on the storm and the crop’s growth stage",
+        "crop",
+        "event"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 13,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 13,
+      "bodyIndex": 2,
+      "sourceEnglish": "What would one bad day cost you right now?",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Xana siku rin’we ro biha ri nga ku durhela yini sweswi?"
+      },
+      "displayProposalWithHolds": "Xana siku rin’we ro biha ri nga ku durhela yini sweswi?",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "draft",
+      "originalReason": "Preserves one-bad-day and right-now scope in a plain cost question.",
+      "retainedEnglishAnchors": [],
+      "sourceBinding": {
+        "pairedSlideN": 13,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "bodyIndex": 0,
+      "sourceEnglish": "Put each element where it works for its neighbours.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Veka element yin’wana ni yin’wana laha yi tirhaka kona na leswi nga ekusuhi na yona."
+      },
+      "displayProposalWithHolds": "Veka element yin’wana ni yin’wana laha yi tirhaka kona na leswi nga ekusuhi na yona.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Direct ordinary instruction: each element belongs where it works with its neighbours.",
+      "retainedEnglishAnchors": [
+        "element"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 14,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "bodyIndex": 1,
+      "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "mixed",
+        "segments": [
+          {
+            "status": "draft",
+            "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food.",
+            "text": "Garden, fruit trees na chicken run swi nga veketeriwa leswaku chickens ti rotate through the beds after harvest; leswi i integration. U nga pfumeleli chickens ti tshinela eka crops leti ku tshoveriwaka swakudya."
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": " Fresh manure can carry germs."
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": " Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+            "text": " Kombela extension adviser a ku hlamusela ndlela yo hlayisa bed yi ri safe loko edible crops ti nga si tlhela ti byariwa. Chickens ti nga basisa pests ti tlhela ti engetela fertility, ematshan’weni yo tshama ti nga endli swo karhi eka fixed pen."
+          }
+        ]
+      },
+      "displayProposalWithHolds": "Garden, fruit trees na chicken run swi nga veketeriwa leswaku chickens ti rotate through the beds after harvest; leswi i integration. U nga pfumeleli chickens ti tshinela eka crops leti ku tshoveriwaka swakudya. Fresh manure can carry germs. Kombela extension adviser a ku hlamusela ndlela yo hlayisa bed yi ri safe loko edible crops ti nga si tlhela ti byariwa. Chickens ti nga basisa pests ti tlhela ti engetela fertility, ematshan’weni yo tshama ti nga endli swo karhi eka fixed pen.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Exact source sentence retained as an explicit English hold; translated spans remain draft.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Localizes the sequence and preserves harvested-food exclusion, germ risk, adviser/safe timing, ability (“can”), and idle-pen contrast. Independent safety repair: retained exact English anchor for the uncertain directional/action term to avoid a possible meaning shift.",
+      "retainedEnglishAnchors": [
+        "Fresh manure can carry germs.",
+        "rotate through the beds after harvest",
+        "Fresh manure can carry germs"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 14,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "bodyIndex": 2,
+      "sourceEnglish": "The same three things, fenced apart, do only their own job.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Swilo leswi swinharhu, loko swi pfariwe hi fence swi hambanisiwile, xin’wana ni xin’wana xi endla ntirho wa xona ntsena."
+      },
+      "displayProposalWithHolds": "Swilo leswi swinharhu, loko swi pfariwe hi fence swi hambanisiwile, xin’wana ni xin’wana xi endla ntirho wa xona ntsena.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves three elements, fenced separation and sole independent work.",
+      "retainedEnglishAnchors": [
+        "fence"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 14,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "bodyIndex": 3,
+      "sourceEnglish": "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Hlawula principles timbirhi kumbe tinharhu leti khumbaka xiphiqo xa wena lexikulu u ti tirhisa swinene. Letin’wana ti ta vonaka kahle loko u ya mahlweni."
+      },
+      "displayProposalWithHolds": "Hlawula principles timbirhi kumbe tinharhu leti khumbaka xiphiqo xa wena lexikulu u ti tirhisa swinene. Letin’wana ti ta vonaka kahle loko u ya mahlweni.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves choice count, biggest-problem criterion, strong application and later understanding.",
+      "retainedEnglishAnchors": [
+        "principles"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 14,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 2,
+      "sourceEnglish": "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Zone 2 i main garden ni chicken run, u ya eka swona once or twice a day. Zone 3 i main field, u ya kona weekly."
+      },
+      "displayProposalWithHolds": "Zone 2 i main garden ni chicken run, u ya eka swona once or twice a day. Zone 3 i main field, u ya kona weekly.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Keeps exact zone identities, examples and visit frequency.",
+      "retainedEnglishAnchors": [
+        "Zone 2",
+        "main garden",
+        "chicken run",
+        "once or twice a day",
+        "Zone 3",
+        "main field",
+        "weekly"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 15,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 3,
+      "sourceEnglish": "Zone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Zone 4 i semi-wild: fruit trees na fodder leswi lavaka attention nkarhi wun’wana ni wun’wana. Zone 5 yi tshikiwa yi ri wild."
+      },
+      "displayProposalWithHolds": "Zone 4 i semi-wild: fruit trees na fodder leswi lavaka attention nkarhi wun’wana ni wun’wana. Zone 5 yi tshikiwa yi ri wild.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Keeps zone labels, examples, occasional care and wild status.",
+      "retainedEnglishAnchors": [
+        "Zone 4",
+        "semi-wild",
+        "fruit trees",
+        "fodder",
+        "attention",
+        "Zone 5",
+        "wild"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 15,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 1,
+      "sourceEnglish": "Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Sun, wind, rain, flood na fire swi tsemakanya ndzilakana wa wena hambi u swi pulanile kumbe a wu swi pulananga."
+      },
+      "displayProposalWithHolds": "Sun, wind, rain, flood na fire swi tsemakanya ndzilakana wa wena hambi u swi pulanile kumbe a wu swi pulananga.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Translates unconditional arrival while preserving all elements and boundary. Independent safety repair: retained exact English anchor for the uncertain directional/action term to avoid a possible meaning shift.",
+      "retainedEnglishAnchors": [
+        "across your boundary"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 18,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 2,
+      "sourceEnglish": "Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Languta laha strong wind yi humaka kona epurasini ra wena. Nearby weather-station records ti nga ku pfuna ku kambela wind direction. Languta laha rainwater yi nghenaka kona ni ndlela leyi yi khulukaka ha yona eka misava ya wena."
+      },
+      "displayProposalWithHolds": "Languta laha strong wind yi humaka kona epurasini ra wena. Nearby weather-station records ti nga ku pfuna ku kambela wind direction. Languta laha rainwater yi nghenaka kona ni ndlela leyi yi khulukaka ha yona eka misava ya wena.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Localizes site observation and rain-entry/flow checks; preserves nearby records as evidence and the exact wind direction to check.",
+      "retainedEnglishAnchors": [
+        "Nearby weather-station records",
+        "wind direction",
+        "strong wind",
+        "rainwater"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 18,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 3,
+      "sourceEnglish": "Which direction does the weather that damages you come from?",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Xana weather leyi ku onhaka yi huma hi tlhelo rihi?"
+      },
+      "displayProposalWithHolds": "Xana weather leyi ku onhaka yi huma hi tlhelo rihi?",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "draft",
+      "originalReason": "Direct ordinary question preserving the source and direction sought.",
+      "retainedEnglishAnchors": [],
+      "sourceBinding": {
+        "pairedSlideN": 18,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "bodyIndex": 0,
+      "sourceEnglish": "Look at this example. The wind comes from the north-west.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Languta example leyi. Wind yi huma hi north-west."
+      },
+      "displayProposalWithHolds": "Languta example leyi. Wind yi huma hi north-west.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves example framing and exact direction.",
+      "retainedEnglishAnchors": [
+        "example",
+        "north-west"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 19,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "bodyIndex": 1,
+      "sourceEnglish": "The trees and shrubs stand between that wind and the crops.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Trees na shrubs swi yima exikarhi ka wind yoleyo ni crops."
+      },
+      "displayProposalWithHolds": "Trees na shrubs swi yima exikarhi ka wind yoleyo ni crops.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves the placement relationship.",
+      "retainedEnglishAnchors": [
+        "shrubs",
+        "wind",
+        "crops"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 19,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "bodyIndex": 2,
+      "sourceEnglish": "Some air passes through the windbreak. Other air moves over it or around its ends.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Air yin’wana yi hundza hi le ka windbreak. Yin’wana yi ya ehenhla ka yona kumbe yi rhendzeleka ematlhelo ya yona."
+      },
+      "displayProposalWithHolds": "Air yin’wana yi hundza hi le ka windbreak. Yin’wana yi ya ehenhla ka yona kumbe yi rhendzeleka ematlhelo ya yona.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves through, over and around-end air paths.",
+      "retainedEnglishAnchors": [
+        "windbreak"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 19,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "bodyIndex": 3,
+      "sourceEnglish": "The shelter can reduce wind speed behind it. The design and care of the windbreak matter.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Shelter yi nga hunguta wind speed endzhaku ka yona. Design ni ku hlayisiwa ka windbreak swi na nkoka."
+      },
+      "displayProposalWithHolds": "Shelter yi nga hunguta wind speed endzhaku ka yona. Design ni ku hlayisiwa ka windbreak swi na nkoka.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves possibility, behind-location, speed reduction and design/care.",
+      "retainedEnglishAnchors": [
+        "windbreak"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 19,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "bodyIndex": 4,
+      "sourceEnglish": "On your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Eka site ya wena, languta damaging winds u nga si hlawula laha u nga ta byala kona. Picture leyi a hi planting plan."
+      },
+      "displayProposalWithHolds": "Eka site ya wena, languta damaging winds u nga si hlawula laha u nga ta byala kona. Picture leyi a hi planting plan.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves own-site observation before planting choice and the no-plan warning.",
+      "retainedEnglishAnchors": [
+        "site",
+        "damaging winds",
+        "planting plan"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 19,
+        "pairedEnglishBodyIndex": 4,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 20,
+      "bodyIndex": 0,
+      "sourceEnglish": "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Dirowa boundary ya wena. Maka yindlu. Dirowa rings u ya ehandle hi ku ya hi leswaku u endzela ndhawu yin’wana ni yin’wana kangani."
+      },
+      "displayProposalWithHolds": "Dirowa boundary ya wena. Maka yindlu. Dirowa rings u ya ehandle hi ku ya hi leswaku u endzela ndhawu yin’wana ni yin’wana kangani.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves all drawing actions, outward direction and visit-frequency basis.",
+      "retainedEnglishAnchors": [
+        "boundary",
+        "rings"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 20,
+        "pairedEnglishBodyIndex": 0,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 20,
+      "bodyIndex": 2,
+      "sourceEnglish": "That sheet of paper is the skeleton of your design. Everything else in this course hangs on it.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Phepha leri ri khoma skeleton ya design ya wena. Hinkwaswo swin’wana eka khoso leyi swi titshege hi rona."
+      },
+      "displayProposalWithHolds": "Phepha leri ri khoma skeleton ya design ya wena. Hinkwaswo swin’wana eka khoso leyi swi titshege hi rona.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Retains the sketch metaphor and design anchor while translating the dependence clause.",
+      "retainedEnglishAnchors": [
+        "skeleton",
+        "design"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 20,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 21,
+      "bodyIndex": 2,
+      "sourceEnglish": "Add an arrow for each energy that arrives from outside, and label where it comes from.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Engetela arrow yin’we eka energy yin’wana ni yin’wana leyi fikaka yi huma ehandle, u tsala laha yi humaka kona."
+      },
+      "displayProposalWithHolds": "Engetela arrow yin’we eka energy yin’wana ni yin’wana leyi fikaka yi huma ehandle, u tsala laha yi humaka kona.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves one-arrow-per-outside-energy and the origin label.",
+      "retainedEnglishAnchors": [
+        "arrow",
+        "energy"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 21,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 22,
+      "bodyIndex": 2,
+      "sourceEnglish": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "mixed",
+        "segments": [
+          {
+            "status": "draft",
+            "sourceEnglish": "Find one thing ",
+            "text": "Kuma xilo xin’we lexi "
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": "planted further away than how often you use it, "
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": "and write down where it should move to.",
+            "text": "u tsala laha xi faneleke ku rhurhiseriwa kona."
+          }
+        ]
+      },
+      "displayProposalWithHolds": "Kuma xilo xin’we lexi planted further away than how often you use it, u tsala laha xi faneleke ku rhurhiseriwa kona.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Human review requested for the unusual distance/frequency comparison; preserve exact held phrase.",
+      "originalCandidateStatus": "draft",
+      "originalReason": "Preserves one planted item, distance/use-frequency comparison and write-down rather than immediate movement.",
+      "retainedEnglishAnchors": [],
+      "sourceBinding": {
+        "pairedSlideN": 22,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "language": "ts",
+      "slide": 22,
+      "bodyIndex": 3,
+      "sourceEnglish": "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "normalizedProposal": {
+        "status": "draft",
+        "text": "Endzhaku kombela one older neighbour a ku hlamusela direction leyi worst wind yi humaka hi yona, u ringanisa nhlamulo ya yena ni arrow ya wena."
+      },
+      "displayProposalWithHolds": "Endzhaku kombela one older neighbour a ku hlamusela direction leyi worst wind yi humaka hi yona, u ringanisa nhlamulo ya yena ni arrow ya wena.",
+      "sourceConcatenationExact": true,
+      "currentSourceExact": true,
+      "currentTargetExact": true,
+      "normalizationNote": "Complete proposed text remains one draft segment; English technical terminology embedded in localized sentences is permitted.",
+      "originalCandidateStatus": "mixed",
+      "originalReason": "Preserves one older neighbour, strongest damaging-wind direction, and comparison with the learner arrow.",
+      "retainedEnglishAnchors": [
+        "one older neighbour",
+        "arrow"
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 22,
+        "pairedEnglishBodyIndex": 3,
+        "exactSourceMatchesPacket": true,
+        "exactCurrentTargetMatchesPacket": true,
+        "pairedFile": "docs/narration/intro-permaculture.ts.paired-draft.json"
+      },
+      "reviewStatus": "unreviewed"
+    }
+  ],
+  "ambiguousSegmentationForRootReview": [
+    {
+      "language": "ve",
+      "slide": 22,
+      "bodyIndex": 2,
+      "sourceSegments": [
+        "Find one thing ",
+        "planted further away than how often you use it, ",
+        "and write down where it should move to."
+      ],
+      "note": "The deliberately unusual distance/frequency comparison stays English-held; first and final actionable fragments are localized."
+    },
+    {
+      "language": "ts",
+      "slide": 22,
+      "bodyIndex": 2,
+      "sourceSegments": [
+        "Find one thing ",
+        "planted further away than how often you use it, ",
+        "and write down where it should move to."
+      ],
+      "note": "The deliberately unusual distance/frequency comparison stays English-held; first and final actionable fragments are localized."
+    },
+    {
+      "language": "ve",
+      "slide": 22,
+      "bodyIndex": 3,
+      "sourceSegments": [
+        "Then ask ",
+        "one older neighbour",
+        " which direction the ",
+        "worst wind",
+        " comes from, and compare their answer with your arrow."
+      ],
+      "note": "Preserves exact English anchors for “one older neighbour” and “worst wind”; verify spaces around source segments during fluent review."
+    }
+  ],
+  "liveBindingChecks": [
+    {
+      "language": "ve",
+      "slide": 2,
+      "bodyIndex": 0,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 2,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 3,
+      "bodyIndex": 1,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "bodyIndex": 1,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 4,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 3,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 1,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 3,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "bodyIndex": 1,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "bodyIndex": 0,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "bodyIndex": 1,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "bodyIndex": 3,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 13,
+      "bodyIndex": 0,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 13,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 14,
+      "bodyIndex": 1,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 14,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 14,
+      "bodyIndex": 3,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 3,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "bodyIndex": 1,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 18,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 19,
+      "bodyIndex": 0,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 19,
+      "bodyIndex": 1,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 19,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 19,
+      "bodyIndex": 3,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 19,
+      "bodyIndex": 4,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 20,
+      "bodyIndex": 0,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 21,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 22,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ve",
+      "slide": 22,
+      "bodyIndex": 3,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "bodyIndex": 1,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 4,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 3,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "bodyIndex": 1,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 3,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 9,
+      "bodyIndex": 0,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "bodyIndex": 1,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 11,
+      "bodyIndex": 0,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 11,
+      "bodyIndex": 1,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 13,
+      "bodyIndex": 0,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 13,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "bodyIndex": 0,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "bodyIndex": 1,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 14,
+      "bodyIndex": 3,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 3,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 1,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 3,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "bodyIndex": 0,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "bodyIndex": 1,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "bodyIndex": 3,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 19,
+      "bodyIndex": 4,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 20,
+      "bodyIndex": 0,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 20,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 21,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 22,
+      "bodyIndex": 2,
+      "sourceExact": true,
+      "currentTargetExact": true
+    },
+    {
+      "language": "ts",
+      "slide": 22,
+      "bodyIndex": 3,
+      "sourceExact": true,
+      "currentTargetExact": true
+    }
+  ],
+  "notes": [
+    "The five independently reviewed repairs are reflected conservatively: VE slide 7 retains the exact-English borehole capacity sentence as a hold; VE slide 22 body 3 holds “one older neighbour” and “worst wind”; VE/TS slide 22 body 2 uses the requested three source segments; TS slide 18 uses the accepted boundary-crossing candidate.",
+    "Complete source English clauses embedded as candidate text are converted to explicit holds where they occur as exact full source sentences (borehole check, hail injury clause, fresh-manure warning).",
+    "Other English terms inside translated sentences remain localized draft segments as permitted technical terminology.",
+    "No repo files changed, no rendering, deployment, commit, or push performed."
+  ],
+  "metadataCorrection": {
+    "field": {
+      "language": "ve",
+      "slide": 22,
+      "bodyIndex": 3,
+      "key": "normalizationNote"
+    },
+    "replacedInProofCopy": "Human review requested for the unusual distance/frequency comparison; preserve exact held phrase.",
+    "with": "Exact English anchors “one older neighbour” and “worst wind” preserve who to ask and which wind factor to identify. The translated text retains asking which direction it comes from and comparing the neighbour’s answer with the learner’s arrow. Facilitator review follows publication; this note does not require fluent approval before publication.",
+    "candidateTextUnchanged": true
+  }
+}

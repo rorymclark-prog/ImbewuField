@@ -1,0 +1,196 @@
+{
+  "module": "reading-landscape",
+  "lessonId": "reading-landscape-l3",
+  "sourceEnglish": {
+    "id": "reading-landscape-l3",
+    "infographicUrl": "/course-images/reading-landscape/reading-landscape-l3.jpg",
+    "infographicAlt": "A farm from above with arrows showing wind direction, cold air draining downhill into a frost hollow, and the direction of the slope.",
+    "title": "Wind, Frost, and Topography: Reading the Invisible Forces",
+    "body": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+    "keyPoints": [
+      "Observe damaging wind direction on your site before placing shelter",
+      "Cold air can drain downhill on clear, still nights and collect in low ground",
+      "Compare cold-night plant damage and temperatures across your site; visible frost is not the only sign",
+      "Airflow and drying may help reduce wet leaves, but do not alone control late blight"
+    ],
+    "quiz": [
+      {
+        "q": "Where should a farmer first look when placing a frost-sensitive seedling nursery on a Highveld smallholding?",
+        "options": [
+          "A known frost hollow at the valley bottom",
+          "An exposed ridgeline without checking the wind",
+          "A sunny, sheltered place outside an observed frost hollow, after checking the site's cold-night pattern",
+          "The place with the most shade, without checking frost"
+        ],
+        "correct": 2,
+        "rationale": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost."
+      },
+      {
+        "q": "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Which bed position may help leaves dry, alongside local crop-health advice?",
+        "options": [
+          "A sealed, unventilated tunnel",
+          "A place with good airflow and morning sun",
+          "A low spot near a dam",
+          "A shaded south wall"
+        ],
+        "correct": 1,
+        "rationale": "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan."
+      }
+    ]
+  },
+  "languages": {
+    "zu": {
+      "content": {
+        "title": "Umoya, Isithwathwa Nokuma Komhlaba: Ukuqonda Amandla Angabonakali",
+        "body": "Umoya ungalimaza izitshalo epulazini elincane. Indawo ovela kuyo namandla omoya olimazayo kuyashintsha kuye ngesifunda, inkathi yonyaka, amagquma nezikhala ezisemhlabeni wakho. Hamba uhlole umhlaba ngezinsuku ezinomoya. Bhala phansi ukuthi umoya olimazayo uvela ngakuphi nokuthi uthinta ini. Hlola amarekhodi esimo sezulu endawo ngaphambi kokunquma ukuthi kudingeka kuphi indawo yokukhosela emoyeni.\n\nNgobusuku obucacile nobungenamoya, umoya obandayo ungehla ngomthambeka uqoqane ezindaweni eziphansi. Lezi zindawo zingabanda kakhulu kunemithambeka eseduze. Indlela isithwathwa esenzeka ngayo nayo incike endaweni. Qhathanisa izindawo ongakhetha kuzo kuyo yonke inkathi yesithwathwa yasendaweni. Hlola amarekhodi endawo okushisa okuphansi, uma ekhona. Uma engekho, qhubeka ubheka okwenzeka ebusuku obubandayo futhi ubuze umeluleki wezolimo wendawo ngaphambi kokukhetha indawo ehlala njalo yezithombo ezizwela amakhaza.\n\nIsithwathwa siyizinhlayiya zeqhwa ezakheka phezu kwendawo ebandayo. Inkungu iyodwa ayisho ukuthi sekwakheke lezo zinhlayiya zeqhwa, futhi isithwathwa singalimaza izitshalo kungabonakali iqhwa. Bheka iqhwa nomonakalo ezitshalweni, uqhathanise izindawo eziphansi nemithambeka, futhi uhlole amazinga okushisa aphansi lapho ukwazi khona. Maka izindawo lapho amakhaza noma umonakalo kuhlala khona isikhathi eside. Gcina izitshalo ezizwela amakhaza zikude nezindawo ezibandayo ozibonile.\n\nKumatamatisi ahlaselwe yi-late blight, ukuhamba kahle komoya nelanga lasekuseni kungasiza amaqabunga ome. I-late blight isengasakazeka uma kuqhubeka isikhathi eside kubanda futhi kunomswakama. Ukususa umbhede uwuyise kwenye indawo kukodwa ngeke kusilawule lesi sifo; funa iseluleko sendawo ngempilo yezitshalo.",
+        "keyPoints": [
+          "Bheka ukuthi umoya olimazayo uvela ngakuphi endaweni yakho ngaphambi kokubeka indawo yokukhosela emoyeni.",
+          "Ngobusuku obucacile nobungenamoya, umoya obandayo ungehla ngomthambeka uqoqane ezindaweni eziphansi.",
+          "Qhathanisa umonakalo ezitshalweni namazinga okushisa ezindaweni ezahlukene ngemva kobusuku obubandayo; ukubona isithwathwa akuyona ukuphela kwendlela yokubona umonakalo waso.",
+          "Ukuhamba komoya nokoma kwamaqabunga kungasiza ekunciphiseni amaqabunga amanzi, kodwa kukodwa akusilawuli i-late blight."
+        ],
+        "quiz": [
+          {
+            "q": "Umlimi kufanele aqale abheke kuphi lapho ekhetha indawo yenkulisa yezithombo ezizwela isithwathwa epulazini elincane lase-Highveld?",
+            "options": [
+              "Indawo ephansi eyaziwayo lapho kuqoqana khona isithwathwa",
+              "Umugqa ophakeme wegquma ovulekele umoya, ngaphandle kokuhlola umoya",
+              "Indawo enelanga nevikelekile emoyeni, engaphandle komgodi owubonile lapho kuqoqana khona isithwathwa, ngemva kokuhlola okwenzeka ebusuku obubandayo endaweni yakho",
+              "Indawo enomthunzi omkhulu, ngaphandle kokuhlola isithwathwa"
+            ],
+            "correct": 2,
+            "rationale": "Ngobusuku obucacile nobungenamoya, umoya obandayo ungaqoqana ezindaweni eziphansi. Qhathanisa izindawo ezingakhethwa zenkulisa yezithombo kuyo yonke inkathi yesithwathwa yasendaweni. Ngaphambi kokukhetha indawo ehlala njalo, hlola amarekhodi endawo okushisa okuphansi noma ubuze umeluleki wezolimo wendawo. Ukungaboni isithwathwa akusho ukuthi izitshalo azilimalanga yiso, futhi akukho ndawo esentabeni eqinisekisa ukuthi ngeke ibe nesithwathwa."
+          },
+          {
+            "q": "Utamatisi womlimi wase-KZN uphathwa yi-late blight ngokuphindaphindiwe ngezikhathi ezibandayo nezinomswakama. Iyiphi indawo yombhede engasiza amaqabunga ome, kuhambisane nokufuna iseluleko sendawo ngempilo yezitshalo?",
+            "options": [
+              "Umhubhe ovaliwe ongenawo umoya odlulayo",
+              "Indawo enomoya ohamba kahle nelanga lasekuseni",
+              "Indawo ephansi eseduze nedamu",
+              "Eduze kodonga oluseningizimu olunomthunzi"
+            ],
+            "correct": 1,
+            "rationale": "Ukuhamba komoya nelanga lasekuseni kungasiza amaqabunga ome. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan."
+          }
+        ],
+        "infographicAlt": "Umfanekiso wepulazi ulibuka phezulu, nemicibisholo ekhombisa indlela yomoya, cold air draining downhill into a frost hollow, nendlela yomthambeka."
+      },
+      "status": "draft"
+    },
+    "st": {
+      "content": {
+        "title": "Moya, Serame, le Boemo ba Naha: Ho Bala Matla a sa Bonweng (Topography)",
+        "body": "Moya o ka senya dijalo polasing e nyane. Nqa le matla a moya o senyang di fetoha ho latela sebaka, sehla le matswapo le dikgeo tsa setsha sa hao. Tsamaya lefatsheng matsatsing a nang le moya. Rekota moo moya o tswang teng le seo o se amang. Hlahloba ditlaleho tsa boemo ba lehodimo tsa lehae pele o etsa qeto ya moo tshireletso e hlokwang teng.\n\nBosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona ho pholletsa le sehla sa frost sa sebakeng seo. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.\n\nSerame (frost) ke leqhwa le iphelang hodima ntho e batang. Mohodi o le mong ha o bontshe hore leqhwa le entswe, mme tshenyo ya serame e ka etsahala ntle le leqhwa le bonwang. Batla leqhwa le tshenyo ya dimela, bapisa mobu o tlase le matswapo, mme o hlahlobe motjheso o tlase-tlase moo o ka kgonang. Tshwaya dibaka tseo ho bata kapa tshenyo e nkang nako e telele ka ho fetisisa. Boloka dimela tse kotsing habonolo hole le dipokotho tse batang (cold pockets) tseo o di hlokomelang.\n\nBakeng sa tamati (tomatoes) e tshwenngwang ke late blight, phallo ya moya le letsatsi la hoseng di ka thusa mahlaku ho oma. Late blight e ntse e ka ata nakong ya lehodimo le phodileng, le nang le mongobo le nkang nako e telele. Ho suthisa bethe ya serapa feela ho ke ke ha e laola; batla le tataiso ya bophelo bo botle ba dijalo sebakeng sa heno.",
+        "keyPoints": [
+          "Hlokomela nqa ya moya o senyang setsheng sa hao pele o beha tshireletso ya moya (shelter)",
+          "Moya o batang o ka theosa leralla masiu a hlakileng, a kgutsitseng mme wa bokellana mobung o tlase",
+          "Bapisa tshenyo ya dimela ya bosiu bo batang le motjheso ho pholletsa le setsha sa hao; serame (frost) se bonwang hase sesupo se le seng feela",
+          "Phallo ya moya le ho omisa di ka thusa ho fokotsa mahlaku a mongobo, empa tsona feela ha di laole late blight"
+        ],
+        "quiz": [
+          {
+            "q": "Molemi o lokela ho qala ka ho batla hokae ha a beha kereche ya dimela tse nyane tse kotsing ya serame polasing e nyane Highveld?",
+            "options": [
+              "Sekoting sa serame (frost hollow) se tsejwang botlaseng ba phula",
+              "Molaong o pepesitsweng wa leralla ntle le ho hlahloba moya",
+              "Sebakeng se tjhabetsweng ke letsatsi, se sireletsehileng kantle ho sekoti sa serame se hlokometsweng, kamora ho hlahloba mokgwa wa bosiu bo batang wa setsha",
+              "Sebakeng se nang le moriti o mongata haholo, ntle le ho hlahloba serame"
+            ],
+            "correct": 2,
+            "rationale": "Moya o batang o ka dula dibakeng tse tlase masiu a hlakileng, a kgutsitseng. Bapisa dibaka tsa kereche tseo e ka bang tsona ho pholletsa le sehla sa frost sa sebakeng seo. Hlahloba ditlaleho tsa motjheso o tlase-tlase tsa lehae kapa o botse moeletsi wa temo wa lehae pele o etsa qeto ya nako e telele. Serame se bonwang hase sesupo se le seng feela sa tshenyo ya serame, mme ha ho na sebaka sa lehlakoreng la leralla se tiisang ho se be le serame."
+          },
+          {
+            "q": "Tamati (tomatoes) ya molemi wa KZN e dula e tshwarwa ke late blight nakong ya maemo a phodileng, a mongobo. Ke sebaka sefe sa bethe ya serapa se ka thusang mahlaku ho oma, hammoho le keletso ya bophelo bo botle ba dijalo ya lehae?",
+            "options": [
+              "Tonele e kwetsweng, e se nang moya (unventilated tunnel)",
+              "Sebaka se nang le phallo e ntle ya moya le letsatsi la hoseng",
+              "Sebaka se tlase haufi le letamo",
+              "Lebota le ka borwa le nang le moriti"
+            ],
+            "correct": 1,
+            "rationale": "Phallo ya moya le letsatsi la hoseng di ka thusa mahlaku ho oma. Late blight e ratwa ke lehodimo le phodileng, le mongobo le nkang nako e telele, mme ho suthisa bethe ya serapa feela hase moralo o feletseng wa taolo."
+          }
+        ],
+        "infographicAlt": "Polasi e bonwang ho tloha hodimo e nang le metsu e bontshang nqa ya moya, moya o batang o phallelang tlase letswapong ho kena sekoting sa serame (frost hollow), le nqa ya letswapo."
+      },
+      "status": "draft"
+    },
+    "ve": {
+      "content": {
+        "title": "Muya, Tshando (Frost), na Muvhumbeleo wa Mavu: U Vhala Maanḓa a sa Vhonali",
+        "body": "Muya u nga tshinyadza zwimela kha shamba ḽiṱuku. Thungo na maanḓa a muya wa tshinyadzaho zwi shanduka u ya nga vhupo, khalaṅwaha, na your site's ridges and gaps. Tshimbilani kha land nga maḓuvha a re na muya. Ṅwalani hune muya wa bva hone na zwine wa kwama. Sedzani rekhodo dza mutsho wa henefho musi ni sa athu dzhia tsheo ya hune tsireledzo ya ṱoḓea hone.\n\nVhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Maitele a frost na one a ya nga fhethu. Vhambedzani candidate places through the local frost season. Ṱolani rekhodo dza minimum temperatures dza henefho hune dza wanala hone. Arali dzi sa wanali, bvelani phanḓa ni tshi sedza nga vhusiku vhu rotholaho, ni vhudzise mueletshedzi wa zwa vhulimi wa henefho musi ni sa athu nanga fhethu ha tshifhinga tshilapfu ha tender seedlings.\n\nFrost ndi ice ine ya vhumbwa kha surface yo rotholaho. Mist fhedzi a i sumbedzi uri ice yo vhumbwa, nahone frost damage i nga itea hu si na ice ine ya vhonala. Sedzani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Keep sensitive plants away from the cold pockets dzine na dzi vhona.\n\nKha matamatisi a re na thaidzo ya late blight, u elela ha muya na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome. Late blight i nga bvela phanḓa u phaḓalala musi hu tshi dzula ho rothola nahone hu na vhunyisi lwa tshifhinga tshilapfu. U sudzisa bed fhedzi a zwi nga i langi; ṱoḓani na nyeletshedzo ya mutakalo wa zwimela ya henefho.",
+        "keyPoints": [
+          "Ṱhogomelani thungo ya muya u tshinyadzaho kha tshitentsi tshaṋu musi ni sa athu vhea tsireledzo",
+          "Muya wo rotholaho u nga elela u tshi ya fhasi nga vhusiku vhu sa na makole, ho dzikaho, wa kuvhangana fhethu ho tsaho.",
+          "Vhambedzani tshenyo ya zwimela ya vhusiku vhu rotholaho na mufhiso kha tshitentsi tshaṋu; tshando (frost) tshi vhonalaho a si tshone fhedzi tshiswayo",
+          "U elela ha muya na u oma zwi nga thusa u fhungudza maṱari a re na maḓi, fhedzi zwi zwoṱhe a zwi langi late blight"
+        ],
+        "quiz": [
+          {
+            "q": "Mulimi u fanela u thoma u sedza ngafhi musi a tshi vhea frost-sensitive seedling nursery kha tshitentsi tshiṱuku tsha Highveld?",
+            "options": [
+              "Mulindi wo ḓoweleaho wa tshando (frost hollow) fhasi kheleleni",
+              "Mutumba wo vuleaho hu songo toliwa muya",
+              "Fhethu hu re na ḓuvha, ho tsireledzeaho nnda ha mulindi wa tshando wo vhonwaho, nga murahu ha u tola maitele a vhusiku vhu rotholaho kha tshitentsi",
+              "Fhethu hu re na murunzi munzhisa, hu songo toliwa tshando"
+            ],
+            "correct": 2,
+            "rationale": "Muya wo rotholaho u nga kuvhangana fhethu ho tsaho kha vhusiku vhu sa na makole, hu si na muya. Vhambedzani fhethu hune nursery ya nga vhewa hone through the local frost season. Ṱolani matsalwa a minimum temperatures a henefho kana ni vhudzise mueletshedzi wa zwa vhulimi wa henefho musi ni sa athu dzhia tsheo ya fhethu ha tshifhinga tshilapfu. Frost ine ya vhonala a si yone fhedzi tswayo ya frost damage; a hu na fhethu ha kha thavha hune ha fulufhedzisa uri a hu nga vhi na frost."
+          },
+          {
+            "q": "Matamati (tomatoes) a mulimi wa KZN a bvela phanḓa u vha na late blight kha zwifhinga zwo rotholaho, zwi re na vhunyisi. Ndi vhuimo vhufhio ha ndima vhune ha nga thusa maṱari u oma, hu tshi tevhedzwa na nyeletshedzo dza mutakalo wa zwimela dza henefho?",
+            "options": [
+              "Bani ḽo valeaho, ḽi si na muya (unventilated tunnel)",
+              "Fhethu hu re na u elela ha muya ho nakaho na ḓuvha ḽa matsheloni",
+              "Fhethu ho tsaho tsini ha damu",
+              "Luvhondo lwo lavhelesaho tshipembe (south) lu re na murunzi"
+            ],
+            "correct": 1,
+            "rationale": "U elela ha muya na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome. Late blight i nga engedzea kha mutsho wa u rothola na vhunyisi ha tshifhinga tshilapfu, nahone u sudzula bed fhedzi a si pulane yo fhelelaho ya u langa vhulwadze."
+          }
+        ],
+        "infographicAlt": "Bulasi i vhonwaho i nṱha i na misevhe i sumbedzaho thungo ya muya, muya wo rotholaho u tshi tsa thavhani u tshi ya mulindini wa tshando (frost hollow), na thungo ya u sendama ha mavu (slope)."
+      },
+      "status": "draft"
+    },
+    "ts": {
+      "content": {
+        "title": "Moya, Xirhami, na Swiyimo swa Misava: Ku Hlaya Matimba Lama nga Vonekiki",
+        "body": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matla ya moya lowu onhaka swi cinca hi muganga, nguva na your site's ridges and gaps. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona ni leswi wu swi khumbaka. Kambela matsalwa ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.\n\nEka vusiku byo tenga ni byo rhula, moya wo titimela wu nga khulukela ehansi wu tlhela wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti nga titimela ku tlurisa tindhawu to rhelela leti nga ekusuhi. Maendlelo ya frost na wona ya ya hi ndhawu. Pimanisa tindhawu leti nga hlawuriwaka through the local frost season. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya loko ma kumeka. Loko ma nga ri kona, yana mahlweni u ri karhi u languta eka vusiku byo titimela, u tlhela u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga si hlawula ndhawu ya nkarhi wo leha ya tender seedlings.\n\nFrost i ice leyi vumbekaka ehenhla ka surface leyi titimelaka. Mist ntsena a yi kombisi leswaku ice yi vumbekile, naswona frost damage yi nga endleka handle ka ice leyi vonakaka. Languta ice ni ku onhaka ka swimilana, pimanisa misava ya le hansi ni tindhawu to rhelela, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu laha cold or damage swi tshamaka kona nkarhi wo leha ngopfu. Hlayisa swimilana leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.\n\nEka matamatisi lama karhatiwaka hi late blight, ku famba ka moya ni dyambu ra nimixo swi nga pfuna leswaku matluka ma oma. Late blight yi nga ya mahlweni yi hangalaka loko ku titimela ni ku tsakama swi teka nkarhi wo leha. Ku rhurhisa mubhedhi ntsena a swi nge yi lawuli; tlhela u lava xitsundzuxo xa rihanyo ra swimilana xa laha kaya.",
+        "keyPoints": [
+          "Xiya tlhelo ra moya lowu onhaka eka ndhawu ya wena u nga se veka nsirhelelo",
+          "Moya wo titimela wu nga khulukela ehansi hi vusiku byo tenga, lebyi rhuleke wu hlengeletana eka misava ya le hansi",
+          "Pimanisa ku onheka ka swimilana hi vusiku byo titimela na mahiselo eka ndhawu ya wena hinkwayo; xirhami lexi vonekaka a hi xona ntsena xikombiso",
+          "Ku famba ka moya na ku omisa swi nga pfuna ku hunguta matluka lama tsakamaka, kambe swona swoxe a swi lawuli late blight"
+        ],
+        "quiz": [
+          {
+            "q": "Hi kwihi laha murimi a faneleke ku rhanga a languta kona loko a veka nursery ya swimilana leswi tsaneke eka xirhami eka purasi leritsongo ra Highveld?",
+            "options": [
+              "Xikhele lexi tiviwaka xa xirhami ehansi ka nkova",
+              "An exposed ridgeline handle ko kambela moya",
+              "Ndhawu leyi nga na dyambu, leyi sirhelelekeke ehandle ka xikhele xa xirhami lexi xiyiwaka, endzhaku ko kambela matirhele ya vusiku byo titimela ya ndhawu",
+              "Ndhawu leyi nga na ndzhuti wo tala ngopfu, handle ko kambela xirhami"
+            ],
+            "correct": 2,
+            "rationale": "Moya wo titimela wu nga hlengeletana etindhawini ta le hansi hi vusiku byo tenga ni byo rhula. Pimanisa tindhawu leti nga tirhisiwaka ku veka nursery through the local frost season. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya kumbe u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga se teka xiboho xa ndhawu ya nkarhi wo leha. Frost leyi vonakaka a hi yona ntsena mhaka leyi kombisaka frost damage, naswona a ku na ndhawu ya le xintshabyanini leyi tiyisekisaka leswaku a ku nge vi na frost."
+          },
+          {
+            "q": "Matamatisi ya murimi wa KZN ma khomiwa hi late blight hi ku phindha-phindha loko ku titimela ni ku tsakama. Hi yihi ndhawu ya mubedhi leyi nga pfunaka matluka ku oma, swin’we ni xitsundzuxo xa rihanyo ra swimilana xa laha kaya?",
+            "options": [
+              "Tunnel leyi pfariweke, leyi nga riki na ndlela yo nghenisa ni ku humesa moya",
+              "Ndhawu leyi nga na ku famba lokunene ka moya na dyambu ra nimixo",
+              "Ndhawu ya le hansi kusuhi na damu",
+              "Khumbi ra le dzongeni leri nga na ndzhuti"
+            ],
+            "correct": 1,
+            "rationale": "Ku famba ka moya ni dyambu ra nimixo swi nga pfuna leswaku matluka ma oma. Late blight yi tsakela ku titimela loku tekaka nkarhi wo leha ni ku tsakama, naswona ku rhurhisa mubedhi ntsena a hi kungu leri heleleke ro lawula vuvabyi."
+          }
+        ],
+        "infographicAlt": "Purasi ri langutiwa hi le henhla ri ri na miseve leyi kombaka tlhelo ra moya, moya wo titimela wu khulukela ehansi eka xikhele xa xirhami, na tlhelo ra ku rhelela ka misava."
+      },
+      "status": "draft"
+    }
+  },
+  "fluentApproval": false
+}

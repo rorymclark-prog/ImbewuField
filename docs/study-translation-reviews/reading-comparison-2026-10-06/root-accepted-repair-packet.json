@@ -1,0 +1,131 @@
+{
+  "packetKind": "read-only exact-source semantic correction packet",
+  "created": "2026-10-06",
+  "scope": "Reading the Landscape current learner text risk follow-up; exact bound checks against current workspace registry and c5f1771 resolved/deck authorities. No repo edits.",
+  "currentWorkspaceHead": "86d84dcf04526fb7064a9e4d1b0a7984fb4c3f15",
+  "authorities": {
+    "courseSnapshot": {
+      "path": "/Users/roryclark/Downloads/ImbewuField-Agy-full-course-audit-20261006/all-course-languages.json",
+      "sourceCommit": "c5f1771eaa7bb014aefe9a19ba349d149b4b4a57",
+      "sha256": "71839d16bbcefb9d8e470acf4f6f8802c1b56b2e407a86cb7453c22adb1927e3"
+    },
+    "pairedDeckSnapshot": {
+      "path": "/Users/roryclark/Downloads/ImbewuField-Agy-full-course-audit-20261006/all-regional-paired-deck-text.json",
+      "sourceCommit": "c5f1771eaa7bb014aefe9a19ba349d149b4b4a57",
+      "sha256": "680b48ee525cf1ef37b49c69065c0b39e07b9c71f13712e9f43f2cdd8e3e4ee1"
+    },
+    "currentSTRegistry": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/lib/course-translation-drafts-st-reading-landscape.ts",
+    "currentCanonicalSource": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/lib/course-modules.ts"
+  },
+  "currentDefects": [
+    {
+      "language": "st",
+      "moduleId": "reading-landscape",
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "paragraphIndex": 1,
+      "canonicalSource": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "currentResolvedTarget": "Bosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata haholo ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona through the local frost season. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.",
+      "overstatedSourceClause": "These places can be colder than nearby slopes.",
+      "overstatedCurrentClause": "Dibaka tsena di ka bata haholo ho feta matswapo a haufi.",
+      "candidateTarget": "Bosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona through the local frost season. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.",
+      "candidateClause": "Dibaka tsena di ka bata ho feta matswapo a haufi.",
+      "candidateDelta": "Remove intensifier “haholo”; retain “can be colder than” with the existing “di ka bata ho feta” comparative and preserve every adjacent clause exactly.",
+      "crossAuthoritySupport": {
+        "STDeckSlide": 14,
+        "deckCanonicalSentence": "These places can be colder than nearby slopes.",
+        "deckResolvedClause": "Dibaka tsena di ka bata ho feta matswapo a haufi.",
+        "sourceIdentity": "The deck body segment sourceEnglish is exactly the same sentence; its current draft already uses the conservative target proposed here.",
+        "relatedQuiz": "ST L3 Q0 has source correctIndex 2/resolved correctIndex 2. Its rationale covers local frost-season comparison, local minimum-temperature records, and no hillside guarantee; it does not make or need the intensified “very colder” claim.",
+        "quizRationaleSource": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+        "quizRationaleCurrentTarget": "Moya o batang o ka dula dibakeng tse tlase masiu a hlakileng, a kgutsitseng. Bapisa dibaka tsa kereche tseo e ka bang tsona through the local frost season. Hlahloba ditlaleho tsa motjheso o tlase-tlase tsa lehae kapa o botse moeletsi wa temo wa lehae pele o etsa qeto ya nako e telele. Serame se bonwang hase sesupo se le seng feela sa tshenyo ya serame, mme ha ho na sebaka sa lehlakoreng la leralla se tiisang ho se be le serame."
+      },
+      "preservation": {
+        "sourceParagraphCount": 4,
+        "targetParagraphCount": 4,
+        "quizCorrectIndex": 2,
+        "allOtherParagraphText": "unchanged",
+        "reviewStatus": "machine-draft; facilitator review still required"
+      },
+      "disposition": "One narrow candidate repair is defensible from exact same-language source identity. Keep as unreviewed machine draft pending facilitator review."
+    }
+  ],
+  "riskDispositions": [
+    {
+      "riskId": "st-l3p1-cold-comparison",
+      "classification": "real current learner-text defect; candidate supplied above",
+      "evidence": "Current ST learner target adds “haholo” while canonical English says only “can be colder”. Matched ST deck source sentence supplies an existing conservative same-language clause."
+    },
+    {
+      "riskId": "st-l4-q0-opt0-fertility",
+      "classification": "Agy audit backtranslation defect; no current learner-text correction",
+      "canonicalQuestion": "You notice thick blackjack growing in one corner every year. What should you do next?",
+      "canonicalOptionIndex": 0,
+      "canonicalOption": "The soil there is exceptionally fertile",
+      "currentTarget": "Mobu o teng o nonne ka mokgwa o ikgethang",
+      "sourceCorrectIndex": 2,
+      "resolvedCorrectIndex": 2,
+      "correctOptionSource": "Mark the patch and check the soil; the plant alone cannot show compaction",
+      "correctOptionTarget": "Tshwaya sebaka seo mme o hlahlobe mobu; semela ka bosona se ke ke sa bontsha ho kitlana ha mobu (compaction)",
+      "AgyErroneousBacktranslation": "Decide immediately that the whole field is compacted",
+      "disposition": "Actual option directly preserves “The soil there is exceptionally fertile”; option 2 remains the source-correct patch/soil-check answer. Do not alter the current target or index. Correct audit evidence only: backtranslate the target as “The soil there is exceptionally fertile.”"
+    },
+    {
+      "riskId": "ts-l1-q0-a-frame",
+      "classification": "unsafe Agy proposal; current exact-English fallback is correct safety behavior",
+      "sourceCorrectIndex": 0,
+      "resolvedCorrectIndex": 0,
+      "sourceOption": "Points at the same height along a contour",
+      "currentResolvedTarget": "Points at the same height along a contour",
+      "unsafeAgyProposal": "Tindhawu leti nga eka vulehi leyi ringanaka eka layini ya khontara",
+      "disposition": "Current target is the exact English source held in place. Proposal substitutes a length/distance notion for equal height/elevation. Reject it; retain the English source with correct index 0 until an exact Xitsonga equivalent is verified."
+    },
+    {
+      "riskId": "ve-ts-s20-frost-persistence",
+      "classification": "unsafe Agy proposals; current exact-source hold is correct",
+      "canonicalClause": "Mark mist, frozen dew, and the places frost lasts longest.",
+      "currentPairedDeckStatus": {
+        "ve": "The exact clause “mist, frozen dew, and the places frost lasts longest.” is held in English.",
+        "ts": "The exact clause “mist, frozen dew, and the places frost lasts longest.” is held in English."
+      },
+      "rejectedAgyProposals": {
+        "ve": "Swayani khuli, khume yo gwalabaho, na fhethu hune tshando tsha fara u thoma.",
+        "ts": "Fungha nkungu, mberha leyi gwalaleke, ni tindhawu laha xirhami xi fara ro sungula."
+      },
+      "disposition": "These proposals say where frost first forms, changing persistence duration to onset. They are not current learner text. Keep the exact English segment held; do not apply them as corrections."
+    },
+    {
+      "riskId": "site-map-inventory-and-direction",
+      "classification": "proposal-only risks; no current correction supported",
+      "sourceInventory": "On paper, draw your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation.",
+      "currentVEInventorySegment": "na zwimela zwine zwa vha hone.",
+      "currentTSInventorySegment": "ni swimilana leswi nga kona.",
+      "rejectedVEMisnarrowing": "miri (trees) plus mavu o sendamaho nga maanḓa (steeply sloping ground)",
+      "deck17Source": "Use the picture as a guide: boundary, buildings, roads, water, slopes, and direction arrows.",
+      "deck17ProposalPhrases": {
+        "ve": "misevhe ya ndila",
+        "ts": "miseve ya matlhelo"
+      },
+      "disposition": "Current VE/TS slide 20 segments retain the broad “existing vegetation” category and source-paired slope language; the VE proposal narrows them and is rejected. Slide 17 text binds the generic phrase “direction arrows”, but the packet does not inspect rendered arrow orientation. Keep arrows source-paired pending visual and local-term verification; do not infer north/wind/runoff direction."
+    }
+  ],
+  "bindingAssertions": {
+    "STL3ParagraphExactSource": true,
+    "STDeck14ComparisonSentenceExactSourceIdentity": true,
+    "STDeck14UsesCandidateClause": true,
+    "STL3QuizCorrectIndexPreserved": [
+      2,
+      2
+    ],
+    "STL4Q0CorrectIndexPreserved": [
+      2,
+      2
+    ],
+    "TSL1Q0CorrectIndexPreserved": [
+      0,
+      0
+    ],
+    "candidateChangesOnlyOneClause": true
+  },
+  "reviewBoundary": "No prose is claimed fluent-approved, locally approved, or safe for publication. Only the single ST comparison clause is a candidate current-text correction; every other noted item is a rejected proposal or audit-evidence correction."
+}

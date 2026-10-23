@@ -1,0 +1,398 @@
+{
+  "title": "Reading Landscape fuller ordinary body wording candidates",
+  "date": "2026-10-04",
+  "baseHead": "d0b5b846b30935c6b6f0498a1889033602ba8fb5",
+  "status": "candidate-only; machine draft; independent semantic and facilitator review pending",
+  "scope": {
+    "candidateFields": 9,
+    "languages": [
+      "st",
+      "ve",
+      "ts"
+    ],
+    "slides": [
+      8,
+      10
+    ],
+    "bodyIndices": {
+      "slide8": [
+        2
+      ],
+      "slide10": [
+        1,
+        2
+      ]
+    },
+    "excludedPriorBatches": [
+      "slides 3–14 accepted 20 fields",
+      "slides 15–21 packet 9 fields"
+    ]
+  },
+  "sourceSHA256": {
+    "englishMarkdown": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+    "pairedTarget-st": "1f39e73a3f9acc8b005d8d6e7662b8f2c06db31ab39aa623064886735e5aa152",
+    "pairedTarget-ve": "b7ab07dc8f54a6cf43a4ea60cad4ecf2112eeaaec985223d7821cc7f736bf463",
+    "pairedTarget-ts": "74919c9edea607327238235376b9edbd3821df2530c3ce90d1e7422a225751a5"
+  },
+  "candidateFields": [
+    {
+      "language": "st",
+      "slide": 8,
+      "bodyIndex": 2,
+      "sourceEnglish": "Watch your own site before choosing where to place tender crops, trees, or buildings.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Sheba sebaka sa hao pele u khetha where to place tender crops, trees, or buildings."
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Watch your own site before choosing where to place ",
+          "status": "draft",
+          "text": "Sheba sebaka sa hao pele u khetha moo o ka behang "
+        },
+        {
+          "sourceEnglish": "tender crops, trees, or buildings.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Sheba sebaka sa hao pele u khetha moo o ka behang tender crops, trees, or buildings.",
+      "reason": "Completes the ordinary placement wording already partly drafted, while retaining crop/tree/building labels in exact English to avoid introducing crop-category or siting terminology.",
+      "riskFlags": [
+        "Proposed locative phrase needs facilitator language review.",
+        "Exact objects and their order remain in the source language."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 8,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPairedRecord": true
+      }
+    },
+    {
+      "language": "st",
+      "slide": 10,
+      "bodyIndex": 1,
+      "sourceEnglish": "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "A wall or shade cloth can shade a bed longer in winter than in summer. Hlahloba shadows tsa sebele before you build or fix a shade structure in place."
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "A wall or shade cloth can shade a bed longer in winter than in summer. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Check the actual shadows ",
+          "status": "draft",
+          "text": "Hlahloba shadows tsa sebele "
+        },
+        {
+          "sourceEnglish": "before you build or fix a ",
+          "status": "draft",
+          "text": "pele o haha kapa o lokisa "
+        },
+        {
+          "sourceEnglish": "shade structure",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " in place.",
+          "status": "draft",
+          "text": " sebakeng sa yona."
+        }
+      ],
+      "candidateText": "A wall or shade cloth can shade a bed longer in winter than in summer. Hlahloba shadows tsa sebele pele o haha kapa o lokisa shade structure sebakeng sa yona.",
+      "reason": "Localizes the ordinary instruction and its before-build/fix condition, retaining the exact seasonal comparison and the technical shade-structure term.",
+      "riskFlags": [
+        "Conditional timing and build-or-fix choices must remain explicit.",
+        "Shade structure stays exact English."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 10,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      }
+    },
+    {
+      "language": "st",
+      "slide": 10,
+      "bodyIndex": 2,
+      "sourceEnglish": "Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Ema sebakeng seo at 8am, midday, and 4pm on a winter's day. Watch where the shade falls."
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Stand in the spot ",
+          "status": "draft",
+          "text": "Ema sebakeng seo "
+        },
+        {
+          "sourceEnglish": "at 8am, midday, and 4pm on a winter's day. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Watch where the shade falls.",
+          "status": "draft",
+          "text": "Shebella moo moriti o welang teng."
+        }
+      ],
+      "candidateText": "Ema sebakeng seo at 8am, midday, and 4pm on a winter's day. Shebella moo moriti o welang teng.",
+      "reason": "Keeps the exact observation times and season in English, while translating where to stand and the instruction to observe the shade.",
+      "riskFlags": [
+        "All three specified times and winter condition remain source exact.",
+        "Localized observation phrasing needs facilitator review."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 10,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPairedRecord": true
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 2,
+      "sourceEnglish": "Watch your own site before choosing where to place tender crops, trees, or buildings.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Sedzani site yaṋu ni sa athu nanga where to place tender crops, trees, or buildings."
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Watch your own site before choosing where to place ",
+          "status": "draft",
+          "text": "Sedzani site yaṋu ni sa athu nanga hune na nga vhea "
+        },
+        {
+          "sourceEnglish": "tender crops, trees, or buildings.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Sedzani site yaṋu ni sa athu nanga hune na nga vhea tender crops, trees, or buildings.",
+      "reason": "Completes the ordinary placement wording already partly drafted, while retaining crop/tree/building labels in exact English to avoid introducing crop-category or siting terminology.",
+      "riskFlags": [
+        "Proposed locative phrase needs facilitator language review.",
+        "Exact objects and their order remain in the source language."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 8,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPairedRecord": true
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "bodyIndex": 1,
+      "sourceEnglish": "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "A wall or shade cloth can shade a bed longer in winter than in summer. Sedzani shadows dza vhukuma before you build or fix a shade structure in place."
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "A wall or shade cloth can shade a bed longer in winter than in summer. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Check the actual shadows ",
+          "status": "draft",
+          "text": "Sedzani shadows dza vhukuma "
+        },
+        {
+          "sourceEnglish": "before you build or fix a ",
+          "status": "draft",
+          "text": "ni sa athu u fhaṱa kana u dzudzanya "
+        },
+        {
+          "sourceEnglish": "shade structure",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " in place.",
+          "status": "draft",
+          "text": " fhethu hayo."
+        }
+      ],
+      "candidateText": "A wall or shade cloth can shade a bed longer in winter than in summer. Sedzani shadows dza vhukuma ni sa athu u fhaṱa kana u dzudzanya shade structure fhethu hayo.",
+      "reason": "Localizes the ordinary instruction and its before-build/fix condition, retaining the exact seasonal comparison and the technical shade-structure term.",
+      "riskFlags": [
+        "Conditional timing and build-or-fix choices must remain explicit.",
+        "Shade structure stays exact English."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 10,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      }
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "bodyIndex": 2,
+      "sourceEnglish": "Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Imani fhethu at 8am, midday, and 4pm on a winter's day. Watch where the shade falls."
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Stand in the spot ",
+          "status": "draft",
+          "text": "Imani fhethu "
+        },
+        {
+          "sourceEnglish": "at 8am, midday, and 4pm on a winter's day. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Watch where the shade falls.",
+          "status": "draft",
+          "text": "Sedzani hune murunzi wa wela hone."
+        }
+      ],
+      "candidateText": "Imani fhethu at 8am, midday, and 4pm on a winter's day. Sedzani hune murunzi wa wela hone.",
+      "reason": "Keeps the exact observation times and season in English, while translating where to stand and the instruction to observe the shade.",
+      "riskFlags": [
+        "All three specified times and winter condition remain source exact.",
+        "Localized observation phrasing needs facilitator review."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 10,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPairedRecord": true
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 2,
+      "sourceEnglish": "Watch your own site before choosing where to place tender crops, trees, or buildings.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Languta ndhawu ya wena u nga si hlawula where to place tender crops, trees, or buildings."
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Watch your own site before choosing where to place ",
+          "status": "draft",
+          "text": "Languta ndhawu ya wena u nga si hlawula laha u nga vekaka "
+        },
+        {
+          "sourceEnglish": "tender crops, trees, or buildings.",
+          "status": "english-hold"
+        }
+      ],
+      "candidateText": "Languta ndhawu ya wena u nga si hlawula laha u nga vekaka tender crops, trees, or buildings.",
+      "reason": "Completes the ordinary placement wording already partly drafted, while retaining crop/tree/building labels in exact English to avoid introducing crop-category or siting terminology.",
+      "riskFlags": [
+        "Proposed locative phrase needs facilitator language review.",
+        "Exact objects and their order remain in the source language."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 8,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPairedRecord": true
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "bodyIndex": 1,
+      "sourceEnglish": "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "A wall or shade cloth can shade a bed longer in winter than in summer. Kambela shadows ta xiviri before you build or fix a shade structure in place."
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "A wall or shade cloth can shade a bed longer in winter than in summer. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Check the actual shadows ",
+          "status": "draft",
+          "text": "Kambela shadows ta xiviri "
+        },
+        {
+          "sourceEnglish": "before you build or fix a ",
+          "status": "draft",
+          "text": "u nga si aka kumbe ku lulamisa "
+        },
+        {
+          "sourceEnglish": "shade structure",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": " in place.",
+          "status": "draft",
+          "text": " endhawini ya yona."
+        }
+      ],
+      "candidateText": "A wall or shade cloth can shade a bed longer in winter than in summer. Kambela shadows ta xiviri u nga si aka kumbe ku lulamisa shade structure endhawini ya yona.",
+      "reason": "Localizes the ordinary instruction and its before-build/fix condition, retaining the exact seasonal comparison and the technical shade-structure term.",
+      "riskFlags": [
+        "Conditional timing and build-or-fix choices must remain explicit.",
+        "Shade structure stays exact English."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 10,
+        "pairedEnglishBodyIndex": 1,
+        "exactSourceMatchesPairedRecord": true
+      }
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "bodyIndex": 2,
+      "sourceEnglish": "Stand in the spot at 8am, midday, and 4pm on a winter's day. Watch where the shade falls.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Yima endhawini yoleyo at 8am, midday, and 4pm on a winter's day. Watch where the shade falls."
+      },
+      "candidateStatus": "mixed",
+      "candidateSegments": [
+        {
+          "sourceEnglish": "Stand in the spot ",
+          "status": "draft",
+          "text": "Yima endhawini yoleyo "
+        },
+        {
+          "sourceEnglish": "at 8am, midday, and 4pm on a winter's day. ",
+          "status": "english-hold"
+        },
+        {
+          "sourceEnglish": "Watch where the shade falls.",
+          "status": "draft",
+          "text": "Languta laha ndzhuti wu welaka kona."
+        }
+      ],
+      "candidateText": "Yima endhawini yoleyo at 8am, midday, and 4pm on a winter's day. Languta laha ndzhuti wu welaka kona.",
+      "reason": "Keeps the exact observation times and season in English, while translating where to stand and the instruction to observe the shade.",
+      "riskFlags": [
+        "All three specified times and winter condition remain source exact.",
+        "Localized observation phrasing needs facilitator review."
+      ],
+      "sourceBinding": {
+        "pairedSlideN": 10,
+        "pairedEnglishBodyIndex": 2,
+        "exactSourceMatchesPairedRecord": true
+      }
+    }
+  ],
+  "reviewLimitations": [
+    "This is not fluency approval.",
+    "Ordinary phrasing is proposed for independent semantic review; source pairing is exact and every held segment is copied exactly.",
+    "No canonical lesson, assessment, image, or learner registry was modified."
+  ]
+}

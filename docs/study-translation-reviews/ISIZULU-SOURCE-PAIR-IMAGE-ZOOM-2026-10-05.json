@@ -1,0 +1,83 @@
+{
+  "title": "isiZulu source-paired slide image viewer implementation audit",
+  "date": "2026-10-05",
+  "status": "scoped UI change; runtime visual and phone review pending",
+  "implementationBase": {
+    "branch": "codex/zulu-deck-source-zoom-20261005",
+    "baseHead": "51463f1ca61729e543cecee05a84b5e0e768fbf3",
+    "scope": [
+      "components/course/DeckPlayer.tsx",
+      "components/course/DeckPlayer.module.css"
+    ]
+  },
+  "change": {
+    "learnerSurface": "The separate View slide image dialog now includes the same current-slide isiZulu draft/source text as the normal and expanded player disclosure. The draft/source content has one JSX renderer used in both places.",
+    "pairSelection": "The existing slideChoice=zu source resolver, silent-draft resolver, review-hold decision, and English-source fallback remain the inputs. The displayed text is still keyed by module and slide and does not change narration selection.",
+    "imageViewerLayout": "Only an isiZulu viewer with available source text gets the vertical-scroll layout: its image remains in a bounded scrolling stage, followed by normal-size source text reached by scrolling the viewer. Image zoom percentage is applied only to the image. The panel begins visible without requiring a disclosure tap. Other languages retain the existing full-height image viewer layout.",
+    "unchangedProductData": [
+      "course transcripts and source bindings",
+      "narration audio and hold rows",
+      "slide images and animations",
+      "slide order and course content",
+      "non-Zulu language rendering",
+      "PLAN_VERSION and Introduction slide 1"
+    ]
+  },
+  "currentSourcePairEvidence": {
+    "authoritativeResolver": "lib/course-deck-source-bindings.ts resolveIsiZuluDeckSourcePair",
+    "silentDraftResolver": "lib/course-deck-silent-drafts-registry.ts resolveIsiZuluSilentDeckDraft",
+    "audioHoldPolicy": "lib/course-deck-review-holds.ts isiZuluDeckReviewHold",
+    "currentPlayerAndDisclosure": "components/course/DeckPlayer.tsx",
+    "all240PairGate": {
+      "command": "node --import ./tests/register-alias.mjs --test tests/course-deck-source-bindings.test.ts",
+      "result": "11 passed, 0 failed; includes the all-240 exact registered source/recorded wording and title/hash binding check",
+      "checkedAtHead": "51463f1ca61729e543cecee05a84b5e0e768fbf3"
+    },
+    "deckInventory": {
+      "moduleCount": 10,
+      "slidePairCount": 240,
+      "perModuleSlideCounts": {
+        "intro-permaculture": 22,
+        "reading-landscape": 21,
+        "water-harvesting": 24,
+        "soil-health": 20,
+        "vegetables-staples": 18,
+        "seeds-sovereignty": 24,
+        "plant-guilds": 51,
+        "food-forest": 20,
+        "small-livestock": 20,
+        "market-community": 20
+      }
+    }
+  },
+  "semanticAndAssetEvidence": {
+    "bodyReviewReports": [
+      "docs/study-translation-reviews/ISIZULU-intro-reading-slide-source-semantic-check-20261005.json",
+      "docs/study-translation-reviews/ISIZULU-soil-water-slide-source-semantic-check-20261005.json",
+      "docs/study-translation-reviews/ISIZULU-vegetables-market-slide-source-semantic-check-20261005.json",
+      "docs/study-translation-reviews/ISIZULU-forest-guilds-slide-source-semantic-check-20261005.json",
+      "docs/study-translation-reviews/ISIZULU-seeds-livestock-slide-source-semantic-check-20261005.json"
+    ],
+    "bodyReviewAggregate": {
+      "slidesCompared": 240,
+      "accepted": 218,
+      "repair": 16,
+      "uncertain": 6,
+      "interpretation": "These are bounded machine comparison dispositions, not fluent approval, audio listening, or validation of the English farming claims. Paragraph counts differ on 37 slides, so the source pairs by module/slide and does not claim one-to-one paragraph alignment."
+    },
+    "titleOnlyReport": "docs/study-translation-reviews/ISIZULU-all240-slide-title-source-check-20261005.json",
+    "titleReportLimit": "The title report covers headings only. It is not evidence for narration-body coverage.",
+    "priorReadOnlyInventory": {
+      "path": "/tmp/imbewu-isizulu-all-decks-source-pairing-plan-20261005.json",
+      "reviewedHead": "87d6d1442e3c30be85ea7c75f8e17995755bd082",
+      "note": "Its body/media counts and limits are retained as prior inventory evidence. Current source-pair exactness is separately rechecked by the all-240 test at this implementation base. The inventory did not establish artwork-label translation or runtime offline behavior."
+    },
+    "artworkLimit": "The source panel pairs narration-script text by module and slide. It does not transcribe or translate every label embedded in the existing image artwork; image identity hashes do not prove the meaning of its pixels."
+  },
+  "runtimeReview": {
+    "typecheck": "npx tsc --noEmit completed successfully at implementation base",
+    "phoneAndPreview": "Not yet performed. Parent review and actual 390px phone preview are required before any visual quality claim.",
+    "offline": "Not tested in this task. No cold-start, whole-course offline, or cached-viewer claim is made.",
+    "visualClaim": "No claim that the new zoom layout has been visually verified."
+  }
+}

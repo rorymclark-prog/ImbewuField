@@ -1,0 +1,68 @@
+{
+  "speciesId": "strychnos-spinosa",
+  "commonName": "Spiny monkey orange",
+  "botanicalName": "Strychnos spinosa",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": [3, 5],
+    "evidence": {
+      "quote": "Presently, Strychnos spinosa can be propagated via seeds, grafting, or budding, with the production of fruit starting 3–5 years after planting",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8703348/",
+      "doc": "Undervalued Spiny Monkey Orange (Strychnos spinosa Lam.): An Indigenous Fruit for Sustainable Food-Nutrition and Economic Prosperity (peer-reviewed review, PMC8703348)",
+      "page": null
+    },
+    "notes": "The review attributes this 3–5-year age to Avakoudjo et al.'s study in Benin, West Africa, rather than a South African bearing trial. Propagation method and local conditions must be confirmed before using it at a South African site; it is not a locally validated age or a yield-by-age curve."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in any fetched source."
+  },
+  "yieldKgPerTreeMature": {
+    "value": [40, 100],
+    "evidence": {
+      "quote": "Fruit weighs between 145 and 383 g, while about 300–700 fruits (40–100 kg) can be produced per tree stand.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8703348/",
+      "doc": "Undervalued Spiny Monkey Orange (Strychnos spinosa Lam.): An Indigenous Fruit for Sustainable Food-Nutrition and Economic Prosperity (peer-reviewed review, PMC8703348)",
+      "page": null
+    },
+    "notes": "The review reports 40–100 kg per tree stand without an annual period, mature age, matched cultivar or South African field conditions. Retain the original per-plant weight as context only: do not relabel it kg/year, spread it across months or treat it as a farm forecast."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source states a chilling requirement or explicitly says the species has none."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "SANBI states only 'It is believed that various insects pollinate the flowers.' (Ecology section, https://pza.sanbi.org/strychnos-spinosa) -- this confirms insect pollination but does not state whether the species is self-fertile, partly-self-fertile, needs a cross-pollinator, or is dioecious, so no enum value could be confidently assigned. The ICRAF Agroforestree Database 4.0 fact sheet for this species (fetched PDF) contains a BOTANIC DESCRIPTION, ECOLOGY, PRODUCTS, TREE MANAGEMENT and GERMPLASM MANAGEMENT section but NO BIOLOGY section with reproductive/phenology detail, unlike the fact sheets for other species in this batch."
+  },
+  "harvestProduct": "fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Harvest interval with unverified South African geography",
+      "quote": "Strychnos spinosa is a seasonal fruit tree that is harvested between August and December",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8703348/",
+      "doc": "Omotayo & Aremu (2021), Undervalued Spiny Monkey Orange, section 3",
+      "page": null,
+      "note": "The review states August–December but does not identify a locality for that interval. Related monkey-orange literature discusses this interval in Zimbabwe and more than one Strychnos species; it does not establish a South African spinosa picking calendar. The former South Africa (general) window is withheld. Record the farm's own ripe-pulp months; seeds and unripe pulp are not ordinary food."
+    },
+    {
+      "title": "Geography of the review's bearing-age citation",
+      "quote": "A participatory rural appraisal study was undertaken across three climatic zones in Benin.",
+      "url": "https://link.springer.com/article/10.1007/s12231-019-09481-0",
+      "doc": "Avakoudjo et al. (2020), Local Knowledge, Uses, and Factors Determining the Use of Strychnos spinosa Organs in Benin (West Africa), abstract",
+      "page": null,
+      "note": "The 2021 review cites this Benin study for its 3–5-year bearing-age statement. The cited source's geography is West Africa, not a South African orchard. Retain the review's numeric statement with this condition; no local annual yield curve is supplied."
+    }
+  ],
+  "gaps": [
+    "South African ripe-picking months remain unverified. The former August–December South Africa (general) window was withdrawn in the 11 October 2026 provenance audit because the review does not state a harvest locality; it remains contextual supplementary evidence.",
+    "The review's first-bearing age cites a Benin study; no local South African first-bearing trial is verified. Its per-plant weight has no stated annual period or mature age, so no annual production schedule is inferred.",
+    "yearsToFullBearing: not found in any fetched source.",
+    "Precise pollination mechanism (self-fertile vs needing a cross-pollinator vs dioecious) not stated by any source found; only 'insects pollinate the flowers' (SANBI) is confirmed.",
+    "chillUnits: not stated by any source found.",
+    "The ICRAF Agroforestree Database PDF fact sheet for this species, unusually, has no BIOLOGY section (phenology/pollination content that exists for the other ICRAF fact sheets used in this project is simply absent here), so it contributed no additional facts beyond botanic description/ecology/products already covered by SANBI."
+  ]
+}

@@ -1,0 +1,532 @@
+{
+  "status": "Text applied only. Media/assets/cache migration/tests/phone and publication gates pending. NOT LIVE.",
+  "basePR": 970,
+  "baseHead": "c573f4e9d15f78223ab6d1789107fb544340e6e8",
+  "preparedPlanSHA256": "cf0b9bf342ae07b5c793dc320ddc31a8cbee8f309629e03eca757a6779d6d901",
+  "changedFields": 109,
+  "changedSegmentsOrWholeFields": 149,
+  "files": [
+    {
+      "file": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "beforeSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "changes": [
+        {
+          "slide": 10,
+          "field": "heading"
+        },
+        {
+          "slide": 11,
+          "field": "heading"
+        },
+        {
+          "slide": 12,
+          "field": "heading"
+        },
+        {
+          "slide": 13,
+          "field": "heading"
+        },
+        {
+          "slide": 14,
+          "field": "heading"
+        }
+      ],
+      "englishRecordsPreserved": 22
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "beforeSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "changes": [
+        {
+          "slide": 19,
+          "field": "body[1]"
+        },
+        {
+          "slide": 21,
+          "field": "body[2]"
+        },
+        {
+          "slide": 6,
+          "field": "body[2]"
+        },
+        {
+          "slide": 12,
+          "field": "body[2]"
+        },
+        {
+          "slide": 12,
+          "field": "body[1]"
+        },
+        {
+          "slide": 19,
+          "field": "body[0]"
+        },
+        {
+          "slide": 2,
+          "field": "body[1]"
+        },
+        {
+          "slide": 4,
+          "field": "body[1]"
+        },
+        {
+          "slide": 20,
+          "field": "body[0]"
+        },
+        {
+          "slide": 5,
+          "field": "body[0]"
+        },
+        {
+          "slide": 6,
+          "field": "body[1]"
+        },
+        {
+          "slide": 21,
+          "field": "body[1]"
+        },
+        {
+          "slide": 7,
+          "field": "body[0]"
+        },
+        {
+          "slide": 10,
+          "field": "body[2]"
+        },
+        {
+          "slide": 14,
+          "field": "body[0]"
+        },
+        {
+          "slide": 14,
+          "field": "body[3]"
+        },
+        {
+          "slide": 20,
+          "field": "body[1]"
+        },
+        {
+          "slide": 20,
+          "field": "body[2]"
+        },
+        {
+          "slide": 8,
+          "field": "body[0]"
+        },
+        {
+          "slide": 15,
+          "field": "body[0]"
+        },
+        {
+          "slide": 15,
+          "field": "body[1]"
+        }
+      ],
+      "englishRecordsPreserved": 21
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "beforeSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "changes": [
+        {
+          "slide": 6,
+          "field": "body[1]"
+        },
+        {
+          "slide": 1,
+          "field": "heading"
+        },
+        {
+          "slide": 1,
+          "field": "body[0]"
+        },
+        {
+          "slide": 3,
+          "field": "body[1]"
+        },
+        {
+          "slide": 3,
+          "field": "body[2]"
+        },
+        {
+          "slide": 3,
+          "field": "body[3]"
+        },
+        {
+          "slide": 3,
+          "field": "body[5]"
+        },
+        {
+          "slide": 4,
+          "field": "heading"
+        },
+        {
+          "slide": 4,
+          "field": "body[1]"
+        },
+        {
+          "slide": 4,
+          "field": "body[2]"
+        },
+        {
+          "slide": 5,
+          "field": "heading"
+        },
+        {
+          "slide": 5,
+          "field": "body[2]"
+        },
+        {
+          "slide": 5,
+          "field": "body[3]"
+        },
+        {
+          "slide": 5,
+          "field": "body[4]"
+        },
+        {
+          "slide": 5,
+          "field": "body[5]"
+        },
+        {
+          "slide": 6,
+          "field": "heading"
+        },
+        {
+          "slide": 6,
+          "field": "body[0]"
+        },
+        {
+          "slide": 6,
+          "field": "body[2]"
+        },
+        {
+          "slide": 7,
+          "field": "body[2]"
+        },
+        {
+          "slide": 7,
+          "field": "body[3]"
+        },
+        {
+          "slide": 8,
+          "field": "heading"
+        },
+        {
+          "slide": 10,
+          "field": "heading"
+        },
+        {
+          "slide": 11,
+          "field": "heading"
+        },
+        {
+          "slide": 12,
+          "field": "heading"
+        },
+        {
+          "slide": 15,
+          "field": "body[1]"
+        },
+        {
+          "slide": 16,
+          "field": "body[4]"
+        },
+        {
+          "slide": 16,
+          "field": "body[5]"
+        },
+        {
+          "slide": 18,
+          "field": "body[5]"
+        },
+        {
+          "slide": 2,
+          "field": "body[3]"
+        }
+      ],
+      "englishRecordsPreserved": 18
+    },
+    {
+      "file": "docs/narration/market-community.st.paired-draft.json",
+      "beforeSHA256": "084bd6732647bdcefcbcf93fb8326f7225a2875704835cf9b3636dde0ef318fc",
+      "changes": [
+        {
+          "slide": 11,
+          "field": "body[0]"
+        },
+        {
+          "slide": 15,
+          "field": "body[1]"
+        }
+      ],
+      "englishRecordsPreserved": 20
+    },
+    {
+      "file": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "beforeSHA256": "956f558efef759c858c57f84aa826c7121f4bc657846069be943b0708043a655",
+      "changes": [
+        {
+          "slide": 4,
+          "field": "body[1]"
+        },
+        {
+          "slide": 6,
+          "field": "body[1]"
+        },
+        {
+          "slide": 10,
+          "field": "body[1]"
+        },
+        {
+          "slide": 11,
+          "field": "body[0]"
+        },
+        {
+          "slide": 12,
+          "field": "body[0]"
+        },
+        {
+          "slide": 13,
+          "field": "body[1]"
+        },
+        {
+          "slide": 14,
+          "field": "body[1]"
+        },
+        {
+          "slide": 15,
+          "field": "body[2]"
+        },
+        {
+          "slide": 19,
+          "field": "body[1]"
+        },
+        {
+          "slide": 20,
+          "field": "body[0]"
+        },
+        {
+          "slide": 12,
+          "field": "body[2]"
+        },
+        {
+          "slide": 20,
+          "field": "heading"
+        }
+      ],
+      "englishRecordsPreserved": 22
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "beforeSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "changes": [
+        {
+          "slide": 4,
+          "field": "body[1]"
+        },
+        {
+          "slide": 20,
+          "field": "body[0]"
+        },
+        {
+          "slide": 5,
+          "field": "body[0]"
+        },
+        {
+          "slide": 7,
+          "field": "body[0]"
+        },
+        {
+          "slide": 14,
+          "field": "body[0]"
+        },
+        {
+          "slide": 20,
+          "field": "body[1]"
+        },
+        {
+          "slide": 20,
+          "field": "body[2]"
+        },
+        {
+          "slide": 21,
+          "field": "body[1]"
+        },
+        {
+          "slide": 1,
+          "field": "body[2]"
+        },
+        {
+          "slide": 8,
+          "field": "body[1]"
+        },
+        {
+          "slide": 19,
+          "field": "body[1]"
+        },
+        {
+          "slide": 19,
+          "field": "body[2]"
+        },
+        {
+          "slide": 1,
+          "field": "body[1]"
+        },
+        {
+          "slide": 4,
+          "field": "body[2]"
+        },
+        {
+          "slide": 18,
+          "field": "body[0]"
+        },
+        {
+          "slide": 21,
+          "field": "body[2]"
+        },
+        {
+          "slide": 8,
+          "field": "body[0]"
+        },
+        {
+          "slide": 15,
+          "field": "body[0]"
+        },
+        {
+          "slide": 15,
+          "field": "body[1]"
+        }
+      ],
+      "englishRecordsPreserved": 21
+    },
+    {
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "beforeSHA256": "334a3e41eeecace2458be5188d01166f9cf7a046a64891cf8eef83ba4ae2ebee",
+      "changes": [
+        {
+          "slide": 1,
+          "field": "heading"
+        },
+        {
+          "slide": 1,
+          "field": "body[0]"
+        },
+        {
+          "slide": 3,
+          "field": "body[3]"
+        },
+        {
+          "slide": 3,
+          "field": "body[5]"
+        },
+        {
+          "slide": 4,
+          "field": "body[1]"
+        },
+        {
+          "slide": 6,
+          "field": "body[2]"
+        },
+        {
+          "slide": 11,
+          "field": "heading"
+        },
+        {
+          "slide": 12,
+          "field": "heading"
+        },
+        {
+          "slide": 16,
+          "field": "body[4]"
+        },
+        {
+          "slide": 17,
+          "field": "body[3]"
+        },
+        {
+          "slide": 18,
+          "field": "body[5]"
+        },
+        {
+          "slide": 17,
+          "field": "body[4]"
+        }
+      ],
+      "englishRecordsPreserved": 18
+    },
+    {
+      "file": "docs/narration/market-community.ts.paired-draft.json",
+      "beforeSHA256": "b081ddf874bd0b40eabceabff104a346d09cea629f0d24256c6c377dc925cdfd",
+      "changes": [
+        {
+          "slide": 17,
+          "field": "body[2]"
+        },
+        {
+          "slide": 18,
+          "field": "body[1]"
+        }
+      ],
+      "englishRecordsPreserved": 20
+    },
+    {
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "beforeSHA256": "8983f26957deb484c0a04bd039ac814fdfb35d812315036071c71846da2f3ddb",
+      "changes": [
+        {
+          "slide": 8,
+          "field": "body[1]"
+        },
+        {
+          "slide": 8,
+          "field": "body[0]"
+        },
+        {
+          "slide": 15,
+          "field": "body[0]"
+        },
+        {
+          "slide": 15,
+          "field": "body[1]"
+        }
+      ],
+      "englishRecordsPreserved": 21
+    },
+    {
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "beforeSHA256": "3dc7d86d7a9ec0d58db7a70baaf4357ed57c58a0df9d4bc7fcb1b0d92ba11db2",
+      "changes": [
+        {
+          "slide": 3,
+          "field": "body[3]"
+        },
+        {
+          "slide": 3,
+          "field": "body[5]"
+        },
+        {
+          "slide": 3,
+          "field": "body[1]"
+        }
+      ],
+      "englishRecordsPreserved": 18
+    }
+  ],
+  "unmodifiedInvariantFiles": [
+    {
+      "file": "docs/narration/intro-permaculture.st.paired-draft.json",
+      "sha256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9"
+    },
+    {
+      "file": "lib/course-audio.ts",
+      "sha256": "36baa7b8e6ffb452a1fee06f3358d4b2050c80101200da8f1dda77cb5f356d64"
+    },
+    {
+      "file": "lib/course-deck.ts",
+      "sha256": "2563213cbabaa688cee56c58080f197cb3cbe3a960070a2e4732b02373badf8d"
+    }
+  ],
+  "sourceAndUnlistedFieldsVerified": true,
+  "fluentApproved": false
+}

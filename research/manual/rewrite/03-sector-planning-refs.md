@@ -1,0 +1,32 @@
+# References — 03-sector-planning
+
+- Clark, R. (comp.) (2021). *The Permaculture Gardening Handbook*. RVCC project, UNDP / Government of Lesotho.
+- Mollison, B. (1988). *Permaculture: A Designers' Manual*. Tagari Publications.
+- Magnetic-Declination.com (n.d.). *Magnetic declination calculator* (page for Johannesburg, South Africa). https://www.magnetic-declination.com/South%20Africa/Johannesburg/2984524.html
+- Magnetic-Declination.com (n.d.). *Magnetic declination calculator* (page for Cape Town, South Africa). https://www.magnetic-declination.com/South%20Africa/Cape%20Town/2981393.html
+- Magnetic-Declination.com (n.d.). *Magnetic declination calculator* (page for Durban, South Africa). https://www.magnetic-declination.com/South%20Africa/Durban/2982327.html
+- The Conversation (2025). *Berg winds in South Africa: the winter weather pattern that increases wildfire risks*. The Conversation Africa. https://theconversation.com/berg-winds-in-south-africa-the-winter-weather-pattern-that-increases-wildfire-risks-260612
+- South Africa Gateway (n.d.). *South Africa's weather and climate*. https://southafrica-info.com/land/south-africa-weather-climate/
+- South African Weather Service (2025). *Regional Weather and Climate: Gauteng*. SAWS. https://www.weathersa.co.za/Documents/Corporate/Regional%20Weather%20and%20Climate_Gauteng_03072025125158.pdf
+- Wikipedia (n.d.). *Cape Doctor*. https://en.wikipedia.org/wiki/Cape_Doctor
+- International Association of Wildland Fire (n.d.). *Situation report: South Africa*. IAWF. https://www.iawfonline.org/article/situation-report-south-africa/
+- CSIRO (2015). *Fire danger: topography, weather and fuel*. CSIRO. https://www.csiro.au/en/news/all/articles/2015/december/fire-danger-topography-weather-and-fuel
+- SANBI (n.d.). *Fireproof garden* (information sheet). PlantZAfrica, South African National Biodiversity Institute. https://pza.sanbi.org/sites/default/files/info_library/fireproof_garden.pdf
+- Gardening in South Africa (n.d.). *Large shrubs and trees recommended for firescaping*. https://www.gardeninginsouthafrica.co.za/large-shrubs-trees-recommended-for-firescaping
+- Gardening in South Africa (n.d.). *Groundcovers and small shrubs recommended for firescaping*. https://www.gardeninginsouthafrica.co.za/groundcovers-small-shrubs-recommended-for-firescaping
+- Duker, R., Cowling, R.M., du Preez, D.R. and Potts, A.J. (2015). *Frost, Portulacaria afra Jacq., and the boundary between the Albany Subtropical Thicket and Nama-Karoo biomes*. South African Journal of Botany 101: 112–119. https://www.sciencedirect.com/science/article/pii/S0254629915002744
+- SouthAfrica.co.za (n.d.). *Rainfall, South Africa* (web page; title from its URL). https://southafrica.co.za/rainfall-south-africa.html
+- One Earth (n.d.). *Nama Karoo Shrublands*. https://www.oneearth.org/ecoregions/nama-karoo-shrublands/
+- Wikipedia (n.d.). *Köppen climate classification*. https://en.wikipedia.org/wiki/K%C3%B6ppen_climate_classification
+- American Meteorological Society (n.d.). *Thermal belt*. Glossary of Meteorology. https://glossary.ametsoc.org/wiki/thermal-belt/
+- Snyder, R.L. and de Melo-Abreu, J.P. (2005). *Frost protection: fundamentals, practice and economics*, Volume 1. FAO. https://www.fao.org/4/y7223e/y7223e00.htm
+- University of California Agriculture and Natural Resources (n.d.). *Frost protection for sensitive plants*. The Real Dirt blog. https://ucanr.edu/blog/real-dirt/article/frost-protection-sensitive-plants
+- University of Arizona Cooperative Extension (n.d.). *Frost protection*. https://extension.arizona.edu/publication/frost-protection
+- Wikipedia (n.d.). *Frost*. https://en.wikipedia.org/wiki/Frost
+- IPCC (2021). *AR6 WGI Regional Fact Sheet: Africa*. Intergovernmental Panel on Climate Change. https://www.ipcc.ch/report/ar6/wg1/downloads/factsheets/IPCC_AR6_WGI_Regional_Fact_Sheet_Africa.pdf
+- IPCC (2022). *Climate Change 2022: Impacts, Adaptation and Vulnerability*, Chapter 9: Africa. https://www.ipcc.ch/report/ar6/wg2/chapter/chapter-9/
+- Engelbrecht, F. et al. (2015). *Projections of rapidly rising surface temperatures over Africa under low mitigation*. Environmental Research Letters 10: 085004. https://iopscience.iop.org/article/10.1088/1748-9326/10/8/085004
+- Climate System Analysis Group (2019). *Twice the global rate*. CSAG, University of Cape Town. https://www.csag.uct.ac.za/2019/09/25/twice-the-global-rate/
+- Otto, F.E.L. et al. (2018). *Anthropogenic influence on the drivers of the Western Cape drought 2015–2017*. Environmental Research Letters 13: 124010. https://iopscience.iop.org/article/10.1088/1748-9326/aae9f9
+- National Center for Home Food Preservation (n.d.). *For safety's sake*. University of Georgia. https://nchfp.uga.edu/how/can/general-information/for-safetys-sake
+- USDA Food Safety and Inspection Service (n.d.). *Clostridium botulinum & Botulism*. https://www.fsis.usda.gov/food-safety/foodborne-illness-and-disease/illnesses-and-pathogens/botulism

@@ -1,0 +1,488 @@
+{
+  "matrix": [
+    {
+      "moduleId": "seeds-sovereignty",
+      "appLang": "en",
+      "ownRecording": true,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": "en"
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "appLang": "zu",
+      "ownRecording": true,
+      "currentPlaylistDefault": "zu",
+      "plannedDefault": "zu"
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "appLang": "st",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "appLang": "ve",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "seeds-sovereignty",
+      "appLang": "ts",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "intro-permaculture",
+      "appLang": "en",
+      "ownRecording": true,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": "en"
+    },
+    {
+      "moduleId": "intro-permaculture",
+      "appLang": "zu",
+      "ownRecording": true,
+      "currentPlaylistDefault": "zu",
+      "plannedDefault": "zu"
+    },
+    {
+      "moduleId": "intro-permaculture",
+      "appLang": "st",
+      "ownRecording": true,
+      "currentPlaylistDefault": "st",
+      "plannedDefault": "st"
+    },
+    {
+      "moduleId": "intro-permaculture",
+      "appLang": "ve",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "intro-permaculture",
+      "appLang": "ts",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "reading-landscape",
+      "appLang": "en",
+      "ownRecording": true,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": "en"
+    },
+    {
+      "moduleId": "reading-landscape",
+      "appLang": "zu",
+      "ownRecording": true,
+      "currentPlaylistDefault": "zu",
+      "plannedDefault": "zu"
+    },
+    {
+      "moduleId": "reading-landscape",
+      "appLang": "st",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "reading-landscape",
+      "appLang": "ve",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "reading-landscape",
+      "appLang": "ts",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "water-harvesting",
+      "appLang": "en",
+      "ownRecording": true,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": "en"
+    },
+    {
+      "moduleId": "water-harvesting",
+      "appLang": "zu",
+      "ownRecording": true,
+      "currentPlaylistDefault": "zu",
+      "plannedDefault": "zu"
+    },
+    {
+      "moduleId": "water-harvesting",
+      "appLang": "st",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "water-harvesting",
+      "appLang": "ve",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "water-harvesting",
+      "appLang": "ts",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "soil-health",
+      "appLang": "en",
+      "ownRecording": true,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": "en"
+    },
+    {
+      "moduleId": "soil-health",
+      "appLang": "zu",
+      "ownRecording": true,
+      "currentPlaylistDefault": "zu",
+      "plannedDefault": "zu"
+    },
+    {
+      "moduleId": "soil-health",
+      "appLang": "st",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "soil-health",
+      "appLang": "ve",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "soil-health",
+      "appLang": "ts",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "appLang": "en",
+      "ownRecording": true,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": "en"
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "appLang": "zu",
+      "ownRecording": true,
+      "currentPlaylistDefault": "zu",
+      "plannedDefault": "zu"
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "appLang": "st",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "appLang": "ve",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "appLang": "ts",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "plant-guilds",
+      "appLang": "en",
+      "ownRecording": true,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": "en"
+    },
+    {
+      "moduleId": "plant-guilds",
+      "appLang": "zu",
+      "ownRecording": true,
+      "currentPlaylistDefault": "zu",
+      "plannedDefault": "zu"
+    },
+    {
+      "moduleId": "plant-guilds",
+      "appLang": "st",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "plant-guilds",
+      "appLang": "ve",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "plant-guilds",
+      "appLang": "ts",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "food-forest",
+      "appLang": "en",
+      "ownRecording": true,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": "en"
+    },
+    {
+      "moduleId": "food-forest",
+      "appLang": "zu",
+      "ownRecording": true,
+      "currentPlaylistDefault": "zu",
+      "plannedDefault": "zu"
+    },
+    {
+      "moduleId": "food-forest",
+      "appLang": "st",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "food-forest",
+      "appLang": "ve",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "food-forest",
+      "appLang": "ts",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "small-livestock",
+      "appLang": "en",
+      "ownRecording": true,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": "en"
+    },
+    {
+      "moduleId": "small-livestock",
+      "appLang": "zu",
+      "ownRecording": true,
+      "currentPlaylistDefault": "zu",
+      "plannedDefault": "zu"
+    },
+    {
+      "moduleId": "small-livestock",
+      "appLang": "st",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "small-livestock",
+      "appLang": "ve",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "small-livestock",
+      "appLang": "ts",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "market-community",
+      "appLang": "en",
+      "ownRecording": true,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": "en"
+    },
+    {
+      "moduleId": "market-community",
+      "appLang": "zu",
+      "ownRecording": true,
+      "currentPlaylistDefault": "zu",
+      "plannedDefault": "zu"
+    },
+    {
+      "moduleId": "market-community",
+      "appLang": "st",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "market-community",
+      "appLang": "ve",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    },
+    {
+      "moduleId": "market-community",
+      "appLang": "ts",
+      "ownRecording": false,
+      "currentPlaylistDefault": "en",
+      "plannedDefault": null
+    }
+  ],
+  "sesothoIntroClips": [
+    {
+      "slide": 1,
+      "url": "/course-audio/intro-permaculture/st/slide-01.mp3",
+      "bytes": 283628,
+      "sha256": "e6126d03971fc957eb8465625e6c1cbad9653b8cfa9c06a8fc364b640eb426cb"
+    },
+    {
+      "slide": 2,
+      "url": "/course-audio/intro-permaculture/st/slide-02.mp3",
+      "bytes": 255980,
+      "sha256": "852d9d98894ba4466145433f620a8898450c2cdd5c813f5cb7956b722b9a783b"
+    },
+    {
+      "slide": 3,
+      "url": "/course-audio/intro-permaculture/st/slide-03.mp3",
+      "bytes": 245804,
+      "sha256": "4b870e2ea0eb2501ebc2e6f2c6ac9874edb3ed47c5b701287e36146f80ebe0f4"
+    },
+    {
+      "slide": 4,
+      "url": "/course-audio/intro-permaculture/st/slide-04.mp3",
+      "bytes": 239660,
+      "sha256": "767a4f3a50ba255c7a468ae05986f9544e69dfab7bc35f5e571ddaa3017c3a2e"
+    },
+    {
+      "slide": 5,
+      "url": "/course-audio/intro-permaculture/st/slide-05.mp3",
+      "bytes": 226028,
+      "sha256": "24f8a79fd1aa23799957968385c2e22d4202364fc9b8d9bb2b34100182a340b5"
+    },
+    {
+      "slide": 6,
+      "url": "/course-audio/intro-permaculture/st/slide-06.mp3",
+      "bytes": 231788,
+      "sha256": "f0fe5f1c8b8700321a56aa5f081e1afe0ae28094926c6fcd56e7ac88e15a07cd"
+    },
+    {
+      "slide": 7,
+      "url": "/course-audio/intro-permaculture/st/slide-07.mp3",
+      "bytes": 257708,
+      "sha256": "4908700e6b6b8b7ac1841716be0c9abd9da4b9d47e235f9bb96cd6459eaa2d35"
+    },
+    {
+      "slide": 8,
+      "url": "/course-audio/intro-permaculture/st/slide-08.mp3",
+      "bytes": 199148,
+      "sha256": "781e1107d13a46f1a75a0282b5f70275b1f4ef54fb5ce3f40b22ca1c390585f6"
+    },
+    {
+      "slide": 9,
+      "url": "/course-audio/intro-permaculture/st/slide-09.mp3",
+      "bytes": 255020,
+      "sha256": "f7430be929f4244e796127abf7e01dc1741933395c957361fd6bf9f5ba9f8243"
+    },
+    {
+      "slide": 10,
+      "url": "/course-audio/intro-permaculture/st/slide-10.mp3",
+      "bytes": 346028,
+      "sha256": "d2f7359238379c1dbe8ee0f168f45c2802d76f3bb64f408dd719f7f70abee5e9"
+    },
+    {
+      "slide": 11,
+      "url": "/course-audio/intro-permaculture/st/slide-11.mp3",
+      "bytes": 244268,
+      "sha256": "182c16cc99390ac6a6f4094540ad069cf871a2c469edda8d6cc74107afd7c279"
+    },
+    {
+      "slide": 12,
+      "url": "/course-audio/intro-permaculture/st/slide-12.mp3",
+      "bytes": 172844,
+      "sha256": "bef2ab756beea6e941455389219dbe131d0a9da64ced8ff07ab72b2b424fe271"
+    },
+    {
+      "slide": 13,
+      "url": "/course-audio/intro-permaculture/st/slide-13.mp3",
+      "bytes": 227180,
+      "sha256": "741918799e5ddd653ad0a4638d4edfe664aeaf40f8329e8f7bced856a94ce80e"
+    },
+    {
+      "slide": 14,
+      "url": "/course-audio/intro-permaculture/st/slide-14.mp3",
+      "bytes": 331820,
+      "sha256": "ee77bce0d1d64cb219771930cc6952794fe54566cd403c5c7e8cdc2ed3b83742"
+    },
+    {
+      "slide": 15,
+      "url": "/course-audio/intro-permaculture/st/slide-15.mp3",
+      "bytes": 255788,
+      "sha256": "e98f413d6e6875fdea5eb272bf89347ff95683efcd31aef2fde21c90bc319bd0"
+    },
+    {
+      "slide": 16,
+      "url": "/course-audio/intro-permaculture/st/slide-16.mp3",
+      "bytes": 161708,
+      "sha256": "2d96297c2a3c073bfd12d95e1086bbf0c82b76396d0a00f4fd56dc54a86a4a10"
+    },
+    {
+      "slide": 17,
+      "url": "/course-audio/intro-permaculture/st/slide-17.mp3",
+      "bytes": 215468,
+      "sha256": "cfc2f59c05ed362256699ad8645f0546a1d5b3574fa65d023a57d10d2442a474"
+    },
+    {
+      "slide": 18,
+      "url": "/course-audio/intro-permaculture/st/slide-18.mp3",
+      "bytes": 234860,
+      "sha256": "85ea7f16de208a83af15c423bbc0f3ca452c605194f621c557243dfd5b333f84"
+    },
+    {
+      "slide": 19,
+      "url": "/course-audio/intro-permaculture/st/slide-19.mp3",
+      "bytes": 226604,
+      "sha256": "95988c9559a92e7fabe49d213f3d3dffdf1f416e3a938997d5430fa9b36781d3"
+    },
+    {
+      "slide": 20,
+      "url": "/course-audio/intro-permaculture/st/slide-20.mp3",
+      "bytes": 242540,
+      "sha256": "f281ce330f09951d197196df8d3c5d09219f32e2e77bba5f69c7f58adc8b37fb"
+    },
+    {
+      "slide": 21,
+      "url": "/course-audio/intro-permaculture/st/slide-21.mp3",
+      "bytes": 145964,
+      "sha256": "91dd1d172982254fa040a0d2b9820226b98b1e016d292c7ef7f5c935ee985bcd"
+    },
+    {
+      "slide": 22,
+      "url": "/course-audio/intro-permaculture/st/slide-22.mp3",
+      "bytes": 182828,
+      "sha256": "38a4980a865fbde9541176d1d4d42eac0c4699448a7026c21c4fd8294d508cd6"
+    }
+  ]
+}

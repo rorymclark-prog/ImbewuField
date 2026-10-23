@@ -77,10 +77,13 @@ test('/funder All tools is unchanged: still every original tab, in its original 
   }
 });
 
-test('the funder BrandLogo no longer passes the ignored icon prop, and the Portfolio map link is a next/link Link', () => {
+test('the funder header no longer passes the ignored BrandLogo icon prop, and the Portfolio map link is a next/link Link', () => {
   const src = funder();
   assert.doesNotMatch(src, /<BrandLogo icon="🏛"\s*\/>/, 'BrandLogo still receives the icon prop it silently ignores');
-  assert.match(src, /<BrandLogo\s*\/>/, 'BrandLogo is no longer rendered');
+  // desk-06: BrandLogo moved into the shared components/layout/AppHeader.tsx that /funder now
+  // renders instead of assembling its own header — see AppHeader's own test coverage for that.
+  assert.match(src, /import AppHeader from '@\/components\/layout\/AppHeader'/, 'AppHeader is gone');
+  assert.match(src, /<AppHeader\b/, 'AppHeader is no longer rendered');
   assert.doesNotMatch(src, /<a\s+href="\/network"/, 'the Portfolio map link is still a plain <a>, not next/link Link');
   assert.match(src, /<Link\s+href="\/network"/, 'the Portfolio map link is no longer a next/link Link');
 });

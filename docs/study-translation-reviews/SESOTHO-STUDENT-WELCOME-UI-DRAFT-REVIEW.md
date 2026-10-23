@@ -8,7 +8,7 @@
 | --- | --- | --- |
 | `studentAppGuidesHeading` | Practical app guides | Ditataiso tse sebetsang tsa app |
 | `studentAppGuidesTitle` | Using ImbewuField | Ho sebedisa ImbewuField |
-| `studentOpenDesignStudio` | Open Design Studio | Bula Design Studio |
+| `studentOpenDesignStudio` | Open design studio | Bula Design Studio |
 | `welcomeShowExample` | Show me an example first | Mpontshe mohlala pele |
 
 The notice source is exactly: “This translation is an AI draft. A fluent Sesotho speaker has not checked it.” Its Sesotho wording is not being represented as human-reviewed.

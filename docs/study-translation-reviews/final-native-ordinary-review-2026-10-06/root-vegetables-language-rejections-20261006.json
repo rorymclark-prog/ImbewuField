@@ -1,0 +1,117 @@
+{
+  "date": "2026-10-06",
+  "reviewedBase": "2731fe76f2e8e7d1bc9a0be0dce66be497904401",
+  "scope": "Root challenge to six non-L4 Vegetables proposals; independent language supplement requested for all fifteen non-L4 fields",
+  "noLearnerWiring": true,
+  "noFluentApproval": true,
+  "fields": [
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "infographicAlt",
+        "candidateIndexes": [
+          27
+        ]
+      },
+      "currentTarget": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "sourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "rejectedProposal": "A raised bed ine ya vha na vhuphara ha about 1.2 metres, i re na paths nga matungo mavhili, uri muthu a swike vhukati a tshi bva kha thungo iṅwe na iṅwe a sa athu u vhuya a ima kha mavu ane a khou limiwa.",
+      "priorVerdict": "accept",
+      "rootDisposition": "hold current wording; no application",
+      "reason": "Never standing on growing soil must not become not-yet standing; recheck before any alt application."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "body.paragraph[14]",
+        "candidateIndexes": [
+          30
+        ]
+      },
+      "currentTarget": "Beans dzi gonya maize, and store as protein.",
+      "sourceEnglish": "Beans climb the maize, and store as protein.",
+      "rejectedProposal": "Beans dzi gonya maize, nahone dzi vhulunga protein.",
+      "priorVerdict": "accept",
+      "rootDisposition": "hold current wording; no application",
+      "reason": "Store AS protein food role must not become store protein; retain exact ordinary clause until repaired."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "infographicAlt",
+        "candidateIndexes": [
+          32
+        ]
+      },
+      "currentTarget": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "sourceEnglish": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "rejectedProposal": "One bed eka tinguva tinharhu: ximilana lexi hatlisaka ku kula xa tshoveriwa, kutani ku byariwa swin'wana kusuhi na ximilana lexi kulaka hi ku nonoka lexi ha ka xi ya xi kula, leswaku bed yi nga tshuki yi sala yi nga ri na swimilana.",
+      "priorVerdict": "accept",
+      "rootDisposition": "hold current wording; no application",
+      "reason": "Rejected language identity: intended Tshivenda proposal is Xitsonga prose."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "body.paragraph[14]",
+        "candidateIndexes": [
+          36
+        ]
+      },
+      "currentTarget": "Beans ti khandziya maize, and store as protein.",
+      "sourceEnglish": "Beans climb the maize, and store as protein.",
+      "rejectedProposal": "Beans ti khandziya maize, naswona ti hlayisa protein.",
+      "priorVerdict": "accept",
+      "rootDisposition": "hold current wording; no application",
+      "reason": "Store AS protein food role must not become store protein; retain exact ordinary clause until repaired."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "infographicAlt",
+        "candidateIndexes": [
+          38
+        ]
+      },
+      "currentTarget": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "sourceEnglish": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "rejectedProposal": "Bed nthihi eka misimu yinharhu: ximilana lexi hatlisaka ku kula xa tshoveriwa, kutani ku byariwa swin'wana kusuhi na ximilana lexi kulaka hi ku nonoka lexi ha ka xi kula, leswaku bed yi nga tshuki yi sala yi nga ri na swimilana.",
+      "priorVerdict": "accept",
+      "rootDisposition": "hold current wording; no application",
+      "reason": "Rejected mixed language: Tshivenda nthihi in intended Xitsonga; seasons meaning also needs repair."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l3",
+        "fieldLocator": "title",
+        "candidateIndexes": [
+          41
+        ]
+      },
+      "currentTarget": "Staple Crops: Maize, Beans, and Root Vegetables",
+      "sourceEnglish": "Staple Crops: Maize, Beans, and Root Vegetables",
+      "rejectedProposal": "Zwibyariwa zwa swakudya swa nkoka: Maize, Beans, and Root Vegetables",
+      "priorVerdict": "accept",
+      "rootDisposition": "hold current wording; no application",
+      "reason": "Rejected language identity: intended Tshivenda title carries Xitsonga swakudya swa nkoka."
+    }
+  ]
+}

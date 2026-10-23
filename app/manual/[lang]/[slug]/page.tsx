@@ -30,7 +30,7 @@ function load(params: { lang: string; slug: string }) {
 export function generateMetadata({ params }: { params: { lang: string; slug: string } }): Metadata {
   const chapter = load(params);
   if (!chapter) return {};
-  return { title: `${chapterTitle(chapter.markdown)} · ${manualUi(chapter.lang).title}` };
+  return { title: `${chapterTitle(chapter.markdown)} — ${manualUi(chapter.lang).title} — ImbewuField` };
 }
 
 const navLink = {

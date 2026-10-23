@@ -1,0 +1,85 @@
+{
+  "speciesId": "ficus-carica",
+  "commonName": "Fig",
+  "botanicalName": "Ficus carica",
+  "harvestMonths": [
+    {
+      "region": "Western Cape (Breede River valley, near Worcester)",
+      "months": [1, 2, 3, 4, 5],
+      "evidence": {
+        "quote": "Common type figs produce their main crop from buds in the axils of leaves on the current season’s growth (McEachern, 1996; Flaishman et al., 2008).  Harvest may start in the middle of summer and can last several months, until the onset of winter.",
+        "url": "https://www.figdatabase.com/uploads/Tree%20Training%20And%20Managing%20Complexcity%20and%20Yield%20In%20Figs.pdf",
+        "doc": "Gerber, H.J. (2010) 'Tree training and managing complexity and yield in fig (Ficus carica L.)', MSc(Agric) thesis, University of Stellenbosch",
+        "page": 38
+      },
+      "notes": "Trial orchard: Breede River valley near Worcester, Western Cape (33°34'S, 19°16'E), Mediterranean-type climate, common-type cultivars 'Bourjasotte Noire', 'Col de Damme Noire', 'Noire de Caromb'. 'Middle of summer' in the Southern Hemisphere is approx. January and 'onset of winter' is approx. May/June, so months [1-5] are an approximation of the stated wording, not an exact calendar range given by the source."
+    },
+    {
+      "region": "Prince Albert / Weltevrede, Western Cape Karoo — Adams cultivar, including early figs",
+      "months": [12, 1, 2, 3, 4, 5],
+      "evidence": {
+        "quote": "harvested from early December (early figs) to May",
+        "url": "https://www.elsenburg.com/wp-content/uploads/2022/10/The-Fig-in-South-Africa-fin-print-10102022.pdf",
+        "doc": "J. de V. Lötter, The Fig in South Africa (2014), Western Cape Department of Agriculture",
+        "page": 97
+      },
+      "notes": "Published account of irrigated, open-vase Adams fig trees at Weltevrede, Prince Albert, planted 7 x 8 m. The interval includes early figs and is not the picking window of every fig tree or a warm KZN forecast. PDF p.97 corresponds to printed p.89."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not explicitly stated by the source found. Gerber (2010) studied a '4-year-old commercial orchard' (planted October 2004, studied in the 2008/2009 season) that was already bearing measurable fruit per shoot, which is consistent with, but does not establish, an exact years-to-first-crop figure."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found. Searched ARC-Infruitec-Nietvoorbij site, PROTA4U, and general search; no SA-specific figure located."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": {
+      "quote": "Full bearing trees. Average annual yield/tree/kg.",
+      "url": "https://www.elsenburg.com/wp-content/uploads/2022/10/The-Fig-in-South-Africa-fin-print-10102022.pdf",
+      "doc": "J. de V. Lötter, The Fig in South Africa (2014), Table 3; printed p.97",
+      "page": 105
+    },
+    "notes": "ARC Infruitec Citrusdal research-farm 1990 trial reports direct annual kg/tree by cultivar and leaf age. At 10th leaf: Kadota 23.5, White Genoa 22.6, Calimyrna 16.5. At 7th leaf: Tena 12.1, Black Mission 6.8, Conadria 3.5, Ephesus 20.6, Excell 15.2, Deanna 59.0, Kadota 24.3. The book warns the values are comparative rather than absolute; spacing is not supplied in this table. No generic fig yield or between-age growth curve is inferred."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": {
+      "quote": "Fig buds require little or no winter chilling to break endo-dormancy (Ferguson et al., 1990) and growth resumes in early spring (Flaishman et al., 2008).",
+      "url": "https://www.figdatabase.com/uploads/Tree%20Training%20And%20Managing%20Complexcity%20and%20Yield%20In%20Figs.pdf",
+      "doc": "Gerber, H.J. (2010) 'Tree training and managing complexity and yield in fig (Ficus carica L.)', MSc(Agric) thesis, University of Stellenbosch",
+      "page": 38
+    },
+    "notes": "no/little chill requirement, per source. Separately, the same trial site (Worcester, Western Cape) itself accumulated 541.5 chill units (1 May-31 Aug 2008, Daily Positive Chill Unit model) — that is ambient regional chill received, not a stated requirement of the fig tree, so it was not used as the value."
+  },
+  "pollination": {
+    "value": "self-fertile",
+    "evidence": {
+      "quote": "The common fig, to which ‘Bourjasotte Noire’, ‘Col de Dame Noire’ and ‘Noire de Caromb’ belong, develops parthenocarpically and usually does not require the stimulus of pollination (Condit, 1955).",
+      "url": "https://www.figdatabase.com/uploads/Tree%20Training%20And%20Managing%20Complexcity%20and%20Yield%20In%20Figs.pdf",
+      "doc": "Gerber, H.J. (2010) 'Tree training and managing complexity and yield in fig (Ficus carica L.)', MSc(Agric) thesis, University of Stellenbosch",
+      "page": 13
+    },
+    "notes": "More precisely 'parthenocarpic' (fruit sets without any pollination at all, i.e. requires neither a wasp nor cross-pollen) for the common-type fig cultivars grown commercially in South Africa; mapped to the closest schema option 'self-fertile'. Other fig types (Smyrna, Capri, San Pedro) do need pollination/caprification but are not the type commercially grown in SA per this source."
+  },
+  "supplementaryReferences": [
+    {
+      "title": "Fig output by cultivar and leaf age — comparative Citrusdal trial",
+      "quote": "Full bearing trees. Average annual yield/tree/kg.",
+      "url": "https://www.elsenburg.com/wp-content/uploads/2022/10/The-Fig-in-South-Africa-fin-print-10102022.pdf",
+      "doc": "J. de V. Lötter (2014), The Fig in South Africa, Table 3, printed p.97",
+      "page": 105,
+      "note": "ARC Infruitec Citrusdal, 1990. 10th leaf: Kadota 23.5, White Genoa 22.6, Calimyrna 16.5 kg/tree/year. 7th leaf: Tena 12.1, Black Mission 6.8, Conadria 3.5, Ephesus 20.6, Excell 15.2, Deanna 59.0, Kadota 24.3 kg/tree/year. The source calls these comparative, not absolute. Different cultivars and orchard groups do not establish a universal age-yield ramp."
+    }
+  ],
+  "harvestProduct": "fruit",
+  "gaps": [
+    "Years to first crop and years to full bearing not found in any primary/authoritative SA source checked (ARC-Infruitec-Nietvoorbij site had no fig-specific guideline page findable; PROTA4U not reachable via search for a SA-specific figure).",
+    "DALRRD/nda.gov.za and other .gov.za domains were unreachable from this environment (connection blocked) for a direct government production-guideline cross-check.",
+    "11 October 2026: cultivar- and leaf-age-specific kg/tree recovered from Lötter (2014), Table 3; generic first/full age and a matched local annual yield curve remain unresolved. An explicit Adams/Prince Albert December–May interval is now retained, distinct from the approximate Worcester reference."
+  ]
+}

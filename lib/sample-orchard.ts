@@ -16,12 +16,12 @@ export const SAMPLE_ORCHARD = [
 });
 
 export function sampleOrchardRecords(profileId: string, iso: string, suffix = 'current', selection = SAMPLE_ORCHARD) {
-  const production: ProductionLog[] = selection.map(row => ({
+  const production: (ProductionLog & { kg: number })[] = selection.map(row => ({
     id: `${profileId}-orchard-picked-${suffix}-${row.key}`, profile_id: profileId,
     garden_id: null, crop: row.crop, kg: row.pickedKg, photo_url: null,
     logged_at: iso, created_at: iso,
   }));
-  const sales: SalesLog[] = selection.map(row => ({
+  const sales: (SalesLog & { kg: number })[] = selection.map(row => ({
     id: `${profileId}-orchard-sold-${suffix}-${row.key}`, profile_id: profileId,
     garden_id: null, crop: row.crop, kg: row.soldKg, amount: row.soldKg * row.price,
     buyer: 'Mkuze produce stall', sold_at: iso, created_at: iso, enterprise: 'other',

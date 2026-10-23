@@ -1,0 +1,105 @@
+{
+  "speciesId": "musa-acuminata-aaa-group",
+  "commonName": "Banana (Dwarf Cavendish, Williams)",
+  "botanicalName": "Musa acuminata AAA",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general — Mpumalanga/Limpopo lowveld and KZN coast)",
+      "months": [],
+      "evidence": {
+        "quote": "Seasonal Fluctuation in Supply and Price. ... It is evident that the highest paying pools are from January to May. Supplies of first grade fruit during this period are lower, due to increased downgrading from thrips, mites, mechanical damage and undersized fruit, as well as generally lower yields resulting from «November dump». However, demand for bananas is highest during these months.",
+        "url": "https://revues.cirad.fr/index.php/fruits/article/download/34912/35666",
+        "doc": "'The structure and statistics of the banana industry in South Africa', Fruits (CIRAD/IRFA journal), vol. 41, n°2, 1986, citing South African Banana Board statistics",
+        "page": 3
+      },
+      "notes": "Withdrawn year-round month claim: the quoted national supply and price passage does not establish a local all-year picking season. The unverifiedMonths list records the rejected proposal for audit history; it must not populate a calendar. Confirm local picking months for the planted cultivar, mat ages and water conditions.",
+      "unverifiedMonths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": [
+      1.0833333333333333,
+      1.6666666666666667
+    ],
+    "evidence": {
+      "quote": "time ranges from 13 to 20 months",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN, Bearing age",
+      "page": 8
+    },
+    "notes": "KZN DARD explicitly states the planting-to-harvest and harvest-to-harvest range. Converted months to years (13/12 to 20/12). This is not a dated forecast or an annual all-month harvest window."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Banana is not tree-structured but a perennial herb grown as a continuous mat/ratoon system (mother plant replaced each cycle by a selected follower sucker), so there is no widely-quantified multi-year ramp to 'full bearing' analogous to a fruit tree. No SA source found stating a specific number of years/cycles until the ratoon system reaches its stable/mature yield, so left null rather than guessed."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Withdrawn 11 October 2026: the previous 19–22.2 kg/plant was derived from a fertiliser programme's 40 t/ha target and incorrectly described as a 12–14-month crop. The directly stated KZN annual area yields and cultivar planting densities are retained as separate reference facts; plant-to-harvest and harvest-to-harvest actually span 13–20 months. No measured annual per-mat age schedule is supplied for a household circle."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": {
+      "quote": "The optimum mean temperature ((max + min) ÷ 2) range for leaf development and bunch initiation and growth is between 22° C and 31° C. Growth ceases at a mean daily temperature of 14° C and leaf chlorophyll destruction takes place at an actual temperature of 6° C, with leaf die back at 0° C.",
+      "url": "https://www.kzndard.gov.za/images/Documents/Research%20and%20Technology%20Development%20Services/Publications/RESEARCH%20REPORTS/BananasinKwaZulu-Natal.pdf",
+      "doc": "Lagerwall, G., 'Bananas in KwaZulu-Natal', KwaZulu-Natal Dept. of Agriculture and Rural Development, Research Report",
+      "page": 1
+    },
+    "notes": "Banana has no winter-chill requirement for flowering (it is tropical/evergreen); the source instead frames cold as a growth-limiting/damaging factor (growth stops below 14°C mean, chlorophyll damage at 6°C actual, leaf die-back at 0°C) rather than a chill accumulation banana needs to fruit. Left value null rather than 0 because the source does not use chill-unit terminology, but the note captures the actual (inverse) temperature sensitivity."
+  },
+  "pollination": {
+    "value": "self-fertile",
+    "evidence": {
+      "quote": "parthenocarpic seedless fruits that develop in the absence of pollination ... the ability to produce a fruit in the absence of pollination",
+      "url": "https://www.promusa.org/Domestication+of+the+banana",
+      "doc": "ProMusa (Bioversity International-affiliated global banana knowledge platform), 'Domestication of the banana'",
+      "page": null
+    },
+    "notes": "Not South Africa-specific, but this is a fixed genetic trait of the edible triploid (AAA group) Cavendish/Williams/Dwarf Cavendish clones grown in SA, not something that varies by region: these cultivars are parthenocarpic and set seedless fruit without any pollination at all (stronger than ordinary self-fertility). 'self-fertile' is the closest available enum value; strictly no pollen transfer of any kind (self or cross) is required for fruit set."
+  },
+  "harvestProduct": "fruit (bunch of bananas)",
+  "supplementaryReferences": [
+    {
+      "title": "Annual plantation output",
+      "quote": "Yields (t/ha/annum) Conservative : 20 to 25 Average : 25 to 30 Good : 40+",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN (2006), Bananas: Yields",
+      "page": 9,
+      "note": "KZN plantation reference per year: conservative 20–25 t/ha, average 25–30 t/ha, good 40+ t/ha. This is annual area production; it is not the weight of one bunch or a measured age-yield curve for three plants in a banana circle."
+    },
+    {
+      "title": "Cultivar, planting and crop cycle",
+      "quote": "Plant to harvest, or harvest to harvest, time ranges from 13 to 20 months, depending mainly on prevailing temperatures and cultivar. ... ‘Williams’ ... (1 800-2000 plants/ha) ... ‘Grand Nain’ ... (2 200 plants/ha) ... ‘Chinese Cavendish’ ... (2 500 plants/ha)",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN (2006), Bananas: Bearing age and Spacing",
+      "page": 8,
+      "note": "The KZN guide gives 13–20 months for both the first planting-to-harvest cycle and subsequent harvest-to-harvest cycles. It lists different commercial densities for Williams, Grand Nain and Chinese Cavendish. A banana circle counts as three planted bananas here; replacement followers are stages of those mats, not extra mapped trees or guaranteed year-round supply."
+    }
+  ],
+  "gaps": [
+    "11 October 2026: verified PDF pp8–9 visually. Replaced the misleading fertiliser-target per-plant figure with directly stated annual hectare evidence, retained cycle length and cultivar densities, and kept local picking months unconfirmed. National market availability does not establish all-year harvest for one household circle.",
+    "Could not access DALRRD/nda.gov.za 'Banana Market Value Chain Profile' (2012 or 2020 editions) — nda.gov.za connection was reset and webapps1.daff.gov.za failed DNS resolution in this environment — which likely has current SA-specific yield/ha, planted area and harvest calendar data.",
+    "No SA-specific source found for years-to-full-bearing of a banana ratoon system, or for a numeric chilling/cold-damage threshold expressed as a 'chill unit' count (only qualitative temperature thresholds were found, see chillUnits notes).",
+    "Pollination evidence is a global banana-biology source (ProMusa), not a South African one specifically, since the trait is intrinsic to the triploid cultivar genetics rather than a regional growing condition; searched ARC-ITSC and KZN DARD documents directly but neither discussed pollination/seedlessness.",
+    "Superseded 11 October 2026: the former fertiliser-target per-plant conversion was withdrawn. Direct annual hectare outputs and cultivar-specific planting densities are retained separately; no household per-plant annual forecast is verified.",
+    "Editor review 2026-09-28: yearsToFirstCrop withdrawn — inferred from the timing of a fertiliser calendar; the leaflet never states when the first bunch is cut.",
+    "Editor review 2026-09-28: harvest window emptied — no quoted South African source states a year-round harvest; needs a DALRRD banana value-chain profile or ARC-ITSC statement.",
+    "2026-10-04: First-crop reference updated after retrieving and inspecting the KZN DARD PDF; regional conditions retained in the note."
+  ],
+  "householdFoodStatus": "confirmed-food"
+}

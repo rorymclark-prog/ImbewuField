@@ -135,3 +135,37 @@ Also removed as page furniture: the Lancaster "Reproduced with permission… www
 - **Excellent Development figures** (40 million litres, more than 1 000 people, 97–99% continues downstream, 1–4 seasons) are the charity's own estimates for a large dam. They are attributed to it in the text rather than stated as general facts.
 - **Lesotho water law** (for the Bethel sand-dam example and Lesotho readers): not researched. Readers are told to ask their national water authority.
 - **Nile tilapia / carp NEMBA categories:** not checked individually; the text gives a general warning that some alien fish are listed and need permits.
+
+## Second pass (27 Sep 2026)
+
+Rewrite to `research/manual/REWRITE.md` (9,196 → 5,742 words). WebSearch only (WebFetch not used); claims checked against search-result extracts.
+
+### "Could not verify" items
+
+| Item | Result | Source |
+|---|---|---|
+| 25 L/person/day (tank example) | **Verified.** SA Free Basic Water is 6 kL per household per month, calculated as 25 L per person per day for a household of eight. Kept as a planning figure. | https://wisa.org.za/wp-content/uploads/2020/02/WISA-FS042.pdf ; https://www.citizenhelp.co.za/utilities/free-basic-water-south-africa |
+| Bare packed soil 0.3–0.6 | **Verified** (0.30–0.60 smooth, 0.20–0.50 rough, rational-method tables). Kept. | http://abe-research.illinois.edu/courses/tsm352/lectures/runoffcoeffs.html |
+| Mulched bed below 0.1 | **Cut** from the table (no source found). The text now says only that covered ground lets most rain soak in. | — |
+| Sprinkler efficiency 70–85% | **Verified and changed** to "roughly 75% to 85%". SABI Agricultural Norms (2021) give drip 90–95%, permanent sprinklers 75–90%, micro-sprinklers 80–85%; a general figure of 75% average for sprinklers is widely quoted. Drip kept at "about 90%". | https://sabi.co.za/wp-content/uploads/2023/02/SABI-Norms-Agricultural-2021.pdf |
+| Impact-sprinkler throw ("often 10 m or more") | **Generalised** to "a wide circle". No pressure value given. | — |
+| First-flush diverter volume | Still no number in the chapter. Search found manufacturer rules of thumb (0.5–2 L per m² of roof, Australian suppliers) but no SA guideline, so none was added. | https://rainharvesting.com.au/products/first-flush-diverters/first-flush-post-wall/ |
+| Swale/basin set-back 3 m from buildings | **Verified.** US soil-conservation rain-garden guidance puts infiltration features at least 10 ft (≈3 m) from foundations and never over a septic system. Kept. | https://www.warrencountyny.gov/sites/default/files/swcd/Rain%20Garden%20Poster.pdf |
+| A-frame calibration by reversing the legs | **Verified.** Mark, reverse the legs on the same spots, mark again; level is halfway. Moved to "Try it". | https://amanziforfood.co.za/wp-content/uploads/2015/01/1.A-FRAME-using-it.pdf ; https://www.echocommunity.org/en/resources/1e97162c-712a-43ef-a21c-86e65c8d2925 ; https://permies.com/t/34007/permaculture/Frame-Calibration |
+| Bleach dose | Still left out. The chapter now says only "boil it" (the "as your clinic advises" line moved to the endnote). | — |
+| Greywater distance from wells | Still no number ("never near, or uphill of"). | — |
+| Excellent Development figures (40 million L, >1 000 people, 97–99%, 1–4 seasons) | **Re-confirmed** in search extracts and kept, attributed to the charity. | https://www.sanddamsworldwide.org.uk/what-is-a-sand-dam ; https://www.ingenia.org.uk/articles/securing-water-supplies-with-sand-dams/ |
+| Lesotho water law | Out of the chapter; moved to the endnote. | — |
+| Tilapia / carp NEMBA categories | Fish-species warning removed from the chapter (endnote). No species named. | — |
+| Fig 41, 40 mm vs 45 mm | Unchanged: the worked pond example uses 40 mm as a teaching figure. Note that the figure caption in `content/manual/figures.json` (`07-pond-filled`) says 45 mm; left for Rory (story file). | — |
+
+Counts: 7 verified (one of them with the figure changed), 2 cut or generalised to no number (mulched bed, impact throw), 4 left out of the chapter / moved to the endnote, 1 unchanged (Fig 41).
+
+### Other changes in this pass
+
+- All legal text (National Water Act Schedule 1, 2016 General Authorisation, s21(c)/(i) watercourse work, NEMA 10 m³, dam-safety registration, fish permits, by-laws, "get advice" lines) moved to `research/manual/rewrite/07-earthworks-and-water-endnote.md`.
+- All four Safety boxes and the amadumbe Note removed. Kept inside the text, plainly: boil roof water before drinking; tight, screened tank lids; slope pond sides as you dig, keep people away from machines, fence ponds and give one gently sloping side; no washing or wading in pond water where bilharzia occurs; fresh manure only at the bottom of a sheet-mulch bed and planting only into compost; greywater never on morogo or root crops eaten raw, never toilet or nappy water, never near or uphill of a well, borehole or spring.
+- Legume trees on the berm: added *Vachellia* species as the example and changed "which feed nitrogen" to "many of which feed nitrogen" (not every legume fixes nitrogen).
+- Amadumbe: SAJB 2025 review confirms it is high risk in SA and spreads along slow-flowing water courses; the chapter keeps "grow it away from streams and wetlands" without legal wording.
+- Greywater table: dishwasher row dropped (merged into kitchen sink). Irrigation comparison table dropped (repeated the text). Micro-jet and impact-sprinkler sub-sections merged into "Sprinklers".
+- Kept the Roosevelt/Hemenway/Fukuoka quotes out (no quote used in this chapter).

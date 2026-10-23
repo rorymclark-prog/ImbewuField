@@ -218,6 +218,22 @@ export default function PitchPage() {
     return () => window.removeEventListener('resize', fit);
   }, []);
 
+  // ux-10/staff-06: below 768px the scaled-down bezel shrinks the 1280×720 deck to a ~370px-wide
+  // slide with 5-8px text — unreadable. A tablet presenter tapping through the deck mid-meeting
+  // (the whole reason slides 4/6 are live iframes, per this file's header comment) is still a
+  // real, wider-than-768px use of the real deck, so this only triggers on phone width, not on
+  // every coarse pointer. Rather than rebuild every slide's fixed-canvas layout as a responsive
+  // phone stack (every slide below assumes the full 1280×720 canvas), this is the track's own
+  // suggested lower-risk alternative: on a narrow screen, show a short "best on a laptop" card
+  // with a direct way to the printed PDF instead of the unreadable bezel.
+  const [phoneFallback, setPhoneFallback] = useState(false);
+  useEffect(() => {
+    const check = () => setPhoneFallback(window.matchMedia('(max-width: 767px)').matches);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
   const go = useCallback((delta: number) => {
     setIdx((i) => Math.max(0, Math.min(SLIDE_COUNT - 1, i + delta)));
   }, []);
@@ -584,6 +600,40 @@ export default function PitchPage() {
     ];
   }, [visited, sampleOk]);
 
+  if (phoneFallback) {
+    return (
+      <div
+        style={{
+          position: 'fixed', inset: 0, display: 'flex', flexDirection: 'column',
+          alignItems: 'center', justifyContent: 'center', gap: 16, padding: 24,
+          background: '#0c1a11', color: '#f2eee1', textAlign: 'center',
+          fontFamily: 'var(--font-sans), system-ui, sans-serif',
+        }}
+      >
+        <div style={{ fontSize: 13, letterSpacing: '0.08em', opacity: 0.7, textTransform: 'uppercase' }}>ImbewuField</div>
+        <h1 style={{ fontSize: 20, fontWeight: 600, margin: 0, maxWidth: 320 }}>Best viewed on a laptop</h1>
+        <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85, maxWidth: 320, margin: 0 }}>
+          This slide deck is laid out for a wide screen. Open it on a laptop or tablet, or get the
+          same deck as a PDF to read or share here.
+        </p>
+        <button
+          type="button"
+          onClick={() => window.print()}
+          style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+            minHeight: 44, padding: '0 20px', borderRadius: 10, border: 'none',
+            background: '#f2eee1', color: '#0c1a11', fontSize: 14, fontWeight: 600, cursor: 'pointer',
+          }}
+        >
+          Save / print as PDF
+        </button>
+        <a href="/partners" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: 13, color: 'rgba(242,238,225,0.7)', textDecoration: 'underline' }}>
+          Or read the programme overview instead →
+        </a>
+      </div>
+    );
+  }
+
   return (
     <div className="pitch-stage">
       <div
@@ -949,6 +999,11 @@ export default function PitchPage() {
           bottom: 20px;
           opacity: 0.55;
         }
+        /* staff-06: keyboard hints mean nothing on a touchscreen (a tablet presenter still gets
+           the real deck above 767px — see phoneFallback — just without this line). */
+        @media (pointer: coarse) {
+          .hints { display: none; }
+        }
         .navbtns {
           right: 18px;
           bottom: 18px;
@@ -965,7 +1020,7 @@ export default function PitchPage() {
           font-size: 14px;
           font-family: inherit;
           cursor: pointer;
-          min-height: 40px;
+          min-height: 44px;
         }
         .navbtns button:disabled {
           opacity: 0.35;

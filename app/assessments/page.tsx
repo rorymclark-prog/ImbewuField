@@ -1,14 +1,10 @@
 'use client';
 
-import BackButton from '@/components/BackButton';
-import BrandLogo from '@/components/BrandLogo';
+import AppHeader from '@/components/layout/AppHeader';
 import MelDashboard from '@/components/MelDashboard';
-import MenuButton from '@/components/MenuButton';
-import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import { useLanguage } from '@/lib/i18n';
-import { APP_HEADER_STYLE } from '@/lib/app-header';
 
 const tr = (lang: string, en: string, zu: string) => lang === 'zu' ? zu : en;
 
@@ -18,21 +14,15 @@ const tr = (lang: string, en: string, zu: string) => lang === 'zu' ? zu : en;
 export default function AssessmentsPage() {
   const { lang } = useLanguage();
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
-        <MenuButton />
-        <BackButton fallback="/home" />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{tr(lang, 'Assessments', 'Ukuhlola')}</span>
-        <div className="flex-1" />
-        <LessonLink id="assessments:overview" label={tr(lang, 'Learn', 'Funda')} />
-        <SettingsButton />
-      </header>
-      <main className="flex-1 overflow-y-auto" style={{ paddingBottom: 80 }}>
+    <div className="flex flex-col overflow-hidden h-[100dvh] lg:h-auto lg:min-h-0 lg:overflow-visible" style={{ background: 'var(--bg-0)' }}>
+      <AppHeader
+        title={tr(lang, 'Assessments', 'Ukuhlola')}
+        right={<LessonLink id="assessments:overview" label={tr(lang, 'Learn', 'Funda')} />}
+      />
+      <main className="flex-1 overflow-y-auto lg:flex-none lg:overflow-visible" style={{ paddingBottom: 'var(--lima-fab-clearance, 96px)' }}>
         <MelDashboard />
       </main>
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

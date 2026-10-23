@@ -1,12 +1,16 @@
 // Auto-split from the former monolithic lib/i18n.tsx (bundle diet, task #6) — mechanical
 // extraction of this locale's existing key/value pairs, no translated text touched. Loaded
 // on demand via loadLocale() in lib/i18n.tsx, not bundled into every page's initial JS.
-import { DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
+import { CHAT_PANEL_ENGLISH_PENDING, DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, NETWORK_FAILURE_ENGLISH_PENDING, PHOTO_UPLOAD_ENGLISH_PENDING, PROFILE_SHEET_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
 
 const dict: Dict = {
   ...DESIGN_STUDIO_ENGLISH_PENDING,
   ...JOURNAL_ENGLISH_PENDING,
   ...LIMA_ENGLISH_PENDING,
+  ...CHAT_PANEL_ENGLISH_PENDING,
+  ...PHOTO_UPLOAD_ENGLISH_PENDING,
+  ...PROFILE_SHEET_ENGLISH_PENDING,
+  ...NETWORK_FAILURE_ENGLISH_PENDING,
   ...MENTOR_ENGLISH_PENDING,
   tagline: 'Buhlakani be-Permaculture',
   welcomeTitle: 'Wemukelekile ku-ImbewuField',
@@ -20,7 +24,6 @@ const dict: Dict = {
   language: 'Lulwimi',
   tabHome: 'Likhaya',
   tabMap: 'Imephu',
-  tabFinance: 'Timali',
   tabAccount: 'I-akhawunti',
   toolbarMinButton: 'Tfola umhlaba wakho',
   toolbarHeader: 'Tfola umhlaba wakho',
@@ -105,7 +108,7 @@ const dict: Dict = {
   drawGpsButton: 'GPS',
   drawGpsTitle: 'Yima ekhoneni lemhlaba wakho bese utsintsa kute ulibeke lapha',
   drawAddCornerButton: 'Ngeta likhona',
-  drawFinishButton: 'Cedza',
+  drawFinishButton: 'Kwentiwe',
   waterDropHint: 'Hambisa kuyo indzawo, bese utsintsa Beka lapha',
   waterDropCancelButton: 'Khansela',
   waterDropPlaceButton: 'Beka lapha',
@@ -231,7 +234,7 @@ const dict: Dict = {
   organicCarbonOk: 'Iyemukeleka',
   statBulkDensity: 'Kuminyana kwenhlabatsi',
   bulkDensityCompacted: 'Iciniwe',
-  bulkDensityOk: 'Ilungile',
+  bulkDensityOk: 'Ngiyacondza',
   textureCompositionHeader: 'Kwakheka kweluhlobo lwenhlabatsi',
   textureSand: 'Sihlabatsi',
   textureSilt: 'Ludzaka',
@@ -622,8 +625,6 @@ const dict: Dict = {
   homeSurveyNew: 'Phenyisisa indzawo yentsha',
   homeSurveyDesc: 'Beka i-pin bese Lima ifundze isimo seliphini, inhlabathi namanzi.',
   homeOpenMap: 'Vula imephu',
-  homeQuickFinance: 'Tindzaba tetemali',
-  homeQuickFinanceDesc: 'Imali yengenako netindleko',
   homeQuickStudy: 'Funda',
   homeQuickStudyDesc: 'Kosi ye-permaculture',
   homeQuickContact: 'Xhumana',
@@ -660,11 +661,10 @@ const dict: Dict = {
   navTaskPlanner: 'Umhleli Wemisebenti',
   navGardenSurvey: 'Ukuhlola Ingadi',
   navNGODashboard: 'Ibhodi Le-NGO',
-  navFacilitator: 'Idizayini',
   navMyAccount: 'I-akhawunti Yami',
   navCloseMenu: 'Vala imenyu',
   myRecordsTitle: 'Emarekodi Ami',
-  myRecordsSubtitle: 'Lokho ukutsalako · lokho uthengisako · imiklamo ivela kumphathi wakho',
+  myRecordsSubtitle: 'Lokho ukutsalako · lokho uthengisako · imiklamo ivela kumeluleki wakho',
   myRecordsSignInTitle: 'Ngena ukugcina emarekodi akho',
   myRecordsSignInBody: 'Beka elihlo kulokho ukutsalako nkulokho uthengisako — idatha yakho ihlala nawe.',
   myRecordsSignInButton: 'Yiya ekungeneneni',

@@ -1,0 +1,648 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-06",
+  "readOnly": true,
+  "reviewedInventory": {
+    "path": "/tmp/imbewu-intro-full-ordinary-residual-inventory-20261006.json",
+    "sha256": "c40ed91e8e985dea43188fa24bab5e0d2dd81a869ee8ef631edd390cd84796aa",
+    "baseCommit": "f923c0c330551586587ec6248cb3e0491d176cf6"
+  },
+  "verifiedBaseFileHashes": {
+    "lib/course-modules.ts": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+    "lib/course-translation-drafts-ve.ts": "748b93af41a1c8ac9b7b85131c31f0aa74e49a8723862b1aaf34c7761332b729",
+    "lib/course-translation-drafts-ts.ts": "77fd4d85f17244f5b72adf3714c5accf3a9ec476b6737f4c88935f3b6ff674ab",
+    "lib/course-localization.ts": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+    "docs/narration/intro-permaculture.en.md": "312fce3eb18c46b04d9353eac636c3b66013b7e17d1cf2ce18a1446d2900914d",
+    "docs/narration/intro-permaculture.ve.paired-draft.json": "b933e501e5e77a6e15ab63ae270d16c56552d1cf1e08d927a02cb43a70dfb9d5",
+    "docs/narration/intro-permaculture.ts.paired-draft.json": "10d0f9ede93fc7c323d60dab330b670d4c21b30720e073426598d27f8e444603",
+    "docs/narration/intro-permaculture.st.paired-draft.json": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9"
+  },
+  "bindingAndCoverage": {
+    "all28ProposalRowsReviewed": true,
+    "pairedFramesPerLanguage": 22,
+    "pairedFrameRows": 44,
+    "pairedSourceCurrentCompositionClaimedByInventory": true,
+    "learnerQuestionAndOptionIndicesUnchanged": true,
+    "wholeFullTargetCompositionReviewed": true,
+    "stIntroFilesUnchanged": true,
+    "inventedFrameCount": false,
+    "all28SourceCurrentPairsIndependentlyResolvedAgainstFrozenSnapshots": true,
+    "pairResolutionMethod": "For paired-deck rows, looked up actual slide number and heading/body index, then composed English holds from source and draft segments from target text. For native rows, looked up the exact canonical lesson field and the resolved regional lesson target, including paragraph, key point, question, and option index.",
+    "veTsFramesIndependentlyCounted": {
+      "ve": 22,
+      "ts": 22,
+      "consecutiveIndices": "1–22",
+      "authoredEnglishSlides": 22
+    },
+    "rowSpecificExactCompositionAssertions": {
+      "deck:ts:s18.body[2]": "First and last current sentences are compared exactly; only the middle sentence target is replaced, with plural ti→ma repair.",
+      "native:ts:L3.body[0]": "Final target asserted equal to one replacement of “Eka example leyi,” with “Eka xikombiso lexi,” in exactCurrent."
+    }
+  },
+  "results": [
+    {
+      "id": "deck:ve:s3.heading",
+      "locator": {
+        "slide": 3,
+        "field": "heading"
+      },
+      "exactSource": "Learning Outcomes",
+      "exactCurrent": "Learning Outcomes",
+      "currentStatus": "english-hold",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Mvelelo dza Ngudo",
+      "independentBacktranslation": "Learning outcomes.",
+      "reason": "The phrase preserves the source heading meaning. Semantic recommendation only; not a fluency claim.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Mvelelo dza Ngudo"
+    },
+    {
+      "id": "deck:ve:s7.heading",
+      "locator": {
+        "slide": 7,
+        "field": "heading"
+      },
+      "exactSource": "Watch: One Decision, Three Ethics",
+      "exactCurrent": "Watch: One Decision, Three Ethics",
+      "currentStatus": "english-hold",
+      "independentVerdict": "hold",
+      "finalComposedTarget": "Watch: One Decision, Three Ethics",
+      "independentBacktranslation": "Not independently verified.",
+      "reason": "The proposed wording may shift “watch” toward examine and “ethics” toward conduct/behavior. Keep the exact source heading pending speaker review.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Ṱolisisani: Tsheo Nthihi, Milayo Miraru ya Vhuḓifari"
+    },
+    {
+      "id": "deck:ve:s15.heading",
+      "locator": {
+        "slide": 15,
+        "field": "heading"
+      },
+      "exactSource": "Zones: Organising by How Often You Visit",
+      "exactCurrent": "Zones: Organising by How Often You Visit",
+      "currentStatus": "english-hold",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Zones: U Dzudzanya u Ya nga uri Ni Dalela Lunzhi-lini",
+      "independentBacktranslation": "Zones: organising according to how often you visit.",
+      "reason": "Retains Zones as a formal diagram label and translates the organizing/frequency relation.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Zones: U Dzudzanya u Ya nga uri Ni Dalela Lunzhi-lini"
+    },
+    {
+      "id": "deck:ve:s16.heading",
+      "locator": {
+        "slide": 16,
+        "field": "heading"
+      },
+      "exactSource": "Keep Daily Crops Close",
+      "exactCurrent": "Keep Daily Crops Close",
+      "currentStatus": "english-hold",
+      "independentVerdict": "hold",
+      "finalComposedTarget": "Keep Daily Crops Close",
+      "independentBacktranslation": "Not independently verified.",
+      "reason": "“Zwimela zwa ḓuvha ḽiṅwe na ḽiṅwe” can read as plants of each day, losing daily-use frequency. Do not apply as-is; use a speaker-checked phrase for crops used daily if available.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Vheani Zwimela zwa Ḓuvha ḽiṅwe na ḽiṅwe Tsini"
+    },
+    {
+      "id": "deck:ts:s7.heading",
+      "locator": {
+        "slide": 7,
+        "field": "heading"
+      },
+      "exactSource": "Watch: One Decision, Three Ethics",
+      "exactCurrent": "Watch: One Decision, Three Ethics",
+      "currentStatus": "english-hold",
+      "independentVerdict": "hold",
+      "finalComposedTarget": "Watch: One Decision, Three Ethics",
+      "independentBacktranslation": "Not independently verified.",
+      "reason": "“Xiyisisa” may mean inspect carefully, while “Mahanyelo” can mean ways of life/behavior rather than the three permaculture ethics. Keep the source heading until checked.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Xiyisisa: Xiboho Xin’we, Mahanyelo Manharhu"
+    },
+    {
+      "id": "deck:ts:s9.heading",
+      "locator": {
+        "slide": 9,
+        "field": "heading"
+      },
+      "exactSource": "Twelve Principles",
+      "exactCurrent": "Twelve Principles",
+      "currentStatus": "english-hold",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Misinya ya Milawu ya Khume-Mbirhi",
+      "independentBacktranslation": "Twelve principles.",
+      "reason": "Matches the cited existing learner term and preserves the count.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Misinya ya Milawu ya Khume-Mbirhi"
+    },
+    {
+      "id": "deck:ts:s15.heading",
+      "locator": {
+        "slide": 15,
+        "field": "heading"
+      },
+      "exactSource": "Zones: Organising by How Often You Visit",
+      "exactCurrent": "Zones: Organising by How Often You Visit",
+      "currentStatus": "english-hold",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Zones: Ku Hlela hi ku ya hi Leswaku U Endzela Kangani",
+      "independentBacktranslation": "Zones: organising according to how often you visit.",
+      "reason": "Retains the formal Zones label and preserves visit frequency as the organizing rule.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Zones: Ku Hlela hi ku ya hi Leswaku U Endzela Kangani"
+    },
+    {
+      "id": "deck:ts:s16.heading",
+      "locator": {
+        "slide": 16,
+        "field": "heading"
+      },
+      "exactSource": "Keep Daily Crops Close",
+      "exactCurrent": "Keep Daily Crops Close",
+      "currentStatus": "english-hold",
+      "independentVerdict": "hold",
+      "finalComposedTarget": "Keep Daily Crops Close",
+      "independentBacktranslation": "Not independently verified.",
+      "reason": "“Swibyariwa swa siku na siku” can read as crops of each day rather than crops used each day. Hold pending a checked daily-use wording.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Hlayisa Swibyariwa swa Siku na Siku Ekusuhi"
+    },
+    {
+      "id": "deck:ts:s18.heading",
+      "locator": {
+        "slide": 18,
+        "field": "heading"
+      },
+      "exactSource": "Sectors: The Energies Arriving From Outside",
+      "exactCurrent": "Sectors: The Energies Arriving From Outside",
+      "currentStatus": "english-hold",
+      "independentVerdict": "hold",
+      "finalComposedTarget": "Sectors: The Energies Arriving From Outside",
+      "independentBacktranslation": "Not independently verified.",
+      "reason": "The proposed “Energies leti Fikaka ti Huma Ehandle” appears to add a second finite verb (“they come out/outside”) to “arriving from outside”; no concise agreement-safe repair verified. Keep the exact heading.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Sectors: Energies leti Fikaka ti Huma Ehandle"
+    },
+    {
+      "id": "deck:ts:s20.heading",
+      "locator": {
+        "slide": 20,
+        "field": "heading"
+      },
+      "exactSource": "Sketch It And You Have A Design",
+      "exactCurrent": "Sketch It And You Have A Design",
+      "currentStatus": "english-hold",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Dirowa Swona Kutani U Va na Design",
+      "independentBacktranslation": "Sketch it, then you have a design.",
+      "reason": "Preserves imperative, sequence, and result; Design remains a label/technical term.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Dirowa Swona Kutani U Va na Design"
+    },
+    {
+      "id": "deck:ts:s21.heading",
+      "locator": {
+        "slide": 21,
+        "field": "heading"
+      },
+      "exactSource": "Field Assignment",
+      "exactCurrent": "Field Assignment",
+      "currentStatus": "english-hold",
+      "independentVerdict": "hold",
+      "finalComposedTarget": "Field Assignment",
+      "independentBacktranslation": "Not independently verified.",
+      "reason": "“Ntirho wa le Nsimwini” reads as field work; it may omit the assigned-task sense. Keep source wording until the assignment sense is checked.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Ntirho wa le Nsimwini"
+    },
+    {
+      "id": "deck:ts:s22.heading",
+      "locator": {
+        "slide": 22,
+        "field": "heading"
+      },
+      "exactSource": "Field Action",
+      "exactCurrent": "Field Action",
+      "currentStatus": "english-hold",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Xiendlo xa le Nsimwini",
+      "independentBacktranslation": "Field action/activity.",
+      "reason": "Preserves the action-in-the-field heading without adding a prescription.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Xiendlo xa le Nsimwini"
+    },
+    {
+      "id": "deck:ve:s12.body[0]",
+      "locator": {
+        "slide": 12,
+        "bodyIndex": 0
+      },
+      "exactSource": "The edge is where two things meet — a fence line or the strip beside a path.",
+      "exactCurrent": "The edge ndi hune zwithu zwivhili zwa ṱangana — a fence line or the strip beside a path.",
+      "currentStatus": "mixed",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "The edge ndi hune zwithu zwivhili zwa ṱangana — muduba wa fence kana tshipiḓa tshi re tsini na nḓila (strip).",
+      "independentBacktranslation": "The edge is where two things meet—a fence line or a piece beside a path (strip).",
+      "reason": "Keeps the meet relation, fence-line/strip alternatives, and beside-path location. Existing localized prefix remains byte-identical; fence/strip terms remain visible.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "The edge ndi hune zwithu zwivhili zwa ṱangana — muduba wa fence kana tshipiḓa tshi re tsini na nḓila (strip)."
+    },
+    {
+      "id": "deck:ts:s12.body[0]",
+      "locator": {
+        "slide": 12,
+        "bodyIndex": 0
+      },
+      "exactSource": "The edge is where two things meet — a fence line or the strip beside a path.",
+      "exactCurrent": "The edge hi laha swilo swimbirhi swi hlanganaka kona — a fence line or the strip beside a path.",
+      "currentStatus": "mixed",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "The edge hi laha swilo swimbirhi swi hlanganaka kona — layini ya fence kumbe xiphemu xa misava lexi nga etlhelo ka ndlela (strip).",
+      "independentBacktranslation": "The edge is where two things meet—a fence line or a piece of ground beside the path (strip).",
+      "reason": "Preserves OR and beside. Retains the familiar fence/strip labels; no boundary-only reinterpretation.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "The edge hi laha swilo swimbirhi swi hlanganaka kona — layini ya fence kumbe xiphemu xa misava lexi nga etlhelo ka ndlela (strip)."
+    },
+    {
+      "id": "deck:ve:s18.body[2]",
+      "locator": {
+        "slide": 18,
+        "bodyIndex": 2
+      },
+      "exactSource": "Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land.",
+      "exactCurrent": "Sedzani hune muya u re na maanḓa u bva hone kha bulasi yaṋu. Nearby weather-station records dzi nga ni thusa u sedza wind direction. Sedzani hune maḓi a mvula a dzhena hone na hune a elela hone kha mavu aṋu.",
+      "currentStatus": "mixed",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Sedzani hune muya u re na maanḓa u bva hone kha bulasi yaṋu. Rekhodo dza weather station ya tsini dzi nga ni thusa u sedza thungo ya muya. Sedzani hune maḓi a mvula a dzhena hone na hune a elela hone kha mavu aṋu.",
+      "independentBacktranslation": "Watch where strong wind comes from on your farm. Records from a nearby weather station can help you check wind direction. Watch where rainwater enters and flows across your land.",
+      "reason": "Preserves strong wind, nearby station records, can-help modality, direction checking, and the final water observation unchanged.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Sedzani hune muya u re na maanḓa u bva hone kha bulasi yaṋu. Rekhodo dza weather station ya tsini dzi nga ni thusa u sedza thungo ya muya. Sedzani hune maḓi a mvula a dzhena hone na hune a elela hone kha mavu aṋu."
+    },
+    {
+      "id": "deck:ts:s18.body[2]",
+      "locator": {
+        "slide": 18,
+        "bodyIndex": 2
+      },
+      "exactSource": "Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land.",
+      "exactCurrent": "Languta laha moya wa matimba wu humaka kona epurasini ra wena. Nearby weather-station records ti nga ku pfuna ku kambela wind direction. Languta laha mati ya mpfula ma nghenaka kona ni ndlela leyi ma khulukaka ha yona eka misava ya wena.",
+      "currentStatus": "mixed",
+      "independentVerdict": "repair",
+      "finalComposedTarget": "Languta laha moya wa matimba wu humaka kona epurasini ra wena. Matsalwa ya weather station ya le kusuhi ma nga ku pfuna ku kambela tlhelo leri moya wu humaka eka rona. Languta laha mati ya mpfula ma nghenaka kona ni ndlela leyi ma khulukaka ha yona eka misava ya wena.",
+      "independentBacktranslation": "Watch where strong wind comes from on your farm. Nearby weather-station records can help you check the direction from which the wind comes. Watch where rainwater enters and flows across your land.",
+      "reason": "Preserve the complete existing first and last sentences byte-for-byte. Replace only the middle English records/direction span, using the packet candidate, and repair the plural agreement from “ti nga ku pfuna” to “ma nga ku pfuna” for matsalwa. This adds no forecast or guarantee.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "currentFirstSentenceByteIdentical": true,
+        "currentLastSentenceByteIdentical": true,
+        "onlyMiddleTargetSpanAndPluralAgreementChanged": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Languta laha moya wa matimba wu humaka kona epurasini ra wena. Matsalwa ya weather station ya le kusuhi ti nga ku pfuna ku kambela tlhelo leri moya wu humaka eka rona. Languta laha mati ya mpfula ma nghenaka kona ni ndlela leyi ma khulukaka ha yona eka misava ya wena."
+    },
+    {
+      "id": "deck:ve:s20.body[0]",
+      "locator": {
+        "slide": 20,
+        "bodyIndex": 0
+      },
+      "exactSource": "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.",
+      "exactCurrent": "Olani boundary yaṋu. Maka nnḓu. Olani rings dzi tshi ya nnḓa u ya nga uri ni dalela hani lunzhi.",
+      "currentStatus": "draft",
+      "independentVerdict": "repair",
+      "finalComposedTarget": "Olani mukano waṋu. Maka nnḓu. Olani rings dzi tshi ya nnḓa u ya nga uri ni dalela hani lunzhi.",
+      "independentBacktranslation": "Draw your boundary. Mark the house. Draw the rings outward according to how often you visit.",
+      "reason": "Change yaṋu to waṋu: the paired Tshivenda Reading Landscape uses “olani mukano waṋu.” This repairs agreement while preserving boundary scope and all other current clauses.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Olani mukano yaṋu. Maka nnḓu. Olani rings dzi tshi ya nnḓa u ya nga uri ni dalela hani lunzhi."
+    },
+    {
+      "id": "deck:ts:s20.body[0]",
+      "locator": {
+        "slide": 20,
+        "bodyIndex": 0
+      },
+      "exactSource": "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.",
+      "exactCurrent": "Dirowa boundary ya wena. Maka yindlu. Dirowa rings u ya ehandle hi ku ya hi leswaku u endzela ndhawu yin’wana ni yin’wana kangani.",
+      "currentStatus": "draft",
+      "independentVerdict": "repair",
+      "finalComposedTarget": "Dirowa ndzilakana wa wena. Maka yindlu. Dirowa rings u ya ehandle hi ku ya hi leswaku u endzela ndhawu yin’wana ni yin’wana kangani.",
+      "independentBacktranslation": "Draw your boundary. Mark the house. Draw the rings outward according to how often you visit each place.",
+      "reason": "Use the attested “ndzilakana wa wena” construction in the same paired deck context; retain remaining clauses and rings unchanged.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Dirowa ndzilakana ya wena. Maka yindlu. Dirowa rings u ya ehandle hi ku ya hi leswaku u endzela ndhawu yin’wana ni yin’wana kangani."
+    },
+    {
+      "id": "deck:ve:s21.body[0]",
+      "locator": {
+        "slide": 21,
+        "bodyIndex": 0
+      },
+      "exactSource": "Sketch your own zones and sectors on one sheet of paper.",
+      "exactCurrent": "Olani own zones and sectors kha bammbiri ḽithihi.",
+      "currentStatus": "mixed",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Olani zones na sectors dzaṋu kha bammbiri ḽithihi.",
+      "independentBacktranslation": "Sketch your own zones and sectors on one sheet of paper.",
+      "reason": "The possessive retains own and paper quantity remains one; Zones/sectors stay as formal labels.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Olani zones na sectors dzaṋu kha bammbiri ḽithihi."
+    },
+    {
+      "id": "deck:ts:s21.body[0]",
+      "locator": {
+        "slide": 21,
+        "bodyIndex": 0
+      },
+      "exactSource": "Sketch your own zones and sectors on one sheet of paper.",
+      "exactCurrent": "Dirowa own zones and sectors eka phepha rin’we.",
+      "currentStatus": "mixed",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Dirowa zones na sectors ta wena eka phepha rin’we.",
+      "independentBacktranslation": "Sketch your own zones and sectors on one sheet of paper.",
+      "reason": "The possessive retains own and one sheet remains explicit; formal labels stay visible.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Dirowa zones na sectors ta wena eka phepha rin’we."
+    },
+    {
+      "id": "deck:ve:s21.body[3]",
+      "locator": {
+        "slide": 21,
+        "bodyIndex": 3
+      },
+      "exactSource": "Photograph the sketch.",
+      "exactCurrent": "Dzhiani photo ya sketch.",
+      "currentStatus": "draft",
+      "independentVerdict": "repair",
+      "finalComposedTarget": "Dzhiani tshifanyiso tsha nyolo.",
+      "independentBacktranslation": "Take a picture of the sketch.",
+      "reason": "The verb preserves taking a photo rather than drawing. Repair the noun-class link from “ya” to “tsha” in the proposed picture-of-sketch phrase; source action stays intact.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Dzhiani tshifanyiso ya nyolo."
+    },
+    {
+      "id": "deck:ts:s19.body[0]",
+      "locator": {
+        "slide": 19,
+        "bodyIndex": 0
+      },
+      "exactSource": "Look at this example. The wind comes from the north-west.",
+      "exactCurrent": "Languta example leyi. Moya wu huma hi north-west.",
+      "currentStatus": "mixed",
+      "independentVerdict": "repair",
+      "finalComposedTarget": "Languta xikombiso lexi. Moya wu huma hi north-west.",
+      "independentBacktranslation": "Look at this example. The wind comes from the north-west.",
+      "reason": "Change leyi to lexi to agree with singular xikombiso; wind and the fixed direction are unchanged.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Languta xikombiso leyi. Moya wu huma hi north-west."
+    },
+    {
+      "id": "native:ts:L3.body[0]",
+      "locator": {
+        "lessonId": "intro-permaculture-l3",
+        "field": "body",
+        "paragraphIndex": 0
+      },
+      "exactSource": "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.",
+      "exactCurrent": "Zones na sectors swi ku pfuna ku hunguta ntirho lowu tlangisiwaka. Zones ti sukela eka 0 ku ya eka 5 hi ku ya hi ku tala ka minkarhi leyi u endzelaka ha yona. Zone 0 i yindlu. Eka example leyi, Zone 1 yi le kusuhi na yindlu naswona yi na leswi u swi tshovelaka nkarhi na nkarhi — herbs na salad greens. Zone 2 i ntanga lowukulu na xivala xa tihuku, leswi u swi endzelaka kan’we kumbe kambirhi hi siku. Zone 3 i nsimu leyikulu, leyi u yi endzelaka vhiki na vhiki. Zone 4 yi le ka semi-wild — mirhi ya mihandzu na fodder leyi lavaka nyingiso minkarhi yin’wana. Zone 5 yi tshikiwile yi ri nhova.",
+      "currentStatus": "machine-draft",
+      "independentVerdict": "repair",
+      "finalComposedTarget": "Zones na sectors swi ku pfuna ku hunguta ntirho lowu tlangisiwaka. Zones ti sukela eka 0 ku ya eka 5 hi ku ya hi ku tala ka minkarhi leyi u endzelaka ha yona. Zone 0 i yindlu. Eka xikombiso lexi, Zone 1 yi le kusuhi na yindlu naswona yi na leswi u swi tshovelaka nkarhi na nkarhi — herbs na salad greens. Zone 2 i ntanga lowukulu na xivala xa tihuku, leswi u swi endzelaka kan’we kumbe kambirhi hi siku. Zone 3 i nsimu leyikulu, leyi u yi endzelaka vhiki na vhiki. Zone 4 yi le ka semi-wild — mirhi ya mihandzu na fodder leyi lavaka nyingiso minkarhi yin’wana. Zone 5 yi tshikiwile yi ri nhova.",
+      "independentBacktranslation": "Zones and sectors help reduce wasted labour. Zones run 0 to 5 according to visit frequency. Zone 0 is the house. In this example, Zone 1 is near the house and contains what you pick often—herbs and salad greens. Zone 2 is the main garden and chicken run, visited once or twice daily. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild, with fruit trees and fodder needing occasional attention. Zone 5 is left wild.",
+      "reason": "The composed final target is exactly exactCurrent.replace(\"Eka example leyi,\", \"Eka xikombiso lexi,\") once. That localizes example and repairs the demonstrative concord for xikombiso. Every other current clause, number, crop term, and qualifier remains byte-identical.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "exactSingleReplacementVerified": true,
+        "replacementBefore": "Eka example leyi,",
+        "replacementAfter": "Eka xikombiso lexi,",
+        "allOtherCurrentTextByteIdentical": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Zones na sectors swi ku pfuna ku hunguta ntirho lowu tlangisiwaka. Zones ti sukela eka 0 ku ya eka 5 hi ku ya hi ku tala ka minkarhi leyi u endzelaka ha yona. Zone 0 i yindlu. Eka xikombiso leyi, Zone 1 yi le kusuhi na yindlu naswona yi na leswi u swi tshovelaka nkarhi na nkarhi — herbs na salad greens. Zone 2 i ntanga lowukulu na xivala xa tihuku, leswi u swi endzelaka kan’we kumbe kambirhi hi siku. Zone 3 i nsimu leyikulu, leyi u yi endzelaka vhiki na vhiki. Zone 4 yi le ka semi-wild — mirhi ya mihandzu na fodder leyi lavaka nyingiso minkarhi yin’wana. Zone 5 yi tshikiwile yi ri nhova."
+    },
+    {
+      "id": "deck:ve:s19.body[4]",
+      "locator": {
+        "slide": 19,
+        "bodyIndex": 4
+      },
+      "exactSource": "On your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan.",
+      "exactCurrent": "Kha site yaṋu, ṱhogomelani meya i tshinyadzaho ni sa athu khetha where to plant. Tshifanyiso itshi a si planting plan.",
+      "currentStatus": "mixed",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Kha site yaṋu, ṱhogomelani meya i tshinyadzaho ni sa athu khetha hune na ṱavha hone. Tshifanyiso itshi a si planting plan.",
+      "independentBacktranslation": "On your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan.",
+      "reason": "Preserves own-site scope, damaging-wind observation, before choosing, broad planting, and explicit not-a-planting-plan warning.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Kha site yaṋu, ṱhogomelani meya i tshinyadzaho ni sa athu khetha hune na ṱavha hone. Tshifanyiso itshi a si planting plan."
+    },
+    {
+      "id": "native:ts:L3.quiz[1].question",
+      "locator": {
+        "lessonId": "intro-permaculture-l3",
+        "questionIndex": 1,
+        "field": "question",
+        "correctIndex": 1
+      },
+      "exactSource": "You observe damaging wind coming from the north-west on a Highveld farm. Where should a windbreak go?",
+      "exactCurrent": "U xiyisisa damaging wind coming from the North-west on a Highveld farm. Windbreak yi fanele ku ya kwihi?",
+      "currentStatus": "machine-draft",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "U xiyisisa moya lowu onhaka lowu humaka hi North-west eka purasi ra Highveld. Windbreak yi fanele ku ya kwihi?",
+      "independentBacktranslation": "You observe damaging wind coming from the north-west on a Highveld farm. Where should a windbreak go?",
+      "reason": "Preserves observation, damaging (not just strong) wind, direction and Highveld, and the question about windbreak placement. Exact labels and answer index are untouched.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "U xiyisisa moya lowu onhaka lowu humaka hi North-west eka purasi ra Highveld. Windbreak yi fanele ku ya kwihi?"
+    },
+    {
+      "id": "native:ve:L3.quiz[1].question",
+      "locator": {
+        "lessonId": "intro-permaculture-l3",
+        "questionIndex": 1,
+        "field": "question",
+        "correctIndex": 1
+      },
+      "exactSource": "You observe damaging wind coming from the north-west on a Highveld farm. Where should a windbreak go?",
+      "exactCurrent": "Musi ni tshi vhona “damaging wind coming from the north-west on a Highveld farm”, windbreak i fanela u vhewa ngafhi?",
+      "currentStatus": "machine-draft",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Musi ni tshi vhona muya u tshinyadzaho u tshi bva north-west kha bulasi ḽa Highveld, windbreak i fanela u vhewa ngafhi?",
+      "independentBacktranslation": "When you observe damaging wind coming from the north-west on a Highveld farm, where should a windbreak be placed?",
+      "reason": "Preserves existing when-you-observe framing, damage predicate, source direction, named region, and windbreak question. No correct-answer index change.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Musi ni tshi vhona muya u tshinyadzaho u tshi bva north-west kha bulasi ḽa Highveld, windbreak i fanela u vhewa ngafhi?"
+    },
+    {
+      "id": "native:ts:L3.quiz[0].options[3]",
+      "locator": {
+        "lessonId": "intro-permaculture-l3",
+        "questionIndex": 0,
+        "optionIndex": 3,
+        "correctIndex": 1
+      },
+      "exactSource": "Zone 3 gets too much sun for herbs",
+      "exactCurrent": "Zone 3 yi kuma sun yo tala ngopfu eka herbs",
+      "currentStatus": "machine-draft",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Zone 3 yi kuma dyambu ro tala ngopfu eka herbs",
+      "independentBacktranslation": "Zone 3 gets too much sun for herbs.",
+      "reason": "Preserves the false distractor, excess degree, Zone 3, and herb class. Only localizes sun; answer index remains fixed.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Zone 3 yi kuma dyambu ro tala ngopfu eka herbs"
+    },
+    {
+      "id": "native:ts:L1.keyPoints[1]",
+      "locator": {
+        "lessonId": "intro-permaculture-l1",
+        "keyPointIndex": 1
+      },
+      "exactSource": "People Care: your family's needs come before market production",
+      "exactCurrent": "People Care: swilaveko swa ndyangu wa wena swi rhanga market production",
+      "currentStatus": "machine-draft",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Ku Hlayisa Vanhu: swilaveko swa ndyangu wa wena swi rhanga market production",
+      "independentBacktranslation": "People Care: your family’s needs come before market production.",
+      "reason": "Uses the existing learner term for the formal ethic while preserving the current family-needs-before-market-production clause unchanged.",
+      "preservationCheck": {
+        "sourceUnchanged": true,
+        "onlyProposedSpanOrListedConcordRepairChanged": true,
+        "unlistedCurrentTextPreserved": true,
+        "sourceAndCurrentIdentityFromBoundPacket": true
+      },
+      "sourceProposalTarget": "Ku Hlayisa Vanhu: swilaveko swa ndyangu wa wena swi rhanga market production"
+    }
+  ],
+  "overallLimits": [
+    "Semantic/source backcheck only; no fluent approval.",
+    "Exact English holds are retained where the draft risks changing daily-use frequency, field-assignment meaning, ethics meaning, or an incoming-energy relation.",
+    "Five narrow concord/word-form repairs: Matsalwa plural agreement, mukano and ndzilakana possessive concord, Tshivenda picture possessive concord, and xikombiso concord.",
+    "No native learner text or paired deck was edited."
+  ]
+}

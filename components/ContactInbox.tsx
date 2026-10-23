@@ -8,7 +8,7 @@ import { useLanguage } from '@/lib/i18n';
 import { isSampleMode } from '@/lib/sample-mode';
 import { sampleRead, sampleWrite, freshSampleMessages, type SampleMessage } from '@/lib/sample-operations';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
-import { getMyProfile } from '@/lib/db/queries';
+import { getMyProfile, withWriteTimeout } from '@/lib/db/queries';
 
 interface ContactMessage {
   id: string;
@@ -132,15 +132,18 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
     const me = auth.currentUser;
     setActionError(false);
     try {
-      await addDoc(collection(fb.db, 'contact_replies'), {
+      // bug-04: neither write had a timeout, so a weak-signal reply could hang on "Sending…"
+      // forever instead of failing into the catch below — replyText is only cleared once both
+      // writes actually land, so a failure here leaves the typed reply in the box.
+      await withWriteTimeout(addDoc(collection(fb.db, 'contact_replies'), {
         message_id: msg.id,
         for_uid: msg.from_uid,
         reply_body: text,
         replied_at: serverTimestamp(),
         replied_by_name: me?.displayName ?? me?.email ?? 'Your mentor',
         recipient_label: recipient,
-      });
-      await updateDoc(doc(fb.db, 'contact_messages', msg.id), { status: 'replied' });
+      }));
+      await withWriteTimeout(updateDoc(doc(fb.db, 'contact_messages', msg.id), { status: 'replied' }));
       setMessages((prev) => prev.map((m) => m.id === msg.id ? { ...m, status: 'replied' as const } : m));
       setReplySent((s) => new Set(s).add(msg.id));
       setReplyText((t) => ({ ...t, [msg.id]: '' }));
@@ -156,10 +159,12 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
 
   if (!isLive && !sample) {
     return (
-      <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-        <MessageCircle size={26} style={{ color: '#755942', margin: '0 auto 10px' }} strokeWidth={1.5} />
-        <p className="text-sm font-display font-semibold" style={{ color: '#5C5040' }}>{lang === 'zu' ? 'Isistimu ayikaxhunyaniswa' : 'Backend not connected'}</p>
-        <p className="text-xs font-sans mt-1" style={{ color: '#755942' }}>{lang === 'zu' ? 'Xhuma i-Firebase ukuze wamukele imilayezo' : 'Connect Firebase to receive messages'}</p>
+      <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+        <MessageCircle size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 10px' }} strokeWidth={1.5} />
+        {/* ux-03/nav-04: was developer vocabulary ("backend", "Firebase") shown to a mentor or
+            NGO coordinator — rewritten in plain words below. */}
+        <p className="text-sm font-display font-semibold" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Akukaxhunywa' : 'Not connected yet'}</p>
+        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Imilayezo izovela lapha uma lokhu kuxhunyiwe' : 'Messages will appear here once this is connected'}</p>
       </div>
     );
   }
@@ -167,46 +172,46 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
   if (loading) {
     return (
       <div className="flex justify-center py-12">
-        <Loader2 size={22} className="animate-spin" style={{ color: '#1F4D2B' }} aria-label={lang === 'zu' ? 'Iyalayisha' : 'Loading'} role="status" />
+        <Loader2 size={22} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} aria-label={lang === 'zu' ? 'Iyalayisha' : 'Loading'} role="status" />
       </div>
     );
   }
 
   if (loadError) {
     return (
-      <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #D8B7A8' }}>
-        <Mail size={26} style={{ color: '#8C4938', margin: '0 auto 10px' }} strokeWidth={1.5} />
-        <p className="text-sm font-display font-semibold" style={{ color: '#8C4938' }}>{lang === 'zu' ? 'Imilayezo ayitholakali' : 'Messages unavailable'}</p>
-        <p className="text-xs font-sans mt-1" style={{ color: '#755942' }}>{lang === 'zu' ? 'Kungenzeka awunayo imvume, noma uxhumano alutholakali.' : 'You may not have access, or the connection is unavailable.'}</p>
+      <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: "1px solid color-mix(in srgb, var(--danger) 35%, transparent)" }}>
+        <Mail size={26} style={{ color: 'var(--danger)', margin: '0 auto 10px' }} strokeWidth={1.5} />
+        <p className="text-sm font-display font-semibold" style={{ color: 'var(--danger)' }}>{lang === 'zu' ? 'Imilayezo ayitholakali' : 'Messages unavailable'}</p>
+        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Kungenzeka awunayo imvume, noma uxhumano alutholakali.' : 'You may not have access, or the connection is unavailable.'}</p>
       </div>
     );
   }
 
   if (noOrg) {
     return (
-      <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-        <Mail size={26} style={{ color: '#755942', margin: '0 auto 10px' }} strokeWidth={1.5} />
-        <p className="text-sm font-display font-semibold" style={{ color: '#5C5040' }}>{lang === 'zu' ? 'Ayikho inhlangano exhunywe' : 'No organisation linked yet'}</p>
-        <p className="text-xs font-sans mt-1" style={{ color: '#755942' }}>{lang === 'zu' ? 'Imilayezo izovela uma i-akhawunti yakho isixhunywe enhlanganweni.' : 'Messages appear here once your account is linked to an organisation.'}</p>
+      <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+        <Mail size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 10px' }} strokeWidth={1.5} />
+        <p className="text-sm font-display font-semibold" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Ayikho inhlangano exhunywe' : 'No organisation linked yet'}</p>
+        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Imilayezo izovela uma i-akhawunti yakho isixhunywe enhlanganweni.' : 'Messages appear here once your account is linked to an organisation.'}</p>
       </div>
     );
   }
 
   if (messages.length === 0) {
     return (
-      <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-        <Mail size={26} style={{ color: '#755942', margin: '0 auto 10px' }} strokeWidth={1.5} />
-        <p className="text-sm font-display font-semibold" style={{ color: '#5C5040' }}>{lang === 'zu' ? 'Akukho milayezo okwamanje' : 'No messages yet'}</p>
-        <p className="text-xs font-sans mt-1" style={{ color: '#755942' }}>{lang === 'zu' ? 'Imilayezo evela kubafundi izovela lapha' : 'Messages from learners appear here'}</p>
+      <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+        <Mail size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 10px' }} strokeWidth={1.5} />
+        <p className="text-sm font-display font-semibold" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Akukho milayezo okwamanje' : 'No messages yet'}</p>
+        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Imilayezo evela kubafundi izovela lapha' : 'Messages from learners appear here'}</p>
       </div>
     );
   }
 
   return (
     <div className="space-y-2">
-      {sample && <p className="rounded-xl p-3 text-sm" style={{ background: '#E5EFF8', color: '#244B6B' }}>{lang === 'zu' ? 'Izimpendulo zigcinwa kulesi sivivinyo kuphela. Akukho okuthunyelwayo.' : 'Replies stay in this tour session. Nothing is sent.'}</p>}
+      {sample && <p className="rounded-xl p-3 text-sm" style={{ background: 'var(--info-soft)', color: 'var(--info)' }}>{lang === 'zu' ? 'Izimpendulo zigcinwa kulesi sivivinyo kuphela. Akukho okuthunyelwayo.' : 'Replies stay in this tour session. Nothing is sent.'}</p>}
       {actionError && (
-        <div className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: '#FFF4EF', border: '1px solid #D8B7A8', color: '#8C4938' }}>
+        <div className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: "1px solid color-mix(in srgb, var(--danger) 35%, transparent)", color: 'var(--danger)' }}>
           {lang === 'zu' ? 'Leso senzo asikwazanga ukugcinwa. Hlola imvume ye-akhawunti noma uxhumano, bese uzama futhi.' : 'That action could not be saved. Check your account access or connection and try again.'}
         </div>
       )}
@@ -216,8 +221,8 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
           className="flex items-center gap-2 rounded-xl px-3 py-2.5"
           style={{ background: 'rgba(31,77,43,0.07)', border: '1px solid rgba(31,77,43,0.2)' }}
         >
-          <MailOpen size={14} style={{ color: '#1F4D2B' }} />
-          <span className="text-xs font-sans font-semibold" style={{ color: '#1F4D2B' }}>
+          <MailOpen size={14} style={{ color: 'var(--color-forest-800)' }} />
+          <span className="text-xs font-sans font-semibold" style={{ color: 'var(--color-forest-800)' }}>
             {unreadCount} {lang === 'zu' ? (unreadCount === 1 ? 'umlayezo ongafundiwe' : 'imilayezo engafundiwe') : `unread ${unreadCount === 1 ? 'message' : 'messages'}`}
           </span>
         </div>
@@ -231,8 +236,8 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
             key={msg.id}
             className="rounded-2xl overflow-hidden transition-all"
             style={{
-              background: isUnread ? 'rgba(31,77,43,0.04)' : '#FFFEFA',
-              border: `1px solid ${isUnread ? 'rgba(31,77,43,0.25)' : '#E2D8C4'}`,
+              background: isUnread ? 'rgba(31,77,43,0.04)' : 'var(--bg-1)',
+              border: `1px solid ${isUnread ? 'rgba(31,77,43,0.25)' : 'var(--border)'}`,
             }}
           >
             {/* Row */}
@@ -246,57 +251,57 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
               {/* Unread indicator dot */}
               <div
                 className="flex-shrink-0 rounded-full"
-                style={{ width: 7, height: 7, marginTop: 6, background: isUnread ? '#1F4D2B' : 'transparent', flexShrink: 0 }}
+                style={{ width: 7, height: 7, marginTop: 6, background: isUnread ? 'var(--color-forest-800)' : 'transparent', flexShrink: 0 }}
               />
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-baseline justify-between gap-2">
                   <span
                     className="font-display font-semibold text-sm truncate"
-                    style={{ color: '#20190F', fontWeight: isUnread ? 700 : 600 }}
+                    style={{ color: 'var(--text-primary)', fontWeight: isUnread ? 700 : 600 }}
                   >
                     {msg.from_name ?? (lang === 'zu' ? 'Umthumeli ongaziwa' : 'Unknown sender')}
                   </span>
-                  <span className="font-sans flex-shrink-0" style={{ fontSize: 11, color: '#755942' }}>
+                  <span className="font-sans flex-shrink-0" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
                     {formatDate(msg.created_at, lang)}
                   </span>
                 </div>
-                <div className="font-sans text-xs mt-0.5 truncate" style={{ color: '#5C5040' }}>
+                <div className="font-sans text-xs mt-0.5 truncate" style={{ color: 'var(--text-muted)' }}>
                   {msg.subject || (lang === 'zu' ? '(Akunasihloko)' : '(no subject)')}
                 </div>
                 {!isOpen && (
-                  <div className="font-sans text-xs mt-0.5 truncate" style={{ color: '#755942' }}>
+                  <div className="font-sans text-xs mt-0.5 truncate" style={{ color: 'var(--text-muted)' }}>
                     {msg.body}
                   </div>
                 )}
               </div>
 
               {isOpen
-                ? <ChevronUp size={14} style={{ color: '#755942', flexShrink: 0, marginTop: 2 }} />
-                : <ChevronDown size={14} style={{ color: '#755942', flexShrink: 0, marginTop: 2 }} />}
+                ? <ChevronUp size={14} style={{ color: 'var(--text-muted)', flexShrink: 0, marginTop: 2 }} />
+                : <ChevronDown size={14} style={{ color: 'var(--text-muted)', flexShrink: 0, marginTop: 2 }} />}
             </button>
 
             {/* Expanded body */}
             {isOpen && (
               <div className="px-10 pb-4" style={{ borderTop: '1px solid rgba(226,216,196,0.6)' }}>
-                <div className="font-sans text-xs pt-2 pb-3" style={{ color: '#755942' }}>
+                <div className="font-sans text-xs pt-2 pb-3" style={{ color: 'var(--text-muted)' }}>
                   {lang === 'zu' ? 'Ithunyelwe ku: ' : 'Sent to: '}<span style={{ textTransform: 'capitalize' }}>{msg.recipient}</span>
                   {msg.status === 'replied' && (
-                    <span className="ml-2 px-1.5 py-0.5 rounded font-mono" style={{ fontSize: 10, background: 'rgba(31,77,43,0.08)', color: '#1F4D2B', border: '1px solid rgba(31,77,43,0.2)' }}>
+                    <span className="ml-2 px-1.5 py-0.5 rounded font-sans" style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.2)' }}>
                       {lang === 'zu' ? 'kuphenduliwe' : 'replied'}
                     </span>
                   )}
                 </div>
-                <p className="font-sans text-sm leading-relaxed whitespace-pre-wrap" style={{ color: '#20190F' }}>
+                <p className="font-sans text-sm leading-relaxed whitespace-pre-wrap" style={{ color: 'var(--text-primary)' }}>
                   {msg.body}
                 </p>
 
                 {sample && (msg as SampleMessage).reply && <p className="text-sm"><strong>{lang === 'zu' ? 'Impendulo:' : 'reply:'}</strong> {(msg as SampleMessage).reply}</p>}
                 {/* Reply box */}
-                <div className="mt-4 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
+                <div className="mt-4 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
                   <div className="flex items-center gap-1.5 mb-2">
-                    <CornerDownRight size={12} style={{ color: '#755942' }} />
-                    <span className="font-sans text-xs font-semibold uppercase tracking-wide" style={{ color: '#5C5040' }}>{lang === 'zu' ? 'Phendula' : 'Reply'}</span>
+                    <CornerDownRight size={12} style={{ color: 'var(--text-muted)' }} />
+                    <span className="font-sans text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Phendula' : 'Reply'}</span>
                   </div>
                   <textarea
                     value={replyText[msg.id] ?? ''}
@@ -304,16 +309,16 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                     onChange={(e) => setReplyText((t) => ({ ...t, [msg.id]: e.target.value }))}
                     placeholder={lang === 'zu' ? 'Bhala impendulo oya kuyithumela kulo mfundi…' : 'Write a reply to this learner…'}
                     rows={3}
-                    className="w-full font-sans text-sm rounded-xl px-3 py-2.5 resize-none outline-none"
-                    style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F', lineHeight: 1.5 }}
+                    className="w-full font-sans text-sm rounded-xl px-3 py-2.5 resize-none outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
+                    style={{ background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)', lineHeight: 1.5 }}
                   />
                   <button
                     onClick={() => sendReply(msg)}
                     disabled={!replyText[msg.id]?.trim() || replySending === msg.id}
                     className="mt-2 flex items-center gap-1.5 font-display font-semibold text-xs px-4 py-2 rounded-xl"
                     style={{
-                      background: replyText[msg.id]?.trim() ? '#1F4D2B' : 'rgba(32,25,15,0.08)',
-                      color: replyText[msg.id]?.trim() ? '#F7F2E9' : '#755942',
+                      background: replyText[msg.id]?.trim() ? 'var(--color-forest-800)' : 'rgba(32,25,15,0.08)',
+                      color: replyText[msg.id]?.trim() ? 'var(--on-forest-800, var(--on-forest))' : 'var(--text-muted)',
                       border: 'none', cursor: replyText[msg.id]?.trim() ? 'pointer' : 'default',
                     }}
                   >

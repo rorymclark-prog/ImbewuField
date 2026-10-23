@@ -1,0 +1,78 @@
+{
+  "speciesId": "ceratonia-siliqua",
+  "commonName": "Carob",
+  "botanicalName": "Ceratonia siliqua",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No locally qualified numeric first-crop age was established in the checked primary sources. Record planting date, nursery starting age and propagation method."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured local numeric full-bearing age was established. No yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified mature per-plant food kg with age, product basis and management context was established. Missing output remains unknown rather than zero."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No universal numeric chilling requirement is assigned. Check the actual cultivar and site's winter conditions."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Check the actual cultivar's pollen needs; no universal classification is inferred from a named cultivar."
+  },
+  "harvestProduct": "pods",
+  "supplementaryReferences": [
+    {
+      "title": "South African food part and planting context",
+      "quote": "Carob pods are excellent fodder and also food for mankind.",
+      "url": "https://www.dlrrd.gov.za/phocadownloadpap/Publications_and_Media/Agroforestry.pdf",
+      "doc": "C.J. Esterhuyse (1989), Department of Environment Affairs, Agroforestry, pamphlet 412",
+      "page": 13,
+      "note": "Government guidance identifies pods, severe-frost exclusion, irrigation in arid areas and variation between seedling trees. It recommends grafted material and pollen provision; not every tree has the same crop."
+    },
+    {
+      "title": "Locally tested carob food products and cultivars",
+      "quote": "Tylliria, SFax, Aaronsohn, Santa Fe",
+      "url": "https://agris.fao.org/search/en/providers/124740/records/67053fb8b1dfe472e1468f95",
+      "doc": "Iipumbu (2008), Stellenbosch MSc Food Science thesis, university-provided abstract in FAO AGRIS",
+      "page": null,
+      "note": "The primary study tested South African grown pod material, including those named cultivars and an unknown one, and developed food products. This is food-part evidence, not a regional maturity/yield trial. University full-text handle returned HTTP 403 during checking."
+    }
+  ],
+  "productionGuidance": {
+    "products": "pods",
+    "care": [
+      "Harvested product is the pod. Confirm the planting material's sex and compatible pollen; seedling pod crops vary.",
+      "Check local frost and water. Food processing needs a suitable method and explicit kept-stock records."
+    ],
+    "purchase": [
+      "Use identified grafted material rather than assuming an unknown seedling will match a productive tree. Tylliria, SFax, Aaronsohn and Santa Fe were in the South African food-composition study; that does not rank their farm yield or regional suitability."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://www.dlrrd.gov.za/phocadownloadpap/Publications_and_Media/Agroforestry.pdf",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    },
+    {
+      "url": "https://agris.fao.org/search/en/providers/124740/records/67053fb8b1dfe472e1468f95",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    }
+  ],
+  "gaps": [
+    "No verified exact South African ripe-pod months or measured first/full bearing age and kg per tree found.",
+    "Global Mediterranean calendars/yields and secondary South African two-kg/six-year claims are not promoted without their primary experiment.",
+    "Biological pollen classification remains cultivar-dependent; no safe home shelf life inferred from thesis product tests."
+  ]
+}

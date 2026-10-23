@@ -1,0 +1,191 @@
+{
+  "title": "Final independent Xitsonga water-harvesting repair check",
+  "date": "2026-10-06",
+  "readOnly": true,
+  "learnerWrites": false,
+  "implementationApproval": false,
+  "packetPath": "/tmp/imbewu-ts-water-ordinary-completion-root-risk-repaired-candidates-20261006.json",
+  "packetSha256": "2b24d6a1c0e3c5f3b0d0a81e3dce7260c3aee9f923a8d48c0fc5d35e107a775c",
+  "reviewLimit": "Model-level semantic review only. No fluent Xitsonga, local farming, Shangani, or production approval is claimed. Four bounded English holds are accepted at the meaning level under Rory discretion. This is not a completion claim.",
+  "rows": [
+    {
+      "id": "water-harvesting::water-harvesting-l2::ts::quiz[0].options[3]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[0].options[3]",
+      "sourceEnglish": "Storage capacity increases permanently",
+      "currentTarget": "Storage capacity increases permanently",
+      "candidateProposed": "Vuswikoti bya ku hlayisa mati byi engeteleka permanently",
+      "decision": "ACCEPT_MEANING_ONLY_TERM_HELD",
+      "finalRepair": null,
+      "reason": "False option still says storage capacity increases permanently; the absolute time claim is preserved. The retained English adverb is a narrow term hold accepted under Rory discretion.",
+      "termDisposition": {
+        "retainedExact": "permanently",
+        "meaningAccepted": true,
+        "termStillHeld": true
+      },
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::body::paragraph[1]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "body",
+      "sourceEnglish": "Do not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.",
+      "currentTarget": "U nga katsi mati ya toilet, mati yo huma eka nappies, mati yo hlantswa munhu loyi a vabyaka kumbe mati yo hlantswa swiharhi eka reuse plan. U nga tirhisi nakambe mati lama nga na harmful chemicals.",
+      "candidateProposed": "U nga katsi mati ya xihambukelo, mati yo huma eka nappies, mati yo hlantswa munhu loyi a vabyaka kumbe mati yo hlantswa swiharhi eka pulani yo tirhisa mati nakambe. U nga tirhisi nakambe mati lama nga na chemicals leti nga ni khombo.",
+      "decision": "ACCEPT_MEANING_ONLY_TERM_HELD",
+      "finalRepair": null,
+      "reason": "Exclusions still cover toilet water, nappy water, washing a sick person, washing animals, and harmful chemicals. The retained household term is a narrow hold accepted under Rory discretion.",
+      "termDisposition": {
+        "retainedExact": "nappies",
+        "meaningAccepted": true,
+        "termStillHeld": true
+      },
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::quiz[1].options[0]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[1].options[0]",
+      "sourceEnglish": "All cleaning products are safe if the water is diluted",
+      "currentTarget": "All cleaning products are safe loko mati ma dilute.",
+      "candidateProposed": "Cleaning products hinkwato ti hlayisekile loko mati ma diluted.",
+      "decision": "ACCEPT_MEANING_ONLY_TERM_HELD",
+      "finalRepair": null,
+      "reason": "False option still says every cleaning product is safe when water is diluted. Quantifier, safety claim, and condition remain; the English terms are narrow holds accepted under Rory discretion.",
+      "termDisposition": {
+        "retainedExact": [
+          "Cleaning products",
+          "diluted"
+        ],
+        "meaningAccepted": true,
+        "termStillHeld": true
+      },
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::ts::moduleDescription",
+      "lessonId": null,
+      "fieldPath": "moduleDescription",
+      "sourceEnglish": "Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop.",
+      "currentTarget": "Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop.",
+      "candidateProposed": "Swales, berms, madamu, mathanki ya mati ya mpfula ni greywater — nonokisa, hangalasa — sink every drop.",
+      "decision": "ACCEPT_MEANING_ONLY_TERM_HELD",
+      "finalRepair": null,
+      "reason": "The line preserves slow/spread and the exact source idiom “sink every drop”; the English idiom is a narrow source-anchored hold accepted under Rory discretion.",
+      "termDisposition": {
+        "retainedExact": "sink every drop",
+        "meaningAccepted": true,
+        "termStillHeld": true
+      },
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::quiz[0].options[1]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[0].options[1]",
+      "sourceEnglish": "Roof area, rainfall pattern, water demand and collection losses",
+      "currentTarget": "Vukulu bya roof, pattern ya mpfula, xilaveko xa mati na losses ta ku hlengeleta mati.",
+      "candidateProposed": "Vukulu bya lwangu, ndlela leyi mpfula yi nakaka ha yona, xilaveko xa mati ni ku lahleka ka mati hi ku ma hlengeleta.",
+      "decision": "REPAIR_RECOMMENDED",
+      "finalRepair": "Vukulu bya lwangu, pattern ya mpfula, xilaveko xa mati ni ku lahleka ka mati hi ku ma hlengeleta.",
+      "reason": "Restore the source dimension “rainfall pattern” exactly; retain the localized roof area, water demand, and collection losses. This is a meaning repair, not fluency approval.",
+      "termDisposition": {
+        "retainedExact": "pattern ya mpfula",
+        "meaningAccepted": true,
+        "termStillHeld": true
+      },
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::quiz[1].rationale",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[1].rationale",
+      "sourceEnglish": "Diverting early runoff can reduce contamination, but it does not guarantee that later water is safe. Assess quality for the intended use.",
+      "currentTarget": "Ku hambukisa early runoff swi nga hunguta contamination, kambe a swi tiyisisi leswaku mati lama taka endzhaku ma hlayisekile. Kambela quality hi ku landza intended use.",
+      "candidateProposed": "Ku hambukisa runoff yo sungula swi nga hunguta contamination, kambe a swi tiyisisi leswaku mati lama taka endzhaku ma hlayisekile. Kambela xiyimo xa mati hi ku landza ku tirhisiwa loku kunguhatiweke.",
+      "decision": "REPAIR_RECOMMENDED",
+      "finalRepair": "Ku hambukisa runoff yo sungula swi nga hunguta contamination, kambe a swi tiyisisi leswaku mati lama taka endzhaku ma hlayisekile. Kambela quality ya mati hi ku landza ku tirhisiwa loku kunguhatiweke.",
+      "reason": "Use the source water-quality concept with a bounded English technical term; keep can reduce, does not guarantee, later water, and intended use.",
+      "termDisposition": {
+        "retainedExact": "quality ya mati",
+        "meaningAccepted": true,
+        "termStillHeld": true
+      },
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::quiz[0].options[3]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[0].options[3]",
+      "sourceEnglish": "Only the price of the biggest available tank",
+      "currentTarget": "Ntsengo ntsena wa tank leyikulu swinene leyi kumekaka.",
+      "candidateProposed": "Ntsengo ntsena wa thanki leyikulu ku hundza hinkwato leti kumekaka.",
+      "decision": "REPAIR_RECOMMENDED",
+      "finalRepair": "Price ntsena wa thanki leyikulu ku hundza hinkwato leti kumekaka.",
+      "reason": "Replace only ambiguous “Ntsengo” with exact source “Price”; keep the remaining localized biggest-available-tank wording intact.",
+      "termDisposition": {
+        "retainedExact": "Price",
+        "meaningAccepted": true,
+        "termStillHeld": true
+      },
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::quiz[0].question",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[0].question",
+      "sourceEnglish": "What should happen before any household washwater is reused?",
+      "currentTarget": "Xana ku fanele ku endliwa yini before any household washwater is reused?",
+      "candidateProposed": "Xana ku fanele ku endliwa yini ku nga si va ni ku tirhisiwa nakambe kwihi na kwihi ka mati yo hlantswa ya le kaya?",
+      "decision": "REPAIR_RECOMMENDED",
+      "finalRepair": "Xana ku fanele ku endliwa yini before any household washwater is reused?",
+      "reason": "“Kwihi na kwihi” risks a spatial “anywhere” reading. Keep the current Xitsonga question frame and restore the exact source clause, preserving before + any + household washwater + reused.",
+      "termDisposition": {
+        "retainedExact": "before any household washwater is reused",
+        "meaningAccepted": true,
+        "termStillHeld": true
+      },
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::body::paragraph[2]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "body",
+      "sourceEnglish": "Before any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.",
+      "currentTarget": "Before any reuse, kombela municipality na qualified local sanitation adviser ku kambela source leyi kongomeke, vukorhokeri bya mati na sanitation bya household, intended use na site. Loko ndzayo leyi yi nga kumeki kumbe yi nga ri erivaleni, u nga ma tirhisi nakambe.",
+      "candidateProposed": "Ku nga si va ni ku tirhisiwa ka mati nakambe kwihi na kwihi, kombela masipala na mutsundzuxi wa sanitation wa laha kaya loyi a nga qualified ku kambela xihlovo xa mati lexi kongomeke, vukorhokeri bya mati na sanitation bya ndyangu, ku tirhisiwa loku kunguhatiweke na ndhawu. Loko ndzayo leyi yi nga kumeki kumbe yi nga ri erivaleni, u nga ma tirhisi nakambe.",
+      "decision": "REPAIR_RECOMMENDED",
+      "finalRepair": "Before any reuse, kombela masipala na mutsundzuxi wa sanitation wa laha kaya loyi a nga qualified ku kambela xihlovo xa mati lexi kongomeke, vukorhokeri bya mati na sanitation bya ndyangu, ku tirhisiwa loku kunguhatiweke na ndhawu. Loko ndzayo leyi yi nga kumeki kumbe yi nga ri erivaleni, u nga ma tirhisi nakambe.",
+      "reason": "The proposed “kwihi na kwihi” risks changing ANY into a location. Restore exact source opening “Before any reuse”; keep translated checks and the no-reuse condition if advice is missing or unclear.",
+      "termDisposition": {
+        "retainedExact": "Before any reuse",
+        "meaningAccepted": true,
+        "termStillHeld": true
+      },
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::keyPoints[1]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "keyPoints[1]",
+      "sourceEnglish": "Check the source, service status, intended use and site locally before any reuse",
+      "currentTarget": "Check the source, service status, intended use and site locally before any reuse",
+      "candidateProposed": "Kambela xihlovo, xiyimo xa vukorhokeri, ku tirhisiwa loku kunguhatiweke ni ndhawu eka swiyimo swa laha kaya, u nga si va ni ku tirhisiwa ka mati nakambe kwihi na kwihi",
+      "decision": "REPAIR_RECOMMENDED",
+      "finalRepair": "Before any reuse, kambela xihlovo, xiyimo xa vukorhokeri, ku tirhisiwa loku kunguhatiweke ni ndhawu eka swiyimo swa laha kaya.",
+      "reason": "The ending “...kwihi na kwihi” risks a spatial reading. Put exact source “Before any reuse” at the front to preserve BEFORE ANY without a location qualifier.",
+      "termDisposition": {
+        "retainedExact": "Before any reuse",
+        "meaningAccepted": true,
+        "termStillHeld": true
+      },
+      "fluentApproval": false
+    }
+  ],
+  "summary": {
+    "meaningAcceptedWithTermStillHeld": 4,
+    "exactRepairsRecommended": 6,
+    "ordinaryTranslationCompletionClaimed": false,
+    "fluentApproval": false
+  }
+}

@@ -102,6 +102,10 @@ export default function FieldJournal() {
   const [filter, setFilter] = useState<Filter>('all');
   const [sheet, setSheet] = useState<{ open: boolean; entry: JournalEntry | null }>({ open: false, entry: null });
   const [notice, setNotice] = useState<string | null>(null);
+  // bug-03: shown INSIDE the sheet (which overlays everything below it), because a storage-full
+  // failure used to close the sheet on the farmer, taking the typed note with it. Kept separate
+  // from `notice` so a save failure doesn't bleed into a later, unrelated trimmed-photos success.
+  const [sheetError, setSheetError] = useState<string | null>(null);
   const [beds, setBeds] = useState<BedOption[]>([]);
   const [crops, setCrops] = useState<string[]>([]);
 
@@ -153,22 +157,36 @@ export default function FieldJournal() {
     [entries],
   );
 
-  function persist(next: JournalEntry[]) {
+  function persist(next: JournalEntry[]): boolean {
     const result = saveJournal(next);
-    setEntries(result.entries);
-    if (!result.ok) setNotice(ui('Storage is full — this entry could not be saved. Delete an old entry and try again.', 'Isikhala sokugcina sigcwele — lokhu okubhaliwe akugcinwanga. Susa okubhaliwe okudala bese uzama futhi.'));
-    else if (result.trimmed) setNotice(ui('Storage was nearly full, so photos on the oldest entries were removed. The notes are kept.', 'Isikhala sokugcina besesizogcwala, ngakho izithombe kokudala kakhulu zisusiwe. Amanothi agciniwe.'));
-    else setNotice(null);
+    if (result.ok) {
+      setEntries(result.entries);
+      setSheetError(null);
+      setNotice(result.trimmed ? ui('Storage was nearly full, so photos on the oldest entries were removed. The notes are kept.', 'Isikhala sokugcina besesizogcwala, ngakho izithombe kokudala kakhulu zisusiwe. Amanothi agciniwe.') : null);
+    } else {
+      // Leave `entries` as it was — the attempted save never actually landed in storage, so
+      // adding it to the in-memory list would show it as saved until the next reload drops it.
+      setSheetError(ui('Storage is full — this entry could not be saved. Delete an old entry and try again.', 'Isikhala sokugcina sigcwele — lokhu okubhaliwe akugcinwanga. Susa okubhaliwe okudala bese uzama futhi.'));
+    }
+    return result.ok;
+  }
+
+  function openSheet(entry: JournalEntry | null) {
+    setSheetError(null);
+    setSheet({ open: true, entry });
   }
 
   function handleSave(input: JournalEntryInput) {
     const entry = sheet.entry ? editJournalEntry(sheet.entry, input) : createJournalEntry(input);
-    persist(upsertJournalEntry(entries, entry));
-    setSheet({ open: false, entry: null });
+    const ok = persist(upsertJournalEntry(entries, entry));
+    // bug-03: only close (and so only discard the sheet's own draft state) once the save actually
+    // landed in storage. On failure the sheet — and the farmer's typed note inside it — stays put.
+    if (ok) setSheet({ open: false, entry: null });
   }
 
   function handleDelete(id: string) {
     persist(removeJournalEntry(entries, id));
+    setSheetError(null);
     setSheet({ open: false, entry: null });
   }
 
@@ -202,10 +220,10 @@ export default function FieldJournal() {
         <button
           type="button"
           className={motion.newEntry}
-          onClick={() => setSheet({ open: true, entry: null })}
+          onClick={() => openSheet(null)}
           style={{
             width: '100%', minHeight: 50, borderRadius: 14, border: 'none', cursor: 'pointer',
-            background: '#274D2C', color: '#fff', font: '700 15px/1 var(--font-sans), sans-serif',
+            background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', font: '700 15px/1 var(--font-sans), sans-serif',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
             boxShadow: '0 3px 12px rgba(20,40,22,0.18)',
           }}
@@ -227,7 +245,7 @@ export default function FieldJournal() {
             about storage, not the entries or the add-note action Simple leads with. */}
         {!simple && (
           <p style={{
-            margin: '8px 2px 0', font: '500 12px/1.5 var(--font-sans), sans-serif', color: '#6B6152',
+            margin: '8px 2px 0', font: '500 12px/1.5 var(--font-sans), sans-serif', color: 'var(--text-secondary)',
           }}>
             {t('journalLocalOnlyNote')} {t('journalWeightsLiveElsewhere')}{' '}
             <Link href="/records" style={{ color: 'var(--color-forest-800)', fontWeight: 700 }}>
@@ -240,8 +258,8 @@ export default function FieldJournal() {
       {notice && (
         <div style={{
           marginBottom: 12, padding: '10px 13px', borderRadius: 11,
-          background: '#FEF6E7', border: '1px solid #EBD6A8',
-          font: '500 12.5px/1.45 var(--font-sans), sans-serif', color: '#7A5B14',
+          background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', border: '1px solid color-mix(in srgb, var(--gold) 30%, transparent)',
+          font: '500 12.5px/1.45 var(--font-sans), sans-serif', color: 'var(--gold-dim)',
         }}>
           {notice}
         </div>
@@ -256,7 +274,7 @@ export default function FieldJournal() {
             {photos.map((p, i) => (
               <div
                 key={`${p.entryId}-${i}`}
-                style={{ flex: '0 0 auto', width: 92, height: 92, borderRadius: 12, overflow: 'hidden', background: '#E0D6C2', position: 'relative' }}
+                style={{ flex: '0 0 auto', width: 92, height: 92, borderRadius: 12, overflow: 'hidden', background: 'var(--bg-2)', position: 'relative' }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={p.src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -273,35 +291,41 @@ export default function FieldJournal() {
         </div>
       )}
 
-      </aside>
-      <div className={workspace.journalTimeline}>
-      {isZulu && <div role="note" style={{ marginBottom: 10, padding: '9px 12px', borderRadius: 10, background: '#FEF6E7', color: '#7A5B14', font: '500 12px/1.45 var(--font-sans), sans-serif' }}>
-        Izibonelo namanothi akho akhonjiswa njengoba ebhaliwe. Isibonelo neminye imibhalo isesiNgisini.
-      </div>}
-      {/* Category filter — an All tools refinement, not one of the entries or the single
-          add-note action Simple leads with. */}
+      {/* desk-18: this filter used to live at the top of the timeline column, where it did
+          nothing for the desktop layout's left rail (previously just stats + the add-note
+          button, with a huge empty band below). Moved into the sidebar so it earns the
+          column, and a desktop reader filters from beside the list rather than above it. */}
       {!simple && usedCategories.length > 1 && (
-        <div style={{ display: 'flex', gap: 7, overflowX: 'auto', paddingBottom: 10, marginBottom: 4 }}>
-          <Chip on={filter === 'all'} onClick={() => setFilter('all')}>{ui('All', 'Konke')} · {entries.length}</Chip>
-          {usedCategories.map((c) => (
-            <Chip key={c.key} on={filter === c.key} onClick={() => setFilter(c.key)} tint={c.tint} ink={c.ink}>
-              {getElementArt2(`journal_${c.key}`) ? (
-                <img className="produce-art" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain', display: 'inline-block', verticalAlign: '-2px' }} />
-              ) : (
-                c.icon
-              )}{' '}
-              {isZulu ? journalCategoryLabel(c.key) : c.label}
-            </Chip>
-          ))}
+        <div>
+          <Heading>{ui('Categories', 'Izigaba')}</Heading>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
+            <Chip on={filter === 'all'} onClick={() => setFilter('all')}>{ui('All', 'Konke')} · {entries.length}</Chip>
+            {usedCategories.map((c) => (
+              <Chip key={c.key} on={filter === c.key} onClick={() => setFilter(c.key)} tint={c.tint} ink={c.ink}>
+                {getElementArt2(`journal_${c.key}`) ? (
+                  <img className="produce-art" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain', display: 'inline-block', verticalAlign: '-2px' }} />
+                ) : (
+                  <c.icon size={12} aria-hidden />
+                )}{' '}
+                {isZulu ? journalCategoryLabel(c.key) : c.label}
+              </Chip>
+            ))}
+          </div>
         </div>
       )}
+
+      </aside>
+      <div className={workspace.journalTimeline}>
+      {isZulu && <div role="note" style={{ marginBottom: 10, padding: '9px 12px', borderRadius: 10, background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', color: 'var(--gold-dim)', font: '500 12px/1.45 var(--font-sans), sans-serif' }}>
+        Izibonelo namanothi akho akhonjiswa njengoba ebhaliwe. Isibonelo neminye imibhalo isesiNgisini.
+      </div>}
 
       {/* Timeline */}
       {ready && entries.length === 0 && (
         <div>
           <div style={{
             textAlign: 'center', padding: '30px 22px 26px', borderRadius: 16,
-            background: 'var(--bg-1)', border: '1px dashed #D9CDB4', marginBottom: 20,
+            background: 'var(--bg-1)', border: '1px dashed var(--border)', marginBottom: 20,
           }}>
             <NotebookPen size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 10px' }} />
             <div style={{ font: '600 16px Newsreader, Georgia, serif', color: 'var(--text-primary)', marginBottom: 6 }}>
@@ -328,7 +352,7 @@ export default function FieldJournal() {
             </div>
 
             <div style={{ position: 'relative', paddingLeft: 16 }}>
-              <div style={{ position: 'absolute', left: 5, top: 6, bottom: 6, width: 2, background: '#DCD0B6', borderRadius: 1, opacity: 0.6 }} />
+              <div style={{ position: 'absolute', left: 5, top: 6, bottom: 6, width: 2, background: 'var(--border)', borderRadius: 1, opacity: 0.6 }} />
               {EXAMPLE_JOURNAL_ENTRIES.map((ex) => {
                 const cat = journalCategory(ex.category);
                 return (
@@ -337,11 +361,11 @@ export default function FieldJournal() {
                     aria-label={`${ui('Example entry (not a real record)', 'Isibonelo, akulona irekhodi langempela')}: ${ex.title}`}
                     style={{
                       position: 'relative', marginBottom: 10, borderRadius: 14, opacity: 0.82,
-                      background: 'var(--bg-1)', border: '1.5px dashed #D9CDB4',
+                      background: 'var(--bg-1)', border: '1.5px dashed var(--border)',
                       borderLeft: `3px dashed ${cat.ink}`, padding: '12px 40px 12px 13px',
                     }}
                   >
-                    <div style={{ position: 'absolute', left: -15, top: 18, width: 10, height: 10, borderRadius: 5, background: '#D9CDB4', border: '2px solid #E4DCC6' }} />
+                    <div style={{ position: 'absolute', left: -15, top: 18, width: 10, height: 10, borderRadius: 5, background: 'var(--border)', border: '2px solid var(--bg-0)' }} />
                     <span style={{
                       position: 'absolute', top: 10, right: 10,
                       padding: '3px 7px', borderRadius: 6, background: '#9A6018', color: '#fff',
@@ -362,7 +386,7 @@ export default function FieldJournal() {
                         {getElementArt2(`journal_${cat.key}`) ? (
                           <img className="produce-art" src={getElementArt2(`journal_${cat.key}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
                         ) : (
-                          cat.icon
+                          <cat.icon size={11} aria-hidden />
                         )}{' '}
                         {isZulu ? journalCategoryLabel(cat.key) : cat.label}
                       </span>
@@ -387,7 +411,7 @@ export default function FieldJournal() {
             <button
               type="button"
               className={motion.newEntry}
-              onClick={() => setSheet({ open: true, entry: null })}
+              onClick={() => openSheet(null)}
               style={{
                 width: '100%', minHeight: 46, borderRadius: 13, cursor: 'pointer', marginTop: 4,
                 background: 'var(--bg-1)', border: '1.5px dashed var(--color-forest-800)', color: 'var(--color-forest-800)',
@@ -410,14 +434,14 @@ export default function FieldJournal() {
             padding: '6px 2px 8px', margin: '0 0 6px',
             background: 'linear-gradient(var(--bg-0) 72%, rgba(228,220,198,0))',
             font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em',
-            textTransform: 'uppercase', color: '#7A6B52',
+            textTransform: 'uppercase', color: 'var(--text-muted)',
           }}>
             {isZulu ? formatZuluMonth(group.key) : group.label} · {group.entries.length}
           </div>
 
           <div style={{ position: 'relative', paddingLeft: 16 }}>
             {/* the spine */}
-            <div style={{ position: 'absolute', left: 5, top: 6, bottom: 6, width: 2, background: '#DCD0B6', borderRadius: 1 }} />
+            <div style={{ position: 'absolute', left: 5, top: 6, bottom: 6, width: 2, background: 'var(--border)', borderRadius: 1 }} />
             {group.entries.map((entry) => {
               const cat = journalCategory(entry.category);
               return (
@@ -430,7 +454,7 @@ export default function FieldJournal() {
                     borderLeft: `3px solid ${cat.ink}`, padding: '12px 12px 12px 13px',
                   }}
                 >
-                  <div style={{ position: 'absolute', left: -15, top: 18, width: 10, height: 10, borderRadius: 5, background: cat.ink, border: '2px solid #E4DCC6' }} />
+                  <div style={{ position: 'absolute', left: -15, top: 18, width: 10, height: 10, borderRadius: 5, background: cat.ink, border: '2px solid var(--bg-0)' }} />
 
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: 9 }}>
                     <div style={{ flex: 1, minWidth: 0 }}>
@@ -446,7 +470,7 @@ export default function FieldJournal() {
                           {getElementArt2(`journal_${entry.category}`) ? (
                             <img className="produce-art" src={getElementArt2(`journal_${entry.category}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
                           ) : (
-                            cat.icon
+                            <cat.icon size={11} aria-hidden />
                           )}{' '}
                           {isZulu ? journalCategoryLabel(cat.key) : cat.label}
                         </span>
@@ -478,7 +502,7 @@ export default function FieldJournal() {
                               key={i}
                               src={src}
                               alt=""
-                              style={{ width: 62, height: 62, objectFit: 'cover', borderRadius: 9, background: '#E0D6C2' }}
+                              style={{ width: 62, height: 62, objectFit: 'cover', borderRadius: 9, background: 'var(--bg-2)' }}
                             />
                           ))}
                         </div>
@@ -488,7 +512,7 @@ export default function FieldJournal() {
                     <button
                       type="button"
                       className={motion.editEntry}
-                      onClick={() => setSheet({ open: true, entry })}
+                      onClick={() => openSheet(entry)}
                       aria-label={`${ui('Edit entry', 'Hlela okufakiwe')}: ${entry.title || (isZulu ? formatZuluJournalDate(entry.date) : formatJournalDate(entry.date))}`}
                       style={{
                         flexShrink: 0, width: 40, height: 40, borderRadius: 10, cursor: 'pointer',
@@ -512,9 +536,10 @@ export default function FieldJournal() {
           entry={sheet.entry}
           beds={beds}
           crops={crops}
+          error={sheetError}
           onSave={handleSave}
           onDelete={handleDelete}
-          onClose={() => setSheet({ open: false, entry: null })}
+          onClose={() => { setSheetError(null); setSheet({ open: false, entry: null }); }}
         />
       )}
     </div>
@@ -536,7 +561,7 @@ function Heading({ children }: { children: React.ReactNode }) {
   return (
     <div style={{
       font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em',
-      textTransform: 'uppercase', color: '#7A6B52', marginBottom: 8,
+      textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 8,
     }}>
       {children}
     </div>
@@ -547,7 +572,7 @@ function Pill({ children }: { children: React.ReactNode }) {
   return (
     <span style={{
       display: 'inline-flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 8,
-      background: 'rgba(92,80,64,0.07)', border: '1px solid #E7DFCC',
+      background: 'var(--bg-2)', border: '1px solid var(--border)',
       font: '500 12px/1 var(--font-sans), sans-serif', color: 'var(--text-secondary)',
     }}>
       {children}
@@ -568,9 +593,9 @@ function Chip({
       aria-pressed={on}
       style={{
         flex: '0 0 auto', minHeight: 38, padding: '0 13px', borderRadius: 19, cursor: 'pointer',
-        background: on ? (tint ?? 'rgba(31,77,43,0.12)') : '#FFFEFA',
-        border: `1.5px solid ${on ? (ink ?? '#1F4D2B') : '#E2D8C4'}`,
-        color: on ? (ink ?? '#1F4D2B') : '#5C5040',
+        background: on ? (tint ?? 'var(--badge-bg)') : 'var(--bg-1)',
+        border: `1.5px solid ${on ? (ink ?? 'var(--color-forest-800)') : 'var(--border)'}`,
+        color: on ? (ink ?? 'var(--color-forest-800)') : 'var(--text-secondary)',
         font: `${on ? 700 : 500} 12.5px/1 var(--font-sans), sans-serif`,
         whiteSpace: 'nowrap',
       }}

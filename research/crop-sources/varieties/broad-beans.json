@@ -1,0 +1,25 @@
+{
+  "key": "broad-beans",
+  "varieties": [
+    {
+      "name": "Longpod Aquadulce",
+      "zones": [],
+      "maturity": null,
+      "season": "Autumn to Winter sowing; 15-20°C",
+      "traits": "Early, tall plants; long pods with large, flat, pale seeds; heirloom, non-hybrid, open-pollinated; 'one of the few podded vegetables for winter and early spring'",
+      "type": "OP",
+      "note": "Kirchhoffs (SA seed company) product listing — the only SA-specific cultivar source found for this crop. It gives a season and temperature range but names no province or climate zone, so no zones are assigned rather than guessed.",
+      "evidence": [
+        { "quote": "Broad Beans Longpod Aquadulce. The rich flavour and crisp texture of freshly harvested garden beans cannot be beaten. Beans should be sown before the soil becomes too warm. Early, tall plants bear long pods with large, flat pale seeds inside. One of the few podded vegetables for winter and early spring.", "url": "https://www.kirchhoffs.co.za/our-range/vegetables/beans-vegetables/broad-beans-longpod-aquadulce/", "page": null, "doc": "Broad Beans Longpod Aquadulce, Kirchhoffs product page" },
+        { "quote": "Season: Autumn to Winter Temperature: 15-20°C Sow: Depth: 20 mm Spacing: 30 x 50 cm Germinate: 7-14 days Harvest: 90 - 100 days", "url": "https://www.kirchhoffs.co.za/our-range/vegetables/beans-vegetables/broad-beans-longpod-aquadulce/", "page": null, "doc": "Broad Beans Longpod Aquadulce, Kirchhoffs product page" }
+      ]
+    }
+  ],
+  "zoneAdvice": {},
+  "gaps": [
+    "Only one named cultivar found for the entire crop, and it comes from a single SA seed retailer's product listing, not a DAFF/ARC/KZN DARD agronomic guide — no such guide could be located this session despite multiple targeted searches and KZN DARD filename guesses (broad_beans.pdf and variants all returned HTTP 404).",
+    "The source names no province, region or climate zone at all — only a season (Autumn-Winter) and a temperature preference (15-20°C) — so every zone in the required output is an honest gap for this crop, not an inference.",
+    "The widely-repeated general claim that broad beans are notably frost-tolerant among legumes was not independently verified against a South African source this session and is therefore excluded rather than stated as fact.",
+    "No zone-specific recommendation exists for any of the 8 zones in this file."
+  ]
+}

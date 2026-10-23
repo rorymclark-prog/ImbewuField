@@ -691,6 +691,881 @@ async function migrateSoilCoverStills() {
   await cache.put(marker, new Response('Improved soil-cover stills'));
 }
 
+// The Tshivenda, Sesotho and Xitsonga soil slides were refreshed in place. Retire only
+// the twelve saved stills so a learner can choose when to download their replacements.
+async function migrateSoilHealthRegionalStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/soil-health/.regional-stills-20261003';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(
+    ['st', 've', 'ts'].flatMap(function (language) {
+      return [1, 2, 5, 19].map(function (slide) {
+        return '/course-decks/soil-health/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+      });
+    })
+  );
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed regional Soil Health stills'));
+}
+
+// The ST, VE and TS Reading slides were refreshed at their existing URLs. Retire only
+// those 63 saved stills once; keep every English slide, recording and other course download.
+// The replacement remains learner-chosen so activation never spends airtime downloading it.
+async function migrateReadingLandscapeRegionalStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/.regional-stills-20261003';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(
+    ['st', 've', 'ts'].flatMap(function (language) {
+      return Array.from({ length: 21 }, function (_, index) {
+        return '/course-decks/reading-landscape/' + language + '/slide-' + String(index + 1).padStart(2, '0') + '.webp';
+      });
+    })
+  );
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed regional Reading Landscape stills'));
+}
+
+// The opening six Vegetables source-paired frames were refreshed in place. Retire just
+// those 18 regional stills once; the new images remain a deliberate learner download.
+async function migrateVegetablesOpeningRegionalStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.opening-regional-stills-20261003';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(
+    ['st', 've', 'ts'].flatMap(function (language) {
+      return Array.from({ length: 6 }, function (_, index) {
+        return '/course-decks/vegetables-staples/' + language + '/slide-' + String(index + 1).padStart(2, '0') + '.webp';
+      });
+    })
+  );
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed opening Vegetables regional stills'));
+}
+
+// The remaining localized Vegetables slides were refreshed at their existing URLs. Retire
+// only slides 7–18 for ST, VE and TS once; English, isiZulu and saved recordings remain intact.
+// Replacement stills stay learner-chosen, so activation does not download them over mobile data.
+async function migrateVegetablesRemainingRegionalStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.remaining-regional-stills-20261003';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(
+    ['st', 've', 'ts'].flatMap(function (language) {
+      return Array.from({ length: 12 }, function (_, index) {
+        return '/course-decks/vegetables-staples/' + language + '/slide-' + String(index + 7).padStart(2, '0') + '.webp';
+      });
+    })
+  );
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed remaining Vegetables regional stills'));
+}
+
+// These Water stills gained source-paired regional wording at their existing URLs.
+// Keep untouched frames and recordings; the learner chooses when to download replacements.
+async function migrateWaterRegionalDraftStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/water-harvesting/.regional-draft-stills-20261003';
+  if (await cache.match(marker)) return;
+  const changed = {
+    st: [1, 3, 6, 8, 9, 10, 11, 13, 14, 15, 17, 18, 19, 22, 23, 24],
+    ve: [1, 3, 6, 8, 9, 10, 11, 13, 14, 15, 17, 18, 19, 23, 24],
+    ts: [1, 6, 8, 9, 10, 11, 13, 14, 15, 17, 18, 19, 23, 24],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/water-harvesting/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Water regional stills'));
+}
+
+// The source-paired Soil draft text changed only these stills. Keep the rest of a saved
+// course intact and let learners choose a replacement download when they have signal.
+async function migrateSoilRegionalDraftStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/soil-health/.regional-draft-stills-20261003';
+  if (await cache.match(marker)) return;
+  const changed = {
+    st: [4, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17, 19, 20],
+    ve: [4, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17, 18, 19, 20],
+    ts: [4, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17, 19, 20],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/soil-health/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Soil regional stills'));
+}
+
+// The accepted Reading Landscape prose changed seventeen ST, VE and TS frames.
+// Retire only those saved stills once; keep every other lesson asset, and leave
+// replacement downloads to the learner so activation never spends airtime.
+async function migrateReadingLandscapeDraftStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/.regional-draft-stills-20261004';
+  if (await cache.match(marker)) return;
+  const changed = {
+    st: [4, 7, 8, 12, 14],
+    ve: [3, 4, 7, 8, 12, 14],
+    ts: [3, 4, 7, 8, 12, 14],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/reading-landscape/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Reading Landscape regional stills'));
+}
+
+// The next source-paired Reading batch changes four more regional frames per language.
+// Retire only those saved WebPs once and leave replacement downloads to the learner.
+async function migrateReadingLandscapeOrdinaryStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/.regional-ordinary-stills-20261004';
+  if (await cache.match(marker)) return;
+  const changed = {
+    st: [8, 10, 15, 21],
+    ve: [8, 10, 15, 21],
+    ts: [8, 10, 15, 21],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/reading-landscape/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Reading Landscape ordinary regional stills'));
+}
+
+// The Intro VE and TS source-paired drafts refresh 21 stills each. Retire only those saved
+// regional frames once; leave replacement downloads to learners and keep Sesotho speech intact.
+async function migrateIntroRegionalSubstantiveStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/intro-permaculture/.regional-substantive-stills-20261004';
+  if (await cache.match(marker)) return;
+  const changed = {
+    ve: [1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+    ts: [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/intro-permaculture/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Introduction regional stills'));
+}
+
+// Learners can save the older Vegetables wording. Retire only the eight regional frames
+// changed with their source-bound lesson paragraphs; keep all narration and other packs.
+async function migrateVegetablesOrdinaryLessonStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.ordinary-lesson-stills-20261004';
+  if (await cache.match(marker)) return;
+  const changed = { st: [16], ve: [16], ts: [4, 6, 10, 11, 15, 16] };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/vegetables-staples/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Vegetables ordinary lesson stills'));
+}
+
+// A saved Market frame must not keep the wording superseded by the checked learner draft.
+// Refresh only these regional stills once, without fetching media or discarding narration.
+async function migrateMarketLearnerReuseStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/market-community/.learner-reuse-stills-20261004';
+  if (await cache.match(marker)) return;
+  const changed = { st: [15, 18], ve: [8, 15, 18], ts: [15, 18] };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/market-community/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Market learner draft stills'));
+}
+
+// Reading slide 16 reuses the current learner draft, and the ST cards also use checked spelling.
+// Retire only these six regional stills once; leave cache downloads to the learner.
+async function migrateReadingLandscapePairedReuseStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/.regional-paired-reuse-stills-20261004';
+  if (await cache.match(marker)) return;
+  const changed = { st: [1, 3, 16, 17], ve: [16], ts: [16] };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/reading-landscape/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Reading Landscape learner-draft stills'));
+}
+
+// The latest Reading observation batch changes slides 18–20 in all three regional languages.
+// Retire only those nine saved frames once; new stills remain a learner-chosen download.
+async function migrateReadingLandscapeObservationStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/.regional-observation-stills-20261004';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(
+    ['st', 've', 'ts'].flatMap(function (language) {
+      return [18, 19, 20].map(function (slide) {
+        return '/course-decks/reading-landscape/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+      });
+    })
+  );
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Reading observation stills'));
+}
+
+// Eight source-paired stills changed across the Vegetables, Intro and Reading decks.
+// Retire only those saved WebPs once; replacement downloads remain learner-chosen.
+async function migrateRegionalRecordIntroReadingStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/.regional-record-intro-stills-20261004';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/vegetables-staples/st/slide-18.webp',
+    '/course-decks/vegetables-staples/ve/slide-18.webp',
+    '/course-decks/vegetables-staples/ts/slide-18.webp',
+    '/course-decks/intro-permaculture/ve/slide-14.webp',
+    '/course-decks/intro-permaculture/ts/slide-14.webp',
+    '/course-decks/reading-landscape/ts/slide-18.webp',
+    '/course-decks/reading-landscape/ve/slide-19.webp',
+    '/course-decks/reading-landscape/ts/slide-19.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired regional record and map stills'));
+}
+
+// The three Field Action learner drafts changed slide 18 in the regional Vegetables decks.
+// Retire only those saved stills once; replacement images remain learner-chosen downloads.
+async function migrateVegetablesFieldActionStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.field-action-slide18-20261004';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(['st', 've', 'ts'].map(function (language) {
+    return '/course-decks/vegetables-staples/' + language + '/slide-18.webp';
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed regional Vegetables Field Action stills'));
+}
+
+// The field-assignment exercise refreshed three Vegetable stills and four Intro stills.
+// Retire only those seven saved frames once; leave other languages, recordings and films cached.
+async function migrateRegionalAssignmentExerciseStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.regional-assignment-exercise-20261004';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    ...['st', 've', 'ts'].map(function (language) {
+      return '/course-decks/vegetables-staples/' + language + '/slide-17.webp';
+    }),
+    '/course-decks/intro-permaculture/ve/slide-20.webp',
+    '/course-decks/intro-permaculture/ve/slide-21.webp',
+    '/course-decks/intro-permaculture/ts/slide-20.webp',
+    '/course-decks/intro-permaculture/ts/slide-22.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed regional assignment exercise stills'));
+}
+
+// The Vegetables L2 VE and TS lesson panels now show source-paired ordinary prose.
+// Retire only those eight saved stills once; replacement downloads remain learner-chosen.
+async function migrateVegetablesL2OrdinaryPairedStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.l2-ordinary-paired-stills-20261004';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(
+    ['ve', 'ts'].flatMap(function (language) {
+      return [8, 9, 10, 11].map(function (slide) {
+        return '/course-decks/vegetables-staples/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+      });
+    })
+  );
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed Vegetables L2 source-paired regional stills'));
+}
+
+// Vegetables L1 now carries the accepted ordinary-prose draft in three regional decks.
+// Retire only the twelve changed saved stills once; keep audio and every other slide.
+async function migrateVegetablesL1FullerOrdinaryPairedStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.l1-fuller-ordinary-paired-stills-20261005';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(
+    ['st', 've', 'ts'].flatMap(function (language) {
+      return [4, 5, 6, 7].map(function (slide) {
+        return '/course-decks/vegetables-staples/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+      });
+    })
+  );
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed Vegetables L1 fuller source-paired regional stills'));
+}
+
+// L4 ordinary prose is now paired in six regional frames; retire only those saved copies once.
+async function migrateVegetablesL4OrdinaryPairedStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.l4-ordinary-paired-stills-20261005';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(
+    ['st', 've', 'ts'].flatMap(function (language) {
+      return [15, 16].map(function (slide) {
+        return '/course-decks/vegetables-staples/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+      });
+    })
+  );
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed Vegetables L4 ordinary source-paired regional stills'));
+}
+
+// L2's newly checked complete-row drafts refresh six regional saved cards. Retire
+// only those URLs once; replacement slides remain learner-chosen downloads.
+async function migrateVegetablesL2FullerOrdinaryPairedStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.l2-fuller-ordinary-paired-stills-20261005';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/vegetables-staples/st/slide-10.webp',
+    '/course-decks/vegetables-staples/ve/slide-08.webp',
+    '/course-decks/vegetables-staples/ve/slide-10.webp',
+    '/course-decks/vegetables-staples/ts/slide-08.webp',
+    '/course-decks/vegetables-staples/ts/slide-09.webp',
+    '/course-decks/vegetables-staples/ts/slide-10.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed six Vegetables L2 fuller source-paired regional stills'));
+}
+
+// L4 precision wording changes replace these six compressed paired cards; keep the
+// refresh scoped to their saved URL variants so narration and films stay available.
+async function migrateVegetablesPestPrecisionPairedStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.pest-precision-paired-stills-20261006';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(
+    ['st', 've', 'ts'].flatMap(function (language) {
+      return [15, 16].map(function (slide) {
+        return '/course-decks/vegetables-staples/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+      });
+    })
+  );
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed six Vegetables pest-precision paired stills'));
+}
+
+// Accepted L3 ordinary spans change only these eight silent cards. Refresh their
+// saved URL variants once, keeping replacement downloads and recorded media intact.
+async function migrateVegetablesL3OrdinaryResidualStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.l3-ordinary-residual-stills-20261006';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/vegetables-staples/st/slide-12.webp',
+    '/course-decks/vegetables-staples/st/slide-13.webp',
+    '/course-decks/vegetables-staples/st/slide-14.webp',
+    '/course-decks/vegetables-staples/ve/slide-12.webp',
+    '/course-decks/vegetables-staples/ve/slide-13.webp',
+    '/course-decks/vegetables-staples/ts/slide-12.webp',
+    '/course-decks/vegetables-staples/ts/slide-13.webp',
+    '/course-decks/vegetables-staples/ts/slide-14.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed eight source-paired Vegetables L3 ordinary stills'));
+}
+
+// Five accepted L1 source-paired paragraphs now have fuller ordinary wording.
+// Retire only their saved still variants once; audio and later downloads stay intact.
+async function migrateVegetablesL1OrdinaryResidualStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.l1-ordinary-residual-stills-20261006';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/vegetables-staples/st/slide-06.webp',
+    '/course-decks/vegetables-staples/ve/slide-04.webp',
+    '/course-decks/vegetables-staples/ve/slide-05.webp',
+    '/course-decks/vegetables-staples/ve/slide-06.webp',
+    '/course-decks/vegetables-staples/ts/slide-06.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed five source-paired Vegetables L1 ordinary stills'));
+}
+
+// The full ordinary Intro batch changes only these reviewed VE/TS stills.
+// Refresh saved variants once; narration, films and later downloads stay learner-chosen.
+async function migrateIntroFullOrdinaryCompletionStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/intro-permaculture/.full-ordinary-completion-stills-20261006';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/ve/slide-01.webp',
+    '/course-decks/intro-permaculture/ve/slide-03.webp',
+    '/course-decks/intro-permaculture/ve/slide-04.webp',
+    '/course-decks/intro-permaculture/ve/slide-06.webp',
+    '/course-decks/intro-permaculture/ve/slide-07.webp',
+    '/course-decks/intro-permaculture/ve/slide-08.webp',
+    '/course-decks/intro-permaculture/ve/slide-10.webp',
+    '/course-decks/intro-permaculture/ve/slide-11.webp',
+    '/course-decks/intro-permaculture/ve/slide-12.webp',
+    '/course-decks/intro-permaculture/ve/slide-13.webp',
+    '/course-decks/intro-permaculture/ve/slide-14.webp',
+    '/course-decks/intro-permaculture/ve/slide-15.webp',
+    '/course-decks/intro-permaculture/ve/slide-16.webp',
+    '/course-decks/intro-permaculture/ve/slide-18.webp',
+    '/course-decks/intro-permaculture/ve/slide-19.webp',
+    '/course-decks/intro-permaculture/ve/slide-20.webp',
+    '/course-decks/intro-permaculture/ve/slide-21.webp',
+    '/course-decks/intro-permaculture/ve/slide-22.webp',
+    '/course-decks/intro-permaculture/ts/slide-01.webp',
+    '/course-decks/intro-permaculture/ts/slide-04.webp',
+    '/course-decks/intro-permaculture/ts/slide-06.webp',
+    '/course-decks/intro-permaculture/ts/slide-07.webp',
+    '/course-decks/intro-permaculture/ts/slide-08.webp',
+    '/course-decks/intro-permaculture/ts/slide-09.webp',
+    '/course-decks/intro-permaculture/ts/slide-10.webp',
+    '/course-decks/intro-permaculture/ts/slide-11.webp',
+    '/course-decks/intro-permaculture/ts/slide-12.webp',
+    '/course-decks/intro-permaculture/ts/slide-13.webp',
+    '/course-decks/intro-permaculture/ts/slide-14.webp',
+    '/course-decks/intro-permaculture/ts/slide-15.webp',
+    '/course-decks/intro-permaculture/ts/slide-16.webp',
+    '/course-decks/intro-permaculture/ts/slide-18.webp',
+    '/course-decks/intro-permaculture/ts/slide-19.webp',
+    '/course-decks/intro-permaculture/ts/slide-20.webp',
+    '/course-decks/intro-permaculture/ts/slide-21.webp',
+    '/course-decks/intro-permaculture/ts/slide-22.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed 36 source-paired Intro ordinary stills'));
+}
+
+// Thirteen accepted Vegetables and Market source-paired cards changed after their previous renders.
+// Retire only those saved URL variants once; audio, films and later learner downloads stay intact.
+async function migrateNativePairedResidualStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.native-paired-residual-stills-20261006';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/vegetables-staples/st/slide-05.webp',
+    '/course-decks/vegetables-staples/st/slide-16.webp',
+    '/course-decks/vegetables-staples/ts/slide-05.webp',
+    '/course-decks/vegetables-staples/ts/slide-16.webp',
+    '/course-decks/vegetables-staples/ve/slide-05.webp',
+    '/course-decks/vegetables-staples/ve/slide-16.webp',
+    '/course-decks/market-community/st/slide-06.webp',
+    '/course-decks/market-community/st/slide-11.webp',
+    '/course-decks/market-community/ts/slide-06.webp',
+    '/course-decks/market-community/ts/slide-12.webp',
+    '/course-decks/market-community/ts/slide-18.webp',
+    '/course-decks/market-community/ve/slide-06.webp',
+    '/course-decks/market-community/ve/slide-11.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed thirteen source-paired Vegetables and Market stills'));
+}
+
+// Four Reading stills now use checked frost wording in their paired drafts.
+// Retire only those saved URLs once; replacement downloads remain learner-chosen.
+async function migrateReadingLandscapeFrostBodySyncStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/.frost-body-sync-stills-20261005';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/reading-landscape/st/slide-11.webp',
+    '/course-decks/reading-landscape/ts/slide-14.webp',
+    '/course-decks/reading-landscape/ve/slide-14.webp',
+    '/course-decks/reading-landscape/ve/slide-18.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed four source-paired Reading frost stills'));
+}
+
+// Fuller source-paired Reading cards replace these exact saved stills once, without
+// spending airtime or removing narration and shared films a learner already downloaded.
+// These Market L1 cards replace saved draft wording; all narration and other cards remain independent.
+async function migrateMarketL1OrdinaryStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/market-community/.regional-l1-ordinary-stills-20261005';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/market-community/st/slide-01.webp',
+    '/course-decks/market-community/st/slide-02.webp',
+    '/course-decks/market-community/st/slide-05.webp',
+    '/course-decks/market-community/st/slide-07.webp',
+    '/course-decks/market-community/st/slide-08.webp',
+    '/course-decks/market-community/ve/slide-02.webp',
+    '/course-decks/market-community/ve/slide-05.webp',
+    '/course-decks/market-community/ve/slide-06.webp',
+    '/course-decks/market-community/ve/slide-07.webp',
+    '/course-decks/market-community/ve/slide-08.webp',
+    '/course-decks/market-community/ts/slide-01.webp',
+    '/course-decks/market-community/ts/slide-02.webp',
+    '/course-decks/market-community/ts/slide-05.webp',
+    '/course-decks/market-community/ts/slide-06.webp',
+    '/course-decks/market-community/ts/slide-07.webp',
+    '/course-decks/market-community/ts/slide-08.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Market L1 ordinary stills'));
+}
+
+async function migrateReadingLandscapeFullOrdinaryStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/.regional-full-ordinary-stills-20261005';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/reading-landscape/st/slide-04.webp',
+    '/course-decks/reading-landscape/st/slide-06.webp',
+    '/course-decks/reading-landscape/st/slide-07.webp',
+    '/course-decks/reading-landscape/st/slide-08.webp',
+    '/course-decks/reading-landscape/st/slide-10.webp',
+    '/course-decks/reading-landscape/st/slide-12.webp',
+    '/course-decks/reading-landscape/st/slide-13.webp',
+    '/course-decks/reading-landscape/st/slide-14.webp',
+    '/course-decks/reading-landscape/st/slide-16.webp',
+    '/course-decks/reading-landscape/st/slide-19.webp',
+    '/course-decks/reading-landscape/st/slide-20.webp',
+    '/course-decks/reading-landscape/st/slide-21.webp',
+    '/course-decks/reading-landscape/ve/slide-01.webp',
+    '/course-decks/reading-landscape/ve/slide-02.webp',
+    '/course-decks/reading-landscape/ve/slide-03.webp',
+    '/course-decks/reading-landscape/ve/slide-04.webp',
+    '/course-decks/reading-landscape/ve/slide-06.webp',
+    '/course-decks/reading-landscape/ve/slide-07.webp',
+    '/course-decks/reading-landscape/ve/slide-08.webp',
+    '/course-decks/reading-landscape/ve/slide-09.webp',
+    '/course-decks/reading-landscape/ve/slide-10.webp',
+    '/course-decks/reading-landscape/ve/slide-11.webp',
+    '/course-decks/reading-landscape/ve/slide-12.webp',
+    '/course-decks/reading-landscape/ve/slide-13.webp',
+    '/course-decks/reading-landscape/ve/slide-14.webp',
+    '/course-decks/reading-landscape/ve/slide-16.webp',
+    '/course-decks/reading-landscape/ve/slide-17.webp',
+    '/course-decks/reading-landscape/ve/slide-18.webp',
+    '/course-decks/reading-landscape/ve/slide-19.webp',
+    '/course-decks/reading-landscape/ve/slide-20.webp',
+    '/course-decks/reading-landscape/ve/slide-21.webp',
+    '/course-decks/reading-landscape/ts/slide-01.webp',
+    '/course-decks/reading-landscape/ts/slide-02.webp',
+    '/course-decks/reading-landscape/ts/slide-03.webp',
+    '/course-decks/reading-landscape/ts/slide-04.webp',
+    '/course-decks/reading-landscape/ts/slide-06.webp',
+    '/course-decks/reading-landscape/ts/slide-07.webp',
+    '/course-decks/reading-landscape/ts/slide-08.webp',
+    '/course-decks/reading-landscape/ts/slide-09.webp',
+    '/course-decks/reading-landscape/ts/slide-10.webp',
+    '/course-decks/reading-landscape/ts/slide-11.webp',
+    '/course-decks/reading-landscape/ts/slide-12.webp',
+    '/course-decks/reading-landscape/ts/slide-13.webp',
+    '/course-decks/reading-landscape/ts/slide-14.webp',
+    '/course-decks/reading-landscape/ts/slide-16.webp',
+    '/course-decks/reading-landscape/ts/slide-17.webp',
+    '/course-decks/reading-landscape/ts/slide-19.webp',
+    '/course-decks/reading-landscape/ts/slide-20.webp',
+    '/course-decks/reading-landscape/ts/slide-21.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Reading ordinary stills'));
+}
+
+// First-observation wording changed on eight Reading cards. Retire only those saved regional stills once.
+async function migrateReadingLandscapeFirstObservationStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/.regional-first-observation-stills-20261005';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/reading-landscape/st/slide-02.webp',
+    '/course-decks/reading-landscape/st/slide-05.webp',
+    '/course-decks/reading-landscape/st/slide-06.webp',
+    '/course-decks/reading-landscape/ve/slide-05.webp',
+    '/course-decks/reading-landscape/ve/slide-06.webp',
+    '/course-decks/reading-landscape/ts/slide-02.webp',
+    '/course-decks/reading-landscape/ts/slide-05.webp',
+    '/course-decks/reading-landscape/ts/slide-06.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed eight source-paired Reading observation stills'));
+}
+
+// These nine regional slides now show the approved source-paired learner text. Retire only
+// their saved still variants once; keep audio, films, other slides, and learner-chosen downloads.
+async function migrateStudyOutcomesResidualStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.study-outcomes-residual-stills-20261005';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/ve/slide-22.webp',
+    '/course-decks/intro-permaculture/ts/slide-22.webp',
+    '/course-decks/vegetables-staples/st/slide-03.webp',
+    '/course-decks/vegetables-staples/ve/slide-03.webp',
+    '/course-decks/vegetables-staples/ts/slide-03.webp',
+    '/course-decks/market-community/st/slide-15.webp',
+    '/course-decks/market-community/ts/slide-15.webp',
+    '/course-decks/reading-landscape/ve/slide-14.webp',
+    '/course-decks/reading-landscape/ts/slide-14.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed nine source-paired Study outcome stills'));
+}
+
+// The reviewed Water predicates change only these saved stills. Retire exact paths and
+// their query variants once, so learner-chosen replacement downloads show the new wording.
+async function migrateWaterReviewedPrecisionStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/water-harvesting/.reviewed-precision-stills-20261005';
+  if (await cache.match(marker)) return;
+  const changed = {
+    st: [6, 13, 14, 22],
+    ve: [6, 8, 10, 11, 13, 14, 17, 18, 22],
+    ts: [8, 13, 14, 15, 17, 18, 22],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/water-harvesting/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Water precision stills'));
+}
+
+// The ordinary-copy pass redrew only these Water lesson cards. Retire those exact saved
+// stills once; preserve narration, shared films and every unrelated learner download.
+async function migrateWaterOrdinaryCompletionStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/water-harvesting/.ordinary-completion-stills-20261006';
+  if (await cache.match(marker)) return;
+  const changed = {
+    st: [6, 8, 13, 14, 15, 17, 18, 22],
+    ve: [6, 8, 10, 11, 13, 14, 15, 17, 18],
+    ts: [6, 8, 10, 11, 13, 14, 15, 17, 18, 22],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/water-harvesting/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed Water ordinary-completion stills'));
+}
+
+// The reviewed Soil ordinary wording reuses these still URLs. Retire their old query
+// variants once so a saved lesson cannot conceal the new source-paired draft wording.
+async function migrateSoilOrdinaryCompletionStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/soil-health/.ordinary-completion-stills-20261006';
+  if (await cache.match(marker)) return;
+  const changed = {
+    st: [18],
+    ve: [4, 8],
+    ts: [8, 13, 18],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/soil-health/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed Soil ordinary-completion stills'));
+}
+
+// Root-reviewed ordinary Intro targets replace exactly these VE/TS stills. Retire
+// old saved query variants once; ST narration, films and every other download stay.
+async function migrateIntroOrdinaryNextStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/intro-permaculture/.ordinary-next-stills-20261006';
+  if (await cache.match(marker)) return;
+  const changed = {
+    ve: [1, 3, 4, 6, 8, 11, 13, 15, 16, 17, 18, 19, 20, 21, 22],
+    ts: [1, 3, 4, 6, 8, 11, 12, 13, 15, 17, 18, 19, 20, 21, 22],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/intro-permaculture/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed Intro ordinary next stills'));
+}
+
+// 6 October 2026: accepted ordinary Market clauses change eleven saved stills.
+// Retire their stale query variants once; keep shared films, narration and later downloads.
+async function migrateMarketOrdinaryResidualStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/market-community/.ordinary-residual-stills-20261006';
+  if (await cache.match(marker)) return;
+  const changed = { st: [12, 15], ve: [7, 8, 10, 11, 15, 17], ts: [7, 10, 17] };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/market-community/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed Market ordinary residual stills'));
+}
+
+// Checked learner paragraphs replace these saved Soil stills; refresh their query variants once.
+// Keep narration and shared films offline, and leave replacement downloads learner-chosen.
+async function migrateSoilFullerLearnerStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/soil-health/.fuller-learner-stills-20261005';
+  if (await cache.match(marker)) return;
+  const changed = {
+    st: [4, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17],
+    ve: [4, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17, 18],
+    ts: [4, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/soil-health/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired fuller Soil learner stills'));
+}
+
+// The Soil Health and Water Harvesting ST, VE and TS decks now pair the remaining ordinary prose with its
+// exact English. Retire only the redrawn saved stills once; replacement downloads remain learner-chosen.
+async function migrateSoilWaterOrdinaryPairedStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.soil-water-ordinary-paired-stills-20261005';
+  if (await cache.match(marker)) return;
+  const changed = {
+    'soil-health': {
+      st: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      ve: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      ts: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+    },
+    'water-harvesting': {
+      st: [1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
+      ve: [1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
+      ts: [1, 2, 3, 4, 5, 6, 7, 9, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
+    },
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([moduleId, languages]) {
+    return Object.entries(languages).flatMap(function ([language, slides]) {
+      return slides.map(function (slide) {
+        return '/course-decks/' + moduleId + '/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+      });
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed Soil Health and Water Harvesting source-paired regional stills'));
+}
+
+// 6 October 2026: the accepted residual prose layer redraws only these 18
+// Soil and Water cards. Retire their saved query variants once; leave all
+// other frames, narration, shared films and later learner downloads intact.
+async function migrateSoilWaterResidualOrdinaryPairedStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.soil-water-residual-ordinary-stills-20261006';
+  if (await cache.match(marker)) return;
+  const changed = {
+    'soil-health': {
+      st: [4, 9, 12, 13, 17],
+      ts: [4, 8, 9, 17],
+      ve: [12, 13, 17],
+    },
+    'water-harvesting': {
+      ts: [22],
+      ve: [6, 15, 17, 18, 22],
+    },
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([moduleId, languages]) {
+    return Object.entries(languages).flatMap(function ([language, slides]) {
+      return slides.map(function (slide) {
+        return '/course-decks/' + moduleId + '/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+      });
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed 18 Soil Health and Water Harvesting residual stills'));
+}
+
 // Slide 14 now labels the bare-versus-mulch impact comparison at phone size. Retire only
 // the old saved English still once; downloading the new still remains the learner's choice.
 async function migrateSoilL3ComparisonStill() {
@@ -1110,6 +1985,407 @@ async function migrateSmallLivestockL2BeeTeaching() {
   await cache.put(marker, new Response('Corrected bee lesson'));
 }
 
+// The new silent Sesotho edition uses new URLs. Only three existing regional
+// cards changed; keep the archived Sesotho recordings and all other saved media.
+async function migrateIntroSilentReleaseStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.intro-silent-release-stills-20261006';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/ve/slide-11.webp',
+    '/course-decks/intro-permaculture/ts/slide-07.webp',
+    '/course-decks/intro-permaculture/ts/slide-12.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Updated regional Introduction cards'));
+}
+
+// Retire only the ten refreshed runtime silent Sesotho stills; recorded media,
+// the twelve unchanged silent cards and all unrelated saved course media remain intact.
+async function migrateStIntroRuntimeResidualStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.st-intro-runtime-residual-stills-20261008';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/st-silent/slide-10.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-13.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-14.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-15.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-16.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-18.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-19.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-20.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-21.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-22.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Updated ten runtime silent Sesotho Introduction cards'));
+}
+
+// These checked regional wording changes replace only the 36 named saved stills.
+// Audio, shared films and later replacement downloads remain in the course cache.
+async function migrateFinalLanguageNextStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.final-language-next-stills-20261006';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/ts/slide-22.webp',
+    '/course-decks/intro-permaculture/ve/slide-12.webp',
+    '/course-decks/intro-permaculture/ve/slide-22.webp',
+    '/course-decks/market-community/st/slide-12.webp',
+    '/course-decks/market-community/st/slide-15.webp',
+    '/course-decks/market-community/st/slide-18.webp',
+    '/course-decks/market-community/ts/slide-10.webp',
+    '/course-decks/market-community/ts/slide-11.webp',
+    '/course-decks/market-community/ts/slide-12.webp',
+    '/course-decks/market-community/ts/slide-15.webp',
+    '/course-decks/market-community/ts/slide-18.webp',
+    '/course-decks/market-community/ts/slide-20.webp',
+    '/course-decks/market-community/ve/slide-12.webp',
+    '/course-decks/market-community/ve/slide-18.webp',
+    '/course-decks/reading-landscape/st/slide-09.webp',
+    '/course-decks/reading-landscape/st/slide-10.webp',
+    '/course-decks/reading-landscape/st/slide-13.webp',
+    '/course-decks/reading-landscape/st/slide-17.webp',
+    '/course-decks/reading-landscape/ts/slide-09.webp',
+    '/course-decks/reading-landscape/ts/slide-10.webp',
+    '/course-decks/reading-landscape/ts/slide-13.webp',
+    '/course-decks/reading-landscape/ts/slide-17.webp',
+    '/course-decks/reading-landscape/ve/slide-09.webp',
+    '/course-decks/reading-landscape/ve/slide-10.webp',
+    '/course-decks/reading-landscape/ve/slide-13.webp',
+    '/course-decks/reading-landscape/ve/slide-17.webp',
+    '/course-decks/vegetables-staples/st/slide-02.webp',
+    '/course-decks/vegetables-staples/st/slide-03.webp',
+    '/course-decks/vegetables-staples/st/slide-18.webp',
+    '/course-decks/vegetables-staples/ts/slide-01.webp',
+    '/course-decks/vegetables-staples/ts/slide-03.webp',
+    '/course-decks/vegetables-staples/ts/slide-18.webp',
+    '/course-decks/vegetables-staples/ve/slide-02.webp',
+    '/course-decks/vegetables-staples/ve/slide-17.webp',
+    '/course-decks/vegetables-staples/ve/slide-18.webp',
+    '/course-decks/water-harvesting/ve/slide-04.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Updated source-paired regional wording'));
+}
+
+// Refresh only the newly checked regional stills; recorded Sesotho audio and its
+// archived images must survive, as must shared films and later saved downloads.
+async function migrateCoreHeldOrdinaryStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.core-held-ordinary-stills-20261007';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/st-silent/slide-10.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-11.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-12.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-13.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-14.webp',
+    '/course-decks/intro-permaculture/ts/slide-04.webp',
+    '/course-decks/intro-permaculture/ts/slide-06.webp',
+    '/course-decks/intro-permaculture/ts/slide-10.webp',
+    '/course-decks/intro-permaculture/ts/slide-11.webp',
+    '/course-decks/intro-permaculture/ts/slide-12.webp',
+    '/course-decks/intro-permaculture/ts/slide-13.webp',
+    '/course-decks/intro-permaculture/ts/slide-14.webp',
+    '/course-decks/intro-permaculture/ts/slide-15.webp',
+    '/course-decks/intro-permaculture/ts/slide-19.webp',
+    '/course-decks/intro-permaculture/ts/slide-20.webp',
+    '/course-decks/market-community/st/slide-11.webp',
+    '/course-decks/market-community/st/slide-15.webp',
+    '/course-decks/market-community/ts/slide-17.webp',
+    '/course-decks/market-community/ts/slide-18.webp',
+    '/course-decks/reading-landscape/st/slide-02.webp',
+    '/course-decks/reading-landscape/st/slide-04.webp',
+    '/course-decks/reading-landscape/st/slide-05.webp',
+    '/course-decks/reading-landscape/st/slide-06.webp',
+    '/course-decks/reading-landscape/st/slide-07.webp',
+    '/course-decks/reading-landscape/st/slide-08.webp',
+    '/course-decks/reading-landscape/st/slide-10.webp',
+    '/course-decks/reading-landscape/st/slide-12.webp',
+    '/course-decks/reading-landscape/st/slide-14.webp',
+    '/course-decks/reading-landscape/st/slide-15.webp',
+    '/course-decks/reading-landscape/st/slide-19.webp',
+    '/course-decks/reading-landscape/st/slide-20.webp',
+    '/course-decks/reading-landscape/st/slide-21.webp',
+    '/course-decks/reading-landscape/ts/slide-01.webp',
+    '/course-decks/reading-landscape/ts/slide-04.webp',
+    '/course-decks/reading-landscape/ts/slide-05.webp',
+    '/course-decks/reading-landscape/ts/slide-07.webp',
+    '/course-decks/reading-landscape/ts/slide-08.webp',
+    '/course-decks/reading-landscape/ts/slide-14.webp',
+    '/course-decks/reading-landscape/ts/slide-15.webp',
+    '/course-decks/reading-landscape/ts/slide-18.webp',
+    '/course-decks/reading-landscape/ts/slide-19.webp',
+    '/course-decks/reading-landscape/ts/slide-20.webp',
+    '/course-decks/reading-landscape/ts/slide-21.webp',
+    '/course-decks/reading-landscape/ve/slide-08.webp',
+    '/course-decks/reading-landscape/ve/slide-15.webp',
+    '/course-decks/vegetables-staples/st/slide-01.webp',
+    '/course-decks/vegetables-staples/st/slide-02.webp',
+    '/course-decks/vegetables-staples/st/slide-03.webp',
+    '/course-decks/vegetables-staples/st/slide-04.webp',
+    '/course-decks/vegetables-staples/st/slide-05.webp',
+    '/course-decks/vegetables-staples/st/slide-06.webp',
+    '/course-decks/vegetables-staples/st/slide-07.webp',
+    '/course-decks/vegetables-staples/st/slide-08.webp',
+    '/course-decks/vegetables-staples/st/slide-10.webp',
+    '/course-decks/vegetables-staples/st/slide-11.webp',
+    '/course-decks/vegetables-staples/st/slide-12.webp',
+    '/course-decks/vegetables-staples/st/slide-15.webp',
+    '/course-decks/vegetables-staples/st/slide-16.webp',
+    '/course-decks/vegetables-staples/st/slide-18.webp',
+    '/course-decks/vegetables-staples/ts/slide-01.webp',
+    '/course-decks/vegetables-staples/ts/slide-03.webp',
+    '/course-decks/vegetables-staples/ts/slide-04.webp',
+    '/course-decks/vegetables-staples/ts/slide-06.webp',
+    '/course-decks/vegetables-staples/ts/slide-11.webp',
+    '/course-decks/vegetables-staples/ts/slide-12.webp',
+    '/course-decks/vegetables-staples/ts/slide-16.webp',
+    '/course-decks/vegetables-staples/ts/slide-17.webp',
+    '/course-decks/vegetables-staples/ts/slide-18.webp',
+    '/course-decks/vegetables-staples/ve/slide-03.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Updated checked regional ordinary wording'));
+}
+
+// Refresh these checked Tshivenda cards once; preserve recordings and later downloads.
+async function migrateTshivendaOrdinaryReviewedStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.tshivenda-ordinary-reviewed-stills-20261007';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/ve/slide-06.webp',
+    '/course-decks/intro-permaculture/ve/slide-07.webp',
+    '/course-decks/intro-permaculture/ve/slide-10.webp',
+    '/course-decks/intro-permaculture/ve/slide-11.webp',
+    '/course-decks/intro-permaculture/ve/slide-14.webp',
+    '/course-decks/market-community/ve/slide-11.webp',
+    '/course-decks/reading-landscape/ve/slide-01.webp',
+    '/course-decks/reading-landscape/ve/slide-04.webp',
+    '/course-decks/reading-landscape/ve/slide-18.webp',
+    '/course-decks/reading-landscape/ve/slide-20.webp',
+    '/course-decks/reading-landscape/ve/slide-21.webp',
+    '/course-decks/vegetables-staples/ve/slide-05.webp',
+    '/course-decks/vegetables-staples/ve/slide-06.webp',
+    '/course-decks/vegetables-staples/ve/slide-16.webp',
+    '/course-decks/vegetables-staples/ve/slide-18.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Updated checked Tshivenda wording'));
+}
+
+// Refresh only these reviewed cards once, without spending data or removing recordings.
+async function migrateRegionalOrdinaryFramingStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.regional-ordinary-framing-stills-20261007';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/market-community/ve/slide-11.webp',
+    '/course-decks/market-community/ve/slide-17.webp',
+    '/course-decks/reading-landscape/ve/slide-14.webp',
+    '/course-decks/reading-landscape/ve/slide-20.webp',
+    '/course-decks/vegetables-staples/ts/slide-04.webp',
+    '/course-decks/vegetables-staples/ts/slide-05.webp',
+    '/course-decks/vegetables-staples/ts/slide-16.webp',
+    '/course-decks/vegetables-staples/ve/slide-03.webp',
+    '/course-decks/vegetables-staples/ve/slide-04.webp',
+    '/course-decks/vegetables-staples/ve/slide-05.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Updated reviewed ordinary wording'));
+}
+
+// Fair-sharing cards have their own checked text; refresh only these stills,
+// retaining the archived recordings and every other saved lesson.
+async function migrateIntroFairSharingStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.intro-fair-sharing-stills-20261007';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/ts/slide-06.webp',
+    '/course-decks/intro-permaculture/ts/slide-07.webp',
+    '/course-decks/intro-permaculture/zu-silent/slide-06.webp',
+    '/course-decks/intro-permaculture/zu-silent/slide-07.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Updated unreviewed fair-sharing cards'));
+}
+
+// These two VE Reading cards now show the checked frost-placement wording. Retire only
+// their saved stills once; replacement downloads stay learner-chosen and no speech is touched.
+async function migrateVeReadingFrostPlacementStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/ve/.frost-placement-stills-20261007';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/reading-landscape/ve/slide-14.webp',
+    '/course-decks/reading-landscape/ve/slide-15.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed two Tshivenda Reading frost placement stills'));
+}
+
+// These five paired cards reuse checked ordinary clauses. Refresh only their saved stills
+// once so an update does not remove speech, films or a learner's later replacement download.
+async function migrateCoreReadingVegetablesFollowupStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.core-reading-vegetables-followup-20261007';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/reading-landscape/st/slide-15.webp',
+    '/course-decks/reading-landscape/ts/slide-07.webp',
+    '/course-decks/reading-landscape/ts/slide-12.webp',
+    '/course-decks/reading-landscape/ts/slide-15.webp',
+    '/course-decks/vegetables-staples/ve/slide-06.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed five source-paired ordinary clause stills'));
+}
+
+// Refresh these corrected comparison and site-work cards once, preserving audio and later downloads.
+async function migrateCoreOrdinaryCompletionNextStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.core-ordinary-completion-next-20261007';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/reading-landscape/st/slide-07.webp',
+    '/course-decks/reading-landscape/ve/slide-07.webp',
+    '/course-decks/reading-landscape/ve/slide-12.webp',
+    '/course-decks/vegetables-staples/st/slide-06.webp',
+    '/course-decks/vegetables-staples/ts/slide-06.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed five corrected source-paired ordinary cards'));
+}
+
+// These four cards changed after review. Refresh their saved still variants once;
+// retain speech, films and replacement packs downloaded after this migration.
+async function migrateCoreOrdinaryExpandedNextStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.core-ordinary-expanded-next-20261007';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/ve/slide-14.webp',
+    '/course-decks/vegetables-staples/ve/slide-04.webp',
+    '/course-decks/vegetables-staples/ve/slide-11.webp',
+    '/course-decks/vegetables-staples/ts/slide-11.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed four source-paired ordinary Study cards'));
+}
+
+// These two newly reviewed text spans change their paired stills. Retire only
+// those saved URL variants once; preserve all other cards and media.
+async function migrateVegetablesTwoOrdinaryResidualStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.two-ordinary-residual-20261008';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/vegetables-staples/ve/slide-10.webp',
+    '/course-decks/vegetables-staples/ts/slide-12.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed two Vegetables ordinary source-paired cards'));
+}
+
+// The 8 October Reading title and Vegetables lightest-action cards refresh four
+// existing still URLs once, including saved width/query variants, without touching media.
+async function migrateReadingTitleLightestFourStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.reading-title-lightest-four-stills-20261008';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/reading-landscape/st/slide-12.webp',
+    '/course-decks/reading-landscape/ve/slide-12.webp',
+    '/course-decks/reading-landscape/ts/slide-12.webp',
+    '/course-decks/vegetables-staples/st/slide-16.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed four reviewed source-paired learner cards'));
+}
+
+// The isiZulu silent safety cards replace six cached recorded JPEG stills. Retire
+// only those stills; recordings, animations and every other saved Study asset stay.
+async function migrateZuluSilentSafetyStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.zu-silent-safety-stills-20261008';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/zu/slide-14.jpg',
+    '/course-decks/reading-landscape/zu/slide-04.jpg',
+    '/course-decks/reading-landscape/zu/slide-07.jpg',
+    '/course-decks/food-forest/zu/slide-07.jpg',
+    '/course-decks/food-forest/zu/slide-11.jpg',
+    '/course-decks/food-forest/zu/slide-12.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed six isiZulu silent safety stills'));
+}
+
+// Refresh only the two corrected ZU silent cards; all other saved ZU media stays.
+async function migrateZuluSilentSentenceRepairs() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.zu-silent-sentence-repairs-20261008';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/zu-silent/slide-14.webp',
+    '/course-decks/food-forest/zu-silent/slide-11.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed two isiZulu silent sentence-repair stills'));
+}
+
+// Retire only five stills corrected after the blind wording audit; saved voices and films stay.
+async function migrateBlindReviewedStudyCorrectionStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.blind-reviewed-corrections-20261012';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/st-silent/slide-22.webp',
+    '/course-decks/intro-permaculture/ts/slide-05.webp',
+    '/course-decks/intro-permaculture/ts/slide-22.webp',
+    '/course-decks/market-community/ts/slide-03.webp',
+    '/course-decks/small-livestock/st/slide-06.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed five blind-reviewed correction stills'));
+}
+
 self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys().then(function (keys) {
@@ -1125,7 +2401,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWaterL4DecisionOnly).then(migrateWaterHarvestingZuluDraft).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateSoilL3ComparisonStill).then(migrateSoilHealthL3CorrectedNarration).then(migrateVegetablesL2ReadableStills).then(migrateVegetablesL3SweetPotatoTeaching).then(migrateVegetablesL4DecisionStill).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateFoodForestClimateMatchStill).then(migrateFoodForestL3AdjustStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(migrateMarketL2RouteStill).then(migrateMarketCommunityNetworkStill).then(migrateMarketCommunityL3SeedRightsTeaching).then(migrateMarketCommunityL3SeedRightsCard).then(migrateSmallLivestockSlide8Still).then(migrateIntroL1WaterUseTeaching).then(migrateSmallLivestockL3NutrientFlow).then(migrateSmallLivestockModuleFlows).then(migrateIntroL2PrinciplesTeaching).then(migrateIntroL3ZonesAndSectorsTeaching).then(migrateLandscapeL1WaterObservationTeaching).then(migrateLandscapeL2SunAndFrostTeaching).then(migrateLandscapeL3WindAndFrostTeaching).then(migrateWaterL1SwaleTeaching).then(migrateWaterL2DamSizingTeaching).then(migrateWaterL3RoofSuitabilityTeaching).then(migrateSmallLivestockL2BeeTeaching).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWaterL4DecisionOnly).then(migrateWaterHarvestingZuluDraft).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateSoilHealthRegionalStills).then(migrateSoilL3ComparisonStill).then(migrateSoilHealthL3CorrectedNarration).then(migrateVegetablesL2ReadableStills).then(migrateVegetablesL3SweetPotatoTeaching).then(migrateVegetablesL4DecisionStill).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateFoodForestClimateMatchStill).then(migrateFoodForestL3AdjustStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(migrateMarketL2RouteStill).then(migrateMarketCommunityNetworkStill).then(migrateMarketCommunityL3SeedRightsTeaching).then(migrateMarketCommunityL3SeedRightsCard).then(migrateSmallLivestockSlide8Still).then(migrateIntroL1WaterUseTeaching).then(migrateSmallLivestockL3NutrientFlow).then(migrateSmallLivestockModuleFlows).then(migrateIntroL2PrinciplesTeaching).then(migrateIntroL3ZonesAndSectorsTeaching).then(migrateLandscapeL1WaterObservationTeaching).then(migrateLandscapeL2SunAndFrostTeaching).then(migrateLandscapeL3WindAndFrostTeaching).then(migrateWaterL1SwaleTeaching).then(migrateWaterL2DamSizingTeaching).then(migrateWaterL3RoofSuitabilityTeaching).then(migrateSmallLivestockL2BeeTeaching).then(migrateReadingLandscapeRegionalStills).then(migrateVegetablesOpeningRegionalStills).then(migrateVegetablesRemainingRegionalStills).then(migrateWaterRegionalDraftStills).then(migrateSoilRegionalDraftStills).then(migrateReadingLandscapeDraftStills).then(migrateReadingLandscapeOrdinaryStills).then(migrateIntroRegionalSubstantiveStills).then(migrateVegetablesOrdinaryLessonStills).then(migrateMarketLearnerReuseStills).then(migrateReadingLandscapePairedReuseStills).then(migrateReadingLandscapeObservationStills).then(migrateRegionalRecordIntroReadingStills).then(migrateVegetablesFieldActionStills).then(migrateRegionalAssignmentExerciseStills).then(migrateVegetablesL2OrdinaryPairedStills).then(migrateVegetablesL1FullerOrdinaryPairedStills).then(migrateVegetablesL4OrdinaryPairedStills).then(migrateVegetablesL2FullerOrdinaryPairedStills).then(migrateVegetablesPestPrecisionPairedStills).then(migrateReadingLandscapeFrostBodySyncStills).then(migrateReadingLandscapeFirstObservationStills).then(migrateStudyOutcomesResidualStills).then(migrateReadingLandscapeFullOrdinaryStills).then(migrateMarketL1OrdinaryStills).then(migrateSoilWaterOrdinaryPairedStills).then(migrateSoilFullerLearnerStills).then(migrateWaterReviewedPrecisionStills).then(migrateWaterOrdinaryCompletionStills).then(migrateSoilOrdinaryCompletionStills).then(migrateSoilWaterResidualOrdinaryPairedStills).then(migrateIntroOrdinaryNextStills).then(migrateMarketOrdinaryResidualStills).then(migrateVegetablesL3OrdinaryResidualStills).then(migrateVegetablesL1OrdinaryResidualStills).then(migrateIntroFullOrdinaryCompletionStills).then(migrateIntroSilentReleaseStills).then(migrateStIntroRuntimeResidualStills).then(migrateNativePairedResidualStills).then(migrateFinalLanguageNextStills).then(migrateCoreHeldOrdinaryStills).then(migrateTshivendaOrdinaryReviewedStills).then(migrateRegionalOrdinaryFramingStills).then(migrateIntroFairSharingStills).then(migrateVeReadingFrostPlacementStills).then(migrateCoreReadingVegetablesFollowupStills).then(migrateCoreOrdinaryCompletionNextStills).then(migrateCoreOrdinaryExpandedNextStills).then(migrateVegetablesTwoOrdinaryResidualStills).then(migrateReadingTitleLightestFourStills).then(migrateZuluSilentSafetyStills).then(migrateZuluSilentSentenceRepairs).then(migrateBlindReviewedStudyCorrectionStills).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

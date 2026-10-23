@@ -1,0 +1,60 @@
+{
+  "speciesId": "vangueria-infausta",
+  "commonName": "Wild medlar (mmilo)",
+  "botanicalName": "Vangueria infausta",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general; SA distribution given as Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape)",
+      "months": [1, 2, 3, 4],
+      "evidence": {
+        "quote": "It can be found on the plants during summer, from January to April.",
+        "url": "https://pza.sanbi.org/vangueria-infausta",
+        "doc": "Vangueria infausta | PlantZAfrica (SANBI)",
+        "page": null
+      },
+      "notes": "The January–April interval follows SANBI's description of soft, edible ripe fruit and its taste. ICRAF's wider November–April statement only dates fruiting; it remains a separate phenology reference rather than extending this ripe-food window."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in either fetched source (SANBI PlantZAfrica, ICRAF Agroforestree Database 4.0 PDF). ICRAF states seedling growth is slow ('the growth rate is usually slow; 40-50 cm/year') but gives no years-to-fruiting figure."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in any fetched source."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in any fetched source."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source states a chilling requirement or explicitly says none is needed. Note this species is described as deciduous by both sources (SANBI: 'deciduous shrub or small tree'; ICRAF: 'Vangueria infausta is a deciduous tree'), so a 'no chill requirement' inference would not be safe to assume even if it were tropical/evergreen -- and no source makes any chilling statement either way."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source states whether the species is self-fertile, dioecious, or needs a cross-pollinator. SANBI's Ecology section states 'Butterflies and flies visit the flowers.' and ICRAF's Tree management section states 'The flowers attract insects, which in turn attract insect-eating birds.' -- both confirm insects visit/likely pollinate the flowers, but neither makes a self-fertility/cross-pollination statement, so the enum value is left null."
+  },
+  "harvestProduct": "fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Wider fruiting observations, not a ripe picking interval",
+      "quote": "In southern Africa, the tree flowers from September to November and fruits from November to April.",
+      "url": "https://apps.worldagroforestry.org/treedb2/AFTPDFS/Vangueria_infausta.PDF",
+      "doc": "Agroforestree Database 4.0 (Orwa et al. 2009), Vangueria infausta fact sheet, BIOLOGY section",
+      "page": 1,
+      "note": "This account separately distinguishes green unripe and brown ripe fruit, but its November–April biology sentence does not date that ripening change. The wider interval remains southern African phenology. SANBI's January–April description of ripe edible fruit supplies the food-ready regional reference."
+    }
+  ],
+  "gaps": [
+    "yearsToFirstCrop, yearsToFullBearing, yieldKgPerTreeMature: none found in either fetched source (SANBI PlantZAfrica, ICRAF Agroforestree Database 4.0 PDF fact sheet).",
+    "chillUnits: not stated by any source found.",
+    "Self-fertility/cross-pollination requirement: not stated by any source found; only that insects (butterflies, flies) visit the flowers is confirmed.",
+    "The ICRAF November–April fruiting interval was withdrawn from harvestMonths in the 11 October 2026 stage audit because it does not establish ripe-food readiness. It remains supplementary phenology; the separate SANBI January–April ripe-fruit reference is retained."
+  ]
+}

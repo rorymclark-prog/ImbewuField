@@ -2,7 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
+import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { SESOTHO_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-st-reading-landscape.ts';
+import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 
 test('Reading the Landscape Sesotho draft stays paired to every exact source field', () => {
   const source = COURSE_MODULES.find(module => module.id === 'reading-landscape');
@@ -13,6 +15,11 @@ test('Reading the Landscape Sesotho draft stays paired to every exact source fie
   assert.equal(draft.sourceMetadata.durationMins, source.durationMins);
   assert.equal(draft.sourceMetadata.category, source.category);
   assert.equal(draft.title.sourceEnglish, source.title);
+  assert.equal(draft.title.sesothoDraft, 'Ho Bala Ponahalo ea Naha');
+  assert.equal(draft.title.reviewStatus, 'machine-draft');
+  const moduleCard = resolveCourseModulePresentation(source, 'st');
+  assert.equal(moduleCard.title, draft.title.sesothoDraft, 'the source-paired Sesotho title must reach the Study card');
+  assert.equal(moduleCard.description, draft.description.sesothoDraft);
   assert.equal(draft.description.sourceEnglish, source.description);
   assert.deepEqual(draft.lessons.map(lesson => lesson.id), source.lessons.map(lesson => lesson.id));
 
@@ -78,5 +85,31 @@ test('Reading the Landscape Sesotho draft stays paired to every exact source fie
       checkPair(question.rationale, english.rationale, `${questionPath}.rationale`);
     }
   }
-  assert.deepEqual(holds, ['lessons[3] reading-landscape-l4.keyPoints[2]'], 'only the reviewed uncertain phrase remains held');
+  const l4Source = source.lessons.find(lesson => lesson.id === 'reading-landscape-l4');
+  const l4Draft = draft.lessons.find(lesson => lesson.id === 'reading-landscape-l4');
+  assert.ok(l4Source && l4Draft, 'the site-map lesson and its key-point draft must remain paired');
+  const l4Point = l4Draft.keyPoints[2];
+  assert.equal(l4Point.sourceEnglish, l4Source.keyPoints[2], 'retain the exact canonical growth/compaction source');
+  assert.ok(l4Point.sesothoDraft.includes('khakibos kapa blackjack di melang di le ngata'),
+    'retain the marked growth and both alternative species without changing the abundance qualifier');
+  assert.equal(l4Point.reviewStatus, 'machine-draft', 'label the source-paired candidate as unreviewed');
+  for (const species of ['khakibos', 'blackjack']) {
+    assert.ok(l4Point.sesothoDraft.includes(species), `preserve source species name ${species}`);
+    assert.ok(l4Point.sourceEnglish.includes(species), `candidate must not add species ${species}`);
+  }
+  assert.ok(l4Point.sesothoDraft.includes('Tshwaya') && l4Point.sesothoDraft.includes('hlahloba mobu ka hloko'),
+    'candidate says to mark the growth and check the soil closely without naming a test or treatment');
+  assert.ok(l4Point.sesothoDraft.endsWith('sena ha se pake hore mobu o kitlane.'),
+    'plant growth is not turned into a soil-compaction diagnosis');
+
+  const changedL4Source = {
+    ...l4Source,
+    keyPoints: l4Source.keyPoints.map((point, index) => index === 2 ? `${point} Changed.` : point),
+  };
+  const fallback = resolveLearnerLessonPresentation(changedL4Source, 'st');
+  assert.equal(fallback.status, 'english-fallback', 'changed compaction guidance withdraws the paired Sesotho lesson');
+  assert.equal(fallback.content.keyPoints[2], changedL4Source.keyPoints[2], 'show the current English after source drift');
+
+  assert.deepEqual(holds, [],
+    'key points are now either source-paired machine drafts or exact-English holds; L4 is drafted because ordinary mark/check wording is paired while technical qualifiers stay English');
 });

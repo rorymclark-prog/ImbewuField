@@ -1,0 +1,33 @@
+# 07-earthworks-and-water — references
+
+- Clark, R. (comp.) (2021). *The Permaculture Gardening Handbook*. RVCC project, UNDP / Government of Lesotho.
+- Mollison, B. (1988). *Permaculture: A Designers' Manual*. Tagari Publications.
+- Lancaster, B. (2019). *Rainwater Harvesting for Drylands and Beyond, Volume 1: Guiding Principles to Welcome Rain into Your Life and Landscape* (3rd ed.). Rainsource Press. https://www.harvestingrainwater.com/product/rainwater-harvesting-for-drylands-and-beyond-volume-1-3rd-edition-new-2019/
+- Lancaster, B. (n.d.). *Rainwater Harvesting for Drylands and Beyond, Volume 1*, p. 48 (calculating runoff). harvestingrainwater.com. https://www.harvestingrainwater.com/wp-content/uploads/2009/07/Volume-1-pg-48.pdf
+- Lancaster, B. (n.d.). *Milagro Co-housing Community: its passive water harvesting*. harvestingrainwater.com. https://www.harvestingrainwater.com/tour_location/milagro-co-housing-community-its-passive-water-harvesting/
+- GRAF (n.d.). *Runoff coefficient* (rainwater harvesting lexicon). graf.info. https://www.graf.info/en/rainwater-harvesting/all-about-rainwater-harvesting/lexicon/runoff-coefficient.html
+- ResearchGate (n.d.). *Coefficient of runoff for different roof types* (table). https://www.researchgate.net/figure/Coefficient-of-Runoff-for-different-Roof-Types_tbl1_245328030
+- Oregon Department of Transportation (n.d.). *Hydraulics Manual, Chapter 7, Appendix F: runoff coefficients*. https://www.oregon.gov/odot/hydraulics/Docs_Hydraulics_Manual/Hydraulics-07-F.pdf
+- University of Illinois, Agricultural and Biological Engineering (n.d.). *Values of runoff coefficient (C) for the rational formula*. http://abe-research.illinois.edu/courses/tsm352/lectures/runoffcoeffs.html
+- Water Institute of Southern Africa (n.d.). *Free Basic Water* (fact sheet FS042). https://wisa.org.za/wp-content/uploads/2020/02/WISA-FS042.pdf
+- CitizenHelp (n.d.). *Free Basic Water in South Africa: 6 kilolitres per month*. https://www.citizenhelp.co.za/utilities/free-basic-water-south-africa
+- Centers for Disease Control and Prevention (n.d.). *About water emergencies* (boiling water to make it safe). https://www.cdc.gov/water-emergency/about/index.html
+- NC State Extension (n.d.). *Mosquito control for stormwater facilities*. https://content.ces.ncsu.edu/mosquito-control-for-stormwater-facilities
+- Water Research Commission (n.d.). *Report TT 729: open-water evaporation in South Africa*. https://www.wrc.org.za/wp-content/uploads/mdocs/TT%20729_final%20web.pdf
+- SouthAfrica.co.za (n.d.). *What is evaporation?* https://southafrica.co.za/what-is-evaporation.html
+- National Institute for Communicable Diseases (2023). *Schistosomiasis (bilharzia): frequently asked questions*. https://www.nicd.ac.za/wp-content/uploads/2023/12/Schistosomiasis-Bilharzia_FAQs.pdf
+- Sand Dams Worldwide / Excellent Development (n.d.). *What is a sand dam?* https://www.sanddamsworldwide.org.uk/what-is-a-sand-dam
+- Ingenia (n.d.). *Securing water supplies with sand dams*. https://www.ingenia.org.uk/articles/securing-water-supplies-with-sand-dams/
+- Maddrell, S. (n.d.). *Sand Dam Manual*. http://www.cyrho.com/data/Sand%20Dam%20Manual%20-%20Maddrell.pdf
+- Permaculture Reflections (n.d.). *Swale calculator*. https://www.permaculturereflections.com/swale-calculator/
+- Permalogica (n.d.). *Swales in permaculture, part two*. https://www.permalogica.com/post/swales-in-permaculture-part-two
+- Warren County Soil and Water Conservation District (n.d.). *Rain garden poster* (siting at least 10 feet from foundations). https://www.warrencountyny.gov/sites/default/files/swcd/Rain%20Garden%20Poster.pdf
+- Amanzi for Food (2015). *How to make an A-frame*. https://amanziforfood.co.za/wp-content/uploads/2015/01/1.A-FRAME-using-it.pdf
+- ECHOcommunity (n.d.). *A-frame level*. https://www.echocommunity.org/en/resources/1e97162c-712a-43ef-a21c-86e65c8d2925
+- Amanzi for Food (2015). *Making trench beds* (Chapter 6.4). https://amanziforfood.co.za/wp-content/uploads/2015/02/Ch6.4_Making-Trench-Beds_English_final.pdf
+- University of California IPM (n.d.). *Soil solarization for gardens and landscapes* (Pest Notes 74145). https://ipm.ucanr.edu/PMG/PESTNOTES/pn74145.html
+- South African Irrigation Institute (SABI) (2021). *SABI Agricultural Norms for the Design of Irrigation Systems*. https://sabi.co.za/wp-content/uploads/2023/02/SABI-Norms-Agricultural-2021.pdf
+- US Environmental Protection Agency (2023). *WaterSense at Work, Section 5.2: irrigation*. https://www.epa.gov/system/files/documents/2023-11/ws-commercial-bmp-watersenseatwork_section5.2_irrigation.pdf
+- DripDepot (n.d.). *Microsprinkler buying guide* (operating pressures). https://help.dripdepot.com/support/solutions/articles/11000080268-microsprinkler-buying-guide
+- Rodda, N., Carden, K., Armitage, N. and du Plessis, H.M. (2011). *Development of guidance for sustainable irrigation use of greywater in gardens and small-scale agriculture in South Africa*. Water SA 37(5). https://www.wrc.org.za/wp-content/uploads/mdocs/SE370514.pdf
+- South African Journal of Botany (2025). *Colocasia esculenta (L.) Schott (Araceae; taro): global invasion history and prognosis for South Africa*. Vol. 177. https://www.sciencedirect.com/science/article/pii/S0254629924007622

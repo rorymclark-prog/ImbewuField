@@ -1,0 +1,33 @@
+{
+  "key": "chilli",
+  "varieties": [
+    {
+      "name": "Cayenne (Long Slim)",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": null,
+      "type": null,
+      "note": "IMPORTANT CAVEAT: this name is confirmed only as an item in Starke Ayres' own site navigation menu (fetched directly and verbatim as part of another product page's HTML), not from a dedicated product page or description — every attempt to fetch an actual Cayenne product page in this pass returned an error (see gaps). No maturity, traits, or zone information could be sourced for it at all; it is listed here purely to confirm Starke Ayres does sell a named Cayenne chilli in South Africa, not as a real recommendation.",
+      "evidence": [{ "quote": "Chilli Jamaican Red (Scotch Bonnet) Jamaican Yellow (Scotch Bonnet) Habanero Yellow Habanero Red Malagueta (Piri Piri Birds Eye) De Cheiro Do Norte (Habanero Lemon) Cambuci (Bishops Hat) Biquinho (Little Beak)... Pepper California Wonder Cayenne Long Slim Hot Chilli Mix", "url": "https://www.starkeayres.com/products/home-gardening-seed/general/pepper-california-wonder", "page": null, "doc": "Site navigation menu embedded in the California Wonder product page, Starke Ayres (fetched directly; the quoted text is the site's own product-category nav list, NOT a product description)" }]
+    },
+    {
+      "name": "Malagueta (Piri Piri / Birds Eye)",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": null,
+      "type": null,
+      "note": "Same caveat as Cayenne above: confirmed only as a named item in a Sakata site navigation list (fetched directly as part of another product page's HTML), not from a dedicated product page. Piri-piri/birds-eye chilli is widely grown informally by South African smallholders, but no primary source with actual agronomic detail was found or opened for it in this pass, so nothing beyond the name is recorded.",
+      "evidence": [{ "quote": "Chilli Jamaican Red (Scotch Bonnet) Jamaican Yellow (Scotch Bonnet) Habanero Yellow Habanero Red Malagueta (Piri Piri Birds Eye) De Cheiro Do Norte (Habanero Lemon) Cambuci (Bishops Hat) Biquinho (Little Beak)", "url": "https://www.starkeayres.com/products/home-gardening-seed/general/pepper-california-wonder", "page": null, "doc": "Site navigation menu embedded in the California Wonder product page, Starke Ayres (fetched directly; the quoted text is the site's own product-category nav list, NOT a product description)" }]
+    }
+  ],
+  "zoneAdvice": {},
+  "gaps": [
+    "This is the weakest-sourced crop in the whole task. No dedicated, openable product page for any named chilli cultivar was found: guessed Starke Ayres URLs for Cayenne / Hot Chilli Mix returned HTTP 500, and guessed Sakata URLs for Malagueta and Habanero Red returned HTTP 404. Sakata's chilli category listing page also returned 404.",
+    "Both entries above are included only because their names appear verbatim in a real, directly-fetched page's site-navigation menu (a Starke Ayres product page fetched for the peppers crop) — this is NOT a product description or agronomic claim, only proof the name is sold. Per the brief's honesty rule, no maturity, season, traits, type or zone claim has been attached to either.",
+    "Starke Ayres' own 'Sweet & Hot Peppers Production Guideline' (fetched and read in full for the peppers.json file) covers chilli agronomically alongside sweet pepper but names no specific chilli cultivars.",
+    "No ARC, DAFF/DALRRD, or KZN DARD source naming specific chilli cultivars was found or opened in this pass — crop-catalog.ts's own chilli entry already notes it shares KZN DARD's generic 'Capsicum' sow-window/spacing/yield row with peppers, which was not re-verified here.",
+    "Given the weakness of what was found, no honest zone-level recommendation could be written; zoneAdvice is empty rather than guessed."
+  ]
+}

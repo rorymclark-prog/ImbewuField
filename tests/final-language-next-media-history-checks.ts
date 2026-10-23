@@ -1,0 +1,183 @@
+import { blindReviewedAssetBefore, blindReviewedCorrectionProof } from './blind-reviewed-study-corrections-history-checks.ts';
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { expandedAssetBefore, expandedAssets, expandedSourceBefore } from './core-ordinary-expanded-history-checks.ts';
+import { ordinaryFramingAssets } from './ordinary-framing-history-checks.ts';
+import { fairSharingAssetBefore, fairSharingAssets } from './intro-fair-sharing-history-checks.ts';
+import { veOrdinaryAssets } from './ve-ordinary-reviewed-history-checks.ts';
+import assert from 'node:assert/strict';
+import { currentBatchProof, followupAssetBefore, followupAssets } from './core-reading-vegetables-followup-history-checks.ts';
+// Dated owners see the tree before the WebP media-format layer (retired JPEGs present).
+import { slidesWebpHistoryStatSync as statSync } from './slides-webp-history-checks.ts';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
+import { createHash } from 'node:crypto';
+import { finalLanguageNextDeckBefore, ensureFinalLanguageNextCurrent } from './final-language-next-checks.ts';
+import { coreHeldOrdinaryAssets, coreHeldOrdinaryAssetBefore, coreHeldOrdinaryManifestBefore, coreHeldOrdinaryPairBefore } from './core-held-ordinary-history-checks.ts';
+import { stIntroRuntimeResidualAssetBefore, stIntroRuntimeResidualAssets, stIntroRuntimeResidualManifestBeforeHistory } from './st-intro-runtime-residual-history-checks.ts';
+import { veReadingFrostAssetBefore, veReadingFrostSourceBefore, veReadingFrostPairBefore, frostFiles } from './ve-reading-frost-history-checks.ts';
+import { lightestAssetBefore } from './reading-title-lightest-media-history-checks.ts';
+import { studyVegetablesTwoResidualAssetBefore } from './study-vegetables-two-ordinary-residual-history-checks.ts';
+const vegetablesResidualAssets = JSON.parse(readFileSync('docs/study-translation-reviews/vegetables-two-ordinary-residual-2026-10-08/media-proof.json', 'utf8')).assets;
+// The later 15-card Tshivenda layer must validate real bytes before this full
+// inventory exposes its predecessor; keep the prior 69-card proof unchanged.
+// Also carry cards unlisted by the older layers (such as TS Vegetables5).
+// Each real current file is checked by the latest immutable measurement guard.
+const laterAssets = [...coreHeldOrdinaryAssets, ...veOrdinaryAssets, ...ordinaryFramingAssets];
+const laterPaths = new Set<string>([...laterAssets.map(row=>'public'+row.url), ...currentBatchProof.assets.map(row => row.path), ...expandedAssets.map((row: any) => 'public' + row.url), ...stIntroRuntimeResidualAssets.map((row:any) => 'public' + row.url), ...vegetablesResidualAssets.map((row: any) => 'public' + row.url)]);
+for (const [url, row] of Object.entries(followupAssets)) if (row.changed) laterPaths.add('public' + url);
+for (const row of fairSharingAssets) if (row.before) laterPaths.add('public' + row.url);
+const framingFrames = new Map(ordinaryFramingAssets.map(row=>['public'+row.url,row]));
+const veFrames = new Map(veOrdinaryAssets.map(row=>['public'+row.url,row]));
+const coreFrames = new Map(coreHeldOrdinaryAssets.map(row=>['public'+row.url,row]));
+const folder = 'docs/media/final-language-next-2026-10-06/';
+const sha = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
+const bytes = readFileSync(folder + 'frames.json');
+assert.equal(sha(bytes), 'be9b0fecb472b21276bd3d90a0363e32c8c5a2eb18abe919c69bc21e54efd310', 'actual 36-frame old/new/source proof is immutable');
+export const finalLanguageNextMediaProof = JSON.parse(bytes.toString());
+const proof = finalLanguageNextMediaProof;
+const beforeInventoryBytes = readFileSync(folder + 'media-before.json');
+assert.equal(sha(beforeInventoryBytes), proof.mediaBeforeSHA256);
+const beforeInventory: any[] = JSON.parse(beforeInventoryBytes.toString());
+const changed = new Map<string, any>(proof.frames.map((frame: any) => [frame.path, frame]));
+const beforeManifest = readFileSync(folder + 'manifest-before.ts.txt', 'utf8');
+assert.equal(sha(beforeManifest), proof.manifestBeforeSHA256);
+let expectedManifest = beforeManifest;
+for (const frame of proof.frames) {
+  const old = beforeInventory.find(row => row.path === frame.path);
+  assert.deepEqual({ bytes: old.bytes, sha256: old.sha256 }, { bytes: frame.old.bytes, sha256: frame.old.sha256 });
+  const entry = `  '${frame.url}': ${frame.old.bytes},`;
+  assert.equal(expectedManifest.split(entry).length, 2);
+  expectedManifest = expectedManifest.replace(entry, `  '${frame.url}': ${frame.new.bytes},`);
+}
+assert.equal(expectedManifest.split(proof.manifestOldComment).length, 2);
+expectedManifest = expectedManifest.replace(proof.manifestOldComment, proof.manifestNewComment);
+assert.equal(sha(expectedManifest), proof.manifestAfterSHA256);
+assert.equal(changed.size, 36);
+assert.equal(beforeInventory.length - changed.size, proof.unlistedMediaPreserved);
+const observations = new Map<string, { signature: string; bytes: number; sha256: string; width: number; height: number; riff: boolean; webp: boolean }>();
+function descriptor(path: string) {
+  const s = statSync(path, { bigint: true });
+  const signature = [s.ino, s.dev, s.size, s.mtimeNs, s.ctimeNs].join(':');
+  const old = observations.get(path); if (old?.signature === signature) return old;
+  const b = readFileSync(path);
+  const newest = lightestAssetBefore(path, b);
+  const newestBuffer = Buffer.from(newest);
+  const row = { signature, bytes: newestBuffer.length, sha256: sha(newestBuffer), width: newestBuffer.length >= 30 ? newestBuffer.readUInt16LE(26) & 0x3fff : 0, height: newestBuffer.length >= 30 ? newestBuffer.readUInt16LE(28) & 0x3fff : 0, riff: newestBuffer.toString('ascii', 0, 4) === 'RIFF', webp: newestBuffer.toString('ascii', 8, 12) === 'WEBP' };
+  const frost = veReadingFrostAssetBefore(path, newest);
+  if (frost) { row.bytes = frost.bytes; row.sha256 = frost.sha256; }
+  observations.set(path, row); return row;
+}
+function checkedHistoricalDescriptor(path: string) {
+  let actual = descriptor(path);
+  const newestPredecessor = lightestAssetBefore(path, readFileSync(path));
+  if (currentBatchProof.assets.some(row => row.path === path)) {
+    const latest = followupAssetBefore(path, newestPredecessor);
+    assert.ok(latest, path + ': current batch image proof supplies its exact predecessor');
+    actual = { ...actual, ...latest };
+  }
+  const expanded = expandedAssetBefore(path, newestPredecessor);
+  if (expanded) actual = { ...actual, ...expanded };
+  // Validate the two later fairness redraws before reconstructing this dated
+  // inventory; no recording or unlisted still can take this path.
+  const fairness = fairSharingAssets.some(row => 'public' + row.url === path)
+    ? fairSharingAssetBefore(path, newestPredecessor) : null;
+  if (fairness) actual = {...actual, ...fairness};
+  // 8 October: validate the ten latest silent ST bytes and restore only their exact predecessor descriptors.
+  const runtimeResidual = stIntroRuntimeResidualAssetBefore(path, readFileSync(path));
+  if (runtimeResidual) actual = { ...actual, ...runtimeResidual };
+  const vegetablesResidual = studyVegetablesTwoResidualAssetBefore(path, readFileSync(path));
+  if (vegetablesResidual) actual = { ...actual, ...vegetablesResidual };
+  // descriptor checks filesystem identity on every call and recomputes the digest
+  // after any rewrite. Do not re-read/hash buffers again for every dated caller.
+  // Each immutable layer still checks its exact successor before exposing its predecessor.
+  const framing = framingFrames.get(path);
+  const ve = veFrames.get(path);
+  const core = coreFrames.get(path);
+  for (const row of [framing && {...framing, afterBytes:framing.bytes, afterSHA256:framing.sha256}, ve, core]) {
+    if (!row) continue;
+    assert.equal(actual.bytes,row.afterBytes,path+': exact current measured bytes before dated rewind');
+    assert.equal(actual.sha256,row.afterSHA256,path+': exact current SHA before dated rewind');
+    actual = {...actual,bytes:row.beforeBytes,sha256:row.beforeSHA256,width:row.beforeDimensions[0],height:row.beforeDimensions[1]};
+  }
+  return actual;
+}
+
+export function verifyFinalLanguageNextAsset(path: string, bytes: Uint8Array) {
+  return withBlindReviewedCorrectionReadScope(() => {
+  const correction = blindReviewedCorrectionProof.assets.find((row: any) => row.path === path);
+  if (correction) {
+    // A supplied same-size damaged new card must fail on its own current hash,
+    // rather than reaching an older card's different length check first.
+    assert.equal(sha(bytes), correction.afterSha256, path + ': exact current SHA');
+    bytes = blindReviewedAssetBefore(path, bytes);
+  }
+  const frame = changed.get(path); const before = beforeInventory.find(row => row.path === path);
+  assert.ok(frame || before, 'asset belongs to the complete frozen media inventory');
+  const expected = frame?.new ?? before;
+  const newestPredecessor = lightestAssetBefore(path, bytes);
+  const latest = coreHeldOrdinaryAssetBefore(path, newestPredecessor);
+  const residual = studyVegetablesTwoResidualAssetBefore(path, bytes);
+  const recovered = residual ?? latest;
+  assert.equal(recovered?.bytes ?? newestPredecessor.length, expected.bytes, path + ': exact current measured bytes');
+  assert.equal(recovered?.sha256 ?? sha(newestPredecessor), expected.sha256, path + ': exact current SHA');
+  });
+}
+export function validateFinalLanguageNextMedia(manifest = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
+  return withBlindReviewedCorrectionReadScope(() => {
+  // 8 October's exact ST layer is newest; validate and rewind it before older source/history layers.
+  manifest = stIntroRuntimeResidualManifestBeforeHistory(manifest);
+  // Reconstruct only the byte-verified newer layer, preserving the complete old inventory guard.
+  manifest = expandedSourceBefore('lib/course-asset-sizes.ts', manifest) as string;
+  const liveManifest = readFileSync('lib/course-asset-sizes.ts', 'utf8');
+  if (manifest === liveManifest && frostFiles['lib/course-asset-sizes.ts']) manifest = veReadingFrostSourceBefore('lib/course-asset-sizes.ts', manifest) as string;
+  manifest = coreHeldOrdinaryManifestBefore(manifest);
+  assert.equal(manifest, expectedManifest, 'complete current final-language manifest/header and all unlisted entries');
+  ensureFinalLanguageNextCurrent();
+  for (const before of beforeInventory) {
+    const expected = changed.get(before.path)?.new ?? before;
+    const actual = checkedHistoricalDescriptor(before.path);
+    assert.equal(actual.bytes, expected.bytes, before.path + ': all current inventory bytes');
+    assert.equal(actual.sha256, expected.sha256, before.path + ': all current inventory hashes');
+  }
+  for (const frame of proof.frames) {
+    const actual = descriptor(frame.path);
+    assert.equal(actual.riff, true); assert.equal(actual.webp, true);
+    assert.deepEqual([actual.width, actual.height], [frame.new.width, frame.new.height]);
+    assert.equal(actual.width, 1440); assert.ok(actual.height >= 5400);
+    const currentPair = JSON.parse(readFileSync(frame.pairFile, 'utf8'));
+    const paired = coreHeldOrdinaryPairBefore(frame.pairFile, veReadingFrostPairBefore(frame.pairFile, currentPair));
+    assert.deepEqual(paired.slides.find((slide: any) => slide.n === frame.slide), frame.pairedSlide);
+    finalLanguageNextDeckBefore(frame.pairFile, JSON.parse(readFileSync(frame.pairFile, 'utf8')));
+  }
+  });
+}
+let initialized = false;
+function ensureInitial() { if (!initialized) { validateFinalLanguageNextMedia(); initialized = true; } }
+/** Full explicit validation notices disk corruption after initialization; per-path
+ * historical descriptors verify their real current bytes without recursively
+ * rescanning the entire 700MB inventory for every older assertion. */
+export function finalLanguageNextMediaBefore(path: string): { bytes: number; sha256: string; width?: number; height?: number } | null {
+  return withBlindReviewedCorrectionReadScope(() => {
+  ensureInitial();
+  const normalized = path.startsWith('public/') ? path : 'public' + path;
+  const frame = changed.get(normalized);
+  const expected = frame?.new ?? beforeInventory.find(row => row.path === normalized);
+  if (expected) {
+    const actual = checkedHistoricalDescriptor(normalized);
+    assert.equal(actual.bytes, expected.bytes, normalized + ': requested current measured bytes'); assert.equal(actual.sha256, expected.sha256, normalized + ': exact current SHA');
+  }
+  // Some later checked cards were unlisted by this 36-card layer. Their
+  // checked predecessor still has to reach older complete inventory guards.
+  if(frame) return {...frame.old};
+  if(laterPaths.has(normalized)) {const actual=checkedHistoricalDescriptor(normalized);return {bytes:actual.bytes,sha256:actual.sha256,width:actual.width,height:actual.height};}
+  return null;
+  });
+}
+export function finalLanguageNextManifestBefore(current = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
+  return withBlindReviewedCorrectionReadScope(() => {
+  current = Buffer.from(blindReviewedSourceBefore('lib/course-asset-sizes.ts', current)).toString();
+  validateFinalLanguageNextMedia(current);
+  return beforeManifest;
+  });
+}

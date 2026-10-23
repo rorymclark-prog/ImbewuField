@@ -1,0 +1,201 @@
+{
+  "rootInspection": "All30compressedframes in8contacts plus4critical closeviews; no clipping observed; full exactEnglish panels and unreviewed labels visible",
+  "notPhoneEvidence": true,
+  "nativePreview": "pending",
+  "sourceFieldsExact": 330,
+  "acceptedTargetsExact": 54,
+  "changedFrames": 30,
+  "framesProofSHA256": "27ada886605e17d8b32190417a54fce6aa108a171b0aa58bfc789481f646c28b",
+  "contacts": [
+    {
+      "file": "ts-contact-01.jpg",
+      "bytes": 714723,
+      "sha256": "ed7eb6838f3fe09cbc98f6ed98fc670ddb78b6b9d59a9be672a3e248266c83a5"
+    },
+    {
+      "file": "ts-contact-02.jpg",
+      "bytes": 631360,
+      "sha256": "f53e54141041769ba76bace213a103f6dde5dd6152eb2d5baeda1f610fd27479"
+    },
+    {
+      "file": "ts-contact-03.jpg",
+      "bytes": 717651,
+      "sha256": "b5e47b029f573273bc32c4c7f59bf5f8e30f038a200c498dfebed2367530ecf2"
+    },
+    {
+      "file": "ts-contact-04.jpg",
+      "bytes": 466302,
+      "sha256": "d26ae20a9a9d5b9eeadc087c8f999cd949887437ad17cf60c1c091087f7a4df5"
+    },
+    {
+      "file": "ts-slide-01-390.jpg",
+      "bytes": 159724,
+      "sha256": "bdd708458b415f03a0f1dc4410f550f02cc98b28173756fcffe3a2b1b509c3eb"
+    },
+    {
+      "file": "ts-slide-03-390.jpg",
+      "bytes": 147761,
+      "sha256": "5cf7804a2484e8cb59648fb6fe7ca14f4a42adcaa5132687863ed41479d226d3"
+    },
+    {
+      "file": "ts-slide-04-390.jpg",
+      "bytes": 189451,
+      "sha256": "b25b407311018889b5003f98f9327110fbefcacae8c4035eddfecc3973e63037"
+    },
+    {
+      "file": "ts-slide-06-390.jpg",
+      "bytes": 211410,
+      "sha256": "993da09f7083e4a3286e7b7b5a80af607e20bd54cbcdd9858d203e2e63467a30"
+    },
+    {
+      "file": "ts-slide-08-390.jpg",
+      "bytes": 162058,
+      "sha256": "4d58d23c236b7cff2c6d47b746f7c2daa3bfddaf93c87033aacc8924c1968b2e"
+    },
+    {
+      "file": "ts-slide-11-390.jpg",
+      "bytes": 144863,
+      "sha256": "2405b68319cf77fa7153fd119fe615e21e6ede92f5c46ebc51064866e286352a"
+    },
+    {
+      "file": "ts-slide-12-390.jpg",
+      "bytes": 136008,
+      "sha256": "850a7dbcb6bdfc7d62f9ce64685219fe73738bbe39c98a95da23e639e1099cd1"
+    },
+    {
+      "file": "ts-slide-13-390.jpg",
+      "bytes": 181439,
+      "sha256": "b03e6264d44c640bc8bcc779263e04b0002589d208ef917435c7ff84cae1df2d"
+    },
+    {
+      "file": "ts-slide-15-390.jpg",
+      "bytes": 174629,
+      "sha256": "ef7f3ca3141007101bd4946b86b46c5f7b479a6a1b8cb67c5bc53ea4ed446eb3"
+    },
+    {
+      "file": "ts-slide-17-390.jpg",
+      "bytes": 150814,
+      "sha256": "dddbce474cb790520cd6e9d75afafd55323f8a3f852f62ea21f98c166d3fbaf1"
+    },
+    {
+      "file": "ts-slide-18-390.jpg",
+      "bytes": 180394,
+      "sha256": "a49a56a5f2acc412b375cdb706157f20087981e4d01414b1318a50b9fd839322"
+    },
+    {
+      "file": "ts-slide-19-390.jpg",
+      "bytes": 203478,
+      "sha256": "df5e9c208790db6f8f347170cfab9bcc8e67df2788084bcac1edf7d65ad0f44b"
+    },
+    {
+      "file": "ts-slide-20-390.jpg",
+      "bytes": 183793,
+      "sha256": "6f049ec1f5e2eb94f73c69b1682bf038f24d39e14e37d8490679d1e8d88cd359"
+    },
+    {
+      "file": "ts-slide-21-390.jpg",
+      "bytes": 120528,
+      "sha256": "814c3f3097cb7e9b947b7930ab44d37d64649c04c4f60c3e4045320b9c645437"
+    },
+    {
+      "file": "ts-slide-22-390.jpg",
+      "bytes": 146757,
+      "sha256": "41d6eb76c168eed06f7a46f23d3f4d903cd77df8b38df16a2a54fc4d03a77564"
+    },
+    {
+      "file": "ve-contact-01.jpg",
+      "bytes": 713575,
+      "sha256": "67024f2deda6cdbc9af98d308c2598c91c82d2c2efe8e61bc843920b24c37a38"
+    },
+    {
+      "file": "ve-contact-02.jpg",
+      "bytes": 673761,
+      "sha256": "9b873bdb43c6fa152faf170867a27d5ed01fcb29bae5b85696aa1f1912e6545f"
+    },
+    {
+      "file": "ve-contact-03.jpg",
+      "bytes": 711662,
+      "sha256": "29f9a8e24938ab90010be773f16cf6fe3d0b5e3035f0121a4aca7f978b195394"
+    },
+    {
+      "file": "ve-contact-04.jpg",
+      "bytes": 464511,
+      "sha256": "2b5561a687a8cbe77edb3337e457e6450117c4ea5c7426aec3ce30fdbc13afa0"
+    },
+    {
+      "file": "ve-slide-01-390.jpg",
+      "bytes": 159367,
+      "sha256": "be034f0413e3a0ce6ca74e6e0a4b86698ae95520a505d1d3431afd6649623774"
+    },
+    {
+      "file": "ve-slide-03-390.jpg",
+      "bytes": 143481,
+      "sha256": "30a6fa968cb3ea967022ed4a63dd51820402c269801b5348e3e029fafb3aeaca"
+    },
+    {
+      "file": "ve-slide-04-390.jpg",
+      "bytes": 193596,
+      "sha256": "721edf3bc406aed77b1ea11e532786433f27cefbf30b10955ac7a742f3efaed7"
+    },
+    {
+      "file": "ve-slide-06-390.jpg",
+      "bytes": 210036,
+      "sha256": "502649773af852e3e399d3a7b8636a46938eacb859d87579ae2517688c6d4433"
+    },
+    {
+      "file": "ve-slide-08-390.jpg",
+      "bytes": 160371,
+      "sha256": "0df31465e658f2e58d4fca9607093ed727b66b068c5fcf714c56492a7d671c5f"
+    },
+    {
+      "file": "ve-slide-11-390.jpg",
+      "bytes": 150771,
+      "sha256": "430cfbb29e8d9e125cd8e0a47ef463000cbdbafc3795b6d69efaf9e3a73f6ced"
+    },
+    {
+      "file": "ve-slide-13-390.jpg",
+      "bytes": 180327,
+      "sha256": "27d08990e44a2558a92a8be0315460be1526282839c06ad236f89263d1dde258"
+    },
+    {
+      "file": "ve-slide-15-390.jpg",
+      "bytes": 173296,
+      "sha256": "9283dd0960ad6a795c5483ca5eeebb332d52047b05be29253adbf7b00601b55d"
+    },
+    {
+      "file": "ve-slide-16-390.jpg",
+      "bytes": 170360,
+      "sha256": "48acc3c4e67c9ed16440672c0966235f92888dc724844ceea66880488db72be2"
+    },
+    {
+      "file": "ve-slide-17-390.jpg",
+      "bytes": 151123,
+      "sha256": "26687d69a75bb1601b08656ee2b3c790533dcf75fba86742eaf33d498a325d3f"
+    },
+    {
+      "file": "ve-slide-18-390.jpg",
+      "bytes": 175854,
+      "sha256": "5f3a1273f4267c4711602c062dad041bff259410dc2b649258e8d2cb7d05498a"
+    },
+    {
+      "file": "ve-slide-19-390.jpg",
+      "bytes": 207323,
+      "sha256": "585acb2e404156cff53774ddfae28e2ffd439b34354623b594d817098ceb2e1a"
+    },
+    {
+      "file": "ve-slide-20-390.jpg",
+      "bytes": 178897,
+      "sha256": "725fceabe5a5c347771c70d2f997e369209c6e09de7272224e8f261896b4758b"
+    },
+    {
+      "file": "ve-slide-21-390.jpg",
+      "bytes": 119805,
+      "sha256": "da3646c53f49a87b594fa6d6b26f5dfe793229d4e3d78de4a4b4f06f1113bc43"
+    },
+    {
+      "file": "ve-slide-22-390.jpg",
+      "bytes": 149286,
+      "sha256": "cbc0314657db0ed82a7d6601f41d4336ad0d4e11b5f81524c5c506a74ae1a292"
+    }
+  ]
+}

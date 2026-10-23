@@ -1,0 +1,75 @@
+{
+  "speciesId": "carissa-haematocarpa",
+  "commonName": "Karoo num-num / karoo-noemnoem",
+  "botanicalName": "Carissa haematocarpa",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "ripe num-num fruit — identity must be confirmed",
+  "supplementaryReferences": [
+    {
+      "title": "Edible part and local use",
+      "quote": "All Carissa species produce edible fruit",
+      "url": "https://pza.sanbi.org/carissa-sebrabergensis",
+      "doc": "SANBI PlantZAfrica, carissa-sebrabergensis",
+      "page": null,
+      "note": "SANBI's botanical account includes C. haematocarpa among South African Carissa. Its identity is bridged to C. bispinosa by the current SANBI assessment; no distinct Karoo cultivar is established."
+    },
+    {
+      "title": "Current SANBI taxonomic bridge",
+      "quote": "Carissa haematocarpa (Eckl.) A.DC.",
+      "url": "https://redlist.sanbi.org/species.php?species=984-2",
+      "doc": "SANBI Red List, Carissa bispinosa assessment (2023)",
+      "page": null,
+      "note": "Listed among synonyms of Carissa bispinosa. This is identity evidence, not a new fruit cultivar or an independent picking window."
+    }
+  ],
+  "productionGuidance": {
+    "products": "ripe num-num fruit — identity must be confirmed",
+    "care": [
+      "Confirm botanical identity before using this catalogue entry as a separate fruit enterprise. Do not count it twice merely because the same plant is also labelled C. bispinosa."
+    ],
+    "purchase": [
+      "Ask a local botanical nursery to confirm the plant's identity and suitable provenance; no primary named cultivar or exact frost threshold was verified."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/carissa-sebrabergensis",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    },
+    {
+      "url": "https://redlist.sanbi.org/species.php?species=984-2",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary institutional source content checked; context and limits retained."
+    }
+  ],
+  "gaps": [
+    "The catalogue name is retained, but SANBI now treats it as a synonym of C. bispinosa. No separately qualified ripe season or yield is assigned."
+  ]
+}

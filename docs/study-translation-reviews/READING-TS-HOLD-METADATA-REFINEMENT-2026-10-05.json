@@ -1,0 +1,472 @@
+{
+  "status": "metadata aligned to actual applied targets; source pairs unchanged",
+  "removedSupersededHolds": [
+    {
+      "lessonId": "reading-landscape-l2",
+      "field": "quiz[0].rationale",
+      "sourceText": "local frost observations must guide the final position.",
+      "reason": "Retain the final-position rule exactly after localizing the surrounding risk statement."
+    },
+    {
+      "lessonId": "reading-landscape-l2",
+      "field": "quiz[1].rationale",
+      "sourceText": "Winter sun is lower and farther north.",
+      "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."
+    },
+    {
+      "lessonId": "reading-landscape-l2",
+      "field": "quiz[1].rationale",
+      "sourceText": "the hours of sun on a bed.",
+      "reason": "Retain the sun-duration effect phrase exactly after localizing the surrounding shade sentence."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[0].rationale",
+      "sourceText": "Cold air can settle in low places on clear, still nights.",
+      "reason": "Keep the full clear/still weather sentence exact; the surrounding assessment framing is a mixed machine draft."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[0].rationale",
+      "sourceText": "candidate nursery sites through the local frost season",
+      "reason": "Keep the nursery-site scope and complete local-frost-season duration exact inside the mixed rationale."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[0].rationale",
+      "sourceText": "local minimum-temperature records",
+      "reason": "Keep the evidence type and measure exact inside the mixed rationale."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[0].rationale",
+      "sourceText": "a local agriculture adviser",
+      "reason": "Keep the adviser qualification exact inside the mixed rationale."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[0].rationale",
+      "sourceText": "permanent choice",
+      "reason": "Keep the permanence and decision scope exact inside the mixed rationale."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[0].rationale",
+      "sourceText": "Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "reason": "Keep both diagnostic and no-guarantee safeguards exact inside the mixed rationale."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[1].q",
+      "sourceText": "repeatedly develop late blight during cool, damp spells.",
+      "reason": "Retain the repeated late-blight and cool, damp weather condition exactly after translating only the KZN farmer and tomatoes subject."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[1].rationale",
+      "sourceText": "Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+      "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "quiz[0].rationale",
+      "sourceText": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction.",
+      "reason": "Retain this precise technical or safety sentence exact within the unreviewed regional draft."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "Its marks are an observation, not a design or approval for earthworks.",
+      "reason": "Keep the explicit limit on what an A-frame can establish exact while the surrounding ordinary prose is drafted."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "Soil, slope, drainage, storm flow, and a safe overflow route all matter.",
+      "reason": "Keep every named site assessment factor and the safe-overflow-route condition exact."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much.",
+      "reason": "Keep the erosion and slow-infiltration conditions exact while drafting the surrounding observation prose."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "Choose any water works for the site and plan a safe route for excess water.",
+      "reason": "Keep the site-specific waterworks and safe-excess-water requirement exact."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[1].rationale",
+      "sourceText": "A placement rule cannot show whether a structure suits the site. Poorly laid contours can increase erosion, and excess water needs a safe route.",
+      "reason": "Retain the exact English source so this site-dependent safety statement is not narrowed, broadened, or turned into a guarantee before fluent local review."
+    },
+    {
+      "lessonId": "reading-landscape-l2",
+      "field": "body",
+      "sourceText": "Pawpaw and young citrus are sensitive to frost.",
+      "reason": "Keep the plant names and frost sensitivity exact; the adjacent known-pocket instruction now has a mixed unreviewed draft."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "On a clear, still night, cold air can flow downhill and collect in low places.",
+      "reason": "Keep the conditional cold-air movement and accumulation statement exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "can be colder than nearby slopes.",
+      "reason": "Keep the relative-temperature comparison and can-modality exact while the subject is localized."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "Frost patterns",
+      "reason": "Keep the frost-pattern technical term exact while localizing the site-dependence framing."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "the local frost season",
+      "reason": "Keep the local-season condition exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "local minimum-temperature records where available",
+      "reason": "Keep the record type and availability condition exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "across cold nights",
+      "reason": "Keep the observation condition exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "local agriculture adviser",
+      "reason": "Keep the adviser role exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "permanent home for tender seedlings",
+      "reason": "Keep permanence and tender-seedling scope exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "reason": "Retain the frost definition and mist/visible-ice distinction exactly until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "low ground",
+      "reason": "Keep low-ground site terminology exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "slopes",
+      "reason": "Keep slope terminology exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "where cold or damage lasts longest.",
+      "reason": "Keep the cold-or-damage criterion and longest-duration comparison exact after translating only the ordinary instruction to mark places."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "Late blight can still spread during prolonged cool, damp weather.",
+      "reason": "Keep the disease-spread condition exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "seek local crop-health guidance too.",
+      "reason": "Keep the local crop-health guidance instruction exact until reviewed."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "body",
+      "sourceText": "These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted.",
+      "reason": "Keep the diagnostic limit exact while the ordinary frost, damp-ground, species-observation and check-before-deciding instructions use a machine draft."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[1].options[0]",
+      "sourceText": "A sealed, unventilated tunnel",
+      "reason": "Technical or agronomic wording remains exact English until a fluent Xitsonga reviewer can verify it."
+    }
+  ],
+  "oldHoldCount": 39,
+  "newHoldCount": 47,
+  "addedHolds": [
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "points at the same height",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "A-frame level",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "contour line",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "earthworks",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "swale",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "dam",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "Soil, slope, drainage, storm flow",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "erosion",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "body",
+      "sourceText": "design",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "keyPoints[1]",
+      "sourceText": "points at the same height",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "keyPoints[1]",
+      "sourceText": "A-frame",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[0].rationale",
+      "sourceText": "points at the same height",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[0].rationale",
+      "sourceText": "A-frame",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[0].rationale",
+      "sourceText": "earthworks",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[0].options[0]",
+      "sourceText": "Points at the same height along a contour",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[1].rationale",
+      "sourceText": "erosion",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[1].options[0]",
+      "sourceText": "slope",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[1].options[1]",
+      "sourceText": "storm flow",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l2",
+      "field": "body",
+      "sourceText": "young citrus",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l2",
+      "field": "body",
+      "sourceText": "frost",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l2",
+      "field": "keyPoints[3]",
+      "sourceText": "young citrus",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l2",
+      "field": "quiz[0].q",
+      "sourceText": "young pawpaw",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l2",
+      "field": "quiz[0].rationale",
+      "sourceText": "frost pocket",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "dam",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "tender seedlings",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "cold pockets",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "frost damage",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "Frost",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "ice",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "surface",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "Mist",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "body",
+      "sourceText": "late blight",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[0].rationale",
+      "sourceText": "dam",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[0].rationale",
+      "sourceText": "frost damage",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l3",
+      "field": "quiz[1].q",
+      "sourceText": "late blight",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "body",
+      "sourceText": "frost",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "body",
+      "sourceText": "design",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "body",
+      "sourceText": "fences",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "quiz[0].rationale",
+      "sourceText": "compaction",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "quiz[0].rationale",
+      "sourceText": "design",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "quiz[1].rationale",
+      "sourceText": "windbreak",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "quiz[1].options[1]",
+      "sourceText": "windbreak",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l4",
+      "field": "quiz[1].options[1]",
+      "sourceText": "windbreaks",
+      "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    }
+  ],
+  "wordBoundaryRepair": "Removed false dam-in-damage and singular windbreak-in-windbreaks spans; trained local adviser excludes article inferred from end of Vutisa. Added exact observation/any-scope spans."
+}

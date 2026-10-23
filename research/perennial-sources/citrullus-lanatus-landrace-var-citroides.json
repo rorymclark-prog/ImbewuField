@@ -1,0 +1,63 @@
+{
+  "speciesId": "citrullus-lanatus-landrace-var-citroides",
+  "commonName": "Tsamma / Kalahari melon / karkoer",
+  "botanicalName": "Citrullus lanatus (landrace / var. citroides)",
+  "householdFoodStatus": "specialist-review",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "identified edible melon landrace — specialist confirmation needed",
+  "supplementaryReferences": [
+    {
+      "title": "Edible-part and safety review",
+      "quote": "The flesh of the bitter karkoer or bitterboela is not used by humans",
+      "url": "https://pza.sanbi.org/citrullus-lanatus",
+      "doc": "SANBI PlantZAfrica, citrullus-lanatus",
+      "page": null,
+      "note": "The catalogue entry combines tsamma and var. citroides/landrace labels. SANBI distinguishes edible makataan/tsamma forms from bitter karkoer; identity and edible part must be confirmed."
+    }
+  ],
+  "productionGuidance": {
+    "products": "identified edible melon landrace — specialist confirmation needed",
+    "care": [
+      "Keep this mixed landrace entry out of household-food totals until an experienced local grower confirms the seed source, form and appropriate food preparation.",
+      "The source describes a sprawling annual for fairly dry areas with adequate space."
+    ],
+    "purchase": [
+      "Obtain an identified edible food landrace from a trusted local seed source. A wild-looking melon or the common name karkoer alone is insufficient."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/citrullus-lanatus",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    }
+  ],
+  "gaps": [
+    "No landrace-specific local harvest interval or safe universal yield. The recorded wild-plant maximum is not a crop benchmark."
+  ]
+}

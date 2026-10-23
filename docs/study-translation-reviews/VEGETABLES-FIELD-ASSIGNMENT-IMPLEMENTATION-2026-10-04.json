@@ -1,0 +1,555 @@
+{
+  "title": "Vegetables Field Assignment source-bound implementation proof",
+  "createdUtc": "2026-10-04T18:36:31.012Z",
+  "baseHead": "af8734847a0b707e5393afb9020fe4425d8542fe",
+  "packetProvenance": {
+    "sourcePacket": "/tmp/imbewu-vegetables-field-assignment-cohesive-independent-check-20261004.json",
+    "packetHistoricalHead": "3ef45b27b55e3650a9b9eafe3fb9833dbca26a98",
+    "reason": "This source-bound packet predates the merged Field Action slide18 update; each selected slide17 current target was rebound and checked against the fresh af873484 base before replacement."
+  },
+  "changedTargetCount": 13,
+  "changedFields": [
+    {
+      "language": "st",
+      "slide": 17,
+      "bodyIndex": 2,
+      "source": "Reach the middle from both sides. Keep every foot on the paths. Space your plants for your own climate. Mulch the bed.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Reach the middle from both sides. ",
+            "status": "draft",
+            "text": "Fihla bohareng ho tloha mahlakoreng ka bobedi. "
+          },
+          {
+            "sourceEnglish": "Keep every foot on the paths. ",
+            "status": "draft",
+            "text": "Etsa bonnete ba hore leoto le leng le le leng le sala ditseleng. "
+          },
+          {
+            "sourceEnglish": "Space your plants for your own climate. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Mulch the bed.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "after": {
+        "status": "draft",
+        "text": "Fihla bohareng ho tloha mahlakoreng ka bobedi. Etsa bonnete ba hore leoto le leng le le leng le sala ditseleng. Beha dimela ka sebaka se tshwanetseng boemo ba lehodimo ba hao. Tshhela mulch bedeng."
+      },
+      "semanticGuard": "Approved source-bound wording preserves the passage conditions and clause order."
+    },
+    {
+      "language": "st",
+      "slide": 17,
+      "bodyIndex": 3,
+      "source": "Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Check the bed regularly from planting.",
+            "status": "draft",
+            "text": "Hlahloba bed kgafetsa ho tloha ha e lengwa."
+          },
+          {
+            "sourceEnglish": " Use the ",
+            "status": "draft",
+            "text": " Sebedisa "
+          },
+          {
+            "sourceEnglish": "ten-day photograph",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " as an assignment checkpoint, ",
+            "status": "draft",
+            "text": " e le assignment checkpoint, "
+          },
+          {
+            "sourceEnglish": "not a reason to delay care.",
+            "status": "draft",
+            "text": "eseng lebaka la ho diehisa tlhokomelo."
+          }
+        ]
+      },
+      "semanticGuard": "Approved source-bound wording preserves the passage conditions and clause order."
+    },
+    {
+      "language": "st",
+      "slide": 17,
+      "bodyIndex": 4,
+      "source": "Photograph it when it's planted. Then come back after ten days with what you observed.",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Nka senepe ha bed e se e jetsoe. Ebe o kgutle ka mora matsatsi a leshome o tlisa seo o se boneng."
+      },
+      "semanticGuard": "Approved source-bound wording preserves the passage conditions and clause order."
+    },
+    {
+      "language": "st",
+      "slide": 17,
+      "bodyIndex": 5,
+      "source": "The aim isn't a perfect picture. The aim is a bed whose shape, spacing and rhythm you chose on purpose.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The aim isn't a perfect picture. ",
+            "status": "draft",
+            "text": "Sepheo ha se setshwantsho se phethahetseng. "
+          },
+          {
+            "sourceEnglish": "The aim is a bed whose shape, spacing and rhythm you chose on purpose.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "after": {
+        "status": "draft",
+        "text": "Sepheo ha se setshwantsho se phethahetseng. Sepheo ke bed eo o kgethileng shape, spacing le rhythm ya yona ka boomo."
+      },
+      "semanticGuard": "Approved source-bound wording preserves the passage conditions and clause order."
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "bodyIndex": 2,
+      "source": "Reach the middle from both sides. Keep every foot on the paths. Space your plants for your own climate. Mulch the bed.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Reach the middle from both sides. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Keep every foot on the paths. ",
+            "status": "draft",
+            "text": "Ni ite uri milenzhe yaṋu yoṱhe i dzule i kha paths fhedzi. "
+          },
+          {
+            "sourceEnglish": "Space your plants for your own climate. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Mulch the bed.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "after": {
+        "status": "draft",
+        "text": "Swikani vhukati ha bed ni tshi bva thungo dzoṱhe mbili. Ni ite uri milenzhe yaṋu yoṱhe i dzule i kha paths fhedzi. Ṋeani zwimela spacing yo teaho kha climate yaṋu. Vheani mulch kha bed."
+      },
+      "semanticGuard": "Approved source-bound wording preserves the passage conditions and clause order."
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "bodyIndex": 3,
+      "source": "Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Check the bed regularly from planting.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Use the ",
+            "status": "draft",
+            "text": " Shumisani "
+          },
+          {
+            "sourceEnglish": "ten-day photograph",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " as an assignment checkpoint, ",
+            "status": "draft",
+            "text": " sa assignment checkpoint, "
+          },
+          {
+            "sourceEnglish": "not a reason to delay care.",
+            "status": "draft",
+            "text": "hu si tshiitisi tsha u lenga u tshi ṱhogomela."
+          }
+        ]
+      },
+      "semanticGuard": "First sentence remains exact English to protect “regularly from planting”; later checkpoint and no-delay-care clauses remain source-paired."
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "bodyIndex": 4,
+      "source": "Photograph it when it's planted. Then come back after ten days with what you observed.",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Photograph it",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " when it's planted.",
+            "status": "draft",
+            "text": " musi bed yo no ṱavhiwa."
+          },
+          {
+            "sourceEnglish": " Then come back after ten days with what you observed.",
+            "status": "draft",
+            "text": " Nga murahu ha maḓuvha a fumi ni vhuye ni na zwe na zwi vhona."
+          }
+        ]
+      },
+      "semanticGuard": "Approved source-bound wording preserves the passage conditions and clause order."
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "bodyIndex": 5,
+      "source": "The aim isn't a perfect picture. The aim is a bed whose shape, spacing and rhythm you chose on purpose.",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Tshipikwa a si tshifanyiso tsho fhelelaho. Tshipikwa ndi bed ine na khetha shape, spacing na rhythm yayo nga ndivho."
+      },
+      "semanticGuard": "Approved source-bound wording preserves the passage conditions and clause order."
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "bodyIndex": 0,
+      "source": "Now the lesson finishes in the soil.",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Sweswi, dyondzo yi hela emhlabeni."
+      },
+      "semanticGuard": "Approved source-bound wording preserves the passage conditions and clause order."
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "bodyIndex": 2,
+      "source": "Reach the middle from both sides. Keep every foot on the paths. Space your plants for your own climate. Mulch the bed.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Reach the middle from both sides. ",
+            "status": "draft",
+            "text": "Fika exivindzini hi matlhelo hamambirhi. "
+          },
+          {
+            "sourceEnglish": "Keep every foot on the paths. ",
+            "status": "draft",
+            "text": "Tiyisisa leswaku milenge ya wena yi sala yi ri etindleleni ntsena. "
+          },
+          {
+            "sourceEnglish": "Space your plants for your own climate. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Mulch the bed.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "after": {
+        "status": "draft",
+        "text": "Fika exivindzini hi matlhelo hamambirhi. Tiyisisa leswaku milenge ya wena yi sala yi ri etindleleni ntsena. Siyela swimilani mpfhuka lowu faneleke eka maxelo ya wena. Tirhisa mulch eka bed."
+      },
+      "semanticGuard": "Approved source-bound wording preserves the passage conditions and clause order."
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "bodyIndex": 3,
+      "source": "Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Check the bed regularly from planting.",
+            "status": "draft",
+            "text": "Kambela bed nkarhi na nkarhi ku sukela loko yi byariwile."
+          },
+          {
+            "sourceEnglish": " Use the ",
+            "status": "draft",
+            "text": " Tirhisa "
+          },
+          {
+            "sourceEnglish": "ten-day photograph",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " as an assignment checkpoint, ",
+            "status": "draft",
+            "text": " tanihi assignment checkpoint, "
+          },
+          {
+            "sourceEnglish": "not a reason to delay care.",
+            "status": "draft",
+            "text": "ku nga ri xivangelo xo hlwela ku khathalela."
+          }
+        ]
+      },
+      "semanticGuard": "Approved source-bound wording preserves the passage conditions and clause order."
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "bodyIndex": 4,
+      "source": "Photograph it when it's planted. Then come back after ten days with what you observed.",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Photograph it when it's planted.",
+            "status": "draft",
+            "text": "Teka foto loko bed yi byariwile."
+          },
+          {
+            "sourceEnglish": " Then come back after ten days",
+            "status": "draft",
+            "text": " Kutani vuya endzhaku ka masiku ya khume"
+          },
+          {
+            "sourceEnglish": " with what you observed.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "semanticGuard": "Approved source-bound wording preserves the passage conditions and clause order."
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "bodyIndex": 5,
+      "source": "The aim isn't a perfect picture. The aim is a bed whose shape, spacing and rhythm you chose on purpose.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "The aim isn't a perfect picture. ",
+            "status": "draft",
+            "text": "Xikongomelo a hi xifaniso lexi hetisekeke. "
+          },
+          {
+            "sourceEnglish": "The aim is a bed whose shape, spacing and rhythm you chose on purpose.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "after": {
+        "status": "draft",
+        "text": "Xikongomelo a hi xifaniso lexi hetisekeke. Xikongomelo i bed leyi xivumbeko, spacing ni rhythm ya yona u swi hlawuleke hi vomu."
+      },
+      "semanticGuard": "Existing first sentence remains byte-identical; only the new second sentence leading space was removed."
+    }
+  ],
+  "preservation": {
+    "languages": {
+      "st": {
+        "pairedPath": "docs/narration/vegetables-staples.st.paired-draft.json",
+        "baseSha256": "499d3ba63a7719cdcf0972ba0f2b668b16c9f83a1237a88e87819c411bd7e4f6",
+        "finalSha256": "415355f47d485ddc2e5dbbeeb952b3134bdaca40341fd7b7a53fb08cfe6a44d3",
+        "canonicalEnglishSlidesSha256": "6e9aa05eedf52883d9afe05869aa9b24c5645b8901d487a8b4ce97c4c90143b8",
+        "canonicalEnglishUnchanged": true,
+        "unlistedTargetFieldsSha256": "0771c2e86a0ce4c2bc999cebe8b9bea091b863972794ee83bc8072b703be9d04",
+        "unlistedTargetsUnchanged": true,
+        "unchangedSoilFinishAndExactDimensions": {
+          "english": [
+            "Now the lesson finishes in the soil.",
+            "Build one bed that can keep feeding you. One point two metres by three metres."
+          ],
+          "target": [
+            {
+              "status": "draft",
+              "text": "Joale thuto e fella mobung."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Build one bed that can keep feeding you. ",
+                  "status": "draft",
+                  "text": "Haha bed e le nngwe e ka tswelang pele ho o fepa. "
+                },
+                {
+                  "sourceEnglish": "One point two metres by three metres.",
+                  "status": "english-hold"
+                }
+              ]
+            }
+          ],
+          "unchanged": true
+        },
+        "slide18Sha256": "1afe1396c2b78b1409395b42a73bee7874b653854ddd7e8b1bd25e4011ddfd50",
+        "slide18Unchanged": true
+      },
+      "ve": {
+        "pairedPath": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "baseSha256": "b69a0dfdf024c452098981de2013501c6aa608dd754cc9560e8727462ce3f1a5",
+        "finalSha256": "e9a850797ebda5684efdd400d79d59a1ef6aedfb3433d63bb5d308fd4757cb88",
+        "canonicalEnglishSlidesSha256": "6e9aa05eedf52883d9afe05869aa9b24c5645b8901d487a8b4ce97c4c90143b8",
+        "canonicalEnglishUnchanged": true,
+        "unlistedTargetFieldsSha256": "2b7e9c5016fa69278a4c25bb2604c28bbeb0f71a20f6a798d5dc3f2940cf7adc",
+        "unlistedTargetsUnchanged": true,
+        "unchangedSoilFinishAndExactDimensions": {
+          "english": [
+            "Now the lesson finishes in the soil.",
+            "Build one bed that can keep feeding you. One point two metres by three metres."
+          ],
+          "target": [
+            {
+              "status": "draft",
+              "text": "Zwino ngudo i fhela mavuni."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Build one bed that can keep feeding you. ",
+                  "status": "draft",
+                  "text": "Fhaṱani bed nthihi ine ya nga bvela phanḓa u ni ṋea zwiliwa. "
+                },
+                {
+                  "sourceEnglish": "One point two metres by three metres.",
+                  "status": "english-hold"
+                }
+              ]
+            }
+          ],
+          "unchanged": true
+        },
+        "slide18Sha256": "1b940f6599b415495da710e9f4c247dea8c2a336df5d8541eed6b12b5cdc37d1",
+        "slide18Unchanged": true
+      },
+      "ts": {
+        "pairedPath": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "baseSha256": "3afa3bac9eee9e9f70a8fc547d65630b9c74977393daaf41b7075de1b9d9b7cb",
+        "finalSha256": "5c6281e4a68eacf0d87f783cf7ae086a095d27fb13307b0315182f549359c3db",
+        "canonicalEnglishSlidesSha256": "6e9aa05eedf52883d9afe05869aa9b24c5645b8901d487a8b4ce97c4c90143b8",
+        "canonicalEnglishUnchanged": true,
+        "unlistedTargetFieldsSha256": "97dcdebe5a0dbb9358c15d4af33872b2d29d4db1c8c2ff0f7b9f8d667eb3e9f2",
+        "unlistedTargetsUnchanged": true,
+        "unchangedSoilFinishAndExactDimensions": {
+          "english": [
+            "Now the lesson finishes in the soil.",
+            "Build one bed that can keep feeding you. One point two metres by three metres."
+          ],
+          "target": [
+            {
+              "status": "english-hold"
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Build one bed that can keep feeding you. ",
+                  "status": "draft",
+                  "text": "Aka bed yin'we leyi nga tshamaka yi ku nyika swakudya. "
+                },
+                {
+                  "sourceEnglish": "One point two metres by three metres.",
+                  "status": "english-hold"
+                }
+              ]
+            }
+          ],
+          "unchanged": false
+        },
+        "slide18Sha256": "db780ff9689141bb1e25d0c74c9ace62aae93e375effb5178d26a7972607ab51",
+        "slide18Unchanged": true
+      }
+    },
+    "canonicalEnglish": {
+      "path": "docs/narration/vegetables-staples.en.md",
+      "sha256": "9cfb6fc5784818d529fdfeecb28f367183fce8a28b6dee28c8f88142640d5bd3",
+      "unchanged": true
+    },
+    "spokenCourseAudio": {
+      "path": "lib/course-audio.ts",
+      "sha256": "82e375452c4034588a526938e350234ed746dc14956adad1cb6d8d548b01ab12",
+      "unchanged": true
+    },
+    "allUnlistedSlidesAndTargetFieldsEqualBase": true,
+    "slide18UnchangedAcrossAllLanguages": true,
+    "dimensionsUnchanged": true,
+    "reviewStatus": "unreviewed"
+  },
+  "renderProof": {
+    "contactSheet": "/tmp/imbewu-vegetables-assignment-slide17-contact-20261004.png",
+    "renderSizePx": [
+      1440,
+      5400
+    ],
+    "webpQuality": 88,
+    "webpMethod": 6,
+    "rootVisualReview": "Contact sheet reviewed; complete target/source/status panels fit without clipping.",
+    "assets": [
+      {
+        "language": "st",
+        "path": "public/course-decks/vegetables-staples/st/slide-17.webp",
+        "bytes": 366550,
+        "sha256": "95da51ecaed6362ebd56239c84a1a4a00bf91279b0b870189d1b30eb7a57b6c5"
+      },
+      {
+        "language": "ve",
+        "path": "public/course-decks/vegetables-staples/ve/slide-17.webp",
+        "bytes": 365210,
+        "sha256": "7ff52939fe87b0daa584fd448ccc737439075c9e610e6d6ca40ffe4c1e4d31aa"
+      },
+      {
+        "language": "ts",
+        "path": "public/course-decks/vegetables-staples/ts/slide-17.webp",
+        "bytes": 370800,
+        "sha256": "06a595f71cc80467e9f6b0a818ec2ee2f17b3c889323590ab6ffbca4fcce346f"
+      }
+    ]
+  },
+  "cacheMigration": {
+    "workerFunction": "migrateVegetablesFieldAssignmentStills",
+    "activationAfter": "migrateVegetablesFieldActionStills",
+    "marker": "/course-decks/vegetables-staples/.field-assignment-slide17-20261004",
+    "invalidatedPaths": [
+      "/course-decks/vegetables-staples/st/slide-17.webp",
+      "/course-decks/vegetables-staples/ve/slide-17.webp",
+      "/course-decks/vegetables-staples/ts/slide-17.webp"
+    ],
+    "matching": "URL pathname, so saved query variants are removed",
+    "preserves": "neighboring slides, EN/ZU stills, all-language audio, animation and other courses",
+    "network": "No fetch; no automatic downloads",
+    "verification": "Focused paired-draft and media-migration tests: 100 passed, 0 failed."
+  }
+}

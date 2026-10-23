@@ -27,3 +27,13 @@ Output: `public/manual/en/00-introduction.md`.
 
 - The exact title of the ACT manual could not be confirmed online (ACT's site is reachable in search results, but no page naming the 2014 manual was found). The title is kept as given in the source, since the compiler had permission from ACT.
 - The web address was left out of the reader only because links are not allowed; it is not in doubt.
+
+## Second pass (27 Sep 2026)
+
+Rewrite to REWRITE.md (639 → about 500 words): new WHY opening, "Who this manual is for", credits, a numbered "How to use this manual" (chapters, Glossary at the end, law and safety notes gathered at the end, translations), Key points.
+
+- **Mollison quote:** re-checked by WebSearch; the fuller wording is consistently attributed to Mollison (Goodreads quote page, The Ethics Centre, Permaculture Research Institute), but no search result tied it to a page of *Introduction to Permaculture* (1991). The text now attributes it to Mollison without naming the book, and the book is no longer cited as its source.
+- **ACT title:** still could not be confirmed online; kept as given in the source handbook (the compiler had ACT's permission).
+- **RVCC project:** UNDP / Government of Lesotho, 2020–21 — kept, sources as in the first pass.
+- **Cut:** "ask local farmers and extension officers" (see `research/manual/rewrite/00-introduction-endnote.md`); the sun-in-the-north and rainfall-season notes (covered in Chapters 2 and 3); the instruction to read Safety boxes (these boxes are being removed from all chapters).
+- **Changed:** "seed, fertiliser and chemicals" costs are now stated without a trend ("are dear"). Translations named as isiZulu, Sesotho and Tshivenḓa only, because Xitsonga is paused in the app (`lib/manual.ts` MANUAL_LANGS).

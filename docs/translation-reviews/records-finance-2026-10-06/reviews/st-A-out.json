@@ -1,0 +1,1455 @@
+[
+ {
+  "id": "R001",
+  "back": "It was not possible to read the receipt — try a clear, flat photo with enough light.",
+  "flags": []
+ },
+ {
+  "id": "R002",
+  "back": "This AI part is switched off. You can change your AI settings or carry on by hand.",
+  "flags": []
+ },
+ {
+  "id": "R003",
+  "back": "Confirmation/verification of signing in is required.",
+  "flags": [
+   "Reads as 'sign-in verification is needed', not a plain 'you must sign in' — meaning is vague"
+  ]
+ },
+ {
+  "id": "R004",
+  "back": "There is no image given.",
+  "flags": []
+ },
+ {
+  "id": "R005",
+  "back": "There are no entries for this month. Use the New entry button, the Invoice tool, or your phone — everything is shown here.",
+  "flags": []
+ },
+ {
+  "id": "R006",
+  "back": "There is no crop work or crop plan for this month.",
+  "flags": [
+   "'moralo' = plan/design; 'mosebetsi' = work/job — unclear what is meant for a performance card (sales? growing area?)"
+  ]
+ },
+ {
+  "id": "R007",
+  "back": "There are no sales or costs written down for this month.",
+  "flags": []
+ },
+ {
+  "id": "R008",
+  "back": "There are no entries for this season. Use the New entry button, the Invoice tool, or your phone — everything is shown here.",
+  "flags": []
+ },
+ {
+  "id": "R009",
+  "back": "There is no crop work or crop plan for this season.",
+  "flags": [
+   "same 'moralo' ambiguity as R006"
+  ]
+ },
+ {
+  "id": "R010",
+  "back": "There are no sales or costs written down for this season.",
+  "flags": []
+ },
+ {
+  "id": "R011",
+  "back": "There are no entries for this year. Use the New entry button, the Invoice tool, or your phone — everything is shown here.",
+  "flags": []
+ },
+ {
+  "id": "R012",
+  "back": "There is no crop work or crop plan for this year.",
+  "flags": [
+   "same 'moralo' ambiguity as R006"
+  ]
+ },
+ {
+  "id": "R013",
+  "back": "There are no sales or costs written down for this year.",
+  "flags": []
+ },
+ {
+  "id": "R014",
+  "back": "A sale is being changed.",
+  "flags": [
+   "'Ho fetolwa' is a passive verb phrase used as a heading; acceptable"
+  ]
+ },
+ {
+  "id": "R015",
+  "back": "A cost/expense is being changed.",
+  "flags": []
+ },
+ {
+  "id": "R016",
+  "back": "Sold (it has been sold).",
+  "flags": []
+ },
+ {
+  "id": "R017",
+  "back": "It is used / let it be used.",
+  "flags": [
+   "'Sebediswe' is a passive form of 'use' (a thing used), not clearly 'Spent' as money going out; sits beside R103 'Tse sebedisitsweng'; tab meaning unclear"
+  ]
+ },
+ {
+  "id": "R018",
+  "back": "Graphs.",
+  "flags": [
+   "'Dikerafo' is an English loan ('graphs') — understandable but a loanword"
+  ]
+ },
+ {
+  "id": "R019",
+  "back": "Animal feed.",
+  "flags": []
+ },
+ {
+  "id": "R020",
+  "back": "Seeds.",
+  "flags": [
+   "'Dipeo' could be read as seeds/kernels; fine but terse"
+  ]
+ },
+ {
+  "id": "R021",
+  "back": "Fuel (oils/fats for burning).",
+  "flags": [
+   "'Mafura a ho tjhesa' literally 'fats for burning' — a roundabout way of saying fuel"
+  ]
+ },
+ {
+  "id": "R022",
+  "back": "Things used / supplies.",
+  "flags": [
+   "'Disebediswa' is generic 'things used'; confusable with R017 'Sebediswe'"
+  ]
+ },
+ {
+  "id": "R023",
+  "back": "Work / labour.",
+  "flags": []
+ },
+ {
+  "id": "R024",
+  "back": "Transport.",
+  "flags": [
+   "'Dipalangwang' has a locative-looking ending; usually fine as 'transport'"
+  ]
+ },
+ {
+  "id": "R025",
+  "back": "Others / those remaining.",
+  "flags": []
+ },
+ {
+  "id": "R026",
+  "back": "Examination / inspection.",
+  "flags": [
+   "'Tlhahlobo' = inspection/checking; as a column header for a duplicate warning it is vague"
+  ]
+ },
+ {
+  "id": "R027",
+  "back": "Crop, kg and price are required.",
+  "flags": []
+ },
+ {
+  "id": "R028",
+  "back": "Saving has failed. Try again.",
+  "flags": []
+ },
+ {
+  "id": "R029",
+  "back": "It was not possible to read that image.",
+  "flags": []
+ },
+ {
+  "id": "R030",
+  "back": "It was not possible to read the receipt.",
+  "flags": []
+ },
+ {
+  "id": "R031",
+  "back": "It has been read — check the numbers before you save.",
+  "flags": []
+ },
+ {
+  "id": "R032",
+  "back": "It was not possible to read the receipt. The photo is still attached; enter the costs below.",
+  "flags": []
+ },
+ {
+  "id": "R033",
+  "back": "The item, giver and total amount have been prepared/fixed. Compare them with the receipt before you save.",
+  "flags": [
+   "'mofani' = giver; used for supplier",
+   "'lokisitswe' = prepared/put right; unclear whether 'filled in' or 'corrected'"
+  ]
+ },
+ {
+  "id": "R034",
+  "back": "Look first with sample records (preview with example records).",
+  "flags": []
+ },
+ {
+  "id": "R035",
+  "back": "Direct sale.",
+  "flags": [
+   "'ka kotloloho' = directly; as a short fragment it may not fit if the slot expects the word 'sale'"
+  ]
+ },
+ {
+  "id": "R036",
+  "back": "Cost / expense.",
+  "flags": [
+   "spelling 'Tshenyehelo' consistent with 'ditshenyehelo' elsewhere"
+  ]
+ },
+ {
+  "id": "R037",
+  "back": "which was harvested (e.g. '[crop] that was harvested').",
+  "flags": [
+   "lower-case relative form 'e' agrees with class 9; will not agree with every crop noun when inserted after {crop}"
+  ]
+ },
+ {
+  "id": "R038",
+  "back": "Harvest record.",
+  "flags": []
+ },
+ {
+  "id": "R039",
+  "back": "Income.",
+  "flags": []
+ },
+ {
+  "id": "R040",
+  "back": "Expenses.",
+  "flags": []
+ },
+ {
+  "id": "R041",
+  "back": "Money that remains, written down.",
+  "flags": [
+   "'Tjhelete e setseng e ngotsweng' = money left that is written; does not convey 'margin'/net"
+  ]
+ },
+ {
+  "id": "R042",
+  "back": "Harvest recorded.",
+  "flags": []
+ },
+ {
+  "id": "R043",
+  "back": "Page of finances.",
+  "flags": [
+   "'leqephe' = page/leaf, not a 'sheet' of figures; slightly odd"
+  ]
+ },
+ {
+  "id": "R044",
+  "back": "Open a model farm that has been worked out fully. Your books were not touched.",
+  "flags": [
+   "negative perfect 'ha di a amiwa' reads as past 'were not touched', not a present guarantee"
+  ]
+ },
+ {
+  "id": "R045",
+  "back": "Try the money book.",
+  "flags": []
+ },
+ {
+  "id": "R046",
+  "back": "month",
+  "flags": []
+ },
+ {
+  "id": "R047",
+  "back": "season",
+  "flags": []
+ },
+ {
+  "id": "R048",
+  "back": "year",
+  "flags": [
+   "'selemo' also means the spring/ploughing season"
+  ]
+ },
+ {
+  "id": "R049",
+  "back": "Take out (export).",
+  "flags": []
+ },
+ {
+  "id": "R050",
+  "back": "New invoice.",
+  "flags": []
+ },
+ {
+  "id": "R051",
+  "back": "Write down harvest.",
+  "flags": []
+ },
+ {
+  "id": "R052",
+  "back": "New entry.",
+  "flags": []
+ },
+ {
+  "id": "R053",
+  "back": "The orchard is switched off, so {kg} kg is not included in 'Harvest recorded': {names}. Income and the money that remains, written down, still count all sales.",
+  "flags": []
+ },
+ {
+  "id": "R054",
+  "back": "Date.",
+  "flags": []
+ },
+ {
+  "id": "R055",
+  "back": "Description.",
+  "flags": []
+ },
+ {
+  "id": "R056",
+  "back": "Quantity.",
+  "flags": []
+ },
+ {
+  "id": "R057",
+  "back": "Enter!",
+  "flags": [
+   "'Kena' is an imperative verb ('Enter!/Come in'), not a column word for money 'In'"
+  ]
+ },
+ {
+  "id": "R058",
+  "back": "Source.",
+  "flags": [
+   "'Mohlodi' = source; may be read as a person (class 1)"
+  ]
+ },
+ {
+  "id": "R059",
+  "back": "Come out! / Get out!",
+  "flags": [
+   "'Tswa' is an imperative verb ('Come out'), not a column word for money 'Out'"
+  ]
+ },
+ {
+  "id": "R060",
+  "back": "entry",
+  "flags": []
+ },
+ {
+  "id": "R061",
+  "back": "entries",
+  "flags": []
+ },
+ {
+  "id": "R062",
+  "back": "It is linked/synced with your phone.",
+  "flags": []
+ },
+ {
+  "id": "R063",
+  "back": "Add or change sales and costs here, or with the New entry button on your phone.",
+  "flags": []
+ },
+ {
+  "id": "R064",
+  "back": "It is not known.",
+  "flags": []
+ },
+ {
+  "id": "R065",
+  "back": "Performance of crops.",
+  "flags": []
+ },
+ {
+  "id": "R066",
+  "back": "Harvest leads: it compares the work of growing even when prices change.",
+  "flags": []
+ },
+ {
+  "id": "R067",
+  "back": "Downloading/unloading crop areas…",
+  "flags": [
+   "'jarolla' means download/unload, not 'load'; reads as downloading"
+  ]
+ },
+ {
+  "id": "R068",
+  "back": "The area planted has not been written down.",
+  "flags": []
+ },
+ {
+  "id": "R069",
+  "back": "planned.",
+  "flags": [
+   "'e rerilweng' after 'm²': agreement with 'm²' is fine"
+  ]
+ },
+ {
+  "id": "R070",
+  "back": "Harvest.",
+  "flags": []
+ },
+ {
+  "id": "R071",
+  "back": "No harvest written down.",
+  "flags": []
+ },
+ {
+  "id": "R072",
+  "back": "Money of sales.",
+  "flags": [
+   "'Tjhelete ya dithekiso' = money from sales; fine"
+  ]
+ },
+ {
+  "id": "R073",
+  "back": "No sales written down.",
+  "flags": []
+ },
+ {
+  "id": "R074",
+  "back": "Price.",
+  "flags": []
+ },
+ {
+  "id": "R075",
+  "back": "Costs from entries that were marked:",
+  "flags": [
+   "typo 'dikenyellelong' (extra 'l'; expected 'dikenyelletsong')"
+  ]
+ },
+ {
+  "id": "R076",
+  "back": "Other costs are not allocated.",
+  "flags": []
+ },
+ {
+  "id": "R077",
+  "back": "Costs per m²: they are not allocated.",
+  "flags": []
+ },
+ {
+  "id": "R078",
+  "back": "No costs of the crop written down.",
+  "flags": []
+ },
+ {
+  "id": "R079",
+  "back": "Orchard of fruit trees and food forest.",
+  "flags": []
+ },
+ {
+  "id": "R080",
+  "back": "harvested and sold, not counted per m².",
+  "flags": []
+ },
+ {
+  "id": "R081",
+  "back": "Harvested.",
+  "flags": []
+ },
+ {
+  "id": "R082",
+  "back": "Sold for.",
+  "flags": []
+ },
+ {
+  "id": "R083",
+  "back": "{sold} of it has been sold · {kept} eaten at home, given to others or lost.",
+  "flags": []
+ },
+ {
+  "id": "R084",
+  "back": "These are not rows in the list above because every number there is worked out per square metre of bed, and tree fruit does not come off a bed. The sales here have already been counted in the money below.",
+  "flags": []
+ },
+ {
+  "id": "R085",
+  "back": "Total/general profit of the garden.",
+  "flags": [
+   "'Phaello kakaretso' = 'general profit'; 'gross margin' idea is approximate"
+  ]
+ },
+ {
+  "id": "R086",
+  "back": "Garden.",
+  "flags": []
+ },
+ {
+  "id": "R087",
+  "back": "This farm.",
+  "flags": []
+ },
+ {
+  "id": "R088",
+  "back": "Sales written down when expenses written down are removed. Shared costs are never put into crop profit by guessing.",
+  "flags": []
+ },
+ {
+  "id": "R089",
+  "back": "Learn.",
+  "flags": []
+ },
+ {
+  "id": "R090",
+  "back": "There are no sales written down up to now.",
+  "flags": []
+ },
+ {
+  "id": "R091",
+  "back": "Add a sale by hand.",
+  "flags": []
+ },
+ {
+  "id": "R092",
+  "back": "There are no costs written down up to now.",
+  "flags": []
+ },
+ {
+  "id": "R093",
+  "back": "Write down a cost.",
+  "flags": []
+ },
+ {
+  "id": "R094",
+  "back": "My farm.",
+  "flags": []
+ },
+ {
+  "id": "R095",
+  "back": "Write down an entry.",
+  "flags": []
+ },
+ {
+  "id": "R096",
+  "back": "You have no network — what is saved on this phone is shown. What cannot be seen will appear when you get network again.",
+  "flags": []
+ },
+ {
+  "id": "R097",
+  "back": "Try the Ubhejane money book.",
+  "flags": []
+ },
+ {
+  "id": "R098",
+  "back": "A year that was worked from the Ubhejane Crèche demo farm: sales, costs, harvests and invoices. Your books are not touched.",
+  "flags": []
+ },
+ {
+  "id": "R099",
+  "back": "Take out for this month (CSV).",
+  "flags": []
+ },
+ {
+  "id": "R100",
+  "back": "What happened recently.",
+  "flags": []
+ },
+ {
+  "id": "R101",
+  "back": "Nothing written down up to now.",
+  "flags": []
+ },
+ {
+  "id": "R102",
+  "back": "Those sold this month.",
+  "flags": []
+ },
+ {
+  "id": "R103",
+  "back": "Those used/spent this month.",
+  "flags": [
+   "'sebedisitsweng' = used; 'spent' as money is only implied"
+  ]
+ },
+ {
+  "id": "R104",
+  "back": "Those harvested this month.",
+  "flags": []
+ },
+ {
+  "id": "R105",
+  "back": "The orchard is switched off, so {kg} kg is not included in the harvest count: {names}. The count of rand still counts all sales.",
+  "flags": []
+ },
+ {
+  "id": "R106",
+  "back": "You spent {amount} more than what you got.",
+  "flags": []
+ },
+ {
+  "id": "R107",
+  "back": "You have kept/saved {amount}.",
+  "flags": []
+ },
+ {
+  "id": "R108",
+  "back": "Money coming in {moneyIn} · Money going out {moneyOut}.",
+  "flags": []
+ },
+ {
+  "id": "R109",
+  "back": "It is only what you have written down.",
+  "flags": []
+ },
+ {
+  "id": "R110",
+  "back": "View invoice (aria label).",
+  "flags": []
+ },
+ {
+  "id": "R111",
+  "back": "Invoice.",
+  "flags": []
+ },
+ {
+  "id": "R112",
+  "back": "View.",
+  "flags": []
+ },
+ {
+  "id": "R113",
+  "back": "Build invoice again.",
+  "flags": []
+ },
+ {
+  "id": "R114",
+  "back": "Make invoice.",
+  "flags": []
+ },
+ {
+  "id": "R115",
+  "back": "by/with (preposition before buyer).",
+  "flags": [
+   "'ka' = by/with/using; ambiguous for 'via' before a buyer name"
+  ]
+ },
+ {
+  "id": "R116",
+  "back": "Farm gate.",
+  "flags": []
+ },
+ {
+  "id": "R117",
+  "back": "It has been paid.",
+  "flags": []
+ },
+ {
+  "id": "R118",
+  "back": "Change.",
+  "flags": []
+ },
+ {
+  "id": "R119",
+  "back": "Confirm to delete.",
+  "flags": []
+ },
+ {
+  "id": "R120",
+  "back": "Delete/erase.",
+  "flags": []
+ },
+ {
+  "id": "R121",
+  "back": "Are you sure?",
+  "flags": []
+ },
+ {
+  "id": "R122",
+  "back": "The photo has been attached. Enter the item, giver and total below.",
+  "flags": [
+   "'mofani' used for supplier"
+  ]
+ },
+ {
+  "id": "R123",
+  "back": "Lima needs network. You can still enter costs and save this photo without network.",
+  "flags": []
+ },
+ {
+  "id": "R124",
+  "back": "Lima reads photos up to 4 MB. You can still save this original photo and enter the costs yourself.",
+  "flags": []
+ },
+ {
+  "id": "R125",
+  "back": "Your account has changed. Open this cost again before you ask Lima to read it.",
+  "flags": []
+ },
+ {
+  "id": "R126",
+  "back": "Item and money are required.",
+  "flags": []
+ },
+ {
+  "id": "R127",
+  "back": "Product, quantity and money are required.",
+  "flags": []
+ },
+ {
+  "id": "R128",
+  "back": "The cost has been saved. Its original receipt photo is saved on this phone only.",
+  "flags": []
+ },
+ {
+  "id": "R129",
+  "back": "The entry has been saved.",
+  "flags": []
+ },
+ {
+  "id": "R130",
+  "back": "The entry is saved on your phone, waiting for the server to confirm it. Any receipt photo that was added stays on this phone only.",
+  "flags": []
+ },
+ {
+  "id": "R131",
+  "back": "You have no network. The entry is saved on your phone, waiting to be sent. Any receipt photo that was added stays on this phone only.",
+  "flags": []
+ },
+ {
+  "id": "R132",
+  "back": "sale (after 'being changed').",
+  "flags": []
+ },
+ {
+  "id": "R133",
+  "back": "Money that you were paid.",
+  "flags": []
+ },
+ {
+  "id": "R134",
+  "back": "Money that you paid.",
+  "flags": []
+ },
+ {
+  "id": "R135",
+  "back": "Money coming in.",
+  "flags": []
+ },
+ {
+  "id": "R136",
+  "back": "Money going out.",
+  "flags": []
+ },
+ {
+  "id": "R137",
+  "back": "Growing area of this entry (optional).",
+  "flags": []
+ },
+ {
+  "id": "R138",
+  "back": "It is not allocated.",
+  "flags": []
+ },
+ {
+  "id": "R139",
+  "back": "Vegetable beds.",
+  "flags": []
+ },
+ {
+  "id": "R140",
+  "back": "Fields of main foods / staple food plots.",
+  "flags": []
+ },
+ {
+  "id": "R141",
+  "back": "It is shared by the beds and the main-food fields.",
+  "flags": []
+ },
+ {
+  "id": "R142",
+  "back": "Orchard / others.",
+  "flags": []
+ },
+ {
+  "id": "R143",
+  "back": "Choose only when this sale or cost belongs to that growing area.",
+  "flags": []
+ },
+ {
+  "id": "R144",
+  "back": "Receipt photo.",
+  "flags": []
+ },
+ {
+  "id": "R145",
+  "back": "optional.",
+  "flags": []
+ },
+ {
+  "id": "R146",
+  "back": "Take a photo.",
+  "flags": []
+ },
+ {
+  "id": "R147",
+  "back": "Choose a photo.",
+  "flags": []
+ },
+ {
+  "id": "R148",
+  "back": "Take a receipt photo.",
+  "flags": []
+ },
+ {
+  "id": "R149",
+  "back": "Choose a receipt photo.",
+  "flags": []
+ },
+ {
+  "id": "R150",
+  "back": "It works without network. The original photo is kept with this cost on this phone only. JPG, PNG or WebP, up to 10 MB.",
+  "flags": []
+ },
+ {
+  "id": "R151",
+  "back": "The photo is being checked…",
+  "flags": []
+ },
+ {
+  "id": "R152",
+  "back": "The receipt photo attached to this cost.",
+  "flags": []
+ },
+ {
+  "id": "R153",
+  "back": "It is ready to be saved.",
+  "flags": []
+ },
+ {
+  "id": "R154",
+  "back": "Remove the photo.",
+  "flags": []
+ },
+ {
+  "id": "R155",
+  "back": "Lima is reading...",
+  "flags": []
+ },
+ {
+  "id": "R156",
+  "back": "Read the receipt with Lima.",
+  "flags": []
+ },
+ {
+  "id": "R157",
+  "back": "Read this photo with Lima.",
+  "flags": []
+ },
+ {
+  "id": "R158",
+  "back": "Reading by AI is optional and uses your network. You can also enter the costs yourself.",
+  "flags": []
+ },
+ {
+  "id": "R159",
+  "back": "Lima needs network. Enter the costs yourself and save the photo that was attached.",
+  "flags": []
+ },
+ {
+  "id": "R160",
+  "back": "Receipt.",
+  "flags": []
+ },
+ {
+  "id": "R161",
+  "back": "The crop that this cost was for.",
+  "flags": []
+ },
+ {
+  "id": "R162",
+  "back": "Leave it empty if it served the whole garden.",
+  "flags": []
+ },
+ {
+  "id": "R163",
+  "back": "Mark the crop only when this cost was for that crop alone.",
+  "flags": []
+ },
+ {
+  "id": "R164",
+  "back": "What is it for?",
+  "flags": []
+ },
+ {
+  "id": "R165",
+  "back": "Product.",
+  "flags": []
+ },
+ {
+  "id": "R166",
+  "back": "e.g. Spinach.",
+  "flags": []
+ },
+ {
+  "id": "R167",
+  "back": "e.g. Small plants (seedlings).",
+  "flags": []
+ },
+ {
+  "id": "R168",
+  "back": "Money (R).",
+  "flags": []
+ },
+ {
+  "id": "R169",
+  "back": "Buyer.",
+  "flags": []
+ },
+ {
+  "id": "R170",
+  "back": "Giver.",
+  "flags": [
+   "'Mofani' literally 'giver'; the usual word for a supplier/provider is not clear"
+  ]
+ },
+ {
+  "id": "R171",
+  "back": "e.g. Local market.",
+  "flags": []
+ },
+ {
+  "id": "R172",
+  "back": "e.g. Agricultural corporation.",
+  "flags": [
+   "'Khoporasi' = corporation, not obviously 'co-op'"
+  ]
+ },
+ {
+  "id": "R173",
+  "back": "Group/category.",
+  "flags": []
+ },
+ {
+  "id": "R174",
+  "back": "Cancel.",
+  "flags": []
+ },
+ {
+  "id": "R175",
+  "back": "Saving...",
+  "flags": []
+ },
+ {
+  "id": "R176",
+  "back": "Save changes.",
+  "flags": []
+ },
+ {
+  "id": "R177",
+  "back": "Save sale and invoice.",
+  "flags": []
+ },
+ {
+  "id": "R178",
+  "back": "Write down a cost.",
+  "flags": [
+   "button label 'Ngola tshenyehelo' = 'Write cost'; reads as an instruction to write, may be fine"
+  ]
+ },
+ {
+  "id": "R179",
+  "back": "More products or payment later? Make an invoice.",
+  "flags": []
+ },
+ {
+  "id": "R180",
+  "back": "Sign in to follow your income.",
+  "flags": []
+ },
+ {
+  "id": "R181",
+  "back": "Write down crop sales and see your income as time goes on.",
+  "flags": []
+ },
+ {
+  "id": "R182",
+  "back": "Go to sign in.",
+  "flags": []
+ },
+ {
+  "id": "R183",
+  "back": "Enter a product and a quantity greater than 0.",
+  "flags": []
+ },
+ {
+  "id": "R184",
+  "back": "Enter a product, a quantity greater than 0 and the money from the sale.",
+  "flags": []
+ },
+ {
+  "id": "R185",
+  "back": "You have no network. This has been saved on your phone and will reach the cloud as soon as you get network again.",
+  "flags": []
+ },
+ {
+  "id": "R186",
+  "back": "Your network disappeared while it was saving. Nothing has been lost — this is saved on your phone and will finish being sent again by itself.",
+  "flags": []
+ },
+ {
+  "id": "R187",
+  "back": "Exporting here is blocked while you are viewing the Ubhejane farm. Sign in and end the tour of showing exporting your records.",
+  "flags": [
+   "last clause 'leeto la ho bontsha ho ntsha direkoto' is garbled: 'tour of showing taking out records'"
+  ]
+ },
+ {
+  "id": "R188",
+  "back": "Spinach.",
+  "flags": []
+ },
+ {
+  "id": "R189",
+  "back": "Local market.",
+  "flags": []
+ },
+ {
+  "id": "R190",
+  "back": "3 days ago.",
+  "flags": []
+ },
+ {
+  "id": "R191",
+  "back": "Records of a lender.",
+  "flags": [
+   "'direkoto tsa mobolekisi' = records of the lender (possessive), not 'for a lender'"
+  ]
+ },
+ {
+  "id": "R192",
+  "back": "A summary of the harvests, sales and costs written down — steadiness of income, flow of money and a history record from the past, built only from what you entered. It is a help for a conversation with a lender, not a credit score or approval of a loan.",
+  "flags": [
+   "'rekoto ya nako e fetileng' is a clumsy 'track record'"
+  ]
+ },
+ {
+  "id": "R193",
+  "back": "Write down at least one harvest, sale or cost first — there is nothing to summarise up to now.",
+  "flags": []
+ },
+ {
+  "id": "R194",
+  "back": "Costs.",
+  "flags": []
+ },
+ {
+  "id": "R195",
+  "back": "Those harvested.",
+  "flags": []
+ },
+ {
+  "id": "R196",
+  "back": "Close the summary.",
+  "flags": []
+ },
+ {
+  "id": "R197",
+  "back": "Look at the summary.",
+  "flags": []
+ },
+ {
+  "id": "R198",
+  "back": "Income and costs of month and month.",
+  "flags": []
+ },
+ {
+  "id": "R199",
+  "back": "Month.",
+  "flags": []
+ },
+ {
+  "id": "R200",
+  "back": "What remains.",
+  "flags": [
+   "'Se setseng' = 'what is left' (class 7); unclear what it labels in a table"
+  ]
+ },
+ {
+  "id": "R201",
+  "back": "A document is being made…",
+  "flags": []
+ },
+ {
+  "id": "R202",
+  "back": "Take out records of a lender.",
+  "flags": []
+ },
+ {
+  "id": "R203",
+  "back": "It is at the top by weight: {crop}.",
+  "flags": []
+ },
+ {
+  "id": "R204",
+  "back": "Write down a sale.",
+  "flags": []
+ },
+ {
+  "id": "R205",
+  "back": "Make an invoice to save the customer, product, quantity and payment together.",
+  "flags": [
+   "'moreki' = buyer/customer; fine"
+  ]
+ },
+ {
+  "id": "R206",
+  "back": "New sale and invoice.",
+  "flags": []
+ },
+ {
+  "id": "R207",
+  "back": "Past sale / invoice on paper.",
+  "flags": []
+ },
+ {
+  "id": "R208",
+  "back": "Have you already written down this sale? Use Make invoice on its line below to save one record.",
+  "flags": []
+ },
+ {
+  "id": "R209",
+  "back": "Quick entry of sale.",
+  "flags": []
+ },
+ {
+  "id": "R210",
+  "back": "A sign/pointer of the crop made by AI · add your own photo of the harvest below.",
+  "flags": [
+   "'sesupo' = pointer/indicator/sign, not 'picture/image'"
+  ]
+ },
+ {
+  "id": "R211",
+  "back": "Look first (preview).",
+  "flags": []
+ },
+ {
+  "id": "R212",
+  "back": "Growing area of this sale (optional).",
+  "flags": []
+ },
+ {
+  "id": "R213",
+  "back": "A pointer made by AI.",
+  "flags": [
+   "'sesupo' = pointer, not image"
+  ]
+ },
+ {
+  "id": "R214",
+  "back": "A pointer to the crop made by AI, not proof of harvest.",
+  "flags": [
+   "'sesupo' = pointer, not image"
+  ]
+ },
+ {
+  "id": "R215",
+  "back": "View invoice of …",
+  "flags": []
+ },
+ {
+  "id": "R216",
+  "back": "Build again invoice of …",
+  "flags": []
+ },
+ {
+  "id": "R217",
+  "back": "Make invoice of …",
+  "flags": []
+ },
+ {
+  "id": "R218",
+  "back": "It was not possible to build the document. Please try again.",
+  "flags": []
+ },
+ {
+  "id": "R219",
+  "back": "Supplies of the farm.",
+  "flags": []
+ },
+ {
+  "id": "R220",
+  "back": "RECEIPT FOR BUYING.",
+  "flags": []
+ },
+ {
+  "id": "R221",
+  "back": "Number.",
+  "flags": []
+ },
+ {
+  "id": "R222",
+  "back": "ALL / TOTAL.",
+  "flags": [
+   "'KAOFELA' = 'all'; works as total"
+  ]
+ },
+ {
+  "id": "R223",
+  "back": "We thank you · Keep this receipt.",
+  "flags": []
+ },
+ {
+  "id": "R224",
+  "back": "It was not possible to open this receipt. Try again.",
+  "flags": []
+ },
+ {
+  "id": "R225",
+  "back": "View receipt of …",
+  "flags": []
+ },
+ {
+  "id": "R226",
+  "back": "View receipt.",
+  "flags": []
+ },
+ {
+  "id": "R227",
+  "back": "Receipt for buying.",
+  "flags": []
+ },
+ {
+  "id": "R228",
+  "back": "Close receipt.",
+  "flags": []
+ },
+ {
+  "id": "R229",
+  "back": "Receipt is being opened…",
+  "flags": [
+   "word order 'Ho bulwa rasiti' is unnatural for a status line"
+  ]
+ },
+ {
+  "id": "R230",
+  "back": "Try again.",
+  "flags": []
+ },
+ {
+  "id": "R231",
+  "back": "Original photo · saved on this phone only.",
+  "flags": []
+ },
+ {
+  "id": "R232",
+  "back": "Open at full size.",
+  "flags": []
+ },
+ {
+  "id": "R233",
+  "back": "Download the original.",
+  "flags": []
+ },
+ {
+  "id": "R234",
+  "back": "There is no receipt photo saved for this cost on this phone. Change the cost to add another, or open it on the phone where you saved the photo.",
+  "flags": []
+ },
+ {
+  "id": "R235",
+  "back": "Quantity.",
+  "flags": []
+ },
+ {
+  "id": "R236",
+  "back": "Quantity sold.",
+  "flags": []
+ },
+ {
+  "id": "R237",
+  "back": "Quantity harvested.",
+  "flags": []
+ },
+ {
+  "id": "R238",
+  "back": "The quantity was not written down.",
+  "flags": []
+ },
+ {
+  "id": "R239",
+  "back": "Unit.",
+  "flags": [
+   "'Yuniti' loanword; fine"
+  ]
+ },
+ {
+  "id": "R240",
+  "back": "There is no quantity written down.",
+  "flags": []
+ },
+ {
+  "id": "R241",
+  "back": "The crop lines of paid invoices enter the sales book by themselves and are counted only once. Do not enter it again.",
+  "flags": [
+   "'e' (singular) after plural subject 'mela'/'diinvoyese' — 'Se ke wa e kenya' object unclear"
+  ]
+ },
+ {
+  "id": "R242",
+  "back": "Maybe it is the same sale — a paid invoice has already been counted as income.",
+  "flags": []
+ },
+ {
+  "id": "R243",
+  "back": "Your account or workplace has changed. Open this cost again before you save its receipt.",
+  "flags": []
+ },
+ {
+  "id": "R244",
+  "back": "Save the receipt together with the cost.",
+  "flags": []
+ },
+ {
+  "id": "R245",
+  "back": "Choose a JPG, PNG or WebP photo up to 10 MB. Keep the original one that can still be seen/read.",
+  "flags": []
+ },
+ {
+  "id": "R246",
+  "back": "This file is not a JPG, PNG or WebP photo that can be read. Choose another photo.",
+  "flags": []
+ },
+ {
+  "id": "R247",
+  "back": "The receipt was not saved on this phone. The storage space may be full or not available. Keep the original photo and try again.",
+  "flags": []
+ },
+ {
+  "id": "R248",
+  "back": "The cost has been saved, but its receipt was not confirmed on this phone. Keep the photo and try this cost again.",
+  "flags": []
+ },
+ {
+  "id": "R249",
+  "back": "Example.",
+  "flags": []
+ },
+ {
+  "id": "R250",
+  "back": "Example — how an entry that was written looks.",
+  "flags": []
+ },
+ {
+  "id": "R251",
+  "back": "Estimated guide — confirm the local price.",
+  "flags": []
+ },
+ {
+  "id": "R252",
+  "back": "No reliable guide price is saved for this crop. Enter the price that you agreed on, truly.",
+  "flags": [
+   "'ruri' = truly/indeed; stray emphasis"
+  ]
+ },
+ {
+  "id": "R253",
+  "back": "For {kg} kg, it is about R{low}–R{high}.",
+  "flags": []
+ },
+ {
+  "id": "R254",
+  "back": "Guide price, July 2026:",
+  "flags": []
+ },
+ {
+  "id": "R255",
+  "back": "shops about R{wholesale}/kg · direct sale/farm gate about R{retail}/kg.",
+  "flags": [
+   "'mabenkele' = shops/stores (retail), not wholesale"
+  ]
+ },
+ {
+  "id": "R256",
+  "back": "Recommended guide — average of prices that were found; confirm at home.",
+  "flags": [
+   "'lehaeng' = at home, not 'locally'"
+  ]
+ },
+ {
+  "id": "R257",
+  "back": "Guide from the source — enter the price that you agreed on.",
+  "flags": []
+ },
+ {
+  "id": "R258",
+  "back": "It was not possible to download your recent records. Check your network and try again — what is shown below may be old or incomplete.",
+  "flags": [
+   "'jarolla' = download"
+  ]
+ },
+ {
+  "id": "R259",
+  "back": "Try again.",
+  "flags": []
+ },
+ {
+  "id": "R260",
+  "back": "The orchard is included.",
+  "flags": []
+ },
+ {
+  "id": "R261",
+  "back": "The orchard has been taken out.",
+  "flags": []
+ },
+ {
+  "id": "R262",
+  "back": "The orchard is switched off, so {kg} kg is not included in this count: {names}. Nothing has been erased — open it again to count it again.",
+  "flags": []
+ },
+ {
+  "id": "R263",
+  "back": "The orchard is switched off, so {kg} kg is not included in the weight above: {names}. The rand total still counts all sales, including those of the orchard.",
+  "flags": []
+ },
+ {
+  "id": "R264",
+  "back": "eggs",
+  "flags": []
+ },
+ {
+  "id": "R265",
+  "back": "jars",
+  "flags": []
+ },
+ {
+  "id": "R266",
+  "back": "bags/sacks",
+  "flags": []
+ },
+ {
+  "id": "R267",
+  "back": "crates",
+  "flags": []
+ },
+ {
+  "id": "R268",
+  "back": "groups/bunches",
+  "flags": [
+   "'dihlopha' = groups/classes; 'bunches' is a stretch"
+  ]
+ },
+ {
+  "id": "R269",
+  "back": "trays",
+  "flags": []
+ },
+ {
+  "id": "R270",
+  "back": "items/things",
+  "flags": []
+ }
+]

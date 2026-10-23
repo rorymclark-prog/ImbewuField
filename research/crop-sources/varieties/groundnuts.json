@@ -1,0 +1,109 @@
+{
+  "key": "groundnuts",
+  "varieties": [
+    {
+      "name": "Akwa",
+      "zones": ["highveld", "karoo-arid", "lowveld-bushveld"],
+      "maturity": "medium",
+      "season": null,
+      "traits": "150-day (medium) growth period; Spanish type, upright bunch habit; 3.7 t/ha irrigated / 2.3 t/ha dryland kernel yield; 88% choice grade irrigated / 78% dryland; good resistance to pod worm and blackened pods, poor Botrytis stem rot resistance, good Sclerotinia resistance; recommended fungicide programme for leaf diseases",
+      "type": "OP",
+      "note": "ARC release, 1994. Named for both drought performance and the warm, dry production belt (NW/Limpopo/Northern Cape/Free State).",
+      "evidence": [
+        { "quote": "Under irrigation and with optimal managerial practices Akwa can yield between 3,75 and 4 t ha-1. Under low yield conditions (for example under drought) Robbie, Sellie, Kwarts, Anel, PAN 9212 and Akwa will still produce an acceptable yield. These cultivars are also recommended for warm, dry areas such as the North West Province, Northern Province, North Cape and the Western Free State.", "url": "https://www.arc.agric.za/arc-gci/Fact%20Sheets%20Library/Groundnut%20Production.pdf", "page": 6, "doc": "Groundnut Production: A Concise Guide, A.J. Cilliers, ARC Grain Crops Institute" },
+        { "quote": "GROWTH PERIOD: 150 days (Medium)... AVERAGE/POSSIBLE YIELD (Kernels/ha): Irrigation - 3.7t/ha Dryland - 2.3t/ha... AVERAGE/POSSIBLE KERNEL GRADING (Choice Grade): Irrigation - 88% Dryland - 78%", "url": "https://www.opot.co.za/imgs/crops/groundnuts/general-info/sa-groundnut-cultivar-overview-2018-august-v1.pdf", "page": 6, "doc": "South African Registered Groundnut Cultivars Overview, opot.co.za, August 2018" }
+      ]
+    },
+    {
+      "name": "Anel",
+      "zones": ["highveld", "karoo-arid", "lowveld-bushveld"],
+      "maturity": "medium",
+      "season": null,
+      "traits": "150-day (medium) growth period; Spanish type; does well without irrigation; 4t/ha irrigated / 2.6t/ha dryland yield; low-oleic (37.05%); tolerant to early/late leaf spot, Phoma, rust and black pod rot",
+      "type": "OP",
+      "note": "ARC release, 1993. Explicitly named as suitable for developing farmers and for dryland production.",
+      "evidence": [
+        { "quote": "Anel does well without irrigation and is suitable for the developing farmer.", "url": "https://www.arc.agric.za/arc-gci/Fact%20Sheets%20Library/Groundnut%20Production.pdf", "page": 6, "doc": "Groundnut Production: A Concise Guide, A.J. Cilliers, ARC Grain Crops Institute" },
+        { "quote": "Wide adaptability. Recommended for dryland but suitable for both dryland and irrigation... Tolerant to early and late leaf spots, Phoma, rust and black pod rot", "url": "https://www.opot.co.za/imgs/crops/groundnuts/general-info/sa-groundnut-cultivar-overview-2018-august-v1.pdf", "page": 6, "doc": "South African Registered Groundnut Cultivars Overview, opot.co.za, August 2018" }
+      ]
+    },
+    {
+      "name": "Kwarts",
+      "zones": ["highveld", "karoo-arid", "lowveld-bushveld"],
+      "maturity": "medium",
+      "season": "Suited to later plantings (late November to mid-December)",
+      "traits": "150-day (medium) growth period; Spanish type; 3.4t/ha irrigated / 1.9t/ha dryland; tolerant to early/late leaf spot, Phoma and black pod rot, resistant to pod nematode; good yield potential; good pod-worm and blackened-pod resistance, reasonable Botrytis stem rot resistance",
+      "type": "OP",
+      "note": "ARC release, 1991. The specific cultivar named for late-planting flexibility, useful where the season is compressed.",
+      "evidence": [
+        { "quote": "For later plantings (late November to mid December) Kwarts can be considered, while Harts is the cultivar with the shortest growing season.", "url": "https://www.arc.agric.za/arc-gci/Fact%20Sheets%20Library/Groundnut%20Production.pdf", "page": 6, "doc": "Groundnut Production: A Concise Guide, A.J. Cilliers, ARC Grain Crops Institute" },
+        { "quote": "GROWTH PERIOD: 150 days (Medium)... AVERAGE/POSSIBLE YIELD (Kernels/ha): Irrigation - 3.4t/ha Dryland - 1.9t/ha", "url": "https://www.opot.co.za/imgs/crops/groundnuts/general-info/sa-groundnut-cultivar-overview-2018-august-v1.pdf", "page": 13, "doc": "South African Registered Groundnut Cultivars Overview, opot.co.za, August 2018" }
+      ]
+    },
+    {
+      "name": "GP023",
+      "zones": [],
+      "maturity": "medium",
+      "season": null,
+      "traits": "150-155 day growth period; Spanish type; 4.3t/ha irrigated / 2.2t/ha dryland; moderate tolerance to leaf spot",
+      "type": "hybrid",
+      "note": "2015 release from Golden Peanut and Tree Nut Company, Hoopstad (Free State) — held by a commercial breeder rather than the ARC. No zone named by the source beyond the holder's location, so left unassigned rather than assumed to match highveld.",
+      "evidence": [{ "quote": "RELEASED: 2015 TYPE: Spanish GROWTH PERIOD: 150-155 days (Medium)... AVERAGE/POSSIBLE YIELD (Kernels/ha): Irrigation - 4.3t/ha Dryland - 2.2t/ha... TOLERANCE: Moderate tolerance to leaf spot. HOLDER/LOCAL DISTRIBUTOR: Golden Peanut and Tree Nut Company (Pty) Ltd, Hoopstad", "url": "https://www.opot.co.za/imgs/crops/groundnuts/general-info/sa-groundnut-cultivar-overview-2018-august-v1.pdf", "page": 20, "doc": "South African Registered Groundnut Cultivars Overview, opot.co.za, August 2018" }]
+    },
+    {
+      "name": "GP033",
+      "zones": [],
+      "maturity": "medium",
+      "season": null,
+      "traits": "150-155 day growth period; Spanish type; 3.6t/ha irrigated / 2.2t/ha dryland; good tolerance to leaf spot; similar to Akwa, well adapted for irrigated cultivation, maximum large kernels",
+      "type": "hybrid",
+      "note": "2015 release, same commercial breeder/holder as GP023 (Hoopstad, Free State) — no explicit zone stated by the source.",
+      "evidence": [{ "quote": "RELEASED: 2015 TYPE: Spanish GROWTH PERIOD: 150 - 155 days (Medium)... TOLERANCE: Good tolerance towards leaf spot... Similar to Akwa. Well adapted for irrigated cultivation. Maximum large kernels", "url": "https://www.opot.co.za/imgs/crops/groundnuts/general-info/sa-groundnut-cultivar-overview-2018-august-v1.pdf", "page": 13, "doc": "South African Registered Groundnut Cultivars Overview, opot.co.za, August 2018" }]
+    },
+    {
+      "name": "Harts",
+      "zones": [],
+      "maturity": "early",
+      "season": null,
+      "traits": "Shortest growing season of the cultivars discussed",
+      "type": "OP",
+      "note": "Named only as the shortest-season option; no zone or numeric day count stated in the source consulted.",
+      "evidence": [{ "quote": "Harts is the cultivar with the shortest growing season.", "url": "https://www.arc.agric.za/arc-gci/Fact%20Sheets%20Library/Groundnut%20Production.pdf", "page": 6, "doc": "Groundnut Production: A Concise Guide, A.J. Cilliers, ARC Grain Crops Institute" }]
+    },
+    {
+      "name": "KanGwane Red",
+      "zones": [],
+      "maturity": null,
+      "season": null,
+      "traits": "Suitable for the developing farmer",
+      "type": "OP",
+      "note": "Named for smallholder suitability but no zone stated.",
+      "evidence": [{ "quote": "KanGwane Red is also a cultivar that is suitable for developing farmers.", "url": "https://www.arc.agric.za/arc-gci/Fact%20Sheets%20Library/Groundnut%20Production.pdf", "page": 6, "doc": "Groundnut Production: A Concise Guide, A.J. Cilliers, ARC Grain Crops Institute" }]
+    }
+  ],
+  "zoneAdvice": {
+    "highveld": {
+      "text": "North West Province and the Western Free State are named directly as part of the 'warm, dry areas' where Robbie, Sellie, Kwarts, Anel, PAN 9212 and Akwa (the drought-hardy group) are recommended; groundnut trial localities Setlagole, Hoopstad, Bultfontein and Hartswater (all Free State/North West) corroborate this belt.",
+      "evidence": [
+        { "quote": "These cultivars are also recommended for warm, dry areas such as the North West Province, Northern Province, North Cape and the Western Free State.", "url": "https://www.arc.agric.za/arc-gci/Fact%20Sheets%20Library/Groundnut%20Production.pdf", "page": 6, "doc": "Groundnut Production: A Concise Guide, A.J. Cilliers, ARC Grain Crops Institute" }
+      ]
+    },
+    "karoo-arid": {
+      "text": "The (Northern) Cape is named directly in the same 'warm, dry areas' recommendation as highveld, for the same drought-hardy cultivar group.",
+      "evidence": [{ "quote": "These cultivars are also recommended for warm, dry areas such as the North West Province, Northern Province, North Cape and the Western Free State.", "url": "https://www.arc.agric.za/arc-gci/Fact%20Sheets%20Library/Groundnut%20Production.pdf", "page": 6, "doc": "Groundnut Production: A Concise Guide, A.J. Cilliers, ARC Grain Crops Institute" }]
+    },
+    "lowveld-bushveld": {
+      "text": "'Northern Province' (the pre-2003 name for Limpopo) is named directly in the same recommendation; KZN and Mpumalanga are separately named as areas where groundnuts matter for household nutrition, though without naming specific cultivars for that context.",
+      "evidence": [
+        { "quote": "These cultivars are also recommended for warm, dry areas such as the North West Province, Northern Province, North Cape and the Western Free State.", "url": "https://www.arc.agric.za/arc-gci/Fact%20Sheets%20Library/Groundnut%20Production.pdf", "page": 6, "doc": "Groundnut Production: A Concise Guide, A.J. Cilliers, ARC Grain Crops Institute" },
+        { "quote": "nutrition in the northern KwaZulu-Natal and Mpumalanga areas.", "url": "https://www.arc.agric.za/arc-gci/Fact%20Sheets%20Library/Groundnut%20Production.pdf", "page": 1, "doc": "Groundnut Production: A Concise Guide, A.J. Cilliers, ARC Grain Crops Institute" }
+      ]
+    }
+  },
+  "gaps": [
+    "No sourced recommendation at all for subtropical-coast, midlands-mistbelt, western-cape, southern-cape or high-mountain — both sources describe groundnuts as a summer-rainfall interior/dryland crop and do not address these zones.",
+    "GP023 and GP033 are named to a specific town (Hoopstad, Free State) via their commercial holder's address only, not stated as a recommended production zone, so left with an empty zones list rather than assumed to be 'highveld'.",
+    "No exact day-count found for Harts' 'shortest growing season' claim, nor for KanGwane Red's maturity — recorded as gaps rather than estimated.",
+    "Row/in-row spacing sourced only as a single figure (75mm) common to all cultivars, with no cultivar- or zone-specific variation found."
+  ]
+}

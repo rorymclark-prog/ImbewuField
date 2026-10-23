@@ -1,0 +1,112 @@
+{
+  "key": "potato",
+  "varieties": [
+    {
+      "name": "Electra",
+      "zones": ["midlands-mistbelt", "highveld"],
+      "maturity": "medium",
+      "season": null,
+      "traits": "Tolerant to late blight (Phytophthora infestans); highest and most consistent yielder of the seven cultivars trialled over four seasons; oval/round tuber, yellow skin, yellow flesh; season length 150 days planting-to-harvest",
+      "type": null,
+      "note": "KZN DARD's Cedara trial names this the top all-round pick, explicitly recommended for both commercial high-rainfall production and resource-poor smallholders.",
+      "evidence": [
+        { "quote": "In the 2017/18, 2018/19 and 2019/20 seasons, and overall, Electra produced significantly higher yields than the other cultivars.", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/2021-22.02-Potato-cultivar-evaluation-at-Cedara.pdf", "page": 1, "doc": "Potato cultivar evaluation at Cedara, KZN DARD Research & Technology Bulletin 2021/22-02" },
+        { "quote": "Electra, Valor and Panamera have good tolerance to late blight. Therefore, these three cultivars will be better suited for resource-poor smallholder and household growers.", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/2021-22.02-Potato-cultivar-evaluation-at-Cedara.pdf", "page": 2, "doc": "Potato cultivar evaluation at Cedara, KZN DARD Research & Technology Bulletin 2021/22-02" },
+        { "quote": "Commercial potato producers should produce cultivars that the market wants. However, as Electra yielded consistently well, all producers in the high potential rainfall areas of KwaZulu-Natal should consider producing and marketing this cultivar more extensively, because of its high yield potential", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/2021-22.02-Potato-cultivar-evaluation-at-Cedara.pdf", "page": 2, "doc": "Potato cultivar evaluation at Cedara, KZN DARD Research & Technology Bulletin 2021/22-02" },
+        { "quote": "Electra Oval/round Yellow Yellow Tolerant 150", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/2021-22.02-Potato-cultivar-evaluation-at-Cedara.pdf", "page": 2, "doc": "Potato cultivar evaluation at Cedara, KZN DARD Research & Technology Bulletin 2021/22-02 (Table 1)" }
+      ]
+    },
+    {
+      "name": "Valor",
+      "zones": ["midlands-mistbelt", "highveld"],
+      "maturity": "medium",
+      "season": null,
+      "traits": "Tolerant to late blight; oval/round tuber, light yellow skin, cream flesh; 151-day season length; one of the three main cultivars grown in KZN",
+      "type": null,
+      "note": "Named alongside Electra and Panamera as the blight-tolerant group best suited to resource-poor smallholders.",
+      "evidence": [
+        { "quote": "The main cultivars grown in the province are Mondial, Valor and Sifra (Potatoes SA, 2019).", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/2021-22.02-Potato-cultivar-evaluation-at-Cedara.pdf", "page": 1, "doc": "Potato cultivar evaluation at Cedara, KZN DARD Research & Technology Bulletin 2021/22-02" },
+        { "quote": "Valor Oval/round Light yellow Cream Tolerant 151", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/2021-22.02-Potato-cultivar-evaluation-at-Cedara.pdf", "page": 2, "doc": "Potato cultivar evaluation at Cedara, KZN DARD Research & Technology Bulletin 2021/22-02 (Table 1)" }
+      ]
+    },
+    {
+      "name": "Panamera",
+      "zones": ["midlands-mistbelt", "highveld"],
+      "maturity": "medium",
+      "season": null,
+      "traits": "Tolerant to late blight; oval, yellow skin, yellow flesh; 150-day season length; yielded inconsistently across seasons",
+      "type": null,
+      "note": "Blight-tolerant, but the trial flags inconsistent yield across the four seasons tested, unlike Electra.",
+      "evidence": [
+        { "quote": "Lanorma produced consistent yields over all the seasons, while Panamera yielded inconsistently.", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/2021-22.02-Potato-cultivar-evaluation-at-Cedara.pdf", "page": 1, "doc": "Potato cultivar evaluation at Cedara, KZN DARD Research & Technology Bulletin 2021/22-02" },
+        { "quote": "Panamera Oval Yellow Yellow Tolerant 150", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/2021-22.02-Potato-cultivar-evaluation-at-Cedara.pdf", "page": 2, "doc": "Potato cultivar evaluation at Cedara, KZN DARD Research & Technology Bulletin 2021/22-02 (Table 1)" }
+      ]
+    },
+    {
+      "name": "Sifra",
+      "zones": ["midlands-mistbelt", "highveld"],
+      "maturity": "early",
+      "season": null,
+      "traits": "Susceptible to late blight; round, light yellow skin, cream flesh; earliest-maturing of the seven at 129 days",
+      "type": null,
+      "note": "One of the three main commercial KZN cultivars, but not blight-tolerant so needs a fungicide programme; the trial's earliest-maturing option.",
+      "evidence": [
+        { "quote": "Sifra and Labadia are earlier maturing than the other cultivars (Table 1).", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/2021-22.02-Potato-cultivar-evaluation-at-Cedara.pdf", "page": 2, "doc": "Potato cultivar evaluation at Cedara, KZN DARD Research & Technology Bulletin 2021/22-02" },
+        { "quote": "Sifra Round Light yellow Cream Susceptible 129", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/2021-22.02-Potato-cultivar-evaluation-at-Cedara.pdf", "page": 2, "doc": "Potato cultivar evaluation at Cedara, KZN DARD Research & Technology Bulletin 2021/22-02 (Table 1)" }
+      ]
+    },
+    {
+      "name": "Labadia",
+      "zones": ["midlands-mistbelt", "highveld"],
+      "maturity": "early",
+      "season": null,
+      "traits": "Susceptible to late blight; oval, light yellow skin/flesh; 125-day season length, the fastest of the seven",
+      "type": null,
+      "note": null,
+      "evidence": [
+        { "quote": "Labadia Oval Light yellow Light yellow Susceptible 125", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/2021-22.02-Potato-cultivar-evaluation-at-Cedara.pdf", "page": 2, "doc": "Potato cultivar evaluation at Cedara, KZN DARD Research & Technology Bulletin 2021/22-02 (Table 1)" }
+      ]
+    },
+    {
+      "name": "Mondial",
+      "zones": ["midlands-mistbelt", "highveld"],
+      "maturity": "late",
+      "season": null,
+      "traits": "Susceptible to late blight; long oval, light yellow skin/flesh; 152-day season length; one of the three main cultivars grown in KZN",
+      "type": null,
+      "note": null,
+      "evidence": [
+        { "quote": "The main cultivars grown in the province are Mondial, Valor and Sifra (Potatoes SA, 2019).", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/2021-22.02-Potato-cultivar-evaluation-at-Cedara.pdf", "page": 1, "doc": "Potato cultivar evaluation at Cedara, KZN DARD Research & Technology Bulletin 2021/22-02" },
+        { "quote": "Mondial Long oval Light yellow Light yellow Susceptible 152", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/2021-22.02-Potato-cultivar-evaluation-at-Cedara.pdf", "page": 2, "doc": "Potato cultivar evaluation at Cedara, KZN DARD Research & Technology Bulletin 2021/22-02 (Table 1)" }
+      ]
+    },
+    {
+      "name": "Lanorma",
+      "zones": ["midlands-mistbelt", "highveld"],
+      "maturity": "late",
+      "season": null,
+      "traits": "Susceptible to late blight; oval, light yellow skin/flesh; 154-day season length, the longest of the seven; the most consistent yielder across all four trial seasons",
+      "type": null,
+      "note": null,
+      "evidence": [
+        { "quote": "Lanorma produced consistent yields over all the seasons, while Panamera yielded inconsistently.", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/2021-22.02-Potato-cultivar-evaluation-at-Cedara.pdf", "page": 1, "doc": "Potato cultivar evaluation at Cedara, KZN DARD Research & Technology Bulletin 2021/22-02" },
+        { "quote": "Lanorma Oval Light yellow Light yellow Susceptible 154", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/Research_and_Technology_Bulletins/2021-22.02-Potato-cultivar-evaluation-at-Cedara.pdf", "page": 2, "doc": "Potato cultivar evaluation at Cedara, KZN DARD Research & Technology Bulletin 2021/22-02 (Table 1)" }
+      ]
+    }
+  ],
+  "zoneAdvice": {
+    "midlands-mistbelt": {
+      "text": "Directly sourced (this trial ran at Cedara, in the KZN Midlands): favour Electra, Valor or Panamera for their late-blight tolerance if growing without a full fungicide programme; Electra gave the highest, most consistent yield of the seven trialled.",
+      "evidence": []
+    },
+    "highveld": {
+      "text": "The Cedara trial's cultivars (bred for the cool, higher-rainfall interior) are extrapolated here to the wider hard-frost interior, not independently confirmed for the highveld itself — treat as a reasonable but unverified extension of the KZN Midlands result.",
+      "evidence": []
+    }
+  },
+  "gaps": [
+    "All seven cultivars and their agronomic data come from a single KZN Midlands (Cedara) trial; no independent source confirms performance in the highveld proper, so that zone assignment is an inference, not a direct citation.",
+    "No sourced recommendation at all for lowveld-bushveld, subtropical-coast, western-cape, southern-cape, karoo-arid or high-mountain — Potatoes SA's region-by-region cultivar guide (referenced within the KZN DARD bulletin as 'Potatoes SA, 2019') was not itself locatable/fetchable this session.",
+    "No spacing, seed rate or yield-in-t/ha figures sourced for any cultivar; the bulletin reports only relative yield rankings (via letter groupings on a chart), not absolute t/ha numbers in extractable text."
+  ]
+}

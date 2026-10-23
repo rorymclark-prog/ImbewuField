@@ -1,0 +1,17 @@
+{
+ "language":"zu",
+ "counts":{"ok":11,"repair":0,"hold":1,"total":12},
+ "top_issues":[
+  "R388 HOLD: 'kwisilinganiso esingu-{benchmark}' uses Xhosa-style 'kwi-' locative and means 'at a benchmark of', not 'of {benchmark}'; no confident repair; key reportedly bypassed by the zu build.",
+  "R356: 'asazi' (we do not know) vs English impersonal 'are unknown'; minor voice shift, consistent with existing chart text.",
+  "R356: 'package' rendered as 'izikhwama' (bags); acceptable if the unit really is bags/sacks.",
+  "R365/R366: 'Also picked/sold' rendered 'Other picked/sold' (okunye); fine as labels, literal alternative 'futhi' exists.",
+  "R361: 'esikaliwe esivuniwe' is redundant-sounding but semantically right.",
+  "R363: 'kept' rendered 'remaining' (esisele); same as existing wording, not money.",
+  "R354/R361/R365: harvest verb 'vuna' used correctly (not 'vunyiwe' = agree/permit).",
+  "R356/R364: 'esibalwayo' (countable) and 'izamba' (totals) are unusual but valid words.",
+  "No negation, tense, income/expense or placeholder errors found; {n}, {qty} identical to English; R388 {benchmark} preserved.",
+  "Loanwords 'esirekhodiwe/amarekhodi/epulazini/amayunithi' are in common use and match existing app wording."
+ ],
+ "confidence_limits":"I am a machine reviewer, not a fluent isiZulu speaker approval. The ok verdicts mean no meaning error was detected from back-translation and consistency with existing app wording; concord, register and naturalness (especially R356, R361, R364) should still be checked by a native speaker. The R388 hold reflects uncertainty, not a proven error beyond the Xhosa-style locative."
+}

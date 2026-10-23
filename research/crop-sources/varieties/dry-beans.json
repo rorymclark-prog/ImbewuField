@@ -1,0 +1,121 @@
+{
+  "key": "dry-beans",
+  "varieties": [
+    {
+      "name": "Teebus RR1",
+      "zones": ["midlands-mistbelt"],
+      "maturity": null,
+      "season": "Dryland, KZN localities (Cedara, Loskop, Greytown, Kokstad)",
+      "traits": "Small white bean; rust resistant; \"displayed good adaptability to all the localities\"",
+      "type": "OP",
+      "note": "Best-adapted small-white line across all four KZN trial sites; the plain (non-RR) Teebus line is rust-susceptible but is kept for its canning quality.",
+      "evidence": [
+        { "quote": "Teebus RR1 displayed good adaptability to all the localities and is resistant to rust.", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/researchreports/DRY_BEAN_CULTIVARS_FOR_KWAZULU_NATAL.pdf", "page": 2, "doc": "Dry Bean Cultivars for KwaZulu-Natal, E.T. Ntombela, KZN DAEA, Cedara" }
+      ]
+    },
+    {
+      "name": "Teebus (standard line)",
+      "zones": ["midlands-mistbelt"],
+      "maturity": null,
+      "season": "Dryland, KZN localities",
+      "traits": "Small white bean, \"highly susceptible to rust, but remains the best cultivar for canning qualities\"",
+      "type": "OP",
+      "note": "Kept for canning use where rust pressure is manageable; the RR1/RCR2 lines are the rust-resistant alternatives.",
+      "evidence": [
+        { "quote": "Of the small white cultivars, Teebus produced the lowest yields at three of the four sites (Table 1) and is highly susceptible to rust, but remains the best cultivar for canning qualities.", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/researchreports/DRY_BEAN_CULTIVARS_FOR_KWAZULU_NATAL.pdf", "page": 2, "doc": "Dry Bean Cultivars for KwaZulu-Natal, E.T. Ntombela, KZN DAEA, Cedara" }
+      ]
+    },
+    {
+      "name": "PAN 123",
+      "zones": ["midlands-mistbelt"],
+      "maturity": null,
+      "season": "Dryland, KZN localities",
+      "traits": "Small white bean; consistently among the top small-white yielders at all four trial sites (Kokstad, Cedara, Loskop, Greytown)",
+      "type": "hybrid",
+      "note": "Pannar-bred small white line; second-best small-white performer after Teebus RR1 at every site in the 2013 table.",
+      "evidence": [
+        { "quote": "SMALL WHITE BEANS ... PAN 123 3.91 ... PAN 123 2.42 ... PAN 123 2.92 ... PAN 123 1.64", "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/AGRI-UPDATES/Dry%20Bean%20Cultivar%20Recommendations.pdf", "page": 1, "doc": "Dry Bean Cultivar Recommendations, Mtumtum & Arathoon, KZN Dept of Agriculture and Environmental Affairs, 2013" }
+      ]
+    },
+    {
+      "name": "RS-6",
+      "zones": ["midlands-mistbelt"],
+      "maturity": null,
+      "season": "Dryland, KZN localities",
+      "traits": "Red speckled sugar bean; \"RS-6, Tygerberg and Sederberg performed consistently at all the localities\"",
+      "type": null,
+      "note": "The most reliable general-purpose red speckled choice across cool (Kokstad), medium (Cedara, Loskop) and drier (Greytown) conditions in this trial series.",
+      "evidence": [
+        { "quote": "Of the red speckled sugar beans, RS-6, Tygerberg and Sederberg performed consistently at all the localities, whilst some of the other cultivars performed differently at each site.", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/researchreports/DRY_BEAN_CULTIVARS_FOR_KWAZULU_NATAL.pdf", "page": 2, "doc": "Dry Bean Cultivars for KwaZulu-Natal, E.T. Ntombela, KZN DAEA, Cedara" }
+      ]
+    },
+    {
+      "name": "Tygerberg",
+      "zones": ["midlands-mistbelt"],
+      "maturity": null,
+      "season": "Dryland, KZN localities",
+      "traits": "Red speckled sugar bean; consistent performer at all four trial localities",
+      "type": null,
+      "note": "See RS-6 evidence above — grouped with RS-6 and Sederberg as the three most consistent red speckled cultivars.",
+      "evidence": [
+        { "quote": "Of the red speckled sugar beans, RS-6, Tygerberg and Sederberg performed consistently at all the localities", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/researchreports/DRY_BEAN_CULTIVARS_FOR_KWAZULU_NATAL.pdf", "page": 2, "doc": "Dry Bean Cultivars for KwaZulu-Natal, E.T. Ntombela, KZN DAEA, Cedara" }
+      ]
+    },
+    {
+      "name": "Sederberg",
+      "zones": ["midlands-mistbelt"],
+      "maturity": null,
+      "season": "Dryland, KZN localities",
+      "traits": "Red speckled sugar bean; consistent performer at all four trial localities",
+      "type": null,
+      "note": "See RS-6 evidence above.",
+      "evidence": [
+        { "quote": "Of the red speckled sugar beans, RS-6, Tygerberg and Sederberg performed consistently at all the localities", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/researchreports/DRY_BEAN_CULTIVARS_FOR_KWAZULU_NATAL.pdf", "page": 2, "doc": "Dry Bean Cultivars for KwaZulu-Natal, E.T. Ntombela, KZN DAEA, Cedara" }
+      ]
+    },
+    {
+      "name": "OPS-RS2 / RS-5",
+      "zones": ["midlands-mistbelt"],
+      "maturity": null,
+      "season": "Dryland, cooler KZN localities (Kokstad, higher-altitude East Griqualand)",
+      "traits": "Red speckled sugar bean; \"yielded best under the cooler conditions at Kokstad\"",
+      "type": null,
+      "note": "The cool-site specialists in this trial; farmers in a similarly cool, higher-altitude pocket of the midlands-mistbelt zone (or the cooler edge bordering high-mountain) are the closest honest fit.",
+      "evidence": [
+        { "quote": "For example, OPS-RS2 and RS-5 yielded best under the cooler conditions at Kokstad, whilst PAN 9249, which had the largest seeds, and PAN 9292 yielded best under the drier conditions experienced at Greytown.", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/researchreports/DRY_BEAN_CULTIVARS_FOR_KWAZULU_NATAL.pdf", "page": 2, "doc": "Dry Bean Cultivars for KwaZulu-Natal, E.T. Ntombela, KZN DAEA, Cedara" }
+      ]
+    },
+    {
+      "name": "PAN 9249 / PAN 9292",
+      "zones": ["midlands-mistbelt"],
+      "maturity": null,
+      "season": "Dryland, drier KZN localities (Greytown)",
+      "traits": "Red speckled sugar bean; \"PAN 9249, which had the largest seeds, and PAN 9292 yielded best under the drier conditions experienced at Greytown\"",
+      "type": "hybrid",
+      "note": "The drier-site specialists in this trial — the better pick for the drier, warmer end of the midlands-mistbelt zone rather than its cool, high-rainfall pockets.",
+      "evidence": [
+        { "quote": "PAN 9249, which had the largest seeds, and PAN 9292 yielded best under the drier conditions experienced at Greytown.", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/researchreports/DRY_BEAN_CULTIVARS_FOR_KWAZULU_NATAL.pdf", "page": 2, "doc": "Dry Bean Cultivars for KwaZulu-Natal, E.T. Ntombela, KZN DAEA, Cedara" }
+      ]
+    }
+  ],
+  "zoneAdvice": {
+    "midlands-mistbelt": {
+      "text": "This is the one zone with a directly sourced, multi-season, multi-locality (Cedara, Loskop, Greytown, Kokstad — all KZN interior/midlands-type sites) cultivar trial. Choose the rust-resistant small white (Teebus RR1) or a consistent red speckled type (RS-6, Tygerberg, Sederberg) as safe general picks; favour OPS-RS2/RS-5 in a cooler high pocket and PAN 9249/PAN 9292 in a drier, hotter pocket.",
+      "evidence": [
+        { "quote": "The trials were planted in 0.75 m wide rows... The crops were grown under dry-land conditions and were fertilized for optimum yields, based on soil analysis recommendations from the Cedara Analytical Laboratory.", "url": "https://www.kzndard.gov.za/images/Documents/researchandtechnologydevelopment/publications/researchreports/DRY_BEAN_CULTIVARS_FOR_KWAZULU_NATAL.pdf", "page": 1, "doc": "Dry Bean Cultivars for KwaZulu-Natal, E.T. Ntombela, KZN DAEA, Cedara" }
+      ]
+    },
+    "highveld": { "text": "Not sourced in this pass — highveld/Mpumalanga escarpment (e.g. Piet Retief) is a major SA dry bean belt in general knowledge, but no cultivar-by-zone table for it was reached.", "evidence": [] },
+    "lowveld-bushveld": { "text": "Not sourced.", "evidence": [] },
+    "subtropical-coast": { "text": "Not sourced (the trial sites above are KZN interior, not the humid coast).", "evidence": [] },
+    "western-cape": { "text": "Not sourced in this pass. General knowledge (not a citable primary source found here) is that Western Cape dry bean production is smaller-scale and irrigated; a WebSearch snippet named 'Sederberg' as a cultivar and coincidentally a Western Cape mountain range, but no source ties the Sederberg *cultivar* to Western Cape production specifically — treat this as a false-friend, not a lead.", "evidence": [] },
+    "southern-cape": { "text": "Not sourced.", "evidence": [] },
+    "karoo-arid": { "text": "Not sourced.", "evidence": [] },
+    "high-mountain": { "text": "Not sourced directly, though Kokstad (a cool, higher-altitude KZN trial site, East Griqualand) is the closest analogue reached — see OPS-RS2/RS-5 above.", "evidence": [] }
+  },
+  "gaps": [
+    "Only the KZN midlands-type zone has a directly sourced cultivar trial; the other seven zones (including the highveld, which is a major national dry bean area) have no cultivar-level source from this pass.",
+    "Maturity class (days) for each named cultivar was not found in the two KZN DARD documents used — they report yield (t/ha) and disease/adaptability notes, not days-to-maturity per cultivar.",
+    "'OP' vs 'hybrid' type is marked null for RS-6, Tygerberg and Sederberg because the KZN DARD documents do not state breeding type; PAN-prefixed lines are Pannar-bred (hybrid or proprietary line) by the company's own naming convention."
+  ]
+}

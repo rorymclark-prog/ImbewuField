@@ -1,0 +1,1300 @@
+[
+  {
+    "zone": "subtropical-coast",
+    "area": "Subtropical coast",
+    "conditions": {
+      "drySeasonWater": "reliable",
+      "drainage": "drains-well",
+      "sunlight": "full-sun",
+      "frost": "no"
+    },
+    "plants": [
+      {
+        "speciesId": "persea-americana",
+        "name": "Avocado",
+        "proposed": 1
+      },
+      {
+        "speciesId": "musa-acuminata-aaa-group",
+        "name": "Banana",
+        "proposed": 3
+      },
+      {
+        "speciesId": "citrus-limon",
+        "name": "Lemon",
+        "proposed": 1
+      },
+      {
+        "speciesId": "litchi-chinensis",
+        "name": "Litchi",
+        "proposed": 1
+      },
+      {
+        "speciesId": "macadamia-integrifolia",
+        "name": "Macadamia",
+        "proposed": 1
+      },
+      {
+        "speciesId": "mangifera-indica",
+        "name": "Mango",
+        "proposed": 1
+      },
+      {
+        "speciesId": "sclerocarya-birrea-subsp-caffra",
+        "name": "Marula",
+        "proposed": 1
+      },
+      {
+        "speciesId": "carissa-macrocarpa",
+        "name": "Num-num",
+        "proposed": 1
+      },
+      {
+        "speciesId": "carica-papaya",
+        "name": "Pawpaw",
+        "proposed": 1
+      },
+      {
+        "speciesId": "fragaria-x-ananassa",
+        "name": "Strawberry",
+        "proposed": 1
+      },
+      {
+        "speciesId": "syzygium-cordatum",
+        "name": "Waterberry",
+        "proposed": 1
+      },
+      {
+        "speciesId": "harpephyllum-caffrum",
+        "name": "Wild plum",
+        "proposed": 1
+      }
+    ],
+    "references": [
+      {
+        "name": "Avocado",
+        "label": "Assumed variety: Hass",
+        "months": [
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "basis": "South Africa - warm subtropical regions (Hass cultivar). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops), p. 5",
+          "url": "http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf"
+        }
+      },
+      {
+        "name": "Lemon",
+        "label": "Regional reference: lemon main crop",
+        "months": [
+          2,
+          3
+        ],
+        "basis": "KZN (hot low-lying areas, e.g. Nkwaleni, Mkhuze vs. cooler KZN Midlands). Hot and cool main crops remain separate; smaller additional crops are not marked. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes), p. 11",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+        }
+      },
+      {
+        "name": "Litchi",
+        "label": "Assumed variety: Mauritius",
+        "months": [
+          11,
+          12,
+          1
+        ],
+        "basis": "South Africa - Mauritius cultivar (SALGA / ARC reference). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "SALGA: Litchi Cultivars, Mauritius; information supplied by ARC-ITSC, Nelspruit",
+          "url": "https://litchisa.co.za/cultivars-2/"
+        }
+      },
+      {
+        "name": "Macadamia",
+        "label": "Regional reference: Macadamia",
+        "months": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "basis": "South Africa (general — Mpumalanga, KwaZulu-Natal, Limpopo). Regional nut-in-shell season; individual cultivar maturity still needs checking. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "USDA Foreign Agricultural Service (FAS), GAIN Report SF2025-0023, 'South Africa's Macadamia Industry Grows Despite Export Uncertainty', FAS Pretoria Post, 2025, p. 5",
+          "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=South+Africa%27s+Macadamia+Industry+Grows+Despite+Export+Uncertainty_Pretoria_South+Africa+-+Republic+of_SF2025-0023.pdf"
+        }
+      },
+      {
+        "name": "Mango",
+        "label": "Regional reference: Mango",
+        "months": [
+          11,
+          12,
+          1,
+          2,
+          3
+        ],
+        "basis": "South Africa (general; Limpopo + Mpumalanga = 96% of SA mango area). Regional industry season, not a Tommy Atkins-only harvest window. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow Report, Issue 56, December 2024 (citing FPEF 2024), p. 3",
+          "url": "https://www.namc.co.za/wp-content/uploads/2024/11/SA-Fruit-Trade-Flow-Report-Issue-56-December-2024-submission.pdf"
+        }
+      },
+      {
+        "name": "Marula",
+        "label": "Regional reference: Marula",
+        "months": [
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "basis": "South Africa (general; SA distribution given as KwaZulu-Natal, Limpopo, Mpumalanga). Fruit reference, not a separate kernel season; check fruiting female stock. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Sclerocarya birrea | PlantZAfrica (SANBI)",
+          "url": "https://pza.sanbi.org/sclerocarya-birrea"
+        }
+      },
+      {
+        "name": "Pawpaw",
+        "label": "Regional reference: Pawpaw",
+        "months": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          1
+        ],
+        "basis": "KwaZulu-Natal. KZN regional reference; cultivar-specific local timing remains unknown. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes), section 1.6 Papaya, 'Bearing age', p. 18",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+        }
+      },
+      {
+        "name": "Strawberry",
+        "label": "Regional reference: frost-free strawberry",
+        "months": [
+          5,
+          6,
+          7,
+          8
+        ],
+        "basis": "KwaZulu-Natal, frost-free areas. KZN outdoor reference, not the Transvaal tunnel season. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN), p. 34",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+        }
+      },
+      {
+        "name": "Waterberry",
+        "label": "Regional reference: Waterberry",
+        "months": [
+          11,
+          12,
+          1,
+          2,
+          3
+        ],
+        "basis": "southern Africa. Moist-position reference; fruit dates are not honey-flow dates. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "PROTA (Plant Resources of Tropical Africa) - Syzygium cordatum, via Pl@ntUse mirror",
+          "url": "https://uses.plantnet-project.org/en/Syzygium_cordatum_(PROTA)"
+        }
+      },
+      {
+        "name": "Wild plum",
+        "label": "Regional reference: Wild plum",
+        "months": [
+          3,
+          4,
+          5
+        ],
+        "basis": "South Africa (general; SANBI: Eastern Cape, KwaZulu-Natal, Limpopo, Mpumalanga). Frost-free forest reference; confirm a fruiting female and pollen source. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Harpephyllum caffrum | PlantZAfrica (SANBI)",
+          "url": "https://pza.sanbi.org/harpephyllum-caffrum"
+        }
+      }
+    ]
+  },
+  {
+    "zone": "lowveld-bushveld",
+    "area": "Lowveld / Bushveld",
+    "conditions": {
+      "drySeasonWater": "reliable",
+      "drainage": "drains-well",
+      "sunlight": "full-sun",
+      "frost": "no"
+    },
+    "plants": [
+      {
+        "speciesId": "persea-americana",
+        "name": "Avocado",
+        "proposed": 1
+      },
+      {
+        "speciesId": "musa-acuminata-aaa-group",
+        "name": "Banana",
+        "proposed": 3
+      },
+      {
+        "speciesId": "vitis-vinifera",
+        "name": "Grape vine",
+        "proposed": 1
+      },
+      {
+        "speciesId": "citrus-limon",
+        "name": "Lemon",
+        "proposed": 1
+      },
+      {
+        "speciesId": "litchi-chinensis",
+        "name": "Litchi",
+        "proposed": 1
+      },
+      {
+        "speciesId": "macadamia-integrifolia",
+        "name": "Macadamia",
+        "proposed": 1
+      },
+      {
+        "speciesId": "mangifera-indica",
+        "name": "Mango",
+        "proposed": 1
+      },
+      {
+        "speciesId": "sclerocarya-birrea-subsp-caffra",
+        "name": "Marula",
+        "proposed": 1
+      },
+      {
+        "speciesId": "carica-papaya",
+        "name": "Pawpaw",
+        "proposed": 1
+      },
+      {
+        "speciesId": "fragaria-x-ananassa",
+        "name": "Strawberry",
+        "proposed": 1
+      },
+      {
+        "speciesId": "syzygium-cordatum",
+        "name": "Waterberry",
+        "proposed": 1
+      },
+      {
+        "speciesId": "vangueria-infausta",
+        "name": "Wild medlar",
+        "proposed": 1
+      }
+    ],
+    "references": [
+      {
+        "name": "Avocado",
+        "label": "Assumed variety: Hass",
+        "months": [
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "basis": "South Africa - warm subtropical regions (Hass cultivar). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops), p. 5",
+          "url": "http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf"
+        }
+      },
+      {
+        "name": "Grape vine",
+        "label": "Regional reference: Grape vine",
+        "months": [
+          11,
+          12
+        ],
+        "basis": "South Africa — Northern Province(s) region (SATI production region; mild sub-tropical, earliest SA harvest). Northern production-region reference, not the national November–May union. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "South African Table Grape Industry (SATI) — 'About' page, production regions section",
+          "url": "https://www.satgi.co.za/about/"
+        }
+      },
+      {
+        "name": "Lemon",
+        "label": "Regional reference: lemon main crop",
+        "months": [
+          2,
+          3
+        ],
+        "basis": "KZN (hot low-lying areas, e.g. Nkwaleni, Mkhuze vs. cooler KZN Midlands). Hot and cool main crops remain separate; smaller additional crops are not marked. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes), p. 11",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+        }
+      },
+      {
+        "name": "Litchi",
+        "label": "Assumed variety: Mauritius",
+        "months": [
+          11,
+          12,
+          1
+        ],
+        "basis": "South Africa - Mauritius cultivar (SALGA / ARC reference). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "SALGA: Litchi Cultivars, Mauritius; information supplied by ARC-ITSC, Nelspruit",
+          "url": "https://litchisa.co.za/cultivars-2/"
+        }
+      },
+      {
+        "name": "Macadamia",
+        "label": "Regional reference: Macadamia",
+        "months": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "basis": "South Africa (general — Mpumalanga, KwaZulu-Natal, Limpopo). Regional nut-in-shell season; individual cultivar maturity still needs checking. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "USDA Foreign Agricultural Service (FAS), GAIN Report SF2025-0023, 'South Africa's Macadamia Industry Grows Despite Export Uncertainty', FAS Pretoria Post, 2025, p. 5",
+          "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=South+Africa%27s+Macadamia+Industry+Grows+Despite+Export+Uncertainty_Pretoria_South+Africa+-+Republic+of_SF2025-0023.pdf"
+        }
+      },
+      {
+        "name": "Mango",
+        "label": "Regional reference: Mango",
+        "months": [
+          11,
+          12,
+          1,
+          2,
+          3
+        ],
+        "basis": "South Africa (general; Limpopo + Mpumalanga = 96% of SA mango area). Regional industry season, not a Tommy Atkins-only harvest window. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow Report, Issue 56, December 2024 (citing FPEF 2024), p. 3",
+          "url": "https://www.namc.co.za/wp-content/uploads/2024/11/SA-Fruit-Trade-Flow-Report-Issue-56-December-2024-submission.pdf"
+        }
+      },
+      {
+        "name": "Marula",
+        "label": "Regional reference: Marula",
+        "months": [
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "basis": "South Africa (general; SA distribution given as KwaZulu-Natal, Limpopo, Mpumalanga). Fruit reference, not a separate kernel season; check fruiting female stock. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Sclerocarya birrea | PlantZAfrica (SANBI)",
+          "url": "https://pza.sanbi.org/sclerocarya-birrea"
+        }
+      },
+      {
+        "name": "Pawpaw",
+        "label": "Regional reference: Pawpaw",
+        "months": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          1
+        ],
+        "basis": "KwaZulu-Natal. KZN regional reference; cultivar-specific local timing remains unknown. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes), section 1.6 Papaya, 'Bearing age', p. 18",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+        }
+      },
+      {
+        "name": "Strawberry",
+        "label": "Regional reference: frost-free strawberry",
+        "months": [
+          5,
+          6,
+          7,
+          8
+        ],
+        "basis": "KwaZulu-Natal, frost-free areas. KZN outdoor reference, not the Transvaal tunnel season. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN), p. 34",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+        }
+      },
+      {
+        "name": "Waterberry",
+        "label": "Regional reference: Waterberry",
+        "months": [
+          11,
+          12,
+          1,
+          2,
+          3
+        ],
+        "basis": "southern Africa. Moist-position reference; fruit dates are not honey-flow dates. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "PROTA (Plant Resources of Tropical Africa) - Syzygium cordatum, via Pl@ntUse mirror",
+          "url": "https://uses.plantnet-project.org/en/Syzygium_cordatum_(PROTA)"
+        }
+      },
+      {
+        "name": "Wild medlar",
+        "label": "Regional reference: Wild medlar",
+        "months": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "basis": "South Africa (general; SA distribution given as Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Vangueria infausta | PlantZAfrica (SANBI)",
+          "url": "https://pza.sanbi.org/vangueria-infausta"
+        }
+      }
+    ]
+  },
+  {
+    "zone": "midlands-mistbelt",
+    "area": "Midlands / Mistbelt",
+    "conditions": {
+      "drySeasonWater": "reliable",
+      "drainage": "drains-well",
+      "sunlight": "full-sun",
+      "frost": "yes"
+    },
+    "plants": [
+      {
+        "speciesId": "persea-americana",
+        "name": "Avocado",
+        "proposed": 1
+      },
+      {
+        "speciesId": "grewia-occidentalis",
+        "name": "Cross-berry",
+        "proposed": 1
+      },
+      {
+        "speciesId": "citrus-limon",
+        "name": "Lemon",
+        "proposed": 1
+      },
+      {
+        "speciesId": "rubus-idaeus",
+        "name": "Raspberry",
+        "proposed": 1
+      },
+      {
+        "speciesId": "fragaria-x-ananassa",
+        "name": "Strawberry",
+        "proposed": 1
+      },
+      {
+        "speciesId": "englerophytum-magalismontanum",
+        "name": "Transvaal milkplum",
+        "proposed": 1
+      },
+      {
+        "speciesId": "vangueria-infausta",
+        "name": "Wild medlar",
+        "proposed": 1
+      }
+    ],
+    "references": [
+      {
+        "name": "Cross-berry",
+        "label": "Regional reference: Cross-berry",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "basis": "South Africa (general). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "SANBI PlantZAfrica - Grewia occidentalis",
+          "url": "https://pza.sanbi.org/grewia-occidentalis"
+        }
+      },
+      {
+        "name": "Lemon",
+        "label": "Regional reference: lemon main crop",
+        "months": [
+          5,
+          6,
+          7
+        ],
+        "basis": "KZN (hot low-lying areas, e.g. Nkwaleni, Mkhuze vs. cooler KZN Midlands). Hot and cool main crops remain separate; smaller additional crops are not marked. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes), p. 11",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+        }
+      },
+      {
+        "name": "Raspberry",
+        "label": "Regional reference: Raspberry",
+        "months": [
+          11,
+          12,
+          1
+        ],
+        "basis": "KwaZulu-Natal (spring-bearing cultivars: Glen Prosen, Glen Lyon, Tulameen). Spring-bearing system only; do not use this for autumn-bearing Heritage or Autumn Bliss. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN), p. 37",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+        }
+      },
+      {
+        "name": "Strawberry",
+        "label": "Regional reference: light-frost strawberry",
+        "months": [
+          9,
+          10,
+          11,
+          12
+        ],
+        "basis": "KwaZulu-Natal, areas with light frosts. Assumes light frost; check severity locally. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN), p. 34",
+          "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+        }
+      },
+      {
+        "name": "Transvaal milkplum",
+        "label": "Regional reference: Transvaal milkplum",
+        "months": [
+          12,
+          1,
+          2
+        ],
+        "basis": "South Africa (general; SA distribution given as Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Englerophytum magalismontanum | PlantZAfrica (SANBI)",
+          "url": "https://pza.sanbi.org/englerophytum-magalismontanum"
+        }
+      },
+      {
+        "name": "Wild medlar",
+        "label": "Regional reference: Wild medlar",
+        "months": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "basis": "South Africa (general; SA distribution given as Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Vangueria infausta | PlantZAfrica (SANBI)",
+          "url": "https://pza.sanbi.org/vangueria-infausta"
+        }
+      }
+    ]
+  },
+  {
+    "zone": "western-cape",
+    "area": "Western Cape",
+    "conditions": {
+      "drySeasonWater": "reliable",
+      "drainage": "drains-well",
+      "sunlight": "full-sun",
+      "frost": "no"
+    },
+    "plants": [
+      {
+        "speciesId": "vaccinium-corymbosum",
+        "name": "Blueberry",
+        "proposed": 1
+      },
+      {
+        "speciesId": "grewia-occidentalis",
+        "name": "Cross-berry",
+        "proposed": 1
+      },
+      {
+        "speciesId": "ficus-carica",
+        "name": "Fig",
+        "proposed": 1
+      },
+      {
+        "speciesId": "vitis-vinifera",
+        "name": "Grape vine",
+        "proposed": 1
+      },
+      {
+        "speciesId": "pappea-capensis",
+        "name": "Jacket plum",
+        "proposed": 1
+      },
+      {
+        "speciesId": "prunus-salicina",
+        "name": "Japanese plum",
+        "proposed": 1
+      },
+      {
+        "speciesId": "prunus-persica",
+        "name": "Low-chill peach",
+        "proposed": 1
+      },
+      {
+        "speciesId": "punica-granatum",
+        "name": "Pomegranate",
+        "proposed": 1
+      },
+      {
+        "speciesId": "citrus-reticulata",
+        "name": "Soft citrus",
+        "proposed": 1
+      },
+      {
+        "speciesId": "carpobrotus-edulis",
+        "name": "Sour fig",
+        "proposed": 1
+      },
+      {
+        "speciesId": "fragaria-x-ananassa",
+        "name": "Strawberry",
+        "proposed": 1
+      }
+    ],
+    "references": [
+      {
+        "name": "Blueberry",
+        "label": "Regional reference: Blueberry",
+        "months": [
+          8,
+          9,
+          10,
+          11
+        ],
+        "basis": "Western Cape (Hex River and Wolseley trial sites). Hex River/Wolseley trial reference; confirm cultivar, chilling and acidic soil. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Steyn, J. (2022) 'Investigating plant growth dynamics of selected southern highbush blueberry (V. corymbosum L. interspecific hybrids) cultivars under South African growing conditions', MSc(Agric) thesis, University of Stellenbosch, p. 45",
+          "url": "https://scholar.sun.ac.za/server/api/core/bitstreams/47824860-fa96-4626-b2b2-da6439d6a8f4/content"
+        }
+      },
+      {
+        "name": "Cross-berry",
+        "label": "Regional reference: Cross-berry",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "basis": "South Africa (general). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "SANBI PlantZAfrica - Grewia occidentalis",
+          "url": "https://pza.sanbi.org/grewia-occidentalis"
+        }
+      },
+      {
+        "name": "Fig",
+        "label": "Regional reference: Fig",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "basis": "Western Cape (Breede River valley, near Worcester). Breede River main-crop reference; cultivar and local dates still need checking. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Gerber, H.J. (2010) 'Tree training and managing complexity and yield in fig (Ficus carica L.)', MSc(Agric) thesis, University of Stellenbosch, p. 38",
+          "url": "https://www.figdatabase.com/uploads/Tree%20Training%20And%20Managing%20Complexcity%20and%20Yield%20In%20Figs.pdf"
+        }
+      },
+      {
+        "name": "Jacket plum",
+        "label": "Regional reference: Jacket plum",
+        "months": [
+          12,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "basis": "South Africa (general). Broad SANBI fruiting reference; local season may be shorter. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "SANBI PlantZAfrica - Pappea capensis",
+          "url": "https://pza.sanbi.org/pappea-capensis"
+        }
+      },
+      {
+        "name": "Japanese plum",
+        "label": "Assumed variety: African Delight",
+        "months": [
+          2
+        ],
+        "basis": "Western Cape (Boland / Klein Karoo / Robertson stone-fruit areas). Reference first pick; confirm chilling and compatible pollinator. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Culdevco (ARC/Deciduous Fruit Industry joint-venture cultivar licensing body) — African Delight® plum cultivar information; cross-referenced with Hortgro's 'TOP CULDEVCO LICENSED PLUM CULTIVARS' article",
+          "url": "https://culdevco.co.za/plums-cultivar-info-african-delight/"
+        }
+      },
+      {
+        "name": "Low-chill peach",
+        "label": "Assumed variety: Earligold (chilling needs checking)",
+        "months": [
+          12
+        ],
+        "basis": "South Africa — low-chill cultivar 'Earligold' (ARC Infruitec-Nietvoorbij bred, low-chill growing areas). Reference first pick, not the whole harvest duration. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Culdevco (Plant Breeders' Rights licensing body for ARC-bred deciduous fruit cultivars) — Earligold peach cultivar information sheet",
+          "url": "https://culdevco.co.za/peach-cultivar-info-earligold/"
+        }
+      },
+      {
+        "name": "Pomegranate",
+        "label": "Regional reference: Pomegranate",
+        "months": [
+          2,
+          3,
+          4
+        ],
+        "basis": "South Africa (general). SA industry reference, not a Wonderful-only window. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Post-Harvest Innovation Programme (PHI) — Pomegranate commodity page",
+          "url": "https://postharvestinnovation.org.za/commodities/pomegranate/"
+        }
+      },
+      {
+        "name": "Soft citrus",
+        "label": "Regional reference: Soft citrus",
+        "months": [
+          3,
+          4,
+          5
+        ],
+        "basis": "Eastern & Western Cape (main soft citrus areas) — Satsuma cultivars. Satsuma group reference; other soft-citrus varieties have different seasons. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Citrus Growers' Association / Citrus Academy — 'Citrus Planting Management 2: Citrus Types and Cultivars' Learner Guide (1st edition), Citrus Resource Warehouse (crw.org.za), citing CRI Cultivar Fact Sheets, p. 8",
+          "url": "https://www.crw.org.za/home/document-home/learning-aids-and-resources/ca-citrus-av-series-learning-material/citrus-planting-management/5808-ca-av-series-cpm-lm-m02-citrus-types-and-cultivars-1/file"
+        }
+      },
+      {
+        "name": "Strawberry",
+        "label": "Regional reference: outdoor strawberry",
+        "months": [
+          9,
+          10,
+          11,
+          12
+        ],
+        "basis": "Western Cape. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "J.P. Human & E.P. Evans, 'STRAWBERRY PRODUCTION IN SOUTH AFRICA', Acta Horticulturae 265 (International Strawberry Symposium), abstract (article 265_125), p. 757",
+          "url": "https://ishs.org/ishs-article/265_125/"
+        }
+      }
+    ]
+  },
+  {
+    "zone": "highveld",
+    "area": "Highveld",
+    "conditions": {
+      "drySeasonWater": "reliable",
+      "drainage": "drains-well",
+      "sunlight": "full-sun",
+      "frost": "yes"
+    },
+    "plants": [
+      {
+        "speciesId": "grewia-occidentalis",
+        "name": "Cross-berry",
+        "proposed": 1
+      },
+      {
+        "speciesId": "pappea-capensis",
+        "name": "Jacket plum",
+        "proposed": 1
+      },
+      {
+        "speciesId": "prunus-persica",
+        "name": "Low-chill peach",
+        "proposed": 1
+      },
+      {
+        "speciesId": "carya-illinoinensis",
+        "name": "Pecan",
+        "proposed": 1
+      },
+      {
+        "speciesId": "fragaria-x-ananassa",
+        "name": "Strawberry",
+        "proposed": 1
+      },
+      {
+        "speciesId": "englerophytum-magalismontanum",
+        "name": "Transvaal milkplum",
+        "proposed": 1
+      },
+      {
+        "speciesId": "vangueria-infausta",
+        "name": "Wild medlar",
+        "proposed": 1
+      }
+    ],
+    "references": [
+      {
+        "name": "Cross-berry",
+        "label": "Regional reference: Cross-berry",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "basis": "South Africa (general). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "SANBI PlantZAfrica - Grewia occidentalis",
+          "url": "https://pza.sanbi.org/grewia-occidentalis"
+        }
+      },
+      {
+        "name": "Jacket plum",
+        "label": "Regional reference: Jacket plum",
+        "months": [
+          12,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "basis": "South Africa (general). Broad SANBI fruiting reference; local season may be shorter. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "SANBI PlantZAfrica - Pappea capensis",
+          "url": "https://pza.sanbi.org/pappea-capensis"
+        }
+      },
+      {
+        "name": "Pecan",
+        "label": "Regional reference: pecan nuts",
+        "months": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "basis": "South Africa (general — Southern Hemisphere phenology; main areas Vaalharts/Northern Cape, Lower Orange River). Irrigated production reference; confirm cultivar, pollination, summer heat and water capacity. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Lötze, E., 'Literature Review: Factors influencing pollination of pecans for commercial production', published by SAPPA (South African Pecan Nut Producers' Association), p. 3",
+          "url": "https://www.sappa.za.org/download/16968/?tmstv=1790592292"
+        }
+      },
+      {
+        "name": "Transvaal milkplum",
+        "label": "Regional reference: Transvaal milkplum",
+        "months": [
+          12,
+          1,
+          2
+        ],
+        "basis": "South Africa (general; SA distribution given as Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Englerophytum magalismontanum | PlantZAfrica (SANBI)",
+          "url": "https://pza.sanbi.org/englerophytum-magalismontanum"
+        }
+      },
+      {
+        "name": "Wild medlar",
+        "label": "Regional reference: Wild medlar",
+        "months": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "basis": "South Africa (general; SA distribution given as Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Vangueria infausta | PlantZAfrica (SANBI)",
+          "url": "https://pza.sanbi.org/vangueria-infausta"
+        }
+      }
+    ]
+  },
+  {
+    "zone": "karoo-arid",
+    "area": "Karoo / arid interior",
+    "conditions": {
+      "drySeasonWater": "reliable",
+      "drainage": "drains-well",
+      "sunlight": "full-sun",
+      "frost": "yes"
+    },
+    "plants": [
+      {
+        "speciesId": "grewia-occidentalis",
+        "name": "Cross-berry",
+        "proposed": 1
+      },
+      {
+        "speciesId": "ficus-carica",
+        "name": "Fig",
+        "proposed": 1
+      },
+      {
+        "speciesId": "vitis-vinifera",
+        "name": "Grape vine",
+        "proposed": 1
+      },
+      {
+        "speciesId": "pappea-capensis",
+        "name": "Jacket plum",
+        "proposed": 1
+      },
+      {
+        "speciesId": "carya-illinoinensis",
+        "name": "Pecan",
+        "proposed": 1
+      },
+      {
+        "speciesId": "punica-granatum",
+        "name": "Pomegranate",
+        "proposed": 1
+      }
+    ],
+    "references": [
+      {
+        "name": "Cross-berry",
+        "label": "Regional reference: Cross-berry",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "basis": "South Africa (general). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "SANBI PlantZAfrica - Grewia occidentalis",
+          "url": "https://pza.sanbi.org/grewia-occidentalis"
+        }
+      },
+      {
+        "name": "Jacket plum",
+        "label": "Regional reference: Jacket plum",
+        "months": [
+          12,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "basis": "South Africa (general). Broad SANBI fruiting reference; local season may be shorter. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "SANBI PlantZAfrica - Pappea capensis",
+          "url": "https://pza.sanbi.org/pappea-capensis"
+        }
+      },
+      {
+        "name": "Pecan",
+        "label": "Regional reference: pecan nuts",
+        "months": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "basis": "South Africa (general — Southern Hemisphere phenology; main areas Vaalharts/Northern Cape, Lower Orange River). Irrigated production reference; confirm cultivar, pollination, summer heat and water capacity. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Lötze, E., 'Literature Review: Factors influencing pollination of pecans for commercial production', published by SAPPA (South African Pecan Nut Producers' Association), p. 3",
+          "url": "https://www.sappa.za.org/download/16968/?tmstv=1790592292"
+        }
+      }
+    ]
+  },
+  {
+    "zone": "southern-cape",
+    "area": "Southern Cape",
+    "conditions": {
+      "drySeasonWater": "reliable",
+      "drainage": "drains-well",
+      "sunlight": "full-sun",
+      "frost": "no"
+    },
+    "plants": [
+      {
+        "speciesId": "rhoicissus-tomentosa",
+        "name": "Common wild grape",
+        "proposed": 1
+      },
+      {
+        "speciesId": "grewia-occidentalis",
+        "name": "Cross-berry",
+        "proposed": 1
+      },
+      {
+        "speciesId": "pappea-capensis",
+        "name": "Jacket plum",
+        "proposed": 1
+      },
+      {
+        "speciesId": "citrus-reticulata",
+        "name": "Soft citrus",
+        "proposed": 1
+      },
+      {
+        "speciesId": "syzygium-cordatum",
+        "name": "Waterberry",
+        "proposed": 1
+      },
+      {
+        "speciesId": "phoenix-reclinata",
+        "name": "Wild date palm",
+        "proposed": 1
+      },
+      {
+        "speciesId": "harpephyllum-caffrum",
+        "name": "Wild plum",
+        "proposed": 1
+      }
+    ],
+    "references": [
+      {
+        "name": "Common wild grape",
+        "label": "Regional reference: Common wild grape",
+        "months": [
+          5,
+          6
+        ],
+        "basis": "South Africa (general). Ripe fruit only; tuberous roots are poisonous. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "SANBI PlantZAfrica - Rhoicissus tomentosa",
+          "url": "https://pza.sanbi.org/rhoicissus-tomentosa"
+        }
+      },
+      {
+        "name": "Cross-berry",
+        "label": "Regional reference: Cross-berry",
+        "months": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "basis": "South Africa (general). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "SANBI PlantZAfrica - Grewia occidentalis",
+          "url": "https://pza.sanbi.org/grewia-occidentalis"
+        }
+      },
+      {
+        "name": "Jacket plum",
+        "label": "Regional reference: Jacket plum",
+        "months": [
+          12,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "basis": "South Africa (general). Broad SANBI fruiting reference; local season may be shorter. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "SANBI PlantZAfrica - Pappea capensis",
+          "url": "https://pza.sanbi.org/pappea-capensis"
+        }
+      },
+      {
+        "name": "Soft citrus",
+        "label": "Regional reference: Soft citrus",
+        "months": [
+          3,
+          4,
+          5
+        ],
+        "basis": "Eastern & Western Cape (main soft citrus areas) — Satsuma cultivars. Satsuma group reference; other soft-citrus varieties have different seasons. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Citrus Growers' Association / Citrus Academy — 'Citrus Planting Management 2: Citrus Types and Cultivars' Learner Guide (1st edition), Citrus Resource Warehouse (crw.org.za), citing CRI Cultivar Fact Sheets, p. 8",
+          "url": "https://www.crw.org.za/home/document-home/learning-aids-and-resources/ca-citrus-av-series-learning-material/citrus-planting-management/5808-ca-av-series-cpm-lm-m02-citrus-types-and-cultivars-1/file"
+        }
+      },
+      {
+        "name": "Waterberry",
+        "label": "Regional reference: Waterberry",
+        "months": [
+          11,
+          12,
+          1,
+          2,
+          3
+        ],
+        "basis": "southern Africa. Moist-position reference; fruit dates are not honey-flow dates. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "PROTA (Plant Resources of Tropical Africa) - Syzygium cordatum, via Pl@ntUse mirror",
+          "url": "https://uses.plantnet-project.org/en/Syzygium_cordatum_(PROTA)"
+        }
+      },
+      {
+        "name": "Wild date palm",
+        "label": "Regional reference: Wild date palm",
+        "months": [
+          2,
+          3,
+          4
+        ],
+        "basis": "South Africa (general). Fruit, not flowering; check moisture and fruiting female stock. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "SANBI PlantZAfrica - Phoenix reclinata",
+          "url": "https://pza.sanbi.org/phoenix-reclinata"
+        }
+      },
+      {
+        "name": "Wild plum",
+        "label": "Regional reference: Wild plum",
+        "months": [
+          3,
+          4,
+          5
+        ],
+        "basis": "South Africa (general; SANBI: Eastern Cape, KwaZulu-Natal, Limpopo, Mpumalanga). Frost-free forest reference; confirm a fruiting female and pollen source. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+        "source": {
+          "label": "Harpephyllum caffrum | PlantZAfrica (SANBI)",
+          "url": "https://pza.sanbi.org/harpephyllum-caffrum"
+        }
+      }
+    ]
+  },
+  {
+    "zone": "high-mountain",
+    "area": "High mountain",
+    "conditions": {
+      "drySeasonWater": "reliable",
+      "drainage": "drains-well",
+      "sunlight": "full-sun",
+      "frost": "yes"
+    },
+    "plants": [
+      {
+        "speciesId": "vaccinium-corymbosum",
+        "name": "Blueberry",
+        "proposed": 1
+      },
+      {
+        "speciesId": "grewia-occidentalis",
+        "name": "Cross-berry",
+        "proposed": 1
+      },
+      {
+        "speciesId": "prunus-persica",
+        "name": "Low-chill peach",
+        "proposed": 1
+      },
+      {
+        "speciesId": "fragaria-x-ananassa",
+        "name": "Strawberry",
+        "proposed": 1
+      }
+    ],
+    "references": []
+  },
+  {
+    "zone": "unknown",
+    "area": "Climate not resolved",
+    "conditions": {
+      "drySeasonWater": "reliable",
+      "drainage": "drains-well",
+      "sunlight": "full-sun",
+      "frost": "no"
+    },
+    "plants": [
+      {
+        "speciesId": "persea-americana",
+        "name": "Avocado",
+        "proposed": 1
+      },
+      {
+        "speciesId": "musa-acuminata-aaa-group",
+        "name": "Banana",
+        "proposed": 3
+      },
+      {
+        "speciesId": "citrus-limon",
+        "name": "Lemon",
+        "proposed": 1
+      },
+      {
+        "speciesId": "litchi-chinensis",
+        "name": "Litchi",
+        "proposed": 1
+      },
+      {
+        "speciesId": "macadamia-integrifolia",
+        "name": "Macadamia",
+        "proposed": 1
+      },
+      {
+        "speciesId": "mangifera-indica",
+        "name": "Mango",
+        "proposed": 1
+      },
+      {
+        "speciesId": "sclerocarya-birrea-subsp-caffra",
+        "name": "Marula",
+        "proposed": 1
+      },
+      {
+        "speciesId": "carissa-macrocarpa",
+        "name": "Num-num",
+        "proposed": 1
+      },
+      {
+        "speciesId": "carica-papaya",
+        "name": "Pawpaw",
+        "proposed": 1
+      },
+      {
+        "speciesId": "fragaria-x-ananassa",
+        "name": "Strawberry",
+        "proposed": 1
+      },
+      {
+        "speciesId": "syzygium-cordatum",
+        "name": "Waterberry",
+        "proposed": 1
+      },
+      {
+        "speciesId": "harpephyllum-caffrum",
+        "name": "Wild plum",
+        "proposed": 1
+      }
+    ],
+    "references": []
+  }
+]

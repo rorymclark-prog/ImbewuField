@@ -1,0 +1,321 @@
+{
+  "status": "Proposed only; requires root actual text/object diff review before any render",
+  "frameCount": 36,
+  "sequentialGroups": [
+    {
+      "module": "intro-permaculture",
+      "language": "ts",
+      "slides": [
+        22
+      ],
+      "pairFile": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "intro-permaculture",
+        "ts",
+        "/tmp/imbewu-final-language-next-render-20261006/intro-permaculture-ts",
+        "--paired-draft",
+        "docs/narration/intro-permaculture.ts.paired-draft.json",
+        "--slides",
+        "22"
+      ],
+      "assetURLs": [
+        "/course-decks/intro-permaculture/ts/slide-22.webp"
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "ve",
+      "slides": [
+        12,
+        22
+      ],
+      "pairFile": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "intro-permaculture",
+        "ve",
+        "/tmp/imbewu-final-language-next-render-20261006/intro-permaculture-ve",
+        "--paired-draft",
+        "docs/narration/intro-permaculture.ve.paired-draft.json",
+        "--slides",
+        "12,22"
+      ],
+      "assetURLs": [
+        "/course-decks/intro-permaculture/ve/slide-12.webp",
+        "/course-decks/intro-permaculture/ve/slide-22.webp"
+      ]
+    },
+    {
+      "module": "market-community",
+      "language": "st",
+      "slides": [
+        12,
+        15,
+        18
+      ],
+      "pairFile": "docs/narration/market-community.st.paired-draft.json",
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "market-community",
+        "st",
+        "/tmp/imbewu-final-language-next-render-20261006/market-community-st",
+        "--paired-draft",
+        "docs/narration/market-community.st.paired-draft.json",
+        "--slides",
+        "12,15,18"
+      ],
+      "assetURLs": [
+        "/course-decks/market-community/st/slide-12.webp",
+        "/course-decks/market-community/st/slide-15.webp",
+        "/course-decks/market-community/st/slide-18.webp"
+      ]
+    },
+    {
+      "module": "market-community",
+      "language": "ts",
+      "slides": [
+        10,
+        11,
+        12,
+        15,
+        18,
+        20
+      ],
+      "pairFile": "docs/narration/market-community.ts.paired-draft.json",
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "market-community",
+        "ts",
+        "/tmp/imbewu-final-language-next-render-20261006/market-community-ts",
+        "--paired-draft",
+        "docs/narration/market-community.ts.paired-draft.json",
+        "--slides",
+        "10,11,12,15,18,20"
+      ],
+      "assetURLs": [
+        "/course-decks/market-community/ts/slide-10.webp",
+        "/course-decks/market-community/ts/slide-11.webp",
+        "/course-decks/market-community/ts/slide-12.webp",
+        "/course-decks/market-community/ts/slide-15.webp",
+        "/course-decks/market-community/ts/slide-18.webp",
+        "/course-decks/market-community/ts/slide-20.webp"
+      ]
+    },
+    {
+      "module": "market-community",
+      "language": "ve",
+      "slides": [
+        12,
+        18
+      ],
+      "pairFile": "docs/narration/market-community.ve.paired-draft.json",
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "market-community",
+        "ve",
+        "/tmp/imbewu-final-language-next-render-20261006/market-community-ve",
+        "--paired-draft",
+        "docs/narration/market-community.ve.paired-draft.json",
+        "--slides",
+        "12,18"
+      ],
+      "assetURLs": [
+        "/course-decks/market-community/ve/slide-12.webp",
+        "/course-decks/market-community/ve/slide-18.webp"
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "st",
+      "slides": [
+        9,
+        10,
+        13,
+        17
+      ],
+      "pairFile": "docs/narration/reading-landscape.st.paired-draft.json",
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "reading-landscape",
+        "st",
+        "/tmp/imbewu-final-language-next-render-20261006/reading-landscape-st",
+        "--paired-draft",
+        "docs/narration/reading-landscape.st.paired-draft.json",
+        "--slides",
+        "9,10,13,17"
+      ],
+      "assetURLs": [
+        "/course-decks/reading-landscape/st/slide-09.webp",
+        "/course-decks/reading-landscape/st/slide-10.webp",
+        "/course-decks/reading-landscape/st/slide-13.webp",
+        "/course-decks/reading-landscape/st/slide-17.webp"
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ts",
+      "slides": [
+        9,
+        10,
+        13,
+        17
+      ],
+      "pairFile": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "reading-landscape",
+        "ts",
+        "/tmp/imbewu-final-language-next-render-20261006/reading-landscape-ts",
+        "--paired-draft",
+        "docs/narration/reading-landscape.ts.paired-draft.json",
+        "--slides",
+        "9,10,13,17"
+      ],
+      "assetURLs": [
+        "/course-decks/reading-landscape/ts/slide-09.webp",
+        "/course-decks/reading-landscape/ts/slide-10.webp",
+        "/course-decks/reading-landscape/ts/slide-13.webp",
+        "/course-decks/reading-landscape/ts/slide-17.webp"
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ve",
+      "slides": [
+        9,
+        10,
+        13,
+        17
+      ],
+      "pairFile": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "reading-landscape",
+        "ve",
+        "/tmp/imbewu-final-language-next-render-20261006/reading-landscape-ve",
+        "--paired-draft",
+        "docs/narration/reading-landscape.ve.paired-draft.json",
+        "--slides",
+        "9,10,13,17"
+      ],
+      "assetURLs": [
+        "/course-decks/reading-landscape/ve/slide-09.webp",
+        "/course-decks/reading-landscape/ve/slide-10.webp",
+        "/course-decks/reading-landscape/ve/slide-13.webp",
+        "/course-decks/reading-landscape/ve/slide-17.webp"
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slides": [
+        2,
+        3,
+        18
+      ],
+      "pairFile": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "vegetables-staples",
+        "st",
+        "/tmp/imbewu-final-language-next-render-20261006/vegetables-staples-st",
+        "--paired-draft",
+        "docs/narration/vegetables-staples.st.paired-draft.json",
+        "--slides",
+        "2,3,18"
+      ],
+      "assetURLs": [
+        "/course-decks/vegetables-staples/st/slide-02.webp",
+        "/course-decks/vegetables-staples/st/slide-03.webp",
+        "/course-decks/vegetables-staples/st/slide-18.webp"
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ts",
+      "slides": [
+        1,
+        3,
+        18
+      ],
+      "pairFile": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "vegetables-staples",
+        "ts",
+        "/tmp/imbewu-final-language-next-render-20261006/vegetables-staples-ts",
+        "--paired-draft",
+        "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "--slides",
+        "1,3,18"
+      ],
+      "assetURLs": [
+        "/course-decks/vegetables-staples/ts/slide-01.webp",
+        "/course-decks/vegetables-staples/ts/slide-03.webp",
+        "/course-decks/vegetables-staples/ts/slide-18.webp"
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ve",
+      "slides": [
+        2,
+        17,
+        18
+      ],
+      "pairFile": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "vegetables-staples",
+        "ve",
+        "/tmp/imbewu-final-language-next-render-20261006/vegetables-staples-ve",
+        "--paired-draft",
+        "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "--slides",
+        "2,17,18"
+      ],
+      "assetURLs": [
+        "/course-decks/vegetables-staples/ve/slide-02.webp",
+        "/course-decks/vegetables-staples/ve/slide-17.webp",
+        "/course-decks/vegetables-staples/ve/slide-18.webp"
+      ]
+    },
+    {
+      "module": "water-harvesting",
+      "language": "ve",
+      "slides": [
+        4
+      ],
+      "pairFile": "docs/narration/water-harvesting.ve.paired-draft.json",
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "water-harvesting",
+        "ve",
+        "/tmp/imbewu-final-language-next-render-20261006/water-harvesting-ve",
+        "--paired-draft",
+        "docs/narration/water-harvesting.ve.paired-draft.json",
+        "--slides",
+        "4"
+      ],
+      "assetURLs": [
+        "/course-decks/water-harvesting/ve/slide-04.webp"
+      ]
+    }
+  ],
+  "conversion": "RGB WebP quality88/method6; original1440 width; preserve natural height; no crop/resize",
+  "scope": "Only selected 36 outputs/manifests after actual rendering; no ST Intro/voice edits",
+  "cacheFutureScope": "Selective once-only exact selected still URLs and query variants; no fetching/audio/films/later-download eviction"
+}

@@ -1,0 +1,85 @@
+{
+  "packetId": "AGY-TS-VEGETABLES-L4-VERIFIED-OBSERVATION-2026-10-02",
+  "conversationId": "a4ac4a78-1443-4191-899a-72d61ac95b4b",
+  "observationSource": "Antigravity native accessibility tree, current conversation, Gemini 3.7 Flash High. Read-only; conversation was not navigated or changed.",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "lessonId": "vegetables-staples-l4",
+  "verifiedRevision": "0f26227cba5b48dda6823af124719e43a58acc09",
+  "currentRegistryFinding": "No Xitsonga L4 entry exists; current display therefore falls back to canonical English.",
+  "sourceOrderCheck": "All six exact canonical sources below match the indicated zero-based L4 paragraph indices: 0, 2, 5, 8, 9, 11.",
+  "entries": [
+    {
+      "paragraphIndex": 0,
+      "canonicalSourceEnglish": "Pest pressure usually rises for a reason.",
+      "observedDraftExact": "Pest pressure hakanyingi yi tlakuka hikwalaho ka xivangelo xo karhi.",
+      "observedLiteralBacktranslationExact": "Pest pressure usually rises because of a certain reason.",
+      "independentCheck": "Accept as a bounded draft. It retains the technical term in English and preserves usually and the statement that pest pressure rises for a reason. The backtranslation's ‘a certain reason’ is slightly more specific in phrasing, but does not identify or add a cause.",
+      "repair": null,
+      "observedUTF16BE": "0050006500730074002000700072006500730073007500720065002000680061006b0061006e00790069006e0067006900200079006900200074006c0061006b0075006b0061002000680069006b00770061006c00610068006f0020006b006100200078006900760061006e00670065006c006f00200078006f0020006b0061007200680069002e",
+      "rootCorrection": "Exact first-two response strings recovered programmatically as character codes; handwritten transcription corrected. Language meaning needs final check; no fluent approval."
+    },
+    {
+      "paragraphIndex": 2,
+      "canonicalSourceEnglish": "So before you treat anything, look at the whole system.",
+      "observedDraftExact": "Hikwalaho, u nga si tshungula nchumu, languta system hinkwayo.",
+      "observedLiteralBacktranslationExact": "Therefore, before you treat anything, look at the whole system.",
+      "independentCheck": "The sentence retains “before you treat anything” and whole-system scope according to its supplied backtranslation, but the observed lead-in is `Hikwalaho`; this may be a misspelling of standard `Hikokwalaho`. I cannot verify it as correct Xitsonga. Keep the complete source sentence in English until a local language check confirms a valid form.",
+      "repair": {
+        "recommendedCandidate": "So before you treat anything, look at the whole system.",
+        "reason": "Avoid publishing the uncertain connective spelling while retaining exact source meaning."
+      },
+      "observedUTF16BE": "00480069006b00770061006c00610068006f002c002000750020006e0067006100200073006900200074007300680075006e00670075006c00610020006e006300680075006d0075002c0020006c0061006e0067007500740061002000730079007300740065006d002000680069006e006b007700610079006f002e",
+      "rootCorrection": "Exact first-two response strings recovered programmatically as character codes; handwritten transcription corrected. Language meaning needs final check; no fluent approval."
+    },
+    {
+      "paragraphIndex": 5,
+      "canonicalSourceEnglish": "Work through four steps, in order.",
+      "observedDraftExact": "Tirha hi magoza ya mune, hi ku landzelelana.",
+      "observedLiteralBacktranslationExact": "Work by means of four steps, in following each other [in order].",
+      "independentCheck": "Accept. The four-step count and ordered sequence remain explicit; no added step or process advice.",
+      "repair": null
+    },
+    {
+      "paragraphIndex": 8,
+      "canonicalSourceEnglish": "Three. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.",
+      "observedDraftExact": "Vunharhu. Sirhelela leswi swi ku pfunaka. Beneficial insects swi endla ntirho lowu a wu ta boheka ku wu endla hi wexe.",
+      "observedLiteralBacktranslationExact": "Three. Protect that which is helping you. Beneficial insects are doing work that you would have had to do yourself.",
+      "independentCheck": "The step label and protect-what-helps sentence preserve source meaning. The backtranslation of the final clause is “work that you would have had to do yourself,” which may strengthen the source’s “you would otherwise do yourself” comparison. Keep that complete final English sentence until the modality is confirmed; no stronger claim is needed.",
+      "repair": {
+        "recommendedCandidate": "Vunharhu. Sirhelela leswi swi ku pfunaka. Beneficial insects are doing work you would otherwise do yourself.",
+        "reason": "Preserve the source counterfactual exactly while keeping the ecological term in English."
+      }
+    },
+    {
+      "paragraphIndex": 9,
+      "canonicalSourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "sourceAsWrittenInConversation": "Four. Only then, act - and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "observedDraftExact": "Vumune. Hi kona ntsena u tekaka goza - and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "observedLiteralBacktranslationExact": "Four. It is only then that you take action [act] - and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "independentCheck": "Accept the sequencing and bounded action framing: the fourth-step label and only-then action are conveyed, while the lightest-effective-action clause and all conditional, suitability, and monitoring statements remain English. The conversation source used a hyphen where canonical English uses an em dash; preserve the canonical punctuation when source-pairing.",
+      "repair": {
+        "recommendedCandidate": "Vumune. Hi kona ntsena u tekaka goza — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+        "reason": "Replace the observed ASCII hyphen separator with the exact canonical em dash; no wording change to the observed translation is recommended."
+      }
+    },
+    {
+      "paragraphIndex": 11,
+      "canonicalSourceEnglish": "Be honest with yourself about which step you usually skip.",
+      "observedDraftExact": "Tshembeka eka wena n'winyi mayelana na goza leri u talaka ku ri tlula.",
+      "observedLiteralBacktranslationExact": "Be honest to yourself regarding the step that you usually skip [jump over].",
+      "independentCheck": "Accept as a bounded reflection draft. It retains self-honesty, which step, and usually. The app response identifies ku tlula as a standard verb for skip/bypass. No frequency strengthening or added judgment is evident.",
+      "repair": null
+    }
+  ],
+  "safetyCheck": {
+    "beforeTreatWholeSystem": "Paragraph 2 preserves before-treatment order and whole-system review.",
+    "steps": "Paragraph 5 states four steps in order; paragraph 8 is step three; paragraph 9 is step four and preserves only-then action.",
+    "leastIntensiveAction": "Exact English retained.",
+    "conditionalControls": "May-help, action-suitability, and monitoring clauses remain exact English.",
+    "registeredProductSafeguards": "Not part of the six requested drafts; the full canonical paragraph 10 remains an exact-English hold in the candidate packet.",
+    "reflectionQualifier": "Usually retained in paragraph 11."
+  },
+  "reviewStatus": "Unreviewed machine draft with independent semantic check; no fluent-speaker or local adviser approval claimed.",
+  "provenanceNote": "First two observed strings corrected from actual CUA response character codes after manual transcription differences. Other four observed response strings match the root UI observation. No learner wiring.",
+  "overall": "The accessibility observation yielded six exact drafts. Paragraphs 0, 5, 9 sequencing, and 11 preserve the intended meaning at this semantic-check level. Retain exact English for paragraph 2 due uncertain connective spelling and for paragraph 8’s counterfactual wording unless verified. Paragraph 9 needs canonical em-dash punctuation in the source-paired candidate. This is not fluent-speaker approval."
+}

@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-06",
+  "head": "2731fe76f2e8e7d1bc9a0be0dce66be497904401",
+  "files": {
+    "canonical-before.ts.txt": {
+      "path": "lib/course-modules.ts",
+      "bytes": 113494,
+      "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397"
+    },
+    "native-before-ve.ts.txt": {
+      "path": "lib/course-translation-drafts-ve.ts",
+      "bytes": 22698,
+      "sha256": "0358e790c699fa047101cbae939bbf0410deb7cd2eea2c3bdc0f2ae5d482d818"
+    },
+    "native-before-ts.ts.txt": {
+      "path": "lib/course-translation-drafts-ts.ts",
+      "bytes": 77313,
+      "sha256": "28e45acf80a96956885e227f55716ac84549bd129019deb23874ffea51396c4e"
+    },
+    "paired-before-st.json": {
+      "path": "docs/narration/intro-permaculture.st.paired-draft.json",
+      "bytes": 25360,
+      "sha256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9"
+    },
+    "paired-before-ve.json": {
+      "path": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "bytes": 126545,
+      "sha256": "8f0b681a7661804affd9038bdd8ba09a080f7eaf9509a740070db5ac4005e80b"
+    },
+    "paired-before-ts.json": {
+      "path": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "bytes": 134703,
+      "sha256": "2773290f06d9d9e48c638cd63e2c29d01281a666a6f42294c06b71db0e053e3d"
+    },
+    "root-reviewed-repaired-candidates.json": {
+      "path": "docs/study-translation-reviews/st-intro-silent-completion-2026-10-06/repaired-candidates.json",
+      "bytes": 262553,
+      "sha256": "81546481b8660b57c0a35ec90484ff4ea50fcb8abe17d4ec1cab26d54d3c0715"
+    }
+  }
+}

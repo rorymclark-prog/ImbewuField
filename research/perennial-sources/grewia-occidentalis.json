@@ -1,0 +1,38 @@
+{
+  "speciesId": "grewia-occidentalis",
+  "commonName": "Cross-berry",
+  "botanicalName": "Grewia occidentalis",
+  "harvestMonths": [
+    {
+      "region": "South Africa (general)",
+      "months": [1, 2, 3, 4, 5],
+      "evidence": {
+        "quote": "Purple star-shaped flowers (measuring 1.5 to 3cm across) appear in summer (October - January), followed by distinctive four-lobed fruits... Fruits turns shiny reddish-brown to light purple when ripe (January - May) and may remain on the tree for long periods.",
+        "url": "https://pza.sanbi.org/grewia-occidentalis",
+        "doc": "SANBI PlantZAfrica - Grewia occidentalis",
+        "page": null
+      },
+      "notes": "Flowering Oct-Jan (months [10,11,12,1] for reference only, not the harvested product); fruit ripens Jan-May and 'may remain on the tree for long periods' per the same source, so the ripening window is wide/soft rather than a sharp harvest peak."
+    }
+  ],
+  "yearsToFirstCrop": { "value": null, "evidence": null, "notes": "" },
+  "yearsToFullBearing": { "value": null, "evidence": null, "notes": "" },
+  "yieldKgPerTreeMature": { "value": null, "evidence": null, "notes": "" },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "Deciduous to semi-deciduous shrub/small tree, frost-hardy per PZA; no source states a chilling requirement or its explicit absence."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "PZA notes the flowers 'feeds honeybees' (nectar/insect visitation) but makes no explicit self-fertile / needs-cross-pollinator / dioecious statement, so left null rather than inferring from bee visitation alone."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "Checked both PROTA4U (via an ICRAF Species Switchboard-derived link) and the Pl@ntUse PROTA mirror (https://uses.plantnet-project.org/en/Grewia_occidentalis_(PROTA)) for this species: the PROTA4U page contained only navigation/UI chrome with no substantive botanical content, and the Pl@ntUse mirror is an explicit unwritten stub page ('This page has still not be written by PROTA.'). Neither could be used.",
+    "An ICRAF Agroforestree Database link (Spid=1772) initially found via search was checked and confirmed to be for a DIFFERENT species, Grewia optiva, not Grewia occidentalis - it was not used.",
+    "yearsToFirstCrop / yearsToFullBearing / yieldKgPerTreeMature / chillUnits / pollination: not found in PZA (the only usable source located for this species) or in any ICRAF/PROTA source.",
+    "No SA grower-body or peer-reviewed technical source was located for this species within the fetch budget; PZA is the sole usable source."
+  ]
+}

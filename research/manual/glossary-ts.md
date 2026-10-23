@@ -952,3 +952,91 @@ Grammar used: a kept word is treated as a class 9 noun in the singular (*swale y
 | Zone | zone / ti-zone | none (already a loan) | 02, 11 |
 
 Left in Xitsonga on purpose (not glossary uses, or an everyday word is clearer): verb forms (*ku kukuriwa*, *ku hluvukisa swiluva* for "pollinate", *ku funengeta misava* for "cover the soil"); *swimilana swo funengeta misava (cover crops)*; "edge" in the everyday sense (edge of a bed, field or roof: *ematlhelweni*, *nhlelo*, *makumu*); "very invasive weeds" such as kikuyu in ch. 7 (*nhova leyi hangalakaka ngopfu*, aggressive weeds rather than a listed species); *tihuku ta xintu* (indigenous chickens, ch. 3); *varimi va ndhavuko* (Indigenous farmers of the Americas, ch. 10); *vutshunguri bya xintu* and *matirhiselo ya ndhavuko* (traditional medicine and use); "predatory" as an adjective (*ti-bug leti dyaka swin'wana*); *mati lama khulukaka* where it means flowing water, not runoff (ch. 11); the brand name *Wonderbag*.
+
+## Second edition (27 Sep 2026)
+
+Chapters 00–11 and 13 were re-translated from the rewritten English second edition (`research/manual/REWRITE.md`, `research/manual/RETRANSLATE.md`). The glossary tables and the "Kept in English" section above still apply; the 66 kept words are written in English (bold with a short Xitsonga gloss on first use in a chapter, *ti-* for the plural). Terms chosen for the first time in this edition, or used differently from the tables above, are listed here. Machine draft: every row is **(check)** for the fluent-speaker reviewer.
+
+### Recurring chapter parts
+
+| English | Xitsonga | Notes |
+|---|---|---|
+| By the end of this chapter you will be able to: | Loko u hetile ndzima leyi u ta kota ku: | Bold line before the outcomes list, every chapter (ch. 00 says *masungulo lawa* for "this introduction") |
+| Try it (activity heading) | Ringeta | Every chapter; also used in cross-references ("vona 'Ringeta'") |
+| Key points | Tinhla ta nkoka | As before |
+| Tip / Note callouts | Xiletelo / Xitsundzuxo | As §12 above |
+| Notes and references (ch. 13 title) | Tinhlamuselo na swihlovo | *xihlovo* here in the sense "source (of information)"; "References" heading = *Swihlovo* |
+| Safety and the law | Vuhlayiseki na nawu | Ch. 13 heading |
+| Chapter N: … (ch. 13 sub-headings) | Ndzima N: … | Titles copied from each translated chapter's `#` line |
+
+### New or changed terms
+
+| English | Xitsonga | Chapter(s) | Notes |
+|---|---|---|---|
+| months (October, March …) | kept in English (October, March …) | 03, 04, 06, 07, 13 | Follows the first edition and the app (*Awu–Sep*). Xitsonga month names (Sunguti … N'wendzamhala) were not used; reviewer may switch |
+| spring (season) | nguva ya mahlumelo (spring) | 03 | Coined; "(spring)" on first use (check) |
+| berg wind | Berg wind (moya wo hisa lowu rhelelaka etintshaveni) | 03 | English kept, gloss in the table cell |
+| heatwaves | tinguva to hisa ngopfu (heatwaves) | 03 | As §3 |
+| botulism | botulism | 03 | Kept English, explained as *chefu ya swakudya leyi dlayaka* |
+| resilience | matimba yo pfuka (resilience) | 01, 03 | As §1; English in brackets in ch. 3 |
+| fossil fuels | mafurha ya le hansi ka misava (fossil fuels) | 01 | As §11 |
+| yield (principle 3) | vuyelo (yield) | 01 | *ntshovelo* kept for "harvest" |
+| township backyard | xivandla xa le xilungwini | 01 | (check) |
+| lifestyle audit | nxopaxopo wa vutomi bya wena (lifestyle audit) | 04 | Follows *nxopaxopo wa ndhawu* |
+| market garden | ntanga wa makete (market garden) | 04 | |
+| retail / wholesale price | nxavo wa retail / nxavo wa wholesale | 04 | English kept, each explained in brackets |
+| broadfork / push-seeder | broadfork / xibyali xo susumeta (push-seeder) | 04 | |
+| open-pollinated / hybrid seed | mbewu ya open-pollinated / ya hybrid | 04 | English kept, "open-pollinated" glossed |
+| cassava | mukhomboni (cassava) | 04 | (check) |
+| sweet potato | patata / tipatata | 04, 06, 07, 10 | Replaces the descriptive *patata leyi nyanganyelaka*; *zambala* = potato (check) |
+| amadumbe (taro) | madumbi (amadumbe) | 04, 07 | (check) |
+| cut and come again | ku tsema kutani ma tlhela ma mila | 04 | Descriptive |
+| omnivore | omnivore (swiharhi leswi dyaka swimilana na swiharhi) | 05 | English kept |
+| grit (for chickens) | maribyana (grit) | 05 | |
+| dust bath | ku hlamba hi ntshuri (dust bath) | 05 | |
+| layer feed / layers / broilers | layer feed / ti-layer / ti-broiler | 05 | English kept |
+| Newcastle disease | vuvabyi bya Newcastle | 05 | |
+| vaccine | mujovo / mijovo | 05 | Follows *ku jova* (§8) |
+| African swine fever, varroa mite, American foulbrood | kept in English | 05 | Varroa glossed *xivungwana lexi hanyaka hi ku mama tinyoxi* |
+| mongoose / genet / wild cat | timangovo / tinsimba / tikati ta nhova | 05 | (check) |
+| quail | tigwatla | 02 | (check) |
+| oxen | tihomu to rima | 05 | Descriptive (check) |
+| veil / bee suit | vheyili / sutu ya tinyoxi | 05 | Loan words (check) |
+| comb (honeycomb) | tikhomu (combs) | 05 | As §8 |
+| inoculant / rhizobium inoculant | inoculant / rhizobium inoculant | 06, 08 | English kept, glossed *mpfuvu wa switsongwatsongwana …* |
+| understorey | understorey (xiyenge xa mirhi leyitsongo ehansi ka leyikulu) | 06 | Now used in ch. 6 (first edition had no use) |
+| carbon to nitrogen ratio | carbon to nitrogen ratio (ku ringanana ka khaboni na naytirojini) | 08 | Now used in ch. 8 |
+| nursery (plant) | nursery | 06, 08 | English kept, as the drafts |
+| Hügelkultur / net-and-pan | kept in English | 07 | Explained in the sentence |
+| diversion mound / drain | khurhana ro hambukisa mati / mugerwana wo hambukisa mati | 07 | |
+| living sponge | xiponji lexi hanyaka | 07 | |
+| plough pan | plough pan (xiyenge xo tiya lexi endliwaka hi ku rima) | 07 | |
+| ripper / chisel plough / rotavator / two-wheel tractor | ti-ripper / tipulawu ta chisel / rotavator / thirakitara ya mavhilwa mambirhi | 07 | |
+| survey staff | nhonga yo pima (survey staff) | captions | |
+| bilharzia | bilharzia | 07 | English kept |
+| level mark (A-frame) | mfungho wa ku ringanana | 07 | |
+| sap suckers / plant eaters | leswi mamaka / leswi dyaka swimilana | 10 | |
+| funnel (of a maize plant) | xikarhi ka matluka ya mavele (funnel) | 10 | |
+| African bollworm, diamond-back moth, fall armyworm, red-billed quelea, mole-rat, golden mole, rat lungworm, Bt | kept in English | 10 | |
+| chilli | pelepele | 10 | (check) |
+| sooty mould | mikowa ya ntima (sooty mould) | 10 | Follows *mikowa* |
+| ecology | ecology | 09 | English kept, defined in the sentence |
+| ecological pyramid | phiramidi ya ecology / phiramidi ya vutomi | 09 | |
+| plant-eaters | swidya-swimilana | 09 | Coined (check) |
+| owl box | bokisi ra xikhova | 09 | |
+| samp | xitambu | 11 | (check) |
+| hay box | bokisi ra byanyi | 11 | |
+| blanching | ku peta hi ku hatlisa ematini lama vilaka (blanching) | 11 | |
+| box / panel / parabolic cooker | xitofu xa bokisi / xa tiphaneli / xa parabolic | 11 | |
+| indirect (solar geyser) / antifreeze | leyi nga kongomangiki (indirect) / mati lama nga gangiki (antifreeze) | 11 | |
+| latitude | latitude | 11 | English kept |
+| traditional council | huvo ya vukosi | 13 | (check) |
+| national authorities | valawuri va tiko | 13 | |
+| Act names (National Water Act, CARA, National Veld and Forest Fire Act, National Forests Act, NEMBA lists) | kept in English with a short gloss in brackets | 13 | e.g. *National Water Act, nawu wa mati wa tiko* |
+
+### Other decisions
+
+- Ch. 00: the English says the manual "is also in isiZulu, Sesotho and Tshivenḓa". In a Xitsonga file that reads oddly, so the sentence says the manual is written in English and its isiZulu, Sesotho, Tshivenḓa and Xitsonga versions are drafts still being checked. Reviewer may prefer a literal translation.
+- Holmgren's sayings (ch. 01) are translated by meaning, as before: "Make hay while the sun shines" = *Tsema byanyi loko dyambu ri ha hisa*; "Don't put all your eggs in one basket" = *U nga veki mandza hinkwawo exirhundzwini xin'we*.
+- Common plant names without a known Xitsonga name (karee, wild dagga, Kei apple, spekboom …) stay in English beside the Latin name, as in the first edition.
+- *Xikhomelo* is used for a peg or stake (ch. 06, 07); *mubedo* stays for worm-farm bedding only (ch. 08).

@@ -1,0 +1,63 @@
+{
+  "speciesId": "momordica-balsamina",
+  "commonName": "Nkaka / balsam pear",
+  "botanicalName": "Momordica balsamina",
+  "householdFoodStatus": "specialist-review",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "traditionally prepared leaves/fruit — specialist review needed",
+  "supplementaryReferences": [
+    {
+      "title": "Edible-part and safety review",
+      "quote": "There are conflicting reports on the toxicity of the fruit, both green and ripe.",
+      "url": "https://pza.sanbi.org/momordica-balsamica",
+      "doc": "SANBI PlantZAfrica, momordica-balsamica",
+      "page": null,
+      "note": "SANBI reports culinary uses but also toxic constituents and poisoning concerns. A preparation report is not a complete safe household recipe."
+    }
+  ],
+  "productionGuidance": {
+    "products": "traditionally prepared leaves/fruit — specialist review needed",
+    "care": [
+      "Retain this climber in mapped inventory, but do not count it as normal household food until a qualified local specialist confirms identity, edible part and safe preparation.",
+      "SANBI records it across South Africa except Western Cape, in varied habitats."
+    ],
+    "purchase": [
+      "Resolve food-use and preparation with an experienced local food-plant specialist before buying it as a household crop."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/momordica-balsamica",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    }
+  ],
+  "gaps": [
+    "October–May mainly flowering/fruiting is not a confirmed safe ripe-food window. No safe recipe, measured food yield or planting-to-food interval."
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "module": "vegetables-staples",
+  "language": "st",
+  "reviewStatus": "unreviewed-machine-draft",
+  "humanLanguageReview": false,
+  "localFarmingReview": false,
+  "narration": null,
+  "pairedSource": "docs/narration/vegetables-staples.st.paired-draft.json",
+  "pairedSourceSha256": "22f89fd204ed890b355527cfcc4302e1a29f7b406419003ce57193386eea7df3",
+  "englishSource": "docs/narration/vegetables-staples.en.md",
+  "englishSourceSha256": "9cfb6fc5784818d529fdfeecb28f367183fce8a28b6dee28c8f88142640d5bd3",
+  "slides": [
+    {
+      "slide": 1,
+      "path": "public/course-decks/vegetables-staples/st/slide-01.webp",
+      "pixels": "1440x5400",
+      "bytes": 318552,
+      "sha256": "c97c79c0f5c80fea9b14d9e64e7c863adf45ca90fd1ed76722a1e3bc7a6a5d10"
+    },
+    {
+      "slide": 2,
+      "path": "public/course-decks/vegetables-staples/st/slide-02.webp",
+      "pixels": "1440x5400",
+      "bytes": 340230,
+      "sha256": "dd383bdc78e0f881e64aed2a86d6471741ce41783fbf353ba88c6b864f39ff77"
+    },
+    {
+      "slide": 3,
+      "path": "public/course-decks/vegetables-staples/st/slide-03.webp",
+      "pixels": "1440x5400",
+      "bytes": 364674,
+      "sha256": "85ef430385f4208c222bf46482959434f889732918cf8e4da5b5f3d31d240411"
+    },
+    {
+      "slide": 4,
+      "path": "public/course-decks/vegetables-staples/st/slide-04.webp",
+      "pixels": "1440x5400",
+      "bytes": 705574,
+      "sha256": "87ff48c696791e274a5aa628fba319a473f792824441b7615a4ec9d4a6bc7b58"
+    },
+    {
+      "slide": 5,
+      "path": "public/course-decks/vegetables-staples/st/slide-05.webp",
+      "pixels": "1440x5400",
+      "bytes": 423868,
+      "sha256": "4ef4bdc325c677badd9c2d2c9e2b9f2e6eea4f98af27732c84acde6bac818770"
+    },
+    {
+      "slide": 6,
+      "path": "public/course-decks/vegetables-staples/st/slide-06.webp",
+      "pixels": "1440x5400",
+      "bytes": 589958,
+      "sha256": "00d4f4dff32b779f7aa91ce38060b38d1bdd882739e15cf14ca0f58fa64d69d3"
+    },
+    {
+      "slide": 7,
+      "path": "public/course-decks/vegetables-staples/st/slide-07.webp",
+      "pixels": "1440x5400",
+      "bytes": 689852,
+      "sha256": "e6c73d9201ee06765f4ca967eb6256ba8624bf81d15ff8173c578da6eebf8be9"
+    },
+    {
+      "slide": 8,
+      "path": "public/course-decks/vegetables-staples/st/slide-08.webp",
+      "pixels": "1440x5400",
+      "bytes": 439644,
+      "sha256": "cf7e82083d0c61c58277b5d0e4ab43102633df440687a633cc747f7ef1f1f3f8"
+    },
+    {
+      "slide": 9,
+      "path": "public/course-decks/vegetables-staples/st/slide-09.webp",
+      "pixels": "1440x5400",
+      "bytes": 354042,
+      "sha256": "40decd8c75391b766aed995521879e3e9fa503188b2ab30bb748f21d908c542e"
+    },
+    {
+      "slide": 10,
+      "path": "public/course-decks/vegetables-staples/st/slide-10.webp",
+      "pixels": "1440x5400",
+      "bytes": 787200,
+      "sha256": "c8f529a959b4147680a55eb5d767a8b4bf584b704f3cf63ed2570808525519ef"
+    },
+    {
+      "slide": 11,
+      "path": "public/course-decks/vegetables-staples/st/slide-11.webp",
+      "pixels": "1440x5400",
+      "bytes": 411708,
+      "sha256": "a1784947e3aae24c3fc3a2e79012d9f4a2be7cf6bc0e48f4800fefb166fd41ec"
+    },
+    {
+      "slide": 12,
+      "path": "public/course-decks/vegetables-staples/st/slide-12.webp",
+      "pixels": "1440x5400",
+      "bytes": 459716,
+      "sha256": "dd8b078f7ce3984543ad6221e4774c1bebdb4ebf607a4e2c571f3e41db205d39"
+    },
+    {
+      "slide": 13,
+      "path": "public/course-decks/vegetables-staples/st/slide-13.webp",
+      "pixels": "1440x5400",
+      "bytes": 443438,
+      "sha256": "8310577ea52f70a5d2a0a762d37402d3d05dd5323e86daee4567143fac744e30"
+    },
+    {
+      "slide": 14,
+      "path": "public/course-decks/vegetables-staples/st/slide-14.webp",
+      "pixels": "1440x5400",
+      "bytes": 257038,
+      "sha256": "727c377db751d498c76b35ef89517842ff747a3042a789c8711364190061b205"
+    },
+    {
+      "slide": 15,
+      "path": "public/course-decks/vegetables-staples/st/slide-15.webp",
+      "pixels": "1440x5400",
+      "bytes": 575028,
+      "sha256": "670f14dfa82d0b83cf9419078c2743e8b0e141808746c6e85d301cd19f52535f"
+    },
+    {
+      "slide": 16,
+      "path": "public/course-decks/vegetables-staples/st/slide-16.webp",
+      "pixels": "1440x5400",
+      "bytes": 589838,
+      "sha256": "c89ab72824ebd249081dc2fa3f7756f51c779bc1aa24a6d110ce69e3e1f07246"
+    },
+    {
+      "slide": 17,
+      "path": "public/course-decks/vegetables-staples/st/slide-17.webp",
+      "pixels": "1440x5400",
+      "bytes": 374644,
+      "sha256": "2305d81a191f35ad5eb7f3b0102be14a078a6af51b28d36e13739c49f08edcf0"
+    },
+    {
+      "slide": 18,
+      "path": "public/course-decks/vegetables-staples/st/slide-18.webp",
+      "pixels": "1440x5400",
+      "bytes": 345666,
+      "sha256": "c50cd995027f7945e48cad4902358c0819ff2ab36f430c1a0dd53ecb81e4c5a5"
+    }
+  ],
+  "contactSheet": "docs/media/vegetables-staples/opening-six-review/st-contact-sheet.jpg",
+  "phoneSamples": [
+    {
+      "slide": 1,
+      "path": "docs/media/vegetables-staples/opening-six-review/st-slide-01-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "32635613e8e0452e7cca264c8615f7258a5ac5e9a415c543d1c6943b95bce416"
+    },
+    {
+      "slide": 2,
+      "path": "docs/media/vegetables-staples/opening-six-review/st-slide-02-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "d3ffc2f005933e48e18d0580c45ead01c249e32bebb42887cbb53ae23efadf41"
+    },
+    {
+      "slide": 3,
+      "path": "docs/media/vegetables-staples/opening-six-review/st-slide-03-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "cb16309152b4b6b44bd15590b55b256c189908b416c1cfb280ef92f4a4b1841b"
+    },
+    {
+      "slide": 4,
+      "path": "docs/media/vegetables-staples/opening-six-review/st-slide-04-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "74bac5b5f0ac1d9d4f4c62d08958692f4d7a60c9bbc6b145eae7eb8c78c12b17"
+    },
+    {
+      "slide": 5,
+      "path": "docs/media/vegetables-staples/opening-six-review/st-slide-05-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "1497679915320a4e0ef5ef38b7554d5da6f97e7512e4ea5faff4ac5d1ca50e8c"
+    },
+    {
+      "slide": 6,
+      "path": "docs/media/vegetables-staples/opening-six-review/st-slide-06-390.jpg",
+      "pixels": "390x1463",
+      "sha256": "4d0b7a37adfc60ae486a8d6f95b0fbb6d58d0fff5f673cf428ba126c00b5a4e1"
+    }
+  ],
+  "note": "The opening six frames now show source-paired unreviewed framing drafts and exact-source reuses; frames 7–18 remain unchanged. No regional narration, fluent review, or local farming approval is claimed."
+}

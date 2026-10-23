@@ -1,0 +1,86 @@
+{
+  "speciesId": "morus-nigra",
+  "commonName": "Black mulberry",
+  "botanicalName": "Morus nigra",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No locally qualified numeric first-crop age was established in the checked primary sources. Record planting date, nursery starting age and propagation method."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured local numeric full-bearing age was established. No yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified mature per-plant food kg with age, product basis and management context was established. Missing output remains unknown rather than zero."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No universal numeric chilling requirement is assigned. Check the actual cultivar and site's winter conditions."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Check the actual cultivar's pollen needs; no universal classification is inferred from a named cultivar."
+  },
+  "harvestProduct": "fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Exact fruit identity and variability",
+      "quote": "The colour of the fruit does not identify the mulberry species.",
+      "url": "https://apps.worldagroforestry.org/treedb2/AFTPDFS/Morus_nigra.PDF",
+      "doc": "Orwa et al. (2009), World Agroforestry, Morus nigra profile",
+      "page": 1,
+      "note": "The institutional species reference distinguishes fruiting forms and variable breeding systems. Ripe fruits are used as food; a black-fruited tree must not silently inherit this identity or the legal status of another Morus species."
+    },
+    {
+      "title": "South African taxonomic cultivation record",
+      "quote": "Morus nigra (Black mulberry, Common mulberry)",
+      "url": "https://www.biodiversityexplorer.info/plants/moraceae/morus.htm",
+      "doc": "Iziko Museums, Biodiversity Explorer, Morus",
+      "page": null,
+      "note": "The museum lists M. nigra as cultivated in southern Africa and distinguishes naturalised Morus taxa. It gives no ripe-harvest months or quantified yield."
+    },
+    {
+      "title": "Fruit maturity and water context",
+      "quote": "the fruit are likely to drop before being fully ripened",
+      "url": "https://apps.worldagroforestry.org/treedb2/AFTPDFS/Morus_nigra.PDF",
+      "doc": "Orwa et al. (2009), World Agroforestry, Morus nigra profile",
+      "page": 4,
+      "note": "Institutional management reference links dry roots to early fruit drop. It contains a non-local 15-year substantial-bearing statement; that is not a South African first-crop age and is not used as a forecast."
+    }
+  ],
+  "productionGuidance": {
+    "products": "fruit",
+    "care": [
+      "Confirm the exact mulberry species and that the chosen plant is a fruiting form. Fruit colour alone cannot identify it.",
+      "Watch water stress during fruit development and record the actual ripe picking months."
+    ],
+    "purchase": [
+      "Ask for identified Morus nigra fruiting material with a locally observed season. Do not use a generic black-fruited mulberry or fruitless ornamental as proof of this product."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://apps.worldagroforestry.org/treedb2/AFTPDFS/Morus_nigra.PDF",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    },
+    {
+      "url": "https://www.biodiversityexplorer.info/plants/moraceae/morus.htm",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    }
+  ],
+  "gaps": [
+    "Primary/institutional searches found no verified South African ripe-harvest month window, local first/full age or mature food kg.",
+    "Atmospheric pollen/flowering dates and foreign growing seasons are excluded from harvest months.",
+    "Cultivar and breeding-system variability prevents a universal self-fertility promise; no numeric age curve or storage duration inferred."
+  ]
+}

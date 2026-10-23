@@ -8,18 +8,16 @@ import RoleSwitcher from '@/components/RoleSwitcher';
 import DashboardTabs from '@/components/DashboardTabs';
 import { SampleFunderGate } from '@/components/SampleProgramme';
 import Link from 'next/link';
-import BackButton from '@/components/BackButton';
-import SettingsButton from '@/components/SettingsButton';
-import BrandLogo from '@/components/BrandLogo';
+import AppHeader from '@/components/layout/AppHeader';
+import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
-import MenuButton from '@/components/MenuButton';
+import { useProductTour } from '@/components/ProductTourProvider';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { canAccessRolePage } from '@/lib/role-access';
 import type { UserRole } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n-context';
-import { APP_HEADER_STYLE } from '@/lib/app-header';
 import { useAppLevel } from '@/lib/app-level';
 const tr = (lang: string, en: string, zu: string) => lang === 'zu' ? zu : en;
 
@@ -76,6 +74,8 @@ export default function FunderPage() {
   useEffect(() => { setSample(isSampleMode()); }, []);
   const [view, setView] = useState<FunderView>('cohort');
   const simple = useAppLevel() === 'simple';
+  // staff-10: see the matching comment on app/ngo/page.tsx.
+  const tour = useProductTour();
 
   useEffect(() => {
     // Sample mode has no user by design; bouncing it to /login would make the
@@ -103,37 +103,33 @@ export default function FunderPage() {
 
   return (
     <div className="h-screen flex flex-col" style={{ background: 'var(--bg-0)' }}>
-      <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4 overflow-x-auto"
-        style={APP_HEADER_STYLE}>
-        <MenuButton />
-        <BackButton />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: 'var(--border)', opacity: 0.5 }} />
-        <h1 className="text-xs font-display m-0 sr-only sm:not-sr-only sm:block" style={{ color: 'var(--text-secondary)' }}>{tr(lang, 'Funder · impact oversight', 'Umxhasi · ukubheka umthelela')}</h1>
-        {/* Was an unconditional "demo data". NgoDashboard reads REAL Firestore via listGardens()
-            and only falls back to its sample gardens when there is no backend configured, so the
-            label now tracks that same condition — no backend, or sample mode. A permanent "demo" badge on real programme
-            figures teaches a funder to discount them. */}
-        {/* Scoped to the gardens view: the cohort view labels its own sample state from what the
-            portfolio read actually returned (`portfolio.isDemo`), which is the more exact test —
-            a configured backend with no signed-in caller is still sample data. Two badges saying
-            it at once, from two different tests, is how they end up disagreeing. */}
-        {(!isLive || sample) && view === 'gardens' && (
-          <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(47,111,158,0.12)', border: '1px solid rgba(47,111,158,0.3)', color: 'var(--blue)' }}>{tr(lang, 'demonstration records', 'amarekhodi esibonelo')}</span>
-        )}
-        <div className="flex-1" />
-        <Link
-          href="/network"
-          className="text-xs font-display hidden sm:block"
-          style={{ color: 'var(--blue)', textDecoration: 'none', marginRight: 4 }}
-        >
-          {tr(lang, 'Portfolio map →', 'Imephu yohlelo →')}
-        </Link>
-        <LessonLink id="funder:overview" label={tr(lang, 'Learn', 'Funda')} />
-        <Link href="/tour" className="shrink-0 text-sm font-semibold">{tr(lang, 'Take a tour', 'Buka uhambo')}</Link>
-        <SettingsButton />
-        <RoleSwitcher current="funder" />
-      </header>
+      <AppHeader
+        title={tr(lang, 'Funder · impact oversight', 'Umxhasi · ukubheka umthelela')}
+        backFallback="/"
+        right={<>
+          {/* Was an unconditional "demo data". NgoDashboard reads REAL Firestore via listGardens()
+              and only falls back to its sample gardens when there is no backend configured, so the
+              label now tracks that same condition — no backend, or sample mode. A permanent "demo" badge on real programme
+              figures teaches a funder to discount them. */}
+          {/* Scoped to the gardens view: the cohort view labels its own sample state from what the
+              portfolio read actually returned (`portfolio.isDemo`), which is the more exact test —
+              a configured backend with no signed-in caller is still sample data. Two badges saying
+              it at once, from two different tests, is how they end up disagreeing. */}
+          {(!isLive || sample) && view === 'gardens' && (
+            <span className="text-xs px-2 py-0.5 rounded-full font-sans hidden md:block" style={{ background: 'rgba(47,111,158,0.12)', border: '1px solid rgba(47,111,158,0.3)', color: 'var(--blue)' }}>{tr(lang, 'demonstration records', 'amarekhodi esibonelo')}</span>
+          )}
+          <Link
+            href="/network"
+            className="text-xs font-display hidden sm:block"
+            style={{ color: 'var(--blue)', textDecoration: 'none', marginRight: 4 }}
+          >
+            {tr(lang, 'Portfolio map →', 'Imephu yohlelo →')}
+          </Link>
+          <LessonLink id="funder:overview" label={tr(lang, 'Learn', 'Funda')} />
+          {!tour?.active && <Link href="/tour" className="shrink-0 text-sm font-semibold inline-flex items-center min-h-[44px]">{tr(lang, 'Take a tour', 'Buka uhambo')}</Link>}
+          <RoleSwitcher current="funder" />
+        </>}
+      />
 
       <DashboardTabs>
         {(simple ? [
@@ -175,8 +171,18 @@ export default function FunderPage() {
       {lang === 'zu' && <p className="px-4 pt-2 text-xs" style={{ color: 'var(--text-secondary)' }}>Imibiko, ubufakazi obunemithombo, neminye imininingwane yohlelo kusaboniswa ngesiNgisi.</p>}
 
       <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden">
-        <SampleFunderGate key={view}>{view === 'evidence' ? <ProgrammeEvidence funder /> : view === 'reports' ? <ProgrammeReports funder /> : view === 'cohort' ? <CohortDashboard mode="funder" /> : view === 'area' ? <ProductionAreas publishedOnly /> : view === 'assessments' ? <FunderAssessments /> : <NgoDashboard mode="funder" />}</SampleFunderGate>
+        <SampleFunderGate key={view}>{view === 'evidence' ? <ProgrammeEvidence funder /> : view === 'reports' ? <ProgrammeReports funder /> : view === 'cohort' ? (
+          // code-13: the only heading on this page used to be the 13px header chip in AppHeader
+          // (a <span>, not a heading) — a real, properly-sized h1 on the default tab.
+          <div className="flex-1 flex flex-col overflow-hidden min-w-0">
+            <h1 className="t-h1 font-display px-4 pt-3" style={{ color: 'var(--text-primary)' }}>
+              {tr(lang, 'Funder dashboard', 'Ibhodi labaxhasi')}
+            </h1>
+            <CohortDashboard mode="funder" />
+          </div>
+        ) : view === 'area' ? <ProductionAreas publishedOnly /> : view === 'assessments' ? <FunderAssessments /> : <NgoDashboard mode="funder" />}</SampleFunderGate>
       </div>
+      <TabBar hideAtDesktop />
     </div>
   );
 }

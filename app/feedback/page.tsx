@@ -1,9 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
-import SettingsButton from '@/components/SettingsButton';
+import AppHeader from '@/components/layout/AppHeader';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
@@ -29,13 +27,15 @@ export default function FeedbackPage(){
   }catch(e){setError((e as Error).message);}finally{setBusy(false);}}
   async function inbox(){setBusy(true);setError('');try{const response=await fetch('/api/product-feedback',{headers:await paidApiHeaders(user)});const result=await response.json();if(!response.ok)throw Error(result.error);setTickets(result.tickets);}catch(e){setError((e as Error).message);}finally{setBusy(false);}}
   return <main className={styles.page}><div className={styles.wrap}>
-    <header className={styles.header}><MenuButton/><BackButton fallback="/account"/><SettingsButton/></header>
+    <AppHeader backFallback="/account" title={label('Feedback','Impendulo')} />
     <h1>{label('Report a bug or suggest a feature','Bika inkinga noma phakamisa isici esisha')}</h1>
     {lang==='zu'&&<p role="note">UMBHALO WESIZULU USALUHLAKA — Le nguqulo ayikabuyekezwa umuntu okhuluma kahle isiZulu. / ISIZULU DRAFT — This translation has not been reviewed by a fluent isiZulu speaker.</p>}
-    <p>{paired('Tell the developer what happened or what would help. Please leave out passwords, identity numbers, private survey answers and other people’s personal information.','Tshela umthuthukisi okwenzekile noma okungasiza. Ungafaki amagama ayimfihlo, izinombolo zomazisi, izimpendulo eziyimfihlo zezinhlolovo noma imininingwane yomuntu siqu yabanye abantu.')}</p>
+    {/* ux-03/nav-04: was developer-addressed phrasing on a farmer-facing screen — rewritten to
+        speak to the person filling the form in, below. */}
+    <p>{paired('Tell us what happened or what would help. Please leave out passwords, identity numbers, private survey answers and other people’s personal information.','Sitshele okwenzekile noma okungasiza. Ungafaki amagama ayimfihlo, izinombolo zomazisi, izimpendulo eziyimfihlo zezinhlolovo noma imininingwane yomuntu siqu yabanye abantu.')}</p>
     {receipt?<section className={styles.card}>
       <h2>{label('Received','Kwamukelwe')}</h2>
-      <p>{paired('Saved in the private developer inbox. Reference:','Kulondolozwe ebhokisini eliyimfihlo lomthuthukisi. Inombolo yokubhekisela:')} {receipt}</p>
+      <p>{paired('Saved. Reference:','Kulondolozwe. Inombolo yokubhekisela:')} {receipt}</p>
       <button onClick={()=>{setReceipt('');setId('');setTitle('');setDetails('');setAgree(false);}}>{label('Write another','Bhala okunye')}</button>
     </section>:<form onSubmit={e=>{e.preventDefault();void send();}} className={styles.card}><fieldset disabled={busy} style={{minWidth:0}}>
       {simple?<label>{label('Tell us','Sitshele')}<textarea required minLength={10} maxLength={4000} value={details} onChange={e=>tellUs(e.target.value)}/></label>:<>
@@ -46,10 +46,12 @@ export default function FeedbackPage(){
       <label>{kind==='bug'?label('What did you do, what happened, and what did you expect?','Wenzeni, kwenzekeni, futhi ubulindeleni?'):label('What would you like to do, and why would it help?','Ufuna ukwenzani, futhi kungasiza ngani?')}<textarea required minLength={10} maxLength={4000} value={details} onChange={e=>{setDetails(e.target.value);setId('');}}/></label>
       </>}
       <label>{label('App page (optional)','Ikhasi lohlelo (ungalikhetha)')}<input value={path} maxLength={200} placeholder="/mentor" onChange={e=>{setPath(e.target.value||'/');setId('');}}/></label>
-      <p className={styles.meta}>{paired('Only the form, your account identifier and organisation/role are sent. No screenshot, GPS position or farm record is attached automatically.','Kuthunyelwa leli fomu kuphela, isihlonzi se-akhawunti yakho, inhlangano nendima yakho. Akunamathiselwa isithombe sesikrini, indawo ye-GPS noma irekhodi lepulazi ngokuzenzakalelayo.')}</p>
-      <label className={styles.check}><input type="checkbox" checked={agree} onChange={e=>setAgree(e.target.checked)}/>{paired('Send this feedback to the real developer inbox, including from a practice view.','Thumela lo mbiko ebhokisini langempela lomthuthukisi, ngisho nasendaweni yokuzijwayeza.')}</label>
+      {/* ux-03/nav-04: was developer-addressed phrasing on a farmer-facing screen — rewritten
+          below to speak plainly about what gets sent and who it goes to. */}
+      <p className={styles.meta}>{paired('Only this form, your name and your role are sent. No screenshot, GPS position or farm record is attached automatically.','Kuthunyelwa leli fomu kuphela, igama lakho nendima yakho. Akunamathiselwa isithombe sesikrini, indawo ye-GPS noma irekhodi lepulazi ngokuzenzakalelayo.')}</p>
+      <label className={styles.check}><input type="checkbox" checked={agree} onChange={e=>setAgree(e.target.checked)}/>{paired('Send this feedback, including from the practice version.','Thumela lo mbiko, ngisho nasendaweni yokuzijwayeza.')}</label>
       <div className={styles.actions}>
-        <button className={styles.primary} disabled={!user||!agree||busy} type="submit">{busy?label('Sending…','Kuyathunyelwa…'):paired('Send to developer','Thumela kumthuthukisi')}</button>
+        <button className={styles.primary} disabled={!user||!agree||busy} type="submit">{busy?label('Sending…','Kuyathunyelwa…'):paired('Send','Thumela')}</button>
         <button type="button" onClick={()=>{const data=input();if(!validFeedback(data)){setError(paired('Please add a title, details and a valid page path first.','Qala ngokufaka isihloko, imininingwane nendlela yekhasi evumelekile.'));return;}downloadFile(new Blob([feedbackText(data)],{type:'text/plain'}),'ImbewuField-feedback.txt');}}>{label('Download a copy','Landa ikhophi')}</button>
       </div>
       {!user&&<p><Link href="/login?from=%2Ffeedback">{label('Sign in','Ngena ngemvume')}</Link> {paired('to send, or download your draft first. Signing in may reload this page.','ukuze uthumele, noma landa uhlaka lwakho kuqala. Ukungena ngemvume kungase kulayishe leli khasi kabusha.')}</p>}

@@ -1,0 +1,32 @@
+{
+  "key": "tomatoes",
+  "varieties": [
+    {
+      "name": "Floradade (or similar heat-tolerant variety)",
+      "zones": ["subtropical-coast", "lowveld-bushveld"],
+      "maturity": null,
+      "season": "Hot summer / subtropical coastal growing",
+      "traits": "Bred specifically for heat tolerance",
+      "type": null,
+      "note": "Kept from the existing crop-catalog.ts entry — not independently re-verified in this pass, but its stated purpose (heat tolerance) is consistent with the two hottest zones in the 8-zone system, so those are assigned here as a reasoned (not separately sourced) extension.",
+      "evidence": [{ "quote": "Bred specifically for heat tolerance — worth seeking out if your area gets properly hot in summer, since an ordinary variety can drop flowers/stop setting fruit in extreme heat.", "url": null, "page": null, "doc": "Existing ImbewuField lib/crop-catalog.ts tomatoes entry" }]
+    },
+    {
+      "name": "Rodade",
+      "zones": ["highveld", "lowveld-bushveld", "subtropical-coast", "midlands-mistbelt", "western-cape", "southern-cape", "karoo-arid", "high-mountain"],
+      "maturity": "medium",
+      "season": null,
+      "traits": "Determinate, bush habit to ~100cm; globe-shaped fruit, uniform, 100-150g; high yield potential for an OP variety; high resistance to Verticillium wilt race 1, Fusarium wilt races 1-2, intermediate resistance to Bacterial wilt race 1",
+      "type": "OP",
+      "note": "A widely-adapted, nationally-sold, open-pollinated (seed-saveable) salad tomato — the strongest OP option found for smallholders, since it does not require buying hybrid seed each season. No zone restriction is stated by the source, so it is listed as suitable everywhere rather than tied to a specific zone.",
+      "evidence": [{ "quote": "Rodade is an adaptable open pollinated, determinate salad tomato. The plants grow to a bush with a height in the region of 100 cm. Fruit has a globe shape, uniform in size and weigh around 100 – 150 g. The yield potential of Rodade is high for an open pollinated variety.", "url": "https://sakata.co.za/shop/vegetables/tomato/determinate-salad/rodade-open-pollinated-tomato/", "page": null, "doc": "Rodade, Sakata product page (fetched directly, verbatim)" }, { "quote": "Rodade has a high resistance to Verticillium wilt race 1 (Vd: 1), Fusarium wilt races 1 and 2 (Fol: 1 – 2) and intermediate resistance against Bacterial wilt race 1 (Rs: 1).", "url": "https://sakata.co.za/shop/vegetables/tomato/determinate-salad/rodade-open-pollinated-tomato/", "page": null, "doc": "Rodade, Sakata product page (fetched directly, verbatim)" }]
+    }
+  ],
+  "zoneAdvice": {},
+  "gaps": [
+    "Only one variety (Rodade) was independently verified with a direct verbatim source in this pass; the Sakata product page names several other tomato lines in its own site navigation (STAR 9082 F1, STAR 9065, STAR 9062, Tengeru Select, Cal-J, Rio Grande, Little Wonder cherry tomato, Moneymaker, Roma VFN, STAR 9009, Heinz 1370) but none of these were individually opened/quoted in this pass — listed here only as a lead for a follow-up pass.",
+    "No zone-specific SA source differentiates tomato variety by growing zone the way onions or carrots are differentiated; Floradade's zone assignment above is reasoned from its own stated heat-tolerance purpose, not from a sourced zone table.",
+    "No maturity-in-days figure was stated by the Sakata source for Rodade; 'medium' is a coarse judgement, not a sourced number.",
+    "No ARC or DAFF/DALRRD tomato cultivar guide was found or opened in this pass."
+  ]
+}

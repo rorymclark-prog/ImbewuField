@@ -1,0 +1,85 @@
+{
+  "createdAt": "2026-10-06",
+  "scope": "Five supplemental Vegetable L4 candidates; two no-op rows excluded",
+  "basis": "Independent supplemental meaning check, root actual canonical illustration review and final coordinated-negative scope review",
+  "noFluentApproval": true,
+  "noLearnerWiring": true,
+  "sourceRecheckRequiredBeforeFreshBatch": true,
+  "fields": [
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "st",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "body.paragraph[10]",
+        "candidateIndex": 43
+      },
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "rootCandidate": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. O se ke wa itirela metswako kapa stronger doses.",
+      "disposition": "semantic candidate only; not wired",
+      "reason": "Preserve every current preceding clause byte-for-byte; change only the scoped final sentence where applicable."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "st",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "infographicAlt",
+        "candidateIndex": 45
+      },
+      "sourceEnglish": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "currentTarget": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "rootCandidate": "Pest e holim'a lekhasi, le ditsela tse tharo tsa ho e laola ntle le dikhemikhali: kokoanyana e molemo, physical barrier, le ho e tlosa ka letsoho.",
+      "disposition": "semantic candidate only; not wired",
+      "reason": "Preserve every current preceding clause byte-for-byte; change only the scoped final sentence where applicable."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "body.paragraph[10]",
+        "candidateIndex": 48
+      },
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "rootCandidate": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Ni songo ḓiitela misanganedzo kana stronger doses.",
+      "disposition": "semantic candidate only; not wired",
+      "reason": "Preserve every current preceding clause byte-for-byte; change only the scoped final sentence where applicable."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "body.paragraph[10]",
+        "candidateIndex": 56
+      },
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "rootCandidate": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. U nga tiendleli swihlanganisi kumbe stronger doses.",
+      "disposition": "semantic candidate only; not wired",
+      "reason": "Preserve every current preceding clause byte-for-byte; change only the scoped final sentence where applicable."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "quiz[1].option[0]",
+        "candidateIndex": 64
+      },
+      "sourceEnglish": "Whether it's actually a soil nutrient or watering issue",
+      "currentTarget": "Loko hakunene ku ri soil nutrient or watering issue",
+      "rootCandidate": "Loko hakunene ku ri xiphiqo xa soil nutrient kumbe xa ku cheleta",
+      "disposition": "semantic candidate only; not wired",
+      "reason": "Preserve every current preceding clause byte-for-byte; change only the scoped final sentence where applicable."
+    }
+  ]
+}

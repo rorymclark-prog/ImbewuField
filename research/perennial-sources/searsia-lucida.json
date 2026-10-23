@@ -1,0 +1,63 @@
+{
+  "speciesId": "searsia-lucida",
+  "commonName": "Glossy currant / blinktaaibos",
+  "botanicalName": "Searsia lucida",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No food-production pollination classification verified in the checked primary source."
+  },
+  "harvestProduct": "ripe fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Currant fruit food use and phenology",
+      "quote": "fruits of all the Searsia species are edible",
+      "url": "https://pza.sanbi.org/searsia-lucida",
+      "doc": "SANBI PlantZAfrica: Searsia lucida",
+      "page": null,
+      "note": "The primary account establishes edible ripe fruit and October–June fruit appearance. That interval includes developing fruit and is retained only as phenology, not a ripe picking calendar. No annual food kg or bearing age is supplied."
+    }
+  ],
+  "productionGuidance": {
+    "products": "ripe fruit",
+    "care": [
+      "Pick ripe fruit and record drying separately.",
+      "This shrub suits exposed coastal gardens and dune stabilisation; confirm local provenance."
+    ],
+    "purchase": [
+      "Ask an indigenous nursery for exact species and local material. No regional high-yield food cultivar is verified."
+    ]
+  },
+  "householdFoodStatus": "confirmed-food",
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/searsia-lucida",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary article text retrieved through the search index; the direct PlantZAfrica endpoint returned 403 during this session."
+    }
+  ],
+  "gaps": [
+    "Fruit-appearance months are not an exact ripe-food picking window; local ripening dates remain unverified."
+  ]
+}

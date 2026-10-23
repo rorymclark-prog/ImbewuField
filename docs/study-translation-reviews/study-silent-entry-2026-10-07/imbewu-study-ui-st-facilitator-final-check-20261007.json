@@ -1,0 +1,13 @@
+{
+  "sourcePacket": "/tmp/imbewu-study-ui-st-full-root-reviewed-20261007.json",
+  "language": "st",
+  "key": "studentFacilitatorVideo",
+  "file": "app/student/page.tsx",
+  "line": 396,
+  "englishSource": "Facilitator training video — for in-person sessions, not for streaming here.",
+  "rootCandidate": "Video ya thupelo ya facilitators — ke ya mananeo ao batho ba kopanang ka seqo ho ona; ha se ya streaming mona.",
+  "verdict": "ACCEPT_PENDING_LANGUAGE_REVIEW",
+  "backTranslation": "A facilitator training video — it is for sessions where people meet in person; it is not for streaming here.",
+  "semanticCheck": "Preserves the facilitator-training-video purpose, the in-person session condition, and the local “not for streaming here” limitation. “Streaming” remains a technical English term as permitted. It does not claim that all online playback is prohibited.",
+  "uncertainty": "Confirm with a Sesotho speaker that the facilitator loan and “mananeo ao batho ba kopanang ka seqo ho ona” are natural; no language/fluency approval is implied."
+}

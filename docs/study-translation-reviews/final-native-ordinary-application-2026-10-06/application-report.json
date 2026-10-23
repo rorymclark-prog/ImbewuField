@@ -1,0 +1,122 @@
+{
+  "title": "Native ordinary overlay application report",
+  "createdAt": "2026-10-06",
+  "baseCommit": "05c677d852c30b29cf7c06516b3f7aaaee4a8f62",
+  "acceptedFields": 28,
+  "heldFields": [
+    {
+      "order": 64,
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "quiz[1].option[0]"
+      },
+      "sourceEnglish": "Whether it's actually a soil nutrient or watering issue",
+      "currentTarget": "Loko hakunene ku ri soil nutrient or watering issue",
+      "reason": "Candidate begins with “Loko” (if), making the option conditional. Source asks “Whether it is actually…”. Preserve the interrogative whether scope; no defensible localized repair was established, so retain current field pending a source-faithful formulation."
+    }
+  ],
+  "excludedNoops": [
+    {
+      "order": 72,
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ve",
+        "lessonId": "market-community-l3",
+        "fieldLocator": "quiz[0].rationale"
+      },
+      "reason": "Candidate is byte-identical to currentTarget; it yields no translation change."
+    }
+  ],
+  "registryFilesBeforeSHA256": {
+    "lib/course-translation-drafts-ve-reading-landscape.ts": "53cd36b3e0a1ea199767d4758333148524357a3e7fe1daf637b498726ea69f10",
+    "lib/course-translation-drafts-ts.ts": "28e45acf80a96956885e227f55716ac84549bd129019deb23874ffea51396c4e",
+    "lib/course-translation-drafts-st-reading-landscape.ts": "70893f7673dddbd9dfe1209a3c8120cdcbc7b03928cc75b633bed740b1b6a7a4",
+    "lib/course-translation-drafts-st-vegetables-staples.ts": "40686e1001abbf6185150d97df9ca469159090b8ded7991fbb828b74ec929c4b",
+    "lib/course-translation-drafts-ve-vegetables-staples.ts": "bad78a1095208c674f64f84563a8013ab756164b00570db927a91232a3f46516",
+    "lib/course-translation-drafts-ts-vegetables-staples.ts": "bbbb4025db3f03ed530cc78f9b7f30ff5ce289ba840bc7f6081e04bc54199755",
+    "lib/course-translation-drafts-ts-vegetables-staples-l2.ts": "adc395f591e0e3afd96ede2dd6500cb6410750c18f0f325c95ea1bfa32df6557",
+    "lib/course-translation-drafts-st-market-community.ts": "3a64fc81e548da407914f12891beddd5a667b87a873c6b12cb22f7346674e6e7",
+    "lib/course-translation-drafts-ve-market-community.ts": "982ca8c5f07e02072b7d3adbf237f4c49c56ebeff871cbf07828dbf9d13d069b",
+    "lib/course-translation-drafts-ts-market-community.ts": "b3017b418eb2d5dd4392f19144491be7e54b43b760e59a55ca4b02207c0fe241"
+  },
+  "registryFilesAfterSHA256": {
+    "lib/course-translation-drafts-ve-reading-landscape.ts": "a8123a7a75db27bfe42df366d069e7cd7b75a09cecb8fc2341bf50a8638df70e",
+    "lib/course-translation-drafts-ts.ts": "8a4aed8317ab147ce2e4f2684da393b6f002dbe0e5d181ead183b14ec45b248f",
+    "lib/course-translation-drafts-st-reading-landscape.ts": "b0f5bb3f56f73e7ec740bb84615166c3fd389abdf93ec6d7269bcd3dc22c398f",
+    "lib/course-translation-drafts-st-vegetables-staples.ts": "c5dcc1f26b55003520c6a6cfe377c93c4262875b5c3b88ed9806ecbbfbd9fba1",
+    "lib/course-translation-drafts-ve-vegetables-staples.ts": "ec51f36ead0b9730f76fbc8dbd937921cd324841270b48c791e9414aaf6eca86",
+    "lib/course-translation-drafts-ts-vegetables-staples.ts": "c2d0574b304d55abd7263d9c0046fbe41ad0860fc97ed29d78b7464ecbad6f62",
+    "lib/course-translation-drafts-ts-vegetables-staples-l2.ts": "2c73d441d205340548c082fe64d52318bf590a4eb0f679540ee4708e8fe5904d",
+    "lib/course-translation-drafts-st-market-community.ts": "6755b70aa886250822cf44f9d28ff5dd9a7f3356703b2b8c21facf61efe6f171",
+    "lib/course-translation-drafts-ve-market-community.ts": "ab464ed8353016d618d399c07426f955063b885836f41214293da6e39f583f2a",
+    "lib/course-translation-drafts-ts-market-community.ts": "9c3103782d72a6144b21cee569c57e7d6f8b5f6b0041fdb6f7261bc5f39f26eb"
+  },
+  "exactImportedTargetChecks": true,
+  "allLocalizedPairsRemainMachineDraft": true,
+  "files": [
+    "baseline-native-modules.json",
+    "applied-native-modules.json",
+    "applied-native-fields.json",
+    "independent-semantic-review.json"
+  ],
+  "limits": "Machine-draft content only. No fluency or local farming approval claim. L4 alt text has source-bound text semantics but no new image rendering in this batch.",
+  "focusedChecks": {
+    "targetedNodeTests": "PASS: native ordinary overlay plus Reading full-completion tests (4 tests)",
+    "typescript": "PASS: npx tsc --noEmit",
+    "rootIndependentRuntimeComparator": "PASS: /tmp/imbewu-native-final-root-runtime-compare-20261006.json",
+    "fullTestSuite": "Not run; root has the ordered full suite live in ST Introduction worktree"
+  },
+  "reviewStatusNote": "Localized fields formerly held in English were promoted only to machine-draft at the same listed fields: 29, 45, 59; call-form holds 27 and 38 naturally became machine-draft. Unlisted hold fields remain unchanged in the whole-object comparison.",
+  "focusedHistoricalAudit": {
+    "command": "node --import ./tests/register-alias.mjs --test [9 scoped prior reading, vegetables, paired-draft files]",
+    "result": {
+      "tests": 108,
+      "passed": 75,
+      "failed": 33,
+      "fullSuiteRun": false
+    },
+    "interpretation": "These older claim checks assume pre-batch targets or pre-batch full-module snapshots. They require newest-layer validation followed by a reasoned rewind before reconstructing their earlier claims. They were left intact for root review; no failing assertion was deleted or reset.",
+    "failingClaims": [
+      "Reading before-digging refinements preserve every paragraph through authorized changes and reject source drift (1.065083ms)",
+      "Reading body extensions preserve checked field ancestry, crop age and site safeguards while source drift falls back (0.899166ms)",
+      "Reading frost observations keep full-season comparisons, weather conditions and damage limits after localization (0.788542ms)",
+      "Vegetables & Staple Crops L3 keeps source-bound framing and crop conditions while leaving technical clauses exact (4.852791ms)",
+      "Vegetables & Staple Crops L3 preserves the one-failure scope and the minimum two-crop safeguard (3.598459ms)",
+      "Xitsonga bed paragraphs preserve dimensions, access and soil restrictions and withdraw on source drift (2.148208ms)",
+      "Pest framing keeps the diagnostic order and treatment safeguards in the source-bound draft (0.474292ms)",
+      "Reading Landscape Xitsonga body candidates preserve paragraph order and bounded farming claims (0.6735ms)",
+      "Reading Landscape retained Xitsonga terms stay exact, source-bound and visibly unreviewed (0.771583ms)",
+      "Vegetables L3 preserves crop conditions and exact technical clauses while showing source-paired prose (10.314541ms)",
+      "Tshivenda bed preparation preserves reachability, soil conditions and crop establishment while translating ordinary prose (2.535625ms)",
+      "Tshivenda succession and pest drafts preserve repeated sowing, uncertainty and treatment order (6.056458ms)",
+      "Tshivenda Vegetables assessments keep source answers and withdraw after question or keypoint drift (6.591333ms)",
+      "Vegetables ordinary drafts retain every canonical instruction and all unrelated regional fields (5.247ms)",
+      "Vegetables source and draft retain all twenty ordered paragraphs, numbered dimensions and quiz assignments (1.943083ms)",
+      "Reachability retains either of two paths and never stepping on the growing area (1.9755ms)",
+      "Wet clay prohibition and local advice precede deeper cultivation; deeper work is only genuinely necessary (1.842958ms)",
+      "Historical pre-residual snapshot keeps its source holds after the newer L1 layer is checked and rewound (3.088958ms)",
+      "Vegetables L1 residual wording preserves increasing difficulty, majority scope, broad performance comparison and crop sequence (1.725042ms)",
+      "Vegetables L4 ordinary drafts change only the 38 accepted source-bound learner fields (6.210708ms)",
+      "Vegetables L4 paired decks reuse only 12 exact-source rows and preserve every other deck field (3.008458ms)",
+      "Vegetables pest precision applies only nine source-bound paragraphs and three Sesotho keypoints (7.349708ms)",
+      "Vegetables pest paired decks preserve exact source coverage, held clauses, and every unlisted slot (3.506291ms)",
+      "Market L1 paired-deck repairs bind complete approved clauses and preserve other slide scopes (2021.886083ms)",
+      "Vegetables paired drafts keep the one-crop limit and source-bound seasonal framing (3.230833ms)",
+      "Vegetables opening frames retain exact source holds and reuse complete L1 learner compositions (1.024459ms)",
+      "Vegetables middle slides reuse whole source-matched lesson paragraphs and keep treatment safeguards intact (1.245833ms)",
+      "Xitsonga Market media retains two established learner concepts beside exact English (1.807625ms)",
+      "the 18 Study outcomes still paragraphs stay exact to source, segment order and unreviewed status (58.261625ms)",
+      "Market backup and shared-seed deck paragraphs map only their exact source sentences (2.398625ms)",
+      "Market seed record and advice slides reuse only exact whole learner paragraphs (26.656125ms)"
+    ],
+    "materialMediaMismatch": "Three existing paired-draft tests require the media composition to equal the current learner resolver and retain the old English L4 safety ending. The authorized batch localizes that ending in native learner registries; media files were explicitly out of scope, so those older cross-surface equality claims are left for root review.",
+    "failingTestFiles": [
+      "tests/course-translation-drafts-st.test.ts",
+      "tests/course-translation-drafts-ve-reading-landscape.test.ts"
+    ]
+  }
+}

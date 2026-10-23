@@ -1,0 +1,2116 @@
+{
+  "baseHead": "4fd25b1025ba474bc4a5825aef36b306dd8e171c",
+  "status": "applied-for-diff-review-unreviewed-machine-draft",
+  "authority": "Only fields[].changedFromCurrent rows were applied; final candidateTarget is authoritative, not stale appliedBodies. Two unchanged-English option rows remain unchanged. Exact-source deck map controls paired edits.",
+  "summary": {
+    "acceptedFieldRows": 40,
+    "changedLearnerFields": 38,
+    "unchangedLearnerRows": 2,
+    "pairedChangedFields": 12,
+    "pairedFrames": 6,
+    "allPreservationChecksPass": true,
+    "rendered": false,
+    "committed": false,
+    "pushed": false
+  },
+  "preservation": {
+    "canonicalModuleUnchanged": true,
+    "learnerDraftFilesEqualAfterOnlyApprovedFields": true,
+    "pairedFilesEqualAfterOnlyApprovedFields": true,
+    "canonicalEnglishUnchanged": true,
+    "sourcePairsUnchanged": true,
+    "quizIndicesUnchanged": true,
+    "unlistedDeckFieldsUnchanged": true
+  },
+  "fields": [
+    {
+      "language": "st",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "body.paragraphs.1",
+      "sourceEnglish": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "currentTarget": "Dimela tse nang le stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "candidateTarget": "Dimela tse nang le stress. One crop dominating the ground. Kapa broad chemical use e seng e tlositse predators tse neng di o thusa.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "machine-draft",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "One crop dominating the ground.",
+          "targetSpan": "One crop dominating the ground.",
+          "reason": "Dominance may describe the crop/system rather than just density or cover; retain exact source sentence instead of guessing a narrower biological relationship."
+        },
+        {
+          "sourceSpan": "broad chemical use",
+          "targetSpan": "broad chemical use",
+          "reason": "Chemical-use category is retained; already-removed/helping-you framing is drafted separately."
+        },
+        {
+          "sourceSpan": "predators",
+          "targetSpan": "predators",
+          "reason": "Biological role is retained without adding a species."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Dimela tse nang le stress. One crop dominating the ground. Kapa broad chemical use e seng e tlositse predators tse neng di o thusa.",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "st",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "body.paragraphs.9",
+      "sourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "currentTarget": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong.",
+      "candidateTarget": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — qala ka the lightest thing that works. Physical removal, barriers kapa diphetoho ho crop care di ka thusa. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "machine-draft",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "the lightest thing that works",
+          "targetSpan": "the lightest thing that works",
+          "reason": "Exact superlative and effectiveness condition retained; lightest must not become easiest or simply gentle."
+        },
+        {
+          "sourceSpan": "Physical removal",
+          "targetSpan": "Physical removal",
+          "reason": "Source method category retained."
+        },
+        {
+          "sourceSpan": "barriers",
+          "targetSpan": "barriers",
+          "reason": "Source method category retained."
+        },
+        {
+          "sourceSpan": "crop care",
+          "targetSpan": "crop care",
+          "reason": "Source method category retained."
+        },
+        {
+          "sourceSpan": "Physical",
+          "targetSpan": "Physical",
+          "reason": "Source measure category retained."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — qala ka the lightest thing that works. Physical removal, barriers kapa diphetoho ho crop care di ka thusa. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong.",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "st",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "body.paragraphs.10",
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "candidateTarget": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "machine-draft",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "product registered for that crop and pest",
+          "targetSpan": "product registered for that crop and pest",
+          "reason": "Registration must match that crop and pest; legal condition retained verbatim."
+        },
+        {
+          "sourceSpan": "neem products",
+          "targetSpan": "neem products",
+          "reason": "Existing named product category retained unchanged."
+        },
+        {
+          "sourceSpan": "protection and harvest waiting instructions",
+          "targetSpan": "protection and harvest waiting instructions",
+          "reason": "Exact protection/harvest-waiting instruction scope retained."
+        },
+        {
+          "sourceSpan": "Do not improvise mixtures or stronger doses.",
+          "targetSpan": "Do not improvise mixtures or stronger doses.",
+          "reason": "Exact prohibition preserved rather than turning improvise into all mixing or weakening stronger-dose restriction."
+        },
+        {
+          "sourceSpan": "dose",
+          "targetSpan": "dose",
+          "reason": "Technical quantity term retained without inventing a figure."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "st",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.0.options.1",
+      "sourceEnglish": "A product registered for the crop and pest, used according to its label",
+      "currentTarget": "A product registered for the crop and pest, used according to its label",
+      "candidateTarget": "Product registered for the crop and pest, e sebediswang ho ya ka label ya yona",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "product registered for the crop and pest",
+          "targetSpan": "Product registered for the crop and pest",
+          "reason": "Registration must match crop and pest; legal condition retained verbatim."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Product registered for the crop and pest, e sebediswang ho ya ka label ya yona",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "st",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.0.rationale",
+      "sourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "currentTarget": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "candidateTarget": "Crop, pest, dose, protection and harvest waiting instructions di bohlokwa. Natural origin ha e etse hore improvised treatment e be safe or suitable.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "protection and harvest waiting instructions",
+          "targetSpan": "protection and harvest waiting instructions",
+          "reason": "Exact protection/harvest-waiting instruction scope retained."
+        },
+        {
+          "sourceSpan": "improvised treatment",
+          "targetSpan": "improvised treatment",
+          "reason": "Specific treatment category retained in the safety rationale."
+        },
+        {
+          "sourceSpan": "safe or suitable",
+          "targetSpan": "safe or suitable",
+          "reason": "Exact two-part safety/fitness qualifier retained."
+        },
+        {
+          "sourceSpan": "dose",
+          "targetSpan": "dose",
+          "reason": "Technical quantity term retained without inventing a figure."
+        },
+        {
+          "sourceSpan": "natural",
+          "targetSpan": "Natural",
+          "reason": "Source product-description/origin word retained; natural is not equated with safe."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Crop, pest, dose, protection and harvest waiting instructions di bohlokwa. Natural origin ha e etse hore improvised treatment e be safe or suitable.",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "body.paragraphs.1",
+      "sourceEnglish": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "currentTarget": "Zwimela zwi re na stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "candidateTarget": "Zwimela zwi re na stress. One crop dominating the ground. Kana broad chemical use yo no bvisa predators dze dza vha dzi tshi ni thusa.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "machine-draft",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "One crop dominating the ground.",
+          "targetSpan": "One crop dominating the ground.",
+          "reason": "Dominance may describe the crop/system rather than just density or cover; retain exact source sentence instead of guessing a narrower biological relationship."
+        },
+        {
+          "sourceSpan": "broad chemical use",
+          "targetSpan": "broad chemical use",
+          "reason": "Chemical-use category is retained; already-removed/helping-you framing is drafted separately."
+        },
+        {
+          "sourceSpan": "predators",
+          "targetSpan": "predators",
+          "reason": "Biological role is retained without adding a species."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Zwimela zwi re na stress. One crop dominating the ground. Kana broad chemical use yo no bvisa predators dze dza vha dzi tshi ni thusa.",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "body.paragraphs.2",
+      "sourceEnglish": "So before you treat anything, look at the whole system.",
+      "currentTarget": "So before you treat anything, sedzani system yoṱhe.",
+      "candidateTarget": "Ngazwenezwo, before you treat anything, sedzani system yoṱhe.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "machine-draft",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "priorRejectedCandidate": "Ngazwenezwo, ni sa athu u ita treatment kha tshiṅwe tshithu, sedzani system yoṱhe.",
+      "rootRepairReason": "Keep universal anything scope; preserve localized system observation.",
+      "appliedTarget": "Ngazwenezwo, before you treat anything, sedzani system yoṱhe.",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "body.paragraphs.3",
+      "sourceEnglish": "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+      "currentTarget": "Tshimela tshi khou shaya water? Soil yo compacted kana yo “hungry”? Are predators already working on the problem for you?",
+      "candidateTarget": "Is the plant short of water? Soil yo compacted kana yo “hungry”? Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "machine-draft",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "predators",
+          "targetSpan": "Predators",
+          "reason": "Biological role is retained without adding a species."
+        },
+        {
+          "sourceSpan": "already",
+          "targetSpan": "already",
+          "reason": "Temporal source qualifier retained rather than replacing it with soon or eventually."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "priorRejectedCandidate": "Tshimela tshi khou shaya water? Soil yo compacted kana yo “hungry”? Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?",
+      "rootRepairReason": "Keep shortage rather than absence; predator already-working and localized soil question preserved.",
+      "appliedTarget": "Is the plant short of water? Soil yo compacted kana yo “hungry”? Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "body.paragraphs.6",
+      "sourceEnglish": "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+      "currentTarget": "Tsha u thoma. Sedzani. Sedzani the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+      "candidateTarget": "Tsha u thoma. Sedzani. Sedzani damage pattern, tlhelo ḽa fhasi ḽa ḽiṱari, tsinde, na zwimela zwi re tsini.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "machine-draft",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "damage pattern",
+          "targetSpan": "damage pattern",
+          "reason": "Observation category retained."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Tsha u thoma. Sedzani. Sedzani damage pattern, tlhelo ḽa fhasi ḽa ḽiṱari, tsinde, na zwimela zwi re tsini.",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "body.paragraphs.9",
+      "sourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "currentTarget": "Tsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo.",
+      "candidateTarget": "Tsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga the lightest thing that works. Physical removal, barriers kana tshanduko kha crop care zwi nga thusa. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "machine-draft",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "the lightest thing that works",
+          "targetSpan": "the lightest thing that works",
+          "reason": "Exact superlative and effectiveness condition retained; lightest must not become easiest or simply gentle."
+        },
+        {
+          "sourceSpan": "Physical removal",
+          "targetSpan": "Physical removal",
+          "reason": "Source method category retained."
+        },
+        {
+          "sourceSpan": "barriers",
+          "targetSpan": "barriers",
+          "reason": "Source method category retained."
+        },
+        {
+          "sourceSpan": "crop care",
+          "targetSpan": "crop care",
+          "reason": "Source method category retained."
+        },
+        {
+          "sourceSpan": "Physical",
+          "targetSpan": "Physical",
+          "reason": "Source measure category retained."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Tsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga the lightest thing that works. Physical removal, barriers kana tshanduko kha crop care zwi nga thusa. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo.",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "body.paragraphs.10",
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "candidateTarget": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "machine-draft",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "product registered for that crop and pest",
+          "targetSpan": "product registered for that crop and pest",
+          "reason": "Registration must match that crop and pest; legal condition retained verbatim."
+        },
+        {
+          "sourceSpan": "neem products",
+          "targetSpan": "neem products",
+          "reason": "Existing named product category retained unchanged."
+        },
+        {
+          "sourceSpan": "protection and harvest waiting instructions",
+          "targetSpan": "protection and harvest waiting instructions",
+          "reason": "Exact protection/harvest-waiting instruction scope retained."
+        },
+        {
+          "sourceSpan": "Do not improvise mixtures or stronger doses.",
+          "targetSpan": "Do not improvise mixtures or stronger doses.",
+          "reason": "Exact prohibition preserved rather than turning improvise into all mixing or weakening stronger-dose restriction."
+        },
+        {
+          "sourceSpan": "dose",
+          "targetSpan": "dose",
+          "reason": "Technical quantity term retained without inventing a figure."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "keyPoints.0",
+      "sourceEnglish": "Identify the cause before treating damage",
+      "currentTarget": "Wanani tshiitisi tsha damage ni sa athu treating.",
+      "candidateTarget": "Wanani tshiitisi tsha damage ni sa athu u ita treatment.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "machine-draft",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [],
+      "provenance": "fresh native field; short ordinary KP framing missed by priority multiword threshold",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Wanani tshiitisi tsha damage ni sa athu u ita treatment.",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "keyPoints.2",
+      "sourceEnglish": "Use suitable physical or crop-care measures and monitor results",
+      "currentTarget": "Shumisani physical kana crop-care measures zwo teaho ni monitor results.",
+      "candidateTarget": "Shumisani physical kana crop-care measures zwo teaho, nahone ni bvele phanḓa ni tshi sedza mvelelo.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "machine-draft",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "physical",
+          "targetSpan": "physical",
+          "reason": "Source measure category retained."
+        },
+        {
+          "sourceSpan": "crop-care measures",
+          "targetSpan": "crop-care measures",
+          "reason": "Source measure category retained."
+        }
+      ],
+      "provenance": "fresh native field; short ordinary KP framing missed by priority multiword threshold",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Shumisani physical kana crop-care measures zwo teaho, nahone ni bvele phanḓa ni tshi sedza mvelelo.",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "keyPoints.3",
+      "sourceEnglish": "If treatment is needed, use a registered product for the crop and pest and follow the label",
+      "currentTarget": "Arali treatment i tshi ṱoḓea, use a registered product for the crop and pest and follow the label.",
+      "candidateTarget": "Arali treatment i tshi ṱoḓea, shumisani registered product for the crop and pest nahone ni tevhele label.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "machine-draft",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "registered product for the crop and pest",
+          "targetSpan": "registered product for the crop and pest",
+          "reason": "Registration must match crop and pest; legal condition retained verbatim."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Arali treatment i tshi ṱoḓea, shumisani registered product for the crop and pest nahone ni tevhele label.",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.0.options.0",
+      "sourceEnglish": "An improvised stronger mixture",
+      "currentTarget": "An improvised stronger mixture",
+      "candidateTarget": "An improvised stronger mixture",
+      "changedFromCurrent": false,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "hold",
+      "candidateDisposition": "exact-English-specific-technical-hold-no-progress",
+      "technicalHolds": [
+        {
+          "sourceSpan": "An improvised stronger mixture",
+          "targetSpan": "An improvised stronger mixture",
+          "reason": "Specific unsafe-mixture comparison retained as exact source distractor, not endorsed."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "An improvised stronger mixture",
+      "appliedReviewStatus": "hold"
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.0.options.1",
+      "sourceEnglish": "A product registered for the crop and pest, used according to its label",
+      "currentTarget": "A product registered for the crop and pest, used according to its label",
+      "candidateTarget": "Product registered for the crop and pest, yo shumiswaho u ya nga label yayo",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "product registered for the crop and pest",
+          "targetSpan": "Product registered for the crop and pest",
+          "reason": "Registration must match crop and pest; legal condition retained verbatim."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Product registered for the crop and pest, yo shumiswaho u ya nga label yayo",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.0.options.3",
+      "sourceEnglish": "A neighbour’s dose for a different crop",
+      "currentTarget": "A neighbour’s dose for a different crop",
+      "candidateTarget": "Dose ya muhura ya crop yo fhambanaho",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "dose",
+          "targetSpan": "Dose",
+          "reason": "Technical quantity term retained without inventing a figure."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Dose ya muhura ya crop yo fhambanaho",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.0.rationale",
+      "sourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "currentTarget": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "candidateTarget": "Crop, pest, dose, protection and harvest waiting instructions ndi zwa ndeme. Natural origin a i iti uri improvised treatment i vhe safe or suitable.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "protection and harvest waiting instructions",
+          "targetSpan": "protection and harvest waiting instructions",
+          "reason": "Exact protection/harvest-waiting instruction scope retained."
+        },
+        {
+          "sourceSpan": "improvised treatment",
+          "targetSpan": "improvised treatment",
+          "reason": "Specific treatment category retained in the safety rationale."
+        },
+        {
+          "sourceSpan": "safe or suitable",
+          "targetSpan": "safe or suitable",
+          "reason": "Exact two-part safety/fitness qualifier retained."
+        },
+        {
+          "sourceSpan": "dose",
+          "targetSpan": "dose",
+          "reason": "Technical quantity term retained without inventing a figure."
+        },
+        {
+          "sourceSpan": "natural",
+          "targetSpan": "Natural",
+          "reason": "Source product-description/origin word retained; natural is not equated with safe."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Crop, pest, dose, protection and harvest waiting instructions ndi zwa ndeme. Natural origin a i iti uri improvised treatment i vhe safe or suitable.",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.1.options.1",
+      "sourceEnglish": "Whether the moon phase is right for treatment",
+      "currentTarget": "Whether the moon phase is right for treatment",
+      "candidateTarget": "Arali moon phase i tshi tea treatment",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "moon phase",
+          "targetSpan": "moon phase",
+          "reason": "Exact source distractor term retained without endorsing it."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Arali moon phase i tshi tea treatment",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.1.options.3",
+      "sourceEnglish": "Whether it's aphids specifically",
+      "currentTarget": "Whether it's aphids specifically",
+      "candidateTarget": "Arali hu aphids specifically",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "aphids",
+          "targetSpan": "aphids",
+          "reason": "Existing taxon retained unchanged."
+        },
+        {
+          "sourceSpan": "specifically",
+          "targetSpan": "specifically",
+          "reason": "Specificity of aphid distractor retained narrowly."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Arali hu aphids specifically",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.1.rationale",
+      "sourceEnglish": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment.",
+      "currentTarget": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment.",
+      "candidateTarget": "Yellowing i na zwivhangi zwo vhalaho zwo ḓoweleaho, nahone soil or watering issue i ṱoḓa fix yo fhambanaho nga hoṱhe na ya pest — u ṱola u thoma zwi thivhela wasted treatment.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "Yellowing",
+          "targetSpan": "Yellowing",
+          "reason": "Diagnostic state retained instead of implying an insect cause."
+        },
+        {
+          "sourceSpan": "wasted treatment",
+          "targetSpan": "wasted treatment",
+          "reason": "Source inefficiency/avoidance meaning retained narrowly."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Yellowing i na zwivhangi zwo vhalaho zwo ḓoweleaho, nahone soil or watering issue i ṱoḓa fix yo fhambanaho nga hoṱhe na ya pest — u ṱola u thoma zwi thivhela wasted treatment.",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "body.paragraphs.1",
+      "sourceEnglish": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "currentTarget": "Swibyariwa leswi nga na stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "candidateTarget": "Swibyariwa leswi nga na stress. One crop dominating the ground. Kumbe broad chemical use leyi se yi suseke predators leti a ti ku pfuna.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "machine-draft",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "One crop dominating the ground.",
+          "targetSpan": "One crop dominating the ground.",
+          "reason": "Dominance may describe the crop/system rather than just density or cover; retain exact source sentence instead of guessing a narrower biological relationship."
+        },
+        {
+          "sourceSpan": "broad chemical use",
+          "targetSpan": "broad chemical use",
+          "reason": "Chemical-use category is retained; already-removed/helping-you framing is drafted separately."
+        },
+        {
+          "sourceSpan": "predators",
+          "targetSpan": "predators",
+          "reason": "Biological role is retained without adding a species."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Swibyariwa leswi nga na stress. One crop dominating the ground. Kumbe broad chemical use leyi se yi suseke predators leti a ti ku pfuna.",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "body.paragraphs.9",
+      "sourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "currentTarget": "Vumune. Hi kona ntsena u tekaka goza — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Kambela leswaku goza ri fambisana ni xiphiqo, and monitor the result.",
+      "candidateTarget": "Vumune. Hi kona ntsena u tekaka goza — sungula hi the lightest thing that works. Physical removal, barriers kumbe ku cinca crop care swi nga pfuna. Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "machine-draft",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "the lightest thing that works",
+          "targetSpan": "the lightest thing that works",
+          "reason": "Exact superlative and effectiveness condition retained; lightest must not become easiest or simply gentle."
+        },
+        {
+          "sourceSpan": "Physical removal",
+          "targetSpan": "Physical removal",
+          "reason": "Source method category retained."
+        },
+        {
+          "sourceSpan": "barriers",
+          "targetSpan": "barriers",
+          "reason": "Source method category retained."
+        },
+        {
+          "sourceSpan": "crop care",
+          "targetSpan": "crop care",
+          "reason": "Source method category retained."
+        },
+        {
+          "sourceSpan": "Physical",
+          "targetSpan": "Physical",
+          "reason": "Source measure category retained."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Vumune. Hi kona ntsena u tekaka goza — sungula hi the lightest thing that works. Physical removal, barriers kumbe ku cinca crop care swi nga pfuna. Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo.",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "body.paragraphs.10",
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "candidateTarget": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "machine-draft",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "product registered for that crop and pest",
+          "targetSpan": "product registered for that crop and pest",
+          "reason": "Registration must match that crop and pest; legal condition retained verbatim."
+        },
+        {
+          "sourceSpan": "neem products",
+          "targetSpan": "neem products",
+          "reason": "Existing named product category retained unchanged."
+        },
+        {
+          "sourceSpan": "protection and harvest waiting instructions",
+          "targetSpan": "protection and harvest waiting instructions",
+          "reason": "Exact protection/harvest-waiting instruction scope retained."
+        },
+        {
+          "sourceSpan": "Do not improvise mixtures or stronger doses.",
+          "targetSpan": "Do not improvise mixtures or stronger doses.",
+          "reason": "Exact prohibition preserved rather than turning improvise into all mixing or weakening stronger-dose restriction."
+        },
+        {
+          "sourceSpan": "dose",
+          "targetSpan": "dose",
+          "reason": "Technical quantity term retained without inventing a figure."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "keyPoints.0",
+      "sourceEnglish": "Identify the cause before treating damage",
+      "currentTarget": "Identify the cause before treating damage",
+      "candidateTarget": "Kuma xivangelo u nga si endla treatment ya damage",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Kuma xivangelo u nga si endla treatment ya damage",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "keyPoints.1",
+      "sourceEnglish": "Check water, roots, nutrition and beneficial insects",
+      "currentTarget": "Check water, roots, nutrition and beneficial insects",
+      "candidateTarget": "Kambela mati, timitsu, nutrition na beneficial insects",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "beneficial insects",
+          "targetSpan": "beneficial insects",
+          "reason": "Existing functional group retained unchanged."
+        },
+        {
+          "sourceSpan": "nutrition",
+          "targetSpan": "nutrition",
+          "reason": "Source diagnostic term retained."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Kambela mati, timitsu, nutrition na beneficial insects",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "keyPoints.2",
+      "sourceEnglish": "Use suitable physical or crop-care measures and monitor results",
+      "currentTarget": "Use suitable physical or crop-care measures and monitor results",
+      "candidateTarget": "Tirhisa physical kumbe crop-care measures leswi faneleke, kutani u ya mahlweni u kambela vuyelo",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "physical",
+          "targetSpan": "physical",
+          "reason": "Source measure category retained."
+        },
+        {
+          "sourceSpan": "crop-care measures",
+          "targetSpan": "crop-care measures",
+          "reason": "Source measure category retained."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Tirhisa physical kumbe crop-care measures leswi faneleke, kutani u ya mahlweni u kambela vuyelo",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "keyPoints.3",
+      "sourceEnglish": "If treatment is needed, use a registered product for the crop and pest and follow the label",
+      "currentTarget": "If treatment is needed, use a registered product for the crop and pest and follow the label",
+      "candidateTarget": "Loko treatment yi laveka, tirhisa registered product for the crop and pest kutani u landzelela label",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "registered product for the crop and pest",
+          "targetSpan": "registered product for the crop and pest",
+          "reason": "Registration must match crop and pest; legal condition retained verbatim."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Loko treatment yi laveka, tirhisa registered product for the crop and pest kutani u landzelela label",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.0.q",
+      "sourceEnglish": "If a pest problem needs a treatment product, what should guide its use?",
+      "currentTarget": "If a pest problem needs a treatment product, what should guide its use?",
+      "candidateTarget": "Loko pest problem yi lava treatment product, i yini lexi faneleke ku kongomisa ku tirhisiwa ka yona?",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "treatment product",
+          "targetSpan": "treatment product",
+          "reason": "Source product term retained."
+        },
+        {
+          "sourceSpan": "pest problem",
+          "targetSpan": "pest problem",
+          "reason": "Source problem term retained."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Loko pest problem yi lava treatment product, i yini lexi faneleke ku kongomisa ku tirhisiwa ka yona?",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.0.options.0",
+      "sourceEnglish": "An improvised stronger mixture",
+      "currentTarget": "An improvised stronger mixture",
+      "candidateTarget": "An improvised stronger mixture",
+      "changedFromCurrent": false,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "hold",
+      "candidateDisposition": "exact-English-specific-technical-hold-no-progress",
+      "technicalHolds": [
+        {
+          "sourceSpan": "An improvised stronger mixture",
+          "targetSpan": "An improvised stronger mixture",
+          "reason": "Specific unsafe-mixture comparison retained as exact source distractor, not endorsed."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "An improvised stronger mixture",
+      "appliedReviewStatus": "hold"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.0.options.1",
+      "sourceEnglish": "A product registered for the crop and pest, used according to its label",
+      "currentTarget": "A product registered for the crop and pest, used according to its label",
+      "candidateTarget": "Product registered for the crop and pest, leyi tirhisiwaka hi ku landza label ya yona",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "product registered for the crop and pest",
+          "targetSpan": "Product registered for the crop and pest",
+          "reason": "Registration must match crop and pest; legal condition retained verbatim."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Product registered for the crop and pest, leyi tirhisiwaka hi ku landza label ya yona",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.0.options.2",
+      "sourceEnglish": "Any product described as natural",
+      "currentTarget": "Any product described as natural",
+      "candidateTarget": "Product yin'wana ni yin'wana leyi hlamuseriwaka yi ri natural",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "natural",
+          "targetSpan": "natural",
+          "reason": "Source product-description/origin word retained; natural is not equated with safe."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Product yin'wana ni yin'wana leyi hlamuseriwaka yi ri natural",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.0.options.3",
+      "sourceEnglish": "A neighbour’s dose for a different crop",
+      "currentTarget": "A neighbour’s dose for a different crop",
+      "candidateTarget": "Dose ya muakelani ya crop yo hambana",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "dose",
+          "targetSpan": "Dose",
+          "reason": "Technical quantity term retained without inventing a figure."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Dose ya muakelani ya crop yo hambana",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.0.rationale",
+      "sourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "currentTarget": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "candidateTarget": "Crop, pest, dose, protection and harvest waiting instructions i swa nkoka. Natural origin a yi endli leswaku improvised treatment yi va safe or suitable.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "protection and harvest waiting instructions",
+          "targetSpan": "protection and harvest waiting instructions",
+          "reason": "Exact protection/harvest-waiting instruction scope retained."
+        },
+        {
+          "sourceSpan": "improvised treatment",
+          "targetSpan": "improvised treatment",
+          "reason": "Specific treatment category retained in the safety rationale."
+        },
+        {
+          "sourceSpan": "safe or suitable",
+          "targetSpan": "safe or suitable",
+          "reason": "Exact two-part safety/fitness qualifier retained."
+        },
+        {
+          "sourceSpan": "dose",
+          "targetSpan": "dose",
+          "reason": "Technical quantity term retained without inventing a figure."
+        },
+        {
+          "sourceSpan": "natural",
+          "targetSpan": "Natural",
+          "reason": "Source product-description/origin word retained; natural is not equated with safe."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Crop, pest, dose, protection and harvest waiting instructions i swa nkoka. Natural origin a yi endli leswaku improvised treatment yi va safe or suitable.",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.1.q",
+      "sourceEnglish": "A farmer's brassica leaves are turning yellow. Before assuming pests, what should she check first?",
+      "currentTarget": "A farmer's brassica leaves are turning yellow. Before assuming pests, what should she check first?",
+      "candidateTarget": "Matluka ya brassica ya murimi ma ri karhi ma hundzuka yellow. Loko a nga si ehleketa leswaku i pests, u fanele a kambela yini ku sungula?",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Matluka ya brassica ya murimi ma ri karhi ma hundzuka yellow. Loko a nga si ehleketa leswaku i pests, u fanele a kambela yini ku sungula?",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.1.options.0",
+      "sourceEnglish": "Whether it's actually a soil nutrient or watering issue",
+      "currentTarget": "Whether it's actually a soil nutrient or watering issue",
+      "candidateTarget": "Loko hakunene ku ri soil nutrient or watering issue",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "soil nutrient or watering issue",
+          "targetSpan": "soil nutrient or watering issue",
+          "reason": "Source diagnostic alternatives retained as exact technical phrase."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Loko hakunene ku ri soil nutrient or watering issue",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.1.options.1",
+      "sourceEnglish": "Whether the moon phase is right for treatment",
+      "currentTarget": "Whether the moon phase is right for treatment",
+      "candidateTarget": "Loko moon phase yi fanele treatment",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "moon phase",
+          "targetSpan": "moon phase",
+          "reason": "Exact source distractor term retained without endorsing it."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Loko moon phase yi fanele treatment",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.1.options.2",
+      "sourceEnglish": "Whether her neighbour has the same problem",
+      "currentTarget": "Whether her neighbour has the same problem",
+      "candidateTarget": "Loko muakelani wa yena a ri ni xiphiqo lexi fanaka",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Loko muakelani wa yena a ri ni xiphiqo lexi fanaka",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.1.options.3",
+      "sourceEnglish": "Whether it's aphids specifically",
+      "currentTarget": "Whether it's aphids specifically",
+      "candidateTarget": "Loko ku ri aphids specifically",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "aphids",
+          "targetSpan": "aphids",
+          "reason": "Existing taxon retained unchanged."
+        },
+        {
+          "sourceSpan": "specifically",
+          "targetSpan": "specifically",
+          "reason": "Specificity of aphid distractor retained narrowly."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Loko ku ri aphids specifically",
+      "appliedReviewStatus": "machine-draft"
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldPath": "quiz.1.rationale",
+      "sourceEnglish": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment.",
+      "currentTarget": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment.",
+      "candidateTarget": "Yellowing yi ni swivangelo swo hlayanyana leswi tolovelekeke, naswona soil or watering issue yi lava fix leyi hambaneke hi ku helela ni leyi lavekaka eka pest — ku kambela ku sungula ku papalata wasted treatment.",
+      "changedFromCurrent": true,
+      "currentReviewStatus": "hold",
+      "candidateReviewStatus": "machine-draft",
+      "candidateDisposition": "ordinary-framing-candidate-with-specific-English-holds",
+      "technicalHolds": [
+        {
+          "sourceSpan": "Yellowing",
+          "targetSpan": "Yellowing",
+          "reason": "Diagnostic state retained instead of implying an insect cause."
+        },
+        {
+          "sourceSpan": "wasted treatment",
+          "targetSpan": "wasted treatment",
+          "reason": "Source inefficiency/avoidance meaning retained narrowly."
+        }
+      ],
+      "provenance": "fresh native canonical/regional registry/resolver binding; priority inventory field",
+      "semanticGuards": [
+        "Preserve current localized segments",
+        "Exact canonical/source remains paired",
+        "No species/numbers/advice added",
+        "Keep quiz order and indices [1,0]",
+        "Retain prerequisite/only-then/modality/registration/label/protection/harvest-waiting/negative/specificity scope"
+      ],
+      "appliedTarget": "Yellowing yi ni swivangelo swo hlayanyana leswi tolovelekeke, naswona soil or watering issue yi lava fix leyi hambaneke hi ku helela ni leyi lavekaka eka pest — ku kambela ku sungula ku papalata wasted treatment.",
+      "appliedReviewStatus": "machine-draft"
+    }
+  ],
+  "pairedFields": [
+    {
+      "language": "st",
+      "slide": 15,
+      "bodyIndexZeroBased": 1,
+      "lessonField": "body.paragraphs.1",
+      "sourceEnglish": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Dimela tse nang le stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you."
+      },
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plants under ",
+            "status": "draft",
+            "text": "Dimela tse nang le "
+          },
+          {
+            "sourceEnglish": "stress.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " One crop dominating the ground.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Or ",
+            "status": "draft",
+            "text": " Kapa "
+          },
+          {
+            "sourceEnglish": "broad chemical use",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that has already removed the ",
+            "status": "draft",
+            "text": " e seng e tlositse "
+          },
+          {
+            "sourceEnglish": "predators",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that were helping you.",
+            "status": "draft",
+            "text": " tse neng di o thusa."
+          }
+        ]
+      },
+      "status": "mixed"
+    },
+    {
+      "language": "st",
+      "slide": 16,
+      "bodyIndexZeroBased": 4,
+      "lessonField": "body.paragraphs.9",
+      "sourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong."
+      },
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four.",
+            "status": "draft",
+            "text": "Ntlha ya bone."
+          },
+          {
+            "sourceEnglish": " Only then, act — and start with ",
+            "status": "draft",
+            "text": " Ke ka morao feela moo o nkang kgato — qala ka "
+          },
+          {
+            "sourceEnglish": "the lightest thing that works.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Physical removal",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", barriers",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " or changes in ",
+            "status": "draft",
+            "text": " kapa diphetoho ho "
+          },
+          {
+            "sourceEnglish": "crop care",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " may help.",
+            "status": "draft",
+            "text": " di ka thusa."
+          },
+          {
+            "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+            "status": "draft",
+            "text": " Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong."
+          }
+        ]
+      },
+      "status": "mixed"
+    },
+    {
+      "language": "st",
+      "slide": 16,
+      "bodyIndexZeroBased": 5,
+      "lessonField": "body.paragraphs.10",
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "If a ",
+            "status": "draft",
+            "text": "Ha "
+          },
+          {
+            "sourceEnglish": "treatment",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " is needed, use a ",
+            "status": "draft",
+            "text": " e hlokahala, sebedisa "
+          },
+          {
+            "sourceEnglish": "product registered for that crop and pest",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and follow its ",
+            "status": "draft",
+            "text": ", mme o latele "
+          },
+          {
+            "sourceEnglish": "label",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": " ya yona."
+          },
+          {
+            "sourceEnglish": " This includes ",
+            "status": "draft",
+            "text": " Sena se kenyeletsa "
+          },
+          {
+            "sourceEnglish": "neem products.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Check ",
+            "status": "draft",
+            "text": " Hlahloba "
+          },
+          {
+            "sourceEnglish": "protection and harvest waiting instructions.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Do not improvise mixtures or stronger doses.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "status": "mixed"
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndexZeroBased": 1,
+      "lessonField": "body.paragraphs.1",
+      "sourceEnglish": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Zwimela zwi re na stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you."
+      },
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plants under ",
+            "status": "draft",
+            "text": "Zwimela zwi re na "
+          },
+          {
+            "sourceEnglish": "stress.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " One crop dominating the ground.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Or ",
+            "status": "draft",
+            "text": " Kana "
+          },
+          {
+            "sourceEnglish": "broad chemical use",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that has already removed the ",
+            "status": "draft",
+            "text": " yo no bvisa "
+          },
+          {
+            "sourceEnglish": "predators",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that were helping you.",
+            "status": "draft",
+            "text": " dze dza vha dzi tshi ni thusa."
+          }
+        ]
+      },
+      "status": "mixed"
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndexZeroBased": 2,
+      "lessonField": "body.paragraphs.2",
+      "sourceEnglish": "So before you treat anything, look at the whole system.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "So before you treat anything, sedzani system yoṱhe."
+      },
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "So ",
+            "status": "draft",
+            "text": "Ngazwenezwo, "
+          },
+          {
+            "sourceEnglish": "before you treat anything, ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "look at the whole system.",
+            "status": "draft",
+            "text": "sedzani system yoṱhe."
+          }
+        ]
+      },
+      "status": "mixed"
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "bodyIndexZeroBased": 3,
+      "lessonField": "body.paragraphs.3",
+      "sourceEnglish": "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Tshimela tshi khou shaya water? Soil yo compacted kana yo “hungry”? Are predators already working on the problem for you?"
+      },
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Is the plant short of water?",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Is the soil ",
+            "status": "draft",
+            "text": " Soil yo "
+          },
+          {
+            "sourceEnglish": "compacted",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", or ",
+            "status": "draft",
+            "text": " kana yo “"
+          },
+          {
+            "sourceEnglish": "hungry",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "?",
+            "status": "draft",
+            "text": "”?"
+          },
+          {
+            "sourceEnglish": " Are predators already working on the problem for you?",
+            "status": "draft",
+            "text": " Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?"
+          }
+        ]
+      },
+      "status": "mixed"
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "bodyIndexZeroBased": 1,
+      "lessonField": "body.paragraphs.6",
+      "sourceEnglish": "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Tsha u thoma. Sedzani. Sedzani the damage pattern, the underside of the leaf, the stem, and the plants nearby."
+      },
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "One. Observe. Look at the ",
+            "status": "draft",
+            "text": "Tsha u thoma. Sedzani. Sedzani "
+          },
+          {
+            "sourceEnglish": "damage pattern",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", the underside of the leaf, the stem, and the plants nearby.",
+            "status": "draft",
+            "text": ", tlhelo ḽa fhasi ḽa ḽiṱari, tsinde, na zwimela zwi re tsini."
+          }
+        ]
+      },
+      "status": "mixed"
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "bodyIndexZeroBased": 4,
+      "lessonField": "body.paragraphs.9",
+      "sourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Tsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo."
+      },
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four.",
+            "status": "draft",
+            "text": "Tsha vhuṋa."
+          },
+          {
+            "sourceEnglish": " Only then, act — and start with ",
+            "status": "draft",
+            "text": " Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga "
+          },
+          {
+            "sourceEnglish": "the lightest thing that works.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Physical removal",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", barriers",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " or changes in ",
+            "status": "draft",
+            "text": " kana tshanduko kha "
+          },
+          {
+            "sourceEnglish": "crop care",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " may help.",
+            "status": "draft",
+            "text": " zwi nga thusa."
+          },
+          {
+            "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+            "status": "draft",
+            "text": " Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo."
+          }
+        ]
+      },
+      "status": "mixed"
+    },
+    {
+      "language": "ve",
+      "slide": 16,
+      "bodyIndexZeroBased": 5,
+      "lessonField": "body.paragraphs.10",
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "If a ",
+            "status": "draft",
+            "text": "Arali "
+          },
+          {
+            "sourceEnglish": "treatment",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " is needed, use a ",
+            "status": "draft",
+            "text": " i tshi ṱoḓea, shumisani "
+          },
+          {
+            "sourceEnglish": "product registered for that crop and pest",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and follow its ",
+            "status": "draft",
+            "text": ", nahone ni tevhele "
+          },
+          {
+            "sourceEnglish": "label",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": " yayo."
+          },
+          {
+            "sourceEnglish": " This includes ",
+            "status": "draft",
+            "text": " Hezwi zwi katela "
+          },
+          {
+            "sourceEnglish": "neem products.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Check ",
+            "status": "draft",
+            "text": " Ṱolani "
+          },
+          {
+            "sourceEnglish": "protection and harvest waiting instructions.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Do not improvise mixtures or stronger doses.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "status": "mixed"
+    },
+    {
+      "language": "ts",
+      "slide": 15,
+      "bodyIndexZeroBased": 1,
+      "lessonField": "body.paragraphs.1",
+      "sourceEnglish": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Swibyariwa leswi nga na stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you."
+      },
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Plants under ",
+            "status": "draft",
+            "text": "Swibyariwa leswi nga na "
+          },
+          {
+            "sourceEnglish": "stress.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " One crop dominating the ground.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Or ",
+            "status": "draft",
+            "text": " Kumbe "
+          },
+          {
+            "sourceEnglish": "broad chemical use",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that has already removed the ",
+            "status": "draft",
+            "text": " leyi se yi suseke "
+          },
+          {
+            "sourceEnglish": "predators",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that were helping you.",
+            "status": "draft",
+            "text": " leti a ti ku pfuna."
+          }
+        ]
+      },
+      "status": "mixed"
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "bodyIndexZeroBased": 4,
+      "lessonField": "body.paragraphs.9",
+      "sourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "currentTarget": {
+        "status": "draft",
+        "text": "Vumune. Hi kona ntsena u tekaka goza — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Kambela leswaku goza ri fambisana ni xiphiqo, and monitor the result."
+      },
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four.",
+            "status": "draft",
+            "text": "Vumune."
+          },
+          {
+            "sourceEnglish": " Only then, act — and start with ",
+            "status": "draft",
+            "text": " Hi kona ntsena u tekaka goza — sungula hi "
+          },
+          {
+            "sourceEnglish": "the lightest thing that works.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Physical removal",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", barriers",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " or changes in ",
+            "status": "draft",
+            "text": " kumbe ku cinca "
+          },
+          {
+            "sourceEnglish": "crop care",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " may help.",
+            "status": "draft",
+            "text": " swi nga pfuna."
+          },
+          {
+            "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+            "status": "draft",
+            "text": " Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo."
+          }
+        ]
+      },
+      "status": "mixed"
+    },
+    {
+      "language": "ts",
+      "slide": 16,
+      "bodyIndexZeroBased": 5,
+      "lessonField": "body.paragraphs.10",
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "If a ",
+            "status": "draft",
+            "text": "Loko "
+          },
+          {
+            "sourceEnglish": "treatment",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " is needed, use a ",
+            "status": "draft",
+            "text": " yi laveka, tirhisa "
+          },
+          {
+            "sourceEnglish": "product registered for that crop and pest",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and follow its ",
+            "status": "draft",
+            "text": ", kutani u landzelela "
+          },
+          {
+            "sourceEnglish": "label",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ".",
+            "status": "draft",
+            "text": " ya yona."
+          },
+          {
+            "sourceEnglish": " This includes ",
+            "status": "draft",
+            "text": " Leswi swi katsa "
+          },
+          {
+            "sourceEnglish": "neem products.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Check ",
+            "status": "draft",
+            "text": " Kambela "
+          },
+          {
+            "sourceEnglish": "protection and harvest waiting instructions.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Do not improvise mixtures or stronger doses.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "status": "mixed"
+    }
+  ],
+  "limitations": [
+    "Machine-draft only; no fluent or local farming approval is claimed.",
+    "No stills were rendered or visually reviewed."
+  ]
+}

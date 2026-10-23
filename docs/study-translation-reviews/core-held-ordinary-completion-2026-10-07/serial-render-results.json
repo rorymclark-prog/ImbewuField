@@ -1,0 +1,76 @@
+{
+  "status": "Images generated serially; conversion/visual inspection/manifest/cache/tests/publication pending",
+  "groups": [
+    {
+      "module": "intro-permaculture",
+      "language": "st",
+      "frames": 5,
+      "seconds": 1.77,
+      "memoryBefore": "The system has 17179869184 (1048576 pages with a page size of 16384).\nSystem-wide memory free percentage: 39%"
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "ts",
+      "frames": 10,
+      "seconds": 2.44,
+      "memoryBefore": "The system has 17179869184 (1048576 pages with a page size of 16384).\nSystem-wide memory free percentage: 42%"
+    },
+    {
+      "module": "market-community",
+      "language": "st",
+      "frames": 2,
+      "seconds": 0.68,
+      "memoryBefore": "The system has 17179869184 (1048576 pages with a page size of 16384).\nSystem-wide memory free percentage: 41%"
+    },
+    {
+      "module": "market-community",
+      "language": "ts",
+      "frames": 2,
+      "seconds": 0.64,
+      "memoryBefore": "The system has 17179869184 (1048576 pages with a page size of 16384).\nSystem-wide memory free percentage: 40%"
+    },
+    {
+      "module": "reading-landscape",
+      "language": "st",
+      "frames": 13,
+      "seconds": 2.52,
+      "memoryBefore": "The system has 17179869184 (1048576 pages with a page size of 16384).\nSystem-wide memory free percentage: 41%"
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ts",
+      "frames": 11,
+      "seconds": 2.31,
+      "memoryBefore": "The system has 17179869184 (1048576 pages with a page size of 16384).\nSystem-wide memory free percentage: 43%"
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ve",
+      "frames": 2,
+      "seconds": 0.68,
+      "memoryBefore": "The system has 17179869184 (1048576 pages with a page size of 16384).\nSystem-wide memory free percentage: 44%"
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "frames": 14,
+      "seconds": 3.44,
+      "memoryBefore": "The system has 17179869184 (1048576 pages with a page size of 16384).\nSystem-wide memory free percentage: 43%"
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ts",
+      "frames": 9,
+      "seconds": 2.61,
+      "memoryBefore": "The system has 17179869184 (1048576 pages with a page size of 16384).\nSystem-wide memory free percentage: 41%"
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ve",
+      "frames": 1,
+      "seconds": 0.74,
+      "memoryBefore": "The system has 17179869184 (1048576 pages with a page size of 16384).\nSystem-wide memory free percentage: 41%"
+    }
+  ],
+  "log": "/tmp/imbewu-held-ordinary-render-20261007.log"
+}

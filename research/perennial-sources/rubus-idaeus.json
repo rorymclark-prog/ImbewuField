@@ -1,0 +1,63 @@
+{
+  "speciesId": "rubus-idaeus",
+  "commonName": "Raspberry",
+  "botanicalName": "Rubus idaeus",
+  "harvestMonths": [
+    {
+      "region": "KwaZulu-Natal (spring-bearing cultivars: Glen Prosen, Glen Lyon, Tulameen)",
+      "months": [
+        11,
+        12,
+        1
+      ],
+      "evidence": {
+        "quote": "Flowering 3-4 weeks later, with fruit maturity & harvest 8 weeks later (1st week November to late January).",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+        "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
+        "page": 37
+      },
+      "notes": "Sentence sits under the combined 'Raspberry & Blackberry (Rubus spp.)' section, after 'Budburst in spring'. The section does not split raspberry from blackberry or spring from autumn bearers for timing. Autumn bearers (Heritage, Autumn Bliss) are listed but no separate months are given. Page is the PDF page number (the printed page number in the document is 4 lower for this section)."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": {
+      "quote": "Bramble canes are typically vegetative in their first year of growth and are referred to as primocanes",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
+      "page": 36
+    },
+    "notes": "Not stated as a number. Canes are biennial: 'Bramble canes are typically vegetative in their first year of growth and are referred to as primocanes . These canes bear fruit the following year' (autumn bearers also fruit on the current year's canes, but no timing given)."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found. Only 'Productive lifetime of 10-15 years' is given."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Per PLANT yield not found. KZN notes give 'Conservative : 5 Average : 7-9 Good: 12+' t/ha with spacing 2.5-3.0 m x 0.6-1.2 m. No per-plant derivation stored."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": {
+      "quote": "Spring bearing raspberries have a high chilling requirement similar to apples, while the autumn bearers have a low chilling requirement of 300-600 PCUs",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
+      "page": 36
+    },
+    "notes": "Numeric value exists only for autumn (primocane) bearers: 'the autumn bearers have a low chilling requirement of 300-600 PCUs'; spring bearers are only 'high ... similar to apples' with no number. Because the field takes one range for the species, it is left null and the autumn-bearer range is recorded here."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Not found in a fetched source."
+  },
+  "harvestProduct": "fruit",
+  "gaps": [
+    "Only KZN sources give months. Western Cape and Free State are named as the main raspberry production regions on southafrica.co.za ('Production primarily occurs in the Western Cape and the Free State.') but without months; that portal page copies the KZN text and is not a primary source.",
+    "Yield per plant, pollination, years to first crop not sourced. SA theses/Berries ZA/Hortgro pages did not surface raspberry agronomy.",
+    "NEMBA 2020: Rubus idaeus is not listed. Listed Rubus items are 306 R. cuneifolius & R. x proteus (1b), 307 R. ellipticus (1a), 308 R. flagellaris (1b), 309 R. fruticosus L. agg. (2, fruit exempt for human consumption), 310 R. immixtus (1b), 311 R. niveus (1b)."
+  ]
+}

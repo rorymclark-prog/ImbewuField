@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "title": "Reading Landscape VE slide 2 body 1 — held candidate and rejection rationale",
+  "date": "2026-10-05",
+  "mode": "data-only exclusion record; exact English remains the published paired target",
+  "candidateProvenance": {
+    "packet": "READING-FIRST-OBSERVATIONS-CORRECTED-CANDIDATES-2026-10-05.json",
+    "packetSha256": "067c57a08057a932e8300fb9a14c0d3110664c88ff15373ea57c78d10ece2b70",
+    "proposedTarget": "Mvula i tevhela mitalo kha land. Ḓuvha ḽi se ḽi futhumadza fhethu huṅwe u fhira huṅwe. Moya u no wana gaps and ridges. Moya u rotholelaho u kuvhangana kha hollows.",
+    "proposedSegments": [
+      {
+        "sourceEnglish": "Rain already follows lines across the land.",
+        "status": "draft",
+        "text": "Mvula i tevhela mitalo kha land."
+      },
+      {
+        "sourceEnglish": " The sun already warms some places more than others.",
+        "status": "draft",
+        "text": " Ḓuvha ḽi se ḽi futhumadza fhethu huṅwe u fhira huṅwe."
+      },
+      {
+        "sourceEnglish": " Wind already finds ",
+        "status": "draft",
+        "text": " Moya u no wana "
+      },
+      {
+        "sourceEnglish": "gaps and ridges.",
+        "status": "english-hold"
+      },
+      {
+        "sourceEnglish": " Cold air already settles in ",
+        "status": "draft",
+        "text": " Moya u rotholelaho u kuvhangana kha "
+      },
+      {
+        "sourceEnglish": "hollows.",
+        "status": "english-hold"
+      }
+    ]
+  },
+  "independentDisposition": "hold",
+  "reason": "Do not use this target row yet. `Ḓuvha ḽi se ḽi` is not independently verified as Tshivenda aspect and was flagged for possible Sotho contamination; the rain and cold-air sentences also do not clearly retain the source’s repeated “already”. Keep this exact paragraph source visible until a source-bound candidate preserves aspect in all four observations.",
+  "independentReviewProvenance": "Independent machine semantic/source check only; not fluent-speaker or local-farming approval.",
+  "currentBinding": {
+    "pairedFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.ve.paired-draft.json",
+    "pairedFileSha256": "759fda604c4dcd2efbdb28eaa7e83256ad8815fd380a9be4a6fbb2453bf76bbd",
+    "canonicalEnglishFile": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/reading-landscape.en.md",
+    "canonicalEnglishSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+    "slide": 2,
+    "field": "body",
+    "index": 1,
+    "sourceEnglish": "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+    "target": {
+      "status": "english-hold"
+    },
+    "sourceStillExact": true,
+    "targetRemainsExactHold": true
+  },
+  "publicationAction": "No candidate segment from this row was wired; keep all four source sentences visibly exact English while aspect/language identity remains uncertain. This hold is limited to this paragraph and does not imply fluent approval."
+}

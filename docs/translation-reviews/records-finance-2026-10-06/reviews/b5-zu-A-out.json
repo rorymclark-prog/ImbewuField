@@ -1,0 +1,11 @@
+[
+ {
+  "id": "R263",
+  "back": "The orchard has been switched off/extinguished (put out), so {kg} kg is not in the weight above: {names}. The rand total still counts everything that was sold, including the orchard.",
+  "flags": [
+    "icishiwe literally 'has been put out / switched off' (as a fire or light); unclear whether it means turned off/hidden/excluded in-app or physically closed",
+    "'ayikho esisindweni esingenhla' is stiff ('is not in the weight above'); 'esingenhla' fine but 'esisindweni' locative of isisindo reads awkwardly",
+    "'sisabala' (still counts) is acceptable but could be read as 'still calculates'"
+  ]
+ }
+]

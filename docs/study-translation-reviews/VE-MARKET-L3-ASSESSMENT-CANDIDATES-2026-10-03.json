@@ -1,0 +1,431 @@
+{
+  "packetId": "IMBEWU-VE-MARKET-L3-ASSESSMENT-CANDIDATES-2026-10-03",
+  "sourceRevision": "18734826c631798ebbec7c0f3f37ea2f9ab6a386",
+  "languageCode": "ve",
+  "languageName": "Tshivenda",
+  "moduleId": "market-community",
+  "lessonId": "market-community-l3",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-ve-market-community.ts",
+  "provenance": "Read-only source-paired Tshivenda assessment draft from the current canonical and VE registry. Ordinary framing is proposed for facilitator review; technical terms and uncertain clauses remain exact English. No repository files or learner wiring changed.",
+  "sourceCorrectIndices": [
+    1,
+    2
+  ],
+  "sourceFields": {
+    "keyPoints": [
+      "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "Agree care, booking and repair responsibilities for shared tools",
+      "Measure losses and net returns for each selling route",
+      "Combine shared experience with qualified help when needed"
+    ],
+    "questions": [
+      "Neighbours want to share saved seed. What helps make the shared seed useful?",
+      "A grower is comparing a distant market with nearby customers. What should guide the decision?"
+    ],
+    "options": [
+      [
+        "Mix all varieties without labels",
+        "Agree seed-quality checks and check whether permission is needed to share the variety",
+        "Assume sharing automatically improves every seed lot",
+        "Rely only on the size of the group"
+      ],
+      [
+        "Always choose the highest headline price",
+        "Always choose the shortest journey",
+        "Compare money received after fees, transport, unsold produce and losses",
+        "Assume joining a group removes all costs"
+      ]
+    ],
+    "rationales": [
+      "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options."
+    ]
+  },
+  "currentRegistryFields": {
+    "keyPoints": [
+      {
+        "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
+        "tshivendaDraft": "Record seed identity, source and quality, and check if permission is needed before sharing",
+        "reviewStatus": "hold"
+      },
+      {
+        "sourceEnglish": "Agree care, booking and repair responsibilities for shared tools",
+        "tshivendaDraft": "Agree care, booking and repair responsibilities for shared tools",
+        "reviewStatus": "hold"
+      },
+      {
+        "sourceEnglish": "Measure losses and net returns for each selling route",
+        "tshivendaDraft": "Measure losses and net returns for each selling route",
+        "reviewStatus": "hold"
+      },
+      {
+        "sourceEnglish": "Combine shared experience with qualified help when needed",
+        "tshivendaDraft": "Combine shared experience with qualified help when needed",
+        "reviewStatus": "hold"
+      }
+    ],
+    "questions": [
+      {
+        "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+        "tshivendaDraft": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+        "reviewStatus": "hold"
+      },
+      {
+        "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+        "tshivendaDraft": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+        "reviewStatus": "hold"
+      }
+    ],
+    "options": [
+      [
+        {
+          "sourceEnglish": "Mix all varieties without labels",
+          "tshivendaDraft": "Mix all varieties without labels",
+          "reviewStatus": "hold"
+        },
+        {
+          "sourceEnglish": "Agree seed-quality checks and check whether permission is needed to share the variety",
+          "tshivendaDraft": "Agree seed-quality checks and check whether permission is needed to share the variety",
+          "reviewStatus": "hold"
+        },
+        {
+          "sourceEnglish": "Assume sharing automatically improves every seed lot",
+          "tshivendaDraft": "Assume sharing automatically improves every seed lot",
+          "reviewStatus": "hold"
+        },
+        {
+          "sourceEnglish": "Rely only on the size of the group",
+          "tshivendaDraft": "Rely only on the size of the group",
+          "reviewStatus": "hold"
+        }
+      ],
+      [
+        {
+          "sourceEnglish": "Always choose the highest headline price",
+          "tshivendaDraft": "Always choose the highest headline price",
+          "reviewStatus": "hold"
+        },
+        {
+          "sourceEnglish": "Always choose the shortest journey",
+          "tshivendaDraft": "Always choose the shortest journey",
+          "reviewStatus": "hold"
+        },
+        {
+          "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
+          "tshivendaDraft": "Compare money received after fees, transport, unsold produce and losses",
+          "reviewStatus": "hold"
+        },
+        {
+          "sourceEnglish": "Assume joining a group removes all costs",
+          "tshivendaDraft": "Assume joining a group removes all costs",
+          "reviewStatus": "hold"
+        }
+      ]
+    ],
+    "rationales": [
+      {
+        "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+        "tshivendaDraft": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+        "reviewStatus": "hold"
+      },
+      {
+        "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+        "tshivendaDraft": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+        "reviewStatus": "hold"
+      }
+    ]
+  },
+  "entries": [
+    {
+      "source": "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "current": "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "sourceIndex": 0,
+      "correctIndex": null,
+      "fieldPath": "keyPoints[0]",
+      "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "currentDraft": "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "tshivendaDraft": "Ṅwalani seed identity, source and quality, nahone ni sedze arali permission i tshi ṱoḓea musi ni sa athu u kovhelana.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Record seed identity, source and quality, and check whether permission is needed before sharing.",
+      "retainedEnglishTerms": [
+        "seed identity",
+        "source",
+        "quality",
+        "permission"
+      ],
+      "uncertainty": "Seed identity, quality and permission remain explicit English anchors. Verify Tshivenda form and the before-sharing construction."
+    },
+    {
+      "source": "Measure losses and net returns for each selling route",
+      "current": "Measure losses and net returns for each selling route",
+      "sourceIndex": 2,
+      "correctIndex": null,
+      "fieldPath": "keyPoints[2]",
+      "sourceEnglish": "Measure losses and net returns for each selling route",
+      "currentDraft": "Measure losses and net returns for each selling route",
+      "tshivendaDraft": "Measure losses and net returns kha selling route iṅwe na iṅwe.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Measure losses and net returns for each selling route.",
+      "retainedEnglishTerms": [
+        "Measure losses and net returns",
+        "selling route"
+      ],
+      "uncertainty": "The business measurements stay exact English; only the for-each framing is localized."
+    },
+    {
+      "source": "Combine shared experience with qualified help when needed",
+      "current": "Combine shared experience with qualified help when needed",
+      "sourceIndex": 3,
+      "correctIndex": null,
+      "fieldPath": "keyPoints[3]",
+      "sourceEnglish": "Combine shared experience with qualified help when needed",
+      "currentDraft": "Combine shared experience with qualified help when needed",
+      "tshivendaDraft": "Ṱanganyisani shared experience na qualified help musi zwi tshi ṱoḓea.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Combine shared experience with qualified help when needed.",
+      "retainedEnglishTerms": [
+        "qualified help"
+      ],
+      "uncertainty": "Qualified help remains English and the when-needed condition is explicit; check the localized shared-experience wording.",
+      "rootRepair": "Agy independent check found distributed/apportioned experience or works-well meaning shifts. Exact English anchors preserve shared experience and usefulness."
+    },
+    {
+      "source": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+      "current": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+      "sourceIndex": 0,
+      "correctIndex": 1,
+      "fieldPath": "quiz[0].question",
+      "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+      "currentDraft": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+      "tshivendaDraft": "Vhahura vha ṱoḓa u kovhelana saved seed. What helps make the shared seed useful?",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Neighbours want to share saved seed. What helps make shared seed useful?",
+      "retainedEnglishTerms": [
+        "saved seed",
+        "shared seed"
+      ],
+      "uncertainty": "The question framing is localized while the seed context remains exact English; check natural Tshivenda wording for useful.",
+      "rootRepair": "Agy independent check found distributed/apportioned experience or works-well meaning shifts. Exact English anchors preserve shared experience and usefulness."
+    },
+    {
+      "source": "Mix all varieties without labels",
+      "current": "Mix all varieties without labels",
+      "sourceIndex": 0,
+      "optionIndex": 0,
+      "correctIndex": 1,
+      "fieldPath": "quiz[0].options[0]",
+      "sourceEnglish": "Mix all varieties without labels",
+      "currentDraft": "Mix all varieties without labels",
+      "tshivendaDraft": "Ṱanganyisani mifuda yoṱhe ni songo i ṅwala labels.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Mix all varieties without labels.",
+      "retainedEnglishTerms": [
+        "labels"
+      ],
+      "uncertainty": "All varieties and the no-labels condition are preserved; verify imperative and label phrasing."
+    },
+    {
+      "source": "Agree seed-quality checks and check whether permission is needed to share the variety",
+      "current": "Agree seed-quality checks and check whether permission is needed to share the variety",
+      "sourceIndex": 0,
+      "optionIndex": 1,
+      "correctIndex": 1,
+      "fieldPath": "quiz[0].options[1]",
+      "sourceEnglish": "Agree seed-quality checks and check whether permission is needed to share the variety",
+      "currentDraft": "Agree seed-quality checks and check whether permission is needed to share the variety",
+      "tshivendaDraft": "Thendelanani nga seed-quality checks nahone ni sedze arali permission i tshi ṱoḓea u kovhelana variety.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Agree on seed-quality checks and check whether permission is needed to share the variety.",
+      "retainedEnglishTerms": [
+        "seed-quality checks",
+        "permission",
+        "variety"
+      ],
+      "uncertainty": "Correct-option meaning keeps both checks and the permission condition; verify legal-rights phrasing locally."
+    },
+    {
+      "source": "Assume sharing automatically improves every seed lot",
+      "current": "Assume sharing automatically improves every seed lot",
+      "sourceIndex": 0,
+      "optionIndex": 2,
+      "correctIndex": 1,
+      "fieldPath": "quiz[0].options[2]",
+      "sourceEnglish": "Assume sharing automatically improves every seed lot",
+      "currentDraft": "Assume sharing automatically improves every seed lot",
+      "tshivendaDraft": "Humbulani uri sharing automatically improves every seed lot.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Assume sharing automatically improves every seed lot.",
+      "retainedEnglishTerms": [
+        "sharing automatically improves every seed lot"
+      ],
+      "uncertainty": "The automatic and every-lot absolute remains exact English to keep the false guarantee clear."
+    },
+    {
+      "source": "Rely only on the size of the group",
+      "current": "Rely only on the size of the group",
+      "sourceIndex": 0,
+      "optionIndex": 3,
+      "correctIndex": 1,
+      "fieldPath": "quiz[0].options[3]",
+      "sourceEnglish": "Rely only on the size of the group",
+      "currentDraft": "Rely only on the size of the group",
+      "tshivendaDraft": "Fulufhelani fhedzi kha size ya group.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Rely only on the size of the group.",
+      "retainedEnglishTerms": [
+        "only",
+        "size of the group"
+      ],
+      "uncertainty": "Only and group-size limitation are retained; confirm that fulufhelani conveys rely on in this context."
+    },
+    {
+      "source": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "current": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "sourceIndex": 0,
+      "correctIndex": 1,
+      "fieldPath": "quiz[0].rationale",
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "currentDraft": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "tshivendaDraft": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "reviewStatus": "hold",
+      "backTranslation": "Exact English hold.",
+      "retainedEnglishTerms": [
+        "whole rationale"
+      ],
+      "uncertainty": "Crop-specific procedures and protected-variety rights stay together in exact English."
+    },
+    {
+      "source": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+      "current": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+      "sourceIndex": 1,
+      "correctIndex": 2,
+      "fieldPath": "quiz[1].question",
+      "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+      "currentDraft": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+      "tshivendaDraft": "Mulimi u khou vhambedza distant market na nearby customers. Ndi mini tshine tsha tea u livhisa phetho?",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+      "retainedEnglishTerms": [
+        "distant market",
+        "nearby customers"
+      ],
+      "uncertainty": "Ordinary question framing is localized; channel terms stay exact English."
+    },
+    {
+      "source": "Always choose the highest headline price",
+      "current": "Always choose the highest headline price",
+      "sourceIndex": 1,
+      "optionIndex": 0,
+      "correctIndex": 2,
+      "fieldPath": "quiz[1].options[0]",
+      "sourceEnglish": "Always choose the highest headline price",
+      "currentDraft": "Always choose the highest headline price",
+      "tshivendaDraft": "Khethani tshifhinga tshoṱhe highest headline price.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Always choose the highest headline price.",
+      "retainedEnglishTerms": [
+        "always",
+        "highest headline price"
+      ],
+      "uncertainty": "Always and highest headline price remain explicit."
+    },
+    {
+      "source": "Always choose the shortest journey",
+      "current": "Always choose the shortest journey",
+      "sourceIndex": 1,
+      "optionIndex": 1,
+      "correctIndex": 2,
+      "fieldPath": "quiz[1].options[1]",
+      "sourceEnglish": "Always choose the shortest journey",
+      "currentDraft": "Always choose the shortest journey",
+      "tshivendaDraft": "Khethani tshifhinga tshoṱhe shortest journey.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Always choose the shortest journey.",
+      "retainedEnglishTerms": [
+        "always",
+        "shortest journey"
+      ],
+      "uncertainty": "Always and shortest journey remain explicit."
+    },
+    {
+      "source": "Compare money received after fees, transport, unsold produce and losses",
+      "current": "Compare money received after fees, transport, unsold produce and losses",
+      "sourceIndex": 1,
+      "optionIndex": 2,
+      "correctIndex": 2,
+      "fieldPath": "quiz[1].options[2]",
+      "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
+      "currentDraft": "Compare money received after fees, transport, unsold produce and losses",
+      "tshivendaDraft": "Vhambedzani money received after fees, transport, unsold produce and losses.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Compare money received after fees, transport, unsold produce and losses.",
+      "retainedEnglishTerms": [
+        "money received after fees",
+        "transport",
+        "unsold produce",
+        "losses"
+      ],
+      "uncertainty": "The comparison imperative is localized; all business-calculation terms remain exact English."
+    },
+    {
+      "source": "Assume joining a group removes all costs",
+      "current": "Assume joining a group removes all costs",
+      "sourceIndex": 1,
+      "optionIndex": 3,
+      "correctIndex": 2,
+      "fieldPath": "quiz[1].options[3]",
+      "sourceEnglish": "Assume joining a group removes all costs",
+      "currentDraft": "Assume joining a group removes all costs",
+      "tshivendaDraft": "Humbulani uri u dzhena kha group zwi fhelisa costs dzoṱhe.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Assume joining a group removes all costs.",
+      "retainedEnglishTerms": [
+        "all costs"
+      ],
+      "uncertainty": "The absolute all-costs claim remains explicit."
+    },
+    {
+      "source": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "current": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "sourceIndex": 1,
+      "correctIndex": 2,
+      "fieldPath": "quiz[1].rationale",
+      "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "currentDraft": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "tshivendaDraft": "Distance affects costs, but it is not the only factor. Shumisani actual returns and losses u vhambedza options.",
+      "reviewStatus": "machine-draft",
+      "backTranslation": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "retainedEnglishTerms": [
+        "Distance affects costs, but it is not the only factor",
+        "actual returns",
+        "losses",
+        "options"
+      ],
+      "uncertainty": "The only-factor caveat and the actual-return/loss measures remain explicit; only use/compare framing is localized."
+    }
+  ],
+  "unchangedLocalizedFields": {
+    "title": "Building Community Food Networks: Strength in Numbers",
+    "keyPoints": {
+      "0": "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "1": "Agree care, booking and repair responsibilities for shared tools",
+      "2": "Measure losses and net returns for each selling route",
+      "3": "Combine shared experience with qualified help when needed"
+    },
+    "quizQuestions": [
+      "Neighbours want to share saved seed. What helps make the shared seed useful?",
+      "A grower is comparing a distant market with nearby customers. What should guide the decision?"
+    ]
+  },
+  "guardrails": [
+    "Seed quality and crop-specific germination procedures do not establish permission to share a protected variety.",
+    "Retain the before-sharing permission condition and protected-variety qualifier.",
+    "Preserve fees, transport, unsold produce, losses, actual returns, and nearest-buyer caveat.",
+    "Preserve absolute terms such as automatically, every, only, always, and all.",
+    "Correct answer indices remain 1 for quiz 0 and 2 for quiz 1.",
+    "Candidate remains unreviewed; no fluency claim is made."
+  ],
+  "reviewStatus": "unreviewed-machine-draft-for-facilitator-review",
+  "rootReview": "Repaired two fields following actual Agy desktop response; awaiting independent repaired-field backcheck, not wired."
+}

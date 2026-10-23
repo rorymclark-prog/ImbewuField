@@ -1,0 +1,62 @@
+{
+  "speciesId": "grewia-flava",
+  "commonName": "Brandybush / velvet raisin",
+  "botanicalName": "Grewia flava",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "ripe fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Edible part and local use",
+      "quote": "The sweet vitamin C-enriched fruit can be enjoyed on its own",
+      "url": "https://pza.sanbi.org/grewia-flava",
+      "doc": "SANBI PlantZAfrica, grewia-flava",
+      "page": null,
+      "note": "Dried-fruit flour is a documented traditional end use, not a supplied safe storage duration. October–March is flowering."
+    }
+  ],
+  "productionGuidance": {
+    "products": "ripe fruit",
+    "care": [
+      "Use sun and well-drained soil. SANBI records dry bushveld, sandy-soil preference and frost hardiness; avoid over-watering established plants."
+    ],
+    "purchase": [
+      "Ask for Grewia flava and confirm local provenance. No named food cultivar or fruit kg was verified."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/grewia-flava",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    }
+  ],
+  "gaps": [
+    "No explicit ripe-picking calendar, numeric bearing ages or food kg."
+  ]
+}

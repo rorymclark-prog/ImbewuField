@@ -58,7 +58,7 @@ export default function ReportCropPlan({ crop, siteName, includeWorking, onInclu
     {s && <div className={styles.controls}>
       <button onClick={() => { void exportWorking(false); }} disabled={exporting}>{tr('Full crop-plan report (English)', 'Umbiko ophelele wohlelo lwezitshalo (isiNgisi)')}</button>
       <button onClick={() => { void exportWorking(true); }} disabled={exporting}>{tr('Quick-print summary (English)', 'Isifinyezo sokuphrinta (isiNgisi)')}</button>
-      <a href={`/facilitator/crops?canvasSite=${encodeURIComponent(s.siteId)}`} target="_blank" rel="noopener noreferrer">{tr('Open current crop planner', 'Vula uhlelo lwezitshalo lwamanje')} →</a>
+      <a href={`/facilitator/crops?canvasSite=${encodeURIComponent(s.siteId)}`} target="_blank" rel="noopener noreferrer">{tr('Open current production plan', 'Vula uhlelo lokukhiqiza lwamanje')} →</a>
       <label><input type="checkbox" checked={includeWorking} onChange={e => onIncludeWorking(e.target.checked)} />{tr('Attach full working plan to PDF (English)', 'Faka uhlelo lomsebenzi oluphelele ku-PDF (isiNgisi)')}</label>
     </div>}
     {exporting && <p role="status">{tr('Preparing crop-plan report…', 'Kulungiswa umbiko wohlelo lwezitshalo…')}</p>}

@@ -1,0 +1,1404 @@
+{
+  "title": "Market Gardening L1 conservative fuller learner candidates",
+  "date": "2026-10-03",
+  "sourcePacket": "/tmp/imbewu-market-current-learner-deck-review-20261003.json",
+  "sourceRevision": "0edd9221a4de4402906124bbbdf7212565c40e69",
+  "scope": {
+    "lessonId": "market-community-l1",
+    "slideNumbers": [
+      2,
+      5,
+      6,
+      7,
+      8,
+      10
+    ],
+    "languages": [
+      "st",
+      "ve",
+      "ts"
+    ],
+    "onlyWholeByteExactCanonicalSourceParagraphs": true,
+    "headingsExcluded": true,
+    "noRepositoryEdits": true
+  },
+  "summary": {
+    "st": {
+      "rows": 20,
+      "recommendedCandidates": 7,
+      "unchangedOrHold": 13
+    },
+    "ve": {
+      "rows": 20,
+      "recommendedCandidates": 4,
+      "unchangedOrHold": 16
+    },
+    "ts": {
+      "rows": 20,
+      "recommendedCandidates": 8,
+      "unchangedOrHold": 12
+    }
+  },
+  "decisionRule": "Recommend prior deck wording for learner use only where the entire paragraph maps byte-exactly to the canonical English paragraph and this independent back-translation check finds the deck version more fully localized while preserving meaning, condition, modality, order, and all enumerated items. This remains a candidate, not a translation approval; root/independent review is required. Do not swap all resolver differences wholesale.",
+  "rows": [
+    {
+      "language": "st",
+      "slide": 2,
+      "bodyIndex": 0,
+      "canonicalSource": "A harvest can feed the household, be sold, be shared, or be lost.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 0
+      },
+      "priorDeckTarget": "Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha).",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha).",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "already-identical; no proposal",
+      "backTranslationCheck": "Current deck and learner resolver already match exactly.",
+      "riskNotes": [
+        "Household food use must remain separate from market sale or surplus.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "st",
+      "slide": 2,
+      "bodyIndex": 1,
+      "canonicalSource": "Recording these different uses helps you see what the farm produces and what reaches customers.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 1
+      },
+      "priorDeckTarget": "Ho rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Ho rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "already-identical; no proposal",
+      "backTranslationCheck": "Current deck and learner resolver already match exactly.",
+      "riskNotes": [
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "st",
+      "slide": 2,
+      "bodyIndex": 2,
+      "canonicalSource": "Use that information to protect household food and make better business decisions.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 2
+      },
+      "priorDeckTarget": "Sebelisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa better business decisions.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Sebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Current deck has mixed English “better business decisions”; learner resolver provides localized ordinary wording. Existing deck is not a fuller/localized choice.",
+      "riskNotes": [
+        "Household food use must remain separate from market sale or surplus."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "st",
+      "slide": 5,
+      "bodyIndex": 0,
+      "canonicalSource": "Write down every harvest as it happens.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 3
+      },
+      "priorDeckTarget": "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "already-identical; no proposal",
+      "backTranslationCheck": "Current deck and learner resolver already match exactly.",
+      "riskNotes": [],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "st",
+      "slide": 5,
+      "bodyIndex": 1,
+      "canonicalSource": "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 4
+      },
+      "priorDeckTarget": "Rekota kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe o ngola hore e nngwe le e nngwe e ile hokae.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Difference alone does not establish that current deck is fuller or semantically safer; retain current target pending translator review.",
+      "riskNotes": [
+        "Preserve may/can, negation, sequence, and failure triggers exactly.",
+        "Preserve units and product categories exactly."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "st",
+      "slide": 5,
+      "bodyIndex": 2,
+      "canonicalSource": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 5
+      },
+      "priorDeckTarget": "Sebelisa mokgwa ona o bonolo o tshwanang bakeng sa dijo tse bolokwang lapeng, dihlahiswa tse rekiswang, tse fanwang e le mpho, le tse kenngwang compost.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Sebedisa mokgwa ona o bonolo o tshwanang bakeng sa dijo tse bolokwang lapeng, dihlahiswa tse rekisitsweng, tse fanweng e le mpho, le tse entsweng compost.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Difference alone does not establish that current deck is fuller or semantically safer; retain current target pending translator review.",
+      "riskNotes": [
+        "“Yield per bed,” “return per hour,” and input use are distinct measures. Keep difficult technical terms in English if the local equivalent is uncertain.",
+        "Household food use must remain separate from market sale or surplus.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "st",
+      "slide": 5,
+      "bodyIndex": 3,
+      "canonicalSource": "Do not rely on memory at the end of the season.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 6
+      },
+      "priorDeckTarget": "O se ke wa itshetleha ka mohopolo qetellong ya sehla.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "O se ke wa itshetleha ka mohopolo qetellong ya sehla.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "already-identical; no proposal",
+      "backTranslationCheck": "Current deck and learner resolver already match exactly.",
+      "riskNotes": [
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "bodyIndex": 0,
+      "canonicalSource": "One season of records answers practical questions.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 7
+      },
+      "priorDeckTarget": "Sehla se le seng sa direkoto se araba dipotso tse sebetsang.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Sehla se le seng sa direkoto se araba dipotso tse sebetsang.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "already-identical; no proposal",
+      "backTranslationCheck": "Current deck and learner resolver already match exactly.",
+      "riskNotes": [],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "bodyIndex": 1,
+      "canonicalSource": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 8
+      },
+      "priorDeckTarget": "Ke dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return for each hour of work?",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Ke crops dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return for each hour of work?",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "Ke dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return for each hour of work?",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck translates the ordinary crop noun while retaining yield-per-bed and return-per-hour terminology; both question clauses remain, and the second anaphoric “Which” is clear from context.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause.",
+        "“Yield per bed,” “return per hour,” and input use are distinct measures. Keep difficult technical terms in English if the local equivalent is uncertain."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "bodyIndex": 2,
+      "canonicalSource": "Which crops use more seeds, water, and compost than they return?",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 9
+      },
+      "priorDeckTarget": "Ke dijalo dife tse sebedisang dipeo, metsi le compost tse ngata ho feta seo di se kgutlisang?",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Ke crops dife tse sebedisang dipeo, metsi le compost tse ngata ho feta return ya tsona?",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "Ke dijalo dife tse sebedisang dipeo, metsi le compost tse ngata ho feta seo di se kgutlisang?",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck localizes the resource list and preserves the comparison “more than what they return”; learner resolver uses English crops and “return ya tsona”. Keep “compost” technical term as currently written.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause.",
+        "“Yield per bed,” “return per hour,” and input use are distinct measures. Keep difficult technical terms in English if the local equivalent is uncertain."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "bodyIndex": 3,
+      "canonicalSource": "The record also shows which months leave the household buying food.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 10
+      },
+      "priorDeckTarget": "Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "already-identical; no proposal",
+      "backTranslationCheck": "Current deck and learner resolver already match exactly.",
+      "riskNotes": [
+        "Household food use must remain separate from market sale or surplus."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "bodyIndex": 0,
+      "canonicalSource": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 11
+      },
+      "priorDeckTarget": "Pele o beha theko, rekota ditjeo tsa tlhahiso, ho paka le ho rekisa, ho kenyeletsa mosebetsi le dipalangoang.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Pele o beha price, rekota production, packing le selling costs, ho kenyeletsa labour le transport.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "Pele o beha theko, rekota ditjeo tsa tlhahiso, ho paka le ho rekisa, ho kenyeletsa mosebetsi le dipalangoang.",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck localizes price, production, packing, selling costs, labour, and transport. All listed cost categories and “before setting a price” order are present.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly.",
+        "Preserve units and product categories exactly."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "bodyIndex": 1,
+      "canonicalSource": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 12
+      },
+      "priorDeckTarget": "",
+      "priorDeckStatus": "english-hold",
+      "currentLearnerResolverText": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "preserve-exact-English-hold",
+      "backTranslationCheck": "Numeric price teaching example is held in exact English; not a market price. Do not translate, reinterpret, or use as local market data.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": "Not eligible for learner candidate."
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "bodyIndex": 2,
+      "canonicalSource": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 13
+      },
+      "priorDeckTarget": "Hlahloba theko, ditjeo le next planting. Sheba seo bareki ba tla se reka e le kannete; theko e hodimo eo o e kopang ha e tiise thekiso.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Hlahloba price, costs le next planting. Lekola seo bareki ba tla se reka e le kannete; theko e hodimo eo o e kopang ha e netefatse thekiso.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "Hlahloba theko, ditjeo le next planting. Sheba seo bareki ba tla se reka e le kannete; theko e hodimo eo o e kopang ha e tiise thekiso.",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck keeps review/check sequence, next planting, actual customer buying, and non-guarantee. It localizes price/cost terms more fully; retain the exact modal and no-guarantee sense.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "st",
+      "slide": 8,
+      "bodyIndex": 0,
+      "canonicalSource": "Use your record to find when household food runs short.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 14
+      },
+      "priorDeckTarget": "Sebedisa rekoto ya hao ho fumana hore na dijo tsa lelapa di haella neng.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Sebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Both current wordings appear plausible but differ in how explicitly they express “when”; no clear fuller/safer deck advantage.",
+      "riskNotes": [
+        "Household food use must remain separate from market sale or surplus.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "st",
+      "slide": 8,
+      "bodyIndex": 1,
+      "canonicalSource": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 15
+      },
+      "priorDeckTarget": "Kgetha dijalo tse loketseng sebaka sa heno, mme o bale o kgutlela morao ho tloha kotulong eo o e hlokang. Hlahloba maemo a ho jala le nako e lebeletsweng ya ho fihla kotulong.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Khetha crops tse loketseng sebaka sa heno, mme o rale o kgutlela morao ho tloha ho harvest eo o e hlokang. Sheba maemo a ho jala le nako e lebelletsweng ya kotulo.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "Kgetha dijalo tse loketseng sebaka sa heno, mme o bale o kgutlela morao ho tloha kotulong eo o e hlokang. Hlahloba maemo a ho jala le nako e lebeletsweng ya ho fihla kotulong.",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck localizes the full instruction and retains local suitability, backward planning from needed harvest, planting conditions, and expected time to harvest.",
+      "riskNotes": [
+        "“Yield per bed,” “return per hour,” and input use are distinct measures. Keep difficult technical terms in English if the local equivalent is uncertain."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "st",
+      "slide": 8,
+      "bodyIndex": 2,
+      "canonicalSource": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 16
+      },
+      "priorDeckTarget": "Letsatsi le sebetsang polasing e nngwe le ka nna la se sebetse mona. Kenyelletsa leano la bobedi haeba pula, metsi kapa dijalo di hloleha.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Letsatsi le sebetsang polasing e nngwe le ka nna la se ke la sebetsa mona. Kenya moralo wa tlatsetso ha pula, metsi kapa dijalo di hloleha.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "Letsatsi le sebetsang polasing e nngwe le ka nna la se sebetse mona. Kenyelletsa leano la bobedi haeba pula, metsi kapa dijalo di hloleha.",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck localizes both sentences and retains may-not-work modality plus backup-plan trigger list rain, water, or crops failing.",
+      "riskNotes": [
+        "“Yield per bed,” “return per hour,” and input use are distinct measures. Keep difficult technical terms in English if the local equivalent is uncertain.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "st",
+      "slide": 10,
+      "bodyIndex": 0,
+      "canonicalSource": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l2",
+        "paragraphIndexZeroBased": 0
+      },
+      "priorDeckTarget": "Botsa hore na moreki o hloka eng: sehlahiswa, bongata, boleng, ho iswa le letsatsi la tefo.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Checklist is complete in both; no clear semantic or localization gain from switching.",
+      "riskNotes": [
+        "Preserve units and product categories exactly."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "st",
+      "slide": 10,
+      "bodyIndex": 1,
+      "canonicalSource": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l2",
+        "paragraphIndexZeroBased": 1
+      },
+      "priorDeckTarget": "Bapisa ditefello tsa mmaraka, dipalangoang, ho paka le dihlahiswa tse sa rekiswang, hammoho le theko ya thekiso.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Bapisa market fees, lipalangoang, ho paka le dihlahiswa tse sa rekiswang hammoho le selling price.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "Bapisa ditefello tsa mmaraka, dipalangoang, ho paka le dihlahiswa tse sa rekiswang, hammoho le theko ya thekiso.",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck localizes fees, transport, packing, unsold produce, and selling price; the full comparison set is present.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "st",
+      "slide": 10,
+      "bodyIndex": 2,
+      "canonicalSource": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l2",
+        "paragraphIndexZeroBased": 2
+      },
+      "priorDeckTarget": "Hlahloba melao ya mmaraka le ditlhoko tsa lehae tsa kgwebo le dijo. Setala sa informal ha se bolele ka boyona hore ha ho na melao kapa ditjeo.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Hlahloba melao ya mmaraka le ditlhoko tsa lehae tsa kgwebo le dijo. Setala sa informal ha se bolele ka boyona hore ha ho na melao kapa ditjeo.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "already-identical; no proposal",
+      "backTranslationCheck": "Current deck and learner resolver already match exactly.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause.",
+        "Household food use must remain separate from market sale or surplus.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly.",
+        "Retain scope of market rules and local trading/food requirements; “informal” does not remove rules or costs."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ve",
+      "slide": 2,
+      "bodyIndex": 0,
+      "canonicalSource": "A harvest can feed the household, be sold, be shared, or be lost.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 0
+      },
+      "priorDeckTarget": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "already-identical; no proposal",
+      "backTranslationCheck": "Current deck and learner resolver already match exactly.",
+      "riskNotes": [
+        "Household food use must remain separate from market sale or surplus.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ve",
+      "slide": 2,
+      "bodyIndex": 1,
+      "canonicalSource": "Recording these different uses helps you see what the farm produces and what reaches customers.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 1
+      },
+      "priorDeckTarget": "U ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "U ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "already-identical; no proposal",
+      "backTranslationCheck": "Current deck and learner resolver already match exactly.",
+      "riskNotes": [
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ve",
+      "slide": 2,
+      "bodyIndex": 2,
+      "canonicalSource": "Use that information to protect household food and make better business decisions.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 2
+      },
+      "priorDeckTarget": "Shumisani mafhungo ayo u tsireledza zwiḽiwa zwa muṱa na u dzhia better business decisions.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Shumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Current deck has mixed English “better business decisions”; learner resolver provides localized ordinary wording. Existing deck is not a fuller/localized choice.",
+      "riskNotes": [
+        "Household food use must remain separate from market sale or surplus."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "ve",
+      "slide": 5,
+      "bodyIndex": 0,
+      "canonicalSource": "Write down every harvest as it happens.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 3
+      },
+      "priorDeckTarget": "Ṅwalani khaṋo iṅwe na iṅwe musi i tshi itea.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Ṅwalani khaṋo iṅwe na iṅwe musi i tshi itea.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "already-identical; no proposal",
+      "backTranslationCheck": "Current deck and learner resolver already match exactly.",
+      "riskNotes": [],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ve",
+      "slide": 5,
+      "bodyIndex": 1,
+      "canonicalSource": "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 4
+      },
+      "priorDeckTarget": "Rekhodani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo, ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Ṅwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Difference alone does not establish that current deck is fuller or semantically safer; retain current target pending translator review.",
+      "riskNotes": [
+        "Preserve may/can, negation, sequence, and failure triggers exactly.",
+        "Preserve units and product categories exactly."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "ve",
+      "slide": 5,
+      "bodyIndex": 2,
+      "canonicalSource": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 5
+      },
+      "priorDeckTarget": "Shumisani nḓowelo iyi yo leluwaho kha zwiḽiwa zwi re hayani, zwibveledzwa zwo rengiswaho, zwe zwa ṋewa vhaṅwe, na zwe zwa vhewa kha compost.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Shumisani maitele a sa lemelaho a fanaho kha zwiḽiwa zwine zwa dzula hayani, zwibveledzwa zwo rengiswaho, zwo ṋewaho vhaṅwe nga mpho, na zwo itwaho compost.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Difference alone does not establish that current deck is fuller or semantically safer; retain current target pending translator review.",
+      "riskNotes": [
+        "“Yield per bed,” “return per hour,” and input use are distinct measures. Keep difficult technical terms in English if the local equivalent is uncertain.",
+        "Household food use must remain separate from market sale or surplus.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "ve",
+      "slide": 5,
+      "bodyIndex": 3,
+      "canonicalSource": "Do not rely on memory at the end of the season.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 6
+      },
+      "priorDeckTarget": "Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "already-identical; no proposal",
+      "backTranslationCheck": "Current deck and learner resolver already match exactly.",
+      "riskNotes": [
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 0,
+      "canonicalSource": "One season of records answers practical questions.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 7
+      },
+      "priorDeckTarget": "Khalaṅwaha nthihi ya rekhodo i fhindula mbudziso dzine dza thusa.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Rekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Difference alone does not establish that current deck is fuller or semantically safer; retain current target pending translator review.",
+      "riskNotes": [],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 1,
+      "canonicalSource": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 8
+      },
+      "priorDeckTarget": "Ndi zwifhio zwimela zwine zwa bveledza best yield per bed? Ndi zwifhio zwine zwa vhuisa the most return for each hour of work?",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwimela zwifhio zwine zwa vhuisa the most return for each hour of work?",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Difference alone does not establish that current deck is fuller or semantically safer; retain current target pending translator review.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause.",
+        "“Yield per bed,” “return per hour,” and input use are distinct measures. Keep difficult technical terms in English if the local equivalent is uncertain."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 2,
+      "canonicalSource": "Which crops use more seeds, water, and compost than they return?",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 9
+      },
+      "priorDeckTarget": "Ndi zwifhio zwimela zwine zwa shumisa mbeu, maḓi na compost nnzhi u fhira zwine zwa zwi bveledza?",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Ndi crops dzifhio dzine dza shumisa seeds, water na compost zwinzhi u fhira zwine dza vhuisa?",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Source “return” may mean production or economic return; current target narrows it to output/produce or resolver mixes technical English. Retain the exact technical English clause pending terminology review.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause.",
+        "“Yield per bed,” “return per hour,” and input use are distinct measures. Keep difficult technical terms in English if the local equivalent is uncertain."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "ve",
+      "slide": 6,
+      "bodyIndex": 3,
+      "canonicalSource": "The record also shows which months leave the household buying food.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 10
+      },
+      "priorDeckTarget": "Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa tea u renga zwiḽiwa.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Month-specific household food buying must remain precise; deck/resolver differences include “some months” or adds obligation. Prefer no promotion without local review.",
+      "riskNotes": [
+        "Household food use must remain separate from market sale or surplus."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 0,
+      "canonicalSource": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 11
+      },
+      "priorDeckTarget": "Musi ni sa athu vhea mutengo, ṅwalani production, packing and selling costs, hu tshi katelwa mushumo na transport.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Musi ni sa athu vhea price, ṅwalani production, packing na selling costs, u katela labour na transport.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "Musi ni sa athu vhea mutengo, ṅwalani production, packing and selling costs, hu tshi katelwa mushumo na transport.",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck localizes price, labour, and transport while retaining the difficult cost-category labels production, packing, and selling. Includes all categories and before-price order.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly.",
+        "Preserve units and product categories exactly."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 1,
+      "canonicalSource": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 12
+      },
+      "priorDeckTarget": "",
+      "priorDeckStatus": "english-hold",
+      "currentLearnerResolverText": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "preserve-exact-English-hold",
+      "backTranslationCheck": "Numeric price teaching example is held in exact English; not a market price. Do not translate, reinterpret, or use as local market data.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": "Not eligible for learner candidate."
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "bodyIndex": 2,
+      "canonicalSource": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 13
+      },
+      "priorDeckTarget": "Sedzani mutengo, costs na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u fulufhedzisi uri hu ḓo rengiswa.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Sedzani price, costs na u ṱavha hu tevhelaho. Ṱolani zwine vharengi vha ḓo zwi renga zwa vhukuma; asking a higher price does not guarantee a sale.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "Sedzani mutengo, costs na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u fulufhedzisi uri hu ḓo rengiswa.",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck localizes price and review/check framing; preserves next planting, actual customer purchase check, and no guaranteed sale. The cost label remains English; preserve it if technical terminology is preferred.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 0,
+      "canonicalSource": "Use your record to find when household food runs short.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 14
+      },
+      "priorDeckTarget": "Shumisani rekhodo yaṋu u wana uri zwiḽiwa zwa muṱa zwi ṱhaela lini.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Shumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Both current wordings appear plausible but differ in how explicitly they express “when”; no clear fuller/safer deck advantage.",
+      "riskNotes": [
+        "Household food use must remain separate from market sale or surplus.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 1,
+      "canonicalSource": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 15
+      },
+      "priorDeckTarget": "Nangani crops dzine dza tea fhethu haṋu, ni pulane ni tshi vhalela murahu ni tshi bva kha harvest ine na i ṱoḓa. Sedzani nyimele dza u ṱavha na tshifhinga tshine khaṋo ya lavhelelwa u swika ngatsho.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Nangani crops dzine dza tea vhupo haṋu, ni pulane ni tshi vhalela murahu ni tshi bva kha harvest ine na i ṱoḓa. Ṱolani nyimele dza u zwala na tshifhinga tsho lavhelelwaho tsha u kaṋa.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Where current target retains ordinary English “crops/harvest” and learner wording differs, keep exact source technical terms if uncertain; no recommendation based on localization amount alone.",
+      "riskNotes": [
+        "“Yield per bed,” “return per hour,” and input use are distinct measures. Keep difficult technical terms in English if the local equivalent is uncertain."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 2,
+      "canonicalSource": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 16
+      },
+      "priorDeckTarget": "Datumu ine ya shuma kha ḽiṅwe bulasi i nga sa shuma hafha. Include a backup plan when rain, water or crops fail.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "A date that works on another farm may not work here. Engedzani a backup plan musi mvula, maḓi kana zwimela zwi tshi kundelwa.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Difference alone does not establish that current deck is fuller or semantically safer; retain current target pending translator review.",
+      "riskNotes": [
+        "“Yield per bed,” “return per hour,” and input use are distinct measures. Keep difficult technical terms in English if the local equivalent is uncertain.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "bodyIndex": 0,
+      "canonicalSource": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l2",
+        "paragraphIndexZeroBased": 0
+      },
+      "priorDeckTarget": "Vhudzisani uri murengi u ṱoḓa mini: tshibveledzwa, tshivhalo, quality, delivery na ḓuvha ḽa payment.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Vhudzisani uri mutengi u ṱoḓa mini: product, tshivhalo, quality, delivery na ḓuvha ḽa payment.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Checklist is complete in both; no clear semantic or localization gain from switching.",
+      "riskNotes": [
+        "Preserve units and product categories exactly."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "bodyIndex": 1,
+      "canonicalSource": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l2",
+        "paragraphIndexZeroBased": 1
+      },
+      "priorDeckTarget": "Vhambedzani market fees, transport, u paka na zwibveledzwa zwi sa rengiswi, na mutengo wa u rengisa.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Pimanisani market fees, transport, packing na unsold produce, khathihi na selling price.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "Vhambedzani market fees, transport, u paka na zwibveledzwa zwi sa rengiswi, na mutengo wa u rengisa.",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck localizes packing and unsold produce and retains market fees, transport, selling price as distinct comparison factors.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "bodyIndex": 2,
+      "canonicalSource": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l2",
+        "paragraphIndexZeroBased": 2
+      },
+      "priorDeckTarget": "Sedzani milayo ya market na ṱhoḓea dza henefho dza u rengisa na zwiḽiwa. Informal stall a zwi sokou amba uri a hu na milayo kana costs.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Sedzani market rules and local trading and food requirements. Informal stall a zwi sokou amba uri a hu na milayo kana costs.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "Sedzani milayo ya market na ṱhoḓea dza henefho dza u rengisa na zwiḽiwa. Informal stall a zwi sokou amba uri a hu na milayo kana costs.",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck localizes the ordinary legal/market framing around “market” and “informal stall,” and preserves the important assertion that informality does not imply no rules/costs. Retain “informal” as technical/contextual English if needed.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause.",
+        "Household food use must remain separate from market sale or surplus.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly.",
+        "Retain scope of market rules and local trading/food requirements; “informal” does not remove rules or costs."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ts",
+      "slide": 2,
+      "bodyIndex": 0,
+      "canonicalSource": "A harvest can feed the household, be sold, be shared, or be lost.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 0
+      },
+      "priorDeckTarget": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "already-identical; no proposal",
+      "backTranslationCheck": "Current deck and learner resolver already match exactly.",
+      "riskNotes": [
+        "Household food use must remain separate from market sale or surplus.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ts",
+      "slide": 2,
+      "bodyIndex": 1,
+      "canonicalSource": "Recording these different uses helps you see what the farm produces and what reaches customers.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 1
+      },
+      "priorDeckTarget": "Ku tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Ku tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "already-identical; no proposal",
+      "backTranslationCheck": "Current deck and learner resolver already match exactly.",
+      "riskNotes": [
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ts",
+      "slide": 2,
+      "bodyIndex": 2,
+      "canonicalSource": "Use that information to protect household food and make better business decisions.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 2
+      },
+      "priorDeckTarget": "Tirhisa rungula rero ku hlayisa swakudya swa ndyangu ni ku endla better business decisions.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Tirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Current deck has mixed English “better business decisions”; learner resolver provides localized ordinary wording. Existing deck is not a fuller/localized choice.",
+      "riskNotes": [
+        "Household food use must remain separate from market sale or surplus."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "ts",
+      "slide": 5,
+      "bodyIndex": 0,
+      "canonicalSource": "Write down every harvest as it happens.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 3
+      },
+      "priorDeckTarget": "Tsala ntshovelo wun'wana ni wun'wana loko wu humelela.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Tsala ntshovelo wun'wana ni wun'wana loko wu humelela.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "already-identical; no proposal",
+      "backTranslationCheck": "Current deck and learner resolver already match exactly.",
+      "riskNotes": [],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ts",
+      "slide": 5,
+      "bodyIndex": 1,
+      "canonicalSource": "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 4
+      },
+      "priorDeckTarget": "Tsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, u tlhela u tsala laha xin’wana ni xin’wana xi yeke kona.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Tsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Difference alone does not establish that current deck is fuller or semantically safer; retain current target pending translator review.",
+      "riskNotes": [
+        "Preserve may/can, negation, sequence, and failure triggers exactly.",
+        "Preserve units and product categories exactly."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "ts",
+      "slide": 5,
+      "bodyIndex": 2,
+      "canonicalSource": "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 5
+      },
+      "priorDeckTarget": "Tirhisa mukhuva lowu wo olova eka swakudya leswi hlayisiwaka ekaya, leswi xavisiwaka, leswi nyikiwaka van’wana, ni leswi endliwaka compost.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Tirhisa mukhuva lowu wo olova lowu fanaka eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Difference alone does not establish that current deck is fuller or semantically safer; retain current target pending translator review.",
+      "riskNotes": [
+        "“Yield per bed,” “return per hour,” and input use are distinct measures. Keep difficult technical terms in English if the local equivalent is uncertain.",
+        "Household food use must remain separate from market sale or surplus.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "ts",
+      "slide": 5,
+      "bodyIndex": 3,
+      "canonicalSource": "Do not rely on memory at the end of the season.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 6
+      },
+      "priorDeckTarget": "Loko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Loko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "already-identical; no proposal",
+      "backTranslationCheck": "Current deck and learner resolver already match exactly.",
+      "riskNotes": [
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 0,
+      "canonicalSource": "One season of records answers practical questions.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 7
+      },
+      "priorDeckTarget": "Nguva yin’we ya tirhekhodo yi hlamula swivutiso leswi pfunaka.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Matsalwa ya nguva yin’we ma nga hlamula swivutiso leswi pfunaka.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "Nguva yin’we ya tirhekhodo yi hlamula swivutiso leswi pfunaka.",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck states that one season of records answers questions; resolver adds “may,” weakening source certainty. Current phrasing retains definite source modality.",
+      "riskNotes": [],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 1,
+      "canonicalSource": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 8
+      },
+      "priorDeckTarget": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return for each hour of work?",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return for each hour of work?",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "already-identical; no proposal",
+      "backTranslationCheck": "Current deck and learner resolver already match exactly.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause.",
+        "“Yield per bed,” “return per hour,” and input use are distinct measures. Keep difficult technical terms in English if the local equivalent is uncertain."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 2,
+      "canonicalSource": "Which crops use more seeds, water, and compost than they return?",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 9
+      },
+      "priorDeckTarget": "Hi swihi swimilana leswi tirhisaka mbewu, mati ni compost yo tala ku hundza leswi swi swi humesaka?",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Hi swihi swibyariwa leswi tirhisaka seeds, water na compost swo tala ku tlurisa leswi swi swi vuyisaka?",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Source “return” may mean production or economic return; current target narrows it to output/produce or resolver mixes technical English. Retain the exact technical English clause pending terminology review.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause.",
+        "“Yield per bed,” “return per hour,” and input use are distinct measures. Keep difficult technical terms in English if the local equivalent is uncertain."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "ts",
+      "slide": 6,
+      "bodyIndex": 3,
+      "canonicalSource": "The record also shows which months leave the household buying food.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 10
+      },
+      "priorDeckTarget": "Rekhodo yi tlhela yi komba tin'wana ta tin'hweti leti ndyangu wu xava swakudya.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Rekhodo yi tlhela yi komba leswaku muti wu xava swakudya hi tin’hweti tihi.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Month-specific household food buying must remain precise; deck/resolver differences include “some months” or adds obligation. Prefer no promotion without local review.",
+      "riskNotes": [
+        "Household food use must remain separate from market sale or surplus."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "bodyIndex": 0,
+      "canonicalSource": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 11
+      },
+      "priorDeckTarget": "U nga si veka nxavo, tsala production, packing and selling costs, ku katsa labour ni transport.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Loko u nga se veka price, tsala production, packing and selling costs, ku katsa labour na transport.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "U nga si veka nxavo, tsala production, packing and selling costs, ku katsa labour ni transport.",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck localizes “price” and preserves production, packing/selling costs, labour, transport, and before-price sequence; English technical labels remain source-exact.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly.",
+        "Preserve units and product categories exactly."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "bodyIndex": 1,
+      "canonicalSource": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 12
+      },
+      "priorDeckTarget": "",
+      "priorDeckStatus": "english-hold",
+      "currentLearnerResolverText": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "preserve-exact-English-hold",
+      "backTranslationCheck": "Numeric price teaching example is held in exact English; not a market price. Do not translate, reinterpret, or use as local market data.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": "Not eligible for learner candidate."
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "bodyIndex": 2,
+      "canonicalSource": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 13
+      },
+      "priorDeckTarget": "Languta nxavo, ntsengo ni ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombisaka a wu tiyisisi ku xavisiwa.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Languta price, costs na ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombelaka a wu tiyisisi leswaku ku ta va ni ku xavisiwa.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "Languta nxavo, ntsengo ni ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombisaka a wu tiyisisi ku xavisiwa.",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck keeps review, costs, next planting, actual customer-buying check, and no-guarantee condition, while localizing price/cost language more fully.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 0,
+      "canonicalSource": "Use your record to find when household food runs short.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 14
+      },
+      "priorDeckTarget": "Tirhisa rekhodo ya wena ku kuma nkarhi lowu swakudya swa ndyangu swi kayivelaka.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Tirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": null,
+      "recommendationStatus": "do-not-promote-current-deck-on-this-check",
+      "backTranslationCheck": "Both current wordings appear plausible but differ in how explicitly they express “when”; no clear fuller/safer deck advantage.",
+      "riskNotes": [
+        "Household food use must remain separate from market sale or surplus.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": "No deck-to-learner recommendation."
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 1,
+      "canonicalSource": "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 15
+      },
+      "priorDeckTarget": "Hlawula swimilana leswi faneleke ndhawu ya ka n’wina, u tlhela u tirha u tlhelela endzhaku ku suka eka ntshovelo lowu u wu lavaka. Kambisisa swiyimo swa ku byala ni nkarhi lowu ntshovelo wu languteriwaka ku fika ha wona.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Hlawula swibyariwa leswi lulameleke ndhawu ya wena, kutani u hlela u tlhelela endzhaku ku suka eka ntshovelo lowu u wu lavaka. Kambisisa planting conditions na expected time to harvest.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "Hlawula swimilana leswi faneleke ndhawu ya ka n’wina, u tlhela u tirha u tlhelela endzhaku ku suka eka ntshovelo lowu u wu lavaka. Kambisisa swiyimo swa ku byala ni nkarhi lowu ntshovelo wu languteriwaka ku fika ha wona.",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck localizes the complete sequence, preserving locally suitable crops, backward planning from the needed harvest, planting conditions, and expected harvest timing.",
+      "riskNotes": [
+        "“Yield per bed,” “return per hour,” and input use are distinct measures. Keep difficult technical terms in English if the local equivalent is uncertain."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 2,
+      "canonicalSource": "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l1",
+        "paragraphIndexZeroBased": 16
+      },
+      "priorDeckTarget": "Siku leri tirhaka epurasini rin’wana ri nga ha ka ri nga tirhi laha. Nghenisa pulani ya vumbirhi loko mpfula, mati kumbe swimilana swi tsandzeka.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Siku leri tirhaka epurasini rin’wana ri nga ha ka ri nga tirhi laha. Engetela backup plan loko mpfula, mati kumbe swibyariwa swi tsandzeka.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "Siku leri tirhaka epurasini rin’wana ri nga ha ka ri nga tirhi laha. Nghenisa pulani ya vumbirhi loko mpfula, mati kumbe swimilana swi tsandzeka.",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck localizes both sentences and retains may-not-work modality and backup plan for rain, water, or crop failure.",
+      "riskNotes": [
+        "“Yield per bed,” “return per hour,” and input use are distinct measures. Keep difficult technical terms in English if the local equivalent is uncertain.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "bodyIndex": 0,
+      "canonicalSource": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l2",
+        "paragraphIndexZeroBased": 0
+      },
+      "priorDeckTarget": "Vutisa leswi muxavi a swi lavaka: product, nhlayo, quality, delivery ni siku ro hakela.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "Vutisa leswi muxavi a swi lavaka: product, nhlayo, quality, delivery ni siku ro hakela.",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck localizes the question framing and quantity/payment wording; retains the distinct product, quantity, quality, delivery, payment-date checklist. Retain quality/product terminology if necessary.",
+      "riskNotes": [
+        "Preserve units and product categories exactly."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "bodyIndex": 1,
+      "canonicalSource": "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l2",
+        "paragraphIndexZeroBased": 1
+      },
+      "priorDeckTarget": "Pimanisa market fees, transport, ku paka ni leswi nga xavisiwangiki, swin’we ni nxavo wo xavisa.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Pimanisa market fees, transport, packing na unsold produce, swin’we ni selling price.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "Pimanisa market fees, transport, ku paka ni leswi nga xavisiwangiki, swin’we ni nxavo wo xavisa.",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck localizes packing, unsold produce, and selling price; preserves fees and transport as distinct cost factors.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause."
+      ],
+      "rejectionOrHoldReason": null
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "bodyIndex": 2,
+      "canonicalSource": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "canonicalSourceMatch": true,
+      "canonicalLessonPath": {
+        "lessonId": "market-community-l2",
+        "paragraphIndexZeroBased": 2
+      },
+      "priorDeckTarget": "Kambisisa milawu ya makete ni local trading and food requirements. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe ntsengo.",
+      "priorDeckStatus": "draft",
+      "currentLearnerResolverText": "Kambisisa market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "currentLearnerResolverStatus": "draft",
+      "candidateLearnerText": "Kambisisa milawu ya makete ni local trading and food requirements. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe ntsengo.",
+      "recommendationStatus": "recommend-deck-wording-as-learner-candidate; independent/root second review required",
+      "backTranslationCheck": "Current deck localizes the ordinary framing and retains the full caution that an informal stall does not automatically have no rules or costs. Keep the precise regulatory categories clear in reviewer pass.",
+      "riskNotes": [
+        "Price, cost and sale are separate; preserve before/after order and any no-guarantee clause.",
+        "Household food use must remain separate from market sale or surplus.",
+        "Preserve may/can, negation, sequence, and failure triggers exactly.",
+        "Retain scope of market rules and local trading/food requirements; “informal” does not remove rules or costs."
+      ],
+      "rejectionOrHoldReason": null
+    }
+  ],
+  "limitations": [
+    "Machine semantic/back-translation check only; no fluent local language or farming approval.",
+    "Candidate wording is copied exactly from the existing paired deck target.",
+    "Exact English technical terms may remain where a localized equivalent would be uncertain.",
+    "Slide 7 body paragraph 1 remains an exact English hold because it is explicitly a teaching example, not a market price."
+  ]
+}

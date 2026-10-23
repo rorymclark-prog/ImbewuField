@@ -1,0 +1,260 @@
+{
+  "title": "Applied Market assessment framing, source-bound reviewer record",
+  "baseHead": "432a99174819a303424404473ee54a08081ff2b4",
+  "canonicalSha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+  "scope": "Six independently accepted/repaired fields in the ST/VE/TS Market learner registries. All are unreviewed machine drafts.",
+  "fields": [
+    {
+      "language": "ve",
+      "moduleId": "market-community",
+      "lessonId": "market-community-l1",
+      "fieldPath": "keyPoints[0]",
+      "sourceEnglish": "Record harvest amounts and destinations separately from cash",
+      "currentTargetText": "Record harvest amounts and destinations separately from cash",
+      "appliedTargetText": "Ṅwalani harvest amounts and destinations nga u fhambana na cash",
+      "reviewStatus": "machine-draft",
+      "sourceCorrectIndex": null,
+      "independentDecision": "repair",
+      "reason": "The recording action and “separately from cash” relation are defensible ordinary framing; the exact record categories and cash anchor remain English. The original segmentation put a trailing space in the English-hold target that was absent from its source and put the separator on the wrong segment. This repair keeps the complete target wording while making every English hold byte-exact and preserving the spaces.",
+      "segments": [
+        {
+          "sourceEnglish": "Record ",
+          "target": "Ṅwalani ",
+          "status": "draft",
+          "reason": "Localizes the ordinary recording action."
+        },
+        {
+          "sourceEnglish": "harvest amounts and destinations",
+          "target": "harvest amounts and destinations",
+          "status": "english-hold",
+          "reason": "Keeps exact business record categories."
+        },
+        {
+          "sourceEnglish": " separately from ",
+          "target": " nga u fhambana na ",
+          "status": "draft",
+          "reason": "Preserves separation from cash."
+        },
+        {
+          "sourceEnglish": "cash",
+          "target": "cash",
+          "status": "english-hold",
+          "reason": "Retains the accounting term."
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "moduleId": "market-community",
+      "lessonId": "market-community-l1",
+      "fieldPath": "quiz[1].options[1]",
+      "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "currentTargetText": "Work backwards from the food gap using suitable local crops and their harvest timing",
+      "appliedTargetText": "Pulani ni tshi humela murahu u bva kha food gap ni tshi shumisa suitable local crops na their harvest timing",
+      "reviewStatus": "machine-draft",
+      "sourceCorrectIndex": 1,
+      "independentDecision": "accept",
+      "reason": "The candidate retains all three required parts: work backwards from the food gap, use suitable local crops, and their harvest timing. Exact source composition and English-hold spans are preserved. Canonical correct index is 1, so metadata calling this option a distractor is incorrect and must be replaced by the corrected risk text.",
+      "segments": [
+        {
+          "sourceEnglish": "Work backwards from the ",
+          "target": "Pulani ni tshi humela murahu u bva kha ",
+          "status": "draft",
+          "reason": "Localizes planning backwards without adding a step."
+        },
+        {
+          "sourceEnglish": "food gap",
+          "target": "food gap",
+          "status": "english-hold",
+          "reason": "Preserves the exact food-shortage concept."
+        },
+        {
+          "sourceEnglish": " using ",
+          "target": " ni tshi shumisa ",
+          "status": "draft",
+          "reason": "Preserves the stated means."
+        },
+        {
+          "sourceEnglish": "suitable local crops",
+          "target": "suitable local crops",
+          "status": "english-hold",
+          "reason": "Retains suitability and locality pending terminology review."
+        },
+        {
+          "sourceEnglish": " and ",
+          "target": " na ",
+          "status": "draft",
+          "reason": "Preserves the conjunction."
+        },
+        {
+          "sourceEnglish": "their harvest timing",
+          "target": "their harvest timing",
+          "status": "english-hold",
+          "reason": "Retains the scope linking timing to those crops."
+        }
+      ]
+    },
+    {
+      "language": "st",
+      "moduleId": "market-community",
+      "lessonId": "market-community-l2",
+      "fieldPath": "quiz[1].options[3]",
+      "sourceEnglish": "Box schemes avoid tax obligations",
+      "currentTargetText": "Box schemes avoid tax obligations",
+      "appliedTargetText": "Box schemes di qoba tax obligations",
+      "reviewStatus": "machine-draft",
+      "sourceCorrectIndex": 2,
+      "independentDecision": "accept",
+      "reason": "The original false distractor still asserts that box schemes avoid tax obligations. The translated verb retains the positive “avoid” direction; it does not turn the statement into preventing/prohibiting obligations, an exemption, or a negation. The named box-scheme and tax-obligation anchors are exact English holds, source composition is exact, and the canonical correct index remains 2. This is a machine-draft semantic check, not legal advice or fluency approval.",
+      "segments": [
+        {
+          "sourceEnglish": "Box schemes ",
+          "target": "Box schemes ",
+          "status": "english-hold",
+          "reason": "Retains the named commercial arrangement."
+        },
+        {
+          "sourceEnglish": "avoid ",
+          "target": "di qoba ",
+          "status": "draft",
+          "reason": "Localizes only the verb and preserves assertion direction."
+        },
+        {
+          "sourceEnglish": "tax obligations",
+          "target": "tax obligations",
+          "status": "english-hold",
+          "reason": "Retains the precise tax term."
+        }
+      ]
+    },
+    {
+      "language": "ve",
+      "moduleId": "market-community",
+      "lessonId": "market-community-l2",
+      "fieldPath": "quiz[1].options[3]",
+      "sourceEnglish": "Box schemes avoid tax obligations",
+      "currentTargetText": "Box schemes avoid tax obligations",
+      "appliedTargetText": "Box schemes dzi iledza tax obligations",
+      "reviewStatus": "machine-draft",
+      "sourceCorrectIndex": 2,
+      "independentDecision": "accept",
+      "reason": "The original false distractor still asserts that box schemes avoid tax obligations. The translated verb retains the positive “avoid” direction; it does not turn the statement into preventing/prohibiting obligations, an exemption, or a negation. The named box-scheme and tax-obligation anchors are exact English holds, source composition is exact, and the canonical correct index remains 2. This is a machine-draft semantic check, not legal advice or fluency approval.",
+      "segments": [
+        {
+          "sourceEnglish": "Box schemes ",
+          "target": "Box schemes ",
+          "status": "english-hold",
+          "reason": "Retains the named commercial arrangement."
+        },
+        {
+          "sourceEnglish": "avoid ",
+          "target": "dzi iledza ",
+          "status": "draft",
+          "reason": "Localizes only the verb and preserves assertion direction."
+        },
+        {
+          "sourceEnglish": "tax obligations",
+          "target": "tax obligations",
+          "status": "english-hold",
+          "reason": "Retains the precise tax term."
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "moduleId": "market-community",
+      "lessonId": "market-community-l2",
+      "fieldPath": "quiz[1].options[3]",
+      "sourceEnglish": "Box schemes avoid tax obligations",
+      "currentTargetText": "Box schemes avoid tax obligations",
+      "appliedTargetText": "Box schemes ti papalata tax obligations",
+      "reviewStatus": "machine-draft",
+      "sourceCorrectIndex": 2,
+      "independentDecision": "accept",
+      "reason": "The original false distractor still asserts that box schemes avoid tax obligations. The translated verb retains the positive “avoid” direction; it does not turn the statement into preventing/prohibiting obligations, an exemption, or a negation. The named box-scheme and tax-obligation anchors are exact English holds, source composition is exact, and the canonical correct index remains 2. This is a machine-draft semantic check, not legal advice or fluency approval.",
+      "segments": [
+        {
+          "sourceEnglish": "Box schemes ",
+          "target": "Box schemes ",
+          "status": "english-hold",
+          "reason": "Retains the named commercial arrangement."
+        },
+        {
+          "sourceEnglish": "avoid ",
+          "target": "ti papalata ",
+          "status": "draft",
+          "reason": "Localizes only the verb and preserves assertion direction."
+        },
+        {
+          "sourceEnglish": "tax obligations",
+          "target": "tax obligations",
+          "status": "english-hold",
+          "reason": "Retains the precise tax term."
+        }
+      ]
+    },
+    {
+      "language": "ts",
+      "moduleId": "market-community",
+      "lessonId": "market-community-l1",
+      "fieldPath": "quiz[1].options[3]",
+      "sourceEnglish": "The records show a soil fertility problem",
+      "currentTargetText": "The records show a soil fertility problem",
+      "appliedTargetText": "Tirhekhodo ti komba leswaku ku na soil fertility problem",
+      "reviewStatus": "machine-draft",
+      "sourceCorrectIndex": 1,
+      "independentDecision": "repair",
+      "reason": "The diagnosis itself is a false distractor and remains an exact English hold. The prior hold target omitted the English article “a” from its source segment. This boundary repair moves “a” into the translated framing and holds only the exact technical diagnosis; the full candidate target remains unchanged and the source still reconstructs byte-for-byte.",
+      "segments": [
+        {
+          "sourceEnglish": "The records show a ",
+          "target": "Tirhekhodo ti komba leswaku ku na ",
+          "status": "draft",
+          "reason": "Localizes ordinary evidence framing."
+        },
+        {
+          "sourceEnglish": "soil fertility problem",
+          "target": "soil fertility problem",
+          "status": "english-hold",
+          "reason": "Retains the exact claimed diagnosis."
+        }
+      ]
+    }
+  ],
+  "excluded": {
+    "language": "ts",
+    "moduleId": "market-community",
+    "lessonId": "market-community-l3",
+    "fieldPath": "quiz[0].options[2]",
+    "sourceEnglish": "Assume sharing automatically improves every seed lot",
+    "currentTargetText": "Assume sharing automatically improves every seed lot",
+    "currentReviewStatus": "hold",
+    "candidateTargetText": "Ehleketa leswaku sharing automatically improves every seed lot",
+    "candidateReviewStatus": "machine-draft",
+    "segments": [
+      {
+        "sourceEnglish": "Assume ",
+        "target": "Ehleketa leswaku ",
+        "status": "draft",
+        "reason": "Localizes instruction framing."
+      },
+      {
+        "sourceEnglish": "sharing automatically improves every seed lot",
+        "target": "sharing automatically improves every seed lot",
+        "status": "english-hold",
+        "reason": "Retains universal/automatic improvement claim and technical term."
+      }
+    ],
+    "meaningRisk": "Existing false distractor; exact English preserves “automatically” and “every”. Fluent review should check framing verb.",
+    "sourceCorrectIndex": 1,
+    "independentCheck": {
+      "decision": "hold",
+      "reason": "The candidate preserves the false automatic/every-seed-lot claim exactly, but “Ehleketa leswaku” can mean think/consider and may weaken the source imperative “Assume.” The only localized portion is this short framing verb; without confirming that its force matches “assume,” keep the current exact-English hold rather than publish an uncertain machine draft.",
+      "sourceCorrectIndex": 1,
+      "retainedExactClaim": "sharing automatically improves every seed lot"
+    }
+  },
+  "limitations": [
+    "No fluent-speaker approval. Tax-option drafts retain the original false assertion and are not legal guidance."
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "schema": "imbewufield.study-vegetables-two-ordinary-residual-media-proof.v1",
+  "status": "prepared-unreviewed-media-refresh",
+  "scope": "Only paired cards VE Vegetables L2 slide 10 and TS Vegetables L3 slide 12; no audio, video, animations, source content, or other card assets changed by this media layer.",
+  "textReviewPacket": "docs/study-translation-reviews/vegetables-two-ordinary-residual-2026-10-08/prepared-layer.json",
+  "sourceFiles": {
+    "app/sw.js/route.ts": {
+      "beforeSha256": "ed8af1ea07af33f8936a0c0a8cb8909338ae4ec4e8fa898810bf84a46b173615",
+      "afterSha256": "c3cc2e2003e2fd74f34ac2136179cdd42114961ba70419ac0d0e0442edd593ce"
+    },
+    "lib/course-asset-sizes.ts": {
+      "beforeSha256": "8d2c26f50a202e27cdeaaa764a1a6c22ac991f60f21f8c0e60a7ff6183d1f991",
+      "afterSha256": "4e090846230392100ef2318160f90346d25567899d3ff37a56b751a6551df646"
+    }
+  },
+  "assets": [
+    {
+      "language": "ve",
+      "slide": 10,
+      "url": "/course-decks/vegetables-staples/ve/slide-10.webp",
+      "beforeBytes": 780116,
+      "beforeSha256": "16356e7c2c100b8e5d782edbe6af2e817c5e08523f4f2ff53a920db4e4ad4a3a",
+      "afterBytes": 779884,
+      "afterSha256": "ed0e057d587546b85953f99f76fa2f3ad0401cb4cf01f6c6c18090c5563d3788",
+      "width": 1440,
+      "height": 5400,
+      "renderer": "scripts/make-lesson-slides.mjs --paired-draft docs/narration/vegetables-staples.ve.paired-draft.json --slides 10",
+      "conversion": "WebP RGB, quality 88, method 6"
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "url": "/course-decks/vegetables-staples/ts/slide-12.webp",
+      "beforeBytes": 466162,
+      "beforeSha256": "6809b5e6646626052be0c0e4f3f8c91f72939c78c9f92f0de34686ad9005a1af",
+      "afterBytes": 464820,
+      "afterSha256": "8df52c02a423e0d54cd5f3f3f477522ceda7ac40e9e7eef8bfe584953b72e6a4",
+      "width": 1440,
+      "height": 5400,
+      "renderer": "scripts/make-lesson-slides.mjs --paired-draft docs/narration/vegetables-staples.ts.paired-draft.json --slides 12",
+      "conversion": "WebP RGB, quality 88, method 6"
+    }
+  ],
+  "cacheMigration": {
+    "function": "migrateVegetablesTwoOrdinaryResidualStills",
+    "marker": "/course-decks/vegetables-staples/.two-ordinary-residual-20261008",
+    "paths": [
+      "/course-decks/vegetables-staples/ve/slide-10.webp",
+      "/course-decks/vegetables-staples/ts/slide-12.webp"
+    ],
+    "queryVariants": "deleted by pathname; other assets are preserved",
+    "networkFetch": false
+  },
+  "visualInspection": {
+    "ve": "1440x5400 temp render inspected; target connector changed only; remaining technical-English tail preserved; no visible clipping observed.",
+    "ts": "1440x5400 temp render inspected; opening clause changed only; existing reason clause preserved; no visible clipping observed.",
+    "limitation": "Visual fit only; no language fluency approval."
+  }
+}

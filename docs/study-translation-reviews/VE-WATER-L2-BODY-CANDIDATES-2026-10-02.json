@@ -1,0 +1,129 @@
+{
+  "lessonId": "water-harvesting-l2",
+  "language": "ve",
+  "sourceMainSha": "39385338ef515dd0d56ccd3fe124fedc991785d5",
+  "currentSourceCheckedAt": "2026-10-02T09:23:04Z",
+  "canonicalPath": "lib/course-modules.ts",
+  "registryPath": "lib/course-translation-drafts-ve-water-harvesting.ts",
+  "status": "wired-machine-draft",
+  "scopeNote": "Read-only complete nine-paragraph Tshivenda Water L2 body candidate. It preserves the existing localized rainfall sentence in paragraph 2 exactly and translates ordinary prose in the previously exact-English-held paragraphs, retaining technical dam, legal, construction and water-safety terms where precision matters. No repository edits; no fluent-speaker or engineering approval claimed.",
+  "sourceBody": "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.\n\nRainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.\n\nBefore changing a watercourse or building storage works, check the required authorisation with the water authority.\n\nA dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.\n\nDo not assume that annual rainfall tells you the size of a flood or the storage you will have.\n\nAn uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.\n\nWater can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nAnimals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
+  "currentDraftBody": "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.\n\nTshifhinga tsha mvula tshi a fhambana u mona na Afurika Tshipembe. Use local records and plan for dry periods; a full dam is not guaranteed.\n\nBefore changing a watercourse or building storage works, check the required authorisation with the water authority.\n\nA dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.\n\nDo not assume that annual rainfall tells you the size of a flood or the storage you will have.\n\nAn uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.\n\nWater can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nAnimals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
+  "candidateBody": "Dam kana pond i nga vhulunga runoff, fhedzi amount i re hone i bva kha local rain, catchment, losses na uri ni shumisa maḓi mangana.\n\nTshifhinga tsha mvula tshi a fhambana u mona na Afurika Tshipembe. Shumisani local records ni pulanele dry periods; dam yo ḓalaho a yo khwaṱhisedzwi.\n\nMusi ni sa athu shandula watercourse kana u fhaṱa storage works, check the required authorisation with the water authority.\n\nDam i ṱoḓa site investigation na design yo itwaho nga suitably qualified person. Catchment runoff, soil, foundations, downstream risk na safe spillway zwoṱhe zwi na ndeme.\n\nNi songo humbula uri annual rainfall i ni vhudza size ya flood kana storage ine na ḓo vha nayo.\n\nOverflow i songo langiwaho i nga erode na breach wall. Plan safe route ya excess water before construction.\n\nMaḓi a nga xela nga evaporation na seepage. Check water level ni sedze leaks kana erosion.\n\nKeep spillway i clear nahone maintain bank cover yo bulwaho kha design. Do not plant trees on earth dam wall.\n\nAnimals can damage banks and add manure to the water. U vha hone hazwi iti uri maḓi a vhe clean kana safe.",
+  "paragraphs": [
+    {
+      "index": 1,
+      "sourceEnglish": "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.",
+      "currentDraft": "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.",
+      "candidateDraft": "Dam kana pond i nga vhulunga runoff, fhedzi amount i re hone i bva kha local rain, catchment, losses na uri ni shumisa maḓi mangana.",
+      "currentStatus": "hold",
+      "candidateStatus": "machine-draft",
+      "literalBacktranslation": "A dam or pond can store runoff, but the available amount depends on local rain, catchment, losses and how much water you use.",
+      "uncertainty": "Retains dam/pond, runoff, local rain, catchment, losses, amount, and the can/dependence claims. English technical terms remain where needed."
+    },
+    {
+      "index": 2,
+      "sourceEnglish": "Rainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.",
+      "currentDraft": "Tshifhinga tsha mvula tshi a fhambana u mona na Afurika Tshipembe. Use local records and plan for dry periods; a full dam is not guaranteed.",
+      "candidateDraft": "Tshifhinga tsha mvula tshi a fhambana u mona na Afurika Tshipembe. Shumisani local records ni pulanele dry periods; dam yo ḓalaho a yo khwaṱhisedzwi.",
+      "currentStatus": "machine-draft",
+      "candidateStatus": "machine-draft",
+      "literalBacktranslation": "Rainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.",
+      "uncertainty": "Preserves the existing localized rainfall sentence byte-for-byte. The remainder retains local records, dry-period planning and the non-guarantee of a full dam."
+    },
+    {
+      "index": 3,
+      "sourceEnglish": "Before changing a watercourse or building storage works, check the required authorisation with the water authority.",
+      "currentDraft": "Before changing a watercourse or building storage works, check the required authorisation with the water authority.",
+      "candidateDraft": "Musi ni sa athu shandula watercourse kana u fhaṱa storage works, check the required authorisation with the water authority.",
+      "currentStatus": "hold",
+      "candidateStatus": "machine-draft",
+      "literalBacktranslation": "Before you change a watercourse or build storage works, check the required authorisation with the water authority.",
+      "uncertainty": "Keeps the authorisation check with the water authority before changing a watercourse or building storage works; technical legal terms remain English."
+    },
+    {
+      "index": 4,
+      "sourceEnglish": "A dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.",
+      "currentDraft": "A dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.",
+      "candidateDraft": "Dam i ṱoḓa site investigation na design yo itwaho nga suitably qualified person. Catchment runoff, soil, foundations, downstream risk na safe spillway zwoṱhe zwi na ndeme.",
+      "currentStatus": "hold",
+      "candidateStatus": "machine-draft",
+      "literalBacktranslation": "A dam needs a site investigation and design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.",
+      "uncertainty": "Preserves the need for a site investigation and a suitably qualified designer, with all five site/runoff factors and safe spillway explicit."
+    },
+    {
+      "index": 5,
+      "sourceEnglish": "Do not assume that annual rainfall tells you the size of a flood or the storage you will have.",
+      "currentDraft": "Do not assume that annual rainfall tells you the size of a flood or the storage you will have.",
+      "candidateDraft": "Ni songo humbula uri annual rainfall i ni vhudza size ya flood kana storage ine na ḓo vha nayo.",
+      "currentStatus": "hold",
+      "candidateStatus": "machine-draft",
+      "literalBacktranslation": "Do not assume annual rainfall tells you the size of a flood or the storage you will have.",
+      "uncertainty": "Preserves the warning not to infer flood size or storage from annual rainfall."
+    },
+    {
+      "index": 6,
+      "sourceEnglish": "An uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.",
+      "currentDraft": "An uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.",
+      "candidateDraft": "Overflow i songo langiwaho i nga erode na breach wall. Plan safe route ya excess water before construction.",
+      "currentStatus": "hold",
+      "candidateStatus": "machine-draft",
+      "literalBacktranslation": "An uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.",
+      "uncertainty": "Preserves uncontrolled overflow as a possible cause of erosion and wall breach, and plans the safe excess-water route before construction."
+    },
+    {
+      "index": 7,
+      "sourceEnglish": "Water can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.",
+      "currentDraft": "Water can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.",
+      "candidateDraft": "Maḓi a nga xela nga evaporation na seepage. Check water level ni sedze leaks kana erosion.",
+      "currentStatus": "hold",
+      "candidateStatus": "machine-draft",
+      "literalBacktranslation": "Water can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.",
+      "uncertainty": "Preserves possible evaporation/seepage losses and checks water level, leaks and erosion."
+    },
+    {
+      "index": 8,
+      "sourceEnglish": "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
+      "currentDraft": "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
+      "candidateDraft": "Keep spillway i clear nahone maintain bank cover yo bulwaho kha design. Do not plant trees on earth dam wall.",
+      "currentStatus": "hold",
+      "candidateStatus": "machine-draft",
+      "literalBacktranslation": "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
+      "uncertainty": "Preserves clear spillway, design-specified bank cover, and the prohibition on planting trees on an earth dam wall."
+    },
+    {
+      "index": 9,
+      "sourceEnglish": "Animals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
+      "currentDraft": "Animals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
+      "candidateDraft": "Animals can damage banks and add manure to the water. U vha hone hazwi iti uri maḓi a vhe clean kana safe.",
+      "currentStatus": "hold",
+      "candidateStatus": "machine-draft",
+      "literalBacktranslation": "Animals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
+      "uncertainty": "Root and independent check found possible livestock narrowing in Zwifuwo; animal/bank/manure sentence retained exact English to preserve all-animal scope. The ordinary second-sentence negation remains an unreviewed Tshivenda draft."
+    }
+  ],
+  "semanticChecks": [
+    "Retains dam/pond, runoff, local rain, catchment, losses, amount, and the can/dependence claims. English technical terms remain where needed.",
+    "Preserves the existing localized rainfall sentence byte-for-byte. The remainder retains local records, dry-period planning and the non-guarantee of a full dam.",
+    "Keeps the authorisation check with the water authority before changing a watercourse or building storage works; technical legal terms remain English.",
+    "Preserves the need for a site investigation and a suitably qualified designer, with all five site/runoff factors and safe spillway explicit.",
+    "Preserves the warning not to infer flood size or storage from annual rainfall.",
+    "Preserves uncontrolled overflow as a possible cause of erosion and wall breach, and plans the safe excess-water route before construction.",
+    "Preserves possible evaporation/seepage losses and checks water level, leaks and erosion.",
+    "Preserves clear spillway, design-specified bank cover, and the prohibition on planting trees on an earth dam wall.",
+    "Preserves that animals can damage banks and add manure, and that their presence does not make water clean or safe."
+  ],
+  "uncertaintySummary": "Unreviewed Tshivenda candidate only. Retained high-consequence construction, legal and water-safety terminology in English where a local rendering could shift the instruction. Independent language and technical review required before wiring.",
+  "independentBackcheck": "Independent lower-cost semantic check accepted source order and conditions after Shumisani repair and conservative exact-English animal-scope hold. Root reviewed all9 paragraphs and repaired final packet; not fluent/local engineering approval. Fresh learner batch and release gates still required.",
+  "currentSourceHead": "8f187e6750a0510d581d4ebc82b64051c4a85e09",
+  "independentReview": {
+    "result": "accepted for source-paired learner wiring with final root repairs",
+    "scope": "Tshivenda body meaning and source alignment; not fluent-speaker or engineering approval",
+    "checks": [
+      "all nine paragraphs source-match canonical Water L2 in order",
+      "the existing localized rainfall sentence in paragraph 2 is preserved byte-for-byte",
+      "qualified design, authority-before-works, flood/storage non-guarantee, overflow/breach, safe route before construction, spillway and bank care, earth-dam wall tree prohibition, and animal-water safety meaning are retained",
+      "paragraph 9 keeps the all-animal damage/manure sentence exact English while drafting only the ordinary second sentence"
+    ]
+  }
+}

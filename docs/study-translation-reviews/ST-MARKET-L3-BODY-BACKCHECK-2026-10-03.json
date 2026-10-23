@@ -1,0 +1,81 @@
+{
+  "packetId": "IMBEWU-ST-MARKET-L3-BODY-NEXT-BACKCHECK-2026-10-03",
+  "checkedAt": "2026-10-03",
+  "sourceRevision": "18734826c631798ebbec7c0f3f37ea2f9ab6a386",
+  "liveCheckoutHead": "18734826c631798ebbec7c0f3f37ea2f9ab6a386",
+  "languageCode": "st",
+  "languageName": "Sesotho",
+  "lessonId": "market-community-l3",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "regionalRegistryPath": "lib/course-translation-drafts-st-market-community.ts",
+  "decision": "accept with review flags; candidate remains an unreviewed machine draft",
+  "sourceAndRegistryVerification": {
+    "canonicalParagraphsMatchPacket": true,
+    "currentRegistryParagraphsMatchPacket": true,
+    "paragraphCount": 12,
+    "existingLocalizedParagraphs3to5PreservedByteForByte": true,
+    "seedProcedureParagraphs2to3RemainExactEnglish": true
+  },
+  "paragraphChecks": [
+    {
+      "paragraph": 1,
+      "decision": "accept with review flag",
+      "check": "Ordinary neighbor-sharing and seed-saving framing; “different crop varieties” in the backtranslation is context-supported by the seed-sharing lesson and adds no concrete species."
+    },
+    {
+      "paragraph": 2,
+      "decision": "preserve exact English",
+      "check": "Crop, variety, source, collection date, isolation, selection, drying and storage procedure remains unchanged."
+    },
+    {
+      "paragraph": 3,
+      "decision": "preserve exact English",
+      "check": "Diversity and quality are not guaranteed; identity, germination, protected-variety and permission checks remain fully exact."
+    },
+    {
+      "paragraphs": "4–6",
+      "decision": "preserved",
+      "check": "Existing Sesotho registry paragraphs are byte-for-byte unchanged."
+    },
+    {
+      "paragraph": 7,
+      "decision": "accept with review flag",
+      "check": "Gentle handling and keeping suitable shade, packaging and storage through delivery are retained; technical preservation phrase remains exact English."
+    },
+    {
+      "paragraph": 8,
+      "decision": "accept with review flag",
+      "check": "Nearby buyer only may reduce the journey; losses and selling costs still require measurement. No guaranteed reduction or sale outcome."
+    },
+    {
+      "paragraph": 9,
+      "decision": "accept with review flag",
+      "check": "Comparison remains after fees, transport and spoilage for each option; nearest buyer is not presumed to give the best return. Negation and always qualifier preserved."
+    },
+    {
+      "paragraph": 10,
+      "decision": "accept with review flag",
+      "check": "Neighbors demonstrate skills and compare events on their own farms; no stronger claim."
+    },
+    {
+      "paragraph": 11,
+      "decision": "accept with review flag",
+      "check": "Record framing localized while method, conditions, result and may-suit-their-land qualification remain English."
+    },
+    {
+      "paragraph": 12,
+      "decision": "accept with safety hold",
+      "check": "The complete first sentence requiring qualified advice for unfamiliar disease or technical problems is verbatim English. The following shared-experience/specialist-help sentence retains “can” modality."
+    }
+  ],
+  "repairs": [],
+  "uncertainty": [
+    "Ordinary Sesotho naturalness and agreement require facilitator review; no fluent approval is claimed.",
+    "Mixed English technical/business clauses should be checked with a local Sesotho reviewer."
+  ],
+  "noClaims": [
+    "No new numbers, crop names, seed guarantees, trading promises or advice were added."
+  ],
+  "packetSha256": "f6b122f4e8f7bfb5dc05d7ef8caea0383da0b9593ff4dbc2619c548adc5e9f95",
+  "provenance": "Independent semantic backcheck of the exact-source Sesotho Market Community L3 body candidate. Verified against the live canonical and registry at 18734826c631798ebbec7c0f3f37ea2f9ab6a386. Candidate remains an unreviewed machine draft for facilitator review."
+}

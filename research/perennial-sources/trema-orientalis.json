@@ -1,0 +1,61 @@
+{
+  "speciesId": "trema-orientalis",
+  "commonName": "Pigeonwood / umbengele",
+  "botanicalName": "Trema orientalis",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No food-production pollination classification verified in the checked primary source."
+  },
+  "harvestProduct": "young leaves for cooked greens",
+  "supplementaryReferences": [
+    {
+      "title": "Documented young-leaf food use",
+      "quote": "The young leaves are eaten as a spinach by the Zulus",
+      "url": "https://pza.sanbi.org/trema-orientalis",
+      "doc": "SANBI PlantZAfrica: Trema orientalis",
+      "page": null,
+      "note": "The human food product is young leaves. Berries described as bird/bat food are not promoted to a human fruit harvest. No leaf cutting age, exact months or household leaf kg is given."
+    }
+  ],
+  "productionGuidance": {
+    "products": "young leaves for cooked greens",
+    "care": [
+      "Match this fast pioneer to warm, moist eastern/northern conditions; protect damp, shaded seedlings.",
+      "Record young-leaf harvest separately from fruit consumed by wildlife."
+    ],
+    "purchase": [
+      "Use correctly identified local planting material; no named leaf-food cultivar or quantified annual food output is verified."
+    ]
+  },
+  "householdFoodStatus": "confirmed-food",
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/trema-orientalis",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary article text retrieved through the search index; the direct PlantZAfrica endpoint returned 403 during this session."
+    }
+  ],
+  "gaps": []
+}

@@ -216,3 +216,19 @@ export function unlockReason(
   }
   return null; // previous module is complete — moduleId should already be unlocked
 }
+
+const UNLOCK_REASON_LANGUAGES = new Set(['zu', 'st', 've', 'ts']);
+
+/**
+ * Localise only the three known unlock-reason shapes. Other languages and unknown future reason
+ * strings keep the English source verbatim so a new gate can never disappear behind a guessed key.
+ */
+export function localisedUnlockReason(text: string | null, lang: string, t: (key: string) => string): string | null {
+  if (!text || !UNLOCK_REASON_LANGUAGES.has(lang)) return text;
+  if (text === 'Opened by your mentor') return t('studentOpenedByMentor');
+  const finish = text.match(/^Finish (.+) to open this$/);
+  if (finish) return t('studentFinishToUnlock').replace('{title}', finish[1]);
+  const submit = text.match(/^Submit the (.+) assignment to open this$/);
+  if (submit) return t('studentSubmitToUnlock').replace('{title}', submit[1]);
+  return text;
+}

@@ -1,6 +1,6 @@
 'use client';
 export type FieldPageStatus = { path: string; ready: boolean; error?: string };
-export const FIELD_PAGE_NAMES: Record<string,string> = { '/home':'Home', '/offline':'Offline & sync', '/farmer':'Garden & site survey', '/student':'Lessons', '/records':'Money book & harvests', '/invoice':'Invoices', '/journal':'Field journal', '/facilitator/crops':'Crop plan', '/cropplan':'Garden tasks', '/reports':'Saved reports', '/design':'Design studio', '/calendar':'Planting calendar', '/assessments':'Assessments', '/mentor':'Mentor fieldwork', '/ngo':'Organisation', '/funder':'Funder reports', '/network':'Garden portfolio' };
+export const FIELD_PAGE_NAMES: Record<string,string> = { '/home':'Home', '/offline':'Offline & sync', '/farmer':'Garden & site survey', '/student':'Lessons', '/records':'Money book & harvests', '/invoice':'Invoices', '/journal':'Field journal', '/facilitator/crops':'Production plan', '/cropplan':'Garden tasks', '/reports':'Saved reports', '/design':'Design studio', '/calendar':'Planting calendar', '/assessments':'Assessments', '/mentor':'Mentor fieldwork', '/ngo':'Organisation', '/funder':'Funder reports', '/network':'Garden portfolio' };
 export async function fieldPageDownloads(prepare: boolean, paths: string[], onStatus: (status: FieldPageStatus)=>void) {
   if (!('serviceWorker' in navigator)) throw Error('This browser cannot prepare the app for offline use.');
   const registration = await navigator.serviceWorker.getRegistration('/');

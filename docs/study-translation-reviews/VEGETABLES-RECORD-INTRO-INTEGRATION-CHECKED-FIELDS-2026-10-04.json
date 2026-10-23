@@ -1,0 +1,243 @@
+{
+  "title": "Checked Vegetables record and Intro integration fields",
+  "baseHead": "d2918a7f07bf680923b72b24ff854d9100c504ed",
+  "candidatePacket": "/tmp/imbewu-vegetables-record-intro-integration-corrected-candidates-20261004.json",
+  "independentCheck": "/tmp/imbewu-vegetables-record-intro-independent-check-20261004.json",
+  "implementationProof": "docs/study-translation-reviews/VEGETABLES-RECORD-INTRO-INTEGRATION-IMPLEMENTATION-2026-10-04.json",
+  "unreviewed": true,
+  "fluentApproval": false,
+  "fields": [
+    {
+      "language": "st",
+      "module": "vegetables-staples",
+      "slide": 18,
+      "bodyIndex": 5,
+      "sourceEnglish": "Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.",
+      "sourceSha256": "1e030969a08e39753b4a721555082233ffea94efd42cabee4e5477a7d955c847",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Record the sowing date.",
+            "status": "draft",
+            "text": "Ngola letsatsi la sowing."
+          },
+          {
+            "sourceEnglish": " The rain.",
+            "status": "draft",
+            "text": " Pula."
+          },
+          {
+            "sourceEnglish": " What germinated.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Pest pressure.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " What you harvested.",
+            "status": "draft",
+            "text": " Seo o se kotutseng."
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "file": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/vegetables-staples.st.paired-draft.json",
+      "currentPairedFileSha256After": "e3e51bf2177b983cb1bbd6c733868558be615e6543e8f0e224cee044176efbfa"
+    },
+    {
+      "language": "ve",
+      "module": "vegetables-staples",
+      "slide": 18,
+      "bodyIndex": 5,
+      "sourceEnglish": "Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.",
+      "sourceSha256": "1e030969a08e39753b4a721555082233ffea94efd42cabee4e5477a7d955c847",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Record the sowing date.",
+            "status": "draft",
+            "text": "Ṅwalani datumu ya sowing."
+          },
+          {
+            "sourceEnglish": " The rain.",
+            "status": "draft",
+            "text": " Mvula."
+          },
+          {
+            "sourceEnglish": " What germinated.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Pest pressure.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " What you harvested.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "file": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/vegetables-staples.ve.paired-draft.json",
+      "currentPairedFileSha256After": "e32a885a9f946b3d72ba9b6406e67b92d2582b70ad9ff4d16c5be91b22db2f6d"
+    },
+    {
+      "language": "ts",
+      "module": "vegetables-staples",
+      "slide": 18,
+      "bodyIndex": 5,
+      "sourceEnglish": "Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.",
+      "sourceSha256": "1e030969a08e39753b4a721555082233ffea94efd42cabee4e5477a7d955c847",
+      "previousTarget": {
+        "status": "english-hold"
+      },
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Record the sowing date.",
+            "status": "draft",
+            "text": "Tsala siku ra sowing."
+          },
+          {
+            "sourceEnglish": " The rain.",
+            "status": "draft",
+            "text": " Mpfula."
+          },
+          {
+            "sourceEnglish": " What germinated.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Pest pressure.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " What you harvested.",
+            "status": "draft",
+            "text": " Leswi u tshoveleke."
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "file": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/vegetables-staples.ts.paired-draft.json",
+      "currentPairedFileSha256After": "130b4f9bedfce74ef23634be68dd64163036cc3b326e864a5b517bfde40f1955"
+    },
+    {
+      "language": "ve",
+      "module": "intro-permaculture",
+      "slide": 14,
+      "bodyIndex": 1,
+      "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+      "sourceSha256": "f808fe2ba35fc3d66cb039fe700afe77fc765f801a31cd50bb53cdb4f8146be0",
+      "previousTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "status": "draft",
+            "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food.",
+            "text": "A garden, fruit trees na chicken run zwi nga dzudzanywa uri chickens dzi rotate through the beds after harvest; izwi ndi integration. Ni songo tendela chickens dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe."
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": " Fresh manure can carry germs."
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": " Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+            "text": " Vhudzisani extension adviser uri bed i langulwe hani safely, edible crops dzi sa athu dovha u hula. Chickens dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha fixed pen."
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "status": "draft",
+            "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food.",
+            "text": "A garden, miri ya mitshelo na chicken run zwi nga dzudzanywa uri khuhu dzi rotate through the beds after harvest; izwi ndi integration. Ni songo tendela khuhu dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe."
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": " Fresh manure can carry germs."
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": " Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+            "text": " Vhudzisani extension adviser uri bed i langulwe hani safely, edible crops dzi sa athu dovha u hula. Khuhu dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha fixed pen."
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "file": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/intro-permaculture.ve.paired-draft.json",
+      "currentPairedFileSha256After": "3a0f2801a5c4e5bbdd2358e85a9548bd64739804f79ee32eea6ea1419073e61e"
+    },
+    {
+      "language": "ts",
+      "module": "intro-permaculture",
+      "slide": 14,
+      "bodyIndex": 1,
+      "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+      "sourceSha256": "f808fe2ba35fc3d66cb039fe700afe77fc765f801a31cd50bb53cdb4f8146be0",
+      "previousTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "status": "draft",
+            "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food.",
+            "text": "Garden, fruit trees na chicken run swi nga veketeriwa leswaku chickens ti rotate through the beds after harvest; leswi i integration. U nga pfumeleli chickens ti tshinela eka crops leti ku tshoveriwaka swakudya."
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": " Fresh manure can carry germs."
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": " Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+            "text": " Kombela extension adviser a ku hlamusela ndlela yo hlayisa bed yi ri safe loko edible crops ti nga si tlhela ti byariwa. Chickens ti nga basisa pests ti tlhela ti engetela fertility, ematshan’weni yo tshama ti nga endli swo karhi eka fixed pen."
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "appliedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "status": "draft",
+            "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food.",
+            "text": "Ntanga, mirhi ya mihandzu na chicken run swi nga veketeriwa leswaku tihuku ti rotate through the beds after harvest; leswi i integration. U nga pfumeleli tihuku ti tshinela eka crops leti ku tshoveriwaka swakudya."
+          },
+          {
+            "status": "english-hold",
+            "sourceEnglish": " Fresh manure can carry germs."
+          },
+          {
+            "status": "draft",
+            "sourceEnglish": " Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+            "text": " Kombela extension adviser a ku hlamusela ndlela yo hlayisa bed yi ri safe loko edible crops ti nga si tlhela ti byariwa. Tihuku ti nga basisa pests ti tlhela ti engetela fertility, ematshan’weni yo tshama ti nga endli swo karhi eka fixed pen."
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "file": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/narration/intro-permaculture.ts.paired-draft.json",
+      "currentPairedFileSha256After": "9e0f241cf56e0e93d6b946cd73d71d18e2b6012d5dea6750b7186028844d9522"
+    }
+  ],
+  "scopeNotes": [
+    "Only five bindings changed.",
+    "All five exact English source strings and source paragraph indices remain unchanged.",
+    "Record list order and separator spaces are preserved; germination and pest pressure remain exact English holds; VE harvest item remains an exact English hold.",
+    "VE/TS Intro mixed segments keep original boundaries, English source spans, statuses, provenance and all other draft text; only approved nouns differ.",
+    "ST Intro14 remains the complete english-hold pair, preserving the hash-bound audio text."
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "key": "chinese-cabbage",
+  "name": "Chinese cabbage",
+  "localNames": null,
+  "botanicalName": "Brassica rapa subsp. pekinensis",
+  "family": "Brassicaceae",
+  "role": "food",
+  "foodGroup": "leafy_green",
+  "harvestProduct": "leafy head",
+  "frostTender": null,
+  "frostTenderNotes": "Not addressed directly by the sourced KZN DARD documents (which group it with the frost-tolerant cabbage family throughout). Left null rather than assuming the same 0°C tolerance quoted for cauliflower, since no source gives a Chinese-cabbage-specific cold-tolerance figure — recorded as a gap.",
+  "transplant": {
+    "value": true,
+    "evidence": [
+      {
+        "quote": "Chinese cabbage 250 - 350 [Seed/g] 200 - 250 g [Seedtray] 250 - 300 g [Seedbed] - [Direct] 15 - 20 [depth mm] 300 - 400 [Plant mm] 500 - 600 [Rows mm]",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf",
+        "page": 5,
+        "doc": "KZN DARD, 'Plant Establishment', Table 5"
+      }
+    ],
+    "notes": "Chinese cabbage is not individually named in the document's prose list of 'crops which transplant comparatively easily' (brinjal, broccoli, Brussels sprouts, cabbage, cauliflower, celery, chilli, leek, lettuce, onion, sweet pepper, tomato — p.2), but Table 5 gives it Seedtray and Seedbed seeding rates with no Direct-sow rate, the same pattern shown for the other transplanted cole crops in that table, so transplant=true is inferred from the table structure rather than the prose list."
+  },
+  "sowMonths": {
+    "summer": { "months": [9, 10, 11, 12, 1, 2], "evidence": [{"quote": "Chinese cabbage Sept - Feb All year Jan - Sept", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 7, "doc": "KZN DARD, 'Plant Establishment', Table 6 — Cold areas / Moderate frosts column"}] },
+    "winter": { "months": [9, 10, 11, 12, 1, 2], "evidence": [], "notes": "No Western Cape/winter-rainfall-specific source found; set equal to the 'summer' (Cold areas) window by inference, following this catalog's existing cabbage/broccoli precedent, not a direct quote." },
+    "all-year": { "months": [1, 2, 3, 4, 5, 6, 7, 8, 9], "evidence": [{"quote": "Chinese cabbage Sept - Feb All year Jan - Sept", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 7, "doc": "KZN DARD, 'Plant Establishment', Table 6 — Hot areas / Frost-free column"}] },
+    "mild-frost": { "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "evidence": [{"quote": "Chinese cabbage Sept - Feb All year Jan - Sept", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 7, "doc": "KZN DARD, 'Plant Establishment', Table 6 — Warm areas / Light frosts column ('All year')"}] }
+  },
+  "daysToHarvestRange": {
+    "value": [70, 90],
+    "evidence": [
+      {
+        "quote": "Chinese cabbage 70 - 90 1 - 4 weeks",
+        "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/length_of_growing_period.pdf",
+        "page": 2,
+        "doc": "KZN DARD, 'Length of Growing Period', Table 4"
+      }
+    ],
+    "notes": "To first harvest of the leafy head; no '*' marker in the source table, so (unlike cabbage/cauliflower on the same table) this figure is not flagged as 'from transplanting' — but since Table 5 elsewhere shows Chinese cabbage is normally raised as a transplant, the days are most plausibly still from transplanting; the source itself does not clarify, so this ambiguity is recorded rather than resolved by assumption."
+  },
+  "harvestPeriodWeeksOrMonths": {
+    "value": "1-4 weeks",
+    "evidence": [{"quote": "Chinese cabbage 70 - 90 1 - 4 weeks", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/length_of_growing_period.pdf", "page": 2, "doc": "KZN DARD, 'Length of Growing Period', Table 4"}]
+  },
+  "rowSpacingRangeCm": {
+    "value": [50, 60],
+    "evidence": [{"quote": "Chinese cabbage 250-350 200-250g 250-300g - 15-20 300-400 500-600", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 5, "doc": "KZN DARD, 'Plant Establishment', Table 5 (Rows column, mm)"}]
+  },
+  "inRowSpacingRangeCm": {
+    "value": [30, 40],
+    "evidence": [{"quote": "Chinese cabbage ... 300 - 400 [Plant mm]", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 5, "doc": "KZN DARD, 'Plant Establishment', Table 5 (Plant column, mm)"}]
+  },
+  "sowDepthRangeCm": {
+    "value": [1.5, 2],
+    "evidence": [{"quote": "Chinese cabbage ... 15 - 20 [Sowing depth mm]", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 5, "doc": "KZN DARD, 'Plant Establishment', Table 5"}]
+  },
+  "seedRateKgPerHaRange": {
+    "value": [0.2, 0.3],
+    "evidence": [{"quote": "Chinese cabbage ... 200 - 250 g [Seedtray] 250 - 300 g [Seedbed]", "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf", "page": 5, "doc": "KZN DARD, 'Plant Establishment', Table 5"}],
+    "notes": "Seedbed/seedtray rate for raising transplants for one hectare; no direct-sow field rate given (table shows '-' in the Direct column for this crop)."
+  },
+  "yield": {
+    "tPerHaRange": null,
+    "product": "leafy heads, fresh market",
+    "conditions": null,
+    "evidence": [],
+    "notes": "KZN DARD's 'Expected Yields' Table 8 lists ordinary Cabbage (Conservative 30 / Likely 50 / Target 80-90 t/ha) but has no separate Chinese cabbage row. A peer-reviewed ARC-VOP paper was found (Taruvinga, Ndou, Ramusandiwa, Seetseng & du Plooy, 'A Stepwise Analysis of Production Returns and Cost Distribution for Chinese Cabbage Produced Under Irrigation in South Africa', Journal of Agricultural Science 2021;13(1):88, DOI 10.5539/jas.v13n1p88) giving low/medium/high field-trial yields of 10.1 / 26.1 / 44.5 t/ha, but on reading the full text its 'Chinese cabbage' is explicitly 'also known locally as Mustard spinach or Mutshaina' and uses cultivar 'Florida Broadleaf', i.e. it is the NON-HEADING Brassica rapa subsp. chinensis group (bunched/cut-and-come-again leaves), not the heading Brassica rapa subsp. pekinensis crop this dossier covers -- the same species-mismatch already flagged for EcoCrop's Pak Choi row above. It was deliberately not used here to avoid conflating two different crops sold under the same common name in South Africa. No SA source found for heading-type Chinese cabbage yield despite checking DAFF/nda.gov.za, Western Cape (elsenburg.com enterprise budgets, which cover ordinary cabbage but not Chinese cabbage), and general search; remains a genuine gap."
+  },
+  "ecocrop": null,
+  "ecocropNotes": "EcoCrop_DB.csv has no row for Brassica rapa subsp. pekinensis (heading/napa Chinese cabbage). It does have a 'Brassica rapa Pak Choi' row, but pak choi is a non-heading subspecies group (B. rapa subsp. chinensis) with a materially different plant form and a much shorter GMIN/GMAX (21-45 days) than Chinese cabbage's own sourced 70-90 day harvest window, so it was judged not equivalent and left out rather than substituted.",
+  "coverCrop": null,
+  "varieties": [],
+  "varietiesNotes": "No SA seed-company catalogue or DAFF/KZN cultivar-name table for Chinese cabbage was located in this research pass (KZN's 'Cole Crops' chapter names it only once in passing as a relative of cauliflower/cabbage, with no cultivar list of its own). Recorded as a gap rather than inventing cultivar names.",
+  "zoneNotes": {
+    "highveld": "KZN's 'Cold areas / Moderate frosts' sowing window (Sept-Feb) applies by the same 3-tier table used for other cole crops.",
+    "lowveld-bushveld": "Falls under the 'Hot areas / Frost-free' window (Jan-Sept) per the sourced table.",
+    "subtropical-coast": "Falls under 'Hot areas / Frost-free' (Jan-Sept); as a leafy cole crop it should tolerate this zone's humidity similarly to cabbage, but this is not separately confirmed by source.",
+    "midlands-mistbelt": "KZN's own 'Warm areas / Light frosts' window ('All year') applies directly, being the province the source document is written for.",
+    "western-cape": "Not covered by a Western Cape-specific source; 'winter' sowMonths are inferred equal to 'summer', not sourced directly — flagged gap.",
+    "southern-cape": "Not confirmed by source.",
+    "karoo-arid": "Not confirmed by source; extreme heat/aridity likely unfavourable for a leafy cole crop but no direct statement found.",
+    "high-mountain": "Not confirmed by source."
+  },
+  "gaps": [
+    "No yield (t/ha) figure found for heading-type Chinese cabbage (Brassica rapa subsp. pekinensis) specifically. A peer-reviewed ARC-VOP paper with SA yield figures (10.1/26.1/44.5 t/ha) was found but rejected because it is actually about the non-heading Mustard spinach/Mutshaina group (B. rapa subsp. chinensis, cv 'Florida Broadleaf') sold under the same common name -- see yield.notes for detail.",
+    "No named SA cultivars sourced for Chinese cabbage.",
+    "frostTender value left null — no source gives a Chinese-cabbage-specific cold-tolerance temperature (unlike cauliflower, whose DAFF guide states an explicit 0°C figure).",
+    "No Western Cape/winter-rainfall-specific sowing calendar found; 'winter' sowMonths inferred equal to 'summer'.",
+    "No EcoCrop row exists for the heading/pekinensis subspecies group; the only close EcoCrop entry (Pak Choi) is a different, much-faster-maturing subspecies and was not substituted.",
+    "The days-to-harvest source table does not clarify whether its 70-90 days are counted from sowing or from transplanting, unlike the adjacent Cabbage/Cauliflower rows which carry an explicit '*' (from transplanting) marker."
+  ],
+  "verdict": "partial",
+  "summary": "Sourced entirely from two KZN DARD 'Vegetable Production Guidelines' chapters (Plant Establishment, Length of Growing Period): sowMonths (all four rain-pattern columns, via the Cold/Warm/Hot 3-tier table), row/in-row spacing, sow depth, seed rate and days-to-harvest (70-90 days) are quoted directly. Verdict is 'partial' rather than 'ready' solely because no sourced document gives a Chinese-cabbage-specific yield (t/ha) figure — KZN's Expected Yields table covers ordinary cabbage but has no separate Chinese cabbage row — and no named SA cultivars or frost-tolerance figure could be found."
+}

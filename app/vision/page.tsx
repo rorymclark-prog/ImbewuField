@@ -3,16 +3,20 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { Camera, Loader2, Leaf, Scale, ChevronRight } from 'lucide-react';
-import BackButton from '@/components/BackButton';
-import BrandLogo from '@/components/BrandLogo';
-import SettingsButton from '@/components/SettingsButton';
+import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
-import MenuButton from '@/components/MenuButton';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useLanguage } from '@/lib/i18n';
-import { useAppLevel } from '@/lib/app-level';
-import { APP_HEADER_INSET } from '@/lib/app-header';
+import { useAppLevel, isStaffRole } from '@/lib/app-level';
+import { useRoleNavigation } from '@/lib/use-role-navigation';
+import { resizeForStorage } from '@/lib/site-evidence';
+import workspace from '@/components/layout/Workspace.module.css';
+
+// A 12 MP phone photo (the common case on the cheap Android phones this app targets) is several
+// MB — well over what the API will accept — and uploading it uses mobile data the farmer is
+// paying for. Downscale to this before sending; the full-resolution file is never uploaded.
+const VISION_UPLOAD_MAX_PX = 1600;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -92,6 +96,10 @@ export default function VisionPage() {
   const zu = lang === 'zu';
   const t = (en: string, isiZulu: string) => zu ? isiZulu : en;
   const simple = useAppLevel() === 'simple';
+  // staff-15: a mentor/ngo/funder/admin opening /vision used to see the farmer's own photo-upload
+  // tool with nothing to actually photograph. Staff accounts get a short redirect card instead.
+  const { navigationRole } = useRoleNavigation();
+  const staffRole = isStaffRole(navigationRole);
   const [mode, setMode] = useState<Mode>('crop');
   const [preview, setPreview] = useState<string | null>(null);
   const [imagePayload, setImagePayload] = useState<{ data: string; mediaType: string } | null>(null);
@@ -121,24 +129,26 @@ export default function VisionPage() {
   const handleFile = useCallback((file: File) => {
     if (!file.type.startsWith('image/')) return;
 
-    // Show preview via object URL (SSR-safe: this only runs in the browser event handler)
+    // Show preview via object URL (SSR-safe: this only runs in the browser event handler) — the
+    // preview stays full quality since it never leaves the device; only the upload is downscaled.
     const url = URL.createObjectURL(file);
     setPreview(url);
     setResult(null);
     setNetworkError(null);
     setShowDetail(false);
+    setImagePayload(null);
 
-    // Read base64 via FileReader (browser-only — safe inside event callback)
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const dataUrl = e.target?.result as string;
-      const [header, data] = dataUrl.split(',');
-      // Extract mediaType from data:image/jpeg;base64 → image/jpeg
-      const mediaType = header.match(/:(.*?);/)?.[1] ?? 'image/jpeg';
-      setImagePayload({ data, mediaType });
-    };
-    reader.readAsDataURL(file);
-  }, []);
+    resizeForStorage(file, VISION_UPLOAD_MAX_PX)
+      .then((dataUrl) => {
+        const [header, data] = dataUrl.split(',');
+        // Extract mediaType from data:image/jpeg;base64 → image/jpeg
+        const mediaType = header.match(/:(.*?);/)?.[1] ?? 'image/jpeg';
+        setImagePayload({ data, mediaType });
+      })
+      .catch(() => {
+        setNetworkError(t('Could not process this photo — try again.', 'Asikwazanga ukucubungula lesi sithombe — zama futhi.'));
+      });
+  }, [t]);
 
   async function askLima() {
     if (!imagePayload) return;
@@ -155,7 +165,11 @@ export default function VisionPage() {
       });
 
       if (!res.ok) {
-        setNetworkError(t(`Server error ${res.status} — please try again.`, `Kube nenkinga kuseva (${res.status}). Zama futhi.`));
+        if (res.status === 413) {
+          setNetworkError(t('This photo is too large — try again with a clearer, closer photo.', 'Lesi sithombe sikhulu kakhulu — zama futhi ngesithombe esicacile, esiseduze.'));
+        } else {
+          setNetworkError(t(`Server error ${res.status} — please try again.`, `Kube nenkinga kuseva (${res.status}). Zama futhi.`));
+        }
         return;
       }
 
@@ -172,27 +186,60 @@ export default function VisionPage() {
   const weighResult = result && result.ok && mode === 'weigh' ? (result as WeighResult) : null;
   const errResult = result && !result.ok ? (result as ErrorResult) : null;
 
+  // staff-15: this tool photographs a planted bed, which a mentor/ngo/funder/admin account has
+  // none of — show a short redirect card instead of the farmer's upload/weigh flow.
+  if (staffRole) {
+    return (
+      <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+        <AppHeader title="Lima Vision" />
+        <main className="flex-1 flex items-center justify-center px-4">
+          <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+            <div className="mx-auto mb-3 flex items-center justify-center rounded-full" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.08)' }}>
+              <Camera size={22} style={{ color: 'var(--color-forest-800)' }} />
+            </div>
+            <h1 className="text-sm font-display font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>
+              {t('Lima Vision is a farmer tool', 'I-Lima Vision iyithuluzi labalimi')}
+            </h1>
+            <p className="text-xs font-sans leading-relaxed mb-5" style={{ color: 'var(--text-muted)' }}>
+              {t('It photographs a planted bed to identify crops and estimate harvest weight — nothing to point it at from here.', 'Ithatha isithombe sombhede otshaliwe ukuze ihlonze izitshalo futhi ilinganise isisindo sesivuno — akukho okungathwetshulwa lapha.')}
+            </p>
+            <Link
+              href="/home"
+              className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold text-sm transition-all"
+              style={{ background: 'var(--color-forest-800)', color: 'var(--bg-1)', textDecoration: 'none' }}
+            >
+              {t('Back to my dashboard', 'Buyela kwideshibhodi yami')}
+            </Link>
+          </div>
+        </main>
+        <TabBar hideAtDesktop />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
 
       {/* ── Header ── */}
-      <header
-        className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3"
-        style={{ ...APP_HEADER_INSET, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}
-      >
-        <MenuButton />
-        <BackButton fallback="/home" />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--text-secondary)' }}>Lima Vision</h1>
-        <div className="flex-1" />
-        <LessonLink id="vision:overview" label={t('Learn', 'Funda')} />
-        <SettingsButton />
-      </header>
+      <AppHeader
+        title="Lima Vision"
+        right={<LessonLink id="vision:overview" label={t('Learn', 'Funda')} />}
+      />
 
       {/* ── Scrollable body ── */}
       <main className="flex-1 overflow-y-auto">
-        <div className="max-w-md mx-auto px-4 py-5 space-y-5" style={{ paddingBottom: 88 }}>
+        {/* sdesk-07: max-w-md (448px) left ~400px of empty paper either side at 1280px — this is
+            a sequential upload-then-result flow, not independent cards, so it keeps one column
+            rather than forcing a two-up grid split across steps that depend on each other; the
+            shared readingWidth token (960px) still gives it real desktop width instead of a
+            stretched phone column. */}
+        <div className={`${workspace.workspace} ${workspace.formWidth} px-4 md:px-8 py-5 md:py-8 space-y-5`} style={{ paddingBottom: 'var(--lima-fab-clearance, 88px)' }}>
+
+          {/* code-13: AppHeader's title is a <span>, not a heading — this page needs its own
+              real <h1> now that the old text-xs chip is gone. */}
+          <h1 className="font-display" style={{ fontSize: 'clamp(20px, 2vw, 28px)', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>
+            Lima Vision
+          </h1>
 
           {/* Mode toggle */}
           <div
@@ -212,7 +259,7 @@ export default function VisionPage() {
                   className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold transition-all"
                   style={{
                     background: on ? '#1F4D2B' : 'transparent',
-                    color: on ? '#F7F2E9' : '#5C5040',
+                    color: on ? 'var(--on-forest)' : 'var(--text-secondary)',
                     border: 'none',
                     cursor: 'pointer',
                   }}
@@ -224,6 +271,9 @@ export default function VisionPage() {
             })}
           </div>
 
+          {/* desk-13: capture and result sit side by side at md+ (one column on phone). */}
+          <div className={workspace.twoColumns}>
+          <div className="space-y-5">
           {/* Capture card */}
           <div>
             <input
@@ -242,7 +292,7 @@ export default function VisionPage() {
               className="w-full rounded-2xl transition-all"
               style={{
                 background: 'var(--bg-1)',
-                border: `1.5px dashed ${preview ? 'rgba(31,77,43,0.4)' : '#E2D8C4'}`,
+                border: `1.5px dashed ${preview ? 'rgba(31,77,43,0.4)' : 'var(--border)'}`,
                 cursor: 'pointer',
                 padding: 0,
                 overflow: 'hidden',
@@ -253,8 +303,13 @@ export default function VisionPage() {
                 <img
                   src={preview}
                   alt={t('Selected photo', 'Isithombe esikhethiwe')}
+                  width={800}
+                  height={260}
                   className="w-full object-cover"
-                  style={{ maxHeight: 260, display: 'block' }}
+                  // code-20: a fixed height (not maxHeight, which only caps a size the browser
+                  // cannot know before decode) reserves this box before the photo loads, so the
+                  // capture button and result card below it do not jump once it has.
+                  style={{ height: 260, display: 'block' }}
                 />
               ) : (
                 <div className="flex flex-col items-center gap-3 py-12 px-6">
@@ -281,13 +336,13 @@ export default function VisionPage() {
               className="w-full flex items-center justify-center gap-2.5 py-3.5 rounded-2xl text-sm font-display font-semibold"
               style={{
                 background: '#1F4D2B',
-                color: '#F7F2E9',
+                color: 'var(--on-forest)',
                 border: 'none',
                 cursor: 'pointer',
               }}
             >
               <LimaSprout size={18} />
-              <span style={{ color: '#F7F2E9' }}>{t('Ask Lima', 'Buza uLima')}</span>
+              <span style={{ color: 'var(--on-forest)' }}>{t('Ask Lima', 'Buza uLima')}</span>
             </button>
           )}
 
@@ -321,6 +376,8 @@ export default function VisionPage() {
             </div>
           )}
 
+          </div>
+          <div className="space-y-5">
           {/* Result card */}
           {result && !loading && (
             <div
@@ -348,16 +405,16 @@ export default function VisionPage() {
                 {cropResult && mode === 'crop' && (
                   <div className="space-y-3">
                     <div>
-                      <div className="font-display font-bold text-2xl leading-tight" style={{ color: 'var(--color-forest-800)', letterSpacing: '-0.02em' }}>
+                      <div className="font-display font-bold text-2xl md:text-4xl leading-tight" style={{ color: 'var(--color-forest-800)', letterSpacing: '-0.02em' }}>
                         {cropResult.crop}
                       </div>
-                      <div className="font-sans text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
+                      <div className="font-sans text-sm md:text-base mt-1" style={{ color: 'var(--text-secondary)' }}>
                         ~{cropResult.estimatedKg} kg &nbsp;&middot;&nbsp; ~{cropResult.weeksToHarvest} {zu ? cropResult.weeksToHarvest === 1 ? 'isonto' : 'amaviki' : cropResult.weeksToHarvest === 1 ? 'week' : 'weeks'} {t('to harvest', 'kuze kuvunwe')}
                       </div>
                     </div>
                     {(!simple || showDetail) && <ConfidencePill level={cropResult.confidence} zu={zu} />}
                     {zu && <p className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
-                    <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                    <p className="font-sans text-sm md:text-base leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                       {cropResult.note}
                     </p>
                     {simple && !showDetail && (
@@ -377,13 +434,13 @@ export default function VisionPage() {
                 {weighResult && mode === 'weigh' && (
                   <div className="space-y-3">
                     <div>
-                      <div className="font-display font-bold text-2xl leading-tight" style={{ color: 'var(--color-forest-800)', letterSpacing: '-0.02em' }}>
+                      <div className="font-display font-bold text-2xl md:text-4xl leading-tight" style={{ color: 'var(--color-forest-800)', letterSpacing: '-0.02em' }}>
                         ~{weighResult.estimatedKg} kg
                       </div>
                     </div>
                     {(!simple || showDetail) && <ConfidencePill level={weighResult.confidence} zu={zu} />}
                     {zu && <p className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
-                    <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                    <p className="font-sans text-sm md:text-base leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                       {weighResult.note}
                     </p>
                     {simple && !showDetail && (
@@ -443,11 +500,13 @@ export default function VisionPage() {
               {t('Try another photo', 'Zama ngesinye isithombe')}
             </button>
           )}
+          </div>
+          </div>
 
         </div>
       </main>
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

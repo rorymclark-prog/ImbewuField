@@ -1,472 +1,306 @@
 # Misava: phamela misava, na yona yi ta ku phamela
 
-## Hikokwalaho ka yini misava yi ri ya nkoka
+Misava i masungulo ya hinkwaswo. A hi thyaka. I **ecosystem** (ntlawa wa vutomi lowu hanyaka swin'we) leyi hanyaka, naswona swakudya hinkwaswo leswi hi swi dyaka swi sungule eka yona.
 
-Misava i masungulo ya ntanga wun'wana na wun'wana ni purasi rin'wana na rin'wana. Misava leyi hanyeke kahle yi kurisa swimilana leswi hanyeke kahle, kutani swimilana leswi hanyeke kahle swi phamela swifuwo na vanhu lava hanyeke kahle. Eka permaculture (ndlela yo rima leyi tiyisaka misava na vanhu malembe hinkwawo) hi ri: **phamela misava, ku nga ri ximilana.**
+Misava yi vumbeka hi ku nonoka. Dyambu, mpfula, xirhami na timitsu swi pandzeka ribye ri va swiphemu leswitsongo. Swimilana, swiharhi, mikowa na swihanyi leswitsongo-tsongo leswi nga hlayekiki (**micro-organisms**) swi hundzula matluka lama feke, timitsu na vulongo swi va **organic matter** (swilo swa ntumbuluko leswi boleke), leswi vulaka xin'wana na xin'wana emisaveni lexi a xi hanya khale. Swi nga teka ku fika eka malembe ya 1 000 ku aka 1 cm wa misava. Xidzedze xin'we xi nga hlantswa sentimitara yoleyo.
 
-Misava yi vumbeka hi ku nonoka swinene. Maribye ma tshoveka ma va swiphemu leswitsongo hikwalaho ka dyambu, mpfula, xirhami na timitsu. Swimilana, swiharhi, mikowa (fungi) na swihanyi leswitsongo-tsongo leswi nga voniwiki hi mahlo (**micro-organisms**) swi engetela matluka lama feke, timitsu na vulongo, kutani hi ku nonoka swi swi hundzula swi va **organic matter** (swilo swa ntumbuluko leswi boleke) ya ntima, leyi noneke. Swi nga teka malembe ya madzana, minkarhi yin'wana ku fika eka malembe ya 1 000, ku vumba misava ya 1 cm ntsena. Mpfula na moya swi nga hoxa kumbe ku haha misava yoleyo hi xidzedze xin'we ntsena. Hikokwalaho hi fanele ku yi sirhelela.
+Hikwalaho hi hundzuluxa xivutiso lexi tolovelekeke. A hi vutisi leswaku ximilana xi lava yini. Hi vutisa leswaku misava yi lava yini. Phamela misava, ku nga ri ximilana.
 
-Swimilana leswi nga na timitsu leti enteke, ku fana na mirhi na swimilana leswi nga na **rimitsu lerikulu leri nghenaka ehansi (taproot)** (rimitsu rin'we ro tiya leri kulaka ri ya ehansi ri lulamile), swi fikelela misava ya le hansi ngopfu. Swi teka mati na timinerali ekwaleyo, kutani loko matluka ya swona ma wa ma bola, timinerali tin'wana ti fika eka **topsoil** (misava ya le henhla).
+**Loko u hetile ndzima leyi u ta kota ku:**
 
-Misava leyi hanyeke kahle yi na vutomi. Voko rin'we ra misava ri na timiliyoni to tala ta tibakteriya, mikowa na swivumbiwa swin'wana leswitsongo. Swi bolisa swilo leswi feke kutani swi humesa **swakudya swa swimilana (nutrients)** leswi swimilana swi swi lavaka. Loko misava yi funengetiwile yi tlhela yi nga pfilunganyisiwi, organic matter yi engeteleka hi ku nonoka, kutani misava yi enta yi tlhela yi nona.
-
-Tanihi murimi, misava ya wena i rifuwo ra wena ra nkoka ku tlula hinkwaswo. Yi tive. Yi cela, yi languta, yi khumba, u tlhela u yi nuhetela.
+- Hlaya swiyenge swa misava ya wena kutani u hambanisa sava, ndhaka, vumba na loam hi mavoko ya wena na hi xibya xa ngilazi
+- Hlaya mbuyelo wa pH kutani u tiva loko misava ya wena yi lava layimi
+- Byala green manure kutani u tirhisa vulongo bya swifuwo handle ko vabyisa munhu
+- Veka mulch emubhedhini, kutani u hundzula byanyi byi va mubhedhi lowuntshwa handle ko cela
+- Aka nhulu wa compost lowu hisaka na worm farm leswi tirhaka
 
 ## Swiyenge swa misava
 
-Loko u cela mugodi wo enta, kumbe u languta tlhelo ra ndhawu leyi gondzo ri tsemeke eka yona kumbe mugero lowu kukuriweke hi mati (gully), u ta vona leswaku misava yi na swiyenge. Leswi swi vuriwa **xivumbeko xa misava (soil profile)**.
+Mugodi emisaveni i buku ya matimu. Cela wun'we, kumbe u languta laha gondzo ri tsemeke kona kumbe mugero, kutani u ta vona swiyenge: **xivumbeko xa misava** (soil profile).
 
-| Xiyenge | Xi yini |
+| Xiyenge | Leswi u swi vonaka |
 |---|---|
-| Matluka lama weleke | Matluka lama feke na swiphemu swa swimilana ehenhla ka misava, leswi sungulaka ku bola. |
-| A: Topsoil | Hi ntolovelo i xiyenge xa ntima ku tlula hinkwaswo. Xi khome organic matter yo tala, timitsu na vutomi bya misava. Laha hi kona ku nona ka misava ku tshamaka kona. Hi ntolovelo xi enta 10 ku ya eka 30 cm ntsena. |
-| B: Misava ya le hansi | Muvala wa kona wu basile ngopfu, naswona yi na organic matter yo kala yi nga tali. Vumba, nsimbi na timinerali to fana na khalisiyamu na magnesiyamu leti hoxiwaka hi mati ti huma ehenhla, hi ntolovelo ti hlengeletana laha. Timitsu leti enteke ti teka mati na swakudya swa swimilana eka xiyenge lexi. |
-| C: Ribye leri tshovekeke | Ribye ra masungulo leri tshovekeke ri hlangana na misava yin'wana. Vutomi byi kala byi nga ri kona. |
-| R: Ribye ra le hansi | Ribye ro tiya. |
+| Matluka lama weleke | Matluka lama feke ehenhla, ma sungula ku bola. |
+| **Topsoil** (misava ya le henhla) | Xiyenge xa ntima ngopfu, lexi teleke hi timitsu, vutomi bya le misaveni na organic matter. Hakanyingi xi enta 10 ku ya eka 30 cm ntsena. |
+| Misava ya le hansi | Yi basa ngopfu, yi ri na organic matter yitsongo. Vumba, nsimbi na timinerali leswi hlantswiweke ku suka ehenhla swi hlengeletana laha. |
+| Ribye leri pandzekeke | Ribye ra masungulo leri tshovekeke leri hlanganeke na misava yitsongo. |
+| Ribye ra le hansi | Ribye leri tiyeke. |
 
-Topsoil leyi enteke, ya ntima, i xikombiso lexinene. Topsoil yi khoma mati kahle hikuva yi tele hi organic matter, naswona yi na xivumbeko xo phuleka lexi nga na swivhoko swo tala leswitsongo swa moya na mati. Loko ku nga ri na vutomi emisaveni, misava yi lahlekeriwa hi ku nona ka yona hi ku hatlisa.
+Topsoil hi yona laha ku nona ku tshamaka kona. Topsoil leyi enteke, ya ntima yi khoma mati kahle, hikuva organic matter ya yona na ndlela leyi yi phurhekaka ha yona swi siya swivandla leswitsongo swa moya na mati. Mirhi na swimilana leswi nga na **taproot** (rimitsu rin'we ro tota leri nghenaka ehansi hi ku kongoma) swi fikelela emisaveni ya le hansi ku kuma mati na timinerali, naswona loko matluka ya swona ma wa ma bola, timinerali tin'wana ta kona ti tlhelela ehenhla.
 
-## Muxaka wa misava: sava, ndhaka, vumba na misava yo hlangana (loam)
+Topsoil i nchumu wo sungula lowu lahlekaka hi **erosion** (ku kukuriwa ka misava hi mati na moya). Yi hlayise yi funengetiwile naswona yi dyisiwa, kutani xiyenge xa ntima xi ya xi enta.
 
-Misava yi endliwe hi swiphemu swa timinerali swa vukulu byo hambana, swin'we na organic matter, moya na mati. Ku hlangana ka vukulu bya swiphemu leswi swi vuriwa **muxaka wa misava (soil texture)**.
+## Muxaka wa misava: sava, ndhaka, vumba na loam
 
-- **Sava** i xiphemu lexikulu ku tlula hinkwaswo. Yi twala yi kwakwarhuka.
-- **Ndhaka (silt)** yi le xikarhi hi vukulu. Yi twala yi olova yi fana na mapa, ku fana na phawuda ya ntsongo (talcum powder).
-- **Vumba** i xiphemu lexitsongo ku tlula hinkwaswo. Ri namarhela loko ri tsakamile, ri tiya loko ri omile.
+Muxaka wa misava wu boha leswaku mati ma hundza hi ku hatlisa ku fika kwihi emisaveni ya wena na leswaku yi nga khoma swakudya swa swimilana swo fika kwihi. Misava yi endliwe hi swiphemu swa timinerali swa vukulu byinharhu: **sava** leyi kwalalaka hi yona leyikulu, **ndhaka** leyi fanaka na mpfuvu i ya xikarhi, naswona **vumba** lebyi namarhelaka hi byona lebyitsongo ngopfu. Ku hlangana ka swinharhu leswi i **muxaka wa misava** (soil texture).
 
-### Misava ya sava
+| Misava | Evokweni ra wena | Na mati |
+|---|---|---|
+| Ya sava | Ya kwalala naswona yi phurhekile. Ya hangalaka. | Yi humesa mati hi ku hatlisa naswona yi oma. Swakudya swa swimilana swa hlantswiwa. |
+| Vumba | Byi namarhela loko byi tsakama, byi tiya loko byi omile. Byi photeka byi va soseji yo leha, yo onda. | Byi khoma mati na swakudya swa swimilana kambe byi humesa mati hi ku nonoka. Byi nga tala hi mati, kutani byi pandzeka no tiya ehenhla. |
+| Loam | Ya ntima, yo olova naswona ya phurheka. | Yi humesa mati kahle naswona ya ha khoma mati na swakudya swo ringanela. |
 
-- Yi phulekile naswona yi olova ku ceriwa. Yi twala yi kwakwarhuka, naswona yi tshoveka evokweni ra wena.
-- Mati ma hundza eka yona hi ku hatlisa, hikwalaho yi oma hi ku hatlisa.
-- Yi khoma swakudya swa swimilana swi nga ri swingani, hikuva swi hoxiwa hi mati swi ya ehansi.
-- Hi ntolovelo muvala wa yona wu basile, naswona yi na organic matter yi nga ri yingani.
-- Yi antswisi hi ku engetela **compost** (thyaka ra swimilana na swiharhi leri boleke) yo tala, vulongo bya swifuwo (manure) na **mulch** (xifunengeto xa byanyi byo oma kumbe matluka). Organic matter yi pfuna misava ya sava ku khoma mati na swakudya swa swimilana ku fana na xipanji.
+Vumba byi nga va byo tshwuka, bya ntshuxu, bya xitshopana, bya mpunga kumbe bya ntima. Swiphemu swa mpunga kumbe swa wasi hakanyingi swi vula leswaku misava yi tshama yi tsakama nkarhi wo leha.
 
-### Misava ya vumba
-
-- Yi tikile, naswona swa tika ku yi cela loko yi omile. Yi namarhela yi tlhela yi rheta loko yi tsakamile.
-- Loko u tshinya voko ra misava leyi tsakameke, yi tshama yi khomanile yi va bolo, naswona yi nga pfotlosiwa yi va nhonga yo leha, yo onda ku fana na soseji.
-- Yi khoma mati yo tala na swakudya swa swimilana swo tala, kambe mati ma hundza eka yona hi ku nonoka. Misava ya vumba yi nga tala mati ngopfu, kutani timitsu ti pfumala moya.
-- Yi pandzeka loko yi oma, yi tlhela yi endla nkoko wo tiya ehenhla.
-- Misava ya vumba yi nga va yo tshwuka, ya ntshuri, ya xitshopana, ya mpunga kumbe ya ntima. Muvala lowu wu huma ngopfu eka nsimbi na le ka ndlela leyi mati ma humaka ha yona emisaveni, ku nga ri eka vumba hi byoxe. Swiphemu swa mpunga kumbe swa mpunga lowu nga na wasi swi tala ku kombisa leswaku misava yi tshama yi tsakamile nkarhi wo leha.
-- Yi antswisi hi ku engetela compost na mulch, ni hi ku nga fambi kumbe ku cela eka yona loko yi tsakamile. Organic matter yi endla leswaku vumba ri phuleka, leswaku moya na mati swi kota ku famba eka rona.
-
-### Misava yo hlangana (loam)
-
-- I nhlanganelo wa sava, ndhaka na vumba, hi ntolovelo leyi nga na organic matter yo ringana.
-- Ya ntima, yo olova naswona yi phulekile. Yi khomana switsongo loko u yi tshinya, kambe yi tshoveka hi ku olova.
-- Mati ma huma eka yona kahle, kambe yi tlhela yi khoma mati na swakudya swa swimilana swo ringana.
-- Yi nun'hwela kahle, ku fana na misava ya le khwatini.
-- Misava yo hlangana i misava leyinene ku tlula hinkwayo eka matsavu yo tala. Hi ku famba ka nkarhi, hi compost na mulch, u nga tshinelisa misava ya sava kumbe ya vumba eka misava yo hlangana.
-
-> **Xitsundzuxo:** A wu nge swi koti ku cinca muxaka wa misava ya wena, kambe u nga cinca **ndlela leyi misava yi hlanganeke ha yona (structure)** na organic matter leyi nga eka yona. Organic matter i nhlamulo eka misava ya sava ni ya vumba.
+Loam i misava leyinene ngopfu eka matsavu yo tala. A wu nge swi koti ku cinca muxaka wa misava ya wena, kambe u nga cinca **ndlela leyi misava yi hlanganeke ha yona** (structure, ndlela leyi swiphemu swi hlanganaka swi va swirhundzwana) na leswaku yi khoma organic matter yo fika kwihi. Organic matter i nhlamulo eka mixaka yimbirhi ya misava leyi nga na swiphiqo: yi pfuna sava ku khoma mati ku fana na xiponji, naswona yi pfula vumba leswaku moya na mati swi kota ku famba. Loko yi dyisiwa hi ndlela leyi lembe na lembe, misava ya sava na ya vumba hinkwayo yi ya yi fana na loam.
 
 ## Ku kambela misava ya wena
 
+Varimi vo tala va mapurasi lamatsongo va na mianakanyo hi misava ya vona. Mianakanyo leyi hakanyingi a yi lulamanga.
+
 ### Ku kambela hi ku khumba (ribbon test)
 
-Ku kambela loku ku teka timinete timbirhi, naswona a ku lavi xitirhisiwa.
+1. Teka xikhomo lexitsongo xa misava ku suka kwalomu ka 10 cm ehansi. Susa maribye na timitsu.
+2. Engetela mati katsongo-katsongo kutani u kanya ku kondza misava yi fana na putty naswona yi tshika ku namarhela evokweni ra wena.
+3. Yi khumba. Loko yi kwalala i sava. Loko yi olova no rhetela i ndhaka. Loko yi namarhela i vumba.
+4. Susumeta bolo exikarhi ka rikunkumela na rintiho ro sungula ri va ribbon leri andlalekeke, kutani u ri tshika ri hayeka ku kondza ri tsemeka.
+5. Pima ribbon.
 
-1. Teka voko ritsongo ra misava ku suka kwalomu ka 10 cm ehansi. Susa maribye na timitsu.
-2. Engetela mati switsongo-switsongo, u pfotlosa misava hi tintiho ta wena ku kondza yi fana na putty (vumba bya ku lunghisa mafasitere) naswona yi sungula ku nga ha namarheli evokweni ra wena.
-3. Yi khumbe. Loko yi kwakwarhuka i sava. Loko yi olova yi rheta i ndhaka. Loko yi namarhela i vumba.
-4. Khoma bolo exikarhi ka rikunwana ra wena na xikomba. Yi tshikelele hi rikunwana u endla ribhande ro andlala, u ri tshika ri lengalenga ehenhla ka xikomba ku kondza ri tsemeka.
-5. Pima ku leha ka ribhande loko ri nga si tsemeka.
-
-| Ku leha ka ribhande | Swi ku byela yini |
+| Ku leha ka ribbon | Misava ya wena |
 |---|---|
-| A ku na ribhande, ya tshoveka | Sava kumbe sava leyi hlanganeke switsongo |
-| Ehansi ka 2.5 cm | Misava yo hlangana ya sava kumbe misava yo hlangana |
-| 2.5 ku ya eka 5 cm | Misava yo hlangana ya vumba |
+| A ku na ribbon, ya hangalaka | Sava kumbe sava ya loam |
+| Ehansi ka 2.5 cm | Loam ya sava kumbe loam |
+| 2.5 ku ya eka 5 cm | Loam ya vumba |
 | Ku tlula 5 cm | Vumba |
 
 ### Ku kambela hi xibya xa ngilazi (jar test)
 
-Ku kambela hi xibya xa ngilazi ku kombisa leswaku ku na sava, ndhaka na vumba swo fika kwihi emisaveni ya wena.
+1. Teka misava etindhawini to hlayanyana ta mubhedhi, eka 15 cm ya le henhla. Yi hlanganise kutani u susa maribye, timitsu na matluka.
+2. Tata xibya xa ngilazi lexi voningaka lexi nga na matlhelo yo lulama hi xiphemu xinharhu xin'we hi misava, kwalomu ka ku tala hi mati, kutani u engetela xipunwana xa sepe ya mati yo hlantswa swibya ku pfuna swiphemu ku hambana.
+3. Tsekatsekisa hi matimba timinete ta 3 ku ya eka 5 kutani u veka xibya laha ku nga riki na munhu loyi a nga ta xi rhurhisa.
+4. Endzhaku ka **1 wa minete**, funga ehenhla ka xiyenge xa le hansi: leyi i **sava**.
+5. Endzhaku ka **tiawara ta 2**, funga ehenhla ka xiyenge lexi landzelaka: **ndhaka**.
+6. Endzhaku ka **siku ra 1 ku ya eka ya 2**, loko mati ma voninga ngopfu, funga xiyenge xa le henhla: **vumba**. Vumba lebyi tikaka byi nga teka vhiki kumbe ku tlula. Xin'wana na xin'wana lexi phaphamalaka i organic matter.
+7. Ringanisa xiyenge xin'wana na xin'wana na ku leha hinkwako ka misava exibyeni.
 
-1. Teka misava eka tindhawu to hlayanyana eka mubhedhi, eka 15 cm ya le henhla. Yi hlanganise, u susa maribye, timitsu na matluka.
-2. Tata xibya xa ngilazi lexi vonakaka, lexi nga na matlhelo yo lulama, ku fikela kwalomu ka xiphemu xin'we xa swinharhu hi misava.
-3. Tata xibya hi mati yo basa ku kala ku kusuhi na le henhla. Engetela xipunu xin'we xa tiya xa sopo ya mati yo hlantswa swibya. Leswi swi pfuna swiphemu ku hambana.
-4. Pfala xipfalo u tlhela u xi ninginisa hi matimba timinete ta 3 ku ya eka 5.
-5. Veka xibya ehansi laha xi nga ta ka xi nga fambisiwi.
-6. Endzhaku ka **minete yin'we**, fungha ku leha ka xiyenge xa le hansi etlhelweni ra xibya. Leyi i **sava**.
-7. Endzhaku ka **tiawara ta 2**, fungha le henhla ka xiyenge lexi landzelaka. Leyi i **ndhaka**.
-8. Endzhaku ka **siku rin'we ku ya eka masiku ya 2**, loko mati ma basile ngopfu, fungha xiyenge xa le henhla. Leri i **vumba**. Misava leyi teleke hi vumba ngopfu yi nga teka vhiki kumbe ku tlula leswaku mati ma basa.
-9. Xin'wana na xin'wana lexi phaphamaka ehenhla i organic matter.
-10. Pima xiyenge xin'wana na xin'wana u xi pimanisa na ku leha hinkwako ka misava leyi nga exibyeni.
+Loam yi na kwalomu ka 40% wa sava, 40% wa ndhaka na 20% wa vumba. Loko sava yi tlula hafu i misava ya sava; xiyenge xo tota xa vumba na mati lama tshamaka ma nga voningi masiku swi vula misava ya vumba.
 
-Misava yo hlangana yi na kwalomu ka 40% wa sava, 40% wa ndhaka na 20% wa vumba. Loko ku tlula hafu ya misava leyi nga exibyeni ku ri sava, u na misava ya sava. Loko xiyenge xa vumba xi ri xikulu naswona mati ma tshama ma nga basanga masiku yo tala, u na misava ya vumba.
+### Hlaya misava
 
-### Xiyisisa misava
+Loko u ri karhi u cela, tsala leswi u swi vonaka. Misava ya ntima ngopfu hakanyingi yi khoma organic matter yo tala. Tinhlanga na mahlanga ya le matini swi kombisa misava leyi tsakameke. Maribye ku fana na sandstone, shale kumbe basalt (ribye ra ntima ra le tintshaveni ta ndzilo ra le Lesotho na le Drakensberg) ma ku byela leswaku misava yi endliwe hi yini. Misava leyi hanyeke kahle yi nun'hwela kahle ku fana na misava; nun'hwelo wo bava wu nga vula ku tala hi mati. Hlayela swivungu swa misava eka xifosholo xin'we. Languta loko mpfula yi nghena kumbe yi khuluka. Naswona vutisa leswaku misava a yi tirhisiwa hi yini khale: swivala swa khale, masimu na tindhawu ta thyaka hinkwaswo swi cinca misava.
 
-Loko u dyondza misava ya wena, languta na le rhendzeleni u tsala leswi u swi vonaka:
+### pH ya misava: yi na asidi kumbe ya nyanganyela?
 
-- Misava yi na muvala wihi? Hi ntolovelo misava ya ntima yi na organic matter yo tala.
-- I swimilana swihi leswi milaka eka yona swi ri swoxe? Swimilana swi hlamusela mhaka. Xikombiso, nhlanga na swimilana swa le matini swi kombisa misava leyi tsakameke.
-- Misava leyi yi vumbiwe hi ribye rihi? Lavisisa maribye ku fana na sandstone, shale, granite kumbe basalt (ribye ra ntima leri humaka eka tintshava ta ndzilo, leri talaka ku kumeka eLesotho na le Drakensberg).
-- Yi nun'hwela njhani? Misava leyi hanyeke kahle yi nun'hwela kahle ku fana na misava ya le khwatini. Ku nun'hwela ko vava kumbe ko bola swi nga kombisa leswaku misava yi tele mati ngopfu.
-- I yini leswi hanyaka eka yona? Hlaya swivungu swa misava eka xifosholo xin'we xa misava. Lavisisa ti-beetle, switsotswana na mikowa.
-- Yi khoma mati njhani? Xana mpfula yi nghena emisaveni hi ku hatlisa, kumbe yi khuluka yi endla swidziva swa mati? Xana ehenhla ka misava ku endleka nkoko wo tiya?
-- Misava leyi a yi tirhisiwa njhani khale? Swivala swa khale, masimu kumbe tindhawu to cukumeta thyaka hinkwaswo swi khumba misava.
+**pH** yi pima leswaku misava yi na asidi kumbe yi nyanganyela (alkaline) ku fika kwihi, eka mpimo ku suka eka 0 ku ya eka 14. pH ya 7 a yi hambukeli kun'wana, ehansi ka 7 i asidi naswona ehenhla ka 7 i alkaline.
 
-> **Vuhlayiseki:** U nga nantswi misava. Misava yi nga va na vulongo bya swiharhi, switsongwatsongwana, matandza ya swivungu swa le ndzeni na tikhemikhali. Minkarhi hinkwayo hlamba mavoko endzhaku ko khoma misava na vulongo.
+- Matsavu yo tala ma mila kahle ngopfu exikarhi ka kwalomu ka pH 6 na 7, leyi pimiweke ematini.
+- Emisaveni leyi nga na asidi yo tala ngopfu, phosphorus yi pfaleriwa naswona aluminium yi chefa timitsu.
+- Misava yo tala evuxeni lebyi tsakameke bya Afrika Dzonga yi na asidi. Misava ya le vupeladyambu lebyi omeke na le tindhawini ta le hansi yi nga va alkaline kumbe yi va na munyu.
 
-### pH ya misava: yi na asidi kumbe yi na alkali?
+Kiti ya pH ya ntsengo wa le hansi yi nyika nhlayo leyi nga kongomangiki; laboratori ya misava yi nyika leyi kongomeke na layimi leyi u yi lavaka. Tilaboratori ta Afrika Dzonga hakanyingi ti vika **pH (KCl)**, leyi hlayaka kwalomu ka 0.5 ku ya eka 1 ehansi ka pH ematini. pH (KCl) leyi nga ehansi ka kwalomu ka 4.5 yi na asidi yo tala ngopfu eka swibyariwa swo tala. Hangalasa layimi ya vurimi kumbe ya dolomitic hi mpimo lowu nga eka xiviko. Organic matter na yona yi pfuna ku lawula pH.
 
-**pH** yi pima leswaku misava yi na asidi kumbe yi na alkali (yi "nyanganyela") ku fika kwihi. Mpimo wu sukela eka 0 ku ya eka 14. pH ya 7 yi le xikarhi. Ehansi ka 7 i asidi, ehenhla ka 7 i alkali.
+## Ku hlayisa misava ya wena
 
-- Matsavu yo tala ma kula kahle eka misava leyi nga na asidi switsongo kumbe leyi nga le xikarhi, kwalomu ka pH ya 6 ku ya eka 7 (loko yi pimiwa hi mati).
-- Eka misava leyi nga na asidi ngopfu, swakudya swa swimilana swo fana na phosiforasi swa pfaleriwa, kutani aluminiyamu yi nga dlaya timitsu hi chefu.
-- Eka Afrika-Dzonga, misava yo tala eVuxeni lebyi nga na mpfula yo tala yi na asidi. Misava eVupeladyambu lebyi omeke na le tindhawini ta le hansi yi nga va na alkali kumbe munyu.
+Ntumbuluko a wu siyi misava yi nga funengetiwanga nikatsongo. Hansi ka khwati kumbe ka nhova leyi hanyeke kahle ku funengetiwile minkarhi hinkwayo, ku dyisiwa minkarhi hinkwayo, naswona a ku celiwi nikatsongo. Hi kopa sweswo.
 
-Ndlela leyinene ku tlula hinkwato yo tiva pH ya wena i ku kambela misava. U nga xava xikambelo xo olova xa pH, kumbe u rhumela xiphemu xa misava eka laboratori ya misava. Vutisa hofisi ya vatirhi va vurimi va mfumo kumbe ntlawa wa varimi (co-operative) wa le kusuhi leswaku u xi rhumela kwihi.
+- **Yi hlayise yi funengetiwile** hi **mulch** (xifunengeto xa byanyi byo oma, mahlanga kumbe matluka) kumbe hi swimilana leswi hanyaka. Misava leyi nga riki na nchumu ya tshwa, yi tiya ehenhla naswona yi hungiwa hi moya.
+- **Yi dyise.** Masalela ya swibyariwa, **compost** (thyaka ra swimilana na swiharhi leri boleke) na vulongo swi tlhelela emisaveni, ku nga ri endzilweni nikatsongo.
+- **Byala mixaka yo tala ya swimilana.** Timitsu to hambana ti fika eka ku enta ko hambana naswona ti dyisa vutomi byo hambana bya le misaveni.
+- **Cela katsongo.** Ku cela kumbe ku rima kun'wana na kun'wana ku tshova ndlela leyi misava yi hlanganeke ha yona naswona ku hisa organic matter. Phurhisa hi foroko ku ri na sweswo.
+- **U nga kandziyi mibhedhi**, ngopfu-ngopfu loko yi tsakama. Famba etindleleni.
+- **Yi tshike yi wisa.** Nyika mubhedhi lowu karhaleke nguva yi ri ehansi ka green manure kumbe mulch.
 
-> **Xitsundzuxo:** Tilaboratori ta Afrika-Dzonga ti tala ku vika **pH (KCl)**. Mpimo lowu hi ntolovelo wu le hansi hi kwalomu ka 0.5 ku ya eka 1 ku tlula pH leyi pimiweke hi mati. pH (KCl) ya le hansi ka kwalomu ka 4.5 yi vula leswaku misava yi na asidi yo tala ngopfu eka swibyariwa swo tala. Xiviko xa laboratori xi ta tlhela xi kombisa "acid saturation" (asidi leyi teleke emisaveni) naswona xi ta ku byela leswaku u engetela layimi yo fika kwihi.
+Misava leyi funengetiweke, leyi nga khumbiwiki yi ya yi enta naswona yi nona lembe na lembe. Ku na tindlela ta ntlhanu letikulu to yi dyisa: green manure, vulongo bya swifuwo, mulch, compost na swivungu swa misava.
 
-Ku lulamisa misava leyi nga na asidi, engetela layimi ya vurimi kumbe layimi ya dolomite, u landzelela ndzayo ya laboratori. Ku engetela compost na swona swa pfuna, hikuva yi sirhelela misava eka ku cinca lokukulu ka pH.
+## Ndlela 1: Green manure
 
-## Ku khathalela misava ya wena
+Swimilana swi nga endla ku nona laha u yimeke kona, hi dyambu, moya na mpfula. **Green manure** (swimilana leswi byariwaka ku dyisa misava) i xibyariwa lexi u xi byalaka ku dyisa misava, ku nga ri ku tshovela.
 
-- **Yi funengete.** Misava leyi nga funengetiwangiki yi hisiwa hi dyambu, yi endla nkoko hi mpfula naswona yi hahiwa hi moya. Tirhisa mulch kumbe swimilana leswi hanyaka.
-- **Yi phamele.** Engetela compost, vulongo bya swifuwo na mulch nkarhi na nkarhi leswaku vutomi bya misava byi va na swakudya.
-- **Tlherisela swiphemu swa swimilana.** Tlherisela masalela ya swibyariwa ehenhla ka misava kumbe enhulwini wa compost ematshan'weni yo ma hisa.
-- **Byala mixaka yo tala ya swimilana.** Swimilana swo hambana swi na timitsu to hambana leti fikaka eka vuenti byo hambana, naswona swi phamela vutomi byo hambana bya misava.
-- **Cela switsongo.** Nkarhi wun'wana na wun'wana loko u cela kumbe u rima, u tshova ndlela leyi misava yi hlanganeke ha yona u tlhela u hisa organic matter. Phulula misava hi foroko ematshan'weni yo yi hundzuluxa.
-- **U nga fambi ehenhla ka mibhedhi leyi byariweke**, ngopfu-ngopfu loko misava yi tsakamile. Tirhisa tindlela.
-- **Tshika misava yi wisa.** Byala **green manure** (swimilana leswi byariwaka ku dyisa misava) kumbe u tshika mubhedhi wu funengetiwile hi mulch nguva yin'we.
-
-Ku na tindlela ta ntlhanu letikulu to engetela ku nona ka misava: green manure, vulongo bya swifuwo, mulch, compost na swivungu swa misava.
-
-## Ndlela ya 1: Green manure
-
-**Green manure** i swimilana leswi u swi byalaka leswaku swi phamela misava, ku nga ri leswaku u swi tshovela. U swi byala, u swi tsema swi nga si veka mbewu, kutani u swi tlherisela emisaveni.
-
-Green manure:
-
-- yi funengeta misava leyi nga funengetiwangiki yi yi sirhelela eka **erosion** (ku kukuriwa ka misava)
-- yi engetela organic matter loko yi bola
-- yi engetela naytirojini, loko ku ri **ti-legume** (swimilana swa ndyangu wa tinyawa na ti-pea). Tibakteriya leti nga eka swirhundzu leswitsongo (**nodules**) eka timitsu ta ti-legume ti teka naytirojini emoyeni ti yi endla leswaku swimilana swi kota ku yi tirhisa
-- yi tshova misava leyi tiyeke hi timitsu ta yona. Mixaka yo tala ya green manure yi na timitsu leti enteke leti fikaka eka misava ya le hansi
-- yi tsindzela nhova
-- yi phamela tinyoxi na swivungwana swin'wana leswi pfunaka loko yi hluka swiluva.
+Green manure yi funengeta misava leyi nga riki na nchumu, yi tsimbilela nhova, yi dyisa tinyoxi loko yi hluka swiluva, naswona yi engetela organic matter loko yi bola. Ti-green manure to tala ti na timitsu leti enteke naswona ti tshova misava yo tiya. Loko yi ri **legume** (ximilana xa ndyangu wa tinyawa na tiphiza), yi tlhela yi engetela naytirojini: switsongwatsongwana leswi nga eka swirhundzwana leswitsongo etimitsweni ta yona, leswi vitaniwaka **swirhundzu** (nodules), swi teka naytirojini emoyeni. Leswi swi endla legume yi va **nitrogen fixer** (ximilana lexi nyikaka misava naytirojini).
 
 ### Ndlela yo tirhisa green manure
 
-1. Byala green manure yi tsindzana eka mubhedhi lowu u nga wu tirhisiki, kumbe exikarhi ka swibyariwa.
-2. Yi tshike yi kula ku kondza yi sungula ku hluka swiluva. Hi nkarhi lowu yi nga na matluka yo tala na naytirojini yo tala.
-3. Yi tseme yi nga si veka mbewu. Yi tsema-tsema yi va swiphemu leswitsongo hi xifosholo kumbe hi xitsemelo xa byanyi (slasher).
-4. Yi tshike ehenhla ka misava yi va mulch (**chop and drop**: ku tsema u siya ehansi), kumbe u yi cela switsongo u yi nghenisa eka 10 ku ya eka 15 cm ya le henhla ya misava.
-5. Rindza mavhiki ya 3 ku ya eka 4 u nga si byala kumbe ku rhurhisela eka mubhedhi. Leswi swi nyika swiphemu swa rihlaza nkarhi wo bola. Loko ku titimela, rindza nkarhi wo leha switsongo.
+1. Yi byale hi ku tala emubhedhini lowu wisaka, kumbe exikarhi ka swibyariwa.
+2. Yi tshike yi kula ku kondza yi sungula ku hluka swiluva, loko yi ri na matluka yo tala ngopfu na naytirojini.
+3. Yi tseme yi nga si veka mbewu, kutani u yi tsemelela yi va swiphemu swo koma hi xifosholo kumbe hi xitsemelo xa byanyi.
+4. Yi siye ehenhla tanihi mulch (**chop and drop**, ku tsema u siya ehansi), kumbe u yi nghenisa katsongo eka 10 ku ya eka 15 cm ya le henhla.
+5. Rindza mavhiki ya 3 ku ya eka 4 u nga si byala emubhedhini, ku tlula katsongo loko ku titimela.
 
-> **Xiletelo:** Loko u byala legume ensin'wini ro sungula, xava **rhizobium inoculant** (phawuda ya tibakteriya leti pfunaka ta timitsu) leyi faneleke eka muxavisi wa wena wa mbewu, u yi hlanganisa na mbewu u nga si byala. Ximilana xi ta endla naytirojini yo tala.
+> **Xiletelo:** Nkarhi wo sungula loko u byala legume ensin'wini, xava **rhizobium inoculant** (mpfuvu wa switsongwatsongwana leswi pfunaka swa timitsu) leyi fambelanaka na yona eka muxavisi wa wena wa mbewu kutani u yi hlanganisa na mbewu. Swimilana swi ta nyika misava naytirojini yo tala.
 
-### Green manure eka Afrika-Dzonga
+### Ti-green manure ta Dzonga ra Afrika
 
-| Nguva | Ximilana | Swo tsundzuka |
+| Nguva | Ximilana | Hikwalaho ka yini u xi byala |
 |---|---|---|
-| Ximumu | Sunn hemp (*Crotalaria juncea*) | Legume. Xi kula hi ku hatlisa xi leha, xi na timitsu leti enteke. Matluka yo tala. |
-| Ximumu | Dlodlo (cowpea) (*Vigna unguiculata*) | Legume. Xi tiyisela ku hisa na dyandza. U nga tlhela u dya matluka na tinyawa ta xona. |
-| Ximumu | Lablab (*Lablab purpureus*) | Legume. Ximilana lexi hangalakaka ehansi xi tiyiselaka dyandza. **Fodder** (swakudya swa swifuwo) leyinene. |
-| Ximumu | Velvet bean (*Mucuna pruriens*) | Legume. Xi funengeta ngopfu xi tsindzela nhova. Makoko ya xona ma na misisi leyi nyangalisaka, hikwalaho ambala tiglavu. |
-| Ximumu | Buckwheat (*Fagopyrum esculentum*) | A hi legume. Xi hatlisa ngopfu, xi hluka swiluva endzhaku ka kwalomu ka mavhiki ya 6. Tinyoxi ti xi rhandza ngopfu. |
-| Vuxika | Oats (*Avena sativa*) | Ximilana xa mahlanga (cereal). Xi engetela organic matter yo tala. Xi tala ku byariwa na vetch. |
-| Vuxika | Vetch (*Vicia* species) | Legume. Munghana lonene wa oats. |
-| Vuxika | Lupin (*Lupinus angustifolius*) | Legume, xi na timitsu leti enteke. Xi fanerile misava ya sava leyi nga na asidi. U nga dyi mbewu ya xona. |
-| Vuxika | Fodder radish (*Raphanus sativus*) | Xi na rimitsu lerikulu ro leha leri tshovaka misava leyi tiyeke. |
+| Ximumu | Sunn hemp (*Crotalaria juncea*) | Legume. Yi hatlisa naswona yi leha, yi ri na timitsu leti enteke. |
+| Ximumu | Dlodlo (*Vigna unguiculata*) | Legume. Yi tiyisela ku hisa na dyandza, naswona u nga dya matluka na tinyawa. |
+| Ximumu | Lablab (*Lablab purpureus*) | Legume. Ximilana lexi hangalakaka ehansi lexi tiyiselaka dyandza naswona i fodder leyinene. |
+| Ximumu | Buckwheat (*Fagopyrum esculentum*) | Yi hluka swiluva endzhaku ka kwalomu ka mavhiki ya 6. Tinyoxi ta yi rhandza. |
+| Vuxika | Oats (*Avena sativa*) na vetch (mixaka ya *Vicia*) | Oats yi nyika vuandlalo; vetch, legume, yi engetela naytirojini. |
+| Vuxika | Fodder radish (*Raphanus sativus*) | Taproot yo leha leyi tshovaka misava yo tiya. |
 
-Eka tindhawu leti mpfula yi nako hi ximumu, byala green manure ya ximumu ku sukela kwalomu ka Oktoba ku ya eka Janawari. Eka Western Cape laha mpfula yi nako hi vuxika, kumbe laha u nga cheletaka kona, byala green manure ya vuxika hi ndzhenga (autumn) (Machi ku ya eka Mey).
+Etindhawini leti kumaka mpfula hi ximumu, byala leti ta ximumu loko timpfula ti sungurile naswona misava yi hisa. EWestern Cape leyi kumaka mpfula hi vuxika, kumbe kun'wana na kun'wana laha u nga cheletaka kona, byala leti ta vuxika hi ndzhenga. Mexican sunflower (*Tithonia diversifolia*), leyi dzunisiwaka eka tibuku to tala ta permaculture, i ximilana lexi hangalakaka eAfrika Dzonga; byala sunn hemp kumbe lablab ku kuma vuandlalo ku ri na yona.
 
-Swimilana swin'wana leswi hi swi vitanaka nhova, ku fana na clover, na swona i green manure leyinene. Ematshan'weni yo swi tsuvula u swi cukumeta, swi tseme swi nga si veka mbewu, u swi tshika ehenhla ka misava kumbe u swi engetela eka compost.
+## Ndlela 2: Vulongo bya swifuwo
 
-> **Xitsundzuxo:** Swimilana swin'wana leswi xavisiwaka tanihi "green manure" kumbe "soil builders" ematikweni mambe i **invasive species** (swimilana swa matiko mambe leswi hangalakaka) leswi tivisiweke eAfrika-Dzonga. Mexican sunflower (*Tithonia diversifolia*), lexi xi tala ku bumabumeriwa eka tibuku ta permaculture, i invasive species ya Category 1b ehansi ka NEMBA: swi lwisana na nawu ku xi byala kumbe ku xi xavisa. U nga xi tirhisi. Kambela ximilana xin'wana na xin'wana lexi u nga xi tiviki eka hofisi ya vatirhi va vurimi va mfumo ya le kusuhi u nga si xi byala.
+Xiharhi xin'wana na xin'wana epurasini i fekitari leyitsongo ya monyolo. Vulongo byi engetela organic matter na swakudya swa swimilana, ngopfu-ngopfu naytirojini, naswona byi dyisa vutomi bya le misaveni. Vulongo bya tihomu, tinyimpfu, timbuti, tihanci, timpfundla na tihuku hinkwabyo bya tirha; vulongo bya tihuku hi byona bya matimba ngopfu, naswona byi hisa timitsu loko byi ha ri lebyintshwa. **Animal tractor** (xivala lexi rhurhisekaka), ku nga xivala xa tihuku lexi rhurhisekaka lexi yimeke ehenhla ka mubhedhi lowu wisaka, yi hangalasa vulongo hi ku kongoma emisaveni (vona ndzima ya maendlelo ya swiharhi).
 
-## Ndlela ya 2: Vulongo bya swifuwo
+### Ndlela yo tirhisa vulongo
 
-Vulongo bya swifuwo byi engetela organic matter na swakudya swa swimilana, ngopfu-ngopfu naytirojini. Byi tlhela byi phamela vutomi bya misava. Vulongo bya tihomu, tinyimpfu, timbuti, tihanci, timpfundla na tihuku hinkwabyo byi nga tirhisiwa.
+1. Hundzula vulongo byi va compost byi nga si tshinela swibyariwa leswi u swi dyaka swi nga swekiwanga. Ku endla compost ku dlaya switsongwatsongwana swo tala na timbewu ta nhova, ku sivela vulongo ku hisa timitsu, naswona ku byi hundzula byi va **humus** (xiphemu xa ntima, lexi tshamisekeke xa organic matter lexi khomaka mati na swakudya swa swimilana).
+2. Loko u boheka ku tirhisa vulongo lebyi nga endliwangiki compost, byi nghenise emisaveni ku nga ri ehansi ka tin'hweti ta 4 (masiku ya 120) u nga si tshovela swibyariwa leswi khumbaka misava kumbe leswi dyiwaka swi nga swekiwanga, ku fana na letisi, xipinichi na tikherotsi. Eka swibyariwa leswi milaka ehenhla ka misava, ku fana na mavele na mirhi ya mihandzu, pfumelela tin'hweti ta 3 (masiku ya 90) hi ku ringana. U nga veki vulongo lebyintshwa ku rhendzela matsavu lama se ma milaka nikatsongo.
+3. U nga tirhisi thyaka ra vanhu, kumbe vulongo bya timbyana kumbe bya tikati, entangeni wa swakudya nikatsongo. Swi rhwala swivungu na swihanyi swin'wana leswi hanyaka eka vanhu, ngopfu-ngopfu vana.
+4. Tirhisa vulongo bya tinguluve ntsena endzhaku ka ku endla compost leyi hisaka kahle na ku hlayisa nkarhi wo leha, naswona u nga byi tirhisi eka swibyariwa leswi dyiwaka swi nga swekiwanga nikatsongo. Mandza ya swivungu swa roundworm swa byona ma hanya malembe yo tala.
+5. Hlamba mavoko endzhaku ko khoma vulongo, naswona u hlantswa matsavu u nga si ma dya.
 
-- **Vulongo bya tihuku** hi byona byi nga na matimba ku tlula hinkwabyo. Vulongo bya tihuku lebyintshwa byi nga hisa timitsu ta swimilana, hikwalaho minkarhi hinkwayo byi endle compost ku sungula.
-- **Vulongo bya tihomu, timbuti, tinyimpfu, tihanci na timpfundla** a byi na matimba ngopfu, kambe byi va na switsongwatsongwana loko byi ha ri lebyintshwa.
-- Tihuku na swifuwo swin'wana leswi nga eka **chicken tractor** (xivala lexi rhurhisiwaka, vona ndzima ya maendlelo ya swifuwo) swi hangalasa vulongo bya swona hi ku kongoma ehenhla ka mibhedhi leyi wisaka.
+Tiva laha vulongo bya wena byi humaka kona. U nga tirhisi vulongo bya swifuwo leswi vabyaka, na vulongo bya swifuwo leswi nyikiweke murhi wa swivungu eka mavhiki ma nga ri mangani lama hundzeke (hi ivermectin, xikombiso), lebyi vavisaka swivungu swa vulongo na swivungu swa misava. Swidlayi swin'wana swa nhova leswi tshamaka nkarhi wo leha leswi fafazeriweke emadyelweni swi hundza eka swifuwo naswona swi hanya ku endla compost, naswona mpimo lowutsongo swinene wu onha matamatisi, tinyawa na tizambala, hikwalaho vutisa loko swifuwo swi rile emadyelweni lama fafazeriweke.
 
-Swa antswa ku **endla compost hi vulongo** u nga si byi tirhisa eka matsavu. Ku endla compost ku dlaya switsongwatsongwana swo tala na mbewu ya nhova, ku sivela vulongo ku hisa swimilana, naswona ku byi hundzula byi va **humus** (organic matter ya ntima leyi boleke kahle) leyi phulekeke.
+## Ndlela 3: Mulch
 
-> **Vuhlayiseki: ku tirhisa vulongo eka swibyariwa swa swakudya**
->
-> Vulongo lebyintshwa byi rhwala switsongwatsongwana swo fana na *E. coli* na *Salmonella* leswi nga vabyisaka vanhu ngopfu.
->
-> **Endla compost hi vulongo u nga si byi tirhisa** eka matsavu, ngopfu-ngopfu miroho na swibyariwa swa timitsu leswi dyiwaka swi nga swekiwanga.
->
-> Loko swi boha leswaku u tirhisa vulongo lebyi nga endliwangiki compost, byi cele u byi nghenisa emisaveni **kwalomu ka tin'hweti ta 4 (masiku ya 120) hi ku tsongo u nga si tshovela** swibyariwa leswi khumbaka misava kumbe leswi dyiwaka swi nga swekiwanga, ku fana na letisi, xipinichi, kherotsi na radixi. Eka swibyariwa leswi kulaka ekule na misava, ku fana na mavele na mirhi ya mihandzu, rindza tin'hweti ta 3 (masiku ya 90) hi ku tsongo.
->
-> U nga tshuki u veka vulongo lebyintshwa ehenhla kumbe ekusuhi na matsavu lama se ma kulaka.
->
-> **U nga tshuki u tirhisa vulongo bya vanhu, kumbe bya timbyana kumbe tikati, entangeni wa swakudya.** Vulongo bya timbyana na tikati byi nga rhwala swivungu swa le ndzeni na switsongwatsongwana swin'wana leswi nghenaka eka vanhu, ngopfu-ngopfu vana. Thyaka ra vanhu ri hlayisekile ntsena endzhaku ko lulamisiwa nkarhi wo leha hi vukheta eka xihambukelo xa compost kumbe xa ku hambanisa murhundzu lexi hlayisiweke kahle; landzelela swiletelo swa mfumo eka swona.
->
-> **U nga tirhisi vulongo bya tinguluve lebyi nga endliwangiki compost.** Byi nga rhwala matandza ya swivungu swa le ndzeni (roundworm) leswi nghenaka eka vanhu naswona matandza lawa ma nga hanya malembe. Tirhisa vulongo bya tinguluve ntsena endzhaku ko byi endla compost yo hisa hi vukheta na ku byi hlayisa nkarhi wo leha, naswona u nga byi tirhisi eka swibyariwa leswi dyiwaka swi nga swekiwanga.
->
-> Ambala tiglavu kumbe u hlamba mavoko kahle endzhaku ko khoma vulongo. Hlantswa matsavu hinkwawo u nga si ma dya.
+Nghena enhoveni leyi hanyeke kahle kutani u susumeta byanyi etlhelweni. Misava leyi nga ehansi ya ntima, yi tsakama naswona ya titimela. Mulch yi endla ntirho lowu fanaka entangeni: xifunengeto xa byanyi byo oma, mahlanga, matluka, swiphemu swa mapulanka kumbe masalela ya swibyariwa leswi andlariweke ehenhla ka misava. Eka tindlela hinkwato to hlayisa misava, sungula laha.
 
-Tlhela u tivonela leswaku vulongo bya wena byi huma kwihi:
-
-- U nga tirhisi vulongo bya swifuwo leswi vabyaka.
-- Vulongo bya swifuwo leswi ha ku nwisiwaka murhi wa swivungu swa le ndzeni (xikombiso, ivermectin) byi nga vavisa swivungu swa vulongo (dung beetles) na swivungu swa misava. Loko u swi kota, tirhisa vulongo lebyi hlengeletiweke mavhiki ma nga ri mangani endzhaku ko nwisiwa murhi.
-- Swidlayi swin'wana swa nhova leswi tshamaka nkarhi wo leha, leswi fafazeriwaka emadyelweni, swi hundza eka swifuwo swi nga cinci, swi fika evulongweni bya swona. Hambi ku ri swa ntsongo swinene swi onha matamatisi, tinyawa, ti-pea, tizambala na letisi. Ku endla compost a ku swi bolisi. Vutisa muxavisi loko swifuwo swi rhise emadyelweni lama fafazeriweke kumbe swi dyile byanyi byo oma lebyi humaka emasin'wini lama fafazeriweke.
-- Vulongo byi nga va na mbewu ya nhova. Nhulu wa compost lowu hisaka wu dlaya yo tala ya yona.
-
-## Ndlela ya 3: Mulch
-
-**Mulch** i nkumba wa swilo leswi andlaleriwaka ehenhla ka misava. I xin'wana xa swilo swa nkoka ngopfu leswi u nga swi endlelaka misava ya wena, naswona i ndlela leyinene yo tirhisa nakambe thyaka ra ntumbuluko. Mulch ya ntumbuluko yi katsa byanyi byo oma, matluka, swiphemu swa tihunyi (wood chips), masalela ya swibyariwa na makhwati ya mirhi lama tsemiweke.
-
-Misava, swivungu na swimilana hinkwaswo swi rhandza mulch. Mulch:
-
-- yi sirhelela misava eka dyambu, moya na mpfula ya matimba, leswaku misava yi nga endli nkoko kumbe yi kukuriwa
-- yi pfuna mpfula ku nghena emisaveni ematshan'weni yo khuluka
-- yi hunguta ngopfu ku phyaphyarha ka mati, leswaku misava yi tshama yi tsakamile nkarhi wo leha naswona u cheleta switsongo
-- yi hlayisa misava yi titimela hi ximumu, yi kufumela hi vuxika
-- yi nonokisa nhova
-- yi phamela vutomi bya misava loko yi bola, kutani hi ku nonoka yi hundzuka humus leyi engetelaka ku nona ka misava
-- yi nyika swivumbiwa swo tala leswi pfunaka ndhawu yo tshama.
+Mulch yi sirhelela misava eka dyambu, moya na mpfula ya matimba, yi pfuna mpfula ku nghena emisaveni, yi hunguta swinene ku phyaphyarha ka mati leswaku u cheleta katsongo, yi hlayisa misava yi titimela hi ximumu naswona yi kufumela hi vuxika, naswona yi nonokisa nhova. Loko yi bola, yi dyisa vutomi bya le misaveni kutani yi va humus.
 
 ### Ndlela yo veka mulch
 
-1. Cheleta mubhedhi kahle ku sungula, kumbe u veka mulch endzhaku ka mpfula leyinene.
-2. Andlala mulch ya ntumbuluko yi **enta 5 ku ya eka 10 cm**. Tirhisa nkumba wo onda wa swilo swo olova ku fana na byanyi lebyi tsemiweke, lebyi nga tshikelelana byi va nkumba lowu tsakameke.
-3. Hlayisa mulch yi ri kwalomu ka 5 cm ekule na mintsonga ya matsavu, na kwalomu ka 10 cm ekule na mintsonga ya mirhi. Mulch leyi hlengeletiweke yi namarhela eka mintsonga yi yi hlayisa yi tsakamile, naswona yi nga endla leswaku yi bola.
-4. Engetela mulch loko yi ri karhi yi bola.
+1. Rhanga u cheleta mubhedhi kahle, kumbe u veka mulch hi ku hatlisa endzhaku ka mpfula leyinene.
+2. Hangalasa mulch yi enta **5 ku ya eka 10 cm**. Tirhisa xiyenge xo onda xa swilo leswi olovaka ku fana na byanyi lebyi tsemiweke, lebyi tiyaka byi va xiandlalo lexi tsakameke.
+3. Hlayisa mulch kwalomu ka 5 cm kule na mahlanga ya matsavu na 10 cm kule na mirhi, loko swi nga ri tano mahlanga ma tshama ma tsakama kutani ma bola.
+4. Yi engetela loko yi ri karhi yi bola.
 
-> **Xiletelo:** Mulch yo oma ya tihunyi ku fana na swiphemu swa tihunyi kumbe ntsumbu wa mapulanka (sawdust) yi teka naytirojini ehenhla ka misava loko yi bola. Yi tirhise etindleleni na le rhendzeleni ka mirhi, ku nga ri eka swimilana leswintshwa swa matsavu, kumbe u veka nkumba wo onda wa vulongo kumbe compost ehansi ka yona.
+Mulch ya mapulanka ku fana na swiphemu swa mapulanka kumbe ntshuri wa mapulanka yi teka naytirojini ehenhla ka misava loko yi ri karhi yi bola. Yi veke etindleleni na ku rhendzela mirhi, kumbe u andlala xiyenge xo onda xa vulongo kumbe compost ehansi ka yona.
 
-### Ku funengeta hi makhadibodo (sheet mulching)
+> **Xiletelo:** Ti-slug na tisinayele ti rhandza ku tsakama na munyama lowu nga ehansi ka mulch naswona ti dya swimilana leswintshwa nivusiku. Ti tshovele hi voko hi rivoni nimadyambu, hlayisa mulch yi ri kule hi ku anama ka voko na swimilana leswintshwa leswitsongo, kutani u tshika tidada kumbe tihuku ti hlota emibhedhini loko swimilana swi kurile ku ringana leswaku swi nga kokotiwi swi huma.
 
-Ku funengeta hi makhadibodo ku hundzula byanyi kumbe nhova ku va mubhedhi lowuntshwa wa ntanga handle ko cela.
+### Ku funengeta hi makhadibodo
 
-1. Tsema byanyi kumbe nhova, u swi tshika ehansi.
-2. Cheleta ndhawu leyi kahle.
-3. Andlala nkumba wo onda wa vulongo kumbe compost.
-4. Funengeta hi khadibodo leri andlalekeke kumbe hi mimbalelo yo tala ya maphephahungu, ma tlhantlhanana hi 15 cm leswaku ku vonakala ku nga hundzi. Susa thepi ya plastiki na ti-staple. U nga tirhisi maphepha lama phatsimaka kumbe lama gandliweke hi mivala.
-5. Tsakamisa khadibodo kahle.
-6. Funengeta hi mulch ya 10 cm kumbe ku tlula, ku fana na byanyi byo oma kumbe matluka.
-7. Loko u byala, tsindzela xifosholo eka mulch u tsema mugodi eka khadibodo. Tata mugodi hi mavoko ma nga ri mangani ya compost kutani u byala ximilana lexintshwa, xihlahla kumbe xiphemu xa rimitsu (tuber) eka wona. Cheleta kahle.
+Ku funengeta hi makhadibodo (sheet mulching) ku hundzula byanyi kumbe nhova swi va mubhedhi lowuntshwa wa ntanga handle ko cela.
 
-Khadibodo ri tsindzela byanyi naswona ri bola hi ku nonoka. Swivungu swa misava swi nghena ehansi ka rona swi phulula misava.
+1. Tsema byanyi kumbe nhova kutani u swi siya swi etlele. Cheleta kahle, kutani u hangalasa xiyenge xo onda xa vulongo kumbe compost ehenhla ka byanyi lebyi tsemiweke.
+2. Swi funengete hi khadibodo leri andlalekeke kumbe maphepha-hungu yo tota, ma tlhantlanile hi 15 cm leswaku ku nga nghenikiki ku vonakala. Susa thepi na swinamarhisi swa nsimbi, kutani u siya maphepha lama vangamaka kumbe lama kandziyisiweke hi mivala.
+3. Tsakamisa khadibodo swinene, kutani u ri funengeta hi 10 cm kumbe ku tlula ya mahlanga, matluka kumbe byanyi byo oma.
+4. Ku byala, susumeta xifosholo xi hundza mulch kutani u tsema mbhovo ekhadibodweni. Wu tata hi swikhomo swi nga ri swingani swa compost, byala ximilana xa wena lexintshwa, xihlahla kumbe xiphemu xa rimitsu, kutani u cheleta kahle.
 
-> **Xilemukiso:** Ti-slug na tisinayele (slugs and snails) ti rhandza ndhawu ya munyama leyi tsakameke ehansi ka mulch. Ti huma nivusiku naswona ti nga dya swimilana leswintshwa hi ku hatlisa. Languta ehansi ka mulch, u ti tsona hi voko nimadyambu, u tshika tidada kumbe tihuku ti ti hlota (kambe tihuku ti tshamela ekule na mibhedhi leyi nga na swimilana leswitsongo, hikuva ti kwakwarhuta). Hlayisa mulch yi ri ekule switsongo na swimilana leswintshwa.
+Khadibodo ri tsimbilela byanyi naswona ri bola hi ku nonoka. Swivungu swa misava swi nghena ehansi kutani swi ku phurhisela misava.
 
-### Swirhapa swa mulch (mulch banks)
+### Ti-mulch bank
 
-**Xirhapa xa mulch (mulch bank)** i ndhawu leyi byariweke swimilana leswi kulaka hi ku hatlisa leswi u swi tsemaka nkarhi na nkarhi leswaku swi va mulch na compost. Xi pfuna ngopfu laha misava yi nga nonangiki kumbe yi kukuriweke naswona swilo swa mulch swi nga ringaniki. Xirhapa xa mulch xi nga tlhela xi:
+Laha mulch yi nga yitsongo, byala ya wena. **Mulch bank** (xirhapa xa swimilana swa mulch) i xiphemu xa swimilana leswi milaka hi ku hatlisa leswi u swi tsemaka kan'wana na kan'wana ku kuma **biomass** (swilo swo tala swa swimilana leswi hundzukaka mulch na compost). Yi tlhela yi tshova moya naswona yi khoma misava endhawini yo rhelela.
 
-- tirha tanihi **windbreak** (layini ya swimilana leyi sivelaka moya)
-- nyika swivungwana leswi pfunaka ndhawu yo tshama
-- khoma misava na mati endhawini yo rhelela
-- ku nyika swilo swo tala swa mulch na compost.
+Hlawula swimilana swa **indigenous** (leswi tolovelekeke laha hi ntumbuluko) kumbe leswi tiviwaka leswaku a swi hangalaki: thatch grass (*Hyparrhenia hirta*), red grass (*Themeda triandra*) na weeping love grass (*Eragrostis curvula*); byanyi bya vetiver lebyi nga vekiki mbewu (*Chrysopogon zizanioides*) eka mitsala ya contour; pigeon pea (*Cajanus cajan*); na swihlahla leswi milaka nakambe endzhaku ko tsemiwa, ku fana na Cape honeysuckle (*Tecoma capensis*) na sand olive (*Dodonaea viscosa*).
 
-Swimilana leswinene swa xirhapa xa mulch swi katsa byanyi bya **indigenous** (bya ndhavuko) ku fana na byanyi byo fulela (thatch grass) (*Hyparrhenia hirta*), byanyi byo tshwuka (red grass) (*Themeda triandra*) na weeping love grass (*Eragrostis curvula*); byanyi bya vetiver (*Chrysopogon zizanioides*) lebyi nga vekiki mbewu naswona byi nga hangalaki, eka milayini ya **contour** (ku leha loku fanaka) endhawini yo rhelela; pigeon pea (*Cajanus cajan*); na swihlahla swa indigenous leswi milaka nakambe endzhaku ko tsemiwa, ku fana na Cape honeysuckle (*Tecoma capensis*) na sand olive (*Dodonaea viscosa*).
+## Ndlela 4: Compost
 
-Tibuku to tala ti vula leswaku swimilana swa timitsu leti enteke leswi vuriwaka "dynamic accumulators" swi koka timinerali to hlawuleka ti ta eka compost ya wena. Ku na vumbhoni bya sayense byitsongo ngopfu bya leswi. Nkoka wa xiviri wa xirhapa xa mulch i swilo swo tala swa ntumbuluko leswi xi swi humesaka.
-
-## Ndlela ya 4: Compost
-
-**Compost** i nhlanganelo wa swilo swa ntumbuluko leswi hlengeletiweke swin'we swi tshikiwa swi bola ku kondza swi va swa ntima, swi phuleka naswona swi nun'hwela kahle. Ku endla compost ku tekelela leswi humelelaka ehansi ka khwati, kambe hi ku hatlisa.
-
-Compost:
-
-- yi antswisa ndlela leyi misava yi hlanganeke ha yona eka misava ya sava ni ya vumba
-- yi pfuna misava ku khoma mati
-- yi phamela swimilana hi ku nonoka na hi ndlela ya ntumbuluko
-- yi phamela vutomi bya misava
-- yi nga hunguta mavabyi man'wana ya swimilana
-- yi tirhisa nakambe thyaka ra le xitsungeni na ra le ntangeni ematshan'weni yo ri hisa kumbe ku ri cukumeta.
+Hansi ka khwati ku endla compost hi ku nonoka, minkarhi hinkwayo. Nhulu lowunene wu swi endla hi ku hatlisa swinene. Compost ya ntima, ya phurheka naswona yi nun'hwela kahle. Yi antswisa misava ya sava na ya vumba, yi khoma mati, yi dyisa swimilana hi ku nonoka, naswona yi hundzula thyaka ri va ku nona ku ri na musi.
 
 ### Leswi compost yi swi lavaka
 
-Compost yi lava swilo swa mune: **swo oma (browns)**, **swa rihlaza (greens)**, **moya** na **mati**. Kutani yi lava **nkarhi**.
+Compost yi lava **swo oma** (browns), **swa rihlaza** (greens), **moya** na **mati**. Kutani yi lava **nkarhi**.
 
-**Swo oma** i swilo swo oma leswi teleke hi khaboni. **Swa rihlaza** i swilo leswintshwa leswi teleke hi naytirojini. Swihanyi leswitsongo-tsongo leswi endlaka compost swi lava swimbirhi. Eka nhulu lowu hisaka, lowu bolaka hi ku hatlisa, kongoma eka kwalomu ka swiphemu swa 25 ku ya eka 30 swa khaboni eka xiphemu xin'we xa naytirojini. Hi xiviri, leswi swi vula kwalomu ka **mabakiti ya 2 ku ya eka 3 ya swo oma eka bakiti rin'we ra swa rihlaza**.
+Swo oma swa oma naswona swi tele hi khaboni. Swa rihlaza i swintshwa naswona swi tele hi naytirojini. Ku ringanana exikarhi ka swona i **carbon to nitrogen ratio** (ku ringanana ka khaboni na naytirojini). Eka nhulu lowu hisaka, kongomisa eka kwalomu ka swiphemu swa 25 ku ya eka 30 swa khaboni eka xiphemu xin'we xa naytirojini, leswi eka ntirho swi nga kwalomu ka **swikotlo swa 2 ku ya eka 3 swa swo oma eka xikotlo xin'wana na xin'wana xa swa rihlaza**.
 
 | Swo oma (khaboni) | Swa rihlaza (naytirojini) |
 |---|---|
-| Byanyi byo oma | Byanyi lebyintshwa lebyi tsemiweke |
-| Matluka yo oma | Nhova ya rihlaza (leyi nga riki na mbewu) |
-| Mahlanga ya mavele lama tsemiweke | Makoko ya matsavu na ya mihandzu |
-| Makhadibodo na maphephahungu lama handzuriweke | Vulongo bya swifuwo |
-| Swiphemu swa tihunyi na ntsumbu wa mapulanka (swi nga ri swingani) | Matluka ya rihlaza na green manure |
+| Mahlanga na byanyi byo oma | Byanyi lebyintshwa lebyi tsemiweke |
+| Matluka yo oma | Nhova ya rihlaza leyi nga riki na mbewu |
+| Mahlanga ya mavele lama tsemeleriweke | Makanda ya matsavu na ya mihandzu |
+| Khadibodo na maphepha-hungu lama handzuriweke | Vulongo bya swifuwo |
 
-- Swa rihlaza swi tala ngopfu: nhulu wu tsakama, wu rheta naswona wu nun'hwela amoniya. Engetela swo oma swo tala.
-- Swo oma swi tala ngopfu: nhulu wu tshama wu titimela naswona wu bola hi ku nonoka swinene. Engetela swa rihlaza swo tala kumbe vulongo.
-- Wu omile ngopfu: a ku humeleli nchumu. Engetela mati.
-- Wu tsakamile ngopfu: nhulu wu nun'hwela ku bola hikuva moya a wu koti ku nghena. Wu hundzuluxe u engetela swo oma.
+Loko yi rhetela naswona yi nun'hwela ammonia: engetela swo oma. Loko yi tshama yi titimela: engetela swa rihlaza kumbe vulongo. Loko yi nun'hwela ku bola: yi tsakame ngopfu, hikwalaho yi hundzuluxe kutani u engetela swo oma.
 
-**Moya.** Swihanyi leswitsongo-tsongo swi lava oksijini. Ku hundzuluxa nhulu swi pfumelela moya ku nghena. Nkumba wa timhonga ehansi, kumbe "chumuni" ya timhonga leyi tsindzeriweke enhulwini, na swona swa pfuna.
+**Moya.** Vutomi bya compost byi lava oxygen. Ku hundzuluxa ku nghenisa moya, na hansi ka tinhonga na kona.
 
-**Mati.** Hlayisa nhulu wu tsakamile ku fana na xipanji lexi hotiweke. Loko u tshinya voko ra compost, ku fanele ku huma thonsi rin'we kumbe mambirhi ya mati ntsena.
+**Mati.** Hlayisa nhulu wu tsakama ku fana na xiponji lexi pfotiweke. Tshindza xikhomo: ku fanele ku huma thonsi rin'we kumbe mambirhi ntsena.
 
-> **Xilemukiso: u nga swi nghenisi eka compost ya wena**
->
-> Vulongo bya timbyana na tikati, kumbe bya vanhu.
->
-> Nyama, tihlampfi, marhambu, mafurha, oyili na swakudya swa ntswamba. Swi nun'hwela swi tlhela swi koka makondlo na tinhongana.
->
-> Swakudya leswi swekiweke swo tala, hi xivangelo lexi fanaka.
->
-> Swimilana leswi nga na mavabyi yo biha, na nhova leyi se yi vekeke mbewu, handle ka loko nhulu wa wena wu hisa kahle.
->
-> Timitsu ta byanyi bya invasive species ku fana na couch grass. Ti bohe ti ri ebakitini ra mati mavhiki ma nga ri mangani ku sungula.
->
-> Invasive species leswi nga na mbewu, leswi u nga swi hangalasaka epurasini ra wena.
->
-> Tihunyi leti lulamisiweke hi tikhemikhali, leti penteriweke kumbe leti vanixiweke, nkuma wa malahla na nkuma wa ti-briquette. Nkuma wa tihunyi letinene wa ntsongo a wu na xiphiqo.
->
-> Plastiki, ngilazi, nsimbi na maphepha lama phatsimaka.
+U nga nghenisi vulongo bya timbyana na bya tikati na thyaka ra vanhu; nyama, tihlampfi, marhambu na swa masi, leswi kokaka makondlo; swimilana leswi vabyaka na nhova leyi vekaka mbewu, handle ka loko nhulu wu hisa hakunene; timitsu ta couch grass (rhanga u ti nwerisa exikotlweni mavhiki ma nga ri mangani); na mapulanka lama tshunguriweke, nkuma wa malahla na plastiki. Nkuma wa tihunyi lowu nga riki na nchumu wutsongo wu lulamile.
 
 ### Ndlela yo aka nhulu wa compost lowu hisaka
 
-**Nhulu wa compost lowu hisaka** wu hisa ku fika eka 55 ku ya eka 65 °C. Ku hisa loku ku dlaya switsongwatsongwana swo tala na mbewu ya nhova, naswona ku endla compost hi ku hatlisa. Leswaku wu hisa, nhulu wu fanele ku va lowukulu: hi ku tsongo 1 m hi ku anama, 1 m hi ku leha na 1 m hi ku tlakuka, naswona wu nga tlakuki ku tlula kwalomu ka 1.5 m, leswaku u ha kota ku wu hundzuluxa.
+**Nhulu wa compost lowu hisaka** wu fika eka 55 ku ya eka 65 °C, ku hisa loku ringaneke ku dlaya switsongwatsongwana swo tala na timbewu ta nhova. Ku fika eka ku hisa koloko wu fanele ku va 1 m hi ku ringana hi ku anama, hi ku leha na hi ku tlakuka, naswona wu nga tlakuki ku tlula kwalomu ka 1.5 m leswaku u ha kota ku wu hundzuluxa.
 
-1. Hlawula ndhawu ya ndzhuti, leyi ringaneleke, ekusuhi na ntanga na mati. Aka nhulu ehenhla ka misava hi ku kongoma leswaku swivungu swa misava na vutomi bya misava swi kota ku nghena.
-2. Andlala kwalomu ka 20 cm ya swilo swo kwakwarhuka ku fana na timhonga, marhavi lamatsongo kumbe mahlanga ya mavele. Leswi swi pfumelela moya ku nghena na mati ku huma.
-3. Engetela nkumba wa swo oma, wu enta kwalomu ka 10 ku ya eka 15 cm.
-4. Engetela nkumba wa swa rihlaza, ku fana na byanyi lebyintshwa, nhova na masalela ya swakudya, wu enta kwalomu ka 5 ku ya eka 10 cm. Veka masalela ya swakudya exikarhi ka nhulu, ku nga ri etlhelweni, leswaku tinhongana na makondlo swi tshama ekule.
-5. Engetela nkumba wo onda wa vulongo, kwalomu ka 5 cm.
-6. Fafazela voko rin'we kumbe mambirhi ya misava ya ntanga kumbe compost ya khale. Leswi swi engetela swihanyi leswitsongo-tsongo leswi sungulaka ku bolisa.
-7. Cheleta minkumba loko u ri karhi u aka, ku kondza yi tsakama kambe yi nga ri na mati yo tala.
+1. Hlawula ndhawu leyi nga na ndzhuti, leyi andlalekeke kusuhi na ntanga na mati. Aka hi ku kongoma emisaveni leswaku swivungu swa misava swi kota ku nghena.
+2. Andlala kwalomu ka 20 cm ya tinhongana, marhavi lamatsongo kumbe mahlanga ya mavele, ku nghenisa moya na ku humesa mati.
+3. Engetela 10 ku ya eka 15 cm ya swo oma.
+4. Engetela 5 ku ya eka 10 cm ya swa rihlaza. Celela masalela ya khixi exikarhi, kule na makumu, ku hlayisa tinhongana na makondlo kule.
+5. Engetela xiyenge xo onda xa vulongo, kwalomu ka 5 cm.
+6. Hangalasa xikhomo xa misava ya ntanga kumbe compost ya khale ku nghenisa micro-organisms.
+7. Cheleta xiyenge xin'wana na xin'wana ku kondza xi tsakama kambe xi nga tali hi mati.
 8. Phindha magoza ya 3 ku ya eka 7 ku kondza nhulu wu tlakuka 1 ku ya eka 1.5 m.
-9. Funengeta nhulu hi nkumba wa byanyi byo oma, kutani hi masaka ya khale, tarapoli kumbe phepha ra plastiki. Leswi swi hlayisa ku tsakama naswona swi sivela mpfula ya matimba ku tsakamisa nhulu ngopfu. Tshika matlhelo ma pfulekile switsongo leswaku moya wu kota ku nghena.
-
-U nga engetela swilo leswi xavisiwaka swa swihanyi leswitsongo-tsongo (effective micro-organisms) ematini loko u ri na swona, kambe voko ra compost ya khale kumbe misava leyinene na swona swi tirha kahle.
+9. Wu funengete hi mahlanga kutani hi masaka ya khale kumbe thapoleni ku sivela mpfula ya matimba, u siya matlhelo ma pfulekile katsongo ku nghenisa moya.
 
 ### Ku hlayisa nhulu
 
-- Nhulu wu fanele ku hisa endzhaku ka masiku ya 2 ku ya eka 4.
-- Kambela ku hisa hi ku tsindzela nsimbi kumbe nhonga leyi lotiweke exikarhi ka nhulu. Yi tshike timinete ta 5, kutani u yi humesa u yi khumba. Loko yi hisa ngopfu leswaku u nga yi khomi kahle, nhulu wa tirha.
-- Nhulu wu tshama wu hisa kwalomu ka vhiki, kutani wu sungula ku titimela. **Wu hundzuluxe loko wu sungula ku titimela,** hi ntolovelo endzhaku ka masiku ya 5 ku ya eka 7.
-- Ku wu hundzuluxa, tirhisa foroko u rhurhisela nhulu endhawini leyintshwa ekusuhi na wona. Veka swilo swa le handle exikarhi, na swa le xikarhi ehandle, leswaku xiphemu xin'wana na xin'wana xi hisa. Engetela mati loko wu omile.
-- Nhulu wu ta tlhela wu hisa. Hambeta u wu hundzuluxa nkarhi wun'wana na wun'wana loko wu titimela, kwalomu ka kan'we hi vhiki eka n'hweti yo sungula. Ku wu hundzuluxa ka 4 kumbe ka 5 loko wu ha hisa swa ringana ku dlaya switsongwatsongwana swo tala na mbewu ya nhova.
-- Loko nhulu wu hisa ku tlula kwalomu ka 70 °C, wu hundzuluxe kumbe u engetela mati ku wu titimeta. Ku hisa ngopfu ku dlaya swihanyi leswitsongo-tsongo leswi pfunaka.
-- Loko u hetile ku aka nhulu, u nga hambeti u engetela swilo leswintshwa. Sungula nhulu wa vumbirhi wa thyaka lerintshwa.
+1. Endzeni ka masiku ya 2 ku ya eka 4 nhulu wu fanele ku va wu hisa. Susumeta nhonga ya nsimbi exikarhi timinete ta 5; loko yi hisa ngopfu ku yi khoma kahle loko u yi humesa, nhulu wa tirha.
+2. Endzhaku ka masiku ya 5 ku ya eka 7 wu sungula ku titimela. **Wu hundzuluxe sweswi.** Rhurhisa nhulu hinkwawo hi foroko u endla nhulu lowuntshwa etlhelweni ka wona, swa le handle swi ya exikarhi na swa le xikarhi swi ya ehandle, u engetela mati loko wu omile.
+3. Wu hisa nakambe. Wu hundzuluxe nkarhi wun'wana na wun'wana loko wu titimela, kwalomu ka vhiki na vhiki eka n'hweti yo sungula. Ku hundzuluxa ka mune kumbe ka ntlhanu loku hisaka ku dlaya switsongwatsongwana swo tala na timbewu ta nhova.
+4. Loko wu hisa ku tlula kwalomu ka 70 °C, wu hundzuluxe kumbe u engetela mati. Ku hisa ko tala ngopfu ku dlaya micro-organisms leti pfunaka.
+5. Tshika ku engetela swilo leswintshwa. Sungula nhulu wa vumbirhi wa thyaka lerintshwa.
 
-> **Vuhlayiseki:** Exikarhi ka nhulu lowu hisaka ku nga hisa ku fikela ku ku tshwa. Ambala tiglavu na tintangu to pfala loko u hundzuluxa compost, u tlhela u hlamba mavoko endzhaku.
+Nhulu lowu hisaka lowu hundzuluxiweke kahle wu lunghekile endzhaku ka tin'hweti ti nga ri tingani hi maxelo yo hisa; nhulu lowu nga hundzuluxiwiki nikatsongo wu nga teka tin'hweti ta 6 ku ya eka lembe kumbe ku tlula. Wu hunguteka hi xiphemu xinharhu xin'we ku ya eka hafu. Compost leyi lunghekeke ya ntima, ya phurheka naswona yi nun'hwela ku fana na hansi ka khwati. Loko ya ha kufumela loko u yi hundzuluxa, rindza: compost leyi nga si bola kahle yi teka naytirojini emisaveni, kutani swimilana swa wena swi va swa xitshopana. Loko nhulu wu titimerile, ti-red wiggler (vona Ndlela 5) ti ta wu hetisa. Hlayisa compost leyi lunghekeke yi funengetiwile kutani u yi tirhisa endzeni ka tin'hweti ti nga ri tingani.
 
-### Compost yi lunghekile rini?
+## Ndlela 5: Swivungu swa misava na worm farm
 
-- Nhulu lowu hisaka lowu hlayisiweke kahle hi ntolovelo wu lunghekile endzhaku ka **tin'hweti ta 2 ku ya eka 3** loko ku kufumela. Wu teka nkarhi wo leha hi vuxika. Nhulu lowu nga hundzuluxiwiki (nhulu "lowu titimelaka") wu nga teka tin'hweti ta 6 ku ya eka 12.
-- Nhulu wu ta hunguteka hi kwalomu ka xiphemu xin'we xa swinharhu ku ya eka hafu loko wu ri karhi wu bola.
-- Compost leyi lunghekeke i ya ntshuri wa ntima, ya phuleka naswona yi nun'hwela ku fana na ehansi ka khwati. A wu ha swi koti ku tiva leswi u swi nghenisiweke eka yona, handle ka swiphemu swin'wana swa tihunyi.
-- Loko nhulu wu ha kufumela loko u wu hundzuluxa, a wu si lunghekela.
-
-U nga tirhisi compost leyi nga si lunghekaka. Compost leyi boleke hafu yi teka naytirojini emisaveni leswaku yi hetisa ku bola, kutani swimilana swa wena swi ta va swa xitshopana swi tlhela swi kula hi ku nonoka.
-
-Loko u engetela swivungu swa compost swa red wiggler (vona laha hansi) eka nhulu lowu titimelaka, swi hetisa ntirho swi tlhela swi endla compost yi nona ku tlula. Swi engetele ntsena loko nhulu wu titimerile, loko swi nga ri tano ku hisa ku ta swi dlaya.
-
-Tirhisa compost leyi lunghekeke endzhaku ka tin'hweti ti nga ri tingani. Yi hlayise yi funengetiwile, leswaku mpfula yi nga hoxi swakudya swa swimilana naswona dyambu ri nga yi omisi.
-
-## Ndlela ya 5: Swivungu swa misava na ku fuya swivungu
-
-> "Swa kanakanisa loko ku ri na swiharhi swin'wana swo tala leswi nga tlanga xiavo xa nkoka swonghasi eka matimu ya misava, ku fana na swivumbiwa leswi swo olova." Charles Darwin, a tsala hi swivungu swa misava hi 1881.
+Charles Darwin u hetile malembe yo tala a ri karhi a xiyisisa swivungu swa misava. Hi 1881 u tsarile a ku: "Swi nga kanakanisa loko ku ri na swiharhi swin'wana swo tala leswi nga va ni xiave xa nkoka swonghasi eka matimu ya misava, ku fana na swivumbiwa leswi swa xiyimo xa le hansi."
 
 ### Swivungu swa misava emisaveni ya wena
 
-Swivungu swa misava (earthworms) i vapfuni lavanene swinene entangeni. Swi:
-
-- koka matluka lama feke na mulch swi swi nghenisa emisaveni
-- cela tindlela ta le hansi leti pfumelelaka moya na mati ku nghena emisaveni, ti tlhela ti pfuna timitsu ku kula ti enta
-- dya misava na organic matter, swi siya **vulongo bya swivungu (castings)**. Vulongo bya swivungu byi khomanisa misava byi va swiphemu leswitsongo, leswi nga xikombiso xa misava leyi hanyeke kahle
-- endla leswaku swakudya swa swimilana swi olova ku tirhisiwa hi swimilana.
-
-Swivungu swa misava swo tala eka xifosholo xin'we xa misava i xikombiso xa leswaku misava ya wena yi hanye kahle. Swi khutaze hi ku hlayisa misava yi funengetiwile hi mulch, ku engetela compost, ku cela switsongo na ku nga tirhisi swidlayi.
+Swivungu swa misava i vatirhi lava miyeleke va ntanga. Swi koka matluka lama feke swi ma nghenisa emisaveni, migodi ya swona yi nghenisa moya na mati, naswona **vulongo bya swivungu** (castings) byi hlanganisa misava yi va swirhundzwana leswitsongo leswi kombisaka misava leyi hanyeke kahle. Ku koka swo tala, veka mulch, engetela compost, cela katsongo naswona u nga tirhisi swidlayi.
 
 ### Swivungu swa compost
 
-Eka **worm farm** (worm farm) u lava **swivungu swa compost (composting worms)** swo hlawuleka. Swivungu leswi swi hanya eka matluka lama bolaka, vulongo na compost, ku nga ri ehansi ngopfu emisaveni. Swi dya swo tala, swi tswalana hi ku hatlisa naswona swi tsaka ebokisini leri teleke.
+**Worm farm** (ndhawu yo fuya swivungu) i xibya laha swivungu swo hlawuleka swa compost swi hundzulaka masalela ya khixi ma va vulongo bya swivungu lebyi noneke. Swivungu leswi swi hanya ematlukeni lama bolaka na le vulongweni, ku nga ri ehansi swinene emisaveni, naswona swi andza hi ku hatlisa ebokisini leri teleke. **Red wiggler** (*Eisenia fetida*) hi xona lexi tolovelekeke ngopfu eAfrika Dzonga naswona xi tiyisela ku titimela na ku hisa ku tlula leswin'wana. **African nightcrawler** (*Eudrilus eugeniae*) na **Indian blue worm** (*Perionyx excavatus*) swi tirha kahle etindhawini leti hisaka kambe a swi humeleli etinguveni ta vuxika to titimela.
 
-- **Red wiggler** (*Eisenia fetida*) i xivungu xa compost lexi talaka ngopfu eAfrika-Dzonga. Xi tiyisela xirhami na ku hisa ku tlula leswin'wana.
-- **African nightcrawler** (*Eudrilus eugeniae*) i xikulu naswona xi tirha hi ku hatlisa etindhawini leti hisaka, kambe a xi tirhi kahle hi vuxika lebyi titimelaka ngopfu.
-- **Indian blue worm** (*Perionyx excavatus*) na xona xi tirhisiwa etindhawini leti hisaka.
+Swi xave eka worm farm kumbe eka nursery. Swivungu swa misava swa ntanga a swi nge hanyi eka worm farm.
 
-Xava swivungu swa compost eka worm farm, endhawini yo kurisa swimilana (nursery) kumbe eka murimi wa ntumbuluko. **U nga tirhisi swivungu swa misava leswi u swi celeke entangeni wa wena.** Swivungu swa misava swa le ntangeni swi hanya emisaveni, naswona a swi nge hanyi kumbe ku tswalana kahle eka worm farm.
+Worm farm yi ku nyika swilo swimbirhi:
 
-**Vermicomposting** swi vula ku tirhisa swivungu ku hundzula thyaka ra ntumbuluko ri va compost. Ku fuya swivungu swi tolovelekile eka varimi lavatsongo na varimi va ntumbuluko, naswona varimi van'wana va xavisa swivungu, vulongo bya swivungu na **worm tea** (mati ya swivungu).
+- **Vulongo bya swivungu**: compost leyi olovaka, ya ntima leyi nga na swakudya swa swimilana swo tala leswi swimilana swi nga swi tirhisaka ku tlula masalela kumbe misava leyi byi humeke eka yona. Byi tirhise ehenhla ka misava, eka ku hlanganisa ka swimilana leswintshwa, kumbe xikhomo xin'we eka mugodi wun'wana na wun'wana wo byala.
+- **Worm tea** (mati ya swivungu): mati lama humaka eka worm farm. Ma ringanisele hi kwalomu ka swiphemu swa 10 swa mati, ku kondza ma languteka ku fana na tiya yo olova, kutani u ma chela emisaveni ku rhendzela swimilana. Loko ma nun'hwela ku biha, worm farm yi tsakame ngopfu; nyika mati wolawo nhulu wa compost kumbe mirhi, ku nga ri matsavu.
 
-### Leswi u swi kumaka eka worm farm
+### Ku aka no fambisa worm farm
 
-- **Vulongo bya swivungu** (vermicompost). Compost yo olova, ya ntima, leyi noneke leyi teleke hi swakudya swa swimilana na vutomi bya misava. Vulongo bya swivungu byi na swakudya swa swimilana swo tala leswi swimilana swi nga swi tirhisaka ku tlula misava kumbe masalela lama byi humeke eka wona. Byi tirhise ehenhla ka misava erhendzeleni ka swimilana, u byi hlanganisa na misava ya swimilana leswintshwa, kumbe u engetela voko rin'we eka mugodi wun'wana na wun'wana wo byala.
-- **Worm tea (mati ya swivungu).** Vanhu vo tala va yi vitana "murhundzu wa swivungu" kumbe "tiya ya swivungu", kambe hakunene i mati lama hundzeke eka worm farm ma teka swakudya swa swimilana eka vulongo bya swivungu na le ka swakudya leswi bolaka. I swakudya swa mati leswi pfunaka.
+Worm farm i kaya ntsena leri nga na ndzhuti, leri tsakameke, ra munyama, leri humesaka mati kahle, leri hlayisekeke eka tihuku, swinyenyani na switsotswana. Bafu ya khale ehenhla ka switina ya tirha, mbhovo wa yona wu ri emakumu ya le hansi ehenhla ka xikotlo, maribye na shade cloth ehansi, na saka ra hessian na phepha ra lwangu ehenhla. Leyi olovaka ngopfu ku tshovela i ntlawa wa mabokisi kumbe swikotlo swinharhu leswi tlhantlanisiweke:
 
-> **Xiletelo:** Hunguta matimba ya worm tea hi ku engetela kwalomu ka swiphemu swa 10 swa mati, ku kondza yi fana na tiya yo olova. Yi chele emisaveni erhendzeleni ka swimilana. Loko worm tea yi nun'hwela ku biha kumbe ku bola, worm farm ya wena yi tsakamile ngopfu. Worm tea yoleyo yi tirhise ntsena enhulwini wa compost kumbe eka swiluva na mirhi, ku nga ri eka matsavu.
+1. Kuma swibya swinharhu swa munyama swa vukulu byo fana, swa kwalomu ka 20 ku ya eka 30 cm hi ku enta.
+2. Siya hansi ka **xibya xa le hansi** xi pfalekile: xi hlengeleta mati. Veka thephe leritsongo, kumbe u xi yimisa ehenhla ka bezeni.
+3. Tlhava timbhovo to tala ta kwalomu ka 5 mm ehansi ka **swibya swimbirhi swa le henhla**, na timbhovo ti nga ri tingani ta moya kusuhi na ehenhla ka matlhelo ya swona.
+4. Yimisa xibya xa le hansi ehenhla ka switina endzhutini, xi ri na xibya xin'we lexi tirhaka ehenhla ka xona.
+5. Tata xibya lexi tirhaka swiphemu swimbirhi swa swinharhu hi **mubhedo** (bedding): khadibodo leri handzuriweke, maphepha-hungu, matluka yo oma na mahlanga, leswi petiweke kutani swi pfotiwa, swin'we na vulongo lebyi boleke kahle na xikhomo xa misava.
+6. Engetela kwalomu ka 500 g ya swivungu, kwalomu ka gidi. Xikhomo xin'we xi teka tin'hweti to tala ku sungula ku tirha.
+7. Funengeta hi saka leri tsakameke na xipfalo. Sungula ku dyisa endzhaku ka masiku ma nga ri mangani.
+8. Loko xibya lexi tirhaka xi tele hi vulongo bya swivungu bya ntima, hakanyingi endzhaku ka tin'hweti ta 2 ku ya eka 4, veka xibya xa vunharhu ehenhla xi ri na mubhedo lowuntshwa na swakudya, xi khumba vulongo bya swivungu lebyi nga ehansi.
+9. Eka mavhiki ma nga ri mangani swivungu swi tlhandlukela ehenhla. Humesa xibya xa le hansi, tlherisela swivungu leswi salaka, kutani u tirhisa vulongo bya swivungu. Xibya lexi nga riki na nchumu xi va xa le henhla lexi landzelaka.
+10. Humesa mati eka xibya xa le hansi endzhaku ka masiku ma nga ri mangani leswaku xi nga tshuki xi nwerisa swivungu.
 
-### Mixaka ya ti-worm farm
+Ti-red wiggler ti humelela kahle ngopfu exikarhi ka kwalomu ka 15 na 25 °C, naswona ehenhla ka kwalomu ka 30 °C ti sungula ku fa. Hlayisa worm farm endzhutini lowukulu yi ri na saka leri tsakameke ehenhla hi ximumu, yi sirheleriwile hi vuxika lebyi titimelaka, naswona mubhedo wu tsakama ku fana na xiponji lexi pfotiweke.
 
-Worm farm i ndhawu yo tshama ya swivungu leyi hlayisekeke, ya ndzhuti, laha mati ma humaka kahle, leyi sirhelelekeke eka tihuku, swinyenyani, switsotswana na timfuku (moles). Tirhisa leswi u nga na swona.
+Loko worm farm yi tele hi swivungu na **makokwana** (cocoons, mandza ya swivungu) lamatsongo lama vumbekeke ku fana na lamula, humesa swikhomo swi nga ri swingani ku sungula worm farm yin'wana kumbe ku engetela eka nhulu wa compost lowu titimerileke.
 
-- **Bafu ya khale kumbe xinwelo xa swifuwo.** Xi tlakusi ehenhla ka switina, xi tlakuka switsongo etlhelweni rin'we, xi ri na mugodi wa mati etlhelweni ra le hansi leswaku mati ma kota ku huma ma ya ebakitini. Veka nkumba wa maribye ehansi, kutani lapi ra ndzhuti ehenhla ka maribye. Engetela mubhedo wa swivungu na swivungu. Funengeta hi nkumba wa khale kumbe saka ra hessian na xiphepherhi xa lwangu leswaku dyambu na mpfula swi nga ngheni.
-- **Tikhireti kumbe swibya leswi tlhandlekiweke.** Tlhandleka tikhireti ta plastiki, mabakiti kumbe mabokisi manharhu ya vukulu byin'we. Leyi i ndlela yo olova ku tlula hinkwato yo tshovela.
-- **Matayere lama tlhandlekiweke.** Tlhandleka matayere ehenhla ka xisekelo xo tiya, ku fana na xiphepherhi xa khonkiriti kumbe xiphepherhi xa nsimbi ehenhla ka switina, ku ri na ndlela yo humesa mati. Ma tirhise ku fana na tikhireti, naswona minkarhi hinkwayo veka xipfalo ehenhla. Matayere ya ntima ma hisa ngopfu edyambyini, hikwalaho ma hlayise endzhutini hinkwawo.
+### Ku dyisa swivungu swa wena
 
-### Leswi swivungu swi swi lavaka
+1. Sungula hi ku nonoka. Engetela swo tala ntsena loko swakudya swo tala swa lexi hundzeke swi herile.
+2. Tsemelela kumbe u pfotlosa swakudya leswaku swi bola hi ku hatlisa.
+3. Swi celele ehansi ka mubhedo, ekhoneni yo hambana nkarhi wun'wana na wun'wana, ku hlayisa tinhongana ta mihandzu kule.
+4. Engetela xikhomo xa mubhedo wo oma nkarhi wun'wana na wun'wana loko u dyisa.
 
-- **Ndzhuti.** Swivungu swi fa hi ku hatlisa edyambyini na loko ku hisa. Red wiggler yi tirha kahle exikarhi ka kwalomu ka 15 na 25 °C. Ehenhla ka kwalomu ka 30 ku ya eka 35 °C swa fa. Loko ku hisa, hlayisa worm farm endzhutini lowukulu u tlhela u veka saka leri tsakameke ehenhla. Etindhawini leti titimelaka, rhurhisela worm farm endhawini leyi sirhelelekeke hi vuxika.
-- **Ku tsakama.** Swivungu swi hefemula hi nhlonge, hikwalaho mubhedo wa swona wu fanele ku tshama wu tsakamile minkarhi hinkwayo, ku fana na xipanji lexi hotiweke. Kambe swi ta nwela loko wu tsakamile ngopfu.
-- **Moya.** Endla mimbovo ya moya ematlhelweni na le ka xipfalo xa worm farm.
-- **Munyama.** Swivungu swi papalata ku vonakala. Hlayisa worm farm yi funengetiwile.
-- **Mubhedo.** Ndhawu yo tshama, ku fana na khadibodo leri handzuriweke, maphephahungu, matluka yo oma, byanyi byo oma na vulongo lebyi boleke kahle.
-- **Swakudya.** Masalela ya le xitsungeni na ya le ntangeni ya ntsongo, lama engeteriwaka nkarhi na nkarhi.
-- **Ku humesa mati.** Mimbovo yo humesa mati lama tlulaka.
-
-### Ndlela yo aka worm farm leyi tlhandlekiweke
-
-1. Kuma tikhireti ta plastiki, mabokisi kumbe mabakiti manharhu ya vukulu byin'we, lama enteke kwalomu ka 20 ku ya eka 30 cm. Swibya swa mivala ya ntima hi swona leswinene.
-2. **Xibya xa le hansi** xi hlengeleta mati. U nga endli mimbovo ehansi ka xona. Loko u swi kota, veka pompi yitsongo ekusuhi na le hansi, kumbe u xi yimisa ehenhla ka bezeni.
-3. Eka **swibya swimbirhi swa le henhla**, bora kumbe u tlhava mimbovo leyitsongo yo tala (kwalomu ka 5 mm) ehansi, leswaku mati ma kota ku huma ma ya ehansi naswona swivungu swi kota ku tlhandluka. Endla mimbovo yitsongo ya moya ma nga ri mangani ekusuhi na le henhla ka matlhelo.
-4. Yimisa xitlhandlekelo ehenhla ka switina endhawini ya ndzhuti.
-5. Veka xibya xa le hansi ehansi. Veka xibya xo sungula xa ntirho ehenhla ka xona.
-6. Tata xibya xa ntirho kwalomu ka swiphemu swimbirhi swa swinharhu hi **mubhedo**: khadibodo kumbe maphephahungu lama handzuriweke, matluka yo oma na byanyi byo oma leswi tsakamisiweke swi tlhela swi hotiwa, swin'we na vulongo lebyi boleke kahle na voko ra misava ya ntanga kumbe compost. Swi hlanganise kahle.
-7. Engetela swivungu swa wena. Sungula hi kwalomu ka 250 ku ya eka 500 g ya swivungu hi ku tsongo (madzana yo hlayanyana ku ya eka kwalomu ka gidi). Loko u ri na voko rin'we ntsena, worm farm yi ta teka tin'hweti to tala leswaku yi sungula ku tirha.
-8. Funengeta mubhedo hi saka leri tsakameke, khadibodo kumbe nkumba wo tiya wa maphephahungu, kutani u pfala xipfalo kumbe u funengeta hi lapi ra ndzhuti leswaku swinyenyani na tihuku swi nga ngheni.
-9. Rindza masiku ma nga ri mangani, kutani u sungula ku phamela (vona laha hansi).
-10. Loko xibya xa ntirho xi tele hi vulongo bya swivungu bya ntima, hi ntolovelo endzhaku ka tin'hweti ta 2 ku ya eka 4, veka xibya xa vunharhu ehenhla. Veka mubhedo lowuntshwa na swakudya eka xona. Xi fanele ku khumba vulongo bya swivungu lebyi nga ehansi.
-11. Eka mavhiki ma nga ri mangani lama landzelaka, swivungu swi ta tlhandlukela exibyeni lexintshwa swi lava swakudya.
-12. Humesa xibya xa le hansi, lexi sweswi xi teleke hi vulongo bya swivungu. Tsona swivungu hinkwaswo leswi u swi vonaka u swi tlherisela. Tirhisa vulongo bya swivungu entangeni wa wena.
-13. Halata xibya, kutani u xi tirhisa tanihi xibya lexintshwa xa le henhla nkarhi lowu taka. Hambeta u cincana hi ndlela leyi.
-14. Humesa mati exibyeni xa le hansi endzhaku ka masiku ma nga ri mangani. U nga xi tshiki xi tala xi nwerisa swivungu.
-
-Loko swivungu swi ri karhi swi tswalana, u ta kuma **makokwana (cocoons)** (matandza ya swivungu) lamatsongo lama vumbekeke ku fana na lamula emubhedweni. Rin'wana na rin'wana ri tswala swivungwana swo hlayanyana. Loko worm farm ya wena yi tele hi swivungu, u nga teka mavoko ma nga ri mangani ya swivungu na mubhedo u sungula worm farm yin'wana kumbe u swi engetela enhulwini wa compost lowu titimelaka. Minkarhi hinkwayo siya swo tala.
-
-### Ku phamela swivungu swa wena
-
-- Sungula hi ku nonoka. Engetela swakudya swa ntsongo, u engetela swin'wana ntsena loko swo tala swa leswi u swi veke khale swi dyiwile.
-- Loko worm farm yi simekekile kahle, swivungu swi nga dya ku fika eka kwalomu ka hafu ya ntiko wa swona wa swakudya hi siku. Xikombiso, 1 kg ya swivungu yi nga dya ku fika eka kwalomu ka 500 g ya masalela hi siku.
-- Tsema kumbe u pfotlosa swakudya swi va swiphemu leswitsongo. Swi bola hi ku hatlisa.
-- Celela swakudya ehansi ka mubhedo, ekhoneni rin'wana nkarhi wun'wana na wun'wana. Leswi swi hlayisa tinhongana ta mihandzu ti ri ekule.
-- Engetela voko ra mubhedo wo oma (maphepha lama handzuriweke kumbe matluka yo oma) nkarhi wun'wana na wun'wana loko u phamela, leswaku ku ringanana ku tshama ku ri kahle.
+Worm farm leyi simekeke yi dya swakudya ku fika eka kwalomu ka hafu ya ku tika ka yona hi siku: 1 kg wa swivungu, ku fika eka kwalomu ka 500 g wa masalela.
 
 | Swivungu swi rhandza | Swivungu a swi rhandzi |
 |---|---|
-| Makoko ya matsavu na ya mihandzu | Tinyala, galiki na piripiri |
-| Matluka ya tiya na masalela ya khofi | Makoko yo tala ya malamula |
-| Makoko ya matandza lama pfotlosiweke | Nyama, tihlampfi, marhambu na swakudya swa ntswamba |
-| Khadibodo na maphepha lama tsakamisiweke | Swakudya swa mafurha, swa munyu kumbe leswi swekiweke |
-| Vulongo lebyi boleke kahle bya tihomu, tihanci kumbe timpfundla | Vulongo bya timbyana na tikati |
-| Matluka na swiphemu swo olova swa swimilana | Swakudya swo tala hi nkarhi wun'we |
-| Xinkwa xa khale, xa ntsongo | Mati yo tala ngopfu |
+| Makanda ya matsavu na ya mihandzu | Tinyala, garlic, pelepele na malamula yo tala |
+| Matluka ya tiya, masalela ya kofi na makhoxo ya mandza lama pfotlosiweke | Nyama, tihlampfi, marhambu na swa masi |
+| Khadibodo na maphepha lama petiweke | Swakudya swa mafurha, swa munyu kumbe leswi swekiweke |
+| Vulongo bya tihomu, tihanci kumbe timpfundla lebyi boleke kahle | Vulongo bya timbyana na bya tikati |
 
-Swivungu a swi tlhela swi rhandzi dyambu hi ku kongoma, ku hisa, xirhami na ku pfilunganyisiwa nkarhi na nkarhi.
+Varimi van'wana va endla **compost tea** (mati ya compost), hi ku nghenisa moya eka vulongo bya swivungu ematini swin'we na molasses yitsongo. Ndzavisiso wa loko swi pfuna wu hambanile, naswona molasses yi nga dyisa switsongwatsongwana ku fana na *E. coli* na *Salmonella*. Worm tea hi yoxe ya olova. Chela yin'wana ya tona emisaveni, ku nga ri ehenhla ka matsavu lama dyiwaka ma nga swekiwanga nikatsongo.
 
-### Mati ya compost (compost tea)
+## Ringeta
 
-Varimi van'wana va tsakamisa vulongo bya swivungu kumbe compost ematini, va pompela moya eka wona hi pompo ya moya ya aquarium, kutani va engetela molasisi ya ntsongo. Molasisi yi phamela swihanyi leswitsongo-tsongo (ku nga ri swivungu). Leswi humaka swi vuriwa **mati ya compost (compost tea)**.
+Hlaya misava ya wena evhikini leri.
 
-Ndzavisiso wa leswaku mati ya compost ma pfuna swimilana a wu fani. Worm tea leyi hungutiweke matimba ntsena, kumbe vulongo bya swivungu lebyi ceriweke byi nghenisiwa emisaveni, swi olova naswona swi tirha kahle.
-
-> **Vuhlayiseki:** Ku engetela molasisi kumbe swikiri eka mati ya compost swi nga endla leswaku tibakteriya leti vavisaka to fana na *E. coli* na *Salmonella* ti kula, ngopfu-ngopfu loko compost a yi ri na vulongo. U nga fafazeli mati ya compost kumbe worm tea ehenhla ka matluka ya matsavu lama nga ta dyiwa ma nga swekiwanga, naswona u nga tshuki u swi endla ekusuhi na nkarhi wo tshovela. Ma chele emisaveni ematshan'weni ya sweswo.
+1. Hlawula tindhawu tinharhu: mubhedhi wa wena lowunene ngopfu, mubhedhi wa wena lowo biha ngopfu na xiphemu xa nhova leyi nga khumbiwangiki.
+2. Eka yin'wana na yin'wana, cela mugodi lowu enteke ku fana na xifosholo xin'we. Pima topsoil ya ntima kutani u hlayela swivungu swa misava eka xifosholo xexo.
+3. Endla ribbon test hi xikhomo lexi humaka eka 10 cm ehansi.
+4. Chela xikotlo xa mati etlhelweni ka mugodi wun'wana na wun'wana. Xana ma nghena kumbe ma khuluka?
+5. Sungula jar test hi misava leyi humaka eka mubhedhi wa wena lowukulu kutani u yi hlaya eka masiku mambirhi lama landzelaka.
+6. Tsala hinkwaswo u ri na siku. Veka mulch eka mubhedhi wa wena lowo biha ngopfu, kutani u wu kambela nakambe hi nkarhi lowu fanaka lembe leri taka.
 
 ## Tinhla ta nkoka
 
-- Misava yi na vutomi naswona yi vumbeka hi ku nonoka swinene. Yi sirhelele: yi hlayise yi funengetiwile, u cela switsongo naswona u nga tshuki u yi tshika yi nga funengetiwanga.
-- Tiva muxaka wa misava ya wena hi ku kambela hi ku khumba na hi xibya xa ngilazi. Misava ya sava ni ya vumba hinkwayo yi antswisiwa hi ku engetela organic matter.
-- Matsavu yo tala ma kula kahle eka pH ya kwalomu ka 6 ku ya eka 7. Ku kambela misava ku ku byela loko u lava layimi.
-- Byala green manure, ngopfu-ngopfu ti-legume, u yi tsema yi nga si veka mbewu. U nga tshuki u byala invasive species leyi nga eka nxaxamelo, ku fana na Mexican sunflower.
-- Endla compost hi vulongo u nga si byi tirhisa eka swibyariwa swa swakudya. Tshika tin'hweti ta 4 hi ku tsongo exikarhi ko veka vulongo lebyintshwa na ku tshovela swibyariwa leswi dyiwaka swi nga swekiwanga. U nga tshuki u tirhisa vulongo bya vanhu, bya timbyana kumbe bya tikati, kumbe vulongo bya tinguluve lebyi nga endliwangiki compost, entangeni wa swakudya.
-- Funengeta misava hi mulch yo enta 5 ku ya eka 10 cm, yi ri ekule na mintsonga.
-- Nhulu wa compost lowu hisaka wu lava swo oma, swa rihlaza, moya na mati, wu fika eka 55 ku ya eka 65 °C, wu hundzuluxiwa loko wu titimela, naswona wu lunghekile endzhaku ka kwalomu ka tin'hweti ta 2 ku ya eka 3.
-- Eka worm farm, tirhisa swivungu swa compost ku fana na red wiggler (*Eisenia fetida*), ku nga ri swivungu swa misava swa le ntangeni. Swi hlayise endzhutini, swi tsakamile naswona swi phameriwa masalela ya matsavu ya ntsongo.
-- Hunguta matimba ya worm tea kwalomu ka 1 eka 10 u yi chela emisaveni, ku nga ri eka miroho leyi dyiwaka yi nga swekiwanga.
+- Misava ya hanya naswona yi vumbeka hi ku nonoka swinene. Yi hlayise yi funengetiwile, yi dyise naswona u cela katsongo.
+- Organic matter yi antswisa sava na vumba. Matsavu yo tala ma rhandza pH ya kwalomu ka 6 ku ya eka 7.
+- Tsema ti-green manure ti nga si veka mbewu. Hundzula vulongo byi va compost byi nga si tshinela swibyariwa leswi dyiwaka swi nga swekiwanga.
+- Veka mulch yi enta 5 ku ya eka 10 cm, kule na mahlanga.
+- Nhulu lowu hisaka wu lava swo oma, swa rihlaza, moya na mati. Swivungu swi lava ndzhuti, mubhedo lowu tsakameke na swakudya switsongo.
+
+Cela xifosholo xin'we endhawini leyi fanaka lembe na lembe. Misava yi hlayisa rhekhodo ya yona, sentimitara hi sentimitara, ya leswaku vukorhokeri bya wena bya tirha.

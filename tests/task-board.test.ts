@@ -234,6 +234,49 @@ test('the home loader finds crop tasks on the main site Design Studio canvas', (
   assert.ok(tasks.every((task) => task.subtitle.startsWith('Kitchen bed ·')));
 });
 
+test('a planting on a non-main saved place\'s bed is not dropped from the Task Planner', () => {
+  // loadCropBoardSource() used to resolve ONLY the main site's Design Studio canvas, so a
+  // second saved place's beds — and any planting on them — were silently invisible to the
+  // Task Planner even though the crop plan itself held them.
+  const { local } = installBrowser();
+  const mainSiteId = 'site:-29.00000,31.00000';
+  const otherSiteId = 'site:-30.00000,29.00000';
+  local.setItem('permamap_saved_places', JSON.stringify([
+    {
+      id: 'main-farm', name: 'Main farm', lat: -29, lon: 31,
+      biome: '', rainfall: 0, elevation: 0,
+      savedAt: '2026-01-01T00:00:00.000Z', updatedAt: 2,
+    },
+    {
+      id: 'other-plot', name: 'Other plot', lat: -30, lon: 29,
+      biome: '', rainfall: 0, elevation: 0,
+      savedAt: '2026-01-01T00:00:00.000Z', updatedAt: 1,
+    },
+  ]));
+  // No explicit main-site pin needed — main-farm's newer updatedAt makes
+  // resolveMainSite() pick it as main, same as a real farmer's most-recent site.
+  local.setItem(`imbewu_design_canvas_${mainSiteId}`, JSON.stringify(canvas()));
+  local.setItem(`imbewu_design_canvas_${otherSiteId}`, JSON.stringify(canvas({
+    siteId: otherSiteId,
+    items: [{ id: 'other-bed', defId: 'veg_bed', x: 0.5, y: 0.5, label: 'Other bed' }],
+  })));
+  const cropPlan: CropPlanState = {
+    version: 1,
+    plantings: [
+      planting({ id: 'main-planting', bedId: 'bed-1', sowMonth: new Date().getMonth() + 1 }),
+      planting({ id: 'other-planting', bedId: 'other-bed', sowMonth: new Date().getMonth() + 1 }),
+    ],
+    updatedAt: 1,
+  };
+  local.setItem('imbewu_crop_plan_v1', JSON.stringify(cropPlan));
+
+  const tasks = loadCropBoardTasks(new Set());
+
+  assert.ok(tasks.some((task) => task.id.startsWith('main-planting:')), 'main site planting must still produce tasks');
+  assert.ok(tasks.some((task) => task.id.startsWith('other-planting:')), 'a planting on a non-main saved place must not be dropped');
+  assert.ok(tasks.some((task) => task.subtitle.startsWith('Other bed ·')), 'the non-main bed label must reach the task');
+});
+
 test('home refreshes the board for every source that can change its task truth', () => {
   const source = readFileSync(new URL('../app/home/page.tsx', import.meta.url), 'utf8');
   for (const event of TASK_BOARD_CHANGED_EVENTS) {

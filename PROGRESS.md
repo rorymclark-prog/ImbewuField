@@ -52,6 +52,633 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 23 Oct 2026 — Wave 17: re-capture, then three swarm tracks (PRs #1073, #1075, #1076, folded on one branch)
+- **Re-capture first:** the wave 16 build (`2bddc451`) rendered again; new IDs `w17-01`…`w17-08`, /farmer `w17-04`
+  fixed in place — `docs/audits/2026-10-23/wave-17-recapture-claude.md`.
+- **Dark forest, part 2:** `.studyButton`, the refresher course links and day headings, four /student fills and the
+  /funder CSV button and chips on `--on-forest-800`; own chat bubbles too. `tests/on-forest-contrast.test.ts` now scans
+  every `*.tsx` and `*.module.css` under `app/` and `components/`, with an empty allow-list.
+- **Text, taps, focus:** /records captions on `--text-secondary` in dark, /network sort chip on forest-800,
+  /samples/production print and source links 44px; focus-visible rings on the six named inputs plus the site survey and
+  design canvas fields (`tests/w17-text-taps-focus.test.ts`, no allow-list); scale diagram labels at least 12px.
+- **Desktop interiors:** MEL assessment cards three to a row at 1280, bars capped at 480px; staff journal filters already
+  sit in the sidebar.
+- **Proof layer:** `tests/wave-17-history-checks.ts` pins `app/student/page.tsx` over its wave 16 bytes. Close-out:
+  `docs/audits/2026-10-23/wave-17-integration-claude.md`. Open next: wave 18 re-capture; Rory on farmer journal filters
+  at lg+.
+
+### 23 Oct 2026 — Wave 16: re-capture, then five swarm tracks (PRs #1067–#1071, folded on one branch)
+- **Re-capture first:** the wave 15 build (`b260f337`) rendered again, 600 frames paired with wave 15; new IDs
+  `w16-01`…`w16-11` — `docs/audits/2026-10-22/wave-16-recapture-claude.md`.
+- **Dark forest buttons:** `--on-forest-800` declared in every theme column (white type on forest-800 stays at least
+  5.8:1 in dark); about 45 places repointed, guarded by `tests/on-forest-contrast.test.ts`; `LessonLink` and /design labels.
+- **Study in dark:** category text colours as `--cat-<name>-text` tokens per theme (`lib/category-text-colors.ts`,
+  `lib/course-modules.ts` untouched); four Study CSS modules and `FinanceCourse` buttons on theme tokens; 12px floor.
+- **Taps and sign-in:** 44px hit areas on /home, /invoice, /contact, /pitch, /login, /funder, /ngo; /login notice and
+  /records small text on readable tokens.
+- **Samples, network, example, farmer:** /samples/production, /network and /example small text at 12px and readable
+  tokens, the production calendar no longer overflows a phone; /farmer Site reports overline on `--gold-dim`.
+- **Leftovers:** last emoji icons in DesignCanvas and SiteCropPlanPreview; `savedSiteUnavailable` behind `t()`
+  (isiZulu pending); /surveys, /assessments, /journal end at their content on desktop; print page back control; manual titles.
+- **Proof layers:** `tests/wave-16-history-checks.ts` pins `app/student/page.tsx` over its wave 15 bytes; live
+  `lib/i18n.tsx` re-pinned with a wave 16 step that allows only the added key. Close-out:
+  `docs/audits/2026-10-23/wave-16-integration-claude.md`. Open next: /home tour card tap size, `MelDashboard`/`FieldJournal`
+  desktop interiors, six inline-style inputs without focus rings, a dark-mode render of /student.
+
+### 22 Oct 2026 — Wave 15: re-capture, then five swarm tracks (PRs #1061–#1065, folded on one branch)
+- **Re-capture first:** the merged wave 14 build (main `d99108f1`) rendered again; three regressions fixed before the
+  swarm started (/facilitator/print phone width with More options, isiZulu/English pairs read as one word, /account
+  h1) — `docs/audits/2026-10-22/wave-15-recapture-claude.md`.
+- **Words and titles:** about 60 dictionary values and 14 pending labels in sentence case, guarded by
+  `tests/sentence-case-labels.test.ts`; /journal uses the nav name; /updates shows one line per entry with Show more in
+  Simple; /facilitator/print has its own tab title.
+- **Farmer desktop and dark:** /example and /vision use the laptop width; exchange and /vision buttons readable in dark
+  (`EX.fill*`); farmer captions at least 12px (16 more files on the type floor); image width/height; chart numbers off
+  `font-mono` (now only in Codex's crops page).
+- **Staff:** CohortCharts and CohortDashboard on theme tokens; chart notes as one line plus "How this is counted".
+- **isiZulu and records:** /login, /farmer, /prices headings; /prices and /calendar on `AppHeader`; records and farmer
+  fills on tokens; focus rings and emoji tidy in owned files. 23 BRU group names stay English until a translator names them.
+- **Study:** about 40 text arrows replaced by Lucide icons through `ArrowLabel`, guarded by `tests/study-arrow-icons.test.ts`.
+- **Proof layers:** live `lib/i18n.tsx` sha re-pinned in front of the wave 15 layer; Tshivenda rewinds the 17 pending
+  labels with `WAVE_15_PENDING_REWORDED`. Close-out: `docs/audits/2026-10-22/wave-15-integration-claude.md`. Open next:
+  `w15-04` (`--on-forest` in dark), code-11/code-05/nav-17/desk-18 remainders, isiZulu render check.
+
+### 17 Oct 2026 — Wave 14: finish what wave 13 started (swarm PRs #1022, #1024–#1027, folded on one branch)
+- **Re-capture first:** the merged wave 13 build (main `5acf084c`) was rendered again on 600 frames; 120 "implemented"
+  rows checked against pixels, three regressions fixed before the swarm started (/account hydration, /facilitator/print
+  desktop overflow, /network isiZulu hint) — `docs/audits/2026-10-17/wave-14-recapture-claude.md`.
+- **Dark leftovers:** Design Studio picker + lite, /partners, /samples/production calendar and its ChatPanel/Screenshot
+  consumers, invoice preview frame, print-preview surround all follow the theme; disabled fills, focus rings on 18
+  `outline-none` inputs, raw sync error no longer shown to the farmer; `tests/theme-token-coverage.test.ts` +205 lines.
+- **Desktop frame:** shared `AppHeader` on 14 farmer pages and /student (Home and /example keep bespoke headers by
+  design), `TabBar hideAtDesktop`, Home's task list fills the desktop right column, staff roles get a staff Home hero,
+  journal filter chips in the desktop sidebar, Lima FAB clearance on example/vision/ExchangeBoard/mentor/student.
+- **Staff copy:** readable dates and sentence-case pills (`formatStaffDate`), plain words on surveys/mentor/ngo,
+  ochre-as-text fixed, Lucide ticks, 50+ `font-mono` removals, MEL result bars in a responsive grid, `/facilitator` →
+  `/mentor`, CohortCharts footnotes behind a details toggle.
+- **isiZulu:** day-first date on Home from new weekday/month tables, one shared `LanguageDraftNote` (farmer, records,
+  login, prices, student), site-report biome/BRU wording and demo feature names, `lib/produce-label.ts` crop names in
+  records/prices/lender card, task board titles in the chosen language. Three new `tests/zu-*` files.
+- **Study:** React #418 root-caused twice (OfflineDownload render-time `window`, SVG `<title>` with two children),
+  disclaimers collapsed to one line + More, Teach the Teachers card via `DesignDraftCopy`, img boxes, Lucide tick,
+  arrows glued with U+00A0; `tests/wave-14-study-history-checks.ts` + `*-before-wave-14.*` fixtures layer on wave 13.
+- **Swarm sessions hit the account's session limit mid-track**; the pushed work was folded as-is and the unreached tasks
+  are listed per track in `docs/audits/2026-10-17/wave-14-integration-claude.md` (166 IDs: 133 implemented, 21 partial,
+  11 blocked or Rory's decision, 1 needs verification). Still deferred: bug-08 sw.js timeout, lang-13.
+
+### 17 Oct 2026 — Wave 13: visual and UX audit fixes (swarm PRs #1014–#1020, folded on one branch)
+- **Dark theme on screen, not just in source:** staff dashboards (MelDashboard, ngo/funder/mentor/assessments/reports), the
+  Study area, Records, Exchange, Network, maps, /updates, journal sheets, the home hero and DataPanel chips follow the
+  theme; page canvas uses `--bg-0`; native inputs get `color-scheme`.
+- **Desktop frame:** shared `AppHeader` + role tab sets, dashboard shell, desktop layouts for /vision, /example, /records
+  tabs, /assessments; Lima launcher clearance variable; Account resolves in sample mode; map fallback without WebGL;
+  tour pill no longer covers CTAs; TabBar on secondary pages; /pitch phone fallback; print sheet scales to phone.
+- **Words:** one name per feature (Field journal, Production plan, My Records, Site reports, Tips and help, Organisation
+  staff), sentence case, plain-language login/contact/offline/feedback, no vendor names, 36 page titles
+  (`tests/page-titles.test.ts`), shorter tab labels (zu U+2011), South African rand/kg formats.
+- **Study proof layer:** `tests/wave-13-theme-history-checks.ts` + `tests/fixtures/*-before-wave-13.*` record the
+  dictionary rewordings/removals and project `lib/i18n.tsx`, `lib/locales/zu.ts`, `app/student/page.tsx` back to their
+  pre-wave-13 bytes for every older dated owner; `rewindWave13PendingDictionary` covers the `lib/i18n-pending.ts` rename.
+- **Close-out:** `docs/audits/2026-10-16/wave-13-integration-claude.md` dispositions all 160 IDs (96 implemented, 24 partial, 33 open, 7 blocked).
+  Rory decides nav-13 (print legend emoji) and the 'facilitator' Study wording. Still deferred: bug-08 sw.js timeout, lang-13.
+
+### 14 Oct 2026 — Wave 12: WebP lesson slides and Studies thumbnails (#999, perf-03/perf-05)
+- **Lighter Study:** 500 English and isiZulu lesson slides are now WebP (~300 KB instead of ~1 MB each, same size and
+  words); `public/course-decks` 391 MB → 322 MB. The two Studies overview cards use ~20 KB WebP thumbnails instead of
+  ~850 KB slides.
+- **Kept on purpose:** plant-guilds `en/slide-15/29/37.jpg` stay because three lessons use them as lesson pictures, and
+  `lib/course-modules.ts` (pinned by 200+ Study proofs) stays byte-identical. Their WebP twins ship for the deck.
+- **Study proof:** new dated media-format layer `docs/study-translation-reviews/slides-webp-2026-10-14/` +
+  `tests/slides-webp-history-checks.ts` (every retired JPEG's size/digest → its WebP successor, before snapshots of the four
+  changed sources). The 12 October layer validates it first, then sees its exact predecessor, so older proofs are unchanged.
+- **Still deferred:** bug-08 sw.js timeout, lang-13.
+
+### 14 Oct 2026 — Wave 11: second app-wide audit fixes (#992)
+- **Security & AI cost:** contour interval clamp, same-org garden/log/thread rules, guest request size caps, slip reader and
+  visit notes metered, profile `network` spoofing closed, no raw provider errors, `//` login redirect blocked.
+- **Offline saving:** sales/expenses delete and read failures, journal, contact/inbox/messages, account and sign-up no longer
+  lose text or hang; Lima Vision photos downscaled; local-date "today".
+- **Lighter first load:** chat panel, mapbox, rainfall chart, deck player and Rive sprout load on demand; release notes out of
+  the layout bundle; PWA polling every 15 min; four dead files deleted.
+- **Dark mode & taps:** NGO pages, Lima chat (now a dialog), inputs, header and cards themed; 44px taps; global reduced motion.
+- **Language:** Ask, Photos, Profile, Design, Places, Map sheets, evidence and error pages in t() with isiZulu drafts; plain
+  network-failure message; plain-word biome text and units; "mentor" for supervisor/facilitator on screen.
+- **Study proof:** `tests/study-ui-due-unlock-history-checks.ts` re-pinned to the wave 11 locale bytes with an exact rewind
+  to the earlier pins (Rory chose option 1). Predecessor i18n kept as `tests/fixtures/i18n-before-wave-11.tsx.txt`.
+- **Deferred:** perf-03/05 WebP slides and bug-08 sw.js timeout (proof pins; own PRs), lang-13. Record:
+  `docs/audits/2026-10-10/app-wide-audit-claude.md` (58 implemented, 1 verified, 4 deferred).
+
+### 14 Oct 2026 — Month names in the money book, charts and Invoice list (unreviewed drafts)
+- **What:** dates, the chart month axis and readout, "Your records start in…", the clipped-month note, the harvest list and
+  the saved-invoice list now name the month in Sesotho, Tshivenda, Xitsonga and isiZulu (`lib/records-months.ts`).
+  isiZulu reuses the names already in the app. English output is byte-identical (pinned by `tests/records-months.test.ts`);
+  the printed invoice, PDF and CSV stay English.
+- **Review:** two independent drafts per language agreed on all 36 long names; a blind reviewer mapped each name back to its
+  month (`docs/translation-reviews/records-finance-2026-10-06/reviews/months/`). Machine drafts only; spelling variants and the
+  Xitsonga January to April block need a speaker (`speaker-sheets/speaker-review-month-names.csv`).
+- **Still not done:** navigation and Lima chat (locale files are pinned by another track).
+
+### 12 Oct 2026 — Held finance rows retried (round 4)
+- **What:** 71 held rows were retried for Sesotho, Tshivenda, Xitsonga and isiZulu (finance-concept and unit-word rows
+  excluded); 33 now have an unreviewed draft (st 5, ve 7, ts 20, zu 1), the rest still show English. Xitsonga's
+  device-only photo warning no longer uses the ambiguous "xitirhisiwa" ("this phone only").
+- **Review:** blind machine back-translation per language, same integration rules; record in
+  `docs/translation-reviews/records-finance-2026-10-06/` (Round 4). No fluent-speaker, local-farming or Shangani approval.
+- **Not done on purpose:** month names (dates frozen; machine month-name error earlier) and navigation / Lima chat
+  (locale files are pinned by another track).
+
+### 12 Oct 2026 — Invoice page in Sesotho, Tshivenda and Xitsonga (unreviewed drafts)
+- **What:** `/invoice` (`app/invoice/page.tsx`) reads the same source-keyed lookup as the money book: 144 more
+  English strings for Sesotho, Tshivenda and Xitsonga, 18 isiZulu fills. Instructions a farmer acts on keep the English
+  beside the draft; price-guide sentences are `{price}`/`{date}` templates; a visible notice says the drafts are
+  unreviewed. **The invoice a buyer receives (print, PDF, preview) stays English.** Held rows (price-guide notes, VAT / tax
+  no., eggs/crates/bunches, "types", Tshivenda/Xitsonga "Remove item") show English; buyer-type names are not translated
+  because they print as the buyer's name.
+- **Fixes found on the phone / in the code:** isiZulu paired instructions with no isiZulu wording printed their English
+  twice; the long Tshivenda word for "each" pushed the price box past the card at 390px (it now wraps onto its own line).
+- **Review:** same drafting + blind-review packet (`docs/translation-reviews/records-finance-2026-10-06/`, Round 3).
+  Machine drafts and machine review only; no fluent-speaker, local-farming or Shangani approval is claimed.
+
+### 10 Oct 2026 — Wave 10: last audit leftovers (#990)
+- Report footnotes (Köppen, rainfall pattern, wet/dry season) translated per language; isiZulu pending translator CSV.
+- New `--on-forest` theme token replaces ~65 hardcoded `#F7F2E9` text colours in 28 files; guard test `tests/stale-paper-hex.test.ts`. Crop planner files left for later (Codex active there).
+- Dead `designMode` prop removed from the design wizard.
+- Audit close-out filed: `docs/audits/2026-10-10/app-wide-closeout-claude.md`. All 92 original findings dispositioned (90 implemented, 1 verified, 1 owner decision). Next app-wide work needs a fresh audit.
+
+### 9 Oct 2026 — AI allowance in rand: R18/person/month
+- Rory: "keep it 18 rand". `lib/ai-budget.ts` now counts in rand: `AI_MONTHLY_CAP_ZAR` (default 18),
+  `AI_GUEST_DAILY_ZAR` (default 1), `AI_ZAR_PER_USD` (default 18). The `*_EUR` vars are gone (never set).
+- Account page shows "R x of R18 left". Note: R18 equals the whole R18/month price — AI could use all
+  of a user's revenue; the research's R6 target is one env change away.
+
+### 6 Oct 2026 — Money book in Sesotho, Tshivenda and Xitsonga (unreviewed drafts)
+- **What:** `/records` (Picked · Sold · Spent · Charts; `/finances` redirects there) now reads
+  source-keyed machine drafts in Sesotho, Tshivenda and provisional standard written Xitsonga, and
+  fills isiZulu where it still fell back to English. One lookup, `lib/records-regional-drafts.ts`,
+  keyed by the exact English on screen, so editing the English retires its draft. Existing wording
+  always wins; instructions about money and saved records show the English first. A visible
+  "Unreviewed … machine draft" notice sits above the tabs.
+- **Unchanged on purpose:** totals, formulas, units, currencies, dates, storage keys, validation
+  rules, paid AI (`/api/read-slip`) and recovery logic. Placeholders (`{kg}`, `{amount}`) must match
+  the English or the draft is refused.
+- **Review:** per-language drafting lane, then an independent blind back-translation review.
+  Reviewer repairs of whole sentences were not re-reviewed, so those, and every reviewer hold,
+  show English. Packet, briefs, verdicts and held rows: `docs/translation-reviews/records-finance-2026-10-06/`.
+- **Existing-wording fixes:** "Save sale & invoice" no longer drops "& invoice" in isiZulu and Sesotho.
+- **Still open:** held strings (units such as eggs and jars, fuel, the lender disclaimer, Tshivenda
+  Export, running total / benchmark / reconciliation wording); month names; everything needs a fluent speaker.
+
+### 10 Oct 2026 — Charts tab in Sesotho, Tshivenda and Xitsonga (unreviewed drafts)
+- **What:** `CashflowChart`, `FinanceGraphs`, `ComingUpHarvests`, `HarvestReconciliation`,
+  `AreaReturnCards` and `IsiZuluDraftSource` read the same source-keyed lookup as the money book
+  (119 more templates, figures as `{placeholders}`). isiZulu keeps its wording and gains fills for the six
+  strings that were English-only. Held concepts (running total, benchmark, reconciliation, net profit,
+  surplus/shortfall) show English. No chart arithmetic, scale, colour or data changed.
+- **Review and layout:** same drafting + blind-review packet (`docs/translation-reviews/records-finance-2026-10-06/`);
+  reconciliation rows now wrap so a drafted line is not cut off at 390px.
+
+### 1 Oct 2026 — Calendar sections; food chart month on top; phone gutter removed
+- **Four calendar sections** (`CalendarSectionHeader`, `CalendarSectionNote` in
+  `app/facilitator/crops/page.tsx`): Vegetables (beds), Staple crops (plots), Fruit, nuts &
+  berries, Animal products. Rory: "must all have their place". An empty section keeps its band and
+  says why; a section hidden by the orchard or animals switch says so, with a Show button
+  (the orchard switch is still the one shared with Money and Records).
+- **Food chart**: month name heads each column, count under the bar ("just switch them").
+  Switches renamed "Fruit, nuts & berries shown/hidden" and "Animal products shown/hidden": Rory
+  saw "Orchard out" and asked where the fruit was.
+- **Phone gutter**: below 768px the chart's 128px bed-label gutter shrinks to 8px
+  (`.crop-chart-track` in `globals.css`). Months keep their width, so the shared scroll still
+  lines up with the calendar.
+
+### 30 Sep 2026 — Squashes & melons tile; saved crop mix per map; fruit and animal bars
+- **Squashes & melons** (`lib/crop-groups.ts`, `squash_melon`): pumpkin, butternut, gem squash,
+  baby marrow, watermelon and spanspek moved out of Fruiting veg into their own crop-mix tile.
+  Cucumber stays in Fruiting veg (trellised, bed-sized). `nutritionGroupOf` maps it back to
+  fruiting veg, so the breadth-first turns (`BREADTH_SLOTS`) are unchanged. PDF: same terracotta
+  ink and legend swatch as Fruiting crops.
+- **Saved crop mix** (`lib/crop-mix-preference.ts`): ticked tiles plus exact crops, saved per map
+  (canvas site, or `design:<id>`) and per goal, in account-scoped localStorage like the animal
+  choices. Auto-suggest opens with it; "Reset to recommended" clears it. A tile added to the app
+  after a save comes back on for family/hybrid and stays off for commercial. Not synced across
+  devices. Tests: `tests/crop-mix-preference.test.ts` (added to `npm test`).
+- **Fruit and animal rows as bars**: Rory wanted "the avocado like a cabbage planting". Each tree
+  kind or animal product is now its own lane of bars over its sourced months (`produceLanes` in
+  `lib/calendar-produce.ts`, runs cut at the year-two seam), in place of up to 3 icons per month.
+  Names stick just right of the bed labels while scrolling. Proposed plants stay faded and say
+  "(proposed)". Hover/tap a bar for the written line.
+- Not done, on purpose: fruit and animals as crop-mix tiles. The mix only steers bed auto-suggest;
+  trees and animals come from the Design Studio map, have their own calendar switches, and animals
+  are chosen per coop/hive under "Animals on your map".
+
+### 30 Sep 2026 — Crop-mix switches for herbs, fringe crops and cover crops; one-bed vine fix; honey flows
+- **Crop mix** (`lib/crop-groups.ts`): "Alliums & herbs" split into **Onions & garlic** and
+  **Herbs** (coriander, parsley). Added **Less common crops** (soybean, bambara, mung bean, spider
+  plant, African nightshade) and **Cover crops** (sunn hemp, medic, fodder radish). Rory: many
+  farmers won't grow coriander, parsley or mung beans, so each can be switched off.
+  - Breadth-first turns still go by nutrition (`BREADTH_SLOTS` / `breadthSlotOf`), so the split
+    doesn't change what a family plan fits. Less common crops queue last within their slot.
+    `suggestSubstituteCrop` uses `nutritionGroupOf` and offers them last.
+  - With Cover crops off (`winterCoversWanted`), plots rest after summer instead of getting
+    broad beans or oats, and the plan says so. A named crop list still gets covers.
+  - PDF legend: 6 swatches ("Less common, cover" share the muted one).
+- **"Only three plantings"**: Rory was on a one-bed map. On one bed a ticked vine (butternut) used
+  to take the whole bed. It is now left out with a note, and the other chosen crops fill the bed
+  (7 plantings). There's a regression test in `tests/crop-plan-ideal.test.ts`.
+- **Honey** (option 1): no month bar. The Animals row shows a honey line with "Honey flows depend
+  on local plants and rain" and a hover/pin tooltip. The tooltip lists 5 regional flow records
+  quoted from Johannsmeier 2016 (SANBI Strelitzia 37), with page numbers
+  (`research/animal-sources/bees.json` → `flowNote`, `flowRecords`; `unmarkedAnimalLines` in
+  `lib/calendar-produce.ts`).
+
+### 29 Sep 2026 — Pawpaw picking months sourced; honey searched again
+Rory: "please search deep the answers will be out there!" (about honey and pawpaw showing only
+"not shown" notes in the bed calendar).
+- **Pawpaw** (`research/perennial-sources/carica-papaya.json`): KZN DARD "Fruit and Nut
+  Production in KZN", §1.6 Papaya, PDF p.18: "The cropping season usually extends from about April
+  to January, with a peak from September to November." Now charted April–January for KZN. Quote
+  checked against the PDF text. The DAFF papaya brochure (nda.gov.za) still 503s from the sandbox;
+  year-round picking appears only in trade press (FreshPlaza, Food For Mzansi), so not used.
+- **Honey** (`research/animal-sources/bees.json`): still no months. The round-2 rule stands: chart
+  honey only when a source states a region's harvest or main-flow months. Found and recorded in
+  gaps, not charted: Buys 2019 (Zululand, "March … the middle of the honey flow", plus bar charts
+  of kg harvested by month, roughly Mar–Jul), Masehela 2017 (beekeeper-reported bloom months of
+  honey-crop plants by province), Human 2006 and Hutton-Squire 2014 (nectar-plant months).
+  Unread: DFFE "The Honey Trade" (2005) and Johannsmeier's ARC-PPRI handbook.
+- Rebuilt `lib/perennial-harvest-data.ts`; `lib/animal-enterprises-data.ts` unchanged. Release
+  note added (placeholder sha).
+
+### 29 Sep 2026 — Berries and moringa in the design studio; tree picking in the monthly plan
+Rory: "what about berries and other food forest crops can we add them to the design studio etc?
+what about moringa put all these things in there… and maybe have it even show in the monthly crop
+plan? harvest period etc etc".
+- **Catalogue** (`lib/species-catalog.ts`, now 200): strawberry (groundcover; Fynbos + Grassland),
+  southern highbush blueberry (Fynbos), raspberry (Fynbos + Grassland), Cape gooseberry (seven
+  biomes, rank 5). All `reviewed: false`, NEMBA checked against GN 1003 of 2020. Height, frost
+  class and biome ranks are editor placeholders and each `source` says so; Cape gooseberry's
+  facts rest on seed-company/trade pages only (said in its source). **Blackberry left out**:
+  *Rubus fruticosus* agg. is NEMBA category 2.
+- **Harvest dossiers** (`research/perennial-sources/`): strawberry (Acta Hort. 265, SASGA, KZN
+  DARD), blueberry (Stellenbosch MSc 2022, USDA GAIN 2017, KZN DARD; its chill figure is in
+  hours so the chill-units field stays null), raspberry (KZN DARD Nov–Jan), purple granadilla
+  (KZN DARD Nov–Jan + Jun–Jul, first crop 6–8 months), moringa (leaves and pods; first leaves
+  6–12 months and pods Mar–Apr, North West DARD p.7), Cape gooseberry (picking late Oct–Jan in one
+  Stellenbosch University tunnel trial; the seed company's sowing calendar is not used). Mulberry
+  still has no SA harvest record.
+- **Art:** moringa mapped in `lib/species-art.ts`; `tree_moringa` → `moringa-oleifera` in
+  `ELEMENT_SPECIES`. The four berries have no painted picker art yet (Lucide fallback) — Codex batch
+  needed.
+- **Fruit, not trees** (Rory: "instead of fruit trees as the icons make them actual fruit"): flat
+  placeholder fruit icons for all 36 harvest species in `public/fruit-art/*.svg`
+  (`scripts/build-fruit-placeholder-art.mjs`), served by `speciesFruitArtworkUrl` in
+  `lib/species-art.ts`. The food chart's tree tray uses them. Painted PNGs: `docs/FRUIT-ART-BRIEF.md`.
+- **Bed calendar rows** (Rory: "include fruit and nuts and berries (also add for animal products)
+  into this calendar … if you hover … a written version of what's in that month"): under the beds,
+  **Fruit, nuts & berries** and **Animal products** rows show each month's fruit icons or Lucide
+  product icons (egg, milk, fish); hover, focus or tap opens a fixed-position card listing each
+  line ("Mango — fruit · 3 plants on your map · 1 of them proposed"). Whole design, proposed faded
+  and said not cropping yet. Footnotes name what is on the map but not shown (no sourced months,
+  e.g. Pawpaw, honey; or a structure with no "what for"). `lib/calendar-produce.ts`. Follows the
+  orchard/animal switches.
+- **Chosen crops** (Rory: "i selected pumin theres no pumkin or amadumbe or peanuts bambara"): a
+  vine picked by name (pumpkin, butternut, watermelon) now takes a bed even with vines kept out of
+  beds; a picked crop with no sowing month on the farm's calendar (amadumbe on hard frost; bambara
+  off the summer calendar) gets a note saying so instead of a false "didn't fit". Groundnuts were
+  already placed. `lib/crop-autosuggest.ts`; the family/steady ideal anchor re-pinned March →
+  November from the re-read sweep (`tests/crop-plan-ideal.test.ts`).
+- **Monthly plan** (`app/facilitator/crops/page.tsx` Tasks card): under each month (this, next,
+  Looking ahead for 12 months) a **From your trees** box lists standing trees in their sourced SA
+  season — "Pick Raspberry (2) — SA season Nov–Jan" — with a note that seasons are every region
+  together. Proposed trees are left out (years from a crop); follows the food-forest switch; the
+  WhatsApp share carries the lines too. `treePickingByMonth` / `treePickingPhrase` in
+  `lib/perennial-harvest.ts`.
+- **Printed task summary** (`lib/crop-export-pdf.ts`): the same pick lines per month, via the
+  export card's new `treeGroups` prop.
+- Tests: pick-line and berry/moringa cases in `tests/perennial-harvest.test.ts`, task-summary case
+  in `tests/crop-plan-pdf-build.test.ts`, species count 196 → 200, `tests/calendar-produce.test.ts`,
+  and a chosen-crops case in `tests/crop-autosuggest.test.ts`.
+
+### 29 Sep 2026 — Food availability: tree and animal picture trays, month labels, printed page
+Rory, looking at the availability chart: "i would prefer icons of fruoit and berrues just like the
+others so a 3rd, 4th litle box after staple crops animal products and food forest pruducts etc with
+icons", "i dont know what month this is?", and "i want in the crop plan printed a version of the
+calendar we have in the app with the veg and other icons".
+- **Picture trays** (`app/facilitator/crops/page.tsx`): the food-forest and animal rows are now
+  tinted trays of the same art as the veg (`speciesPickerArtworkUrl`, `animalArtUrl`; Lucide
+  fallback), one tray per month, replacing the count/Lucide rows. Legend has tinted swatches.
+- **Month identity** (`lib/month-axis.ts`): each column knows its calendar year; the first shows a
+  **Now** pill with the year, every January shows its year. On the timeline header, the
+  availability chart and the line charts; tooltips/aria read e.g. "September 2026 (now)".
+- **Printed page** (`lib/crop-export-pdf.ts` section `availability`, in the default export after
+  the bed calendar): landscape "What there is to eat: Sep 2026 - Aug 2027" — fresh / stored veg,
+  food forest, animal products (empty trays left off, as on screen), a **field space used** row
+  (% + bar, red over 100%), January seam, a key naming every picture, and the source notes.
+  Pictures come from `lib/pdf-icons.ts` (browser: fetched, drawn at 64 px, embedded once by alias);
+  a missing or unreadable picture prints the crop code instead. The export card passes the chart's
+  first 12 columns via `lib/crop-export-availability.ts`, honouring the tree/animal switches.
+  Quick print stays calendar + tasks and loads no pictures.
+- **Not printed:** the plan-cycle value chart (prices move; it stays on screen with its dates).
+- **Regional harness** (`scripts/crop-plan-pdf-regions.ts`) now adds a sample food forest and a
+  layer coop + tilapia pond with icons from `public/`; all 16 site/water PDFs rebuilt and the
+  page checked. Picture cost ~10 KB each (~290 KB for a busy plan).
+- Guava, pawpaw and honey have no sourced months yet, so they stay off the chart and the page.
+- **Next (PR2):** berries, moringa and tree picking in the monthly plan — done, see the entry above.
+- Tests: `tests/print-availability.test.ts` (new), availability cases in `tests/crop-plan-pdf-build.test.ts`.
+
+### 29 Sep 2026 — Crop-plan PDF audited at eight SA sites
+- **Harness:** `scripts/crop-plan-pdf-regions.ts` builds the full PDF through the planner's own
+  pipeline for KZN Midlands, Durban, Gauteng, Stellenbosch, Tzaneen, Mthatha, Bloemfontein and
+  Kimberley, irrigated and rain-fed (NASA POWER climatology in `scripts/fixtures/crop-plan-regions/`).
+- **Truth fix:** `fillFirstSeasonGaps` split each year-one bare run by the repeating plan's year-two
+  ledger. Only months also bare in year two say "recurs every year"; the rest print as "First-year
+  gap only" (cycle crop sown in a month already passed). Test in `tests/staple-crops.test.ts`.
+- **Layout:** title wraps to two lines; stat tiles size to their text; page-1 trust panel kept off the
+  footer; workload chart unit moved beside its title with 1/2/5 steps; crop-code key filed by colour
+  and empty colours dropped; `m²` throughout.
+- **Wording:** buying list and field sheet places compact to "Beds 2, 4, 8, 9; Plot 3"; crop names
+  keep inner capitals ("true spinach (English spinach)"); covered prep note printed once; long crop
+  whitelists counted instead of listed; Aug nursery seedlings not bought on a Sep plan.
+- **Next:** fruit/berry icon trays, month-chart year labels, berries + moringa, food-forest rows.
+
+### 29 Sep 2026 — Recommended prices for the last five unpriced catalogue crops
+- New price confidence level `'recommended'` (`lib/crop-prices.ts`): the plain average of the
+  like-for-like cited prices found, for crops no single source fits. Labelled "Recommended price —
+  average of prices found" on the price card, sales log, invoice and planner price editor.
+- Parsley R243.64/R20.27, sorghum R32.50/R4.12, bambara R97.37/R37, sweetcorn R74.47/R28.30,
+  cowpea R56/R12.50 (retail/wholesale per kg). Quotes + method: `research/crop-sources/_prices-2026-09-29.json`.
+- `UNPRICED_CROPS` is down to coriander and true spinach. Test: every recommended price carries
+  `pricedAt` and wholesale < retail.
+
+### 28 Sep 2026 — Variety guidance by growing zone; yield benchmarks checked; crop prices
+- **Growing zones (`lib/growing-zones.ts`):** the site's own monthly temperature and rain → the
+  zone(s) `research/crop-sources/_zones.json` files the variety research under, using the Köppen
+  class and koppen-global's frost lines (7 °C / 13 °C coldest month). Where monthly data can't split
+  two zones (Highveld/Midlands, Lowveld/coast, BSk steppe, hard frost vs high mountain) it names
+  both. No site climate → no zone claimed. Tested against 9 reference places (`tests/growing-zones.test.ts`).
+- **Sourced cultivars:** `scripts/build-crop-varieties.mjs` turns the variety dossiers into
+  `lib/crop-varieties-data.ts` (28 crops, 105 cultivars). Evidence citing the app itself is dropped,
+  and any cultivar left with no outside source; researcher notes ("fetched directly, verbatim") are
+  stripped from the source name. `tests/crop-varieties.test.ts` fails if data and dossiers drift.
+- **Crop picker → Variety guidance** (`components/crops/VarietyGuidance.tsx`): "Your area" line,
+  zone notes, cultivars named for your area, then "Other varieties" with the areas their source
+  named; every card links its source with the quote on hover. Catalog advice stays as General guidance.
+- **Low benchmarks checked** against a second source (KZN crop guides, ARC, Elsenburg). All three
+  follow Table 8's conservative-through-likely convention like every other row, so planning points
+  stay. Green beans range upper 0.8 → 1.0 kg/m² (ARC "Estimated yield: 100 kg/100m2"); broccoli
+  0.8 → 0.9 (KZN Cole Crops "6 to 9 tons per hectare"); peas left (KZN Green Peas average 5–6 t/ha).
+- **Prices for batch-1 crops** (`lib/crop-prices.ts`, quotes in `research/crop-sources/_prices-2026-09-28.json`):
+  gem squash, brinjal, baby marrow both sides real (Joburg Market + shop listing); cauliflower,
+  spanspek, soybean, sunflower have real wholesale (Joburg Market / SAFEX) with retail derived by
+  the file's ~38% ratio, because the only shop listings were a different product (florets, cooked
+  soya, snack seed). Still excluded, with reasons: parsley (pack vs market 21x apart), sorghum,
+  bambara, sweetcorn (two market codes 18x apart), cowpea. `PRICE_SNAPSHOT_MONTHS` now reads
+  "July, August and September 2026".
+
+### 28 Sep 2026 — Artwork: Codex batches merged (20 crops, 15 animals, 5 fruit trees)
+- **Crop Batch 2 (#779):** the 20 flat placeholders in `public/crop-art/` replaced with finished
+  256² art; the whole crop library is 3.79 MB, under the 4 MB gate in `tests/element-art.test.ts`.
+- **Animals + trees (#774):** 15 animal pictures in `public/animal-art/`, wired in `lib/animal-art.ts`
+  (the Animals on your map chips and picked-animal picture); pickers + plan crowns for sour fig,
+  Transvaal milkplum, African mangosteen, jacket plum and spiny monkey orange, plus a guava picker.
+- **Crown size fix:** the 5 new plan crowns shipped as 1024² RGBA at ~1.8 MB each (9 MB together).
+  Re-saved as 768² 256-colour palette PNGs, 242–258 KB each, the same format and range as the rest
+  of `reference-blueprint/` (all palette, max 262 KB). No visible difference at map scale.
+- Both briefs marked done, and ANIMAL-TREE-ART-BRIEF now asks for palette crowns ≤ 270 KB.
+
+### 28 Sep 2026 — Artwork: 17 fruit trees linked, Codex brief for trees and animals
+- **17 harvest-table fruit trees linked to art they already had** (`lib/species-art.ts`): pawpaw,
+  num-num/Natal plum, lemon, naartjie, Kei apple, fig, wild plum, litchi, macadamia, mango, avocado,
+  peach, Japanese plum, pomegranate, marula, waterberry, plus guava's plan crown. The Plant Catalog
+  (opened from Other Tree) showed them with no picture, and on the plan they drew the generic
+  orchard crown because they are saved as `tree_other` + `speciesId`.
+- **Animal picture slot:** `lib/animal-art.ts` (empty map) + `AnimalEnterprisesCard` shows a 16 px
+  chip image and a 56–72 px picture when an entry exists; Lucide icon otherwise.
+  `tests/animal-enterprises.test.ts` guards id ↔ file ↔ 256×256 transparent corners, and orphans.
+- **`docs/ANIMAL-TREE-ART-BRIEF.md`:** Codex brief + paste-ready prompt. Part A: 5 trees with no art
+  anywhere (sour fig, Transvaal milkplum, African mangosteen, jacket plum, spiny monkey orange;
+  picker 192² + plan 1024²) and a guava picker. Part B: 15 animal pictures (256²).
+- **`docs/CROP-ART-BRIEF.md`:** status now says the 20 Batch 2 files are placeholders, and tells
+  Codex to branch from current `main` (a stale clone read the old 1024² rule).
+- **Left:** all Codex drawing (20 crops, 11 tree files, 15 animals). *Done — see the entry above.*
+
+### 28 Sep 2026 — Animal enterprises, round 2 (Phase C: cattle, sheep, pigs, fish; month search)
+- **New enterprises (15 in all):** beef cattle (Nguni/crossbred, communal veld), dairy cow, meat
+  sheep, wool sheep, pigs (small-scale sow herd) and tilapia (Mozambique tilapia, small pond or
+  tank). Dossiers in `research/animal-sources/`; same build script and drift test.
+- **Housing, not animal:** choices are now keyed by the structure (`HousingKind`). A kraal holds
+  cattle, sheep or goats, so it offers every enterprise of those three ("What is the kraal for?");
+  a small pond asks "Keeping fish in it?"; a pig pen offers pigs. `cleanChoices` drops a saved
+  choice that no longer fits its housing. Product `fish` (Fish icon, "Harvest per fish") and
+  `wool` (Scissors) are new. Wool is not food: `isFoodProduct` keeps it off the Availability chart
+  and the Year of food, and the card says so.
+- **Months now on the chart:** laying hens, dairy cows ("processors require a year-round even milk
+  flow", Elsenburg Dairy Farming Handbook) and tilapia (year-round harvest, North-Eastern SA).
+- **Month search for honey, goat milk, rabbits, ducks, broilers and village hens:** each was
+  searched again; no source states the months the product is taken for the system recorded, so
+  they stay empty with a "Round 2" gaps line. Withdrawn in editor review:
+  - Honey: two Johannsmeier (Strelitzia 37) months described one plant's nectar flow, not a
+    region's honey season.
+  - Boer goat meat: kidding months plus an assumed weaning age (the kidding pattern stays as text).
+  - Beef: the "months" were a paper's birth-season classes; age at first calving is not a first
+    weaned calf; a holding-pen floor minimum is not housing space.
+  - Dairy: shade m² moved to a welfare point; a dead KZN URL replaced; wrong ± figures in a
+    productive-life quote replaced by the paper's own sentence; table notes corrected.
+  - PMC quotes were checked against the Europe PMC full text (PMC serves scripts a reCAPTCHA).
+- **Tests:** `tests/animal-enterprises.test.ts` adds kraal/pond/pig housing, choice-fits-housing
+  and wool-never-food cases. 14 `npm test` failures in this container (auth transition, course
+  deck, product tour, public SSR, venue location, saved reports, paired slides) fail identically
+  on `origin/main` here — loader/environment, not this change.
+
+### 28 Sep 2026 — Year of food (Phase D: one calendar, gap-fill sowings)
+- **New `lib/year-of-food.ts`:** `buildYearOfFood` folds the Availability chart's OWN first 12
+  slots (bed crops, fruit trees, animals) into one verdict per month: fresh (anything fresh from any
+  source), stored-only, or empty. It recomputes nothing, so it cannot disagree with the chart, and
+  it follows the chart's year mode and the Orchard/Animals switches. A "veg gap" month has no fresh
+  vegetable even if fruit or eggs cover it.
+- **Gap-fill sowings (`suggestGapFills`):** for each veg-gap month (hungry months first), up to 3
+  sowings that pick fresh in it. Only crops the auto-planner trusts (`hasAutomaticPlanningBasis`,
+  yield > 0, so no soil covers; not maize), sown in the region's window, inside the site climate gate
+  auto-suggest uses (heat always, rain when rain-fed), on a veg bed (not a staple plot) with room
+  from the printed field-entry month to the end of picking. The share offered is the largest picker
+  share still free; vines only get a whole bed. Fresh months use `buildFoodAvailability`'s own
+  arithmetic, and the test adds each suggestion as a planting and checks the chart shows it.
+  When no bed has room, the card names the crops that could have picked and says so.
+- **Crop plan (`/facilitator/crops`):** "Year of food" card under the chart: 12 month cells with
+  Lucide pips (fresh veg, fruit, eggs/milk/meat/honey, in store), empty months dashed in ochre, a
+  one-line summary ("Something fresh in 9 of 12 months; nothing fresh in Jun–Aug") and an
+  availability-not-sufficiency caveat. "Plan it" opens the normal crop picker prefilled with bed,
+  crop, sow month and share, so the overlap warning and window note still show before anything is
+  added. Tests: `tests/year-of-food.test.ts`.
+
+### 28 Sep 2026 — Animal enterprises (Phase C: chickens, goats, bees, rabbits, ducks)
+- **New table `lib/animal-enterprises.ts`:** per ENTERPRISE, not per m². Each of 9 enterprises
+  (layer, broiler and village chickens; dairy, meat and indigenous goats; honeybees; meat rabbits;
+  meat ducks) holds output per animal, production months, first product, productive life, feed,
+  water, space, welfare points and legal points (avian flu and FMD as controlled diseases, movement
+  restrictions, beekeeper registration, animal ID marks, abattoir rule and its own-use exemption).
+  - Generated from `research/animal-sources/<enterpriseId>.json` by
+    `node scripts/build-animal-enterprises.mjs`; `tests/animal-enterprises.test.ts` fails on drift,
+    a missing quote/URL, a banned host or animals reaching the bed-yield modules.
+- **Quote check:** every quote was re-fetched and matched. Withdrawn or restated in review, each with
+  a `gaps` line starting "Editor review 2026-09-28":
+  - Derived figures: layer eggs/year and laying life (two documents stitched), broiler feed/day
+    (cumulative ÷ 35) and space (kg/m² ÷ a weight from elsewhere; kept as a welfare point), rabbit
+    water (g/kg × assumed weight), goat-milk litres (assumed density; restored to kg/305-day
+    lactation), indigenous-goat months (kidding + assumed weaning; kept as `unverifiedMonths`).
+  - Wrong fit: rabbit feed was a buck figure; experimental conditions read as welfare rules (rabbit,
+    duck); village-chicken "seasonal pattern" was a nutrition finding.
+  - Legal points citing only the Animal Diseases Act's general definition were dropped or re-cited
+    to a statement that names the disease (SAnews for FMD; the controlled-disease list for NAI).
+  - Breed egg counts from a paper with no fetchable text were removed even from notes.
+- **Crop plan (`/facilitator/crops`):** "Animals on your map" card groups coops, pens, hives,
+  hutches and duck ponds by animal. The farmer picks what they are for (per canvas site); nothing
+  is multiplied by structure count (a coop is housing, not a head count). Laying hens' sourced
+  months add a row to the Availability chart; the Animals switch only appears for kinds that can
+  put something on it. Small amounts keep 2 significant figures (0.083 m², not 0.1).
+- **Gaps:** no sourced months yet for honey, goat milk, rabbits, ducks, broilers or village hens,
+  so only laying hens reach the chart. Kraal and pig pen are not guessed at.
+- **Test script fix:** a merge (4d003ea, PR #762) left `npm test` as
+  `node --import ./tests/tshivenda-…test.ts …` — no `register-alias`, no `--test` — so CI ran two
+  files and PRs #763/#764 went untested. Restored in b9e2d2f; the full suite passes in CI again.
+
+### 28 Sep 2026 — Perennial harvest layer (Phase B: fruit trees)
+- **New table `lib/perennial-harvest.ts`:** for each tree species it holds harvest months by SA
+  region, years to first crop and to full bearing, kg per mature tree, chill units and pollination.
+  Every value carries a verbatim quote, URL and page. Anything no approved source states is `null`.
+  - The data file `lib/perennial-harvest-data.ts` is GENERATED from
+    `research/perennial-sources/<speciesId>.json` by `node scripts/build-perennial-harvest.mjs`.
+  - `tests/perennial-harvest.test.ts` fails if the file drifts from the dossiers, or if a citation
+    lacks a quote/URL or uses a banned host.
+- **Quote check:** every quote was fetched and matched against its source (pypdf for PDFs); table
+  layouts were checked by hand. Values withdrawn in review, each with a `gaps` line in its dossier:
+  - Harpephyllum: its "harvest" months were really its flowering months.
+  - Carissa: first-crop and pollination came from Morton/Purdue, which is not an approved tier.
+  - Lemon, mandarin and litchi: the pollination quote did not say what the value claimed.
+  - Garcinia: first crop came from a secondary source, and its only window is Kenyan.
+  - Pappea: 21.85 kg was seed weight for oil, not fruit.
+  - Carpobrotus: pollination came from the GISD compilation, not the primary paper.
+  - Plum: window cut to the February that its quote supports.
+  - Mango: pollination came from a table of flower visitors, which does not say whether a second
+    cultivar is needed. Papaya pollination is also blank: it depends on the cultivar and the plant.
+  - Pecan: 20 kg was an industry average across orchards of every age, not a mature-tree yield.
+  - Banana: first-crop age was inferred from a fertiliser calendar. The all-year window is blank
+    because no quoted SA source says the harvest runs all year.
+  - Macadamia: changed to partly self-fertile. SAMAC measured 10–97% outcrossing, and cross-pollination
+    raises yield by about half.
+  - Papaya first crop and guava bearing/yield come from FAO and ICRAF, not SA sources. Their notes
+    say so. A harvest window is never taken from a non-SA source.
+- **Kei apple duplicate fixed:** `dovyalis-caffra` merged into `dovyalis-afra`. `lib/species-aliases.ts`
+  maps the retired id, so saved designs keep working.
+- **Crop plan → Availability** gets a tree row for fruit trees placed on the Studio map:
+  - Months are the SA-wide sourced span, labelled as such. Trees placed from the palette (Mango
+    Tree…) map to a species via `ELEMENT_SPECIES`; ambiguous elements (Citrus, Plum) are not guessed.
+  - "From today" counts only existing trees; an established year adds proposed ones.
+  - It uses the same orchard switch as Money/Records (`lib/produce-scope.ts`). Trees never enter a
+    per-m² figure, and the bed-yield modules may not import the table (a test enforces this).
+- **Design species picker** shows "Picking … in SA sources · first crop … yrs · about … kg a mature
+  tree" when the table has the data.
+- **Gaps:** most indigenous species have months only — no SA source gives their yield or bearing
+  age. Chill units exist for peach and plum only. Banana, papaya and guava have no SA window yet
+  (ARC-ITSC and DALRRD pages were unreachable). Regional window matching (the farm's own window
+  rather than the SA span) is next.
+
+### 28 Sep 2026 — Crop catalog batch 1: 20 new crops + planner fixes
+- **Added (primary sources, cited per value in `lib/crop-catalog.ts`):** amaranth, cauliflower,
+  parsley, sorghum, soybean, brinjal, gem squash, baby marrow, spanspek, sweetcorn, cowpea,
+  bambara groundnut, sunflower, radish, mung bean, spider plant, African nightshade, sunn hemp,
+  medic, fodder radish. Research dossiers in `research/crop-sources/<key>.json`.
+- **Judgement calls:** cowpea has no yield (only SA trial: 60.7 vs 1184 kg/ha at two sites) so it
+  is manual-add only; bambara uses the UKZN 2023 genotype-mean range 0.16–0.96 t/ha, planning at the
+  low end; sorghum from national production/area; parsley from the conservative KZN 2 t/ha.
+- **Cover crops** sunn hemp, medic and fodder radish carry `timingVerified: false` (termination days
+  are proxies), so they are recorded but not auto-scheduled. Only oats/broad beans stay as winter cover.
+- **Not added:** Chinese cabbage, leeks, cassava — no primary SA source for the missing values.
+- **Prices:** 12 new crops are in `UNPRICED_CROPS` (no price research yet); plan value skips them.
+- **Planner fixes the bigger catalog exposed:** (1) a sowing that would leave a bed with no crop able
+  to reach a bare winter month is tried last (winter route guard); (2) few-big follow-on sowings
+  may use any shared bed, so a large crop can't strand a second sowing; (3) the sowing-cadence pass
+  prefers the candidate that fills a fresh-harvest month no bed covers yet.
+- **Art:** 20 placeholder PNGs in `public/crop-art/`; the Codex brief is `docs/CROP-ART-BRIEF.md` (batch 2).
+
+### 27 Sep 2026 — Crop-plan audit, phase 3: the nine open items
+- **Few big harvests:** each crop now gets its next big sowing once its last harvest ends (follow-on
+  rounds), instead of one cohort and bare ground. Reference farm family/few-big 88 → 254 kg,
+  bed-months 29.6% → 80.3%; nine-bed August plan 53.7% → 70.4%. Commercial few-big unchanged
+  (rotation blocks the same-crop repeat).
+- **Heat check:** `lib/crop-climate-gate.ts` holds FAO ECOCROP TOPMX/TMAX for all 29 schedulable crops.
+  With the site's NASA POWER monthly means (`SiteClimate.monthlyTempC`, new) a sowing month is
+  skipped when the crop would grow through a month above TMAX (ECOCROP suitability 0); months
+  above TOPMX get a basis note. No site temperatures = regional calendar unchanged.
+- **Rain-fed mode:** irrigation off no longer means "no plan" when the site's own rain, temperature
+  and latitude are known: a cohort is sown only if every field month has P ≥ 0.5 PET (FAO AEZ
+  growing-period rule; Thornthwaite PET). Still refuses without site climate.
+- **Frost-free calendar:** `FROST_FREE_CALENDAR_CITED` lists the 8 crops whose 'all-year' months come
+  from KZN DARD Table 6 hot-area column (carrots corrected to Feb–Sep); a frost-free plan names every
+  other crop it uses as unchecked. The other 21 crops still need a source (none found; .gov.za blocked).
+- **Heat-season crops (cowpea, amaranth, okra):** NOT added — no days-to-harvest for cowpea, no yield
+  for amaranth, okra only from secondary sites; the DAFF PDFs could not be fetched here.
+- UI: review screen shows each crop's bed; Simple mode shows the double-booking card; `/calendar`
+  follows the saved plan's climate column; the Task Planner includes beds on every saved site.
+
+### 27 Sep 2026 — Crop-plan audit, phase 2: existing crops + frost gate
+- **Whole-year plan double-booking (critical):** the ideal-year sweep aged already-growing crops from
+  each synthetic anchor, so the winning plan was stacked on top of them (73% of 1,152 probe inputs;
+  Simple mode showed no conflict). Occupancy/BedRotation now age them from realNow and, in synthetic
+  frames, block their remaining calendar months. Regression test fails on the old engine.
+- **Frost gate (critical):** new `frostTender` flag on 14 warm-season crops; the hard-frost 'summer'
+  column no longer offers months that leave them in the field through May–Aug frost before first
+  harvest (potato Feb/Mar, maize/pumpkin/sweet potato Dec, dry beans Jan, groundnuts Nov, amadumbe).
+  Invariant: `tests/crop-catalog-frost.test.ts`.
+- Tried and reverted: a commercial focus-set chooser scored by one-bed rotation — after #749 it lost
+  17% on the audit case because the engine gives each focus crop its own beds.
+- Still open: heat gating from monthly temperatures (needs sourced per-crop limits), a sourced
+  frost-free column, rain-fed mode, "few big harvests" packing, heat-season crops, review screen
+  showing beds, Simple-mode conflict card, `/calendar` following the plan's climate, plans for
+  non-main sites in the Task Planner.
+
+### 27 Sep 2026 — Crop-plan audit: climate calendar + rotation packing
+- Multi-agent audit of every crop-planning feature, plus a line-by-line fact-check of one engine
+  plan for the Mkuze demo farm against two independent expert plans.
+- **Climate (critical):** `rainPatternFor` (lib/koppen-global.ts) now chooses the calendar column by
+  frost class first (coldest-month mean < 7 / < 11 / >= 13 °C), rain second. Before, the coldest
+  sites (< 4 °C) got the KZN *light*-frost calendar, hard-frost bimodal Karoo sites got the
+  frost-free column, and frost-free lowveld/coast (the demo farm, Durban, Mbombela) could only get
+  the hard-frost Highveld windows. Arid sites stay on the frost column. Warm-area plans now carry a
+  basis note to confirm months with an extension officer outside KZN.
+- **Rotation (critical):** a second, staggered sowing of one crop was refused because its partner's
+  next-year copy read as a same-family repeat, leaving beds mostly empty under the default settings.
+  Staggered cohorts joined in the current cycle now carry their annual copies (one course, as the
+  code's own comment says). The test oracle now also draws year −1, matching the engine.
+- Measured: Mkuze demo farm 154 → 191 kg/yr, bed-months 91.4% → 92.7%, winter tomatoes appear;
+  reference farm commercial/steady 324 → 365 kg, bed use 58% → 66%.
+- Still open from the audit (see the PR): temperature/heat gating, a sourced frost-free column,
+  kg-per-bed-month ranking, "few big harvests" packing, rain-fed mode, existing-crop double-booking in
+  the whole-year plan, potato/frost-tail windows, missing heat-season crops.
+
+### 2026-09-29 (Permaculture Manual — Sesotho uses moroho; nasturtium line)
+- Sesotho chapters now say *moroho* (Sesotho for leafy greens, as in *papa le moroho*) instead of
+  *morogo*, the Setswana/Sepedi form. English keeps *morogo*. Decision noted in
+  `research/manual/glossary-st.md`. Fluent-speaker review of the translations is deferred for now.
+- Chapter 10 trap crops: the unsupported "we have seen nasturtiums…" line replaced with general
+  advice (nasturtiums draw aphids, especially black aphids), in all five languages.
+
+### 2026-09-27 (Permaculture Manual — second edition in Rory's voice)
+- **What:** the English manual rewritten in Rory's teaching voice (`research/manual/VOICE.md`,
+  from his Style Engine) and cut from 55,370 to 37,858 words (print: 257 → 214 A4 pages). Every
+  chapter opens with WHY, lists what the reader will be able to do, has one hands-on "Try it",
+  a short Key points list and a forward-looking close. SA words throughout (morogo, mielies,
+  veld, pikmatok). Brief: `research/manual/REWRITE.md`.
+- **Warnings and law out of the chapters:** Safety boxes, legal sections and "consult / check
+  with" lines removed (callouts 94 → 13, none warnings); a handful of life-safety facts stay as
+  plain steps. Everything else is one paragraph in the new **chapter 13 Notes and references**,
+  with 278 references grouped by chapter.
+- **Accuracy:** second fact-check pass appended to every `research/manual/factcheck/*.md`;
+  overlap check against the source handbook found no copied runs.
+- **Translations:** isiZulu, Sesotho, Tshivenḓa and Xitsonga re-translated from the new English
+  (`research/manual/RETRANSLATE.md`); Xitsonga stays paused. Machine drafts for fluent review.
+- **Pictures:** 41 re-mapped to new sections; 8 captions reworded; `CODEX-IMAGE-BRIEF.md` §4.D has
+  prompts to replace every photo with one uniform AI-illustrated set.
+- **For Rory:** `research/manual/FIELD-STORIES.md` — 52 story slots; nothing invented.
+
 ### 27 Sep 2026 — Monthly AI allowance + value models
 - New `lib/ai-budget.ts` + `lib/metered-ai.ts`: every Claude call in app/api goes through one metered
   client. €3/person/month (env `AI_MONTHLY_CAP_EUR`), priced from real usage, ledger in Firestore

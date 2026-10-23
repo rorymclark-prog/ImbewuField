@@ -235,3 +235,67 @@ test('a storage failure during migration does not stop the farmer from signing i
   // out of signIn to say so, which is the whole point of the guarantee.
   assert.equal(localStorageMock.getItem(uidKey('imbewu_field_journal_v1', 'farmer-c')), null);
 });
+
+// An explicit zero is an observation, not an unanswered record or an empty farm.
+const productionOnlyPlan = {
+  version: 1, plantings: [], updatedAt: 1,
+  productionRecords: [{ id: 'observed-eggs', siteId: 'site:-28.00000,32.00000',
+    sourceIconKey: 'animal:chicken-layer', label: 'Eggs', date: { year: 2027, month: 1 },
+    quantity: 0, unit: 'eggs', status: 'actual', pricePerUnit: 0, provenance: 'farm-record' }],
+};
+const stockOnlyPlan = {
+  version: 1, plantings: [], updatedAt: 1,
+  preservedProducts: [{ id: 'observed-nuts', siteId: 'site:-28.00000,32.00000',
+    sourceIconKey: 'tree:macadamia-integrifolia', label: 'Stored nuts', method: 'stored',
+    dates: [{ year: 2027, month: 1 }], quantities: [{ year: 2027, month: 1, kg: 0 }],
+    provenance: 'farm-record', note: 'Measured empty store, not an inferred harvest.' }],
+};
+const emptyProductionPlan = JSON.stringify({ version: 1, plantings: [], productionRecords: [], preservedProducts: [], updatedAt: 1 });
+
+test('signing in cannot overwrite a real account’s production-only or stock-only plan even when the observed amount is zero', async () => {
+  for (const [kind, plan] of [['production', productionOnlyPlan], ['stock', stockOnlyPlan]] as const) {
+    localStorageMock.clear();
+    const owner = `protected-${kind}-owner`;
+    const realRaw = JSON.stringify(plan);
+    const guestRaw = JSON.stringify({ version: 1, plantings: [{ id: 'stale-guest-crop' }], updatedAt: 2 });
+    localStorageMock.setItem(uidKey('imbewu_crop_plan_v1', owner), realRaw);
+    localStorageMock.setItem(guestKey('imbewu_crop_plan_v1'), guestRaw);
+    await withSignIn(async (signIn) => { assert.equal(await signIn(owner, 'irrelevant'), null); });
+    assert.equal(localStorageMock.getItem(uidKey('imbewu_crop_plan_v1', owner)), realRaw,
+      `${kind} records without crop beds must survive sign-in byte for byte, including site ownership and explicit zero`);
+    assert.equal(localStorageMock.getItem(guestKey('imbewu_crop_plan_v1')), guestRaw,
+      'refusing to overwrite a real account must not consume the separate guest draft');
+  }
+});
+
+test('production-only and stock-only guest work migrates into an empty account without creating plantings, quantities or repeated dates', async () => {
+  for (const [kind, plan] of [['production', productionOnlyPlan], ['stock', stockOnlyPlan]] as const) {
+    localStorageMock.clear();
+    const owner = `new-${kind}-owner`;
+    const guestRaw = JSON.stringify(plan);
+    localStorageMock.setItem(guestKey('imbewu_crop_plan_v1'), guestRaw);
+    localStorageMock.setItem(uidKey('imbewu_crop_plan_v1', owner), emptyProductionPlan);
+    await withSignIn(async (signIn) => { assert.equal(await signIn(owner, 'irrelevant'), null); });
+    assert.equal(localStorageMock.getItem(uidKey('imbewu_crop_plan_v1', owner)), guestRaw,
+      `${kind} work is real guest work even with no crop beds; migration must preserve its native units, zero and provenance`);
+    assert.equal(localStorageMock.getItem(guestKey('imbewu_crop_plan_v1')), null,
+      'a successfully transferred production or stock record must leave the shared guest namespace');
+  }
+});
+
+test('genuinely empty crop and record lists remain empty for migration while an empty account can still receive a guest crop plan', async () => {
+  localStorageMock.clear();
+  localStorageMock.setItem(guestKey('imbewu_crop_plan_v1'), emptyProductionPlan);
+  await withSignIn(async (signIn) => { assert.equal(await signIn('empty-guest-owner', 'irrelevant'), null); });
+  assert.equal(localStorageMock.getItem(uidKey('imbewu_crop_plan_v1', 'empty-guest-owner')), null,
+    'an unanswered guest plan must not create an account record');
+
+  localStorageMock.clear();
+  const guestRaw = JSON.stringify({ version: 1, plantings: [{ id: 'real-guest-crop' }], updatedAt: 2 });
+  localStorageMock.setItem(guestKey('imbewu_crop_plan_v1'), guestRaw);
+  localStorageMock.setItem(uidKey('imbewu_crop_plan_v1', 'empty-account-owner'), emptyProductionPlan);
+  await withSignIn(async (signIn) => { assert.equal(await signIn('empty-account-owner', 'irrelevant'), null); });
+  assert.equal(localStorageMock.getItem(uidKey('imbewu_crop_plan_v1', 'empty-account-owner')), guestRaw,
+    'explicit empty production and stock lists must not block the existing crop-plan migration');
+  assert.equal(localStorageMock.getItem(guestKey('imbewu_crop_plan_v1')), null);
+});

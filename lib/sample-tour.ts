@@ -17,7 +17,7 @@ export const FARM_TOUR = [
   { id: 'design', minutes: 3, title: 'Try the Design Studio', href: '/design?lat=-27.72623&lon=31.96304', task: 'Select a bed or tree, move it and try Undo.' },
   { id: 'assessment', minutes: 2, title: 'Review the site assessment', href: '/farmer?openSurvey=1', task: 'Review the site assessment, change a water or site answer, then save.' },
   { id: 'evidence', minutes: 2, title: 'Explore the evidence pack', href: '/samples/farm#evidence', task: 'Review the site pictures, soil results and household interview.' },
-  { id: 'crops', minutes: 2, title: 'Read the crop plan', href: '/facilitator/crops', task: 'Compare vegetable beds and staple plots. Inspect the planting calendar.' },
+  { id: 'crops', minutes: 2, title: 'Read the production plan', href: '/facilitator/crops', task: 'Compare vegetable beds and staple plots. Inspect the planting calendar.' },
   { id: 'money', minutes: 2, title: 'Follow the harvest and money', href: '/records', task: 'Compare harvests, income, costs and returns per square metre.' },
   { id: 'report', minutes: 2, title: 'Make a report', href: '/samples/farm#report', task: 'Download the branded farm evidence report, including your saved edits and illustrative photos.' },
 ] as const;
@@ -51,7 +51,7 @@ export const PRODUCT_TOUR: readonly ProductTourStep[] = [
     id: 'planning', minutes: 2, title: 'Plan the growing season',
     href: '/design?lat=-27.72623&lon=31.96304&simple=1',
     task: 'Start on Planting in Design Studio. Select a bed or tree, move it and try Undo. Then open the crop plan to compare vegetable beds, staple plots and planting months.',
-    secondaryLabel: 'Open the crop plan', secondaryHref: '/facilitator/crops',
+    secondaryLabel: 'Open the production plan', secondaryHref: '/facilitator/crops',
   },
   {
     id: 'learning', minutes: 2, title: 'Learn and find guidance', href: '/student', role: 'student',

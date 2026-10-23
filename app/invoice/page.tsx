@@ -6,6 +6,10 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { Plus, Trash2, Printer, Share2, FilePlus2, Clock, X, ChevronDown, Building2, Landmark, Save, Sprout } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
+import { recordsDate } from '@/lib/records-months';
+import {
+  isRecordsRegionalLang, recordsDraftNotice, recordsFill, recordsPaired, recordsQuantityLabel, recordsTemplate,
+} from '@/lib/records-regional-drafts';
 import { useAppLevel } from '@/lib/app-level';
 import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
@@ -21,7 +25,7 @@ import {
 import {
   loadLetterhead, saveLetterhead, dueDateISO, EMPTY_LETTERHEAD, type SellerLetterhead,
 } from '@/lib/invoice-seller';
-import { buildInvoiceDocument } from '@/lib/invoice-document';
+import { buildInvoiceDocument, formatInvoiceZar } from '@/lib/invoice-document';
 import { buildInvoicePdf } from '@/lib/invoice-pdf';
 import InvoiceDocumentView from '@/components/invoice/InvoiceDocument';
 import LessonLink from '@/components/design/LessonLink';
@@ -37,6 +41,7 @@ import { isSampleMode, getSandboxProfile } from '@/lib/sample-mode';
 import { updateMyProfile } from '@/lib/db/queries';
 import type { Profile, SalesLog } from '@/lib/db/types';
 import { APP_HEADER_INSET } from '@/lib/app-header';
+import { RECORD_UNITS, recordQuantity, recordUnit, normaliseRecordUnit, validRecordQuantity } from '@/lib/farm-records';
 
 interface LineItem {
   id: number; desc: string; qty: number; unit: string; price: number;
@@ -53,7 +58,7 @@ interface LineItem {
   priceFromGuide?: boolean;
 }
 
-const UNITS = ['bags', 'kg', 'crates', 'bunches', 'trays', 'each'];
+const UNITS = RECORD_UNITS;
 const PAYMENT_METHODS: PaymentMethod[] = ['cash', 'eft', 'card', 'mobile', 'other'];
 const BUYER_TYPES = [
   'Neighbour', 'Farm gate', 'Spaza shop', 'Bakkie trader', 'Market stall', 'Hawker',
@@ -65,7 +70,6 @@ const INVOICE_ZU: Record<string, string> = {
   'Invoice': 'I-invoyisi', 'Learn': 'Funda', 'Share PDF (WhatsApp, email…)': 'Yabelana nge-PDF (WhatsApp, i-imeyili…)',
   'New invoice': 'I-invoyisi entsha', 'Saved': 'Okulondoloziwe', 'Editing': 'Kuyahlelwa',
   'Invoice and payment details': 'Imininingwane ye-invoyisi nenkokhelo', 'Record the sale once': 'Rekhoda ukuthengisa kanye kuphela',
-  'Keep the invoice, payment and kilograms together.': 'Gcina i-invoyisi, inkokhelo namakhilogremu ndawonye.',
   'A new invoice': 'I-invoyisi entsha', 'Produce already sold': 'Umkhiqizo osudayisiwe', 'An invoice already written on paper': 'I-invoyisi esivele ibhalwe ephepheni',
   'VAT / tax no.': 'Inombolo ye-VAT / yentela', 'Qty': 'Inani',
   'What are you recording?': 'Urekhoda ini?', 'Invoice type': 'Uhlobo lwe-invoyisi',
@@ -74,8 +78,6 @@ const INVOICE_ZU: Record<string, string> = {
   'No — record it with this invoice': 'Cha — kurekhode ngale invoyisi', 'Yes — link the existing sale': 'Yebo — xhumanisa nerekhodi elikhona',
   'Recorded sale': 'Ukuthengisa okurekhodiwe', 'Choose recorded sale': 'Khetha ukuthengisa okurekhodiwe',
   'Choose the exact sale': 'Khetha ukuthengisa okufanele', 'Loading your sales…': 'Kulayishwa ukuthengisa kwakho…',
-  'The recorded crop, kilograms, total and payment date stay together. This invoice documents that sale without adding it again.': 'Isilimo esirekhodiwe, amakhilogremu, isamba nosuku lokukhokha kuhlala ndawonye. Le invoyisi ibhala lokho kuthengisa ngaphandle kokukubala futhi.',
-  'Select a sale recorded in kilograms. An existing invoice should be reopened from Saved.': 'Khetha ukuthengisa okurekhodwe ngamakhilogremu. Vula futhi i-invoyisi ekhona kokuthi Okulondoloziwe.',
   'Original paper invoice number or reference': 'Inombolo noma ireferensi ye-invoyisi yephepha yokuqala',
   'As written on the paper invoice': 'Njengoba ibhalwe ku-invoyisi yephepha',
   'Date on the original paper invoice': 'Usuku olukwi-invoyisi yephepha yokuqala', 'Invoice issue date': 'Usuku lokukhishwa kwe-invoyisi',
@@ -83,7 +85,6 @@ const INVOICE_ZU: Record<string, string> = {
   'Choose paid or unpaid': 'Khetha ukuthi ikhokhiwe noma ayikakhokhwa', 'Yes — paid in full': 'Yebo — ikhokhwe yonke',
   'Not yet — payment outstanding': 'Cha — kusafuneka inkokhelo', 'Payment received on': 'Inkokhelo yamukelwe ngomhlaka',
   'Payment received date': 'Usuku lokwamukelwa kwenkokhelo', 'Payment method': 'Indlela yokukhokha', 'Optional': 'Akuphoqelekile',
-  'Paid invoices add their income and kg lines to My Records. Other units keep their original quantities; unpaid invoices stay outstanding.': 'Ama-invoyisi akhokhiwe engeza imali engenayo nemigqa yamakhilogremu kokuthi Okurekhodiwe Kwami. Amanye amayunithi agcina amanani awo; ama-invoyisi angakhokhiwe ahlala engakakhokhwa.',
   'No buyer': 'Akekho umthengi', 'Paid': 'Ikhokhiwe', 'Unpaid': 'Ayikhokhiwe', 'Delete invoice': 'Susa i-invoyisi',
   'Your details & banking': 'Imininingwane yakho yasebhange', 'Printed on every invoice': 'Kuboniswa kuwo wonke ama-invoyisi',
   'Add an address and bank account so buyers can pay you': 'Faka ikheli ne-akhawunti yasebhange ukuze abathengi bakukhokhele',
@@ -111,7 +112,6 @@ const INVOICE_ZU: Record<string, string> = {
   'Confirm whether this sale is already recorded.': 'Qinisekisa ukuthi lokhu kuthengisa sekurekhodiwe yini.',
   'Select the existing sale to continue.': 'Khetha ukuthengisa okukhona ukuze uqhubeke.',
   'Add a buyer and at least one item to save, print or share.': 'Faka umthengi nento okungenani eyodwa ukuze ulondoloze, uphrinte noma wabelane.',
-  'Marking an invoice paid adds its kg crop lines to My Records automatically.': 'Ukumaka i-invoyisi njengekhokhiwe kwengeza ngokuzenzakalelayo imigqa yesilimo engamakhilogremu kokuthi Okurekhodiwe Kwami.',
   'Bags, crates and bunches are not converted because their weight is unknown.': 'Amasaka, amakhreyithi nezinyanda akuguqulwa ngoba isisindo sazo asaziwa.',
   'No saved invoices yet — save your first invoice here.': 'Awekho ama-invoyisi alondoloziwe okwamanje — londoloza i-invoyisi yakho yokuqala lapha.',
   'Review payment for invoice': 'Buyekeza inkokhelo ye-invoyisi', 'Delete?': 'Susa?',
@@ -131,10 +131,8 @@ const INVOICE_ZU: Record<string, string> = {
   'Your account changed. Open the invoice again in the correct workspace.': 'I-akhawunti yakho ishintshile. Vula futhi i-invoyisi endaweni yokusebenza efanele.',
   'This invoice could not be saved. Check your device storage and keep the original details of any linked sale, then try again.': 'Le invoyisi ayikwazanga ukulondolozwa. Hlola isikhala kudivayisi, ugcine imininingwane yokuqala yanoma yikuphi ukuthengisa okuxhunyiwe, bese uzama futhi.',
   'Invoice saved on this device. Reconnect and save it again to update the crop sale book.': 'I-invoyisi ilondolozwe kule divayisi. Xhuma futhi bese uyilondoloza futhi ukuze ubuyekeze incwadi yokuthengisa izilimo.',
-  'Invoice saved and linked to the existing sale. Its kilograms and income are counted once.': 'I-invoyisi ilondoloziwe futhi ixhunyaniswe nokuthengisa okukhona. Amakhilogremu nemali engenayo kubalwa kanye kuphela.',
   'Invoice saved.': 'I-invoyisi ilondoloziwe.', 'The invoice could not be saved. Please try again.': 'I-invoyisi ayikwazanga ukulondolozwa. Zama futhi.',
   'The PDF could not be built on this device. The invoice is saved — try Print instead.': 'I-PDF ayikwazanga ukwenziwa kule divayisi. I-invoyisi ilondoloziwe — zama ukuphrinta.',
-  'Choose an available sale with recorded kilograms from your own records.': 'Khetha ukuthengisa okutholakalayo okunamakhilogremu arekhodiwe kumarekhodi akho.',
   'Your pending invoice has been recovered. Review it and save to finish linking.': 'I-invoyisi yakho ebisalindile itholakele. Yibuyekeze bese uyilondoloza ukuze uqedele ukuxhumanisa.',
   'This sale already has an invoice. Open it on the device where it was created; its private invoice copy is not available on this device.': 'Lokhu kuthengisa sekune-invoyisi. Yivule kudivayisi eyadalelwa kuyo; ikhophi yayo eyimfihlo ayitholakali kule divayisi.',
   'The invoice status was not changed because its crop sales could not be updated. Check your connection and try again.': 'Isimo se-invoyisi asishintshwanga ngoba ukuthengisa izilimo akukwazanga ukubuyekezwa. Hlola uxhumano bese uzama futhi.',
@@ -147,22 +145,21 @@ const INVOICE_ZU: Record<string, string> = {
   'This sale already belongs to another invoice.': 'Lokhu kuthengisa sekuvele kungokwenye i-invoyisi.',
   'Keep the recorded growing area for this sale.': 'Gcina indawo yokutshala erekhodiwe yalokhu kuthengisa.',
   'Keep the recorded payment date and paid status for this sale.': 'Gcina usuku lwenkokhelo nesimo sokukhokha okurekhodiwe kwalokhu kuthengisa.',
-  'Keep the recorded crop, kilograms and total when documenting this sale.': 'Gcina isilimo, amakhilogremu nesamba okurekhodiwe lapho ubhala lokhu kuthengisa.',
 };
 
 // These instructions affect payment status, duplicate counting, sync, or deletion. Keep the
 // English visible beside the draft so a farmer can check the meaning before acting.
 const INVOICE_PAIRED_COPY = new Set([
-  'The recorded crop, kilograms, total and payment date stay together. This invoice documents that sale without adding it again.',
-  'Paid invoices add their income and kg lines to My Records. Other units keep their original quantities; unpaid invoices stay outstanding.',
+  'The recorded produce, quantity, unit, total and payment date stay together. This invoice documents that sale without adding it again.',
+  'Paid invoices add income and produce quantities to My Records in their recorded units. Unpaid invoices stay outstanding.',
   'For your R/m² records. Choose only if every line belongs to this area.',
-  'Marking an invoice paid adds its kg crop lines to My Records automatically.',
+  'Marking an invoice paid adds its produce quantities to My Records in their recorded units.',
   'Bags, crates and bunches are not converted because their weight is unknown.',
   'Invoice saved on this device. The shared sales records have not confirmed yet.',
   'Retry sales sync',
   'Choose paid or unpaid to continue.',
   'Invoice saved on this device. Reconnect and save it again to update the crop sale book.',
-  'Invoice saved and linked to the existing sale. Its kilograms and income are counted once.',
+  'Invoice saved and linked to the existing sale. Its quantity and income are counted once.',
   'The invoice status was not changed because its crop sales could not be updated. Check your connection and try again.',
   'Connect to the internet to load a sale you have already recorded.',
   'Load the recorded sale before saving this invoice.',
@@ -183,7 +180,7 @@ const TERM_CHOICES: { label: string; days: number | null }[] = [
 ];
 
 const CARD = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
-const FIELD = { background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' };
+const FIELD = { background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', colorScheme: 'light dark' as const };
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -224,13 +221,21 @@ export default function InvoicePage() {
   const { lang } = useLanguage();
   const simple = useAppLevel() === 'simple';
   const ui = (english: string, isiZulu?: string) => {
-    if (lang !== 'zu') return english;
-    const zulu = isiZulu ?? INVOICE_ZU[english] ?? english;
-    return INVOICE_PAIRED_COPY.has(english) ? `${english} — ${zulu}` : zulu;
+    if (lang !== 'zu') {
+      // Sesotho, Tshivenda and Xitsonga: an unreviewed machine draft keyed by this exact English
+      // sentence (lib/records-regional-drafts.ts), English when there is none. A sentence a farmer
+      // may act on keeps the English beside the draft. Any other language keeps English.
+      if (!isRecordsRegionalLang(lang)) return english;
+      return INVOICE_PAIRED_COPY.has(english) ? recordsPaired(lang, english) : recordsFill(lang, english);
+    }
+    // Existing isiZulu wording always wins; only an English fallback is filled from a draft. A
+    // paired sentence is paired only when there is a draft to pair (it used to print the English twice).
+    const zulu = recordsFill('zu', english, isiZulu ?? INVOICE_ZU[english] ?? english);
+    return INVOICE_PAIRED_COPY.has(english) && zulu !== english ? `${english} — ${zulu}` : zulu;
   };
   const paymentLabel = (method: PaymentMethod) => lang === 'zu'
     ? ({ cash: 'Ukheshi', eft: 'EFT', card: 'Ikhadi', mobile: 'Inkokhelo yeselula', other: 'Okunye' } as const)[method]
-    : paymentMethodLabel(method);
+    : recordsFill(lang, paymentMethodLabel(method));
   const { user, profile: signedInProfile, refreshProfile } = useAuth();
   // Sample mode has no signed-in user, so useAuth() returns no profile and the demo invoice
   // printed a bare "Your name" placeholder — which reads as an unbuilt feature rather than an
@@ -285,10 +290,21 @@ export default function InvoicePage() {
   const [saveError, setSaveError] = useState<string | null>(null);
   const [priceOverrides, setPriceOverrides] = useState<Record<string, CropPrice>>({});
   const [syncingInvoiceId, setSyncingInvoiceId] = useState<string | null>(null);
+  // staff-11 / sdesk-13 / desk-02: the saved list used to render all of it, with every paid
+  // invoice carrying its own row of five payment-method chips — a 70-invoice sample account
+  // became a page several thousand pixels tall. Ten rows, "Show more", and a single "Edit"
+  // tap before showing the payment-method choices instead of always showing all five.
+  const SAVED_PAGE_SIZE = 10;
+  const [savedVisibleCount, setSavedVisibleCount] = useState(SAVED_PAGE_SIZE);
+  const [editingPaymentFor, setEditingPaymentFor] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
-    if (isSampleMode()) { setSampleProfile(getSandboxProfile()); setShowSaved(true); }
+    // desk-02: this used to also setShowSaved(true), which opened sample mode with the full
+    // Saved list expanded above the editor — a 1280px visitor scrolled ~5000px of saved-invoice
+    // rows before reaching Bill to, Line items and Save invoice. The editor + preview are now
+    // the first thing on screen in sample mode too, same as a real account.
+    if (isSampleMode()) { setSampleProfile(getSandboxProfile()); }
     const nextNumber = loadNextInvoiceNumber();
     setSeq(nextNumber);
     setCurrentNo(nextNumber);
@@ -518,6 +534,7 @@ export default function InvoicePage() {
     try {
       const invalid = invoiceEntryError(candidate);
       if (invalid) throw new Error(invalid);
+      if (candidate.items.some(item => normaliseRecordUnit(item.unit) !== null && !validRecordQuantity(item.qty, item.unit))) throw new Error(ui('Enter a positive quantity. Eggs and items need whole numbers.'));
       if (sourceSaleId) {
         if (!linkedSale) throw new Error(ui('Load the recorded sale before saving this invoice.'));
         const mismatch = recordedSaleInvoiceError(candidate, linkedSale, sample ? 'demo' : user?.uid ?? '');
@@ -527,7 +544,13 @@ export default function InvoicePage() {
         // Link first. Until this device has the invoice, cashLedgerSales retains the tagged
         // original sale. A failed device write therefore cannot double or erase its cash.
         try { await syncInvoiceSales(candidate); }
-        catch (error) { throw new Error(error instanceof Error ? `${error.message} ${ui('Reconnect and try again.')}` : ui('Connect to the internet to link this existing sale safely.')); }
+        catch (error) {
+          // copy-16: this used to splice the raw JS/network error message ("Failed to fetch",
+          // "NetworkError when attempting to fetch resource"…) straight into what the farmer
+          // sees. Log it for debugging; show only the translated sentence.
+          console.error(error);
+          throw new Error(ui('Connect to the internet to link this existing sale safely.'));
+        }
       }
       if (!sameAccount()) throw new Error(ui('Your account changed. Open the invoice again in the correct workspace.'));
       const list = saveInvoice(candidate);
@@ -557,7 +580,7 @@ export default function InvoicePage() {
           return sameAccount() ? id : null;
         }
       }
-      if (sameAccount()) setSaveMessage(sourceSaleId ? ui('Invoice saved and linked to the existing sale. Its kilograms and income are counted once.') : ui('Invoice saved.'));
+      if (sameAccount()) setSaveMessage(sourceSaleId ? ui('Invoice saved and linked to the existing sale. Its quantity and income are counted once.') : ui('Invoice saved.'));
       return sameAccount() ? id : null;
     } catch (error) {
       if (sameAccount()) setSaveError(error instanceof Error ? ui(error.message) : ui('The invoice could not be saved. Please try again.'));
@@ -651,8 +674,8 @@ export default function InvoicePage() {
   function selectRecordedSale(id: string) {
     const sale = recordedSales.find(row => row.id === id);
     const owner = isSampleMode() ? 'demo' : user?.uid;
-    if (!sale || sale.profile_id !== owner || !Number.isFinite(sale.kg) || sale.kg <= 0 || sale.amount < 0) {
-      setSaveError(ui('Choose an available sale with recorded kilograms from your own records.')); return;
+    if (!sale || sale.profile_id !== owner || recordQuantity(sale) === null || !recordUnit(sale) || sale.amount < 0) {
+      setSaveError(ui('Choose an available sale with a recorded quantity and unit from your own records.')); return;
     }
     const known = saved.find(invoice => invoice.id === sale.invoice_id)
       ?? loadPendingInvoiceLinks().find(invoice => invoice.sourceSaleId === sale.id);
@@ -671,7 +694,8 @@ export default function InvoicePage() {
     setCurrentNo(loadNextInvoiceNumber(seq));
     setSourceSaleId(sale.id); setRecordBasis('existing');
     setPaymentStatus('paid'); setPaymentISO(sale.sold_at); setPaymentMethod('');
-    setItems([{ id: 1, desc: sale.crop, qty: sale.kg, unit: 'kg', price: sale.amount / sale.kg }]);
+    const quantity = recordQuantity(sale)!;
+    setItems([{ id: 1, desc: sale.crop, qty: quantity, unit: recordUnit(sale)!, price: sale.amount / quantity }]);
     setNextId(2);
     setBillTo(sale.buyer ?? ''); setCustomBuyer(Boolean(sale.buyer));
     setBuyerDetails({});
@@ -739,7 +763,7 @@ export default function InvoicePage() {
         <MenuButton />
         <BackButton fallback="/records?tab=sold" />
         <BrandLogo />
-        <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
+        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
         <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{ui('Invoice', 'I-invoyisi')} {invoiceNo}</span>
         <div className="flex-1" />
         <LessonLink id="finances:invoices" label={ui('Learn', 'Funda')} />
@@ -747,18 +771,19 @@ export default function InvoicePage() {
           onClick={shareInvoice}
           disabled={!valid}
           aria-label={ui('Share PDF (WhatsApp, email…)', 'Yabelana nge-PDF (WhatsApp, i-imeyili…)')}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
-          style={{ background: valid ? '#25D366' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
+          className="flex items-center justify-center gap-1.5 px-3 min-h-11 rounded-lg text-xs font-display font-semibold flex-shrink-0"
+          style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest-800)' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
         >
-          <Share2 size={13} />{ui('Share PDF', 'Yabelana nge-PDF')}
+          <Share2 size={16} /><span className="hidden sm:inline">{ui('Share PDF', 'Yabelana nge-PDF')}</span>
         </button>
         <button
           onClick={printInvoice}
           disabled={!valid}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
-          style={{ background: valid ? '#C07A1E' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
+          aria-label={ui('Print', 'Phrinta')}
+          className="flex items-center justify-center gap-1.5 px-3 min-h-11 rounded-lg text-xs font-display font-semibold flex-shrink-0"
+          style={{ background: valid ? '#9A6018' : 'var(--bg-2)', color: valid ? '#fff' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
         >
-          <Printer size={13} />{ui('Print', 'Phrinta')}
+          <Printer size={16} /><span className="hidden sm:inline">{ui('Print', 'Phrinta')}</span>
         </button>
         <SettingsButton />
       </header>
@@ -766,12 +791,30 @@ export default function InvoicePage() {
       <div className="invoice-scroll flex-1 overflow-y-auto">
         <div className={`invoice-column ${workspace.workspace} ${workspace.invoice} px-4 py-5 sm:px-6 sm:py-6`}>
 
-          <div className={`invoice-preview ${workspace.invoicePreview}`}>
+          {/* dark-12: the invoice sheet below is a deliberately un-themed printed artefact (see
+              components/invoice/InvoiceDocument.tsx's own header comment) — it stays white in
+              every theme on purpose. In dark mode a bare white rectangle reads as broken rather
+              than intentional, so it gets a themed "well" (padding, var(--bg-2) backing,
+              var(--shadow-panel)) and a caption to read as a deliberate paper preview. The print
+              stylesheet below resets .invoice-preview's own padding/background to 0/#fff, so this
+              frame disappears at print time and only the white sheet is left. */}
+          <div className={`invoice-preview ${workspace.invoicePreview}`} style={{ background: 'var(--bg-2)', borderRadius: 18, padding: 10, boxShadow: 'var(--shadow-panel)' }}>
+            <p className="no-print text-xs font-sans text-center mb-2" style={{ color: 'var(--text-muted)' }}>
+              {/* 'Preview' is a reviewed sentence in every regional packet; a new caption would
+                  have shipped untranslated in Sesotho, Tshivenda and Xitsonga. */}
+              {ui('Preview')}
+            </p>
             <InvoiceDocumentView doc={doc} />
           </div>
 
           {/* ── Editor (screen only) ───────────────────────────────────── */}
           <div className={`no-print ${workspace.invoiceEditor} space-y-4`}>
+
+            {isRecordsRegionalLang(lang) && (
+              <p role="note" lang="en" data-records-draft-notice={lang} className="text-xs" style={{ color: 'var(--color-muted-strong)' }}>
+                {recordsDraftNotice(lang)} The invoice a buyer receives (print and PDF) stays in English.
+              </p>
+            )}
 
             <div className="flex items-center gap-2 flex-wrap">
               <button onClick={newInvoice}
@@ -781,7 +824,7 @@ export default function InvoicePage() {
               </button>
               <button onClick={() => setShowSaved((s) => !s)}
                 className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-display font-semibold"
-                style={{ background: showSaved ? 'rgba(31,77,43,0.1)' : '#FFFEFA', border: '1px solid var(--border)', color: 'var(--color-forest-800)', cursor: 'pointer' }}>
+                style={{ background: showSaved ? 'rgba(31,77,43,0.1)' : 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--color-forest-800)', cursor: 'pointer' }}>
                 <Clock size={14} />{ui('Saved', 'Okulondoloziwe')}{saved.length ? ` (${saved.length})` : ''}
               </button>
               {currentId && (
@@ -792,7 +835,7 @@ export default function InvoicePage() {
             <section className="rounded-2xl p-4 space-y-3" style={CARD} aria-label={ui('Invoice and payment details', 'Imininingwane ye-invoyisi nenkokhelo')}>
               <div>
                 <h1 className="font-display text-xl font-semibold" style={{ color: 'var(--color-forest-800)' }}>{ui('Record the sale once', 'Bhala ukuthengisa kanye kuphela')}</h1>
-                <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>{ui('Keep the invoice, payment and kilograms together.', 'Gcina i-invoyisi, inkokhelo namakhilogremu ndawonye.')}</p>
+                <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>{ui('Keep the invoice, payment and quantity together.')}</p>
               </div>
               {/* Simple defaults straight to a new sale — a quick farm-gate sale is the common
                   case, and the picker below is how the other two entry kinds stayed reachable:
@@ -830,19 +873,19 @@ export default function InvoicePage() {
                     <select aria-label={ui('Choose recorded sale')} value={sourceSaleId} disabled={Boolean(currentId) || saving || !salesReady}
                       onChange={event => selectRecordedSale(event.target.value)} className="w-full min-h-11 rounded-xl px-3 text-sm" style={FIELD}>
                       <option value="">{salesReady ? ui('Choose the exact sale') : ui('Loading your sales…')}</option>
-                      {recordedSales.filter(sale => sale.id === sourceSaleId || ((!sale.invoice_id || sale.invoice_source_sale) && sale.kg > 0 && sale.amount >= 0)).map(sale => (
-                        <option key={sale.id} value={sale.id}>{invoiceDateInput(sale.sold_at)} · {sale.crop} · {sale.kg} kg · R{sale.amount.toFixed(2)}{sale.buyer ? ` · ${sale.buyer}` : ''}</option>
+                      {recordedSales.filter(sale => sale.id === sourceSaleId || ((!sale.invoice_id || sale.invoice_source_sale) && recordQuantity(sale) !== null && sale.amount >= 0)).map(sale => (
+                        <option key={sale.id} value={sale.id}>{invoiceDateInput(sale.sold_at)} · {sale.crop} · {recordsQuantityLabel(sale, lang)} · R{sale.amount.toFixed(2)}{sale.buyer ? ` · ${sale.buyer}` : ''}</option>
                       ))}
                     </select>
                   </label>
-                  <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{financialsLocked ? ui('The recorded crop, kilograms, total and payment date stay together. This invoice documents that sale without adding it again.') : ui('Select a sale recorded in kilograms. An existing invoice should be reopened from Saved.')}</p>
+                  <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{financialsLocked ? ui('The recorded produce, quantity, unit, total and payment date stay together. This invoice documents that sale without adding it again.') : ui('Select a sale with a recorded quantity and unit. An existing invoice should be reopened from Saved.')}</p>
       {salesError && <p role="alert" className="text-sm" style={{ color: '#A02B28' }}>{ui(salesError)}</p>}
                 </div>
               )}
               {entryKind === 'paper-copy' && (
                 <label className="block">
                   <FieldLabel>{ui('Original paper invoice number or reference')}</FieldLabel>
-                  <input aria-label="Original paper invoice reference" value={paperReference} onChange={event => setPaperReference(event.target.value)} maxLength={120}
+                  <input aria-label={ui('Original paper invoice reference')} value={paperReference} onChange={event => setPaperReference(event.target.value)} maxLength={120}
                     placeholder={ui('As written on the paper invoice')} className="w-full min-h-11 rounded-xl px-3 text-sm" style={FIELD} />
                 </label>
               )}
@@ -876,75 +919,121 @@ export default function InvoicePage() {
                   </label>
                 </div>
               )}
-              <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{ui('Paid invoices add their income and kg lines to My Records. Other units keep their original quantities; unpaid invoices stay outstanding.')}</p>
+              <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{ui('Paid invoices add income and produce quantities to My Records in their recorded units. Unpaid invoices stay outstanding.')}</p>
             </section>
 
             {/* Saved-invoices list — tap to reopen/reprint */}
             {showSaved && (
               <div className="rounded-xl overflow-hidden" style={CARD}>
                 <div className="px-3 py-2 text-xs font-sans leading-relaxed" style={{ color: 'var(--text-secondary)', background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
-                  {ui('Marking an invoice paid adds its kg crop lines to My Records automatically.')}
+                  {ui('Marking an invoice paid adds its produce quantities to My Records in their recorded units.')}
                   {' '}{ui('Bags, crates and bunches are not converted because their weight is unknown.')}
                 </div>
                 {saved.length === 0 ? (
                   <div className="px-3 py-3 text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
                     {ui('No saved invoices yet — save your first invoice here.')}
                   </div>
-                ) : saved.map((inv) => (
-                  <div key={inv.id} className="px-3 py-2.5" style={{ borderBottom: '1px solid var(--border)' }}>
-                    <div className="flex items-center gap-2">
-                      <button onClick={() => openSaved(inv)} className="flex-1 min-w-0 text-left" style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}>
-                        <div className="font-display text-sm" style={{ color: 'var(--text-primary)' }}>
-                          #{String(inv.no).padStart(4, '0')} · {inv.billTo || ui('No buyer')}
-                        </div>
-                        <div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
-                          {new Date(inv.dateISO).toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
-                        </div>
-                      </button>
-                      <button
-                        onClick={() => openSaved(inv)}
-                        disabled={syncingInvoiceId === inv.id}
-                        aria-label={`${ui('Review payment for invoice')} ${inv.no}`}
-                        className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
-                        style={inv.status === 'paid'
-                          ? { background: 'rgba(46,107,58,0.12)', border: '1px solid rgba(46,107,58,0.3)', color: 'var(--color-forest-700)', cursor: 'pointer' }
-                          : { background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--gold)', cursor: 'pointer' }}>
-                        {inv.status === 'paid' ? ui('Paid') : ui('Unpaid')}
-                      </button>
-                      {/* Two taps to destroy accounting history. The first tap used to be enough. */}
-                      {!inv.sourceSaleId && (confirmDelete === inv.id ? (
-                        <button onClick={() => { deleteInvoice(inv.id); setConfirmDelete(null); }}
-                          className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
-                          style={{ background: '#B53A3A', color: '#fff', border: 'none', cursor: 'pointer' }}>
-                          {ui('Delete?', 'Susa?')}
-                        </button>
-                      ) : (
-                        <button onClick={() => setConfirmDelete(inv.id)} aria-label={ui('Delete invoice')}
-                          style={{
-                            background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', opacity: 0.5,
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            width: 44, height: 44, minWidth: 44, minHeight: 44, flexShrink: 0,
-                          }}>
-                          <X size={15} />
-                        </button>
-                      ))}
+                ) : (
+                  <>
+                    {/* sdesk-13: a column heading row on md+ only — the rows below stay the same
+                        markup at every width (a redesign into a true <table> risked more than
+                        this track's scope), but the header at least names what each column is
+                        once the row is wide enough to read as one. */}
+                    <div
+                      className="hidden md:grid px-3 py-1.5 text-xs font-sans font-semibold uppercase"
+                      style={{ gridTemplateColumns: '1fr 7rem 9rem 2.75rem', gap: 8, letterSpacing: '0.06em', color: 'var(--text-muted)', borderBottom: '1px solid var(--border)' }}
+                    >
+                      <span>{ui('Date · client')}</span>
+                      <span>{ui('Amount')}</span>
+                      <span>{ui('Status')}</span>
+                      <span />
                     </div>
-                    {inv.status === 'paid' && !simple && (
-                      <div className="flex flex-wrap gap-1.5 mt-2 pl-0.5">
-                        {PAYMENT_METHODS.map((m) => (
-                          <button key={m} onClick={() => void changeInvoiceStatus(inv, 'paid', m)}
-                            disabled={syncingInvoiceId === inv.id}
-                            className="px-2.5 py-1 rounded-full text-xs font-sans font-semibold capitalize transition-all"
-                            style={inv.paymentMethod === m
-                              ? { background: '#1F4D2B', color: '#fff', border: '1px solid #1F4D2B', cursor: 'pointer' }
-                              : { background: 'var(--bg-1)', color: 'var(--text-secondary)', border: '1px solid var(--border)', cursor: 'pointer' }}>
-                            {paymentLabel(m)}
+                    {saved.slice(0, savedVisibleCount).map((inv) => (
+                      <div key={inv.id} className="px-3 py-2.5" style={{ borderBottom: '1px solid var(--border)' }}>
+                        <div className="flex items-center gap-2">
+                          <button onClick={() => openSaved(inv)} className="flex-1 min-w-0 text-left" style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}>
+                            <div className="font-display text-sm" style={{ color: 'var(--text-primary)' }}>
+                              #{String(inv.no).padStart(4, '0')} · {inv.billTo || ui('No buyer')}
+                            </div>
+                            <div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
+                              {isRecordsRegionalLang(lang)
+                                ? recordsDate(lang, new Date(inv.dateISO), true)
+                                : new Date(inv.dateISO).toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                            </div>
                           </button>
-                        ))}
+                          <span className="hidden md:inline-block text-sm font-display tabular-nums" style={{ color: 'var(--text-primary)', minWidth: '7rem' }}>
+                            {formatInvoiceZar(inv.total)}
+                          </span>
+                          <button
+                            onClick={() => openSaved(inv)}
+                            disabled={syncingInvoiceId === inv.id}
+                            aria-label={`${ui('Review payment for invoice')} ${inv.no}`}
+                            className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
+                            style={inv.status === 'paid'
+                              ? { background: 'rgba(46,107,58,0.12)', border: '1px solid rgba(46,107,58,0.3)', color: 'var(--color-forest-700)', cursor: 'pointer' }
+                              : { background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--gold)', cursor: 'pointer' }}>
+                            {inv.status === 'paid' ? ui('Paid') : ui('Unpaid')}
+                          </button>
+                          {/* Two taps to destroy accounting history. The first tap used to be enough. */}
+                          {!inv.sourceSaleId && (confirmDelete === inv.id ? (
+                            <button onClick={() => { deleteInvoice(inv.id); setConfirmDelete(null); }}
+                              className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
+                              style={{ background: '#B53A3A', color: '#fff', border: 'none', cursor: 'pointer' }}>
+                              {ui('Delete?', 'Susa?')}
+                            </button>
+                          ) : (
+                            <button onClick={() => setConfirmDelete(inv.id)} aria-label={ui('Delete invoice')}
+                              style={{
+                                background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', opacity: 0.5,
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                width: 44, height: 44, minWidth: 44, minHeight: 44, flexShrink: 0,
+                              }}>
+                              <X size={15} />
+                            </button>
+                          ))}
+                        </div>
+                        {/* staff-11 / sdesk-13: a paid invoice used to always show all five payment-
+                            method chips. It now shows the chosen method with one "Edit" tap — the
+                            chips themselves (the popover sdesk-13 asked for, simplified to an inline
+                            reveal rather than a floating panel) only appear while editing this row. */}
+                        {inv.status === 'paid' && !simple && (
+                          editingPaymentFor === inv.id ? (
+                            <div className="flex flex-wrap gap-1.5 mt-2 pl-0.5">
+                              {PAYMENT_METHODS.map((m) => (
+                                <button key={m} onClick={() => { void changeInvoiceStatus(inv, 'paid', m); setEditingPaymentFor(null); }}
+                                  disabled={syncingInvoiceId === inv.id}
+                                  className="px-2.5 py-1 rounded-full text-xs font-sans font-semibold capitalize transition-all"
+                                  style={inv.paymentMethod === m
+                                    ? { background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: '1px solid var(--color-forest-800)', cursor: 'pointer' }
+                                    : { background: 'var(--bg-1)', color: 'var(--text-secondary)', border: '1px solid var(--border)', cursor: 'pointer' }}>
+                                  {paymentLabel(m)}
+                                </button>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-2 mt-2 pl-0.5">
+                              <span className="text-xs font-sans capitalize" style={{ color: 'var(--text-secondary)' }}>
+                                {inv.paymentMethod ? paymentLabel(inv.paymentMethod) : ui('Record payment', 'Rekhoda inkokhelo')}
+                              </span>
+                              <button onClick={() => setEditingPaymentFor(inv.id)}
+                                className="text-xs font-sans font-semibold"
+                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-forest-700)', padding: 0, textDecoration: 'underline' }}>
+                                {ui('Edit', 'Hlela')}
+                              </button>
+                            </div>
+                          )
+                        )}
                       </div>
+                    ))}
+                    {saved.length > savedVisibleCount && (
+                      <button onClick={() => setSavedVisibleCount((n) => n + SAVED_PAGE_SIZE)}
+                        className="w-full text-center text-xs font-sans font-semibold py-2.5"
+                        style={{ background: 'var(--bg-1)', border: 'none', borderTop: '1px solid var(--border)', color: 'var(--color-forest-700)', cursor: 'pointer' }}>
+                        {ui('Show more', 'Khombisa okungaphezulu')} ({saved.length - savedVisibleCount})
+                      </button>
                     )}
-                  </div>
-                ))}
+                  </>
+                )}
               </div>
             )}
 
@@ -966,7 +1055,7 @@ export default function InvoicePage() {
                 <input value={businessNameDraft} onChange={(e) => setBusinessNameDraft(e.target.value)}
                   onBlur={saveBusinessName}
                   placeholder="e.g. Ubhejane Creche"
-                  className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                 <div className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>
                   {businessNameDraft.trim()
                     ? ui('This heads your invoices. Your own name is printed underneath it.')
@@ -980,36 +1069,36 @@ export default function InvoicePage() {
                 <FieldLabel>{ui('Your address')}</FieldLabel>
                 <textarea rows={2} value={letterhead.address} onChange={(e) => patchLetterhead({ address: e.target.value })}
                   placeholder={'Plot 14, Nquthu\nKwaZulu-Natal, 3135'}
-                  className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
+                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
               </label>
               <div className="flex gap-2">
                 <label className="block flex-1 min-w-0">
                   <FieldLabel>{ui('Email')}</FieldLabel>
                   <input type="email" value={letterhead.email} onChange={(e) => patchLetterhead({ email: e.target.value })}
                     placeholder="you@example.co.za"
-                    className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                    className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                 </label>
                 <label className="block flex-1 min-w-0">
                   <FieldLabel>{ui('VAT / tax no.')}</FieldLabel>
                   <input value={letterhead.taxNumber} onChange={(e) => patchLetterhead({ taxNumber: e.target.value })}
-                    placeholder="Optional"
-                    className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                    placeholder={ui('Optional')}
+                    className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                 </label>
               </div>
               <div className="pt-1">
                 <FieldLabel>{ui('Where buyers pay you')}</FieldLabel>
                 <div className="space-y-2">
                   <input value={letterhead.bankAccountName} onChange={(e) => patchLetterhead({ bankAccountName: e.target.value })}
-                    placeholder={ui('Account name')} className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                    placeholder={ui('Account name')} className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                   <div className="flex gap-2">
                     <input value={letterhead.bankName} onChange={(e) => patchLetterhead({ bankName: e.target.value })}
-                      placeholder={ui('Bank')} className="flex-1 min-w-0 text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                      placeholder={ui('Bank')} className="flex-1 min-w-0 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                     <input value={letterhead.bankBranchCode} onChange={(e) => patchLetterhead({ bankBranchCode: e.target.value })}
-                      placeholder={ui('Branch code')} className="w-28 text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                      placeholder={ui('Branch code')} className="w-28 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                   </div>
                   <input value={letterhead.bankAccountNumber} onChange={(e) => patchLetterhead({ bankAccountNumber: e.target.value })}
                     placeholder={ui('Account number')} inputMode="numeric"
-                    className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 tabular-nums" style={FIELD} />
+                    className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 tabular-nums" style={FIELD} />
                 </div>
               </div>
             </Disclosure>
@@ -1030,7 +1119,7 @@ export default function InvoicePage() {
                       selectBuyer(event.target.value);
                     }
                   }}
-                  className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
+                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
                   style={FIELD}
                 >
                   <option value="">{ui('Choose a customer')}</option>
@@ -1050,7 +1139,7 @@ export default function InvoicePage() {
                     value={billTo}
                     onChange={(event) => setBillTo(event.target.value)}
                     placeholder={ui('Customer name')}
-                    className="w-full mt-2 text-sm font-display outline-none rounded-xl px-3 py-2.5"
+                    className="w-full mt-2 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
                     style={FIELD}
                   />
                 )}
@@ -1067,20 +1156,20 @@ export default function InvoicePage() {
                   <FieldLabel>{ui('Address')}</FieldLabel>
                   <textarea rows={2} value={buyerDetails.address ?? ''} onChange={(e) => setBuyerDetails((d) => ({ ...d, address: e.target.value }))}
                     placeholder={'Shop 3, Main Road\nNquthu'}
-                    className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
+                    className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
                 </label>
                 <div className="flex gap-2">
                   <label className="block flex-1 min-w-0">
                     <FieldLabel>{ui('Phone')}</FieldLabel>
                     <input type="tel" value={buyerDetails.phone ?? ''} onChange={(e) => setBuyerDetails((d) => ({ ...d, phone: e.target.value }))}
                       placeholder="072 345 6789"
-                      className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                      className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                   </label>
                   <label className="block flex-1 min-w-0">
                     <FieldLabel>{ui('Email')}</FieldLabel>
                     <input type="email" value={buyerDetails.email ?? ''} onChange={(e) => setBuyerDetails((d) => ({ ...d, email: e.target.value }))}
                       placeholder={ui('Optional')}
-                      className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                      className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                   </label>
                 </div>
               </Disclosure>
@@ -1102,12 +1191,15 @@ export default function InvoicePage() {
                       />
                     </div>
                     <button onClick={() => removeItem(it.id)} aria-label={ui('Remove item')}
-                      className="flex-shrink-0 opacity-40 hover:opacity-80 transition-opacity"
+                      className="flex-shrink-0 opacity-40 hover:opacity-80 transition-opacity relative before:absolute before:-inset-3.5 before:content-['']"
                       style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--text-secondary)' }}>
                       <Trash2 size={14} />
                     </button>
                   </div>
-                  <div className="flex items-center gap-2">
+                  {/* A long drafted word for "each" (Tshivenda "tshiṅwe na tshiṅwe") pushed the price box past the
+                      card edge at 390px, so only then does the price drop to its own line. English and isiZulu
+                      keep the single row they always had. */}
+                  <div className={`flex items-center gap-2${ui('each').length > 10 ? ' flex-wrap' : ''}`}>
                     {/* parseFloat, not parseInt: UNITS includes kg and crates, and 12.5 kg of tomatoes became 12 —
                         the farmer underpaid on the document the buyer pays from, always in the same
                         direction. Worse, a sub-unit line (0.75 kg of chillies) became 0, which
@@ -1115,19 +1207,19 @@ export default function InvoicePage() {
                         and WhatsApped invoice with no stored record. */}
                     <input type="number" min={0} step="0.01" inputMode="decimal" value={it.qty || ''} onChange={(e) => updateItem(it.id, { qty: Math.max(0, parseFloat(e.target.value) || 0) })}
                       placeholder={ui('Qty')} aria-label={ui('Quantity')}
-                      className="w-16 text-sm font-display outline-none rounded-lg px-2.5 py-2 tabular-nums" style={FIELD} />
+                      className="w-16 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-lg px-2.5 py-2 tabular-nums" style={FIELD} />
                     <select value={it.unit} aria-label={ui('Unit')} onChange={(e) => updateItem(it.id, {
                       unit: e.target.value,
                       ...(it.unit === 'kg' && e.target.value !== 'kg' ? { price: 0, priceFromGuide: false } : {}),
                     })}
-                      className="text-sm font-display outline-none rounded-lg px-2 py-2 appearance-none" style={FIELD}>
+                      className="text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-lg px-2 py-2 appearance-none" style={FIELD}>
                       {UNITS.map((u) => <option key={u} value={u}>{ui(u)}</option>)}
                     </select>
-                    <div className="flex items-center gap-1 flex-1 rounded-lg px-2.5 py-2" style={FIELD}>
+                    <div className={`flex items-center gap-1 flex-1 rounded-lg px-2.5 py-2${ui('each').length > 10 ? ' basis-full' : ''}`} style={FIELD}>
                       <span className="text-sm font-display" style={{ color: 'var(--text-muted)' }}>R</span>
                       <input type="number" min={0} inputMode="decimal" value={it.price || ''} onChange={(e) => updateItem(it.id, { price: Math.max(0, parseFloat(e.target.value) || 0), priceFromGuide: false })}
                         placeholder="0" aria-label={ui('Price each')}
-                        className="w-full text-sm font-display outline-none tabular-nums"
+                        className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] tabular-nums"
                         style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)' }} />
                       <span className="text-xs font-sans whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>{ui('each')}</span>
                     </div>
@@ -1136,12 +1228,14 @@ export default function InvoicePage() {
                     const crop = cropEntryOption(it.desc);
                     const guide = crop ? priceFor(crop.key, priceOverrides) : null;
                     if (!guide || it.unit !== 'kg') return null;
+                    // The English templates are the lookup keys; {price} is the only moving part, so a
+                    // draft that lost it is refused and the English sentence shows instead.
                     const first = wholesaleBuyer
-                      ? `Shops/bulk about R${guide.wholesalePerKg}/kg`
-                      : `Direct/farm gate about R${guide.retailPerKg}/kg`;
+                      ? recordsTemplate(lang, 'Shops/bulk about R{price}/kg', null, { price: guide.wholesalePerKg })
+                      : recordsTemplate(lang, 'Direct/farm gate about R{price}/kg', null, { price: guide.retailPerKg });
                     const second = wholesaleBuyer
-                      ? `direct/farm gate about R${guide.retailPerKg}/kg`
-                      : `shops/bulk about R${guide.wholesalePerKg}/kg`;
+                      ? recordsTemplate(lang, 'direct/farm gate about R{price}/kg', null, { price: guide.retailPerKg })
+                      : recordsTemplate(lang, 'shops/bulk about R{price}/kg', null, { price: guide.wholesalePerKg });
                     return (
                       <div className="rounded-lg px-2.5 py-2 text-xs font-sans leading-relaxed" style={{ background: 'var(--bg-1)', color: 'var(--text-secondary)' }}>
                         {it.priceFromGuide && (
@@ -1149,8 +1243,8 @@ export default function InvoicePage() {
                             {ui('Suggested price filled in — change it if you agreed something else.')}
                           </div>
                         )}
-                        <strong style={{ color: 'var(--text-primary)' }}>{first}</strong> · {second} — guide price from {priceDateLabel(guide)}.
-                        {' '}{guide.confidence === 'estimated' ? 'Estimated; confirm locally.' : 'Sourced guide.'}
+                        <strong style={{ color: 'var(--text-primary)' }}>{first}</strong> · {second} — {recordsTemplate(lang, 'guide price from {date}.', null, { date: priceDateLabel(guide) })}
+                        {' '}{ui(guide.confidence === 'estimated' ? 'Estimated; confirm locally.' : guide.confidence === 'recommended' ? 'Recommended price (average of prices found); confirm locally.' : 'Sourced guide.')}
                       </div>
                     );
                   })()}
@@ -1178,7 +1272,7 @@ export default function InvoicePage() {
                       onClick={() => { setTermsDays(choice.days); patchLetterhead({ paymentTermsDays: choice.days }); }}
                       className="px-2.5 py-1.5 rounded-full text-xs font-sans font-semibold"
                       style={termsDays === choice.days
-                        ? { background: '#1F4D2B', color: '#fff', border: '1px solid #1F4D2B', cursor: 'pointer' }
+                        ? { background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: '1px solid var(--color-forest-800)', cursor: 'pointer' }
                         : { background: 'var(--bg-1)', color: 'var(--text-secondary)', border: '1px solid var(--border)', cursor: 'pointer' }}>
                       {ui(choice.label)}
                     </button>
@@ -1190,7 +1284,7 @@ export default function InvoicePage() {
                 <FieldLabel>{ui("Buyer's reference")}</FieldLabel>
                 <input value={reference} onChange={(e) => setReference(e.target.value)}
                   placeholder={ui('Their order number — optional')}
-                  className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
               </label>
               {/* Growing area stays reachable — a farmer may still want this sale on their
                   R/m² records — but Simple keeps it closed until asked for, the same as the
@@ -1227,26 +1321,26 @@ export default function InvoicePage() {
                 <textarea rows={2} value={notes} onChange={(e) => setNotes(e.target.value)}
                   onBlur={() => patchLetterhead({ notes })}
                   placeholder={ui('Delivery Thursday. Crates returned with next order.')}
-                  className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
+                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
               </label>
             </div>
 
             <button onClick={() => void persist()} disabled={!valid}
               className="w-full flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-display font-semibold"
-              style={{ background: valid ? '#1F4D2B' : '#DDD5C5', color: valid ? '#fff' : '#5C5040', border: 'none' }}>
+              style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest-800)' : 'var(--text-muted)', border: 'none' }}>
               <Save size={16} />{saving ? ui('Saving…') : ui('Save invoice')}
             </button>
-            {saveMessage && <p role="status" className="rounded-xl p-3 text-sm" style={{ background: '#EAF2EB', color: '#244E33' }}>{saveMessage}</p>}
+            {saveMessage && <p role="status" className="rounded-xl p-3 text-sm" style={{ background: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))', color: 'var(--emerald)' }}>{saveMessage}</p>}
 
             <div className="flex gap-2">
               <button onClick={shareInvoice} disabled={!valid}
-                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: valid ? '#25D366' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
+                className="flex-1 flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-display font-semibold"
+                style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest-800)' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
                 <Share2 size={15} />{ui('Share PDF')}
               </button>
               <button onClick={printInvoice} disabled={!valid}
-                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: valid ? '#C07A1E' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
+                className="flex-1 flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-display font-semibold"
+                style={{ background: valid ? '#9A6018' : 'var(--bg-2)', color: valid ? '#fff' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
                 <Printer size={15} />{ui('Print')}
               </button>
             </div>

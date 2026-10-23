@@ -1,0 +1,419 @@
+{
+  "title": "Vegetables and Staple Crops L3 source-bound ordinary-prose candidates (root repairs)",
+  "date": "2026-10-03",
+  "workspace": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "branch": "codex/regional-staples-prose-next-20261003",
+  "sourceRevision": "0c214618ef8aa6b2ed5dfada8eb67ef18e1542ad",
+  "sourceAuthority": "lib/course-modules.ts COURSE_MODULES; current learner text from resolveLearnerLessonPresentation in lib/course-localization.ts",
+  "scope": {
+    "moduleId": "vegetables-staples",
+    "lessonId": "vegetables-staples-l3",
+    "languages": [
+      "st",
+      "ve",
+      "ts"
+    ],
+    "candidateFields": 16,
+    "onlyFieldsWhoseCurrentLearnerParagraphExactlyEqualsCanonical": true
+  },
+  "provenance": {
+    "proposal": "Translate ordinary family food-security prose into an unreviewed source-paired draft. Retain difficult crop and farming terms in English where translating them could shift terminology.",
+    "fluentApproval": false,
+    "publicationStatus": "machine-draft for facilitator review only",
+    "languageQuality": "Machine-proposed wording; requires independent source-faithfulness check and later fluent review.",
+    "rootRepairDisposition": "Applied the seven conservative repairs from the independent semantic check. No repository edits.",
+    "appliedRevision": "0c214618ef8aa6b2ed5dfada8eb67ef18e1542ad",
+    "rootRepairMetadataNote": "Curly apostrophes in repairedCandidate metadata were normalized to the actual accepted ASCII-apostrophe candidateText; target candidate strings are unchanged."
+  },
+  "preservation": {
+    "canonicalEnglishUnchanged": true,
+    "paragraphOrderAndCount": "Preserve the exact existing paragraph order and count; only listed paragraph text is proposed to change.",
+    "noNewNumbers": true,
+    "noNewSpeciesOrCropNames": true,
+    "noNewPrescriptions": true,
+    "conditions": "Preserve all source quantifiers, timing, negation, causal limits, and qualified claims.",
+    "answerIndices": "No assessment field is changed; quiz options and correct indices remain untouched."
+  },
+  "entries": [
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "body paragraph 4",
+      "sourceEnglish": "Grow at least two. Not one.",
+      "currentLearnerText": "Grow at least two. Not one.",
+      "candidateText": "Lema bonyane tse pedi. E seng se le seng.",
+      "targetReviewStatus": "machine-draft",
+      "binding": {
+        "canonicalLessonId": "vegetables-staples-l3",
+        "paragraphIndex": 3,
+        "paragraphCount": 16,
+        "orderUnchanged": true
+      },
+      "preserve": [
+        "at least two",
+        "not one"
+      ]
+    },
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "body paragraph 5",
+      "sourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentLearnerText": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "candidateText": "Ke staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "targetReviewStatus": "machine-draft",
+      "binding": {
+        "canonicalLessonId": "vegetables-staples-l3",
+        "paragraphIndex": 4,
+        "paragraphCount": 16,
+        "orderUnchanged": true
+      },
+      "preserve": [
+        "which staple the household relies on most right now",
+        "the failure would hurt most",
+        "that staple needs a companion crop"
+      ]
+    },
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "body paragraph 7",
+      "sourceEnglish": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "currentLearnerText": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "candidateText": "Maize e fana ka calories, ’me e ka bolokoa e omme. Open-pollinated maize e boetse e u lumella ho boloka peo ea hao, haeba u laola isolation le selection.",
+      "targetReviewStatus": "machine-draft",
+      "binding": {
+        "canonicalLessonId": "vegetables-staples-l3",
+        "paragraphIndex": 6,
+        "paragraphCount": 16,
+        "orderUnchanged": true
+      },
+      "preserve": [
+        "maize provides calories and stores dry",
+        "open-pollinated maize",
+        "seed saving is conditional on managing isolation and selection"
+      ]
+    },
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "body paragraph 8",
+      "sourceEnglish": "Beans and cowpeas give a storable protein harvest.",
+      "currentLearnerText": "Beans and cowpeas give a storable protein harvest.",
+      "candidateText": "Beans le cowpeas li fana ka protein harvest e ka bolokoang.",
+      "targetReviewStatus": "machine-draft",
+      "binding": {
+        "canonicalLessonId": "vegetables-staples-l3",
+        "paragraphIndex": 7,
+        "paragraphCount": 16,
+        "orderUnchanged": true
+      },
+      "preserve": [
+        "beans and cowpeas",
+        "storable protein harvest"
+      ]
+    },
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "body paragraph 9",
+      "sourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "currentLearnerText": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "candidateText": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too.",
+      "targetReviewStatus": "machine-draft",
+      "binding": {
+        "canonicalLessonId": "vegetables-staples-l3",
+        "paragraphIndex": 8,
+        "paragraphCount": 16,
+        "orderUnchanged": true
+      },
+      "preserve": [
+        "some drought tolerance only after storage roots form",
+        "water in the first weeks and while roots form",
+        "water stress then can reduce harvest",
+        "young leaves are also edible"
+      ]
+    },
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "body paragraph 10",
+      "sourceEnglish": "Amadumbe handles wetter ground, where other staples struggle.",
+      "currentLearnerText": "Amadumbe handles wetter ground, where other staples struggle.",
+      "candidateText": "Amadumbe e khona ho mamella wetter ground, moo lijalo tse ling tsa staple li thatafalloang teng.",
+      "targetReviewStatus": "machine-draft",
+      "binding": {
+        "canonicalLessonId": "vegetables-staples-l3",
+        "paragraphIndex": 9,
+        "paragraphCount": 16,
+        "orderUnchanged": true
+      },
+      "preserve": [
+        "Amadumbe",
+        "wetter ground",
+        "other staples struggle"
+      ]
+    },
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "body paragraph 7",
+      "sourceEnglish": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "currentLearnerText": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "candidateText": "Maize i ṋea calories nahone i a vhulungea yo oma. Open-pollinated maize i dovha ya ni tendela ni vhulunga mbeu yaṋu, arali ni tshi langula isolation na selection.",
+      "targetReviewStatus": "machine-draft",
+      "binding": {
+        "canonicalLessonId": "vegetables-staples-l3",
+        "paragraphIndex": 6,
+        "paragraphCount": 16,
+        "orderUnchanged": true
+      },
+      "preserve": [
+        "maize provides calories and stores dry",
+        "open-pollinated maize",
+        "seed saving is conditional on managing isolation and selection"
+      ]
+    },
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "body paragraph 8",
+      "sourceEnglish": "Beans and cowpeas give a storable protein harvest.",
+      "currentLearnerText": "Beans and cowpeas give a storable protein harvest.",
+      "candidateText": "Beans na cowpeas zwi ṋea protein harvest ine ya nga vhulungwa.",
+      "targetReviewStatus": "machine-draft",
+      "binding": {
+        "canonicalLessonId": "vegetables-staples-l3",
+        "paragraphIndex": 7,
+        "paragraphCount": 16,
+        "orderUnchanged": true
+      },
+      "preserve": [
+        "beans and cowpeas",
+        "storable protein harvest"
+      ]
+    },
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "body paragraph 9",
+      "sourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "currentLearnerText": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "candidateText": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too.",
+      "targetReviewStatus": "machine-draft",
+      "binding": {
+        "canonicalLessonId": "vegetables-staples-l3",
+        "paragraphIndex": 8,
+        "paragraphCount": 16,
+        "orderUnchanged": true
+      },
+      "preserve": [
+        "some drought tolerance only after storage roots form",
+        "water in the first weeks and while roots form",
+        "water stress then can reduce harvest",
+        "young leaves are also edible"
+      ]
+    },
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "body paragraph 10",
+      "sourceEnglish": "Amadumbe handles wetter ground, where other staples struggle.",
+      "currentLearnerText": "Amadumbe handles wetter ground, where other staples struggle.",
+      "candidateText": "Amadumbe i a konḓelela mavu ane a vha na maḓi manzhi u fhira, hune zwiṅwe zwimela zwa vhuthogwa zwa konḓelwa.",
+      "targetReviewStatus": "machine-draft",
+      "binding": {
+        "canonicalLessonId": "vegetables-staples-l3",
+        "paragraphIndex": 9,
+        "paragraphCount": 16,
+        "orderUnchanged": true
+      },
+      "preserve": [
+        "Amadumbe",
+        "wetter ground",
+        "other staples struggle"
+      ]
+    },
+    {
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "body paragraph 5",
+      "sourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentLearnerText": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "candidateText": "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "targetReviewStatus": "machine-draft",
+      "binding": {
+        "canonicalLessonId": "vegetables-staples-l3",
+        "paragraphIndex": 4,
+        "paragraphCount": 16,
+        "orderUnchanged": true
+      },
+      "preserve": [
+        "which staple the household relies on most right now",
+        "the failure would hurt most",
+        "that staple needs a companion crop"
+      ]
+    },
+    {
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "body paragraph 7",
+      "sourceEnglish": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "currentLearnerText": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "candidateText": "Maize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection.",
+      "targetReviewStatus": "machine-draft",
+      "binding": {
+        "canonicalLessonId": "vegetables-staples-l3",
+        "paragraphIndex": 6,
+        "paragraphCount": 16,
+        "orderUnchanged": true
+      },
+      "preserve": [
+        "maize provides calories and stores dry",
+        "open-pollinated maize",
+        "seed saving is conditional on managing isolation and selection"
+      ]
+    },
+    {
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "body paragraph 8",
+      "sourceEnglish": "Beans and cowpeas give a storable protein harvest.",
+      "currentLearnerText": "Beans and cowpeas give a storable protein harvest.",
+      "candidateText": "Beans na cowpeas swi nyika protein harvest leyi nga hlayisiwa.",
+      "targetReviewStatus": "machine-draft",
+      "binding": {
+        "canonicalLessonId": "vegetables-staples-l3",
+        "paragraphIndex": 7,
+        "paragraphCount": 16,
+        "orderUnchanged": true
+      },
+      "preserve": [
+        "beans and cowpeas",
+        "storable protein harvest"
+      ]
+    },
+    {
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "body paragraph 9",
+      "sourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "currentLearnerText": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "candidateText": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too.",
+      "targetReviewStatus": "machine-draft",
+      "binding": {
+        "canonicalLessonId": "vegetables-staples-l3",
+        "paragraphIndex": 8,
+        "paragraphCount": 16,
+        "orderUnchanged": true
+      },
+      "preserve": [
+        "some drought tolerance only after storage roots form",
+        "water in the first weeks and while roots form",
+        "water stress then can reduce harvest",
+        "young leaves are also edible"
+      ]
+    },
+    {
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "body paragraph 10",
+      "sourceEnglish": "Amadumbe handles wetter ground, where other staples struggle.",
+      "currentLearnerText": "Amadumbe handles wetter ground, where other staples struggle.",
+      "candidateText": "Amadumbe yi kota ku tiyisela eka wetter ground, laha swibyariwa swin’wana swa nkoka swi tikaka.",
+      "targetReviewStatus": "machine-draft",
+      "binding": {
+        "canonicalLessonId": "vegetables-staples-l3",
+        "paragraphIndex": 9,
+        "paragraphCount": 16,
+        "orderUnchanged": true
+      },
+      "preserve": [
+        "Amadumbe",
+        "wetter ground",
+        "other staples struggle"
+      ]
+    },
+    {
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "body paragraph 15",
+      "sourceEnglish": "Two or more staples give you more ways to keep eating.",
+      "currentLearnerText": "Two or more staples give you more ways to keep eating.",
+      "candidateText": "Swakudya swa nkoka swimbirhi kumbe ku tlurisa swi ku nyika tindlela to tala ta ku ya mahlweni u dya.",
+      "targetReviewStatus": "machine-draft",
+      "binding": {
+        "canonicalLessonId": "vegetables-staples-l3",
+        "paragraphIndex": 14,
+        "paragraphCount": 16,
+        "orderUnchanged": true
+      },
+      "preserve": [
+        "two or more staples",
+        "more ways to keep eating"
+      ]
+    }
+  ],
+  "rootRepairs": [
+    {
+      "language": "st",
+      "fieldPath": "body paragraph 5",
+      "priorCandidate": "Ke staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? Haeba sejalo seo se hloleha, ke sona se ka amang lelapa la hao haholo; ke sona se hlokang companion crop.",
+      "repairedCandidate": "Ke staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? That's the one whose failure would hurt most — so that’s the one that needs a companion.",
+      "reason": "Preserves the translated first question while retaining the exact source counterfactual/companion sentence whose modal meaning was uncertain."
+    },
+    {
+      "language": "st",
+      "fieldPath": "body paragraph 9",
+      "priorCandidate": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Makhasi a eona a manyenyane le ’ona aa jeoa.",
+      "repairedCandidate": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too.",
+      "reason": "Uses the exact source young-leaves clause because the local term could mean small rather than young."
+    },
+    {
+      "language": "st",
+      "fieldPath": "body paragraph 10",
+      "priorCandidate": "Amadumbe e mamella mobu o mongobo ho feta, moo lijalo tse ling tsa staple li thatafalloang.",
+      "repairedCandidate": "Amadumbe e khona ho mamella wetter ground, moo lijalo tse ling tsa staple li thatafalloang teng.",
+      "reason": "Retains the difficult ground-suitability comparator “wetter ground” exactly in English while translating the ordinary tolerance and other-staples framing."
+    },
+    {
+      "language": "ve",
+      "fieldPath": "body paragraph 9",
+      "priorCandidate": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Maṱari ayo maṱuku na one a nga ḽiwa.",
+      "repairedCandidate": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too.",
+      "reason": "Uses the exact source young-leaves clause because the local term could mean small rather than young."
+    },
+    {
+      "language": "ts",
+      "fieldPath": "body paragraph 5",
+      "priorCandidate": "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? Ku tsandzeka ka xona ku nga vavisa ndyangu ngopfu; hi xona lexi lavaka companion crop.",
+      "repairedCandidate": "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that’s the one that needs a companion.",
+      "reason": "Preserves the translated first question while retaining the exact source counterfactual/companion sentence whose modal meaning was uncertain."
+    },
+    {
+      "language": "ts",
+      "fieldPath": "body paragraph 9",
+      "priorCandidate": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Matluka ya yona lamantsongo na wona ya dyiwa.",
+      "repairedCandidate": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too.",
+      "reason": "Uses the exact source young-leaves clause because the local term could mean small rather than young."
+    },
+    {
+      "language": "ts",
+      "fieldPath": "body paragraph 10",
+      "priorCandidate": "Amadumbe yi kota ku kula ematikweni lama tsakamaka swinene, laha swibyariwa swin’wana swa nkoka swi tikaka.",
+      "repairedCandidate": "Amadumbe yi kota ku tiyisela eka wetter ground, laha swibyariwa swin’wana swa nkoka swi tikaka.",
+      "reason": "Retains the difficult ground-suitability comparator “wetter ground” exactly in English while translating the ordinary tolerance and other-staples framing."
+    }
+  ],
+  "independentReviewRequired": true,
+  "limits": [
+    "Candidate wording remains machine-proposed and unapproved; no fluency approval is implied."
+  ],
+  "validation": {
+    "sourceCurrentResolverChecks": "passed all 16 entries at recorded revision/head",
+    "recordedFieldCount": 16,
+    "whollyEnglishCopyCandidates": 0,
+    "repositoryWrites": false,
+    "fluentApproval": false
+  }
+}

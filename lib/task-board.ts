@@ -13,6 +13,45 @@ import { loadPlaces, resolveMainSite } from './saved-places';
 import { designSiteIdFromLocation } from './design-studio';
 import type { LocationData } from './types';
 import { activeAccountLocalStorageKey } from './account-local-storage';
+import { produceLabel } from './produce-label';
+
+// zu-03 (wave 13 audit): the task board was entirely hard-coded English — verbs, the default
+// "Bed {n}" label and "Due this month" — regardless of the farmer's chosen language. lib/i18n.tsx
+// itself can't be imported here: it's a .tsx module (LanguageProvider renders JSX), and this file
+// is exercised directly by `node --test` under tests/task-board.test.ts, whose loader has no
+// JSX/TSX transform — only lib/i18n.tsx's own string-matching tests read it that way. So the
+// board takes an optional translator instead of importing one: lib/i18n.tsx carries the matching
+// 'taskVerbPrep' etc. keys (sentence source of truth, and where a future first-language review
+// would add real translations), and a caller with a React tree — e.g. app/home/page.tsx's
+// `const { t } = useLanguage()` — can pass `(key, vars) => { let s = t(key); for (...) ...; return
+// s; }` to get the live language. No existing caller does yet (app/home/page.tsx is not in this
+// track's owned files), so the board renders in English exactly as before until one does; the
+// template structure itself is the fix this finding asks for.
+export type BoardTranslate = (key: string, vars?: Record<string, string>) => string;
+
+// Mirrors the English values of the matching lib/i18n.tsx keys exactly — kept here as the
+// built-in default so a board rendered with no injected translator (today's only caller) reads
+// the same as it always has.
+const EN_TASK_BOARD_STRINGS: Record<string, string> = {
+  taskVerbPrep: 'Prep bed for {crop}',
+  taskVerbSow: 'Sow {crop}',
+  taskVerbTransplant: 'Transplant {crop}',
+  taskVerbMulch: 'Water in & mulch {crop}',
+  taskVerbHarvest: 'Harvest {crop}',
+  taskVerbTerminateCover: 'Cut or roll down {crop}',
+  taskVerbWeedEarly: 'Weed around {crop}',
+  taskVerbWeedMid: 'Weed & check on {crop}',
+  taskBedLabel: 'Bed {n}',
+  taskDueThisMonth: 'Due this month',
+  taskDueNextMonth: 'Due next month',
+  taskDueInMonths: 'Due in {n} months',
+};
+
+function defaultBoardTranslate(key: string, vars?: Record<string, string>): string {
+  let s = EN_TASK_BOARD_STRINGS[key] ?? key;
+  if (vars) for (const [name, value] of Object.entries(vars)) s = s.replace(`{${name}}`, value);
+  return s;
+}
 
 // Months throughout lib/crop-plan.ts are 1-12 (Jan-Dec), wrapping via the
 // same rule as that module's internal wrapMonth — kept in sync here since
@@ -59,18 +98,49 @@ function computeDesignBeds(state: FacilitatorDesignState | null): PlanBed[] {
 // or those farmers' tasks silently vanish.
 const VIRTUAL_BED: PlanBed = { id: 'virtual-bed-1', label: 'Bed 1', areaM2: 10 };
 
+function usableBed(bed: PlanBed): boolean {
+  return typeof bed.id === 'string' && bed.id.length > 0
+    && Number.isFinite(bed.areaM2) && bed.areaM2 > 0
+    && (bed.minDimM === undefined || (Number.isFinite(bed.minDimM) && bed.minDimM > 0));
+}
+
+/** Beds from one or more Design Studio canvases, unioned and de-duplicated by
+ *  id (first occurrence wins). A null canvas (no Studio design at that site)
+ *  contributes nothing, same as bedsFromDesignCanvas(null) === []. */
+function unionCanvasBeds(canvases: (DesignCanvasState | null)[]): PlanBed[] {
+  const seen = new Set<string>();
+  const beds: PlanBed[] = [];
+  for (const c of canvases) {
+    for (const bed of bedsFromDesignCanvas(c).filter(usableBed)) {
+      if (seen.has(bed.id)) continue;
+      seen.add(bed.id);
+      beds.push(bed);
+    }
+  }
+  return beds;
+}
+
 /** Same source priority as the crop planner: main-site Studio, legacy canvas, virtual fallback. */
 export function taskBoardBeds(
   canvas: DesignCanvasState | null,
   facilitator: FacilitatorDesignState | null,
 ): PlanBed[] {
-  const usable = (bed: PlanBed) =>
-    typeof bed.id === 'string' && bed.id.length > 0
-    && Number.isFinite(bed.areaM2) && bed.areaM2 > 0
-    && (bed.minDimM === undefined || (Number.isFinite(bed.minDimM) && bed.minDimM > 0));
-  const canvasBeds = bedsFromDesignCanvas(canvas).filter(usable);
+  return taskBoardBedsAcrossPlaces([canvas], facilitator);
+}
+
+/** taskBoardBeds, generalised to several sites' canvases at once — the Task
+ *  Planner's bed universe is every saved place's Studio canvas unioned
+ *  together (main site first), not just the main site's. Facilitator/virtual
+ *  fallback still only fires once, globally, when NONE of the canvases have
+ *  usable beds — so a farmer with a real canvas at their main site never
+ *  gets its beds duplicated alongside a stale facilitator-state fallback. */
+export function taskBoardBedsAcrossPlaces(
+  canvases: (DesignCanvasState | null)[],
+  facilitator: FacilitatorDesignState | null,
+): PlanBed[] {
+  const canvasBeds = unionCanvasBeds(canvases);
   if (canvasBeds.length > 0) return canvasBeds;
-  const facilitatorBeds = computeDesignBeds(facilitator).filter(usable);
+  const facilitatorBeds = computeDesignBeds(facilitator).filter(usableBed);
   return facilitatorBeds.length > 0 ? facilitatorBeds : [VIRTUAL_BED];
 }
 
@@ -114,23 +184,43 @@ export interface BoardTask {
 // Concise verb per action for a board TITLE — deliberately shorter than
 // app/facilitator/crops/page.tsx's own TASK_VERB (built for a full sentence,
 // e.g. the source-aware soil-assessment preparation phrase), since a
-// board row only has room for a short title. Plain hardcoded English, same
-// as TASK_VERB itself (confirmed not routed through t() there either).
-const BOARD_VERB: Record<CropTask['action'], string> = {
-  prep: 'Prep bed for',
-  sow: 'Sow',
-  transplant: 'Transplant',
-  mulch: 'Water in & mulch',
-  harvest: 'Harvest',
-  'terminate-cover': 'Cut or roll down',
-  'weed-early': 'Weed around',
-  'weed-mid': 'Weed & check on',
+// board row only has room for a short title. Each is a lib/i18n.tsx '{verb}
+// {crop}' template key (zu-03) rather than hardcoded English; the crop name
+// itself still comes from lib/crop-plan.ts (Codex-owned) as plain English.
+const BOARD_VERB_KEY: Record<CropTask['action'], string> = {
+  prep: 'taskVerbPrep',
+  sow: 'taskVerbSow',
+  transplant: 'taskVerbTransplant',
+  mulch: 'taskVerbMulch',
+  harvest: 'taskVerbHarvest',
+  'terminate-cover': 'taskVerbTerminateCover',
+  'weed-early': 'taskVerbWeedEarly',
+  'weed-mid': 'taskVerbWeedMid',
 };
 
-function dueLabel(monthsAway: number): string {
-  if (monthsAway === 0) return 'Due this month';
-  if (monthsAway === 1) return 'Due next month';
-  return `Due in ${monthsAway} months`;
+// zu-03/zu-11: the crop name itself used to be passed straight through as plain English
+// (t.cropName, from lib/crop-plan.ts). It now reads through the shared produceLabel() helper
+// (lib/produce-label.ts) keyed by t.cropKey, which also has an isiZulu common name for the
+// crops this draft covers — so 'Prep bed for {crop}' can read 'Lungisa umbhede we{crop}' with
+// an isiZulu crop name too, not just an isiZulu verb around an English one.
+function boardTaskTitle(action: CropTask['action'], cropKey: string, translateFn: BoardTranslate, lang: string): string {
+  return translateFn(BOARD_VERB_KEY[action], { crop: produceLabel(cropKey, lang) });
+}
+
+// The default bed label crop-plan.ts assigns is exactly "Bed {n}" (bedById.get(bedId)?.label);
+// a farmer who has renamed their own bed gets whatever they typed instead, which must never be
+// translated — only the untouched default format is recognised and templated here.
+const DEFAULT_BED_LABEL = /^Bed (\d+)$/;
+
+function boardBedLabel(bedLabel: string, translateFn: BoardTranslate): string {
+  const match = DEFAULT_BED_LABEL.exec(bedLabel);
+  return match ? translateFn('taskBedLabel', { n: match[1] }) : bedLabel;
+}
+
+function dueLabel(monthsAway: number, translateFn: BoardTranslate): string {
+  if (monthsAway === 0) return translateFn('taskDueThisMonth');
+  if (monthsAway === 1) return translateFn('taskDueNextMonth');
+  return translateFn('taskDueInMonths', { n: String(monthsAway) });
 }
 
 export function buildCropBoardTasks(
@@ -138,6 +228,8 @@ export function buildCropBoardTasks(
   beds: PlanBed[],
   currentMonth: number,
   completedIds: Set<string>,
+  translateFn: BoardTranslate = defaultBoardTranslate,
+  lang: string = 'en',
 ): BoardTask[] {
   if (!Number.isSafeInteger(currentMonth) || currentMonth < 1 || currentMonth > 12) return [];
   const bedIds = new Set(beds.map((bed) => bed.id));
@@ -163,8 +255,8 @@ export function buildCropBoardTasks(
     out.push({
       id: t.id,
       kind: 'crop',
-      title: `${BOARD_VERB[t.action]} ${t.cropName}`,
-      subtitle: `${t.bedLabel} · ${dueLabel(monthsAway)}`,
+      title: boardTaskTitle(t.action, t.cropKey, translateFn, lang),
+      subtitle: `${boardBedLabel(t.bedLabel, translateFn)} · ${dueLabel(monthsAway, translateFn)}`,
       icon: t.icon,
       cropKey: t.cropKey,
       action: t.action,
@@ -188,24 +280,31 @@ export function buildCropBoardTasks(
  * longer exists), and returns BoardTasks ready to render. Returns [] under
  * SSR/no-window, same as loadCropPlan.
  */
-export function loadCropBoardTasks(completedIds: Set<string>): BoardTask[] {
+export function loadCropBoardTasks(completedIds: Set<string>, translateFn: BoardTranslate = defaultBoardTranslate, lang: string = 'en'): BoardTask[] {
   if (typeof window === 'undefined' || !window.localStorage) return [];
   const { beds, plantings } = loadCropBoardSource();
   const currentMonth = new Date().getMonth() + 1;
-  return buildCropBoardTasks(plantings, beds, currentMonth, completedIds);
+  return buildCropBoardTasks(plantings, beds, currentMonth, completedIds, translateFn, lang);
 }
 
 /** Shared bed/planting resolution behind loadCropBoardTasks and
- *  loadCropBoardYear — same main-site Studio → legacy canvas → virtual-bed
- *  fallback either way. `savedPlantings` is the UNFILTERED count straight off
- *  the stored plan, so a screen can tell "no plan at all" apart from "a plan
- *  whose plantings all sit on beds that no longer exist". */
+ *  loadCropBoardYear — beds are unioned across EVERY saved place's Design
+ *  Studio canvas (main site first, so a colliding id resolves in its favour),
+ *  not just the main site's: a planting on a bed at a non-main saved place
+ *  used to be silently dropped from the Task Planner because only the main
+ *  site's canvas was ever consulted. `savedPlantings` is the UNFILTERED count
+ *  straight off the stored plan, so a screen can tell "no plan at all" apart
+ *  from "a plan whose plantings all sit on beds that no longer exist". */
 function loadCropBoardSource(): { beds: PlanBed[]; plantings: Planting[]; savedPlantings: number } {
-  const main = resolveMainSite(loadPlaces());
-  const canvas = main && Number.isFinite(main.lat) && Number.isFinite(main.lon)
-    ? loadCanvasState(designSiteIdFromLocation({ lat: main.lat, lon: main.lon } as LocationData))
-    : null;
-  const beds = taskBoardBeds(canvas, loadFacilitatorState());
+  const places = loadPlaces();
+  const main = resolveMainSite(places);
+  // Main site first — dedup in unionCanvasBeds keeps its bed on an id
+  // collision, and it stays the "primary" source when ordering matters.
+  const ordered = main ? [main, ...places.filter((p) => p.id !== main.id)] : places;
+  const canvases = ordered
+    .filter((p) => Number.isFinite(p.lat) && Number.isFinite(p.lon))
+    .map((p) => loadCanvasState(designSiteIdFromLocation({ lat: p.lat, lon: p.lon } as LocationData)));
+  const beds = taskBoardBedsAcrossPlaces(canvases, loadFacilitatorState());
   const bedIds = new Set(beds.map((b) => b.id));
   const saved = loadCropPlan().plantings;
   const plantings = saved.filter((p) => bedIds.has(p.bedId));

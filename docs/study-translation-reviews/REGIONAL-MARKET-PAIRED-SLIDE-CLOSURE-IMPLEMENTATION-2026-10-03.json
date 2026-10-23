@@ -1,0 +1,799 @@
+{
+  "title": "Market Community paired slide closure implementation",
+  "date": "2026-10-03",
+  "baseHead": "d81bafa592ca06da64331335063e3afeb797f3c6",
+  "candidateCount": 150,
+  "candidateEntryCount": 144,
+  "mixedFieldCandidateCount": 6,
+  "targetPacketFiles": [
+    "docs/narration/market-community.st.paired-draft.json",
+    "docs/narration/market-community.ve.paired-draft.json",
+    "docs/narration/market-community.ts.paired-draft.json"
+  ],
+  "updatedFieldCount": 143,
+  "updatedFields": [
+    {
+      "language": "st",
+      "fieldPath": "slides[0].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[1].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[4].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[4].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[5].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[6].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[6].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[6].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[7].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[8].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[9].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[9].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[9].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[10].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[10].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[10].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[11].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[11].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[11].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[12].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[12].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[12].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[14].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[14].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[14].target.body[1]",
+      "candidateStatus": "unreviewed-candidate-with-explicit-English-hold"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[14].target.body[2]",
+      "candidateStatus": "unreviewed-candidate-with-explicit-English-hold"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[15].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[15].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[15].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[15].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[16].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[16].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[16].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[17].target.body[2]",
+      "candidateStatus": "unreviewed-candidate-with-explicit-English-hold"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[18].target.body[3]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[19].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[19].target.body[2]",
+      "candidateStatus": "unreviewed-candidate-with-explicit-English-hold"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[0].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[0].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[1].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[2].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[2].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[3].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[4].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[4].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[5].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[5].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[6].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[6].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[6].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[7].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[7].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[8].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[9].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[9].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[9].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[10].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[10].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[10].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[10].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[11].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[11].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[11].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[11].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[12].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[12].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[12].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[12].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[13].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[13].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[13].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[14].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[14].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[14].target.body[1]",
+      "candidateStatus": "unreviewed-candidate-with-explicit-English-hold"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[14].target.body[2]",
+      "candidateStatus": "unreviewed-candidate-with-explicit-English-hold"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[15].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[15].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[15].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[15].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[16].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[16].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[16].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[16].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[17].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[17].target.body[2]",
+      "candidateStatus": "unreviewed-candidate-with-explicit-English-hold"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[18].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[18].target.body[3]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[19].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[19].target.body[2]",
+      "candidateStatus": "unreviewed-candidate-with-explicit-English-hold"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[0].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[0].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[1].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[2].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[2].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[2].target.body[3]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[3].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[4].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[4].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[5].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[5].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[6].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[6].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[6].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[7].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[7].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[8].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[9].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[9].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[9].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[10].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[10].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[10].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[10].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[11].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[11].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[11].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[11].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[12].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[12].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[12].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[12].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[13].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[14].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[14].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[14].target.body[1]",
+      "candidateStatus": "unreviewed-candidate-with-explicit-English-hold"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[14].target.body[2]",
+      "candidateStatus": "unreviewed-candidate-with-explicit-English-hold"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[15].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[15].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[15].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[15].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[16].target.heading",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[16].target.body[0]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[16].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[16].target.body[2]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[17].target.body[2]",
+      "candidateStatus": "unreviewed-candidate-with-explicit-English-hold"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[18].target.body[3]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[19].target.body[1]",
+      "candidateStatus": "unreviewed-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[19].target.body[2]",
+      "candidateStatus": "unreviewed-candidate-with-explicit-English-hold"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[8].target.heading",
+      "candidateStatus": "unreviewed-mixed-field-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[13].target.body[2]",
+      "candidateStatus": "unreviewed-mixed-field-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[0].target.body[1]",
+      "candidateStatus": "unreviewed-mixed-field-candidate"
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[2].target.heading",
+      "candidateStatus": "unreviewed-mixed-field-candidate"
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[5].target.body[1]",
+      "candidateStatus": "unreviewed-mixed-field-candidate"
+    }
+  ],
+  "exactEnglishHoldsPreservedTextless": [
+    {
+      "language": "st",
+      "fieldPath": "slides[6].target.body[1]",
+      "sourceEnglish": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost."
+    },
+    {
+      "language": "st",
+      "fieldPath": "slides[14].target.body[3]",
+      "sourceEnglish": "Before exchanging seed, check whether the variety is protected and whether permission is needed."
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[6].target.body[1]",
+      "sourceEnglish": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost."
+    },
+    {
+      "language": "ve",
+      "fieldPath": "slides[14].target.body[3]",
+      "sourceEnglish": "Before exchanging seed, check whether the variety is protected and whether permission is needed."
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[6].target.body[1]",
+      "sourceEnglish": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost."
+    },
+    {
+      "language": "ts",
+      "fieldPath": "slides[14].target.body[3]",
+      "sourceEnglish": "Before exchanging seed, check whether the variety is protected and whether permission is needed."
+    }
+  ],
+  "mixedCandidateNoOps": [
+    {
+      "language": "ts",
+      "fieldPath": "slides[18].target.body[0]",
+      "reason": "candidate text already equals bound current text; preserved byte-level field"
+    }
+  ],
+  "draftStatus": "unreviewed; paired with exact English source",
+  "fluencyApproval": false,
+  "rendererAssetsAndManifestEdited": false,
+  "canonicalLessonBodiesQuestionsRationalesAndMediaEdited": false,
+  "testsModified": true,
+  "wholePacketProof": "REGIONAL-MARKET-PAIRED-SLIDE-CLOSURE-PRESERVATION-2026-10-03.json",
+  "independentCheck": "REGIONAL-MARKET-PAIRED-SLIDE-CLOSURE-INDEPENDENT-CHECK-2026-10-03.json",
+  "draftFieldCountsByLanguage": {
+    "st": 81,
+    "ve": 81,
+    "ts": 81
+  },
+  "englishHoldFieldCountsByLanguage": {
+    "st": 2,
+    "ve": 2,
+    "ts": 2
+  },
+  "testUpdates": [
+    "Reframed prior hold-only assertions around exact English price/permission holds and conditions retained inside unreviewed draft fields.",
+    "Retained quantity units, specialist-advice wording, before/only-when/no-guarantee conditions, source binding and unreviewed provenance checks.",
+    "Added a validate-only layout test for the complete three-line Tshivenda Market channel heading and an overlong heading that must still fail without writing media."
+  ],
+  "focusedVerification": {
+    "command": "node --import ./tests/register-alias.mjs --test tests/paired-draft-slides.test.ts",
+    "tests": 34,
+    "passed": 34,
+    "failed": 0,
+    "notes": "Covers exact English holds, source pairing, before/only-when/no-guarantee conditions, unreviewed draft status, and three-line heading acceptance with runaway-heading rejection; validate-only paths wrote no media."
+  }
+}

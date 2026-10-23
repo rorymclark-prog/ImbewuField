@@ -176,6 +176,21 @@ test('the marker label and its pin do not steal each other\'s taps', () => {
   assert.ok(22 - pin.top - pin.bottom >= 44, 'the pin is back under the 44px floor');
 });
 
+// code-16 (wave 13, swarm/w13-farmer-dark): the evidence catalogue/sheet close buttons were
+// `padding: 4` around a 22px X icon — a ~30px tap target, under the 44px floor. This file has no
+// generic ROUTES list to extend (unlike tests/type-floor.test.ts), so these are added as their own
+// source checks, the same hand-written style the rest of this file already uses.
+test('the evidence catalogue and evidence sheet close buttons clear the 44px floor', () => {
+  for (const rel of ['../components/EvidenceCatalogue.tsx', '../components/EvidenceSheet.tsx']) {
+    const src = source(rel);
+    const at = src.indexOf("aria-label={t('evidenceSheetClose')}");
+    assert.ok(at > 0, `${rel}: could not find the close button — recheck by hand`);
+    const style = src.slice(src.lastIndexOf('<button', at), src.indexOf('>', at));
+    assert.match(style, /minWidth:\s*44/, `${rel}'s close button lost its 44px minWidth`);
+    assert.match(style, /minHeight:\s*44/, `${rel}'s close button lost its 44px minHeight`);
+  }
+});
+
 test('a label faded out of sight cannot take a tap', () => {
   // opacity-0 is invisible, not absent. The marker label sits directly over the pin, so while it
   // is faded it was still swallowing taps aimed at something else — measured as fixed in the

@@ -32,12 +32,14 @@ interface Props {
   onSave: (input: JournalEntryInput) => void;
   onDelete?: (id: string) => void;
   onClose: () => void;
+  /** A save that failed to persist (e.g. storage full) — shown without closing the sheet. */
+  error?: string | null;
 }
 
 /* Bottom sheet, phone-first: 92dvh cap, 22px top radius, safe-area padding —
    the same chrome components/EvidenceSheet.tsx uses, so the journal does not
    introduce a second modal idiom. */
-export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete, onClose }: Props) {
+export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete, onClose, error }: Props) {
   const { lang } = useLanguage();
   const isZulu = lang === 'zu';
   const ui = (english: string, zulu: string) => isZulu ? zulu : english;
@@ -53,12 +55,30 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
   const [busy, setBusy] = useState(false);
   const [photoError, setPhotoError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  // bug-12: two-tap delete, same pattern as app/records/page.tsx's SalesLedger — first tap
+  // arms a confirm (reverting on its own after 3.5s), second tap within that window deletes.
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const confirmTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
+
+  useEffect(() => () => { if (confirmTimer.current) clearTimeout(confirmTimer.current); }, []);
+
+  function requestDelete() {
+    if (!entry || !onDelete) return;
+    if (confirmTimer.current) clearTimeout(confirmTimer.current);
+    if (confirmDelete) {
+      setConfirmDelete(false);
+      onDelete(entry.id);
+      return;
+    }
+    setConfirmDelete(true);
+    confirmTimer.current = setTimeout(() => setConfirmDelete(false), 3500);
+  }
 
   async function handleFiles(files: FileList | null) {
     if (!files || files.length === 0) return;
@@ -109,7 +129,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
         onSubmit={submit}
         className={`w-full max-w-md font-sans overflow-y-auto ${motion.sheet}`}
         style={{
-          background: '#FBF8F1', borderRadius: '22px 22px 0 0',
+          background: 'var(--bg-1)', borderRadius: '22px 22px 0 0',
           maxHeight: '92dvh',
           // Deep enough to clear BOTH the tab bar and components/SampleModeBanner.tsx,
           // which is fixed at bottom 60px with z-index 9999 and wraps to two lines on a
@@ -120,16 +140,16 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
         }}
       >
         {/* Grab handle + header */}
-        <div style={{ position: 'sticky', top: 0, background: '#FBF8F1', zIndex: 2, borderBottom: '1px solid #EFE7D6' }}>
+        <div style={{ position: 'sticky', top: 0, background: 'var(--bg-1)', zIndex: 2, borderBottom: '1px solid var(--border)' }}>
           <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 8 }}>
-            <div style={{ width: 38, height: 4, borderRadius: 2, background: '#DED3BC' }} />
+            <div style={{ width: 38, height: 4, borderRadius: 2, background: 'var(--border-strong)' }} />
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 20px 14px' }}>
             <div style={{ flex: 1 }}>
               <div style={{ font: '600 17px Newsreader, Georgia, serif', color: 'var(--text-primary)' }}>
                 {entry ? ui('Edit journal entry', 'Hlela okubhaliwe kwejenali') : ui('New journal entry', 'Okusha kwejenali')}
               </div>
-              <div style={{ font: '400 11.5px/1.4 var(--font-sans), sans-serif', color: 'var(--text-muted)', marginTop: 1 }}>
+              <div style={{ font: '400 12px/1.4 var(--font-sans), sans-serif', color: 'var(--text-muted)', marginTop: 1 }}>
                 {ui('Date, weather, action and result — those four make a note useful later.', 'Usuku, isimo sezulu, okwenzile nomphumela — lokhu kusiza ukuthi inothi libe wusizo kamuva.')}
               </div>
             </div>
@@ -163,16 +183,16 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
                       style={{
                         display: 'flex', alignItems: 'center', gap: 6,
                         minHeight: 40, padding: '9px 12px', borderRadius: 11, cursor: 'pointer',
-                        background: on ? c.tint : '#FFFEFA',
-                        border: `1.5px solid ${on ? c.ink : '#E2D8C4'}`,
-                        color: on ? c.ink : '#5C5040',
+                        background: on ? c.tint : 'var(--bg-1)',
+                        border: `1.5px solid ${on ? c.ink : 'var(--border)'}`,
+                        color: on ? c.ink : 'var(--text-secondary)',
                         font: `${on ? 700 : 500} 13px/1 var(--font-sans), sans-serif`,
                       }}
                     >
                       {getElementArt2(`journal_${c.key}`) ? (
                         <img className="produce-art" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 15, height: 15, objectFit: 'contain' }} />
                       ) : (
-                        <span style={{ fontSize: 15 }}>{c.icon}</span>
+                        <c.icon size={15} aria-hidden />
                       )}
                       {isZulu ? journalCategoryLabel(c.key) : c.label}
                     </button>
@@ -187,7 +207,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
           {!simple && (
             <div>
               <Label>{ui('Date', 'Usuku')}</Label>
-              <input
+              <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
@@ -198,7 +218,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
 
           <div>
             <Label>{ui('Title', 'Isihloko')}</Label>
-            <input
+            <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
               type="text"
               value={title}
               maxLength={MAX_TITLE_LEN}
@@ -210,7 +230,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
 
           <div>
             <Label>{ui('Notes', 'Amanothi')}</Label>
-            <textarea
+            <textarea className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
               value={notes}
               rows={5}
               maxLength={MAX_NOTES_LEN}
@@ -227,12 +247,12 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               <div style={{ flex: 1 }}>
                 <Label>{ui('Bed / plot', 'Umbhede / isiqephu')}</Label>
                 {beds.length > 0 ? (
-                  <select value={bedId} onChange={(e) => setBedId(e.target.value)} style={inputStyle}>
+                  <select className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1" value={bedId} onChange={(e) => setBedId(e.target.value)} style={inputStyle}>
                     <option value="">{ui('Not linked', 'Akuxhunyiwe')}</option>
                     {beds.map((b) => <option key={b.id} value={b.id}>{b.label}</option>)}
                   </select>
                 ) : (
-                  <input
+                  <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                     type="text"
                     value={bedLabel}
                     placeholder={ui('e.g. Bed 4', 'isib. Umbhede 4')}
@@ -243,7 +263,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               </div>
               <div style={{ flex: 1 }}>
                 <Label>{ui('Crop', 'Isitshalo')}</Label>
-                <input
+                <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                   type="text"
                   list="journal-crop-options"
                   value={cropName}
@@ -263,7 +283,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
             <Label>{ui('Photos', 'Izithombe')} {photos.length > 0 ? `· ${photos.length}/${MAX_PHOTOS_PER_ENTRY}` : ''}</Label>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
               {photos.map((src, i) => (
-                <div key={`${i}-${src.slice(-12)}`} style={{ position: 'relative', width: 68, height: 68, borderRadius: 10, overflow: 'hidden', background: '#E0D6C2' }}>
+                <div key={`${i}-${src.slice(-12)}`} style={{ position: 'relative', width: 68, height: 68, borderRadius: 10, overflow: 'hidden', background: 'var(--bg-2)' }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   <button
@@ -287,9 +307,9 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
                   disabled={busy}
                   style={{
                     width: 68, height: 68, borderRadius: 10, cursor: 'pointer',
-                    background: 'var(--bg-1)', border: '1.5px dashed #CFC4AC', color: 'var(--color-forest-700)',
+                    background: 'var(--bg-1)', border: '1.5px dashed var(--border)', color: 'var(--color-forest-700)',
                     display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3,
-                    font: '600 10px/1 var(--font-sans), sans-serif',
+                    font: '600 12px/1 var(--font-sans), sans-serif',
                   }}
                 >
                   {busy ? <Loader2 size={18} className="animate-spin" /> : <Camera size={18} />}
@@ -298,7 +318,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               )}
             </div>
             {photoError && (
-              <div style={{ marginTop: 6, font: '500 12px/1.4 var(--font-sans), sans-serif', color: '#B91C1C' }}>{photoError}</div>
+              <div style={{ marginTop: 6, font: '500 12px/1.4 var(--font-sans), sans-serif', color: 'var(--orange)' }}>{photoError}</div>
             )}
             <input
               ref={fileRef}
@@ -312,20 +332,35 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
           </div>
         </div>
 
+        {error && (
+          <div style={{
+            margin: '16px 20px 0', padding: '10px 13px', borderRadius: 11,
+            background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', border: '1px solid color-mix(in srgb, var(--gold) 30%, transparent)',
+            font: '500 12.5px/1.45 var(--font-sans), sans-serif', color: 'var(--gold-dim)',
+          }}>
+            {error}
+          </div>
+        )}
+
         {/* Actions */}
         <div style={{ display: 'flex', gap: 10, padding: '20px 20px 4px' }}>
           {entry && onDelete && (
             <button
               type="button"
-              onClick={() => onDelete(entry.id)}
-              style={{
+              onClick={requestDelete}
+              aria-label={confirmDelete ? ui('Confirm delete', 'Qinisekisa ukususa') : ui('Delete', 'Susa')}
+              style={confirmDelete ? {
                 minHeight: 48, padding: '0 16px', borderRadius: 12, cursor: 'pointer',
-                background: 'var(--bg-1)', border: '1.5px solid #E7C9C6', color: 'var(--orange)',
+                background: 'color-mix(in srgb, var(--orange) 12%, transparent)', border: '1.5px solid color-mix(in srgb, var(--orange) 40%, transparent)', color: 'var(--orange)',
+                font: '700 14px/1 var(--font-sans), sans-serif', display: 'flex', alignItems: 'center', gap: 7,
+              } : {
+                minHeight: 48, padding: '0 16px', borderRadius: 12, cursor: 'pointer',
+                background: 'var(--bg-1)', border: '1.5px solid color-mix(in srgb, var(--orange) 30%, transparent)', color: 'var(--orange)',
                 font: '600 14px/1 var(--font-sans), sans-serif', display: 'flex', alignItems: 'center', gap: 7,
               }}
             >
               <Trash2 size={16} />
-              {ui('Delete', 'Susa')}
+              {confirmDelete ? ui('Sure?', 'Uqinisekile?') : ui('Delete', 'Susa')}
             </button>
           )}
           <button
@@ -334,8 +369,8 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
             style={{
               flex: 1, minHeight: 48, borderRadius: 12, border: 'none',
               cursor: canSave && !busy ? 'pointer' : 'not-allowed',
-              background: canSave && !busy ? '#274D2C' : 'rgba(39,77,44,0.25)',
-              color: '#fff', font: '700 15px/1 var(--font-sans), sans-serif',
+              background: canSave && !busy ? 'var(--color-forest-800)' : 'color-mix(in srgb, var(--color-forest-800) 25%, transparent)',
+              color: 'var(--on-forest-800)', font: '700 15px/1 var(--font-sans), sans-serif',
             }}
           >
             {entry ? ui('Save changes', 'Gcina izinguquko') : ui('Save entry', 'Gcina okubhaliwe')}
@@ -361,7 +396,7 @@ const inputStyle: React.CSSProperties = {
 function Label({ children }: { children: React.ReactNode }) {
   return (
     <div style={{
-      font: '700 10.5px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em',
+      font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em',
       textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 8,
     }}>
       {children}

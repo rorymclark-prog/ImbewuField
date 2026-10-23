@@ -39,10 +39,63 @@ import {
   latestBedEntryMonth,
   plannedBedEntryMonth,
   plantingBedEntryOffsets,
+  seedBoqBatchesForPlan,
   taskMonthsFromNow,
   yieldByCrop,
 } from '@/lib/crop-plan';
-import { MONTH_NAMES, monthShort, rollingMonths, wrapMonth } from '@/lib/crop-export-schedule';
+import { numberLabel } from '@/lib/format-figures';
+import { bedShareLabel, inSentence, MONTH_NAMES, monthShort, rollingMonths, wrapMonth } from '@/lib/crop-export-schedule';
+
+/**
+ * Which planting-material noun a crop actually uses, keyed off the SAME field
+ * `seedBoqBatchesForPlan` already computes for the buying schedule (see
+ * lib/crop-plan.ts's SeedBoqBatch.unit) — never a second, independently
+ * hardcoded list of "which crops grow from pieces". A crop absent from the
+ * result (an already-`existing` cohort, or one the BOQ deliberately excludes)
+ * falls back to the same transplant/seed split the BOQ itself falls back to.
+ */
+function unitByCropKey(plantings: Planting[], beds: PlanBed[]): Map<string, string> {
+  const map = new Map<string, string>();
+  for (const batch of seedBoqBatchesForPlan(plantings, beds)) map.set(batch.cropKey, batch.unit);
+  return map;
+}
+
+/** A crop bought and planted as a living piece (slip, seed potato, clove,
+ *  corm...) rather than botanical seed or a raised seedling. */
+function isLivingPieceUnit(unit: string | undefined): unit is string {
+  return unit !== undefined && unit !== 'seeds' && unit !== 'seedlings' && unit !== 'kg seed';
+}
+
+/** "sweet potato slips", "garlic cloves", "amadumbe corms" — but just "seed
+ *  potatoes", not "potato seed potatoes", when the unit noun already names
+ *  the crop. Generic on `unit`; adding a new living-piece crop to the catalog
+ *  needs no new case here. */
+function pieceLabel(cropName: string, unit: string): string {
+  return unit.toLowerCase().includes(cropName.toLowerCase()) ? unit : `${cropName} ${unit}`;
+}
+
+/** SA winter — the frost risk window (Jun-Jul). Used only to raise a WARNING
+ *  caveat on a frost-tender crop whose harvest window reaches it on a
+ *  'mild-frost' site; this pattern's own catalog header only records "light
+ *  frost in low pockets on clear winter nights" with no sourced first/last
+ *  frost date for the zone, so this is never a sowing or harvest gate. */
+export const SA_WINTER_FROST_MONTHS: ReadonlySet<number> = new Set([6, 7]);
+
+const FROST_CAVEAT_TEXT = 'Frost-tender: finish picking before the first frost or cover on clear, still nights.';
+
+/** Does the inclusive month range start..end (wrapping past December) touch
+ *  any month in `targets`? Capped at 12 steps — a harvest window longer than
+ *  a year is not a value this planner produces. */
+function monthRangeHits(start: number, end: number, targets: ReadonlySet<number>): boolean {
+  let m = wrapMonth(start);
+  const stop = wrapMonth(end);
+  for (let i = 0; i < 12; i++) {
+    if (targets.has(m)) return true;
+    if (m === stop) return false;
+    m = wrapMonth(m + 1);
+  }
+  return false;
+}
 
 // ── 1. Dashboard ────────────────────────────────────────────────────────────
 
@@ -112,18 +165,21 @@ export function buildPlanDashboard(
   const unknownYieldCrops = benchmark.unknownYieldCrops;
   const areaConflictBedLabels = benchmark.areaConflictBedLabels;
   const hasKnownYield = grossKg !== null && benchmark.byCrop.length > 0;
-  const availability = buildFoodAvailability(accountedPlantings, beds, opts.nowMonth);
-  const freshPickingMonths = availability.slice(1, 13)
+  // A dated first year starts with the sowings actually ahead of it. Folding
+  // next August's crop into this October used to overstate both fresh food
+  // and storage on the cover while the dated bed calendar showed bare ground.
+  const availability = buildFoodAvailability(accountedPlantings, beds, opts.nowMonth, 12);
+  const freshPickingMonths = availability
     .filter((month) => month.some((item) => item.status === 'fresh')).length;
-  const storedFoodMonths = availability.slice(1, 13)
+  const storedFoodMonths = availability
     .filter((month) => month.some((item) => item.status === 'stored')).length;
   const storedFoodCrops = [...new Set(
-    availability.slice(1, 13).flatMap((month) => month
+    availability.flatMap((month) => month
       .filter((item) => item.status === 'stored')
       .map((item) => item.name)),
   )].sort((a, b) => a.localeCompare(b));
 
-  const workload = buildWorkloadSeries(tasks, opts.nowMonth);
+  const workload = buildWorkloadSeries(tasks, opts.nowMonth, plantings, beds);
   const busiest = [...workload].sort((a, b) => b.count - a.count).slice(0, 3)
     .sort((a, b) => workload.findIndex((w) => w.month === a.month) - workload.findIndex((w) => w.month === b.month));
 
@@ -132,7 +188,7 @@ export function buildPlanDashboard(
 
   const stats: DashboardStat[] = [
     {
-      value: `${areaM2.toFixed(1)} m2`,
+      value: `${areaM2.toFixed(1)} m²`,
       label: 'growing space',
       detail: `${bedCount} bed${bedCount === 1 ? '' : 's'}${plotCount ? ` + ${plotCount} staple plot${plotCount === 1 ? '' : 's'}` : ''}`,
     },
@@ -147,11 +203,11 @@ export function buildPlanDashboard(
       // Same knownKg ÷ same areaM2 already above — never a separate estimate,
       // so it cannot read "in line" while the two figures it is built from
       // disagree with each other.
-      value: hasKnownYield && benchmark.kgPerM2 !== null ? `${benchmark.kgPerM2.toFixed(2)} kg/m2` : 'Not shown',
+      value: hasKnownYield && benchmark.kgPerM2 !== null ? `${benchmark.kgPerM2.toFixed(2)} kg/m²` : 'Not shown',
       label: areaConflictBedLabels.length ? 'benchmark density blocked' : 'benchmark density',
       detail: areaConflictBedLabels.length
         ? 'blocked with the total above until shares are resolved'
-        : 'known benchmark total ÷ whole growing area, for comparing against other plans',
+        : 'known total ÷ whole growing area, to compare plans',
     },
     lossConfirmed
       ? {
@@ -203,7 +259,7 @@ export function buildPlanDashboard(
   if (areaConflictBedLabels.length) {
     decisions.push(`Resolve the planting shares in ${areaConflictBedLabels.join(', ')} before using any crop benchmark or value scenario.`);
   } else if (top[0]) {
-    decisions.push(`Compare the ${top[0].name.toLowerCase()} benchmark with actual harvest records before planning storage or sales.`);
+    decisions.push(`Compare the ${inSentence(top[0].name)} benchmark with actual harvest records before planning storage or sales.`);
   }
   decisions.push('Check actual household demand and recorded harvests; the benchmark comparison is not a meal or surplus guarantee.');
   if (busiest.length) {
@@ -226,6 +282,7 @@ export function idleBedMonths(plantings: Planting[], beds: PlanBed[], nowMonth?:
   }
   const occupied = new Map<string, Set<number>>();
   for (const p of plantings) {
+    if (p.awaitingSowingConfirmation || p.finishedOnceSowing) continue;
     const crop = cropByKey(p.cropKey);
     if (!crop) continue;
     let set = occupied.get(p.bedId);
@@ -313,13 +370,13 @@ export const FOLDED_ACTIONS: ReadonlySet<CropTask['action']> = new Set(['mulch']
  * month again — one aggregation, read three times, not three separate counts
  * that can drift apart.
  */
-export function buildWorkloadSeries(tasks: CropTask[], nowMonth: number): MonthCount[] {
+export function buildWorkloadSeries(tasks: CropTask[], nowMonth: number, plantings: Planting[] = [], beds: PlanBed[] = []): MonthCount[] {
   // buildFieldSheet only reads the month number off `now` for cohort math; the
   // full date only affects the printed year label, which nothing here reads.
   const now = new Date(2000, nowMonth - 1, 1);
   return rollingMonths(nowMonth).map((m) => ({
     month: m,
-    count: buildFieldSheet(m, tasks, now).workRows,
+    count: buildFieldSheet(m, tasks, now, plantings, beds).workRows,
   }));
 }
 
@@ -341,6 +398,9 @@ export function buildTopCrops(plantings: Planting[], beds: PlanBed[], limit = 7)
 // ── 3. Land occupancy calendar ──────────────────────────────────────────────
 
 export interface CalendarEntry {
+  /** Same-crop successions can overlap in one bed; keep their identity so
+   * print lanes cannot join distinct sowings into one continuous crop. */
+  plantingId: string;
   cropKey: string;
   abbr: string;
   /** '1/3', '1/2', 'Full' — what share of the bed this crop holds. */
@@ -421,6 +481,7 @@ export function buildOccupancyCalendar(
           const idx = start + lifeMonth;
           if (idx < 0 || idx >= 12) continue;
           cells[idx].push({
+            plantingId: p.id,
             cropKey: p.cropKey,
             abbr: abbr.get(p.cropKey) ?? '??',
             share: shareCode(p.areaFraction ?? 1),
@@ -454,22 +515,30 @@ export interface FieldSheetRow {
 export interface FieldSheetSection {
   title: string;
   rows: FieldSheetRow[];
+  /** Guidance that applies to every row below and would otherwise repeat on
+   *  each one — stated once for the whole section instead. Undefined when
+   *  the section has nothing generic to say once. */
+  note?: string;
 }
 
 export interface FieldSheet {
   month: number;
   monthLabel: string;
   sourceLines: number;
+  /** Printed rows (tick boxes) across every section. */
   workRows: number;
+  /** Printed rows under nursery + direct sowing — the same unit as workRows. Counting raw per-bed
+   *  task lines instead printed "12 jobs · 14 sowing" on one header: more sowings than jobs. */
   plantingFocus: number;
+  /** Printed rows under "Harvest and record", in the same unit. */
   harvestFocus: number;
   sections: FieldSheetSection[];
 }
 
 const SECTION_ORDER = [
+  'Prepare for the next planting',
   'Nursery - raise seedlings',
   'Direct sowing and planting',
-  'Prepare for the next planting',
   'Harvest and record',
   'End the cover crop',
   'Maintenance',
@@ -495,6 +564,8 @@ export function buildFieldSheet(
   month: number,
   tasks: CropTask[],
   now: Date,
+  plantings: Planting[] = [],
+  beds: PlanBed[] = [],
 ): FieldSheet {
   const nowMonth = now.getMonth() + 1;
   const targetOffset = ((wrapMonth(month) - nowMonth) % 12 + 12) % 12;
@@ -503,13 +574,23 @@ export function buildFieldSheet(
   // November sheet merely because both are called "November".
   const mine = tasks.filter((t) => taskMonthsFromNow(t, nowMonth) === targetOffset);
   const mulchedCrops = new Set(mine.filter((t) => t.action === 'mulch').map((t) => `${t.bedLabel}::${t.cropKey}`));
+  const unitByCrop = unitByCropKey(plantings, beds);
+  const plantingById = new Map(plantings.map((planting) => [planting.id, planting]));
+  const bedById = new Map(beds.map((bed) => [bed.id, bed]));
+
+  // Distinct ground-prep guidance for this month, said ONCE in the section's
+  // own note rather than after every bed — see FieldSheetSection.note. Every
+  // planting's prep task carries the same one or two catalog-driven sentences
+  // (lib/crop-plan.ts's bedKind split), so repeating it per bed added nothing
+  // but length.
+  const prepNotes = new Set<string>();
 
   // A row is one BED and one kind of job. Within it each crop keeps its own
   // spacing in brackets — merging the crops but not their instructions is how
   // "Sow at rows 47cm apart. Sow at about 17cm each way." ended up in one
   // sentence with nothing saying which crop either belonged to.
   interface Bucket {
-    sow: string[]; transplant: string[]; plain: string[]; extra: Set<string>;
+    sow: string[]; plantPieces: string[]; transplant: string[]; plain: string[]; extra: Set<string>;
     waterSow: boolean; waterTransplant: boolean;
   }
   const buckets = new Map<string, Map<string, Bucket>>();
@@ -518,7 +599,7 @@ export function buildFieldSheet(
     if (!byPlace) { byPlace = new Map(); buckets.set(section, byPlace); }
     let entry = byPlace.get(place);
     if (!entry) {
-      entry = { sow: [], transplant: [], plain: [], extra: new Set(), waterSow: false, waterTransplant: false };
+      entry = { sow: [], plantPieces: [], transplant: [], plain: [], extra: new Set(), waterSow: false, waterTransplant: false };
       byPlace.set(place, entry);
     }
     return entry;
@@ -527,7 +608,19 @@ export function buildFieldSheet(
   for (const t of mine) {
     const crop = cropByKey(t.cropKey);
     const watered = mulchedCrops.has(`${t.bedLabel}::${t.cropKey}`);
-    const name = t.cropName.toLowerCase();
+    const name = inSentence(t.cropName);
+    const planting = plantingById.get(t.plantingId);
+    const bed = planting && bedById.get(planting.bedId);
+    // A bed shared by successive thirds is not an instruction to sow the
+    // whole bed again. Scope each crop's work to its recorded allocation.
+    const fraction = planting?.areaFraction ?? 1;
+    const allocation = planting && bed
+      ? `${bedShareLabel(fraction) || (bed.kind === 'plot' ? 'whole plot' : 'whole bed')}; ${numberLabel(bed.areaM2 * fraction)} m²`
+      : null;
+    const workLabel = (advice?: string): string => {
+      const details = [allocation, advice].filter(Boolean).join('; ');
+      return details ? `${name} (${details})` : name;
+    };
     switch (t.action) {
       case 'sow':
         if (crop?.transplant) {
@@ -535,32 +628,42 @@ export function buildFieldSheet(
           // Keyed crop|||bed so the section build can say "tomatoes for Beds
           // 10, 11, 12" instead of naming the same crop once per bed.
           const trayDepth = sowDepthPhrase(crop);
-          b.plain.push(`${name}${trayDepth ? ` (${trayDepth})` : ''}|||${t.bedLabel}`);
+          b.plain.push(`${workLabel(trayDepth ?? undefined)}|||${t.bedLabel}`);
           const sowMonth = t.cohortSowMonth ?? t.month;
           const earliest = bedEntryMonth(sowMonth, crop);
           const latest = latestBedEntryMonth(sowMonth, crop);
           b.extra.add(`Start checking in ${monthShort(earliest)}; transplant when ready, within the planning window through ${monthShort(latest)}.`);
         } else {
           const b = bucketFor('Direct sowing and planting', t.bedLabel);
-          b.sow.push(`${name} (${spacingPhrase(crop)})`);
+          const unit = unitByCrop.get(t.cropKey);
+          // Sweet potato slips, seed potatoes, garlic cloves, amadumbe corms —
+          // living planting material, never botanical seed. "Direct sow" /
+          // "Sow" is the wrong instruction for a piece someone plants whole;
+          // driven by the same `unit` the buying schedule already uses, not a
+          // second hardcoded list of crop keys.
+          if (isLivingPieceUnit(unit)) {
+            b.plantPieces.push(`${pieceLabel(name, unit)} (${[allocation, spacingPhrase(crop)].filter(Boolean).join('; ')})`);
+          } else {
+            b.sow.push(workLabel(spacingPhrase(crop)));
+          }
           b.waterSow ||= watered;
         }
         break;
       case 'transplant': {
         const b = bucketFor('Direct sowing and planting', t.bedLabel);
-        b.transplant.push(`${name} (${spacingPhrase(crop)})`);
+        b.transplant.push(workLabel(spacingPhrase(crop)));
         b.waterTransplant ||= watered;
         break;
       }
       case 'prep': {
         const b = bucketFor('Prepare for the next planting', t.bedLabel);
-        b.plain.push(name);
-        if (t.prepText) b.extra.add(`${capitalise(stripPrepWrapper(t.prepText))}.`);
+        b.plain.push(workLabel());
+        if (t.prepText) prepNotes.add(`${capitalise(stripPrepWrapper(t.prepText))}.`);
         break;
       }
       case 'harvest': {
         const b = bucketFor('Harvest and record', t.bedLabel);
-        b.plain.push(name);
+        b.plain.push(workLabel());
         b.extra.add('Record kilograms and where it went.');
         break;
       }
@@ -568,11 +671,11 @@ export function buildFieldSheet(
         // A green manure is field management, not food. Keeping it out of the
         // harvest bucket prevents the printed sheet from asking for kilograms
         // of biomass that is cut or rolled down for the soil.
-        bucketFor('End the cover crop', t.bedLabel).plain.push(name);
+        bucketFor('End the cover crop', t.bedLabel).plain.push(workLabel());
         break;
       case 'weed-early':
       case 'weed-mid':
-        bucketFor('Maintenance', t.bedLabel).plain.push(name);
+        bucketFor('Maintenance', t.bedLabel).plain.push(workLabel());
         break;
       case 'mulch':
         // Folded into the sow/transplant row above — never its own line, and never its own count.
@@ -601,11 +704,12 @@ export function buildFieldSheet(
         const phrases = [...byCrop.entries()].map(([crop, bedsOf]) => `${crop} for ${compactPlaces(bedsOf)}`);
         parts.push(`Raise and label trays for ${joinList(phrases)}.`);
       }
-      else if (title === 'Prepare for the next planting') parts.push(`If this follows another crop, confirm it is finished and the bed is clear; then prepare the ground for ${joinList(unique(b.plain))}.`);
+      else if (title === 'Prepare for the next planting') parts.push(`Prepare the ground for ${joinList(unique(b.plain))}.`);
       else if (title === 'Harvest and record') parts.push(`Harvest ${joinList(unique(b.plain))}.`);
       else if (title === 'End the cover crop') parts.push(`Cut or roll down ${joinList(unique(b.plain))} before the next crop.`);
       else if (title === 'Maintenance') parts.push(`Weed and check for pests around ${joinList(unique(b.plain))}.`);
       if (b.sow.length) parts.push(`Sow ${joinList(unique(b.sow))}.`);
+      if (b.plantPieces.length) parts.push(`Plant ${joinList(unique(b.plantPieces))}.`);
       if (b.transplant.length) parts.push(`From this month, transplant ${joinList(unique(b.transplant))} when seedlings and the bed are ready.`);
       // ONE watering sentence per row. A bed that is both sown and planted into
       // in the same month used to end "...Water and mulch. Water, mulch and
@@ -615,7 +719,17 @@ export function buildFieldSheet(
       parts.push(...b.extra);
       rows.push({ place, work: parts.filter(Boolean).join(' ') });
     }
-    sections.push({ title, rows: mergeIdenticalWork(rows) });
+    // The "if this follows another crop, confirm it is clear" reminder and the
+    // soil/drainage assessment used to repeat after every single bed. Both are
+    // generic guidance, not a fact specific to any one bed, so they are said
+    // once for the section instead — see FieldSheetSection.note.
+    const note = title === 'Prepare for the next planting' && prepNotes.size
+      ? [
+        'Where a bed follows another crop, confirm it is finished and cleared before preparing it.',
+        ...withoutCoveredNotes([...prepNotes]),
+      ].join(' ')
+      : undefined;
+    sections.push({ title, rows: mergeIdenticalWork(rows), ...(note ? { note } : {}) });
   }
 
   const workRows = sections.reduce((s, x) => s + x.rows.length, 0);
@@ -624,8 +738,8 @@ export function buildFieldSheet(
     monthLabel: `${MONTH_NAMES[month - 1]} ${resolveYear(month, now)}`,
     sourceLines: mine.length,
     workRows,
-    plantingFocus: mine.filter((t) => t.action === 'sow' || t.action === 'transplant').length,
-    harvestFocus: mine.filter((t) => t.action === 'harvest').length,
+    plantingFocus: rowsIn(sections, 'Nursery - raise seedlings') + rowsIn(sections, 'Direct sowing and planting'),
+    harvestFocus: rowsIn(sections, 'Harvest and record'),
     sections,
   };
 }
@@ -659,6 +773,26 @@ function sowDepthPhrase(crop: CropDef): string | null {
 
 function formatCmRange(range: readonly [number, number]): string {
   return range[0] === range[1] ? String(range[0]) : `${range[0]}–${range[1]}`;
+}
+
+function rowsIn(sections: FieldSheetSection[], title: string): number {
+  return sections.find((x) => x.title === title)?.rows.length ?? 0;
+}
+
+/** Drop a note whose every word already appears in a longer note. A month that prepares both a bed
+ *  and a staple plot printed "…before adding amendments. …before cultivating or adding
+ *  amendments." — the second sentence already says everything the first does. */
+function withoutCoveredNotes(notes: string[]): string[] {
+  const words = (n: string) => new Set(n.toLowerCase().match(/[a-z0-9]+/g) ?? []);
+  return notes.filter((note, i) => {
+    const mine = words(note);
+    return !notes.some((other, j) => {
+      if (j === i) return false;
+      const theirs = words(other);
+      if (theirs.size < mine.size || (theirs.size === mine.size && j > i)) return false;
+      return [...mine].every((w) => theirs.has(w));
+    });
+  });
 }
 
 /** Older saved tasks may phrase bed prep as "prep bed (...)" — unwrap that
@@ -708,18 +842,33 @@ function mergeIdenticalWork(rows: FieldSheetRow[]): FieldSheetRow[] {
   return [...byWork.entries()].map(([work, places]) => ({ place: compactPlaces(places), work }));
 }
 
-/** "Bed 3" + "Bed 7" + "Bed 12" -> "Beds 3, 7, 12"; anything mixed just joins. */
-function compactPlaces(places: string[]): string {
-  if (places.length === 1) return places[0];
-  const bedNums = places.map((p) => /^Bed (\d+)$/.exec(p)?.[1]);
-  if (bedNums.every((n): n is string => n !== undefined)) {
-    return `Beds ${bedNums.map(Number).sort((a, b) => a - b).join(', ')}`;
+/** "1, 2, 3, 4, 6" -> "1–4, 6": three or more consecutive numbers become a range, so nine beds fit
+ *  the place column as "Beds 1–9" instead of wrapping over three lines. */
+function numberRuns(nums: number[]): string {
+  const sorted = [...new Set(nums)].sort((a, b) => a - b);
+  const out: string[] = [];
+  for (let i = 0; i < sorted.length;) {
+    let j = i;
+    while (j + 1 < sorted.length && sorted[j + 1] === sorted[j] + 1) j++;
+    if (j - i >= 2) out.push(`${sorted[i]}–${sorted[j]}`);
+    else for (let k = i; k <= j; k++) out.push(String(sorted[k]));
+    i = j + 1;
   }
-  const plotNums = places.map((p) => /^Plot (\d+)$/.exec(p)?.[1]);
-  if (plotNums.every((n): n is string => n !== undefined)) {
-    return `Plots ${plotNums.map(Number).sort((a, b) => a - b).join(', ')}`;
-  }
-  return places.join(', ');
+  return out.join(', ');
+}
+
+/** "Bed 9" + "Bed 2" + "Bed 3" + "Plot 3" -> "Beds 2, 3, 9; Plot 3": numbered beds and plots are
+ *  sorted and grouped, anything else keeps its own name, in the order given. */
+export function compactPlaces(places: string[]): string {
+  const unique = [...new Set(places)];
+  if (unique.length === 1) return unique[0];
+  const group = (singular: string) => {
+    const nums = unique.map((p) => new RegExp(`^${singular} (\\d+)$`).exec(p)?.[1]).filter((n): n is string => n !== undefined).map(Number);
+    if (!nums.length) return null;
+    return nums.length === 1 ? `${singular} ${nums[0]}` : `${singular}s ${numberRuns(nums)}`;
+  };
+  const others = unique.filter((p) => !/^(Bed|Plot) \d+$/.test(p));
+  return [group('Bed'), group('Plot'), ...others].filter((part): part is string => !!part).join('; ');
 }
 
 // ── 4. Full plan table rows ─────────────────────────────────────────────────
@@ -734,12 +883,20 @@ export interface PlanTableRow {
   harvest: string;
   /** Null means no verified kg/m² benchmark; it must never be formatted as 0kg. */
   yieldKg: number | null;
+  /** Kept in the reference inventory, but not treated as a sowing or food claim. */
+  awaitingSowingConfirmation: boolean;
   /** True for a one-time first-season starter (`Planting.once`). The printed
    *  sheet is the copy a farmer carries into the field, and on paper a starter
    *  is otherwise indistinguishable from a crop the repeating plan re-sows every
    *  year — the exact phantom-recurrence reading the `once` field exists to
    *  prevent, recreated in print. Consumers must mark these rows. */
   once: boolean;
+  /** A short WARNING for a frost-tender crop harvesting into SA's winter
+   *  (Jun-Jul) on a 'mild-frost' site — never null on a hard summer-frost or
+   *  frost-free site, since the catalog's own frost gate already keeps a
+   *  frost-tender crop out of the field there before its first harvest. Null
+   *  whenever no caveat applies. */
+  frostCaveat: string | null;
 }
 
 /**
@@ -747,35 +904,55 @@ export interface PlanTableRow {
  * because for a tray crop they are different months and different jobs — the
  * single "sow" column they used to share is what let nursery and field work
  * blur together in the first place.
+ *
+ * `mildFrostSite` gates the frost caveat only — it never changes what is
+ * sown or when; see SA_WINTER_FROST_MONTHS.
  */
-export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[]): PlanTableRow[] {
+export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[], mildFrostSite = false): PlanTableRow[] {
   const rows: PlanTableRow[] = [];
+  const unitByCrop = unitByCropKey(plantings, beds);
   for (const bed of beds) {
     const mine = plantings
-      .filter((p) => p.bedId === bed.id)
+      .filter((p) => p.bedId === bed.id && !p.finishedOnceSowing)
       .map((p) => ({ p, crop: cropByKey(p.cropKey) }))
       .filter((x): x is { p: Planting; crop: CropDef } => !!x.crop)
       .sort((a, b) => a.p.sowMonth - b.p.sowMonth || a.crop.name.localeCompare(b.crop.name));
 
     mine.forEach(({ p, crop }, i) => {
-      const h = crop.timingVerified === false ? null : harvestMonthForCrop(p.sowMonth, crop);
+      const pending = p.awaitingSowingConfirmation === true;
+      const pendingStamp = typeof p.once === 'string' && /^(\d{4})-(0[1-9]|1[0-2])$/.test(p.once)
+        ? `${monthShort(Number(p.once.slice(5)))} ${p.once.slice(0, 4)}` : 'dated';
+      const h = pending || crop.timingVerified === false ? null : harvestMonthForCrop(p.sowMonth, crop);
       const end = h === null ? null : wrapMonth(h + (crop.harvestWindowMonths ?? 0));
+      const unit = unitByCrop.get(crop.key);
+      const establish = pending
+        ? `Confirm ${pendingStamp} sowing`
+        : crop.transplant
+        ? `Nursery ${monthShort(p.sowMonth)}`
+        : isLivingPieceUnit(unit)
+          ? `Plant ${unit} ${monthShort(p.sowMonth)}`
+          : `Direct sow ${monthShort(p.sowMonth)}`;
       rows.push({
         area: bed.label,
         isFirstOfArea: i === 0,
         crop: p.variety ? `${crop.name} - ${p.variety}` : crop.name,
         share: shareCode(p.areaFraction ?? 1),
-        establish: crop.transplant ? `Nursery ${monthShort(p.sowMonth)}` : `Direct sow ${monthShort(p.sowMonth)}`,
-        intoField: crop.transplant
+        establish,
+        intoField: pending ? 'Not confirmed' : crop.transplant
           ? `Check ${monthShort(bedEntryMonth(p.sowMonth, crop))}-${monthShort(latestBedEntryMonth(p.sowMonth, crop))}; transplant when ready`
           : 'Direct',
-        harvest: h === null || end === null
+        harvest: pending ? 'Confirm sowing' : h === null || end === null
           ? 'Confirm locally'
           : h === end ? monthShort(h) : `${monthShort(h)}-${monthShort(end)}`,
-        yieldKg: crop.yieldKgPerM2 === null
+        yieldKg: pending || crop.yieldKgPerM2 === null
           ? null
           : estimatedYieldKgAdjusted(p, bed.areaM2, plantings),
         once: typeof p.once === 'string',
+        awaitingSowingConfirmation: pending,
+        frostCaveat: mildFrostSite && crop.frostTender && h !== null && end !== null
+          && monthRangeHits(h, end, SA_WINTER_FROST_MONTHS)
+          ? FROST_CAVEAT_TEXT
+          : null,
       });
     });
   }

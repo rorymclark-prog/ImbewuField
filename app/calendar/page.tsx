@@ -1,18 +1,20 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { Sprout, Leaf, Droplets, Sun, Snowflake, ChevronDown } from 'lucide-react';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
+import AppHeader from '@/components/layout/AppHeader';
 import LimaBar from '@/components/LimaBar';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import { CATALOG_KEY_FOR_CROP } from '@/lib/crop-display';
+import { produceLabel } from '@/lib/produce-label';
 import { sowMarksForPattern, type PlantMark } from '@/lib/crop-calendar';
+import type { RainPattern } from '@/lib/crop-catalog';
 import { useLanguage } from '@/lib/i18n';
-import { APP_HEADER_INSET } from '@/lib/app-header';
 import { useAppLevel } from '@/lib/app-level';
 import { loadCropPlan } from '@/lib/crop-plan';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
@@ -59,21 +61,40 @@ interface CropRow {
   harvestMonths: number[]; // 0-indexed
 }
 
-const CALENDAR_RAIN_PATTERN = 'summer' as const;
+/** English + isiZulu label for each RainPattern the calendar can be showing —
+ * whichever one the farmer's saved crop plan was generated against
+ * (CropPlanState.rainPattern, lib/crop-plan.ts), falling back to 'summer'
+ * for a plan saved before that field existed or when there is no plan yet. */
+const RAIN_PATTERN_LABELS: Record<RainPattern, { en: string; zu: string }> = {
+  summer: { en: 'Summer-rainfall pattern', zu: 'Iphethini yemvula yasehlobo' },
+  'mild-frost': { en: 'Summer rain, light winter frost', zu: 'Imvula yasehlobo, isithwathwa esincane sasebusika' },
+  'all-year': { en: 'Rain all year, frost-free', zu: 'Imvula unyaka wonke, asikho isithwathwa' },
+  winter: { en: 'Winter-rainfall pattern', zu: 'Iphethini yemvula yasebusika' },
+};
 
-const CROPS: CropRow[] = [
+const CROP_BASE: { name: string; catalogKey: string; harvestMonths: number[] }[] = [
   { name: 'Spinach', catalogKey: CATALOG_KEY_FOR_CROP.Spinach, harvestMonths: [5, 6, 7, 8, 9] },
   { name: 'Tomatoes', catalogKey: CATALOG_KEY_FOR_CROP.Tomatoes, harvestMonths: [11, 0, 1, 2] },
   { name: 'Maize', catalogKey: CATALOG_KEY_FOR_CROP.Maize, harvestMonths: [1, 2, 3] },
   { name: 'Beans', catalogKey: CATALOG_KEY_FOR_CROP.Beans, harvestMonths: [11, 0, 1, 2] },
   { name: 'Carrots', catalogKey: CATALOG_KEY_FOR_CROP.Carrots, harvestMonths: [5, 6, 7, 8] },
-  { name: 'Sweet Potato', catalogKey: CATALOG_KEY_FOR_CROP['Sweet potato'], harvestMonths: [1, 2, 3] },
+  { name: 'Sweet potato', catalogKey: CATALOG_KEY_FOR_CROP['Sweet potato'], harvestMonths: [1, 2, 3] },
   { name: 'Garlic', catalogKey: CATALOG_KEY_FOR_CROP.Garlic, harvestMonths: [8, 9, 10] },
   { name: 'Pumpkin', catalogKey: CATALOG_KEY_FOR_CROP.Pumpkin, harvestMonths: [1, 2, 3] },
-].map((crop) => ({
-  ...crop,
-  marks: sowMarksForPattern(crop.catalogKey, CALENDAR_RAIN_PATTERN),
-}));
+];
+
+/** Builds CROPS for whichever RainPattern the farmer's saved plan actually uses, rather than
+ * always assuming 'summer'. ux-18: `name` now comes from the shared produceLabel() helper
+ * (lib/produce-label.ts) instead of CROP_BASE's own hardcoded string, so this grid spells a
+ * crop the same way MyRecords, Home and /prices do, in whichever language is active — this was
+ * the 'Sweet Potato' on /calendar vs 'Sweet potato' everywhere else the audit flagged. */
+function cropsForPattern(pattern: RainPattern, lang: string): CropRow[] {
+  return CROP_BASE.map((crop) => ({
+    ...crop,
+    name: produceLabel(crop.catalogKey, lang),
+    marks: sowMarksForPattern(crop.catalogKey, pattern),
+  }));
+}
 
 // ---------------------------------------------------------------------------
 // Monthly planting / harvest / maintain data
@@ -257,13 +278,16 @@ const MONTHLY_ADVICE: MonthAdvice[] = [
   },
 ];
 
-const MONTHLY_DATA: MonthData[] = MONTHLY_ADVICE.map((advice, monthIndex) => ({
-  ...advice,
-  // 'B' marks a month inside the catalog's sowing window for the summer-rainfall pattern this
-  // page states it is showing (CALENDAR_RAIN_PATTERN).
-  plant: CROPS.filter((crop) => crop.marks[monthIndex] === 'B').map((crop) => crop.name),
-  harvest: CROPS.filter((crop) => crop.harvestMonths.includes(monthIndex)).map((crop) => crop.name),
-}));
+/** 'B' marks a month inside the catalog's sowing window for whichever RainPattern
+ * `crops` was built for — the saved plan's own pattern (fallback 'summer'), not
+ * a page-wide assumption. */
+function monthlyDataForCrops(crops: CropRow[]): MonthData[] {
+  return MONTHLY_ADVICE.map((advice, monthIndex) => ({
+    ...advice,
+    plant: crops.filter((crop) => crop.marks[monthIndex] === 'B').map((crop) => crop.name),
+    harvest: crops.filter((crop) => crop.harvestMonths.includes(monthIndex)).map((crop) => crop.name),
+  }));
+}
 
 // ---------------------------------------------------------------------------
 // Season icon helper
@@ -296,7 +320,6 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div
       style={{
-        fontFamily: 'var(--font-mono, monospace)',
         fontSize: 12,
         fontWeight: 700,
         letterSpacing: '0.10em',
@@ -373,6 +396,10 @@ export default function CalendarPage() {
   // 'imbewu_planner_crops', a key app/survey/page.tsx also only ever READ and nothing in the app
   // ever wrote — a permanently empty filter that could never once have matched anything.
   const [plannedCropKeys, setPlannedCropKeys] = useState<Set<string>>(new Set());
+  // The RainPattern the farmer's saved plan was generated against (lib/crop-plan.ts's
+  // CropPlanState.rainPattern) — read alongside plannedCropKeys below so this calendar
+  // follows the same plan rather than always assuming summer rainfall.
+  const [rainPattern, setRainPattern] = useState<RainPattern>('summer');
   // "Show all" overrides a real plan without touching it — the plan itself is read-only here.
   const [showAllOverride, setShowAllOverride] = useState(false);
   // Simple: the 12-month reference grid is behind this disclosure; All tools always shows it.
@@ -399,19 +426,25 @@ export default function CalendarPage() {
     try {
       const plan = loadCropPlan();
       setPlannedCropKeys(new Set(plan.plantings.map((p) => p.cropKey)));
+      setRainPattern(plan.rainPattern ?? 'summer');
     } catch { /* ignore */ }
   }, []);
+
+  // Rebuilt only when the plan's rain pattern changes — everything below reads
+  // from these, never from a page-wide 'summer' assumption.
+  const crops = useMemo(() => cropsForPattern(rainPattern, lang), [rainPattern, lang]);
+  const monthlyData = useMemo(() => monthlyDataForCrops(crops), [crops]);
 
   const hasPlan = plannedCropKeys.size > 0;
   const isFiltered = hasPlan && !showAllOverride;
   // Plantings are keyed by the catalog key (e.g. 'tomatoes', 'sweet-potato') — the same key
-  // CROPS[].catalogKey carries via lib/crop-display.ts's CATALOG_KEY_FOR_CROP, so this is a
+  // crops[].catalogKey carries via lib/crop-display.ts's CATALOG_KEY_FOR_CROP, so this is a
   // direct match, not a name comparison.
   const visibleCrops = isFiltered
-    ? CROPS.filter((c) => plannedCropKeys.has(c.catalogKey))
-    : CROPS;
+    ? crops.filter((c) => plannedCropKeys.has(c.catalogKey))
+    : crops;
 
-  const monthData = MONTHLY_DATA[selectedMonth];
+  const monthData = monthlyData[selectedMonth];
   // Simple's "what to do" card follows the real plan when there is one; All tools' card is
   // unchanged below and always reads the general monthData list.
   const simplePlant = hasPlan
@@ -434,15 +467,10 @@ export default function CalendarPage() {
       }}
     >
       {/* Header */}
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ ...APP_HEADER_INSET, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
-        <MenuButton /><BackButton fallback="/home" />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
-        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--text-secondary)' }}>{localUi('Planting Calendar', 'Ikhalenda lokutshala', lang)}</h1>
-        <div className="flex-1" />
-        <LessonLink id="crops:calendar" label={localUi('Learn', 'Funda', lang)} />
-        <SettingsButton />
-      </header>
+      <AppHeader
+        title={localUi('Planting Calendar', 'Ikhalenda lokutshala', lang)}
+        right={<LessonLink id="crops:calendar" label={localUi('Learn', 'Funda', lang)} />}
+      />
 
       {/* Scrollable body */}
       <main
@@ -452,6 +480,9 @@ export default function CalendarPage() {
           background: 'var(--bg-0)',
         }}
       >
+        <h1 className="font-display font-semibold m-0" style={{ padding: '14px 14px 0', fontSize: 'clamp(20px, 2vw, 26px)', color: 'var(--text-primary)' }}>
+          {localUi('Planting Calendar', 'Ikhalenda lokutshala', lang)}
+        </h1>
         {lang === 'zu' && (
           <p role="note" style={{ margin: '12px 14px 0', padding: '9px 12px', borderRadius: 10, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', fontSize: 12 }}>
             Imisebenzi yanyanga zonke neseluleko sikaLima sinombhalo wesiZulu ongakabuyekezwa nomthombo wesiNgisi. Eminye imiyalo yokulima isasele ngesiNgisi ukuze ibuyekezwe.
@@ -459,6 +490,10 @@ export default function CalendarPage() {
           </p>
         )}
         {/* ---- Month strip ---- */}
+        {/* staff-18: the strip already scrolls the active chip to centre on mount (see the
+            activeChipRef effect above), but there was no visual hint that it scrolls at all —
+            edge fades on both sides signal more months sit off-screen, and scroll-snap gives the
+            drag a settled stop on a chip instead of landing mid-month. */}
         <div
           style={{
             background: 'var(--bg-1)',
@@ -466,6 +501,9 @@ export default function CalendarPage() {
             overflowX: 'auto',
             WebkitOverflowScrolling: 'touch',
             scrollbarWidth: 'none',
+            scrollSnapType: 'x proximity',
+            maskImage: 'linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent)',
           }}
         >
           <div
@@ -492,7 +530,6 @@ export default function CalendarPage() {
                       : idx === currentMonth ? '1px solid var(--gold-dim)' : '1px solid var(--border)',
                     borderRadius: 8,
                     color: active ? 'var(--color-canvas)' : idx === currentMonth ? 'var(--gold-dim)' : 'var(--text-secondary)',
-                    fontFamily: 'var(--font-mono, monospace)',
                     fontSize: 'clamp(12px, 1vw, 13px)',
                     fontWeight: active || idx === currentMonth ? 700 : 500,
                     padding: '5px 11px',
@@ -500,6 +537,7 @@ export default function CalendarPage() {
                     transition: 'all 0.15s ease',
                     flexShrink: 0,
                     letterSpacing: '0.04em',
+                    scrollSnapAlign: 'center',
                   }}
                   aria-pressed={active}
                   aria-current={idx === currentMonth ? 'date' : undefined}
@@ -554,7 +592,6 @@ export default function CalendarPage() {
                     alignItems: 'center',
                     gap: 5,
                     marginTop: 4,
-                    fontFamily: 'var(--font-mono, monospace)',
                     fontSize: 12,
                     color: 'var(--text-muted)',
                     letterSpacing: '0.06em',
@@ -704,7 +741,6 @@ export default function CalendarPage() {
             <div>
               <div
                 style={{
-                  fontFamily: 'var(--font-mono, monospace)',
                   fontSize: 12,
                   fontWeight: 700,
                   letterSpacing: '0.10em',
@@ -788,21 +824,22 @@ export default function CalendarPage() {
                   <span
                     style={{
                       fontSize: 12,
-                      fontFamily: 'var(--font-mono, monospace)',
                       color: 'var(--text-secondary)',
                     }}
                   >
-                    {localUi('In catalog sowing window', 'Esikhathini sokuhlwanyela esisohlwini', lang)}
+                    {/* copy-10: was 'In catalog sowing window' — internal data-model wording
+                        ('catalog') a farmer has no reason to know. isiZulu meaning is unchanged
+                        (still "in the sowing time"), only the English jargon moved. */}
+                    {localUi('Good month to sow', 'Esikhathini sokuhlwanyela esisohlwini', lang)}
                   </span>
                 </div>
                 <span
                   style={{
                     fontSize: 12,
-                    fontFamily: 'var(--font-mono, monospace)',
                     color: 'var(--text-secondary)',
                   }}
                 >
-                  {localUi('Summer-rainfall pattern', 'Iphethini yemvula yasehlobo', lang)}
+                  {localUi(RAIN_PATTERN_LABELS[rainPattern].en, RAIN_PATTERN_LABELS[rainPattern].zu, lang)}
                 </span>
               </div>
             </div>
@@ -835,15 +872,21 @@ export default function CalendarPage() {
                 no clue why. Name what this grid covers instead of just going blank. */}
             {isFiltered && visibleCrops.length === 0 ? (
               <div style={{ padding: '4px 14px 18px', fontSize: 13, fontFamily: 'var(--font-sans)', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-                This grid tracks {CROPS.map((c) => c.name).join(', ')}. Tap &ldquo;Show all&rdquo; above to see the full 12-month calendar.
+                This grid tracks {crops.map((c) => c.name).join(', ')}. Tap &ldquo;Show all&rdquo; above to see the full 12-month calendar.
               </div>
             ) : (
-            /* Scrollable table */
+            /* Scrollable table. staff-18: this is a crop × month matrix (data two-dimensional in
+               a way a 3-rows-of-4-months card grid can't show), so it stays a horizontally
+               scrolling table rather than being rebuilt as month cards — the fade on the right
+               edge is the fix that carries over: it signals "Dec" is still off-screen instead of
+               leaving the table looking clipped at whichever month happens to land at the edge. */
             <div
               style={{
                 overflowX: 'auto',
                 WebkitOverflowScrolling: 'touch',
                 scrollbarWidth: 'none',
+                maskImage: 'linear-gradient(to right, black calc(100% - 24px), transparent)',
+                WebkitMaskImage: 'linear-gradient(to right, black calc(100% - 24px), transparent)',
               }}
             >
               <table
@@ -860,7 +903,6 @@ export default function CalendarPage() {
                       style={{
                         padding: '7px 14px',
                         textAlign: 'left',
-                        fontFamily: 'var(--font-mono, monospace)',
                         fontSize: 12,
                         fontWeight: 700,
                         letterSpacing: '0.08em',
@@ -883,7 +925,6 @@ export default function CalendarPage() {
                         style={{
                           padding: '7px 4px',
                           textAlign: 'center',
-                          fontFamily: 'var(--font-mono, monospace)',
                           fontSize: 'clamp(12px, 1vw, 13px)',
                           fontWeight: idx === selectedMonth ? 700 : 500,
                           letterSpacing: '0.06em',
@@ -972,7 +1013,7 @@ export default function CalendarPage() {
           made. */}
       <LimaBar />
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

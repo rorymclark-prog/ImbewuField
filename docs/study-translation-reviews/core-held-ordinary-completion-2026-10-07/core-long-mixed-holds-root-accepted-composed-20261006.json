@@ -1,0 +1,743 @@
+{
+  "date": "2026-10-06",
+  "status": "root accepted coherent18segment data-only packet, not learner-wired/rendered/published",
+  "independentReportSHA256": "9efd3a90976005127d4bdb1d28c62d16fbb90820d3b9d5831ecb887c5a986395",
+  "followupReportSHA256": "5e9ab52fdb491cbcbc1940885b6a9fa7dbf220b9aa4bf3070df551ea9a03c180",
+  "acceptedSegmentCount": 18,
+  "pairedFieldCount": 12,
+  "groups": [
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "language": "st",
+      "slide": 8,
+      "bodyIndex": 0,
+      "source": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+      "expectedCurrentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "In much of South Africa, especially in winter, ",
+            "status": "draft",
+            "text": "Dikarolong tse ngata tsa South Africa, haholo mariha, "
+          },
+          {
+            "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "proposedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "In much of South Africa, especially in winter, ",
+            "status": "draft",
+            "text": "Dikarolong tse ngata tsa South Africa, haholo mariha, "
+          },
+          {
+            "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
+            "status": "draft",
+            "text": "the sun is to the north. Tsela ya lona e a fetoha ho ya ka sehla le sebaka sa heno."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "changedSegments": [
+        {
+          "index": 1,
+          "rowId": "reading-landscape-st-s8-b0-seg1",
+          "targetText": "the sun is to the north. Tsela ya lona e a fetoha ho ya ka sehla le sebaka sa heno."
+        }
+      ],
+      "visibleTarget": "Dikarolong tse ngata tsa South Africa, haholo mariha, the sun is to the north. Tsela ya lona e a fetoha ho ya ka sehla le sebaka sa heno."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "language": "st",
+      "slide": 15,
+      "bodyIndex": 0,
+      "source": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "expectedCurrentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Compare candidate places through the local frost season. ",
+            "status": "draft",
+            "text": "Bapisa dibaka tseo e ka bang tsona nakong ya local frost season. "
+          },
+          {
+            "sourceEnglish": "Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Check sun and damaging wind too. ",
+            "status": "draft",
+            "text": "Hlahloba letsatsi le moya o senyang le tsona. "
+          },
+          {
+            "sourceEnglish": "No hillside position guarantees freedom from frost.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "proposedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. ",
+            "status": "draft",
+            "text": "Beha frost-sensitive seedling nursery ka ntle ho cold pockets tseo o di boneng. "
+          },
+          {
+            "sourceEnglish": "Compare candidate places through the local frost season. ",
+            "status": "draft",
+            "text": "Bapisa dibaka tseo e ka bang tsona nakong ya local frost season. "
+          },
+          {
+            "sourceEnglish": "Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. ",
+            "status": "draft",
+            "text": "Hlahloba local minimum-temperature records kapa o botse local agriculture adviser pele o kgetha permanent position. "
+          },
+          {
+            "sourceEnglish": "Check sun and damaging wind too. ",
+            "status": "draft",
+            "text": "Hlahloba letsatsi le moya o senyang le tsona. "
+          },
+          {
+            "sourceEnglish": "No hillside position guarantees freedom from frost.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "changedSegments": [
+        {
+          "index": 0,
+          "rowId": "reading-landscape-st-s15-b0-seg0",
+          "targetText": "Beha frost-sensitive seedling nursery ka ntle ho cold pockets tseo o di boneng. "
+        },
+        {
+          "index": 2,
+          "rowId": "reading-landscape-st-s15-b0-seg2",
+          "targetText": "Hlahloba local minimum-temperature records kapa o botse local agriculture adviser pele o kgetha permanent position. "
+        }
+      ],
+      "visibleTarget": "Beha frost-sensitive seedling nursery ka ntle ho cold pockets tseo o di boneng. Bapisa dibaka tseo e ka bang tsona nakong ya local frost season. Hlahloba local minimum-temperature records kapa o botse local agriculture adviser pele o kgetha permanent position. Hlahloba letsatsi le moya o senyang le tsona. No hillside position guarantees freedom from frost."
+    },
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "fileSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "language": "st",
+      "slide": 15,
+      "bodyIndex": 1,
+      "source": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too.",
+      "expectedCurrentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Seek local crop-health advice too.",
+            "status": "draft",
+            "text": "Batla keletso ya lehae ka bophelo ba dijalo le yona."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "proposedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. ",
+            "status": "draft",
+            "text": "For tomatoes troubled by late blight, moya o tsamayang hantle le letsatsi la hoseng di ka thusa makhasi ho oma. "
+          },
+          {
+            "sourceEnglish": "Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. ",
+            "status": "draft",
+            "text": "Boemo ba lehodimo bo phodileng le bo mongobo ka nako e telele bo ntse bo ka favour late blight. Ho tsamaisa bed feela ha ho laole late blight. "
+          },
+          {
+            "sourceEnglish": "Seek local crop-health advice too.",
+            "status": "draft",
+            "text": "Batla keletso ya lehae ka bophelo ba dijalo le yona."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "changedSegments": [
+        {
+          "index": 0,
+          "rowId": "reading-landscape-st-s15-b1-seg0",
+          "targetText": "For tomatoes troubled by late blight, moya o tsamayang hantle le letsatsi la hoseng di ka thusa makhasi ho oma. "
+        },
+        {
+          "index": 1,
+          "rowId": "reading-landscape-st-s15-b1-seg1",
+          "targetText": "Boemo ba lehodimo bo phodileng le bo mongobo ka nako e telele bo ntse bo ka favour late blight. Ho tsamaisa bed feela ha ho laole late blight. "
+        }
+      ],
+      "visibleTarget": "For tomatoes troubled by late blight, moya o tsamayang hantle le letsatsi la hoseng di ka thusa makhasi ho oma. Boemo ba lehodimo bo phodileng le bo mongobo ka nako e telele bo ntse bo ka favour late blight. Ho tsamaisa bed feela ha ho laole late blight. Batla keletso ya lehae ka bophelo ba dijalo le yona."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "fileSHA256": "8983f26957deb484c0a04bd039ac814fdfb35d812315036071c71846da2f3ddb",
+      "language": "ve",
+      "slide": 8,
+      "bodyIndex": 0,
+      "source": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+      "expectedCurrentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "In much of South Africa, especially in winter, ",
+            "status": "draft",
+            "text": "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), "
+          },
+          {
+            "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "proposedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "In much of South Africa, especially in winter, ",
+            "status": "draft",
+            "text": "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), "
+          },
+          {
+            "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
+            "status": "draft",
+            "text": "the sun is to the north. Nḓila yaḽo i shanduka hu tshi tevhedzwa khalaṅwaha na vhuimo haṋu."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "changedSegments": [
+        {
+          "index": 1,
+          "rowId": "reading-landscape-ve-s8-b0-seg1",
+          "targetText": "the sun is to the north. Nḓila yaḽo i shanduka hu tshi tevhedzwa khalaṅwaha na vhuimo haṋu."
+        }
+      ],
+      "visibleTarget": "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), the sun is to the north. Nḓila yaḽo i shanduka hu tshi tevhedzwa khalaṅwaha na vhuimo haṋu."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "fileSHA256": "8983f26957deb484c0a04bd039ac814fdfb35d812315036071c71846da2f3ddb",
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 0,
+      "source": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "expectedCurrentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Compare candidate places through the local frost season. ",
+            "status": "draft",
+            "text": "Vhambedzani candidate places through the local frost season. "
+          },
+          {
+            "sourceEnglish": "Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Check sun and damaging wind too. ",
+            "status": "draft",
+            "text": "Sedzani ḓuvha na muya wa tshinyadzaho na zwone. "
+          },
+          {
+            "sourceEnglish": "No hillside position guarantees freedom from frost.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "proposedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. ",
+            "status": "draft",
+            "text": "Vheani frost-sensitive seedling nursery nnḓa ha cold pockets dze na dzi vhona. "
+          },
+          {
+            "sourceEnglish": "Compare candidate places through the local frost season. ",
+            "status": "draft",
+            "text": "Vhambedzani candidate places through the local frost season. "
+          },
+          {
+            "sourceEnglish": "Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. ",
+            "status": "draft",
+            "text": "Sedzani local minimum-temperature records kana ni vhudzise local agriculture adviser ni sa athu nanga permanent position. "
+          },
+          {
+            "sourceEnglish": "Check sun and damaging wind too. ",
+            "status": "draft",
+            "text": "Sedzani ḓuvha na muya wa tshinyadzaho na zwone. "
+          },
+          {
+            "sourceEnglish": "No hillside position guarantees freedom from frost.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "changedSegments": [
+        {
+          "index": 0,
+          "rowId": "reading-landscape-ve-s15-b0-seg0",
+          "targetText": "Vheani frost-sensitive seedling nursery nnḓa ha cold pockets dze na dzi vhona. "
+        },
+        {
+          "index": 2,
+          "rowId": "reading-landscape-ve-s15-b0-seg2",
+          "targetText": "Sedzani local minimum-temperature records kana ni vhudzise local agriculture adviser ni sa athu nanga permanent position. "
+        }
+      ],
+      "visibleTarget": "Vheani frost-sensitive seedling nursery nnḓa ha cold pockets dze na dzi vhona. Vhambedzani candidate places through the local frost season. Sedzani local minimum-temperature records kana ni vhudzise local agriculture adviser ni sa athu nanga permanent position. Sedzani ḓuvha na muya wa tshinyadzaho na zwone. No hillside position guarantees freedom from frost."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "fileSHA256": "8983f26957deb484c0a04bd039ac814fdfb35d812315036071c71846da2f3ddb",
+      "language": "ve",
+      "slide": 15,
+      "bodyIndex": 1,
+      "source": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too.",
+      "expectedCurrentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Seek local crop-health advice too.",
+            "status": "draft",
+            "text": "Ṱoḓani nyeletshedzo ya henefho nga mutakalo wa zwimela na yone."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "proposedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. ",
+            "status": "draft",
+            "text": "For tomatoes troubled by late blight, muya wo tshimbilaho zwavhuḓi na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome. "
+          },
+          {
+            "sourceEnglish": "Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. ",
+            "status": "draft",
+            "text": "Mutsho une wa rothola na u vha na vhunyefu lwa tshifhinga tshilapfu u kha ḓi nga tikedza late blight. U sudzulusela bed fhedzi a zwi langi late blight. "
+          },
+          {
+            "sourceEnglish": "Seek local crop-health advice too.",
+            "status": "draft",
+            "text": "Ṱoḓani nyeletshedzo ya henefho nga mutakalo wa zwimela na yone."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "changedSegments": [
+        {
+          "index": 0,
+          "rowId": "reading-landscape-ve-s15-b1-seg0",
+          "targetText": "For tomatoes troubled by late blight, muya wo tshimbilaho zwavhuḓi na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome. "
+        },
+        {
+          "index": 1,
+          "rowId": "reading-landscape-ve-s15-b1-seg1",
+          "targetText": "Mutsho une wa rothola na u vha na vhunyefu lwa tshifhinga tshilapfu u kha ḓi nga tikedza late blight. U sudzulusela bed fhedzi a zwi langi late blight. "
+        }
+      ],
+      "visibleTarget": "For tomatoes troubled by late blight, muya wo tshimbilaho zwavhuḓi na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome. Mutsho une wa rothola na u vha na vhunyefu lwa tshifhinga tshilapfu u kha ḓi nga tikedza late blight. U sudzulusela bed fhedzi a zwi langi late blight. Ṱoḓani nyeletshedzo ya henefho nga mutakalo wa zwimela na yone."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "language": "ts",
+      "slide": 8,
+      "bodyIndex": 0,
+      "source": "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location.",
+      "expectedCurrentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "In much of South Africa, especially in winter, ",
+            "status": "draft",
+            "text": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, "
+          },
+          {
+            "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "proposedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "In much of South Africa, especially in winter, ",
+            "status": "draft",
+            "text": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, "
+          },
+          {
+            "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
+            "status": "draft",
+            "text": "the sun is to the north. Ndlela ya rona yi cinca hi nguva ni ndhawu ya wena."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "changedSegments": [
+        {
+          "index": 1,
+          "rowId": "reading-landscape-ts-s8-b0-seg1",
+          "targetText": "the sun is to the north. Ndlela ya rona yi cinca hi nguva ni ndhawu ya wena."
+        }
+      ],
+      "visibleTarget": "Eka tindhawu to tala ta South Africa, ngopfu-ngopfu hi vuxika, the sun is to the north. Ndlela ya rona yi cinca hi nguva ni ndhawu ya wena."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 0,
+      "source": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "expectedCurrentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Compare candidate places through the local frost season. ",
+            "status": "draft",
+            "text": "Pimanisa candidate places through the local frost season. "
+          },
+          {
+            "sourceEnglish": "Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Check sun and damaging wind too. ",
+            "status": "draft",
+            "text": "Kambela dyambu ni moya lowu onhaka na swona. "
+          },
+          {
+            "sourceEnglish": "No hillside position guarantees freedom from frost.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "proposedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. ",
+            "status": "draft",
+            "text": "Veka frost-sensitive seedling nursery ehandle ka cold pockets leti u ti voneke. "
+          },
+          {
+            "sourceEnglish": "Compare candidate places through the local frost season. ",
+            "status": "draft",
+            "text": "Pimanisa candidate places through the local frost season. "
+          },
+          {
+            "sourceEnglish": "Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. ",
+            "status": "draft",
+            "text": "Kambela local minimum-temperature records kumbe u vutisa local agriculture adviser u nga si hlawula permanent position. "
+          },
+          {
+            "sourceEnglish": "Check sun and damaging wind too. ",
+            "status": "draft",
+            "text": "Kambela dyambu ni moya lowu onhaka na swona. "
+          },
+          {
+            "sourceEnglish": "No hillside position guarantees freedom from frost.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "changedSegments": [
+        {
+          "index": 0,
+          "rowId": "reading-landscape-ts-s15-b0-seg0",
+          "targetText": "Veka frost-sensitive seedling nursery ehandle ka cold pockets leti u ti voneke. "
+        },
+        {
+          "index": 2,
+          "rowId": "reading-landscape-ts-s15-b0-seg2",
+          "targetText": "Kambela local minimum-temperature records kumbe u vutisa local agriculture adviser u nga si hlawula permanent position. "
+        }
+      ],
+      "visibleTarget": "Veka frost-sensitive seedling nursery ehandle ka cold pockets leti u ti voneke. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records kumbe u vutisa local agriculture adviser u nga si hlawula permanent position. Kambela dyambu ni moya lowu onhaka na swona. No hillside position guarantees freedom from frost."
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "fileSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 1,
+      "source": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. Seek local crop-health advice too.",
+      "expectedCurrentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Seek local crop-health advice too.",
+            "status": "draft",
+            "text": "Kombela xitsundzuxo xa le kaya hi rihanyo ra swibyariwa na xona."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "proposedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. ",
+            "status": "draft",
+            "text": "For tomatoes troubled by late blight, moya lowu fambaka kahle ni dyambu ra nimixo swi nga pfuna matluka ku oma. "
+          },
+          {
+            "sourceEnglish": "Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. ",
+            "status": "draft",
+            "text": "Maxelo yo titimela ni yo tsakama ya nkarhi wo leha ya ha nga hlohletela late blight. Ku fambisa bed ntsena a swi lawuli late blight. "
+          },
+          {
+            "sourceEnglish": "Seek local crop-health advice too.",
+            "status": "draft",
+            "text": "Kombela xitsundzuxo xa le kaya hi rihanyo ra swibyariwa na xona."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "changedSegments": [
+        {
+          "index": 0,
+          "rowId": "reading-landscape-ts-s15-b1-seg0",
+          "targetText": "For tomatoes troubled by late blight, moya lowu fambaka kahle ni dyambu ra nimixo swi nga pfuna matluka ku oma. "
+        },
+        {
+          "index": 1,
+          "rowId": "reading-landscape-ts-s15-b1-seg1",
+          "targetText": "Maxelo yo titimela ni yo tsakama ya nkarhi wo leha ya ha nga hlohletela late blight. Ku fambisa bed ntsena a swi lawuli late blight. "
+        }
+      ],
+      "visibleTarget": "For tomatoes troubled by late blight, moya lowu fambaka kahle ni dyambu ra nimixo swi nga pfuna matluka ku oma. Maxelo yo titimela ni yo tsakama ya nkarhi wo leha ya ha nga hlohletela late blight. Ku fambisa bed ntsena a swi lawuli late blight. Kombela xitsundzuxo xa le kaya hi rihanyo ra swibyariwa na xona."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "fileSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "language": "st",
+      "slide": 3,
+      "bodyIndex": 5,
+      "source": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "expectedCurrentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "These four belong together. ",
+            "status": "draft",
+            "text": "Dintho tsena tse nne di tsamaya mmoho. "
+          },
+          {
+            "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "proposedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "These four belong together. ",
+            "status": "draft",
+            "text": "Dintho tsena tse nne di tsamaya mmoho. "
+          },
+          {
+            "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+            "status": "draft",
+            "text": "Ho lema mefuta e fapaneng ho ntse ho thatafalloa haeba o nka lekhasi le leng le le leng le mosehla e le bothata ba dikokonyana."
+          }
+        ]
+      },
+      "changedSegments": [
+        {
+          "index": 2,
+          "rowId": "vegetables-staples-st-s3-b5-seg2",
+          "targetText": "Ho lema mefuta e fapaneng ho ntse ho thatafalloa haeba o nka lekhasi le leng le le leng le mosehla e le bothata ba dikokonyana."
+        }
+      ],
+      "visibleTarget": "Dintho tsena tse nne di tsamaya mmoho. A well-shaped bed still fails if everything goes in on one day. Ho lema mefuta e fapaneng ho ntse ho thatafalloa haeba o nka lekhasi le leng le le leng le mosehla e le bothata ba dikokonyana."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "fileSHA256": "3dc7d86d7a9ec0d58db7a70baaf4357ed57c58a0df9d4bc7fcb1b0d92ba11db2",
+      "language": "ve",
+      "slide": 3,
+      "bodyIndex": 5,
+      "source": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "expectedCurrentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "These four belong together. ",
+            "status": "draft",
+            "text": "Zwithu izwi zwiṋa zwi tshimbila zwoṱhe. "
+          },
+          {
+            "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "proposedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "These four belong together. ",
+            "status": "draft",
+            "text": "Zwithu izwi zwiṋa zwi tshimbila zwoṱhe. "
+          },
+          {
+            "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+            "status": "draft",
+            "text": "U ṱavha mifuda yo fhambanaho hu kha ḓi konḓelwa arali na dzhia every yellow leaf sa thaidzo ya zwikhokhonono."
+          }
+        ]
+      },
+      "changedSegments": [
+        {
+          "index": 2,
+          "rowId": "vegetables-staples-ve-s3-b5-seg2",
+          "targetText": "U ṱavha mifuda yo fhambanaho hu kha ḓi konḓelwa arali na dzhia every yellow leaf sa thaidzo ya zwikhokhonono."
+        }
+      ],
+      "visibleTarget": "Zwithu izwi zwiṋa zwi tshimbila zwoṱhe. A well-shaped bed still fails if everything goes in on one day. U ṱavha mifuda yo fhambanaho hu kha ḓi konḓelwa arali na dzhia every yellow leaf sa thaidzo ya zwikhokhonono."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "fileSHA256": "334a3e41eeecace2458be5188d01166f9cf7a046a64891cf8eef83ba4ae2ebee",
+      "language": "ts",
+      "slide": 3,
+      "bodyIndex": 5,
+      "source": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "expectedCurrentTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "These four belong together. ",
+            "status": "draft",
+            "text": "Swilo leswi swa mune swi fambisana. "
+          },
+          {
+            "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "proposedTarget": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "These four belong together. ",
+            "status": "draft",
+            "text": "Swilo leswi swa mune swi fambisana. "
+          },
+          {
+            "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+            "status": "draft",
+            "text": "Ku byala mixaka yo hambanaka ka ha swi tikela loko u teka tluka rin’wana ni rin’wana ra xitshopana ku ri xiphiqo xa switsotswana."
+          }
+        ]
+      },
+      "changedSegments": [
+        {
+          "index": 2,
+          "rowId": "vegetables-staples-ts-s3-b5-seg2",
+          "targetText": "Ku byala mixaka yo hambanaka ka ha swi tikela loko u teka tluka rin’wana ni rin’wana ra xitshopana ku ri xiphiqo xa switsotswana."
+        }
+      ],
+      "visibleTarget": "Swilo leswi swa mune swi fambisana. A well-shaped bed still fails if everything goes in on one day. Ku byala mixaka yo hambanaka ka ha swi tikela loko u teka tluka rin’wana ni rin’wana ra xitshopana ku ri xiphiqo xa switsotswana."
+    }
+  ],
+  "holds": [
+    {
+      "id": "reading-landscape-ve-s12-b1-seg0",
+      "exactEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. ",
+      "reason": "Linked damaging-wind direction/strength/site geometry remain exact English pending defensible wording; not fluent review prerequisite."
+    },
+    {
+      "id": "reading-landscape-ts-s12-b1-seg0",
+      "exactEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. ",
+      "reason": "Linked damaging-wind direction/strength/site geometry remain exact English pending defensible wording; not fluent review prerequisite."
+    }
+  ],
+  "requirements": "Fresh main and exact current-source/target checks before learner application. Preserve existing localized neighboring segments, exact English, visible unreviewed notices; technical English retained inside drafts. Later fluent review, no approval claimed. Render/phone/offline/CI/publication gates remain."
+}

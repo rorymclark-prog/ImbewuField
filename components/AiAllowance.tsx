@@ -13,12 +13,12 @@ export default function AiAllowance({ copy }: { copy: (en: string, zu: string) =
     paidApiHeaders()
       .then((headers) => fetch('/api/ai-allowance', { headers }))
       .then((r) => (r.ok ? r.json() : null))
-      .then((body) => { if (live && body && typeof body.capEur === 'number') setA(body); })
+      .then((body) => { if (live && body && typeof body.capZar === 'number') setA(body); })
       .catch(() => {});
     return () => { live = false; };
   }, []);
   if (!a || a.kind !== 'user') return null;
-  const used = a.capEur > 0 ? Math.min(1, a.spentEur / a.capEur) : 1;
+  const used = a.capZar > 0 ? Math.min(1, a.spentZar / a.capZar) : 1;
   const resets = new Date(`${a.resetsOn}T00:00:00Z`).toLocaleDateString(undefined, { day: 'numeric', month: 'long' });
   return (
     <div className="rounded-2xl px-4 py-4 space-y-2" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
@@ -35,8 +35,8 @@ export default function AiAllowance({ copy }: { copy: (en: string, zu: string) =
         {a.capped
           ? copy(`This month's full AI allowance is used. AI still works, on a simpler model, until ${resets}.`,
                  `Isabelo se-AI sale nyanga sesiphelile. I-AI isasebenza, ngohlobo olulula, kuze kube ngu-${resets}.`)
-          : copy(`€${a.remainingEur.toFixed(2)} of €${a.capEur.toFixed(2)} left. Refills on ${resets}.`,
-                 `Kusele u-€${a.remainingEur.toFixed(2)} ku-€${a.capEur.toFixed(2)}. Kugcwaliswa ngo-${resets}.`)}
+          : copy(`R${a.remainingZar.toFixed(2)} of R${a.capZar.toFixed(2)} left. Refills on ${resets}.`,
+                 `Kusele u-R${a.remainingZar.toFixed(2)} ku-R${a.capZar.toFixed(2)}. Kugcwaliswa ngo-${resets}.`)}
       </p>
     </div>
   );

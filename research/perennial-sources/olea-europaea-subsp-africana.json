@@ -1,0 +1,63 @@
+{
+  "speciesId": "olea-europaea-subsp-africana",
+  "commonName": "Wild olive",
+  "botanicalName": "Olea europaea subsp. africana",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "ripe wild-olive fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Edible part and local use",
+      "quote": "The fruits are popular with people",
+      "url": "https://pza.sanbi.org/olea-europaea-subsp-africana",
+      "doc": "SANBI PlantZAfrica, olea-europaea-subsp-africana",
+      "page": null,
+      "note": "Wild olive is distinct from a named commercial olive cultivar. March–July describes fruit following flowers; no exact ripe-picking start/end is established."
+    }
+  ],
+  "productionGuidance": {
+    "products": "ripe wild-olive fruit",
+    "care": [
+      "SANBI records this slow-growing tree in summer and winter rainfall areas, with frost, drought and wind resistance.",
+      "Keep its roots away from walls, patios and pools; SANBI notes that they can be aggressive."
+    ],
+    "purchase": [
+      "Ask for the wild-olive taxon in the catalogue, rather than substituting a commercial olive cultivar. Record actual local picking."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/olea-europaea-subsp-africana",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    }
+  ],
+  "gaps": [
+    "The broad fruiting description is not a confirmed ripe-picking calendar."
+  ]
+}

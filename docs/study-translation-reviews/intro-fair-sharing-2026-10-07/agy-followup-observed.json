@@ -1,0 +1,98 @@
+{
+  "conversation": "48686326-d31a-4a61-a252-ae3bc13ca69c",
+  "model": "Gemini 3.8 Flash Medium",
+  "fluentApproval": false,
+  "scope": "Actual native conversation response observed; no global completion claim",
+  "tsIntroL2": {
+    "responseObserved": true,
+    "evidence": [
+      "eka nguva ya mpfula yin’we kumbe ku tlurisa discussed against at least one wet season",
+      "loyi a leteriweke u nga si cela discussed against trained adviser before digging",
+      "ti nga si vuya discussed against before edible crops return"
+    ],
+    "rootLimit": "Infographic seedling is only ximilana (plant); model says no risk but this omission remains a candidate review issue. Model claims of exactness are not independently fluent approval."
+  },
+  "zuIntroL3": {
+    "promptVerifiedSent": true,
+    "responsePartialObserved": false,
+    "evidence": [
+      "kungasho ukuthi discussed for may mean",
+      "enyakatho-ntshonalanga and phakathi komoya nezitshalo discussed for NW boundary between wind and crops"
+    ],
+    "rootLimit": "kancane glossed as less often despite possible amount/degree ambiguity; do not declare all fields semantically verified from this model response. Await full response and independent checks.",
+    "responseCompletedObserved": true,
+    "finding": "Title by Energy flagged, proposed Ngokwamandla unapproved; source technical energy scope needs separate check, not applied."
+  },
+  "stIntroL3": {
+    "responseCompletedObserved": true,
+    "evidence": [
+      "dipakeng tsa moya le dijalo for between wind and crops",
+      "ha a bolele meeli e tsitsitseng for not fixed boundaries"
+    ],
+    "rootLimits": [
+      "Model dialect-intelligibility and semantically flawless claims are not accepted as human approval.",
+      "Extra ZU regional warning is not required to be inserted into a source-faithful ST rationale.",
+      "Sesotho alt orthography differs; no global replacements authorized by this model response."
+    ]
+  },
+  "veIntroL3": {
+    "responseCompletedObserved": true,
+    "observedFindings": [
+      "less often English in option/rationale; model proposes lu si lunzhi",
+      "Alt wilder riverside area and not fixed boundaries or distances English; model proposes native clauses"
+    ],
+    "rootLimits": [
+      "Retained English predicates are intentional ambiguity holds, not evidence of wrong-language contamination.",
+      "Proposed lu si lunzhi must preserve comparative frequency, not merely not many.",
+      "Wilder comparative and fixed boundaries/distances negation need independent check before any application.",
+      "No learner changes approved by this response."
+    ]
+  },
+  "tsIntroL3Observed": {
+    "conversation": "48686326-d31a-4a61-a252-ae3bc13ca69c",
+    "observedNativeResponseTime": "4:36",
+    "scope": "21 fields against exact source",
+    "phraseEvidence": [
+      "hi minkarhi yitsongo: at few times, not independently verified as comparative less often",
+      "a swi laveki: negative necessity",
+      "a hi mindzilakano leyi tiyisiweke kumbe mipfhuka leyi tiyisiweke: negated fixed boundaries or distances"
+    ],
+    "rootDisposition": "Model accepted draft meaning; no learner changes authorized by that blanket verdict. Comparative frequency and fixed-versus-confirmed nuance remain review points. Intentional English holds do not establish fluent approval.",
+    "fluentApproval": false
+  },
+  "zuIntroL2Observed": {
+    "responseCompletedObserved": true,
+    "observedNativeResponseTime": "4:38",
+    "scope": "21 fields",
+    "phraseEvidence": [
+      "okungenani kuyo yonke isizini yemvula: at least throughout the full wet season",
+      "Ngaphambi kokumba, cela umeluleki wendawo oqeqeshiwe: trained local adviser before digging",
+      "ngemva kokuvuna; ngaphambi kokuba izitshalo ezidliwayo zibuyele kuwo: after harvest and before edible return",
+      "isithombo esimaphakathi: central seedling"
+    ],
+    "rootLimits": [
+      "Model pure-natural-Zulu and exceptional-quality claims are not fluent approval.",
+      "apply them hard intentionally retains difficult intensity wording; candidate requires source-bound check, not automatically a defect.",
+      "Model protocol gloss does not add any sanitation guarantee or prescribe a treatment."
+    ],
+    "fluentApproval": false
+  },
+  "zuReadingL1Observed": {
+    "responseCompletedObserved": true,
+    "observedNativeResponseTime": "4:41",
+    "phraseEvidence": [
+      "umeluleki wendawo oqeqeshiwe: trained local adviser",
+      "awukwazi ukukhombisa: cannot show whether structure suits site",
+      "amanzi amaningi adinga indlela ephephile yokuphuma: excess water needs safe route"
+    ],
+    "indices": [
+      0,
+      1
+    ],
+    "rootLimits": [
+      "Bounded model verdict does not prove construction suitability or fluent approval.",
+      "Cross-section and direction meaning remain tied to exact canonical source; no new dimensions or excavation prescription introduced."
+    ],
+    "fluentApproval": false
+  }
+}

@@ -1,0 +1,14 @@
+[
+ {"id":"R353","back":"Recorded harvest, {n} months","flags":["'esirekhodiwe' is an English loanword (record) in passive form; understandable but not native phrasing","'ezingu-{n}' (numbering 'which are n') fine"]},
+ {"id":"R354","back":"Harvested: {qty}","flags":[]},
+ {"id":"R355","back":"Sold: {qty}","flags":[]},
+ {"id":"R356","back":"No harvest weight amounts are recorded for these months. The count of eggs and bags keeps its units; we do not know kilogram totals and remaining weight.","flags":["'amanani ezisindo zesivuno' (amounts of weights of the harvest) is clumsy/concord looks off","'asazi' = 'we do not know' (first person plural) rather than 'is not known / cannot be calculated'","'izamba' (totals) fine; 'nesisindo esisele' = and the remaining weight","'ligcina amayunithi alo' = it keeps its units; ok but 'inani' as subject is ambiguous"]},
+ {"id":"R357","back":"View your records","flags":[]},
+ {"id":"R361","back":"Weighed harvest that was harvested, {n} months","flags":["'esikaliwe esivuniwe' is redundant/awkward: 'weighed' + 'harvested' stacked as two relative clauses"]},
+ {"id":"R362","back":"Weighed harvest sold","flags":[]},
+ {"id":"R363","back":"Weighed harvest remaining on the farm","flags":["'epulazini' loanword (pulazi) for farm; acceptable"]},
+ {"id":"R364","back":"This chart shows recorded kilograms only. Countable harvest stays in its recorded units.","flags":["'esibalwayo' (countable) is unusual; 'sisala emayunithini aso' = remains in its units, ok"]},
+ {"id":"R365","back":"Other harvested: {qty}","flags":[]},
+ {"id":"R366","back":"Other sold: {qty}","flags":[]},
+ {"id":"R388","back":"at a benchmark of {benchmark}","flags":["'kwisilinganiso' uses Xhosa-style locative 'kwi-'; isiZulu would be 'kusilinganiso' or 'esilinganisweni'","does not read as 'of {benchmark}' after '12 kg'; reads as 'at a benchmark of', a locative not a partitive","'esingu-{benchmark}' with a kg figure as a number-copula is awkward"]}
+]

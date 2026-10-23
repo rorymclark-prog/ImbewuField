@@ -1,0 +1,45 @@
+{
+  "base": "66b274842927ba93e47586c322325742716d2a39",
+  "scope": [
+    {
+      "language": "st",
+      "file": "docs/narration/water-harvesting.st.paired-draft.json",
+      "changedFields": 15,
+      "frames": [
+        6,
+        8,
+        13,
+        14,
+        15,
+        17,
+        18,
+        22
+      ],
+      "beforeSHA": "0342fd3fcb618c4410f75afacf7927ced6e8ff68ddd90f65f47d86d28ccf32a2",
+      "afterSHA": "0a5dae6353ee123ef17f3c185532271f29668a46277541a0cdf7acdc01476aa2",
+      "englishAndUnlistedExact": true
+    },
+    {
+      "language": "ve",
+      "file": "docs/narration/water-harvesting.ve.paired-draft.json",
+      "changedFields": 20,
+      "frames": [
+        6,
+        8,
+        10,
+        11,
+        13,
+        14,
+        15,
+        17,
+        18
+      ],
+      "beforeSHA": "be3145e22fed890b556eb57ebce8aca3f9aeeb209ba8ec852bcded7df8cd5d64",
+      "afterSHA": "27b0510c34c02d6b04939f6a5c4750b01901c7553cd135eb5008f225f3e54465",
+      "englishAndUnlistedExact": true
+    }
+  ],
+  "mediaChanged": false,
+  "renderPending": true,
+  "sourceAndUnlistedPreserved": true
+}

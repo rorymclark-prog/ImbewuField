@@ -1,0 +1,208 @@
+{
+  "title": "Vegetables and Staple Crops L1 remaining Xitsonga body candidates",
+  "date": "2026-10-03",
+  "sourceRevision": "a692325d4420c1d445fb5cba6a7450211dcc51c1",
+  "sourceAuthority": "lib/course-modules.ts and actual resolveLearnerLessonPresentation from lib/course-localization.ts",
+  "resolverStatus": "draft",
+  "scope": {
+    "moduleId": "vegetables-staples",
+    "lessonId": "vegetables-staples-l1",
+    "language": "ts",
+    "requestedParagraphIndexesZeroBased": [
+      2,
+      6,
+      7,
+      8,
+      9,
+      12,
+      15,
+      17
+    ],
+    "paragraphCount": 20,
+    "fieldCount": 8,
+    "writeToRepository": true
+  },
+  "provenance": {
+    "publicationStatus": "machine-draft for facilitator review only",
+    "fluentApproval": false,
+    "languageQuality": "Machine-proposed wording; requires independent source-faithfulness checking and later fluent review.",
+    "canonicalSourceUnchanged": true,
+    "appliedAs": "Unreviewed source-paired machine draft; facilitator review only."
+  },
+  "preservation": {
+    "sourceTextAndParagraphOrderUnchanged": true,
+    "paragraphCountAndIndicesUnchanged": true,
+    "allSourceDimensionsAndCropNamesRetained": true,
+    "prohibitionsAndConditionsPreserved": true,
+    "noNewSpeciesNumbersOrPrescriptions": true,
+    "otherLessonFieldsAndAssessmentIndicesUntouched": true
+  },
+  "entries": [
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 3",
+      "paragraphIndexZeroBased": 2,
+      "paragraphCount": 20,
+      "sourceEnglish": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "currentLearnerText": "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "candidateText": "One metre to one point two metres hi ku anama. Lowu hi wona mpimo lowu tirhaka. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+      "targetReviewStatus": "machine-draft",
+      "retainedEnglish": [
+        "One metre to one point two metres"
+      ],
+      "reason": "Keeps the source dimensions verbatim while translating the usable-width framing and reachability instruction. The feet/no-step condition remains explicit.",
+      "rootRepairReason": "Independent check repaired source comparative/sequence, reach from either path, or exact dig-deeper action using English anchors."
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 7",
+      "paragraphIndexZeroBased": 6,
+      "paragraphCount": 20,
+      "sourceEnglish": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "currentLearnerText": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "candidateText": "No-dig yi lulamela most garden soils. Tshika soil structure yi ri tano, kutani u aka fertility ehenhla.",
+      "targetReviewStatus": "machine-draft",
+      "retainedEnglish": [
+        "No-dig",
+        "most garden soils",
+        "soil structure",
+        "fertility"
+      ],
+      "reason": "Translates the suitability and action framing while retaining the named cultivation approach, scope quantifier, and soil concepts to avoid changing their technical meaning."
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 8",
+      "paragraphIndexZeroBased": 7,
+      "paragraphCount": 20,
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "currentLearnerText": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "candidateText": "U nga keli wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "targetReviewStatus": "machine-draft",
+      "retainedEnglish": [
+        "wet clay",
+        "If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation."
+      ],
+      "reason": "Localizes the prohibition framing but retains wet-clay terminology and the entire severity/adviser/before-deeper-cultivation condition verbatim because changing any part could alter a soil-work decision."
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 9",
+      "paragraphIndexZeroBased": 8,
+      "paragraphCount": 20,
+      "sourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "currentLearnerText": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "candidateText": "Raised beds ti lulamela wet ground, laha mati ma faneleke ku kuma ndhawu yo huma ma ya kona.",
+      "targetReviewStatus": "machine-draft",
+      "retainedEnglish": [
+        "Raised beds",
+        "wet ground"
+      ],
+      "reason": "Translates the drainage explanation while retaining bed type and wet-ground suitability terms; does not imply raised beds suit every wet site."
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 10",
+      "paragraphIndexZeroBased": 9,
+      "paragraphCount": 20,
+      "sourceEnglish": "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+      "currentLearnerText": "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+      "candidateText": "Sunken beds ti lulamela dry ground, laha u lavaka ku khoma ni ku hlayisa mpfula leyi u yi kumaka.",
+      "targetReviewStatus": "machine-draft",
+      "retainedEnglish": [
+        "Sunken beds",
+        "dry ground"
+      ],
+      "reason": "Translates the source's conditional purpose (catch and hold the rain received) while retaining the bed type and dry-ground setting."
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 13",
+      "paragraphIndexZeroBased": 12,
+      "paragraphCount": 20,
+      "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "currentLearnerText": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "candidateText": "Others do better with a protected start in a nursery, then transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo.",
+      "targetReviewStatus": "machine-draft",
+      "retainedEnglish": [
+        "nursery",
+        "transplanting",
+        "Tomatoes",
+        "brassicas"
+      ],
+      "reason": "Localizes the establishment framing and grouping sentence while retaining the nursery/transplanting terms and both exact crop names.",
+      "rootRepairReason": "Independent check repaired source comparative/sequence, reach from either path, or exact dig-deeper action using English anchors."
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 16",
+      "paragraphIndexZeroBased": 15,
+      "paragraphCount": 20,
+      "sourceEnglish": "One point two metres wide. Three metres long. One practice bed.",
+      "currentLearnerText": "One point two metres wide. Three metres long. One practice bed.",
+      "candidateText": "One point two metres hi ku anama. Three metres hi ku leha. I bed yin'we ya ku titoloveta.",
+      "targetReviewStatus": "machine-draft",
+      "retainedEnglish": [
+        "One point two metres",
+        "Three metres"
+      ],
+      "reason": "Keeps both source dimensions verbatim and in order while translating width/length framing and the one-bed practice description."
+    },
+    {
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 18",
+      "paragraphIndexZeroBased": 17,
+      "paragraphCount": 20,
+      "sourceEnglish": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "currentLearnerText": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "candidateText": "Kutani lulamisa hi ku ya hi misava ya wena — sungula hi no-dig, kutani u dig deeper ntsena loko misava ya wena hakunene yi swi lava.",
+      "targetReviewStatus": "machine-draft",
+      "retainedEnglish": [
+        "no-dig",
+        "deeper cultivation"
+      ],
+      "reason": "Retains the source priority, the difficult no-dig/deeper-cultivation terms, and the only-if/genuinely-needed safeguard while localizing the instruction framing.",
+      "rootRepairReason": "Independent check repaired source comparative/sequence, reach from either path, or exact dig-deeper action using English anchors."
+    }
+  ],
+  "reviewRequirements": [
+    "Independent semantic backcheck of all eight candidates before any repository application.",
+    "Confirm learner-readable Xitsonga phrasing and that mixed English phrases are still visible as unreviewed draft text.",
+    "Do not treat machine draft status as fluent approval."
+  ],
+  "rootRepairProvenance": {
+    "originalPacket": "/tmp/imbewu-ts-vegetables-l1-remaining-body-20261003.json",
+    "independentCheck": "/tmp/imbewu-ts-vegetables-l1-remaining-body-independent-check-20261003.json",
+    "repairedIndices": [
+      2,
+      12,
+      17
+    ],
+    "note": "Technical geometry/sequence/actions anchored exactly, ordinary framing still unreviewed. Final independent repair check required."
+  },
+  "branch": "codex/regional-vegetables-establishment-next-20261003",
+  "implementationRecord": {
+    "baseRevision": "a692325d4420c1d445fb5cba6a7450211dcc51c1",
+    "appliedFields": 8,
+    "registryPath": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+    "canonicalEnglishUnchanged": true,
+    "quizWordingAndCorrectIndicesUnchanged": true,
+    "unlistedParagraphsComparedWithBaseAndPreserved": true
+  }
+}

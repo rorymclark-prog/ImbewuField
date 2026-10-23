@@ -1,0 +1,141 @@
+{
+  "key": "medic",
+  "name": "Medic",
+  "localNames": null,
+  "botanicalName": "Medicago truncatula / M. littoralis / M. polymorpha",
+  "family": "Fabaceae",
+  "role": "cover",
+  "foodGroup": null,
+  "harvestProduct": "grazing / dry pods (self-reseeding pasture ley) — not a harvested food crop",
+  "frostTender": { "value": null, "evidence": [] },
+  "transplant": { "value": false, "evidence": [] },
+  "sowMonths": {
+    "summer": { "months": [], "evidence": [] },
+    "winter": {
+      "months": [4, 5],
+      "evidence": [
+        {
+          "quote": "Planting Months: Apr - May",
+          "url": "https://www.agricol.co.za/agricol-products/medics/",
+          "page": null,
+          "doc": "Medics product page, Agricol"
+        },
+        {
+          "quote": "Suited Regions: Western Cape, Southern Cape and Eastern Cape",
+          "url": "https://www.agricol.co.za/agricol-products/medics/",
+          "page": null,
+          "doc": "Medics product page, Agricol"
+        }
+      ]
+    },
+    "all-year": {
+      "months": [4, 5],
+      "evidence": [
+        {
+          "quote": "Suited Regions: Western Cape, Southern Cape and Eastern Cape. Planting Months: Apr - May",
+          "url": "https://www.agricol.co.za/agricol-products/medics/",
+          "page": null,
+          "doc": "Medics product page, Agricol"
+        }
+      ]
+    },
+    "mild-frost": { "months": [], "evidence": [] }
+  },
+  "daysToHarvestRange": {
+    "value": [60, 100],
+    "evidence": [
+      {
+        "quote": "Bur Medic (Medicago polymorpha) is a legume that is closely related to alfalfa/ lucerne. They fix around 120kgN/ha. They are true annuals flowering, setting seed and dying within one growing season (60 to 100 days).",
+        "url": "https://www.grainsa.co.za/upload/conservation-agriculture/eng/6-CA-manual-Chapter-5-Cover-crops.pdf",
+        "page": 7,
+        "doc": "Conservation Agriculture Manual, Chapter 5: Cover crops, Grain SA, 2016"
+      }
+    ],
+    "notes": "Whole annual life cycle (germination to seed set/death) for bur medic, not a specific pasture-cut date."
+  },
+  "harvestPeriodWeeksOrMonths": null,
+  "rowSpacingRangeCm": null,
+  "inRowSpacingRangeCm": null,
+  "sowDepthRangeCm": null,
+  "seedRateKgPerHaRange": {
+    "value": [4, 15],
+    "evidence": [
+      {
+        "quote": "Seeding: 4-7kg/ha if sown in mixture, 10-12kg/ha planted, 12-15kg/ha broadcast",
+        "url": "https://www.agricol.co.za/agricol-products/medics/",
+        "page": null,
+        "doc": "Medics product page, Agricol"
+      }
+    ]
+  },
+  "yield": {
+    "tPerHaRange": [5, 5],
+    "product": "dry matter (pasture)",
+    "conditions": "dryland, Western/Southern/Eastern Cape pasture-cereal rotation",
+    "evidence": [
+      {
+        "quote": "DM yields of 5mt/ha are obtainable with a carrying capacity of 4-5 small stock units during winter to 10 small units/ha during spring are possible",
+        "url": "https://www.agricol.co.za/agricol-products/medics/",
+        "page": null,
+        "doc": "Medics product page, Agricol"
+      }
+    ]
+  },
+  "ecocrop": {
+    "row": "Medicago truncatula",
+    "TOPMN": 20,
+    "TOPMX": 25,
+    "TMIN": 8,
+    "TMAX": 35,
+    "GMIN": 90,
+    "GMAX": 300
+  },
+  "coverCrop": {
+    "nFixedKgPerHa": 120,
+    "biomassTPerHa": 5,
+    "terminateAfterDays": 100,
+    "evidence": [
+      {
+        "quote": "They fix around 120kgN/ha.",
+        "url": "https://www.grainsa.co.za/upload/conservation-agriculture/eng/6-CA-manual-Chapter-5-Cover-crops.pdf",
+        "page": 7,
+        "doc": "Conservation Agriculture Manual, Chapter 5: Cover crops, Grain SA, 2016"
+      },
+      {
+        "quote": "Medics is also an outstanding rotational crop with cereals and the advantages are the fixing of nitrogen, the reduction of diseases and the controlling of weeds",
+        "url": "https://www.agricol.co.za/agricol-products/medics/",
+        "page": null,
+        "doc": "Medics product page, Agricol"
+      }
+    ]
+  },
+  "varieties": [
+    {
+      "name": "Parabinga, Paraggio, Santiago, Cavalier, Bindaroo",
+      "zones": ["western-cape", "southern-cape"],
+      "maturity": null,
+      "season": "Apr-May sowing",
+      "note": "Medicago truncatula, M. littoralis and M. polymorpha cultivars; well drained loam to clay soils; hard seed coat lets the pasture re-establish itself the following year without re-sowing.",
+      "evidence": [
+        {
+          "quote": "Due to the hard seed coating the seed is able to establish itself the following year again.",
+          "url": "https://www.agricol.co.za/agricol-products/medics/",
+          "page": null,
+          "doc": "Medics product page, Agricol"
+        }
+      ]
+    }
+  ],
+  "zoneNotes": {
+    "western-cape": "Winter-rainfall wheat/pasture rotation crop, sown Apr-May, on well-drained loam to clay soils.",
+    "southern-cape": "Included by Agricol among the suited regions for medics, alongside Western and Eastern Cape.",
+    "karoo-arid": "Grain SA CA manual notes medics are 'used very successfully in dryland conditions with poor quality soils.'"
+  },
+  "gaps": [
+    "No row/in-row spacing found — medics are established as a broadcast/drilled pasture, not a row crop, in the sources found.",
+    "No sow-depth figure found.",
+    "daysToHarvestRange (60-100 days) is for the closely related Bur Medic's full annual cycle, used here as the best available proxy for the Medicago truncatula/littoralis/polymorpha group sold by Agricol, since no separate cycle-length figure was found for those species."
+  ],
+  "verdict": "partial",
+  "summary": "Well sourced for winter-rainfall sow window (Apr-May), seed rate (4-15 kg/ha depending on method), DM yield (5 t/ha) and N-fixation (~120 kg/ha) from Agricol's Medics page and the Grain SA CA manual's Bur Medic entry. Row/in-row spacing and sow depth are not given anywhere (medics are broadcast pasture, not row-planted), so the entry stops at 'partial'."
+}

@@ -1,0 +1,89 @@
+{
+  "baseHead": "beec49d41db081017a83acbe641a56e025530bb1",
+  "state": "Unreviewed machine drafts; publication still pending full gates and actual preview review.",
+  "scope": {
+    "VegetablesBodyParagraphs": 11,
+    "MarketBodyParagraphs": 10,
+    "MarketAssessmentFields": 5,
+    "ordinaryStudyMetadataFields": 9,
+    "expectedChangedVegetablesFrames": {
+      "st": [
+        16
+      ],
+      "ve": [
+        16
+      ],
+      "ts": [
+        4,
+        6,
+        10,
+        11,
+        15,
+        16
+      ]
+    }
+  },
+  "sourceAudit": [
+    {
+      "file": "lib/course-translation-drafts-st-market-community.ts",
+      "objectSourceAndQuizIndicesUnchanged": true
+    },
+    {
+      "file": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "objectSourceAndQuizIndicesUnchanged": true
+    },
+    {
+      "file": "lib/course-translation-drafts-ts-market-community.ts",
+      "objectSourceAndQuizIndicesUnchanged": true
+    },
+    {
+      "file": "lib/course-translation-drafts-ts-soil-health.ts",
+      "objectSourceAndQuizIndicesUnchanged": true
+    },
+    {
+      "file": "lib/course-translation-drafts-ts-vegetables-staples-l2.ts",
+      "objectSourceAndQuizIndicesUnchanged": true
+    },
+    {
+      "file": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "objectSourceAndQuizIndicesUnchanged": true
+    },
+    {
+      "file": "lib/course-translation-drafts-ts-water-harvesting.ts",
+      "objectSourceAndQuizIndicesUnchanged": true
+    },
+    {
+      "file": "lib/course-translation-drafts-ve-market-community.ts",
+      "objectSourceAndQuizIndicesUnchanged": true
+    },
+    {
+      "file": "lib/course-translation-drafts-ve-soil-health.ts",
+      "objectSourceAndQuizIndicesUnchanged": true
+    },
+    {
+      "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "objectSourceAndQuizIndicesUnchanged": true
+    },
+    {
+      "file": "lib/course-translation-drafts-ve-water-harvesting.ts",
+      "objectSourceAndQuizIndicesUnchanged": true
+    }
+  ],
+  "canonicalMediaInvariants": "Canonical English, species and numbers, quiz indices, geometry, PLAN_VERSION, all audio and English/isiZulu frames remain unchanged. Eight regional frames intentionally refreshed to match learner body; static and phone verification pending.",
+  "localGates": {
+    "typecheck": "pass",
+    "fullTests": {
+      "pass": 4546,
+      "fail": 0,
+      "existingTodo": 1
+    },
+    "whitespace": "pass"
+  },
+  "staticFramesRootReview": {
+    "eightFrameContactSheet": "/tmp/vegetables-staples-eightframes-contact.jpg",
+    "viewedByRoot": true,
+    "clippingObserved": false,
+    "frameMetadata": "VEGETABLES-ORDINARY-SOURCE-PAIRED-FRAMES-2026-10-04.json"
+  },
+  "publication": "Pending exact preview phone review and CI; not live."
+}

@@ -336,7 +336,10 @@ test('a crop chosen out of season fills the Later this year panel that could nev
   const result = autoSuggestPlan({
     goal: 'commercial', householdSize: 'medium', focusCropCount: 2, groups: [],
     cropKeys: ['green-beans', 'beetroot', 'swiss-chard'], rhythm: 'few-big',
-    rotateCrops: false, allowVinesInBeds: false, allowMixedCropsInBed: true,
+    // Rotation on: few-big now repeats a crop once its harvest ends, so with
+    // rotation off beetroot/chard would re-take every bed in August and leave
+    // no September room. Rotation blocks that same-family repeat.
+    rotateCrops: true, allowVinesInBeds: false, allowMixedCropsInBed: true,
     reliableIrrigation: true,
   }, 'summer', bedsFor(3, 0, 9), [], 2);
   assert.ok(!result.plantings.some((planting) => planting.cropKey === 'green-beans'),
@@ -692,8 +695,12 @@ test('the out-of-KZN calendar caveat leads with the action and stays prominent',
     goal: 'family', householdSize: 'medium', groups: [], rhythm: 'steady',
     rotateCrops: true, allowVinesInBeds: false, reliableIrrigation: true,
   }, 'mild-frost', bedsFor(3, 0, 9), [], 3);
-  assert.ok(!kzn.notes.some((note) => /extension officer/.test(note.text)),
-    'the audited calendar must not carry the caveat');
+  assert.ok(!kzn.notes.some((note) => note.kind === 'warning' && /extension officer/.test(note.text)),
+    'the audited calendar must not carry the caveat as a warning');
+  // Frost-free sites outside KZN now reach this column too, so its provenance is
+  // still stated — quietly, as basis.
+  assert.ok(kzn.notes.some((note) => note.kind === 'basis' && /KZN DARD warm-area/.test(note.text)),
+    'the warm-area calendar must still say where it comes from');
 });
 
 // ── A resting staple plot is never passed over in silence ────────────────────

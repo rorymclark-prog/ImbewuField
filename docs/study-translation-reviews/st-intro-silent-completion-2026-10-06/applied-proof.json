@@ -1,0 +1,1013 @@
+{
+  "title": "Applied source-bound silent Introduction draft proof",
+  "date": "2026-10-06",
+  "readOnly": false,
+  "implementationOnly": true,
+  "notFluencyApproval": true,
+  "baseHead": "2731fe76f2e8e7d1bc9a0be0dce66be497904401",
+  "rootReviewedPacket": {
+    "path": "docs/study-translation-reviews/st-intro-silent-completion-2026-10-06/repaired-candidates.json",
+    "sha256": "81546481b8660b57c0a35ec90484ff4ea50fcb8abe17d4ec1cab26d54d3c0715",
+    "rows": 60
+  },
+  "scope": {
+    "changedRows": [
+      {
+        "row": 1,
+        "language": "ve",
+        "fieldLocator": "lessons/0/keyPoints/1",
+        "sourceEnglish": "People Care: your family's needs come before market production",
+        "before": "U Ṱhogomela Vhathu: ṱhoḓea dza muṱa waṋu dzi ranga zwi no bviselwa makete",
+        "after": "U Ṱhogomela Vhathu: ṱhoḓea dza muṱa waṋu dzi ranga zwine zwa bveledzwa u ya makete.",
+        "beforeStatus": "machine-draft",
+        "afterStatus": "machine-draft"
+      },
+      {
+        "row": 2,
+        "language": "ts",
+        "fieldLocator": "lessons/0/keyPoints/1",
+        "sourceEnglish": "People Care: your family's needs come before market production",
+        "before": "Ku Hlayisa Vanhu: swilaveko swa ndyangu wa wena swi rhanga market production",
+        "after": "Ku Hlayisa Vanhu: swilaveko swa ndyangu wa wena swi rhanga swilo leswi endliwaka leswaku swi xavisiwa.",
+        "beforeStatus": "machine-draft",
+        "afterStatus": "machine-draft"
+      },
+      {
+        "row": 3,
+        "language": "ts",
+        "fieldLocator": "lessons/0/quiz/0/question",
+        "sourceEnglish": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
+        "before": "Murimi u xavisa all his surplus maize kambe a nga hlayisi xilo xa composting kumbe ku hlayisa mbewu. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?",
+        "after": "Murimi u xavisa mavele ya yena lama saleke hinkwawo, kambe a nga hlayisi na xin’we xa ku endla compost kumbe ku hlayisa mbewu. Hi yihi ethic leyi a tsandzekaka ngopfu ku yi landzelela?",
+        "beforeStatus": "machine-draft",
+        "afterStatus": "machine-draft"
+      },
+      {
+        "row": 4,
+        "language": "ve",
+        "fieldLocator": "lessons/1/quiz/1/options/3",
+        "sourceEnglish": "All animals kept off the cultivated zone",
+        "before": "All animals kept off zone yo limiwaho.",
+        "after": "Zwipuka zwoṱhe zwi vhetshelwe kule na zone yo limiwaho.",
+        "beforeStatus": "machine-draft",
+        "afterStatus": "machine-draft"
+      },
+      {
+        "row": 5,
+        "language": "ve",
+        "fieldLocator": "lessons/2/quiz/0/question",
+        "sourceEnglish": "You plant herbs in Zone 3, the main field far from the house. What problem does this create?",
+        "before": "Ni ṱavha herbs kha Zone 3, tsimu khulwane i re kule na nnḓu. Hezwi zwi vhanga thaidzo-ḓe?",
+        "after": "Ni ṱavha herbs kha Zone 3, main field i re kule na nnḓu. Hezwi zwi vhanga thaidzo-ḓe?",
+        "beforeStatus": "machine-draft",
+        "afterStatus": "machine-draft"
+      },
+      {
+        "row": 10,
+        "language": "ts",
+        "fieldLocator": "pairedSlides/ts/slides[n=7]/target/body[1]",
+        "sourceEnglish": "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+        "before": "Sungula hi ku kuma leswaku ku avelana swa pfumeleriwa kumbe e-e. Kambela loko borehole yi nga tirhela vatirhisi hinkwavo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona ku ri na mati yo ringana, pfumelelani ndlela ya ku avelana hi ku ringana, mi ya mahlweni mi languta xiyimo xa mati. People Care na Fair Share swi kongomisa ntwanano. Earth Care swi vula ku sirhelela xihlovo. Ku languta xiyimo xa mati ntsena a swi endli leswaku ku tirhisa mati yo engetela swi va safe kumbe swi pfumeleriwa.",
+        "after": "Sungula hi ku kuma leswaku ku avelana swa pfumeleriwa kumbe e-e. Kambela loko borehole yi nga tirhela vatirhisi hinkwawo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona ku ri na mati yo ringana, pfumelelani ndlela ya ku avelana hi ku ringana, mi ya mahlweni mi languta xiyimo xa mati. People Care na Fair Share swi kongomisa ntwanano. Earth Care swi vula ku sirhelela xihlovo. Ku languta xiyimo xa mati ntsena a swi endli leswaku ku tirhisa mati yo engetela swi va hlayisekile kumbe swi pfumeleriwa.",
+        "beforeStatus": "mixed",
+        "afterStatus": "mixed"
+      },
+      {
+        "row": 13,
+        "language": "ve",
+        "fieldLocator": "pairedSlides/ve/slides[n=11]/target/body[2]",
+        "sourceEnglish": "Compare the cost and work with the benefit on your own farm.",
+        "before": "Vhambedzani the cost and work with the benefit kha bulasi yaṋu.",
+        "after": "Vhambedzani cost na mushumo na mbuelo kha bulasi yaṋu.",
+        "beforeStatus": "mixed",
+        "afterStatus": "mixed"
+      },
+      {
+        "row": 16,
+        "language": "ts",
+        "fieldLocator": "pairedSlides/ts/slides[n=12]/target/body[1]",
+        "sourceEnglish": "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+        "before": "Leswi swi nga va tindhawu letinene to languta. Languta leswi se swi kulaka kahle etlhelo ka edge ya wena. Yoleyo i land leyi ku byelaka swin’wana.",
+        "after": "Leswi swi nga va tindhawu letinene to languta. Languta leswi se swi kulaka kahle etlhelo ka edge ya wena. Yoleyo i ndhawu leyi ku byelaka swin’wana.",
+        "beforeStatus": "mixed",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 26,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=4]/target/body[2]",
+        "sourceEnglish": "A system you use up stops paying you. A system you protect keeps paying you.",
+        "before": "A system you use up stops paying you. A system you protect keeps paying you.",
+        "after": "Tsamaiso eo o e sebedisang ho fihlela e fela ha e sa o tswela molemo. Tsamaiso eo o e sireletsang e tswela pele ho o tswela molemo.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 27,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=5]/target/body[2]",
+        "sourceEnglish": "A farmer who sells every egg and every vegetable, and keeps nothing back for the family table, is skipping People Care.",
+        "before": "A farmer who sells every egg and every vegetable, and keeps nothing back for the family table, is skipping People Care.",
+        "after": "Molemi ya rekisang lehe le leng le le leng le moroho o mong le o mong, mme a sa boloke letho bakeng sa dijo tsa lelapa, o tlola People Care.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 28,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=6]/target/body[1]",
+        "sourceEnglish": "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+        "before": "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+        "after": "Nka feela seo o se hlokang, mme o kgutlisetse tse setseng tsamaisong — dipeo, dijo, metsi, tsebo.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 29,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=6]/target/body[2]",
+        "sourceEnglish": "A farmer who sells all his surplus mielies and keeps nothing back for compost or for seed is breaking this one. Nothing goes back.",
+        "before": "A farmer who sells all his surplus mielies and keeps nothing back for compost or for seed is breaking this one. Nothing goes back.",
+        "after": "Molemi ya rekisang poone yohle e setseng mme a sa boloke letho bakeng sa compost kapa peo, o tlola molao ona. Ha ho letho le kgutlelang morao.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 30,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=6]/target/body[3]",
+        "sourceEnglish": "A community that fences off a shared spring is breaking it too.",
+        "before": "A community that fences off a shared spring is breaking it too.",
+        "after": "Setjhaba se teratang sediba se sebediswang ke bohle se tlola molao ona le sona.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 31,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=7]/target/body[0]",
+        "sourceEnglish": "A borehole serves your household. Neighbours ask for water too.",
+        "before": "A borehole serves your household. Neighbours ask for water too.",
+        "after": "Borehole e sebeletsa lelapa la hao. Baahisani le bona ba kopa metsi.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 32,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=7]/target/body[1]",
+        "sourceEnglish": "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+        "before": "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+        "after": "Pele fumana hore na ho arolelana ho dumelletswe. Lekola hore na borehole e ka sebeletsa basebedisi bohle ntle le ho nka metsi a mangata haholo. Haeba ho arolelana ho dumelletswe mme metsi a lekane, dumellanang kamoo le ka arolelanang ka toka mme le tswele pele ho lekola boemo ba metsi. People Care le Fair Share di tataisa tumellano. Earth Care e bolela ho sireletsa mohlodi. Ho sheba boemo feela ha ho etse hore tshebediso e eketsehileng e bolokehe kapa e dumellwe.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 33,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=8]/target/body[1]",
+        "sourceEnglish": "A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.",
+        "before": "A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.",
+        "after": "Moahisani o kopa ho fula dikgomo ka mora komello. Morwallo o senya swales tsa hao. Ha ho motho ya ngotseng karabo.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 34,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=8]/target/body[2]",
+        "sourceEnglish": "The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.",
+        "before": "The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.",
+        "after": "Melao ya boitshwaro e o thusa ho lekanya dikgetho le ho hlalosa qeto ya hao. Lekola melao mme o kope tumello moo e hlokahalang.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 35,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=8]/target/body[3]",
+        "sourceEnglish": "Build these three into how you think before you build anything on the ground.",
+        "before": "Build these three into how you think before you build anything on the ground.",
+        "after": "Kenya melao ena e meraro tseleng eo o nahanang ka yona pele o haha eng kapa eng fatshe.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 36,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=9]/target/body[1]",
+        "sourceEnglish": "You do not need all twelve to start. Three useful starting points for this lesson are: observe and interact, catch and store energy, and use edges and value the marginal.",
+        "before": "You do not need all twelve to start. Three useful starting points for this lesson are: observe and interact, catch and store energy, and use edges and value the marginal.",
+        "after": "Ha ho hlokahale hore o qale ka melao e leshome le metso e mmedi kaofela. Dintlha tse tharo tse molemo tsa ho qala thutong ena ke: observe and interact, catch and store energy, le use edges and value the marginal.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 37,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=10]/target/body[0]",
+        "sourceEnglish": "Watch your land through a full season before you commit to major earthworks.",
+        "before": "Watch your land through a full season before you commit to major earthworks.",
+        "after": "Shebella setsha sa hao sehleng sohle pele o itlama ka major earthworks.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 38,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=10]/target/body[1]",
+        "sourceEnglish": "One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.",
+        "before": "One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.",
+        "after": "Sefefo se le seng se bontsha motsotso o le mong. Sehla sohle sa dipula se bontsha mokgwa — moo metsi a phallang, moo a bokellanang, le moo a sa fihleheng.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 39,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=10]/target/body[2]",
+        "sourceEnglish": "This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
+        "before": "This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
+        "after": "Sena se thusa ho utlwisisa setsha. Ka bosona ha se bontshe hore swale e loketse kapa e bolokehile ho aha. Pele o cheka, lekola mobu, slope, drainage le safe overflow route e ke keng ya baka erosion kapa ya romela metsi a senyang ho baahisani. Kopa trained local adviser ho lekola setsha.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 40,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=10]/target/body[3]",
+        "sourceEnglish": "Where does water leave your land? Do you actually know, or are you guessing?",
+        "before": "Where does water leave your land? Do you actually know, or are you guessing?",
+        "after": "Metsi a tloha kae setsheng sa hao? Na o tseba e le kannete, kapa o a hakanya?",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 41,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=11]/target/body[0]",
+        "sourceEnglish": "Harvest rain, sun and biomass before they leave your property.",
+        "before": "Harvest rain, sun and biomass before they leave your property.",
+        "after": "Bokella pula, letsatsi le biomass pele di tloha setsheng sa hao.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 42,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=11]/target/body[2]",
+        "sourceEnglish": "Compare the cost and work with the benefit on your own farm.",
+        "before": "Compare the cost and work with the benefit on your own farm.",
+        "after": "Bapisa ditshenyehelo le mosebetsi le molemo polasing ya hao.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 43,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=13]/target/body[0]",
+        "sourceEnglish": "Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.",
+        "before": "Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.",
+        "after": "Sebedisa diversity mme o e nke e le bohlokwa. Tshenyo ya sefako pooneng e itshetlehile ka sefefo le growth stage ya crop. Molao-motheo ona ha o tshepise hore crop e tla pholoha ketsahalo e nngwe le e nngwe.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 44,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=13]/target/body[1]",
+        "sourceEnglish": "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+        "before": "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+        "after": "Tse ding tse pedi tseo ho leng molemo ho di tseba: produce no waste, kahoo masalla a fetoha compost mme compost e fetoha mobu. Hape, use small and slow solutions — bakete e ka nosetsa bed ntle le motlakase ho hang.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 45,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=13]/target/body[2]",
+        "sourceEnglish": "What would one bad day cost you right now?",
+        "before": "What would one bad day cost you right now?",
+        "after": "Letsatsi le lebe le le leng le ka o jella bokae hona jwale?",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 46,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=14]/target/body[0]",
+        "sourceEnglish": "Put each element where it works for its neighbours.",
+        "before": "Put each element where it works for its neighbours.",
+        "after": "Beha karolo ka nngwe moo e sebeletsang tse e potileng.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 47,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=14]/target/body[1]",
+        "sourceEnglish": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+        "before": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+        "after": "Serapa, difate tsa ditholwana le chicken run di hlophisitswe hore dikgoho rotate through the beds after harvest — hoo ke integration. Boloka dikgoho hole le dijalo tse kotulwang bakeng sa dijo. Manyoro a foreshe a ka jara germs. Kopa extension adviser hore a hlalose kamoo bed e lokelang ho laolwa ka polokeho pele dijalo tse jewang di kgutla. Dikgoho di ka clean up pests le ho eketsa fertility ho ena le ho dula di sa sebetse ka pen e sa fetoheng.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 48,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=14]/target/body[3]",
+        "sourceEnglish": "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+        "before": "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+        "after": "Kgetha melao-motheo e mmedi kapa e meraro e buang ka bothata ba hao bo boholo, mme o e sebedise ka matla. Tse setseng di tla bonahala ha o ntse o tswela pele.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 49,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=15]/target/body[0]",
+        "sourceEnglish": "Zones run from 0 to 5, and they are about your feet, not your fences.",
+        "before": "Zones run from 0 to 5, and they are about your feet, not your fences.",
+        "after": "Zones di qala ho 0 ho isa ho 5, mme di mabapi le maeto a hao, eseng terata ya hao.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 50,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=15]/target/body[1]",
+        "sourceEnglish": "Zone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.",
+        "before": "Zone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.",
+        "after": "Zone 0 ke ntlo. Mohlaleng ona, Zone 1 e haufi le ntlo mme e na le herbs le salad greens tse kotulwa kgafetsa.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 51,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=15]/target/body[2]",
+        "sourceEnglish": "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+        "before": "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+        "after": "Zone 2 ke main garden le chicken run, tse etelwang hang kapa habedi ka letsatsi. Zone 3 ke main field, e etelwang beke le beke.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 52,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=15]/target/body[3]",
+        "sourceEnglish": "Zone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild.",
+        "before": "Zone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild.",
+        "after": "Zone 4 ke semi-wild — difate tsa ditholwana le fodder tse hlokang tlhokomelo ka dinako tse ding. Zone 5 e tlohelwa e le wild.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 53,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=16]/target/body[0]",
+        "sourceEnglish": "Herbs you pick often are easier to tend near the house.",
+        "before": "Herbs you pick often are easier to tend near the house.",
+        "after": "Herbs tseo o di kotulang kgafetsa ho bonolo ho di hlokomela haufi le ntlo.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 54,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=16]/target/body[1]",
+        "sourceEnglish": "Put them far away, and the long walk may mean you miss a visit. The herbs may be neglected.",
+        "before": "Put them far away, and the long walk may mean you miss a visit. The herbs may be neglected.",
+        "after": "Ha o di beha hole, leeto le lelelele le ka etsa hore o fetwe ke ketelo. Herbs di ka hlokomolohwa.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 55,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=17]/target/body[2]",
+        "sourceEnglish": "The more often something needs you, the closer it lives. That can save walking and work over a season.",
+        "before": "The more often something needs you, the closer it lives. That can save walking and work over a season.",
+        "after": "Ha ntho e o hloka hangata ho feta, e phela haufi le wena ho feta. Seo se ka fokotsa ho tsamaya le mosebetsi sehleng sohle.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 56,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=18]/target/body[1]",
+        "sourceEnglish": "Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.",
+        "before": "Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.",
+        "after": "Letsatsi, moya, pula, flood le mollo di fihla ka mose ho moedi wa hao ho sa tsotellehe hore na o a di rera kapa tjhe.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 57,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=18]/target/body[2]",
+        "sourceEnglish": "Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land.",
+        "before": "Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land.",
+        "after": "Shebella moo moya o matla o tswang teng polasing ya hao. Direkoto tsa weather station e haufi di ka o thusa ho lekola moo moya o tswang teng. Shebella moo metsi a pula a kenang teng le moo a phallang teng setsheng sa hao.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 58,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=19]/target/body[0]",
+        "sourceEnglish": "Look at this example. The wind comes from the north-west.",
+        "before": "Look at this example. The wind comes from the north-west.",
+        "after": "Sheba mohlala ona. Moya o tswa north-west.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 59,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=19]/target/body[1]",
+        "sourceEnglish": "The trees and shrubs stand between that wind and the crops.",
+        "before": "The trees and shrubs stand between that wind and the crops.",
+        "after": "Difate le shrubs di eme pakeng tsa moya oo le dijalo.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 60,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=19]/target/body[2]",
+        "sourceEnglish": "Some air passes through the windbreak. Other air moves over it or around its ends.",
+        "before": "Some air passes through the windbreak. Other air moves over it or around its ends.",
+        "after": "Moya o mong o feta ka hare ho windbreak. O mong o tsamaya hodima yona kapa o e potoloha dipheletsong.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 61,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=19]/target/body[3]",
+        "sourceEnglish": "The shelter can reduce wind speed behind it. The design and care of the windbreak matter.",
+        "before": "The shelter can reduce wind speed behind it. The design and care of the windbreak matter.",
+        "after": "Tshireletso e ka fokotsa lebelo la moya ka mora yona. Moralo le tlhokomelo ya windbreak di bohlokwa.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 62,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=19]/target/body[4]",
+        "sourceEnglish": "On your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan.",
+        "before": "On your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan.",
+        "after": "Setsheng sa hao, shebella meya e senyang pele o kgetha moo o ka jalang teng. Setshwantsho sena ha se moralo wa ho jala.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 63,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=20]/target/body[0]",
+        "sourceEnglish": "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.",
+        "before": "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.",
+        "after": "Thala moedi wa hao. Tshwaya ntlo. Thala rings ho ya kantle ho latela hore na o etela hangata hakae.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 64,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=21]/target/body[0]",
+        "sourceEnglish": "Sketch your own zones and sectors on one sheet of paper.",
+        "before": "Sketch your own zones and sectors on one sheet of paper.",
+        "after": "Thala zones le sectors tsa hao pampiring e le nngwe.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 65,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=21]/target/body[1]",
+        "sourceEnglish": "Mark Zone 0 and Zone 1 first, then work outward as far as your land goes.",
+        "before": "Mark Zone 0 and Zone 1 first, then work outward as far as your land goes.",
+        "after": "Tshwaya Zone 0 le Zone 1 pele, ebe o tswela kantle ho fihlela moo setsha sa hao se fellang teng.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 66,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=21]/target/body[2]",
+        "sourceEnglish": "Add an arrow for each energy that arrives from outside, and label where it comes from.",
+        "before": "Add an arrow for each energy that arrives from outside, and label where it comes from.",
+        "after": "Kenya motsu bakeng sa energy e nngwe le e nngwe e fihlang e tswa kantle, mme o ngole moo e tswang teng.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 67,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=22]/target/body[0]",
+        "sourceEnglish": "Walk out and check your sketch against the ground.",
+        "before": "Walk out and check your sketch against the ground.",
+        "after": "Tsamaya ka ntle mme o bapise sketch ya hao le ground ya sebele.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 68,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=22]/target/body[1]",
+        "sourceEnglish": "Stand at the kitchen door and count what is really in Zone 1 today.",
+        "before": "Stand at the kitchen door and count what is really in Zone 1 today.",
+        "after": "Ema monyako wa kichine mme o bale seo Zone 1 e nang le sona ka nnete kajeno.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 69,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=8]/target/heading",
+        "sourceEnglish": "When There Is No Rulebook",
+        "before": "When There Is No Rulebook",
+        "after": "Ha ho na buka ya melao.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 75,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=15]/target/heading",
+        "sourceEnglish": "Zones: Organising by How Often You Visit",
+        "before": "Zones: Organising by How Often You Visit",
+        "after": "Zones: Ho hlophisa ho latela hore na o etela hangata hakae.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 76,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=16]/target/heading",
+        "sourceEnglish": "Keep Daily Crops Close",
+        "before": "Keep Daily Crops Close",
+        "after": "Boloka dijalo tsa letsatsi le letsatsi di le haufi.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 77,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=17]/target/heading",
+        "sourceEnglish": "Zones Plan Your Labour",
+        "before": "Zones Plan Your Labour",
+        "after": "Zones di rala mosebetsi wa hao.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 78,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=18]/target/heading",
+        "sourceEnglish": "Sectors: The Energies Arriving From Outside",
+        "before": "Sectors: The Energies Arriving From Outside",
+        "after": "Sectors: Matla a fihlang a tswa kantle.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 79,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=19]/target/heading",
+        "sourceEnglish": "Watch: Shelter Between Wind and Crops",
+        "before": "Watch: Shelter Between Wind and Crops",
+        "after": "Shebella: Tshireletso pakeng tsa moya le dijalo.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 80,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=20]/target/heading",
+        "sourceEnglish": "Sketch It And You Have A Design",
+        "before": "Sketch It And You Have A Design",
+        "after": "E take mme o be le design.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 81,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=22]/target/body[2]",
+        "sourceEnglish": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+        "before": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+        "after": "Fumana ntho e le nngwe e lenngweng further away than how often you use it, mme o ngole moo e lokelang ho iswa teng.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      },
+      {
+        "row": 82,
+        "language": "st",
+        "fieldLocator": "pairedSlides/st/slides[n=22]/target/body[3]",
+        "sourceEnglish": "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow.",
+        "before": "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow.",
+        "after": "Ebe o botse older neighbour a le mong hore worst wind e tswa ka lehlakoreng lefe, mme o bapise karabo ya hae le motsu wa hao.",
+        "beforeStatus": "english-hold",
+        "afterStatus": "draft"
+      }
+    ],
+    "changedNativeFields": 5,
+    "changedVEandTSPairedFields": 3,
+    "changedNewSilentSTPairedFields": 52,
+    "excludedRowsPreserved": 23
+  },
+  "snapshotDirectory": "docs/study-translation-reviews/st-intro-silent-completion-2026-10-06/implementation-before",
+  "beforeSnapshots": {
+    "canonical-before.ts.txt": {
+      "path": "lib/course-modules.ts",
+      "bytes": 113494,
+      "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397"
+    },
+    "native-before-ve.ts.txt": {
+      "path": "lib/course-translation-drafts-ve.ts",
+      "bytes": 22698,
+      "sha256": "0358e790c699fa047101cbae939bbf0410deb7cd2eea2c3bdc0f2ae5d482d818"
+    },
+    "native-before-ts.ts.txt": {
+      "path": "lib/course-translation-drafts-ts.ts",
+      "bytes": 77313,
+      "sha256": "28e45acf80a96956885e227f55716ac84549bd129019deb23874ffea51396c4e"
+    },
+    "paired-before-st.json": {
+      "path": "docs/narration/intro-permaculture.st.paired-draft.json",
+      "bytes": 25360,
+      "sha256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9"
+    },
+    "paired-before-ve.json": {
+      "path": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "bytes": 126545,
+      "sha256": "8f0b681a7661804affd9038bdd8ba09a080f7eaf9509a740070db5ac4005e80b"
+    },
+    "paired-before-ts.json": {
+      "path": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "bytes": 134703,
+      "sha256": "2773290f06d9d9e48c638cd63e2c29d01281a666a6f42294c06b71db0e053e3d"
+    },
+    "root-reviewed-repaired-candidates.json": {
+      "path": "docs/study-translation-reviews/st-intro-silent-completion-2026-10-06/repaired-candidates.json",
+      "bytes": 262553,
+      "sha256": "81546481b8660b57c0a35ec90484ff4ea50fcb8abe17d4ec1cab26d54d3c0715"
+    }
+  },
+  "outputs": {
+    "native": {
+      "ve": {
+        "path": "lib/course-translation-drafts-ve.ts",
+        "sha256": "68547af8a22173105a2f278adf53a2c73954772891e0ac2ef46abcacb2d2a45f"
+      },
+      "ts": {
+        "path": "lib/course-translation-drafts-ts.ts",
+        "sha256": "f34dd03aeba8b72b5bc684b9491e27ee4cb65da2153dbbc09b8fbe0967670816"
+      }
+    },
+    "existingPaired": {
+      "ve": {
+        "path": "docs/narration/intro-permaculture.ve.paired-draft.json",
+        "sha256": "89400f76434e9eb6af8a2ef7f5056258b6004910bacd7f9887e557d0e63f4fa1",
+        "changedTargetCount": 1
+      },
+      "ts": {
+        "path": "docs/narration/intro-permaculture.ts.paired-draft.json",
+        "sha256": "1cec865ebfbbcee7cbfbfa5c41bea16156da9f70f3442f60e711befc7a71556a",
+        "changedTargetCount": 2
+      }
+    },
+    "newSilentST": {
+      "path": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "sha256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "changedTargetCount": 52
+    },
+    "unchangedOldST": {
+      "path": "docs/narration/intro-permaculture.st.paired-draft.json",
+      "sha256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+      "sha256Before": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9"
+    },
+    "protectedOldSTSha256Records": 48
+  },
+  "verification": {
+    "all60SourceAndCurrentGuardsPassed": true,
+    "nativePairSourcesStillMatchCanonical": true,
+    "nativeChangedPairsRemainMachineDraft": true,
+    "pairedExactEnglishCoveragePreserved": true,
+    "all21quizAnswersAndIndicesUnchanged": true,
+    "all23ExcludedRowsUnchanged": true,
+    "allUnlistedSourceTargetStatusObjectsEqualFrozenSnapshots": true,
+    "oldSTPairedDeckByteIdentical": true,
+    "oldSTAudioTranscriptStillUnchanged": true,
+    "oldSTStillsUnchanged": true,
+    "canonicalModuleByteIdentical": true,
+    "reviewStatus": "unreviewed/draft; no fluent or local approval",
+    "runtimeRegistration": "No runtime files changed by this text lane; separate runtime helper owns binding/availability.",
+    "oldSTTranscriptAudioAnd22StillsMatchBaseByteForByte": true,
+    "oldSTProtectedByteInventory": [
+      {
+        "path": "docs/narration/intro-permaculture.st.paired-draft.json",
+        "bytes": 25360,
+        "sha256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "docs/narration-reviews/INTRO-PERMACULTURE-ST-AUDIO-2026-09-28.json",
+        "bytes": 30100,
+        "sha256": "af15028a91eec576917ec46f908aef39abb388c4ec42f7a8b4dbbe776dbb8ca8",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "lib/course-transcripts.ts",
+        "bytes": 204569,
+        "sha256": "28ddeb239c278c3b4329b09656ddc9a00e9843d9f82d6592b5e7ebfdecaa4b08",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-01.mp3",
+        "bytes": 283628,
+        "sha256": "e6126d03971fc957eb8465625e6c1cbad9653b8cfa9c06a8fc364b640eb426cb",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-02.mp3",
+        "bytes": 255980,
+        "sha256": "852d9d98894ba4466145433f620a8898450c2cdd5c813f5cb7956b722b9a783b",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-03.mp3",
+        "bytes": 245804,
+        "sha256": "4b870e2ea0eb2501ebc2e6f2c6ac9874edb3ed47c5b701287e36146f80ebe0f4",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-04.mp3",
+        "bytes": 239660,
+        "sha256": "767a4f3a50ba255c7a468ae05986f9544e69dfab7bc35f5e571ddaa3017c3a2e",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-05.mp3",
+        "bytes": 226028,
+        "sha256": "24f8a79fd1aa23799957968385c2e22d4202364fc9b8d9bb2b34100182a340b5",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-06.mp3",
+        "bytes": 231788,
+        "sha256": "f0fe5f1c8b8700321a56aa5f081e1afe0ae28094926c6fcd56e7ac88e15a07cd",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-07.mp3",
+        "bytes": 257708,
+        "sha256": "4908700e6b6b8b7ac1841716be0c9abd9da4b9d47e235f9bb96cd6459eaa2d35",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-08.mp3",
+        "bytes": 199148,
+        "sha256": "781e1107d13a46f1a75a0282b5f70275b1f4ef54fb5ce3f40b22ca1c390585f6",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-09.mp3",
+        "bytes": 255020,
+        "sha256": "f7430be929f4244e796127abf7e01dc1741933395c957361fd6bf9f5ba9f8243",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-10.mp3",
+        "bytes": 346028,
+        "sha256": "d2f7359238379c1dbe8ee0f168f45c2802d76f3bb64f408dd719f7f70abee5e9",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-11.mp3",
+        "bytes": 244268,
+        "sha256": "182c16cc99390ac6a6f4094540ad069cf871a2c469edda8d6cc74107afd7c279",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-12.mp3",
+        "bytes": 172844,
+        "sha256": "bef2ab756beea6e941455389219dbe131d0a9da64ced8ff07ab72b2b424fe271",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-13.mp3",
+        "bytes": 227180,
+        "sha256": "741918799e5ddd653ad0a4638d4edfe664aeaf40f8329e8f7bced856a94ce80e",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-14.mp3",
+        "bytes": 331820,
+        "sha256": "ee77bce0d1d64cb219771930cc6952794fe54566cd403c5c7e8cdc2ed3b83742",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-15.mp3",
+        "bytes": 255788,
+        "sha256": "e98f413d6e6875fdea5eb272bf89347ff95683efcd31aef2fde21c90bc319bd0",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-16.mp3",
+        "bytes": 161708,
+        "sha256": "2d96297c2a3c073bfd12d95e1086bbf0c82b76396d0a00f4fd56dc54a86a4a10",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-17.mp3",
+        "bytes": 215468,
+        "sha256": "cfc2f59c05ed362256699ad8645f0546a1d5b3574fa65d023a57d10d2442a474",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-18.mp3",
+        "bytes": 234860,
+        "sha256": "85ea7f16de208a83af15c423bbc0f3ca452c605194f621c557243dfd5b333f84",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-19.mp3",
+        "bytes": 226604,
+        "sha256": "95988c9559a92e7fabe49d213f3d3dffdf1f416e3a938997d5430fa9b36781d3",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-20.mp3",
+        "bytes": 242540,
+        "sha256": "f281ce330f09951d197196df8d3c5d09219f32e2e77bba5f69c7f58adc8b37fb",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-21.mp3",
+        "bytes": 145964,
+        "sha256": "91dd1d172982254fa040a0d2b9820226b98b1e016d292c7ef7f5c935ee985bcd",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/slide-22.mp3",
+        "bytes": 182828,
+        "sha256": "38a4980a865fbde9541176d1d4d42eac0c4699448a7026c21c4fd8294d508cd6",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-audio/intro-permaculture/st/full.mp3",
+        "bytes": 5168108,
+        "sha256": "c2411fd63e864a7bf158547a921ab9613ccd8d40d6d2cd09ec0974492ffe9510",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-01.webp",
+        "bytes": 265292,
+        "sha256": "b36c045503a462f2042ed10d87a0867f7854dd16ab9f665c7db9e8e65a675886",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-02.webp",
+        "bytes": 251390,
+        "sha256": "028b9190e4e79212fcb274d241918cebe7aadd25324c8eb7186ee82048a5aa55",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-03.webp",
+        "bytes": 228478,
+        "sha256": "5826f38dc9c59af454e17cf9355412c97c1c7eb665c538d166d9eb37a7e8386b",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-04.webp",
+        "bytes": 470012,
+        "sha256": "f8a3a12c76589c3e267767aeeec5ef748957dddad8047cb699f1a64c2a9ffcc1",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-05.webp",
+        "bytes": 418758,
+        "sha256": "7fcb33543b20f16e83de4d6f596ab1a84afbd43d1e992a946cad9c326cca2aad",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-06.webp",
+        "bytes": 471666,
+        "sha256": "e2680b0abffabd3e50a66d52ad3122dc065539f670357dd437549a440498c91f",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-07.webp",
+        "bytes": 316054,
+        "sha256": "7df59401d248b5a1fad1814d63d670b6e34c16a25531520d9658113cc67033e2",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-08.webp",
+        "bytes": 246518,
+        "sha256": "2faf2edd8e3ae42c5194e1be2b91af74395ad3f2c28d1587563eead376ca4d0e",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-09.webp",
+        "bytes": 253428,
+        "sha256": "d0b7d721896847337a1452ea73e665a78dd192480d2509f2983dde39105d0751",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-10.webp",
+        "bytes": 592998,
+        "sha256": "f6b864e5b480b639f7f25ada16cf78fb4a3fc2509904c9ad238bab7021bee191",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-11.webp",
+        "bytes": 236554,
+        "sha256": "44e4ae1d408c60e409158a05de20be32c463ee398861d563cf2985394babbc6a",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-12.webp",
+        "bytes": 216360,
+        "sha256": "48cd0ef7de44a3c73ba45720d4c35a9dd54166e60c71fd53089eccfe80920394",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-13.webp",
+        "bytes": 352656,
+        "sha256": "c5257c90b0188b6bc2f7366c011d4cf9f49512e80e8896281dd0b96f71cd4671",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-14.webp",
+        "bytes": 370012,
+        "sha256": "e5c31d0cda31f9f61457f10e771c8263d403633f339d63b55b6cf91d745ace4a",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-15.webp",
+        "bytes": 561626,
+        "sha256": "c56a9420a281fd0cd4630df98007521abe05d6ecae1ab1fc4c39b8411828b634",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-16.webp",
+        "bytes": 448928,
+        "sha256": "1427822f3cdc18848ecb1e9667a1cda285f7ff402e7bbe6e133467f5f692e455",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-17.webp",
+        "bytes": 529086,
+        "sha256": "5a49ab2deac3fb7ac51bd353250d1ecc9af41de9c8a5aec932db6569eae39d9c",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-18.webp",
+        "bytes": 277404,
+        "sha256": "aa12c6087de716c1b67f2a67b2fbfdb5754a0a83bbf610dd3c5c00e4b645f082",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-19.webp",
+        "bytes": 499162,
+        "sha256": "45349972ba07a113d54c3c3d660a7df78dbafd839e1a21a251f6dfc1e3d54159",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-20.webp",
+        "bytes": 443178,
+        "sha256": "3547e473f6916dec7716e5e245a88077397c1b4d6e0fea0bd47a18aad7b17bc3",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-21.webp",
+        "bytes": 208754,
+        "sha256": "2cb8ea33e1ebff7e2cb0f2161e32c13314b084fb116092cf5e08f3711521420e",
+        "equalToBaseHead": true
+      },
+      {
+        "path": "public/course-decks/intro-permaculture/st/slide-22.webp",
+        "bytes": 231466,
+        "sha256": "96bfd69d4d9f270f1511afda15cf69c8c3e9eb8c99a49b83d0b252e32de70537",
+        "equalToBaseHead": true
+      }
+    ],
+    "newSilentSTChangedOnly52AcceptedTargetCells": true,
+    "veTsPairsChangedOnly3AcceptedTargetCells": true,
+    "changedRowsUseAccurateDraftStatus": true,
+    "rootAcceptedFinalTargetsReconstructedExactly": true,
+    "all21QuizAnswersAndIndicesUnchanged": true,
+    "nativeFullObjectEqualsExactFiveFieldOverlay": true,
+    "nativeSourcesMatchCanonicalAndEveryOtherNativeFieldMatchesBefore": true,
+    "currentProvenance": "Source-bound machine drafts remain unreviewed; no fluent/local approval."
+  },
+  "constraints": [
+    "No render performed.",
+    "No audio, transcript, still, canonical source, quiz index, or unlisted translation was changed.",
+    "New Sesotho pair is a silent draft only; old Sesotho paired registry remains byte-identical."
+  ]
+}

@@ -1,0 +1,98 @@
+[
+ {
+  "file": "lib/locales/zu.ts",
+  "english": "Save sale & invoice (myRecordsSaveSale, from lib/i18n.tsx)",
+  "existing": "Londoloza ukudayisa",
+  "problem": "Drops the '& invoice' clause: the button also creates an invoice but isiZulu says only 'save sale'.",
+  "suggested": "Londoloza ukudayisa ne-invoyisi",
+  "severity": "error"
+ },
+ {
+  "file": "lib/locales/zu.ts",
+  "english": "Crop name and a positive kg are required. (myRecordsProdValidationError)",
+  "existing": "Igama lesitshalo ne-kg enegative ziyadingeka.",
+  "problem": "'positive' became 'enegative' (negative): the opposite meaning, on a harvest-quantity validation message. Also an English loan word.",
+  "suggested": "Kudingeka igama lesitshalo ne-kg elingaphezu kuka-0.",
+  "severity": "error"
+ },
+ {
+  "file": "lib/locales/zu.ts",
+  "english": "Kg sold / kg sold (myRecordsKgSoldLabel, myRecordsKgSoldSuffix)",
+  "existing": "Kg ekiwe / kg ekiwe",
+  "problem": "'ekiwe' does not mean 'sold' (not a recognised passive of dayisa/thengisa); the sold quantity label is unclear. Elsewhere sold = 'okudayisiwe'. (Machine judgement; ask a speaker.)",
+  "suggested": "Kg edayisiwe / kg edayisiwe",
+  "severity": "error"
+ },
+ {
+  "file": "app/records/page.tsx",
+  "english": "harvested (L1033); Picked (L1297); picked & sold, not per m² (L1290)",
+  "existing": "kuvunyiwe; Okuvunyiwe; kuvunyiwe kwadayiswa",
+  "problem": "'-vunyiwe' is the passive of 'vuma' (agree/permit/approve), so 'Picked' reads 'approved/permitted'. Harvest = 'vuna', whose passive is 'vuniwe/vunwe'. Brief: Picked must be 'harvested', not 'chosen/agreed'. (Machine judgement, ask a speaker.)",
+  "suggested": "kuvuniwe; Okuvuniwe; kuvuniwe kwadayiswa",
+  "severity": "error"
+ },
+ {
+  "file": "components/MyRecords.tsx",
+  "english": "Harvested (L1028, credit-pack summary label)",
+  "existing": "Okuvunyiwe",
+  "problem": "Same 'vuma' vs 'vuna' error as above.",
+  "suggested": "Okuvuniwe",
+  "severity": "error"
+ },
+ {
+  "file": "app/records/page.tsx",
+  "english": "Price (L1268, crop performance row)",
+  "existing": "Inani",
+  "problem": "Price is rendered with the same word as Qty ('Inani', L1165) and Amount ('Inani (R)'); price, quantity and amount cannot be told apart.",
+  "suggested": "Intengo",
+  "severity": "error"
+ },
+ {
+  "file": "app/records/page.tsx",
+  "english": "Qty / Amount (R) / Crop, kg and price are required.",
+  "existing": "Inani / Inani (R) / ...isitshalo, u-kg nenani",
+  "problem": "One word 'inani' covers quantity, amount and price in the same form; ambiguity rather than a hard error.",
+  "suggested": "Keep 'Inani' for quantity only; use 'Imali' or 'Inani (R)' for amount and 'Intengo' for price",
+  "severity": "minor"
+ },
+ {
+  "file": "app/records/page.tsx",
+  "english": "{sold} of that was sold · {kept} eaten at home, given away or lost (L1320)",
+  "existing": "Kuthengiswe {sold} · {kept} kudliwe ekhaya, kwanikezwa abanye noma kulahlekile",
+  "problem": "'of that' (the sold amount is part of the picked total) is lost.",
+  "suggested": "{sold} kwalokho kudayiswe · {kept} kudliwe ekhaya, kwanikezwa abanye noma kwalahleka",
+  "severity": "minor"
+ },
+ {
+  "file": "app/records/page.tsx",
+  "english": "Orchard is switched off... (L283, L1156) and components/MyRecords.tsx L580 'Orchard / other'",
+  "existing": "Ingadi yezithelo icishiwe (L283); Ingadi yezihlahla icishiwe ... akafakiwe (L1156); Ingadi yezihlahla zezithelo (MyRecords)",
+  "problem": "Three different words for 'orchard' (also 'Isivande sezithelo' in zu.ts) for one switch; L1156 uses class-1 'akafakiwe' for '{kg} kg' (L283 uses 'awufakiwe'). Meaning intact, but inconsistent.",
+  "suggested": "Pick one term (zu.ts uses 'Isivande sezithelo') and use 'awufakiwe' / 'ayikho' consistently",
+  "severity": "minor"
+ },
+ {
+  "file": "app/records/page.tsx",
+  "english": "What for (L877)",
+  "existing": "Bekungokwani",
+  "problem": "'Bekungokwani' reads 'it was whose/according to whom' rather than 'what for' (purpose); and is past tense. Low confidence.",
+  "suggested": "Kwenzelwe ini",
+  "severity": "minor"
+ },
+ {
+  "file": "components/MyRecords.tsx",
+  "english": "Records for a lender (L1013)",
+  "existing": "Amarekhodi okubolekwa imali",
+  "problem": "Reads 'records of borrowing money' (borrower side); English is records for the lender. The button (L1061) correctly uses 'kumbolekisi'.",
+  "suggested": "Amarekhodi embolekisi",
+  "severity": "minor"
+ },
+ {
+  "file": "components/MyRecords.tsx",
+  "english": "Record a sale (L1389)",
+  "existing": "Qopha ukuthengisa",
+  "problem": "'Qopha' vs 'Rekhoda' used elsewhere for log/record, and 'ukuthengisa' vs 'ukudayisa'; same-screen inconsistency only. 'Recover invoice' = 'Buyisa i-invoyisi' checked: restores/brings back, distinct from 'Buka' (View) and 'Dala' (Create); not an error.",
+  "suggested": "Rekhoda ukudayisa (to match zu.ts myRecordsLogSaleHeader)",
+  "severity": "minor"
+ }
+]

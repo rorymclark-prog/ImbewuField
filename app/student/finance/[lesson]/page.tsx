@@ -11,6 +11,7 @@ import OfflinePageLink from '@/components/studies/OfflinePageLink';
 import FullToolsOnly from '@/components/studies/FullToolsOnly';
 import { FinanceZuText, FinanceZuBadge, FinanceZuLessonReading } from '@/components/studies/FinanceZu';
 import styles from '@/components/studies/FinanceCourse.module.css';
+import ArrowLabel from '@/components/studies/ArrowLabel';
 
 export const metadata = { title: 'Farm Finance lesson — ImbewuField teaching preview', robots: { index: false, follow: false } };
 export function generateStaticParams() { return FINANCE_LESSONS.map(({ lesson }) => ({ lesson: lesson.id })); }
@@ -50,11 +51,11 @@ export default async function FinanceLessonPage({ params }: { params: Promise<{ 
         {practice.map((section, i) => <section key={`${section.title}-${i}`} className={styles.practice}><h3>{section.title.replace(/^Independent (attempt|check|task|decision)$/i, 'Try another example')}</h3><FinanceText text={section.text} /></section>)}
         {feedback.length > 0 && <details className={styles.practice}><summary>Discuss mistakes and try again</summary>{feedback.map((section, i) => <FinanceText key={i} text={section.text} />)}</details>}
       </section>
-      <section className={styles.section}><h2>Use the app alongside this lesson</h2><p>Read the relevant guide, then practise in the sample farm. Keep workbook figures out of your real farm records.</p><div className={styles.actions}>{FINANCE_APP_GUIDES[unit.id].map(guide => <OfflinePageLink key={guide.href} href={guide.href}>{guide.title} →</OfflinePageLink>)}</div></section>
+      <section className={styles.section}><h2>Use the app alongside this lesson</h2><p>Read the relevant guide, then practise in the sample farm. Keep workbook figures out of your real farm records.</p><div className={styles.actions}>{FINANCE_APP_GUIDES[unit.id].map(guide => <OfflinePageLink key={guide.href} href={guide.href}><ArrowLabel>{guide.title}</ArrowLabel></OfflinePageLink>)}</div></section>
       {unit.sources.length > 0 && <FullToolsOnly><section className={`${styles.section} ${styles.sourceLinks}`}><details><summary>Sources and further reading</summary><ul>{unit.sources.map(source => <li key={source.url}><a href={source.url}>{source.label}</a></li>)}</ul></details></section></FullToolsOnly>}
-      {lesson.id === 'f8-3' && <section className={styles.section}><h2>Bring the course together</h2><p>Try the connected practice case, then work through an independent case with fresh figures.</p><div className={styles.actions}><OfflinePageLink href="/student/finance/project/guided">Open the practical project →</OfflinePageLink></div></section>}
+      {lesson.id === 'f8-3' && <section className={styles.section}><h2>Bring the course together</h2><p>Try the connected practice case, then work through an independent case with fresh figures.</p><div className={styles.actions}><OfflinePageLink href="/student/finance/project/guided"><ArrowLabel>Open the practical project</ArrowLabel></OfflinePageLink></div></section>}
       <section className={styles.section}><h2>Keep your place</h2><FinanceReadingChecklist lessonId={lesson.id} lessonIds={FINANCE_LESSONS.map(e => e.lesson.id)} />
-        <nav aria-label="Finance lesson navigation" className={styles.actions}>{previous && <OfflinePageLink href={`/student/finance/${previous.id}`}>← {previous.title}</OfflinePageLink>}{next ? <OfflinePageLink className={styles.primary} href={`/student/finance/${next.id}`}>Next: {next.title} →</OfflinePageLink> : <OfflinePageLink className={styles.primary} href="/student/finance">Return to the course outline</OfflinePageLink>}</nav>
+        <nav aria-label="Finance lesson navigation" className={styles.actions}>{previous && <OfflinePageLink href={`/student/finance/${previous.id}`}><ArrowLabel dir="back">{previous.title}</ArrowLabel></OfflinePageLink>}{next ? <OfflinePageLink className={styles.primary} href={`/student/finance/${next.id}`}><ArrowLabel>Next: {next.title}</ArrowLabel></OfflinePageLink> : <OfflinePageLink className={styles.primary} href="/student/finance">Return to the course outline</OfflinePageLink>}</nav>
       </section>
     </main>
   </div>;

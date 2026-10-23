@@ -1,0 +1,81 @@
+{
+  "speciesId": "rhoicissus-digitata",
+  "commonName": "Baboon grape",
+  "botanicalName": "Rhoicissus digitata",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [
+    {
+      "region": "Western/Eastern Cape, KwaZulu-Natal and Mpumalanga botanical account — ripe berries",
+      "months": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "evidence": {
+        "quote": "ripen from autumn to winter (March to August)",
+        "url": "https://pza.sanbi.org/rhoicissus-digitata",
+        "doc": "SANBI PlantZAfrica, rhoicissus-digitata",
+        "page": null
+      },
+      "notes": "A regional botanical reference, not a confirmed season for the farm's plant."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "ripe berries",
+  "supplementaryReferences": [
+    {
+      "title": "Edible part and local use",
+      "quote": "traditionally used to make jam",
+      "url": "https://pza.sanbi.org/rhoicissus-digitata",
+      "doc": "SANBI PlantZAfrica, rhoicissus-digitata",
+      "page": null,
+      "note": "The source gives a ripe-berry interval. This does not establish stored jam months or safe shelf life."
+    }
+  ],
+  "productionGuidance": {
+    "products": "ripe berries",
+    "care": [
+      "Provide climbing support and control its spread where space is limited. SANBI records coastal dunes and forest margins from Western Cape to KwaZulu-Natal and Mpumalanga."
+    ],
+    "purchase": [
+      "Confirm Rhoicissus digitata; other wild-grape species have different descriptions and cannot supply its dates."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/rhoicissus-digitata",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    }
+  ],
+  "gaps": [
+    "No measured food yield or bearing ages."
+  ]
+}

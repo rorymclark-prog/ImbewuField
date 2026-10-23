@@ -1,0 +1,152 @@
+{
+  "title": "Sesotho and Tshivenda Vegetables establishment repaired candidates final semantic check",
+  "date": "2026-10-03",
+  "inputPacket": "/tmp/imbewu-st-ve-vegetables-establishment-root-repaired-20261003.json",
+  "comparisonPackets": [
+    "/tmp/imbewu-st-ve-vegetables-establishment-remaining-body-20261003.json",
+    "/tmp/imbewu-st-ve-vegetables-establishment-independent-check-20261003.json"
+  ],
+  "canonicalRevisionChecked": "a692325d4420c1d445fb5cba6a7450211dcc51c1",
+  "sourceProof": {
+    "lib/course-modules.ts": {
+      "head": "a692325d4420c1d445fb5cba6a7450211dcc51c1",
+      "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "workingTreeMatchesHead": true
+    },
+    "lib/course-translation-drafts-st-vegetables-staples.ts": {
+      "head": "a692325d4420c1d445fb5cba6a7450211dcc51c1",
+      "sha256": "0df921ae6416efd4fdc3cbe01133b1db3dbac1c7f8e64cf1ab639733e4f4fcc1",
+      "workingTreeMatchesHead": true
+    },
+    "lib/course-translation-drafts-ve-vegetables-staples.ts": {
+      "head": "a692325d4420c1d445fb5cba6a7450211dcc51c1",
+      "sha256": "23a3062dddda0c1f9868d4d0903cf0aaef52397db53244088b060cba1c6573aa",
+      "workingTreeMatchesHead": true
+    },
+    "lib/course-translation-drafts-ts-vegetables-staples-l2.ts": {
+      "head": "a692325d4420c1d445fb5cba6a7450211dcc51c1",
+      "sha256": "84feff03f5893c6b4d7f8d50298af110543e6a73b02f1b60bf07e264103380bc",
+      "workingTreeMatchesHead": true
+    },
+    "lib/course-localization.ts": {
+      "head": "a692325d4420c1d445fb5cba6a7450211dcc51c1",
+      "sha256": "503f628a1c0679c5247558887e7438260fead024b67ac5112626e6e52bb1ff9f",
+      "workingTreeMatchesHead": true
+    }
+  },
+  "scope": {
+    "expectedFields": 7,
+    "checkedFields": 7,
+    "repairedCandidateCount": 3,
+    "unchangedCandidateCount": 4,
+    "repositoryWrites": false
+  },
+  "overall": "All seven bindings match canonical source, registered learner values, and live resolver output. The three requested repairs are semantically conservative; the other four candidate strings are byte-for-byte unchanged from the original packet. No fluent/local approval.",
+  "entries": [
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 8",
+      "paragraphIndexZeroBased": 7,
+      "paragraphCount": 20,
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "currentLearnerText": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "candidateText": "U se ke ua cheka wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "sourceCurrentBindingVerified": true,
+      "changedFromOriginal": false,
+      "finding": "Candidate unchanged from the independently checked packet; source and resolver binding still match.",
+      "result": "pass"
+    },
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 13",
+      "paragraphIndexZeroBased": 12,
+      "paragraphCount": 20,
+      "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "currentLearnerText": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "candidateText": "Others do better with a protected start in a nursery, then transplanting. Tomatoes le brassicas ke tsa sehlopha seo.",
+      "sourceCurrentBindingVerified": true,
+      "changedFromOriginal": true,
+      "finding": "Exact English first sentence restores “do better” and the nursery-then-transplanting sequence; the localized second sentence keeps Tomatoes/brassicas in that group.",
+      "result": "pass"
+    },
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 18",
+      "paragraphIndexZeroBased": 17,
+      "paragraphCount": 20,
+      "sourceEnglish": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "currentLearnerText": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "candidateText": "Jwale lokisetsa ho ya ka mobu wa hao — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "sourceCurrentBindingVerified": true,
+      "changedFromOriginal": false,
+      "finding": "Candidate unchanged from the independently checked packet; source and resolver binding still match.",
+      "result": "pass"
+    },
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 1",
+      "paragraphIndexZeroBased": 0,
+      "paragraphCount": 20,
+      "sourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "currentLearnerText": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "candidateText": "Compacted soil loses its air spaces. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe.",
+      "sourceCurrentBindingVerified": true,
+      "changedFromOriginal": true,
+      "finding": "Retains the exact compaction/air-space mechanism; local wording states roots grow slowly, water soaks differently, and the bed gets harder to work each season. Corrected Maḓi spelling is present.",
+      "result": "pass"
+    },
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 8",
+      "paragraphIndexZeroBased": 7,
+      "paragraphCount": 20,
+      "sourceEnglish": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "currentLearnerText": "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "candidateText": "Ni songo bwa wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+      "sourceCurrentBindingVerified": true,
+      "changedFromOriginal": false,
+      "finding": "Candidate unchanged from the independently checked packet; source and resolver binding still match.",
+      "result": "pass"
+    },
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l1",
+      "fieldPath": "body paragraph 18",
+      "paragraphIndexZeroBased": 17,
+      "paragraphCount": 20,
+      "sourceEnglish": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "currentLearnerText": "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "candidateText": "Nga murahu ni lugiselele u ya nga mavu aṋu — no-dig first, and dig deeper only if your ground genuinely needs it.",
+      "sourceCurrentBindingVerified": true,
+      "changedFromOriginal": false,
+      "finding": "Candidate unchanged from the independently checked packet; source and resolver binding still match.",
+      "result": "pass"
+    },
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l2",
+      "fieldPath": "body paragraph 9",
+      "paragraphIndexZeroBased": 8,
+      "paragraphCount": 23,
+      "sourceEnglish": "With suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.",
+      "currentLearnerText": "With suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.",
+      "candidateText": "Arali crop timing yo tea, harvests dzi nga thoma u overlap. The first batch will not always be ready by the fourth sowing.",
+      "sourceCurrentBindingVerified": true,
+      "changedFromOriginal": true,
+      "finding": "Exact English second sentence restores the negative-frequency caveat “not always”; the localized first sentence retains suitable timing and possible overlap.",
+      "result": "pass"
+    }
+  ],
+  "implementationRecord": {
+    "branch": "codex/regional-vegetables-establishment-next-20261003",
+    "baseRevision": "a692325d4420c1d445fb5cba6a7450211dcc51c1",
+    "appliedFields": 7,
+    "actualResolverRuntimeVerified": true,
+    "TS8FieldsVerifiedUnchanged": true
+  }
+}

@@ -1,0 +1,284 @@
+{
+  "packetId": "VE-VEGETABLES-L4-ASSESSMENT-2026-10-02",
+  "language": "Tshivenda (ve)",
+  "sourceRevision": "3c82b61f70ddd86ae2d0521b9fa9174080e5184d",
+  "sourcePath": "lib/course-modules.ts",
+  "registryPath": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+  "canonicalLessonId": "vegetables-staples-l4",
+  "scope": "Title, key points, and quiz fields only. Existing body candidate is not changed.",
+  "answerIndices": [
+    1,
+    0
+  ],
+  "title": {
+    "fieldPath": "title",
+    "sourceEnglish": "Observe and Manage Pests and Disease",
+    "currentRegistry": {
+      "sourceEnglish": "Observe and Manage Pests and Disease",
+      "tshivendaDraft": "Observe and Manage Pests and Disease",
+      "reviewStatus": "hold"
+    },
+    "candidateTshivenda": "Sedzani ni lange Pests na Disease.",
+    "candidateStatus": "machine-draft",
+    "uncertainty": [
+      "Pests and Disease remain in English as precise agricultural terms; verify local terminology and imperative register."
+    ],
+    "drafterBacktranslation": "Observe and manage pests and disease."
+  },
+  "keyPoints": [
+    {
+      "fieldPath": "keyPoints[0]",
+      "sourceEnglish": "Identify the cause before treating damage",
+      "currentRegistry": {
+        "sourceEnglish": "Identify the cause before treating damage",
+        "tshivendaDraft": "Identify the cause before treating damage",
+        "reviewStatus": "hold"
+      },
+      "candidateTshivenda": "Wanani tshiitisi tsha damage ni sa athu treating.",
+      "candidateStatus": "machine-draft",
+      "uncertainty": [
+        "damage and treating are retained in English to avoid changing the scope of diagnosis or treatment."
+      ],
+      "drafterBacktranslation": "Find the cause of damage before treating."
+    },
+    {
+      "fieldPath": "keyPoints[1]",
+      "sourceEnglish": "Check water, roots, nutrition and beneficial insects",
+      "currentRegistry": {
+        "sourceEnglish": "Check water, roots, nutrition and beneficial insects",
+        "tshivendaDraft": "Check water, roots, nutrition and beneficial insects",
+        "reviewStatus": "hold"
+      },
+      "candidateTshivenda": "Ṱolani maḓi, roots, nutrition na beneficial insects.",
+      "candidateStatus": "machine-draft",
+      "uncertainty": [
+        "roots, nutrition and beneficial insects are retained as technical terms; verify preferred Tshivenda terms."
+      ],
+      "drafterBacktranslation": "Check water, roots, nutrition and beneficial insects."
+    },
+    {
+      "fieldPath": "keyPoints[2]",
+      "sourceEnglish": "Use suitable physical or crop-care measures and monitor results",
+      "currentRegistry": {
+        "sourceEnglish": "Use suitable physical or crop-care measures and monitor results",
+        "tshivendaDraft": "Use suitable physical or crop-care measures and monitor results",
+        "reviewStatus": "hold"
+      },
+      "candidateTshivenda": "Shumisani physical kana crop-care measures zwo teaho ni monitor results.",
+      "candidateStatus": "machine-draft",
+      "uncertainty": [
+        "The specific measure categories and monitoring phrase remain English; verify the local wording for suitable."
+      ],
+      "drafterBacktranslation": "Use suitable physical or crop-care measures and monitor results."
+    },
+    {
+      "fieldPath": "keyPoints[3]",
+      "sourceEnglish": "If treatment is needed, use a registered product for the crop and pest and follow the label",
+      "currentRegistry": {
+        "sourceEnglish": "If treatment is needed, use a registered product for the crop and pest and follow the label",
+        "tshivendaDraft": "If treatment is needed, use a registered product for the crop and pest and follow the label",
+        "reviewStatus": "hold"
+      },
+      "candidateTshivenda": "Arali treatment i tshi ṱoḓea, use a registered product for the crop and pest and follow the label.",
+      "candidateStatus": "machine-draft",
+      "uncertainty": [
+        "The complete registered-product, crop-and-pest, and label instruction remains exact English because it is a safety-critical use condition."
+      ],
+      "drafterBacktranslation": "If treatment is needed, use a registered product for the crop and pest and follow the label."
+    }
+  ],
+  "quiz": [
+    {
+      "question": {
+        "fieldPath": "quiz[0].question",
+        "sourceEnglish": "If a pest problem needs a treatment product, what should guide its use?",
+        "currentRegistry": {
+          "sourceEnglish": "If a pest problem needs a treatment product, what should guide its use?",
+          "tshivendaDraft": "If a pest problem needs a treatment product, what should guide its use?",
+          "reviewStatus": "hold"
+        },
+        "candidateTshivenda": "Arali pest problem i tshi ṱoḓa treatment product, ndi mini tshine tsha fanela u langa u shumiswa hayo?",
+        "candidateStatus": "machine-draft",
+        "uncertainty": [
+          "pest problem and treatment product remain English; verify the phrasing for what should guide use."
+        ],
+        "drafterBacktranslation": "If a pest problem needs a treatment product, what should guide its use?"
+      },
+      "options": [
+        {
+          "fieldPath": "quiz[0].options[0]",
+          "sourceEnglish": "An improvised stronger mixture",
+          "currentRegistry": {
+            "sourceEnglish": "An improvised stronger mixture",
+            "tshivendaDraft": "An improvised stronger mixture",
+            "reviewStatus": "hold"
+          },
+          "candidateTshivenda": "An improvised stronger mixture",
+          "candidateStatus": "hold",
+          "uncertainty": [
+            "Held exact English because improvised mixtures and stronger treatments are safety-sensitive."
+          ],
+          "drafterBacktranslation": "An improvised stronger mixture."
+        },
+        {
+          "fieldPath": "quiz[0].options[1]",
+          "sourceEnglish": "A product registered for the crop and pest, used according to its label",
+          "currentRegistry": {
+            "sourceEnglish": "A product registered for the crop and pest, used according to its label",
+            "tshivendaDraft": "A product registered for the crop and pest, used according to its label",
+            "reviewStatus": "hold"
+          },
+          "candidateTshivenda": "A product registered for the crop and pest, used according to its label",
+          "candidateStatus": "hold",
+          "uncertainty": [
+            "Held exact English to preserve registration, crop and pest scope, and label compliance."
+          ],
+          "drafterBacktranslation": "A product registered for the crop and pest, used according to its label."
+        },
+        {
+          "fieldPath": "quiz[0].options[2]",
+          "sourceEnglish": "Any product described as natural",
+          "currentRegistry": {
+            "sourceEnglish": "Any product described as natural",
+            "tshivendaDraft": "Any product described as natural",
+            "reviewStatus": "hold"
+          },
+          "candidateTshivenda": "Product iṅwe na iṅwe ine ya ṱaluswa sa natural.",
+          "candidateStatus": "machine-draft",
+          "uncertainty": [
+            "natural remains English as a product descriptor; verify the Tshivenda phrasing for described as."
+          ],
+          "drafterBacktranslation": "Any product described as natural."
+        },
+        {
+          "fieldPath": "quiz[0].options[3]",
+          "sourceEnglish": "A neighbour’s dose for a different crop",
+          "currentRegistry": {
+            "sourceEnglish": "A neighbour’s dose for a different crop",
+            "tshivendaDraft": "A neighbour’s dose for a different crop",
+            "reviewStatus": "hold"
+          },
+          "candidateTshivenda": "A neighbour’s dose for a different crop",
+          "candidateStatus": "hold",
+          "uncertainty": [
+            "Held exact English because dose and crop identity must remain precise."
+          ],
+          "drafterBacktranslation": "A neighbour’s dose for a different crop."
+        }
+      ],
+      "sourceCorrectIndex": 1,
+      "rationale": {
+        "fieldPath": "quiz[0].rationale",
+        "sourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+        "currentRegistry": {
+          "sourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+          "tshivendaDraft": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+          "reviewStatus": "hold"
+        },
+        "candidateTshivenda": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+        "candidateStatus": "hold",
+        "uncertainty": [
+          "Held exact English: crop, pest, dose, protection, harvest-waiting, improvised-mixture and safety clauses are precise treatment safeguards."
+        ],
+        "drafterBacktranslation": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable."
+      }
+    },
+    {
+      "question": {
+        "fieldPath": "quiz[1].question",
+        "sourceEnglish": "A farmer's brassica leaves are turning yellow. Before assuming pests, what should she check first?",
+        "currentRegistry": {
+          "sourceEnglish": "A farmer's brassica leaves are turning yellow. Before assuming pests, what should she check first?",
+          "tshivendaDraft": "A farmer's brassica leaves are turning yellow. Before assuming pests, what should she check first?",
+          "reviewStatus": "hold"
+        },
+        "candidateTshivenda": "Musi maṱari a brassica a murimi a tshi khou vha yellow, u sa athu humbulela uri ndi pests, u fanela u thoma u ṱola mini?",
+        "candidateStatus": "machine-draft",
+        "uncertainty": [
+          "brassica, yellow and pests are retained in English; verify agreement and the idiom for before assuming."
+        ],
+        "drafterBacktranslation": "When a farmer’s brassica leaves are turning yellow, before assuming they are pests, what should she check first?"
+      },
+      "options": [
+        {
+          "fieldPath": "quiz[1].options[0]",
+          "sourceEnglish": "Whether it's actually a soil nutrient or watering issue",
+          "currentRegistry": {
+            "sourceEnglish": "Whether it's actually a soil nutrient or watering issue",
+            "tshivendaDraft": "Whether it's actually a soil nutrient or watering issue",
+            "reviewStatus": "hold"
+          },
+          "candidateTshivenda": "Arali hu vhukuma thaidzo ya soil nutrient kana watering.",
+          "candidateStatus": "machine-draft",
+          "uncertainty": [
+            "soil nutrient and watering remain English to preserve the possible-cause distinction; verify the elliptical option wording."
+          ],
+          "drafterBacktranslation": "Whether it is actually a soil nutrient or watering issue."
+        },
+        {
+          "fieldPath": "quiz[1].options[1]",
+          "sourceEnglish": "Whether the moon phase is right for treatment",
+          "currentRegistry": {
+            "sourceEnglish": "Whether the moon phase is right for treatment",
+            "tshivendaDraft": "Whether the moon phase is right for treatment",
+            "reviewStatus": "hold"
+          },
+          "candidateTshivenda": "Whether the moon phase is right for treatment",
+          "candidateStatus": "hold",
+          "uncertainty": [
+            "Held exact English; this is a precise distractor about treatment timing."
+          ],
+          "drafterBacktranslation": "Whether the moon phase is right for treatment."
+        },
+        {
+          "fieldPath": "quiz[1].options[2]",
+          "sourceEnglish": "Whether her neighbour has the same problem",
+          "currentRegistry": {
+            "sourceEnglish": "Whether her neighbour has the same problem",
+            "tshivendaDraft": "Whether her neighbour has the same problem",
+            "reviewStatus": "hold"
+          },
+          "candidateTshivenda": "Arali muhura wawe a tshi na thaidzo i fanaho.",
+          "candidateStatus": "machine-draft",
+          "uncertainty": [
+            "Verify the wording for neighbour and whether the problem is the same."
+          ],
+          "drafterBacktranslation": "Whether her neighbour has the same problem."
+        },
+        {
+          "fieldPath": "quiz[1].options[3]",
+          "sourceEnglish": "Whether it's aphids specifically",
+          "currentRegistry": {
+            "sourceEnglish": "Whether it's aphids specifically",
+            "tshivendaDraft": "Whether it's aphids specifically",
+            "reviewStatus": "hold"
+          },
+          "candidateTshivenda": "Whether it's aphids specifically",
+          "candidateStatus": "hold",
+          "uncertainty": [
+            "Held exact English because aphids is a specific pest identification."
+          ],
+          "drafterBacktranslation": "Whether it is aphids specifically."
+        }
+      ],
+      "sourceCorrectIndex": 0,
+      "rationale": {
+        "fieldPath": "quiz[1].rationale",
+        "sourceEnglish": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment.",
+        "currentRegistry": {
+          "sourceEnglish": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment.",
+          "tshivendaDraft": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment.",
+          "reviewStatus": "hold"
+        },
+        "candidateTshivenda": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment.",
+        "candidateStatus": "hold",
+        "uncertainty": [
+          "Held exact English to preserve the multiple-cause warning and distinction between soil/watering causes and pest causes before treatment."
+        ],
+        "drafterBacktranslation": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment."
+      }
+    }
+  ],
+  "reviewNote": "These are source-paired machine-draft candidates, not fluent approval. Exact English holds preserve crop/pest registration, label, dose, protection, harvest-waiting and treatment-safety meaning.",
+  "reviewStage": "Root and independent semantic check accepted after recorded exact-English repairs; unreviewed machine draft, no fluent/local approval."
+}

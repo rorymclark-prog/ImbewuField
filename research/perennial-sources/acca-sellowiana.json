@@ -1,0 +1,83 @@
+{
+  "speciesId": "acca-sellowiana",
+  "commonName": "Feijoa / pineapple guava",
+  "botanicalName": "Acca sellowiana",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No locally qualified numeric first-crop age was established in the checked primary sources. Record planting date, nursery starting age and propagation method."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured local numeric full-bearing age was established. No yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified mature per-plant food kg with age, product basis and management context was established. Missing output remains unknown rather than zero."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No universal numeric chilling requirement is assigned. Check the actual cultivar and site's winter conditions."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Check the actual cultivar's pollen needs; no universal classification is inferred from a named cultivar."
+  },
+  "harvestProduct": "fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Cultivar-dependent pollen compatibility",
+      "quote": "458 self-compatible and 101 self- incompatible",
+      "url": "https://new.scielo.br/j/rbf/a/3Wh7WGGbVFkHckM7R5GDJLc/?ilang=pt_BR&lang=pt",
+      "doc": "dos Santos et al. (2007), Evidence of late-acting self-incompatibility in Acca sellowiana, Revista Brasileira de Fruticultura 29(1)",
+      "page": null,
+      "note": "Primary Brazilian germplasm experiment found both compatibility classes. Biological evidence supports checking the actual cultivar and compatible pollen, not assigning one universal species category or copying its calendar to South Africa."
+    },
+    {
+      "title": "South African research context",
+      "quote": "Lesser-known exotic crops being evaluated are pitanga, feijoa",
+      "url": "https://www.gcis.gov.za/sites/default/files/docs/resourcecentre/yearbook/2004/18scitec.pdf",
+      "doc": "South African Yearbook 2003/04, ARC tropical/subtropical crop research",
+      "page": null,
+      "note": "Government confirms ARC evaluated feijoa; no trial result, cultivar, harvest month or yield follows from this mention."
+    }
+  ],
+  "productionGuidance": {
+    "products": "fruit",
+    "care": [
+      "Check the actual cultivar's pollen needs. A primary trial includes self-compatible and self-incompatible plants.",
+      "Record local ripe picking dates and output. Foreign cultivar seasons do not establish a South African season."
+    ],
+    "purchase": [
+      "Ask the nursery to name the cultivar or identify a seedling and provide local fruiting and compatible-pollen evidence. 'Fruit Salad Tree' is a common sales label and does not identify a tested cultivar."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://new.scielo.br/j/rbf/a/3Wh7WGGbVFkHckM7R5GDJLc/?ilang=pt_BR&lang=pt",
+      "checkedAt": "2026-10-11",
+      "observations": "Read primary abstract and methods: actual accessions included both compatibility classes; foreign months/yields not copied."
+    },
+    {
+      "url": "https://www.gcis.gov.za/sites/default/files/docs/resourcecentre/yearbook/2004/18scitec.pdf",
+      "checkedAt": "2026-10-11",
+      "observations": "Official ARC research mention supplies context but no productive measurements."
+    },
+    {
+      "url": "https://www.fromthegarden.co.za/product/feijoa-fruit-salad-tree",
+      "checkedAt": "2026-10-11",
+      "observations": "Supplier's February–March, about-three-year and broad-climate claims checked but not promoted to automatic SA fields. Fruit Salad Tree is common descriptive wording, not a verified named cultivar."
+    }
+  ],
+  "gaps": [
+    "No verified primary South African ripe-harvest window, first/full bearing age or mature per-plant kg established.",
+    "A South African supplier advertises February–March and about three years from seed, but gives no local trial context; these are search leads, not forecast fields.",
+    "No universal chilling range, self-fertility guarantee or safe household shelf life assigned."
+  ]
+}

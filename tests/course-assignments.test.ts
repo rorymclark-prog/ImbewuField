@@ -7,12 +7,17 @@ import {
   assignmentState,
   daysBetween,
   formatDue,
+  localisedDueText,
   orderModulesForLearner,
   sortAssignments,
   summariseAssignments,
   toDateKey,
   type CourseAssignment,
 } from '../lib/course-assignments.ts';
+import st from '../lib/locales/st.ts';
+import ts from '../lib/locales/ts.ts';
+import ve from '../lib/locales/ve.ts';
+import zu from '../lib/locales/zu.ts';
 
 const TODAY = '2026-07-26';
 const MODULES = ['m1', 'm2', 'm3', 'm4', 'm5'];
@@ -78,6 +83,55 @@ test('due dates read as plain language', () => {
   assert.equal(formatDue('2026-07-20', TODAY), '6 days overdue');
   assert.equal(formatDue('2026-07-30', TODAY), 'Due in 4 days');
   assert.equal(formatDue('2026-09-12', TODAY), 'Due 12 Sep');
+});
+
+test('regional due labels keep today, tomorrow, overdue, due-in, and date states distinct', () => {
+  const locales = [
+    { lang: 'st', dict: st },
+    { lang: 've', dict: ve },
+    { lang: 'ts', dict: ts },
+  ] as const;
+  const cases = [
+    ['Due today', 'studentDueToday', null, null],
+    ['Due tomorrow', 'studentDueTomorrow', null, null],
+    ['1 day overdue', 'studentDaysOverdue', '{count}', '1'],
+    ['6 days overdue', 'studentDaysOverdue', '{count}', '6'],
+    ['Due in 2 days', 'studentDueInDays', '{count}', '2'],
+    ['Due in 7 days', 'studentDueInDays', '{count}', '7'],
+    ['Due 12 Sep', 'studentDueDate', '{date}', '12 Sep'],
+  ] as const;
+
+  for (let days = 2; days <= DUE_SOON_DAYS; days += 1) {
+    const dueDate = new Date(Date.UTC(2026, 6, 26 + days)).toISOString().slice(0, 10);
+    assert.equal(
+      formatDue(dueDate, TODAY),
+      `Due in ${days} days`,
+      `the deadline {count} days ahead remains a future due date (${days})`,
+    );
+  }
+  for (const { lang, dict } of locales) {
+    const t = (key: string) => dict[key] ?? key;
+    for (const [source, key, slot, value] of cases) {
+      const template = t(key);
+      const expected = slot ? template.replace(slot, value!) : template;
+      if (slot) assert.equal(template.split(slot).length - 1, 1, `${lang}/${key} keeps its source slot exactly once`);
+      assert.equal(localisedDueText(source, lang, t), expected, `${lang}/${key} retains the state and source value`);
+    }
+    assert.equal(localisedDueText('New status from the source', lang, t), 'New status from the source');
+  }
+});
+
+test('due label localisation preserves isiZulu and leaves English or unlisted languages untouched', () => {
+  const zuText = (key: string) => zu[key] ?? key;
+  const shouldNotBeCalled = () => { throw new Error('unsupported language must keep its source text'); };
+
+  assert.equal(localisedDueText('Due today', 'zu', zuText), 'Kufuneka namuhla');
+  assert.equal(localisedDueText('Due tomorrow', 'zu', zuText), 'Kufuneka kusasa');
+  assert.equal(localisedDueText('1 day overdue', 'zu', zuText), 'Sekudlule izinsuku ezingu-1');
+  assert.equal(localisedDueText('Due in 4 days', 'zu', zuText), 'Kusele izinsuku ezingu-4');
+  assert.equal(localisedDueText('Due 12 Sep', 'zu', zuText), 'Kufuneka ngo-12 Sep');
+  assert.equal(localisedDueText('Due in 4 days', 'en', shouldNotBeCalled), 'Due in 4 days');
+  assert.equal(localisedDueText('Due in 4 days', 'xh', shouldNotBeCalled), 'Due in 4 days');
 });
 
 test('sorting puts the most urgent first and sinks finished work', () => {

@@ -1,0 +1,696 @@
+{
+  "title": "Independent semantic and source check: Tshivenda Soil ordinary completion candidates",
+  "date": "2026-10-06",
+  "readOnly": true,
+  "repositoryEdits": false,
+  "candidatePacket": "/tmp/imbewu-ts-soil-ordinary-completion-candidates-20261006.json",
+  "candidatePacketSHA256": "eb47d8c4b01c4d26286b318465836b08de5c4a4be52e4be5a37e8ac260262f93",
+  "candidateBaseSHA": "66b274842927ba93e47586c322325742716d2a39",
+  "candidateInventory": {
+    "path": "/tmp/imbewu-soil-ordinary-completion-source-inventory-20261006.json",
+    "sha256": "4af2a58358304dd93ba69c9def7260c45ea73e9be337b55bf88490d01526f49b"
+  },
+  "summary": {
+    "rows": 27,
+    "accepted": 15,
+    "repaired": 8,
+    "held": 4
+  },
+  "scopeFinding": "All 27 rows were checked. 25 translation-draft rows carry exact source bindings in the packet; the module title and description were separately checked against exact canonical registry fields. The candidate packet source/native snapshot hashes match the current files in the designated parent worktree.",
+  "nativeFileSnapshotChecks": [
+    {
+      "path": "lib/course-modules.ts",
+      "expectedSHA256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "actualSHA256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "matches": true
+    },
+    {
+      "path": "lib/course-translation-drafts-ts-soil-health.ts",
+      "expectedSHA256": "0bcb9f6efeb130ded9ebd3a5c824e356c24f5825a748357fcc6ce783016b160e",
+      "actualSHA256": "0bcb9f6efeb130ded9ebd3a5c824e356c24f5825a748357fcc6ce783016b160e",
+      "matches": true
+    },
+    {
+      "path": "lib/course-module-translation-drafts.ts",
+      "expectedSHA256": "4905e70c5dbae62a617f25ad0a1ca9f4c98ba14c323e5cc6e481345eeb6ca481",
+      "actualSHA256": "4905e70c5dbae62a617f25ad0a1ca9f4c98ba14c323e5cc6e481345eeb6ca481",
+      "matches": true
+    },
+    {
+      "path": "lib/course-localization.ts",
+      "expectedSHA256": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+      "actualSHA256": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+      "matches": true
+    }
+  ],
+  "prior955Protection": {
+    "packetPath": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/study-translation-reviews/soil-learner-fuller-2026-10-05/soil-learner-final-accepted-candidates.json",
+    "expectedSHA256": "38d5cc52ba57f5e1b7da2461010af86ddfb9697a76963ec23d64e78580867016",
+    "actualSHA256": "38d5cc52ba57f5e1b7da2461010af86ddfb9697a76963ec23d64e78580867016",
+    "hashMatches": true,
+    "checkedTSUnitCount": 85,
+    "allCurrentAcceptedTSUnitsExact": true,
+    "precisionFlags": [
+      {
+        "kind": "prior-14-independent-repair",
+        "id": "soil-health/ts/soil-health-l1/body/paragraph[7]",
+        "currentSourceEnglish": "Compare the settled layers and feel the soil in the field.",
+        "currentTarget": "Fananisa settled layers, kutani u twa misava ensin'wini.",
+        "priorReason": "Use exact settled layers anchor for completed state. Candidate tshamaka describes settling generally; source already-settled category must remain explicit.",
+        "exactAcceptedTargetStillPresent": true,
+        "doNotDuplicateRepair": true
+      },
+      {
+        "kind": "prior-14-independent-repair",
+        "id": "soil-health/ts/soil-health-l1/quiz[1].question",
+        "currentSourceEnglish": "A farmer finds compacted soil and few worms. What is the useful next step?",
+        "currentTarget": "Murimi u kuma misava leyi compacted ni worms ti nga ri tingani. Hi rihi goza leri landzelaka leri nga pfunaka?",
+        "priorReason": "goza replaces Sesotho mohato in the Xitsonga question. The farmer/few worms/compacted and useful next-step framing remain; no action recommendation added.",
+        "exactAcceptedTargetStillPresent": true,
+        "doNotDuplicateRepair": true
+      },
+      {
+        "kind": "prior-14-independent-repair",
+        "id": "soil-health/ts/soil-health-l3/body/paragraph[8]",
+        "currentSourceEnglish": "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.",
+        "currentTarget": "Leachate yi nga va na harmful organisms kumbe substances leswi nga ni khombo. U nga yi tirhisi eka edible plants. U nga ehleketi leswaku dilution yi endla leswaku yi hlayiseka.",
+        "priorReason": "Both independent prohibitions now explicitly negative. Harmful substances qualifier, leachate/edible/dilution technical concepts, can rather than guarantee retained.",
+        "exactAcceptedTargetStillPresent": true,
+        "doNotDuplicateRepair": true
+      },
+      {
+        "kind": "prior-14-independent-repair",
+        "id": "soil-health/ts/soil-health-l3/quiz[1].options[1]",
+        "currentSourceEnglish": "It can contain harmful organisms or substances; dilution is not a safety guarantee",
+        "currentTarget": "Yi nga va na harmful organisms kumbe substances leswi nga ni khombo; dilution a hi safety guarantee",
+        "priorReason": "Both categories explicitly harmful. May/can and dilution NOT safety guarantee remain. No safe dilution or nutrient claim added.",
+        "exactAcceptedTargetStillPresent": true,
+        "doNotDuplicateRepair": true
+      },
+      {
+        "kind": "final-decomposition-or-SA-spelling-repair",
+        "id": "soil-health/ts/soil-health-l1/body/paragraph[0]",
+        "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+        "currentTarget": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku break down organic matter ni ku cycle nutrients.",
+        "exactEnglishHoldOrSpelling": "break down",
+        "exactAcceptedTargetStillPresent": true,
+        "doNotDuplicateRepair": true
+      }
+    ],
+    "candidateClaimsExactWholeNativeRewind": true
+  },
+  "bodyCompositionChecks": [
+    {
+      "lessonId": "soil-health-l1",
+      "changedParagraphIndexes": [
+        9,
+        11
+      ],
+      "allUnlistedParagraphsExact": true
+    },
+    {
+      "lessonId": "soil-health-l2",
+      "changedParagraphIndexes": [
+        10
+      ],
+      "allUnlistedParagraphsExact": true
+    },
+    {
+      "lessonId": "soil-health-l3",
+      "changedParagraphIndexes": [
+        3,
+        5,
+        12
+      ],
+      "allUnlistedParagraphsExact": true
+    }
+  ],
+  "indexAndCoverageChecks": {
+    "candidateProtectionChecks": {
+      "actualWholeCanonicalAndNativeEqualInventory": true,
+      "all27LiteralCurrentSourceBindingsExact": true,
+      "fullRewindEqualsWholeNativeBefore": true,
+      "allUnlistedParagraphsExact": true,
+      "allQuizCorrectIndicesAndSourcesUnchanged": [
+        {
+          "lessonId": "soil-health-l1",
+          "correct": [
+            1,
+            2
+          ]
+        },
+        {
+          "lessonId": "soil-health-l2",
+          "correct": [
+            1,
+            1
+          ]
+        },
+        {
+          "lessonId": "soil-health-l3",
+          "correct": [
+            2,
+            1
+          ]
+        }
+      ],
+      "speciesNumbersAndOtherLanguagesUnchanged": true,
+      "settledLayersL1p7Exact": "Fananisa settled layers, kutani u twa misava ensin'wini.",
+      "leachateBothProhibitionsL3p8Exact": "Leachate yi nga va na harmful organisms kumbe substances leswi nga ni khombo. U nga yi tirhisi eka edible plants. U nga ehleketi leswaku dilution yi endla leswaku yi hlayiseka."
+    },
+    "allQuizCorrectIndicesAndSourcesUnchanged": [
+      {
+        "lessonId": "soil-health-l1",
+        "correct": [
+          1,
+          2
+        ]
+      },
+      {
+        "lessonId": "soil-health-l2",
+        "correct": [
+          1,
+          1
+        ]
+      },
+      {
+        "lessonId": "soil-health-l3",
+        "correct": [
+          2,
+          1
+        ]
+      }
+    ],
+    "speciesNumbersAndOtherLanguagesUnchanged": true
+  },
+  "rows": [
+    {
+      "unitId": "soil-health::ts::moduleTitle",
+      "fieldPath": "moduleTitle",
+      "sourceEnglish": "Soil Health & Composting",
+      "currentTarget": "Soil Health & Composting",
+      "candidateTarget": "Rihanyo ra Misava na Ku Endla Compost",
+      "candidateChanged": true,
+      "verdict": "accept",
+      "recommendedTarget": "Rihanyo ra Misava na Ku Endla Compost",
+      "reason": "The module label is concise and keeps Compost as the domain term. It preserves the source topic.",
+      "sourceBindingExact": "module title/description exact source checked against lib/course-modules.ts",
+      "index": null,
+      "nativeReviewStatus": "hold",
+      "resolverStatus": "english-fallback",
+      "quizPair": {
+        "sourceEnglish": "Soil Health & Composting",
+        "xitsongaDraft": "Soil Health & Composting",
+        "reviewStatus": "hold"
+      }
+    },
+    {
+      "unitId": "soil-health::ts::moduleDescription",
+      "fieldPath": "moduleDescription",
+      "sourceEnglish": "Build living soil with compost, mulch, cover crops and worm farms.",
+      "currentTarget": "Build living soil with compost, mulch, cover crops and worm farms.",
+      "candidateTarget": "Aka misava leyi hanyaka hi compost, mulch, cover crops na worm farms.",
+      "candidateChanged": true,
+      "verdict": "accept",
+      "recommendedTarget": "Aka misava leyi hanyaka hi compost, mulch, cover crops na worm farms.",
+      "reason": "The ordinary instruction to build living soil is localized; compost, mulch, cover crops and worm farms remain as recognizable practice/category labels.",
+      "sourceBindingExact": "module title/description exact source checked against lib/course-modules.ts",
+      "index": null,
+      "nativeReviewStatus": "hold",
+      "resolverStatus": "english-fallback",
+      "quizPair": {
+        "sourceEnglish": "Build living soil with compost, mulch, cover crops and worm farms.",
+        "xitsongaDraft": "Build living soil with compost, mulch, cover crops and worm farms.",
+        "reviewStatus": "hold"
+      }
+    },
+    {
+      "unitId": "soil-health::soil-health-l1::ts::infographicAlt",
+      "fieldPath": "infographicAlt",
+      "sourceEnglish": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+      "currentTarget": "Xiyenge xa misava lexi tsemiweke xi komba dark topsoil ehenhla ka pale subsoil, xi ri na worms timbirhi. Etlhelo ka xona: the soil in the jar settles into three layers — sand, silt na clay.",
+      "candidateTarget": "Xiyenge xa misava lexi tsemiweke xi komba dark topsoil ehenhla ka pale subsoil, xi ri na worms timbirhi. Etlhelo ka xona: misava leyi nga eka jar yi settles into three layers — sand, silt na clay.",
+      "candidateChanged": true,
+      "verdict": "repair",
+      "recommendedTarget": "Xiyenge xa misava lexi tsemiweke xi komba dark topsoil ehenhla ka pale subsoil, xi ri na worms timbirhi. Etlhelo ka xona: misava leyi nga eka jar yi tshamisa yi endla swiphemu swinharhu — sand, silt na clay.",
+      "reason": "The candidate has the English verb “settles” embedded in a local clause. This repair translates the ordinary process and preserves the three distinct material categories.",
+      "sourceBindingExact": true,
+      "index": null,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": {
+        "sourceEnglish": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+        "xitsongaDraft": "Xiyenge xa misava lexi tsemiweke xi komba dark topsoil ehenhla ka pale subsoil, xi ri na worms timbirhi. Etlhelo ka xona: the soil in the jar settles into three layers — sand, silt na clay.",
+        "reviewStatus": "machine-draft"
+      }
+    },
+    {
+      "unitId": "soil-health::soil-health-l1::ts::body::paragraph[1]",
+      "fieldPath": "body",
+      "sourceEnglish": "Some fungi help roots take up nutrients. Worm channels can help water and air enter soil.",
+      "currentTarget": "Fungi tin'wana ti pfuna timitsu ku tswonga nutrients. Worm channels ti nga pfuna mati na moya ku nghena emhlabeni.",
+      "candidateTarget": "Fungi tin'wana ti pfuna timitsu ku tswonga nutrients. Worm channels ti nga pfuna mati na moya ku nghena emhlabeni.",
+      "candidateChanged": false,
+      "verdict": "accept",
+      "recommendedTarget": "Fungi tin'wana ti pfuna timitsu ku tswonga nutrients. Worm channels ti nga pfuna mati na moya ku nghena emhlabeni.",
+      "reason": "Unchanged from current. The paired text preserves the precise fungi/root-nutrient and worm-channel/water-and-air claims, including can-help modality.",
+      "sourceBindingExact": true,
+      "index": 1,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": null
+    },
+    {
+      "unitId": "soil-health::soil-health-l1::ts::body::paragraph[6]",
+      "fieldPath": "body",
+      "sourceEnglish": "A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.",
+      "currentTarget": "Thick sand layer ehansi ka cloudy water a yi si komba final proportions. Fine particles tin’wana ti nga ha va suspended.",
+      "candidateTarget": "Thick sand layer ehansi ka cloudy water a yi si komba final proportions. Fine particles tin’wana ti nga ha va suspended.",
+      "candidateChanged": false,
+      "verdict": "accept",
+      "recommendedTarget": "Thick sand layer ehansi ka cloudy water a yi si komba final proportions. Fine particles tin’wana ti nga ha va suspended.",
+      "reason": "Unchanged from current. The rough-settling and suspended-particle caveats stay explicit; no final proportions are inferred.",
+      "sourceBindingExact": true,
+      "index": 6,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": null
+    },
+    {
+      "unitId": "soil-health::soil-health-l1::ts::body::paragraph[9]",
+      "fieldPath": "body",
+      "sourceEnglish": "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+      "currentTarget": "Compaction, poor drainage na ku lahleka ka organic matter swi nga limit timitsu ni soil life.",
+      "candidateTarget": "Compaction, poor drainage na ku lahleka ka organic matter swi nga vekela timitsu ni leswi hanyaka emhlabeni swipimelo.",
+      "candidateChanged": true,
+      "verdict": "repair",
+      "recommendedTarget": "Compaction, poor drainage na ku lahleka ka organic matter swi nga kavanyeta ku kula ka timitsu ni swilo leswi hanyaka emhlabathini.",
+      "reason": "The proposal’s “put limits on … living things on earth” is awkward and can broaden soil life to life anywhere on earth. The repair localizes can-limit while retaining the soil-organism scope and technical condition names.",
+      "sourceBindingExact": true,
+      "index": 9,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": null
+    },
+    {
+      "unitId": "soil-health::soil-health-l1::ts::body::paragraph[11]",
+      "fieldPath": "body",
+      "sourceEnglish": "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+      "currentTarget": "Languta patterns leti humelelaka ensin'wini hinkwaro. Kambela management history, drainage ni ku kula ka swimilani u nga si hlawula ndlela yo lulamisa.",
+      "candidateTarget": "Languta patterns leti humelelaka ensin'wini hinkwaro. Kambela matimu ya malawulelo, drainage ni ku kula ka swimilani u nga si hlawula ndlela yo lulamisa.",
+      "candidateChanged": true,
+      "verdict": "accept",
+      "recommendedTarget": "Languta patterns leti humelelaka ensin'wini hinkwaro. Kambela matimu ya malawulelo, drainage ni ku kula ka swimilani u nga si hlawula ndlela yo lulamisa.",
+      "reason": "“Matimu ya malawulelo” is a defensible rendering of management history in this field-check context. The check-before-remedy order and all three evidence sources remain.",
+      "sourceBindingExact": true,
+      "index": 11,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": null
+    },
+    {
+      "unitId": "soil-health::soil-health-l1::ts::keyPoints[3]",
+      "fieldPath": "keyPoints[3]",
+      "sourceEnglish": "Check drainage, roots and management history before choosing a remedy",
+      "currentTarget": "Kambela drainage, timitsu na management history u nga si hlawula ndlela yo lulamisa.",
+      "candidateTarget": "Kambela drainage, timitsu na matimu ya malawulelo u nga si hlawula ndlela yo lulamisa.",
+      "candidateChanged": true,
+      "verdict": "accept",
+      "recommendedTarget": "Kambela drainage, timitsu na matimu ya malawulelo u nga si hlawula ndlela yo lulamisa.",
+      "reason": "Same management-history wording as the paragraph; drainage, roots, and “before choosing” are retained.",
+      "sourceBindingExact": true,
+      "index": null,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": {
+        "sourceEnglish": "Check drainage, roots and management history before choosing a remedy",
+        "xitsongaDraft": "Kambela drainage, timitsu na management history u nga si hlawula ndlela yo lulamisa.",
+        "reviewStatus": "machine-draft"
+      }
+    },
+    {
+      "unitId": "soil-health::soil-health-l1::ts::quiz[0].question",
+      "fieldPath": "quiz[0].question",
+      "sourceEnglish": "A soil jar still has cloudy water above the sand layer. What should the farmer conclude?",
+      "currentTarget": "Jar ya misava ya ha ri na cloudy water ehenhla ka sand layer. Murimi u fanele ku gimeta hi yini?",
+      "candidateTarget": "Jar ya misava ya ha ri na cloudy water ehenhla ka sand layer. Murimi u fanele ku gimeta hi yini?",
+      "candidateChanged": false,
+      "verdict": "accept",
+      "recommendedTarget": "Jar ya misava ya ha ri na cloudy water ehenhla ka sand layer. Murimi u fanele ku gimeta hi yini?",
+      "reason": "Unchanged. Cloudy water above sand and the farmer’s conclusion question are preserved.",
+      "sourceBindingExact": true,
+      "index": null,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": {
+        "sourceEnglish": "A soil jar still has cloudy water above the sand layer. What should the farmer conclude?",
+        "xitsongaDraft": "Jar ya misava ya ha ri na cloudy water ehenhla ka sand layer. Murimi u fanele ku gimeta hi yini?",
+        "reviewStatus": "machine-draft"
+      }
+    },
+    {
+      "unitId": "soil-health::soil-health-l1::ts::quiz[0].options[1]",
+      "fieldPath": "quiz[0].options[1]",
+      "sourceEnglish": "Fine particles may still be suspended; more observation is needed",
+      "currentTarget": "Fine particles ti nga ha va suspended; ku laveka ku languta nakambe",
+      "candidateTarget": "Fine particles ti nga ha va suspended; ku laveka ku languta nakambe",
+      "candidateChanged": false,
+      "verdict": "accept",
+      "recommendedTarget": "Fine particles ti nga ha va suspended; ku laveka ku languta nakambe",
+      "reason": "Unchanged technical term and “may still be suspended” remain; further observation is requested.",
+      "sourceBindingExact": true,
+      "index": null,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": {
+        "sourceEnglish": "Fine particles may still be suspended; more observation is needed",
+        "xitsongaDraft": "Fine particles ti nga ha va suspended; ku laveka ku languta nakambe",
+        "reviewStatus": "machine-draft"
+      }
+    },
+    {
+      "unitId": "soil-health::soil-health-l1::ts::quiz[0].rationale",
+      "fieldPath": "quiz[0].rationale",
+      "sourceEnglish": "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment.",
+      "currentTarget": "Cloudy water yi nga va na fine particles leti nga se tshamaka ehansi. Ku languta kan'we le masungulweni a ku koti ku tiyisisa final proportions kumbe treatment leyi faneleke.",
+      "candidateTarget": "Cloudy water yi nga va na fine particles leti nga se tshamaka ehansi. Ku languta kan'we le masungulweni a ku koti ku tiyisisa final proportions kumbe treatment leyi faneleke.",
+      "candidateChanged": false,
+      "verdict": "accept",
+      "recommendedTarget": "Cloudy water yi nga va na fine particles leti nga se tshamaka ehansi. Ku languta kan'we le masungulweni a ku koti ku tiyisisa final proportions kumbe treatment leyi faneleke.",
+      "reason": "Unchanged. It does not infer final proportions or recommend treatment from one early observation.",
+      "sourceBindingExact": true,
+      "index": null,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": {
+        "sourceEnglish": "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment.",
+        "xitsongaDraft": "Cloudy water yi nga va na fine particles leti nga se tshamaka ehansi. Ku languta kan'we le masungulweni a ku koti ku tiyisisa final proportions kumbe treatment leyi faneleke.",
+        "reviewStatus": "machine-draft"
+      }
+    },
+    {
+      "unitId": "soil-health::soil-health-l1::ts::quiz[1].options[2]",
+      "fieldPath": "quiz[1].options[2]",
+      "sourceEnglish": "Check drainage, roots, moisture and management history",
+      "currentTarget": "Kambela drainage, timitsu, ku tsakama ni management history",
+      "candidateTarget": "Kambela drainage, timitsu, ku tsakama ni matimu ya malawulelo",
+      "candidateChanged": true,
+      "verdict": "accept",
+      "recommendedTarget": "Kambela drainage, timitsu, ku tsakama ni matimu ya malawulelo",
+      "reason": "The repeated key-point uses the accepted management-history translation and keeps drainage, roots, moisture, and the before-remedy qualifier.",
+      "sourceBindingExact": true,
+      "index": null,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": {
+        "sourceEnglish": "Check drainage, roots, moisture and management history",
+        "xitsongaDraft": "Kambela drainage, timitsu, ku tsakama ni management history",
+        "reviewStatus": "machine-draft"
+      }
+    },
+    {
+      "unitId": "soil-health::soil-health-l2::ts::infographicAlt",
+      "fieldPath": "infographicAlt",
+      "sourceEnglish": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+      "currentTarget": "Heap ya compost cut open, yi komba alternating layers ta dry brown material na fresh green material; ku hisa ku tlakuka ku suka exikarhini, naswona arrow yi komba leswaku heap ya hundzuluxiwa.",
+      "candidateTarget": "Nhulu ya compost cut open, yi komba layers leti cincanaka ta dry brown material na fresh green material; ku hisa ku tlakuka ku suka exikarhini, naswona nseve wu komba leswaku nhulu ya hundzuluxiwa.",
+      "candidateChanged": true,
+      "verdict": "repair",
+      "recommendedTarget": "Nhulu ya compost leyi pfuriweke leswaku ku vonaka endzeni ka yona, yi komba layers leti cincanaka ta dry brown material na fresh green material; ku hisa ku tlakuka ku suka exikarhini, naswona nseve wu komba leswaku nhulu ya hundzuluxiwa.",
+      "reason": "“Cut open” is left as an English action phrase. The repair makes clear this is a heap opened to show its inside while retaining alternating dry-brown/fresh-green material, heat from the centre, and the turning arrow.",
+      "sourceBindingExact": true,
+      "index": null,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": {
+        "sourceEnglish": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+        "xitsongaDraft": "Heap ya compost cut open, yi komba alternating layers ta dry brown material na fresh green material; ku hisa ku tlakuka ku suka exikarhini, naswona arrow yi komba leswaku heap ya hundzuluxiwa.",
+        "reviewStatus": "machine-draft"
+      }
+    },
+    {
+      "unitId": "soil-health::soil-health-l2::ts::body::paragraph[10]",
+      "fieldPath": "body",
+      "sourceEnglish": "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+      "currentTarget": "Tirhisa clean, untreated materials ntsena. Bark yi bola hi ku nonoka; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.",
+      "candidateTarget": "Tirhisa swilo leswi baseke, leswi untreated ntsena. Bark yi bola hi ku nonoka; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.",
+      "candidateChanged": true,
+      "verdict": "accept",
+      "recommendedTarget": "Tirhisa swilo leswi baseke, leswi untreated ntsena. Bark yi bola hi ku nonoka; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.",
+      "reason": "“Clean” is translated; untreated and contamination remain technical/safety terms. Bark’s slow breakdown and the warning that its name alone proves nothing are preserved.",
+      "sourceBindingExact": true,
+      "index": 10,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": null
+    },
+    {
+      "unitId": "soil-health::soil-health-l2::ts::keyPoints[3]",
+      "fieldPath": "keyPoints[3]",
+      "sourceEnglish": "Judge readiness from the compost condition, not a fixed regional timetable",
+      "currentTarget": "Kambela ku lungheka ka compost hi xiyimo xa yona, ku nga ri hi regional timetable leyi vekiweke.",
+      "candidateTarget": "Kambela ku lungheka ka compost hi xiyimo xa yona, ku nga ri hi nongonoko wa nkarhi wa ndhawu leyi vekiweke.",
+      "candidateChanged": true,
+      "verdict": "hold",
+      "recommendedTarget": "Kambela ku lungheka ka compost hi xiyimo xa yona, ku nga ri hi regional timetable leyi vekiweke.",
+      "reason": "The proposal loses the fixed regional timetable distinction: “nongonoko wa nkarhi wa ndhawu leyi vekiweke” can read as a set local time schedule. Keep the exact current technical phrase until a precise equivalent for fixed regional timetable is supported.",
+      "sourceBindingExact": true,
+      "index": null,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": {
+        "sourceEnglish": "Judge readiness from the compost condition, not a fixed regional timetable",
+        "xitsongaDraft": "Kambela ku lungheka ka compost hi xiyimo xa yona, ku nga ri hi regional timetable leyi vekiweke.",
+        "reviewStatus": "machine-draft"
+      }
+    },
+    {
+      "unitId": "soil-health::soil-health-l2::ts::quiz[0].options[0]",
+      "fieldPath": "quiz[0].options[0]",
+      "sourceEnglish": "Add more nitrogen-rich green material",
+      "currentTarget": "Engetela green material yo tala leyi fuweke hi nitrogen",
+      "candidateTarget": "Engetela swilo swa rihlaza yo tala leyi fuweke hi nitrogen",
+      "candidateChanged": true,
+      "verdict": "hold",
+      "recommendedTarget": "Engetela green material yo tala leyi fuweke hi nitrogen",
+      "reason": "The proposed “swilo swa rihlaza yo tala leyi” has agreement/attachment problems and can make the category simply green things. The current exact green-material label protects the compost input category and its nitrogen-rich qualifier.",
+      "sourceBindingExact": true,
+      "index": null,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": {
+        "sourceEnglish": "Add more nitrogen-rich green material",
+        "xitsongaDraft": "Engetela green material yo tala leyi fuweke hi nitrogen",
+        "reviewStatus": "machine-draft"
+      }
+    },
+    {
+      "unitId": "soil-health::soil-health-l2::ts::quiz[0].options[1]",
+      "fieldPath": "quiz[0].options[1]",
+      "sourceEnglish": "Add more dry carbon material like straw and turn the heap",
+      "currentTarget": "Engetela dry carbon material yo tala yo fana na straw kutani u hundzuluxa nhulu",
+      "candidateTarget": "Engetela carbon material leyi omeke yo tala yo fana na straw kutani u hundzuluxa nhulu",
+      "candidateChanged": true,
+      "verdict": "repair",
+      "recommendedTarget": "Engetela carbon material yo oma yo tala, yo fana na straw, kutani u hundzuluxa nhulu.",
+      "reason": "The candidate correctly localizes dry but has awkward word order. This repair preserves more/additional, dry carbon material, straw as an example, and the instruction to turn the heap.",
+      "sourceBindingExact": true,
+      "index": null,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": {
+        "sourceEnglish": "Add more dry carbon material like straw and turn the heap",
+        "xitsongaDraft": "Engetela dry carbon material yo tala yo fana na straw kutani u hundzuluxa nhulu",
+        "reviewStatus": "machine-draft"
+      }
+    },
+    {
+      "unitId": "soil-health::soil-health-l3::ts::title",
+      "fieldPath": "title",
+      "sourceEnglish": "Mulching and Cover Crops: Protecting and Building Soil",
+      "currentTarget": "Ku Tirhisa Mulch na Cover Crops: Ku Sirhelela Misava na Building Soil",
+      "candidateTarget": "Ku Tirhisa Mulch na Cover Crops: Ku Sirhelela Misava na Ku Aka Misava",
+      "candidateChanged": true,
+      "verdict": "hold",
+      "recommendedTarget": "Ku Tirhisa Mulch na Cover Crops: Ku Sirhelela Misava na Building Soil",
+      "reason": "“Ku Aka Misava” risks meaning physical construction/earthworks. Retain “Building Soil” as the unresolved soil-building concept.",
+      "sourceBindingExact": true,
+      "index": null,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": {
+        "sourceEnglish": "Mulching and Cover Crops: Protecting and Building Soil",
+        "xitsongaDraft": "Ku Tirhisa Mulch na Cover Crops: Ku Sirhelela Misava na Building Soil",
+        "reviewStatus": "machine-draft"
+      }
+    },
+    {
+      "unitId": "soil-health::soil-health-l3::ts::body::paragraph[2]",
+      "fieldPath": "body",
+      "sourceEnglish": "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.",
+      "currentTarget": "Yi hlayiseni ekule na trunks and stems. Kambelani ku tsakama ehansi ka yona, mi lulamisa layer; mulch yo tala a yi vuli leswaku swi ta antswa nkarhi wun'wana ni wun'wana.",
+      "candidateTarget": "Yi hlayiseni ekule na trunks and stems. Kambelani ku tsakama ehansi ka yona, mi lulamisa layer; mulch yo tala a yi vuli leswaku swi ta antswa nkarhi wun'wana ni wun'wana.",
+      "candidateChanged": false,
+      "verdict": "accept",
+      "recommendedTarget": "Yi hlayiseni ekule na trunks and stems. Kambelani ku tsakama ehansi ka yona, mi lulamisa layer; mulch yo tala a yi vuli leswaku swi ta antswa nkarhi wun'wana ni wun'wana.",
+      "reason": "Unchanged. Trunks and stems, checking/adjusting moisture under the layer, and “more is not always better” remain exact.",
+      "sourceBindingExact": true,
+      "index": 2,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": null
+    },
+    {
+      "unitId": "soil-health::soil-health-l3::ts::body::paragraph[3]",
+      "fieldPath": "body",
+      "sourceEnglish": "Cover crops can protect ground between main crops. Choose for local weather, available water and the next planting.",
+      "currentTarget": "Cover crops ti nga sirhelela misava leyi nga kona exikari ka main crops. Ti hlawuleni hi ku ya hi maxelo ya laha, mati lama kumekaka ni ku byala loku landzelaka.",
+      "candidateTarget": "Cover crops ti nga sirhelela misava leyi nga kona exikari ka swibyariwa leswikulu. Ti hlawuleni hi ku ya hi maxelo ya laha, mati lama kumekaka ni ku byala loku landzelaka.",
+      "candidateChanged": true,
+      "verdict": "repair",
+      "recommendedTarget": "Cover crops ti nga sirhelela misava leyi nga kona exikari ka main crops. Ti hlawuleni hi ku ya hi maxelo ya laha, mati lama kumekaka ni ku byala loku landzelaka.",
+      "reason": "“Swibyariwa leswikulu” may mean large crops, while main crops means principal crops. Retain main crops in English; the protect-ground, can, local-weather, water-availability and next-planting clauses remain.",
+      "sourceBindingExact": true,
+      "index": 3,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": null
+    },
+    {
+      "unitId": "soil-health::soil-health-l3::ts::body::paragraph[5]",
+      "fieldPath": "body",
+      "sourceEnglish": "Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.",
+      "currentTarget": "Legumes ti lava bacteria leti faneleke ni swiyimo leswi faneleke swa ku kula leswaku ti fix nitrogen. Nutrients leti nga eka masalela ya tona ta kumeka loko material yi ri karhi yi bola.",
+      "candidateTarget": "Legumes ti lava bacteria leti faneleke ni swiyimo leswi faneleke swa ku kula leswaku ti fix nitrogen. Nutrients leti nga eka masalela ya tona ta kumeka loko swilo leswi swi ri karhi swi bola.",
+      "candidateChanged": true,
+      "verdict": "repair",
+      "recommendedTarget": "Legumes ti lava bacteria leti faneleke ni swiyimo leswi faneleke swa ku kula leswaku ti fix nitrogen. Nutrients leti nga eka masalela ya tona ta kumeka loko masalela ma bola.",
+      "reason": "“Swilo leswi” has an unclear antecedent. The repair names residues as what decomposes and preserves the “become available as” timing relation, without changing the nitrogen-fixation conditions.",
+      "sourceBindingExact": true,
+      "index": 5,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": null
+    },
+    {
+      "unitId": "soil-health::soil-health-l3::ts::body::paragraph[12]",
+      "fieldPath": "body",
+      "sourceEnglish": "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+      "currentTarget": "Cover crops, mulch ni organic matter swi nga pfuna ku khoma misava endhawini ya yona ni ku yi pfuna leswaku yi ya mahlweni yi hanya.",
+      "candidateTarget": "Swibyariwa swo sirhelela misava (cover crops), mulch ni organic matter swi nga pfuna ku khoma misava endhawini ya yona ni ku yi pfuna leswaku yi ya mahlweni yi hanya.",
+      "candidateChanged": true,
+      "verdict": "accept",
+      "recommendedTarget": "Swibyariwa swo sirhelela misava (cover crops), mulch ni organic matter swi nga pfuna ku khoma misava endhawini ya yona ni ku yi pfuna leswaku yi ya mahlweni yi hanya.",
+      "reason": "The proposal localizes cover crops with an English anchor and preserves can-help, holding soil in place, and the soil-stays-alive claim; mulch and organic matter remain domain terms.",
+      "sourceBindingExact": true,
+      "index": 12,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": null
+    },
+    {
+      "unitId": "soil-health::soil-health-l3::ts::quiz[0].options[1]",
+      "fieldPath": "quiz[0].options[1]",
+      "sourceEnglish": "Frost kills soil life and weeds take over early",
+      "currentTarget": "Frost yi dlaya soil life naswona nhova yi talela ndhawu ka ha ri eku sunguleni",
+      "candidateTarget": "Frost yi dlaya leswi hanyaka emhlabeni naswona nhova yi talela ndhawu ka ha ri eku sunguleni",
+      "candidateChanged": true,
+      "verdict": "hold",
+      "recommendedTarget": "Frost yi dlaya soil life naswona nhova yi talela ndhawu ka ha ri eku sunguleni",
+      "reason": "The proposed “leswi hanyaka emhlabeni” can mean living things on earth generally and weakens the soil-life concept. Keep the current technical category phrase pending a precise equivalent.",
+      "sourceBindingExact": true,
+      "index": null,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": {
+        "sourceEnglish": "Frost kills soil life and weeds take over early",
+        "xitsongaDraft": "Frost yi dlaya soil life naswona nhova yi talela ndhawu ka ha ri eku sunguleni",
+        "reviewStatus": "machine-draft"
+      }
+    },
+    {
+      "unitId": "soil-health::soil-health-l3::ts::quiz[0].options[2]",
+      "fieldPath": "quiz[0].options[2]",
+      "sourceEnglish": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
+      "currentTarget": "Wind erosion ya dry topsoil ni ku lahlekeriwa hi soil structure hi ku ba ka spring storm",
+      "candidateTarget": "Wind erosion ya misava ya le henhla leyi omeke ni ku lahlekeriwa hi soil structure hi ku ba ka spring storm",
+      "candidateChanged": true,
+      "verdict": "repair",
+      "recommendedTarget": "Wind erosion ya topsoil leyi omeke (misava ya le henhla) ni ku lahlekeriwa hi soil structure hi ku ba ka spring storm",
+      "reason": "“Misava ya le henhla leyi omeke” alone may describe upper soil without anchoring the technical topsoil category. Add the English anchor while retaining the localized dry qualifier and all erosion/structure/storm relations.",
+      "sourceBindingExact": true,
+      "index": null,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": {
+        "sourceEnglish": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
+        "xitsongaDraft": "Wind erosion ya dry topsoil ni ku lahlekeriwa hi soil structure hi ku ba ka spring storm",
+        "reviewStatus": "machine-draft"
+      }
+    },
+    {
+      "unitId": "soil-health::soil-health-l3::ts::quiz[0].rationale",
+      "fieldPath": "quiz[0].rationale",
+      "sourceEnglish": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away.",
+      "currentTarget": "Misava leyi nga funengetiwangi yi va erivaleni eka mheho wa xixika, lowu nga susaka dry topsoil. Ku ba ka marhonsi ya mpfula ku nga onha vuandlalo; laha mati ma khulukaka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma yi susa.",
+      "candidateTarget": "Misava leyi nga funengetiwangi yi va erivaleni eka mheho wa xixika, lowu nga susaka misava ya le henhla leyi omeke. Ku ba ka marhonsi ya mpfula ku nga onha vuandlalo; laha mati ma khulukaka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma yi susa.",
+      "candidateChanged": true,
+      "verdict": "repair",
+      "recommendedTarget": "Misava leyi nga funengetiwangi yi va erivaleni eka mheho wa xixika, lowu nga susaka topsoil leyi omeke (misava ya le henhla). Ku ba ka marhonsi ya mpfula ku nga onha vuandlalo; laha mati ma khulukaka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma yi susa.",
+      "reason": "The proposed translation removes the explicit topsoil category. Retain it alongside the local gloss; the modal can carry away, raindrop damage, and conditional field runoff remain intact.",
+      "sourceBindingExact": true,
+      "index": null,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": {
+        "sourceEnglish": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away.",
+        "xitsongaDraft": "Misava leyi nga funengetiwangi yi va erivaleni eka mheho wa xixika, lowu nga susaka dry topsoil. Ku ba ka marhonsi ya mpfula ku nga onha vuandlalo; laha mati ma khulukaka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma yi susa.",
+        "reviewStatus": "machine-draft"
+      }
+    },
+    {
+      "unitId": "soil-health::soil-health-l3::ts::quiz[1].options[0]",
+      "fieldPath": "quiz[1].options[0]",
+      "sourceEnglish": "It is always safe on salad leaves",
+      "currentTarget": "Yi hlayisekile minkarhi hinkwayu eka salad leaves",
+      "candidateTarget": "Yi hlayisekile minkarhi hinkwayu eka salad leaves",
+      "candidateChanged": false,
+      "verdict": "accept",
+      "recommendedTarget": "Yi hlayisekile minkarhi hinkwayu eka salad leaves",
+      "reason": "Unchanged. The deliberately absolute “always safe” assertion remains a quiz distractor, with salad leaves retained as the specific crop category.",
+      "sourceBindingExact": true,
+      "index": null,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": {
+        "sourceEnglish": "It is always safe on salad leaves",
+        "xitsongaDraft": "Yi hlayisekile minkarhi hinkwayu eka salad leaves",
+        "reviewStatus": "machine-draft"
+      }
+    },
+    {
+      "unitId": "soil-health::soil-health-l3::ts::quiz[1].options[1]",
+      "fieldPath": "quiz[1].options[1]",
+      "sourceEnglish": "It can contain harmful organisms or substances; dilution is not a safety guarantee",
+      "currentTarget": "Yi nga va na harmful organisms kumbe substances leswi nga ni khombo; dilution a hi safety guarantee",
+      "candidateTarget": "Yi nga va na harmful organisms kumbe substances leswi nga ni khombo; dilution a hi safety guarantee",
+      "candidateChanged": false,
+      "verdict": "accept",
+      "recommendedTarget": "Yi nga va na harmful organisms kumbe substances leswi nga ni khombo; dilution a hi safety guarantee",
+      "reason": "Unchanged and protected by prior review. Harmful organisms or substances, can-contain, and dilution is not a safety guarantee all remain exact.",
+      "sourceBindingExact": true,
+      "index": null,
+      "nativeReviewStatus": "machine-draft",
+      "resolverStatus": "draft",
+      "quizPair": {
+        "sourceEnglish": "It can contain harmful organisms or substances; dilution is not a safety guarantee",
+        "xitsongaDraft": "Yi nga va na harmful organisms kumbe substances leswi nga ni khombo; dilution a hi safety guarantee",
+        "reviewStatus": "machine-draft"
+      }
+    }
+  ],
+  "limits": [
+    "This is an independent meaning and source-consistency review, not fluent-speaker or local farming approval.",
+    "No registry edits or renders were made. Root should recompute complete body strings and source guards from the accepted final set before implementation."
+  ]
+}

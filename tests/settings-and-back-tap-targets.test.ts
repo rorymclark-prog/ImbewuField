@@ -48,21 +48,43 @@ test('BackButton is still the widely-shared control this guard assumes it is', (
   // If usage collapses to a couple of call sites, the "15+ headers" framing above is stale and
   // this test (and the fix it guards) should be re-scoped, not silently left describing a
   // component nobody uses anymore.
-  const importers = [
-    '../app/journal/page.tsx', '../app/records/page.tsx', '../app/cropplan/page.tsx',
-    '../app/network/page.tsx', '../app/vision/page.tsx', '../app/updates/page.tsx',
-    '../app/funder/page.tsx', '../app/surveys/page.tsx', '../app/ngo/page.tsx',
-    '../app/atlas/page.tsx', '../app/invoice/page.tsx',
+  //
+  // w13: /vision, /funder, /surveys and /ngo stopped importing BackButton directly — they now
+  // render components/layout/AppHeader.tsx, which renders BackButton itself (see the earlier
+  // test above: AppHeader's own BackButton still clears the 44px floor). Direct-or-via-AppHeader
+  // both count as "still using BackButton" for this canary's purpose.
+  //
+  // w14: /journal, /network, /updates, /atlas, /contact, /tour, /tips, /offline and /samples moved
+  // to AppHeader too (desk-02/desk-04), so they count the same way.
+  const direct = [
+    '../app/records/page.tsx', '../app/cropplan/page.tsx', '../app/invoice/page.tsx',
+    '../app/calendar/page.tsx', '../app/prices/page.tsx', '../app/farmer/page.tsx', '../app/home/page.tsx',
   ];
-  const stillImports = importers.filter((rel) => {
+  const viaAppHeader = [
+    '../app/vision/page.tsx', '../app/funder/page.tsx', '../app/surveys/page.tsx', '../app/ngo/page.tsx',
+    '../app/journal/page.tsx', '../app/network/page.tsx', '../app/updates/page.tsx', '../app/atlas/page.tsx',
+    '../app/contact/page.tsx', '../app/tour/page.tsx', '../app/tips/page.tsx', '../app/offline/page.tsx',
+    '../app/samples/page.tsx',
+  ];
+  const appHeaderRendersBackButton = /import BackButton/.test(source('../components/layout/AppHeader.tsx'));
+  assert.ok(appHeaderRendersBackButton, 'AppHeader no longer renders BackButton — the pages below no longer reach it at all');
+  const stillImports = direct.filter((rel) => {
     try {
       return /import BackButton/.test(source(rel));
     } catch {
       return false;
     }
   });
+  const stillViaAppHeader = viaAppHeader.filter((rel) => {
+    try {
+      return /import AppHeader/.test(source(rel));
+    } catch {
+      return false;
+    }
+  });
+  const total = stillImports.length + stillViaAppHeader.length;
   assert.ok(
-    stillImports.length >= 10,
-    `only ${stillImports.length} of the expected pages still import BackButton — re-check the "15+ headers" claim above`,
+    total >= 10,
+    `only ${total} of the expected pages still reach BackButton (directly or via AppHeader) — re-check the "15+ headers" claim above`,
   );
 });

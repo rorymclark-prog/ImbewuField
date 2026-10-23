@@ -20,7 +20,10 @@ interface PWAUpdateNotifierProps {
   initialBuildSha?: string | null;
 }
 
-const UPDATE_CHECK_MS = 60_000;
+// perf-08: this used to re-check the 130 KB service worker and build-info endpoint every minute,
+// all day, even with nothing to find. Focus/visibility/online already catch a real update sooner
+// than any interval would, so the interval is just the background fallback.
+const UPDATE_CHECK_MS = 15 * 60_000;
 const UPDATE_RELOAD_TIMEOUT_MS = 1_200;
 
 /**

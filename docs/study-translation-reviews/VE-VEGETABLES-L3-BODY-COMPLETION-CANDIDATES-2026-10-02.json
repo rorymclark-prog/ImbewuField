@@ -1,0 +1,198 @@
+{
+  "packetVersion": 1,
+  "created": "2026-10-02",
+  "language": "Tshivenda (VE)",
+  "moduleId": "vegetables-staples",
+  "lessonId": "vegetables-staples-l3",
+  "sourceRevision": "3c82b61f70ddd86ae2d0521b9fa9174080e5184d",
+  "canonicalSourcePath": "lib/course-modules.ts",
+  "currentRegistryPath": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+  "registryFinding": "L3 is wired as a mixed Tshivenda draft. Existing localized passages are preserved byte-for-byte in this packet; candidates cover remaining ordinary prose only. Crop/species and agronomic paragraphs with sensitive qualifiers remain exact English.",
+  "sourceParagraphCount": 16,
+  "paragraphOrder": "Canonical zero-based paragraph indices",
+  "entries": [
+    {
+      "fieldPath": "lessons[2].body.paragraphs[0]",
+      "paragraphIndex": 0,
+      "exactSourceEnglish": "A staple earns its place because it feeds the household beyond the day of harvest.",
+      "currentRegistryDraft": "Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo.",
+      "candidateTshivendaDraft": "Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo.",
+      "draftStatus": "preserve existing draft verbatim",
+      "drafterBacktranslation": "",
+      "conditions": "Already-translated paragraph: preserve verbatim; no edits to the existing draft.",
+      "uncertainty": "The prior machine draft remains unreviewed."
+    },
+    {
+      "fieldPath": "lessons[2].body.paragraphs[1]",
+      "paragraphIndex": 1,
+      "exactSourceEnglish": "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+      "currentRegistryDraft": "Tshiḽiwa tsha vhuthogwa tshi fara energy kana protein. Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa. Nahone kanzhi tshi na cultural memory.",
+      "candidateTshivendaDraft": "Tshiḽiwa tsha vhuthogwa tshi fara energy kana protein. Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa. Nahone kanzhi tshi na cultural memory.",
+      "draftStatus": "preserve existing draft verbatim",
+      "drafterBacktranslation": "",
+      "conditions": "Already-translated paragraph: preserve verbatim; no edits to the existing draft.",
+      "uncertainty": "The prior machine draft remains unreviewed."
+    },
+    {
+      "fieldPath": "lessons[2].body.paragraphs[2]",
+      "paragraphIndex": 2,
+      "exactSourceEnglish": "One staple leaves you vulnerable. Two or more give you options when weather or pests hit.",
+      "currentRegistryDraft": "Tshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea khetho musi mutsho kana zwikhokhonono zwi tshi kwama zwimela.",
+      "candidateTshivendaDraft": "Tshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea khetho musi mutsho kana zwikhokhonono zwi tshi kwama zwimela.",
+      "draftStatus": "preserve existing draft verbatim",
+      "drafterBacktranslation": "",
+      "conditions": "Already-translated paragraph: preserve verbatim; no edits to the existing draft.",
+      "uncertainty": "The prior machine draft remains unreviewed."
+    },
+    {
+      "fieldPath": "lessons[2].body.paragraphs[3]",
+      "paragraphIndex": 3,
+      "exactSourceEnglish": "Grow at least two. Not one.",
+      "currentRegistryDraft": "Grow at least two. Not one.",
+      "candidateTshivendaDraft": "Alusani zwivhili kana zwo engaho. Hu si tshithihi.",
+      "draftStatus": "machine-draft candidate",
+      "drafterBacktranslation": "Grow two or more. Not one.",
+      "conditions": "Preserves the minimum of two and the explicit contrast with one; no crop is specified.",
+      "uncertainty": "Low: numeral is written in words in Tshivenda, with the original threshold preserved."
+    },
+    {
+      "fieldPath": "lessons[2].body.paragraphs[4]",
+      "paragraphIndex": 4,
+      "exactSourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentRegistryDraft": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "candidateTshivendaDraft": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "draftStatus": "exact-English hold",
+      "drafterBacktranslation": "Which staple does your household rely on most right now? That is the one whose failure could hurt you most, so it needs a companion.",
+      "conditions": "Root accepted independent check: retain most-heavily reliance and would-hurt-most modality/superlative byte-for-byte.",
+      "uncertainty": "English hold; prior candidate did not preserve the comparative strength."
+    },
+    {
+      "fieldPath": "lessons[2].body.paragraphs[5]",
+      "paragraphIndex": 5,
+      "exactSourceEnglish": "Each staple protects you against something different.",
+      "currentRegistryDraft": "Tshiḽiwa tsha vhuthogwa tshiṅwe na tshiṅwe tshi ni tsireledza kha zwithu zwo fhambanaho.",
+      "candidateTshivendaDraft": "Tshiḽiwa tsha vhuthogwa tshiṅwe na tshiṅwe tshi ni tsireledza kha zwithu zwo fhambanaho.",
+      "draftStatus": "preserve existing draft verbatim",
+      "drafterBacktranslation": "",
+      "conditions": "Already-translated paragraph: preserve verbatim; no edits to the existing draft.",
+      "uncertainty": "The prior machine draft remains unreviewed."
+    },
+    {
+      "fieldPath": "lessons[2].body.paragraphs[6]",
+      "paragraphIndex": 6,
+      "exactSourceEnglish": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "currentRegistryDraft": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "candidateTshivendaDraft": "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+      "draftStatus": "exact-English hold",
+      "drafterBacktranslation": "",
+      "conditions": "Exact English hold: contains crop/species identity or precise seed, storage, drought, water-stress, timing, edible-leaf, or wet-ground claims. Keep the full paragraph verbatim pending language review.",
+      "uncertainty": "Do not alter species or agronomic claim/qualification in this draft."
+    },
+    {
+      "fieldPath": "lessons[2].body.paragraphs[7]",
+      "paragraphIndex": 7,
+      "exactSourceEnglish": "Beans and cowpeas give a storable protein harvest.",
+      "currentRegistryDraft": "Beans and cowpeas give a storable protein harvest.",
+      "candidateTshivendaDraft": "Beans and cowpeas give a storable protein harvest.",
+      "draftStatus": "exact-English hold",
+      "drafterBacktranslation": "",
+      "conditions": "Exact English hold: contains crop/species identity or precise seed, storage, drought, water-stress, timing, edible-leaf, or wet-ground claims. Keep the full paragraph verbatim pending language review.",
+      "uncertainty": "Do not alter species or agronomic claim/qualification in this draft."
+    },
+    {
+      "fieldPath": "lessons[2].body.paragraphs[8]",
+      "paragraphIndex": 8,
+      "exactSourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "currentRegistryDraft": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "candidateTshivendaDraft": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "draftStatus": "exact-English hold",
+      "drafterBacktranslation": "",
+      "conditions": "Exact English hold: contains crop/species identity or precise seed, storage, drought, water-stress, timing, edible-leaf, or wet-ground claims. Keep the full paragraph verbatim pending language review.",
+      "uncertainty": "Do not alter species or agronomic claim/qualification in this draft."
+    },
+    {
+      "fieldPath": "lessons[2].body.paragraphs[9]",
+      "paragraphIndex": 9,
+      "exactSourceEnglish": "Amadumbe handles wetter ground, where other staples struggle.",
+      "currentRegistryDraft": "Amadumbe handles wetter ground, where other staples struggle.",
+      "candidateTshivendaDraft": "Amadumbe handles wetter ground, where other staples struggle.",
+      "draftStatus": "exact-English hold",
+      "drafterBacktranslation": "",
+      "conditions": "Exact English hold: contains crop/species identity or precise seed, storage, drought, water-stress, timing, edible-leaf, or wet-ground claims. Keep the full paragraph verbatim pending language review.",
+      "uncertainty": "Do not alter species or agronomic claim/qualification in this draft."
+    },
+    {
+      "fieldPath": "lessons[2].body.paragraphs[10]",
+      "paragraphIndex": 10,
+      "exactSourceEnglish": "Notice that they fail in different conditions. That's the whole point.",
+      "currentRegistryDraft": "Notice that they fail in different conditions. That's the whole point.",
+      "candidateTshivendaDraft": "Ṱhogomelani uri zwi kundwa kha conditions dzo fhambanaho. Ndi zwone zwine zwa vha ndeme nga maanḓa.",
+      "draftStatus": "machine-draft candidate",
+      "drafterBacktranslation": "Notice that they fail in different conditions. That is the main point.",
+      "conditions": "Preserves different conditions and that this difference is the central point.",
+      "uncertainty": "Moderate: ‘the whole point’ rendered as the important/main point."
+    },
+    {
+      "fieldPath": "lessons[2].body.paragraphs[11]",
+      "paragraphIndex": 11,
+      "exactSourceEnglish": "Resilience doesn't mean nothing fails.",
+      "currentRegistryDraft": "Resilience a zwi ambi uri a hu na zwine zwa kundwa.",
+      "candidateTshivendaDraft": "Resilience a zwi ambi uri a hu na zwine zwa kundwa.",
+      "draftStatus": "preserve existing draft verbatim",
+      "drafterBacktranslation": "",
+      "conditions": "Already-translated paragraph: preserve verbatim; no edits to the existing draft.",
+      "uncertainty": "The prior machine draft remains unreviewed."
+    },
+    {
+      "fieldPath": "lessons[2].body.paragraphs[12]",
+      "paragraphIndex": 12,
+      "exactSourceEnglish": "It means one failure doesn't finish your household's food plan.",
+      "currentRegistryDraft": "Zwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu.",
+      "candidateTshivendaDraft": "Zwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu.",
+      "draftStatus": "preserve existing draft verbatim",
+      "drafterBacktranslation": "",
+      "conditions": "Already-translated paragraph: preserve verbatim; no edits to the existing draft.",
+      "uncertainty": "The prior machine draft remains unreviewed."
+    },
+    {
+      "fieldPath": "lessons[2].body.paragraphs[13]",
+      "paragraphIndex": 13,
+      "exactSourceEnglish": "One crop is one point of failure.",
+      "currentRegistryDraft": "Tshibyariwa tshithihi ndi point nthihi ya failure.",
+      "candidateTshivendaDraft": "Tshibyariwa tshithihi ndi point nthihi ya failure.",
+      "draftStatus": "preserve existing draft verbatim",
+      "drafterBacktranslation": "",
+      "conditions": "Already-translated paragraph: preserve verbatim; no edits to the existing draft.",
+      "uncertainty": "The prior machine draft remains unreviewed."
+    },
+    {
+      "fieldPath": "lessons[2].body.paragraphs[14]",
+      "paragraphIndex": 14,
+      "exactSourceEnglish": "Two or more staples give you more ways to keep eating.",
+      "currentRegistryDraft": "Two or more staples give you more ways to keep eating.",
+      "candidateTshivendaDraft": "Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea dziṅwe nḓila nnzhi dza u bvela phanḓa ni tshiḽa.",
+      "draftStatus": "machine-draft candidate",
+      "drafterBacktranslation": "Two or more staples give you more ways to keep eating.",
+      "conditions": "Preserves the minimum of two and the resilience claim as more ways to continue eating.",
+      "uncertainty": "Moderate: ‘staples’ uses the established L3 term ‘zwiḽiwa zwa vhuthogwa’."
+    },
+    {
+      "fieldPath": "lessons[2].body.paragraphs[15]",
+      "paragraphIndex": 15,
+      "exactSourceEnglish": "Different crops use water, soil and seasons differently. That difference is the protection.",
+      "currentRegistryDraft": "Zwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho. That difference is the protection.",
+      "candidateTshivendaDraft": "Zwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho. Phambano yeneyo ndi yone tsireledzo.",
+      "draftStatus": "machine-draft candidate",
+      "drafterBacktranslation": "Different crops use water, soil, and seasons differently. That difference is the protection.",
+      "conditions": "Preserves the existing translated first sentence verbatim and translates only the second sentence, retaining the causal protection statement.",
+      "uncertainty": "Low to moderate: preserves current first sentence exactly; second is a direct translation."
+    }
+  ],
+  "constraints": [
+    "No canonical changes or repo edits.",
+    "Preserve existing translated paragraphs verbatim.",
+    "No new crops, numbers, planting recommendations, or food-resilience guarantees.",
+    "No claim of fluent approval; drafts require independent Tshivenda review."
+  ],
+  "independentCheck": "All16 current source/registry paragraphs checked; p4 exact-English repaired by root. No fluent approval."
+}

@@ -1,0 +1,139 @@
+{
+  "packetId": "imbewu-ve-vegetables-l2-assessment-20261002-backcheck",
+  "status": "independent semantic backcheck; candidate drafts remain unreviewed and not fluent-approved",
+  "language": "Tshivenda (ve)",
+  "moduleId": "vegetables-staples",
+  "lessonId": "vegetables-staples-l2",
+  "packetSourceRevision": "fb5f4b733b73f38a5d59adcaf0f496b5f90217dd",
+  "verifiedCanonicalRevision": "3c82b61f70ddd86ae2d0521b9fa9174080e5184d",
+  "canonicalSource": "lib/course-modules.ts",
+  "canonicalChecks": "All 17 packet source strings and both quiz correct indices [1, 1] match the current canonical lesson. Current VE L2 registry fields are exact-English holds.",
+  "answerIndices": [
+    1,
+    1
+  ],
+  "findings": [
+    {
+      "fieldPath": "lessons[1].title",
+      "sourceEnglish": "Succession Planting and Intercropping",
+      "candidate": "Succession Planting na Intercropping",
+      "status": "accept",
+      "finding": "“na” supplies “and”; the technical succession/intercropping names remain unchanged."
+    },
+    {
+      "fieldPath": "lessons[1].keyPoints[0]",
+      "sourceEnglish": "Stagger sowings and adjust the interval for crop, weather and household use",
+      "candidate": "Shumisani staggered sowings, ni shandule interval u ya nga crop, weather na household use.",
+      "status": "accept_with_review",
+      "finding": "Retains staggered sowings, interval adjustment, and all three factors (crop, weather, household use). No schedule is added."
+    },
+    {
+      "fieldPath": "lessons[1].keyPoints[1]",
+      "sourceEnglish": "The Three Sisters comes from Indigenous farming traditions in the Americas",
+      "candidate": "The Three Sisters comes from Indigenous farming traditions in the Americas",
+      "status": "exact_english_hold",
+      "finding": "Cultural attribution and named system correctly remain exact."
+    },
+    {
+      "fieldPath": "lessons[1].keyPoints[2]",
+      "sourceEnglish": "Use household food records to identify and plan for a hungry gap",
+      "candidate": "Shumisani household food records u wana na u pulana hungry gap.",
+      "status": "accept_with_review",
+      "finding": "Household food records remain the basis; the draft says find and plan for the retained hungry gap."
+    },
+    {
+      "fieldPath": "lessons[1].keyPoints[3]",
+      "sourceEnglish": "Intercropped plants can still compete; manage space, timing and water",
+      "candidate": "Zwimela zwo ṱavhiwaho zwo ṱanganelana zwi nga kha ḓi konkurisana; langani space, timing na maḓi.",
+      "status": "accept_with_review",
+      "finding": "Preserves that intercropped plants can still compete and the space/timing/water factors. No crop roles are invented."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[0].question",
+      "sourceEnglish": "Why sow lettuce in small batches every 2-3 weeks instead of all at once?",
+      "candidate": "Ndi ngani ni tshi sow lettuce nga small batches every 2-3 weeks, nṱhani ha u i sow all at once?",
+      "status": "accept_with_review",
+      "finding": "Keeps lettuce, sowing, small batches, exact 2-3 weeks, and the contrast with sowing all at once."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[0].options[0]",
+      "sourceEnglish": "It uses less seed overall",
+      "candidate": "Zwi shumisa mbeu iṱuku nga u angaredza.",
+      "status": "hold_recommended",
+      "finding": "`mbeu iṱuku nga u angaredza` reads as a small/low amount of seed overall, but the exact comparative “less seed overall” is not explicit. Retain “It uses less seed overall” exact English unless a checked comparative is supplied."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[0].options[1]",
+      "sourceEnglish": "It gives a steady harvest instead of a glut followed by a gap",
+      "candidate": "It gives a steady harvest instead of a glut followed by a gap",
+      "status": "exact_english_hold",
+      "finding": "Correct option remains exact; the steady-harvest versus glut-then-gap meaning is preserved."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[0].options[2]",
+      "sourceEnglish": "Lettuce germinates better in small batches",
+      "candidate": "Lettuce i germinate zwavhuḓi nga small batches.",
+      "status": "hold_recommended",
+      "finding": "`zwavhuḓi` means well/good; it does not clearly preserve the comparative “better.” Retain “Lettuce germinates better in small batches” exact English."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[0].options[3]",
+      "sourceEnglish": "It reduces pest pressure",
+      "candidate": "Zwi fhungudza pest pressure.",
+      "status": "accept_with_review",
+      "finding": "Preserves the distractor claim “It reduces pest pressure”; term remains exact English."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[0].rationale",
+      "sourceEnglish": "A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.",
+      "candidate": "A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.",
+      "status": "exact_english_hold",
+      "finding": "Preserves one large sowing maturing at once, staggered sowing spreading harvest, and the household-use purpose."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[1].question",
+      "sourceEnglish": "When can nitrogen in bean crop residues become available to other plants?",
+      "candidate": "Ndi lini nitrogen in bean crop residues i nga vha available kha other plants?",
+      "status": "accept_with_review",
+      "finding": "Retains the question about when nitrogen in bean residues can become available; no timing is added. The English availability terms preserve the technical mechanism."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[1].options[0]",
+      "sourceEnglish": "Immediately whenever a bean touches maize",
+      "candidate": "Nga u ṱavhanya tshifhinga tshoṱhe musi bean i tshi kwama maize.",
+      "status": "accept_with_review",
+      "finding": "Preserves “immediately,” “whenever,” and the bean/maize contact condition in the incorrect distractor."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[1].options[1]",
+      "sourceEnglish": "As soil organisms decompose the residues",
+      "candidate": "As soil organisms decompose the residues",
+      "status": "exact_english_hold",
+      "finding": "Correct option and decomposition timing condition remain exact."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[1].options[2]",
+      "sourceEnglish": "Only when pumpkin leaves shade them",
+      "candidate": "Only when pumpkin leaves shade them",
+      "status": "exact_english_hold",
+      "finding": "The exact “only when” restriction and pumpkin identity remain unchanged."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[1].options[3]",
+      "sourceEnglish": "It can never be released",
+      "candidate": "A i nga vhi released.",
+      "status": "hold_recommended",
+      "finding": "`A i nga vhi released` likely conveys inability, but does not independently establish the explicit “never” absolute. Retain “It can never be released” exact English."
+    },
+    {
+      "fieldPath": "lessons[1].quiz[1].rationale",
+      "sourceEnglish": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+      "candidate": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+      "status": "exact_english_hold",
+      "finding": "Preserves suitable root bacteria, decomposition release, and the no-immediate-feeding caveat exactly."
+    }
+  ],
+  "overall": "Do not accept quiz0 option2 as preserving “better” or quiz1 option3 as preserving the absolute “never” without repair; quiz0 option0 also lacks an explicit comparative. Hold those exact English. The other proposed ordinary framing candidates preserve the source claims at this semantic-check level; fluent Tshivenda review remains outstanding.",
+  "repositoryEditsMade": false,
+  "fluencyApprovalClaim": false
+}

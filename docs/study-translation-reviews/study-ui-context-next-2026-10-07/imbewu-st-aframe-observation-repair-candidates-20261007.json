@@ -1,0 +1,52 @@
+{
+  "head": "27dc083deda68dd33bfc67bf7c954037ee4a70f1",
+  "sourceReviewPacket": "/tmp/imbewu-core-final-ordinary-residual-candidates-20261007.json",
+  "decision": "HOLD_LOCALIZED_OBSERVATION_CLAUSE",
+  "language": "st",
+  "scope": "Source-bound draft only; no fluency or approval claim.",
+  "semanticAssessment": {
+    "sourceClause": "Its marks are an observation",
+    "currentLearnerFragment": "Matshwao a yona ke tlhokomelo feela",
+    "literalConcern": "Tlhokomelo may mean care/attention. That does not securely convey that the A-frame marks represent an observation/record of what was seen.",
+    "candidateAssessed": "Matshwao a yona a bontsha se bonweng feela",
+    "candidateVerdict": "HOLD",
+    "candidateConcern": "This says the marks show only what was seen. It adds “show” and “only”, and could narrow or distort the source. I cannot verify a safer natural Sesotho equivalent from the supplied source-bound evidence.",
+    "safeAction": "Keep the exact English observation clause visible as a technical hold while retaining the safe Sesotho setup and all localized warning/assessment wording around it. Do not turn the A-frame observation into design approval."
+  },
+  "bindings": [
+    {
+      "kind": "actual-learner",
+      "file": "lib/course-translation-drafts-st-reading-landscape.ts",
+      "lesson": "reading-landscape-l1",
+      "field": "body paragraph 1",
+      "sourceEnglish": "An A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+      "currentTarget": "Level ya A-frame e ka o thusa ho tshwaya dintlha tse bophahamong bo lekanang le ho latela mola wa contour. Matshwao a yona ke tlhokomelo feela, eseng moralo kapa tumello ya ho tjheka mobu (earthworks). Pele o tjheka mokero (swale), letamo, kapa sebopeho se seng, etsa hore sebaka se hlahlojwe. Mofuta wa mobu, letswapo, tsamaiso ya metsi, phallo ya sefefo, le tsela e sireletsehileng ya ho phalla ha metsi a tletse (overflow route) kaofela di a hlokahala. Botsa moeletsi wa lehae ya kwetlisitsweng (trained local adviser).",
+      "localizedPrefixBeforeHeldClause": "Level ya A-frame e ka o thusa ho tshwaya dintlha tse bophahamong bo lekanang le ho latela mola wa contour. ",
+      "exactChangedFragment": "Matshwao a yona ke tlhokomelo feela",
+      "localizedSuffixAfterHeldClause": ", eseng moralo kapa tumello ya ho tjheka mobu (earthworks). Pele o tjheka mokero (swale), letamo, kapa sebopeho se seng, etsa hore sebaka se hlahlojwe. Mofuta wa mobu, letswapo, tsamaiso ya metsi, phallo ya sefefo, le tsela e sireletsehileng ya ho phalla ha metsi a tletse (overflow route) kaofela di a hlokahala. Botsa moeletsi wa lehae ya kwetlisitsweng (trained local adviser).",
+      "heldFragment": "Its marks are an observation",
+      "candidateComposition": "Level ya A-frame e ka o thusa ho tshwaya dintlha tse bophahamong bo lekanang le ho latela mola wa contour. Its marks are an observation, eseng moralo kapa tumello ya ho tjheka mobu (earthworks). Pele o tjheka mokero (swale), letamo, kapa sebopeho se seng, etsa hore sebaka se hlahlojwe. Mofuta wa mobu, letswapo, tsamaiso ya metsi, phallo ya sefefo, le tsela e sireletsehileng ya ho phalla ha metsi a tletse (overflow route) kaofela di a hlokahala. Botsa moeletsi wa lehae ya kwetlisitsweng (trained local adviser)."
+    },
+    {
+      "kind": "visible-paired-target",
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "slide": 6,
+      "field": "slides[5].target.body[2].segments[4]",
+      "sourceEnglish": "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+      "currentTarget": "A-frame e ka u thusa ho tshwaya dintlha tse bophahamo bo lekanang mme o latele contour line. Its marks are an observation; ha se moralo kapa tumello ya earthworks. Pele u cheka, etsa hore sebaka se hlahlojoe. Mobu, moepa, ho ntsha metsi mobung, phallo ya metsi a sefefo (storm flow) le tsela e sireletsehileng ya ho ntsha metsi a mangata kaofela di bohlokwa. Botsa moeletsi ea koetlisitsoeng oa sebakeng seo.",
+      "localizedPrefixBeforeHeldClause": "A-frame e ka u thusa ho tshwaya dintlha tse bophahamo bo lekanang mme o latele contour line. ",
+      "exactChangedFragment": "Matshwao a yona ke tlhokomelo feela",
+      "localizedSuffixAfterHeldClause": "; ha se moralo kapa tumello ya earthworks. Pele u cheka, etsa hore sebaka se hlahlojoe. Mobu, moepa, ho ntsha metsi mobung, phallo ya metsi a sefefo (storm flow) le tsela e sireletsehileng ya ho ntsha metsi a mangata kaofela di bohlokwa. Botsa moeletsi ea koetlisitsoeng oa sebakeng seo.",
+      "heldFragment": "Its marks are an observation",
+      "candidateComposition": null,
+      "actualCurrentSegment": {
+        "sourceEnglish": "Its marks are an observation",
+        "status": "english-hold"
+      },
+      "currentSegmentStatus": "english-hold",
+      "recommendedAction": "retain existing exact English hold without changes",
+      "compositionNote": "The visible paired draft already holds this exact English source clause. No paired-target edit is proposed; preserve its existing localized prefix and suffix segments in order."
+    }
+  ],
+  "limitations": "Learner paragraph: change only the unsafe ambiguous observation fragment to its exact English source clause as a visible technical hold; keep the localized safe A-frame prefix and every localized warning, condition and adviser clause exactly. Paired slide 6 already marks the same English clause as english-hold; leave that native field unchanged. No fluent or agricultural approval."
+}

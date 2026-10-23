@@ -1,0 +1,2630 @@
+{
+  "title": "Independent second semantic check of Vegetables L3 repaired candidates",
+  "date": "2026-10-06",
+  "createdAt": "2026-10-05T22:31:22.623736+00:00",
+  "readOnly": true,
+  "repositoryEdits": false,
+  "method": "Different author independently backtranslated each candidate and recorded source comparison separately. Sources were visible in the session; this is not claimed to be a blinded review. No external/native Agy audit dispatch is claimed.",
+  "candidateFile": {
+    "path": "/tmp/imbewu-vegetables-l3-ordinary-assessment-repaired-candidates-20261006.json",
+    "sha256": "9273737ea9d61a004ed9a132a05d8e3013ce6d0f86091c9f4e84c5942db4802f",
+    "stableDuringReview": true
+  },
+  "sourcePacket": {
+    "path": "/Users/roryclark/Downloads/ImbewuField-Agy-next-learner-review-20261005/source-and-draft.json",
+    "sha256": "b3732dbf47fecbec68e238e5528fddc4595484f2b726f75e0d5b724ccf927f09",
+    "units": 572
+  },
+  "nativeBindings": [
+    {
+      "path": "lib/course-modules.ts",
+      "expected": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "actual": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "exact": true
+    },
+    {
+      "path": "lib/course-localization.ts",
+      "expected": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+      "actual": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+      "exact": true
+    },
+    {
+      "path": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "expected": "6a12db51a598565f8d35f4de3c47dbcec8d089c3eeb1770b8770756a49e55136",
+      "actual": "6a12db51a598565f8d35f4de3c47dbcec8d089c3eeb1770b8770756a49e55136",
+      "exact": true
+    },
+    {
+      "path": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "expected": "475f5c350f4dc4a9351c6c6a578a7a8b87a29e9aa39290015bf2870c5d6fbe6b",
+      "actual": "475f5c350f4dc4a9351c6c6a578a7a8b87a29e9aa39290015bf2870c5d6fbe6b",
+      "exact": true
+    },
+    {
+      "path": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "expected": "5bb95bc4c89f589029228ffa4f9685df127a6e3d85f0f7b44ba434ed4430f67d",
+      "actual": "5bb95bc4c89f589029228ffa4f9685df127a6e3d85f0f7b44ba434ed4430f67d",
+      "exact": true
+    }
+  ],
+  "globalChecks": {
+    "34UniqueIDsSourceCurrentExact": true,
+    "all34NativeResolverBindingsExact": true,
+    "allFiveNativeFileHashesExactAtF3b75a58": true,
+    "correctIndices": [
+      1,
+      1
+    ],
+    "bodyChangesProposed": 0,
+    "cropNamesNumbersPreserved": true,
+    "halfBelowGroundNotAbove": true,
+    "youngLeavesNotNewLeaves": true,
+    "afterRootsFormEarlyWaterDistinct": true,
+    "negativesModalsComparativesCheckedIndividually": true,
+    "noFluentApprovalMandatoryPrepublicationGate": true,
+    "publicationRequiresRootAcceptedFinalCandidatesAndActualDiagramInspection": true
+  },
+  "counts": {
+    "ACCEPT": 28,
+    "HOLD_EXACT_ENGLISH": 4,
+    "REPAIR": 2
+  },
+  "verdicts": [
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "st",
+      "fieldPath": "keyPoints[2]",
+      "sourceEnglish": "Sweet potato develops some drought tolerance after storage roots form, but needs water early; young leaves are edible",
+      "currentTarget": "Sweet potato develops some drought tolerance after storage roots form, but needs water early; young leaves are edible",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::st::keyPoints[2]",
+      "candidate": "Sweet potato e ba le drought tolerance e itseng ka mora hore storage roots di bopehe, empa e hloka metsi qalong; young leaves tsa yona di a jeha",
+      "technicalEnglishHolds": [
+        "Sweet potato",
+        "drought tolerance",
+        "storage roots",
+        "young leaves"
+      ],
+      "reason": "After storage-root formation, limited drought tolerance, early water need, and young-leaf age all remain. Young leaves and the agronomic terms remain precise English anchors.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "Sweet potato",
+          "drought tolerance",
+          "storage roots",
+          "young leaves"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Some drought tolerance only after storage roots form; needs water early; young leaves edible.",
+          "young leaves retained exactly to avoid replacing age with small-size/fresh-leaf wording; a precise local age phrase still needs review."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "Sweet potato",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "drought tolerance",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "storage roots",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "young leaves",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Sweet potato e ba le drought tolerance e itseng ka mora hore storage roots di bopehe, empa e hloka metsi qalong; young leaves tsa yona di a jeha",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "The stage condition, “some,” early water need, and young-leaf age remain explicit. English plant/agronomy anchors are retained; no ordinary phrase stands out as unnecessarily English.",
+      "independentFirstBacktranslation": "Sweet potato gets some drought tolerance after storage roots form, but needs water at the beginning; its young leaves are edible.",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "Sweet potato acquires some drought tolerance after storage roots have formed, but it needs water at the beginning; its young leaves can be eaten.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::st::keyPoints[2]",
+        "canonical": "Sweet potato develops some drought tolerance after storage roots form, but needs water early; young leaves are edible",
+        "current": "Sweet potato develops some drought tolerance after storage roots form, but needs water early; young leaves are edible",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Sweet potato e ba le drought tolerance e itseng ka mora hore storage roots di bopehe, empa e hloka metsi qalong; young leaves tsa yona di a jeha",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ve",
+      "fieldPath": "title",
+      "sourceEnglish": "Staple Crops: Maize, Beans, and Root Vegetables",
+      "currentTarget": "Staple Crops: Maize, Beans, and Root Vegetables",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ve::title",
+      "candidate": "Staple Crops: Maize, Beans, and Root Vegetables",
+      "technicalEnglishHolds": [
+        "Staple Crops: Maize, Beans, and Root Vegetables"
+      ],
+      "reason": "Exact source title retains staple crop identity and all three named crop groups; whole-title English hold is defensible.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": false,
+        "remainingPrecisionEnglish": [
+          "Staple Crops: Maize, Beans, and Root Vegetables"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "ROOT EXCLUSION — full English title held; first independent ACCEPT is not root approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "Staple Crops: Maize, Beans, and Root Vegetables",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Zwimela zwa Vhuthogwa: Maize, Beans, na Root Vegetables",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "The Tshivenda title frame is translated while crop names/categories stay as source anchors. No meaning shift found.",
+      "independentFirstBacktranslation": "Important crops: Maize, Beans, and Root Vegetables.",
+      "finalDisposition": "SOURCE_ENGLISH_HOLD",
+      "repairReason": "Root rejected Important crops as a dietary-staple equivalent. Preserve entire current title; localizing only na would be pseudo-translation.",
+      "changeFromOriginal": "root exclusion: full current English title retained",
+      "rootReview": "Important crops does not preserve dietary staple role.",
+      "independentBacktranslation": "Staple Crops: Maize, Beans, and Root Vegetables",
+      "verdict": "HOLD_EXACT_ENGLISH",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ve::title",
+        "canonical": "Staple Crops: Maize, Beans, and Root Vegetables",
+        "current": "Staple Crops: Maize, Beans, and Root Vegetables",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Staple Crops: Maize, Beans, and Root Vegetables",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": true,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ve",
+      "fieldPath": "infographicAlt",
+      "sourceEnglish": "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.",
+      "currentTarget": "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ve::infographicAlt",
+      "candidate": "Zwimela zwiraru zwa staple zwo ṱangana: tsinde ḽilapfu ḽa grain, vine ine ya namela kha thanda, na tshimela tsha midzi tsho sumbedzwaho hafu yatsho i fhasi ha mavu.",
+      "technicalEnglishHolds": [
+        "grain",
+        "vine",
+        "staple"
+      ],
+      "reason": "Three crops, grain stem, climbing vine on a pole, and half of the root crop below ground all remain. Staple is now explicit; no height/proportion/species added.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "grain",
+          "vine",
+          "staple"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "requires independent repaired-row semantic backcheck",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "grain",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "vine",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "staple",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Zwimela zwiraru zwa vhuthogwa zwo ṱangana: tall grain stalk, climbing vine kha thanda, na root crop yo sumbedzwaho hafu yayo i fhasi ha mavu.",
+      "independentFirstVerdict": "REPAIR",
+      "independentFirstReason": "The pole and half-below-ground composition are present, but “tall grain stalk,” “climbing vine,” and “root crop” are ordinary image descriptions left entirely in English. Translate those descriptions while preserving the stated composition; no local wording supplied because I cannot defend a Tshivenda repair.",
+      "independentFirstBacktranslation": "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown with half of it below the soil.",
+      "repairReason": "Translate tall/stalk, climbing/on-pole and root-crop/half-below-soil composition. Keep grain and vine as precise crop-form nouns rather than inventing a species. Preserve the dietary staple role explicitly; the Important crops wording is not equivalent.",
+      "finalDisposition": "PROPOSED_REPAIR_REQUIRES_SECOND_CHECK",
+      "changeFromOriginal": "bounded ordinary-framing repair",
+      "independentBacktranslation": "Three staple crops together: a tall grain stem, a vine climbing a pole, and a root crop shown with half of it below the soil.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ve::infographicAlt",
+        "canonical": "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.",
+        "current": "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Zwimela zwiraru zwa staple zwo ṱangana: tsinde ḽilapfu ḽa grain, vine ine ya namela kha thanda, na tshimela tsha midzi tsho sumbedzwaho hafu yatsho i fhasi ha mavu.",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ve",
+      "fieldPath": "keyPoints[0]",
+      "sourceEnglish": "Open-pollinated maize lets you save seed; hybrid seed won't breed true next season",
+      "currentTarget": "Open-pollinated maize lets you save seed; hybrid seed won't breed true next season",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ve::keyPoints[0]",
+      "candidate": "Open-pollinated maize i ni tendela u vhulunga mbeu; mbeu ya hybrid a i nga ḓo breed true khalaṅwaha i tevhelaho",
+      "technicalEnglishHolds": [
+        "Open-pollinated maize",
+        "hybrid",
+        "breed true"
+      ],
+      "reason": "Seed saving remains permitted by open-pollination; negative breed-true prediction and next-season timing stay explicit.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "Open-pollinated maize",
+          "hybrid",
+          "breed true"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "Open-pollinated maize",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "hybrid",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "breed true",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Open-pollinated maize i ni tendela u vhulunga mbeu; mbeu ya hybrid a i nga ḓo breed true khalaṅwaha i tevhelaho",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "Seed saving, the hybrid negation, and next-season timing are preserved. The seed/genetics terms are reasonable English anchors.",
+      "independentFirstBacktranslation": "Open-pollinated maize allows you to save seed; hybrid seed will not breed true the next season.",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "Open-pollinated maize allows you to save seed; hybrid seed will not breed true in the following season.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ve::keyPoints[0]",
+        "canonical": "Open-pollinated maize lets you save seed; hybrid seed won't breed true next season",
+        "current": "Open-pollinated maize lets you save seed; hybrid seed won't breed true next season",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Open-pollinated maize i ni tendela u vhulunga mbeu; mbeu ya hybrid a i nga ḓo breed true khalaṅwaha i tevhelaho",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ve",
+      "fieldPath": "keyPoints[1]",
+      "sourceEnglish": "Beans are the key protein crop — productive, storable, and nitrogen-fixing",
+      "currentTarget": "Beans are the key protein crop — productive, storable, and nitrogen-fixing",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ve::keyPoints[1]",
+      "candidate": "Beans ndi tshimela tsha ndeme tsha protein — tshi a bveledza zwavhuḓi, tshi a vhulungea, nahone ndi nitrogen-fixing",
+      "technicalEnglishHolds": [
+        "Beans",
+        "protein",
+        "nitrogen-fixing"
+      ],
+      "reason": "The key/important protein role, productivity, storage ability, and nitrogen fixing are all present. No yield figure or new claim added.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "Beans",
+          "protein",
+          "nitrogen-fixing"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "Beans",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "protein",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "nitrogen-fixing",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Beans ndi tshimela tsha ndeme tsha protein — tshi a bveledza zwavhuḓi, tshi a vhulungea, nahone ndi nitrogen-fixing",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "The key/protein relation and three properties are retained. “Beans,” “protein,” and “nitrogen-fixing” remain technical/source anchors.",
+      "independentFirstBacktranslation": "Beans are the important protein crop: it produces well, can be stored, and fixes nitrogen.",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "Beans are an important protein crop: productive, able to be stored, and nitrogen-fixing.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ve::keyPoints[1]",
+        "canonical": "Beans are the key protein crop — productive, storable, and nitrogen-fixing",
+        "current": "Beans are the key protein crop — productive, storable, and nitrogen-fixing",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Beans ndi tshimela tsha ndeme tsha protein — tshi a bveledza zwavhuḓi, tshi a vhulungea, nahone ndi nitrogen-fixing",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ve",
+      "fieldPath": "keyPoints[2]",
+      "sourceEnglish": "Sweet potato develops some drought tolerance after storage roots form, but needs water early; young leaves are edible",
+      "currentTarget": "Sweet potato develops some drought tolerance after storage roots form, but needs water early; young leaves are edible",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ve::keyPoints[2]",
+      "candidate": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dzo no vhumbea, fhedzi i ṱoḓa maḓi mathomoni; young leaves ayo a a lea",
+      "technicalEnglishHolds": [
+        "Sweet potato",
+        "drought tolerance",
+        "storage roots",
+        "young leaves"
+      ],
+      "reason": "After and early remain distinct. Young leaves is retained, avoiding the incorrect new-leaf interpretation.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "Sweet potato",
+          "drought tolerance",
+          "storage roots",
+          "young leaves"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Some drought tolerance only after storage roots form; needs water early; young leaves edible.",
+          "young leaves retained exactly to avoid replacing age with small-size/fresh-leaf wording; a precise local age phrase still needs review."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "Sweet potato",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "drought tolerance",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "storage roots",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "young leaves",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dzo no vhumbea, fhedzi i ṱoḓa maḓi mathomoni; young leaves ayo a a lea",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "“Some,” after root formation, early water need, and young-leaf age survive the backtranslation. Technical anchors stay in English.",
+      "independentFirstBacktranslation": "Sweet potato gets some drought tolerance after the storage roots have formed, but it needs water early; its young leaves are edible.",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "Sweet potato acquires some drought tolerance after storage roots have formed, but it needs water at the beginning; its young leaves can be eaten.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ve::keyPoints[2]",
+        "canonical": "Sweet potato develops some drought tolerance after storage roots form, but needs water early; young leaves are edible",
+        "current": "Sweet potato develops some drought tolerance after storage roots form, but needs water early; young leaves are edible",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dzo no vhumbea, fhedzi i ṱoḓa maḓi mathomoni; young leaves ayo a a lea",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ve",
+      "fieldPath": "keyPoints[3]",
+      "sourceEnglish": "Amadumbe (taro) is an underused traditional staple suited to wetter KZN and coastal ground",
+      "currentTarget": "Amadumbe (taro) is an underused traditional staple suited to wetter KZN and coastal ground",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ve::keyPoints[3]",
+      "candidate": "Amadumbe (taro) ndi staple ya sialala i sa shumiswi nga ho eḓanaho, i fanele mavu a KZN ane a vha na maḓi manzhi u fhira na mavu a tsini ha lwanzhe.",
+      "technicalEnglishHolds": [
+        "Amadumbe (taro)",
+        "staple",
+        "KZN"
+      ],
+      "reason": "Staple is explicit, underuse remains negative/insufficient use, wetter remains comparative, and KZN/coastal scope stays intact.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "Amadumbe (taro)",
+          "staple",
+          "KZN"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "requires independent repaired-row semantic backcheck",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "Amadumbe (taro)",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "staple",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "KZN",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Amadumbe (taro) ndi tshimela tsha vhuthogwa tsha sialala tshi sa shumiswi nga ho eḓanaho, tshi fanele wetter KZN na coastal ground",
+      "independentFirstVerdict": "REPAIR",
+      "independentFirstReason": "“Underused traditional staple” is translated, but “wetter KZN” and “coastal ground” remain ordinary descriptive English. Localize those moisture/location descriptions while keeping crop identity and comparison intact; no defensible Venda wording supplied.",
+      "independentFirstBacktranslation": "Amadumbe (taro) is an underused traditional staple crop, suited to wetter KZN and coastal ground.",
+      "repairReason": "Translate wetter as having comparatively more water and coastal ground as ground near the sea; preserve underused/traditional/suited relation without adding waterlogging or rainfall amounts. Root additionally requires explicit dietary staple role; staple is retained rather than using important crop.",
+      "finalDisposition": "PROPOSED_REPAIR_REQUIRES_SECOND_CHECK",
+      "changeFromOriginal": "bounded ordinary-framing repair",
+      "rootReview": "Retain dietary staple identity as English staple; Important crop is weaker.",
+      "independentBacktranslation": "Amadumbe (taro) is an insufficiently used traditional staple suited to wetter KZN ground and ground near the sea.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ve::keyPoints[3]",
+        "canonical": "Amadumbe (taro) is an underused traditional staple suited to wetter KZN and coastal ground",
+        "current": "Amadumbe (taro) is an underused traditional staple suited to wetter KZN and coastal ground",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Amadumbe (taro) ndi staple ya sialala i sa shumiswi nga ho eḓanaho, i fanele mavu a KZN ane a vha na maḓi manzhi u fhira na mavu a tsini ha lwanzhe.",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ve",
+      "fieldPath": "quiz[0].question",
+      "sourceEnglish": "Why choose open-pollinated maize over a hybrid variety if you plan to save your own seed?",
+      "currentTarget": "Why choose open-pollinated maize over a hybrid variety if you plan to save your own seed?",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[0].question",
+      "candidate": "Ndi ngani ni tshi khetha open-pollinated maize u fhira lushaka lwa hybrid arali ni tshi dzudzanya u vhulunga mbeu yaṋu?",
+      "technicalEnglishHolds": [
+        "open-pollinated maize",
+        "hybrid"
+      ],
+      "reason": "Open-pollinated versus hybrid choice remains conditional on planning to save own seed.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "open-pollinated maize",
+          "hybrid"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Preserve F1 may-grow and next-generation-can-vary modals.",
+          "Keep stable variety and managed pollination conditions.",
+          "False distractors retain more/always/cannot absolutes; do not repair their factual falsehood.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "open-pollinated maize",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "hybrid",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Ndi ngani ni tshi khetha open-pollinated maize u fhira lushaka lwa hybrid arali ni tshi dzudzanya u vhulunga mbeu yaṋu?",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "The comparison and condition about planning to save one’s own seed remain. Technical seed terms can stay in English.",
+      "independentFirstBacktranslation": "Why do you choose open-pollinated maize rather than a hybrid variety if you plan to save your seed?",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "Why choose open-pollinated maize rather than a hybrid kind if you plan to save your own seed?",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[0].question",
+        "canonical": "Why choose open-pollinated maize over a hybrid variety if you plan to save your own seed?",
+        "current": "Why choose open-pollinated maize over a hybrid variety if you plan to save your own seed?",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Ndi ngani ni tshi khetha open-pollinated maize u fhira lushaka lwa hybrid arali ni tshi dzudzanya u vhulunga mbeu yaṋu?",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ve",
+      "fieldPath": "quiz[0].rationale",
+      "sourceEnglish": "Seed saved from an F1 hybrid may grow, but the next generation can vary. A stable open-pollinated variety with managed pollination is more predictable when saving seed.",
+      "currentTarget": "Seed saved from an F1 hybrid may grow, but the next generation can vary. A stable open-pollinated variety with managed pollination is more predictable when saving seed.",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[0].rationale",
+      "candidate": "Mbeu yo vhulungwaho kha F1 hybrid i nga mela, fhedzi zwimela zwa murafho u tevhelaho zwi nga fhambana. Mvelelo dza lushaka lwa open-pollinated lu re stable lune pollination ya lo ya langwa dzi a leluwa u bvumba u fhira, musi ni tshi vhulunga mbeu.",
+      "technicalEnglishHolds": [
+        "F1 hybrid",
+        "open-pollinated",
+        "stable",
+        "pollination"
+      ],
+      "reason": "May germinate and can vary remain possibilities, not certainties. Stable variety plus managed pollination remains the condition for comparative predictability; results wording expresses the same seed-saving comparison.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "F1 hybrid",
+          "open-pollinated",
+          "stable",
+          "pollination"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "requires independent repaired-row semantic backcheck",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Preserve F1 may-grow and next-generation-can-vary modals.",
+          "Keep stable variety and managed pollination conditions.",
+          "False distractors retain more/always/cannot absolutes; do not repair their factual falsehood.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "F1 hybrid",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "open-pollinated",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "stable",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "pollination",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Mbeu yo vhulungwaho kha F1 hybrid i nga mela, fhedzi zwimela zwa murafho u tevhelaho zwi nga fhambana. stable open-pollinated variety ine pollination ya langwa i vha more predictable musi ni tshi vhulunga mbeu.",
+      "independentFirstVerdict": "REPAIR",
+      "independentFirstReason": "Both “may” claims and the next-generation variation are retained, as is managed pollination. “Stable” and “more predictable” remain generic English wording inside an otherwise translated rationale; translate ordinary framing while keeping precise seed terms if needed. No full replacement supplied because the wording of stability/predictability needs language review.",
+      "independentFirstBacktranslation": "Seed saved from an F1 hybrid may germinate, but plants in the next generation may differ. A stable open-pollinated variety whose pollination is managed is more predictable when saving seed.",
+      "repairReason": "Preserve both possibility modals and next-generation variation. Translate more predictable as outcomes easier to predict, with explicit comparative u fhira; retain stable as the seed-variety/genetic stability anchor until a precise local equivalent is independently defended.",
+      "finalDisposition": "PROPOSED_REPAIR_REQUIRES_SECOND_CHECK",
+      "changeFromOriginal": "bounded ordinary-framing repair",
+      "independentBacktranslation": "Seed saved from an F1 hybrid may sprout, but the plants of the next generation can differ. The results of a stable open-pollinated variety whose pollination is managed are easier to predict when saving seed.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[0].rationale",
+        "canonical": "Seed saved from an F1 hybrid may grow, but the next generation can vary. A stable open-pollinated variety with managed pollination is more predictable when saving seed.",
+        "current": "Seed saved from an F1 hybrid may grow, but the next generation can vary. A stable open-pollinated variety with managed pollination is more predictable when saving seed.",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Mbeu yo vhulungwaho kha F1 hybrid i nga mela, fhedzi zwimela zwa murafho u tevhelaho zwi nga fhambana. Mvelelo dza lushaka lwa open-pollinated lu re stable lune pollination ya lo ya langwa dzi a leluwa u bvumba u fhira, musi ni tshi vhulunga mbeu.",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ve",
+      "fieldPath": "quiz[0].options[0]",
+      "sourceEnglish": "Open-pollinated varieties yield more",
+      "currentTarget": "Open-pollinated varieties yield more",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[0].options[0]",
+      "candidate": "Varieties dza open-pollinated dzi bveledza khaṋo nnzhi u fhira",
+      "technicalEnglishHolds": [
+        "Varieties",
+        "open-pollinated"
+      ],
+      "reason": "The comparative greater yield survives without an absolute or a numeric yield. This remains the same false option.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "Varieties",
+          "open-pollinated"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "requires independent repaired-row semantic backcheck",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Preserve F1 may-grow and next-generation-can-vary modals.",
+          "Keep stable variety and managed pollination conditions.",
+          "False distractors retain more/always/cannot absolutes; do not repair their factual falsehood.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "Varieties",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "open-pollinated",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Varieties dza open-pollinated dzi yield more",
+      "independentFirstVerdict": "REPAIR",
+      "independentFirstReason": "“Yield more” is ordinary proposition wording left in English. Translate it; preserve that this remains the false option. No defensible Venda wording supplied.",
+      "independentFirstBacktranslation": "Open-pollinated varieties yield more.",
+      "repairReason": "Translate yield more as produce a comparatively greater harvest, retaining the implicit comparison and the option’s false status; no added comparator or yield figure.",
+      "finalDisposition": "PROPOSED_REPAIR_REQUIRES_SECOND_CHECK",
+      "changeFromOriginal": "bounded ordinary-framing repair",
+      "independentBacktranslation": "Open-pollinated varieties produce a greater harvest.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[0].options[0]",
+        "canonical": "Open-pollinated varieties yield more",
+        "current": "Open-pollinated varieties yield more",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Varieties dza open-pollinated dzi bveledza khaṋo nnzhi u fhira",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ve",
+      "fieldPath": "quiz[0].options[1]",
+      "sourceEnglish": "Hybrid seed won't breed true — the next generation won't match the parent plant",
+      "currentTarget": "Hybrid seed won't breed true — the next generation won't match the parent plant",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[0].options[1]",
+      "candidate": "Mbeu ya hybrid a i nga ḓo breed true — zwimela zwa murafho u tevhelaho a zwi nga ḓo fana na tshimela tsha mubebi",
+      "technicalEnglishHolds": [
+        "hybrid",
+        "breed true"
+      ],
+      "reason": "Two future negatives remain: no breed-true outcome and no next-generation match to the parent. No all-plants-identical guarantee introduced.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "hybrid",
+          "breed true"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Preserve F1 may-grow and next-generation-can-vary modals.",
+          "Keep stable variety and managed pollination conditions.",
+          "False distractors retain more/always/cannot absolutes; do not repair their factual falsehood.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "hybrid",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "breed true",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Mbeu ya hybrid a i nga ḓo breed true — zwimela zwa murafho u tevhelaho a zwi nga ḓo fana na tshimela tsha mubebi",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "Both “won’t” negations and the parent comparison are explicit. The technical phrase “breed true” is retained.",
+      "independentFirstBacktranslation": "Hybrid seed will not breed true — plants in the next generation will not be like the parent plant.",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "Hybrid seed will not breed true: the plants of the next generation will not be like the parent plant.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[0].options[1]",
+        "canonical": "Hybrid seed won't breed true — the next generation won't match the parent plant",
+        "current": "Hybrid seed won't breed true — the next generation won't match the parent plant",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Mbeu ya hybrid a i nga ḓo breed true — zwimela zwa murafho u tevhelaho a zwi nga ḓo fana na tshimela tsha mubebi",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ve",
+      "fieldPath": "quiz[0].options[2]",
+      "sourceEnglish": "Open-pollinated maize is always more drought-tolerant",
+      "currentTarget": "Open-pollinated maize is always more drought-tolerant",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[0].options[2]",
+      "candidate": "Open-pollinated maize i dzulela u vha more drought-tolerant",
+      "technicalEnglishHolds": [
+        "Open-pollinated maize",
+        "more drought-tolerant"
+      ],
+      "reason": "Dzulela u vha conveys always/continually being; more drought-tolerant remains the exact comparative English predicate. Same false absolute option, not advice.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "Open-pollinated maize",
+          "more drought-tolerant"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Preserve F1 may-grow and next-generation-can-vary modals.",
+          "Keep stable variety and managed pollination conditions.",
+          "False distractors retain more/always/cannot absolutes; do not repair their factual falsehood.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "Open-pollinated maize",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "more drought-tolerant",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Open-pollinated maize i dzulela u vha more drought-tolerant",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "The absolute “always” and the comparative “more” survive. The drought-tolerance term is a precision anchor; this remains the same false option.",
+      "independentFirstBacktranslation": "Open-pollinated maize is always more drought-tolerant.",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "Open-pollinated maize is always more drought-tolerant.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[0].options[2]",
+        "canonical": "Open-pollinated maize is always more drought-tolerant",
+        "current": "Open-pollinated maize is always more drought-tolerant",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Open-pollinated maize i dzulela u vha more drought-tolerant",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ve",
+      "fieldPath": "quiz[0].options[3]",
+      "sourceEnglish": "Hybrids can't be planted in South Africa",
+      "currentTarget": "Hybrids can't be planted in South Africa",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[0].options[3]",
+      "candidate": "Hybrids a dzi koni u ṱavhiwa Afurika Tshipembe",
+      "technicalEnglishHolds": [
+        "Hybrids"
+      ],
+      "reason": "The negative planting-capability claim and South Africa are retained as the same false option, without adding a new legal claim.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "Hybrids"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Preserve F1 may-grow and next-generation-can-vary modals.",
+          "Keep stable variety and managed pollination conditions.",
+          "False distractors retain more/always/cannot absolutes; do not repair their factual falsehood.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "Hybrids",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Hybrids a dzi koni u ṱavhiwa Afurika Tshipembe",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "“Can’t” is retained as inability/prohibition wording and the country is unchanged; this remains the same false option.",
+      "independentFirstBacktranslation": "Hybrids cannot be planted in South Africa.",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "Hybrids cannot be planted in South Africa.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[0].options[3]",
+        "canonical": "Hybrids can't be planted in South Africa",
+        "current": "Hybrids can't be planted in South Africa",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Hybrids a dzi koni u ṱavhiwa Afurika Tshipembe",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ve",
+      "fieldPath": "quiz[1].question",
+      "sourceEnglish": "Why is amadumbe (taro) a good staple choice for parts of KZN?",
+      "currentTarget": "Why is amadumbe (taro) a good staple choice for parts of KZN?",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[1].question",
+      "candidate": "Ndi ngani amadumbe (taro) i tshi vha khetho yavhuḓi ya tshimela tsha vhuthogwa kha zwiṅwe zwipiḓa zwa KZN?",
+      "technicalEnglishHolds": [
+        "amadumbe (taro)",
+        "KZN"
+      ],
+      "reason": "Important crop does not preserve dietary staple. Retain English staple in the choice noun phrase; question identity must stay narrower than any important crop.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "amadumbe (taro)",
+          "KZN"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "FIRST ACCEPT plus unresolved dietary-staple semantic flag; root decision required",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Keep damp/wet comparisons and maize contrast without adding waterlogging or guaranteeing harvest.",
+          "Preserve very dry/sandy, no cultivation at all and only/multiple-years false distractors.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "amadumbe (taro)",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "KZN",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Ndi ngani amadumbe (taro) i tshi vha khetho yavhuḓi ya tshimela tsha vhuthogwa kha zwiṅwe zwipiḓa zwa KZN?",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "Question meaning and “parts of KZN” scope are preserved.",
+      "independentFirstBacktranslation": "Why is amadumbe (taro) a good choice of staple crop in some parts of KZN?",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "rootReview": "Same dietary-staple risk: tshimela tsha vhuthogwa can mean important crop. Root has not approved this accepted candidate; do not publish without resolving this term.",
+      "publicationEligible": false,
+      "independentBacktranslation": "Why is amadumbe (taro) a good choice of important crop for some parts of KZN?",
+      "verdict": "REPAIR",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[1].question",
+        "canonical": "Why is amadumbe (taro) a good staple choice for parts of KZN?",
+        "current": "Why is amadumbe (taro) a good staple choice for parts of KZN?",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": "Ndi ngani amadumbe (taro) i tshi vha khetho yavhuḓi ya staple kha zwiṅwe zwipiḓa zwa KZN?",
+      "secondCheckFinalCandidate": "Ndi ngani amadumbe (taro) i tshi vha khetho yavhuḓi ya staple kha zwiṅwe zwipiḓa zwa KZN?",
+      "acceptableAsUnreviewedSourcePairedCandidate": false,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ve",
+      "fieldPath": "quiz[1].rationale",
+      "sourceEnglish": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "currentTarget": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[1].rationale",
+      "candidate": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "technicalEnglishHolds": [
+        "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well."
+      ],
+      "reason": "Exact source rationale retains actually, damper comparative, counterfactual would struggle, niche, other staples and negative handle-well threshold. No may/would weakening or failure overstatement.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": false,
+        "remainingPrecisionEnglish": [
+          "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well."
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "English hold preserved; no localized meaning approved",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Keep damp/wet comparisons and maize contrast without adding waterlogging or guaranteeing harvest.",
+          "Preserve very dry/sandy, no cultivation at all and only/multiple-years false distractors.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Amadumbe i takalela damper ground zwa vhukuma, hune maize ya nga konḓelwa — i ḓadza niche ine zwiṅwe zwimela zwa vhuthogwa zwa sa kone u i shumisa zwavhuḓi.",
+      "independentFirstVerdict": "HOLD",
+      "independentFirstReason": "“Damper ground” and “niche” are left in English. More seriously, the last clause can read as other staples being unable to use the niche, instead of being unable to handle the ground/conditions well. Have a fluent reviewer confirm the referent and the “would struggle” force before accepting.",
+      "independentFirstBacktranslation": "Amadumbe really prefers damper ground, where maize may struggle; it fills a niche that other staple crops cannot use well.",
+      "repairReason": "Keep the original complete source-English target. Independent review could not confirm the absolute always or rationale modal/referent; do not publish the rejected pseudo-localization.",
+      "finalDisposition": "SOURCE_ENGLISH_HOLD",
+      "changeFromOriginal": "rejected draft removed; full current English retained",
+      "independentBacktranslation": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "verdict": "HOLD_EXACT_ENGLISH",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[1].rationale",
+        "canonical": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+        "current": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": true,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ve",
+      "fieldPath": "quiz[1].options[0]",
+      "sourceEnglish": "It thrives on very dry, sandy soil",
+      "currentTarget": "It thrives on very dry, sandy soil",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[1].options[0]",
+      "candidate": "I aluwa zwavhuḓi kha mavu o omaho vhukuma, a muṱavha",
+      "technicalEnglishHolds": [],
+      "reason": "Very, dryness, sand and positive thrive/grow-well distractor remain, without a new drought recommendation.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Keep damp/wet comparisons and maize contrast without adding waterlogging or guaranteeing harvest.",
+          "Preserve very dry/sandy, no cultivation at all and only/multiple-years false distractors.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [],
+      "originalCandidate": "I aluwa zwavhuḓi kha mavu o omaho vhukuma, a muṱavha",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "The false option’s very-dry and sandy conditions are both preserved.",
+      "independentFirstBacktranslation": "It grows very well in very dry, sandy soil.",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "It grows well on very dry sandy soil.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[1].options[0]",
+        "canonical": "It thrives on very dry, sandy soil",
+        "current": "It thrives on very dry, sandy soil",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "I aluwa zwavhuḓi kha mavu o omaho vhukuma, a muṱavha",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ve",
+      "fieldPath": "quiz[1].options[1]",
+      "sourceEnglish": "It tolerates wetter ground than maize, suiting coastal and high-rainfall conditions",
+      "currentTarget": "It tolerates wetter ground than maize, suiting coastal and high-rainfall conditions",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[1].options[1]",
+      "candidate": "I konḓelela mavu a re na maḓi manzhi u fhira ane maize ya konḓelela, zwine zwa ita uri i fanele mavu a tsini ha lwanzhe na nyimele dza mvula nnzhi.",
+      "technicalEnglishHolds": [
+        "maize"
+      ],
+      "reason": "The comparison is tolerance of wetter ground than maize, not mere preference or survival at any wetness. Coastal and high-rainfall suitability remain.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "maize"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "requires independent repaired-row semantic backcheck",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Keep damp/wet comparisons and maize contrast without adding waterlogging or guaranteeing harvest.",
+          "Preserve very dry/sandy, no cultivation at all and only/multiple-years false distractors.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "maize",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "I konḓelela wetter ground u fhira maize, zwine zwa ita uri i fanele coastal na high-rainfall conditions",
+      "independentFirstVerdict": "REPAIR",
+      "independentFirstReason": "The direction of the comparison (“wetter than maize”) and suitability relation are preserved. “Wetter ground,” “coastal,” and “high-rainfall conditions” remain ordinary descriptive English; translate those while preserving the comparison. No defensible Venda replacement supplied.",
+      "independentFirstBacktranslation": "It tolerates wetter ground than maize, which makes it suitable for coastal and high-rainfall conditions.",
+      "repairReason": "Make the tolerance comparison explicit: ground with more water than maize tolerates; translate coastal and high-rainfall suitability. Do not assert tolerance of flooding or waterlogging.",
+      "finalDisposition": "PROPOSED_REPAIR_REQUIRES_SECOND_CHECK",
+      "changeFromOriginal": "bounded ordinary-framing repair",
+      "independentBacktranslation": "It tolerates ground wetter than maize tolerates, making it suitable for coastal ground and high-rainfall conditions.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[1].options[1]",
+        "canonical": "It tolerates wetter ground than maize, suiting coastal and high-rainfall conditions",
+        "current": "It tolerates wetter ground than maize, suiting coastal and high-rainfall conditions",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "I konḓelela mavu a re na maḓi manzhi u fhira ane maize ya konḓelela, zwine zwa ita uri i fanele mavu a tsini ha lwanzhe na nyimele dza mvula nnzhi.",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ve",
+      "fieldPath": "quiz[1].options[2]",
+      "sourceEnglish": "It requires no cultivation at all",
+      "currentTarget": "It requires no cultivation at all",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[1].options[2]",
+      "candidate": "A i ṱoḓi cultivation na luthihi",
+      "technicalEnglishHolds": [
+        "cultivation"
+      ],
+      "reason": "No cultivation at all is explicit, including the absolute no/at-all qualifier; the false option is not softened to little cultivation.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "cultivation"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Keep damp/wet comparisons and maize contrast without adding waterlogging or guaranteeing harvest.",
+          "Preserve very dry/sandy, no cultivation at all and only/multiple-years false distractors.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "cultivation",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "A i ṱoḓi cultivation na luthihi",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "The absolute “no … at all” is explicit. “Cultivation” is an agronomic term reasonably retained in English; this remains the same false option.",
+      "independentFirstBacktranslation": "It does not need cultivation at all.",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "It does not need cultivation at all.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[1].options[2]",
+        "canonical": "It requires no cultivation at all",
+        "current": "It requires no cultivation at all",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "A i ṱoḓi cultivation na luthihi",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ve",
+      "fieldPath": "quiz[1].options[3]",
+      "sourceEnglish": "It's the only staple that stores for multiple years",
+      "currentTarget": "It's the only staple that stores for multiple years",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[1].options[3]",
+      "candidate": "Ndi tshone tshimela tsha vhuthogwa tshithihi fhedzi tshi vhulungeaho miṅwaha i fhiraho muthihi",
+      "technicalEnglishHolds": [],
+      "reason": "Only important crop broadens the noun class beyond staple. Retain English staple while preserving only and multiple-year storage; more than one year is the same plural-year quantity, not a new timeline.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Keep damp/wet comparisons and maize contrast without adding waterlogging or guaranteeing harvest.",
+          "Preserve very dry/sandy, no cultivation at all and only/multiple-years false distractors.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [],
+      "originalCandidate": "Ndi tshone tshimela tsha vhuthogwa tshithihi fhedzi tshi vhulungeaho miṅwaha i fhiraho muthihi",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "“Only” and the multiple-year (>1 year) duration are explicit; no extra storage duration is invented.",
+      "independentFirstBacktranslation": "It is the only staple crop that can be stored for more than one year.",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "It is the sole important crop that can be stored for more than one year.",
+      "verdict": "REPAIR",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ve::quiz[1].options[3]",
+        "canonical": "It's the only staple that stores for multiple years",
+        "current": "It's the only staple that stores for multiple years",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": "Ndi tshone staple tshithihi fhedzi tshi vhulungeaho miṅwaha i fhiraho muthihi",
+      "secondCheckFinalCandidate": "Ndi tshone staple tshithihi fhedzi tshi vhulungeaho miṅwaha i fhiraho muthihi",
+      "acceptableAsUnreviewedSourcePairedCandidate": false,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ts",
+      "fieldPath": "infographicAlt",
+      "sourceEnglish": "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.",
+      "currentTarget": "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ts::infographicAlt",
+      "candidate": "Swirimiwa swinharhu swa staple swi ri swin’we: stalk yo leha ya grain, vine leyi khandziyaka eka nsika, ni xirimilwa xa timitsu lexi kombisiweke hafu ya xona yi ri ehansi ka misava.",
+      "technicalEnglishHolds": [
+        "staple",
+        "stalk",
+        "grain",
+        "vine"
+      ],
+      "reason": "Three staples, grain stalk, vine climbing a pole and half below ground are explicit. No substitute species or reversed half-ground relation.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "staple",
+          "stalk",
+          "grain",
+          "vine"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "requires independent repaired-row semantic backcheck",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "staple",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "stalk",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "grain",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "vine",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Swirimiwa swinharhu swa staple swi ri swin’we: tall grain stalk, climbing vine eka nsika, ni root crop leyi kombisiweke hafu ya yona yi ri ehansi ka misava.",
+      "independentFirstVerdict": "REPAIR",
+      "independentFirstReason": "The half-below-ground and pole relationships are present, but “tall grain stalk,” “climbing vine,” and “root crop” are ordinary image descriptions left in English. Translate them while preserving composition; no defensible Tsonga replacement supplied.",
+      "independentFirstBacktranslation": "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown with half of it below the soil.",
+      "repairReason": "Translate tall, climbing/on-pole and root-crop/half-below-soil composition. Keep stalk/grain/vine as precise form nouns rather than silently substituting tree trunk, branch or a named crop.",
+      "finalDisposition": "PROPOSED_REPAIR_REQUIRES_SECOND_CHECK",
+      "changeFromOriginal": "bounded ordinary-framing repair",
+      "independentBacktranslation": "Three staple crops together: a tall grain stalk, a vine climbing a pole, and a root crop shown with half of it below the soil.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ts::infographicAlt",
+        "canonical": "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.",
+        "current": "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Swirimiwa swinharhu swa staple swi ri swin’we: stalk yo leha ya grain, vine leyi khandziyaka eka nsika, ni xirimilwa xa timitsu lexi kombisiweke hafu ya xona yi ri ehansi ka misava.",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ts",
+      "fieldPath": "keyPoints[0]",
+      "sourceEnglish": "Open-pollinated maize lets you save seed; hybrid seed won't breed true next season",
+      "currentTarget": "Open-pollinated maize lets you save seed; hybrid seed won't breed true next season",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ts::keyPoints[0]",
+      "candidate": "Open-pollinated maize yi ku pfumelela ku hlayisa mbewu; mbewu ya hybrid a yi nge breed true eka nguva leyi taka",
+      "technicalEnglishHolds": [
+        "Open-pollinated maize",
+        "hybrid",
+        "breed true"
+      ],
+      "reason": "Open-pollination allows own seed saving; hybrid will-not breed-true and next-season timing remain.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "Open-pollinated maize",
+          "hybrid",
+          "breed true"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "Open-pollinated maize",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "hybrid",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "breed true",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Open-pollinated maize yi ku pfumelela ku hlayisa mbewu; mbewu ya hybrid a yi nge breed true eka nguva leyi taka",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "Seed-saving permission, hybrid negation, and next-season timing are retained.",
+      "independentFirstBacktranslation": "Open-pollinated maize allows you to save seed; hybrid seed will not breed true in the coming season.",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "Open-pollinated maize allows you to save seed; hybrid seed will not breed true in the coming season.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ts::keyPoints[0]",
+        "canonical": "Open-pollinated maize lets you save seed; hybrid seed won't breed true next season",
+        "current": "Open-pollinated maize lets you save seed; hybrid seed won't breed true next season",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Open-pollinated maize yi ku pfumelela ku hlayisa mbewu; mbewu ya hybrid a yi nge breed true eka nguva leyi taka",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ts",
+      "fieldPath": "keyPoints[1]",
+      "sourceEnglish": "Beans are the key protein crop — productive, storable, and nitrogen-fixing",
+      "currentTarget": "Beans are the key protein crop — productive, storable, and nitrogen-fixing",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ts::keyPoints[1]",
+      "candidate": "Beans i xirimilwa xa nkoka xa protein — xi humesa ntshovelo kahle, xi hlayiseka, naswona i nitrogen-fixing",
+      "technicalEnglishHolds": [
+        "Beans",
+        "protein",
+        "nitrogen-fixing"
+      ],
+      "reason": "Protein role, productive harvest, ability to store and nitrogen fixing remain. No numerical yield or new seed claim.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "Beans",
+          "protein",
+          "nitrogen-fixing"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "Beans",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "protein",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "nitrogen-fixing",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Beans i xirimilwa xa nkoka xa protein — xi humesa ntshovelo kahle, xi hlayiseka, naswona i nitrogen-fixing",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "The key properties are preserved. “Beans,” “protein,” and “nitrogen-fixing” remain technical/source anchors.",
+      "independentFirstBacktranslation": "Beans are an important protein crop: it produces a good harvest, keeps/stores well, and fixes nitrogen.",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "Beans are an important protein crop: producing a good harvest, able to be stored, and nitrogen-fixing.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ts::keyPoints[1]",
+        "canonical": "Beans are the key protein crop — productive, storable, and nitrogen-fixing",
+        "current": "Beans are the key protein crop — productive, storable, and nitrogen-fixing",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Beans i xirimilwa xa nkoka xa protein — xi humesa ntshovelo kahle, xi hlayiseka, naswona i nitrogen-fixing",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ts",
+      "fieldPath": "keyPoints[2]",
+      "sourceEnglish": "Sweet potato develops some drought tolerance after storage roots form, but needs water early; young leaves are edible",
+      "currentTarget": "Sweet potato develops some drought tolerance after storage roots form, but needs water early; young leaves are edible",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ts::keyPoints[2]",
+      "candidate": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ti vumbekile, kambe yi lava mati eku sunguleni; young leaves ya yona ya dyiwa",
+      "technicalEnglishHolds": [
+        "Sweet potato",
+        "drought tolerance",
+        "storage roots",
+        "young leaves"
+      ],
+      "reason": "Limited/some tolerance arises after storage roots form; early water need and young-leaf age remain. No drought-proof or all-leaves claim.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "Sweet potato",
+          "drought tolerance",
+          "storage roots",
+          "young leaves"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Some drought tolerance only after storage roots form; needs water early; young leaves edible.",
+          "young leaves retained exactly to avoid replacing age with small-size/fresh-leaf wording; a precise local age phrase still needs review."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "Sweet potato",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "drought tolerance",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "storage roots",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "young leaves",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ti vumbekile, kambe yi lava mati eku sunguleni; young leaves ya yona ya dyiwa",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "The limited drought tolerance, stage condition, early water need, and young-leaf age are present. “Can be eaten” matches edible without adding a new claim.",
+      "independentFirstBacktranslation": "Sweet potato gets some drought tolerance after the storage roots have formed, but needs water at the beginning; its young leaves can be eaten.",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "Sweet potato acquires some drought tolerance after storage roots have formed, but it needs water at the beginning; its young leaves can be eaten.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ts::keyPoints[2]",
+        "canonical": "Sweet potato develops some drought tolerance after storage roots form, but needs water early; young leaves are edible",
+        "current": "Sweet potato develops some drought tolerance after storage roots form, but needs water early; young leaves are edible",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ti vumbekile, kambe yi lava mati eku sunguleni; young leaves ya yona ya dyiwa",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ts",
+      "fieldPath": "keyPoints[3]",
+      "sourceEnglish": "Amadumbe (taro) is an underused traditional staple suited to wetter KZN and coastal ground",
+      "currentTarget": "Amadumbe (taro) is an underused traditional staple suited to wetter KZN and coastal ground",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ts::keyPoints[3]",
+      "candidate": "Amadumbe (taro) i staple ya ndhavuko leyi nga tirhisiwiki hi ndlela leyi eneleke, leyi fambisanaka ni misava ya KZN leyi tsakamaka ku hundza ni misava ya le kusuhi ni lwandle.",
+      "technicalEnglishHolds": [
+        "Amadumbe (taro)",
+        "staple",
+        "KZN"
+      ],
+      "reason": "Staple/underuse/traditional identity, wetter ground, KZN and coastal scope remain. No new climate zone or rainfall threshold.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "Amadumbe (taro)",
+          "staple",
+          "KZN"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "requires independent repaired-row semantic backcheck",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "Amadumbe (taro)",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "staple",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "KZN",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Amadumbe (taro) i staple ya ndhavuko leyi nga tirhisiwiki hi ndlela leyi eneleke, leyi fambisanaka ni wetter KZN ni coastal ground",
+      "independentFirstVerdict": "REPAIR",
+      "independentFirstReason": "The ordinary English descriptions “wetter KZN” and “coastal ground” remain. Translate these while retaining crop identity and moisture suitability; no defensible Tsonga repair supplied.",
+      "independentFirstBacktranslation": "Amadumbe (taro) is an underused traditional staple suited to wetter KZN and coastal ground.",
+      "repairReason": "Translate wetter with explicit ku hundza comparison and coastal ground as ground near the sea. Preserve underused traditional staple and suitability; no rain amounts or waterlogging claim.",
+      "finalDisposition": "PROPOSED_REPAIR_REQUIRES_SECOND_CHECK",
+      "changeFromOriginal": "bounded ordinary-framing repair",
+      "independentBacktranslation": "Amadumbe (taro) is a traditional staple not used sufficiently, suited to wetter KZN ground and ground near the sea.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ts::keyPoints[3]",
+        "canonical": "Amadumbe (taro) is an underused traditional staple suited to wetter KZN and coastal ground",
+        "current": "Amadumbe (taro) is an underused traditional staple suited to wetter KZN and coastal ground",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Amadumbe (taro) i staple ya ndhavuko leyi nga tirhisiwiki hi ndlela leyi eneleke, leyi fambisanaka ni misava ya KZN leyi tsakamaka ku hundza ni misava ya le kusuhi ni lwandle.",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ts",
+      "fieldPath": "quiz[0].rationale",
+      "sourceEnglish": "Seed saved from an F1 hybrid may grow, but the next generation can vary. A stable open-pollinated variety with managed pollination is more predictable when saving seed.",
+      "currentTarget": "Seed saved from an F1 hybrid may grow, but the next generation can vary. A stable open-pollinated variety with managed pollination is more predictable when saving seed.",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[0].rationale",
+      "candidate": "Mbewu leyi hlayisiweke eka F1 hybrid yi nga mela, kambe swimilana swa xitukulwana lexi landzelaka swi nga hambana. Mbuyelo ya muxaka wa open-pollinated lowu nga stable lowu pollination ya wona yi lawuriwaka yi olova ku bvumba ku hundza, loko u hlayisa mbewu.",
+      "technicalEnglishHolds": [
+        "F1 hybrid",
+        "open-pollinated",
+        "stable",
+        "pollination"
+      ],
+      "reason": "May germinate, can vary, stable variety and managed pollination all remain. Easier-to-predict results preserves comparative predictability, avoiding confusing repeated planting with predictable offspring.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "F1 hybrid",
+          "open-pollinated",
+          "stable",
+          "pollination"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "requires independent repaired-row semantic backcheck",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Preserve F1 may-grow and next-generation-can-vary modals.",
+          "Keep stable variety and managed pollination conditions.",
+          "False distractors retain more/always/cannot absolutes; do not repair their factual falsehood.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "F1 hybrid",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "open-pollinated",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "stable",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "pollination",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Mbewu leyi hlayisiweke eka F1 hybrid yi nga mela, kambe swimilana swa xitukulwana lexi landzelaka swi nga hambana. stable open-pollinated variety leyi pollination ya yona yi lawuriwaka yi va more predictable loko u hlayisa mbewu.",
+      "independentFirstVerdict": "REPAIR",
+      "independentFirstReason": "The two possibility claims, generation change, and managed pollination survive. “Stable” and “more predictable” are left as generic English prose; translate where the precise comparison permits, retaining a difficult technical term if needed. No full replacement supplied because the local equivalent and force of “stable” need language review.",
+      "independentFirstBacktranslation": "Seed saved from an F1 hybrid may germinate, but plants in the next generation may differ. A stable open-pollinated variety whose pollination is managed is more predictable when saving seed.",
+      "repairReason": "Preserve may grow and can vary, next generation, and managed pollination. Translate more predictable as outcomes easier to predict with an explicit ku hundza comparison; retain stable as a precise seed-variety stability label rather than substitute physical firmness or an unchanging guarantee.",
+      "finalDisposition": "PROPOSED_REPAIR_REQUIRES_SECOND_CHECK",
+      "changeFromOriginal": "bounded ordinary-framing repair",
+      "independentBacktranslation": "Seed saved from an F1 hybrid may sprout, but the plants of the next generation can differ. The results of a stable open-pollinated variety whose pollination is managed are easier to predict when saving seed.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[0].rationale",
+        "canonical": "Seed saved from an F1 hybrid may grow, but the next generation can vary. A stable open-pollinated variety with managed pollination is more predictable when saving seed.",
+        "current": "Seed saved from an F1 hybrid may grow, but the next generation can vary. A stable open-pollinated variety with managed pollination is more predictable when saving seed.",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Mbewu leyi hlayisiweke eka F1 hybrid yi nga mela, kambe swimilana swa xitukulwana lexi landzelaka swi nga hambana. Mbuyelo ya muxaka wa open-pollinated lowu nga stable lowu pollination ya wona yi lawuriwaka yi olova ku bvumba ku hundza, loko u hlayisa mbewu.",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ts",
+      "fieldPath": "quiz[0].options[0]",
+      "sourceEnglish": "Open-pollinated varieties yield more",
+      "currentTarget": "Open-pollinated varieties yield more",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[0].options[0]",
+      "candidate": "Mixaka ya open-pollinated yi humesa ntshovelo wo tala ku hundza",
+      "technicalEnglishHolds": [
+        "open-pollinated"
+      ],
+      "reason": "Greater yield remains comparative and unsupported as the same false option; no always or numerical claim is added.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "open-pollinated"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "requires independent repaired-row semantic backcheck",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Preserve F1 may-grow and next-generation-can-vary modals.",
+          "Keep stable variety and managed pollination conditions.",
+          "False distractors retain more/always/cannot absolutes; do not repair their factual falsehood.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "open-pollinated",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Mixaka ya open-pollinated yi yield more",
+      "independentFirstVerdict": "REPAIR",
+      "independentFirstReason": "“Yield more” remains ordinary English. Translate it and preserve this as the false option. No defensible Tsonga wording supplied.",
+      "independentFirstBacktranslation": "Open-pollinated varieties yield more.",
+      "repairReason": "Translate yield more as produce a comparatively greater harvest; preserve the unqualified false distractor and implicit comparator, with no invented yield number.",
+      "finalDisposition": "PROPOSED_REPAIR_REQUIRES_SECOND_CHECK",
+      "changeFromOriginal": "bounded ordinary-framing repair",
+      "independentBacktranslation": "Open-pollinated kinds produce a greater harvest.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[0].options[0]",
+        "canonical": "Open-pollinated varieties yield more",
+        "current": "Open-pollinated varieties yield more",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Mixaka ya open-pollinated yi humesa ntshovelo wo tala ku hundza",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ts",
+      "fieldPath": "quiz[0].options[1]",
+      "sourceEnglish": "Hybrid seed won't breed true — the next generation won't match the parent plant",
+      "currentTarget": "Hybrid seed won't breed true — the next generation won't match the parent plant",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[0].options[1]",
+      "candidate": "Mbewu ya hybrid a yi nge breed true — swimilana swa xitukulwana lexi landzelaka a swi nge fani ni ximilana xa mutswari",
+      "technicalEnglishHolds": [
+        "hybrid",
+        "breed true"
+      ],
+      "reason": "Both future negatives, generation and parent-plant relation remain; breed true retained as a technical English anchor.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "hybrid",
+          "breed true"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Preserve F1 may-grow and next-generation-can-vary modals.",
+          "Keep stable variety and managed pollination conditions.",
+          "False distractors retain more/always/cannot absolutes; do not repair their factual falsehood.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "hybrid",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        },
+        {
+          "sourceEnglishAnchor": "breed true",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Mbewu ya hybrid a yi nge breed true — swimilana swa xitukulwana lexi landzelaka a swi nge fani ni ximilana xa mutswari",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "Both negations and parent comparison survive; “breed true” is a precise technical anchor.",
+      "independentFirstBacktranslation": "Hybrid seed will not breed true — plants in the next generation will not be like the parent plant.",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "Hybrid seed will not breed true: the plants of the following generation will not match the parent plant.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[0].options[1]",
+        "canonical": "Hybrid seed won't breed true — the next generation won't match the parent plant",
+        "current": "Hybrid seed won't breed true — the next generation won't match the parent plant",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Mbewu ya hybrid a yi nge breed true — swimilana swa xitukulwana lexi landzelaka a swi nge fani ni ximilana xa mutswari",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ts",
+      "fieldPath": "quiz[0].options[2]",
+      "sourceEnglish": "Open-pollinated maize is always more drought-tolerant",
+      "currentTarget": "Open-pollinated maize is always more drought-tolerant",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[0].options[2]",
+      "candidate": "Open-pollinated maize is always more drought-tolerant",
+      "technicalEnglishHolds": [
+        "Open-pollinated maize is always more drought-tolerant"
+      ],
+      "reason": "Exact English holds the always quantifier and more-drought-tolerant comparative; no broad sometimes/often/usually substitution.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": false,
+        "remainingPrecisionEnglish": [
+          "Open-pollinated maize is always more drought-tolerant"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "English hold preserved; no localized meaning approved",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Preserve F1 may-grow and next-generation-can-vary modals.",
+          "Keep stable variety and managed pollination conditions.",
+          "False distractors retain more/always/cannot absolutes; do not repair their factual falsehood.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "Open-pollinated maize is always more drought-tolerant",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Open-pollinated maize yi tshamela ku va more drought-tolerant",
+      "independentFirstVerdict": "HOLD",
+      "independentFirstReason": "“Tshamela ku va” may backtranslate as “tends to be” or “continues to be,” which can weaken the source’s absolute “always.” A fluent reviewer should confirm the quantifier; preserve the emphatic universal meaning if revised.",
+      "independentFirstBacktranslation": "Open-pollinated maize tends to/continues to be more drought-tolerant.",
+      "repairReason": "Keep the original complete source-English target. Independent review could not confirm the absolute always or rationale modal/referent; do not publish the rejected pseudo-localization.",
+      "finalDisposition": "SOURCE_ENGLISH_HOLD",
+      "changeFromOriginal": "rejected draft removed; full current English retained",
+      "independentBacktranslation": "Open-pollinated maize is always more drought-tolerant.",
+      "verdict": "HOLD_EXACT_ENGLISH",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[0].options[2]",
+        "canonical": "Open-pollinated maize is always more drought-tolerant",
+        "current": "Open-pollinated maize is always more drought-tolerant",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Open-pollinated maize is always more drought-tolerant",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": true,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ts",
+      "fieldPath": "quiz[0].options[3]",
+      "sourceEnglish": "Hybrids can't be planted in South Africa",
+      "currentTarget": "Hybrids can't be planted in South Africa",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[0].options[3]",
+      "candidate": "Hybrids a ti koti ku byariwa eAfrika-Dzonga",
+      "technicalEnglishHolds": [
+        "Hybrids"
+      ],
+      "reason": "Negative planting-capability and South Africa remain the same false option; no added statutory assertion.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "Hybrids"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Preserve F1 may-grow and next-generation-can-vary modals.",
+          "Keep stable variety and managed pollination conditions.",
+          "False distractors retain more/always/cannot absolutes; do not repair their factual falsehood.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "Hybrids",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Hybrids a ti koti ku byariwa eAfrika-Dzonga",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "The inability claim and location are retained; this remains the same false option.",
+      "independentFirstBacktranslation": "Hybrids cannot be planted in South Africa.",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "Hybrids cannot be planted in South Africa.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[0].options[3]",
+        "canonical": "Hybrids can't be planted in South Africa",
+        "current": "Hybrids can't be planted in South Africa",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Hybrids a ti koti ku byariwa eAfrika-Dzonga",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ts",
+      "fieldPath": "quiz[1].rationale",
+      "sourceEnglish": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "currentTarget": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[1].rationale",
+      "candidate": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "technicalEnglishHolds": [
+        "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well."
+      ],
+      "reason": "Exact English preserves would rather than may, damper rather than any wet ground, niche, other staples and inability to handle well rather than complete crop failure.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": false,
+        "remainingPrecisionEnglish": [
+          "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well."
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "English hold preserved; no localized meaning approved",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Keep damp/wet comparisons and maize contrast without adding waterlogging or guaranteeing harvest.",
+          "Preserve very dry/sandy, no cultivation at all and only/multiple-years false distractors.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Amadumbe entiyisweni yi tsakela damper ground laha maize yi nga tikeriwaka — yi tata niche leyi swirimiwa swin’wana swa staple swi nga kotiki ku tirha kahle eka yona.",
+      "independentFirstVerdict": "HOLD",
+      "independentFirstReason": "The “actually,” niche, and other-staples limitation are represented. The English “damper ground” and “niche” need ordinary-language localization. Also “would struggle” appears to become “can struggle,” which may soften the source; confirm the modal force with a fluent reviewer before accepting.",
+      "independentFirstBacktranslation": "Amadumbe actually likes damper ground, where maize can struggle; it fills a niche that other staple crops cannot work well in.",
+      "repairReason": "Keep the original complete source-English target. Independent review could not confirm the absolute always or rationale modal/referent; do not publish the rejected pseudo-localization.",
+      "finalDisposition": "SOURCE_ENGLISH_HOLD",
+      "changeFromOriginal": "rejected draft removed; full current English retained",
+      "independentBacktranslation": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "verdict": "HOLD_EXACT_ENGLISH",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[1].rationale",
+        "canonical": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+        "current": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": true,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ts",
+      "fieldPath": "quiz[1].options[0]",
+      "sourceEnglish": "It thrives on very dry, sandy soil",
+      "currentTarget": "It thrives on very dry, sandy soil",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[1].options[0]",
+      "candidate": "Yi kula kahle eka misava leyi omeke swinene ya sava",
+      "technicalEnglishHolds": [],
+      "reason": "Very dry and sandy conditions remain explicit in the same false option.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Keep damp/wet comparisons and maize contrast without adding waterlogging or guaranteeing harvest.",
+          "Preserve very dry/sandy, no cultivation at all and only/multiple-years false distractors.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [],
+      "originalCandidate": "Yi kula kahle eka misava leyi omeke swinene ya sava",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "Both very-dry and sandy-soil properties are retained; this remains the false option.",
+      "independentFirstBacktranslation": "It grows well in very dry, sandy soil.",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "It grows well in very dry sandy soil.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[1].options[0]",
+        "canonical": "It thrives on very dry, sandy soil",
+        "current": "It thrives on very dry, sandy soil",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Yi kula kahle eka misava leyi omeke swinene ya sava",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ts",
+      "fieldPath": "quiz[1].options[1]",
+      "sourceEnglish": "It tolerates wetter ground than maize, suiting coastal and high-rainfall conditions",
+      "currentTarget": "It tolerates wetter ground than maize, suiting coastal and high-rainfall conditions",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[1].options[1]",
+      "candidate": "Yi tiyisela misava leyi tsakamaka ku hundza leyi maize yi yi tiyiselaka, yi fambisana ni misava ya le kusuhi ni lwandle ni swiyimo swa mpfula yo tala.",
+      "technicalEnglishHolds": [
+        "maize"
+      ],
+      "reason": "Tolerance remains compared with maize and coastal/high-rainfall suitability stays explicit; no water quantity or timing added.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "maize"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "requires independent repaired-row semantic backcheck",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Keep damp/wet comparisons and maize contrast without adding waterlogging or guaranteeing harvest.",
+          "Preserve very dry/sandy, no cultivation at all and only/multiple-years false distractors.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "maize",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Yi tiyisela wetter ground ku hundza maize, yi fambisana ni coastal ni high-rainfall conditions",
+      "independentFirstVerdict": "REPAIR",
+      "independentFirstReason": "The comparative direction and suitability are preserved. “Wetter ground,” “coastal,” and “high-rainfall conditions” remain ordinary descriptive English; translate them while retaining the comparison. No defensible Tsonga replacement supplied.",
+      "independentFirstBacktranslation": "It tolerates wetter ground than maize, suiting coastal and high-rainfall conditions.",
+      "repairReason": "Make the tolerance comparison explicit: wetter ground than the ground maize tolerates; translate coastal and high-rainfall suitability without adding flooding or rainfall figures.",
+      "finalDisposition": "PROPOSED_REPAIR_REQUIRES_SECOND_CHECK",
+      "changeFromOriginal": "bounded ordinary-framing repair",
+      "independentBacktranslation": "It tolerates ground wetter than maize tolerates and is suited to coastal ground and high-rainfall conditions.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[1].options[1]",
+        "canonical": "It tolerates wetter ground than maize, suiting coastal and high-rainfall conditions",
+        "current": "It tolerates wetter ground than maize, suiting coastal and high-rainfall conditions",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Yi tiyisela misava leyi tsakamaka ku hundza leyi maize yi yi tiyiselaka, yi fambisana ni misava ya le kusuhi ni lwandle ni swiyimo swa mpfula yo tala.",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ts",
+      "fieldPath": "quiz[1].options[2]",
+      "sourceEnglish": "It requires no cultivation at all",
+      "currentTarget": "It requires no cultivation at all",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[1].options[2]",
+      "candidate": "A yi lavi cultivation nikatsongo",
+      "technicalEnglishHolds": [
+        "cultivation"
+      ],
+      "reason": "No cultivation at all remains explicit and absolute. Cultivation is retained as an agronomic English anchor.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "cultivation"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Keep damp/wet comparisons and maize contrast without adding waterlogging or guaranteeing harvest.",
+          "Preserve very dry/sandy, no cultivation at all and only/multiple-years false distractors.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "cultivation",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "A yi lavi cultivation nikatsongo",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "The absolute “not … at all” is retained. “Cultivation” is a reasonable technical farming term to keep in English; this remains the same false option.",
+      "independentFirstBacktranslation": "It does not need cultivation at all.",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "It does not need cultivation at all.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[1].options[2]",
+        "canonical": "It requires no cultivation at all",
+        "current": "It requires no cultivation at all",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "A yi lavi cultivation nikatsongo",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "language": "ts",
+      "fieldPath": "quiz[1].options[3]",
+      "sourceEnglish": "It's the only staple that stores for multiple years",
+      "currentTarget": "It's the only staple that stores for multiple years",
+      "status": "draft",
+      "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[1].options[3]",
+      "candidate": "Hi yona ntsena staple leyi hlayisekaka ku ringana nkarhi wa ku hundza lembe rin’we",
+      "technicalEnglishHolds": [
+        "staple"
+      ],
+      "reason": "Only staple and more-than-one-year storage remain. The latter paraphrases multiple years without inventing a numeric crop-storage promise; still the same false option.",
+      "ordinaryAccessibility": {
+        "changedOrdinaryFrame": true,
+        "remainingPrecisionEnglish": [
+          "staple"
+        ],
+        "claimOfAllOrdinaryEnglishCompletion": false
+      },
+      "meaningReview": {
+        "status": "first independent semantic check accepted; root review pending; no fluent approval",
+        "correctIndexChanged": false,
+        "sourceMeaningApproval": false,
+        "focus": [
+          "Keep damp/wet comparisons and maize contrast without adding waterlogging or guaranteeing harvest.",
+          "Preserve very dry/sandy, no cultivation at all and only/multiple-years false distractors.",
+          "Correct index remains 1 (B)."
+        ]
+      },
+      "reviewStatus": "unreviewed machine draft; second check/root review pending; no fluent approval",
+      "technicalHoldDetails": [
+        {
+          "sourceEnglishAnchor": "staple",
+          "retainedInCandidate": true,
+          "sourceContainsAnchor": true,
+          "reason": "Retain source dietary/crop/seed/form meaning; ordinary frame translated only where defensible."
+        }
+      ],
+      "originalCandidate": "Hi yona ntsena staple leyi hlayisekaka ku ringana nkarhi wa ku hundza lembe rin’we",
+      "independentFirstVerdict": "ACCEPT",
+      "independentFirstReason": "“Only” and “more than one year” survive; no unsupported specific duration is added.",
+      "independentFirstBacktranslation": "It alone is the staple crop that can be stored for a period longer than one year.",
+      "finalDisposition": "FIRST_CHECK_ACCEPTED_UNCHANGED_AWAITING_ROOT",
+      "repairReason": "Preserve the first independently accepted candidate byte-for-byte.",
+      "changeFromOriginal": "none",
+      "independentBacktranslation": "It is the only staple that can be stored for a period longer than one year.",
+      "verdict": "ACCEPT",
+      "sourceCurrentBinding": {
+        "id": "vegetables-staples::vegetables-staples-l3::ts::quiz[1].options[3]",
+        "canonical": "It's the only staple that stores for multiple years",
+        "current": "It's the only staple that stores for multiple years",
+        "sourceExact": true,
+        "currentExact": true,
+        "status": "draft",
+        "correctIndices": [
+          1,
+          1
+        ]
+      },
+      "repairedCandidate": null,
+      "secondCheckFinalCandidate": "Hi yona ntsena staple leyi hlayisekaka ku ringana nkarhi wa ku hundza lembe rin’we",
+      "acceptableAsUnreviewedSourcePairedCandidate": true,
+      "precisionEnglishHoldDefensible": false,
+      "fluentApproval": false,
+      "localFarmingApproval": false
+    }
+  ],
+  "summary": [
+    "Two Venda staple substitutions still need the explicit bounded repairs above.",
+    "The other 28 translated candidates preserve the bounded source meaning; four exact-English holds are defensible and can remain visibly unreviewed/source-paired.",
+    "English technical anchors and whole-field precision holds do not imply complete ordinary translation or fluent approval.",
+    "No implementation, commit, push or approval for publication was performed."
+  ]
+}

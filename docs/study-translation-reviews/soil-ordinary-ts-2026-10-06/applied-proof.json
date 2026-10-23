@@ -1,0 +1,124 @@
+{
+  "title": "TS Soil ordinary accepted batch application proof",
+  "date": "2026-10-06",
+  "baseSHA": "c5f1771eaa7bb014aefe9a19ba349d149b4b4a57",
+  "acceptedPacket": "root-accepted-packet.json",
+  "acceptedPacketSHA256": "fffc70b38c919dccb9e1e02bda2fcc868dd2b588393a22b91ac9e9b67ca42009",
+  "acceptedRows": 12,
+  "rootUnchangedRows": 15,
+  "exactOverlayEqualsActualFullNativeObject": true,
+  "rootUnchangedRowsRemainExact": true,
+  "bodyComposition": [
+    {
+      "lessonId": "soil-health-l1",
+      "paragraphCount": 12,
+      "changedParagraphIndexes": [
+        11
+      ],
+      "allOtherParagraphsExact": true,
+      "sourceParagraphsExact": true
+    },
+    {
+      "lessonId": "soil-health-l2",
+      "paragraphCount": 12,
+      "changedParagraphIndexes": [
+        10
+      ],
+      "allOtherParagraphsExact": true,
+      "sourceParagraphsExact": true
+    },
+    {
+      "lessonId": "soil-health-l3",
+      "paragraphCount": 13,
+      "changedParagraphIndexes": [
+        12
+      ],
+      "allOtherParagraphsExact": true,
+      "sourceParagraphsExact": true
+    }
+  ],
+  "quizSourceAndCorrectIndexPreservation": [
+    {
+      "lessonId": "soil-health-l1",
+      "sourceCorrectIndexes": [
+        1,
+        2
+      ]
+    },
+    {
+      "lessonId": "soil-health-l2",
+      "sourceCorrectIndexes": [
+        1,
+        1
+      ]
+    },
+    {
+      "lessonId": "soil-health-l3",
+      "sourceCorrectIndexes": [
+        2,
+        1
+      ]
+    }
+  ],
+  "prior955TSAcceptedUnits": {
+    "packet": "prior-955-final-accepted-candidates.json",
+    "checked": 85,
+    "priorFinalTargetsStillExact": 77,
+    "updatedByAcceptedOrdinaryRows": 8,
+    "updatedPriorIds": [
+      "soil-health/ts/soil-health-l1/body/paragraph[11]",
+      "soil-health/ts/soil-health-l1/keyPoints[3]",
+      "soil-health/ts/soil-health-l1/quiz[1].options[2]",
+      "soil-health/ts/soil-health-l2/body/paragraph[10]",
+      "soil-health/ts/soil-health-l2/quiz[0].options[1]",
+      "soil-health/ts/soil-health-l3/body/paragraph[12]",
+      "soil-health/ts/soil-health-l3/quiz[0].options[2]",
+      "soil-health/ts/soil-health-l3/quiz[0].rationale"
+    ],
+    "priorPacketSHA256": "38d5cc52ba57f5e1b7da2461010af86ddfb9697a76963ec23d64e78580867016",
+    "protectedPrecisionRows": {
+      "l1p0_breakdown_hold": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku break down organic matter ni ku cycle nutrients.",
+      "l1p7_settled_layers": "Fananisa settled layers, kutani u twa misava ensin'wini.",
+      "l3p5_material_progression": "Legumes ti lava bacteria leti faneleke ni swiyimo leswi faneleke swa ku kula leswaku ti fix nitrogen. Nutrients leti nga eka masalela ya tona ta kumeka loko material yi ri karhi yi bola.",
+      "l3p8_leachate": "Leachate yi nga va na harmful organisms kumbe substances leswi nga ni khombo. U nga yi tirhisi eka edible plants. U nga ehleketi leswaku dilution yi endla leswaku yi hlayiseka.",
+      "l3quiz1opt1_leachate": "Yi nga va na harmful organisms kumbe substances leswi nga ni khombo; dilution a hi safety guarantee"
+    }
+  },
+  "moduleCard": {
+    "sourceGuarded": true,
+    "runtimePresentation": {
+      "title": "Rihanyo ra Misava na Ku Endla Compost",
+      "description": "Aka misava leyi hanyaka hi compost, mulch, cover crops na worm farms.",
+      "status": "draft"
+    },
+    "canonicalFields": {
+      "id": "soil-health",
+      "title": "Soil Health & Composting",
+      "description": "Build living soil with compost, mulch, cover crops and worm farms.",
+      "durationMins": 20,
+      "category": "soil"
+    },
+    "resolverStatusDraft": true,
+    "note": "TS Soil card resolves through exact canonical title/description/duration/category source guard."
+  },
+  "fullNativeBeforePath": "native-before.json",
+  "fullNativeAfterPath": "native-after.json",
+  "currentFileHashes": [
+    {
+      "path": "lib/course-translation-drafts-ts-soil-health.ts",
+      "sha256": "ec64022f10b16a3ad668b82057fea5fc60ad32701e02a01e67db24f04b1a5bf3"
+    },
+    {
+      "path": "lib/course-module-translation-drafts.ts",
+      "sha256": "2272055f149c8730ac68c4af30eab2e9d4e2e763698c1dc33ba025f35a90c629"
+    }
+  ],
+  "scope": "Only accepted 12 TS native rows plus missing TS module-card registration. Canonical source strings, quiz indices/order, species, numeric values and all 15 root-unlisted rows remain exact. Eight previous TS rows receive the newly root-approved ordinary wording shown in this proof. ST/VE files are outside this lane.",
+  "status": "machine-draft; no fluent or local farming approval",
+  "tests": "node --import ./tests/register-alias.mjs --test tests/course-translation-drafts-ts-soil-health.test.ts tests/soil-ordinary-completion-20261006.test.ts passed 15/15; no tests were edited beyond rewiring the historical TS test to the validate-before-rewind helper.",
+  "verification": {
+    "typecheck": "npx tsc --noEmit passed",
+    "focusedTests": "node --import ./tests/register-alias.mjs --test tests/course-translation-drafts-ts-soil-health.test.ts tests/soil-ordinary-completion-20261006.test.ts passed 15/15",
+    "diffCheck": "git diff --check passed"
+  }
+}

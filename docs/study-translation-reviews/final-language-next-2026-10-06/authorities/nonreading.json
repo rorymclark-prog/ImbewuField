@@ -1,0 +1,2607 @@
+{
+  "title": "Independent repaired non-Reading paired residual candidates — root review pending",
+  "date": "2026-10-06",
+  "readOnly": true,
+  "repositoryEdits": false,
+  "renderingTestsCommit": false,
+  "authority": {
+    "worktree": "/Users/roryclark/.codex/worktrees/soil-water-residual-20261006/ImbewuField",
+    "head": "3341019a39a081a33348b2f73f9275285918f618",
+    "auditPath": "/tmp/imbewu-core-final-scope-residual-audit-20261006.json",
+    "auditSHA256": "949f7826bdb12ad7ce65209feef23ddee2aaca4f34da7f942b277ae021d32626",
+    "pairSelectionNote": "Each row binds the current exact pair artifact path and SHA from the corrected final audit, including the live ST Introduction silent override where applicable (none of the 29 selected rows is ST Introduction).",
+    "scope": "All remaining paired residual fields outside Reading Landscape and outside the thirteen accepted changed Market/Vegetables pair cells. Duplicate candidate spans within a field are combined into one complete-field row.",
+    "rowCounts": {
+      "residualSpanRowsIncluded": 31,
+      "uniqueFields": 29,
+      "technicalAnchorHoldFields": 6,
+      "localizedCandidateFields": 23
+    },
+    "limits": [
+      "Candidates are source-bound drafts, not independent approval or fluent-speaker/farming review.",
+      "Numbers, species names, source language, slide order and canonical English remain unchanged.",
+      "No technical safety/legal/accounting anchor was broadened or turned into permission, profit, advice threshold, or guarantee."
+    ],
+    "independentReviewNeeded": "Root must independently review semantic/language candidates; held technical fields are not represented as translated."
+  },
+  "fields": [
+    {
+      "moduleId": "intro-permaculture",
+      "languageTag": "ve",
+      "languageName": "Tshivenda",
+      "pairFile": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "pairFileSHA256": "89400f76434e9eb6af8a2ef7f5056258b6004910bacd7f9887e557d0e63f4fa1",
+      "slideNumber": 12,
+      "bodyIndex": 1,
+      "fieldLocator": "slide[12].body[1]",
+      "exactEnglishSourceField": "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+      "currentComposedTargetExact": "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza. Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu. That is the land telling you something.",
+      "currentTargetStatus": "mixed",
+      "originalEnglishResidualSpans": [
+        "that is the land telling you something"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza.",
+        "Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu."
+      ],
+      "candidateFullFieldComposition": "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza. Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu. Ndi land ine ya khou ni vhudza zwiṅwe zwithu.",
+      "proposedReplacementSpans": [
+        "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "land"
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "These may be useful observation places. Look at what grows well along your edge. That is land telling you something.",
+      "semanticReason": "The new final clause preserves the source personification, without a new farming claim. Existing second clause does not expressly render already; that inherited omission is separately flagged, not silently rewritten.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza. Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu. Ndi land ine ya khou ni vhudza zwiṅwe zwithu.",
+      "independentVerdict": "accept",
+      "independentBackTranslation": "These may be useful observation places. Look at what grows well along your edge. That is land telling you something.",
+      "independentReason": "The new final clause preserves the source personification, without a new farming claim. Existing second clause does not expressly render already; that inherited omission is separately flagged, not silently rewritten.",
+      "originalDraftMetadata": {
+        "backTranslation": "These can be useful places to observe. Look at what already grows well along yours. It is the land telling you something.",
+        "semanticReason": "Translates the explanatory sentence and preserves the land-personification. Retains “land” to avoid a Tshivenda word that can also mean country, and “edge” as a site feature term.",
+        "uncertainties": [
+          "The personification is intentionally retained; no causal instruction is added."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "land"
+        ],
+        "proposedReplacementSpans": [
+          "That is the land telling you something."
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "land"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza.",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+        "exactCurrentTarget": "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza. Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu. That is the land telling you something.",
+        "exactProposedTarget": "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza. Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu. Ndi land ine ya khou ni vhudza zwiṅwe zwithu.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza.",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "intro-permaculture",
+      "languageTag": "ve",
+      "languageName": "Tshivenda",
+      "pairFile": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "pairFileSHA256": "89400f76434e9eb6af8a2ef7f5056258b6004910bacd7f9887e557d0e63f4fa1",
+      "slideNumber": 22,
+      "bodyIndex": 2,
+      "fieldLocator": "slide[22].body[2]",
+      "exactEnglishSourceField": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+      "currentComposedTargetExact": "Wanani tshithu tshithihi tsho ṱavhiwaho further away than how often you use it, ni ṅwale hune tsha tea u pfuluselwa hone.",
+      "currentTargetStatus": "mixed",
+      "originalEnglishResidualSpans": [
+        "further away than how often you use it"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Wanani tshithu tshithihi tsho ṱavhiwaho ",
+        "ni ṅwale hune tsha tea u pfuluselwa hone."
+      ],
+      "candidateFullFieldComposition": "Wanani tshithu tshithihi tsho ṱavhiwaho further away than uri ni tshi shumisa kangani, ni ṅwale hune tsha tea u pfuluselwa hone.",
+      "proposedReplacementSpans": [
+        "Find one thing planted further away than how often you use it, and write down where it should move to."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "further away than"
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Find one planted thing further away than how often you use it; write where it should be moved.",
+      "semanticReason": "Reject mere far in relation to. Retain the exact comparative English anchor and translate frequency; the source compares distance with frequency without a threshold. This remains an intentionally mixed, awkward source-bound draft, not a complete translation.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Wanani tshithu tshithihi tsho ṱavhiwaho kule u ya nga uri ni tshi shumisa kangani, ni ṅwale hune tsha tea u pfuluselwa hone.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Find one planted thing further away than how often you use it; write where it should be moved.",
+      "independentReason": "Reject mere far in relation to. Retain the exact comparative English anchor and translate frequency; the source compares distance with frequency without a threshold. This remains an intentionally mixed, awkward source-bound draft, not a complete translation.",
+      "originalDraftMetadata": {
+        "backTranslation": "Find one planted thing far in relation to how often you use it, and write where it should be moved.",
+        "semanticReason": "Keeps the source relation between placement distance and use frequency, and the instruction to record where to move it. Does not introduce “too far”, daily-use rules, or a numeric threshold.",
+        "uncertainties": [
+          "The English source uses a metaphorical comparison between distance and use frequency; this draft follows that comparison rather than adding a threshold."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "further away than"
+        ],
+        "proposedReplacementSpans": [
+          "further away than how often you use it"
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "further away than"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Wanani tshithu tshithihi tsho ṱavhiwaho ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "ni ṅwale hune tsha tea u pfuluselwa hone.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+        "exactCurrentTarget": "Wanani tshithu tshithihi tsho ṱavhiwaho further away than how often you use it, ni ṅwale hune tsha tea u pfuluselwa hone.",
+        "exactProposedTarget": "Wanani tshithu tshithihi tsho ṱavhiwaho further away than uri ni tshi shumisa kangani, ni ṅwale hune tsha tea u pfuluselwa hone.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Wanani tshithu tshithihi tsho ṱavhiwaho ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "ni ṅwale hune tsha tea u pfuluselwa hone.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "intro-permaculture",
+      "languageTag": "ts",
+      "languageName": "Xitsonga",
+      "pairFile": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "pairFileSHA256": "1cec865ebfbbcee7cbfbfa5c41bea16156da9f70f3442f60e711befc7a71556a",
+      "slideNumber": 22,
+      "bodyIndex": 2,
+      "fieldLocator": "slide[22].body[2]",
+      "exactEnglishSourceField": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+      "currentComposedTargetExact": "Kuma xilo xin’we lexi byariweke further away than how often you use it, u tsala laha xi faneleke ku rhurhiseriwa kona.",
+      "currentTargetStatus": "mixed",
+      "originalEnglishResidualSpans": [
+        "further away than how often you use it"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Kuma xilo xin’we lexi byariweke ",
+        "u tsala laha xi faneleke ku rhurhiseriwa kona."
+      ],
+      "candidateFullFieldComposition": "Kuma xilo xin’we lexi byariweke further away than ku tala ka minkarhi leyi u xi tirhisaka ha yona, u tsala laha xi faneleke ku rhurhiseriwa kona.",
+      "proposedReplacementSpans": [
+        "Find one thing planted further away than how often you use it, and write down where it should move to."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "further away than"
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Find one planted thing further away than the frequency of occasions on which you use it; write where it ought to move.",
+      "semanticReason": "ndlela leyi ... hakona means how/manner, not how often. Keep the exact comparative anchor rather than invent a distance/use ratio or too-far threshold. ku tala ka minkarhi expresses frequency; concord remains unreviewed.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Kuma xilo xin’we lexi byariweke ekule loko hi pimanisa ni ndlela leyi u xi tirhisaka hakona, u tsala laha xi faneleke ku rhurhiseriwa kona.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Find one planted thing further away than the frequency of occasions on which you use it; write where it ought to move.",
+      "independentReason": "ndlela leyi ... hakona means how/manner, not how often. Keep the exact comparative anchor rather than invent a distance/use ratio or too-far threshold. ku tala ka minkarhi expresses frequency; concord remains unreviewed.",
+      "originalDraftMetadata": {
+        "backTranslation": "Find one planted thing that is far when compared with how you use it, and write where it should be moved.",
+        "semanticReason": "Preserves the source comparison and destination-writing instruction without making it “too far” or setting a frequency threshold.",
+        "uncertainties": [
+          "The source comparison is metaphorical; facilitator review should check the localized phrasing."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "further away than"
+        ],
+        "proposedReplacementSpans": [
+          "further away than how often you use it"
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "further away than"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Kuma xilo xin’we lexi byariweke ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "u tsala laha xi faneleke ku rhurhiseriwa kona.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+        "exactCurrentTarget": "Kuma xilo xin’we lexi byariweke further away than how often you use it, u tsala laha xi faneleke ku rhurhiseriwa kona.",
+        "exactProposedTarget": "Kuma xilo xin’we lexi byariweke further away than ku tala ka minkarhi leyi u xi tirhisaka ha yona, u tsala laha xi faneleke ku rhurhiseriwa kona.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Kuma xilo xin’we lexi byariweke ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "u tsala laha xi faneleke ku rhurhiseriwa kona.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "water-harvesting",
+      "languageTag": "ve",
+      "languageName": "Tshivenda",
+      "pairFile": "docs/narration/water-harvesting.ve.paired-draft.json",
+      "pairFileSHA256": "04543fdf4385d23bf63098c124ff080589fee4227dff6c2604a2bc7166f0fde2",
+      "slideNumber": 4,
+      "bodyIndex": 1,
+      "fieldLocator": "slide[4].body[1]",
+      "exactEnglishSourceField": "It does not show how deep moisture reaches on your land. Check the soil, slope and overflow route before building.",
+      "currentComposedTargetExact": "It does not show how deep moisture reaches on your land. Ṱolani mavu, u sendama na nḓila ya u fhalala ha maḓi musi ni sa athu u fhaṱa.",
+      "currentTargetStatus": "mixed",
+      "originalEnglishResidualSpans": [
+        "it does not show how deep moisture reaches on your land"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        " Ṱolani mavu, u sendama na nḓila ya u fhalala ha maḓi musi ni sa athu u fhaṱa."
+      ],
+      "candidateFullFieldComposition": "A zwi sumbedzi uri moisture i swika fhasi vhungafhani kha land yaṋu. Ṱolani mavu, u sendama na nḓila ya u fhalala ha maḓi musi ni sa athu u fhaṱa.",
+      "proposedReplacementSpans": [
+        "It does not show how deep moisture reaches on your land. Check the soil, slope and overflow route before building."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "moisture",
+        "land"
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "It does not show how far down moisture reaches on your land. Check soil, slope and overflow before building.",
+      "semanticReason": "vhunyunyu is not independently established as moisture; metadata falsely claims moisture is retained English. Restore exact moisture and land anchors while translating the depth disclaimer. Retain the complete existing before-building clause byte-for-byte.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "A zwi sumbedzi uri vhunyunyu vhu swika fhasi vhungafhani mavuni aṋu. Ṱolani mavu, u sendama na nḓila ya u fhalala ha maḓi musi ni sa athu u fhaṱa.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "It does not show how far down moisture reaches on your land. Check soil, slope and overflow before building.",
+      "independentReason": "vhunyunyu is not independently established as moisture; metadata falsely claims moisture is retained English. Restore exact moisture and land anchors while translating the depth disclaimer. Retain the complete existing before-building clause byte-for-byte.",
+      "originalDraftMetadata": {
+        "backTranslation": "It does not show how deep moisture reaches in your land. Check soil, slope, and the route where excess water flows before building.",
+        "semanticReason": "Translates the negative depth limitation while preserving the already localized check-soil/slope/overflow/build clause.",
+        "uncertainties": [
+          "“Moisture” remains an anchor to avoid changing the hydrology term."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "moisture",
+          "land"
+        ],
+        "proposedReplacementSpans": [
+          "It does not show how deep moisture reaches on your land."
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "moisture",
+        "land"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": " Ṱolani mavu, u sendama na nḓila ya u fhalala ha maḓi musi ni sa athu u fhaṱa.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "It does not show how deep moisture reaches on your land. Check the soil, slope and overflow route before building.",
+        "exactCurrentTarget": "It does not show how deep moisture reaches on your land. Ṱolani mavu, u sendama na nḓila ya u fhalala ha maḓi musi ni sa athu u fhaṱa.",
+        "exactProposedTarget": "A zwi sumbedzi uri moisture i swika fhasi vhungafhani kha land yaṋu. Ṱolani mavu, u sendama na nḓila ya u fhalala ha maḓi musi ni sa athu u fhaṱa.",
+        "preservationChecks": [
+          {
+            "exactSpan": " Ṱolani mavu, u sendama na nḓila ya u fhalala ha maḓi musi ni sa athu u fhaṱa.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "languageTag": "st",
+      "languageName": "Sesotho",
+      "pairFile": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "pairFileSHA256": "a5e2da37170c56f3498613c7c7608509a87aca85fb2556b135bb5c46b3e18d88",
+      "slideNumber": 2,
+      "bodyIndex": 3,
+      "fieldLocator": "slide[2].body[3]",
+      "exactEnglishSourceField": "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready.",
+      "currentComposedTargetExact": "Small sowings create a rhythm instead. Ho jala, ho hlokomela le ho kotula di etsahala ka nako e le nngwe. Something is always coming ready.",
+      "currentTargetStatus": "mixed",
+      "originalEnglishResidualSpans": [
+        "something is always coming ready"
+      ],
+      "localizedCurrentSegmentsToPreserve": [],
+      "candidateFullFieldComposition": "Ho jala hanyenyane ho e-na le hoo ho theha morethetho. Planting, tending and harvesting overlap. Kamehla ho na le se seng se atamelang ho loka.",
+      "proposedReplacementSpans": [
+        "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "Planting, tending and harvesting overlap."
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Sowing small amounts instead creates a rhythm. Planting, tending and harvesting overlap. Something is always approaching readiness.",
+      "semanticReason": "Small sections can narrow small sowings to area, so use small-amount sowing without a numerical prescription. Correct the inherited middle sentence: di etsahala ka nako e le nngwe says happen at the same time and must not be asserted equivalent to temporal overlap. No precise localized overlap phrase was independently established; preserve the exact canonical overlap sentence as an explicit ordinary-English precision hold. The previously proposed di a kopana ka nako was not independently justified. Readiness remains readiness rather than a prescribed harvest date.",
+      "uncertainties": [
+        "The overlap sentence remains ordinary English pending a precise localized wording; this is an explicit incomplete ordinary span, not a technical-completion claim. Sesotho rhythm/readiness idiom remains unreviewed."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Ho jala ka dikarolo tse nyenyane ho theha morethetho ho e-na le hoo. Ho jala, ho hlokomela le ho kotula di a kopana ka nako. Kamehla ho na le se seng se atamelang nako ya kotulo.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Sowing small amounts instead creates a rhythm. Planting, tending and harvesting overlap. Something is always approaching readiness.",
+      "independentReason": "Small sections can narrow small sowings to area, so use small-amount sowing without a numerical prescription. Correct the inherited middle sentence: di etsahala ka nako e le nngwe says happen at the same time and must not be asserted equivalent to temporal overlap. No precise localized overlap phrase was independently established; preserve the exact canonical overlap sentence as an explicit ordinary-English precision hold. The previously proposed di a kopana ka nako was not independently justified. Readiness remains readiness rather than a prescribed harvest date.",
+      "originalDraftMetadata": {
+        "backTranslation": "Small sowings create a rhythm instead. Planting, tending and harvesting overlap in time. There is always something approaching readiness for harvest.",
+        "semanticReason": "Localizes all ordinary sentences and preserves the repeated rhythm, overlap (not exact simultaneity), and “always” claim. Corrects the existing localized middle clause from “happen at the same time” to “overlap in time”.",
+        "uncertainties": [
+          "“Coming ready” is rendered as approaching harvest readiness; root should check natural Sesotho phrasing."
+        ],
+        "retainedEnglishTechnicalAnchors": [],
+        "existingLocalizedSegmentRepair": "Ho jala, ho hlokomela le ho kotula di etsahala ka nako e le nngwe. → Ho jala, ho hlokomela le ho kotula di a kopana ka nako.",
+        "proposedReplacementSpans": [
+          "Small sowings create a rhythm instead.",
+          "Something is always coming ready."
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "Planting, tending and harvesting overlap."
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "explicit-inherited-overlap-precision-repair",
+        "requiresRootReview": true,
+        "preservationChecks": [
+          {
+            "exactSpan": "Ho jala, ho hlokomela le ho kotula di etsahala ka nako e le nngwe.",
+            "preservedInRecommendedTarget": false,
+            "reason": "Demonstrated exact-simultaneity versus overlap distinction; replaced only by exact canonical English, pending root review."
+          }
+        ]
+      },
+      "existingLocalizedSegmentRepair": "Ho jala, ho hlokomela le ho kotula di etsahala ka nako e le nngwe. → Planting, tending and harvesting overlap.",
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready.",
+        "exactCurrentTarget": "Small sowings create a rhythm instead. Ho jala, ho hlokomela le ho kotula di etsahala ka nako e le nngwe. Something is always coming ready.",
+        "exactProposedTarget": "Ho jala hanyenyane ho e-na le hoo ho theha morethetho. Planting, tending and harvesting overlap. Kamehla ho na le se seng se atamelang ho loka.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Ho jala, ho hlokomela le ho kotula di etsahala ka nako e le nngwe.",
+            "preservedInRecommendedTarget": false,
+            "reason": "Demonstrated exact-simultaneity versus overlap distinction; replaced only by exact canonical English, pending root review."
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "languageTag": "st",
+      "languageName": "Sesotho",
+      "pairFile": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "pairFileSHA256": "a5e2da37170c56f3498613c7c7608509a87aca85fb2556b135bb5c46b3e18d88",
+      "slideNumber": 3,
+      "bodyIndex": 1,
+      "fieldLocator": "slide[3].body[1]",
+      "exactEnglishSourceField": "One. Build the right bed — matching the width and the bed type to your soil and your rainfall.",
+      "currentComposedTargetExact": "Nngwe. Build the right bed — width le bed type di tsamaisana le soil ya hao le rainfall ya hao.",
+      "currentTargetStatus": "mixed",
+      "originalEnglishResidualSpans": [
+        "build the right bed"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Nngwe. ",
+        "— width le bed type di tsamaisana le soil ya hao le rainfall ya hao."
+      ],
+      "candidateFullFieldComposition": "Nngwe. Haha bed e loketseng — width le bed type di tsamaisana le soil ya hao le rainfall ya hao.",
+      "proposedReplacementSpans": [
+        "One. Build the right bed — matching the width and the bed type to your soil and your rainfall."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "bed",
+        "width",
+        "bed type",
+        "soil",
+        "rainfall"
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "One. Build a suitable bed; width and type correspond to your soil and rainfall.",
+      "semanticReason": "Build, suitability and both soil/rainfall matching conditions preserved. Existing numeral/prefix and all precise nouns remain unchanged.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Nngwe. Haha bed e loketseng — width le bed type di tsamaisana le soil ya hao le rainfall ya hao.",
+      "independentVerdict": "accept",
+      "independentBackTranslation": "One. Build a suitable bed; width and type correspond to your soil and rainfall.",
+      "independentReason": "Build, suitability and both soil/rainfall matching conditions preserved. Existing numeral/prefix and all precise nouns remain unchanged.",
+      "originalDraftMetadata": {
+        "backTranslation": "One. Build a suitable bed, matching its width and type to your soil and rainfall.",
+        "semanticReason": "Translates “build the right bed”, retaining the current localized width/type/soil/rainfall clause and the farming terms as anchors.",
+        "uncertainties": [
+          "“Bed” remains the established farm term in this current paired draft."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "bed",
+          "width",
+          "bed type",
+          "soil",
+          "rainfall"
+        ],
+        "proposedReplacementSpans": [
+          "Build the right bed"
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "bed",
+        "width",
+        "bed type",
+        "soil",
+        "rainfall"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Nngwe. ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "— width le bed type di tsamaisana le soil ya hao le rainfall ya hao.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "One. Build the right bed — matching the width and the bed type to your soil and your rainfall.",
+        "exactCurrentTarget": "Nngwe. Build the right bed — width le bed type di tsamaisana le soil ya hao le rainfall ya hao.",
+        "exactProposedTarget": "Nngwe. Haha bed e loketseng — width le bed type di tsamaisana le soil ya hao le rainfall ya hao.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Nngwe. ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "— width le bed type di tsamaisana le soil ya hao le rainfall ya hao.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "languageTag": "st",
+      "languageName": "Sesotho",
+      "pairFile": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "pairFileSHA256": "a5e2da37170c56f3498613c7c7608509a87aca85fb2556b135bb5c46b3e18d88",
+      "slideNumber": 18,
+      "bodyIndex": 6,
+      "fieldLocator": "slide[18].body[6]",
+      "exactEnglishSourceField": "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+      "currentComposedTargetExact": "Sehla ka seng, serapa sa hao becomes less dependent on guesswork — mme haholo ka seo o hlileng o se boneng se etsahala on your own ground.",
+      "currentTargetStatus": "mixed",
+      "originalEnglishResidualSpans": [
+        "becomes less dependent on guesswork",
+        "on your own ground"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Sehla ka seng, serapa sa hao ",
+        "— mme haholo ka seo o hlileng o se boneng se etsahala "
+      ],
+      "candidateFullFieldComposition": "Sehla ka seng, serapa sa hao se ntse se fokotsa ho itshetleha ka ho hakanya — mme se ntse se eketsa ho itshetleha ka seo o hlileng o se boneng se etsahala fatshe la hao.",
+      "proposedReplacementSpans": [
+        "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground."
+      ],
+      "retainedEnglishTechnicalAnchors": [],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Season by season your garden is reducing dependence on guessing and increasing dependence on what you actually saw happen on your own ground.",
+      "semanticReason": "A little dependence is not the source decreasing comparison. Use reducing/increasing framing for both gradual comparisons; preserve the existing actual-observation clause, explicitly repairing its surrounding comparative frame. Own ground is the physical site, not a new soil-test requirement. The comparative-framing changes are proposed source-precision clarifications, not a claim that every existing localized reliance phrase is conclusively mistranslated.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Sehla ka seng, serapa sa hao se itshetleha hanyenyane ka ho hakanya — mme haholo ka seo o hlileng o se boneng se etsahala mobung wa hao.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Season by season your garden is reducing dependence on guessing and increasing dependence on what you actually saw happen on your own ground.",
+      "independentReason": "A little dependence is not the source decreasing comparison. Use reducing/increasing framing for both gradual comparisons; preserve the existing actual-observation clause, explicitly repairing its surrounding comparative frame. Own ground is the physical site, not a new soil-test requirement. The comparative-framing changes are proposed source-precision clarifications, not a claim that every existing localized reliance phrase is conclusively mistranslated.",
+      "originalDraftMetadata": {
+        "backTranslation": "Season by season, your garden depends less on guessing and more on what you have actually seen happen on your own ground.",
+        "semanticReason": "Preserves season-by-season change, the lesser reliance on guesswork, the greater reliance on observed events, and the local-ground scope.",
+        "uncertainties": [
+          "The comparative “less ... more” is retained; “guesswork” is rendered as guessing rather than an agronomic term."
+        ],
+        "retainedEnglishTechnicalAnchors": [],
+        "proposedReplacementSpans": [
+          "becomes less dependent on guesswork",
+          "on your own ground"
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "explicit-comparative-frame-repair",
+        "requiresRootReview": true,
+        "preservationChecks": [
+          {
+            "exactSpan": "Sehla ka seng, serapa sa hao ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "— mme haholo ka seo o hlileng o se boneng se etsahala ",
+            "preservedInRecommendedTarget": false
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+        "exactCurrentTarget": "Sehla ka seng, serapa sa hao becomes less dependent on guesswork — mme haholo ka seo o hlileng o se boneng se etsahala on your own ground.",
+        "exactProposedTarget": "Sehla ka seng, serapa sa hao se ntse se fokotsa ho itshetleha ka ho hakanya — mme se ntse se eketsa ho itshetleha ka seo o hlileng o se boneng se etsahala fatshe la hao.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Sehla ka seng, serapa sa hao ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "— mme haholo ka seo o hlileng o se boneng se etsahala ",
+            "preservedInRecommendedTarget": false
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "languageTag": "st",
+      "languageName": "Sesotho",
+      "pairFile": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "pairFileSHA256": "a5e2da37170c56f3498613c7c7608509a87aca85fb2556b135bb5c46b3e18d88",
+      "slideNumber": 18,
+      "bodyIndex": 7,
+      "fieldLocator": "slide[18].body[7]",
+      "exactEnglishSourceField": "Use your record with reliable local advice when making the next decision.",
+      "currentComposedTargetExact": "Sebedisa rekoto ya hao with reliable local advice ha o etsa qeto e latelang.",
+      "currentTargetStatus": "mixed",
+      "originalEnglishResidualSpans": [
+        "with reliable local advice"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Sebedisa rekoto ya hao ",
+        "ha o etsa qeto e latelang."
+      ],
+      "candidateFullFieldComposition": "Sebedisa rekoto ya hao mmoho le keletso e tshepahalang ya sebakeng sa heno ha o etsa qeto e latelang.",
+      "proposedReplacementSpans": [
+        "Use your record with reliable local advice when making the next decision."
+      ],
+      "retainedEnglishTechnicalAnchors": [],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Use your record together with reliable local advice when making the next decision.",
+      "semanticReason": "keletso e tshepahalang qualifies the advice itself; locality, use with records and next-decision timing are preserved.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Sebedisa rekoto ya hao mmoho le keletso e tshepahalang ya sebakeng sa heno ha o etsa qeto e latelang.",
+      "independentVerdict": "accept",
+      "independentBackTranslation": "Use your record together with reliable local advice when making the next decision.",
+      "independentReason": "keletso e tshepahalang qualifies the advice itself; locality, use with records and next-decision timing are preserved.",
+      "originalDraftMetadata": {
+        "backTranslation": "Use your record together with reliable local advice when making the next decision.",
+        "semanticReason": "Preserves the instruction to use the record and combines it with reliable advice from the local area before the next decision.",
+        "uncertainties": [],
+        "retainedEnglishTechnicalAnchors": [],
+        "proposedReplacementSpans": [
+          "with reliable local advice"
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Sebedisa rekoto ya hao ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "ha o etsa qeto e latelang.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Use your record with reliable local advice when making the next decision.",
+        "exactCurrentTarget": "Sebedisa rekoto ya hao with reliable local advice ha o etsa qeto e latelang.",
+        "exactProposedTarget": "Sebedisa rekoto ya hao mmoho le keletso e tshepahalang ya sebakeng sa heno ha o etsa qeto e latelang.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Sebedisa rekoto ya hao ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "ha o etsa qeto e latelang.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "languageTag": "ve",
+      "languageName": "Tshivenda",
+      "pairFile": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "pairFileSHA256": "e4c53ab0bb822c8ea70943dc1e60f28066ebf6bf001fc9fa9990f66bc4051b4c",
+      "slideNumber": 2,
+      "bodyIndex": 2,
+      "fieldLocator": "slide[2].body[2]",
+      "exactEnglishSourceField": "Then comes the gap. Nothing is ready. The garden is full of plants, but there's no food in it.",
+      "currentComposedTargetExact": "Nga murahu ha ḓa tshifhinga tsha u shaya. A hu na tshithu tshine tsha vha tsho lugela. The garden is full of plants, but there's no food in it.",
+      "currentTargetStatus": "mixed",
+      "originalEnglishResidualSpans": [
+        "the garden is full of"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Nga murahu ha ḓa tshifhinga tsha u shaya. ",
+        "A hu na tshithu tshine tsha vha tsho lugela. "
+      ],
+      "candidateFullFieldComposition": "Nga murahu ha ḓa tshifhinga tsha u shaya. A hu na tshithu tshine tsha vha tsho lugela. Garden yo ḓala zwimela, fhedzi a hu na zwiḽiwa khayo.",
+      "proposedReplacementSpans": [
+        "Then comes the gap. Nothing is ready. The garden is full of plants, but there's no food in it."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "Garden"
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Then comes a gap. Nothing is ready. The garden is full of plants but has no food.",
+      "semanticReason": "Tsimu can denote a field; the precise garden anchor avoids broadening the explicitly garden-scoped final clause. Preserve both already-localized sentences.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Nga murahu ha ḓa tshifhinga tsha u shaya. A hu na tshithu tshine tsha vha tsho lugela. Tsimu yo ḓala zwimela, fhedzi a hu na zwiḽiwa khayo.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Then comes a gap. Nothing is ready. The garden is full of plants but has no food.",
+      "independentReason": "Tsimu can denote a field; the precise garden anchor avoids broadening the explicitly garden-scoped final clause. Preserve both already-localized sentences.",
+      "originalDraftMetadata": {
+        "backTranslation": "Then comes a time of shortage. Nothing is ready. The garden is full of plants, but there is no food in it.",
+        "semanticReason": "Preserves the current localized shortage and not-ready statements, then translates the contrast between many plants and no food.",
+        "uncertainties": [],
+        "retainedEnglishTechnicalAnchors": [
+          "Garden"
+        ],
+        "proposedReplacementSpans": [
+          "The garden is full of plants, but there's no food in it."
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "Garden"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Nga murahu ha ḓa tshifhinga tsha u shaya. ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "A hu na tshithu tshine tsha vha tsho lugela. ",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Then comes the gap. Nothing is ready. The garden is full of plants, but there's no food in it.",
+        "exactCurrentTarget": "Nga murahu ha ḓa tshifhinga tsha u shaya. A hu na tshithu tshine tsha vha tsho lugela. The garden is full of plants, but there's no food in it.",
+        "exactProposedTarget": "Nga murahu ha ḓa tshifhinga tsha u shaya. A hu na tshithu tshine tsha vha tsho lugela. Garden yo ḓala zwimela, fhedzi a hu na zwiḽiwa khayo.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Nga murahu ha ḓa tshifhinga tsha u shaya. ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "A hu na tshithu tshine tsha vha tsho lugela. ",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "languageTag": "ve",
+      "languageName": "Tshivenda",
+      "pairFile": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "pairFileSHA256": "e4c53ab0bb822c8ea70943dc1e60f28066ebf6bf001fc9fa9990f66bc4051b4c",
+      "slideNumber": 17,
+      "bodyIndex": 3,
+      "fieldLocator": "slide[17].body[3]",
+      "exactEnglishSourceField": "Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.",
+      "currentComposedTargetExact": "Check the bed regularly from planting. Shumisani ten-day photograph sa assignment checkpoint, hu si tshiitisi tsha u lenga u tshi ṱhogomela.",
+      "currentTargetStatus": "mixed",
+      "originalEnglishResidualSpans": [
+        "check the bed regularly from planting"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        " Shumisani ten-day photograph sa assignment checkpoint, hu si tshiitisi tsha u lenga u tshi ṱhogomela."
+      ],
+      "candidateFullFieldComposition": "Ṱolani bed regularly u bva musi wa u ṱavha. Shumisani ten-day photograph sa assignment checkpoint, hu si tshiitisi tsha u lenga u tshi ṱhogomela.",
+      "proposedReplacementSpans": [
+        "Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "bed",
+        "regularly",
+        "ten-day photograph",
+        "assignment checkpoint"
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.",
+      "semanticReason": "All the time is stronger than regularly; i ṱavha can make the bed itself the planted object. Retain regularly pending a precise frequency rendering and use from planting without a new object. The entire no-delay clause stays exact. This ordinary frequency word remains a disclosed gap, not a technical completion claim.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Ṱolani bed tshifhinga tshoṱhe u bva musi ni tshi i ṱavha. Shumisani ten-day photograph sa assignment checkpoint, hu si tshiitisi tsha u lenga u tshi ṱhogomela.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.",
+      "independentReason": "All the time is stronger than regularly; i ṱavha can make the bed itself the planted object. Retain regularly pending a precise frequency rendering and use from planting without a new object. The entire no-delay clause stays exact. This ordinary frequency word remains a disclosed gap, not a technical completion claim.",
+      "originalDraftMetadata": {
+        "backTranslation": "Check the bed regularly from when you plant it. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.",
+        "semanticReason": "Translates the care-check instruction from planting onward and preserves the current ten-day checkpoint/non-delay clause.",
+        "uncertainties": [
+          "The second sentence retains the existing technical/assignment anchors."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "bed",
+          "regularly",
+          "ten-day photograph",
+          "assignment checkpoint"
+        ],
+        "proposedReplacementSpans": [
+          "Check the bed regularly from planting."
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "bed",
+        "regularly",
+        "ten-day photograph",
+        "assignment checkpoint"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": " Shumisani ten-day photograph sa assignment checkpoint, hu si tshiitisi tsha u lenga u tshi ṱhogomela.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.",
+        "exactCurrentTarget": "Check the bed regularly from planting. Shumisani ten-day photograph sa assignment checkpoint, hu si tshiitisi tsha u lenga u tshi ṱhogomela.",
+        "exactProposedTarget": "Ṱolani bed regularly u bva musi wa u ṱavha. Shumisani ten-day photograph sa assignment checkpoint, hu si tshiitisi tsha u lenga u tshi ṱhogomela.",
+        "preservationChecks": [
+          {
+            "exactSpan": " Shumisani ten-day photograph sa assignment checkpoint, hu si tshiitisi tsha u lenga u tshi ṱhogomela.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "languageTag": "ve",
+      "languageName": "Tshivenda",
+      "pairFile": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "pairFileSHA256": "e4c53ab0bb822c8ea70943dc1e60f28066ebf6bf001fc9fa9990f66bc4051b4c",
+      "slideNumber": 18,
+      "bodyIndex": 6,
+      "fieldLocator": "slide[18].body[6]",
+      "exactEnglishSourceField": "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+      "currentComposedTargetExact": "Khalaṅwaha iṅwe na iṅwe, your garden becomes less dependent on guesswork — and more on zwe na zwi vhona zwa vhukuma zwi tshi itea on your own ground.",
+      "currentTargetStatus": "mixed",
+      "originalEnglishResidualSpans": [
+        "on your own ground"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Khalaṅwaha iṅwe na iṅwe, ",
+        "zwe na zwi vhona zwa vhukuma zwi tshi itea "
+      ],
+      "candidateFullFieldComposition": "Khalaṅwaha iṅwe na iṅwe, garden yaṋu i ya i tshi fhungudza u ḓitika nga u humbulela — nahone i tshi engedza u ḓitika nga zwe na zwi vhona zwa vhukuma zwi tshi itea fhethu haṋu.",
+      "proposedReplacementSpans": [
+        "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "garden"
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Season by season your garden reduces dependence on guessing and increases dependence on what you actually saw happen at your own site.",
+      "semanticReason": "Candidate loses more entirely and replaces less with a little. Restore explicit decreasing/increasing reliance, preserve the actual-observation clause, and keep garden to avoid field expansion. Physical own-ground/site is retained without a new land-ownership claim. The comparative-framing changes are proposed source-precision clarifications, not a claim that every existing localized reliance phrase is conclusively mistranslated.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Khalaṅwaha iṅwe na iṅwe, tsimu yaṋu i ḓitika nga u humbulela nga zwiṱuku — nahone nga zwe na zwi vhona zwa vhukuma zwi tshi itea mavuni aṋu.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Season by season your garden reduces dependence on guessing and increases dependence on what you actually saw happen at your own site.",
+      "independentReason": "Candidate loses more entirely and replaces less with a little. Restore explicit decreasing/increasing reliance, preserve the actual-observation clause, and keep garden to avoid field expansion. Physical own-ground/site is retained without a new land-ownership claim. The comparative-framing changes are proposed source-precision clarifications, not a claim that every existing localized reliance phrase is conclusively mistranslated.",
+      "originalDraftMetadata": {
+        "backTranslation": "Season by season, your garden depends a little less on guessing and more on what you have actually seen happen on your own ground.",
+        "semanticReason": "Preserves the gradual reduction in guesswork, increased reliance on observed events, and own-ground scope.",
+        "uncertainties": [
+          "The draft preserves less/more contrast without saying guesswork disappears."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "garden"
+        ],
+        "proposedReplacementSpans": [
+          "your garden becomes less dependent on guesswork",
+          "on your own ground"
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "garden"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "explicit-comparative-frame-repair",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Khalaṅwaha iṅwe na iṅwe, ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "zwe na zwi vhona zwa vhukuma zwi tshi itea ",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+        "exactCurrentTarget": "Khalaṅwaha iṅwe na iṅwe, your garden becomes less dependent on guesswork — and more on zwe na zwi vhona zwa vhukuma zwi tshi itea on your own ground.",
+        "exactProposedTarget": "Khalaṅwaha iṅwe na iṅwe, garden yaṋu i ya i tshi fhungudza u ḓitika nga u humbulela — nahone i tshi engedza u ḓitika nga zwe na zwi vhona zwa vhukuma zwi tshi itea fhethu haṋu.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Khalaṅwaha iṅwe na iṅwe, ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "zwe na zwi vhona zwa vhukuma zwi tshi itea ",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "languageTag": "ve",
+      "languageName": "Tshivenda",
+      "pairFile": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "pairFileSHA256": "e4c53ab0bb822c8ea70943dc1e60f28066ebf6bf001fc9fa9990f66bc4051b4c",
+      "slideNumber": 18,
+      "bodyIndex": 7,
+      "fieldLocator": "slide[18].body[7]",
+      "exactEnglishSourceField": "Use your record with reliable local advice when making the next decision.",
+      "currentComposedTargetExact": "Shumisani rekhodo yaṋu with reliable local advice musi ni tshi dzhia tsheo i tevhelaho.",
+      "currentTargetStatus": "mixed",
+      "originalEnglishResidualSpans": [
+        "with reliable local advice"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Shumisani rekhodo yaṋu ",
+        "musi ni tshi dzhia tsheo i tevhelaho."
+      ],
+      "candidateFullFieldComposition": "Shumisani rekhodo yaṋu na nyeletshedzo i fulufhedzeaho ya henefho musi ni tshi dzhia tsheo i tevhelaho.",
+      "proposedReplacementSpans": [
+        "Use your record with reliable local advice when making the next decision."
+      ],
+      "retainedEnglishTechnicalAnchors": [],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Use your record with reliable advice from locally when taking the next decision.",
+      "semanticReason": "Replace advice you personally can trust with advice that is reliable. Exact same-module-family phrase nyeletshedzo i fulufhedzeaho ya fhethu occurs in VE Food Forest for reliable local guidance; this supports objective reliability but does not prove fluency.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Shumisani rekhodo yaṋu na nyeletshedzo ya henefho ine na nga i fulufhedza musi ni tshi dzhia tsheo i tevhelaho.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Use your record with reliable advice from locally when taking the next decision.",
+      "independentReason": "Replace advice you personally can trust with advice that is reliable. Exact same-module-family phrase nyeletshedzo i fulufhedzeaho ya fhethu occurs in VE Food Forest for reliable local guidance; this supports objective reliability but does not prove fluency.",
+      "originalDraftMetadata": {
+        "backTranslation": "Use your record with advice from there that you can rely on when making the next decision.",
+        "semanticReason": "Translates the support phrase while keeping the user’s record and next-decision instruction.",
+        "uncertainties": [
+          "A fluent reviewer should confirm the most natural Tshivenda equivalent for reliable local advice."
+        ],
+        "retainedEnglishTechnicalAnchors": [],
+        "proposedReplacementSpans": [
+          "with reliable local advice"
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Shumisani rekhodo yaṋu ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "musi ni tshi dzhia tsheo i tevhelaho.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Use your record with reliable local advice when making the next decision.",
+        "exactCurrentTarget": "Shumisani rekhodo yaṋu with reliable local advice musi ni tshi dzhia tsheo i tevhelaho.",
+        "exactProposedTarget": "Shumisani rekhodo yaṋu na nyeletshedzo i fulufhedzeaho ya henefho musi ni tshi dzhia tsheo i tevhelaho.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Shumisani rekhodo yaṋu ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "musi ni tshi dzhia tsheo i tevhelaho.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "languageTag": "ts",
+      "languageName": "Xitsonga",
+      "pairFile": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "pairFileSHA256": "e08e26316ad374f4b81a922a921b2fad7b808440380a2cd04a72bb8e1f14d66e",
+      "slideNumber": 1,
+      "bodyIndex": 2,
+      "fieldLocator": "slide[1].body[2]",
+      "exactEnglishSourceField": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive.",
+      "currentComposedTargetExact": "Eka timinete ti nga ri tingani leti landzelaka, hi ta bula swilo swa mune. Ku lulamisa bed. Ku endla leswaku harvest yi ya yi ri kona. Ti staple crops leti u faneleke ku ti byala. And what to do when pests arrive.",
+      "currentTargetStatus": "mixed",
+      "originalEnglishResidualSpans": [
+        "and what to do when"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Eka timinete ti nga ri tingani leti landzelaka, hi ta bula swilo swa mune. ",
+        "Ku lulamisa bed. ",
+        "Ku endla leswaku harvest yi ya yi ri kona. ",
+        "Ti staple crops leti u faneleke ku ti byala. "
+      ],
+      "candidateFullFieldComposition": "Eka timinete ti nga ri tingani leti landzelaka, hi ta bula swilo swa mune. Ndlela yo aka bed. Ku endla leswaku harvest yi ya yi ri kona. Staples tihi to ti byala. Na ku endla yini loko pests ti fika.",
+      "proposedReplacementSpans": [
+        "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "bed",
+        "harvest",
+        "Staples",
+        "pests"
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "In the next few minutes we cover four things: how to build a bed; keep harvest coming; which staples to grow; and what to do when pests arrive.",
+      "semanticReason": "Explicit inherited scope repairs: prepare/lulamisa is not build; the current which-staples clause adds must; candidate adds must to what-to-do too. Keep the exact introductory and harvest clauses, four topics and order, and give decision topics without obligation. These inherited prefix changes require root approval, not automatic application.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Eka timinete ti nga ri tingani leti landzelaka, hi ta bula swilo swa mune. Ku lulamisa bed. Ku endla leswaku harvest yi ya yi ri kona. Ti staple crops leti u faneleke ku ti byala. Na leswi u faneleke ku swi endla loko pests ti fika.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "In the next few minutes we cover four things: how to build a bed; keep harvest coming; which staples to grow; and what to do when pests arrive.",
+      "independentReason": "Explicit inherited scope repairs: prepare/lulamisa is not build; the current which-staples clause adds must; candidate adds must to what-to-do too. Keep the exact introductory and harvest clauses, four topics and order, and give decision topics without obligation. These inherited prefix changes require root approval, not automatic application.",
+      "originalDraftMetadata": {
+        "backTranslation": "In the next few minutes we will cover four things: preparing a bed; keeping harvests coming; which staple crops to plant; and what to do when pests arrive.",
+        "semanticReason": "Preserves the current Xitsonga introduction and the four-topic list/order, translating the final “and what to do when” clause while retaining broad pest as a technical anchor.",
+        "uncertainties": [
+          "Current earlier list phrases retain the established bed/harvest/staple-crop terms."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "bed",
+          "harvest",
+          "Staples",
+          "pests"
+        ],
+        "proposedReplacementSpans": [
+          "And what to do when pests arrive."
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "bed",
+        "harvest",
+        "Staples",
+        "pests"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "explicit-inherited-topic-scope-repair",
+        "requiresRootReview": true,
+        "preservationChecks": [
+          {
+            "exactSpan": "Eka timinete ti nga ri tingani leti landzelaka, hi ta bula swilo swa mune. ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "Ku lulamisa bed. ",
+            "preservedInRecommendedTarget": false
+          },
+          {
+            "exactSpan": "Ku endla leswaku harvest yi ya yi ri kona. ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "Ti staple crops leti u faneleke ku ti byala. ",
+            "preservedInRecommendedTarget": false
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive.",
+        "exactCurrentTarget": "Eka timinete ti nga ri tingani leti landzelaka, hi ta bula swilo swa mune. Ku lulamisa bed. Ku endla leswaku harvest yi ya yi ri kona. Ti staple crops leti u faneleke ku ti byala. And what to do when pests arrive.",
+        "exactProposedTarget": "Eka timinete ti nga ri tingani leti landzelaka, hi ta bula swilo swa mune. Ndlela yo aka bed. Ku endla leswaku harvest yi ya yi ri kona. Staples tihi to ti byala. Na ku endla yini loko pests ti fika.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Eka timinete ti nga ri tingani leti landzelaka, hi ta bula swilo swa mune. ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "Ku lulamisa bed. ",
+            "preservedInRecommendedTarget": false
+          },
+          {
+            "exactSpan": "Ku endla leswaku harvest yi ya yi ri kona. ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "Ti staple crops leti u faneleke ku ti byala. ",
+            "preservedInRecommendedTarget": false
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "languageTag": "ts",
+      "languageName": "Xitsonga",
+      "pairFile": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "pairFileSHA256": "e08e26316ad374f4b81a922a921b2fad7b808440380a2cd04a72bb8e1f14d66e",
+      "slideNumber": 3,
+      "bodyIndex": 1,
+      "fieldLocator": "slide[3].body[1]",
+      "exactEnglishSourceField": "One. Build the right bed — matching the width and the bed type to your soil and your rainfall.",
+      "currentComposedTargetExact": "Xo sungula. Build the right bed — width na bed type swi fambisana ni soil ya wena na rainfall ya wena.",
+      "currentTargetStatus": "mixed",
+      "originalEnglishResidualSpans": [
+        "build the right bed"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Xo sungula. ",
+        "— width na bed type swi fambisana ni soil ya wena na rainfall ya wena."
+      ],
+      "candidateFullFieldComposition": "Xo sungula. Aka bed leyi faneleke — width na bed type swi fambisana ni soil ya wena na rainfall ya wena.",
+      "proposedReplacementSpans": [
+        "One. Build the right bed — matching the width and the bed type to your soil and your rainfall."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "bed",
+        "width",
+        "bed type",
+        "soil",
+        "rainfall"
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "First. Build an appropriate bed, matching width/type to your soil/rainfall.",
+      "semanticReason": "The action is build; right is contextual appropriateness rather than a universal bed type. Preserve first/topic frame and all matching qualifiers.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Xo sungula. Aka bed leyi faneleke — width na bed type swi fambisana ni soil ya wena na rainfall ya wena.",
+      "independentVerdict": "accept",
+      "independentBackTranslation": "First. Build an appropriate bed, matching width/type to your soil/rainfall.",
+      "independentReason": "The action is build; right is contextual appropriateness rather than a universal bed type. Preserve first/topic frame and all matching qualifiers.",
+      "originalDraftMetadata": {
+        "backTranslation": "One. Build a suitable bed, matching its width and type to your soil and rainfall.",
+        "semanticReason": "Translates the ordinary action and suitable/right frame; preserves the current localized width/type/soil/rainfall clause and technical farm terms.",
+        "uncertainties": [
+          "“Bed” remains the established farming term in this paired draft."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "bed",
+          "width",
+          "bed type",
+          "soil",
+          "rainfall"
+        ],
+        "proposedReplacementSpans": [
+          "Build the right bed"
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "bed",
+        "width",
+        "bed type",
+        "soil",
+        "rainfall"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Xo sungula. ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "— width na bed type swi fambisana ni soil ya wena na rainfall ya wena.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "One. Build the right bed — matching the width and the bed type to your soil and your rainfall.",
+        "exactCurrentTarget": "Xo sungula. Build the right bed — width na bed type swi fambisana ni soil ya wena na rainfall ya wena.",
+        "exactProposedTarget": "Xo sungula. Aka bed leyi faneleke — width na bed type swi fambisana ni soil ya wena na rainfall ya wena.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Xo sungula. ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "— width na bed type swi fambisana ni soil ya wena na rainfall ya wena.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "languageTag": "ts",
+      "languageName": "Xitsonga",
+      "pairFile": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "pairFileSHA256": "e08e26316ad374f4b81a922a921b2fad7b808440380a2cd04a72bb8e1f14d66e",
+      "slideNumber": 18,
+      "bodyIndex": 6,
+      "fieldLocator": "slide[18].body[6]",
+      "exactEnglishSourceField": "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+      "currentComposedTargetExact": "Nguva yin’wana ni yin’wana, ntanga wa wena becomes less dependent on guesswork — naswona wu titshega ngopfu hi leswi u swi voneke swi humelela hakunene on your own ground.",
+      "currentTargetStatus": "mixed",
+      "originalEnglishResidualSpans": [
+        "becomes less dependent on guesswork",
+        "on your own ground"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Nguva yin’wana ni yin’wana, ntanga wa wena ",
+        "— naswona wu titshega ngopfu hi leswi u swi voneke swi humelela hakunene "
+      ],
+      "candidateFullFieldComposition": "Nguva yin’wana ni yin’wana, ntanga wa wena wu ya wu hunguta ku titshega hi ku bvumba — naswona wu ya wu engetela ku titshega hi leswi u swi voneke swi humelela hakunene eka misava ya wena.",
+      "proposedReplacementSpans": [
+        "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground."
+      ],
+      "retainedEnglishTechnicalAnchors": [],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Season by season the garden reduces reliance on guessing and increases reliance on what you actually saw happen on your own ground.",
+      "semanticReason": "No longer depending much can strengthen the achieved state; use gradual reduction and increase. Preserve the actual-seen observation span; explicit comparative frame repair is documented rather than claimed untouched. The comparative-framing changes are proposed source-precision clarifications, not a claim that every existing localized reliance phrase is conclusively mistranslated.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Nguva yin’wana ni yin’wana, ntanga wa wena wu ya wu nga ha titshegi ngopfu hi ku bvumba — naswona wu titshega ngopfu hi leswi u swi voneke swi humelela hakunene eka misava ya wena.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Season by season the garden reduces reliance on guessing and increases reliance on what you actually saw happen on your own ground.",
+      "independentReason": "No longer depending much can strengthen the achieved state; use gradual reduction and increase. Preserve the actual-seen observation span; explicit comparative frame repair is documented rather than claimed untouched. The comparative-framing changes are proposed source-precision clarifications, not a claim that every existing localized reliance phrase is conclusively mistranslated.",
+      "originalDraftMetadata": {
+        "backTranslation": "Season by season, your garden grows less dependent on guessing and more dependent on what you have actually seen happen on your own ground.",
+        "semanticReason": "Keeps the gradual less/more comparison, actual observation, and own-ground scope, while preserving the existing localized comparative clause exactly.",
+        "uncertainties": [
+          "A fluent reviewer should confirm the best Xitsonga phrasing for “own ground”."
+        ],
+        "retainedEnglishTechnicalAnchors": [],
+        "proposedReplacementSpans": [
+          "becomes less dependent on guesswork",
+          "on your own ground"
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "explicit-comparative-frame-repair",
+        "requiresRootReview": true,
+        "preservationChecks": [
+          {
+            "exactSpan": "Nguva yin’wana ni yin’wana, ntanga wa wena ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "— naswona wu titshega ngopfu hi leswi u swi voneke swi humelela hakunene ",
+            "preservedInRecommendedTarget": false
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+        "exactCurrentTarget": "Nguva yin’wana ni yin’wana, ntanga wa wena becomes less dependent on guesswork — naswona wu titshega ngopfu hi leswi u swi voneke swi humelela hakunene on your own ground.",
+        "exactProposedTarget": "Nguva yin’wana ni yin’wana, ntanga wa wena wu ya wu hunguta ku titshega hi ku bvumba — naswona wu ya wu engetela ku titshega hi leswi u swi voneke swi humelela hakunene eka misava ya wena.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Nguva yin’wana ni yin’wana, ntanga wa wena ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "— naswona wu titshega ngopfu hi leswi u swi voneke swi humelela hakunene ",
+            "preservedInRecommendedTarget": false
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "vegetables-staples",
+      "languageTag": "ts",
+      "languageName": "Xitsonga",
+      "pairFile": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "pairFileSHA256": "e08e26316ad374f4b81a922a921b2fad7b808440380a2cd04a72bb8e1f14d66e",
+      "slideNumber": 18,
+      "bodyIndex": 7,
+      "fieldLocator": "slide[18].body[7]",
+      "exactEnglishSourceField": "Use your record with reliable local advice when making the next decision.",
+      "currentComposedTargetExact": "Tirhisa rhekhodo ya wena with reliable local advice loko u endla xiboho lexi landzelaka.",
+      "currentTargetStatus": "mixed",
+      "originalEnglishResidualSpans": [
+        "with reliable local advice"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Tirhisa rhekhodo ya wena ",
+        "loko u endla xiboho lexi landzelaka."
+      ],
+      "candidateFullFieldComposition": "Tirhisa rhekhodo ya wena ni xitsundzuxo xo tshembeka xa laha kaya loko u endla xiboho lexi landzelaka.",
+      "proposedReplacementSpans": [
+        "Use your record with reliable local advice when making the next decision."
+      ],
+      "retainedEnglishTechnicalAnchors": [],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Use your record with reliable local advice when making the next decision.",
+      "semanticReason": "The source qualifies reliability of advice, not merely advice you personally trust. Objective xo tshembeka replaces the personal-trust relative clause; no qualification or diagnosis claim is added.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Tirhisa rhekhodo ya wena ni xitsundzuxo xa laha kaya lexi u nga xi tshemba loko u endla xiboho lexi landzelaka.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Use your record with reliable local advice when making the next decision.",
+      "independentReason": "The source qualifies reliability of advice, not merely advice you personally trust. Objective xo tshembeka replaces the personal-trust relative clause; no qualification or diagnosis claim is added.",
+      "originalDraftMetadata": {
+        "backTranslation": "Use your record with local advice you can trust when making the next decision.",
+        "semanticReason": "Translates reliable/local and preserves use-your-record/next-decision scope.",
+        "uncertainties": [],
+        "retainedEnglishTechnicalAnchors": [],
+        "proposedReplacementSpans": [
+          "with reliable local advice"
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Tirhisa rhekhodo ya wena ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "loko u endla xiboho lexi landzelaka.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Use your record with reliable local advice when making the next decision.",
+        "exactCurrentTarget": "Tirhisa rhekhodo ya wena with reliable local advice loko u endla xiboho lexi landzelaka.",
+        "exactProposedTarget": "Tirhisa rhekhodo ya wena ni xitsundzuxo xo tshembeka xa laha kaya loko u endla xiboho lexi landzelaka.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Tirhisa rhekhodo ya wena ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "loko u endla xiboho lexi landzelaka.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "market-community",
+      "languageTag": "st",
+      "languageName": "Sesotho",
+      "pairFile": "docs/narration/market-community.st.paired-draft.json",
+      "pairFileSHA256": "8046170b4cfd3a96fde790e9c53ce7ab73cf6846ddf8d75f1109c9dbcbefc160",
+      "slideNumber": 12,
+      "bodyIndex": 0,
+      "fieldLocator": "slide[12].body[0]",
+      "exactEnglishSourceField": "Start from what you can reliably supply and what customers want.",
+      "currentComposedTargetExact": "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+      "currentTargetStatus": "draft",
+      "originalEnglishResidualSpans": [
+        "what you can reliably supply"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Qala ka ",
+        "le seo bareki ba se batlang."
+      ],
+      "candidateFullFieldComposition": "Qala ka seo o ka fanang ka sona ka ho tshepahala le seo bareki ba se batlang.",
+      "proposedReplacementSpans": [
+        "Start from what you can reliably supply and what customers want."
+      ],
+      "retainedEnglishTechnicalAnchors": [],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Start with what you can provide reliably and what customers want.",
+      "semanticReason": "ka tshepeho can emphasize honesty/fidelity; ka ho tshepahala applies reliable provision, preserving can and customer demand. No quantity, steady-weekly promise or guarantee added.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Qala ka seo o ka fanang ka sona ka tshepeho le seo bareki ba se batlang.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Start with what you can provide reliably and what customers want.",
+      "independentReason": "ka tshepeho can emphasize honesty/fidelity; ka ho tshepahala applies reliable provision, preserving can and customer demand. No quantity, steady-weekly promise or guarantee added.",
+      "originalDraftMetadata": {
+        "backTranslation": "Start with what you can supply reliably and what customers want.",
+        "semanticReason": "Preserves start-from, reliable supply capacity, and customer demand.",
+        "uncertainties": [
+          "“Reliably” is rendered as “with confidence/reliability”; facilitator should check local naturalness."
+        ],
+        "retainedEnglishTechnicalAnchors": [],
+        "proposedReplacementSpans": [
+          "what you can reliably supply"
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Qala ka ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "le seo bareki ba se batlang.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Start from what you can reliably supply and what customers want.",
+        "exactCurrentTarget": "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+        "exactProposedTarget": "Qala ka seo o ka fanang ka sona ka ho tshepahala le seo bareki ba se batlang.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Qala ka ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": "le seo bareki ba se batlang.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "market-community",
+      "languageTag": "st",
+      "languageName": "Sesotho",
+      "pairFile": "docs/narration/market-community.st.paired-draft.json",
+      "pairFileSHA256": "8046170b4cfd3a96fde790e9c53ce7ab73cf6846ddf8d75f1109c9dbcbefc160",
+      "slideNumber": 15,
+      "bodyIndex": 3,
+      "fieldLocator": "slide[15].body[3]",
+      "exactEnglishSourceField": "Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "currentComposedTargetExact": "Pele o fapanyetsana peo, check whether the variety is protected and whether permission is needed.",
+      "currentTargetStatus": "mixed",
+      "originalEnglishResidualSpans": [
+        "check whether the variety is protected and whether permission is"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Pele o fapanyetsana peo, "
+      ],
+      "candidateFullFieldComposition": "Pele o fapanyetsana peo, hlahloba hore na variety e sireleditswe le hore na permission e a hlokahala.",
+      "proposedReplacementSpans": [
+        "Before exchanging seed, check whether the variety is protected and whether permission is needed."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "variety",
+        "permission"
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Before exchanging seed, check whether the variety is protected and whether permission is required.",
+      "semanticReason": "The full ordinary two-whether framing is safely available as an exact source-equivalent clause in current ST native Market L3 body. Keep existing deck before-exchange prefix and reuse only the exact matching final source sentence remainder. No assertion that permission is always needed or granted.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Pele o fapanyetsana peo, hlahloba whether the variety is protected and whether permission is needed.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Before exchanging seed, check whether the variety is protected and whether permission is required.",
+      "independentReason": "The full ordinary two-whether framing is safely available as an exact source-equivalent clause in current ST native Market L3 body. Keep existing deck before-exchange prefix and reuse only the exact matching final source sentence remainder. No assertion that permission is always needed or granted.",
+      "originalDraftMetadata": {
+        "backTranslation": "Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+        "semanticReason": "Translates only the ordinary checking verb; retains both exact legal/permission conditions so no permission is implied and scope remains exchange-specific.",
+        "uncertainties": [
+          "Protection and permission wording remains exact English pending legal-term review; this is not a statement that permission exists or is required."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "variety",
+          "permission"
+        ],
+        "proposedReplacementSpans": [
+          "check"
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "variety",
+        "permission"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Pele o fapanyetsana peo, ",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+        "exactCurrentTarget": "Pele o fapanyetsana peo, check whether the variety is protected and whether permission is needed.",
+        "exactProposedTarget": "Pele o fapanyetsana peo, hlahloba hore na variety e sireleditswe le hore na permission e a hlokahala.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Pele o fapanyetsana peo, ",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "market-community",
+      "languageTag": "st",
+      "languageName": "Sesotho",
+      "pairFile": "docs/narration/market-community.st.paired-draft.json",
+      "pairFileSHA256": "8046170b4cfd3a96fde790e9c53ce7ab73cf6846ddf8d75f1109c9dbcbefc160",
+      "slideNumber": 18,
+      "bodyIndex": 2,
+      "fieldLocator": "slide[18].body[2]",
+      "exactEnglishSourceField": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "currentComposedTargetExact": "Batla qualified advice bakeng sa unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+      "currentTargetStatus": "draft",
+      "originalEnglishResidualSpans": [
+        "unfamiliar disease or technical"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Batla ",
+        " bakeng sa ",
+        ". Boiphihlelo bo arolelanoang le thuso ya ",
+        " di ka sebetsa mmoho."
+      ],
+      "candidateFullFieldComposition": "Batla qualified advice bakeng sa unfamiliar disease kapa mathata a technical. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+      "proposedReplacementSpans": [
+        "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "qualified advice",
+        "unfamiliar disease",
+        "technical",
+        "specialist"
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "semanticReason": "The hold need not keep ordinary or/problems English. Translate those only, keeping current localized second clause exact and source qualification/can. unfamiliar inside the disease phrase remains an unresolved ordinary adjective; do not call the whole instruction complete.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Batla qualified advice bakeng sa unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "independentReason": "The hold need not keep ordinary or/problems English. Translate those only, keeping current localized second clause exact and source qualification/can. unfamiliar inside the disease phrase remains an unresolved ordinary adjective; do not call the whole instruction complete.",
+      "originalDraftMetadata": {
+        "backTranslation": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+        "semanticReason": "The ordinary framing is already localized. The remaining words name disease/technical categories and qualification/specialist concepts; keep those exact English anchors rather than risk narrowing or changing the advice threshold.",
+        "uncertainties": [
+          "No additional translation is proposed for the held technical spans; current localized clauses remain as registered."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "qualified advice",
+          "unfamiliar disease",
+          "technical",
+          "specialist"
+        ],
+        "proposedReplacementSpans": []
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "qualified advice",
+        "unfamiliar disease",
+        "technical",
+        "specialist"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Batla ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " bakeng sa ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": ". Boiphihlelo bo arolelanoang le thuso ya ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " di ka sebetsa mmoho.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+        "exactCurrentTarget": "Batla qualified advice bakeng sa unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+        "exactProposedTarget": "Batla qualified advice bakeng sa unfamiliar disease kapa mathata a technical. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Batla ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " bakeng sa ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": ". Boiphihlelo bo arolelanoang le thuso ya ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " di ka sebetsa mmoho.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "market-community",
+      "languageTag": "ve",
+      "languageName": "Tshivenda",
+      "pairFile": "docs/narration/market-community.ve.paired-draft.json",
+      "pairFileSHA256": "f08ae7470ff8913d315017275054a3e9582e5c6b5df523b36c9c95971f389620",
+      "slideNumber": 3,
+      "bodyIndex": 1,
+      "fieldLocator": "slide[3].body[1]",
+      "exactEnglishSourceField": "You can work out the true cost of production before setting a price.",
+      "currentComposedTargetExact": "Ni nga vhalela true cost of production, musi ni sa athu vhea mutengo wa u rengisa.",
+      "currentTargetStatus": "draft",
+      "originalEnglishResidualSpans": [
+        "true cost of production"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Ni nga vhalela ",
+        ", musi ni sa athu vhea mutengo wa u rengisa."
+      ],
+      "candidateFullFieldComposition": "Ni nga vhalela true cost of production, musi ni sa athu vhea mutengo wa u rengisa.",
+      "proposedReplacementSpans": [
+        "You can work out the true cost of production before setting a price."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "true cost of production"
+      ],
+      "classification": "unchanged-accounting-precision-hold",
+      "backTranslation": "You can calculate the true cost of production before setting a selling price.",
+      "semanticReason": "The accounting precision phrase is a justified hold; can and before already have localized framing. No defect established, no change proposed.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Ni nga vhalela true cost of production, musi ni sa athu vhea mutengo wa u rengisa.",
+      "independentVerdict": "hold",
+      "independentBackTranslation": "You can calculate the true cost of production before setting a selling price.",
+      "independentReason": "The accounting precision phrase is a justified hold; can and before already have localized framing. No defect established, no change proposed.",
+      "originalDraftMetadata": {
+        "backTranslation": "You can work out the true cost of production before setting a selling price.",
+        "semanticReason": "The ordinary ability/before-pricing frame is already localized. “True cost of production” is a finance calculation concept; keep the exact technical phrase rather than risk implying gross cost or profit.",
+        "uncertainties": [
+          "No localized replacement for the accounting term proposed."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "true cost of production"
+        ],
+        "proposedReplacementSpans": []
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "true cost of production"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Ni nga vhalela ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": ", musi ni sa athu vhea mutengo wa u rengisa.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "You can work out the true cost of production before setting a price.",
+        "exactCurrentTarget": "Ni nga vhalela true cost of production, musi ni sa athu vhea mutengo wa u rengisa.",
+        "exactProposedTarget": "Ni nga vhalela true cost of production, musi ni sa athu vhea mutengo wa u rengisa.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Ni nga vhalela ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": ", musi ni sa athu vhea mutengo wa u rengisa.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "market-community",
+      "languageTag": "ve",
+      "languageName": "Tshivenda",
+      "pairFile": "docs/narration/market-community.ve.paired-draft.json",
+      "pairFileSHA256": "f08ae7470ff8913d315017275054a3e9582e5c6b5df523b36c9c95971f389620",
+      "slideNumber": 12,
+      "bodyIndex": 0,
+      "fieldLocator": "slide[12].body[0]",
+      "exactEnglishSourceField": "Start from what you can reliably supply and what customers want.",
+      "currentComposedTargetExact": "Thomani nga what you can reliably supply na zwine vharengi vha zwi ṱoḓa.",
+      "currentTargetStatus": "draft",
+      "originalEnglishResidualSpans": [
+        "what you can reliably supply"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Thomani nga ",
+        " na zwine vharengi vha zwi ṱoḓa."
+      ],
+      "candidateFullFieldComposition": "Thomani nga zwine na nga kona u ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.",
+      "proposedReplacementSpans": [
+        "Start from what you can reliably supply and what customers want."
+      ],
+      "retainedEnglishTechnicalAnchors": [],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Start with what you can supply reliably and what customers want.",
+      "semanticReason": "nga u fulufhedzea qualifies reliable provision rather than the recipient personally trusting it; can, supply and customer demand remain. Native VE formal-stall target supply yo fulufhedzeaho provides contextual reliability precedent, not fluent approval.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Thomani nga zwine na nga kona u ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.",
+      "independentVerdict": "accept",
+      "independentBackTranslation": "Start with what you can supply reliably and what customers want.",
+      "independentReason": "nga u fulufhedzea qualifies reliable provision rather than the recipient personally trusting it; can, supply and customer demand remain. Native VE formal-stall target supply yo fulufhedzeaho provides contextual reliability precedent, not fluent approval.",
+      "originalDraftMetadata": {
+        "backTranslation": "Start from what you can reliably supply and what customers want.",
+        "semanticReason": "Preserves the existing localized start/and-customer clauses and translates supplier capacity and reliability.",
+        "uncertainties": [],
+        "retainedEnglishTechnicalAnchors": [],
+        "proposedReplacementSpans": [
+          "what you can reliably supply"
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Thomani nga ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " na zwine vharengi vha zwi ṱoḓa.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Start from what you can reliably supply and what customers want.",
+        "exactCurrentTarget": "Thomani nga what you can reliably supply na zwine vharengi vha zwi ṱoḓa.",
+        "exactProposedTarget": "Thomani nga zwine na nga kona u ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Thomani nga ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " na zwine vharengi vha zwi ṱoḓa.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "market-community",
+      "languageTag": "ve",
+      "languageName": "Tshivenda",
+      "pairFile": "docs/narration/market-community.ve.paired-draft.json",
+      "pairFileSHA256": "f08ae7470ff8913d315017275054a3e9582e5c6b5df523b36c9c95971f389620",
+      "slideNumber": 18,
+      "bodyIndex": 2,
+      "fieldLocator": "slide[18].body[2]",
+      "exactEnglishSourceField": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "currentComposedTargetExact": "Ṱoḓani qualified advice nga ha unfamiliar disease or technical problems. Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
+      "currentTargetStatus": "draft",
+      "originalEnglishResidualSpans": [
+        "unfamiliar disease or technical"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Ṱoḓani ",
+        " nga ha ",
+        ". Tshenzhemo yo kovhekaniwaho na ",
+        " zwi nga shuma khathihi."
+      ],
+      "candidateFullFieldComposition": "Ṱoḓani qualified advice nga ha unfamiliar disease kana thaidzo dza technical. Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
+      "proposedReplacementSpans": [
+        "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "qualified advice",
+        "unfamiliar disease",
+        "technical",
+        "specialist help"
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help may work together.",
+      "semanticReason": "Translate ordinary or/problems, preserve qualified and unfamiliar-disease precision plus the complete current localized second clause. No ordinary-clause blanket hold; unfamiliar remains an explicitly unresolved adjective.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Ṱoḓani qualified advice nga ha unfamiliar disease or technical problems. Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help may work together.",
+      "independentReason": "Translate ordinary or/problems, preserve qualified and unfamiliar-disease precision plus the complete current localized second clause. No ordinary-clause blanket hold; unfamiliar remains an explicitly unresolved adjective.",
+      "originalDraftMetadata": {
+        "backTranslation": "Seek qualified advice about unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+        "semanticReason": "Ordinary command and collaboration clauses are already localized; remaining terms are technical disease/problem categories and qualifications. Retain those precise anchors.",
+        "uncertainties": [
+          "No new wording proposed for technical spans pending reviewer confirmation."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "qualified advice",
+          "unfamiliar disease",
+          "technical",
+          "specialist help"
+        ],
+        "proposedReplacementSpans": []
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "qualified advice",
+        "unfamiliar disease",
+        "technical",
+        "specialist help"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Ṱoḓani ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " nga ha ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": ". Tshenzhemo yo kovhekaniwaho na ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " zwi nga shuma khathihi.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+        "exactCurrentTarget": "Ṱoḓani qualified advice nga ha unfamiliar disease or technical problems. Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
+        "exactProposedTarget": "Ṱoḓani qualified advice nga ha unfamiliar disease kana thaidzo dza technical. Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Ṱoḓani ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " nga ha ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": ". Tshenzhemo yo kovhekaniwaho na ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " zwi nga shuma khathihi.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "market-community",
+      "languageTag": "ts",
+      "languageName": "Xitsonga",
+      "pairFile": "docs/narration/market-community.ts.paired-draft.json",
+      "pairFileSHA256": "6de3ddc49bb912422eeab2a7ecd8b330e9ec25d38bab3d4dcc29e4f60f783286",
+      "slideNumber": 3,
+      "bodyIndex": 1,
+      "fieldLocator": "slide[3].body[1]",
+      "exactEnglishSourceField": "You can work out the true cost of production before setting a price.",
+      "currentComposedTargetExact": "U nga hlayela true cost of production u nga si veka nxavo.",
+      "currentTargetStatus": "draft",
+      "originalEnglishResidualSpans": [
+        "true cost of production"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "U nga hlayela ",
+        " u nga si veka nxavo."
+      ],
+      "candidateFullFieldComposition": "U nga hlayela true cost of production u nga si veka nxavo.",
+      "proposedReplacementSpans": [
+        "You can work out the true cost of production before setting a price."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "true cost of production"
+      ],
+      "classification": "unchanged-accounting-precision-hold",
+      "backTranslation": "You can calculate true cost of production before setting the price.",
+      "semanticReason": "Precise accounting term stays English; all ordinary modal/timing/action framing is already localized. No profit/cost equivalence introduced.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "U nga hlayela true cost of production u nga si veka nxavo.",
+      "independentVerdict": "hold",
+      "independentBackTranslation": "You can calculate true cost of production before setting the price.",
+      "independentReason": "Precise accounting term stays English; all ordinary modal/timing/action framing is already localized. No profit/cost equivalence introduced.",
+      "originalDraftMetadata": {
+        "backTranslation": "You can work out the true cost of production before setting a price.",
+        "semanticReason": "The sentence frame is already localized; the remaining finance calculation term stays exact English to avoid changing accounting/profit scope.",
+        "uncertainties": [
+          "No localized replacement for the accounting term proposed."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "true cost of production"
+        ],
+        "proposedReplacementSpans": []
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "true cost of production"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "U nga hlayela ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " u nga si veka nxavo.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "You can work out the true cost of production before setting a price.",
+        "exactCurrentTarget": "U nga hlayela true cost of production u nga si veka nxavo.",
+        "exactProposedTarget": "U nga hlayela true cost of production u nga si veka nxavo.",
+        "preservationChecks": [
+          {
+            "exactSpan": "U nga hlayela ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " u nga si veka nxavo.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "market-community",
+      "languageTag": "ts",
+      "languageName": "Xitsonga",
+      "pairFile": "docs/narration/market-community.ts.paired-draft.json",
+      "pairFileSHA256": "6de3ddc49bb912422eeab2a7ecd8b330e9ec25d38bab3d4dcc29e4f60f783286",
+      "slideNumber": 10,
+      "bodyIndex": 2,
+      "fieldLocator": "slide[10].body[2]",
+      "exactEnglishSourceField": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+      "currentComposedTargetExact": "Kambisisa milawu ya makete ni local trading and food requirements. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe ntsengo.",
+      "currentTargetStatus": "draft",
+      "originalEnglishResidualSpans": [
+        "local trading and food"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Kambisisa milawu ya makete ni ",
+        " requirements. ",
+        "Informal stall",
+        " a xi vuli hi xoxe leswaku a ku na milawu kumbe ntsengo."
+      ],
+      "candidateFullFieldComposition": "Kambisisa milawu ya makete ni swilaveko swa ndhawu swa ku xavisa ni swakudya. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe ntsengo.",
+      "proposedReplacementSpans": [
+        "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "Informal stall"
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Check market rules and local trading/food requirements. An informal stall does not itself mean there are no rules or costs.",
+      "semanticReason": "Current TS native Market L2 has this exact source-identical first sentence with localized requirements, so the whole legal phrase need not stay English. Reuse that full sentence only; preserve the current negative second sentence without changing ntsengo to costs. No specific new legal requirement or exemption.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Kambisisa milawu ya makete ni local trading and food requirements. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe ntsengo.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Check market rules and local trading/food requirements. An informal stall does not itself mean there are no rules or costs.",
+      "independentReason": "Current TS native Market L2 has this exact source-identical first sentence with localized requirements, so the whole legal phrase need not stay English. Reuse that full sentence only; preserve the current negative second sentence without changing ntsengo to costs. No specific new legal requirement or exemption.",
+      "originalDraftMetadata": {
+        "backTranslation": "Check the market rules and local trading and food requirements. An informal stall does not by itself mean there are no rules or costs.",
+        "semanticReason": "The check, market-rule, and “not automatically no rules or costs” frames are already localized. Retain the named local trading/food compliance terms and “informal stall” category exactly.",
+        "uncertainties": [
+          "Do not infer that a stall has or lacks permission/costs; the source says only that informality does not automatically remove rules/costs."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "Informal stall"
+        ],
+        "proposedReplacementSpans": []
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "Informal stall"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": true,
+        "preservationChecks": [
+          {
+            "exactSpan": "Kambisisa milawu ya makete ni ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " requirements. ",
+            "preservedInRecommendedTarget": false
+          },
+          {
+            "exactSpan": "Informal stall",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " a xi vuli hi xoxe leswaku a ku na milawu kumbe ntsengo.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+        "exactCurrentTarget": "Kambisisa milawu ya makete ni local trading and food requirements. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe ntsengo.",
+        "exactProposedTarget": "Kambisisa milawu ya makete ni swilaveko swa ndhawu swa ku xavisa ni swakudya. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe ntsengo.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Kambisisa milawu ya makete ni ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " requirements. ",
+            "preservedInRecommendedTarget": false
+          },
+          {
+            "exactSpan": "Informal stall",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " a xi vuli hi xoxe leswaku a ku na milawu kumbe ntsengo.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "market-community",
+      "languageTag": "ts",
+      "languageName": "Xitsonga",
+      "pairFile": "docs/narration/market-community.ts.paired-draft.json",
+      "pairFileSHA256": "6de3ddc49bb912422eeab2a7ecd8b330e9ec25d38bab3d4dcc29e4f60f783286",
+      "slideNumber": 11,
+      "bodyIndex": 0,
+      "fieldLocator": "slide[11].body[0]",
+      "exactEnglishSourceField": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "currentComposedTargetExact": "Ku xavisa hi ku kongoma ku nga retain more of the sale price, kambe swi teka nkarhi, ku paka, swo famba ni ku khathalela vaxavi.",
+      "currentTargetStatus": "draft",
+      "originalEnglishResidualSpans": [
+        "retain more of the sale price"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Ku xavisa hi ku kongoma ku nga ",
+        ", kambe swi teka nkarhi, ku paka, swo famba ni ku khathalela vaxavi."
+      ],
+      "candidateFullFieldComposition": "Ku xavisa hi ku kongoma ku nga hlayisa more of the sale price, kambe swi teka nkarhi, ku paka, swo famba ni ku khathalela vaxavi.",
+      "proposedReplacementSpans": [
+        "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "more of the sale price"
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Direct selling can retain more of the sale price, but takes time, packing, transport and customer care.",
+      "semanticReason": "Large share/lexikulu does not explicitly preserve more. Localize retain and hold the precise comparative sale-price phrase rather than invent a percentage, profit or baseline. That remaining ordinary comparative is disclosed as incomplete; no net-return guarantee.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Ku xavisa hi ku kongoma ku nga endla leswaku u sala ni xiphemu lexikulu xa nxavo wa leswi xavisiwaka, kambe swi teka nkarhi, ku paka, swo famba ni ku khathalela vaxavi.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Direct selling can retain more of the sale price, but takes time, packing, transport and customer care.",
+      "independentReason": "Large share/lexikulu does not explicitly preserve more. Localize retain and hold the precise comparative sale-price phrase rather than invent a percentage, profit or baseline. That remaining ordinary comparative is disclosed as incomplete; no net-return guarantee.",
+      "originalDraftMetadata": {
+        "backTranslation": "Direct selling may leave you with a larger share of the sale price, but it takes time, packing, transport, and customer care.",
+        "semanticReason": "Translates the comparative as a larger share of sale price, keeps modality, and preserves every listed cost/activity. It makes no net-income or profit claim.",
+        "uncertainties": [
+          "The translation must be reviewed to ensure it denotes gross sale price share rather than net income."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "more of the sale price"
+        ],
+        "proposedReplacementSpans": [
+          "retain more of the sale price"
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "more of the sale price"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Ku xavisa hi ku kongoma ku nga ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": ", kambe swi teka nkarhi, ku paka, swo famba ni ku khathalela vaxavi.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+        "exactCurrentTarget": "Ku xavisa hi ku kongoma ku nga retain more of the sale price, kambe swi teka nkarhi, ku paka, swo famba ni ku khathalela vaxavi.",
+        "exactProposedTarget": "Ku xavisa hi ku kongoma ku nga hlayisa more of the sale price, kambe swi teka nkarhi, ku paka, swo famba ni ku khathalela vaxavi.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Ku xavisa hi ku kongoma ku nga ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": ", kambe swi teka nkarhi, ku paka, swo famba ni ku khathalela vaxavi.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "market-community",
+      "languageTag": "ts",
+      "languageName": "Xitsonga",
+      "pairFile": "docs/narration/market-community.ts.paired-draft.json",
+      "pairFileSHA256": "6de3ddc49bb912422eeab2a7ecd8b330e9ec25d38bab3d4dcc29e4f60f783286",
+      "slideNumber": 12,
+      "bodyIndex": 0,
+      "fieldLocator": "slide[12].body[0]",
+      "exactEnglishSourceField": "Start from what you can reliably supply and what customers want.",
+      "currentComposedTargetExact": "Sungula hi what you can reliably supply ni leswi vaxavi va swi lavaka.",
+      "currentTargetStatus": "draft",
+      "originalEnglishResidualSpans": [
+        "what you can reliably supply"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Sungula hi ",
+        " ni leswi vaxavi va swi lavaka."
+      ],
+      "candidateFullFieldComposition": "Sungula hi leswi u nga kotaka ku swi nyika hi ku tshamiseka ni leswi vaxavi va swi lavaka.",
+      "proposedReplacementSpans": [
+        "Start from what you can reliably supply and what customers want."
+      ],
+      "retainedEnglishTechnicalAnchors": [],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Start with what you can consistently supply and what customers want.",
+      "semanticReason": "Candidate describes a method you can trust, not reliable provision. Reuse the exact complete source-identical current TS native Market L2 sentence: reliable supply is framed as consistent capacity, with can retained and no fixed volume or weekly guarantee.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Sungula hi leswi u nga swi nyikaka hi ndlela leyi u nga yi tshemba, ni leswi vaxavi va swi lavaka.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Start with what you can consistently supply and what customers want.",
+      "independentReason": "Candidate describes a method you can trust, not reliable provision. Reuse the exact complete source-identical current TS native Market L2 sentence: reliable supply is framed as consistent capacity, with can retained and no fixed volume or weekly guarantee.",
+      "originalDraftMetadata": {
+        "backTranslation": "Start from what you can reliably supply and what customers want.",
+        "semanticReason": "Preserves start-from/customer-demand meaning and translates reliable supply without adding quantity guarantees.",
+        "uncertainties": [
+          "Facilitator should check the natural phrase for reliable supply."
+        ],
+        "retainedEnglishTechnicalAnchors": [],
+        "proposedReplacementSpans": [
+          "what you can reliably supply"
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Sungula hi ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " ni leswi vaxavi va swi lavaka.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Start from what you can reliably supply and what customers want.",
+        "exactCurrentTarget": "Sungula hi what you can reliably supply ni leswi vaxavi va swi lavaka.",
+        "exactProposedTarget": "Sungula hi leswi u nga kotaka ku swi nyika hi ku tshamiseka ni leswi vaxavi va swi lavaka.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Sungula hi ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " ni leswi vaxavi va swi lavaka.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "market-community",
+      "languageTag": "ts",
+      "languageName": "Xitsonga",
+      "pairFile": "docs/narration/market-community.ts.paired-draft.json",
+      "pairFileSHA256": "6de3ddc49bb912422eeab2a7ecd8b330e9ec25d38bab3d4dcc29e4f60f783286",
+      "slideNumber": 15,
+      "bodyIndex": 3,
+      "fieldLocator": "slide[15].body[3]",
+      "exactEnglishSourceField": "Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+      "currentComposedTargetExact": "Loko u nga si cincana hi mbewu, check whether the variety is protected and whether permission is needed.",
+      "currentTargetStatus": "mixed",
+      "originalEnglishResidualSpans": [
+        "check whether the variety is protected and whether permission is"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Loko u nga si cincana hi mbewu, "
+      ],
+      "candidateFullFieldComposition": "Loko u nga si cincana hi mbewu, kambisisa loko variety yi sirheleriwile ni loko ku laveka permission.",
+      "proposedReplacementSpans": [
+        "Before exchanging seed, check whether the variety is protected and whether permission is needed."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "variety",
+        "permission"
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Before seed exchange, check whether the variety is protected and whether permission is needed.",
+      "semanticReason": "Reuse the exact source-identical native final-clause remainder, preserving the deck before-exchange prefix. Two interrogative loko clauses are under check, not an assertion or an additional permission rule.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Loko u nga si cincana hi mbewu, kambisisa whether the variety is protected and whether permission is needed.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Before seed exchange, check whether the variety is protected and whether permission is needed.",
+      "independentReason": "Reuse the exact source-identical native final-clause remainder, preserving the deck before-exchange prefix. Two interrogative loko clauses are under check, not an assertion or an additional permission rule.",
+      "originalDraftMetadata": {
+        "backTranslation": "Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+        "semanticReason": "Translates the ordinary check action; keeps exchange-specific legal conditions exactly English and does not imply permission.",
+        "uncertainties": [
+          "Protection/permission clauses stay unchanged pending legal terminology review."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "variety",
+          "permission"
+        ],
+        "proposedReplacementSpans": [
+          "check"
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "variety",
+        "permission"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Loko u nga si cincana hi mbewu, ",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Before exchanging seed, check whether the variety is protected and whether permission is needed.",
+        "exactCurrentTarget": "Loko u nga si cincana hi mbewu, check whether the variety is protected and whether permission is needed.",
+        "exactProposedTarget": "Loko u nga si cincana hi mbewu, kambisisa loko variety yi sirheleriwile ni loko ku laveka permission.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Loko u nga si cincana hi mbewu, ",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "market-community",
+      "languageTag": "ts",
+      "languageName": "Xitsonga",
+      "pairFile": "docs/narration/market-community.ts.paired-draft.json",
+      "pairFileSHA256": "6de3ddc49bb912422eeab2a7ecd8b330e9ec25d38bab3d4dcc29e4f60f783286",
+      "slideNumber": 18,
+      "bodyIndex": 2,
+      "fieldLocator": "slide[18].body[2]",
+      "exactEnglishSourceField": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "currentComposedTargetExact": "Lavani qualified advice eka unfamiliar disease or technical problems. Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we.",
+      "currentTargetStatus": "draft",
+      "originalEnglishResidualSpans": [
+        "unfamiliar disease or technical"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Lavani ",
+        " eka ",
+        ". Ntokoto lowu avelaniweke ni ",
+        " swi nga tirha swin’we."
+      ],
+      "candidateFullFieldComposition": "Lavani qualified advice eka unfamiliar disease kumbe swiphiqo swa technical. Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we.",
+      "proposedReplacementSpans": [
+        "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "qualified advice",
+        "unfamiliar disease",
+        "technical",
+        "specialist help"
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Seek qualified advice about unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "semanticReason": "Translate ordinary disjunction/problems; preserve the exact localized second sentence and can. Qualification and unfamiliar disease precision stay English; the ordinary unfamiliar adjective remains disclosed as unresolved rather than silently treated as technical completion.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Lavani qualified advice eka unfamiliar disease or technical problems. Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Seek qualified advice about unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "independentReason": "Translate ordinary disjunction/problems; preserve the exact localized second sentence and can. Qualification and unfamiliar disease precision stay English; the ordinary unfamiliar adjective remains disclosed as unresolved rather than silently treated as technical completion.",
+      "originalDraftMetadata": {
+        "backTranslation": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+        "semanticReason": "The ordinary instruction and teamwork clauses are already localized. Remaining English identifies technical disease/problem categories and qualification/specialist concepts; retain those exact anchors.",
+        "uncertainties": [
+          "No new wording proposed for technical spans pending review."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "qualified advice",
+          "unfamiliar disease",
+          "technical",
+          "specialist help"
+        ],
+        "proposedReplacementSpans": []
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "qualified advice",
+        "unfamiliar disease",
+        "technical",
+        "specialist help"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Lavani ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " eka ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": ". Ntokoto lowu avelaniweke ni ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " swi nga tirha swin’we.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+        "exactCurrentTarget": "Lavani qualified advice eka unfamiliar disease or technical problems. Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we.",
+        "exactProposedTarget": "Lavani qualified advice eka unfamiliar disease kumbe swiphiqo swa technical. Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Lavani ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " eka ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": ". Ntokoto lowu avelaniweke ni ",
+            "preservedInRecommendedTarget": true
+          },
+          {
+            "exactSpan": " swi nga tirha swin’we.",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    },
+    {
+      "moduleId": "market-community",
+      "languageTag": "ts",
+      "languageName": "Xitsonga",
+      "pairFile": "docs/narration/market-community.ts.paired-draft.json",
+      "pairFileSHA256": "6de3ddc49bb912422eeab2a7ecd8b330e9ec25d38bab3d4dcc29e4f60f783286",
+      "slideNumber": 20,
+      "bodyIndex": 1,
+      "fieldLocator": "slide[20].body[1]",
+      "exactEnglishSourceField": "Compare the cost and return of a crop or selling route, or plan for a household food gap using local growing conditions.",
+      "currentComposedTargetExact": "Pimanisa cost ni return ya crop kumbe ndlela yo xavisa, kumbe u plan for a household food gap using local growing conditions.",
+      "currentTargetStatus": "draft",
+      "originalEnglishResidualSpans": [
+        "plan for a household food gap using local growing"
+      ],
+      "localizedCurrentSegmentsToPreserve": [
+        "Pimanisa cost ni return ya crop kumbe ndlela yo xavisa, kumbe u "
+      ],
+      "candidateFullFieldComposition": "Pimanisa cost ni return ya crop kumbe ndlela yo xavisa, kumbe u pulanela ku kayivela ka swakudya swa ndyangu hi ku ya hi swiyimo swa ku byala swa laha kaya.",
+      "proposedReplacementSpans": [
+        "Compare the cost and return of a crop or selling route, or plan for a household food gap using local growing conditions."
+      ],
+      "retainedEnglishTechnicalAnchors": [
+        "cost",
+        "return",
+        "crop"
+      ],
+      "classification": "independent-source-bound-draft-pending-root-review",
+      "backTranslation": "Compare crop or selling-route cost/return, or plan for a shortage of household food using local growing conditions.",
+      "semanticReason": "A household food gap may be insufficient supply, not zero food; remove the candidate period/may-lack-food narrowing and express shortage. Native current TS Market L1 uses swi kayivela for food-gap framing and swiyimo swa ku byala for growing conditions. Preserve both OR relations and existing cost/return comparison.",
+      "uncertainties": [
+        "Unreviewed source-bound draft. Grammar/concord and idiom are not fluent-speaker approved; exact English anchors are not claimed translated. No farming, financial or legal approval."
+      ],
+      "independentApproval": false,
+      "noRepositoryChange": true,
+      "originalCandidateFullFieldComposition": "Pimanisa cost ni return ya crop kumbe ndlela yo xavisa, kumbe u pulanela nkarhi lowu ndyangu wu nga ha pfumalaka swakudya, hi ku ya hi swiyimo swa ku byala swa laha kaya.",
+      "independentVerdict": "repair",
+      "independentBackTranslation": "Compare crop or selling-route cost/return, or plan for a shortage of household food using local growing conditions.",
+      "independentReason": "A household food gap may be insufficient supply, not zero food; remove the candidate period/may-lack-food narrowing and express shortage. Native current TS Market L1 uses swi kayivela for food-gap framing and swiyimo swa ku byala for growing conditions. Preserve both OR relations and existing cost/return comparison.",
+      "originalDraftMetadata": {
+        "backTranslation": "Compare cost and return for a crop or selling route, or plan for a time when the household may run short of food, based on local growing conditions.",
+        "semanticReason": "Keeps the financial comparison terms, translates household food-gap planning and local growing conditions, and preserves “may” possibility without guaranteeing a shortage.",
+        "uncertainties": [
+          "Facilitator should check whether the local phrase for food gap matches the course concept without implying inevitable shortage."
+        ],
+        "retainedEnglishTechnicalAnchors": [
+          "cost",
+          "return",
+          "crop"
+        ],
+        "proposedReplacementSpans": [
+          "plan for a household food gap using local growing conditions"
+        ]
+      },
+      "retainedEnglishPrecisionAnchors": [
+        "cost",
+        "return",
+        "crop"
+      ],
+      "retainedAnchorClassificationNote": "The legacy technicalAnchors key records actually retained English precision anchors; some (comparative/frequency/overlap) are unresolved ordinary prose, not technical terms or completed translation.",
+      "explicitCurrentLocalizedRepair": {
+        "scope": "candidate-only",
+        "requiresRootReview": false,
+        "preservationChecks": [
+          {
+            "exactSpan": "Pimanisa cost ni return ya crop kumbe ndlela yo xavisa, kumbe u ",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      },
+      "fullFieldReplacementEvidence": {
+        "mode": "full-field-semantic-composition-not-character-segments",
+        "exactSource": "Compare the cost and return of a crop or selling route, or plan for a household food gap using local growing conditions.",
+        "exactCurrentTarget": "Pimanisa cost ni return ya crop kumbe ndlela yo xavisa, kumbe u plan for a household food gap using local growing conditions.",
+        "exactProposedTarget": "Pimanisa cost ni return ya crop kumbe ndlela yo xavisa, kumbe u pulanela ku kayivela ka swakudya swa ndyangu hi ku ya hi swiyimo swa ku byala swa laha kaya.",
+        "preservationChecks": [
+          {
+            "exactSpan": "Pimanisa cost ni return ya crop kumbe ndlela yo xavisa, kumbe u ",
+            "preservedInRecommendedTarget": true
+          }
+        ]
+      }
+    }
+  ],
+  "independentRepairAuthority": {
+    "originalCandidatePath": "/tmp/imbewu-final-nonreading-paired-residual-candidates-20261006.json",
+    "originalCandidateSHA256": "44021c2da9e3b1f0c49da37b9167377254b04372bf8573d4206d51f75c9448a8",
+    "reportPath": "/tmp/imbewu-final-nonreading-paired-residual-root-ready-independent-check-20261006.json",
+    "reportSHA256": "d8b4ddcbdab17b0c3e835519af1510e8d7e0e9ca9b3bfcc0b712f7fd97cbe7c5",
+    "all29BindingsExact": true,
+    "approved": false
+  },
+  "actualRecommendationDelta": {
+    "changedFieldCount": 27,
+    "unchangedHoldCount": 2,
+    "noPairedObjectProposal": true,
+    "note": "Targets are data-only. Mixed semantic object boundaries, status/provenance and all unlisted fields require a separately checked application plan."
+  },
+  "previousRepairedPacket": {
+    "path": "/tmp/imbewu-final-nonreading-paired-residual-independent-repaired-candidates-20261006.json",
+    "sha256": "a136d53aef91ae9679c102bf679fffb7c374d136199e69ac2c795c3542e1a0af",
+    "reason": "Immutable prior packet. Original stale metadata and prior independent reasoning preserved, not replayed."
+  },
+  "metadataSyncProof": {
+    "all29BackTranslationsMatchIndependentRecommendedTargetBT": true,
+    "all29SemanticReasonsMatch": true,
+    "allRetainedAnchorsActuallyPresent": true,
+    "originalDraftMetadataRetainedPerRow": true,
+    "rootReviewPending": true
+  }
+}

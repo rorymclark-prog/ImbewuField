@@ -1,0 +1,63 @@
+{
+  "speciesId": "lablab-purpureus",
+  "commonName": "Lablab / dolichos bean",
+  "botanicalName": "Lablab purpureus",
+  "harvestMonths": [],
+  "householdFoodStatus": "confirmed-food",
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable planting-to-first-food age. Trial days after sowing are accession, place and season specific, not a perennial age curve."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No universal full-bearing age applies to this annual or dual-purpose crop."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Trial grain kg/ha is retained as a reference only; it is not kg/plant or household food yield."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric crop-specific chilling requirement is verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No household-food pollination classification is inferred from a grain trial."
+  },
+  "harvestProduct": "food grain, immature pods or cooked leaves; forage biomass is separate",
+  "supplementaryReferences": [
+    {
+      "title": "SA accession maturity and grain trial",
+      "quote": "Grain yield (kg/ha) … CPI 52552 576.2 a",
+      "url": "https://www.aciar.gov.au/sites/default/files/legacy/node/555/proc115.pdf",
+      "doc": "Ayisi, Bopape and Pengelly: ACIAR Proceedings 115 (2004), Tables 3 and 5, pp46 and49",
+      "page": 49,
+      "note": "Dalmada near Polokwane, 2002/03; sown 10 December on clay loam with 297 mm rain plus 178 mm irrigation. Paired physiological maturity days after planting / grain kg/ha: CPI 52552 99.3 / 576.2; CPI 60795 99.0 / 570.5; CQ 3620 99.0 / 574.2; Rongai black 197.0 / 2.6, brown 197.0 / 3.3, white 197.0 / 7.4. Tables visually checked. Maturity means 90% brown pods; biomass Table 4 is separate. The authors require farmer evaluation of eating qualities, so trial accessions are not verified food purchase recommendations."
+    }
+  ],
+  "productionGuidance": {
+    "products": "food grain, immature pods or cooked leaves; forage biomass is separate",
+    "care": [
+      "Choose the intended food part and appropriate preparation; confirm the actual food type with a local adviser. Food and fodder harvests are different operations.",
+      "The existing 2–6 t/ha research figure is forage/green-manure dry matter, not beans for people. Late forage Rongai cannot inherit an early grain accession’s timing or yield."
+    ],
+    "purchase": [
+      "Obtain identified material for the intended food or forage purpose. Availability and eating quality of early trial accessions are unverified; record the purchased type and actual sowing and picking dates."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://www.aciar.gov.au/sites/default/files/legacy/node/555/proc115.pdf",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary publication or producer page checked; product, cultivar, location and native units retained. Generic age, plant yield and calendar remain unknown."
+    }
+  ],
+  "gaps": [
+    "An actual farm cultivar, sowing date, product purpose and applicable local harvest window are required; reference trials do not create an automatic annual forecast."
+  ]
+}

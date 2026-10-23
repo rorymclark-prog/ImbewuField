@@ -253,28 +253,40 @@ test('the Land & legal group exists with the papers a funding application asks f
 // "backed up here". This is a SOURCE test because the failure mode is a missing UI banner, not a
 // function a unit test can call.
 test('the Land & legal sheet warns the farmer this app is not a backup of their papers', () => {
+  // The warning text itself now lives in lib/i18n.tsx (evidenceSheetLandLegalWarningTitle/Body),
+  // so a farmer reading isiZulu or any other locale would see a translated version if one is ever
+  // added; EvidenceSheet.tsx just has to gate those two keys to the land_legal group and render
+  // them ahead of the capture buttons.
   const src = readFileSync(join(process.cwd(), 'components', 'EvidenceSheet.tsx'), 'utf8');
+  const i18nSrc = readFileSync(join(process.cwd(), 'lib', 'i18n.tsx'), 'utf8');
 
   assert.ok(
-    /\{group\.key === 'land_legal' && \([\s\S]{0,600}This app is not a backup/.test(src),
+    /\{group\.key === 'land_legal' && \([\s\S]{0,600}evidenceSheetLandLegalWarningTitle[\s\S]{0,200}evidenceSheetLandLegalWarningBody/.test(src),
     'the warning is missing, or is not gated to the land_legal group by a JSX conditional',
   );
-  assert.match(src, /shrunk small/i, 'the warning must say what happens to a scanned photo');
+
+  const titleMatch = i18nSrc.match(/evidenceSheetLandLegalWarningTitle: '([^']*)'/);
+  const bodyMatch = i18nSrc.match(/evidenceSheetLandLegalWarningBody: '([^']*)'/);
+  assert.ok(titleMatch, 'evidenceSheetLandLegalWarningTitle is missing from lib/i18n.tsx');
+  assert.ok(bodyMatch, 'evidenceSheetLandLegalWarningBody is missing from lib/i18n.tsx');
+  const warningText = `${titleMatch![1]} ${bodyMatch![1]}`;
+
+  assert.match(warningText, /shrunk small/i, 'the warning must say what happens to a scanned photo');
   assert.match(
-    src,
+    warningText,
     /PDF[\s\S]{0,40}keeps only its file name, not the document/i,
     'the warning must say a PDF is not actually kept, only its name',
   );
-  assert.match(src, /this phone alone/i, 'the warning must say storage is device-local');
+  assert.match(warningText, /this phone alone/i, 'the warning must say storage is device-local');
   assert.match(
-    src,
+    warningText,
     /deleted automatically/i,
     'the warning must say old items can be silently evicted',
   );
 
   // The warning must render ahead of the capture buttons — a farmer who has already tapped
   // "Take / scan photo" has made their choice; the truth has to land before that, not after.
-  const warnIdx = src.indexOf("This app is not a backup");
-  const buttonsIdx = src.indexOf('Take / scan photo');
+  const warnIdx = src.indexOf("evidenceSheetLandLegalWarningTitle");
+  const buttonsIdx = src.indexOf("evidenceSheetTakePhoto");
   assert.ok(warnIdx > 0 && buttonsIdx > 0 && warnIdx < buttonsIdx, 'warning must precede capture buttons');
 });

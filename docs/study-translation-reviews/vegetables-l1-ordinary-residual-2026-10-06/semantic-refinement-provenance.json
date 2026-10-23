@@ -1,0 +1,468 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-06",
+  "readOnly": true,
+  "baseCommit": "f923c0c330551586587ec6248cb3e0491d176cf6",
+  "originMainAtCheck": "f923c0c330551586587ec6248cb3e0491d176cf6",
+  "supersedes": {
+    "path": "/tmp/imbewu-vegetables-l1-ordinary-residual-candidates-20261006.json",
+    "sha256": "0e00eefc34f7190155b5f191ff405ad1847885391a4fd6e5009193cf80e02177"
+  },
+  "independentReview": {
+    "path": "/tmp/imbewu-vegetables-l1-ordinary-residual-independent-check-20261006.json",
+    "sha256": "0bca4d9f4b8605b805b52f84a2aa235eb9059e0ba324f3bdb6ac2908d640f2de"
+  },
+  "fileHashes": {
+    "lib/course-modules.ts": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+    "lib/course-translation-drafts-st-vegetables-staples.ts": "173b4a4cf2c435cb4fb7cac8673844846fb425c5fa5ece6bdf6e152ab6e72a4f",
+    "lib/course-translation-drafts-ve-vegetables-staples.ts": "e7e4aa9084f1bf42705471185e994d00ca8e1af5cd8eeefbed551aae43668ad9",
+    "lib/course-translation-drafts-ts-vegetables-staples.ts": "41eba3fa7ab8eff153ec591950ee0ddb5a64995deb456c91e5d330db76ec0f95",
+    "docs/narration/vegetables-staples.st.paired-draft.json": "d9384b30cc00c16a54c62336fae1fe00afc2b1549bb8edf98f9e55ce3b215ed5",
+    "docs/narration/vegetables-staples.ve.paired-draft.json": "7a48dae1f0e0040bf6aba97ec2a5dd3f95f6180f104517e70b00f7ffe82fb375",
+    "docs/narration/vegetables-staples.ts.paired-draft.json": "500238291cc2ec08bab704a998ec425cbb5b68f97dd537065be57c1772874439"
+  },
+  "purpose": "Source-bound repair packet responding to independent semantic review. Candidates only; no repository edits and no fluent approval.",
+  "rejectedPreviousLines": [
+    {
+      "id": "ve-L1-p0",
+      "line": "Bed i a konḓa u shuma khayo kha khalaṅwaha iṅwe na iṅwe.",
+      "reason": "Back-translates as hard each season and loses the increasing “gets harder” comparison."
+    },
+    {
+      "id": "st-L1-p12",
+      "line": "Tse ding di hola hantle ho feta ha di qala di sireletsehile ka nursery, ebe di a fetisetswa.",
+      "reason": "“grow better” narrows broad performance, while fetisetswa means generic transfer rather than the technical transplanting process."
+    },
+    {
+      "id": "ts-L1-p12",
+      "line": "Swin'wana swibyariwa swi kula ku antswa loko swi sungula swi sirhelelekile eka nursery, kutani swi hundziseriwa.",
+      "reason": "“grow better” narrows broad performance; the added swibyariwa is not needed and hundziseriwa is generic transfer."
+    },
+    {
+      "id": "ve-L1-p12",
+      "line": "Zwiṅwe zwimela zwi aluwa zwi khwine ... zwa pfuluselwa.",
+      "reason": "“grow better” narrows broad performance; pfuluselwa describes movement, not reliably transplanting."
+    },
+    {
+      "id": "ve-L1-p6",
+      "line": "No-dig i tea kha most garden soils.",
+      "reason": "Only translates the relationship verb while leaving ordinary majority and soil-class wording in English."
+    }
+  ],
+  "rows": [
+    {
+      "id": "ve-L1-body-0",
+      "language": "ve",
+      "bodyIndex": 0,
+      "pairedSlide": 4,
+      "canonicalSourceExact": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "currentFullTargetExact": "Compacted soil loses its air spaces. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe.",
+      "previousCandidateRejected": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed i a konḓa u shuma khayo kha khalaṅwaha iṅwe na iṅwe.",
+      "recommendedFullTarget": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed i ya u konḓa u shuma khayo nga khalaṅwaha iṅwe na iṅwe.",
+      "pairedAfter": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Compacted soil loses its air spaces.",
+            "status": "draft",
+            "text": "Mavu o petetsanaho a xedza zwikhala zwa muya."
+          },
+          {
+            "sourceEnglish": " Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+            "status": "draft",
+            "text": " Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed i ya u konḓa u shuma khayo nga khalaṅwaha iṅwe na iṅwe."
+          }
+        ]
+      },
+      "independentBacktranslation": "Compacted soil loses air spaces. Roots grow slowly. Water enters differently. The bed becomes progressively harder to work each season.",
+      "semanticReason": "“i ya u konḓa” is proposed to retain the becoming-harder comparison; “Bed” remains the current familiar term. The compacted-soil phrase describes physical compression and air-space loss, not a new soil category.",
+      "languageReviewUncertainty": "Native Tshivenda review needed to confirm the progressive construction and concord; if it only means “is difficult each season,” retain the exact source comparison until revised.",
+      "pairedBefore": {
+        "status": "draft",
+        "text": "Compacted soil loses its air spaces. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe."
+      }
+    },
+    {
+      "id": "ve-L1-body-6",
+      "language": "ve",
+      "bodyIndex": 6,
+      "pairedSlide": 5,
+      "canonicalSourceExact": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "currentFullTargetExact": "No-dig suits most garden soils. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha.",
+      "previousCandidateRejected": "No-dig i tea kha most garden soils. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha.",
+      "recommendedFullTarget": "No-dig i tea kha vhunzhi ha mavu a ngade. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha.",
+      "pairedAfter": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "No-dig",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " suits most garden soils.",
+            "status": "draft",
+            "text": " i tea kha vhunzhi ha mavu a ngade."
+          },
+          {
+            "sourceEnglish": " Leave the structure alone and build fertility on top.",
+            "status": "draft",
+            "text": " Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha."
+          }
+        ]
+      },
+      "independentBacktranslation": "No-dig is suitable for most garden soils. Leave the soil structure unchanged and build fertility on top.",
+      "semanticReason": "The method label stays as the technical name. “vhunzhi ha mavu a ngade” is offered as “most of garden soils,” preserving majority scope; this avoids substituting merely “many.”",
+      "languageReviewUncertainty": "Confirm that vhunzhi ha mavu a ngade is idiomatic and unambiguously means most garden soils in this context; do not weaken to “many.”",
+      "pairedBefore": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "No-dig suits most garden soils.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Leave the structure alone and build fertility on top.",
+            "status": "draft",
+            "text": " Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha."
+          }
+        ]
+      }
+    },
+    {
+      "id": "st-L1-body-12",
+      "language": "st",
+      "bodyIndex": 12,
+      "pairedSlide": 6,
+      "canonicalSourceExact": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "currentFullTargetExact": "Tse ding do better ka qalo e sireletsehileng ho nursery, ebe transplanting. Tomatoes le brassicas ke tsa sehlopha seo.",
+      "previousCandidateRejected": "Tse ding di hola hantle ho feta ha di qala di sireletsehile ka nursery, ebe di a fetisetswa. Tomatoes le brassicas ke tsa sehlopha seo.",
+      "recommendedFullTarget": "Tse ding di sebetsa ka katleho e kgolo ha di qala di sireletsehile ka nursery, ebe transplanting. Tomatoes le brassicas ke tsa sehlopha seo.",
+      "pairedAfter": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Others ",
+            "status": "draft",
+            "text": "Tse ding "
+          },
+          {
+            "sourceEnglish": "do better",
+            "status": "draft",
+            "text": "di sebetsa ka katleho e kgolo"
+          },
+          {
+            "sourceEnglish": " with a protected start in a ",
+            "status": "draft",
+            "text": " ha di qala di sireletsehile ka "
+          },
+          {
+            "sourceEnglish": "nursery",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", then ",
+            "status": "draft",
+            "text": ", ebe "
+          },
+          {
+            "sourceEnglish": "transplanting.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Tomatoes",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " le "
+          },
+          {
+            "sourceEnglish": "brassicas",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " belong there.",
+            "status": "draft",
+            "text": " ke tsa sehlopha seo."
+          }
+        ]
+      },
+      "independentBacktranslation": "Others perform with greater success when they start protected in a nursery, then transplanting. Tomatoes and brassicas are in that group.",
+      "semanticReason": "“di sebetsa ka katleho e kgolo” attempts a broad performance comparative (“do better”) rather than narrowing it to growth. It retains the current localized sequence/classification and technical nursery/transplanting terms.",
+      "languageReviewUncertainty": "This is a lexical and syntax proposal, not fluent approval. Confirm the comparative is idiomatic and does not imply a measured degree of success beyond “better.”",
+      "pairedBefore": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Others ",
+            "status": "draft",
+            "text": "Tse ding "
+          },
+          {
+            "sourceEnglish": "do better",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " with a protected start in a ",
+            "status": "draft",
+            "text": " ka qalo e sireletsehileng ho "
+          },
+          {
+            "sourceEnglish": "nursery",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", then ",
+            "status": "draft",
+            "text": ", ebe "
+          },
+          {
+            "sourceEnglish": "transplanting. Tomatoes",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " le "
+          },
+          {
+            "sourceEnglish": "brassicas",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " belong there.",
+            "status": "draft",
+            "text": " ke tsa sehlopha seo."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ts-L1-body-12",
+      "language": "ts",
+      "bodyIndex": 12,
+      "pairedSlide": 6,
+      "canonicalSourceExact": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "currentFullTargetExact": "Swin'wana do better loko swi sungula swi sirhelelekile eka nursery, kutani transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo.",
+      "previousCandidateRejected": "Swin'wana swibyariwa swi kula ku antswa loko swi sungula swi sirhelelekile eka nursery, kutani swi hundziseriwa. Tomatoes na brassicas swi wela eka ntlawa wolowo.",
+      "recommendedFullTarget": "Swin'wana swi tirha ku antswa loko swi sungula swi sirhelelekile eka nursery, kutani transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo.",
+      "pairedAfter": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Others ",
+            "status": "draft",
+            "text": "Swin'wana "
+          },
+          {
+            "sourceEnglish": "do better",
+            "status": "draft",
+            "text": "swi tirha ku antswa"
+          },
+          {
+            "sourceEnglish": " with a protected start in a ",
+            "status": "draft",
+            "text": " loko swi sungula swi sirhelelekile eka "
+          },
+          {
+            "sourceEnglish": "nursery",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", then ",
+            "status": "draft",
+            "text": ", kutani "
+          },
+          {
+            "sourceEnglish": "transplanting.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Tomatoes",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " na "
+          },
+          {
+            "sourceEnglish": "brassicas",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " belong there.",
+            "status": "draft",
+            "text": " swi wela eka ntlawa wolowo."
+          }
+        ]
+      },
+      "independentBacktranslation": "Others perform/do better when they start protected in a nursery, then transplanting. Tomatoes and brassicas belong to that group.",
+      "semanticReason": "“swi tirha ku antswa” aims at broad performance (“do better”), not growth alone. Existing localized condition, sequence and classification remain; nursery/transplanting stay exact technical terms.",
+      "languageReviewUncertainty": "Confirm that “tirha” is the right broad performance verb for crops and that ku antswa carries the intended comparative. No claim of fluency.",
+      "pairedBefore": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Others ",
+            "status": "draft",
+            "text": "Swin'wana "
+          },
+          {
+            "sourceEnglish": "do better",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " with a protected start in a ",
+            "status": "draft",
+            "text": " loko swi sungula swi sirhelelekile eka "
+          },
+          {
+            "sourceEnglish": "nursery",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", then ",
+            "status": "draft",
+            "text": ", kutani "
+          },
+          {
+            "sourceEnglish": "transplanting. Tomatoes",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " na "
+          },
+          {
+            "sourceEnglish": "brassicas",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " belong there.",
+            "status": "draft",
+            "text": " swi wela eka ntlawa wolowo."
+          }
+        ]
+      }
+    },
+    {
+      "id": "ve-L1-body-12",
+      "language": "ve",
+      "bodyIndex": 12,
+      "pairedSlide": 6,
+      "canonicalSourceExact": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "currentFullTargetExact": "Others do better with a protected start in a nursery, then transplanting. Tomatoes na brassicas zwi wela henefho.",
+      "previousCandidateRejected": "Zwiṅwe do better musi zwi tshi thoma zwo tsireledzea kha nursery, nga murahu transplanting. Tomatoes na brassicas zwi wela henefho.",
+      "recommendedFullTarget": "Zwiṅwe zwi ita khwine musi zwi tshi thoma zwo tsireledzea kha nursery, nga murahu transplanting. Tomatoes na brassicas zwi wela henefho.",
+      "pairedAfter": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Others ",
+            "status": "draft",
+            "text": "Zwiṅwe "
+          },
+          {
+            "sourceEnglish": "do better",
+            "status": "draft",
+            "text": "zwi ita khwine"
+          },
+          {
+            "sourceEnglish": " with a protected start in a ",
+            "status": "draft",
+            "text": " musi zwi tshi thoma zwo tsireledzea kha "
+          },
+          {
+            "sourceEnglish": "nursery",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", then ",
+            "status": "draft",
+            "text": ", nga murahu "
+          },
+          {
+            "sourceEnglish": "transplanting.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Tomatoes",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " na "
+          },
+          {
+            "sourceEnglish": "brassicas",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " belong there.",
+            "status": "draft",
+            "text": " zwi wela henefho."
+          }
+        ]
+      },
+      "independentBacktranslation": "Other plants do better when they start protected in a nursery, afterwards transplanting. Tomatoes and brassicas belong there.",
+      "semanticReason": "“zwi ita khwine” translates do better as a general performance comparison without limiting it to growth. “nga murahu” preserves the after-sequence. Crop labels and classification are unchanged.",
+      "languageReviewUncertainty": "Confirm class agreement and that this construction reads as comparative performance for crops; no fluent approval claimed.",
+      "pairedBefore": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Tomatoes",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " na "
+          },
+          {
+            "sourceEnglish": "brassicas",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " belong there.",
+            "status": "draft",
+            "text": " zwi wela henefho."
+          }
+        ]
+      }
+    }
+  ],
+  "unmodifiedScopedFindings": [
+    {
+      "id": "st-L1-p0",
+      "reason": "Current paragraph and paired target already localize all four sentences; leave unchanged."
+    },
+    {
+      "id": "ts-L1-p0",
+      "reason": "Current paired target translates the sentence sequence; the retained Compacted soil label is a precise technical phrase, not a complete ordinary sentence."
+    },
+    {
+      "id": "st-L1-p6",
+      "reason": "Existing No-dig e loketse boholo ba mobu wa dirapa already localizes suitability and majority scope."
+    },
+    {
+      "id": "ts-L1-p6",
+      "reason": "Outside the specifically requested Tshivenda No-dig row; retain current work rather than widening this repair packet."
+    }
+  ],
+  "bindingAndCompositionChecks": {
+    "candidateRows": 5,
+    "pairedSourceExactConcatenations": 5,
+    "pairedTargetCompositionsExact": 5,
+    "validation": "The script verified source segment concatenation and composed proposed target for each row."
+  },
+  "status": "Language candidate; speaker review needed for highlighted constructions. No repo changes, rendering, or commit."
+}

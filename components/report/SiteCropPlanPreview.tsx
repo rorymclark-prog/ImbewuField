@@ -38,13 +38,13 @@ export default function SiteCropPlanPreview({ siteId, siteName }: { siteId: stri
   }, [siteId]);
 
   const counts = preview ? [preview.beds ? t('cropPlanBedCount').replace('{count}', String(preview.beds)) : '', preview.plots ? t('cropPlanPlotCount').replace('{count}', String(preview.plots)) : ''].filter(Boolean).join(' · ') : '';
-  return <Link className={styles.preview} href={`/facilitator/crops?canvasSite=${encodeURIComponent(siteId)}`} aria-label={t(preview?.crops.length ? 'cropPlanOpenAria' : 'cropPlanStartAria').replace('{siteName}', siteName)}>
+  return <Link className={styles.preview} href={`/facilitator/crops?canvasSite=${encodeURIComponent(siteId)}`} aria-label={t(preview?.crops.length ? 'cropPlanOpenAria' : 'cropPlanStartAria').replace('{site}', siteName)}>
     <div className={styles.overview}>
       <div className={styles.plan}>{preview?.plan ? <MiniPlanPlate plan={preview.plan} /> : <Sprout size={36} aria-hidden="true" />}</div>
       <div><strong>{t('cropPlanTitle')}</strong><span>{preview ? counts || t('cropPlanAddGrowingAreas') : t('cropPlanLoading')}</span><span className={styles.action}>{preview?.crops.length ? t('cropPlanPlannedCount').replace('{count}', String(preview.crops.length)) : t('cropPlanStartAction')} <ArrowUpRight size={15} aria-hidden="true" /></span></div>
     </div>
     {!!preview?.crops.length && <div className={styles.crops}>
-      {preview.crops.slice(0, 4).map(key => { const crop = cropByKey(key); const art = getCropArt(key); const name = crop?.name ?? key; return <span key={key} title={name} className={styles.crop}>{art ? <img src={art} alt={name} width={44} height={44} loading="lazy" /> : <span role="img" aria-label={name}>{crop?.icon ?? '🌱'}</span>}</span>; })}
+      {preview.crops.slice(0, 4).map(key => { const crop = cropByKey(key); const art = getCropArt(key); const name = crop?.name ?? key; return <span key={key} title={name} className={styles.crop}>{art ? <img src={art} alt={name} width={44} height={44} loading="lazy" /> : <span role="img" aria-label={name}><Sprout size={28} aria-hidden /></span>}</span>; })}
       {preview.crops.length > 4 && <span className={styles.more}>+{preview.crops.length - 4}</span>}
     </div>}
   </Link>;

@@ -86,10 +86,16 @@ test('the Take a tour row and the tour tip button use a real fill under white ty
 /* ── Task 3: TabBar /network label ───────────────────────────────────────────────────────── */
 
 test('the NGO and funder tab bars label /network with navNetwork, not the menu-section heading key', () => {
-  const tabsBlock = TAB_BAR.slice(TAB_BAR.indexOf('const tabs ='), TAB_BAR.indexOf(';', TAB_BAR.indexOf('TABS;')) + 1);
+  // w13: TabBar's per-role tab arrays moved into a STAFF_TABS map (mentor/ngo/funder/student)
+  // behind an exported tabsForRole() that components/layout/AppHeader.tsx also reuses — the old
+  // `const tabs = navigationRole === 'funder' ? [...] : ... : TABS;` ternary chain this test used
+  // to slice out is gone, but the requirement it guards (/network must use navNetwork, not the
+  // "Organisation" section heading) still holds.
+  const tabsBlock = TAB_BAR.slice(TAB_BAR.indexOf('const STAFF_TABS'), TAB_BAR.indexOf('} as const'));
+  assert.ok(tabsBlock.length > 0, 'could not find the STAFF_TABS block in TabBar.tsx');
   assert.doesNotMatch(tabsBlock, /'navSectionOrganisation'/,
     '/network must not reuse the "Organisation" section heading as a tab label');
-  assert.match(tabsBlock, /href: '\/network', key: 'navNetwork'/g);
+  assert.match(tabsBlock, /href: '\/network',\s*key: 'navNetwork'/g);
 });
 
 /* ── Task 4: no data-vendor badges ───────────────────────────────────────────────────────── */
@@ -134,11 +140,17 @@ test('the raw glyphs are gone from these three files, replaced by Lucide icons',
 
 /* ── Task 6: /updates caps to recent entries and drops the SHA ──────────────────────────── */
 
-test('/updates shows only the recent entries, with an All-tools-only disclosure, and never prints a SHA', () => {
-  assert.match(UPDATES_PAGE, /const RECENT_COUNT = 10;/);
-  assert.match(UPDATES_PAGE, /RELEASE_NOTES\.slice\(0, RECENT_COUNT\)/);
-  assert.match(UPDATES_PAGE, /!simple && hasOlder/,
-    'the "Show older updates" disclosure must be gated to All tools');
+test('/updates shows only the recent entries, with a Show more disclosure, and never prints a SHA', () => {
+  // Wave 13 (ux-09 / nav-09) groups the notes by day so a day prints one heading; Simple still
+  // stops at the recent days and only All tools can open the rest.
+  assert.match(UPDATES_PAGE, /const RECENT_DAYS_SIMPLE = 3;/);
+  assert.match(UPDATES_PAGE, /const RECENT_DAYS_ALL = 5;/);
+  assert.match(UPDATES_PAGE, /const recentDays = simple \? RECENT_DAYS_SIMPLE : RECENT_DAYS_ALL;/);
+  assert.match(UPDATES_PAGE, /showAll \? dayGroups : dayGroups\.slice\(0, recentDays\)/);
+  // Wave 15 (ux-09): Simple gets the 'Show more' disclosure too, so the 3-day cap hides nothing.
+  assert.match(UPDATES_PAGE, /\{hasOlder && \(/);
+  assert.doesNotMatch(UPDATES_PAGE, /!simple && hasOlder/);
+  assert.match(UPDATES_PAGE, /firstSentence\(line\)/, 'long notes show their first sentence');
   assert.doesNotMatch(UPDATES_PAGE, /entry\.sha\s*&&/,
     'the page must not render a release note\'s git SHA to a farmer');
   assert.doesNotMatch(UPDATES_PAGE, /build \{buildSha\}/,

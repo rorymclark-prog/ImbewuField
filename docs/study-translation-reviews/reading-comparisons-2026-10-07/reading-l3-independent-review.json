@@ -1,0 +1,22 @@
+{
+  "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+  "model": "Gemini 3.8 Flash Medium",
+  "observedTerminal": true,
+  "accepted": [
+    1,
+    2,
+    3,
+    4,
+    8,
+    9,
+    10
+  ],
+  "repairs": {
+    "5": "muya wa tshinyadzaho -> muya une wa tshinyadza",
+    "6": "Ṱutshelisani -> Vhetshelani",
+    "7": "u phuletshedza khalaṅwaha ya tshando ya henefho -> kha khalaṅwaha yoṱhe ya tshando ya henefho"
+  },
+  "repairBackcheck": "Submitted 06:07 native UI; Working observed, no code edits authorized to Agy.",
+  "fluentApproval": false,
+  "actualDiagramRootReviewed": "public/course-images/reading-landscape/reading-landscape-l3.jpg: wind, downslope, cold-air-to-hollow arrows visible; candidate alt consistent with source."
+}

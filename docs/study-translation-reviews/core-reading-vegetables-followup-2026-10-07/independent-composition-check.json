@@ -1,0 +1,149 @@
+{
+  "title": "Independent final composition check for core follow-up candidates",
+  "date": "2026-10-07",
+  "head": "dfdf51d26adc4d9ca27ef9a18c809e4f8cb143a3",
+  "status": "Read-only source and composition check; no fluent approval claimed.",
+  "method": "Checked actual paired slide/body/segment indices and current values, then composed after text by replacing only that segment. Checked learner target-span occurrence and untouched suffix, and verified canonical source file has no diff from HEAD.",
+  "pairedFields": [
+    {
+      "binding": {
+        "file": "docs/narration/reading-landscape.st.paired-draft.json",
+        "slide": 15,
+        "bodyIndex": 0,
+        "segmentIndex": 4
+      },
+      "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "heldSourceSegment": "No hillside position guarantees freedom from frost.",
+      "beforeComposedTarget": "Beha frost-sensitive seedling nursery ka ntle ho cold pockets tseo o di boneng. Bapisa dibaka tseo e ka bang tsona nakong ya local frost season. Hlahloba local minimum-temperature records kapa o botse local agriculture adviser pele o kgetha permanent position. Hlahloba letsatsi le moya o senyang le tsona. No hillside position guarantees freedom from frost.",
+      "prefixExact": "Beha frost-sensitive seedling nursery ka ntle ho cold pockets tseo o di boneng. Bapisa dibaka tseo e ka bang tsona nakong ya local frost season. Hlahloba local minimum-temperature records kapa o botse local agriculture adviser pele o kgetha permanent position. Hlahloba letsatsi le moya o senyang le tsona. ",
+      "replacement": "Ha ho hillside position e ka tiisang hore ha ho frost.",
+      "suffixExact": "",
+      "afterComposedTarget": "Beha frost-sensitive seedling nursery ka ntle ho cold pockets tseo o di boneng. Bapisa dibaka tseo e ka bang tsona nakong ya local frost season. Hlahloba local minimum-temperature records kapa o botse local agriculture adviser pele o kgetha permanent position. Hlahloba letsatsi le moya o senyang le tsona. Ha ho hillside position e ka tiisang hore ha ho frost.",
+      "status": "pass",
+      "compositionCheck": "Only the indexed segment is replaced; exact source and all neighboring target segment values remain in order.",
+      "scope": "Negative guarantee remains about hillside position and frost; preceding seedling, observed pockets, records, adviser, sun and damaging-wind clauses remain exact."
+    },
+    {
+      "binding": {
+        "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+        "slide": 15,
+        "bodyIndex": 0,
+        "segmentIndex": 4
+      },
+      "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. Compare candidate places through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. Check sun and damaging wind too. No hillside position guarantees freedom from frost.",
+      "heldSourceSegment": "No hillside position guarantees freedom from frost.",
+      "beforeComposedTarget": "Veka frost-sensitive seedling nursery ehandle ka cold pockets leti u ti voneke. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records kumbe u vutisa local agriculture adviser u nga si hlawula permanent position. Kambela dyambu ni moya lowu onhaka na swona. No hillside position guarantees freedom from frost.",
+      "prefixExact": "Veka frost-sensitive seedling nursery ehandle ka cold pockets leti u ti voneke. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records kumbe u vutisa local agriculture adviser u nga si hlawula permanent position. Kambela dyambu ni moya lowu onhaka na swona. ",
+      "replacement": "A ku na hillside position leyi tiyisisaka leswaku ku nga vi na frost.",
+      "suffixExact": "",
+      "afterComposedTarget": "Veka frost-sensitive seedling nursery ehandle ka cold pockets leti u ti voneke. Pimanisa candidate places through the local frost season. Kambela local minimum-temperature records kumbe u vutisa local agriculture adviser u nga si hlawula permanent position. Kambela dyambu ni moya lowu onhaka na swona. A ku na hillside position leyi tiyisisaka leswaku ku nga vi na frost.",
+      "status": "pass",
+      "compositionCheck": "Only the indexed segment is replaced; exact source and all neighboring target segment values remain in order.",
+      "scope": "Negative guarantee remains about hillside position and frost; preceding seedling, observed pockets, records, adviser, sun and damaging-wind clauses remain exact."
+    },
+    {
+      "binding": {
+        "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+        "slide": 12,
+        "bodyIndex": 1,
+        "segmentIndex": 0
+      },
+      "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where damaging wind comes from and what it affects. Check local weather records before placing a windbreak.",
+      "heldSourceSegment": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. ",
+      "beforeComposedTarget": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Famba-famba eka misava hi masiku lama nga ni moya. Tsala laha moya lowu onhaka wu humaka kona ni leswi wu swi khumbaka. Kambela tirhekhodo ta maxelo ya le ndhawini u nga si veka xisirhelelo xa moya.",
+      "prefixExact": "",
+      "replacement": "Tlhelo na matla ya moya lowu onhaka swi cinca hi muganga, nguva na ti-ridges and gaps ta ndhawu ya wena. ",
+      "suffixExact": "Famba-famba eka misava hi masiku lama nga ni moya. Tsala laha moya lowu onhaka wu humaka kona ni leswi wu swi khumbaka. Kambela tirhekhodo ta maxelo ya le ndhawini u nga si veka xisirhelelo xa moya.",
+      "afterComposedTarget": "Tlhelo na matla ya moya lowu onhaka swi cinca hi muganga, nguva na ti-ridges and gaps ta ndhawu ya wena. Famba-famba eka misava hi masiku lama nga ni moya. Tsala laha moya lowu onhaka wu humaka kona ni leswi wu swi khumbaka. Kambela tirhekhodo ta maxelo ya le ndhawini u nga si veka xisirhelelo xa moya.",
+      "status": "pass",
+      "compositionCheck": "Only the indexed segment is replaced; exact source and all neighboring target segment values remain in order.",
+      "spacing": "Trailing space remains before the existing next sentence."
+    },
+    {
+      "binding": {
+        "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+        "slide": 7,
+        "bodyIndex": 2,
+        "segmentIndex": 1
+      },
+      "sourceEnglish": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "heldSourceSegment": "any water works for the site",
+      "beforeComposedTarget": "Contours leti nga vekiwa hi ndlela yo biha ti nga engetela erosion, naswona misava leyi tswongaka mati hi ku nonoka yi nga khoma mati yo tala ngopfu. Hlawula any water works for the site, kutani u pulana ndlela leyi hlayisekeke ya mati yo tala.",
+      "prefixExact": "Contours leti nga vekiwa hi ndlela yo biha ti nga engetela erosion, naswona misava leyi tswongaka mati hi ku nonoka yi nga khoma mati yo tala ngopfu. Hlawula ",
+      "replacement": "water works yin'wana ni yin'wana leyi faneleke ndhawu yoleyo",
+      "suffixExact": ", kutani u pulana ndlela leyi hlayisekeke ya mati yo tala.",
+      "afterComposedTarget": "Contours leti nga vekiwa hi ndlela yo biha ti nga engetela erosion, naswona misava leyi tswongaka mati hi ku nonoka yi nga khoma mati yo tala ngopfu. Hlawula water works yin'wana ni yin'wana leyi faneleke ndhawu yoleyo, kutani u pulana ndlela leyi hlayisekeke ya mati yo tala.",
+      "status": "pass",
+      "compositionCheck": "Only the indexed segment is replaced; exact source and all neighboring target segment values remain in order.",
+      "scope": "“any” and suitability for that site compose between the unchanged Choose prefix and safe-route suffix."
+    },
+    {
+      "binding": {
+        "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "slide": 6,
+        "bodyIndex": 0,
+        "segmentIndex": 1
+      },
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "heldSourceSegment": "They do better",
+      "beforeComposedTarget": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. They do better musi zwi tshi zwaliwa nga ho livhaho hune zwa ḓo aluwa hone. Beans, carrots na maize zwi wela kha tshigwada itsho.",
+      "prefixExact": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. ",
+      "replacement": "Zwi ita khwine",
+      "suffixExact": " musi zwi tshi zwaliwa nga ho livhaho hune zwa ḓo aluwa hone. Beans, carrots na maize zwi wela kha tshigwada itsho.",
+      "afterComposedTarget": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. Zwi ita khwine musi zwi tshi zwaliwa nga ho livhaho hune zwa ḓo aluwa hone. Beans, carrots na maize zwi wela kha tshigwada itsho.",
+      "status": "pass",
+      "compositionCheck": "Only the indexed segment is replaced; exact source and all neighboring target segment values remain in order.",
+      "meaning": "General “do better” comparative is followed by the original direct-sowing condition; not narrowed to “grow better.”"
+    }
+  ],
+  "learnerClauses": [
+    {
+      "binding": {
+        "file": "lib/course-translation-drafts-st-reading-landscape.ts",
+        "field": "reading-landscape-l3 body paragraph 3, first sentence"
+      },
+      "canonicalEnglish": "Frost is ice that forms on a cold surface.",
+      "oldSpan": "Serame (frost) ke leqhwa le iphelang hodima ntho e batang.",
+      "replacement": "Serame (frost) ke leqhwa le bopehang hodima surface e batang.",
+      "untouchedSuffix": " Mohodi o le mong ha o bontshe hore leqhwa le entswe, mme tshenyo ya serame e ka etsahala ntle le leqhwa le bonwang. Batla leqhwa le tshenyo ya dimela, bapisa mobu o tlase le matswapo, mme o hlahlobe motjheso o tlase-tlase moo o ka kgonang. Tshwaya dibaka tseo ho bata kapa tshenyo e nkang nako e telele ka ho fetisisa. Boloka dimela tse kotsing habonolo hole le dipokotho tse batang (cold pockets) tseo o di hlokomelang.\n\nBakeng sa tamati (tomatoes) e tshwenngwang ke late blight, phallo ya moya le letsatsi la hoseng di ka thusa mahlaku ho oma. Late blight e ntse e ka ata nakong ya lehodimo le phodileng, le nang le mongobo le nkang nako e telele. Ho suthisa bethe ya serapa feela ho ke ke ha e laola; batla le tataiso ya bophelo bo botle ba dijalo sebakeng sa heno.",
+      "composedAfter": "Moya o ka senya dijalo polasing e nyane. Nqa le matla a moya o senyang di fetoha ho latela sebaka, sehla le matswapo le dikgeo tsa setsha sa hao. Tsamaya lefatsheng matsatsing a nang le moya. Rekota moo moya o tswang teng le seo o se amang. Hlahloba ditlaleho tsa boemo ba lehodimo tsa lehae pele o etsa qeto ya moo tshireletso e hlokwang teng.\n\nBosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona ho pholletsa le sehla sa frost sa sebakeng seo. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.\n\nSerame (frost) ke leqhwa le bopehang hodima surface e batang. Mohodi o le mong ha o bontshe hore leqhwa le entswe, mme tshenyo ya serame e ka etsahala ntle le leqhwa le bonwang. Batla leqhwa le tshenyo ya dimela, bapisa mobu o tlase le matswapo, mme o hlahlobe motjheso o tlase-tlase moo o ka kgonang. Tshwaya dibaka tseo ho bata kapa tshenyo e nkang nako e telele ka ho fetisisa. Boloka dimela tse kotsing habonolo hole le dipokotho tse batang (cold pockets) tseo o di hlokomelang.\n\nBakeng sa tamati (tomatoes) e tshwenngwang ke late blight, phallo ya moya le letsatsi la hoseng di ka thusa mahlaku ho oma. Late blight e ntse e ka ata nakong ya lehodimo le phodileng, le nang le mongobo le nkang nako e telele. Ho suthisa bethe ya serapa feela ho ke ke ha e laola; batla le tataiso ya bophelo bo botle ba dijalo sebakeng sa heno.",
+      "status": "pass",
+      "meaning": "“le bopehang” preserves ice formation; “surface e batang” preserves the cold-surface boundary instead of broadening it to a generic object. Mist and frost-damage clauses remain unchanged.",
+      "uncertainty": [
+        "The mixed Sesotho phrase has not received fluent review."
+      ],
+      "currentTargetField": "Moya o ka senya dijalo polasing e nyane. Nqa le matla a moya o senyang di fetoha ho latela sebaka, sehla le matswapo le dikgeo tsa setsha sa hao. Tsamaya lefatsheng matsatsing a nang le moya. Rekota moo moya o tswang teng le seo o se amang. Hlahloba ditlaleho tsa boemo ba lehodimo tsa lehae pele o etsa qeto ya moo tshireletso e hlokwang teng.\n\nBosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona ho pholletsa le sehla sa frost sa sebakeng seo. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.\n\nSerame (frost) ke leqhwa le iphelang hodima ntho e batang. Mohodi o le mong ha o bontshe hore leqhwa le entswe, mme tshenyo ya serame e ka etsahala ntle le leqhwa le bonwang. Batla leqhwa le tshenyo ya dimela, bapisa mobu o tlase le matswapo, mme o hlahlobe motjheso o tlase-tlase moo o ka kgonang. Tshwaya dibaka tseo ho bata kapa tshenyo e nkang nako e telele ka ho fetisisa. Boloka dimela tse kotsing habonolo hole le dipokotho tse batang (cold pockets) tseo o di hlokomelang.\n\nBakeng sa tamati (tomatoes) e tshwenngwang ke late blight, phallo ya moya le letsatsi la hoseng di ka thusa mahlaku ho oma. Late blight e ntse e ka ata nakong ya lehodimo le phodileng, le nang le mongobo le nkang nako e telele. Ho suthisa bethe ya serapa feela ho ke ke ha e laola; batla le tataiso ya bophelo bo botle ba dijalo sebakeng sa heno.",
+      "exactTargetPrefix": "Moya o ka senya dijalo polasing e nyane. Nqa le matla a moya o senyang di fetoha ho latela sebaka, sehla le matswapo le dikgeo tsa setsha sa hao. Tsamaya lefatsheng matsatsing a nang le moya. Rekota moo moya o tswang teng le seo o se amang. Hlahloba ditlaleho tsa boemo ba lehodimo tsa lehae pele o etsa qeto ya moo tshireletso e hlokwang teng.\n\nBosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona ho pholletsa le sehla sa frost sa sebakeng seo. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.\n\n"
+    },
+    {
+      "binding": {
+        "file": "lib/course-translation-drafts-ve-market-community.ts",
+        "field": "market-community-l2 quiz[1].rationale, sentence 1"
+      },
+      "canonicalEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "oldSpan": "Distance affects costs, but it is not the only factor.",
+      "replacement": "Distance i kwama costs, fhedzi a si yone factor nthihi fhedzi.",
+      "untouchedSuffix": " Shumisani actual returns na losses u vhambedza options.",
+      "composedAfter": "Distance i kwama costs, fhedzi a si yone factor nthihi fhedzi. Shumisani actual returns na losses u vhambedza options.",
+      "status": "pass-with-wording-risk",
+      "meaning": "Retains distance affecting costs and the contrast that distance is not the sole factor. The actual-returns/losses comparison stays unchanged.",
+      "uncertainty": [
+        "The two fhedzi forms are intended to mean “but” and “only”; confirm the second clause is read as “not the only factor,” not “not one factor only.”"
+      ],
+      "canonicalCheck": "lib/course-modules.ts has no working-tree diff from HEAD; canonical wording remains unchanged.",
+      "currentTargetField": "Distance affects costs, but it is not the only factor. Shumisani actual returns na losses u vhambedza options.",
+      "exactTargetPrefix": ""
+    }
+  ],
+  "summary": {
+    "pairedFieldsChecked": 5,
+    "learnerClausesChecked": 2,
+    "canonicalSourceChanged": false,
+    "materialCompositionErrors": [],
+    "remainingLanguageRisks": [
+      "TS water-works concord with the English technical noun is unresolved though any/site scope composes correctly.",
+      "VE market rationale’s “fhedzi” qualification is semantically plausible; exact idiom remains uncertain."
+    ],
+    "fluentApproval": "Not assessed or claimed."
+  }
+}
