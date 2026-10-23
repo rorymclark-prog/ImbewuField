@@ -47,7 +47,7 @@ export default function SampleFarmPage() {
     <AppHeader
       backFallback="/samples"
       title={ui('Farm evidence','Ubufakazi bepulazi')}
-      right={<Link href="/tour" aria-label={ui('15-minute tour','Uhambo lwemizuzu engu-15')} style={{ whiteSpace: 'nowrap' }}>{ui('Tour','Uhambo')}</Link>}
+      right={<Link href="/tour" aria-label={ui('15-minute tour','Uhambo lwemizuzu engu-15')} style={{ whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '0 8px' }}>{ui('Tour','Uhambo')}</Link>}
     /><div className={styles.content} style={{ flex: 1, overflowY: 'auto', paddingBottom: 'calc(max(180px, var(--lima-fab-clearance, 180px)) + var(--bottom-nav-height, 0px) + env(safe-area-inset-bottom, 0px))' }}><div className={styles.wrap}>
     <h1>{ui('One farm, from plan to evidence','Ipulazi elilodwa, kusukela ohlelweni kuye ebufakazini')}</h1><p>{ui('Explore the design, visit records and evidence. Your edits stay available until you reload or reset this workspace.','Hlola umklamo, amarekhodi okuvakasha nobufakazi. Izinguquko zakho zizohlala zikhona uze ulayishe kabusha noma usethe kabusha le ndawo yokuzilolonga.')}</p>
     {!sample?<button className={styles.primary} onClick={()=>{if(!enterSampleMode())setMessage(ui('Please allow session storage to open this tour.','Vumela ukugcinwa kolwazi lweseshini ukuze uvule lolu hambo.'));}}>{ui('Open farm workspace','Vula indawo yokusebenza yepulazi')}</button>:pack&&<>
