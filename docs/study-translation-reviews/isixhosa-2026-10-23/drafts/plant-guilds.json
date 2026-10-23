@@ -1,0 +1,115 @@
+{
+ "id": "plant-guilds",
+ "title": "Ukukhetha izityalo kunye ne-guild",
+ "description": "Khetha izityalo eziluncedo ezisebenza kunye, buyisela ingca yokugquma uze ulawule i-guild (iqela lezityalo elisebenzisana) njengoko imithi ikhula.",
+ "lessons": [
+  {
+   "id": "plant-guilds-l1",
+   "title": "Izityalo ezifaka i-nitrogen: khetha uze ulawule izityalo ezixhasayo",
+   "body": "Ezi bhaktheriya ziguqula i-nitrogen eseMoyeni ibe yiyo i-legume (isityalo esinembotyi emagobolondweni) enokuyisebenzisa.\n\nFumana ii-nodule (amaqhuma asengcambu) kwisityalo se-legume esiyisipheyo. Ukwenza ii-nodule nokukhula kuxhomekeke kwisityalo, kwibhaktheriya efanelekileyo nakwiimeko zokukhula.\n\nBuyisela iinqunqo zamagqabi ezifanelekileyo, amagqabi awileyo kunye neentsalela zezityalo njengengca yokugquma. Izidalwa eziphila emhlabeni zikhulula izondlo ngexesha lokubola.\n\nOku kuthatha ixesha. I-legume ephilayo ayiyombhobho womanyolo osebenza kwangoko ukuya emthini weziqhamo.\n\nImveli yaseKwaZulu-Natal. Kwiimeko ezifudumeleyo ezifanelekileyo, lawula esi sihlahla siphila ixesha elifutshane okanye umthi omncinci njengesityalo sokuxhasa.\n\nYiyekele indawo yokukhula. Yinqunqe ukuze ufumane ingca yokugquma uphinde uyihlole xa umthunzi okanye ukhuphiswano lwamanzi lunyuka.\n\nI-Sesbania punicea yi-red sesbania ehlaselayo (isityalo sangaphandle esithatha indawo yezinye). Iipodi zayo zineempiko ezine ezihamba ubude. Qinisekisa ukuchongwa kwesityalo usebenzisa isikhokelo sezityalo esithembekileyo.\n\nKhangela igama elipheleleyo phambi kokutyala. Hlonipha uluhlu lweentlobo zezityalo olwavunyelwene ngalo kwiprojekthi, kuquka nasiphi na isithintelo kwi-Sesbania sesban.\n\nSebenzisa indawo enelanga namanzi aphumayo kakuhle. Sisihlahla esixhasayo esiphila ixesha elifutshane; iqabaka nokuhlala kwamanzi emhlabeni kunokusithintela.\n\nLatha ukuba isityalo ngasinye sibonelela kakhulu ngee-pea okanye ngamagqabi. Ukusika rhoqo kakhulu kunokusonzakalisa kwaye kunciphise isivuno sokutya.\n\nI-cowpea igubungela izikhewu ezinelanga. I-pigeon pea ibonelela ngokutya nangamagqabi. I-Sesbania sesban elawulwayo inokubonelela ngenkxaso ende yethutyana.\n\nYongeza izityalo ezifanelekileyo ezidubulayo nezokugquma. Gcina isiqu se-mango sicocekile kwaye ulawule ukukhanya, amanzi nendlela yokufikelela.\n\nBala izixhaso ezinomthi ngaphezu kwezikhewu phakathi kwemithi yeziqhamo. Hlwayela isigqubuthelo somhlaba esifanelekileyo ngokwendawo.\n\nAkukho nani lilodwa elisebenza kuyo yonke imithi yeziqhamo. Hlengahlengisa ukuxinana ngokwamanzi, umhlaba, ubukhulu besityalo kunye namandla akho okunqunqa nokunciphisa.",
+   "keyPoints": [
+    "Ii-legume zisebenza kunye ne-rhizobia (ibhaktheriya) kwii-nodule zengcambu; ukufaka i-nitrogen kuxhomekeke kwiimeko ezifanelekileyo.",
+    "Buyisela impahla esikiweyo eluncedo emhlabeni; ukukhululwa kwezondlo kuthatha ixesha.",
+    "Sebenzisa izigqubuthelo zexesha ezifanelekileyo, izihlahla ezixhasayo nemithi yethutyana.",
+    "Lawula ukuxinana kwezixhasi njengoko izityalo zikhula; akukho nani lilodwa elisebenza kuyo yonke imithi yeziqhamo."
+   ],
+   "quiz": [
+    {
+     "q": "I-nitrogen kwimpahla ye-legume esikiweyo iba yafumaneka nini kwezinye izityalo?",
+     "options": [
+      "Kwangoko xa isikiwe",
+      "Njengoko izidalwa eziphila emhlabeni ziyibola le mpahla",
+      "Kuphela xa umthi weziqhamo uchukumisa i-legume",
+      "Ayinakuze ifumaneke"
+     ],
+     "correct": 1,
+     "rationale": "Ukubola kukhulula izondlo ngokuhamba kwexesha. Isantya sixhomekeke kuhlobo lwempahla nakwiimeko zokukhula."
+    },
+    {
+     "q": "Yintoni ekufanele igqibe ngenani lezityalo ezixhasayo ozimisayo?",
+     "options": [
+      "Inani elinye elimiselweyo kuyo yonke indawo",
+      "Amanzi, umhlaba, ubukhulu besityalo nenkathalo onokuyinika",
+      "Ukuhlala ubeka yonke inkxaso ngaphezulu ethambekeni",
+      "Ukutyala imithi emininzi kangangoko ingena ngokwenyani"
+     ],
+     "correct": 1,
+     "rationale": "Izityalo ezixhasayo nazo zifuna izixhobo nokulawulwa. Khangela ukukhula nokhuphiswano, uze uhlengahlengise."
+    }
+   ],
+   "infographicAlt": "Umzobo wokufundisa weguild ngokweengcamango; qinisekisa ukuchongwa kwesityalo usebenzisa isikhokelo sezityalo esithembekileyo."
+  },
+  {
+   "id": "plant-guilds-l2",
+   "title": "Izityalo zengca yokugquma kunye nezinambuzane eziluncedo",
+   "body": "Iklip ibonisa ukusikwa kwesebe: umthi ongumxhasi usama. Shiya amagqabi anempilo anele ukuze isityalo siphinde sibuyele kwimeko.\n\nHambisa ukusika ngohlobo lwesityalo. Phepha ukusika kakhulu rhoqo kwi-pigeon pea, ingakumbi xa uyityala ukuze uvune ii-pea.\n\nIngca yokugquma ikhusela umphezulu, inceda ukugcina ukufuma kwaye ibuyisela impahla yezinto eziphilayo.\n\nShiya indlela yokufikelela ekunisweni nasekuhlolweni. Sika impahla ibe ziziqwenga ezilawulekayo uqhubeke ujonga ukufuma nokubola.\n\nFumana i-cultivar (uhlobo olukhethiweyo) echanekileyo. I-Bocking 14 ayisasazeki ngembewu ekwaziyo ukuhluma, kodwa iziqwenga zengcambu zinokuphinda zihlume.\n\nYibeke apho inendawo nokufuma okwaneleyo. Sika amagqabi njengoko ibuyela kwimeko; ungawuxinezeli umthi weziqhamo oselula.\n\nUninzi lwee-ladybird (iinambuzane ezincinci ezinamachokoza) ludla ii-aphid (iinambuzane ezincinci ezifunxa ijusi yezityalo); ezinye ii-parasitoid wasp (iinambuzane ezinjengeenyosi ezihlasela ezinye izinambuzane) zihlasela izinambuzane ezonakalisa izityalo. Izityalo ezidubulayo ezinjenge-African basil zinokongeza izixhobo.\n\nJonga ukuba zeziphi izinambuzane ezityelelayo nokuba umonakalo uyatshintsha na. Isityalo esidubulayo asiqinisekisi ulawulo lwezinambuzane ezonakalisayo.\n\nI-Tulbaghia violacea inamagqabi amancinci amxinwa kunye neentyatyambo ezimfusa ezikhaphukhaphu (lilac). Beka iqela lezityalo apho linokukhanya nendawo yokukhula.\n\nJonga izinambuzane ezityelelayo. Ungathembisi ukuba umqukumbelo we-wild garlic uza kugxotha izinambuzane ezonakalisayo okanye uphilise ukuqhambuka kwazo.",
+   "keyPoints": [
+    "Ukunqunqa kusika amasebe ngoxa kugcinwa isityalo esixhasayo.",
+    "Buyisela amagqabi asikiweyo afanelekileyo njengengca yokugquma ngoxa usigcina isiqu sicocekile.",
+    "I-Bocking 14 ayisasazeki ngembewu ekwaziyo ukuhluma, kodwa iziqwenga zengcambu zinokuphinda zihlume.",
+    "Izityalo ezidubulayo zinokuxhasa izinambuzane eziluncedo; jonga indlela ezityelela ngayo ngokwenyani nomonakalo wesityalo."
+   ],
+   "quiz": [
+    {
+     "q": "Iklip yokusika isebe ibonisa ntoni?",
+     "options": [
+      "Ukususa wonke umthi ongumxhasi",
+      "Ukunqunqa umthi ongumxhasi ogcinwayo ukuze kufumaneke ukukhanya nengca yokugquma",
+      "Ukuvuna umthi weziqhamo",
+      "Ubungqina bokuba ukhuphiswano lwengcambu luyekile"
+     ],
+     "correct": 1,
+     "rationale": "Isebe liyawa, ngoxa umthi ongumxhasi usama. Oko kukunqunqa kunye ne-chop-and-drop (ukusika uyiyeke iwe emhlabeni)."
+    },
+    {
+     "q": "Unokuzivavanya njani izityalo ezidubulayo ezisetyenziselwa ukuxhasa izinambuzane eziluncedo?",
+     "options": [
+      "Cinga ukuba ziza kuphelisa izinambuzane ezonakalisayo",
+      "Jonga izinambuzane ezityelelayo notshintsho kumonakalo wesityalo",
+      "Susa zonke iintyatyambo phambi kokuba zivuleke",
+      "Bala yonke into edubulayo njengesityalo esifaka i-nitrogen"
+     ],
+     "correct": 1,
+     "rationale": "Iintyatyambo zinokubonelela ngezixhobo, kodwa ubukho bazo abuqinisekisi ulawulo lwezinambuzane ezonakalisayo."
+    }
+   ],
+   "infographicAlt": "Umzobo wokufundisa weguild ngokweengcamango; qinisekisa ukuchongwa kwesityalo usebenzisa isikhokelo sezityalo esithembekileyo."
+  },
+  {
+   "id": "plant-guilds-l3",
+   "title": "Yakha i-guild uyihlengahlengise njengoko ikhula",
+   "body": "Dibanisa imisebenzi yenkxaso efunwa yindawo yakho: ukufaka i-nitrogen, ukutya, ingca yokugquma, iintyatyambo nesigqubuthelo somhlaba. Ezinye izityalo zenza imisebenzi emininzi.\n\nGcina indawo yesiqu nendlela ivuliwe. Phinda uhlole ilungu ngalinye njengoko i-mango kunye nabamelwane bayo bekhula.\n\nGcina iziqu zayo ezirhubuluzayo zikude nomthi weziqhamo oselula kwaye ugcine indlela yokuyinakekela. Iingcambu zayo nazo zisebenzisa amanzi nezondlo.\n\nApho izixhobo zinqongophele, qhathanisa isigqubuthelo esiphilayo nebheseni eqhelekileyo yengca yokugquma.\n\nTyala ngexesha elifanelekileyo, gquma ngengca uze ugcine amanzi okumisa isityalo. Gcina isikhewu sokufikelela sivuliwe.\n\nQala ngenani lezityalo ezixhasayo onokuzinakekela. Jonga ukusinda nokukhula phambi kokongeza ezinye.\n\nSika phantsi izixhasi ezikhethiweyo ezikhuphisanayo ukuze uvule indawo. Impahla esikiweyo efanelekileyo inokuhlala njengengca yokugquma: oku kukunciphisa nge-chop-and-drop.\n\nLawula ukuhluma kwakhona ukuze ugcine ivuliwe indawo. Hlola ukukhanya, ukufuma komhlaba nokukhula; ukunciphisa akuyeki ngoko nangoko ukhuphiswano lwengcambu.\n\nBuyisela iinqunqo eziluncedo kwimithi esele imisiwe. Gcina izityalo ezikufutshane kuphela apho zisenza kakuhle.\n\nImithi yeziqhamo evuthiweyo isafuna izondlo. Jonga ukukhula, isivuno nemeko yomhlaba; izityalo ezixhasayo aziyisusi loo mfuno.\n\nHlola ukukhula komthi weziqhamo, umthunzi, ukufuma komhlaba, izivuno eziluncedo nomonakalo ngezinambuzane ezonakalisayo. Bhala oko kusikiweyo, kubuyiselwe okanye kususiwe.\n\nSebenzisa ezi ngqwalaselo ukutshintsha uyilo nenkathalo. Isityalo sifumana indawo yaso ngoko sikwenzayo apha.",
+   "keyPoints": [
+    "Nika isityalo ngasinye indima eluncedo ngoxa ukhusela indawo yomthi weziqhamo.",
+    "Isigqubuthelo somhlaba esiphilayo sikhuphisana nokunye ngamanzi nezondlo.",
+    "Nciphisa izityalo ezixhasayo ezikhethiweyo xa ukunqunqa kungasanikezi ndawo yaneleyo.",
+    "Impahla esikiweyo efanelekileyo inokuhlala njengengca yokugquma; lawula ukuhluma kwakhona ukuze ugcine indawo evuliweyo."
+   ],
+   "quiz": [
+    {
+     "q": "Isityalo esixhasayo sisawuxinezela i-mango emva kokunqunqa. Ukunciphisa kungabandakanya ntoni?",
+     "options": [
+      "Ukusika kuphela enye intonga encinci",
+      "Ukusika phantsi isixhasi esikhethiweyo esikhuphisanayo nokulawula ukuhluma kwakhona",
+      "Ukususa i-mango endaweni yoko",
+      "Ukuhlala uthatha yonke impahla esikiweyo uyisusa kwindawo"
+     ],
+     "correct": 1,
+     "rationale": "Ukunciphisa kunciphisa izityalo ezixhasayo ezikhethiweyo ezimeleyo. Impahla esikiweyo efanelekileyo inokuhlala njengengca yokugquma."
+    },
+    {
+     "q": "Ngaba ubhatata uhlala ungcono kunebheseni yengca yokugquma ejikeleze umthi weziqhamo oselula?",
+     "options": [
+      "Ewe, kuba awusoze usebenzise manzi",
+      "Ewe, kuba ufaka i-nitrogen",
+      "Hayi; qhathanisa iinzuzo zawo zokutya nesigqubuthelo nokhuphiswano lwezixhobo",
+      "Hayi, kuba akukho sigqubuthelo somhlaba sinokuluncedo"
+     ],
+     "correct": 2,
+     "rationale": "Khetha isigqubuthelo ngokwendawo. Gcina indlela yokufikelela nendawo yesiqu icocekile, uze ujonge umthi oselula."
+    }
+   ],
+   "infographicAlt": "Umzobo wokufundisa weguild ngokweengcamango; qinisekisa ukuchongwa kwesityalo usebenzisa isikhokelo sezityalo esithembekileyo."
+  }
+ ]
+}

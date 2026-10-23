@@ -95,7 +95,7 @@ function formatDuration(mins: number, t: (key: string) => string) {
   return `${hours} ${t(hours === 1 ? 'studentHourOne' : 'studentHours')}${remaining > 0 ? ` ${remaining} ${t('studentMinutes')}` : ''}`;
 }
 
-const SOURCE_PAIRED_LANGUAGES = new Set(['st', 've', 'ts']);
+const SOURCE_PAIRED_LANGUAGES = new Set(['st', 've', 'ts', 'xh']);
 
 const ZULU_MEDIA_LANGUAGE_NOTICES = {
   bothEnglish: {
@@ -207,10 +207,10 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
   const lessonTracks = tracksForLesson(moduleId, lesson.id);
   const presentation = resolveLearnerLessonPresentation(lesson, lang);
   const lessonContent = presentation.content;
-  const regionalDraft = (lang === 'st' || lang === 'ts' || lang === 've') && presentation.status === 'draft';
+  const regionalDraft = (lang === 'st' || lang === 'ts' || lang === 've' || lang === 'xh') && presentation.status === 'draft';
   const isiZuluDraft = lang === 'zu' && presentation.status === 'draft';
   const sourcePairedDraft = regionalDraft || isiZuluDraft;
-  const regionalFallback = (lang === 'st' || lang === 'ts' || lang === 've') && presentation.status === 'english-fallback';
+  const regionalFallback = (lang === 'st' || lang === 'ts' || lang === 've' || lang === 'xh') && presentation.status === 'english-fallback';
   const regionalDeck = resolveDeckLang(moduleId, lang);
   const regionalNarration = resolveNarrationLang(moduleId, lang);
   // The entry must describe the same silent default as the player, rather than promise a voice.
@@ -267,7 +267,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
                 {t('studentZuluLessonEnglishBadge')}
               </span>
             )}
-            {regionalDraft && <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold" style={{ color: 'var(--gold-dim)', background: 'rgba(192,122,30,0.14)', border: '1px solid rgba(192,122,30,0.32)' }}>{lang === 've' ? 'Tshivenda AI draft · review pending' : 'AI draft · review pending'}</span>}
+            {regionalDraft && <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold" style={{ color: 'var(--gold-dim)', background: 'rgba(192,122,30,0.14)', border: '1px solid rgba(192,122,30,0.32)' }}>{lang === 've' ? 'Tshivenda AI draft · review pending' : lang === 'xh' ? 'isiXhosa AI draft · review pending' : 'AI draft · review pending'}</span>}
             {regionalFallback && <span className="inline-flex rounded-full px-2 py-0.5 font-sans text-xs font-semibold" style={{ color: 'var(--text-secondary)', background: 'rgba(140,122,98,0.08)', border: '1px solid var(--border)' }}>English lesson</span>}
           </span>
         </span>
@@ -290,9 +290,10 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               <p lang="en" className="mt-1 text-xs">English is shown because the isiZulu draft is unavailable or its checked English source no longer matches the current lesson. IsiZulu audio, if available, does not mean the lesson text or questions have been reviewed.</p>
             </div>
           )}
-          {regionalDraft && lang !== 've' && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: 'var(--gold-dim)', background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)' }}>Unreviewed {lang === 'st' ? 'Sesotho' : 'Xitsonga'} AI draft. Exact English source is shown alongside the lesson and answers. {regionalMediaNotice}</div>}
+          {regionalDraft && lang !== 've' && lang !== 'xh' && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: 'var(--gold-dim)', background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)' }}>Unreviewed {lang === 'st' ? 'Sesotho' : 'Xitsonga'} AI draft. Exact English source is shown alongside the lesson and answers. {regionalMediaNotice}</div>}
           {regionalFallback && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', background: 'rgba(140,122,98,0.08)', border: '1px solid var(--border)' }}>This lesson is in English. {regionalMediaNotice}</div>}
           {lang === 've' && regionalDraft && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: 'var(--gold-dim)', background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)' }}>Unreviewed Tshivenda AI draft. It has not been checked by a fluent speaker or local farming reviewer. Exact English source is shown alongside the lesson and answers. {regionalMediaNotice}</div>}
+          {lang === 'xh' && regionalDraft && <div role="status" className="mt-4 rounded-lg px-3 py-2.5 font-sans text-sm leading-relaxed" style={{ color: 'var(--gold-dim)', background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)' }}>Unreviewed isiXhosa AI draft. It has not been checked by a fluent speaker or local farming reviewer. Exact English source is shown alongside the lesson and answers. {regionalMediaNotice}</div>}
           {hasAudio && (
             <div className="pt-4">
               <CourseAudioPlayer
@@ -341,7 +342,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
               <LessonInfographic url={lesson.infographicUrl!} alt={lessonContent.infographicAlt ?? lesson.infographicAlt!} />
               {infographicAltDraft && (
                 <div className="mt-2 rounded-lg px-3 py-2.5 space-y-1.5 font-sans leading-relaxed" style={{ background: 'rgba(140,122,98,0.08)', color: 'var(--text-primary)' }}>
-                  <p lang="en" className="text-xs font-semibold">Machine draft · {lang === 'st' ? 'Sesotho' : lang === 'ts' ? 'Xitsonga' : lang === 'zu' ? 'isiZulu' : 'Tshivenda'} image description</p>
+                  <p lang="en" className="text-xs font-semibold">Machine draft · {lang === 'st' ? 'Sesotho' : lang === 'ts' ? 'Xitsonga' : lang === 'zu' ? 'isiZulu' : lang === 'xh' ? 'isiXhosa' : 'Tshivenda'} image description</p>
                   <p lang={lang} className="text-sm">{infographicAltDraft}</p>
                   <p lang="en" className="text-xs" style={{ color: 'var(--text-secondary)' }}><span className="font-semibold">Exact English source:</span> {lesson.infographicAlt}</p>
                 </div>
@@ -848,6 +849,13 @@ export default function StudentPage() {
             <span lang="en">{t('studentTshivendaUiDraftNotice')}</span>
           </p>
         )}
+        {lang === 'xh' && (
+          <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
+            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: 'var(--text-secondary)' }}>
+            <span lang="xh">{t('xhosaUiDraftNotice')}</span>{' '}
+            <span lang="en">/ Unreviewed isiXhosa machine draft.</span>
+          </p>
+        )}
         {/* Progress hero */}
         <section className={styles.intro} aria-labelledby="studies-title">
           <div>
@@ -1019,7 +1027,7 @@ export default function StudentPage() {
             const englishDueSource = SOURCE_PAIRED_LANGUAGES.has(lang) && assignment && today
               ? formatDue(assignment.due_at, today, 'en') : null;
             const modulePresentation = resolveCourseModulePresentation(mod, lang);
-            const moduleDraftBadge = lang === 'st' || lang === 'ts' || lang === 've'
+            const moduleDraftBadge = lang === 'st' || lang === 'ts' || lang === 've' || lang === 'xh'
               ? regionalModuleDraftBadge(mod, lang) : null;
             const zuluSlidesReady = resolveDeckLang(mod.id, 'zu')?.exact ?? false;
             const zuluAudioReady = resolveNarrationLang(mod.id, 'zu')?.exact ?? false;
@@ -1065,7 +1073,7 @@ export default function StudentPage() {
                         <span className={`font-display ${styles.moduleTitle}`}>
                           {modulePresentation.title}
                         </span>
-                        {(lang === 'zu' || lang === 'st' || lang === 'ts' || lang === 've') && (
+                        {(lang === 'zu' || lang === 'st' || lang === 'ts' || lang === 've' || lang === 'xh') && (
                           <span className="min-w-0 max-w-full whitespace-normal break-words text-xs font-sans font-semibold px-2 py-0.5 rounded-2xl"
                             style={{ background: 'rgba(192,122,30,0.08)', color: 'var(--gold-dim)', border: '1px solid rgba(192,122,30,0.24)' }}>
                             {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : moduleDraftBadge}
@@ -1116,7 +1124,7 @@ export default function StudentPage() {
                     aria-expanded={isExpanded}
                   >
                     <span className={`font-display ${styles.moduleTitle}`}>{modulePresentation.title}</span>
-                    {(lang === 'zu' || lang === 'st' || lang === 'ts' || lang === 've') && (
+                    {(lang === 'zu' || lang === 'st' || lang === 'ts' || lang === 've' || lang === 'xh') && (
                       <span className="min-w-0 max-w-full whitespace-normal break-words text-xs font-sans font-semibold px-2 py-0.5 rounded-2xl"
                         style={{ background: 'rgba(192,122,30,0.08)', color: 'var(--gold-dim)', border: '1px solid rgba(192,122,30,0.24)' }}>
                         {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : moduleDraftBadge}
@@ -1189,7 +1197,7 @@ export default function StudentPage() {
                     <p className="font-sans text-xs mt-1 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                       {modulePresentation.description}
                     </p>
-                    {(lang === 'st' || lang === 'ts' || lang === 've') && modulePresentation.status === 'draft' && <p lang="en" className="font-sans text-xs mt-1 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>English source: {mod.title} — {mod.description}</p>}
+                    {(lang === 'st' || lang === 'ts' || lang === 've' || lang === 'xh') && modulePresentation.status === 'draft' && <p lang="en" className="font-sans text-xs mt-1 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>English source: {mod.title} — {mod.description}</p>}
                     <div className={styles.moduleMeta}>
                       <div className="flex items-center gap-1.5">
                         <Clock size={11} style={{ color: 'var(--text-muted)' }} />
@@ -1201,7 +1209,7 @@ export default function StudentPage() {
                           <span className="font-sans text-xs" style={{ color: 'var(--color-forest-800)' }}>
                             {lang === 'zu' && !zuluAudioReady ? 'Umsindo: isiNgisi'
                               : ownNarrationReady && regionalNarrationDraft(mod.id, lang) ? `Audio: ${{ st: 'Sesotho', ts: 'Xitsonga', ve: 'Tshivenda' }[lang as 'st' | 'ts' | 've']} AI draft + English holds`
-                                : (lang === 'st' || lang === 'ts' || lang === 've') ? 'Audio: optional English' : t('studentAudio')}
+                                : (lang === 'st' || lang === 'ts' || lang === 've' || lang === 'xh') ? 'Audio: optional English' : t('studentAudio')}
                           </span>
                         </div>
                       )}

@@ -4,15 +4,15 @@ import { Calendar, CircleSlash, MapPin, Tag, Trash2 } from 'lucide-react';
 import {
   distanceBucket,
   listingCrop,
-  priceLabel,
   quantityLabel,
   type ListingWithDistance,
 } from '@/lib/exchange';
 import ShareListingButton from './ShareListingButton';
-import { CATEGORY_LABEL, EX, KIND_COLOR, KIND_LABEL, MONTH_LABEL, ZU_CATEGORY_LABEL, ZU_KIND_LABEL, ZU_MONTH_LABEL } from './theme';
+import { CATEGORY_LABEL, EX, KIND_COLOR, KIND_LABEL, MONTH_LABEL, ZU_CATEGORY_LABEL, ZU_KIND_LABEL, ZU_MONTH_LABEL, xhMonthStem, xhPriceLabel } from './theme';
 import { produceLabel } from '@/lib/produce-label';
 import { getCropArt } from '@/lib/crop-art';
 import { useLanguage } from '@/lib/i18n';
+import { inlineTemplate, inlineText } from '@/lib/xh-inline';
 
 /**
  * Distance is coloured by bucket so a scan down the board reads as a map:
@@ -34,16 +34,16 @@ const BUCKET_COLOR: Record<ReturnType<typeof distanceBucket>, string> = {
  * client's and trip a hydration mismatch. Null until mounted, and the line is
  * simply absent from the server HTML.
  */
-function postedLabel(postedAt: string, nowMs: number | null, zu: boolean): string | null {
+function postedLabel(postedAt: string, nowMs: number | null, zu: boolean, lang: string): string | null {
   if (nowMs === null) return null;
   const then = Date.parse(postedAt);
   if (!Number.isFinite(then)) return null;
   const diff = nowMs - then;
-  if (diff < 3_600_000) return zu ? 'Manje nje' : 'Just now';
-  if (diff < 86_400_000) return zu ? `Emahoreni angu-${Math.floor(diff / 3_600_000)} adlule` : `${Math.floor(diff / 3_600_000)}h ago`;
+  if (diff < 3_600_000) return zu ? 'Manje nje' : inlineText(lang, 'Just now');
+  if (diff < 86_400_000) return zu ? `Emahoreni angu-${Math.floor(diff / 3_600_000)} adlule` : inlineTemplate(lang, '{n}h ago', null, { n: Math.floor(diff / 3_600_000) });
   const days = Math.floor(diff / 86_400_000);
-  if (days < 30) return zu ? `Ezinsukwini ezingu-${days} ezedlule` : `${days}d ago`;
-  return zu ? `Ezinyangeni ezingu-${Math.floor(days / 30)} ezedlule` : `${Math.floor(days / 30)}mo ago`;
+  if (days < 30) return zu ? `Ezinsukwini ezingu-${days} ezedlule` : inlineTemplate(lang, '{n}d ago', null, { n: days });
+  return zu ? `Ezinyangeni ezingu-${Math.floor(days / 30)} ezedlule` : inlineTemplate(lang, '{n}mo ago', null, { n: Math.floor(days / 30) });
 }
 
 export default function ListingCard({
@@ -71,15 +71,15 @@ export default function ListingCard({
 }) {
   const { lang } = useLanguage();
   const zu = lang === 'zu';
-  const tx = (en: string, dz: string) => zu ? dz : en;
+  const tx = (en: string, dz: string) => inlineText(lang, en, dz);
   const { listing, km, distanceLabel } = row;
   const crop = listingCrop(listing);
   const qty = quantityLabel(listing);
-  const posted = postedLabel(listing.postedAt, nowMs, zu);
+  const posted = postedLabel(listing.postedAt, nowMs, zu, lang);
   const price = zu && listing.price.type === 'free' ? 'Mahhala'
     : zu && listing.price.type === 'swap' ? `Ukushintshisana: ${listing.price.wants}`
       : zu && listing.price.type === 'ask' ? 'Beka intengo yakho'
-        : priceLabel(listing);
+        : xhPriceLabel(lang, listing);
   const closed = listing.status === 'closed';
 
   return (
@@ -105,10 +105,10 @@ export default function ListingCard({
             letterSpacing: '0.05em',
           }}
         >
-          {zu ? ZU_KIND_LABEL[listing.kind] : KIND_LABEL[listing.kind]}
+          {zu ? ZU_KIND_LABEL[listing.kind] : inlineText(lang, KIND_LABEL[listing.kind])}
         </span>
         <span className="font-sans" style={{ fontSize: 12, color: EX.faint }}>
-          {zu ? ZU_CATEGORY_LABEL[listing.category] : CATEGORY_LABEL[listing.category]}
+          {zu ? ZU_CATEGORY_LABEL[listing.category] : inlineText(lang, CATEGORY_LABEL[listing.category])}
         </span>
         {crop && (
           <span className="font-sans" style={{ fontSize: 12, color: EX.muted, display: 'inline-flex', alignItems: 'center', gap: 3 }}>
@@ -191,7 +191,7 @@ export default function ListingCard({
         {listing.availableMonth !== null && (
           <span className="flex items-center gap-1.5 font-sans" style={{ fontSize: 12, color: EX.faint }}>
             <Calendar size={11} strokeWidth={1.8} />
-            {zu ? (listing.kind === 'want' ? 'Kudingeka ngaphambi kuka' : 'Kulungile ngo') + ZU_MONTH_LABEL[listing.availableMonth - 1].slice(1) : (listing.kind === 'want' ? 'Needed by' : 'Ready') + ' ' + MONTH_LABEL[listing.availableMonth - 1]}
+            {zu ? (listing.kind === 'want' ? 'Kudingeka ngaphambi kuka' : 'Kulungile ngo') + ZU_MONTH_LABEL[listing.availableMonth - 1].slice(1) : lang === 'xh' ? inlineTemplate(lang, listing.kind === 'want' ? 'Needed by {month}' : 'Ready {month}', null, { month: xhMonthStem(lang, MONTH_LABEL[listing.availableMonth - 1]) }) : (listing.kind === 'want' ? 'Needed by' : 'Ready') + ' ' + MONTH_LABEL[listing.availableMonth - 1]}
           </span>
         )}
         {closed && (
@@ -216,7 +216,7 @@ export default function ListingCard({
             className="font-sans font-semibold"
             style={{ fontSize: 12, color: BUCKET_COLOR[distanceBucket(km)] }}
           >
-            · {distanceLabel}
+            · {distanceLabel === 'Area unknown' ? inlineText(lang, 'Area unknown') : distanceLabel}
           </span>
         )}
       </div>

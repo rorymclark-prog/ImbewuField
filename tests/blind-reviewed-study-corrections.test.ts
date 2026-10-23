@@ -104,7 +104,9 @@ async function isolatedGuard() {
     // The wave 16 layer sits on the wave 14 one the same way.
     'tests/wave-16-history-checks.ts','tests/fixtures/student-page-before-wave-16.tsx.txt',
     // The wave 17 layer sits on the wave 16 one the same way.
-    'tests/wave-17-history-checks.ts','tests/fixtures/student-page-before-wave-17.tsx.txt']);
+    'tests/wave-17-history-checks.ts','tests/fixtures/student-page-before-wave-17.tsx.txt',
+    // The isiXhosa Studies layer sits on the wave 17 one the same way.
+    'tests/xh-studies-history-checks.ts','tests/fixtures/student-page-before-xh-studies.tsx.txt']);
   for (const file of files) { if (retiredJpegs.has(file)) continue;const destination=join(fixture,file);mkdirSync(dirname(destination),{recursive:true});copyFileSync(file,destination,constants.COPYFILE_FICLONE); }
   cpSync(folder,join(fixture,folder),{recursive:true});
   cpSync(webpFolder,join(fixture,webpFolder),{recursive:true});

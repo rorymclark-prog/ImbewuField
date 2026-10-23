@@ -20,6 +20,7 @@ import { useAppLevel } from '@/lib/app-level';
 import SettingsButton from './SettingsButton';
 import LessonLink from './design/LessonLink';
 import RoleSwitcher from './RoleSwitcher';
+import { inlineText } from '@/lib/xh-inline';
 
 interface NavDrawerProps {
   open: boolean;
@@ -46,7 +47,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
   const pathname = usePathname();
   const { t, lang } = useLanguage();
   const isZulu = lang === 'zu';
-  const ui = (english: string, zulu: string) => isZulu ? `${zulu} (${english})` : english;
+  const ui = (english: string, zulu: string) => isZulu ? `${zulu} (${english})` : inlineText(lang, english);
   // Every link below used to be offered to everybody, including the four staff dashboards. See
   // lib/role-access.ts for why that is a usability failure rather than a security one, and for
   // what `role === null` deliberately does NOT do.
@@ -221,6 +222,12 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         {isZulu && (
           <p role="note" lang="en" style={{ margin: '10px 16px 0', padding: '8px 10px', borderRadius: 9, background: 'color-mix(in srgb, var(--color-harvest) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--color-harvest) 28%, transparent)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.4 }}>
             <strong>ISIZULU MACHINE DRAFT.</strong> Navigation wording has not been reviewed by a fluent isiZulu speaker.
+          </p>
+        )}
+
+        {lang === 'xh' && (
+          <p role="note" lang="xh" style={{ margin: '10px 16px 0', padding: '8px 10px', borderRadius: 9, background: 'color-mix(in srgb, var(--color-harvest) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--color-harvest) 28%, transparent)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.4 }}>
+            <strong>{inlineText(lang, 'ISIXHOSA MACHINE DRAFT.')}</strong> {inlineText(lang, 'Navigation wording has not been reviewed by a fluent isiXhosa speaker.')}
           </p>
         )}
 

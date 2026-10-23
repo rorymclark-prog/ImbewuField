@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { Camera, Loader2, Check, Trash2, X } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { useAppLevel } from '@/lib/app-level';
 import { useAppConfirm } from '@/components/AppConfirm';
 import { communityEnabled } from '@/lib/community/flag';
@@ -69,7 +70,9 @@ function Toggle({ label, sub, on, onChange }: { label: string; sub?: string; on:
 export default function CommunityProfilePage() {
   const { user, loading } = useAuth();
   const { t, lang } = useLanguage();
-  const privacyText = (english: string, key: string) => lang === 'zu' ? `${t(key)} / ${english}` : english;
+  // isiXhosa gets the same treatment as isiZulu: its unreviewed draft with the English source beside it.
+  const xhPair = (english: string) => { const xh = inlineText(lang, english); return xh === english ? english : `${xh} / ${english}`; };
+  const privacyText = (english: string, key: string) => lang === 'zu' ? `${t(key)} / ${english}` : lang === 'xh' ? xhPair(english) : english;
   const appConfirm = useAppConfirm();
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -162,7 +165,7 @@ export default function CommunityProfilePage() {
       setSaved(true);
       setTimeout(() => setSaved(false), 2500);
     } catch {
-      setError(lang === 'zu' ? t('communityProfileSaveError') : 'Could not save — try again.');
+      setError(lang === 'zu' ? t('communityProfileSaveError') : inlineText(lang, 'Could not save — try again.'));
     } finally {
       setSaving(false);
     }
@@ -182,7 +185,7 @@ export default function CommunityProfilePage() {
 
   if (!ready) {
     return (
-      <div role="status" aria-label={lang === 'zu' ? t('communityLoadingStatus') : 'Loading community profile'} className="h-[100dvh] flex items-center justify-center" style={{ background: 'var(--bg-0)' }}>
+      <div role="status" aria-label={lang === 'zu' ? t('communityLoadingStatus') : inlineText(lang, 'Loading community profile')} className="h-[100dvh] flex items-center justify-center" style={{ background: 'var(--bg-0)' }}>
         <Loader2 size={24} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
       </div>
     );
@@ -202,6 +205,7 @@ export default function CommunityProfilePage() {
         <h1 className="font-display font-bold m-0" style={{ fontSize: 20, color: 'var(--text-primary)', marginBottom: 12 }}>{t('communityEditProfileTitle')}</h1>
         <p className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: 20 }}>
           {lang === 'zu' && <span className="block font-sans" style={{ marginBottom: 8, color: 'var(--text-muted)' }}>{t('communityDraftReviewNotice')} / isiZulu draft — not reviewed by a fluent speaker</span>}
+          {lang === 'xh' && <span lang="xh" className="block font-sans" style={{ marginBottom: 8, color: 'var(--text-muted)' }}>{inlineText(lang, 'isiXhosa draft — not reviewed by a fluent speaker')} / isiXhosa draft — not reviewed by a fluent speaker</span>}
           {privacyText('Share as much or as little as you like. Nothing here is visible until you save it.', 'communityEditProfileIntro')}
         </p>
 
@@ -318,7 +322,7 @@ export default function CommunityProfilePage() {
           <div>
             <Toggle
               label={privacyText('Show me on the community map', 'communityShowOnMapLabel')}
-              sub={locating ? (lang === 'zu' ? t('communityLocationPending') : 'Getting your approximate area…') : privacyText('Your location shows as an approximate ~1km area, never your exact homestead', 'communityShowOnMapHint')}
+              sub={locating ? (lang === 'zu' ? t('communityLocationPending') : inlineText(lang, 'Getting your approximate area…')) : privacyText('Your location shows as an approximate ~1km area, never your exact homestead', 'communityShowOnMapHint')}
               on={showOnMap}
               onChange={handleShowOnMapToggle}
             />
@@ -333,7 +337,7 @@ export default function CommunityProfilePage() {
             style={{ background: 'var(--color-forest-800)', color: 'var(--color-canvas)', border: 'none', cursor: 'pointer', padding: '13px 20px', fontSize: 15 }}
           >
             {saving ? <Loader2 size={16} className="animate-spin" /> : saved ? <Check size={16} /> : null}
-            {saved ? (lang === 'zu' ? t('communityProfileSaved') : 'Saved') : t('communitySaveProfile')}
+            {saved ? (lang === 'zu' ? t('communityProfileSaved') : inlineText(lang, 'Saved')) : t('communitySaveProfile')}
           </button>
 
           <button

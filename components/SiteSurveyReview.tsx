@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 import type { SiteSurvey, ProductionCategory } from '@/lib/site-survey';
 import styles from './SiteSurveySheet.module.css';
 import SurveyZuluDraftPair from './SurveyZuluDraftPair';
+import { inlineText } from '@/lib/xh-inline';
 
 const LABELS: Record<string, string> = {
   food:'goalFoodSecurityLabel',income:'goalGenerateIncomeLabel',soil:'challengePoorSoil',education:'goalDemonstrateTeachLabel',
@@ -40,8 +41,8 @@ export default function SiteSurveyReview({ survey:s, onEdit, onEditProduction, p
   }).reduce<ReactNode[]>((items,item,index)=>index? [...items,' · ',item]:[item],[]):unknown;
   const area=(n:number|null)=>n===null?unknown:`${numberLabel(n)} m²`;
   const editSectionName=(step:number,title:ReactNode):string=>step===6
-    ?lang==='zu'?'Izinselelo (Challenges & Priorities)':'Challenges & Priorities'
-    :typeof title==='string'?title:'Challenges & Priorities';
+    ?lang==='zu'?'Izinselelo (Challenges & Priorities)':inlineText(lang,'Challenges & Priorities')
+    :typeof title==='string'?title:inlineText(lang,'Challenges & Priorities');
   const entries=s.reportedProduction??[];
   const harvestMonths=new Set(entries.flatMap(row=>row.harvestMonths??[]));
   const sections=[

@@ -5,6 +5,7 @@ import { MessageCircle, ChevronDown, ChevronUp, Mail, Loader2, MailOpen, CornerD
 import { collection, query, where, orderBy, getDocs, updateDoc, addDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import { isSampleMode } from '@/lib/sample-mode';
 import { sampleRead, sampleWrite, freshSampleMessages, type SampleMessage } from '@/lib/sample-operations';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
@@ -34,9 +35,9 @@ function formatDate(ts: ContactMessage['created_at'], lang: string): string {
       : new Date((ts as { seconds?: number }).seconds ? (ts as { seconds: number }).seconds * 1000 : String(ts));
     const now = new Date();
     const diff = now.getTime() - d.getTime();
-    if (diff < 60_000) return lang === 'zu' ? 'Manje' : 'Just now';
-    if (diff < 3_600_000) return lang === 'zu' ? `emiz ${Math.floor(diff / 60_000)} edlule` : `${Math.floor(diff / 60_000)}m ago`;
-    if (diff < 86_400_000) return lang === 'zu' ? `amahora ${Math.floor(diff / 3_600_000)} edlule` : `${Math.floor(diff / 3_600_000)}h ago`;
+    if (diff < 60_000) return lang === 'zu' ? 'Manje' : inlineText(lang, 'Just now');
+    if (diff < 3_600_000) return lang === 'zu' ? `emiz ${Math.floor(diff / 60_000)} edlule` : inlineTemplate(lang, '{n}m ago', null, { n: Math.floor(diff / 60_000) });
+    if (diff < 86_400_000) return lang === 'zu' ? `amahora ${Math.floor(diff / 3_600_000)} edlule` : inlineTemplate(lang, '{n}h ago', null, { n: Math.floor(diff / 3_600_000) });
     return d.toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-ZA', { day: 'numeric', month: 'short' });
   } catch {
     return '';
@@ -163,8 +164,8 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
         <MessageCircle size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 10px' }} strokeWidth={1.5} />
         {/* ux-03/nav-04: was developer vocabulary ("backend", "Firebase") shown to a mentor or
             NGO coordinator — rewritten in plain words below. */}
-        <p className="text-sm font-display font-semibold" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Akukaxhunywa' : 'Not connected yet'}</p>
-        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Imilayezo izovela lapha uma lokhu kuxhunyiwe' : 'Messages will appear here once this is connected'}</p>
+        <p className="text-sm font-display font-semibold" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Akukaxhunywa' : inlineText(lang, 'Not connected yet')}</p>
+        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Imilayezo izovela lapha uma lokhu kuxhunyiwe' : inlineText(lang, 'Messages will appear here once this is connected')}</p>
       </div>
     );
   }
@@ -172,7 +173,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
   if (loading) {
     return (
       <div className="flex justify-center py-12">
-        <Loader2 size={22} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} aria-label={lang === 'zu' ? 'Iyalayisha' : 'Loading'} role="status" />
+        <Loader2 size={22} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} aria-label={lang === 'zu' ? 'Iyalayisha' : inlineText(lang, 'Loading')} role="status" />
       </div>
     );
   }
@@ -181,8 +182,8 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
     return (
       <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: "1px solid color-mix(in srgb, var(--danger) 35%, transparent)" }}>
         <Mail size={26} style={{ color: 'var(--danger)', margin: '0 auto 10px' }} strokeWidth={1.5} />
-        <p className="text-sm font-display font-semibold" style={{ color: 'var(--danger)' }}>{lang === 'zu' ? 'Imilayezo ayitholakali' : 'Messages unavailable'}</p>
-        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Kungenzeka awunayo imvume, noma uxhumano alutholakali.' : 'You may not have access, or the connection is unavailable.'}</p>
+        <p className="text-sm font-display font-semibold" style={{ color: 'var(--danger)' }}>{lang === 'zu' ? 'Imilayezo ayitholakali' : inlineText(lang, 'Messages unavailable')}</p>
+        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Kungenzeka awunayo imvume, noma uxhumano alutholakali.' : inlineText(lang, 'You may not have access, or the connection is unavailable.')}</p>
       </div>
     );
   }
@@ -191,8 +192,8 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
     return (
       <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
         <Mail size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 10px' }} strokeWidth={1.5} />
-        <p className="text-sm font-display font-semibold" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Ayikho inhlangano exhunywe' : 'No organisation linked yet'}</p>
-        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Imilayezo izovela uma i-akhawunti yakho isixhunywe enhlanganweni.' : 'Messages appear here once your account is linked to an organisation.'}</p>
+        <p className="text-sm font-display font-semibold" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Ayikho inhlangano exhunywe' : inlineText(lang, 'No organisation linked yet')}</p>
+        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Imilayezo izovela uma i-akhawunti yakho isixhunywe enhlanganweni.' : inlineText(lang, 'Messages appear here once your account is linked to an organisation.')}</p>
       </div>
     );
   }
@@ -201,18 +202,18 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
     return (
       <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
         <Mail size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 10px' }} strokeWidth={1.5} />
-        <p className="text-sm font-display font-semibold" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Akukho milayezo okwamanje' : 'No messages yet'}</p>
-        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Imilayezo evela kubafundi izovela lapha' : 'Messages from learners appear here'}</p>
+        <p className="text-sm font-display font-semibold" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Akukho milayezo okwamanje' : inlineText(lang, 'No messages yet')}</p>
+        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Imilayezo evela kubafundi izovela lapha' : inlineText(lang, 'Messages from learners appear here')}</p>
       </div>
     );
   }
 
   return (
     <div className="space-y-2">
-      {sample && <p className="rounded-xl p-3 text-sm" style={{ background: 'var(--info-soft)', color: 'var(--info)' }}>{lang === 'zu' ? 'Izimpendulo zigcinwa kulesi sivivinyo kuphela. Akukho okuthunyelwayo.' : 'Replies stay in this tour session. Nothing is sent.'}</p>}
+      {sample && <p className="rounded-xl p-3 text-sm" style={{ background: 'var(--info-soft)', color: 'var(--info)' }}>{lang === 'zu' ? 'Izimpendulo zigcinwa kulesi sivivinyo kuphela. Akukho okuthunyelwayo.' : inlineText(lang, 'Replies stay in this tour session. Nothing is sent.')}</p>}
       {actionError && (
         <div className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: "1px solid color-mix(in srgb, var(--danger) 35%, transparent)", color: 'var(--danger)' }}>
-          {lang === 'zu' ? 'Leso senzo asikwazanga ukugcinwa. Hlola imvume ye-akhawunti noma uxhumano, bese uzama futhi.' : 'That action could not be saved. Check your account access or connection and try again.'}
+          {lang === 'zu' ? 'Leso senzo asikwazanga ukugcinwa. Hlola imvume ye-akhawunti noma uxhumano, bese uzama futhi.' : inlineText(lang, 'That action could not be saved. Check your account access or connection and try again.')}
         </div>
       )}
       {/* Unread banner */}
@@ -223,7 +224,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
         >
           <MailOpen size={14} style={{ color: 'var(--color-forest-800)' }} />
           <span className="text-xs font-sans font-semibold" style={{ color: 'var(--color-forest-800)' }}>
-            {unreadCount} {lang === 'zu' ? (unreadCount === 1 ? 'umlayezo ongafundiwe' : 'imilayezo engafundiwe') : `unread ${unreadCount === 1 ? 'message' : 'messages'}`}
+            {unreadCount} {lang === 'zu' ? (unreadCount === 1 ? 'umlayezo ongafundiwe' : 'imilayezo engafundiwe') : inlineText(lang, unreadCount === 1 ? 'unread message' : 'unread messages')}
           </span>
         </div>
       )}
@@ -244,7 +245,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
             <button
               onClick={() => toggleExpand(msg.id)}
               aria-expanded={isOpen}
-              aria-label={`${lang === 'zu' ? (isOpen ? 'Fihla umlayezo' : 'Vula umlayezo') : (isOpen ? 'Collapse message' : 'Open message')}: ${msg.subject || (lang === 'zu' ? 'Akunasihloko' : 'no subject')}`}
+              aria-label={`${lang === 'zu' ? (isOpen ? 'Fihla umlayezo' : 'Vula umlayezo') : inlineText(lang, isOpen ? 'Collapse message' : 'Open message')}: ${msg.subject || (lang === 'zu' ? 'Akunasihloko' : inlineText(lang, 'no subject'))}`}
               className="w-full flex items-start gap-3 px-4 py-3.5 text-left"
               style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
             >
@@ -260,14 +261,14 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                     className="font-display font-semibold text-sm truncate"
                     style={{ color: 'var(--text-primary)', fontWeight: isUnread ? 700 : 600 }}
                   >
-                    {msg.from_name ?? (lang === 'zu' ? 'Umthumeli ongaziwa' : 'Unknown sender')}
+                    {msg.from_name ?? (lang === 'zu' ? 'Umthumeli ongaziwa' : inlineText(lang, 'Unknown sender'))}
                   </span>
                   <span className="font-sans flex-shrink-0" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
                     {formatDate(msg.created_at, lang)}
                   </span>
                 </div>
                 <div className="font-sans text-xs mt-0.5 truncate" style={{ color: 'var(--text-muted)' }}>
-                  {msg.subject || (lang === 'zu' ? '(Akunasihloko)' : '(no subject)')}
+                  {msg.subject || (lang === 'zu' ? '(Akunasihloko)' : inlineText(lang, '(no subject)'))}
                 </div>
                 {!isOpen && (
                   <div className="font-sans text-xs mt-0.5 truncate" style={{ color: 'var(--text-muted)' }}>
@@ -285,10 +286,10 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
             {isOpen && (
               <div className="px-10 pb-4" style={{ borderTop: '1px solid rgba(226,216,196,0.6)' }}>
                 <div className="font-sans text-xs pt-2 pb-3" style={{ color: 'var(--text-muted)' }}>
-                  {lang === 'zu' ? 'Ithunyelwe ku: ' : 'Sent to: '}<span style={{ textTransform: 'capitalize' }}>{msg.recipient}</span>
+                  {lang === 'zu' ? 'Ithunyelwe ku: ' : inlineText(lang, 'Sent to: ')}<span style={{ textTransform: 'capitalize' }}>{msg.recipient}</span>
                   {msg.status === 'replied' && (
                     <span className="ml-2 px-1.5 py-0.5 rounded font-sans" style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.2)' }}>
-                      {lang === 'zu' ? 'kuphenduliwe' : 'replied'}
+                      {lang === 'zu' ? 'kuphenduliwe' : inlineText(lang, 'replied')}
                     </span>
                   )}
                 </div>
@@ -296,18 +297,18 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                   {msg.body}
                 </p>
 
-                {sample && (msg as SampleMessage).reply && <p className="text-sm"><strong>{lang === 'zu' ? 'Impendulo:' : 'reply:'}</strong> {(msg as SampleMessage).reply}</p>}
+                {sample && (msg as SampleMessage).reply && <p className="text-sm"><strong>{lang === 'zu' ? 'Impendulo:' : inlineText(lang, 'reply:')}</strong> {(msg as SampleMessage).reply}</p>}
                 {/* Reply box */}
                 <div className="mt-4 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
                   <div className="flex items-center gap-1.5 mb-2">
                     <CornerDownRight size={12} style={{ color: 'var(--text-muted)' }} />
-                    <span className="font-sans text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Phendula' : 'Reply'}</span>
+                    <span className="font-sans text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Phendula' : inlineText(lang, 'Reply')}</span>
                   </div>
                   <textarea
                     value={replyText[msg.id] ?? ''}
-                    aria-label={`${lang === 'zu' ? 'Impendulo eya ku-' : 'Reply to '}${msg.from_name ?? (lang === 'zu' ? 'umfundi' : 'learner')}`}
+                    aria-label={`${lang === 'zu' ? 'Impendulo eya ku-' : inlineText(lang, 'Reply to ')}${msg.from_name ?? (lang === 'zu' ? 'umfundi' : inlineText(lang, 'learner'))}`}
                     onChange={(e) => setReplyText((t) => ({ ...t, [msg.id]: e.target.value }))}
-                    placeholder={lang === 'zu' ? 'Bhala impendulo oya kuyithumela kulo mfundi…' : 'Write a reply to this learner…'}
+                    placeholder={lang === 'zu' ? 'Bhala impendulo oya kuyithumela kulo mfundi…' : inlineText(lang, 'Write a reply to this learner…')}
                     rows={3}
                     className="w-full font-sans text-sm rounded-xl px-3 py-2.5 resize-none outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
                     style={{ background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)', lineHeight: 1.5 }}
@@ -322,8 +323,8 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                       border: 'none', cursor: replyText[msg.id]?.trim() ? 'pointer' : 'default',
                     }}
                   >
-                    {replySending === msg.id ? <Loader2 size={12} className="animate-spin" aria-label={lang === 'zu' ? 'Kuyathunyelwa' : 'Sending'} /> : <Send size={12} aria-hidden="true" />}
-                    {replySent.has(msg.id) ? (sample ? (lang === 'zu' ? 'Kulondoloziwe kule ndawo' : 'Saved in this workspace') : (lang === 'zu' ? 'Kuthunyelwe!' : 'Sent!')) : replySending === msg.id ? (lang === 'zu' ? 'Kuyathunyelwa…' : 'Sending…') : sample ? (lang === 'zu' ? 'Londoloza impendulo' : 'Save reply') : (lang === 'zu' ? 'Thumela impendulo' : 'Send reply')}
+                    {replySending === msg.id ? <Loader2 size={12} className="animate-spin" aria-label={lang === 'zu' ? 'Kuyathunyelwa' : inlineText(lang, 'Sending')} /> : <Send size={12} aria-hidden="true" />}
+                    {replySent.has(msg.id) ? (sample ? (lang === 'zu' ? 'Kulondoloziwe kule ndawo' : inlineText(lang, 'Saved in this workspace')) : (lang === 'zu' ? 'Kuthunyelwe!' : inlineText(lang, 'Sent!'))) : replySending === msg.id ? (lang === 'zu' ? 'Kuyathunyelwa…' : inlineText(lang, 'Sending…')) : sample ? (lang === 'zu' ? 'Londoloza impendulo' : inlineText(lang, 'Save reply')) : (lang === 'zu' ? 'Thumela impendulo' : inlineText(lang, 'Send reply'))}
                   </button>
                 </div>
               </div>

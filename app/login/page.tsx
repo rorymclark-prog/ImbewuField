@@ -325,7 +325,7 @@ function LoginPageInner() {
               </>
             )}
 
-            {error && <p ref={errorRef} tabIndex={-1} role="alert" className="font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]" style={{ fontSize: 13, color: 'var(--gold-dim)' }}>{displayAuthError(error)}{lang === 'zu' && AUTH_ERROR_KEYS[error] ? <span className="block mt-1">{translate('en', AUTH_ERROR_KEYS[error])}</span> : null}</p>}
+            {error && <p ref={errorRef} tabIndex={-1} role="alert" className="font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]" style={{ fontSize: 13, color: 'var(--gold-dim)' }}>{displayAuthError(error)}{(lang === 'zu' || lang === 'xh') && AUTH_ERROR_KEYS[error] ? <span className="block mt-1">{translate('en', AUTH_ERROR_KEYS[error])}</span> : null}</p>}
 
             <button type="submit"
               disabled={loading || !backendReady || !email || (mode !== 'reset' && !password) || (mode === 'create' && !fullName.trim())}

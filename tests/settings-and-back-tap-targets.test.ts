@@ -22,8 +22,8 @@ const MIN = 44;
 
 test('the Appearance panel close button clears the 44px touch-target floor', () => {
   const src = source('../components/ThemePanel.tsx');
-  // The label follows the selected language; retain both labels and the same touch target.
-  const label = "aria-label={zu ? 'Vala izilungiselelo' : 'Close settings'}";
+  // The label follows the selected language (isiXhosa via inlineText); retain the labels and the same touch target.
+  const label = "aria-label={zu ? 'Vala izilungiselelo' : inlineText(lang, 'Close settings')}";
   const at = src.indexOf(label);
   assert.ok(at > 0, 'the Appearance panel close button moved or lost its bilingual label');
   const nearby = src.slice(at, at + 400);

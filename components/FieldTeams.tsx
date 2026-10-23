@@ -1,6 +1,6 @@
 'use client';
 import { numberLabel, formatStaffDate } from '@/lib/format-figures';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useAuth } from '@/lib/auth';
 import { fieldApi } from '@/lib/field-api';
 import { DEVICE_SAVE_NOTICE } from '@/lib/field-request-model';
@@ -23,6 +23,7 @@ import FieldDataStatus from './FieldDataStatus';
 import { prepareFieldVisitDraft, fieldVisitDraftHasPhotos } from '@/lib/field-visit-draft';
 import { useLanguage } from '@/lib/i18n-context';
 import { translate } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import SurveyZuluDraftPair from './SurveyZuluDraftPair';
 
 const emptyVisit=():FieldVisit=>({id:'',mentorId:'',farmerId:'',date:localTodayISODate(),notes:'',supportRequested:'',observations:'',agreedAction:'',responsiblePerson:'',followUpDate:'',location:'',photos:[],photoCount:0});
@@ -49,16 +50,27 @@ const FIELD_FOCUS_KEYS: Record<FieldFocus, string> = {
   records: 'mentorFocusRecords',
 };
 
+/** isiXhosa counterpart of SurveyZuluDraftPair: the unreviewed draft with its English source beside it. */
+function XhDraftPair({ children, english, label }: { children: ReactNode; english: string; label: string }) {
+  return <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 4 }}>
+    <span lang="xh">{children}</span>
+    {' '}
+    <small lang="en" style={{ fontSize: '12px', fontWeight: 400, opacity: 0.82 }}>{label}{english}</small>
+  </span>;
+}
+
 export default function FieldTeams({ organisation = false, initialFarmerId, onStartTraining }: { organisation?: boolean; initialFarmerId?: string; onStartTraining?:()=>void }) {
   const { lang, t } = useLanguage();
-  const ui = (en: string, zu: string) => lang === 'zu' ? `${zu} · ${en}` : en;
+  const ui = (en: string, zu: string) => lang === 'zu' ? `${zu} · ${en}` : inlineText(lang, en);
   // Preserves this component's already-existing isiZulu drafts (now real lib/locales/zu.ts
   // overrides, see lib/i18n-pending.ts's MENTOR_ENGLISH_PENDING comment) while routing every
   // other string through t(). English is shown alongside the draft the same way every other
   // unreviewed isiZulu draft in this app is (SurveyZuluDraftPair).
   const paired = (key: string) => lang === 'zu'
     ? <SurveyZuluDraftPair english={translate('en', key)}>{t(key)}</SurveyZuluDraftPair>
-    : t(key);
+    : lang === 'xh'
+      ? <XhDraftPair english={translate('en', key)} label={inlineText(lang, 'English: ')}>{t(key)}</XhDraftPair>
+      : t(key);
   const { user, profile } = useAuth();
   const [data, setData] = useState<FieldWorkspace | null>(null), [error, setError] = useState(''), [busy, setBusy] = useState(false);
   const [draft, setDraft] = useState<FieldTeam>({ mentorId: '', location: '', farmerIds: [], guidance: '', updatedAt: '' });
@@ -189,6 +201,7 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
   const filteredPeople=data?.people.filter(person=>assigned.includes(person.id)&&(!farmerFilter||person.id===farmerFilter)&&`${person.name} ${person.gardenName??''}`.toLowerCase().includes(peopleSearch.toLowerCase()))??[];
   return <section className={`${styles.root} ${workStyles.workspace}`}><div className={styles.wrap}>
     {lang === 'zu' && <p role="note" className={styles.notice}>{paired('mentorZuluDraftNotice')}</p>}
+    {lang === 'xh' && <p role="note" lang="xh" className={styles.notice}>{t('mentorZuluDraftNotice')}</p>}
     <FieldDataStatus data={data} />
     <FieldDraft name={`visit:${org}`} value={prepareFieldVisitDraft(visit,{open:visitOpen,photosReady,photosBusy,captureBusy,saving:busy,readOnly:readOnlyVisit})} onRestore={value=>{
       // Abandon a previous photo load before restoring a different saved draft.

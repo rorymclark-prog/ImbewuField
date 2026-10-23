@@ -8,7 +8,7 @@ Homestead Gardening* (2014). In the file, the printed page number = the `===== p
 marker minus 1.
 
 The app reader (`/manual`, `app/manual/`, renderer `lib/manual.ts`) shows one chapter at a time, in English, isiZulu, Sesotho,
-Tshivenḓa or Xitsonga.
+Tshivenḓa, Xitsonga or isiXhosa.
 
 ## Chapters (slugs are fixed — every language uses the same file names)
 
@@ -30,9 +30,9 @@ Tshivenḓa or Xitsonga.
 Files:
 - English (fact-checked, improved): `content/manual/en/<slug>.md`
 - Fact-check log (English only): `research/manual/factcheck/<slug>.md`
-- Translations: `content/manual/{zu,st,ve,ts}/<slug>.md`
+- Translations: `content/manual/{zu,st,ve,ts,xh}/<slug>.md`
 - Reader UI strings: `content/manual/<lang>/ui.json` (English is the reference; keep `{n}`)
-- Glossaries: `research/manual/glossary-{zu,st,ve,ts}.md`
+- Glossaries: `research/manual/glossary-{zu,st,ve,ts,xh}.md`
 
 ## Reader & audience
 
@@ -98,7 +98,7 @@ Plain paragraph text. **Bold** is allowed. *Italic* is allowed (use for Latin pl
 No HTML, no images, no links, no emoji, no footnotes, no nested lists (one level only), no
 code blocks. Leave one blank line between blocks.
 
-## Translation rules (isiZulu `zu`, Sesotho `st`, Tshivenḓa `ve`, Xitsonga `ts`)
+## Translation rules (isiZulu `zu`, Sesotho `st`, Tshivenḓa `ve`, Xitsonga `ts`, isiXhosa `xh`)
 
 - Translate the **fact-checked English** in `content/manual/en/`, not the raw source.
 - Keep the Markdown structure identical: same number and order of headings, list items,
@@ -112,6 +112,8 @@ code blocks. Leave one blank line between blocks.
   - **Sesotho**: South African orthography (*di-*, *ho*, *tjhe*, *ke*), not Lesotho spelling (*li-*).
   - **Tshivenḓa**: use the correct circumflex/dot letters ḓ ḽ ṅ ṋ ṱ (not plain d l n t).
   - **Xitsonga**: standard SA Xitsonga orthography.
+  - **isiXhosa**: standard written isiXhosa (Eastern/Western Cape); do not copy isiZulu spellings
+    (*-fumana* not *-thola*, *ifoto* not *isithombe*, *umhlaba* for soil).
 - Use the language's glossary file (`research/manual/glossary-<code>.md`) for every listed term
   so all chapters agree. If you need a new term, add it to the glossary.
 - Numbers, units (mm, m, kg, °C) and measurements stay exactly as in English.

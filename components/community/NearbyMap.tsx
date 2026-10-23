@@ -5,6 +5,7 @@ import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import type { CommunityProfile } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -18,7 +19,7 @@ interface Props {
 // and this view only ever needs coarse pins + a popup.
 export default function NearbyMap({ people, onOpenProfile }: Props) {
   const { lang } = useLanguage();
-  const ui = (en: string, zu: string) => lang === 'zu' ? zu : en;
+  const ui = (en: string, zu: string) => inlineText(lang, en, zu);
   const [activeUid, setActiveUid] = useState<string | null>(null);
   const pins = people.filter((p) => typeof p.coarse_lat === 'number' && typeof p.coarse_lon === 'number');
   const active = pins.find((p) => p.uid === activeUid) ?? null;

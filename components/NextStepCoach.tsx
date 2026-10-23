@@ -251,7 +251,7 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
           {body}
         </p>
 
-        {lang === 'zu' && (
+        {(lang === 'zu' || lang === 'xh') && (
           <p className="font-sans" style={{ fontSize: 12.5, color: '#775F3E', lineHeight: 1.4, margin: '6px 0 0' }}>
             {t('coachZuluEnglishGuidanceNotice')}
           </p>
@@ -265,6 +265,12 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
                 <SurveyZuluDraftPair english={translate('en', GOAL_COPY_KEY[goal as Goal])}>
                   {t(GOAL_COPY_KEY[goal as Goal])}
                 </SurveyZuluDraftPair>
+              ) : lang === 'xh' ? (
+                <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 4 }}>
+                  <span lang="xh">{t(GOAL_COPY_KEY[goal as Goal])}</span>
+                  {' '}
+                  <small lang="en" style={{ fontSize: '12px', fontWeight: 400, opacity: 0.82 }}>English: {translate('en', GOAL_COPY_KEY[goal as Goal])}</small>
+                </span>
               ) : t(GOAL_COPY_KEY[goal as Goal])}
             </span>
           </div>

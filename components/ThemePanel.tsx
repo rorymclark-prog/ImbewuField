@@ -8,6 +8,7 @@ import { getGuidedState, setGuidedState, GUIDED_CHANGED_EVENT } from '@/lib/site
 import { isTtsSupported, getTtsMuted, setTtsMuted } from '@/lib/tts';
 import { APP_LANGS, useLanguage, translate, loadLocale, T_en, getLoadedDict } from '@/lib/i18n';
 import { setAppLevel, useAppLevel, type AppLevel } from '@/lib/app-level';
+import { inlineText } from '@/lib/xh-inline';
 import { coverageOf, type LangCoverage } from '@/lib/lang-coverage';
 import Link from 'next/link';
 
@@ -93,8 +94,8 @@ export default function ThemePanel({ open, onClose }: Props) {
   }, [open]);
   const isPartialLang = (code: string) => code !== 'en' && langCoverage[code] !== undefined && !langCoverage[code].complete;
   const LEVELS: { key: AppLevel; label: string; desc: string }[] = [
-    { key: 'simple', label: zu ? 'Okulula' : 'Simple', desc: zu ? 'Imisebenzi eyinhloko kuphela. Kuhle uma usaqala.' : 'The main jobs only. Best when you are starting out.' },
-    { key: 'full', label: zu ? 'Wonke amathuluzi' : 'All tools', desc: zu ? 'Konke, kuhlanganise wonke amathuluzi okuhlela nawemali.' : 'Everything, including every planning and money tool.' },
+    { key: 'simple', label: zu ? 'Okulula' : inlineText(lang, 'Simple'), desc: zu ? 'Imisebenzi eyinhloko kuphela. Kuhle uma usaqala.' : inlineText(lang, 'The main jobs only. Best when you are starting out.') },
+    { key: 'full', label: zu ? 'Wonke amathuluzi' : inlineText(lang, 'All tools'), desc: zu ? 'Konke, kuhlanganise wonke amathuluzi okuhlela nawemali.' : inlineText(lang, 'Everything, including every planning and money tool.') },
   ];
 
   // Guidance (Lima) settings — read client-side so SSR/first paint is stable.
@@ -164,7 +165,7 @@ export default function ThemePanel({ open, onClose }: Props) {
         ref={panelRef}
         role="dialog"
         aria-modal="true"
-        aria-label={zu ? 'Izilungiselelo zokubukeka' : 'Appearance settings'}
+        aria-label={zu ? 'Izilungiselelo zokubukeka' : inlineText(lang, 'Appearance settings')}
         style={{
           position: 'fixed', top: 0, right: 0, bottom: 0,
           width: 'min(340px, 90vw)',
@@ -191,13 +192,13 @@ export default function ThemePanel({ open, onClose }: Props) {
         }}>
           <div>
             <div style={{ fontSize: 18, fontWeight: 600, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>
-              {zu ? 'Izilungiselelo' : 'Settings'}
+              {zu ? 'Izilungiselelo' : inlineText(lang, 'Settings')}
             </div>
-            <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>{zu ? 'Ulimi, usayizi wombhalo nombala wohlelo' : 'Language, text size & theme'}</div>
+            <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>{zu ? 'Ulimi, usayizi wombhalo nombala wohlelo' : inlineText(lang, 'Language, text size & theme')}</div>
           </div>
           <button
             onClick={onClose}
-            aria-label={zu ? 'Vala izilungiselelo' : 'Close settings'}
+            aria-label={zu ? 'Vala izilungiselelo' : inlineText(lang, 'Close settings')}
             style={{
               /* 44x44: the touch-target floor a fingertip needs. Was 28x28 — small enough to
                  mistap on the panel that exists to help someone with exactly that problem. */
@@ -283,7 +284,7 @@ export default function ThemePanel({ open, onClose }: Props) {
               Farmers start on Simple; this is where they, or a mentor at training, change it. */}
           <div style={{ marginBottom: 28 }}>
             <div id="app-level-heading" style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
-              {zu ? 'Kuboniswe okungakanani' : 'How much to show'}
+              {zu ? 'Kuboniswe okungakanani' : inlineText(lang, 'How much to show')}
             </div>
             <div role="radiogroup" aria-labelledby="app-level-heading" style={{ display: 'grid', gap: 8 }}>
               {LEVELS.map((l) => {
@@ -313,14 +314,14 @@ export default function ThemePanel({ open, onClose }: Props) {
               })}
             </div>
             <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, lineHeight: 1.5 }}>
-              {zu ? 'Ungakushintsha noma nini.' : 'You can change this any time.'}
+              {zu ? 'Ungakushintsha noma nini.' : inlineText(lang, 'You can change this any time.')}
             </div>
           </div>
 
           {/* Text size section — first, since it's the accessibility lever */}
           <div style={{ marginBottom: 28 }}>
             <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
-              {zu ? 'Usayizi wombhalo' : 'Text size'}
+              {zu ? 'Usayizi wombhalo' : inlineText(lang, 'Text size')}
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
               {TEXT_SIZES.map((s) => {
@@ -339,14 +340,14 @@ export default function ThemePanel({ open, onClose }: Props) {
                   >
                     <span style={{ fontSize: 12 + (s.value - 1) * 30, fontWeight: 700, color: active ? 'var(--emerald)' : 'var(--text-secondary)', lineHeight: 1 }}>A</span>
                     <span style={{ fontSize: 12, fontWeight: 500, color: active ? 'var(--emerald)' : 'var(--text-secondary)', fontFamily: 'var(--font-display)' }}>
-                      {zu ? (s.value === 1 ? 'Ovamile' : s.value === 1.15 ? 'Omkhulu' : 'Omkhudlwana') : s.label}
+                      {zu ? (s.value === 1 ? 'Ovamile' : s.value === 1.15 ? 'Omkhulu' : 'Omkhudlwana') : inlineText(lang, s.label)}
                     </span>
                   </button>
                 );
               })}
             </div>
             <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, lineHeight: 1.5 }}>
-              {zu ? 'Kukhulisa umbhalo, izinkinobho namamenyu kulo lonke uhlelo.' : 'Makes the whole app bigger — text, buttons and menus.'}
+              {zu ? 'Kukhulisa umbhalo, izinkinobho namamenyu kulo lonke uhlelo.' : inlineText(lang, 'Makes the whole app bigger — text, buttons and menus.')}
             </div>
           </div>
 
@@ -354,19 +355,19 @@ export default function ThemePanel({ open, onClose }: Props) {
           {/* Guidance (Lima) section */}
           <div style={{ marginBottom: 28 }}>
             <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
-              {zu ? 'Ukuholwa' : 'Guidance'}
+              {zu ? 'Ukuholwa' : inlineText(lang, 'Guidance')}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {/* Guide me */}
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px', borderRadius: 10, background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
                 <Footprints size={18} style={{ color: 'var(--emerald)', flexShrink: 0 }} />
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 15, fontWeight: 500, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>{zu ? 'Ngihole' : 'Guide me'}</div>
-                  <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 1, lineHeight: 1.4 }}>{zu ? 'Bonisa izinyathelo ezilandelayo embikweni wendawo yakho.' : 'Show the next-step guide on your site report.'}</div>
+                  <div style={{ fontSize: 15, fontWeight: 500, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>{zu ? 'Ngihole' : inlineText(lang, 'Guide me')}</div>
+                  <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 1, lineHeight: 1.4 }}>{zu ? 'Bonisa izinyathelo ezilandelayo embikweni wendawo yakho.' : inlineText(lang, 'Show the next-step guide on your site report.')}</div>
                 </div>
                 <PillToggle
                   on={guidedOn}
-                  label={zu ? 'Ngihole' : 'Guide me'}
+                  label={zu ? 'Ngihole' : inlineText(lang, 'Guide me')}
                   onClick={() => {
                     if (guidedOn) setGuidedState({ enabled: false });
                     else setGuidedState({ enabled: true, retired: false, dismissals: 0 });
@@ -378,10 +379,10 @@ export default function ThemePanel({ open, onClose }: Props) {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px', borderRadius: 10, background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
                   <Volume2 size={18} style={{ color: 'var(--emerald)', flexShrink: 0 }} />
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 15, fontWeight: 500, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>{zu ? 'ULima ufunda ngezwi' : 'Lima reads aloud'}</div>
-                    <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 1, lineHeight: 1.4 }}>{zu ? 'Funda amathiphu ngezwi uma izwi litholakala.' : 'Speak tips out loud when a voice is available.'}</div>
+                    <div style={{ fontSize: 15, fontWeight: 500, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>{zu ? 'ULima ufunda ngezwi' : inlineText(lang, 'Lima reads aloud')}</div>
+                    <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 1, lineHeight: 1.4 }}>{zu ? 'Funda amathiphu ngezwi uma izwi litholakala.' : inlineText(lang, 'Speak tips out loud when a voice is available.')}</div>
                   </div>
-                  <PillToggle on={voiceOn} label={zu ? 'ULima ufunda ngezwi' : 'Lima reads aloud'} onClick={() => setTtsMuted(voiceOn)} />
+                  <PillToggle on={voiceOn} label={zu ? 'ULima ufunda ngezwi' : inlineText(lang, 'Lima reads aloud')} onClick={() => setTtsMuted(voiceOn)} />
                 </div>
               )}
             </div>
@@ -390,7 +391,7 @@ export default function ThemePanel({ open, onClose }: Props) {
           {/* Theme section */}
           <div style={{ marginBottom: 28 }}>
             <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
-              {zu ? 'Umbala wohlelo' : 'Colour theme'}
+              {zu ? 'Umbala wohlelo' : inlineText(lang, 'Colour theme')}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {THEMES.map((t) => {
@@ -421,9 +422,9 @@ export default function ThemePanel({ open, onClose }: Props) {
                     </div>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontSize: 15, fontWeight: 500, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>
-                        {zu ? (t.key === 'earth' ? 'Umhlaba' : 'I-Slate') : t.label}
+                        {zu ? (t.key === 'earth' ? 'Umhlaba' : 'I-Slate') : inlineText(lang, t.label)}
                       </div>
-                      <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 1 }}>{zu ? (t.key === 'earth' ? 'Imibala efudumele yezolimo' : 'Imibala ehlanzekile yesimanje') : t.desc}</div>
+                      <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 1 }}>{zu ? (t.key === 'earth' ? 'Imibala efudumele yezolimo' : 'Imibala ehlanzekile yesimanje') : inlineText(lang, t.desc)}</div>
                     </div>
                     {active && (
                       <div style={{
@@ -441,7 +442,7 @@ export default function ThemePanel({ open, onClose }: Props) {
           {/* Mode section */}
           <div>
             <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
-              {zu ? 'Indlela yokubonisa' : 'Display mode'}
+              {zu ? 'Indlela yokubonisa' : inlineText(lang, 'Display mode')}
             </div>
             <div style={{
               display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8,
@@ -464,14 +465,14 @@ export default function ThemePanel({ open, onClose }: Props) {
                   >
                     <m.Icon size={20} style={{ color: active ? 'var(--emerald)' : 'var(--text-muted)' }} />
                     <span style={{ fontSize: 13, fontWeight: 500, color: active ? 'var(--emerald)' : 'var(--text-secondary)', fontFamily: 'var(--font-display)' }}>
-                      {zu ? (m.key === 'light' ? 'Ukukhanya' : m.key === 'dark' ? 'Ubumnyama' : 'Okuzenzakalelayo') : m.label}
+                      {zu ? (m.key === 'light' ? 'Ukukhanya' : m.key === 'dark' ? 'Ubumnyama' : 'Okuzenzakalelayo') : inlineText(lang, m.label)}
                     </span>
                   </button>
                 );
               })}
             </div>
             <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, lineHeight: 1.5 }}>
-              {zu ? 'Okuzenzakalelayo kulandela izilungiselelo zedivayisi yakho.' : 'Auto follows your device setting.'}
+              {zu ? 'Okuzenzakalelayo kulandela izilungiselelo zedivayisi yakho.' : inlineText(lang, 'Auto follows your device setting.')}
             </div>
           </div>
 
@@ -479,17 +480,17 @@ export default function ThemePanel({ open, onClose }: Props) {
               to show" (Simple / All tools) below the fold on a phone — Rory went looking for the switch
               and could not find it. Settings now opens on the two choices that decide whether the app
               is usable at all: language, then how much to show. */}
-          <section style={{ marginTop:8, marginBottom:28, display:'grid', gap:12, fontSize:16 }} aria-label={zu ? 'Ukuhlola nosizo' : 'Tour and support'}>
-            <Link href="/tour" onClick={onClose}>{zu ? 'Ukuhlola nezibonelo · imizuzu engu-15' : 'Tour & samples · 15 minutes'}</Link>
-            <Link href="/samples" onClick={onClose}>{zu ? 'Khetha indawo yokusebenza' : 'Choose a workspace'}</Link>
-            <Link href="/samples/gardens" onClick={onClose}>{zu ? 'Buka izingadi ezingu-18' : 'Browse 18 gardens'}</Link>
-            <Link href="/feedback" onClick={onClose}>{zu ? 'Bika iphutha / cela isici' : 'Report a bug / request a feature'}</Link>
+          <section style={{ marginTop:8, marginBottom:28, display:'grid', gap:12, fontSize:16 }} aria-label={zu ? 'Ukuhlola nosizo' : inlineText(lang, 'Tour and support')}>
+            <Link href="/tour" onClick={onClose}>{zu ? 'Ukuhlola nezibonelo · imizuzu engu-15' : inlineText(lang, 'Tour & samples · 15 minutes')}</Link>
+            <Link href="/samples" onClick={onClose}>{zu ? 'Khetha indawo yokusebenza' : inlineText(lang, 'Choose a workspace')}</Link>
+            <Link href="/samples/gardens" onClick={onClose}>{zu ? 'Buka izingadi ezingu-18' : inlineText(lang, 'Browse 18 gardens')}</Link>
+            <Link href="/feedback" onClick={onClose}>{zu ? 'Bika iphutha / cela isici' : inlineText(lang, 'Report a bug / request a feature')}</Link>
           </section>
 
           {/* CLAUDE.md: no data-vendor badges in the UI — this used to name each data provider by
               brand. One unbranded line instead of a vendor list. */}
           <div style={{ marginTop: 28, fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }}>
-            {zu ? 'Amasu ezolimo asekelwe ku-climate, inhlabathi kanye nedatha yendawo yaseNingizimu Afrika.' : 'Farm guidance is built from South African climate, soil and terrain data.'}
+            {zu ? 'Amasu ezolimo asekelwe ku-climate, inhlabathi kanye nedatha yendawo yaseNingizimu Afrika.' : inlineText(lang, 'Farm guidance is built from South African climate, soil and terrain data.')}
           </div>
         </div>
 
@@ -502,7 +503,7 @@ export default function ThemePanel({ open, onClose }: Props) {
         }}>
           <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--emerald)', flexShrink: 0 }} />
           <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-            {zu ? 'ImbewuField · kulondolozwa ngokuzenzakalelayo' : 'ImbewuField · saved automatically'}
+            {zu ? 'ImbewuField · kulondolozwa ngokuzenzakalelayo' : inlineText(lang, 'ImbewuField · saved automatically')}
           </span>
         </div>
       </div>
