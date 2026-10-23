@@ -211,8 +211,10 @@ export default function PitchPage() {
   }, [idx]);
 
   useEffect(() => {
+    // w18-51: the slide counter and prev/next buttons live in the bottom band, so the deck is
+    // fitted to the viewport above it (the .pitch-stage padding-bottom below matches).
     const fit = () =>
-      setScale(Math.min((window.innerWidth - 24) / DECK_W, (window.innerHeight - 24) / DECK_H));
+      setScale(Math.min((window.innerWidth - 24) / DECK_W, (window.innerHeight - 24 - 96) / DECK_H));
     fit();
     window.addEventListener('resize', fit);
     return () => window.removeEventListener('resize', fit);
@@ -696,6 +698,8 @@ export default function PitchPage() {
              1280×720 size, placing the scaled slide beyond the visible viewport. */
           grid-template-columns: minmax(0, 1fr);
           grid-template-rows: minmax(0, 1fr);
+          padding-bottom: 96px;
+          box-sizing: border-box;
           overflow: hidden;
           z-index: 40;
         }
