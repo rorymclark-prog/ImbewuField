@@ -113,7 +113,7 @@ an app theme cannot turn report text pale on white.
 
 - Node 24 typecheck and whitespace checks pass.
 - Focused report, existing programme/session, PDF, type-floor and manifest checks:
-  130 tests passed, including 15 new report regressions and the existing theme checks.
+  148 tests passed, including 16 new report regressions and the existing theme checks.
 - Browser review: funder/organisation reports, 390 px phone width, desktop,
   month-range read-back, cohort reset, real PDF download, dark mode, paper ink
   preview, and the working organisation progress action. Sample data only.
@@ -136,3 +136,7 @@ widening a download to all remaining cohorts.
 Final rendering includes the real sample partner marks. The learning distribution
 now keeps its final course bands with the heading on the first page. A new PDF
 regression was confirmed failing on the split chart before the spacing repair.
+
+Missing activity dates also stay unavailable in the learning table. A readable old
+log can establish no recent recorded activity; an unreadable history cannot. The
+new regression was observed failing before that distinction was applied.

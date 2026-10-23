@@ -50,6 +50,7 @@ export function programmeReportCohortChoices(rows: NetworkFarmerSummary[], selec
 }
 
 const format = (n: number | null, unit = '') => n === null || !Number.isFinite(n) ? 'Not available' : `${numberLabel(n,2)}${unit}`;
+const countedNoun = (n: number, noun: string) => n === 1 ? noun : `${noun}s`;
 const money = (n: number | null) => n === null || !Number.isFinite(n) ? 'Not available' : randCentsLabel(n);
 const sum = (values: (number | null)[]) => {
   const known = values.filter((v): v is number => v !== null && Number.isFinite(v));
@@ -89,11 +90,11 @@ export function buildProgrammeReport(o: ProgrammeReportOptions): ProgrammeReport
   const metrics: ReportMetric[] = [
     { label: 'Visible farmers', value: format(rows.length), detail: 'Authorised portfolio; not household reach' },
     ...(o.kind === 'training' ? [
-      { label: 'Training completion', value: format(totals.averageTrainingPct, '%'), detail: `${coverage[4].available} of ${rows.length} farmers · current snapshot` },
-      { label: 'Course completed', value: format(training.reporting ? training.finishedCourse : null), detail: `${training.reporting} readable learning records · current snapshot` },
+      { label: 'Training completion', value: format(totals.averageTrainingPct, '%'), detail: `${coverage[4].available} of ${rows.length} ${countedNoun(rows.length, 'farmer')} · current snapshot` },
+      { label: 'Course completed', value: format(training.reporting ? training.finishedCourse : null), detail: `${training.reporting} readable learning ${countedNoun(training.reporting, 'record')} · current snapshot` },
     ] : [
-      { label: 'Harvest logged', value: format(harvest, ' kg'), detail: `${coverage[0].available} of ${rows.length} ${scoped ? 'books readable; known weights only' : 'farmers'} · ${basis.toLowerCase()}` },
-      { label: 'Sales recorded', value: money(income), detail: `${coverage[2].available} of ${rows.length} farmers · ${basis.toLowerCase()}` },
+      { label: 'Harvest logged', value: format(harvest, ' kg'), detail: `${coverage[0].available} of ${rows.length} ${scoped ? 'books readable; known weights only' : countedNoun(rows.length, 'farmer')} · ${basis.toLowerCase()}` },
+      { label: 'Sales recorded', value: money(income), detail: `${coverage[2].available} of ${rows.length} ${countedNoun(rows.length, 'farmer')} · ${basis.toLowerCase()}` },
     ]),
     { label: 'Cohorts represented', value: format(totals.cohortCount), detail: 'Current membership snapshot' },
   ];
@@ -102,22 +103,22 @@ export function buildProgrammeReport(o: ProgrammeReportOptions): ProgrammeReport
   const partial = coverage.filter(c => c.available < c.total);
   const title = { overview: o.funder ? 'Funder results report' : 'Programme delivery report', production: 'Production & recorded finances', training: 'Learning & participation' }[o.kind];
   const findings = [
-    `${rows.length} farmers are visible across ${totals.cohortCount} cohorts in this selection. This counts portfolio records, not unique households or indirect beneficiaries.`,
-    ...(o.kind !== 'training' ? [`Harvest logged: ${format(harvest, ' kg')}. Sales recorded: ${money(income)}. Basis: ${basis.toLowerCase()}. Each measure has its own coverage; no sales-minus-costs or return-on-investment claim is made.`] : [`Average recorded course completion is ${format(totals.averageTrainingPct, '%')} across ${coverage[4].available} farmers. ${training.finishedCourse} of ${training.reporting} readable course records show the course completed.`]),
-    partial.length ? `${partial.length} of the ${coverage.length} evidence measures have incomplete coverage. Unavailable records are excluded from totals, not counted as zero.` : rows.length ? 'Every listed evidence measure has a value for every visible farmer. Readable records are not independently verified or necessarily complete.' : 'No farmers are visible in this selection. This does not establish that the programme has no participants.',
-    `${flagged.length} farmers have record-based follow-up flags. Flags identify questions to review, not proof of poor performance.`,
+    `${rows.length} ${countedNoun(rows.length, 'farmer')} ${rows.length === 1 ? 'is' : 'are'} visible across ${totals.cohortCount} ${countedNoun(totals.cohortCount, 'cohort')} in this selection. This counts portfolio records, not unique households or indirect beneficiaries.`,
+    ...(o.kind !== 'training' ? [`Harvest logged: ${format(harvest, ' kg')}. Sales recorded: ${money(income)}. Basis: ${basis.toLowerCase()}. Each measure has its own coverage; no sales-minus-costs or return-on-investment claim is made.`] : [`Average recorded course completion is ${format(totals.averageTrainingPct, '%')} across ${coverage[4].available} ${countedNoun(coverage[4].available, 'farmer')}. ${training.finishedCourse} of ${training.reporting} readable course ${countedNoun(training.reporting, 'record')} ${training.reporting === 1 ? 'shows' : 'show'} the course completed.`]),
+    partial.length ? `${partial.length} of the ${coverage.length} evidence measures ${partial.length === 1 ? 'has' : 'have'} incomplete coverage. Unavailable records are excluded from totals, not counted as zero.` : rows.length ? 'Every measure in the evidence coverage table has a value for every visible farmer. Readable records are not independently verified or necessarily complete.' : 'No farmers are visible in this selection. This does not establish that the programme has no participants.',
+    `${flagged.length} ${countedNoun(flagged.length, 'farmer')} ${flagged.length === 1 ? 'has' : 'have'} record-based follow-up flags. Flags identify questions to review, not proof of poor performance.`,
   ];
   const sections: ReportSection[] = [
     { title: 'Executive reading', lines: findings },
     { title: 'Scope & reporting basis', lines: [
       `Organisation / selection: ${scope}. Prepared ${o.date}.`, `Ledger period: ${period}.`,
       'Learning, cohort membership, coverage and follow-up flags are current snapshots; they are not period-specific achievements.',
-      `${o.withheldForConsent} enrolled farmers are withheld for consent across the organisation. This count is not allocated to the selected cohort. Other access restrictions may also limit the portfolio.`,
+      `${o.withheldForConsent} enrolled ${countedNoun(o.withheldForConsent, 'farmer')} ${o.withheldForConsent === 1 ? 'is' : 'are'} withheld for consent across the organisation. This count is not allocated to the selected cohort. Other access restrictions may also limit the portfolio.`,
       ...(o.sample ? ['DEMONSTRATION RECORDS: all figures in this report are illustrative and must not be used as evidence of real programme results.'] : []),
     ] },
     { title: o.funder ? 'Questions for the next funding review' : 'Delivery priorities for the next review', lines: [
       ...(partial.length ? [`Review missing evidence for ${partial.map(c => `${c.label.toLowerCase()} (${c.available}/${c.total})`).join(', ')}. Confirm whether gaps reflect consent, access, or incomplete recording; do not pressure farmers to share.`] : ['Check record completeness and supporting evidence with the programme team before using these figures externally.']),
-      `${flagged.length} farmers have follow-up flags; ${unknownActivity} have no readable activity date. ${o.funder ? 'Ask the implementing organisation for a consent-respecting support plan.' : 'Use the cohort roster to review flagged records, then agree support actions with the mentor and farmer.'}`,
+      `${flagged.length} ${countedNoun(flagged.length, 'farmer')} ${flagged.length === 1 ? 'has' : 'have'} follow-up flags; ${unknownActivity} ${unknownActivity === 1 ? 'has' : 'have'} no readable activity date. ${o.funder ? 'Ask the implementing organisation for a consent-respecting support plan.' : 'Use the cohort roster to review flagged records, then agree support actions with the mentor and farmer.'}`,
       'Record an action owner, agreed due date and evidence of completion in Progress & milestones. None is assigned automatically by this report.',
       ...(o.kind !== 'training' ? ['Reconcile sales, harvest dates and expense coverage before drawing livelihood or financial conclusions. Produce picked earlier, purchased stock and missing logs can affect the balance.'] : ['Pair course progress with observed practice and participant feedback before claiming improved skills or adoption.']),
     ] },
@@ -154,10 +155,10 @@ export function buildProgrammeReport(o: ProgrammeReportOptions): ProgrammeReport
   const tables: ReportTable[] = [];
   if (o.kind !== 'training') tables.push({ title: 'Recorded results', note: `${basis}. ${scoped ? 'Coverage = current readable books / visible farmers; the number contributing known weights in this period is not available.' : 'Coverage = farmers with an available value / visible farmers.'} Readable books do not guarantee complete records.`, columns: ['Measure', 'Recorded value', 'Coverage', 'Evidence / interpretation'], rows: resultRows });
   if (o.kind !== 'production') tables.push({ title: 'Learning & participation', note: 'Current snapshot. Participation and course progress are outputs, not measured livelihood outcomes.', columns: ['Measure', 'Recorded value', 'Coverage / meaning'], rows: [
-    ['Average course completion', format(totals.averageTrainingPct, '%'), `${coverage[4].available} / ${rows.length} farmers`],
-    ['Course completed', format(training.reporting ? training.finishedCourse : null), `${training.reporting} readable course records`],
+    ['Average course completion', format(totals.averageTrainingPct, '%'), `${coverage[4].available} / ${rows.length} ${countedNoun(rows.length, 'farmer')}`],
+    ['Course completed', format(training.reporting ? training.finishedCourse : null), `${training.reporting} readable course ${countedNoun(training.reporting, 'record')}`],
     ['Modules completed', format(training.reporting ? training.modulesCompleted : null), 'Module completions; not unique people'],
-    ['Activity in last 90 days', format(totals.activeLast90Days), `${rows.length - unknownActivity} farmers with a readable activity date`],
+    ['Activity in last 90 days', format(rows.length > unknownActivity ? totals.activeLast90Days : null), `${rows.length - unknownActivity} ${countedNoun(rows.length - unknownActivity, 'farmer')} with a readable activity date`],
   ] });
   tables.push({ title: 'Evidence coverage', note: `${scoped ? 'Ledger counts describe current readable books, not farmers contributing known weights in the selected period. ' : ''}Current availability, not evidence quality. Unavailable can mean unshared, unreadable, or not recorded.`, columns: ['Evidence', 'Available', 'Unavailable', 'Total visible'], rows: coverage.map(c => [c.label, String(c.available), String(Math.max(0, c.total - c.available)), String(c.total)]) });
   const reviewKinds = new Map<string, number>();
@@ -178,7 +179,7 @@ export function buildProgrammeReport(o: ProgrammeReportOptions): ProgrammeReport
     }) });
   } else tables.push({ includeInSummary:false, title: 'Monthly ledger', note: 'Organisation-wide event-date totals for the selected months. A zero is no recorded quantity; it does not prove no farming took place.', columns: ['Month (UTC)', 'Harvest kg', 'Sales ZAR', 'Costs ZAR'], rows: months.map(m => [m.longLabel, format(m.producedKg), money(m.incomeZar), money(m.expensesZar)]) });
   const chart: ReportChart = o.kind === 'training' ? {
-    title: 'Course progress distribution', note: `${training.reporting} of ${rows.length} farmers have readable course records. Counts are current progress, not demonstrated competence.`, suffix: ' farmers', rows: (training.reporting ? training.bands : []).map(b => ({ label: `${b.done} / ${training.modulesTotal} modules`, value: b.farmers, display: `${b.farmers} ${b.farmers === 1 ? 'farmer' : 'farmers'}` })),
+    title: 'Course progress distribution', note: `${training.reporting} of ${rows.length} ${countedNoun(rows.length, 'farmer')} ${training.reporting === 1 ? 'has' : 'have'} readable course records. Counts are current progress, not demonstrated competence.`, suffix: ' farmers', rows: (training.reporting ? training.bands : []).map(b => ({ label: `${b.done} / ${training.modulesTotal} modules`, value: b.farmers, display: `${b.farmers} ${countedNoun(b.farmers, 'farmer')}` })),
   } : scoped ? { title: 'Harvest logged by month', note: `${o.monthly.productionFarmers} readable harvest books. Known weights only; missing months are omitted, not zero.`, suffix: ' kg', rows: months.flatMap(m => m.producedKg === null ? [] : [{ label: m.longLabel, value: m.producedKg }]) } : {
     title: 'Where harvest is recorded', note: 'Cumulative harvest by cohort. Cohorts differ in size, age and record coverage; these totals are not a performance ranking. Coverage is listed in the tables.', suffix: ' kg', rows: [...cohortGroups.values()].flatMap(group => {
       const value = portfolioTotals(group).producedKg;

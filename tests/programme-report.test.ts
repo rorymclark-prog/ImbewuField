@@ -170,3 +170,16 @@ test('a branded learning report keeps the entire course distribution with its he
   assert.ok(chartPage,'the chart heading must be present');
   assert.ok(chartPage.join('\n').includes(report.chart!.rows.at(-1)!.label),'partner logos must not separate the final course bands from their heading');
 });
+
+
+test('unreadable activity history is unavailable while a readable old log can establish no recent activity', () => {
+  const o = options({ kind: 'training', rows: structuredClone(DEMO_NETWORK.farmers.slice(0,1)) });
+  const activity = () => buildProgrammeReport(o).tables.find(t => t.title === 'Learning & participation')!.rows.find(r => r[0] === 'Activity in last 90 days')!;
+  o.rows[0].metrics.daysSinceActivity = null;
+  assert.equal(activity()[1], 'Not available');
+  assert.match(activity()[2], /0 farmers with a readable activity date/);
+  o.rows[0].metrics.daysSinceActivity = 91;
+  assert.equal(activity()[1], '0');
+  o.rows[0].metrics.daysSinceActivity = 1;
+  assert.equal(activity()[1], '1');
+});
