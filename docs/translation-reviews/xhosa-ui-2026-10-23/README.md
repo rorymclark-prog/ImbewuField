@@ -41,8 +41,41 @@ records, prices, login, student pages) and an isiXhosa line under the language g
 - Short forms: `surveyMonth*` use loan abbreviations (Jan, Feb, Mat …); the Home date uses the everyday
   loan month names (Janyuwari …), not the traditional ones (EyoMqungu …).
 
-## Not covered yet (the rest of "the whole app")
-- About 400 inline `lang === 'zu' ? isiZulu : English` branches in components (survey, atlas, MEL,
-  contact inbox, exchange, report view …) still show English for isiXhosa.
-- Studies (course decks, narration, assignments) and the Permaculture Manual have no isiXhosa yet.
-- `toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-ZA')` date lines outside Home.
+## Phase 2 — the rest of the app (same day)
+
+- **Inline isiZulu branches** (~400 places in 119 component and lib files): routed through
+  `lib/xh-inline.ts` (`inlineText` / `inlineTemplate`). The isiXhosa lives in English-keyed shards in
+  `lib/locales/xh-inline/` (one per component group, plus `s01-mel-templates` for programme survey
+  questions and `s02-study-tracks` for the Finance and Design study tracks), registered by the lazily loaded
+  xh chunk. English output is unchanged for every other language. `tests/xh-inline.test.ts` fails if a key is
+  no longer English that some source file shows, or if a placeholder drifts. Drafted by ten parallel model
+  agents against the same glossary; where a screen pairs isiZulu with its English source (consent, money,
+  farming instructions), isiXhosa gets the same pairing.
+- **Studies lessons:** every module and lesson (title, body, key points, quiz, image description) as a
+  source-paired draft in `lib/course-translation-drafts-xh.ts`, generated from
+  `docs/study-translation-reviews/isixhosa-2026-10-23/drafts/` by `scripts/build-xh-course-drafts.mjs`.
+  Five independent reviewers wrote blind back-translations before comparing with the English (535 ok,
+  111 repairs, 0 holds — `reviews/r*-*.json`); a second reviewer re-checked the 19 meaning-level repairs
+  (all confirmed, 7 small further fixes — `reviews/rr-*.json`). Notable catches: a reversed seed-storage
+  warning, a lost frost-safety negation, wattle pods rendered as seed sacks, a flipped box-scheme
+  condition, "acidic" rendered as "rocket".
+- **Permaculture Manual:** all 14 chapters, the reader UI and `research/manual/glossary-xh.md`; every
+  chapter keeps the English structure (`tests/manual.test.ts`). `/manual/xh` is public.
+
+## Questions for the content owner (English source, not translation)
+
+Reviewers found these in the English lessons; the drafts follow the English faithfully:
+- `plant-guilds-l1` body: "These bacteria …" and "It is indigenous to KwaZulu-Natal" never name their
+  subject; a learner cannot tell native *Sesbania sesban* from invasive *S. punicea* without the picture.
+  `plant-guilds-l3` "its vines" never names the sweet potato.
+- `small-livestock-l3` quiz 0 option 2 says "ducks" in a question about guinea fowl.
+- `soil-health-l2` quiz 1 option 0 says "Bark" in a question about seed pods.
+- `intro-permaculture-l2`: the hail-damage-to-maize sentence does not fit its paragraph.
+
+## Still English for isiXhosa readers
+- Slides with burned-in text and lesson narration audio (no isiXhosa media; producing them needs the slide
+  renderer's fonts and a TTS/recording pass).
+- The printed or PDF invoice a buyer receives (English by design, as for every language).
+- The staff training-feedback form, whose stored answer language is validated as English or isiZulu
+  (`lib/programme-evidence.ts`) — adding isiXhosa there is a data-model change.
+- `toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-ZA')` date lines outside Home and the journal.
