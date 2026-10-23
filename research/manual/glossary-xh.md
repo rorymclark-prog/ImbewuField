@@ -771,3 +771,46 @@ noted. Other translators copy the callout labels, the "Key points" heading, the 
 | pods (of trees, as fodder) | iimbotyi zemithi | Ch 12, fodder. (check) |
 | pH range "between about 6 and 7" | phakathi kwe-6 ne-7 malunga | Ch 12; number concords after *phakathi kwe-* unconfirmed. (check) |
 | basket (compost basket in a keyhole bed) | ibhasikithi ye-compost | Ch 12. (check) |
+
+## Chapter 3 additions (sector planning)
+
+| English | isiXhosa | Notes |
+|---|---|---|
+| wedge (of a sector map) | isiqwenga (njengesiqwenga sekeyiki) | Ch 3. (check) |
+| true north / magnetic north | emntla oyinyani / emntla wemagnethi | Ch 3. (check) |
+| compass | ikhampasi | Ch 3. (check) |
+| wind vane / windsock | i-wind vane / i-windsock (ityhubhu yelaphu ebekwe kwipali) | Ch 3. Loans. (check) |
+| berg wind / cold front / south-easter | i-berg wind / i-cold front / i-south-easter | Ch 3. Loans; no settled isiXhosa names. (check) |
+| fire beater | isixhobo sokubetha umlilo (fire beater) | Ch 3. (check) |
+| knapsack sprayer | i-knapsack sprayer | Ch 3. Loan. (check) |
+| veld fire | umlilo wedlelo | Ch 3. (check) |
+| fire sector | i-sector yomlilo | Ch 3. (check) |
+| midday sun height / sun angle | ukuphakama kwelanga emini / ikona yelanga | Ch 3. (check) |
+| deciduous (trees, vines) | -ephulukana namagqabi ebusika | Ch 3. Same as section 7. (check) |
+| eaves / roof overhang | umphetho wophahla | Ch 3. (check) |
+| rain gauge / thermometer | isixhobo sokulinganisa imvula (rain gauge) / ithemometha | Ch 3. (check) |
+| temperate (climate) | ephakathi (temperate) | Ch 3. (check) |
+| low-chill varieties | iintlobo ezidinga i-chill encinci | Ch 3. (check) |
+| hydrology | ukuhamba kwamanzi (hydrology) | Ch 3. Same as section 3 "water flow". (check) |
+| white frost / black frost | iqabaka elimhlophe / iqabaka elimnyama (black frost) | Ch 3. As section 3. (check) |
+| frost cloth | ilaphu lokukhusela iqabaka | Ch 3. (check) |
+| sun trap | indawo ebamba ilanga (sun trap) | Ch 3. (check) |
+| botulism | i-botulism (ityhefu yokutya ebulalayo) | Ch 3. Loan, explained. Keep the warning about untested home bottling exactly. (check) |
+| low-acid food | ukutya okune-asidi encinci | Ch 3. (check) |
+| Nguni cattle | iinkomo zeNguni | Ch 3. (check) |
+| Fruit and tree names, ch 3 | i-apile, ipere, iplamu, ipesika, i-apricot, i-almond, ikhiwane (fig), imidiliya (grape vines), i-pomegranate, i-persimmon, i-black mulberry, i-pecan, i-litchi, i-macadamia, iziqhamo zesitrasi (citrus), i-white stinkwood (*Celtis africana*), i-wild pear (*Dombeya rotundifolia*), i-spekboom (*Portulacaria afra*), i-sour fig (*Carpobrotus edulis*), i-bietou (*Osteospermum moniliferum*), i-num-num (*Carissa*), ii-vygie (*Delosperma*) | Ch 3. English common name kept with Latin in italics where no isiXhosa name is confirmed. (check) |
+| Provinces and regions, ch 3 | iNtshona Koloni (Western Cape), iMpuma Koloni (Eastern Cape), iMntla Koloni (Northern Cape), iFreyistata (Free State), i-Southern Cape, i-Highveld, i-Lowveld, iKaroo | Ch 3. (check) |
+| morogo (leafy greens) | imifino | Ch 2, 4. Plain word for leafy greens; *imbuya* is amaranth only. (check) |
+| quail / rabbit (Zone 1 animals) | ii-quail / umvundla (pl. iimvundla) | Ch 2. Quail is a loan; isiXhosa name not confirmed. (check) |
+| well (for water) | iqula lamanzi (pl. amaqula amanzi) | Ch 2. (check) |
+| communal land | umhlaba oyimpahla yoluntu (communal land) | Ch 2. (check) |
+| hedge (living fence) in cold-air gap | uthango oluphilayo | Ch 4. Same as section 7. |
+| spaza shop | isitolo sasekhaya (spaza shop) | Ch 4. (check) |
+| cyanide | i-cyanide (ityhefu) | Ch 4, cassava. Loan, explained. (check) |
+| sugar bean / chickpea / soya | iimbotyi ze-sugar bean / ii-chickpea / isoya | Ch 4. (check) |
+| butternut / melon | i-butternut / imeloni (pl. iimeloni) | Ch 4. Loan words. (check) |
+| orange-fleshed sweet potato | ibhatata enenyama eorenji | Ch 4. (check) |
+| tunnel (plastic) | itonela yeplastiki | Ch 4. (check) |
+| ammonia | i-ammonia | Ch 4. Loan. (check) |
+| satellite image | ifoto yesatellite | Ch 2. (check) |
+| topographic map (1:50 000) | imephu ye-topographic (1:50 000) | Ch 2. (check) |
