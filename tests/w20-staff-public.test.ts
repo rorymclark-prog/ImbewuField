@@ -55,3 +55,10 @@ test('w20-42: cohort Export CSV and filled chips use the forest fill pair, not e
 test('w20-43: partners h1 keeps "community‑farming" together with a non-breaking hyphen', () => {
   assert.ok(read('app/partners/page.tsx').includes('community‑farming programmes'));
 });
+
+test('w20-44: login has no sign-in subtitle and its card follows the theme tokens', () => {
+  const l = read('app/login/page.tsx');
+  assert.doesNotMatch(l, /t\('loginSubtitleSignIn'\)/);
+  assert.doesNotMatch(l, /--color-surface|--color-ink|--color-muted-strong/);
+  assert.match(l, /background: 'var\(--bg-1\)', border: '1px solid var\(--border\)'/);
+});
