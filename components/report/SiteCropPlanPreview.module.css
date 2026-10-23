@@ -3,7 +3,7 @@
 .overview { display:grid; grid-template-columns:104px minmax(0,1fr); gap:12px; align-items:center; }
 .overview strong { display:block; font-size:16px; line-height:1.3; }
 .overview span { display:block; margin-top:4px; color:var(--text-secondary); font-size:13px; line-height:1.4; }
-.plan { display:flex; align-items:center; justify-content:center; min-height:70px; overflow:hidden; border-radius:8px; background:var(--bg-2); }
+.plan { --mini-plate-bg:var(--bg-1); --mini-plate-bed:var(--emerald); --mini-plate-plot:var(--gold); --mini-plate-canopy:var(--emerald); --mini-plate-structure:var(--text-muted); --mini-plate-water:var(--blue); display:flex; align-items:center; justify-content:center; min-height:70px; overflow:hidden; border-radius:8px; background:var(--bg-2); }
 .overview .action { display:flex; gap:4px; align-items:center; color:var(--text-primary); font-weight:600; }
 .action svg { flex-shrink:0; }
 .crops { display:flex; align-items:center; gap:8px; padding-top:8px; margin-top:8px; border-top:1px solid var(--border); }
