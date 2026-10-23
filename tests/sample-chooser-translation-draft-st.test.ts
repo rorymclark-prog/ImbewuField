@@ -64,5 +64,5 @@ test('the chooser visibly pairs every selected draft field and keeps English/isi
   assert.match(page, /<PairedDraft lang=\{lang\} pair=\{roleCopy\.subtitle\}/);
   assert.match(page, /lang === 'zu' \? examplesZu/);
   assert.match(page, /lang === 'st' \|\| lang === 've'/);
-  assert.match(page, /const ui = \(english: string, zulu: string\) => lang === 'zu' \? zulu : english/);
+  assert.match(page, /const ui = \(english: string, zulu: string\) => (lang === 'zu' \? zulu : english|inlineText\(lang, english, zulu\))/);
 });

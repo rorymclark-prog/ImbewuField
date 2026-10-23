@@ -32,6 +32,7 @@ import {
   type JournalEntryInput,
 } from '@/lib/field-journal';
 import JournalEntrySheet, { type BedOption } from './JournalEntrySheet';
+import { inlineText } from '@/lib/xh-inline';
 import { formatZuluJournalDate, formatZuluMonth, journalCategoryLabel } from './journal-labels';
 import motion from './JournalMotion.module.css';
 
@@ -95,7 +96,7 @@ const EXAMPLE_JOURNAL_ENTRIES: ReadonlyArray<{
 export default function FieldJournal() {
   const { t, lang } = useLanguage();
   const isZulu = lang === 'zu';
-  const ui = (english: string, zulu: string) => isZulu ? zulu : english;
+  const ui = (english: string, zulu: string) => inlineText(lang, english, zulu);
   const simple = useAppLevel() === 'simple';
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [ready, setReady] = useState(false);
@@ -307,7 +308,7 @@ export default function FieldJournal() {
                 ) : (
                   <c.icon size={12} aria-hidden />
                 )}{' '}
-                {isZulu ? journalCategoryLabel(c.key) : c.label}
+                {isZulu ? journalCategoryLabel(c.key) : inlineText(lang, c.label)}
               </Chip>
             ))}
           </div>
@@ -318,6 +319,9 @@ export default function FieldJournal() {
       <div className={workspace.journalTimeline}>
       {isZulu && <div role="note" style={{ marginBottom: 10, padding: '9px 12px', borderRadius: 10, background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', color: 'var(--gold-dim)', font: '500 12px/1.45 var(--font-sans), sans-serif' }}>
         Izibonelo namanothi akho akhonjiswa njengoba ebhaliwe. Isibonelo neminye imibhalo isesiNgisini.
+      </div>}
+      {lang === 'xh' && <div role="note" style={{ marginBottom: 10, padding: '9px 12px', borderRadius: 10, background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', color: 'var(--gold-dim)', font: '500 12px/1.45 var(--font-sans), sans-serif' }}>
+        {inlineText(lang, 'Examples and your own notes are shown as written. The example and other text stay in English.')}
       </div>}
 
       {/* Timeline */}
@@ -388,7 +392,7 @@ export default function FieldJournal() {
                         ) : (
                           <cat.icon size={11} aria-hidden />
                         )}{' '}
-                        {isZulu ? journalCategoryLabel(cat.key) : cat.label}
+                        {isZulu ? journalCategoryLabel(cat.key) : inlineText(lang, cat.label)}
                       </span>
                     </div>
 
@@ -472,7 +476,7 @@ export default function FieldJournal() {
                           ) : (
                             <cat.icon size={11} aria-hidden />
                           )}{' '}
-                          {isZulu ? journalCategoryLabel(cat.key) : cat.label}
+                          {isZulu ? journalCategoryLabel(cat.key) : inlineText(lang, cat.label)}
                         </span>
                       </div>
 

@@ -6,6 +6,7 @@ import LimaBar from '@/components/LimaBar';
 import LessonLink from '@/components/design/LessonLink';
 import AppHeader from '@/components/layout/AppHeader';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 
 export default function JournalPage() {
   const { lang, t } = useLanguage();
@@ -15,7 +16,7 @@ export default function JournalPage() {
       {/* Header */}
       <AppHeader
         title={t('navFieldJournal')}
-        right={<LessonLink id="journal:overview" label={isZulu ? 'Funda' : 'Learn'} />}
+        right={<LessonLink id="journal:overview" label={isZulu ? 'Funda' : inlineText(lang, 'Learn')} />}
       />
       {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own
           real, visible <h1> now that the old header's h1 is gone. */}

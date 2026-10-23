@@ -9,6 +9,7 @@ import { useProductTour } from '@/components/ProductTourProvider';
 import { PRODUCT_TOUR } from '@/lib/sample-tour';
 import { productTourError, productTourStepCopy, productTourUi } from '@/lib/sample-tour-localization';
 import { useLanguage } from '@/lib/i18n-context';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import styles from '@/components/ProductTour.module.css';
 import cards from './Tour.module.css';
 
@@ -19,7 +20,7 @@ const STOP_ICONS: Record<string, LucideIcon> = {
 
 export default function TourPage() {
   const { lang } = useLanguage();
-  const ui = (english: string, zulu: string) => lang === 'zu' ? zulu : english;
+  const ui = (english: string, zulu: string) => inlineText(lang, english, zulu);
   const tour = useProductTour();
   const tourUi = (key: Parameters<typeof productTourUi>[0], fallback: string, values: Record<string, string | number> = {}) =>
     productTourUi(key, lang, values) ?? fallback;
@@ -45,7 +46,7 @@ export default function TourPage() {
     <section className={styles.hero}>
       <div><span className={styles.eyebrow}>{ui('FARMERS · MENTORS · ORGANISATIONS · FUNDERS', 'ABALIMI · ABELULEKI · IZINHLANGANO · ABAXHASI')}</span>
         <h1>{ui('See what ImbewuField can do.', 'Bona okungenziwa yi-ImbewuField.')}</h1>
-        <p>{ui(`Explore the app in about ${minutes} minutes: plan a garden, learn a skill, follow a sale, support growers and see the programme evidence.`, `Hlola uhlelo cishe ngemizuzu engu-${minutes}: hlela ingadi, funda ikhono, landela ukuthengisa, sekela abalimi futhi ubone ubufakazi bohlelo.`)}</p>
+        <p>{inlineTemplate(lang, 'Explore the app in about {minutes} minutes: plan a garden, learn a skill, follow a sale, support growers and see the programme evidence.', 'Hlola uhlelo cishe ngemizuzu engu-{minutes}: hlela ingadi, funda ikhono, landela ukuthengisa, sekela abalimi futhi ubone ubufakazi bohlelo.', { minutes })}</p>
         <p className={styles.hint}>{ui('Explore at your own pace. No sign-in needed.', 'Hlola ngejubane lakho. Akudingeki ungene ngemvume.')}</p>
         <div className={styles.controls}>{tour?.active ? <button className={styles.primary} onClick={tour.open}>{tourUi('continue', `Continue tour · stop ${tour.current+1}`, { current: tour.current + 1 })}</button> : <button className={styles.primary} onClick={tour?.start} disabled={!tour?.ready}>{!tour?.ready ? tourUi('loading', 'Getting the tour ready…') : tried ? tourUi('tryAgain', 'Try the tour again') : tourUi('start', 'Start the 15-minute tour')}</button>}
         <Link href="/samples/gardens">{tourUi('browseGardens', 'Browse the gardens')}</Link></div>
@@ -54,14 +55,16 @@ export default function TourPage() {
     </section>
     {tour?.error && <p role="alert">{productTourError(tour.error, lang)}</p>}
     <p className={styles.notice}>{ui('Try the app with prepared records. Your own project stays unchanged.', 'Zama uhlelo ngamarekhodi alungisiwe. Iphrojekthi yakho ayishintshi.')}</p>
-    {lang === 'zu' && <p className={styles.notice} role="note">{tourUi('draftDisclosure', '')}</p>}
-    {tried > 0 && !tour?.active && <section className={styles.complete}><h2>{tried === PRODUCT_TOUR.length ? ui('You’ve explored the whole tour.', 'Usuhlole lonke uhambo.') : ui('Keep exploring at your own pace.', 'Qhubeka uhlole ngejubane lakho.')}</h2><p>{ui(`${tried} of ${PRODUCT_TOUR.length} stops marked as explored. These are your checklist choices, not a training certificate.`, `Izindawo ezingu-${tried} kwezingu-${PRODUCT_TOUR.length} zimakwe njengezihloliwe. Lokhu kuwuhlu lokuzihlola kwakho, akusona isitifiketi sokuqeqeshwa.`)}</p><div className={styles.controls}><Link href="/samples">{ui('Explore another role', 'Hlola enye indima')}</Link><Link href="/feedback">{ui('Request a feature or ask about customisation', 'Cela isici noma ubuze ngokwenza uhlelo lufanele wena')}</Link></div></section>}
+    {(lang === 'zu' || lang === 'xh') && <p className={styles.notice} role="note" lang={lang}>{tourUi('draftDisclosure', '')}</p>}
+    {tried > 0 && !tour?.active && <section className={styles.complete}><h2>{tried === PRODUCT_TOUR.length ? ui('You’ve explored the whole tour.', 'Usuhlole lonke uhambo.') : ui('Keep exploring at your own pace.', 'Qhubeka uhlole ngejubane lakho.')}</h2><p>{inlineTemplate(lang, '{tried} of {total} stops marked as explored. These are your checklist choices, not a training certificate.', 'Izindawo ezingu-{tried} kwezingu-{total} zimakwe njengezihloliwe. Lokhu kuwuhlu lokuzihlola kwakho, akusona isitifiketi sokuqeqeshwa.', { tried, total: PRODUCT_TOUR.length })}</p><div className={styles.controls}><Link href="/samples">{ui('Explore another role', 'Hlola enye indima')}</Link><Link href="/feedback">{ui('Request a feature or ask about customisation', 'Cela isici noma ubuze ngokwenza uhlelo lufanele wena')}</Link></div></section>}
     <h2>{ui('Nine stops, one connected story.', 'Izindawo eziyisishiyagalolunye, indaba eyodwa exhunyiwe.')}</h2>
     <p className={styles.hint}>{ui('Choose any stop below to open its screen and guide. Use the Tour button beside the menu to return to the tips or move to another stop.', 'Khetha noma iyiphi indawo ngezansi ukuze uvule isikrini nomhlahlandlela wayo. Sebenzisa inkinobho ethi Tour eduze kwemenyu ukuze ubuyele emacebisweni noma uye kwenye indawo.')}</p>
-    {tour?.active && <><p aria-live="polite">{ui(`${tried} of ${PRODUCT_TOUR.length} stops explored`, `Kuhlolwe izindawo ezingu-${tried} kwezingu-${PRODUCT_TOUR.length}`)}</p><progress className={styles.progress} value={tried} max={PRODUCT_TOUR.length} aria-label={ui('Tour progress', 'Inqubekela phambili yohambo')}/></>}
+    {tour?.active && <><p aria-live="polite">{inlineTemplate(lang, '{tried} of {total} stops explored', 'Kuhlolwe izindawo ezingu-{tried} kwezingu-{total}', { tried, total: PRODUCT_TOUR.length })}</p><progress className={styles.progress} value={tried} max={PRODUCT_TOUR.length} aria-label={ui('Tour progress', 'Inqubekela phambili yohambo')}/></>}
     <div className={styles.grid}>{PRODUCT_TOUR.map((step,index) => {
       const copy = productTourStepCopy(step, lang);
-      const duration = lang === 'zu' ? (step.minutes === 1 ? 'umzuzu' : `imizuzu engu-${step.minutes}`) : `${step.minutes} min`;
+      const duration = lang === 'zu' ? (step.minutes === 1 ? 'umzuzu' : `imizuzu engu-${step.minutes}`)
+        : lang === 'xh' ? (step.minutes === 1 ? inlineText(lang, '1 minute') : inlineTemplate(lang, '{n} minutes', null, { n: step.minutes }))
+        : `${step.minutes} min`;
       const Icon = STOP_ICONS[step.id] ?? Sprout;
       const allowed = !!tour?.ready && tour.allowed(index);
       const current = !!tour?.active && tour.current === index;
