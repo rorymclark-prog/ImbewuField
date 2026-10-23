@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import { BarChart3, Sprout, Inbox, Map } from 'lucide-react';
+import { Sprout, Inbox, Map, ClipboardList, Eye, FileText, LayoutDashboard, MapPin, TrendingUp, Users } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -130,21 +130,21 @@ export default function NgoPage() {
 
       <DashboardTabs>
         {(simple ? [
-          { key: 'cohort',   label: tr(lang, 'Cohort', 'Iqembu'),   icon: BarChart3, badge: 0 },
+          { key: 'cohort',   label: tr(lang, 'Cohort', 'Iqembu'),   icon: Users, badge: 0 },
           { key: 'gardens',  label: tr(lang, 'Gardens', 'Izingadi'), icon: Sprout,    badge: 0 },
           { key: 'messages', label: tr(lang, 'Messages', 'Imiyalezo'), icon: Inbox,     badge: msgUnread },
-          { key: 'reports', label: tr(lang, 'Reports', 'Imibiko'), icon: BarChart3, badge: 0 },
-          { key: 'training', label: tr(lang, 'Training', 'Ukuqeqeshwa'), icon: BarChart3, badge: 0 },
+          { key: 'reports', label: tr(lang, 'Reports', 'Imibiko'), icon: FileText, badge: 0 },
+          { key: 'training', label: tr(lang, 'Training', 'Ukuqeqeshwa'), icon: TrendingUp, badge: 0 },
         ] as const : [
-          { key: 'access', label: tr(lang, 'Control centre', 'Isikhungo sokulawula'), icon: BarChart3, badge: 0 },
-          { key: 'evidence', label: tr(lang, 'Training & progress', 'Ukuqeqeshwa nenqubekelaphambili'), icon: BarChart3, badge: 0 },
-          { key: 'reports', label: tr(lang, 'Reports', 'Imibiko'), icon: BarChart3, badge: 0 },
-          { key: 'cohort',   label: tr(lang, 'Cohort', 'Iqembu'),   icon: BarChart3, badge: 0 },
+          { key: 'access', label: tr(lang, 'Control centre', 'Isikhungo sokulawula'), icon: LayoutDashboard, badge: 0 },
+          { key: 'evidence', label: tr(lang, 'Training & progress', 'Ukuqeqeshwa nenqubekelaphambili'), icon: TrendingUp, badge: 0 },
+          { key: 'reports', label: tr(lang, 'Reports', 'Imibiko'), icon: FileText, badge: 0 },
+          { key: 'cohort',   label: tr(lang, 'Cohort', 'Iqembu'),   icon: Users, badge: 0 },
           { key: 'gardens',  label: tr(lang, 'Gardens', 'Izingadi'), icon: Sprout,    badge: 0 },
           { key: 'messages', label: tr(lang, 'Messages', 'Imiyalezo'), icon: Inbox,     badge: msgUnread },
-          { key: 'assessments', label: tr(lang, 'Assessments', 'Ukuhlola'), icon: BarChart3, badge: 0 },
-          { key: 'area', label: tr(lang, 'Production area', 'Indawo yokukhiqiza'), icon: BarChart3, badge: 0 },
-          { key: 'funder-preview', label: tr(lang, 'Funder summary preview', 'Ukubuka kafushane kwabaxhasi'), icon: BarChart3, badge: 0 },
+          { key: 'assessments', label: tr(lang, 'Assessments', 'Ukuhlola'), icon: ClipboardList, badge: 0 },
+          { key: 'area', label: tr(lang, 'Production area', 'Indawo yokukhiqiza'), icon: MapPin, badge: 0 },
+          { key: 'funder-preview', label: tr(lang, 'Funder summary preview', 'Ukubuka kafushane kwabaxhasi'), icon: Eye, badge: 0 },
         ] as const).map(({ key, label, icon: Icon, badge }) => (
           <button
             key={key}
@@ -159,12 +159,12 @@ export default function NgoPage() {
               minHeight: 44,
               border: 'none',
               cursor: 'pointer',
-              color: view === key ? 'var(--color-forest-800)' : 'var(--text-muted)',
+              color: view === key ? 'var(--color-forest-800)' : 'var(--text-secondary)',
               borderBottom: view === key ? '2px solid var(--color-forest-800)' : '2px solid transparent',
               marginBottom: -1,
             }}
           >
-            <Icon size={13} />
+            <Icon size={16} aria-hidden="true" />
             {label}
             {badge != null && badge > 0 && (
               <span className="flex items-center justify-center rounded-full font-display tabular-nums"

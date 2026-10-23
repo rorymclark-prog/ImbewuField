@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import { BarChart3, Sprout, Map } from 'lucide-react';
+import { Sprout, Map, ClipboardList, FileText, MapPin, TrendingUp, Users } from 'lucide-react';
 import RoleSwitcher from '@/components/RoleSwitcher';
 import DashboardTabs from '@/components/DashboardTabs';
 import { SampleFunderGate } from '@/components/SampleProgramme';
@@ -130,16 +130,16 @@ export default function FunderPage() {
 
       <DashboardTabs>
         {(simple ? [
-          { key: 'cohort', label: tr(lang, 'Cohort', 'Iqembu'), icon: BarChart3 },
-          { key: 'evidence', label: tr(lang, 'Progress & milestones', 'Inqubekelaphambili nezinyathelo ezibalulekile'), icon: BarChart3 },
-          { key: 'reports', label: tr(lang, 'Reports', 'Imibiko'), icon: BarChart3 },
+          { key: 'cohort', label: tr(lang, 'Cohort', 'Iqembu'), icon: Users },
+          { key: 'evidence', label: tr(lang, 'Progress & milestones', 'Inqubekelaphambili nezinyathelo ezibalulekile'), icon: TrendingUp },
+          { key: 'reports', label: tr(lang, 'Reports', 'Imibiko'), icon: FileText },
         ] as const : [
-          { key: 'evidence', label: tr(lang, 'Progress & milestones', 'Inqubekelaphambili nezinyathelo ezibalulekile'), icon: BarChart3 },
-          { key: 'reports', label: tr(lang, 'Reports', 'Imibiko'), icon: BarChart3 },
-          { key: 'cohort', label: tr(lang, 'Cohort', 'Iqembu'), icon: BarChart3 },
+          { key: 'evidence', label: tr(lang, 'Progress & milestones', 'Inqubekelaphambili nezinyathelo ezibalulekile'), icon: TrendingUp },
+          { key: 'reports', label: tr(lang, 'Reports', 'Imibiko'), icon: FileText },
+          { key: 'cohort', label: tr(lang, 'Cohort', 'Iqembu'), icon: Users },
           { key: 'gardens', label: tr(lang, 'Gardens', 'Izingadi'), icon: Sprout },
-          { key: 'area', label: tr(lang, 'Production area', 'Indawo yokukhiqiza'), icon: Sprout },
-          { key: 'assessments', label: tr(lang, 'Assessments', 'Ukuhlola'), icon: BarChart3 },
+          { key: 'area', label: tr(lang, 'Production area', 'Indawo yokukhiqiza'), icon: MapPin },
+          { key: 'assessments', label: tr(lang, 'Assessments', 'Ukuhlola'), icon: ClipboardList },
         ] as const).map(({ key, label, icon: Icon }) => (
           <button
             key={key}
@@ -159,7 +159,7 @@ export default function FunderPage() {
               marginBottom: -1,
             }}
           >
-            <Icon size={13} />
+            <Icon size={16} aria-hidden="true" />
             {label}
           </button>
         ))}
