@@ -14,9 +14,10 @@ export default function JournalPage() {
     <div className="flex flex-col overflow-hidden h-[100dvh] lg:h-auto lg:min-h-0 lg:overflow-visible" style={{ background: 'var(--bg-0)' }}>
       {/* Header */}
       <AppHeader
-        title={t('navFieldJournal')}
+        title=""
         right={<LessonLink id="journal:overview" label={isZulu ? 'Funda' : 'Learn'} />}
       />
+      {/* w19-08: the h1 below is the one title; the header no longer repeats it. */}
       {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own
           real, visible <h1> now that the old header's h1 is gone. */}
       <h1 className="t-h1 px-3 sm:px-4 pt-3 m-0" style={{ color: 'var(--text-primary)' }}>
@@ -26,7 +27,7 @@ export default function JournalPage() {
       {/* Body — the dated record of what actually happened on the land. Harvest
           weights and sales stay in /records and /finances, where the ledger, the
           harvest reconciliation and the CSV export already live. */}
-      <main className="flex-1 overflow-y-auto lg:flex-none lg:overflow-visible" style={{ background: 'var(--bg-0)' }}>
+      <main className="journal-narrow-sidebar flex-1 overflow-y-auto lg:flex-none lg:overflow-visible" style={{ background: 'var(--bg-0)' }}>
         <FieldJournal />
       </main>
 
