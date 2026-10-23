@@ -14,7 +14,7 @@ import VisitCapture from './VisitCapture';
 import VenueLocation from './VenueLocation';
 import workStyles from './FieldWork.module.css';
 import type { VisitPhoto } from '@/lib/field-teams';
-import { CalendarClock, ClipboardCheck, Users } from 'lucide-react';
+import { CalendarClock, ClipboardCheck } from 'lucide-react';
 import ProfileAvatar from './ProfileAvatar';
 import FieldVisitGuide from './FieldVisitGuide';
 import ReportComposer from './ReportComposer';
@@ -228,7 +228,7 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
           </section>
           <aside className={styles.card}><FieldVisitGuide actProgramme={!!actProgramme}/></aside>
         </div>
-        <section className={styles.card}><div className={styles.row}><Users size={28} aria-hidden="true"/><h2>{t('mentorPlanNextVisit')}</h2><span className={styles.tag}>{t('mentorParticipantsWithoutVisit').replace('{count}',String(summary.unvisited))}</span></div><p>{t('mentorSearchAssignedGroup')}</p><button onClick={()=>setPanel('people')}>{t('mentorOpenPeopleGardens')}</button></section>
+        <section className={styles.card}><div className={styles.row}><h2>{t('mentorPlanNextVisit')}</h2><span className={styles.tag}>{t('mentorParticipantsWithoutVisit').replace('{count}',String(summary.unvisited))}</span></div><p>{t('mentorSearchAssignedGroup')}</p><button onClick={()=>setPanel('people')}>{t('mentorOpenPeopleGardens')}</button></section>
       </>}
       {visitOpen&&<section ref={visitForm} className={styles.card} style={{margin:'16px 0'}} aria-label={t('mentorVisitDetailsAria')}>
         <div className={styles.row}><h2>{readOnlyVisit?paired('mentorFieldVisitDetailsHeading'):data.visits.some(v=>v.id===visit.id)?paired('mentorEditFieldVisit'):paired('mentorRecordFieldVisit')}</h2><button type="button" disabled={busy||captureBusy} onClick={closeVisit}>{paired('mentorCloseVisit')}</button></div>

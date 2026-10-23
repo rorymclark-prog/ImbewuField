@@ -281,7 +281,7 @@ function LoginPageInner() {
                 </label>
                 <input id="full-name" ref={fullNameRef} type="text" value={fullName}
                   onChange={(e) => { setFullName(e.target.value); setError(null); }}
-                  placeholder={t('loginFullName')} autoComplete="name" required disabled={!backendReady}
+                  autoComplete="name" required disabled={!backendReady}
                   className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                   style={inputStyle()} />
               </>
@@ -292,7 +292,7 @@ function LoginPageInner() {
             </label>
             <input id="email" ref={emailRef} type="email" value={email}
               onChange={(e) => { setEmail(e.target.value); setError(null); }}
-              placeholder={t('loginEmailAddress')} required disabled={!backendReady}
+              placeholder="name@example.com" required disabled={!backendReady}
               autoComplete="email" inputMode="email"
               className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
               style={inputStyle(errorField === 'email')} />
@@ -304,7 +304,7 @@ function LoginPageInner() {
                 </label>
                 <input id="password" type="password" value={password}
                 onChange={(e) => { setPassword(e.target.value); setError(null); }}
-                placeholder={t('loginPassword')} required disabled={!backendReady}
+                required disabled={!backendReady}
                 autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
                 className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                 style={inputStyle(errorField === 'password')} />
@@ -346,9 +346,8 @@ function LoginPageInner() {
                 </span>
               )}
             </button>
-            {!backendReady && (
-              <p role="status" className="font-sans text-center m-0" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{t('loginConnecting')}</p>
-            )}
+            {/* w19-40: no "Connecting…" line when no backend is configured — nothing is connecting;
+                the practice notice above already says so. Real pending work shows on the button. */}
 
             {/* Forgot password link — only on sign-in */}
             {mode === 'signin' && (

@@ -243,7 +243,7 @@ export default function VisionPage() {
 
           {/* Mode toggle */}
           <div
-            className="flex rounded-2xl p-1 gap-1"
+            className="flex rounded-2xl p-1 gap-1 w-fit mx-auto max-w-full"
             style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}
           >
             {([
@@ -256,7 +256,7 @@ export default function VisionPage() {
                   key={v}
                   onClick={() => switchMode(v)}
                   aria-pressed={on}
-                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold transition-all"
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-sans font-semibold transition-all"
                   style={{
                     background: on ? 'var(--color-forest-800)' : 'transparent',
                     color: on ? 'var(--on-forest-800)' : 'var(--text-secondary)',

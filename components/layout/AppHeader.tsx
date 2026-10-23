@@ -56,13 +56,13 @@ export default function AppHeader({
       <BrandLogo />
       <div className="w-px h-5" style={{ background: 'var(--border)' }} />
       <span
-        className="text-xs font-display truncate min-w-0"
+        className="text-xs font-display truncate min-w-0 lg:shrink-0 lg:overflow-visible whitespace-nowrap"
         style={{ color: 'var(--text-secondary)' }}
       >
         {title}
       </span>
       {desktopNav && (
-        <nav aria-label="Primary" className="hidden lg:flex items-center gap-5 ml-2">
+        <nav aria-label="Primary" className="hidden lg:flex items-center gap-5 ml-2 min-w-0 overflow-hidden whitespace-nowrap">
           {tabs.map(({ href, key }) => (
             <Link
               key={href}
