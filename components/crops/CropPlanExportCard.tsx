@@ -27,6 +27,7 @@ import {
   type CropPlanAvailability, type CropPlanPageFormat, type CropPlanPdfInput, type CropPlanPdfMeta, type CropPlanSection,
 } from '@/lib/crop-export-pdf';
 import { loadPdfIcons } from '@/lib/pdf-icons';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import {
   canShareFiles, deliverFile, downloadFile, openFileInTab, prefersShareSheet, shareFile,
 } from '@/lib/crop-export-deliver';
@@ -60,7 +61,7 @@ export interface CropPlanExportCardProps {
 }
 
 type Busy = 'ics' | 'pdf' | null;
-const cropUi = (lang: string, english: string, isiZulu: string) => lang === 'zu' ? isiZulu : english;
+const cropUi = (lang: string, english: string, isiZulu: string) => inlineText(lang, english, isiZulu);
 
 export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, sections, availabilityDetails, preservedProducts, productionRecords, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, productionProjection, poultryGuidance }: CropPlanExportCardProps) {
   const { lang } = useLanguage();
@@ -202,6 +203,12 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
         </p>
       )}
 
+      {lang === 'xh' && (
+        <p role="note" lang="xh" className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+          {inlineText(lang, 'Draft notice: exported task names, planting times and instructions remain in English pending source and local farming review.')}
+        </p>
+      )}
+
       <div className="flex flex-wrap gap-2">
         <button
           onClick={exportCalendar}
@@ -212,7 +219,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
         >
           {busy === 'ics'
             ? <><Hourglass size={14} aria-hidden /> {cropUi(lang, 'Building…', 'Kwakhiwa…')}</>
-            : <><CalendarPlus size={14} aria-hidden /> {empty ? cropUi(lang, 'Add tasks to calendar', 'Engeza imisebenzi ekhalendeni') : `${cropUi(lang, 'Add', 'Engeza')} ${tasks.length} ${lang === 'zu' ? (tasks.length === 1 ? 'umsebenzi ekhalendeni' : 'imisebenzi ekhalendeni') : 'tasks to calendar'}`}</>}
+            : <><CalendarPlus size={14} aria-hidden /> {empty ? cropUi(lang, 'Add tasks to calendar', 'Engeza imisebenzi ekhalendeni') : (lang === 'zu' ? `Engeza ${tasks.length} ${tasks.length === 1 ? 'umsebenzi ekhalendeni' : 'imisebenzi ekhalendeni'}` : inlineTemplate(lang, 'Add {n} tasks to calendar', null, { n: tasks.length }))}</>}
         </button>
         <button
           onClick={exportPdf}

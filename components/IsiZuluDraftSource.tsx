@@ -1,6 +1,7 @@
 'use client';
 
 import { isRecordsRegionalLang, recordsDraft, recordsTemplate } from '@/lib/records-regional-drafts';
+import { fillInline, inlineText, xhInlineDraft } from '@/lib/xh-inline';
 
 /**
  * Keeps financial wording readable in isiZulu while showing the exact English source.
@@ -13,6 +14,7 @@ import { isRecordsRegionalLang, recordsDraft, recordsTemplate } from '@/lib/reco
 export default function IsiZuluDraftSource({
   lang,
   zulu,
+  xhosa,
   english,
   template,
   vars,
@@ -21,6 +23,8 @@ export default function IsiZuluDraftSource({
 }: {
   lang: string;
   zulu: string;
+  /** isiXhosa wording a call site builds itself (a task title); otherwise the draft is looked up by the English sentence. */
+  xhosa?: string;
   english: string;
   /** English with {placeholders}; omit for a fixed sentence (the lookup then uses `english`). */
   template?: string;
@@ -34,9 +38,13 @@ export default function IsiZuluDraftSource({
   // localised fragment inside its values would otherwise come back as English with a stray local word.
   const sentence = template ?? english;
   const looked = (code: string) => (recordsDraft(code, sentence) !== null ? recordsTemplate(code, sentence, null, vars ?? {}) : english);
-  const local = lang === 'zu'
+  const base = lang === 'zu'
     ? (zulu || looked('zu'))
     : isRecordsRegionalLang(lang) ? looked(lang) : english;
+  // isiXhosa also reads lib/locales/xh-inline/ (lib/xh-inline.ts) for a sentence the money-book drafts do not
+  // cover, and call sites that build their own isiXhosa (a task title) pass it as `xhosa`.
+  const xhInline = lang === 'xh' && base === english ? xhInlineDraft(sentence) : null;
+  const local = lang === 'xh' && xhosa ? xhosa : xhInline ? fillInline(xhInline, vars ?? {}) : base;
   if (!local || local === english) return <p className={className} style={style}>{english}</p>;
 
   return (
@@ -44,6 +52,7 @@ export default function IsiZuluDraftSource({
       <p lang={lang} style={{ margin: 0 }}>{local}</p>
       <p className="mt-1 text-xs leading-snug text-[var(--text-muted)]" style={{ marginBottom: 0 }}>
         {lang === 'zu' && <span>Unreviewed isiZulu draft. </span>}
+        {lang === 'xh' && <span>{inlineText(lang, 'Unreviewed isiXhosa draft.')} </span>}
         <span lang="en">English source: {english}</span>
       </p>
     </div>

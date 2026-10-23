@@ -18,13 +18,14 @@ import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
 import { loadCropPlan } from '@/lib/crop-plan';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import {
   CALENDAR_LIMA_ADVICE_ZU, CALENDAR_LIMA_HOLD_MONTHS,
   CALENDAR_MAINTAIN_HOLD_KEYS, CALENDAR_MAINTAIN_ZU,
 } from '@/lib/calendar-zu-draft';
 
 function localUi(en: string, zu: string, lang: string) {
-  return lang === 'zu' ? zu : en;
+  return inlineText(lang, en, zu);
 }
 
 function CalendarDraftSource({
@@ -32,11 +33,11 @@ function CalendarDraftSource({
 }: {
   lang: string; english: string; zulu: string; heldForReview?: boolean; style?: React.CSSProperties;
 }) {
-  if (lang === 'zu' && heldForReview) {
+  if ((lang === 'zu' || lang === 'xh') && heldForReview) {
     return (
       <div style={style}>
         <p style={{ margin: 0 }}>
-          <span className="text-xs leading-snug text-stone-600">isiZulu translation pending — English source: </span>
+          <span className="text-xs leading-snug text-stone-600">{lang === 'xh' ? inlineText(lang, 'isiXhosa translation pending — English source:') : 'isiZulu translation pending — English source:'} </span>
           <span lang="en">{english}</span>
         </p>
       </div>
@@ -385,7 +386,7 @@ function Dot({ mark, lang }: { mark: PlantMark; lang: string }) {
 export default function CalendarPage() {
   const { lang, t } = useLanguage();
   const simple = useAppLevel() === 'simple';
-  const monthLabels = lang === 'zu'
+  const monthLabels = lang === 'zu' || lang === 'xh'
     ? [t('surveyMonthJan'), t('surveyMonthFeb'), t('surveyMonthMar'), t('surveyMonthApr'),
        t('surveyMonthMay'), t('surveyMonthJun'), t('surveyMonthJul'), t('surveyMonthAug'),
        t('surveyMonthSep'), t('surveyMonthOct'), t('surveyMonthNov'), t('surveyMonthDec')]
@@ -483,6 +484,12 @@ export default function CalendarPage() {
         <h1 className="t-h1 m-0" style={{ padding: '14px 14px 0', color: 'var(--text-primary)' }}>
           {localUi('Planting Calendar', 'Ikhalenda lokutshala', lang)}
         </h1>
+        {lang === 'xh' && (
+          <p role="note" style={{ margin: '12px 14px 0', padding: '9px 12px', borderRadius: 10, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', fontSize: 12 }}>
+            {inlineText(lang, 'Monthly chores and Lima advice have unreviewed isiXhosa drafts beside English sources. Some farming instructions remain in English for review.')}
+            <span lang="en" style={{ display: 'block', marginTop: 4 }}>Monthly chores and Lima advice have unreviewed isiXhosa drafts beside English sources. Some farming instructions remain in English for review.</span>
+          </p>
+        )}
         {lang === 'zu' && (
           <p role="note" style={{ margin: '12px 14px 0', padding: '9px 12px', borderRadius: 10, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', fontSize: 12 }}>
             Imisebenzi yanyanga zonke neseluleko sikaLima sinombhalo wesiZulu ongakabuyekezwa nomthombo wesiNgisi. Eminye imiyalo yokulima isasele ngesiNgisi ukuze ibuyekezwe.
@@ -543,8 +550,8 @@ export default function CalendarPage() {
                   aria-current={idx === currentMonth ? 'date' : undefined}
                   aria-label={
                     idx === currentMonth
-                      ? localUi(`Select ${MONTH_ABBR[idx]} — this month`, `Khetha u-${monthLabels[idx]} — le nyanga`, lang)
-                      : localUi(`Select ${MONTH_ABBR[idx]}`, `Khetha u-${monthLabels[idx]}`, lang)
+                      ? (lang === 'zu' ? `Khetha u-${monthLabels[idx]} — le nyanga` : inlineTemplate(lang, 'Select {month} — this month', null, { month: lang === 'xh' ? monthLabels[idx] : MONTH_ABBR[idx] }))
+                      : (lang === 'zu' ? `Khetha u-${monthLabels[idx]}` : inlineTemplate(lang, 'Select {month}', null, { month: lang === 'xh' ? monthLabels[idx] : MONTH_ABBR[idx] }))
                   }
                 >
                   {monthLabels[idx]}
@@ -849,7 +856,7 @@ export default function CalendarPage() {
               <div style={{ margin: '12px 14px 0', padding: '8px 12px', background: 'var(--brand-soft)', border: '1px solid var(--brand-soft-2)', borderRadius: 10, fontSize: 12, fontFamily: 'var(--font-sans)', color: 'var(--color-forest-800)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <span>
                   {visibleCrops.length > 0
-                    ? localUi(`Showing your ${visibleCrops.length} planned crop${visibleCrops.length === 1 ? '' : 's'}`, `Kuboniswa izitshalo zakho ezihleliwe eziyi-${visibleCrops.length}`, lang)
+                    ? (lang === 'zu' ? `Kuboniswa izitshalo zakho ezihleliwe eziyi-${visibleCrops.length}` : inlineTemplate(lang, visibleCrops.length === 1 ? 'Showing your {n} planned crop' : 'Showing your {n} planned crops', null, { n: visibleCrops.length }))
                     : localUi('None of your planned crops are in this calendar yet', 'Azikho izitshalo zakho ezihleliwe kule khalenda okwamanje', lang)}
                 </span>
                 <button onClick={() => setShowAllOverride(true)} style={{ fontSize: 12, color: 'var(--text-secondary)', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>

@@ -88,6 +88,7 @@ import { UNPRICED_CROPS, asFarmerOwnPrice, isUsablePrice, priceFor, loadCropPric
 // than retyped so the wording cannot drift from the book it describes (that drift is exactly what
 // left this sentence naming a single day after a crop was priced five weeks later).
 import { PRICE_SNAPSHOT_MONTHS } from '@/components/prices/CropPriceGuide.format';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 // Task wording lives in the export module now, not here: the screen, the
 // calendar file and the printed plan all have to describe a task the same way,
 // and three copies of that sentence is how they stop doing so.
@@ -107,7 +108,7 @@ const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium'
 // This route has sourced crop timing, climate, price and task claims mixed with
 // ordinary controls. Only pass interface labels through this helper; keep the
 // source-backed farming copy in its original English until it is reviewed.
-const cropUi = (lang: string, english: string, isiZulu: string) => lang === 'zu' ? isiZulu : english;
+const cropUi = (lang: string, english: string, isiZulu: string) => inlineText(lang, english, isiZulu);
 
 // The rolling timeline shows this many months ahead from today (column 0),
 // scrollable. TWO FULL YEARS as of 2026-08-05 (Rory: "the last month i feel
@@ -1881,6 +1882,11 @@ function FacilitatorCropsPageInner() {
         Vegetables and staples · Fruit, nuts &amp; berries · Animal products. Housing is listed. Use the site survey for animal numbers and care checks.
       </div>
 
+      {lang === 'xh' && (
+        <div role="note" lang="xh" className="flex-shrink-0 px-3 md:px-5 py-2" style={{ background: 'rgba(192,122,30,0.08)', borderBottom: '1px solid rgba(154,96,24,0.3)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.45 }}>
+          {inlineText(lang, 'Unreviewed isiXhosa draft. This interface draft has not been reviewed by a fluent isiXhosa speaker. Crop names, planting times, climate and price assumptions, and task instructions remain in English pending source and local farming review.')}
+        </div>
+      )}
       {lang === 'zu' && (
         <div role="note" className="flex-shrink-0 px-3 md:px-5 py-2" style={{ background: 'rgba(192,122,30,0.08)', borderBottom: '1px solid rgba(154,96,24,0.3)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.45 }}>
           <strong>IsiZulu draft · Isaziso senguqulo yesiZulu esalungiswa.</strong> This interface draft has not been reviewed by a fluent isiZulu speaker. Crop names, planting times, climate and price assumptions, and task instructions remain in English pending source and local farming review. Amagama ezitshalo, izikhathi zokutshala, isimo sezulu, amanani nemiyalelo yemisebenzi kuseNgisini kuze kubuyekezwe imithombo nolwazi lwezolimo lwendawo.
@@ -1944,7 +1950,7 @@ function FacilitatorCropsPageInner() {
                 ? cropUi(lang, 'No saved designs yet. Draw your beds in the Design Studio and this is where they will appear.', 'Azikho izakhiwo ezilondoloziwe okwamanje. Dweba imibhede yakho ku-Design Studio; izovela lapha.')
                 : cloudCards.length + studioCards.length === 1
                   ? 'One saved design — here is what is on it.'
-                  : `${cloudCards.length + studioCards.length} ${cropUi(lang, 'saved designs. Each one is drawn as it sits on the ground.', 'imiklamo elondoloziwe. Ngayinye iboniswa njengoba injalo emhlabeni.')}`}
+                  : lang === 'xh' ? inlineTemplate(lang, '{n} saved designs. Each one is drawn as it sits on the ground.', null, { n: cloudCards.length + studioCards.length }) : `${cloudCards.length + studioCards.length} ${cropUi(lang, 'saved designs. Each one is drawn as it sits on the ground.', 'imiklamo elondoloziwe. Ngayinye iboniswa njengoba injalo emhlabeni.')}`}
             </p>
 
             <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(215px, 1fr))' }}>
@@ -1995,7 +2001,7 @@ function FacilitatorCropsPageInner() {
           <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
             {useVirtual && designBeds.length === 0 && (
               <div className="mb-3 px-3 py-2 rounded-xl font-sans" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--gold)' }}>
-                Planning without a map — one virtual 10 m² bed.{' '}
+                {inlineText(lang, 'Planning without a map — one virtual 10 m² bed.')}{' '}
                 <Link href={designHref} style={{ color: 'var(--color-forest-800)', textDecoration: 'underline' }}>{cropUi(lang, 'Place real beds on the Planting step', 'Faka imibhede yangempela esigabeni sokuTshala')}</Link> {cropUi(lang, 'to replace it.', 'ukuze uwushintshe.')}
               </div>
             )}
@@ -2051,7 +2057,7 @@ function FacilitatorCropsPageInner() {
                   style={{ fontSize: 13, background: 'var(--bg-1)', border: '1px solid rgba(179,58,58,0.3)', color: '#B33A3A', cursor: 'pointer' }}
                   title={cropUi(lang, 'Clear every planting from this plan', 'Susa konke okutshalwe kulolu hlelo')}
                 >
-                  <Trash2 size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {lang === 'zu' ? <span style={{ lineHeight: 1.1 }}>Sula konke<br/><small lang="en">Clear all</small></span> : 'Clear all'}
+                  <Trash2 size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {lang === 'zu' ? <span style={{ lineHeight: 1.1 }}>Sula konke<br/><small lang="en">Clear all</small></span> : inlineText(lang, 'Clear all')}
                 </button>
               )}
             </div>
@@ -2606,7 +2612,7 @@ function FacilitatorCropsPageInner() {
             {/* Seed BOQ + year-ahead report */}
             <div className="grid gap-4 mt-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
               <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-                <div className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}><Sprout size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Seeds &amp; seedlings — what to buy, and when{lang === 'zu' && <small className="block" lang="zu" style={{ fontSize: 12 }}>Imbewu nezithombo — okuthengwayo nesikhathi</small>}</div>
+                <div className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}><Sprout size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {lang === 'xh' ? inlineText(lang, 'Seeds & seedlings — what to buy, and when') : <>Seeds &amp; seedlings — what to buy, and when</>}{lang === 'zu' && <small className="block" lang="zu" style={{ fontSize: 12 }}>Imbewu nezithombo — okuthengwayo nesikhathi</small>}</div>
                 <p className="font-sans mb-2 mt-0.5" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>
                   {/* The subtitle must not promise which month comes first:
                       buildBuyingSchedule drops months with nothing to buy, so
@@ -2919,7 +2925,7 @@ function MonthAvailabilityDetail({
     <div className="rounded-xl p-3 mt-3" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
       <div className="flex items-start justify-between gap-2 mb-1.5">
         <div className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{monthLabel(month)}</div>
-        <button onClick={onClose} aria-label={cropUi(lang, `Close ${monthLabel(month)} detail`, `Vala imininingwane ka-${monthLabel(month)}`)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 0 }}>
+        <button onClick={onClose} aria-label={lang === 'zu' ? `Vala imininingwane ka-${monthLabel(month)}` : inlineTemplate(lang, 'Close {month} detail', null, { month: monthLabel(month) })} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 0 }}>
           <X size={14} />
         </button>
       </div>
@@ -4663,7 +4669,7 @@ function CropPickerModal({
                 );
               })}
               {filtered.length === 0 && (
-                <div className="font-sans text-center py-6" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{cropUi(lang, `No crops match “${search}”.`, `Azikho izitshalo ezihambisana nokuthi “${search}”.`)}</div>
+                <div className="font-sans text-center py-6" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{lang === 'zu' ? `Azikho izitshalo ezihambisana nokuthi “${search}”.` : inlineTemplate(lang, 'No crops match “{search}”.', null, { search })}</div>
               )}
             </div>
           </div>
