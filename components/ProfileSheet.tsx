@@ -458,7 +458,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
               value={fullName}
               onChange={e => setFullName(e.target.value)}
               placeholder={t('profileFullNamePlaceholder')}
-              className="w-full font-sans"
+              className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 w-full font-sans"
               style={{
                 padding: '10px 14px',
                 borderRadius: 11,
@@ -520,7 +520,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
               onChange={e => setBio(e.target.value.slice(0, 200))}
               placeholder={t('profileBioPlaceholder')}
               rows={3}
-              className="w-full font-sans"
+              className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 w-full font-sans"
               style={{
                 padding: '10px 14px',
                 borderRadius: 11,

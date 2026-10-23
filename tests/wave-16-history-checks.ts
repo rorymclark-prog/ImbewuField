@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { wave17SourceBefore } from './wave-17-history-checks.ts';
 
 // Wave 16 (22 Oct 2026, study-dark track w16-03): category text on the Studies page follows the theme.
 // The page imports CATEGORY_TEXT_COLORS from the new lib/category-text-colors.ts (seven
@@ -10,7 +11,8 @@ import { fileURLToPath } from 'node:url';
 // map in lib/course-modules.ts, which stays byte-identical, and paints its category icons with that
 // text-safe colour. Older layers pin the page byte-exact, so this layer keeps the exact wave 15 bytes
 // as a fixture (older owners still see their predecessor through it), pins the live file byte-exact
-// itself and holds the named markers that distinguish the two.
+// itself and holds the named markers that distinguish the two. Wave 17 sits on top: the live file is
+// read through tests/wave-17-history-checks.ts, so this layer sees its own exact successor bytes.
 const root = fileURLToPath(new URL('../', import.meta.url));
 const sha = (v: string | Uint8Array) => createHash('sha256').update(v).digest('hex');
 const read = (file: string) => readFileSync(resolve(root, file));
@@ -44,7 +46,7 @@ export function ensureWave16Current(): void {
   for (const [file, row] of Object.entries(files)) {
     const before = read(row.beforePath);
     assert.equal(sha(before), row.beforeSha256, file + ': wave 16 predecessor fixture may not change');
-    const live = read(file);
+    const live = wave17SourceBefore(file, read(file));
     assert.equal(live.length, row.afterBytes, file + ': complete live wave 16 successor size');
     assert.equal(sha(live), row.afterSha256, file + ': complete live wave 16 successor, including every unlisted byte');
     const a = before.toString(), b = live.toString();
@@ -69,6 +71,7 @@ export function wave16SourceBefore<T extends string | Uint8Array>(file: string, 
   const row = files[file];
   if (!row) return supplied;
   ensureWave16Current();
+  supplied = wave17SourceBefore(file, supplied);
   if (sha(supplied) !== row.afterSha256) return supplied;
   const before = beforeFiles.get(file)!;
   return (typeof supplied === 'string' ? before.toString() : Buffer.from(before)) as T;

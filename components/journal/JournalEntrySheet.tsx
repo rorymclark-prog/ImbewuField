@@ -207,7 +207,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
           {!simple && (
             <div>
               <Label>{ui('Date', 'Usuku')}</Label>
-              <input
+              <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
@@ -218,7 +218,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
 
           <div>
             <Label>{ui('Title', 'Isihloko')}</Label>
-            <input
+            <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
               type="text"
               value={title}
               maxLength={MAX_TITLE_LEN}
@@ -230,7 +230,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
 
           <div>
             <Label>{ui('Notes', 'Amanothi')}</Label>
-            <textarea
+            <textarea className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
               value={notes}
               rows={5}
               maxLength={MAX_NOTES_LEN}
@@ -247,12 +247,12 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               <div style={{ flex: 1 }}>
                 <Label>{ui('Bed / plot', 'Umbhede / isiqephu')}</Label>
                 {beds.length > 0 ? (
-                  <select value={bedId} onChange={(e) => setBedId(e.target.value)} style={inputStyle}>
+                  <select className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1" value={bedId} onChange={(e) => setBedId(e.target.value)} style={inputStyle}>
                     <option value="">{ui('Not linked', 'Akuxhunyiwe')}</option>
                     {beds.map((b) => <option key={b.id} value={b.id}>{b.label}</option>)}
                   </select>
                 ) : (
-                  <input
+                  <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                     type="text"
                     value={bedLabel}
                     placeholder={ui('e.g. Bed 4', 'isib. Umbhede 4')}
@@ -263,7 +263,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               </div>
               <div style={{ flex: 1 }}>
                 <Label>{ui('Crop', 'Isitshalo')}</Label>
-                <input
+                <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                   type="text"
                   list="journal-crop-options"
                   value={cropName}

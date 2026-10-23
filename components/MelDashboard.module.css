@@ -127,3 +127,11 @@
   .cycleStages button > span,.appStages button > span { grid-column:1; }
   .root .assessmentCard { padding:14px; }
 }
+
+/* w17-06: at lg+ the assessment cards fill the row (Workspace .cards pattern) and the
+   progress tracks stop at a readable length instead of running the whole panel width.
+   Phone and tablet rules above are untouched. */
+@media(min-width:1024px) {
+  .assessmentCards { grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr)); }
+  .coverageTrack, .assessmentText .bar { max-width:480px; }
+}

@@ -41,6 +41,18 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 October 2026', sha: '2bddc451', changes: [
+    'Green buttons in Study, the refresher course and chat messages stay readable in dark.',
+    'Grey text on Records and Finances is darker in dark mode; Network chips are clearer.',
+    'Print and source links on the sample plan are bigger to tap; text boxes show focus.',
+    'On a laptop, assessment cards sit three to a row and progress bars stop stretching.',
+  ], tour: [{ title: 'Open the Study area in dark mode',
+    where: 'Menu → Study', href: '/student',
+    detail: 'Start studying and the other green buttons now keep dark text on the light green.',
+  }, { title: 'Open your Records in dark mode',
+    where: 'Menu → Records', href: '/records',
+    detail: 'The small grey totals and empty-list notes are easier to read.',
+  }] },
   { when: '23 October 2026', sha: 'ed8ed899', changes: [
     'Study pages and course colours follow dark mode; green buttons stay readable in dark.',
     'Bigger tap areas on Home, Sign in, Invoice, Contact and the NGO and funder pages.',

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const root = join(import.meta.dirname, '..');
@@ -72,4 +72,57 @@ test('w16-02: LessonLink and the Design labels paint text with the themed forest
   const design = readFileSync(join(root, 'app/design/page.tsx'), 'utf8');
   assert.match(design, /textTransform: 'uppercase', color: 'var\(--color-forest-800\)'/);
   assert.match(design, /color: 'var\(--color-forest-800\)', fontWeight: 600, flexShrink: 0 \}\}>\{isZulu \? 'Klama →'/);
+});
+
+// w17-01: widened guard. Scans every *.tsx and *.module.css under app/ and components/ and fails when
+// a forest-800 or emerald fill is paired with plain var(--on-forest) in the same CSS rule or the same
+// inline style object / line. Codex-owned crop paths are excluded.
+const EXCLUDED = [/^app\/facilitator\/crops\//, /^app\/cropplan\//, /^app\/plan\//, /^components\/crop[^/]*\//];
+// Every hit the wave 17 tracks listed has been fixed or resolved by the integrator; keep this empty.
+const ALLOW: string[] = [];
+
+function walk(dir: string, out: string[] = []): string[] {
+  for (const name of readdirSync(join(root, dir))) {
+    const rel = `${dir}/${name}`;
+    if (statSync(join(root, rel)).isDirectory()) walk(rel, out);
+    else if (/\.tsx$|\.module\.css$/.test(name) && !EXCLUDED.some(r => r.test(rel))) out.push(rel);
+  }
+  return out;
+}
+
+const FILL = /(background(-color)?\s*[:=]|\bbg-\[)[^;}]*var\(--(color-forest-800|emerald)\)|background(Color)?:\s*(FOREST|GREEN)\b/;
+const PLAIN = /(?<![\w-])(color\s*[:=]|text-\[)[^;}]*var\(--on-forest\)/;
+const PLAIN_ANY = /var\(--on-forest\)/;
+
+test('w17-01: no forest-800/emerald fill is paired with plain --on-forest text (all tsx + module.css)', () => {
+  const hits: string[] = [];
+  for (const f of [...walk('app'), ...walk('components')]) {
+    const src = readFileSync(join(root, f), 'utf8').replace(/var\(--on-forest-800, var\(--on-forest\)\)/g, 'OK');
+    // A FOREST/GREEN constant only counts as a themed fill when the file declares it as the themed token;
+    // a fixed '#1F4D2B' stays dark forest in every theme column and cream --on-forest reads on it.
+    const themedConst = (name: string) => new RegExp(`const ${name}\\s*=\\s*'var\\(--(color-forest-800|emerald)\\)'`).test(src);
+    const fillHere = (text: string) => {
+      const m = text.match(FILL);
+      if (!m) return false;
+      const named = m[0].match(/\b(FOREST|GREEN)\b$/);
+      return named ? themedConst(named[1]) : true;
+    };
+    const isCss = f.endsWith('.css');
+    // CSS: per rule. TSX: per line (style objects here are single-line or one declaration per line, so also scan 6-line windows).
+    const units: { text: string; line: number }[] = isCss
+      ? [...src.matchAll(/[^{}]*\{[^{}]*\}/g)].map(m => ({ text: m[0], line: src.slice(0, m.index).split('\n').length }))
+      : src.split('\n').map((_, i, a) => ({ text: a.slice(i, i + 6).join('\n'), line: i + 1 }));
+    for (const u of units) {
+      const lines = isCss ? [u.text] : [u.text.split('\n')[0]];
+      const body = isCss ? u.text : lines[0];
+      const windowText = isCss ? u.text : u.text;
+      if (!(fillHere(isCss ? body : windowText.split('\n').slice(0, 1).join('')) || (!isCss && fillHere(body)))) continue;
+      const scope = isCss ? body : windowText.slice(0, windowText.indexOf('}') >= 0 ? windowText.indexOf('}') : undefined);
+      if (PLAIN_ANY.test(scope) && (isCss ? PLAIN.test(scope) : true)) {
+        const key = `${f}:${u.line}`;
+        if (!ALLOW.includes(key)) hits.push(key);
+      }
+    }
+  }
+  assert.deepEqual(hits, [], `forest-800/emerald fill with plain --on-forest text:\n${hits.join('\n')}`);
 });

@@ -787,7 +787,7 @@ export default function StudentPage() {
             <button
               onClick={() => router.push('/home')}
               className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold text-sm transition-all"
-              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}
+              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800)' }}
             >
               <Home size={15} />
               {t('studentBackHome')}
@@ -1152,7 +1152,7 @@ export default function StudentPage() {
                           // Regional readiness labels are longer; keep every word inside the phone card.
                           className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0 max-w-full whitespace-normal"
                           style={contentComplete
-                            ? { background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: '1px solid var(--color-forest-800)' }
+                            ? { background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: '1px solid var(--color-forest-800)' }
                             : { background: 'rgba(32,25,15,0.05)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}
                         >
                         {readiness?.text === 'Fully built'
@@ -1236,7 +1236,7 @@ export default function StudentPage() {
                     style={{
                       background: done ? 'rgba(31,77,43,0.08)' : 'var(--color-forest-800)',
                       border: done ? '1px solid rgba(31,77,43,0.2)' : 'none',
-                      color: done ? 'var(--color-forest-800)' : 'var(--on-forest)',
+                      color: done ? 'var(--color-forest-800)' : 'var(--on-forest-800)',
                       cursor: isToggling ? 'wait' : 'pointer',
                       opacity: isToggling ? 0.6 : 1,
                     }}
@@ -1387,7 +1387,7 @@ export default function StudentPage() {
           {capstoneUnlocked && (
             <Link href="/design"
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl font-sans font-semibold text-sm transition-all"
-              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', textDecoration: 'none' }}>
+              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', textDecoration: 'none' }}>
               {t('studentOpenDesignStudio')}
             </Link>
           )}

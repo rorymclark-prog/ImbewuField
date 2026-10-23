@@ -230,7 +230,7 @@ export default function MessageThreadPage() {
                   style={{
                     fontSize: 14, lineHeight: 1.5, padding: '9px 13px', borderRadius: 16,
                     background: mine ? 'var(--color-forest-800)' : 'var(--bg-1)',
-                    color: mine ? 'var(--on-forest)' : 'var(--text-primary)',
+                    color: mine ? 'var(--on-forest-800)' : 'var(--text-primary)',
                     border: mine ? 'none' : '1px solid var(--border)',
                     borderBottomRightRadius: mine ? 4 : 16,
                     borderBottomLeftRadius: mine ? 16 : 4,

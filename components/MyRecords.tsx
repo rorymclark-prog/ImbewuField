@@ -265,7 +265,7 @@ function SignInPrompt() {
         >
           {t('myRecordsSignInTitle')}
         </p>
-        <p className="font-display text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+        <p className="font-display text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
           {t('myRecordsSignInBody')}
         </p>
       </div>
@@ -679,7 +679,7 @@ function OrchardNote({ kg, names, t, money = false }: {
 }) {
   const figure = kg % 1 === 0 ? String(kg) : kg.toFixed(1);
   return (
-    <p className="font-sans mt-2" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }}>
+    <p className="font-sans mt-2" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
       {t(money ? 'recordsOrchardOutNoteMoney' : 'recordsOrchardOutNote')
         .replace('{kg}', figure)
         .replace('{names}', names.join(', '))}
@@ -746,7 +746,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
   if (items.length === 0) {
     if (isSampleMode()) {
       return (
-        <p className="text-xs text-center py-4" style={{ color: 'var(--text-muted)' }}>
+        <p className="text-xs text-center py-4" style={{ color: 'var(--text-secondary)' }}>
           {t('myRecordsNoHarvests')}
         </p>
       );
@@ -768,7 +768,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
             <p className="text-sm font-display font-medium leading-tight truncate" style={{ color: 'var(--text-primary)' }}>
               {recordsFill(lang, EXAMPLE_PRODUCTION.crop)}
             </p>
-            <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>{recordsFill(lang, EXAMPLE_PRODUCTION.dateLabel)}</p>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>{recordsFill(lang, EXAMPLE_PRODUCTION.dateLabel)}</p>
           </div>
           <div className="text-sm font-display font-semibold flex-shrink-0" style={{ color: 'var(--color-forest-800)' }}>
             {EXAMPLE_PRODUCTION.kg} kg
@@ -813,7 +813,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
             >
               {harvestCropLabel(item.crop, lang)}
             </p>
-            <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
               {fmtDate(item.logged_at, lang)}
             </p>
           </div>
@@ -836,7 +836,7 @@ function SalesList({ items }: { items: SalesLog[] }) {
   if (items.length === 0) {
     if (isSampleMode()) {
       return (
-        <p className="text-xs text-center py-4" style={{ color: 'var(--text-muted)' }}>
+        <p className="text-xs text-center py-4" style={{ color: 'var(--text-secondary)' }}>
           {t('myRecordsNoSales')}
         </p>
       );
@@ -857,9 +857,9 @@ function SalesList({ items }: { items: SalesLog[] }) {
           <div className="flex-1 min-w-0">
             <p className="text-sm font-display font-medium leading-tight truncate" style={{ color: 'var(--text-primary)' }}>
               {recordsFill(lang, EXAMPLE_SALE.crop)}
-              <span className="font-normal" style={{ color: 'var(--text-muted)' }}> → {recordsFill(lang, EXAMPLE_SALE.buyer)}</span>
+              <span className="font-normal" style={{ color: 'var(--text-secondary)' }}> → {recordsFill(lang, EXAMPLE_SALE.buyer)}</span>
             </p>
-            <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
               {EXAMPLE_SALE.kg} kg &nbsp;·&nbsp; {recordsFill(lang, EXAMPLE_SALE.dateLabel)}
             </p>
           </div>
@@ -895,12 +895,12 @@ function SalesList({ items }: { items: SalesLog[] }) {
             >
               {harvestCropLabel(item.crop, lang)}
               {item.buyer ? (
-                <span className="font-normal" style={{ color: 'var(--text-muted)' }}>
+                <span className="font-normal" style={{ color: 'var(--text-secondary)' }}>
                   {' '}→ {item.buyer}
                 </span>
               ) : null}
             </p>
-            <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
               {recordsQuantityLabel(item, lang)} &nbsp;·&nbsp; {fmtDate(item.sold_at, lang)}
             </p>
             {item.invoice_id && loadInvoices().some((invoice) => invoice.id === item.invoice_id) && <Link href={`/invoice?view=${encodeURIComponent(item.invoice_id)}`} aria-label={`${recordsUi(lang, 'View invoice for', 'Buka i-invoyisi ka')} ${item.crop}`} style={{ display: 'inline-flex', gap: 6, alignItems: 'center', minHeight: 44, fontSize: 12, color: '#315939' }}><Eye size={16} />{recordsUi(lang, 'Invoice', 'I-invoyisi')} #{loadInvoices().find((invoice) => invoice.id === item.invoice_id)?.no} · {recordsUi(lang, 'View', 'Buka')}</Link>}
@@ -924,7 +924,7 @@ function SharedDesignsList({ items }: { items: Design[] }) {
   const { t } = useRecordsT();
   if (items.length === 0) {
     return (
-      <p className="text-xs text-center py-4" style={{ color: 'var(--text-muted)' }}>
+      <p className="text-xs text-center py-4" style={{ color: 'var(--text-secondary)' }}>
         {t('myRecordsNoDesigns')}
       </p>
     );
@@ -953,7 +953,7 @@ function SharedDesignsList({ items }: { items: Design[] }) {
             >
               {design.title || t('myRecordsUntitledDesign')}
             </p>
-            <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
               {t('myRecordsSharedPrefix')} {fmtDate(design.created_at)}
             </p>
           </div>
@@ -1309,7 +1309,7 @@ export default function MyRecords({
             >
               {t('myRecordsTitle')}
             </h2>
-            <p className="font-display text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="font-display text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
               {t('myRecordsSubtitle')}
             </p>
           </div>
@@ -1377,7 +1377,7 @@ export default function MyRecords({
                 <div className="font-display font-bold" style={{ fontSize: 22, color: 'var(--color-forest-800)', lineHeight: 1 }}>
                   <RecordQuantitySummary totals={pickedQuantities} />
                 </div>
-                <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
                   {t('myRecordsTotalHarvested')}{topCrop ? ` · ${recordsTemplate(lang, 'Top by weight: {crop}', null, { crop: topCrop[0] })}` : ''}
                 </div>
                 <OrchardSwitch
@@ -1465,10 +1465,10 @@ export default function MyRecords({
                 <div className="font-display font-bold" style={{ fontSize: 22, color: 'var(--gold)', lineHeight: 1 }}>
                   R{totalRev % 1 === 0 ? totalRev : totalRev.toFixed(2)}
                 </div>
-                <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
                   {t('myRecordsTotalRevenue')}
                 </div>
-                <div className="font-sans mt-2" style={{ color: 'var(--text-muted)' }}><RecordQuantitySummary compact totals={soldQuantities} /></div>
+                <div className="font-sans mt-2" style={{ color: 'var(--text-secondary)' }}><RecordQuantitySummary compact totals={soldQuantities} /></div>
               </div>
               <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
                 <polyline points={pts} fill="none" stroke="rgba(192,122,30,0.25)" strokeWidth="1.5" strokeLinejoin="round" />
