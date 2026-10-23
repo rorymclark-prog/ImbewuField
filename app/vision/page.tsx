@@ -341,13 +341,13 @@ export default function VisionPage() {
               className="w-full flex items-center justify-center gap-2.5 py-3.5 rounded-2xl text-sm font-display font-semibold"
               style={{
                 background: 'var(--color-forest-800)',
-                color: 'var(--on-forest)',
+                color: 'var(--on-forest-800)',
                 border: 'none',
                 cursor: 'pointer',
               }}
             >
               <LimaSprout size={18} />
-              <span style={{ color: 'var(--on-forest)' }}>{t('Ask Lima', 'Buza uLima')}</span>
+              <span style={{ color: 'var(--on-forest-800)' }}>{t('Ask Lima', 'Buza uLima')}</span>
             </button>
           )}
 
