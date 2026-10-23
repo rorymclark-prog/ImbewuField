@@ -898,3 +898,14 @@ noted. Other translators copy the callout labels, the "Key points" heading, the 
 | to simmer | ukubila kancinci | Ch 11. (check) |
 | chimney | ishimini | Ch 11. (check) |
 | imbawula (coal brazier) | imbawula | Ch 11. English text keeps the word; kept unchanged. |
+| peg (to mark a contour line) | isikhonkwane (pl. izikhonkwane) | Ch 7. (check) |
+| well (hand-dug) / seep | umthombo obiweyo (well) / indawo amanzi aphuma kancinci kuyo emhlabeni (seep) | Ch 7. (check) |
+| bath / shower | ibhafu / ishawa (ukushawa) | Ch 7. Loans. (check) |
+| fly larvae | imibungu yeempukane | Ch 7. (check) |
+| overhang (of a roof) | umphetho ophumela ngaphandle | Ch 7. (check) |
+| pit toilet / septic tank / soak-away | indlu yangasese engumngxuma / itanki ye-septic / i-soak-away | Ch 7. (check) |
+| cardboard / newspaper | ikhadibhodi / iphephandaba | Ch 7. (check) |
+| seasonal sandy river | umlambo onesanti wexesha elithile (seasonal sandy river) | Ch 7. (check) |
+| level mark (A-frame) | uphawu lokulingana (level mark) | Ch 7. (check) |
+| straw (as mulch) | utyani / ingca eyomileyo | Ch 7. (check) |
+| crossbar / seed pods | intonga ephakathi / iingobozi zembewu | Ch 7. (check) |
