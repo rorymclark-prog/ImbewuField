@@ -632,7 +632,7 @@ function FarmerSurveyCard({
           <div className="text-xs font-sans mt-0.5" style={{ color: 'var(--text-secondary)' }}>
             {localUi('From', 'Kuvela ku', lang)} {survey.org_name}
             {/* Simple hides the question-count metadata — a farmer answering does not need it. */}
-            {!simple && <>&middot; {survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 && lang !== 'zu' ? 's' : ''}</>}
+            {!simple && <>{' · '}{survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 && lang !== 'zu' ? 's' : ''}</>}
           </div>
         </div>
         {submitted ? (
@@ -814,7 +814,7 @@ export default function SurveysPage() {
 
         {/* Section heading */}
         <div className="flex items-center gap-2.5">
-          <ClipboardList size={16} style={{ color: 'var(--color-forest-800)' }} strokeWidth={1.7} />
+          <ClipboardList size={24} className="shrink-0" style={{ color: 'var(--color-forest-800)' }} strokeWidth={1.7} aria-hidden="true" />
           <h1 className="t-h1 font-display" style={{ color: 'var(--text-primary)' }}>
             {isStaff ? localUi('Survey builder', 'Ukwakha inhlolovo', lang) : canAnswer ? localUi('Available surveys', 'Izinhlolovo ezitholakalayo', lang) : localUi('Surveys', 'Izinhlolovo', lang)}
           </h1>
@@ -902,7 +902,7 @@ export default function SurveysPage() {
         )}
 
         {!isLive && (
-          <p className="text-center text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
+          <p className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
             {localUi('Sample data', 'Idatha yesibonelo', lang)}
           </p>
         )}
