@@ -68,13 +68,13 @@ export default function CompleteProductionExamplePage() {
   const stapleArt = bandRows(resolved.bands.find(band => band.key === 'staples')!).slice(0, 4);
 
   return <main className={styles.page}><div className={styles.wrap}>
-    <nav className={styles.nav} aria-label="Example navigation"><div className={styles.navControls}><MenuButton /><Link href="/samples"><ArrowLeft size={18} /> More examples</Link></div><span>Imbewu<span className={styles.brandField}>Field</span></span><a href="#print" className="relative before:absolute before:-inset-y-[13px] before:inset-x-0 before:content-['']"><Printer size={18} /> Print this plan</a></nav>
+    <nav className={styles.nav} aria-label="Example navigation"><div className={styles.navControls}><MenuButton /><Link href="/samples"><ArrowLeft size={18} /> More examples</Link></div><span>Imbewu<span className={styles.brandField}>Field</span></span><a href="#print" className={`${styles.printLink} relative before:absolute before:-inset-y-[13px] before:inset-x-0 before:content-['']`} aria-label="Print this plan"><Printer size={18} /> <span className={styles.printLabel}>Print this plan</span></a></nav>
     <header className={styles.hero}>
       <div><span className={styles.eyebrow}>FICTIONAL FARM · WARM KWAZULU-NATAL</span><h1>A whole farm.<br />{' '}A year of food.</h1><p>Vegetables and staples from the beds. Fruit, nuts and berries from the food forest. Eggs, milk, meat, honey and fish alongside them.</p><div className={styles.heroActions}><a className={styles.primary} href="#calendar">See the production calendar <ArrowDown size={18} /></a><a href="#food-graphs">Food and space graphs <ArrowDown size={16} /></a><span><CalendarDays size={17} /> November 2026 – October 2027</span></div></div>
       <div className={styles.heroProduce} aria-label="Example foods"><Art iconKey="crop:maize" size={94} /><Art iconKey="tree:persea-americana" size={94} /><Art iconKey="crop:swiss-chard" size={94} /><Art iconKey="animal:chicken-layer" size={94} /><Art iconKey="tree:macadamia-integrifolia" size={94} /><Art iconKey="animal:bees" size={94} /></div>
     </header>
     <p className={styles.notice}><strong>This is a made-up farm.</strong> Layout, plant ages, banana dates, animal production and preserved-stock months are examples. Fruit and nut reference seasons use the existing South African research. Quantities that are not known stay unknown.</p>
-    <p className={styles.small}>The example starts in November 2026 so screen, paper and tests use the same dates. Your own plan starts from the current month; the climate and saved sowings decide when food is ready.</p>
+    <p className={styles.small}>This example plan runs from November 2026. Your own plan starts from the current month; the climate and saved sowings decide when food is ready.</p>
 
     <section className={styles.overview} aria-labelledby="farm-title">
       <div className={styles.sectionHeading}><div><span className={styles.eyebrow}>THE EXAMPLE SITE</span><h2 id="farm-title">Everything has a place</h2></div><span className={styles.small}>Illustrated layout · not a measured map</span></div>
