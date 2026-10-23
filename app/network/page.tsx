@@ -59,7 +59,7 @@ import {
   type NetworkSortKey,
 } from '@/lib/network';
 import { DEMO_NETWORK_NOTICE } from '@/lib/network-demo';
-import type { GardenStatus } from '@/lib/db/types';
+import { NETWORK_STATUS_COLOR } from '@/components/network/status-colors';
 
 const NetworkMap = dynamic(() => import('@/components/network/NetworkMap'), {
   ssr: false,
@@ -87,11 +87,7 @@ const LINE = 'var(--border)';
 const PAPER = 'var(--bg-1)';
 const ATTENTION = 'var(--orange)';
 
-const STATUS_COLOR: Record<GardenStatus, string> = {
-  thriving: 'var(--emerald)',
-  establishing: 'var(--gold)',
-  support: 'var(--orange)',
-};
+const STATUS_COLOR = NETWORK_STATUS_COLOR;
 
 const DASH = '—';
 function group(n: number): string {
@@ -228,7 +224,11 @@ export default function NetworkPage() {
                 // track what the rows actually are. Leaving it on real data would be
                 // the same failure in the other direction: a funder discounting real
                 // programme results as a mock-up.
-                className="font-sans font-semibold whitespace-nowrap shrink-0"
+                //
+                // w20-38: in the header only from sm up; below sm the same label sits as a
+                // full-width strip under the header (still on first paint, never hidden), so it
+                // stops pushing the title down to "N" and Settings off-screen.
+                className="font-sans font-semibold whitespace-nowrap shrink-0 hidden sm:inline-block"
                 style={{
                   fontSize: 12,
                   color: 'var(--gold-dim)',
@@ -249,6 +249,14 @@ export default function NetworkPage() {
           header's h1 is gone. The stat strip right below already repeats "Sites" etc, so this
           stays visually quiet (matches the previous text-xs treatment). */}
       <h1 className="sr-only">{tr('Network', 'Inethiwekhi')}</h1>
+      {portfolio.isDemo && (
+        <div
+          className="sm:hidden flex-shrink-0 px-3 py-1.5 font-sans font-semibold"
+          style={{ fontSize: 12, color: 'var(--gold-dim)', background: 'color-mix(in srgb, var(--gold) 12%, var(--bg-1))', borderBottom: `1px solid ${LINE}` }}
+        >
+          {tr('Programme portfolio', 'Iphothifoliyo yohlelo')}
+        </div>
+      )}
 
       {/* An authorised read that failed says so. It must not render as an empty portfolio:
           "no farmers" and "we could not find out" look identical on a dashboard and mean

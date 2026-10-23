@@ -18,7 +18,8 @@ test('w19-39: network stat strip, list column and status colours', () => {
   const n = read('app/network/page.tsx');
   assert.doesNotMatch(n, /padding: '9px 0'/);
   assert.match(n, /paddingBlock: 9/);
-  assert.match(n, /thriving: 'var\(--emerald\)'/);
+  // w20-39: the status colours moved to the shared components/network/status-colors.ts.
+  assert.match(read('components/network/status-colors.ts'), /thriving: 'var\(--emerald\)'/);
   assert.match(n, /var\(--color-forest-800\)' : 'transparent'/);
   assert.match(n, /flex flex-col min-w-0 flex-1/);
 });
