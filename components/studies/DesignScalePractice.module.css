@@ -1,6 +1,6 @@
 .diagramGrid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(220px, 1fr); gap: 28px; margin-top: 24px; align-items: start; }
 .figure { margin: 0; min-width: 0; }
-.viewport { overflow: auto; border: 1px solid var(--border); border-radius: 14px; background: #FAF7EE; /* fixed paper: DesignScaleDiagram.tsx draws in fixed dark inks */ }
+.viewport { overflow: auto; border: 1px solid var(--border); border-radius: 14px; background: var(--bg-1); }
 .viewport[data-enlarged="true"] { max-height: 620px; }
 .viewport:focus-visible, .viewButton:focus-visible { outline: 3px solid var(--gold-dim); outline-offset: 3px; }
 .normal { width: 100%; }
@@ -15,3 +15,7 @@
 .answers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 26px; align-items: end; }
 @media (max-width: 760px) { .diagramGrid { grid-template-columns: 1fr; } .answers { grid-template-columns: 1fr; gap: 0; } .viewport[data-enlarged="true"] { max-height: 520px; } }
 @media print { .diagramGrid { display: block; } .viewport, .viewport[data-enlarged="true"] { max-height: none; overflow: visible; border: 0; } .enlarged { width: 100%; } .figure { max-width: 125mm; } .viewButton { display: none; } .readout { margin-top: 12px; } }
+.diagram { font-family: var(--font-sans), system-ui, sans-serif; }
+.diagram .paper { fill: transparent; }
+:global(html.dark) .diagram { filter: invert(1) hue-rotate(180deg); }
+.diagram * { font-family: inherit; }
