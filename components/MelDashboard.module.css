@@ -15,7 +15,7 @@
 .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
 .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); gap:16px; margin:18px 0; }
 .card { background:var(--bg-1); padding:20px; border:1px solid var(--border); border-radius:16px; min-width:0; }
-.stat { font-size:30px; font-weight:700; display:block; margin:8px 0; }
+.stat { font-family:var(--font-display),serif; font-size:30px; font-weight:700; display:block; margin:8px 0; }
 .muted { color:var(--mel-muted); font-size:13px; }
 .tag { display:inline-block; background:var(--badge-bg); color:var(--emerald); padding:5px 9px; border-radius:8px; font-size:12px; font-weight:600; }
 .root button,.root select,.root input:not([type=checkbox]),.root textarea { min-height:44px; border-radius:9px; padding:9px 12px; border:1px solid var(--border); font:inherit; font-size:14px; background:var(--input-bg); color:var(--mel-ink); max-width:100%; }
@@ -40,13 +40,15 @@
 .bar span { display:block; height:100%; background:var(--emerald); }
 .compact { padding:12px 20px; background:var(--bg-1); border-bottom:1px solid var(--border); font-size:14px; display:flex; gap:20px; flex-wrap:wrap; }
 .statsGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:14px 0; }
-/* ux-22: a bordered row with a chevron, not a bare bold label — the same disclosure affordance
-   every other <details> on these dashboards gives (see .root summary below). */
+/* w18-11: one disclosure pattern for every <details> inside the MEL dashboards (About these
+   counts, Create an assessment, How assessments work, Learning action): primary-ink 600 label,
+   chevron on the right that turns when open, native marker hidden. */
+.root details > summary { min-height:44px; display:flex; align-items:center; gap:8px; list-style:none; cursor:pointer; padding:8px 0; color:var(--text-primary); font-weight:600; line-height:1.5; }
+.root details > summary::-webkit-details-marker { display:none; }
+.root details > summary::after { content:''; flex-shrink:0; width:8px; height:8px; margin-left:auto; border-right:2px solid var(--text-muted); border-bottom:2px solid var(--text-muted); transform:rotate(45deg); transition:transform .15s; }
+.root details[open] > summary::after { transform:rotate(-135deg); }
+.root details.card { margin:16px 0; padding-top:4px; padding-bottom:4px; }
 .about { font-size:14px; border:1px solid var(--border); border-radius:12px; padding:0 14px; margin:14px 0; background:var(--bg-1); }
-.about summary { min-height:44px; display:flex; align-items:center; gap:6px; list-style:none; }
-.about summary::-webkit-details-marker { display:none; }
-.about summary::after { content:''; flex-shrink:0; width:8px; height:8px; margin-left:auto; border-right:2px solid var(--text-muted); border-bottom:2px solid var(--text-muted); transform:rotate(45deg); transition:transform .15s; }
-.about[open] summary::after { transform:rotate(-135deg); }
 .about p { margin-top:0; padding-bottom:14px; }
 /* MelMetrics' per-question result bars — sdesk-14: this used to be a plain stacked <div>, so
    each question's bar ran the full 1280px frame on desktop. Reusing .grid puts 2-3 questions
@@ -74,7 +76,6 @@
 .sampleCard p { margin:0 0 8px; }
 .sampleCard button { margin-top:auto; width:100%; font-weight:600; }
 .sampleCard > svg { color:var(--emerald); }
-.root summary { cursor:pointer; padding:8px 0; font-weight:600; line-height:1.5; }
 @media(max-width:1000px) { .sampleGrid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:600px) { .sampleGrid { grid-template-columns:1fr; } }
 
@@ -116,7 +117,6 @@
 .assessmentText > span:not(.tag),.assessmentText > small { color:var(--text-secondary); font-size:14px; }
 .assessmentText .bar { width:100%; margin:0; }
 .root .guide { margin:20px 0; padding:12px 20px; }
-.root .guide > summary { color:var(--emerald); }
 @media(max-width:1100px) { .hero p { display:none; } .cycleStages { grid-template-columns:repeat(3,minmax(0,1fr)); } .summaryCard > svg { display:none; } }
 @media(max-width:650px) {
   .hero { display:block; padding:0; }
@@ -141,3 +141,6 @@
   .assessmentCards { grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr)); }
   .coverageTrack, .assessmentText .bar { max-width:480px; }
 }
+
+/* w18-09: stat tiles match the cohort Tile one tab over (rounded-2xl = 28px, 16px padding). */
+@media(min-width:1024px) { .root .summaryCard, .statsGrid .card { border-radius:28px; } }
