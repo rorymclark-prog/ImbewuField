@@ -1,0 +1,38 @@
+.workspace { padding:clamp(16px,3vw,40px); padding-bottom:100px; }
+.wrap { max-width:1180px; margin:auto; }
+.intro { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:8px 0 24px; border-bottom:1px solid var(--border); }
+.intro h1 { font:500 clamp(32px,4vw,46px)/1.1 var(--font-display),Georgia,serif; margin:8px 0 12px; letter-spacing:-.025em; }
+.intro p { max-width:64ch; margin:0; color:var(--text-secondary); font-size:16px; }
+.intro > svg { color:var(--emerald); flex-shrink:0; }
+.intro .eyebrow { font-size:12px; letter-spacing:.14em; font-weight:700; color:var(--emerald); }
+.sample { margin:18px 0; padding:12px 16px; border:1px solid var(--border); border-left:3px solid var(--gold); border-radius:8px; background:var(--bg-1); color:var(--text-primary); }
+.languageNote { color:var(--text-secondary); }
+.choices { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin:24px 0; }
+.workspace .choice { text-align:left; padding:20px; display:flex; flex-direction:column; gap:12px; border-radius:16px; background:var(--bg-1); line-height:1.5; }
+.workspace .choice[aria-pressed=true] { background:var(--bg-2); border-color:var(--emerald); box-shadow:inset 0 3px 0 var(--emerald); }
+.choiceTop { display:flex; justify-content:space-between; align-items:center; width:100%; color:var(--emerald); }
+.choiceTop > span { font-size:12px; letter-spacing:.1em; color:var(--text-secondary); }
+.choice > strong { font:500 23px/1.2 var(--font-display),Georgia,serif; }
+.choice > span:last-child { color:var(--text-secondary); font-size:14px; }
+.scope { background:var(--bg-1); border:1px solid var(--border); border-radius:16px; padding:20px; }
+.scopeTitle { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.scopeTitle h2 { margin:0; font-size:18px; }
+.scopeTitle > span { margin-left:auto; color:var(--text-secondary); font-size:13px; }
+.filters { display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:18px; }
+.workspace .filters label,.workspace .months label { margin-bottom:4px; font-size:13px; font-weight:600; }
+.filters select,.months select { width:100%; min-width:0; font-weight:400; }
+.fixedValue { display:block; min-height:44px; margin-top:6px; padding:10px 0; font-weight:400; }
+.scope > p { color:var(--text-secondary); font-size:13px; margin:14px 0 0; }
+.months { display:grid; grid-template-columns:1fr 1fr; gap:18px; max-width:600px; }
+.state { border:1px solid var(--border); background:var(--bg-1); padding:28px; margin:24px 0; border-radius:16px; }
+.method { display:grid; grid-template-columns:1fr 1fr; gap:32px; margin:32px 0; padding-top:24px; border-top:1px solid var(--border); }
+.method h2 { font:500 24px var(--font-display),Georgia,serif; }
+.method p { color:var(--text-secondary); }
+.method a { display:flex; align-items:center; justify-content:space-between; gap:14px; min-height:44px; padding:8px 0; color:var(--emerald); border-bottom:1px solid var(--border); font-size:14px; text-decoration:none; }
+.method a:hover { text-decoration:underline; }
+@media(max-width:760px) { .choices { grid-template-columns:1fr; gap:10px; margin:18px 0; }.workspace .choice { padding:16px; gap:8px; }.choiceTop { display:none; }.choice > strong { font-size:22px; }.filters { grid-template-columns:1fr; gap:0; }.scopeTitle > span { margin-left:0; }.scope { padding:16px; }.method { grid-template-columns:1fr; gap:10px; }.intro > svg { display:none; }.months { gap:10px; } }
+@media print { .intro,.choices,.scope,.sample,.method,.languageNote { display:none; }.workspace { padding:0; overflow:visible; }.wrap { max-width:none; } }
+@media(max-width:760px){.choice[aria-pressed=false] > span:last-child{display:none}.workspace .choice{min-height:62px;justify-content:center}}
+.nextReview{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;margin:24px 0;padding:22px;background:var(--bg-1);border:1px solid var(--border);border-radius:16px}
+.nextReview h2{font:500 24px var(--font-display),Georgia,serif}.nextReview p{margin:0;color:var(--text-secondary);max-width:60ch}.nextReview > div:last-child{display:flex;flex-wrap:wrap;gap:10px}.nextReview button{display:inline-flex;align-items:center;gap:10px}
+@media print{.nextReview{display:none}}
