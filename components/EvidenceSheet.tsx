@@ -344,7 +344,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
                   {editingField === f.key ? (
                     <div style={{ display: 'flex', gap: 8, alignItems: 'center', background: 'var(--bg-1)', border: `1.5px solid ${group.color}`, borderRadius: 11, padding: '10px 13px' }}>
                       <span style={{ font: '400 13px/1 var(--font-sans), sans-serif', color: 'var(--text-secondary)', flex: 1 }}>{f.label}</span>
-                      <input
+                      <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                         autoFocus
                         type="text"
                         inputMode="decimal"

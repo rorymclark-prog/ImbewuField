@@ -30,7 +30,7 @@ test('w16-06: /network text is 12px+ and ochre/orange text follows the theme', (
     assert.doesNotMatch(s, /color:\s*'#9E5C08'/);
     assert.doesNotMatch(s, /color:\s*'#7A4A06'/);
   }
-  assert.match(src('app/network/page.tsx'), /color: sort === key \? 'var\(--emerald\)'/);
+  assert.match(src('app/network/page.tsx'), /color: sort === key \? 'var\(--color-forest-800\)'/);
 });
 
 test('w16-07: /example paints full-opacity white on the ochre fill and theme tokens for text', () => {

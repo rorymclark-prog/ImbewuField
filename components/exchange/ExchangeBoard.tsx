@@ -242,7 +242,7 @@ export default function ExchangeBoard() {
               onChange={(e) => setQuery(e.target.value)}
               placeholder={tx('Search crop, town or farmer', 'Funa isitshalo, idolobha noma umlimi')}
               aria-label={tx('Search listings', 'Funa izikhangiso')}
-              className="rounded-xl font-sans"
+              className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 rounded-xl font-sans"
               style={{
                 width: '100%',
                 padding: '10px 12px 10px 34px',

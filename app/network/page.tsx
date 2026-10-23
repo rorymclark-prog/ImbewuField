@@ -469,7 +469,7 @@ export default function NetworkPage() {
                     padding: '3px 8px',
                     cursor: 'pointer',
                     background: sort === key ? 'rgba(31,77,43,0.12)' : 'transparent',
-                    color: sort === key ? 'var(--emerald)' : INK_MUTED,
+                    color: sort === key ? 'var(--color-forest-800)' : INK_MUTED,
                     border: `1px solid ${sort === key ? 'rgba(31,77,43,0.35)' : LINE}`,
                   }}
                 >
