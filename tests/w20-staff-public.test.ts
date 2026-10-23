@@ -45,3 +45,9 @@ test('w20-41: vision toggle never wraps and has equal segments; h1 is centred wi
   assert.match(v, /font-sans font-semibold whitespace-nowrap transition-all/);
   assert.match(v, /<h1 className="font-display text-center"/);
 });
+
+test('w20-42: cohort Export CSV and filled chips use the forest fill pair, not emerald', () => {
+  const c = read('components/funder/CohortDashboard.tsx');
+  assert.match(c, /background: 'var\(--color-forest-800\)', color: 'var\(--on-forest-800\)'/);
+  assert.match(c, /background: on \? 'var\(--color-forest-800\)' : 'var\(--bg-2\)'/);
+});
