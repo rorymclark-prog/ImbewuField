@@ -179,7 +179,7 @@ export default function PartnersPage() {
         <section className="px-5 sm:px-8 lg:px-10 pt-14 pb-16 sm:pt-20 sm:pb-20">
           <div className="max-w-3xl mx-auto text-center">
             <SectionEyebrow>For NGOs &amp; funded farming programmes</SectionEyebrow>
-            <h1 className="mt-4 font-display font-semibold text-[32px] leading-[1.15] sm:text-[44px] sm:leading-[1.12] tracking-[-0.02em] text-[var(--text-primary)]">
+            <h1 className="mt-4 [text-wrap:balance] font-display font-semibold text-[32px] leading-[1.15] sm:text-[44px] sm:leading-[1.12] tracking-[-0.02em] text-[var(--text-primary)]">
               The field operating system for funded smallholder and community-farming programmes
             </h1>
             <p className="mt-5 font-display text-[19px] sm:text-[21px] leading-[1.5] text-[var(--text-secondary)]">

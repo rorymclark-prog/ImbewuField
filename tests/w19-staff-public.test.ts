@@ -27,3 +27,24 @@ test('w19-40: login is honest', () => {
   assert.doesNotMatch(l, /placeholder=\{t\('login(FullName|EmailAddress|Password)'\)\}/);
   assert.match(read('lib/i18n.tsx'), /kept on this device\./);
 });
+
+test('w19-41: mentor metric numbers use the display font; due chip outlined; no lone icon', () => {
+  const css = read('components/FieldWork.module.css');
+  assert.match(css, /\.metric strong \{[^}]*font-family:var\(--font-display\)/);
+  assert.match(css, /\.due \{[^}]*border:1px solid var\(--border\)/);
+  assert.doesNotMatch(read('components/FieldTeams.tsx'), /<Users size=\{28\}/);
+});
+
+test('w19-42: public page polish', () => {
+  assert.match(read('app/partners/page.tsx'), /\[text-wrap:balance\] font-display/);
+  const c = read('app/contact/page.tsx');
+  assert.match(c, /8%, var\(--bg-1\)\)/);
+  assert.match(c, /1\.5px solid var\(--color-forest-800\)/);
+  assert.doesNotMatch(c, /\+ \{ui\('Add a subject'/);
+  assert.match(c, /<Plus size=\{14\}/);
+  assert.doesNotMatch(c, /kept on this phone/);
+  assert.match(read('app/updates/page.tsx'), /1\.5px solid var\(--color-forest-800\)/);
+  const v = read('app/vision/page.tsx');
+  assert.match(v, /w-fit mx-auto/);
+  assert.match(v, /px-4 rounded-xl text-sm font-sans font-semibold/);
+});

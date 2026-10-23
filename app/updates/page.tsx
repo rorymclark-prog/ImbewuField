@@ -92,7 +92,7 @@ export default function UpdatesPage() {
               type="button"
               onClick={() => setShowAll((v) => !v)}
               className="mb-6 px-4 rounded-lg font-semibold"
-              style={{ minHeight: 44, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
+              style={{ minHeight: 44, background: 'transparent', border: '1.5px solid var(--color-forest-800)', color: 'var(--color-forest-800)' }}
             >
               {showAll ? 'Show fewer' : 'Show more'}
             </button>
