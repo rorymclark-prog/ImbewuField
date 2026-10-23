@@ -27,7 +27,7 @@ export default function FeedbackPage(){
   }catch(e){setError((e as Error).message);}finally{setBusy(false);}}
   async function inbox(){setBusy(true);setError('');try{const response=await fetch('/api/product-feedback',{headers:await paidApiHeaders(user)});const result=await response.json();if(!response.ok)throw Error(result.error);setTickets(result.tickets);}catch(e){setError((e as Error).message);}finally{setBusy(false);}}
   return <main className={styles.page}>
-    <AppHeader backFallback="/account" title={label('Feedback','Impendulo')} /><div className={styles.content}><div className={styles.wrap}>
+    <AppHeader backFallback="/account" title={label('Feedback','Impendulo')} /><div className={styles.content}><div className={`${styles.wrap} ${styles.narrow}`}>
     <h1>{label('Report a bug or suggest a feature','Bika inkinga noma phakamisa isici esisha')}</h1>
     {lang==='zu'&&<p role="note">UMBHALO WESIZULU USALUHLAKA — Le nguqulo ayikabuyekezwa umuntu okhuluma kahle isiZulu. / ISIZULU DRAFT — This translation has not been reviewed by a fluent isiZulu speaker.</p>}
     {/* ux-03/nav-04: was developer-addressed phrasing on a farmer-facing screen — rewritten to
