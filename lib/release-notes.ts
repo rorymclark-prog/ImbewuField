@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '23 October 2026', sha: '774a3530', changes: [
+  { when: '23 October 2026', sha: '8b96d925', changes: [
     'Organisation and funder reports now show coverage, evidence tables and follow-up.',
     'Choose cohorts or recorded months; download a brief, full-colour or ink-saving PDF.',
     'Reports keep missing records separate from zero and show where figures come from.',
