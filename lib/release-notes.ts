@@ -41,6 +41,18 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 October 2026', sha: 'ed8ed899', changes: [
+    'Study pages and course colours follow dark mode; green buttons stay readable in dark.',
+    'Bigger tap areas on Home, Sign in, Invoice, Contact and the NGO and funder pages.',
+    'Sample pages, the Network map and your site report have clearer small text.',
+    'The last emoji icons are proper icons; survey and journal pages fit a laptop.',
+  ], tour: [{ title: 'Open the Study area in dark mode',
+    where: 'Menu → Study', href: '/student',
+    detail: 'Course colours, cards and diagrams now follow dark mode.',
+  }, { title: 'Open the Network map',
+    where: 'Menu → Network', href: '/network',
+    detail: 'Labels and small text on the map and its list are easier to read.',
+  }] },
   { when: '22 October 2026', sha: '1fb671ea', changes: [
     'The printable plan fits a phone; screen readers pause between isiZulu and English.',
     'Buttons and titles use plain sentence case; Study arrows are icons; staff charts go dark.',
