@@ -8,10 +8,11 @@ import FieldTeams from './FieldTeams';
 import MemberAccessPreview from './MemberAccessPreview';
 import styles from './MelDashboard.module.css';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 
 export default function OrganisationControlCentre() {
   const { lang } = useLanguage();
-  const ui = (en: string, zu: string) => lang === 'zu' ? zu : en;
+  const ui = (en: string, zu: string) => inlineText(lang, en, zu);
   const router = useRouter();
   const [tab, setTab] = useState<'people' | 'teams' | 'preview' | 'branding'>('people');
   const [error, setError] = useState('');

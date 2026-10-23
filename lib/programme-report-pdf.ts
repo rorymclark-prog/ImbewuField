@@ -1,12 +1,13 @@
 import { numberLabel } from '@/lib/format-figures';
 import { trainingEvidenceSummary, trainingFeedbackSummary, type ProgrammeBranding, type VenuePhoto, type TrainingRecord } from './programme-evidence';
 import { pdfSafe } from '@/lib/crop-export-pdf';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 
 export type ReportSection = { title: string; lines: string[] };
 export type ReportMetric = { label: string; value: string; detail?: string };
 export type ReportChart = { title: string; rows: { label: string; value: number; display?: string }[]; suffix?: string; minimumScale?:number };
-export type ProgrammePresentation = { metrics?: ReportMetric[]; chart?: ReportChart; session?: TrainingRecord; funder?: boolean; ink?: boolean; language?: 'en' | 'zu' };
-const pdfLabel = (en: string, language: 'en' | 'zu' | undefined) => language === 'zu' ? ({
+export type ProgrammePresentation = { metrics?: ReportMetric[]; chart?: ReportChart; session?: TrainingRecord; funder?: boolean; ink?: boolean; language?: 'en' | 'zu' | 'xh' };
+const pdfLabel = (en: string, language: 'en' | 'zu' | 'xh' | undefined) => language === 'xh' ? pdfLabelXh(en) : language === 'zu' ? ({
   'Full report':'Umbiko ogcwele', 'Brief summary':'Isifinyezo esifushane', 'Tour workspace':'Indawo yokuhlola',
   'Attendance':'Ukuba khona', 'No register yet':'Alukho uhlu okwamanje', 'Signed register':'Uhlu olusayiniwe',
   'Attendance signatures':'Amasiginesha okuba khona', 'Feedback':'Impendulo', 'Responses / attendees':'Izimpendulo / abebehambele',
@@ -23,6 +24,12 @@ const pdfLabel = (en: string, language: 'en' | 'zu' | undefined) => language ===
   'answered':'baphendulile', 'skipped':'beqile', 'First action':'Isenzo sokuqala', 'Suggested improvement':'Isiphakamiso sokuthuthukisa',
   'Programme report':'Umbiko wohlelo', 'Internal session record':'Irekhodi leseshini yangaphakathi',
 } as Record<string,string>)[en] ?? en.replace(/^(\d+)% present$/, '$1% bakhona') : en;
+/** isiXhosa (unreviewed machine draft): the shard draft for this exact English label, English when there is none. */
+function pdfLabelXh(en: string): string {
+  const attendance = /^(\d+)% present$/.exec(en);
+  if (attendance) return inlineTemplate('xh', '{n}% present', null, { n: attendance[1] });
+  return inlineText('xh', en);
+}
 export function programmeReportMetrics(p: ProgrammePresentation): ReportMetric[] {
   if(!p.session)return p.metrics??[];
   const s=p.session,e=trainingEvidenceSummary(s),f=trainingFeedbackSummary(s,p.funder);
@@ -49,7 +56,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     const { drawVisualReportFront } = await import('./report-visual-pdf');
     drawVisualReportFront(doc, visual.visuals, visual.assets, visual.date, presentation.language);page();
   }
-  if(!ink){doc.setFillColor(23,62,44);doc.rect(0,0,210,presentation.language==='zu'?58:49,'F');doc.setTextColor(255);}
+  if(!ink){doc.setFillColor(23,62,44);doc.rect(0,0,210,presentation.language==='zu'||presentation.language==='xh'?58:49,'F');doc.setTextColor(255);}
   else {doc.setDrawColor(35,75,49);doc.setLineWidth(.6);doc.line(18,46,192,46);doc.setTextColor(23,62,44);}
   doc.setFont('helvetica','bold');doc.setFontSize(22);
   const titleRows=doc.splitTextToSize(pdfSafe(presentation.session?.title??title),174) as string[];
@@ -60,7 +67,11 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(ink?75:245,ink?95:245,ink?80:245);
     doc.text(pdfSafe('Izihloko zesiZulu azikabuyekezwa; umbhalo wobufakazi ugcinwa ngolimi oqoshwe ngalo.'),18,51);
   }
-  y=presentation.language==='zu'?67:59;
+  if(presentation.language==='xh'){
+    doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(ink?75:245,ink?95:245,ink?80:245);
+    doc.text(pdfSafe(inlineText('xh','The isiXhosa headings are unreviewed; evidence text is kept in the language it was recorded in.')),18,51);
+  }
+  y=presentation.language==='zu'||presentation.language==='xh'?67:59;
   const partners=branding?(['organisation','garden','funder'] as const).filter(k=>branding[k].label||branding[k].image):[];
   if(branding&&partners.length){
     let height=18;
@@ -91,7 +102,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     write(`${s.venue}${s.facilitator?` | ${pdfLabel('Facilitator',presentation.language)}: ${s.facilitator}`:''}`,10);
     if(!presentation.funder&&s.latitude!==null&&s.longitude!==null){
       ensure(12);doc.setFontSize(9);doc.setTextColor(34,88,57);
-      doc.textWithLink(`${presentation.language==='zu'?'Imephu yendawo / izikhombisi-ndlela':'Venue map / directions'}: ${s.latitude.toFixed(5)}, ${s.longitude.toFixed(5)}`,18,y,{url:`https://www.google.com/maps/search/?api=1&query=${s.latitude},${s.longitude}`});y+=12;
+      doc.textWithLink(`${presentation.language==='zu'?'Imephu yendawo / izikhombisi-ndlela':pdfLabel('Venue map / directions',presentation.language)}: ${s.latitude.toFixed(5)}, ${s.longitude.toFixed(5)}`,18,y,{url:`https://www.google.com/maps/search/?api=1&query=${s.latitude},${s.longitude}`});y+=12;
     }
   }
   if(presentation.chart){
@@ -133,10 +144,10 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
   }
   if(session){
     const feedback=trainingFeedbackSummary(session,presentation.funder);
-    ensure(30);write(pdfLabel('Training feedback',presentation.language),15,true);write(presentation.language==='zu'?`${feedback.completed} izimpendulo kubantu abangu-${feedback.assigned} abebehambele.`:`${feedback.completed} responses from ${feedback.assigned} attendees.`,10);
+    ensure(30);write(pdfLabel('Training feedback',presentation.language),15,true);write(presentation.language==='zu'?`${feedback.completed} izimpendulo kubantu abangu-${feedback.assigned} abebehambele.`:inlineTemplate(presentation.language??'en','{completed} responses from {assigned} attendees.',null,{completed:feedback.completed,assigned:feedback.assigned}),10);
     if(!feedback.completed)write(pdfLabel('No feedback recorded yet.',presentation.language));
     if(feedback.completed&&feedback.metrics.length&&feedback.metrics.every(m=>m.suppressed))write(pdfLabel('Detailed findings are withheld for this small group.',presentation.language),10);
-    for(const m of feedback.metrics.every(m=>m.suppressed)?[]:feedback.metrics){if(!feedback.completed)break;ensure(22);write(presentation.language==='zu'?m.zu:m.en,11,true);if(m.suppressed){write(pdfLabel('Results withheld for this small group.',presentation.language),9);continue;}write(`${m.n} ${presentation.language==='zu'?'baphendulile':'answered'} · ${m.missing} ${presentation.language==='zu'?'beqile':'skipped'}`,9);for(const c of m.choices??[])if(c.count)write(`${presentation.language==='zu'?c.zu:c.en}: ${c.count}`,10);}
+    for(const m of feedback.metrics.every(m=>m.suppressed)?[]:feedback.metrics){if(!feedback.completed)break;ensure(22);write(presentation.language==='zu'?m.zu:m.en,11,true);if(m.suppressed){write(pdfLabel('Results withheld for this small group.',presentation.language),9);continue;}write(`${m.n} ${presentation.language==='zu'?'baphendulile':pdfLabel('answered',presentation.language)} · ${m.missing} ${presentation.language==='zu'?'beqile':pdfLabel('skipped',presentation.language)}`,9);for(const c of m.choices??[])if(c.count)write(`${presentation.language==='zu'?c.zu:c.en}: ${c.count}`,10);}
     if(!presentation.funder)for(const response of session.feedback??[])for(const [key,value] of Object.entries(response.answers))if(['course_change','course_apply'].includes(key)&&value.trim())write(`${pdfLabel(key==='course_apply'?'First action':'Suggested improvement',presentation.language)}: ${value}`);
   }
   if(photos.length&&!visual){
@@ -160,6 +171,6 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     }
   }
   const pages=doc.getNumberOfPages();
-  for(let p=1;p<=pages;p++){doc.setPage(p);doc.setDrawColor(207,220,211);doc.line(18,281,192,281);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(64,86,72);doc.text(presentation.language==='zu'?`ImbewuField · ${pdfLabel(presentation.session&&!presentation.funder?'Internal session record':'Programme report',presentation.language)}`:'ImbewuField',18,288);doc.text(`${p} / ${pages}`,192,288,{align:'right'});}
+  for(let p=1;p<=pages;p++){doc.setPage(p);doc.setDrawColor(207,220,211);doc.line(18,281,192,281);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(64,86,72);doc.text(presentation.language==='zu'||presentation.language==='xh'?`ImbewuField · ${pdfLabel(presentation.session&&!presentation.funder?'Internal session record':'Programme report',presentation.language)}`:'ImbewuField',18,288);doc.text(`${p} / ${pages}`,192,288,{align:'right'});}
   return doc;
 }

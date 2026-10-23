@@ -6,10 +6,11 @@ import { portfolioTotals } from '@/lib/network';
 import ReportComposer, { type ReportSection } from './ReportComposer';
 import styles from './MelDashboard.module.css';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 
 export default function ProgrammeReports({ funder = false }: { funder?: boolean }) {
   const { lang } = useLanguage();
-  const ui = (en: string, zu: string) => lang === 'zu' ? zu : en;
+  const ui = (en: string, zu: string) => inlineText(lang, en, zu);
   const { user } = useAuth();
   const portfolio = useNetworkPortfolio(Boolean(user));
   const [kind, setKind] = useState<'overview' | 'production' | 'training'>('overview');
@@ -29,6 +30,7 @@ export default function ProgrammeReports({ funder = false }: { funder?: boolean 
   const reportTitle = { overview: ui('Programme overview', 'Uhlolojikelele lohlelo'), production: ui('Production and sales', 'Ukukhiqiza nokuthengisa'), training: ui('Training and participation', 'Ukuqeqeshwa nokubamba iqhaza') }[kind];
   return <section className={styles.root}><div className={styles.wrap}><div className={styles.hero}><h1>{funder ? ui('Funder reports', 'Imibiko yabaxhasi') : ui('Organisation reports', 'Imibiko yenhlangano')}</h1><p>{ui('Choose a report, review its coverage and export a clear, economical PDF.', 'Khetha umbiko, ubuyekeze imininingwane yawo, bese uwukhipha njenge-PDF ecacile nefushane.')}</p></div>
     {lang === 'zu' && <p role="note">Izihloko nezilawuli zalapha zisesiZulu. Umbhalo nobufakazi obungaphakathi ku-PDF kuzohlala kunjengoba kuqoshwe, futhi kungase kube ngesiNgisi.</p>}
+    {lang === 'xh' && <p role="note">{inlineText(lang, 'The headings and controls here are in isiXhosa. The text and evidence inside the PDF stay as recorded and may be in English.')}</p>}
     {portfolio.orgs.length > 0 && <label>{ui('Organisation', 'Inhlangano')}<select value={portfolio.orgId ?? ''} onChange={e => portfolio.setOrgId(e.target.value)}>{portfolio.orgs.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}</select></label>}
     <div className={styles.grid}>{reportChoices.map(([key, label, desc]) => <button key={key} className={styles.card} aria-pressed={key === kind} onClick={() => setKind(key)}><h2>{label}</h2><p>{desc}</p></button>)}</div>
     {portfolio.error ? <p role="alert" className={styles.error}>{portfolio.error}</p> : portfolio.loading ? <p>{ui('Loading authorised report data…', 'Kusalayishwa idatha yemibiko egunyaziwe…')}</p> : <ReportComposer key={`${kind}:${portfolio.orgId}:${portfolio.isDemo}`} title={reportTitle} sample={portfolio.isDemo} orgId={portfolio.orgId} sections={sections}
