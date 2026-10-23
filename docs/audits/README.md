@@ -62,6 +62,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Wave 19 integration close-out: five tracks folded, w19-01 to w19-42 implemented, w18 partials closed with them — 23 October 2026](2026-10-23/wave-19-integration-claude.md).
+
 - [Wave 19 rendered re-capture and visual review of the wave 18 build: new IDs w19-01 to w19-42 across five tracks, w18 partials carried — 23 October 2026](2026-10-23/wave-19-recapture-claude.md).
 
 - [Wave 18 integration close-out: eight tracks folded, w18-01 to w18-59 implemented, w17-08 closed — 23 October 2026](2026-10-23/wave-18-integration-claude.md).

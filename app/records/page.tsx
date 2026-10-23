@@ -28,6 +28,7 @@ import {
 } from '@/lib/sample-mode';
 import HarvestReconciliation from '@/components/HarvestReconciliation';
 import BrandLogo from '@/components/BrandLogo';
+import DesktopPrimaryNav from '@/components/layout/DesktopPrimaryNav';
 import LanguageDraftNote from '@/components/LanguageDraftNote';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
@@ -1608,6 +1609,8 @@ export default function RecordsPage() {
             label simply steps aside — the same pattern the funder and NGO headers use. */}
         <div className="w-px h-5 hidden sm:block" style={{ background: 'var(--color-border)' }} />
         <h1 className="text-xs font-display truncate min-w-0 m-0 sr-only sm:not-sr-only sm:block" style={{ color: 'var(--color-muted-strong)' }}>{t('myRecordsTitle')}</h1>
+        {/* TabBar steps aside at lg+ (hideAtDesktop below), so the four destinations move up here. */}
+        <DesktopPrimaryNav />
         <div className="flex-1" />
         {/* 'finances:overview', which is the id lib/lesson-registry.ts actually holds. The old
             /records header asked for 'finance:overview' — no such lesson — so Learn opened onto

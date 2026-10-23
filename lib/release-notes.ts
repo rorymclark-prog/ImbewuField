@@ -41,6 +41,18 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 October 2026', sha: '774a3530', changes: [
+    'On a laptop each page has one set of links at the top, and titles are no longer cut off.',
+    'Invoices keep amounts on one line, and the Share and Print buttons appear once.',
+    'Sample pages, MEL and the Atlas use one button and badge style, with clearer notices.',
+    'Study diagrams follow dark mode; Tips and the manual now match the rest of the app.',
+  ], tour: [{ title: 'Open an invoice',
+    where: 'Records → Invoice', href: '/invoice',
+    detail: 'Amounts no longer break across lines and the tab bar stays out of the way on a laptop.',
+  }, { title: 'Open the Tips page',
+    where: 'Menu → Tips and help', href: '/tips',
+    detail: 'Tips sit on the same cards as the rest of the app, with one way to start the tour.',
+  }] },
   { when: '23 October 2026', sha: '0d8445cc', changes: [
     'Sample pages, Teach the Teachers, the tour and Tips now match the rest of the app.',
     'Records, Finances, Contact, Sign in and the Design picker read clearly in dark mode.',

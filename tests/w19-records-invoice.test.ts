@@ -7,6 +7,12 @@ const read = (rel: string) => readFileSync(new URL(`../${rel}`, import.meta.url)
 test('w19-10 records and invoice hide the TabBar at desktop', () => {
   assert.match(read('app/records/page.tsx'), /<TabBar hideAtDesktop \/>/);
   assert.match(read('app/invoice/page.tsx'), /<TabBar hideAtDesktop \/>/);
+  // ...and their own headers carry the four destinations at lg+ in its place.
+  for (const p of ['app/records/page.tsx', 'app/invoice/page.tsx']) {
+    const s = read(p);
+    const header = s.slice(s.indexOf('<header'), s.indexOf('</header>'));
+    assert.match(header, /<DesktopPrimaryNav \/>/, `${p} header has no desktop nav to replace the TabBar`);
+  }
 });
 
 test('w19-11 Picked wrapper is a plain div, full width on desktop', () => {

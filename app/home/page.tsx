@@ -30,6 +30,7 @@ import ThemePanel from '@/components/ThemePanel';
 import LimaBar from '@/components/LimaBar';
 import TabBar from '@/components/TabBar';
 import AppHeader from '@/components/layout/AppHeader';
+import DesktopPrimaryNav from '@/components/layout/DesktopPrimaryNav';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import HomeHeroCard from '@/components/home/HomeHeroCard';
@@ -445,7 +446,7 @@ function HomeLandingInner() {
       >
         <MenuButton />{!simple && <BackButton fallback="/home" />}
 
-        <div className="flex flex-col justify-center flex-1">
+        <div className="flex flex-col justify-center min-w-0">
           <span className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-harvest)', letterSpacing: '0.12em', lineHeight: 1 }}>
             {getDayDate(lang)}
           </span>
@@ -461,6 +462,9 @@ function HomeLandingInner() {
             {firstName ? t('homeGreeting').replace('{name}', firstName) : t('tabHome')}
           </h1>
         </div>
+        {/* TabBar steps aside at lg+ (hideAtDesktop below), so the four destinations move up here. */}
+        <DesktopPrimaryNav />
+        <div className="flex-1" />
 
         <LessonLink id="home:overview" label={localUi(lang, 'Learn', 'Funda')} />
         <button

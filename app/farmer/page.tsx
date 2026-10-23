@@ -13,9 +13,9 @@ import DataPanel from '@/components/DataPanel';
 import { useAppConfirm } from '@/components/AppConfirm';
 import TabBar from '@/components/TabBar';
 import LangSwitcher from '@/components/LangSwitcher';
-import RoleSwitcher from '@/components/RoleSwitcher';
 import AccountButton from '@/components/AccountButton';
 import BrandLogo from '@/components/BrandLogo';
+import DesktopPrimaryNav from '@/components/layout/DesktopPrimaryNav';
 import ThemePanel from '@/components/ThemePanel';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
@@ -576,7 +576,9 @@ function HomeInner() {
           <h1 className="sr-only">{t('tabMap')}</h1>
 
           <div className="w-px h-5 flex-shrink-0 hidden md:block" style={{ background: 'var(--border)', opacity: 0.5 }} />
-          <span className="hidden lg:block font-sans whitespace-nowrap" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{t('tagline')}</span>
+          <span className="hidden 2xl:block font-sans whitespace-nowrap" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{t('tagline')}</span>
+          {/* TabBar steps aside at lg+ (hideAtDesktop below), so the four destinations move up here. */}
+          <DesktopPrimaryNav />
           <div className="flex-1" />
 
           <span className="flex-shrink-0"><LessonLink id="map:overview" label="Learn" /></span>
@@ -616,9 +618,16 @@ function HomeInner() {
               Build {buildInfo.sha}
             </div>
           )}
-          <div className="hidden md:flex"><RoleSwitcher current="farmer" /></div>
-          <div className="hidden md:block"><LangSwitcher /></div>
-          <div className="hidden md:block"><AccountButton /></div>
+          {/* The five-role switcher (~570px) used to sit here from md up. With Learn, Design studio,
+              language, account and Settings beside it, the bar was ~1,590px of content in a 1,280px
+              header, so Settings was clipped off the right edge at every laptop width. It already
+              lives in the burger drawer (NavDrawer renders the inMenu switcher), so the header
+              keeps the four primary destinations instead. */}
+          {/* xl+ only: from md to lg these two pushed Settings off the bar (768px) and clipped the
+              primary links (1024px). The language picker is the first section of the
+              Appearance panel behind Settings (ThemePanel), and My account is in the burger drawer. */}
+          <div className="hidden xl:block"><LangSwitcher /></div>
+          <div className="hidden xl:block"><AccountButton /></div>
 
           <button
             onClick={() => setSettingsOpen(true)}

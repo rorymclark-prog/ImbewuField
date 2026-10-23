@@ -9,6 +9,13 @@ test('w19-01: farmer pages hide the phone TabBar at desktop', () => {
   for (const p of ['app/journal/page.tsx', 'app/home/page.tsx', 'app/farmer/page.tsx']) {
     assert.match(read(p), /<TabBar hideAtDesktop \/>/, p);
   }
+  // Hiding the bar is only safe where the header carries the same four links at lg+: /journal and
+  // staff Home get them from AppHeader, /farmer and farmer Home from DesktopPrimaryNav.
+  for (const p of ['app/home/page.tsx', 'app/farmer/page.tsx']) {
+    const s = read(p);
+    const header = s.slice(s.indexOf('<header'), s.indexOf('</header>'));
+    assert.match(header, /<DesktopPrimaryNav \/>/, `${p} header has no desktop nav to replace the TabBar`);
+  }
   const header = read('components/exchange/ExchangeHeader.tsx');
   assert.match(header, /<AppHeader/);
   assert.equal((header.match(/<h1/g) ?? []).length, 1);
@@ -19,7 +26,9 @@ test('w19-02: farmer error is a banner outside the header; LangSwitcher is compa
   const headerEnd = s.indexOf('</header>');
   assert.ok(s.indexOf('{error && (\n          <div role="alert"') > headerEnd);
   assert.doesNotMatch(s.slice(0, headerEnd), /\{error && \(\n\s+<span/);
-  assert.match(s, /hidden lg:block font-sans whitespace-nowrap[^>]*>\{t\('tagline'\)\}/);
+  assert.match(s, /hidden 2xl:block font-sans whitespace-nowrap[^>]*>\{t\('tagline'\)\}/);
+  // The header role switcher overflowed the bar and clipped Settings; it lives in the drawer.
+  assert.doesNotMatch(s.slice(0, headerEnd), /<RoleSwitcher/);
   const lang = read('components/LangSwitcher.tsx');
   assert.match(lang, /minHeight: 40/);
   assert.doesNotMatch(lang, /fontSize: 20/);

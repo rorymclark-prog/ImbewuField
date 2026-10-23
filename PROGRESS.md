@@ -52,6 +52,30 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 23 Oct 2026 — Wave 19: re-capture, then five swarm tracks (PRs #1086–#1089 and the staff-public branch, folded on one branch)
+- **Re-capture first:** the wave 18 build (`774a3530`) rendered again, 600 frames; new IDs `w19-01`…`w19-42` across five
+  tracks, w18 partials carried to them — `docs/audits/2026-10-23/wave-19-recapture-claude.md`.
+- **Farmer chrome:** one navigation on desktop (TabBar hidden at lg where AppHeader has its nav), /exchange and staff
+  Home on AppHeader, farmer error as a banner below the header, sans controls, /offline card spacing and disabled
+  buttons, inline produce art no longer inflated, themed account chip, narrow /journal rail.
+- **Records and invoice:** one nav bar on desktop, Picked tab full width, on-screen money on a no-break space (the PDF
+  keeps a plain space), Lima in flow on /invoice, sans form controls, Share PDF and Print once.
+- **Samples and map:** /samples/production nav, print and CTA; themed mini plan thumbnail; MEL hero not lime in dark,
+  neutral notices; one Tour control, one radius, Lucide arrows; Atlas title, farmer-facing /feedback, heavier MEL
+  headings, themed /design/lite.
+- **Study:** worked diagram readable on phone and themed in dark (no invert filter); chevron cue on notices; one card
+  surface on /student; /tips on the shared grid; /manual on AppHeader; balanced headings; English notice hidden in isiZulu.
+- **Staff and public:** short header titles that survive the nav, /network strip and statuses, honest /login ("this
+  device", no permanent Connecting line), mentor metric figures and due chip, /partners, /contact, /updates, /vision polish.
+- **Integrator:** `tests/w19-farmer-chrome.test.ts` moved from the storage-emulator script into `npm test`; app
+  dictionary pin re-baselined for the one reworded sign-in line (`tests/fixtures/i18n-before-wave-19.tsx.txt`); w18-50
+  pin now checks the /design/lite top gap is at least 56px (w19-26 made it 72px). /farmer, farmer Home, /records and
+  /invoice hid the TabBar at lg+ without any header links to replace it, so they now carry the shared
+  `DesktopPrimaryNav`; the /farmer header also dropped the role switcher (still in the drawer) so it stops clipping
+  Settings at laptop widths. Close-out:
+  `docs/audits/2026-10-23/wave-19-integration-claude.md`. Open next: wave 20 re-capture; Rory on the items under
+  *Unchanged* in the re-capture record.
+
 ### 23 Oct 2026 — Wave 18: re-capture, then eight swarm tracks (PRs #1077–#1081, #1083–#1085, folded on one branch)
 - **Re-capture first:** the wave 17 build (`4cad7c53`) rendered again with a full visual review; new IDs `w18-01`…`w18-59`
   across eight tracks — `docs/audits/2026-10-23/wave-18-recapture-claude.md`.

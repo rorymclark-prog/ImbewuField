@@ -13,6 +13,7 @@ import {
 import { useAppLevel } from '@/lib/app-level';
 import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
+import DesktopPrimaryNav from '@/components/layout/DesktopPrimaryNav';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LimaBar from '@/components/LimaBar';
@@ -766,6 +767,8 @@ export default function InvoicePage() {
         <BrandLogo />
         <div className="w-px h-5" style={{ background: 'var(--border)' }} />
         <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{ui('Invoice', 'I-invoyisi')} {invoiceNo}</span>
+        {/* TabBar steps aside at lg+ (hideAtDesktop below), so the four destinations move up here. */}
+        <DesktopPrimaryNav />
         <div className="flex-1" />
         <LessonLink id="finances:invoices" label={ui('Learn', 'Funda')} />
         <SettingsButton />
