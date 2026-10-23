@@ -52,7 +52,7 @@ Isahluko ngasinye sihlolwe ngale mithombo ngeyoMsintsi ngo-2026. Esi sikhokelo s
 - Centre for Environmental Rights (n.d.). *Regulations under the Conservation of Agricultural Resources Act, 1983* (copy). cer.org.za. https://cer.org.za/wp-content/uploads/2014/02/CARA-Regs.pdf
 - Endangered Wildlife Trust (n.d.). *Conservation of Agricultural Resources Act (CARA)*. EWT Laws. https://laws.ewt.org/legislation/land-legislation/cara/
 
-### Isahluko 3: Ukucwangcisa ngee-sector
+### Isahluko 3: Ucwangciso lwee-sector
 
 - Clark, R. (comp.) (2021). *The Permaculture Gardening Handbook*. RVCC project, UNDP / Government of Lesotho.
 - Mollison, B. (1988). *Permaculture: A Designers' Manual*. Tagari Publications.
@@ -198,7 +198,7 @@ Isahluko ngasinye sihlolwe ngale mithombo ngeyoMsintsi ngo-2026. Esi sikhokelo s
 - Rodda, N., Carden, K., Armitage, N. and du Plessis, H.M. (2011). *Development of guidance for sustainable irrigation use of greywater in gardens and small-scale agriculture in South Africa*. Water SA 37(5). https://www.wrc.org.za/wp-content/uploads/mdocs/SE370514.pdf
 - South African Journal of Botany (2025). *Colocasia esculenta (L.) Schott (Araceae; taro): global invasion history and prognosis for South Africa*. Vol. 177. https://www.sciencedirect.com/science/article/pii/S0254629924007622
 
-### Isahluko 8: Umhlaba: ondla umhlaba, wona uya kukondla
+### Isahluko 8: Umhlaba: yondle umhlaba, nawo uya kukondla
 
 - Clark, R. (comp.) (2021). *The Permaculture Gardening Handbook*. RVCC project, UNDP / Government of Lesotho.
 - African Conservation Trust (2014). *Introduction to Permaculture and Homestead Gardening*. African Conservation Trust.
@@ -248,7 +248,7 @@ Isahluko ngasinye sihlolwe ngale mithombo ngeyoMsintsi ngo-2026. Esi sikhokelo s
 - PubMed (n.d.). *Factors affecting compost tea as a potential source of Escherichia coli and Salmonella on fresh produce*. US National Library of Medicine. https://pubmed.ncbi.nlm.nih.gov/17477249/
 - UConn Soil Nutrient Analysis Laboratory (n.d.). *Compost, compost tea and manure*. University of Connecticut. https://soiltesting.cahnr.uconn.edu/compost_compost_tea_and_manure/
 
-### Isahluko 9: Ukwakha indalo elungeleleneyo, evelisayo
+### Isahluko 9: Ukwakha indalo elungeleleneyo nevelisayo
 
 - Clark, R. (comp.) (2021). *The Permaculture Gardening Handbook*. RVCC project, UNDP / Government of Lesotho.
 - African Conservation Trust (2014). *Introduction to Permaculture and Homestead Gardening*. African Conservation Trust. https://projectafrica.com/
@@ -303,7 +303,7 @@ Isahluko ngasinye sihlolwe ngale mithombo ngeyoMsintsi ngo-2026. Esi sikhokelo s
 - Wikipedia (n.d.). *Nicotine poisoning*. Wikipedia. https://en.wikipedia.org/wiki/Nicotine_poisoning
 - Kobisi, K., Seleteng-Kose, L. and Moteetee, A. (2019). *Invasive alien plants occurring in Lesotho: their ethnobotany, potential risks, distribution and origin*. Bothalia 49(1). https://journals.abcjournal.aosis.co.za/index.php/abc/article/view/2453
 
-### Isahluko 11: Ikhaya elizinzileyo: i-Zone 0 nobuchwephesha obufanelekileyo
+### Isahluko 11: Ikhaya elizinzileyo: i-Zone 0 ne-appropriate technology
 
 - Clark, R. (comp.) (2021). *The Permaculture Gardening Handbook*. RVCC project, UNDP / Government of Lesotho.
 - African Conservation Trust (2014). *Introduction to Permaculture and Homestead Gardening*. African Conservation Trust. https://projectafrica.com/
