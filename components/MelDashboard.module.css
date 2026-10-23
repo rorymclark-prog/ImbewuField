@@ -4,7 +4,7 @@
    edge to edge. TabBar is in normal flow (not fixed), so the shell stays a 100dvh column. */
 .shell { height:100dvh; display:flex; flex-direction:column; overflow:hidden; background:var(--bg-0); }
 .scroller { flex:1; min-height:0; overflow-y:auto; }
-.hero { background:#214d35; color:white; border-radius:16px; padding:16px 20px; margin-bottom:16px; display:flex; align-items:center; gap:8px 20px; flex-wrap:wrap; }
+.hero { background:var(--color-forest-800); color:var(--on-forest-800); border-radius:16px; padding:16px 20px; margin-bottom:16px; display:flex; align-items:center; gap:8px 20px; flex-wrap:wrap; }
 .hero > span { display:none; }
 .hero h1 { font-family:var(--font-display),serif; font-size:28px; margin:0; }
 .hero p { max-width:680px; margin:0; }
@@ -21,13 +21,15 @@
 .root button,.root select,.root input:not([type=checkbox]),.root textarea { min-height:44px; border-radius:9px; padding:9px 12px; border:1px solid var(--border); font:inherit; font-size:14px; background:var(--input-bg); color:var(--mel-ink); max-width:100%; }
 .root input:not([type=checkbox]),.root textarea { width:100%; }
 .root textarea { min-height:90px; }
-.root input[type=checkbox] { width:20px; height:20px; accent-color:#245739; flex-shrink:0; }
+.root input[type=checkbox] { width:20px; height:20px; accent-color:var(--color-forest-800); flex-shrink:0; }
 .root label { display:block; font-size:14px; line-height:1.5; margin:14px 0; }
 .root label > input:not([type=checkbox]),.root label > select,.root label > textarea { display:block; margin-top:6px; }
 .root button { cursor:pointer; }
 .root button:disabled { opacity:.55; cursor:default; }
-.root button.primary { background:#245739; color:white; border-color:#245739; }
-.root button[aria-pressed=true] { box-shadow:0 0 0 2px #245739; }
+.root :is(button,a).primary { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:9px 18px; border-radius:9px; background:var(--color-forest-800); color:var(--on-forest-800); border:1px solid var(--color-forest-800); font-weight:600; font-size:14px; text-decoration:none; }
+.root :is(button,a).secondary { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:9px 18px; border-radius:9px; background:transparent; color:var(--text-primary); border:1px solid var(--border); font-weight:600; font-size:14px; text-decoration:none; }
+.stack { display:grid; gap:16px; margin:16px 0; }
+.root button[aria-pressed=true] { box-shadow:0 0 0 2px var(--emerald); }
 .root :focus-visible { outline:3px solid var(--gold); outline-offset:3px; }
 .error { padding:15px; background:color-mix(in srgb, var(--orange) 14%, var(--bg-0)); color:var(--orange); border:1px solid color-mix(in srgb, var(--orange) 40%, var(--border)); border-radius:10px; }
 .notice { padding:15px; background:color-mix(in srgb, var(--blue) 14%, var(--bg-0)); color:var(--blue); border-radius:10px; margin:14px 0; }
@@ -71,7 +73,7 @@
 .sampleCard h2 { margin:0 !important; }
 .sampleCard p { margin:0 0 8px; }
 .sampleCard button { margin-top:auto; width:100%; font-weight:600; }
-.sampleCard > svg { color:#245739; }
+.sampleCard > svg { color:var(--emerald); }
 .root summary { cursor:pointer; padding:8px 0; font-weight:600; line-height:1.5; }
 @media(max-width:1000px) { .sampleGrid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:600px) { .sampleGrid { grid-template-columns:1fr; } }
