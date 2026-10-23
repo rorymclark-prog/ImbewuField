@@ -62,3 +62,10 @@ test('w20-44: login has no sign-in subtitle and its card follows the theme token
   assert.doesNotMatch(l, /--color-surface|--color-ink|--color-muted-strong/);
   assert.match(l, /background: 'var\(--bg-1\)', border: '1px solid var\(--border\)'/);
 });
+
+test('w20-45: print sheet toolbar uses forest tokens and font tokens; north arrow says N once', () => {
+  const p = read('app/facilitator/print/page.tsx');
+  assert.match(p, /background: 'var\(--color-forest-800\)', color: 'var\(--on-forest-800\)', fontFamily: 'var\(--font-sans\), sans-serif'/);
+  assert.doesNotMatch(p, /fontFamily: 'sans-serif'/);
+  assert.doesNotMatch(p, /N ↑/);
+});
