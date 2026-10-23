@@ -101,7 +101,7 @@ export default function NgoPage() {
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       <AppHeader
-        title={tr(lang, 'Organisation · programme overview', 'Inhlangano · ukubuka konke kohlelo')}
+        title={tr(lang, 'Organisation', 'Inhlangano')}
         backFallback="/"
         right={<>
           {/* Conditional for the same reason as /funder: this dashboard reads real gardens and

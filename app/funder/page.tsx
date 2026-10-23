@@ -101,7 +101,7 @@ export default function FunderPage() {
   return (
     <div className="h-screen flex flex-col" style={{ background: 'var(--bg-0)' }}>
       <AppHeader
-        title={tr(lang, 'Funder · impact oversight', 'Umxhasi · ukubheka umthelela')}
+        title={tr(lang, 'Funder', 'Umxhasi')}
         backFallback="/"
         right={<>
           {/* Was an unconditional "demo data". NgoDashboard reads REAL Firestore via listGardens()
