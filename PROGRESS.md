@@ -52,6 +52,17 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 23 Oct 2026 — isiXhosa: full UI dictionary and money book (machine draft)
+- **Dictionary:** `lib/locales/xh.ts` from 693 to 2,514 of 2,556 keys (98.4%; the rest are codes/names). 1,863 new
+  keys drafted against one glossary; 185 of the 693 shipped strings fixed for meaning (e.g. "umonakalo" = damage for
+  impact, flipped negation in `challengeLabour`, *ikhephu* snow for frost). Soil advice stays on its English source.
+- **Money book:** isiXhosa joins the source-keyed regional lane (`RECORDS_REGIONAL_LANGS`); `draft-xh.json` 543
+  accepted after a blind back-translation review (535 ok, 8 repairs shipped), 1 held, 1 retired.
+- **Marked as draft:** `LanguageDraftNote` now covers isiXhosa; Settings shows an isiXhosa draft line like Xitsonga;
+  Home date reads isiXhosa weekday/month tables. Guards updated to allow isiXhosa as a second marked-draft language.
+- **Record:** `docs/translation-reviews/xhosa-ui-2026-10-23/`. Open next: ~400 inline `lang === 'zu'` branches still
+  English for isiXhosa, Studies decks and the Manual, fluent-speaker review.
+
 ### 23 Oct 2026 — Wave 18: re-capture, then eight swarm tracks (PRs #1077–#1081, #1083–#1085, folded on one branch)
 - **Re-capture first:** the wave 17 build (`4cad7c53`) rendered again with a full visual review; new IDs `w18-01`…`w18-59`
   across eight tracks — `docs/audits/2026-10-23/wave-18-recapture-claude.md`.

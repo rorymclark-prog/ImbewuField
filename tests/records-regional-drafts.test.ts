@@ -37,7 +37,7 @@ test('English is untouched: no draft is ever returned for English, and English l
     }
   }
   // Unaffected languages stay English too — a language with no table must never get another's words.
-  assert.equal(recordsFill('xh', 'Cancel'), 'Cancel');
+  assert.equal(recordsFill('nr', 'Cancel'), 'Cancel');
   assert.equal(recordsFill('af', 'Cancel'), 'Cancel');
 });
 
@@ -119,6 +119,10 @@ test('Sesotho, Tshivenda and Xitsonga draft notices name the language, say unrev
   assert.equal(isRecordsRegionalLang('zu'), false);
   assert.match(recordsDraftNotice('st'), /Unreviewed Sesotho machine draft/);
   assert.match(recordsDraftNotice('ve'), /Unreviewed Tshivenda machine draft/);
+  // isiXhosa joined the regional lane on 23 Oct 2026 (docs/translation-reviews/xhosa-ui-2026-10-23/).
+  assert.equal(isRecordsRegionalLang('xh'), true);
+  assert.match(recordsDraftNotice('xh'), /Unreviewed isiXhosa machine draft\. English source is shown beside instructions/);
+  assert.equal(recordsDraft('xh', 'Cancel') !== null, true, 'isiXhosa money-book drafts are reachable');
   assert.match(recordsDraftNotice('ts'), /Unreviewed Xitsonga machine draft \(provisional standard written Xitsonga\)/);
   for (const lang of LANGS) assert.doesNotMatch(recordsDraftNotice(lang), /reviewed by|approved|fluent speaker has|Shangani/i);
 });
