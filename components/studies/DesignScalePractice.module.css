@@ -19,3 +19,8 @@
 .diagram .paper { fill: transparent; }
 :global(html.dark) .diagram { filter: invert(1) hue-rotate(180deg); }
 .diagram * { font-family: inherit; }
+.disclosure { display: flex; align-items: center; gap: 8px; list-style: none; }
+.disclosure::-webkit-details-marker { display: none; }
+.chevron { flex: none; transition: transform .15s; }
+details[open] > .disclosure .chevron { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) { .chevron { transition: none; } }

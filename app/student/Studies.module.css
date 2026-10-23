@@ -56,7 +56,8 @@
 .previewSummary > div { min-width: 0; }
 .coursePreviews .previewSummary h2 { margin: 0; font-size: clamp(20px, 2vw, 24px); line-height: 1.2; }
 .collapsible > .previewSummary::after { top: 50%; transform: translateY(-50%); }
-.coursePreviewLink { display: block; margin-top: 14px; padding: 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-2); }
+.coursePreviewLink { display: block; margin-top: 14px; padding: 14px; border: 1px solid var(--border-strong, var(--border)); border-radius: 12px; background: var(--bg-1); }
+.coursePreviews > .coursePreviewLink:last-child:nth-child(odd) { grid-column: 1 / -1; margin-top: 0; }
 .coursePreviewLink strong { display: block; color: var(--color-forest-800); font-size: 18px; line-height: 1.25; }
 .coursePreviewLink span span { display: block; margin-top: 6px; color: var(--text-secondary); font-size: 14px; line-height: 1.45; }
 .coursePreviewLink em { display: block; margin-top: 10px; color: var(--color-forest-800); font-size: 14px; font-style: normal; font-weight: 700; }
