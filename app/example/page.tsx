@@ -27,6 +27,7 @@ function Card({ children }: { children: React.ReactNode }) {
         backgroundColor: 'var(--bg-1)',
         border: '1px solid var(--border)',
         borderRadius: 12,
+        alignSelf: 'stretch',
         padding: 'clamp(16px, 1.6vw, 24px)',
       }}
     >
@@ -37,7 +38,7 @@ function Card({ children }: { children: React.ReactNode }) {
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-xs mb-1.5 uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
+    <div className="font-display font-semibold mb-1.5" style={{ fontSize: 'clamp(14px, 1.1vw, 16px)', color: 'var(--text-primary)' }}>
       {children}
     </div>
   );
@@ -139,8 +140,8 @@ function ExampleInner() {
           <CompletionScore inputs={DEMO_COMPLETION} surface />
 
           {/* Your land / Harvesting areas — mirrors DataPanel Overview cards */}
-          <div className="space-y-2">
-          <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.22)' }}>
+          <div className="flex flex-col gap-2 self-stretch">
+          <div className="flex-1 overflow-hidden" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderLeft: '3px solid var(--emerald)', borderRadius: 12 }}>
             <div className="flex items-center gap-3 px-3.5 py-2.5">
               <div className="flex items-center justify-center flex-shrink-0 rounded-xl" style={{ width: 32, height: 32, background: '#1F4D2B' }}>
                 <Sprout size={16} style={{ color: '#A8D88A' }} />
@@ -157,14 +158,12 @@ function ExampleInner() {
                 {site.areaHa < 1
                   ? (
                     <>
-                      <div className="font-display font-bold" style={{ fontSize: 'clamp(15px, 1.3vw, 18px)', color: 'var(--text-primary)', lineHeight: 1 }}>{numberLabel(site.areaM2)}</div>
-                      <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>m²</div>
+                      <div className="font-display font-bold" style={{ fontSize: 'clamp(15px, 1.3vw, 18px)', color: 'var(--text-primary)', lineHeight: 1 }}>{numberLabel(site.areaM2)} <span className="font-sans font-normal" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>m²</span></div>
                     </>
                   )
                   : (
                     <>
-                      <div className="font-display font-bold" style={{ fontSize: 'clamp(15px, 1.3vw, 18px)', color: 'var(--text-primary)', lineHeight: 1 }}>{site.areaHa}</div>
-                      <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{t('hectaresUnit')}</div>
+                      <div className="font-display font-bold" style={{ fontSize: 'clamp(15px, 1.3vw, 18px)', color: 'var(--text-primary)', lineHeight: 1 }}>{site.areaHa} <span className="font-sans font-normal" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{t('hectaresUnit')}</span></div>
                     </>
                   )}
               </div>
@@ -173,7 +172,7 @@ function ExampleInner() {
               <div className="px-3.5 pb-2.5 space-y-1">
                 {site.features.map((f, i) => (f.name ? (
                   <div key={i} className="flex items-center gap-2 font-sans" style={{ fontSize: 'clamp(12px, 0.95vw, 14px)', color: 'var(--text-secondary)' }}>
-                    <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#1F4D2B', opacity: 0.6 }} />
+                    <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--emerald)', opacity: 0.8 }} />
                     <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{f.name}</span>
                     {f.category && <span style={{ color: 'var(--text-secondary)' }}>{f.category}</span>}
                     <span className="ml-auto" style={{ color: 'var(--text-secondary)' }}>{f.areaHa < 1 ? `${numberLabel(Math.round(f.areaHa * 10000))} m²` : `${f.areaHa} ha`}</span>
@@ -183,7 +182,7 @@ function ExampleInner() {
             )}
           </div>
 
-          <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(35,94,134,0.06)', border: '1px solid rgba(35,94,134,0.25)' }}>
+          <div className="flex-1 overflow-hidden" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderLeft: '3px solid var(--blue)', borderRadius: 12 }}>
             <div className="flex items-center gap-3 px-3.5 py-2.5">
               <div className="flex items-center justify-center flex-shrink-0 rounded-xl" style={{ width: 32, height: 32, background: '#235E86' }}>
                 <Droplets size={16} style={{ color: '#CFE6F5' }} />
@@ -197,15 +196,14 @@ function ExampleInner() {
                 </div>
               </div>
               <div className="text-right flex-shrink-0">
-                <div className="font-display font-bold" style={{ fontSize: 'clamp(15px, 1.3vw, 18px)', color: 'var(--text-primary)', lineHeight: 1 }}>{numberLabel(water.estVolumeKL)}</div>
-                <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>kL est.</div>
+                <div className="font-display font-bold" style={{ fontSize: 'clamp(15px, 1.3vw, 18px)', color: 'var(--text-primary)', lineHeight: 1 }}>{numberLabel(water.estVolumeKL)} <span className="font-sans font-normal" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>kL est.</span></div>
               </div>
             </div>
             {water.features && water.features.some((f) => f.name) && (
               <div className="px-3.5 pb-2.5 space-y-1">
                 {water.features.map((f, i) => (f.name ? (
                   <div key={i} className="flex items-center gap-2 font-sans" style={{ fontSize: 'clamp(12px, 0.95vw, 14px)', color: 'var(--text-secondary)' }}>
-                    <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#235E86', opacity: 0.6 }} />
+                    <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--blue)', opacity: 0.8 }} />
                     <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{f.name}</span>
                     {f.category && <span style={{ color: 'var(--text-secondary)' }}>{f.category}</span>}
                     <span className="ml-auto" style={{ color: 'var(--text-secondary)' }}>{numberLabel(f.estVolumeKL)} kL</span>
@@ -275,7 +273,7 @@ function ExampleInner() {
             <div className="space-y-1.5">
               {data.biome.challenges.slice(0, 4).map((c, i) => (
                 <div key={i} className="flex gap-2 font-display leading-relaxed" style={{ fontSize: 'clamp(13px, 1vw, 15px)', color: 'var(--text-primary)' }}>
-                  <span className="flex-shrink-0 mt-0.5 flex items-center" style={{ color: '#9A6018' }}><AlertTriangle size={12} /></span>
+                  <span className="flex-shrink-0 mt-0.5 flex items-center" style={{ color: 'var(--gold-dim)' }}><AlertTriangle size={12} /></span>
                   {c}
                 </div>
               ))}
