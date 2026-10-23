@@ -50,18 +50,18 @@ function LiteInner() {
 
   const title = fromFarmer ? 'Your farm is safe' : 'Your design is safe';
   const body = fromFarmer
-    ? 'The map page kept closing on this phone, so we brought you here instead of letting it crash again. Your places, reports and details are exactly as you left them.'
+    ? 'The map page kept closing on this device, so we brought you here instead of letting it crash again. Your places, reports and details are exactly as you left them.'
     : lightDied
-      ? 'Even the light designer could not stay open on this phone right now. Nothing is lost — everything you drew and every measurement is safe. Freeing memory (close other apps and tabs) gives the next try its best chance.'
-      : 'The full designer kept closing on this phone, so we brought you here instead of letting it crash again. Everything you drew and every measurement is exactly as you left it.';
+      ? 'Even the light designer could not stay open on this device right now. Nothing is lost — everything you drew and every measurement is safe. Freeing memory (close other apps and tabs) gives the next try its best chance.'
+      : 'The full designer kept closing on this device, so we brought you here instead of letting it crash again. Everything you drew and every measurement is exactly as you left it.';
 
-  const designLight = link(`/design${coords}${amp}safe=1&full=1`, 'Open the designer, light', 'Your whole design without the background photo — easiest on this phone', !fromFarmer);
+  const designLight = link(`/design${coords}${amp}safe=1&full=1`, 'Open the designer, light', 'Your whole design without the background photo — easiest on this device', !fromFarmer);
   const designFull = link(`/design${coords}${amp}full=1`, 'Open the full designer', 'Everything including the photo — needs a phone with more free memory');
   const farmerMap = link(`/farmer${coords}${amp}full=1`, 'Back to the map', 'Your farm, places and details panel', fromFarmer);
   const reports = link('/farmer?panel=Reports&full=1', 'My reports', 'Saved reports, photos and evidence');
 
   return (
-    <main style={{ minHeight: '100dvh', background: 'var(--bg-0)', padding: '28px 20px', fontFamily: 'var(--font-sans)' }}>
+    <main style={{ minHeight: '100dvh', background: 'var(--bg-0)', padding: 'calc(env(safe-area-inset-top, 0px) + 56px) 20px 28px', fontFamily: 'var(--font-sans)' }}>
       <div style={{ maxWidth: 460, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 12 }}>
         <div style={{ padding: '16px 18px', borderRadius: 16, background: 'var(--warn-soft)', border: '1px solid color-mix(in srgb, var(--warn) 35%, transparent)' }}>
           <h1 style={{ margin: 0, fontWeight: 700, fontSize: 17, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>
