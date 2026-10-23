@@ -36,7 +36,7 @@
 .card li > a { min-height: 40px; }
 .reading { background: color-mix(in srgb, var(--color-forest-800) 10%, var(--bg-1)); border-color: color-mix(in srgb, var(--color-forest-800) 25%, transparent); }
 .actions { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; margin-top: 18px; }
-.actions a, .actions button { text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 1px solid color-mix(in srgb, var(--color-forest-800) 30%, transparent); border-radius: 12px; background: var(--bg-1); font: inherit; font-size: 16px; font-weight: 600; }
+.actions a, .actions button { text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 1px solid color-mix(in srgb, var(--color-forest-800) 30%, transparent); border-radius: 12px; background: var(--bg-1); color: var(--color-forest-800); text-align: center; font: inherit; font-size: 16px; font-weight: 600; }
 /* Same size and weight as the secondary buttons beside it (16px/600); only the fill differs. */
 .actions .primary { background: var(--color-forest-800); color: var(--on-forest-800, var(--on-forest)); border-color: transparent; text-decoration: none; }
 .actions .primary small { color: inherit; opacity: .85; }

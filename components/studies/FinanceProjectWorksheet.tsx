@@ -7,6 +7,7 @@ import { canSaveProjectDraft, checkProjectAnswers, deriveProject, projectDraftTe
 import { financeZu, FINANCE_ZU_PROJECT_NUMBER_LABEL, FINANCE_ZU_PROJECT_REASONING_LABEL, FINANCE_ZU_PROJECT_REASONING_PROMPT } from '@/lib/course-finance-i18n';
 import { FinanceZuText, FinanceZuCourseNotice } from './FinanceZu';
 import styles from './FinanceCourse.module.css';
+import Summary from './Summary';
 
 export default function FinanceProjectWorksheet({ exercise }: { exercise: FinanceProjectCase }) {
   const { user, loading } = useAuth();
@@ -98,7 +99,7 @@ export default function FinanceProjectWorksheet({ exercise }: { exercise: Financ
       <p>Harvest left = opening stock + harvest − delivery − household food − recorded loss. Compare it with {exercise.stockCount.reference}. Invoice value = delivered kilograms × the agreed price per kilogram. The in-month payment clears part of that invoice; {exercise.laterPayment.reference} is outside this month.</p>
       <p>The original forecast starts at {projectMoney(exercise.opening.cashCents)}, pays the two quoted amounts, then receives the assumed sale. Actual cash starts at the same opening amount and uses only the dated cash records. It also includes the stated funding and household withdrawal. The unknown, unpaid water charge changes neither the counted cash nor what is known about the missing cost.</p>
       <p>Full profit is unknown. The source pack does not supply complete production costs, stock values, equipment use and other relevant adjustments. Do not treat a cash balance, cash change or the difference between sales and the two payments as full profit.</p>
-      <details><summary>See the running balances</summary><h4>Original forecast</h4><ol>{derived.plannedBalances.map(row => <li key={row.reference}>{row.date} · {row.reference}: {projectMoney(row.balance)}{row.balance < 0 ? ' — unfunded gap, not cash in a tin' : ''}</li>)}</ol><h4>Actual cash</h4><ol>{derived.actualBalances.map(row => <li key={row.reference}>{row.date} · {row.reference}: {projectMoney(row.balance)}</li>)}</ol></details>
+      <details><Summary>See the running balances</Summary><h4>Original forecast</h4><ol>{derived.plannedBalances.map(row => <li key={row.reference}>{row.date} · {row.reference}: {projectMoney(row.balance)}{row.balance < 0 ? ' — unfunded gap, not cash in a tin' : ''}</li>)}</ol><h4>Actual cash</h4><ol>{derived.actualBalances.map(row => <li key={row.reference}>{row.date} · {row.reference}: {projectMoney(row.balance)}</li>)}</ol></details>
       <h4>Explain the change from planned to actual cash</h4>
       <ul>{derived.bridge.map(row => <li key={row.label}>{row.label}: {projectMoney(row.cents)}.</li>)}</ul>
       <p>These changes add to {projectMoney(derived.cashDifference)}. They explain the change in closing cash, not profit. In these cases the price per kilogram stays the same; the sales difference comes from quantity.</p>
