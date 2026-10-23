@@ -188,6 +188,12 @@ const WAVE_14_ZULU_REWORDED = new Set([
   "  studentSampleTourAction: 'Hlola imephu, ukuhlela namarekhodi ohambweni lwesibonelo \u2192',",
 ]);
 const WAVE_14_REMOVED = new Set<string>();
+// Wave 19 (w19-40): the practice-version sign-in notice says "this device" instead of "this phone",
+// because it shows on desktop too. Nothing else in the app dictionary changes; the named line is the
+// exact wave 16 value.
+const WAVE_19_ENGLISH_REWORDED = new Set([
+  "  loginBackendUnavailableNotice: 'Sign-in is not available in this practice version. Everything you try here is kept on this phone.',",
+]);
 // Wave 15 (copy-07): English UI labels in the app dictionary go to sentence case; keys and every
 // other line are unchanged. Each named line is the exact wave 14 value.
 const WAVE_15_ENGLISH_REWORDED = new Set([
@@ -310,11 +316,16 @@ export function ensureStudyUiDueUnlockCurrent() {
   // Wave 16 (copy-05) adds one English key, savedSiteUnavailable, for a saved site that no longer
   // exists; nothing is reworded or removed. Check the complete new file, then bind the wave 15 proof
   // to the exact pre-wave-16 fixture so it still holds byte for byte.
+  // Wave 19 (w19-40) rewords one sign-in notice. Check the complete new file, then bind the wave 16
+  // proof to the exact pre-wave-19 fixture so it still holds byte for byte.
   const liveDictionary = readFileSync(path('lib/i18n.tsx'), 'utf8');
-  assert.equal(sha(liveDictionary), '965efb4d398e7996e9a8bbfa061fa608b931d3c9244ce735e40d5c7c280eb671', 'complete app dictionary after the wave 16 edits');
+  assert.equal(sha(liveDictionary), 'bf215f73f61fc9d04bb3e89949b1d0c6fb94832276d5a6e4c55ad04a4af80b32', 'complete app dictionary after the wave 19 edit');
+  const englishBefore19 = readFileSync(path('tests/fixtures/i18n-before-wave-19.tsx.txt'), 'utf8');
+  assert.equal(sha(englishBefore19), '965efb4d398e7996e9a8bbfa061fa608b931d3c9244ce735e40d5c7c280eb671', 'complete app dictionary after the wave 16 edits');
+  assertOnlyWaveChanges(englishBefore19, liveDictionary, WAVE_19_ENGLISH_REWORDED, new Set(), 'app dictionary', 'wave 19');
   const liveEnglish = readFileSync(path('tests/fixtures/i18n-before-wave-16.tsx.txt'), 'utf8');
   assert.equal(sha(liveEnglish), '737049f60cfd7ea083460c212c5f3f7b985e8177ec03045f34619b7627331512', 'complete app dictionary after the wave 15 edits');
-  assertOnlyWaveChanges(liveEnglish, liveDictionary, new Set(), new Set(), 'app dictionary', 'wave 16');
+  assertOnlyWaveChanges(liveEnglish, englishBefore19, new Set(), new Set(), 'app dictionary', 'wave 16');
   const englishBefore15 = readFileSync(path('tests/fixtures/i18n-before-wave-15.tsx.txt'), 'utf8');
   assert.equal(sha(englishBefore15), '2485d3cc34a6b8e0b5bf964b8c8fd20ac8ec341be769ebf1094bce3987cdc282', 'complete app dictionary after the wave 14 edits remains exact');
   assertOnlyWaveChanges(englishBefore15, liveEnglish, WAVE_15_ENGLISH_REWORDED, WAVE_14_REMOVED, 'app dictionary', 'wave 15');
