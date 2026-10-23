@@ -2,10 +2,6 @@
 /* The global draggable Lima launcher sits over the left edge of lesson copy on a phone.
    This reading page already links to the app exercises where Lima remains available. */
 .page ~ :global(button[aria-label^="Open Lima"]) { display: none; }
-/* Same centred header as FinanceCourse.module.css. */
-.header { padding: 16px max(20px, calc((100% - 1120px) / 2)); display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 12px; background: var(--bg-1); border-bottom: 1px solid var(--border); }
-.header > a { color: var(--color-forest-800); font-weight: 700; text-decoration: none; }
-.header > :last-child { margin-left: auto; }
 .main { width: min(100%, 1080px); margin: 0 auto; padding: 20px 16px var(--lima-fab-clearance, 96px); }
 .hero, .panel, .day, .notice { border: 1px solid var(--border); border-radius: 20px; background: var(--bg-1); }
 .hero { padding: clamp(24px, 6vw, 48px); background: linear-gradient(145deg, color-mix(in srgb, var(--color-forest-800) 8%, var(--bg-1)), var(--bg-1) 70%); }
@@ -51,5 +47,5 @@
 .appTask p { margin-bottom: 10px; }
 .appTask a { display: inline-flex; align-items: center; min-height: 44px; color: var(--color-forest-800); font-weight: 700; text-underline-offset: 3px; }
 .footer { display: grid; gap: 12px; justify-items: start; margin-top: 20px; color: var(--text-secondary); font-size: 13px; line-height: 1.5; }
-@media (max-width: 480px) { .header > span:not([data-header-secondary]) { display: none; } .dayHeading { display: block; } .dayHeading > span { display: inline-block; margin-bottom: 12px; } .session summary { align-items: flex-start; flex-direction: column; gap: 3px; position: relative; padding-right: 44px; } .chevron { position: absolute; right: 14px; top: 14px; } .moduleList { columns: 1; } }
+@media (max-width: 480px) { .dayHeading { display: block; } .dayHeading > span { display: inline-block; margin-bottom: 12px; } .session summary { align-items: flex-start; flex-direction: column; gap: 3px; position: relative; padding-right: 44px; } .chevron { position: absolute; right: 14px; top: 14px; } .moduleList { columns: 1; } }
 @media print { .header, .heroLinks, .appTask a, .footer a { display: none; } .page { height: auto; overflow: visible; background: white; } .main { width: 100%; padding: 0; } .hero, .panel, .day, .notice { box-shadow: none; } .session { break-inside: avoid; } .session > .sessionBody { display: block !important; } }
