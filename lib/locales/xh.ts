@@ -2,6 +2,11 @@
 // extraction of this locale's existing key/value pairs, no translated text touched. Loaded
 // on demand via loadLocale() in lib/i18n.tsx, not bundled into every page's initial JS.
 import { CHAT_PANEL_ENGLISH_PENDING, DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, NETWORK_FAILURE_ENGLISH_PENDING, PHOTO_UPLOAD_ENGLISH_PENDING, PROFILE_SHEET_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
+import { XH_INLINE_SOURCE } from '@/lib/locales/xh-inline/index';
+import { registerXhInline } from '@/lib/xh-inline';
+
+// The inline isiZulu branches' isiXhosa (lib/xh-inline.ts) arrive with this chunk.
+registerXhInline(XH_INLINE_SOURCE);
 
 const dict: Dict = {
   ...DESIGN_STUDIO_ENGLISH_PENDING,
