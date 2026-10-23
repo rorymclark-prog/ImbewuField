@@ -421,7 +421,7 @@ function HomeLandingInner() {
     { href: '/assessments', Icon: ClipboardList, label: t('navAssessments') },
     { href: '/reports', Icon: FileText, label: t('siteReportOverline') },
     { href: '/network', Icon: Users, label: t('navNetwork') },
-  ].filter(({ href }) => canSeeNavLink(role, href) && canSeeWorkspaceLink(navigationRole, href));
+  ].filter(({ href }) => canSeeNavLink(navigationRole, href) && canSeeWorkspaceLink(navigationRole, href));
   const quickActions = simple ? QUICK_ACTIONS.filter((q) => q.href !== '/records') : QUICK_ACTIONS;
 
   return (

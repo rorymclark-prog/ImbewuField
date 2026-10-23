@@ -37,7 +37,7 @@ test('w18-46: staff hero has no repeated overline and Home links real pages', ()
   assert.match(read('components/home/HomeHeroCard.tsx'), /\{firstName && <Overline>/);
   const s = read('app/home/page.tsx');
   assert.match(s, /STAFF_LINKS/);
-  assert.match(s, /'\/assessments'[\s\S]*'\/reports'[\s\S]*'\/network'[\s\S]*canSeeNavLink\(role, href\)/);
+  assert.match(s, /'\/assessments'[\s\S]*'\/reports'[\s\S]*'\/network'[\s\S]*canSeeNavLink\(navigationRole, href\)/);
 });
 
 test('w18-47: exchange card meta, segment fill and rand format', () => {
