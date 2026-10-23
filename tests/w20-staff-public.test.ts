@@ -30,3 +30,11 @@ test('w20-39: map and list share one status token map; legend uses Lucide Plus/M
   assert.match(m, /<Plus size=\{14\}/);
   assert.match(read('app/network/page.tsx'), /NETWORK_STATUS_COLOR/);
 });
+
+test('w20-40: mentor follow-up date is formatted; metric numbers are primary text; names use display font', () => {
+  assert.match(read('components/FieldTeams.tsx'), /formatStaffDate\(record\.followUpDate,lang\)/);
+  const css = read('components/FieldWork.module.css');
+  assert.match(css, /\.metric strong \{[^}]*color:var\(--text-primary\)/);
+  assert.doesNotMatch(css, /\.metric strong \{[^}]*var\(--emerald\)/);
+  assert.match(css, /\.personHeading strong \{ font-family:var\(--font-display\)/);
+});
