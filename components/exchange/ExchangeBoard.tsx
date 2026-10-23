@@ -257,12 +257,12 @@ export default function ExchangeBoard() {
         )}
         <button
           onClick={() => { setShowForm((v) => !v); setShowGuide(false); }}
-          className="flex items-center gap-1.5 font-display font-semibold rounded-xl"
+          className={`flex items-center gap-1.5 font-display font-semibold rounded-xl${simple ? ' flex-1 md:flex-none' : ''}`}
           style={{
-            flex: simple ? 1 : undefined,
             justifyContent: simple ? 'center' : undefined,
-            background: showForm ? 'transparent' : EX.fill,
-            color: showForm ? EX.muted : 'var(--on-forest)',
+            minHeight: 44,
+            background: showForm ? 'transparent' : 'var(--color-forest-800)',
+            color: showForm ? EX.muted : 'var(--on-forest-800)',
             border: showForm ? `1px solid ${EX.inputBorder}` : 'none',
             cursor: 'pointer',
             padding: '10px 14px',
@@ -298,9 +298,9 @@ export default function ExchangeBoard() {
               borderRadius: 10,
               fontSize: 12.5,
               cursor: 'pointer',
-              background: kind === value ? EX.fillInk : EX.chip,
-              color: kind === value ? 'var(--on-forest)' : EX.muted,
-              border: `1px solid ${kind === value ? EX.ink : EX.border}`,
+              background: kind === value ? 'var(--color-forest-800)' : EX.chip,
+              color: kind === value ? 'var(--on-forest-800)' : EX.muted,
+              border: `1px solid ${kind === value ? 'var(--color-forest-800)' : EX.border}`,
             }}
           >
             {label}

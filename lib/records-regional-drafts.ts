@@ -20,6 +20,7 @@
 // claims Shangani comprehension, fluent review, or local farming approval. The screen says so
 // (RECORDS_DRAFT_NOTICE below) wherever a draft can appear.
 
+import { kgPreciseLabel } from '@/lib/format-figures';
 import { RECORDS_DRAFTS } from '@/lib/records-regional-drafts-data';
 import { recordQuantity, recordUnit, type RecordQuantityRow, type RecordUnit } from '@/lib/farm-records';
 
@@ -103,6 +104,8 @@ export function recordsQuantityLabel(row: RecordQuantityRow, lang: string): stri
   const quantity = recordQuantity(row);
   const unit = recordUnit(row);
   if (quantity === null || !unit) return recordsFill(lang, 'Quantity not recorded');
+  // w18-39: kilograms use the app's one kg format ('1 203,6 kg'), so a screen never mixes '43.2 kg' with '427,2 kg'.
+  if (unit === 'kg') return kgPreciseLabel(quantity);
   return `${quantity.toLocaleString('en-ZA', { maximumSignificantDigits: 21 })} ${recordsUnitWord(unit, lang)}`;
 }
 

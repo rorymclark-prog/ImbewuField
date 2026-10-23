@@ -3,8 +3,10 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Map, DollarSign, User, Users, BarChart3, BookOpen } from 'lucide-react';
+import { Home, Map, DollarSign, User, Users, BarChart3, BookOpen, ClipboardList } from 'lucide-react';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
+import { canSeeNavLink } from '@/lib/role-access';
+import type { UserRole } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n';
 import styles from './TabBar.module.css';
 
@@ -31,7 +33,7 @@ const STAFF_TABS = {
   mentor: [
     { href: '/home',   key: 'tabHome',      Icon: Home },
     { href: '/mentor', key: 'tabDashboard', Icon: BarChart3 },
-    { href: '/network', key: 'navNetwork',  Icon: Users },
+    { href: '/assessments', key: 'offlinePageAssessments', Icon: ClipboardList },
     { href: '/account', key: 'tabAccount',  Icon: User },
   ],
   ngo: [
@@ -57,9 +59,11 @@ const STAFF_TABS = {
 /** Shared with components/layout/AppHeader.tsx, which shows the same four destinations as
  *  16px text links at lg+ instead of this bar (desk-07) rather than keeping its own copy. */
 export function tabsForRole(navigationRole: string | null) {
-  return navigationRole && navigationRole in STAFF_TABS
+  const set = navigationRole && navigationRole in STAFF_TABS
     ? STAFF_TABS[navigationRole as keyof typeof STAFF_TABS]
     : FARMER_TABS;
+  // w18-27: the same gate the menu uses, so a tab can never point at a page that refuses the role.
+  return set.filter(({ href }) => canSeeNavLink(navigationRole as UserRole | null, href));
 }
 
 export default function TabBar({ hideAtDesktop = false }: { hideAtDesktop?: boolean }) {
@@ -161,8 +165,9 @@ export default function TabBar({ hideAtDesktop = false }: { hideAtDesktop?: bool
               style={{
                 padding: '4px 14px',
                 borderRadius: 12,
-                // A fixed light pill keeps the forest-green active label legible in dark mode.
-                background: active ? '#e4eee8' : 'transparent',
+                // w18-33: a tint of the theme's --emerald, not a fixed light pill (it was the only
+                // light surface in the dark chrome).
+                background: active ? 'color-mix(in srgb, var(--emerald) 16%, transparent)' : 'transparent',
               }}
             >
               <Icon
@@ -170,12 +175,7 @@ export default function TabBar({ hideAtDesktop = false }: { hideAtDesktop?: bool
                 size={22}
                 strokeWidth={active ? 2.2 : 1.7}
                 style={{
-                  // '#1F4D2B', not var(--emerald): the earth theme's --emerald (#3A7518, an
-                  // "ok"-status olive-green, see globals.css) is a different hue from the brand
-                  // forest green every other screen still hardcodes — swapping just this one
-                  // would put two visibly different "brand greens" in the app at once. Matches
-                  // the --brand-soft tint already used for the pill background above.
-                  color: active ? '#1F4D2B' : 'var(--text-muted)',
+                  color: active ? 'var(--emerald)' : 'var(--text-muted)',
                 }}
               />
               <span
@@ -188,7 +188,9 @@ export default function TabBar({ hideAtDesktop = false }: { hideAtDesktop?: bool
                   fontSize: 12,
                   whiteSpace: 'nowrap',
                   fontWeight: active ? 700 : 600,
-                  color: active ? '#1F4D2B' : 'var(--text-muted)',
+                  // emerald at 16% over the bar is 4.46:1 in earth light — under 4.5 for 12px text — so the label
+                  // takes --text-primary (13:1 / 11:1); the icon keeps the emerald.
+                  color: active ? 'var(--text-primary)' : 'var(--text-muted)',
                   letterSpacing: '0.01em',
                   transition: 'color var(--dur-fast) var(--ease-out)',
                 }}

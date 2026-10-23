@@ -16,7 +16,7 @@ export default function ExchangeHeader() {
       <MenuButton /><BackButton fallback="/home" />
       <Handshake size={17} aria-hidden style={{ flexShrink: 0 }} />
       <div style={{ minWidth: 0 }}>
-        <h1 className="font-display font-bold" style={{ fontSize: 14, color: EX.ink, margin: 0, lineHeight: 1.2, whiteSpace: 'nowrap' }}>{zu ? 'Ukuhwebelana kwabalimi' : 'Farmer exchange'}</h1>
+        <h1 className="t-h1" style={{ color: 'var(--text-primary)', margin: 0, whiteSpace: 'nowrap' }}>{zu ? 'Ukuhwebelana kwabalimi' : 'Farmer exchange'}</h1>
         <p className="font-sans hidden sm:block" style={{ fontSize: 12, color: EX.faint, margin: 0, lineHeight: 1.3 }}>{zu ? 'Imbewu, izithombo, okusalile namathuluzi — phakathi kwabalimi' : 'Seed, seedlings, surplus and tools — between farmers'}</p>
       </div>
       <div style={{ flex: 1 }} />

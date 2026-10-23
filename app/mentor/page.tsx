@@ -4,7 +4,7 @@ import { samplePortrait } from '@/lib/sample-media';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Loader2, GraduationCap, Inbox, Home, UserPlus, X, CalendarClock, AlertTriangle, PauseCircle, PlayCircle } from 'lucide-react';
+import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Loader2, GraduationCap, Inbox, Home, UserPlus, X, CalendarClock, AlertTriangle, PauseCircle, PlayCircle, MapPin } from 'lucide-react';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useLanguage } from '@/lib/i18n-context';
 import { useAuth } from '@/lib/auth';
@@ -625,9 +625,9 @@ export default function MentorPage() {
       {/* Tab strip */}
       <DashboardTabs>
         {([
-          { key: 'field', label: tr(lang, 'Fieldwork', 'Umsebenzi wasensimini'), icon: Users, badge: 0 },
+          { key: 'field', label: tr(lang, 'Fieldwork', 'Umsebenzi wasensimini'), icon: MapPin, badge: 0 },
           { key: 'evidence', label: tr(lang, 'Training', 'Ukuqeqeshwa'), icon: BookOpen, badge: 0 },
-          { key: 'trainees', label: tr(lang, 'Learning', 'Ukufunda'), icon: Users,  badge: 0 },
+          { key: 'trainees', label: tr(lang, 'Learning', 'Ukufunda'), icon: GraduationCap, badge: 0 },
           { key: 'messages', label: tr(lang, 'Messages', 'Imiyalezo'), icon: Inbox, badge: msgUnread },
         ] as const).map(({ key, label, icon: Icon, badge }) => (
           <button
@@ -636,9 +636,10 @@ export default function MentorPage() {
             onClick={() => { setView(key); setVisitPerson(''); if (key === 'trainees') void load(); }}
             aria-label={label}
             aria-pressed={view === key}
-            className="flex items-center gap-1.5 py-2.5 px-3 font-display text-xs font-semibold relative"
+            className="flex items-center gap-1.5 py-2.5 px-3 font-sans text-sm font-semibold relative shrink-0 whitespace-nowrap"
             style={{
               background: 'transparent',
+              minHeight: 44,
               border: 'none',
               cursor: 'pointer',
               color: view === key ? 'var(--color-forest-800)' : 'var(--text-secondary)',
@@ -646,7 +647,7 @@ export default function MentorPage() {
               marginBottom: -1,
             }}
           >
-            <Icon size={13} />
+            <Icon size={16} aria-hidden="true" />
             {label}
             {badge != null && badge > 0 && (
               <span className="flex items-center justify-center rounded-full font-display tabular-nums"

@@ -10,6 +10,7 @@ import {
 } from '@/lib/exchange';
 import ShareListingButton from './ShareListingButton';
 import { CATEGORY_LABEL, EX, KIND_COLOR, KIND_LABEL, MONTH_LABEL, ZU_CATEGORY_LABEL, ZU_KIND_LABEL, ZU_MONTH_LABEL } from './theme';
+import { produceLabel } from '@/lib/produce-label';
 import { getCropArt } from '@/lib/crop-art';
 import { useLanguage } from '@/lib/i18n';
 
@@ -116,10 +117,10 @@ export default function ListingCard({
             ) : (
               <span>{crop.icon}</span>
             )}{' '}
-            {crop.name}
+            {produceLabel(listing.cropKey ?? '', lang)}
           </span>
         )}
-        <div style={{ flex: 1, minWidth: 8 }} />
+        <div className="ml-auto flex items-center gap-2 flex-wrap">
         {mine && (
           <span
             className="font-sans font-semibold"
@@ -151,8 +152,9 @@ export default function ListingCard({
           </span>
         )}
         {posted && (
-        <span className="font-sans" style={{ fontSize: 12, color: EX.faint }}>{posted}</span>
+        <span className="font-sans" style={{ fontSize: 12, color: EX.faint, whiteSpace: 'nowrap' }}>{posted}</span>
         )}
+        </div>
       </div>
 
       <h3 className="font-display font-semibold" style={{ fontSize: 15, color: EX.ink, margin: '0 0 4px' }}>

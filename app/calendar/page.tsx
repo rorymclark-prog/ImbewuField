@@ -480,7 +480,7 @@ export default function CalendarPage() {
           background: 'var(--bg-0)',
         }}
       >
-        <h1 className="font-display font-semibold m-0" style={{ padding: '14px 14px 0', fontSize: 'clamp(20px, 2vw, 26px)', color: 'var(--text-primary)' }}>
+        <h1 className="t-h1 m-0" style={{ padding: '14px 14px 0', color: 'var(--text-primary)' }}>
           {localUi('Planting Calendar', 'Ikhalenda lokutshala', lang)}
         </h1>
         {lang === 'zu' && (

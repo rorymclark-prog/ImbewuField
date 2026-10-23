@@ -15,8 +15,10 @@ test('w16-09: /invoice remove-item, /contact add-subject, /pitch overview link, 
   assert.match(read('app/invoice/page.tsx'), /before:-inset-3\.5 before:content-\[''\]/);
   assert.match(read('app/contact/page.tsx'), /padding: 0, minHeight: 44/);
   assert.match(read('app/pitch/page.tsx'), /inline-flex', alignItems: 'center', minHeight: 44/);
+  // Wave 18 (w18-29) removed the header "Take a tour" link from /funder and /ngo — the menu's tour
+  // entry is the one way in — so there is no link left to size; tests/w18-staff-chrome.test.ts pins it.
   for (const f of ['app/funder/page.tsx', 'app/ngo/page.tsx']) {
-    assert.match(read(f), /href="\/tour" className="[^"]*min-h-\[44px\]/);
+    assert.doesNotMatch(read(f), /href="\/tour"/);
   }
   const login = read('app/login/page.tsx');
   assert.ok((login.match(/minHeight: 44/g) ?? []).length >= 4);

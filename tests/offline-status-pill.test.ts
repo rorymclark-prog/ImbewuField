@@ -12,7 +12,7 @@ const page = readFileSync(new URL('../app/offline/page.tsx', import.meta.url), '
 const i18n = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
 
 test('the offline status line has a Wifi/WifiOff icon and a full sentence when online', () => {
-  assert.match(page, /import \{ Wifi,WifiOff \} from 'lucide-react';/);
+  assert.match(page, /import \{ ChevronDown,Wifi,WifiOff \} from 'lucide-react';/);
   const statusAt = page.indexOf('role="status"');
   assert.ok(statusAt > 0);
   const statusBlock = page.slice(statusAt, statusAt + 1200);

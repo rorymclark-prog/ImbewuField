@@ -1054,10 +1054,10 @@ function CreditPackCard({
         </p>
       ) : (
         <>
-        <div className="grid grid-cols-3 gap-2 my-3">
+        <div className="grid grid-cols-1 min-[420px]:grid-cols-3 gap-2 my-3">
           {[[recordsUi(lang, 'Income', 'Imali engenayo'), money(totals.income)], [recordsUi(lang, 'Costs', 'Izindleko'), money(totals.spent)], [recordsUi(lang, 'Harvested', 'Okuvunyiwe'), <RecordQuantitySummary key="picked" compact totals={quantityTotals(production)} />]].map(([label, value], index) => (
             <div key={index} className="rounded-xl p-3" style={{ background: 'var(--bg-1)', color: 'var(--text-primary)' }}>
-              <span className="block font-sans text-xs">{label}</span><strong className="block font-display text-lg mt-1">{value}</strong>
+              <span className="block font-sans text-xs">{label}</span><strong className="block font-display text-lg mt-1 whitespace-nowrap tabular-nums">{value}</strong>
             </div>
           ))}
         </div>
@@ -1073,7 +1073,7 @@ function CreditPackCard({
           type="button"
           onClick={() => { void handleExport(); }}
           disabled={loading}
-          className="w-full py-2 rounded-xl text-xs font-display font-semibold flex items-center justify-center gap-2 transition-all"
+          className="w-full py-2 rounded-xl text-xs font-sans font-semibold flex items-center justify-center gap-2 transition-all"
           style={{
             // zu-11: a fixed rgba(46,107,58,…) tint stayed dark-green in every theme while
             // var(--color-forest-700) (the text colour) flipped to a pale green in the dark

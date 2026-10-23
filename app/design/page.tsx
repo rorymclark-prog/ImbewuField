@@ -12,7 +12,7 @@ import type { Position } from 'geojson';
 import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock, AlertTriangle, Droplets } from 'lucide-react';
 import { CRASH_LOOP_SETTLE_MS, designSafeMode, exitSafeMode, lastCrashPhase, markPageSettled, noteCrashPhase } from '@/lib/crash-loop';
 import { clearPulseCookie } from '@/lib/server-rescue';
-import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
+import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
 import { useAppConfirm } from '@/components/AppConfirm';
 import { translatedDesignStepLabel } from '@/lib/design-studio-i18n';
 
@@ -516,7 +516,7 @@ function EmptyState() {
         justifyContent: 'center',
         gap: 16,
         padding: 24,
-        background: PAPER,
+        background: 'var(--bg-0)',
         color: DARK,
         textAlign: 'center',
       }}
@@ -525,8 +525,8 @@ function EmptyState() {
       {/* nav-17: /design had no h1 at all while this empty-site state was showing. One visible
           h1 matching the nav label ("Design studio"), small so it doesn't compete with the
           instructional copy below. */}
-      <h1 style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--color-forest-800)', margin: 0 }}>
-        {isZulu ? 'Isitudiyo Sokuklama' : 'Design studio'}
+      <h1 className="t-h1" style={{ color: 'var(--color-forest-800)', margin: 0 }}>
+        {isZulu ? 'Isitudiyo Sokuklama' : 'Design Studio'}
       </h1>
       {places.length > 0 ? (
         <>
@@ -552,7 +552,7 @@ function EmptyState() {
                   textAlign: 'left',
                 }}
               >
-                <MapPin size={18} color={resolveColor(p)} style={{ flexShrink: 0 }} />
+                <MapPin size={18} color="var(--emerald)" style={{ flexShrink: 0 }} />
                 <span style={{ flex: 1, minWidth: 0 }}>
                   <span style={{ display: 'block', fontWeight: 600, fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {p.name}
@@ -583,8 +583,8 @@ function EmptyState() {
           padding: '12px 20px',
           minHeight: 44,
           borderRadius: 999,
-          background: GREEN,
-          color: 'var(--on-forest)',
+          background: 'var(--color-forest-800)',
+          color: 'var(--on-forest-800)',
           fontWeight: 600,
           textDecoration: 'none',
         }}

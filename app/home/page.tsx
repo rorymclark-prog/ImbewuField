@@ -13,6 +13,7 @@ import {
   Leaf,
   CalendarDays,
   ClipboardList,
+  FileText,
   Camera,
   MessageCircle,
   Wheat,
@@ -405,17 +406,22 @@ function HomeLandingInner() {
   // SIMPLE LEAVES THE TILE OUT. The tab bar under every screen already opens the same book under
   // the same name, so on Simple's Home "My Records" appears once, as the tab.
   const QUICK_ACTIONS = [
-    { href: '/student',           Icon: GraduationCap, art: undefined as string | undefined, label: t('homeQuickStudy'),       desc: t('homeQuickStudyDesc'),       color: 'var(--color-water)', bg: 'rgba(35,94,134,0.10)' },
-    { href: '/contact',           Icon: MessageCircle, art: undefined as string | undefined, label: t('homeQuickContact'),     desc: t('homeQuickContactDesc'),     color: '#5A7A3A', bg: 'rgba(90,122,58,0.10)' },
-    // These four carry real illustrated art (public/home-icons/) instead of a Lucide glyph —
-    // same "art field with an Icon fallback" pattern as def.art in DesignPalette.tsx and
-    // getCropArt() on the Prices/Exchange pages. Icon stays wired as the fallback if the art
-    // path is ever wrong, never dead-code.
-    { href: '/journal',           Icon: Leaf,          art: '/home-icons/journal.png',      label: t('homeQuickJournal'),     desc: t('homeQuickJournalDesc'),     color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
-    { href: '/facilitator/crops', Icon: CalendarDays,  art: '/home-icons/crop-planner.png', label: t('homeQuickCropPlanner'), desc: t('homeQuickCropPlannerDesc'), color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
-    { href: '/records',           Icon: Wheat,         art: '/home-icons/my-records.png',   label: t('homeQuickMyRecords'),   desc: t('homeQuickMyRecordsDesc'),   color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
-    { href: '/prices',            Icon: Tag,           art: '/home-icons/prices.png',       label: localUi(lang, 'Prices', 'Amanani'), desc: localUi(lang, 'Wholesale & retail', 'Izintengo zezitolo ezinkulu nezokuthengisa'), color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
+    { href: '/student',           Icon: GraduationCap, label: t('homeQuickStudy'),       desc: t('homeQuickStudyDesc'),       color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
+    { href: '/contact',           Icon: MessageCircle, label: t('homeQuickContact'),     desc: t('homeQuickContactDesc'),     color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
+    // w18-45: every tile uses a Lucide icon in the same themed emerald chip (the painted PNG art
+    // did not follow the theme and made Study/Contact look like a different style).
+    { href: '/journal',           Icon: Leaf,          label: t('homeQuickJournal'),     desc: t('homeQuickJournalDesc'),     color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
+    { href: '/facilitator/crops', Icon: CalendarDays,  label: t('homeQuickCropPlanner'), desc: t('homeQuickCropPlannerDesc'), color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
+    { href: '/records',           Icon: Wheat,         label: t('homeQuickMyRecords'),   desc: t('homeQuickMyRecordsDesc'),   color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
+    { href: '/prices',            Icon: Tag,           label: localUi(lang, 'Prices', 'Amanani'), desc: localUi(lang, 'Wholesale & retail', 'Izintengo zezitolo ezinkulu nezokuthengisa'), color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
   ];
+  const STAFF_LINKS = !staffRole ? [] : [
+    { href: `/${staffRole}`, Icon: staffRole === 'mentor' ? Users : staffRole === 'ngo' ? BarChart3 : Building2,
+      label: staffRole === 'mentor' ? t('homeRoleMentorLabel') : staffRole === 'ngo' ? t('homeRoleNGOLabel') : t('homeRoleFunderLabel') },
+    { href: '/assessments', Icon: ClipboardList, label: t('navAssessments') },
+    { href: '/reports', Icon: FileText, label: t('siteReportOverline') },
+    { href: '/network', Icon: Users, label: t('navNetwork') },
+  ].filter(({ href }) => canSeeNavLink(navigationRole, href) && canSeeWorkspaceLink(navigationRole, href));
   const quickActions = simple ? QUICK_ACTIONS.filter((q) => q.href !== '/records') : QUICK_ACTIONS;
 
   return (
@@ -463,6 +469,7 @@ function HomeLandingInner() {
            35px on shorter windows, leaving only a thin strip of its garden photo visible. */
         .home-scroll-content > * { flex-shrink: 0; }
         @keyframes imfQuickEnter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .home-quick-grid > .home-quick-link:last-child:nth-child(odd) { grid-column: span 2; }
         .home-quick-link { animation: imfQuickEnter 360ms cubic-bezier(0.16,1,0.3,1) both; transition: transform 180ms cubic-bezier(0.16,1,0.3,1), box-shadow 180ms ease, border-color 180ms ease; }
         .home-quick-link:nth-child(2) { animation-delay: 45ms; }
         .home-quick-link:nth-child(3) { animation-delay: 90ms; }
@@ -523,6 +530,7 @@ function HomeLandingInner() {
           .home-quick-grid {
             grid-template-columns: repeat(6, minmax(0, 1fr));
           }
+          .home-quick-grid > .home-quick-link:last-child:nth-child(odd) { grid-column: auto; }
           .home-quick-grid.is-simple {
             grid-template-columns: repeat(5, minmax(0, 1fr));
           }
@@ -566,25 +574,42 @@ function HomeLandingInner() {
           )}
         </section>
 
+        {/* w18-46: staff Home used to end at the hero. A short card of their real pages; each
+            link passes the same role gates as the drawer, so a role is never offered a refusal. */}
+        {staffRole && (
+          <nav aria-label={t('homeDashboards')} className="rounded-2xl overflow-hidden" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+            {STAFF_LINKS.map((l, i) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="home-quick-link flex items-center gap-3 px-4"
+                style={{ minHeight: 56, textDecoration: 'none', borderTop: i ? '1px solid var(--border)' : 'none' }}
+              >
+                <span className="flex items-center justify-center rounded-xl flex-shrink-0" style={{ width: 40, height: 40, color: 'var(--emerald)', background: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' }}>
+                  <l.Icon size={20} strokeWidth={1.6} aria-hidden />
+                </span>
+                <span className="flex-1 min-w-0 font-display font-semibold" style={{ fontSize: 15, color: 'var(--text-primary)' }}>{l.label}</span>
+                <ChevronRight size={16} strokeWidth={1.6} aria-hidden style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
+              </Link>
+            ))}
+          </nav>
+        )}
+
         {/* ── Quick actions ── */}
-        {!staffRole && <div className={`home-quick-grid grid grid-cols-3 gap-3${simple ? ' is-simple' : ''}`}>
+        {!staffRole && <div className={`home-quick-grid grid grid-cols-2 gap-3${simple ? ' is-simple' : ''}`}>
           {quickActions.map((q) => (
             <Link
               key={q.href}
               href={q.href}
               className="home-quick-link flex flex-col items-center gap-2 p-3 rounded-2xl text-center"
-              style={{ textDecoration: 'none', background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
+              style={{ textDecoration: 'none', background: 'var(--bg-1)', border: '1px solid var(--border)' }}
             >
               <div className="flex items-center justify-center rounded-xl" style={{ width: 44, height: 44, background: q.bg, color: q.color }}>
-                {q.art ? (
-                  <img src={q.art} alt="" aria-hidden width={38} height={38} style={{ width: 38, height: 38, objectFit: 'contain' }} />
-                ) : (
-                  <q.Icon size={20} strokeWidth={1.6} />
-                )}
+                <q.Icon size={22} strokeWidth={1.6} aria-hidden />
               </div>
               <div>
-                <div className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--color-ink)', lineHeight: 1.2 }}>{q.label}</div>
-                <div className="font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', marginTop: 1 }}>{q.desc}</div>
+                <div className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--text-primary)', lineHeight: 1.2 }}>{q.label}</div>
+                <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 1 }}>{q.desc}</div>
               </div>
             </Link>
           ))}
@@ -654,7 +679,7 @@ function HomeLandingInner() {
         {!staffRole && <section>
           <button
             onClick={() => setRolesOpen((o) => !o)}
-            className="w-full flex items-center justify-between"
+            className="w-full flex flex-col items-start gap-1 text-left sm:flex-row sm:items-center sm:justify-between"
             aria-expanded={rolesOpen}
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '2px 2px' }}
           >

@@ -56,7 +56,7 @@ export default function UpdatesPage() {
         <div className="mx-auto max-w-2xl px-4 py-6">
           {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own
               real <h1> now that the old header's h1 is gone. */}
-          <h1 className="text-sm font-display font-semibold m-0 mb-4" style={{ color: 'var(--text-primary)' }}>
+          <h1 className="t-h1 m-0 mb-4" style={{ color: 'var(--text-primary)' }}>
             What&rsquo;s new
           </h1>
           <p className="text-xs mb-6" style={{ color: 'var(--text-secondary)' }}>
@@ -72,7 +72,7 @@ export default function UpdatesPage() {
           {visibleDays.map((day) => (
             <section key={day.when} className="mb-7">
               <div className="flex items-baseline gap-2 mb-2">
-                <h2 className="text-base font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>
+                <h2 className="t-h2" style={{ color: 'var(--color-forest-800)' }}>
                   {day.when}
                 </h2>
               </div>

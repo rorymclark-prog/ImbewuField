@@ -190,7 +190,7 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
         <HeroEntranceStyle />
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
-            <Overline>{firstName ? t('homeGreeting').replace('{name}', firstName) : text.title}</Overline>
+            {firstName && <Overline>{t('homeGreeting').replace('{name}', firstName)}</Overline>}
             <h2 className="u-display-sm" style={{ color: 'var(--on-forest)', marginBottom: 6 }}>
               {text.title}
             </h2>

@@ -7,10 +7,13 @@
   overflow-x: auto;
   border: 1px solid var(--border);
   border-radius: 0.75rem;
-  background: #F7F1E3; /* fixed paper: DesignWorkedDiagram.tsx draws in fixed dark inks */
+  background: var(--bg-1);
 }
 
+/* On screen the drawing follows the theme: the paper rect is transparent and, in dark, the fixed
+   inks are inverted. The downloaded SVG carries none of this CSS, so it stays the light drawing. */
 .diagram {
+  font-family: var(--font-sans), system-ui, sans-serif;
   display: block;
   width: 100%;
   min-width: 0;
@@ -32,3 +35,6 @@
   font-size: 0.92rem;
   line-height: 1.45;
 }
+.diagram .paper { fill: transparent; }
+:global(html.dark) .diagram { filter: invert(1) hue-rotate(180deg); }
+.diagram * { font-family: inherit; }

@@ -19,7 +19,7 @@ export default function JournalPage() {
       />
       {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own
           real, visible <h1> now that the old header's h1 is gone. */}
-      <h1 className="font-display px-3 sm:px-4 pt-3 m-0" style={{ fontSize: 15, color: 'var(--text-primary)' }}>
+      <h1 className="t-h1 px-3 sm:px-4 pt-3 m-0" style={{ color: 'var(--text-primary)' }}>
         {t('navFieldJournal')}
       </h1>
 

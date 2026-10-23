@@ -2,21 +2,22 @@
    h-[100dvh] flex flex-col… layout", per components/TabBar.tsx) and .scroll is the scrolling
    content area above it, so /tour and /tips can carry the same bottom nav every other
    farmer-facing route has instead of losing the way home on exactly these two pages. */
-.page{height:100dvh;overflow:hidden;display:flex;flex-direction:column;color:var(--text-primary);background:var(--bg-0);font:16px/1.6 var(--font-sans),sans-serif}
-.scroll{flex:1;overflow-y:auto;padding:24px 20px calc(var(--bottom-nav-height,0px) + max(96px, var(--lima-fab-clearance,0px)) + env(safe-area-inset-bottom,0px))}
+.page{height:100dvh;overflow:hidden;display:flex;flex-direction:column;color:var(--text-primary);background:var(--bg-0)}
+.scroll{flex:1;overflow-y:auto;padding:24px 20px calc(var(--bottom-nav-height,0px) + max(96px, var(--lima-fab-clearance,0px)) + env(safe-area-inset-bottom,0px));font:16px/1.6 var(--font-sans),sans-serif}
 .wrap{max-width:1080px;margin:auto}
 .header,.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .header{margin-bottom:24px}
 .hero{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center;margin:24px 0}
 .eyebrow{color:var(--text-secondary);font-size:13px;font-weight:700;letter-spacing:.09em}
-.page h1{font:600 clamp(32px,4.6vw,52px)/1.1 var(--font-display),serif;margin:12px 0 20px;max-width:620px}
+.page h1{font:600 clamp(24px,3.2vw,32px)/1.15 var(--font-display),serif;letter-spacing:-.02em;color:var(--text-primary);margin:12px 0 16px;max-width:620px}
 .page h2,.dialog h2{font:600 26px/1.25 var(--font-display),serif;margin:12px 0}
 .page p,.dialog p{margin:12px 0}
 .hero img{width:100%;height:300px;object-fit:cover;border-radius:22px}
 .hero figure{margin:0}.hero figcaption,.hint,.time{font-size:13px;color:var(--text-secondary)}
-.page button,.page a,.dialog button,.dialog a{min-height:44px}
-.controls button,.controls a,.page .primary{display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;border:1px solid var(--border);border-radius:999px;text-decoration:none;background:var(--bg-1);color:var(--text-primary);font:inherit;cursor:pointer}
-.page .primary,.dialog .primary{background:#245739;color:#fff;border-color:#245739;font-weight:600}
+.scroll button,.scroll a,.dialog button,.dialog a{min-height:44px;box-sizing:border-box}
+.scroll .controls a,.scroll .controls button,.scroll .card .primary{display:inline-flex;align-items:center;justify-content:center}
+.controls button,.controls a,.page .primary{display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;border:1px solid var(--border);border-radius:12px;text-decoration:none;background:var(--bg-1);color:var(--text-primary);font:inherit;cursor:pointer}
+.page .primary,.dialog .primary{background:var(--color-forest-800);color:var(--on-forest-800);border-color:transparent;font-weight:600}
 .notice{padding:14px 18px;border-radius:14px;background:var(--bg-2);font-size:14px}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:22px 0}
 .card{background:var(--bg-1);border:1px solid var(--border);border-radius:18px;padding:20px;min-width:0}
