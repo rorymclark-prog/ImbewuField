@@ -1,0 +1,802 @@
+{
+  "_lang": "zu",
+  "_status": "DRAFT — machine-assisted; must be read back by a first-language isiZulu speaker who farms before printing",
+  "posters": {
+    "R-P01": {
+      "headline": "Isivumelwano sethu semali",
+      "labels": [
+        "Imindeni eqanjiwe kuphela",
+        "Ungathi: ngiyadlula",
+        "Kusala lapha",
+        "Akudayiswa lapha",
+        "Wonke umbuzo ubalulekile"
+      ],
+      "question": "Yini enye esivumelana ngayo?"
+    },
+    "R-P02": {
+      "headline": "Imali iyaphi?",
+      "labels": [
+        "Imali engenayo",
+        "Umndeni wethu",
+        "Imali ephumayo",
+        "Ukuvuza okuncane kuyahlangana"
+      ],
+      "question": "Yikuphi ukuvuza kwakho okukhulu?"
+    },
+    "R-P03": {
+      "headline": "Izidingo kuqala, izifiso kamuva",
+      "labels": [
+        "Isidingo: kumele sibe khona",
+        "Isifiso: singalinda",
+        "Kuya ngesimo"
+      ],
+      "question": "I-airtime iba yisidingo nini?"
+    },
+    "R-P04": {
+      "headline": "Hlela inyanga kuqala",
+      "labels": [
+        "Bala imali engenayo",
+        "Izidingo kuqala",
+        "Yonga enye",
+        "Beka imali yensimu eceleni",
+        "Bese kuba izifiso",
+        "Gcinela okungalindelekile"
+      ],
+      "question": "Yini oyikhohlwe ngenyanga edlule?"
+    },
+    "R-P05": {
+      "headline": "Amathini amathathu",
+      "labels": [
+        "Ikhaya",
+        "Ukonga",
+        "Insimu",
+        "Imali yengadi ingena kuqala"
+      ],
+      "question": "Ubani onquma ukuthi yahlukaniswa kanjani?"
+    },
+    "R-P06": {
+      "headline": "Izindlela zokonga",
+      "labels": [
+        "Istokfela (iqembu lokonga)",
+        "I-akhawunti yasebhange",
+        "Imali eselula",
+        "Ithini ekhaya"
+      ],
+      "question": "Uzosebenzisa ziphi ezimbili?"
+    },
+    "R-P07": {
+      "headline": "Gcina imali yakho iphephile",
+      "labels": [
+        "I-PIN: ungatsheli muntu",
+        "Mboza izinombolo",
+        "Ungalokothi unike i-OTP",
+        "Kuhle kakhulu? Inkohliso!",
+        "Akekho ogcina ikhadi lakho"
+      ],
+      "question": "Ubani okucele i-PIN yakho?"
+    },
+    "R-P08": {
+      "headline": "Bhala yonke irandi",
+      "labels": [
+        "Usuku",
+        "Kwenzekeni",
+        "Imali engenayo",
+        "Imali ephumayo",
+        "Ibhalansi",
+        "Imali engiyikweletwayo"
+      ],
+      "question": "Ithini liyafana nencwadi?"
+    },
+    "R-P09": {
+      "headline": "Isivuno saya kuphi?",
+      "labels": [
+        "Kudliwe",
+        "Kuphiwe abanye",
+        "Kuthengisiwe",
+        "Kulahlekile",
+        "Okudliwe = imali eyongiwe"
+      ],
+      "question": "Yini oyidle kuleli sonto?"
+    },
+    "R-P10": {
+      "headline": "Bala zonke izindleko",
+      "labels": [
+        "Imbewu",
+        "I-compost nomquba",
+        "Amanzi",
+        "Imali yokugibela",
+        "Amarabha, izikhwama, amathuluzi",
+        "Isikhathi sakho"
+      ],
+      "question": "Yiziphi izindleko abantu abazikhohlwayo?"
+    },
+    "R-P11": {
+      "headline": "Isixha esisodwa: izindleko, intengo, inzuzo",
+      "labels": [
+        "Zonke izindleko",
+        "÷ zonke izixha",
+        "Izindleko zesixha esisodwa",
+        "Intengo ephansi",
+        "Imakethe",
+        "Umthengi"
+      ],
+      "question": "Intengo yakho ingaphezu kweyephansi?"
+    },
+    "R-P12": {
+      "headline": "Gcwalisa inkomishi kuqala",
+      "labels": [
+        "Inkomishi yezindleko zesizini",
+        "Isixha: ubhontshisi owodwa",
+        "Igcwele: i-break-even",
+        "Bese kuba yinzuzo"
+      ],
+      "question": "Zingaki izixha ezigcwalisa inkomishi yakho?"
+    },
+    "R-P13": {
+      "headline": "Imali kuyo yonke isizini",
+      "labels": [
+        "Imali iphuma kuqala",
+        "Imali ingena kamuva",
+        "Izinyanga ezinkulu zomndeni",
+        "Inyanga enzima",
+        "Yonga kusengaphambili"
+      ],
+      "question": "Iyiphi inyanga enzima kakhulu kuwe?"
+    },
+    "R-P14": {
+      "headline": "Ubani othengayo? Ufunani?",
+      "labels": [
+        "Umakhelwane",
+        "Isipaza",
+        "Umthengisi wasemgwaqweni",
+        "Ikhishi lekhilishi",
+        "Itafula lasemakethe",
+        "Thengisani ndawonye"
+      ],
+      "question": "Imuphi umthengi okhokha ngesikhathi?"
+    },
+    "R-P15": {
+      "headline": "Kusuka ku-oda kuya kurisidi",
+      "labels": [
+        "I-oda",
+        "Letha ubale",
+        "I-invoyisi: uyakweleta",
+        "Kukhokhiwe",
+        "Irisidi: ukhokhile"
+      ],
+      "question": "Yiliphi iphepha elifakazela ukukhokha?"
+    },
+    "R-P16": {
+      "headline": "Boleka ngokuhlakanipha",
+      "labels": [
+        "Ngiboleka ukwenzani?",
+        "Izindleko zonke zingaki?",
+        "Ngingakwazi ukukhokha?",
+        "Umbolekisi obhalisiwe?",
+        "Kuthiwani uma...?",
+        "Akekho ogcina ikhadi lakho"
+      ],
+      "question": "Akushibhile yini ukonga kuqala?"
+    },
+    "R-P17": {
+      "headline": "Uhlelo lwami lwemali",
+      "labels": [
+        "Umgomo wami",
+        "Amathini ami amathathu",
+        "Incwadi yami, usuku lwami",
+        "Inyanga enzima, imali egciniwe",
+        "Isinyathelo esisodwa ngenyanga ezayo"
+      ],
+      "question": "Yisiphi isinyathelo sakho esisodwa?"
+    }
+  },
+  "slides": {
+    "R-D1-01": {
+      "title": "Siyanamukela",
+      "screen": [
+        "Farmer Money (Imali Yomlimi)",
+        "Usuku 1 kwezi-3 · Imali yasekhaya"
+      ]
+    },
+    "R-D1-02": {
+      "title": "Namuhla",
+      "screen": [
+        "Imali ivelaphi, iyaphi",
+        "Yihlele, yonge, yigcine iphephile",
+        "Amaqembu aba-5, awashintshi"
+      ]
+    },
+    "R-D1-03": {
+      "title": "Isivumelwano sethu semali",
+      "screen": [
+        "Imindeni eqanjiwe kuphela",
+        "Ungadlula · kusala lapha",
+        "Akudayiswa lutho kuleli gumbi"
+      ]
+    },
+    "R-D1-04": {
+      "title": "Yazani imindeni emithathu",
+      "screen": [
+        "Umndeni wakwaDlamini",
+        "Umndeni wakwaMokoena",
+        "Sizanani Youth Garden"
+      ]
+    },
+    "R-D1-05": {
+      "title": "Imibuzo ngezithombe",
+      "screen": [
+        "Bhekani ikhadi",
+        "Hambani niye ekhoneni A, B noma C",
+        "Akufundwa, akubhalwa"
+      ]
+    },
+    "R-D1-06": {
+      "title": "Imephu yemali",
+      "screen": [
+        "Imali iyaphi?"
+      ]
+    },
+    "R-D1-07": {
+      "title": "Ingena, umndeni, iphuma",
+      "screen": [
+        "Imali engenayo",
+        "Imali ephumayo",
+        "Ukuvuza okuncane kuyahlangana"
+      ]
+    },
+    "R-D1-08": {
+      "title": "Yakhani imephu yemali yomndeni wenu",
+      "screen": [
+        "Ubhontshisi ongenayo uvela kwesobunxele",
+        "Ubhontshisi ophumayo uya kwesokudla",
+        "Kusaleni? (27 min)"
+      ]
+    },
+    "R-D1-09": {
+      "title": "Izidingo kuqala, izifiso kamuva",
+      "screen": [
+        "Isidingo: kumele sibe khona",
+        "Isifiso: singalinda",
+        "Kuya ngesimo — nini?"
+      ]
+    },
+    "R-D1-10": {
+      "title": "Hlelani amakhadi",
+      "screen": [
+        "Amakhadi angu-24, izinqwaba ezintathu",
+        "Isidingo · Isifiso · Kuya ngesimo",
+        "Bese: ikhadi lenkinga"
+      ]
+    },
+    "R-D1-11": {
+      "title": "Amamephu abonisani?",
+      "screen": [
+        "Ukudla kungumcibisholo omkhulu",
+        "Izibonelelo zithwala imindeni eminingi",
+        "Kubone ngaphambi kokuthi ukulungise"
+      ]
+    },
+    "R-D1-12": {
+      "title": "Hlela inyanga kuqala",
+      "screen": [
+        "Ibhajethi iwuhlelo",
+        "Lwenziwa ngaphambi kokuqala kwenyanga"
+      ]
+    },
+    "R-D1-13": {
+      "title": "Imigqa eyisithupha, ngokulandelana",
+      "screen": [
+        "Engenayo · izidingo · yonga · insimu",
+        "Bese kuba izifiso",
+        "Gcinela okungalindelekile"
+      ]
+    },
+    "R-D1-14": {
+      "title": "Yenzani ibhajethi ngemali yokudlala",
+      "screen": [
+        "Thathani imali yenyanga yomndeni wenu",
+        "Bekani amanothi emgqeni ngamunye, ngokulandelana",
+        "Gcinani R100 yokungalindelekile (20 min)"
+      ]
+    },
+    "R-D1-15": {
+      "title": "Amathini amathathu",
+      "screen": [
+        "Ikhaya · Ukonga · Insimu",
+        "Imali yengadi ingena ku-INSIMU kuqala",
+        "Insimu ikhokhela ikhaya — ngenhloso"
+      ]
+    },
+    "R-D1-16": {
+      "title": "Ubani onqumayo?",
+      "screen": [
+        "ISonto lomndeni wakwaDlamini",
+        "Ubani osebenzayo? Ubani onqumayo?",
+        "Bangavumelana kanjani? (12 min)"
+      ]
+    },
+    "R-D1-17": {
+      "title": "Izindlela zokonga",
+      "screen": [
+        "Istokfela · i-akhawunti yasebhange",
+        "Imali eselula · ithini ekhaya",
+        "Uzosebenzisa ziphi ezimbili?"
+      ]
+    },
+    "R-D1-18": {
+      "title": "Nikezani izindlela ezine amaphuzu",
+      "screen": [
+        "Kuphephile? Kuyashesha? Kumahhala?",
+        "Kungisiza ngiqhubeke ngonga?",
+        "Ubhontshisi owodwa ku-yebo ngamunye (13 min)"
+      ]
+    },
+    "R-D1-19": {
+      "title": "Gcina imali yakho iphephile",
+      "screen": [
+        "I-PIN ne-OTP: ungatsheli muntu",
+        "Akekho ogcina ikhadi lakho",
+        "Kuhle kakhulu? Yinkohliso"
+      ]
+    },
+    "R-D1-20": {
+      "title": "Inkohliso noma kuphephile?",
+      "screen": [
+        "Lalelani ikhadi",
+        "Okubomvu = inkohliso · Okuluhlaza = kuphephile",
+        "Yishoni ukuthi kungani"
+      ]
+    },
+    "R-D1-21": {
+      "title": "Okwenziwa ekhaya",
+      "screen": [
+        "Bhala amathini amathathu namuhla ebusuku",
+        "Shintsha i-PIN ebuthakathaka",
+        "Imali yokudlala: ibaleni yonke"
+      ]
+    },
+    "R-D2-01": {
+      "title": "Usuku 2 · Imali yensimu",
+      "screen": [
+        "Farmer Money · Usuku 2 kwezi-3",
+        "Bhala · bala · beka intengo"
+      ]
+    },
+    "R-D2-02": {
+      "title": "Ingabe uLerato wenze imali?",
+      "screen": [
+        "Ithini lakhe lensimu line-R315",
+        "Ingadi yenze imali yini?",
+        "Ithini alisho. Incwadi iyasho."
+      ]
+    },
+    "R-D2-03": {
+      "title": "Bhala yonke irandi",
+      "screen": [
+        "Usuku · kwenzekeni · engenayo · ephumayo",
+        "Ibhalansi = okusethinini",
+        "Imali engiyikweletwayo: ikhasi elihlukile"
+      ]
+    },
+    "R-D2-04": {
+      "title": "Isonto likaLerato",
+      "screen": [
+        "Ibhalansi yokuqala R150",
+        "Amakhadi ayi-10: hambisani imali, bhalani umugqa",
+        "Amakhadi 3, 9: imali iyahamba? (20 min)"
+      ]
+    },
+    "R-D2-05": {
+      "title": "Qhathanisa",
+      "screen": [
+        "Bala ithini",
+        "Liyafana nencwadi?",
+        "Cha? Thola umugqa."
+      ]
+    },
+    "R-D2-06": {
+      "title": "Ukuthengisa akusiyo imali esandleni",
+      "screen": [
+        "Kuthengiswe okungu-R590 kuleli sonto",
+        "Imali engenile: R390",
+        "Isipaza sikweleta R200"
+      ]
+    },
+    "R-D2-07": {
+      "title": "My Records (Amarekhodi Ami): Sold and Spent",
+      "screen": [
+        "Picked · Sold · Spent · Charts",
+        "Sold → Quick sale entry",
+        "Spent → New entry"
+      ]
+    },
+    "R-D2-08": {
+      "title": "Incwadi yami yemali",
+      "screen": [
+        "Bhala igama lakho ekhaveni",
+        "Zijwayeze: uMsombuluko weSizanani",
+        "Kusukela namuhla ebusuku: ingadi yakho"
+      ]
+    },
+    "R-D2-09": {
+      "title": "Isivuno saya kuphi?",
+      "screen": [
+        "Kudliwe · kuphiwe abanye · kuthengisiwe · kulahlekile"
+      ]
+    },
+    "R-D2-10": {
+      "title": "Vuna, bopha, bhala",
+      "screen": [
+        "Vunani izixha ezi-5 — amaqabunga angaphandle",
+        "Kalani isixha esisodwa",
+        "Gcwalisani irekhodi lesivuno (25 min)"
+      ]
+    },
+    "R-D2-11": {
+      "title": "Ukudla okudliwe kuyimali eyongiwe",
+      "screen": [
+        "Izixha ezi-8 × R12 = R96",
+        "I-R96 yasala esikhwameni sikaGogo",
+        "Isizini: R480 engasetshenziswanga"
+      ]
+    },
+    "R-D2-12": {
+      "title": "Bala zonke izindleko",
+      "screen": [
+        "Imbewu · i-compost · amanzi · imali yokugibela",
+        "Amarabha, izikhwama, amathuluzi",
+        "Isikhathi sakho"
+      ]
+    },
+    "R-D2-13": {
+      "title": "Umbhede wesipinashi kaLerato",
+      "screen": [
+        "Amakhadi ezindleko ayi-12, izinqwaba ezimbili",
+        "Hlanganisani izindleko zemali",
+        "Imali yokudlala kuqala, ikhalkhuletha ekugcineni (20 min)"
+      ]
+    },
+    "R-D2-14": {
+      "title": "Izindleko zesizini",
+      "screen": [
+        "Izindleko zemali: R510",
+        "Kanye namahora angu-44 esikhathi sakhe",
+        "Kuvunwe izixha ezingu-150"
+      ]
+    },
+    "R-D2-15": {
+      "title": "Gcina zonke izilipi",
+      "screen": [
+        "Dweba indilinga esambeni",
+        "Yinamathisele, noma uyifake emvilophini",
+        "Asikho isilipi? Bhala esakho"
+      ]
+    },
+    "R-D2-16": {
+      "title": "Skena isilipi sasesitolo",
+      "screen": [
+        "Spent → New entry",
+        "Take photo → Read with Lima",
+        "Hlola kahle, bese uyagcina"
+      ]
+    },
+    "R-D2-17": {
+      "title": "Isixha esisodwa",
+      "screen": [
+        "Izindleko · intengo · inzuzo"
+      ]
+    },
+    "R-D2-18": {
+      "title": "Izindleko zesixha esisodwa",
+      "screen": [
+        "Zonke izindleko ÷ zonke izixha",
+        "R510 ÷ 150 = R3.40",
+        "Ungalokothi uthengise ngaphansi kwazo"
+      ]
+    },
+    "R-D2-19": {
+      "title": "Intengo efanele, inzuzo eqotho",
+      "screen": [
+        "Intengo ephansi · imakethe · umthengi",
+        "R1 080 − R510 = R570",
+        "Kanye no-R480 wokudla"
+      ]
+    },
+    "R-D2-20": {
+      "title": "Gcwalisa inkomishi kuqala",
+      "screen": [
+        "Izindleko zesizini: R600 = ubhontshisi ongu-60",
+        "Isixha ngasinye sishiya R10 = ubhontshisi owodwa",
+        "Izixha ezingu-60 = i-break-even"
+      ]
+    },
+    "R-D2-21": {
+      "title": "I-break-even ngobhontshisi",
+      "screen": [
+        "Fakani ubhontshisi owodwa ngesixha ngasinye",
+        "Balani kuze kugcwale inkomishi",
+        "Zamani: intengo yehla ibe yi-R10 (15 min)"
+      ]
+    },
+    "R-D2-22": {
+      "title": "Imali kuyo yonke isizini",
+      "screen": [
+        "Imali iphuma kuqala",
+        "Imali ingena kamuva",
+        "Thola inyanga enzima"
+      ]
+    },
+    "R-D2-23": {
+      "title": "Ithini lensimu lakwaDlamini",
+      "screen": [
+        "Qalani: R200 ngomhla ka-1 Septemba",
+        "Inyanga ngenyanga, ngemali yokudlala",
+        "Bomvu uma kungaphansi kukaziro (25 min)"
+      ]
+    },
+    "R-D2-24": {
+      "title": "Financial sheet (Ishidi lezimali)",
+      "screen": [
+        "My Records → Financial sheet",
+        "Inyanga: Income · Expenses",
+        "Imali esele erekhodiwe ≠ inzuzo yesizini"
+      ]
+    },
+    "R-D2-25": {
+      "title": "Ukuhlola ekupheleni kwenyanga",
+      "screen": [
+        "Engenayo · ephumayo · ibhalansi · ukubala ithini",
+        "Engiyikweletwayo · engiyikweletayo",
+        "Okuyiswe ekhaya"
+      ]
+    },
+    "R-D2-26": {
+      "title": "Okwenziwa ekhaya",
+      "screen": [
+        "Bhala yonke irandi yensimu izinsuku ezi-7",
+        "Hlola intengo: isixha esisodwa, nokunye okukodwa",
+        "Imali yokudlala: ibaleni yonke"
+      ]
+    },
+    "R-D3-01": {
+      "title": "Usuku 3 · Ukuthengisa nokukhula",
+      "screen": [
+        "Farmer Money · Usuku 3 kwezi-3",
+        "Thengisa kahle · boleka ngokuhlakanipha · hlela"
+      ]
+    },
+    "R-D3-02": {
+      "title": "Ubani othengayo?",
+      "screen": [
+        "Umakhelwane · isipaza · umthengisi wasemgwaqweni",
+        "Ikhishi lekhilishi · itafula lasemakethe",
+        "Ukuthengisa ndawonye"
+      ]
+    },
+    "R-D3-03": {
+      "title": "Umthengi ongcono emndenini wethu",
+      "screen": [
+        "Amakhadi abathengi ayisithupha",
+        "Wabekeni ngokulandelana, ongcono phezulu",
+        "Yishoni ukuthi kungani (15 min)"
+      ]
+    },
+    "R-D3-04": {
+      "title": "Ikhwalithi iyintengo",
+      "screen": [
+        "Kuvunwe ekuseni · kupholile · kuhlanzekile",
+        "Ubukhulu obufanayo · kufana njalo ngesonto",
+        "Ngesikhathi"
+      ]
+    },
+    "R-D3-05": {
+      "title": "Ukuthengisa ndawonye",
+      "screen": [
+        "Abalimi abahlanu, i-oda elilodwa elikhulu",
+        "Itekisi elilodwa, izindleko ziyabiwa",
+        "Amarekhodi acacile elungu ngalinye"
+      ]
+    },
+    "R-D3-06": {
+      "title": "Usuku lwemakethe",
+      "screen": [
+        "Kusuka ku-oda kuya kurisidi"
+      ]
+    },
+    "R-D3-07": {
+      "title": "Izinyathelo ezinhlanu, ubufakazi obuhlanu",
+      "screen": [
+        "I-oda → ukuletha → i-invoyisi",
+        "Kukhokhiwe → irisidi",
+        "Iphepha ngalinye lifakazela isinyathelo esisodwa"
+      ]
+    },
+    "R-D3-08": {
+      "title": "Umdlalo wosuku lwemakethe",
+      "screen": [
+        "Umzuliswano 1: abathengisi aba-3, abathengi aba-3",
+        "Landelani ikhadi lenu lendima",
+        "Shintshanani emzuliswaneni 2 (20 + 20 min)"
+      ]
+    },
+    "R-D3-09": {
+      "title": "Imali ekweletwayo",
+      "screen": [
+        "Ekweletwayo ayikho ethinini",
+        "Vumelanani ngosuku lokukhokha, nikubhale phansi",
+        "Asikho isikweletu esisha ize ikhokhwe"
+      ]
+    },
+    "R-D3-10": {
+      "title": "Invoice builder (Isakhi se-invoyisi)",
+      "screen": [
+        "I-invoyisi entsha",
+        "Izinto, intengo, isamba okufanele sikhokhwe",
+        "Umthengi usekhokhile? Akakakhokhi"
+      ]
+    },
+    "R-D3-11": {
+      "title": "Yibhale ukuthi ikhokhiwe — kanye",
+      "screen": [
+        "Vula i-invoyisi egciniwe",
+        "Yebo — ikhokhwe yonke + usuku",
+        "Ungabe usayifaka naku-Sold"
+      ]
+    },
+    "R-D3-12": {
+      "title": "Izincwadi zama-invoyisi namarisidi",
+      "screen": [
+        "I-invoyisi: cindezela kakhulu, gcina ikhophi",
+        "Ikhasi lemali engiyikweletwayo: R360",
+        "Kukhokhiwe? Irisidi, thikha, imali ingene"
+      ]
+    },
+    "R-D3-13": {
+      "title": "Boleka ngokuhlakanipha",
+      "screen": [
+        "UBongani ufuna iphampu ye-R3 000",
+        "Angayithola kuphi?"
+      ]
+    },
+    "R-D3-14": {
+      "title": "Imibuzo emihlanu ngaphambi kokuboleka",
+      "screen": [
+        "Ngiboleka ukwenzani? Izindleko zonke?",
+        "Ngingakhokha? Ubhalisiwe?",
+        "Kuthiwani uma...?"
+      ]
+    },
+    "R-D3-15": {
+      "title": "Izindlela ezine zokuthola u-R3 000",
+      "screen": [
+        "Balani i-offer ngayinye ngemali yokudlala",
+        "Uthola · ubuyisela · izindleko",
+        "Ingadi ingakhokha? (20 min)"
+      ]
+    },
+    "R-D3-16": {
+      "title": "Umbolekisi ongekho emthethweni · imali egciniwe",
+      "screen": [
+        "Ugcina ikhadi lakho? Hamba",
+        "Ayikho inombolo ye-NCR? Hamba",
+        "Imali egciniwe: R20 ngesonto"
+      ]
+    },
+    "R-D3-17": {
+      "title": "Uhlelo lwami lwemali",
+      "screen": [
+        "Umgomo · amathini amathathu · usuku lwencwadi",
+        "Inyanga enzima nemali egciniwe",
+        "Isinyathelo esisodwa ngenyanga ezayo"
+      ]
+    },
+    "R-D3-18": {
+      "title": "Yenzani uhlelo lwenu nixoxe ngalo",
+      "screen": [
+        "15 min: uhlelo lwami",
+        "2 min ngamunye: umgomo nesinyathelo esisodwa",
+        "Inkanyezi eyodwa evela eqenjini"
+      ]
+    },
+    "R-D3-19": {
+      "title": "Imibuzo ngezithombe — futhi",
+      "screen": [
+        "Amakhadi afanayo, amakhona afanayo",
+        "Yini eshintshile?"
+      ]
+    },
+    "R-D3-20": {
+      "title": "Izitifiketi",
+      "screen": [
+        "Farmer Money",
+        "Halala, nenze kahle"
+      ]
+    }
+  },
+  "glossary": {
+    "money": "imali",
+    "money in": "imali engenayo",
+    "money out": "imali ephumayo",
+    "household": "umndeni",
+    "budget": "ibhajethi",
+    "tin": "ithini (amathini)",
+    "Home (tin)": "Ikhaya",
+    "Save (tin) / to save": "Ukonga / yonga",
+    "Farm (tin) / farm": "Insimu",
+    "need": "isidingo",
+    "want": "isifiso",
+    "it depends": "kuya ngesimo",
+    "surprises": "okungalindelekile",
+    "savings group / stokvel": "istokfela (iqembu lokonga)",
+    "bank account": "i-akhawunti yasebhange",
+    "money on phone": "imali eselula",
+    "phone": "iselula",
+    "PIN": "i-PIN",
+    "OTP": "i-OTP",
+    "scam": "inkohliso",
+    "card": "ikhadi",
+    "grant": "isibonelelo",
+    "airtime": "i-airtime",
+    "money book": "incwadi yemali",
+    "balance": "ibhalansi",
+    "owed to me": "imali engiyikweletwayo",
+    "I owe": "imali engiyikweletayo",
+    "taken home": "okuyiswe ekhaya",
+    "reconcile": "qhathanisa",
+    "harvest": "isivuno",
+    "harvest record": "irekhodi lesivuno",
+    "bunch": "isixha (izixha)",
+    "spinach": "isipinashi",
+    "eaten / shared / sold / lost": "kudliwe / kuphiwe abanye / kuthengisiwe / kulahlekile",
+    "cost(s)": "izindleko",
+    "cash costs": "izindleko zemali",
+    "price": "intengo",
+    "profit": "inzuzo",
+    "floor (price)": "intengo ephansi",
+    "market": "imakethe",
+    "buyer": "umthengi",
+    "seller": "umthengisi",
+    "break-even": "i-break-even",
+    "season": "isizini",
+    "pinch month": "inyanga enzima",
+    "save ahead": "yonga kusengaphambili",
+    "seed": "imbewu",
+    "compost": "i-compost",
+    "manure": "umquba",
+    "transport": "imali yokugibela",
+    "rubber bands": "amarabha",
+    "bed (garden)": "umbhede",
+    "garden": "ingadi",
+    "beans (counters)": "ubhontshisi",
+    "play money": "imali yokudlala",
+    "notes (money)": "amanothi",
+    "slip / till slip": "isilipi (izilipi)",
+    "calculator": "ikhalkhuletha",
+    "neighbour": "umakhelwane",
+    "spaza shop": "isipaza",
+    "hawker": "umthengisi wasemgwaqweni",
+    "creche": "ikhilishi",
+    "market stall": "itafula lasemakethe",
+    "sell together": "thengisani ndawonye",
+    "quality": "ikhwalithi",
+    "order": "i-oda",
+    "deliver": "ukuletha",
+    "invoice": "i-invoyisi",
+    "receipt": "irisidi",
+    "paid": "kukhokhiwe",
+    "money owed": "imali ekweletwayo",
+    "credit / debt": "isikweletu",
+    "borrow": "ukuboleka",
+    "lender": "umbolekisi",
+    "registered": "obhalisiwe",
+    "offer (loan)": "i-offer",
+    "reserve": "imali egciniwe",
+    "plan": "uhlelo",
+    "goal": "umgomo",
+    "one step": "isinyathelo esisodwa",
+    "taxi": "itekisi",
+    "Records": "Records (Amarekhodi)",
+    "Invoice builder": "Invoice builder (Isakhi se-invoyisi)",
+    "Financial sheet": "Financial sheet (Ishidi lezimali)"
+  }
+}

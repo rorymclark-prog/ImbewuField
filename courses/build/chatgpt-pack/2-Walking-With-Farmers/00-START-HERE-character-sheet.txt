@@ -1,0 +1,31 @@
+Walking With Farmers — look: Field Notes
+
+STEP 1 — open a NEW ChatGPT chat just for this course. Paste this whole prompt first.
+Save the result as: character-sheet.png (keep it; attach it to later prompts so faces stay the same).
+
+---- COPY FROM HERE ----
+Style: warm documentary photograph, shot on 35 mm film (Kodak Portra look), natural morning or
+late-afternoon light, gentle grain, shallow depth of field, honest and unposed — people mid-task
+and mid-conversation, not smiling at the camera. Real rural KwaZulu-Natal homestead gardens:
+corrugated-iron roofs, JoJo-style water tank, droppers and wire fencing, mulched beds, red soil,
+rolling green hills. SOUTHERN HEMISPHERE: sun in the NORTH, shadows fall SOUTH.
+People: Black South African smallholders and a mentor, mixed ages and genders, everyday work
+clothes, dignified. Leave calm, uncluttered space on one side of the frame for text.
+ABSOLUTELY NO TEXT: no signs, logos, labels, writing on clothes, packets or tanks.
+
+Make a CHARACTER SHEET: all of these recurring characters standing side by side, full body,
+front view, plain background, so they can be reused consistently in later images:
+- **Zanele** (mentor / extension officer) — early 40s, short natural hair, wide-brim khaki sun
+  hat, olive utility shirt, small notebook and pen, a phone in a chest pocket. Listens more than
+  she talks.
+- **Baba Mthembu** — mid 60s, grey beard, flat cap, checked shirt, walking stick; proud of his
+  garden, sceptical at first.
+- **Lindiwe** — 22, hair in a puff, yellow T-shirt, jeans; new farmer, uses a phone.
+- A **cluster group** of 8–10 neighbours of mixed ages.
+---- TO HERE ----
+
+STEP 2 — paste the prompts in 01-images.md one at a time (attach the character sheet when people
+appear). Save each image with the file name shown above its prompt.
+STEP 3 — paste 02-posters.md prompts for the finished bilingual posters. CHECK EVERY WORD
+(ChatGPT misspells isiZulu); if wrong, reply: "Keep everything the same, only correct the
+spelling of X to Y."

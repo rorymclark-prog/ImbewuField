@@ -1,0 +1,30 @@
+AI Literacy — look: Comic Panels
+
+STEP 1 — open a NEW ChatGPT chat just for this course. Paste this whole prompt first.
+Save the result as: character-sheet.png (keep it; attach it to later prompts so faces stay the same).
+
+---- COPY FROM HERE ----
+Style: bold comic-book panel illustration, thick black ink outlines, flat bright colours with
+halftone-dot shading, white background, slight paper texture. Palette: black (#111111), cyan
+(#1FA3C8), magenta (#D6336C), yellow (#F7C948), halftone grey. Expressive faces and clear body
+language. People are Black South Africans of mixed ages in everyday township and rural settings
+(spaza shop, taxi rank, kitchen, garden). Phones shown with plain glowing screens.
+"The AI" is only ever a small cyan rounded speech shape with three dots — never a robot, face or
+person. Speech bubbles and phone screens are EMPTY. If outdoors: SOUTHERN HEMISPHERE, sun in the
+NORTH. ABSOLUTELY NO TEXT, letters or numbers anywhere, including bubbles, screens and signs.
+
+Make a CHARACTER SHEET: all of these recurring characters standing side by side, full body,
+front view, plain background, so they can be reused consistently in later images:
+- **Thabo** — 19, student, hoodie, earphones round his neck, cracked-screen Android phone.
+- **Mam' Grace** — mid 50s, spaza shop owner, floral apron, reading glasses on her head, careful.
+- **Gogo Nomvula** — 70s, church hat, sharp mind, never had a smartphone before this course.
+- **The guesser** — a small cyan rounded speech shape with three dots and a soft glow. No face,
+  no body, no eyes.
+- **The scammer** — only ever a shadowy phone screen or a silhouette; never a real-looking person.
+---- TO HERE ----
+
+STEP 2 — paste the prompts in 01-images.md one at a time (attach the character sheet when people
+appear). Save each image with the file name shown above its prompt.
+STEP 3 — paste 02-posters.md prompts for the finished bilingual posters. CHECK EVERY WORD
+(ChatGPT misspells isiZulu); if wrong, reply: "Keep everything the same, only correct the
+spelling of X to Y."

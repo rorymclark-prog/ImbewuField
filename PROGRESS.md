@@ -928,6 +928,29 @@ calendar we have in the app with the veg and other icons".
 - **Next:** app-wide audit (running), then Simple mode screen by screen; an organisation-wide
   default for its farmers (Step 3) on the org record.
 
+### 2026-09-23 (Training pathway: five facilitator courses — PR #509, draft)
+Rory asked for a 5-day farmer course for ACT·SEF-type beneficiaries (09:00–16:00, taught from posters
+and a phone, optional slides), a mentor course (in person or online, a visit schedule with group visits,
+the app's finance/invoice mentoring switchable on/off), and Teach the Teachers (posters or PowerPoint,
+inspired by — not copied from — the Morrow-based TTT Rory sat); then added Farmer Money and AI Literacy.
+All five live in `courses/` (README = the pathway). ~230k words, 351 slides, 90 posters, 412 media items.
+- `courses/shared/`: FORMAT (parsed syntax), poster standards, facilitation toolkit, forms, PRODUCTION-GUIDE.
+- Courses: `farmer-5day/` (93 slides, 21 posters), `mentor-3day/` (61, 16; Visit Hand, visit playbook,
+  app-track ON/OFF), `teach-the-teachers/` (86, 22; micro-teaching bank), `farmer-money/` (67, 17;
+  printables), `ai-literacy/` (44, 14; prompt cards). Every app session has a `[PAPER]` twin.
+- `scripts/courses/build.py` builds `courses/build/<course>/*.pptx` + an offline phone-pack HTML and
+  `courses/media-manifest.json` (Codex's work list: NEW vs REUSE of existing clips). `--check` = 0 problems.
+- Field lessons from the 2022/2023 reports are design rules (groups of 5, no demo-only practicals,
+  ≤30% teacher talk, Day 0, registers, max 30 learners).
+- **Deck redesign (2026-10-22):** one layout grid for all five courses with a per-course `motif` in
+  `style.md` (linocut · photo · chalk · clay · comic) that sets frames, bullet markers and the
+  section-slide ornament. Day kicker, numbered steps on "Your turn" slides, poster pill + page count in
+  the footer, APP/PAPER track pills, titles and bullets shrink to fit (isiZulu runs long), and
+  picture placeholders show only a title — the full brief moved to the speaker notes. Previewed by
+  installing LibreOffice Impress in the container (`apt-get install libreoffice-impress`).
+- **Next:** Rory makes images/posters in ChatGPT and animations in Flow (PRODUCTION-GUIDE.md), then
+  re-run the build; helpline numbers and Rand prices are marked "check locally".
+
 ### 2026-08-24 (Phase 1/4 of NGO/funder dashboards: cross-org Firestore/Storage leak fix — PR #350, draft)
 Rory: *"i need to build the full ngo and funder dashboard now the ngo needs admin powers to
 designate what users can or cannot do audit and research what we need and they need to be able
