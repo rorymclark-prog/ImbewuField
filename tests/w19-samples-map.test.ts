@@ -33,7 +33,8 @@ test('w19-19: MEL hero is not a lime slab in dark; notice is neutral with blue r
 test('w19-20/21/22: one Tour control, one radius, Lucide arrows, even gaps', () => {
   assert.doesNotMatch(read('app/samples/farm/page.tsx'), /right=\{<Link href="\/tour"/);
   assert.doesNotMatch(read('app/samples/farm/page.tsx'), /styles\.button\} \$\{styles\.primary\}/);
-  assert.doesNotMatch(sample, /border-radius:999px/);
+  // w20-17 deliberately moved the page buttons to the shared 999px pill, scoped to .content.
+  assert.match(sample, /\.content button,\.button \{[^}]*border-radius:999px/);
   assert.doesNotMatch(read('app/samples/page.tsx'), /→/);
   assert.doesNotMatch(read('app/samples/gardens/page.tsx'), /→/);
   assert.match(sample, /\.grid > label \{ margin:0; \}/);
