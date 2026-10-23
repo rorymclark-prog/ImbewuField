@@ -17,7 +17,10 @@
 .notice { margin: 16px 0; padding: 18px 20px; border-color: color-mix(in srgb, var(--gold) 45%, transparent); background: color-mix(in srgb, var(--gold) 12%, var(--bg-1)); line-height: 1.55; }
 .notice p { margin: 0; }
 .notice p + details { margin-top: 8px; }
-.notice summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-weight: 600; }
+.notice summary { min-height: 44px; display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; list-style: none; }
+.notice summary::-webkit-details-marker { display: none; }
+.notice summary .chevron { margin-left: 0; position: static; }
+.notice details[open] > summary .chevron { transform: rotate(180deg); }
 .panel, .day { margin-top: 16px; padding: clamp(20px, 4vw, 30px); scroll-margin-top: 20px; }
 .panel h2, .day h2 { margin: 0 0 12px; color: var(--color-forest-800); font: 600 clamp(25px, 3.4vw, 35px)/1.15 var(--font-display), Georgia, serif; }
 .panel p, .panel li { line-height: 1.55; }

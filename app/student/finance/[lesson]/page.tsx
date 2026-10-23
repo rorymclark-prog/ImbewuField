@@ -27,7 +27,7 @@ export default async function FinanceLessonPage({ params }: { params: Promise<{ 
   const practice = lesson.practice.filter(s => !/^(Feedback|Corrective feedback)/.test(s.title));
   const feedback = lesson.practice.filter(s => /^(Feedback|Corrective feedback)/.test(s.title));
   return <div className={styles.page}>
-    <header className={styles.header}><MenuButton /><BackButton fallback="/student/finance" /><OfflinePageLink href="/student/finance">Farm Finance</OfflinePageLink><span>{lesson.code} · {index + 1} / 24</span></header>
+    <header className={styles.header}><MenuButton /><BackButton fallback="/student/finance" /><OfflinePageLink href="/student/finance">Farm Finance</OfflinePageLink><span data-header-secondary>{lesson.code} · {index + 1} / 24</span></header>
     <main className={styles.main}>
       <section className={styles.hero}>
         <div className={styles.heroText}><p className={styles.eyebrow}>Unit {unit.number} · {unit.title}</p><h1><FinanceZuText en={lesson.title} zu={financeZu(FINANCE_ZU_LESSON_TITLE, lesson.id, lesson.title)} /></h1>{lesson.outcome && <p><FinanceZuText en={lesson.outcome} zu={financeZu(FINANCE_ZU_LESSON_OUTCOME, lesson.id, lesson.outcome)} /></p>}
