@@ -848,3 +848,53 @@ noted. Other translators copy the callout labels, the "Key points" heading, the 
 | south-easter / north-wester | umoya wasemzantsi-mpuma (south-easter) / umoya wasemntla-ntshona (north-wester) | Ch 6. (check) |
 | planting basin / tree basin | isitya (pl. izitya) / isitya somthi | Ch 6. Same as infiltration basin entry. (check) |
 | Ch 6 tree and shrub names | English common name kept, Latin in italics; only umnga (*Vachellia karroo*) and umqokolo (Kei apple, *Dovyalis caffra*) given in isiXhosa | Ch 6. Apple, pear, plum = iapile, ipere, iplamu (check); other fruit (quince, nectarine, apricot, fig, persimmon, grape, pecan, almond, carob, litchi, pomegranate) kept in English. |
+| red-billed quelea | i-red-billed quelea | Ch 10. Loan; isiXhosa name not confirmed. (check) |
+| mole snake | ii-mole snake | Ch 10. Loan; isiXhosa name not confirmed. (check) |
+| rat lungworm / parasite | i-rat lungworm / i-parasite | Ch 10. Loans, explained in the sentence. (check) |
+| slug pellets | ii-slug pellet | Ch 10. Loan. (check) |
+| armyworm / fall armyworm funnel | ii-armyworm / ifanele (indawo ephakathi apho amagqabi amatsha avela khona) | Ch 10. *ifanele* = funnel of a young maize plant; glossed on first use. (check) |
+| carrot fly / Mediterranean, Natal, Oriental fruit fly | i-carrot fly / i-Mediterranean fruit fly, i-Natal fruit fly, i-Oriental fruit fly | Ch 10. Loan names. (check) |
+| bait trap | isicupho esinesithako esitsala iimpukane | Ch 10. (check) |
+| tobacco / snuff / nicotine | ugwayi / icuba / i-nicotine | Ch 10. (check) |
+| syringa (*Melia azedarach*) | i-syringa (*Melia azedarach*) | Ch 10. Loan with Latin name. (check) |
+| sweet pepper (capsicum) | i-pepper (pl. ii-pepper) | Ch 10. Chilli stays *ipilipili*. (check) |
+| Swiss chard | i-Swiss chard | Ch 10. Spinach stays *isipinatshi*. (check) |
+| broad bean / soya bean | iimbotyi ezibanzi / iimbotyi ze-soya | Ch 10. (check) |
+| mustard greens / kale / rape / broccoli / cauliflower / celery / leek / chive / radish / strawberry / butternut / squash / sweetcorn / millet / melon / spring onion | i-mustard greens / i-kale / i-rape / i-broccoli / i-cauliflower / i-celery / i-leek / i-chive / i-radish / i-strawberry / i-butternut / i-squash / i-sweetcorn / i-millet / i-melon / i-spring onion | Ch 10. Loans (plural *ii-*). (check) |
+| dill / coriander / parsley / caraway / basil / mint / rosemary / sage / lavender / yarrow / calendula / chamomile / zinnia / borage / lemon verbena / cosmos / gazania | i-dill / i-coriander / i-parsley / i-caraway / i-basil / i-mint / i-rosemary / i-sage / i-lavender / i-yarrow / i-calendula / i-chamomile / i-zinnia / i-borage / i-lemon verbena / i-cosmos / i-gazania | Ch 10. Loans; isiXhosa names not confirmed. African daisy, pincushion, everlasting and wild wormwood kept as English names with Latin. (check) |
+| crop family (rotation) | usapho lwekhaphetshu / lwetumato / lwekherothi / lwebhitrudi / lwethanga / lweembotyi / lwamatswele / lwengca | Ch 10. *usapho* = family. (check) |
+| frogs and toads (one bullet) | amaxoxo (frogs and toads) | Ch 10. One word for both, with the English in brackets. (check) |
+| scent disrupter / tonic plant | izinto ezidida ivumba / izityalo ezomeleza | Ch 10 sub-headings. (check) |
+| wilt / bacterial wilt | i-wilt / i-bacterial wilt | Ch 10. Loan. (check) |
+| acid soil / sweet (alkaline) soil | umhlaba obawayo / umhlaba omnandi (alkaline) | Ch 8. *ukubawa* = to be sour. Neutral pH: *ayithathi cala* (neutral). (check) |
+| weathered rock / parent rock | ilitye elibolileyo / ilitye lesiseko | Ch 8, soil profile table. (check) |
+| straw | utyani lwenkozo | Ch 8. Plain *utyani* after first use; *ingca eyomileyo* is dry grass. (check) |
+| slasher | i-slasher | Ch 8. Loan. (check) |
+| parasite | ii-parasite | Ch 8. Loan; internal worms stay *iinqolowa*. (check) |
+| container (worm farm) | ikhonteyina | Ch 8. Loan. (check) |
+| couch grass | ingca ye-couch | Ch 8. Loan; isiXhosa name not confirmed. (check) |
+| horse | ihashe (pl. amahashe) | Ch 8. (check) |
+| dung beetle | ibhungane lobulongwe (pl. amabhungane obulongwe) | Ch 8. Descriptive. (check) |
+| mulch bank (in Ch 8 heading) | indawo yokutyala i-mulch (mulch bank) | Ch 8. Uses *i-mulch* because mulch is one of the 66 kept words; the older section-6 form has *ingca yokugquma*. (check) |
+| sedge / reeds | i-sedge / amahlanga | Ch 8. (check) |
+| top-dressing | isasazo ngaphezulu (top-dressing) | Ch 8. Descriptive. (check) |
+| water cycle / nutrient cycle / energy flow | umjikelo wamanzi / umjikelo wezondlo / ukuhamba kwamandla | Ch 9. (check) |
+| producers / consumers / decomposers (ch 9 bullets) | abavelisi / abatyi / ababolisi | Ch 9, as in section 8. With the matching pronoun *zona* / *bona* after the colon. (check) |
+| top predators | ii-predator eziphezulu (top predators) | Ch 9. (check) |
+| barn owls | izikhova (barn owls) | Ch 9. isiXhosa name for the barn owl itself not confirmed. (check) |
+| mosquitofish | i-mosquitofish | Ch 9. Loan. (check) |
+| pine (tree) | ipayini (pl. iipayini) | Ch 9. (check) |
+| escarpment | i-escarpment | Ch 9. Loan. (check) |
+| hedgerow | uthango oluphilayo (imigca exubileyo) | Ch 9. Same as hedge / living fence in section 7. (check) |
+| kitchen | ikhitshi | Ch 1 and 11 use *ikhitshi* (aspirated). The garden entry in section 5 writes *ikitshi*. (check) |
+| insulation / insulated | i-insulation (into ethintela ubushushu ukuba bungene okanye buphume) / egqunyiweyo (insulated) | Ch 11. Loan, explained on first use. (check) |
+| ceiling | isilingi | Ch 11. (check) |
+| eaves | umphetho ophumayo wophahla (eaves) | Ch 11. (check) |
+| collector (solar geyser) | i-collector (iphaneli eqokelela ubushushu elangeni) | Ch 11. Loan, explained on first use. (check) |
+| antifreeze | ulwelo olungabandi (antifreeze) | Ch 11. (check) |
+| electricity grid | igridi yombane | Ch 11. (check) |
+| dew | umbethe (dew) | Ch 11. isiXhosa word not confirmed. (check) |
+| blanching | ukuntywilisa emanzini abilayo ngokukhawuleza (blanching) | Ch 11. (check) |
+| to simmer | ukubila kancinci | Ch 11. (check) |
+| chimney | ishimini | Ch 11. (check) |
+| imbawula (coal brazier) | imbawula | Ch 11. English text keeps the word; kept unchanged. |
