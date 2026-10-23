@@ -1769,6 +1769,8 @@ const dict: Dict = {
   journalWeightsLiveElsewhere: 'Izisindo zesivuno nokuthengiswa kubhalwa kokuthi Amarekhodi Ami.',
   journalOpenRecords: 'Vula Amarekhodi Ami',
   limaWhoIs: 'Lima, umsizi wakho wokutshala',
+  // w20-08: unreviewed isiZulu draft (role-neutral label for staff Home).
+  limaWhoIsStaff: 'Lima, umsizi wakho',
   limaAskButton: 'Cela usizo',
   limaPhotoButton: 'Isithombe',
   popiaGoalPickOne: 'Khetha okukodwa ukuze uqhubeke',

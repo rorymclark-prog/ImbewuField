@@ -53,3 +53,18 @@ test('w20-06: offline page gives farmers plain copy and hides the information-re
   assert.match(read('lib/i18n.tsx'), /offlineSavedEntriesDescriptionFarmer: 'Journal notes, records and photos wait here/);
   assert.match(read('lib/locales/zu.ts'), /w20-06: unreviewed isiZulu draft/);
 });
+
+test('w20-07: pages have a readable measure on desktop', () => {
+  assert.match(read('components/journal/FieldJournal.tsx'), /padding: '14px 14px 176px', maxWidth: 1040/);
+  assert.match(read('app/calendar/page.tsx'), /padding: '16px 16px 24px', maxWidth: 1040, marginInline: 'auto'/);
+  assert.match(read('app/account/page.tsx'), /px-4 py-6 sm:px-6`\} style=\{\{ maxWidth: 640 \}\}/);
+});
+
+test('w20-08: staff Home Lima strip is inset and role-neutral', () => {
+  const bar = read('components/LimaBar.tsx');
+  assert.match(bar, /staff \? ' px-4' : ''/);
+  assert.match(bar, /staff \? 'limaWhoIsStaff' : 'limaWhoIs'/);
+  assert.match(read('app/home/page.tsx'), /<LimaBar staff=\{Boolean\(staffRole\)\} \/>/);
+  assert.match(read('lib/i18n.tsx'), /limaWhoIsStaff: 'Lima, your helper'/);
+  assert.match(read('design/DESIGN.md'), /Entry points \(w20-08\)/);
+});

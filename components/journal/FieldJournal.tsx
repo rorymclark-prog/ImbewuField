@@ -193,7 +193,7 @@ export default function FieldJournal() {
   return (
     // Bottom padding clears the tab bar AND the sample-mode banner stacked above it,
     // so the oldest entry is never trapped behind them.
-    <div className={`${workspace.workspace} ${workspace.journal}`} style={{ padding: '14px 14px 176px' }}>
+    <div className={`${workspace.workspace} ${workspace.journal}`} style={{ padding: '14px 14px 176px', maxWidth: 1040 }}>
       <aside className={workspace.journalSidebar} aria-label={ui('Journal overview', 'Uhlolojikelele lwejenali')}>
       {/* Stat row — extra dashboard detail, not the entries or the add-note action Simple
           leads with. Still one tap away: switch to All tools in Settings. */}

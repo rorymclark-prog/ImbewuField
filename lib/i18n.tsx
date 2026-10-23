@@ -249,6 +249,7 @@ export const T_en: Dict = {
   // English, and an open composer is the hardest control there is for someone who types slowly.
   // Now a labelled button, and Lima is finally introduced. See components/LimaBar.tsx.
   limaWhoIs: 'Lima, your planting helper',
+  limaWhoIsStaff: 'Lima, your helper',
   limaAskButton: 'Ask for help',
   limaPhotoButton: 'Photo',
   askLimaSubtitle: 'Sizes, water, what to plant…',

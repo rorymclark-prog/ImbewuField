@@ -227,7 +227,7 @@ export default function AccountPage() {
         <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
           <AccountShellHeader copy={copy} />
           <div className="flex-1 overflow-y-auto">
-            <div className={`${workspace.workspace} ${workspace.formWidth} px-4 py-6 sm:px-6`}>
+            <div className={`${workspace.workspace} px-4 py-6 sm:px-6`} style={{ maxWidth: 640 }}>
               <section className="min-w-0 space-y-5" aria-label={copy('Tour account', 'I-akhawunti yohambo')}>
                 <div className="rounded-2xl p-5 flex items-center gap-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
                   <div className="flex items-center justify-center rounded-full font-display font-bold flex-shrink-0"
