@@ -43,16 +43,12 @@ function walk(dir: string, out: string[] = []): string[] {
 }
 
 const CODEX = [/^components\/crop/, /^app\/facilitator\/crops\//, /^app\/cropplan\//];
-// owned by another track, wave 17: not in this track's file list, so reported rather than fixed here.
-const ALLOW = new Set([
-  'components/SiteSurveySheet.tsx',
-  'components/design/DesignCanvas.tsx',
-  'app/community/profile/page.tsx',
-  'app/community/page.tsx',
-  'app/community/messages/[threadId]/page.tsx',
-  'app/community/u/[uid]/page.tsx',
-  'app/contact/page.tsx',
-]);
+// Fields that kill the outline but take their focus ring from a CSS module class with its own
+// :focus-visible rule. A Tailwind ring there would fight that rule's box-shadow, so the tag must
+// carry the class and the module must still declare the rule.
+const CSS_FOCUS: Record<string, { cls: string; css: string; rule: RegExp }> = {
+  'app/contact/page.tsx': { cls: '${motion.field}', css: 'app/contact/ContactMotion.module.css', rule: /\.field:focus-visible\s*\{[^}]*box-shadow/ },
+};
 
 function tagsOf(src: string): string[] {
   const tags: string[] = [];
@@ -74,19 +70,21 @@ function tagsOf(src: string): string[] {
 
 test('w17-07: outline:none on form fields always pairs with a focus-visible ring', () => {
   const offenders: string[] = [];
-  const allowed: string[] = [];
   for (const file of [...walk('components'), ...walk('app')]) {
     if (CODEX.some(r => r.test(file))) continue;
     const src = read(file);
     if (!/outline:\s*(?:'none'|0\b)/.test(src)) continue;
-    const shared = [...src.matchAll(/const (\w+)(?::[^=]+)?= \{[^}]*outline:\s*(?:'none'|0\b)[^}]*\}/g)].map(m => m[1]);
+    // A shared style object may hold a template literal (`1px solid ${color}`), so `${...}` is allowed inside it.
+    const shared = [...src.matchAll(/const (\w+)(?:\s*:[^=]+)?\s*=\s*\{(?:[^{}]|\$\{[^}]*\})*?outline:\s*(?:'none'|0\b)/g)].map(m => m[1]);
     for (const tag of tagsOf(src)) {
       const bare = /outline:\s*(?:'none'|0\b)/.test(tag) || shared.some(n => new RegExp(`\\.\\.\\.${n}\\b|style=\\{${n}\\}`).test(tag));
-      if (bare && !/focus-visible:ring/.test(tag)) (ALLOW.has(file) ? allowed : offenders).push(`${file}: ${tag.slice(0, 60)}`);
+      if (!bare || /focus-visible:ring/.test(tag)) continue;
+      const css = CSS_FOCUS[file];
+      if (css && tag.includes(css.cls) && css.rule.test(read(css.css))) continue;
+      offenders.push(`${file}: ${tag.slice(0, 60)}`);
     }
   }
   assert.deepEqual(offenders, []);
-  assert.ok(allowed.length > 0, 'allow-list is stale: remove files that are now fixed');
 });
 
 test('w17-07: the six named inputs carry the ring', () => {

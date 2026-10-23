@@ -253,7 +253,7 @@ function NumInput({ value, onChange, placeholder, placeholderEnglish, hint, labe
   return (
     <>
       <input type="number" min="0" step="any" aria-label={label} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder ?? t('surveyNumInputDefaultPlaceholder')}
-        className="w-full font-sans"
+        className="w-full font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
         style={{ padding: '10px 14px', borderRadius: 11, background: 'var(--surface)', border: '1px solid var(--border)', fontSize: 14, color: 'var(--text)', outline: 'none' }} />
       {lang === 'zu' && placeholderEnglish && <small>English: {placeholderEnglish}</small>}
       {hint && <div className="font-sans mt-1" style={{ fontSize: 12, color: 'var(--text-2)' }}>{hint}</div>}
@@ -1206,7 +1206,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, sco
               </div>
               <textarea aria-label={t('sectionAnythingElseLimaShouldKnow')} value={notes} onChange={e => setNotes(e.target.value)}
                 placeholder={lang === 'zu' ? 'e.g. North slope gets afternoon shade from the ridge. We had a tree removed and the soil there is very hard…' : t('notesPlaceholder')}
-                rows={4} className="w-full font-sans"
+                rows={4} className="w-full font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                 style={{ padding: '10px 14px', borderRadius: 11, background: 'var(--surface)', border: '1px solid var(--border)', fontSize: 14, color: 'var(--text)', outline: 'none', resize: 'none', lineHeight: 1.5 }} />
             </div>
           </div>
