@@ -16,7 +16,8 @@ test('w18-48: contact send button, icon tile and notice follow the theme', () =>
 test('w18-49: login inputs are full opacity and a Connecting line shows', () => {
   const src = read('app/login/page.tsx');
   assert.ok(!src.includes('opacity: backendReady'));
-  assert.match(src, /!backendReady && \(\s*<p role="status"[^>]*>\{t\('loginConnecting'\)\}/);
+  // w19-40: the permanent "Connecting…" under a disabled button was removed (nothing connects).
+  assert.doesNotMatch(src, /!backendReady && \(\s*<p role="status"/);
   assert.match(read('components/SampleModeBanner.tsx'), /pathname\.startsWith\('\/login'\)/);
 });
 

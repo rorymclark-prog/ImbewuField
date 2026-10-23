@@ -1806,7 +1806,7 @@ export const T_en: Dict = {
   loginContinueToMap: 'Sign in to continue to your map',
   // ux-03/nav-04: was 'Backend not connected yet — auth is unavailable. The app runs in tour
   // mode.' — developer vocabulary on a farmer's first-contact screen.
-  loginBackendUnavailableNotice: 'Sign-in is not available in this practice version. Everything you try here is kept on this phone.',
+  loginBackendUnavailableNotice: 'Sign-in is not available in this practice version. Everything you try here is kept on this device.',
   loginSignIn: 'Sign in',
   loginCreateAccount: 'Create account',
   loginResetEmailSent: 'Reset email sent to',
