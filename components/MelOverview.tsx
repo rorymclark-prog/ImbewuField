@@ -4,12 +4,22 @@ import { useState } from 'react';
 import { ClipboardList, CheckCircle2, Eye, Share2, Flag, BookOpen, GraduationCap, Milestone, Smartphone, ArrowRight, Clock3 } from 'lucide-react';
 import { MEL_STAGES, type MelAssessment, type MelStage } from '@/lib/mel';
 import { translate } from '@/lib/i18n';
+import { recordsMonthShort } from '@/lib/records-months';
 import { MEL_TEMPLATES } from '@/lib/mel-templates';
 import styles from './MelDashboard.module.css';
 
 export type OverviewAssessment = Pick<MelAssessment, 'id' | 'title' | 'project' | 'stage' | 'state' | 'published' | 'due' | 'action' | 'actionOwner' | 'actionDue' | 'actionDone'> & { assigned: number; completed: number };
 const icons = { baseline: Flag, course_before: BookOpen, course_after: GraduationCap, midpoint: Milestone, closeout: CheckCircle2, app_midpoint: Smartphone, app_closeout: Smartphone };
 const shortNames = { baseline: 'Baseline', course_before: 'Before training', course_after: 'After training', midpoint: 'Midpoint', closeout: 'Closeout', app_midpoint: 'App midpoint', app_closeout: 'App closeout' };
+
+const stateLabelsEn = { draft: 'Draft', open: 'Open', closed: 'Closed' } as const;
+/** '2026-08-01' -> '1 Aug 2026' (isiZulu month from the records table); anything else is shown as stored. */
+function overviewDate(iso: string, zu: boolean) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+  if (!m) return iso;
+  const month = recordsMonthShort(zu ? 'zu' : 'en', Number(m[2]));
+  return month ? `${Number(m[3])} ${month} ${m[1]}` : iso;
+}
 
 /** Only counts already authorised for this viewer enter this presentation component. */
 export default function MelOverview({ items, onOpen, selectedId, busy = false, zu = false }: { items: OverviewAssessment[]; onOpen: (id: string) => void; selectedId?: string; busy?: boolean; zu?: boolean }) {
@@ -37,7 +47,7 @@ export default function MelOverview({ items, onOpen, selectedId, busy = false, z
       {[false, true].map(app => <div key={String(app)}><h3 className={styles.cycleLabel}>{app ? (zu ? 'Impendulo ngohlelo lokusebenza · ngokuzithandela' : 'App feedback · optional') : (zu ? 'Iphrojekthi nokuqeqeshwa' : 'Project & training')}</h3><div className={app ? styles.appStages : styles.cycleStages}>{MEL_STAGES.filter(s => s.startsWith('app_') === app).map(s => { const rows = items.filter(a => a.stage === s); const n = rows.reduce((v, a) => v + a.assigned, 0); const c = rows.reduce((v, a) => v + a.completed, 0); const Icon = icons[s]; return <button key={s} aria-pressed={stage === s} onClick={() => { setStage(stage === s ? null : s); setFilter('all'); }}><Icon size={23} aria-hidden="true" /><strong>{zu ? MEL_TEMPLATES[s].zu : shortNames[s]}</strong><span>{n ? `${c} / ${n}` : rows.length ? (zu ? 'Uhlaka' : 'Not assigned') : (zu ? 'Akukaqalwa' : 'Not started')}</span><div className={styles.bar} aria-hidden="true"><span style={{ width: `${n ? Math.min(100, c / n * 100) : 0}%` }} /></div></button>; })}</div></div>)}
     </section>
     <div className={styles.row}><h2>{zu ? 'Ukuhlola' : 'Assessments'} <span className={styles.muted}>({visible.length})</span></h2>{(filter !== 'all' || stage) && <button onClick={() => { setFilter('all'); setStage(null); }}>{zu ? 'Susa izihlungi' : 'Clear filters'}</button>}</div>
-    <div className={styles.assessmentCards}>{visible.map(a => { const Icon = icons[a.stage]; const stateLabel = zu ? translate('zu', `assessmentState_${a.state}`) : a.state; const sharedLabel = zu ? translate('zu', 'assessmentState_shared') : 'shared'; return <button key={a.id} className={styles.assessmentCard} aria-pressed={selectedId === a.id} disabled={busy} onClick={() => onOpen(a.id)}><span className={styles.statIcon}><Icon size={24} aria-hidden="true" /></span><span className={styles.assessmentText}><span className={styles.tag}>{stateLabel}{a.published ? ` · ${sharedLabel}` : ''}</span><strong>{zu ? MEL_TEMPLATES[a.stage].zu : a.title}</strong><span>{a.project}</span><small>{zu ? 'Kufanele' : 'Due'} {a.due} · {a.completed}/{a.assigned} {zu ? 'kuqediwe' : 'completed'}</small><div className={styles.bar} aria-hidden="true"><span style={{ width: `${a.assigned ? Math.min(100, a.completed / a.assigned * 100) : 0}%` }} /></div></span><ArrowRight size={20} aria-hidden="true" /></button>; })}</div>
+    <div className={styles.assessmentCards}>{visible.map(a => { const Icon = icons[a.stage]; const stateLabel = zu ? translate('zu', `assessmentState_${a.state}`) : (stateLabelsEn[a.state as keyof typeof stateLabelsEn] ?? a.state); const sharedLabel = zu ? translate('zu', 'assessmentState_shared') : 'Shared'; return <button key={a.id} className={styles.assessmentCard} aria-pressed={selectedId === a.id} disabled={busy} onClick={() => onOpen(a.id)}><span className={styles.statIcon}><Icon size={24} aria-hidden="true" /></span><span className={styles.assessmentText}><span className={styles.tag}>{stateLabel}{a.published ? ` · ${sharedLabel}` : ''}</span><strong>{zu ? MEL_TEMPLATES[a.stage].zu : a.title}</strong><span>{a.project}</span><small>{zu ? 'Kufanele' : 'Due'} {overviewDate(a.due, zu)} · {a.assigned ? `${a.completed}/${a.assigned} ${zu ? 'kuqediwe' : 'completed'}` : (zu ? 'Akukavulwa' : 'Not opened yet')}</small><div className={styles.bar} aria-hidden="true"><span style={{ width: `${a.assigned ? Math.min(100, a.completed / a.assigned * 100) : 0}%` }} /></div></span><ArrowRight size={20} aria-hidden="true" /></button>; })}</div>
     {!visible.length && <p className={styles.card}>{zu ? 'Akukho ukuhlola okufana nalokhu.' : 'No assessments match this view.'}</p>}
   </div>;
 }
