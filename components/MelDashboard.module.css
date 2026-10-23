@@ -27,8 +27,8 @@
 .root label > input:not([type=checkbox]),.root label > select,.root label > textarea { display:block; margin-top:6px; }
 .root button { cursor:pointer; }
 .root button:disabled { opacity:.55; cursor:default; }
-.root :is(button,a).primary { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:9px 18px; border-radius:9px; background:var(--color-forest-800); color:var(--on-forest-800); border:1px solid var(--color-forest-800); font-weight:600; font-size:14px; text-decoration:none; }
-.root :is(button,a).secondary { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:9px 18px; border-radius:9px; background:transparent; color:var(--text-primary); border:1px solid var(--border); font-weight:600; font-size:14px; text-decoration:none; }
+.root :is(button,a).primary { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:9px 18px; border-radius:10px; background:var(--color-forest-800); color:var(--on-forest-800); border:1px solid var(--color-forest-800); font-weight:600; font-size:14px; text-decoration:none; }
+.root :is(button,a).secondary { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:9px 18px; border-radius:10px; background:transparent; color:var(--text-primary); border:1px solid var(--border); font-weight:600; font-size:14px; text-decoration:none; }
 .stack { display:grid; gap:16px; margin:16px 0; }
 .root button[aria-pressed=true] { box-shadow:0 0 0 2px var(--emerald); }
 .root :focus-visible { outline:3px solid var(--gold); outline-offset:3px; }
