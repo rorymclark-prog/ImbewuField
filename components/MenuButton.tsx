@@ -45,19 +45,21 @@ export default function MenuButton() {
           // Tokens, not hexes — the lesson SettingsButton already carries: a control
           // dropped into a dozen page headers is exactly the one that must follow
           // the theme, or dark mode has a bright chip in the corner of every screen.
+          // w18-34: the tour state is a pill — icon with the word beside it — so the label never
+          // sits on, or gets clipped by, the 44px circle's outline.
           width: 44,
           height: 44,
+          ...(sample ? { width: 'auto', minWidth: 44, padding: '0 12px' } : null),
           background: 'var(--bg-1)',
-          border: sample ? '1px solid var(--color-harvest)' : '1px solid var(--border)',
+          border: sample ? '1px solid var(--gold-dim)' : '1px solid var(--border)',
           color: 'var(--text-primary)',
           cursor: 'pointer',
-          flexDirection: 'column',
-          gap: 1,
+          flexDirection: 'row',
+          gap: 6,
         }}
       >
         <Menu size={18} strokeWidth={1.7} />
-        {/* "Uhambo" measured wider than the 44px phone button at 12px. */}
-        {sample && <span style={{fontSize:lang === 'zu' ? 10 : 12,lineHeight:1,fontWeight:700,color:'var(--color-harvest)'}}>{lang === 'zu' ? 'Uhambo' : 'Tour'}</span>}
+        {sample && <span className="font-sans" style={{fontSize:12,lineHeight:1,fontWeight:700,whiteSpace:'nowrap',color:'var(--gold-dim)'}}>{lang === 'zu' ? 'Uhambo' : 'Tour'}</span>}
       </button>
       <FieldSyncBadge />
       <ProductTourButton />

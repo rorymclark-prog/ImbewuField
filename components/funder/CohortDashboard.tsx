@@ -311,11 +311,11 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
           Izilawuli nezaziso zokwabelana kuleli khasi zisesiZulu. Amanye amagrafu, izexwayiso zesimo sedatha nephaneli yemininingwane yomlimi zisaboniswa ngesiNgisi; amagama, amanani nobufakazi obuqoshwe ngabantu kuboniswa njengoba kugcinwe.
         </p>}
 
-        <div className="px-3 md:px-5 pt-4" style={{ paddingBottom: 160, maxWidth: 1480, margin: '0 auto' }}>
+        <div className="px-3 md:px-5 pt-2" style={{ paddingBottom: 160, maxWidth: 1480, margin: '0 auto' }}>
           {/* ── 1. what the cohort adds up to ─────────────────────────────────────────── */}
           <h2
-            className="font-display font-bold"
-            style={{ fontSize: 'clamp(25px, 2.5vw, 32px)', color: INK, margin: '0 0 2px' }}
+            className="t-h2 font-display"
+            style={{ color: INK, margin: '0 0 2px' }}
           >
             {mode === 'funder' ? ui('The cohort you are funding','Iqembu olixhasayo') : ui('The cohort','Iqembu')}
           </h2>
