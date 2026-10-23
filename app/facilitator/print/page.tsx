@@ -13,6 +13,7 @@
 // which pages to print (e.g. just the Water map). Pure client-side,
 // read-only — never writes back to the design.
 
+import { useRegisterBackControl } from '@/components/BackControl';
 import { numberLabel } from '@/lib/format-figures';
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { ArrowLeft, Pencil, Printer, Droplets, ChevronDown } from 'lucide-react';
@@ -378,6 +379,8 @@ function SheetScaler({ children }: { children: React.ReactNode }) {
 type PageKey = 'full' | LayerId;
 
 export default function FacilitatorPrintPage() {
+  // w16-10: this page has its own Back controls in every state — the floating pill stands down.
+  useRegisterBackControl();
   const simple = useAppLevel() === 'simple';
   // Simple: the per-layer page checkboxes and the cost tables are collapsed behind this, leaving
   // one "Print my plan" action that prints the full design sheet. All tools is unaffected —

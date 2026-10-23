@@ -119,15 +119,15 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
             {/* Drone / aerial — mentor only */}
             <div style={{ display: 'flex', gap: 14, background: 'var(--color-forest-800)', borderRadius: 14, padding: '18px 20px', alignItems: 'center' }}>
               <div style={{ width: 42, height: 42, borderRadius: 10, background: 'var(--color-forest-700)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--on-forest)" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--on-forest-800)" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M9 9h6v6H9z" /><path d="M9 9 4.5 4.5M15 9l4.5-4.5M9 15l-4.5 4.5M15 15l4.5 4.5" />
                   <circle cx="4.5" cy="4.5" r="1.6" /><circle cx="19.5" cy="4.5" r="1.6" />
                   <circle cx="4.5" cy="19.5" r="1.6" /><circle cx="19.5" cy="19.5" r="1.6" />
                 </svg>
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ font: '600 14.5px/1.2 var(--font-sans), sans-serif', color: 'var(--on-forest)' }}>{t('evidenceCatalogueDroneTitle')}</div>
-                <div style={{ font: '400 13px/1.45 Newsreader, Georgia, serif', color: 'color-mix(in srgb, var(--on-forest) 75%, transparent)', marginTop: 3, fontStyle: 'italic' }}>
+                <div style={{ font: '600 14.5px/1.2 var(--font-sans), sans-serif', color: 'var(--on-forest-800)' }}>{t('evidenceCatalogueDroneTitle')}</div>
+                <div style={{ font: '400 13px/1.45 Newsreader, Georgia, serif', color: 'color-mix(in srgb, var(--on-forest-800) 75%, transparent)', marginTop: 3, fontStyle: 'italic' }}>
                   {t('evidenceCatalogueDroneBody')}
                 </div>
               </div>

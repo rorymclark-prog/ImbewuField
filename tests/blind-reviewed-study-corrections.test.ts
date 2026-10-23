@@ -100,7 +100,9 @@ async function isolatedGuard() {
     // The wave 13 theme layer sits on the WebP layer and is imported by it, so the fixture carries it and its predecessor fixture too.
     'tests/wave-13-theme-history-checks.ts','tests/fixtures/student-page-before-wave-13.tsx.txt',
     // The wave 14 study layer sits on the wave 13 theme layer the same way.
-    'tests/wave-14-study-history-checks.ts','tests/fixtures/student-page-before-wave-14.tsx.txt']);
+    'tests/wave-14-study-history-checks.ts','tests/fixtures/student-page-before-wave-14.tsx.txt',
+    // The wave 16 layer sits on the wave 14 one the same way.
+    'tests/wave-16-history-checks.ts','tests/fixtures/student-page-before-wave-16.tsx.txt']);
   for (const file of files) { if (retiredJpegs.has(file)) continue;const destination=join(fixture,file);mkdirSync(dirname(destination),{recursive:true});copyFileSync(file,destination,constants.COPYFILE_FICLONE); }
   cpSync(folder,join(fixture,folder),{recursive:true});
   cpSync(webpFolder,join(fixture,webpFolder),{recursive:true});

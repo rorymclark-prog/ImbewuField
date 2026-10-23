@@ -77,7 +77,7 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
         <p>{t('reportsFunderNotice')}</p>
         <Link
           href="/funder"
-          style={{ display: 'inline-flex', minHeight: 44, alignItems: 'center', justifyContent: 'center', gap: 8, fontWeight: 600, padding: '10px 20px', borderRadius: 12, background: 'var(--color-forest-800)', color: 'var(--on-forest)', textDecoration: 'none', marginTop: 8 }}
+          style={{ display: 'inline-flex', minHeight: 44, alignItems: 'center', justifyContent: 'center', gap: 8, fontWeight: 600, padding: '10px 20px', borderRadius: 12, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', textDecoration: 'none', marginTop: 8 }}
         >
           {t('reportsOpenFunderView')}
         </Link>

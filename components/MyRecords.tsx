@@ -1061,7 +1061,7 @@ function CreditPackCard({
             </div>
           ))}
         </div>
-        <button type="button" onClick={() => setPreviewOpen(v => !v)} aria-expanded={previewOpen} className="w-full rounded-xl px-4 py-3 mb-2 font-sans text-sm font-semibold" style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}>{recordsUi(lang, previewOpen ? 'Close summary' : 'View summary', previewOpen ? 'Vala isifinyezo' : 'Buka isifinyezo')}</button>
+        <button type="button" onClick={() => setPreviewOpen(v => !v)} aria-expanded={previewOpen} className="w-full rounded-xl px-4 py-3 mb-2 font-sans text-sm font-semibold" style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800)' }}>{recordsUi(lang, previewOpen ? 'Close summary' : 'View summary', previewOpen ? 'Vala isifinyezo' : 'Buka isifinyezo')}</button>
         {previewOpen && <div className="overflow-x-auto mb-3">
           <table className="w-full text-sm font-sans" style={{ color: 'var(--color-ink)' }}>
             <caption className="text-left py-2 font-semibold">{recordsUi(lang, 'Monthly income and costs', 'Imali engenayo nezindleko zenyanga')}</caption>

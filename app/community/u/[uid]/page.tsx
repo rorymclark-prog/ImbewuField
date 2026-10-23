@@ -161,7 +161,7 @@ export default function PublicCommunityProfilePage() {
                   onClick={handleMessage}
                   disabled={messaging}
                   className="flex items-center justify-center gap-2 font-display font-semibold rounded-xl"
-                  style={{ flex: 1, background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', cursor: messaging ? 'default' : 'pointer', padding: '12px 16px', fontSize: 14, opacity: messaging ? 0.7 : 1 }}
+                  style={{ flex: 1, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: 'none', cursor: messaging ? 'default' : 'pointer', padding: '12px 16px', fontSize: 14, opacity: messaging ? 0.7 : 1 }}
                 >
                   {messaging ? <Loader2 size={16} className="animate-spin" /> : <MessageCircle size={16} />}
                   {t('communityMessageButton')}
@@ -191,7 +191,7 @@ export default function PublicCommunityProfilePage() {
                   onChange={(e) => setReportReason(e.target.value.slice(0, 300))}
                   placeholder={t('communityReportReasonPlaceholder')}
                   rows={3}
-                  className="w-full rounded-xl px-3 py-2.5 font-sans"
+                  className="w-full rounded-xl px-3 py-2.5 font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
                   style={{ fontSize: 13.5, background: 'var(--bg-1)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)', outline: 'none', resize: 'none', marginBottom: 10 }}
                 />
                 <button

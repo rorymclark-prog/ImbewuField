@@ -370,7 +370,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               flex: 1, minHeight: 48, borderRadius: 12, border: 'none',
               cursor: canSave && !busy ? 'pointer' : 'not-allowed',
               background: canSave && !busy ? 'var(--color-forest-800)' : 'color-mix(in srgb, var(--color-forest-800) 25%, transparent)',
-              color: 'var(--on-forest)', font: '700 15px/1 var(--font-sans), sans-serif',
+              color: 'var(--on-forest-800)', font: '700 15px/1 var(--font-sans), sans-serif',
             }}
           >
             {entry ? ui('Save changes', 'Gcina izinguquko') : ui('Save entry', 'Gcina okubhaliwe')}

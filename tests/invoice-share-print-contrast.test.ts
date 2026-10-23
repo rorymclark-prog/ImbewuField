@@ -60,5 +60,7 @@ test('invoice header Share/Print clear the 44px tap-target floor and keep an ari
 test('ShareListingButton no longer fills its WhatsApp-share pill with white-on-green', () => {
   assert.doesNotMatch(shareButtonSrc, /#25D366/, 'WhatsApp green literal should be gone from ShareListingButton');
   assert.match(shareButtonSrc, /background:\s*'var\(--color-forest-800\)'/);
-  assert.match(shareButtonSrc, /color:\s*'var\(--on-forest\)'/);
+  // Wave 16 (w16-01): white type on a forest-800 fill uses --on-forest-800, which stays light in
+  // every theme column where plain --on-forest would not.
+  assert.match(shareButtonSrc, /color:\s*'var\(--on-forest-800(?:, var\(--on-forest\))?\)'/);
 });

@@ -18,7 +18,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { lang: string } }): Metadata {
   if (!isManualLang(params.lang)) return {};
   const ui = manualUi(params.lang);
-  return { title: `${ui.title} · ImbewuField`, description: ui.subtitle };
+  return { title: `${ui.title} — ImbewuField`, description: ui.subtitle };
 }
 
 export default function ManualContentsPage({ params }: { params: { lang: string } }) {

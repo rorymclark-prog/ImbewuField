@@ -91,7 +91,7 @@ const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
  * funder-facing screens never disagree about what "thriving" looks like. */
 const STATUS: Record<GardenStatus, { color: string }> = {
   thriving: { color: '#1F4D2B' },
-  establishing: { color: '#9E5C08' },
+  establishing: { color: 'var(--gold-dim)' },
   support: { color: '#C0531E' },
 };
 
@@ -111,7 +111,7 @@ const INK_MUTED = 'var(--text-muted)';
 const LINE = 'var(--border)';
 const PAPER = 'var(--bg-1)';
 const PANEL = 'var(--bg-1)';
-const ATTENTION = '#C0531E';
+const ATTENTION = 'var(--orange)';
 
 /** Space-grouped thousands (SA convention), locale-independent so SSR and the
  *  client never disagree. Only the legend needs it — every figure with a
@@ -367,7 +367,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                       className="font-display font-semibold"
                       style={{
                         marginTop: 4,
-                        fontSize: 11,
+                        fontSize: 12,
                         color: INK,
                         background: 'color-mix(in srgb, var(--bg-1) 92%, transparent)',
                         border: `1px solid ${LINE}`,
@@ -439,7 +439,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                         className="font-display font-semibold"
                         style={{
                           marginTop: 4,
-                          fontSize: 11.5,
+                          fontSize: 12,
                           color: INK,
                           background: 'color-mix(in srgb, var(--bg-1) 95%, transparent)',
                           border: `1px solid ${LINE}`,
@@ -534,18 +534,18 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              fontSize: 11,
+              fontSize: 12,
               letterSpacing: '0.1em',
               color: INK_MUTED,
             }}
           >
             <span>{copy.legend}</span>
-            <span style={{ fontSize: 11, letterSpacing: 0 }}>{legendOpen ? '−' : '+'}</span>
+            <span style={{ fontSize: 12, letterSpacing: 0 }}>{legendOpen ? '−' : '+'}</span>
           </button>
 
           {legendOpen && (
             <div id="network-map-legend" className="px-3 pb-3" style={{ borderTop: `1px solid ${LINE}` }}>
-              <div className="font-sans" style={{ fontSize: 11, color: INK_MUTED, margin: '8px 0 5px' }}>
+              <div className="font-sans" style={{ fontSize: 12, color: INK_MUTED, margin: '8px 0 5px' }}>
                 {copy.colourStatus}
               </div>
               {(Object.keys(STATUS) as GardenStatus[]).map((s) => (
@@ -560,13 +560,13 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                       flexShrink: 0,
                     }}
                   />
-                  <span className="font-sans" style={{ fontSize: 11.5, color: INK_SOFT }}>
+                  <span className="font-sans" style={{ fontSize: 12, color: INK_SOFT }}>
                     {copy[s]}
                   </span>
                 </div>
               ))}
 
-              <div className="font-sans" style={{ fontSize: 11, color: INK_MUTED, margin: '9px 0 5px' }}>
+              <div className="font-sans" style={{ fontSize: 12, color: INK_MUTED, margin: '9px 0 5px' }}>
                 {copy.sizeArea}
               </div>
               <div className="flex items-center gap-2">
@@ -576,12 +576,12 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                 <span
                   style={{ width: 19, height: 19, borderRadius: '50%', background: INK_SOFT, flexShrink: 0 }}
                 />
-                <span className="font-sans" style={{ fontSize: 11, color: INK_SOFT }}>
+                <span className="font-sans" style={{ fontSize: 12, color: INK_SOFT }}>
                   {group(minM2)}–{group(maxM2)} m²
                 </span>
               </div>
 
-              <div className="font-sans" style={{ fontSize: 11, color: INK_MUTED, margin: '9px 0 5px' }}>
+              <div className="font-sans" style={{ fontSize: 12, color: INK_MUTED, margin: '9px 0 5px' }}>
                 {copy.ringAttention}
               </div>
               <div className="flex items-center gap-2">
@@ -595,14 +595,14 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                     flexShrink: 0,
                   }}
                 />
-                <span className="font-sans" style={{ fontSize: 11, color: INK_SOFT }}>
+                <span className="font-sans" style={{ fontSize: 12, color: INK_SOFT }}>
                   {copy.attention}
                 </span>
               </div>
 
               <p
                 className="font-sans"
-                style={{ fontSize: 11, color: INK_MUTED, marginTop: 9, lineHeight: 1.45 }}
+                style={{ fontSize: 12, color: INK_MUTED, marginTop: 9, lineHeight: 1.45 }}
               >
                 {copy.pinExplanation}
               </p>
@@ -641,7 +641,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
             />
             <span
               className="font-sans font-bold uppercase"
-              style={{ fontSize: 11, letterSpacing: '0.1em', color: INK_MUTED, marginTop: 6 }}
+              style={{ fontSize: 12, letterSpacing: '0.1em', color: INK_MUTED, marginTop: 6 }}
             >
               {copy.farmer}
             </span>

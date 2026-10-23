@@ -627,7 +627,7 @@ export default function PitchPage() {
         >
           Save / print as PDF
         </button>
-        <a href="/partners" style={{ fontSize: 13, color: 'rgba(242,238,225,0.7)', textDecoration: 'underline' }}>
+        <a href="/partners" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: 13, color: 'rgba(242,238,225,0.7)', textDecoration: 'underline' }}>
           Or read the programme overview instead →
         </a>
       </div>

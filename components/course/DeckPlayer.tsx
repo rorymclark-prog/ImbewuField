@@ -559,7 +559,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       style={{ '--deck-header-height': `${headerHeight}px` } as CSSProperties}
     >
       <div ref={playerHeaderRef} className={styles.playerHeader}>
-        <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.06em', color: MUTED, textTransform: 'uppercase' }}>
+        <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: '0.06em', color: MUTED, textTransform: 'uppercase' }}>
           {index + 1} / {total}
         </span>
         <h3 className={styles.slideHeading} style={{ color: INK }}>{heading}</h3>
@@ -580,7 +580,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
                   }}
                   aria-pressed={on}
                   style={{
-                    padding: '3px 9px', borderRadius: 999, fontSize: 11.5, cursor: 'pointer',
+                    padding: '3px 9px', borderRadius: 999, fontSize: 12, cursor: 'pointer',
                     maxWidth: '100%', whiteSpace: 'normal', textAlign: 'center',
                     background: on ? 'rgba(47,107,58,0.10)' : 'transparent',
                     border: `1px solid ${on ? 'rgba(47,107,58,0.30)' : LINE}`,
@@ -611,7 +611,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
                 }}
                 aria-pressed={narrationChoice === NO_NARRATION}
                 style={{
-                  padding: '3px 9px', borderRadius: 999, fontSize: 11.5, cursor: 'pointer',
+                  padding: '3px 9px', borderRadius: 999, fontSize: 12, cursor: 'pointer',
                   maxWidth: '100%', whiteSpace: 'normal', textAlign: 'center',
                   background: narrationChoice === NO_NARRATION ? 'rgba(47,107,58,0.10)' : 'transparent',
                   border: `1px solid ${narrationChoice === NO_NARRATION ? 'rgba(47,107,58,0.30)' : LINE}`,
@@ -795,13 +795,13 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         // Only on the slide it is actually true of. A localized deck can have one missing asset,
         // so saying "these slides are in English" across the whole module would be false for the
         // rest of the lesson and would make a finished lesson look unfinished.
-        <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
+        <p style={{ margin: 0, fontSize: 12, lineHeight: 1.4, color: MUTED }}>
           {t('courseDeckSlideLanguage').replace('{language}', langName(img.lang, uiLang))}
         </p>
       )}
 
       {spokenLang && !spokenLang.exact && (
-        <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
+        <p style={{ margin: 0, fontSize: 12, lineHeight: 1.4, color: MUTED }}>
           {t('courseDeckNarrationFallback')
             .replace('{spokenLanguage}', langName(spokenLang.lang, uiLang))
             .replace('{appLanguage}', langName(appLang, uiLang))}
@@ -809,13 +809,13 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       )}
 
       {narrationChoice === NO_NARRATION && !needsSourceNarrationChoice && (
-        <p role="status" style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
+        <p role="status" style={{ margin: 0, fontSize: 12, lineHeight: 1.4, color: MUTED }}>
           {t('courseDeckSilentStatus')}
         </p>
       )}
 
       {needsSourceNarrationChoice && (
-        <p role="status" style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
+        <p role="status" style={{ margin: 0, fontSize: 12, lineHeight: 1.4, color: MUTED }}>
           {narrationChoice === NO_NARRATION
             ? `${langName(appLang, uiLang)} slides selected. No narration will play. Use Next to read at your own pace.`
             : appLang === 'st' ? <>Sesotho AI draft · {narrationChoice === 'en'
@@ -828,13 +828,13 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       )}
 
       {regionalSlidesSelected && !needsSourceNarrationChoice && narrationChoice === 'en' && (
-        <p role="status" style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
+        <p role="status" style={{ margin: 0, fontSize: 12, lineHeight: 1.4, color: MUTED }}>
           English source narration selected. Your regional slides remain visible.
         </p>
       )}
 
       {spokenLang?.lang === 'zu' && narrationReviewPending(moduleId, 'zu') && (
-        <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
+        <p style={{ margin: 0, fontSize: 12, lineHeight: 1.4, color: MUTED }}>
           {uiLang === 'zu'
             ? 'Lo msindo wesiZulu usalindele ukubuyekezwa ngumuntu olwazi kahle ulimi.'
             : 'This isiZulu narration is awaiting review by a fluent speaker.'}
@@ -842,7 +842,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       )}
 
       {spokenLang && regionalNarrationDraft(moduleId, spokenLang.lang) && (
-        <p role="status" style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
+        <p role="status" style={{ margin: 0, fontSize: 12, lineHeight: 1.4, color: MUTED }}>
           Unreviewed {langName(spokenLang.lang, uiLang)} machine narration. Some passages are exact English holds.
           Fluent-speaker, local-farming and listening review are pending.
         </p>

@@ -85,7 +85,7 @@ const INK_SOFT = 'var(--text-secondary)';
 const INK_MUTED = 'var(--text-muted)';
 const LINE = 'var(--border)';
 const PAPER = 'var(--bg-1)';
-const ATTENTION = '#C0531E';
+const ATTENTION = 'var(--orange)';
 
 const STATUS_COLOR: Record<GardenStatus, string> = {
   thriving: '#1F4D2B',
@@ -205,7 +205,7 @@ export default function NetworkPage() {
                 onChange={(e) => portfolio.setOrgId(e.target.value)}
                 className="font-sans"
                 style={{
-                  fontSize: 11.5, color: INK, background: PAPER, border: `1px solid ${LINE}`,
+                  fontSize: 12, color: INK, background: PAPER, border: `1px solid ${LINE}`,
                   borderRadius: 8, padding: '4px 8px', maxWidth: 190, marginRight: 4,
                 }}
               >
@@ -231,7 +231,7 @@ export default function NetworkPage() {
                 className="font-sans font-semibold"
                 style={{
                   fontSize: 12,
-                  color: '#9E5C08',
+                  color: 'var(--gold-dim)',
                   background: 'rgba(158,92,8,0.10)',
                   border: '1px solid rgba(158,92,8,0.30)',
                   borderRadius: 999,
@@ -259,8 +259,8 @@ export default function NetworkPage() {
           className="flex-shrink-0 flex items-center gap-2 px-3 md:px-4 py-2"
           style={{ background: 'rgba(158,92,8,0.08)', borderBottom: `1px solid ${LINE}` }}
         >
-          <AlertTriangle size={13} style={{ color: '#9E5C08', flexShrink: 0 }} />
-          <span className="font-sans" style={{ fontSize: 11.5, color: '#7A4A06' }}>
+          <AlertTriangle size={13} style={{ color: 'var(--gold-dim)', flexShrink: 0 }} />
+          <span className="font-sans" style={{ fontSize: 12, color: 'var(--gold-dim)' }}>
             {portfolio.error === 'No organisation is linked to this account yet.'
               ? tr(portfolio.error, 'Ayikho inhlangano exhunyiwe kule akhawunti okwamanje.')
               : portfolio.error === 'Could not reach the portfolio service.'
@@ -271,7 +271,7 @@ export default function NetworkPage() {
             onClick={portfolio.reload}
             className="font-sans font-semibold"
             style={{
-              fontSize: 11, color: '#7A4A06', background: 'transparent',
+              fontSize: 12, color: 'var(--gold-dim)', background: 'transparent',
               border: '1px solid rgba(158,92,8,0.35)', borderRadius: 7,
               padding: '2px 9px', cursor: 'pointer', marginLeft: 'auto', flexShrink: 0,
             }}
@@ -284,7 +284,7 @@ export default function NetworkPage() {
       {portfolio.loading && !portfolio.error && (
         <div
           className="flex-shrink-0 px-3 md:px-4 py-1.5 font-sans"
-          style={{ fontSize: 11, color: INK_MUTED, background: PAPER, borderBottom: `1px solid ${LINE}` }}
+          style={{ fontSize: 12, color: INK_MUTED, background: PAPER, borderBottom: `1px solid ${LINE}` }}
         >
           {tr('Loading the portfolio…', 'Kulayishwa uhlelo…')}
         </div>
@@ -292,7 +292,7 @@ export default function NetworkPage() {
 
       {isZulu && (
         <p role="note" className="flex-shrink-0 px-3 md:px-4 py-1.5 font-sans"
-          style={{ fontSize: 11, color: INK_SOFT, background: PAPER, borderBottom: `1px solid ${LINE}` }}>
+          style={{ fontSize: 12, color: INK_SOFT, background: PAPER, borderBottom: `1px solid ${LINE}` }}>
           Imephu nemininingwane yomlimi ewindini layo kusaboniswa ngesiNgisi.
         </p>
       )}
@@ -437,7 +437,7 @@ export default function NetworkPage() {
                     aria-pressed={on}
                     className="font-sans font-semibold"
                     style={{
-                      fontSize: 11,
+                      fontSize: 12,
                       borderRadius: 999,
                       padding: '3.5px 9px',
                       cursor: 'pointer',
@@ -464,12 +464,12 @@ export default function NetworkPage() {
                   aria-pressed={sort === key}
                   className="font-sans font-semibold"
                   style={{
-                    fontSize: 11,
+                    fontSize: 12,
                     borderRadius: 999,
                     padding: '3px 8px',
                     cursor: 'pointer',
                     background: sort === key ? 'rgba(31,77,43,0.12)' : 'transparent',
-                    color: sort === key ? '#1F4D2B' : INK_MUTED,
+                    color: sort === key ? 'var(--emerald)' : INK_MUTED,
                     border: `1px solid ${sort === key ? 'rgba(31,77,43,0.35)' : LINE}`,
                   }}
                 >
@@ -534,13 +534,13 @@ export default function NetworkPage() {
                   </div>
                   <div
                     className="font-sans"
-                    style={{ fontSize: 11, color: INK_MUTED, marginTop: 1, paddingLeft: 17 }}
+                    style={{ fontSize: 12, color: INK_MUTED, marginTop: 1, paddingLeft: 17 }}
                   >
                     {farmer.siteName} · {farmer.district}
                   </div>
                   <div
                     className="font-sans"
-                    style={{ fontSize: 11, color: INK_SOFT, marginTop: 2, paddingLeft: 17 }}
+                    style={{ fontSize: 12, color: INK_SOFT, marginTop: 2, paddingLeft: 17 }}
                   >
                     {statKg(metrics.producedKg)} · {statZar(metrics.incomeZar)} ·{' '}
                     {group(farmer.plotSizeM2)} m²

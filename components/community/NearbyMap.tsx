@@ -74,7 +74,7 @@ export default function NearbyMap({ people, onOpenProfile }: Props) {
                 onClick={() => onOpenProfile(active.uid)}
                 className="font-sans font-semibold"
                 style={{
-                  marginTop: 8, background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none',
+                  marginTop: 8, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: 'none',
                   borderRadius: 100, padding: '5px 12px', fontSize: 12, cursor: 'pointer',
                 }}
               >

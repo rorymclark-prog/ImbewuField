@@ -88,7 +88,7 @@ function LiteInner() {
           </>
         )}
 
-        <div style={{ fontSize: 11.5, color: 'var(--text-muted)', textAlign: 'center', marginTop: 8 }}>
+        <div style={{ fontSize: 12, color: 'var(--text-muted)', textAlign: 'center', marginTop: 8 }}>
           Closing other tabs and apps frees memory for the full experience.
         </div>
       </div>

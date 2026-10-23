@@ -33,6 +33,12 @@ const RELATIVE_PATHS = [
   'app/student/Studies.module.css',
   'components/studies/FinanceCourse.module.css',
   'app/student/teach-the-teachers/Refresher.module.css',
+  // w16-04: the four design/guide CSS modules, now on theme tokens (the two diagram viewports keep
+  // one fixed paper colour because their SVGs draw in fixed dark inks).
+  'components/studies/AppGuide.module.css',
+  'components/studies/DesignScalePractice.module.css',
+  'components/studies/DesignPortfolio.module.css',
+  'components/studies/DesignWorkedDiagram.module.css',
 ];
 const FILES = RELATIVE_PATHS.map((p) => fileURLToPath(new URL(`../${p}`, import.meta.url)));
 
@@ -55,6 +61,10 @@ const ALLOWED_HEX: Record<string, Set<string>> = {
   'app/student/Studies.module.css': new Set(),
   'components/studies/FinanceCourse.module.css': new Set(),
   'app/student/teach-the-teachers/Refresher.module.css': new Set(),
+  'components/studies/AppGuide.module.css': new Set(),
+  'components/studies/DesignScalePractice.module.css': new Set(['#FAF7EE']),
+  'components/studies/DesignPortfolio.module.css': new Set(),
+  'components/studies/DesignWorkedDiagram.module.css': new Set(['#F7F1E3']),
 };
 
 // The forest/paper/error hexes this wave removed. Any of these creeping back into these three

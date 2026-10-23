@@ -461,7 +461,7 @@ function NewBoardPostForm({ myAreaText, simple, onPosted, onCancel }: { myAreaTe
           onChange={(e) => setDescription(e.target.value.slice(0, 300))}
           placeholder={tr('communityBoardDescriptionPlaceholder')}
           rows={3}
-          className="w-full rounded-xl px-3 py-2.5 font-sans"
+          className="w-full rounded-xl px-3 py-2.5 font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
           style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)', outline: 'none', resize: 'none', lineHeight: 1.5 }}
         />
       </div>
@@ -474,7 +474,7 @@ function NewBoardPostForm({ myAreaText, simple, onPosted, onCancel }: { myAreaTe
             aria-label={tr('communityAreaLabel')}
             onChange={(e) => setAreaText(e.target.value)}
             placeholder={tr('communityAreaPlaceholder')}
-            className="w-full rounded-xl px-3 py-2.5 font-sans"
+            className="w-full rounded-xl px-3 py-2.5 font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
             style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)', outline: 'none' }}
           />
         </div>

@@ -2613,7 +2613,8 @@ export default function DesignCanvas({
                         textOverflow: 'ellipsis',
                       }}
                     >
-                      {adopted ? `✓ ${layer.name}` : layer.name}
+                      {adopted && <Check size={11} aria-hidden style={{ display: 'inline-block', verticalAlign: '-1px', marginRight: 3 }} />}
+                      {layer.name}
                     </div>
                   </foreignObject>
                   </g>

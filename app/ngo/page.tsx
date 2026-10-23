@@ -128,7 +128,7 @@ export default function NgoPage() {
             </Link>
           )}
           <LessonLink id="ngo:overview" label={tr(lang, 'Learn', 'Funda')} />
-          {!tour?.active && <Link href="/tour" className="shrink-0 text-sm font-semibold">{tr(lang, 'Take a tour', 'Buka uhambo')}</Link>}
+          {!tour?.active && <Link href="/tour" className="shrink-0 text-sm font-semibold inline-flex items-center min-h-[44px]">{tr(lang, 'Take a tour', 'Buka uhambo')}</Link>}
           <RoleSwitcher current="ngo" />
         </>}
       />
@@ -176,7 +176,7 @@ export default function NgoPage() {
                 // Was fontSize 9, under the 12px micro-label floor and genuinely hard to read on a
                 // laptop. Raised with the pill grown to match, since a 12px digit does not fit a
                 // 16px circle.
-                style={{ minWidth: 19, height: 19, fontSize: 12, padding: '0 5px', background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}>
+                style={{ minWidth: 19, height: 19, fontSize: 12, padding: '0 5px', background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))' }}>
                 {badge}
               </span>
             )}
