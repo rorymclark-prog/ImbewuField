@@ -113,7 +113,7 @@ an app theme cannot turn report text pale on white.
 
 - Node 24 typecheck and whitespace checks pass.
 - Focused report, existing programme/session, PDF, type-floor and manifest checks:
-  78 tests passed, including 13 new report regressions.
+  128 tests passed, including 13 new report regressions and the existing theme checks.
 - Browser review: funder/organisation reports, 390 px phone width, desktop,
   month-range read-back, cohort reset, real PDF download, dark mode, paper ink
   preview, and the working organisation progress action. Sample data only.
