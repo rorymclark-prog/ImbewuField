@@ -66,6 +66,6 @@ test('w18-32: /network stats are a phone grid with dividers only at sm+, pill do
   const src = read('app/network/page.tsx');
   assert.match(src, /grid grid-cols-2/);
   assert.match(src, /sm:border-r/);
-  assert.doesNotMatch(src, /borderRight: `1px solid \$\{LINE\}`/);
+  assert.doesNotMatch(src, /marginRight: 16,\n\s*borderRight/);
   assert.match(src, /font-sans font-semibold whitespace-nowrap shrink-0/);
 });
