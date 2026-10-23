@@ -70,7 +70,7 @@ function Toggle({ on, onChange, label }: { on: boolean; onChange: (v: boolean) =
 export default function PopiaConsent() {
   const { t, lang } = useLanguage();
   const showEnglishSource = ENGLISH_SOURCE_LANGS.has(lang);
-  const copy = (key: string) => <span>{t(key)}{showEnglishSource && <small className="block mt-1" style={{ fontSize: 11, fontWeight: 400, lineHeight: 1.4 }}><span className="font-semibold">English source:</span> {translate('en', key)}</small>}</span>;
+  const copy = (key: string) => <span>{t(key)}{showEnglishSource && <small className="block mt-1" style={{ fontSize: 12, fontWeight: 400, lineHeight: 1.4 }}><span className="font-semibold">English source:</span> {translate('en', key)}</small>}</span>;
   const copyString = (key: string) => showEnglishSource ? `${t(key)} · ${translate('en', key)}` : t(key);
   const [ready, setReady] = useState(false);
   const [done, setDone] = useState(false);
@@ -138,8 +138,8 @@ export default function PopiaConsent() {
           maxHeight: 'calc(100dvh - 2rem)',
         }}
       >
-        {lang === 'zu' && <p role="note" className="rounded-lg px-3 py-2 mb-4 font-sans" style={{ fontSize: 11.5, lineHeight: 1.4, background: 'color-mix(in srgb, var(--gold) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--gold) 25%, transparent)', color: 'var(--text-muted)' }}>{t('popiaZuluDraftNotice')}</p>}
-        {(lang === 'st' || lang === 've') && <p role="note" className="rounded-lg px-3 py-2 mb-4 font-sans" style={{ fontSize: 11.5, lineHeight: 1.4, background: 'color-mix(in srgb, var(--gold) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--gold) 25%, transparent)', color: 'var(--text-muted)' }}>Translation status: unreviewed. Read the English source before choosing.</p>}
+        {lang === 'zu' && <p role="note" className="rounded-lg px-3 py-2 mb-4 font-sans" style={{ fontSize: 12, lineHeight: 1.4, background: 'color-mix(in srgb, var(--gold) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--gold) 25%, transparent)', color: 'var(--text-muted)' }}>{t('popiaZuluDraftNotice')}</p>}
+        {(lang === 'st' || lang === 've') && <p role="note" className="rounded-lg px-3 py-2 mb-4 font-sans" style={{ fontSize: 12, lineHeight: 1.4, background: 'color-mix(in srgb, var(--gold) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--gold) 25%, transparent)', color: 'var(--text-muted)' }}>Translation status: unreviewed. Read the English source before choosing.</p>}
         {/* ── Step indicator ── */}
         <div className="flex gap-1.5 mb-6">
           {([1, 2] as const).map((s) => (

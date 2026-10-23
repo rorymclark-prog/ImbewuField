@@ -28,8 +28,14 @@ import { useSampleRole } from '@/lib/use-role-navigation';
 // three drifting copies, since every captured frame for /account across phone and desktop,
 // light and dark, used to show only a faint sprout on an empty page with no way to tell
 // loading, broken and "this is the practice version" apart.
+// w15-03: AppHeader's title is a <span>, so these three states had no <h1> at all (every
+// sample-mode /account frame in the wave 15 capture). The visible header already says
+// "Account"; the heading is for screen readers, as on /community.
 function AccountShellHeader({ copy }: { copy: (en: string, zu: string) => string }) {
-  return <AppHeader title={copy('Account', 'I-akhawunti')} />;
+  return <>
+    <AppHeader title={copy('Account', 'I-akhawunti')} />
+    <h1 className="sr-only">{copy('Account', 'I-akhawunti')}</h1>
+  </>;
 }
 
 const ROLE_LABELS: Record<UserRole, string> = {
@@ -320,7 +326,7 @@ export default function AccountPage() {
           <div className="rounded-2xl p-5 flex items-center gap-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
             <div className="relative flex-shrink-0">
               {profile?.photo_url ? (
-                <img data-photo-preview src={profile.photo_url} alt={displayName ?? 'Avatar'}
+                <img data-photo-preview src={profile.photo_url} alt={displayName ?? 'Avatar'} width={64} height={64}
                   className="rounded-full object-cover"
                   style={{ width: 64, height: 64 }} />
               ) : (
@@ -407,7 +413,7 @@ export default function AccountPage() {
                     style={{ width: 56, height: 56, background: 'var(--input-bg)', border: '1px solid var(--border)' }}>
                     {profile?.farm_logo
                       /* eslint-disable-next-line @next/next/no-img-element -- farmer-supplied data URL */
-                      ? <img src={profile.farm_logo} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                      ? <img src={profile.farm_logo} alt="" width={64} height={64} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                       : <ImageIcon size={20} style={{ color: '#C3B79E' }} />}
                   </div>
                   <div className="flex flex-col gap-1.5 min-w-0">

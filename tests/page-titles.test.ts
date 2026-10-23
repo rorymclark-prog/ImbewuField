@@ -33,14 +33,13 @@ function findPages(dir: string, out: string[] = []): string[] {
 
 // Routes this track does not own and cannot add a layout.tsx title to without stepping into
 // another track's territory: app/cropplan/page.tsx and app/facilitator/crops/page.tsx belong to
-// the crop/production planner (Codex-owned, explicitly off limits this wave); app/facilitator/
-// print/page.tsx reads the same facilitator design-canvas state and sits in the same area.
+// the crop/production planner (Codex-owned, explicitly off limits this wave). app/facilitator/
+// print/page.tsx left this list in wave 15 (nav-16) with its own 'Printable plan' layout title.
 // Tracked here, not silently skipped — a route leaving this list without gaining a real title
 // should fail the test like any other regression.
 const OUT_OF_SCOPE_THIS_WAVE = new Set([
   'cropplan/page.tsx',
   'facilitator/crops/page.tsx',
-  'facilitator/print/page.tsx',
 ]);
 
 test('every app route can produce a page title distinct from the root default', () => {

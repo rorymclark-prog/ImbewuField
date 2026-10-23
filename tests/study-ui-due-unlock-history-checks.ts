@@ -188,6 +188,69 @@ const WAVE_14_ZULU_REWORDED = new Set([
   "  studentSampleTourAction: 'Hlola imephu, ukuhlela namarekhodi ohambweni lwesibonelo \u2192',",
 ]);
 const WAVE_14_REMOVED = new Set<string>();
+// Wave 15 (copy-07): English UI labels in the app dictionary go to sentence case; keys and every
+// other line are unchanged. Each named line is the exact wave 14 value.
+const WAVE_15_ENGLISH_REWORDED = new Set([
+  "  designStudioLabel: 'Design Studio',",
+  "  siteDesignOpenStudio: 'Open the Design Studio',",
+  "  siteDesignSketchHeader: 'Sketch \u2192 AI Design',",
+  "  statOrganicCarbon: 'Organic Carbon',",
+  "  statBulkDensity: 'Bulk Density',",
+  "  stepSiteAndGoals: 'Site & Goals',",
+  "  stepLandAndSoil: 'Land & Soil',",
+  "  reportToolbarTitle: 'Site Analysis Report',",
+  "  reportPrintSubtitle: 'Permaculture Site Analysis Report',",
+  "  reportSavedPlacesHeader: 'Saved Places \u00b7 GPS Points',",
+  "  reportSatelliteViewHeader: 'Site Satellite View',",
+  "  reportMonthlyRainfallHeader: 'Monthly Rainfall Pattern',",
+  "  reportShareTitle: 'ImbewuField Site Analysis',",
+  "  reportSiteAreaLabel: 'Site Area',",
+  "  reportWaterStorageLabel: 'Water Storage',",
+  "  reportExecutiveSummaryHeading: 'Executive Summary',",
+  "  allSectionExecutiveSummary: 'Executive Summary',",
+  "  allSectionSiteConditions: 'Site Conditions',",
+  "  allSectionNaturalVegetationBiome: 'Natural Vegetation & Biome',",
+  "  allSectionWaterHarvesting: 'Water Harvesting',",
+  "  allSectionIrrigationPlan: 'Irrigation Plan',",
+  "  allSectionSoilStrategy: 'Soil Strategy',",
+  "  allSectionPlantingCalendar: 'Planting Calendar',",
+  "  allSectionYearRoundFoodProduction: 'Year-Round Food Production',",
+  "  allSectionFruitNutBerryTrees: 'Fruit, Nut & Berry Trees',",
+  "  allSectionIndigenousTrees: 'Indigenous Trees',",
+  "  allSectionAgroecosystemPlantingGuide: 'Agroecosystem Planting Guide',",
+  "  allSectionCropRotation: 'Crop Rotation',",
+  "  allSectionAnimalsLivestock: 'Animals & Livestock',",
+  "  allSectionSunSolar: 'Sun & Solar',",
+  "  allSectionWindWindbreaks: 'Wind & Windbreaks',",
+  "  allSectionFireHazards: 'Fire & Hazards',",
+  "  allSectionEconomicOpportunities: 'Economic Opportunities',",
+  "  allSectionPlantGuilds: 'Plant Guilds',",
+  "  allSectionZoneDesign: 'Zone Design',",
+  "  allSectionSeasonalCalendar: 'Seasonal Calendar',",
+  "  allSectionYear1Priorities: 'Year 1 Priorities',",
+  "  homeQuickContactDesc: 'Mentor \u00b7 Organisation',",
+  "  journalOpenRecords: 'Open My Records',",
+  "  homeQuickMyRecords: 'My Records',",
+  "  navPlantingCalendar: 'Planting Calendar',",
+  "  studentPortal: 'Learning Portal',",
+  "  studentPortalTitle: 'This is the Learning Portal',",
+  "  studentMyStudies: 'My Studies',",
+  "  studentOpenDesignStudio: 'Open Design Studio',",
+  "  studentFinancePreviewTitle: 'Farm Finance',",
+  "  studentFinancePreviewSimpleLabel: 'Farm Finance course',",
+  "  myRecordsTitle: 'My Records',",
+  "  insightsReportTitle: 'AI Permaculture Report',",
+  "  coachStepDesignCta: 'Open the Studio',",
+  "  addLabelHouse: 'House / Building',",
+  "  surveyStepHouseholdInfo: 'Household Info',",
+  "  surveyStepLandLocation: 'Land & Location',",
+  "  surveyStepCurrentProduction: 'Current Production',",
+  "  surveyStepLivestockPoultry: 'Livestock & Poultry',",
+  "  surveyStepIncomeSales: 'Income & Sales',",
+  "  surveyStepResourcesInputs: 'Resources & Inputs',",
+  "  offlinePageRecords: 'My Records',",
+  "  limaFieldGuideSubtitle: 'Field Guide \u00b7 ImbewuField',",
+]);
 /** Every predecessor line survives in order except the named rewordings (key kept, value changed)
  * and the named removals (dead keys deleted); added lines may not re-declare any predecessor key. */
 function assertOnlyWaveChanges(before: string, live: string, reworded: Set<string>, removed: Set<string>, label: string, wave: string) {
@@ -245,10 +308,13 @@ export function ensureStudyUiDueUnlockCurrent() {
   // the Home date names, and keeps four Study action arrows from wrapping alone. Check the complete new file,
   // then bind the wave 13 proof to the exact pre-wave-14 fixture so it still holds byte for byte.
   const liveEnglish = readFileSync(path('lib/i18n.tsx'), 'utf8');
-  assert.equal(sha(liveEnglish), '2485d3cc34a6b8e0b5bf964b8c8fd20ac8ec341be769ebf1094bce3987cdc282', 'complete app dictionary after the wave 14 edits');
+  assert.equal(sha(liveEnglish), '737049f60cfd7ea083460c212c5f3f7b985e8177ec03045f34619b7627331512', 'complete app dictionary after the wave 15 edits');
+  const englishBefore15 = readFileSync(path('tests/fixtures/i18n-before-wave-15.tsx.txt'), 'utf8');
+  assert.equal(sha(englishBefore15), '2485d3cc34a6b8e0b5bf964b8c8fd20ac8ec341be769ebf1094bce3987cdc282', 'complete app dictionary after the wave 14 edits remains exact');
+  assertOnlyWaveChanges(englishBefore15, liveEnglish, WAVE_15_ENGLISH_REWORDED, WAVE_14_REMOVED, 'app dictionary', 'wave 15');
   const englishBefore14 = readFileSync(path('tests/fixtures/i18n-before-wave-14.tsx.txt'), 'utf8');
   assert.equal(sha(englishBefore14), '9d96cbcd3986b7955c1a326491a8c3bf5cbb9fe63d5185b2d4e05307f205a27b', 'complete app dictionary after the wave 13 edits remains exact');
-  assertOnlyWaveChanges(englishBefore14, liveEnglish, WAVE_14_ENGLISH_REWORDED, WAVE_14_REMOVED, 'app dictionary', 'wave 14');
+  assertOnlyWaveChanges(englishBefore14, englishBefore15, WAVE_14_ENGLISH_REWORDED, WAVE_14_REMOVED, 'app dictionary', 'wave 14');
   const englishBefore13 = readFileSync(path('tests/fixtures/i18n-before-wave-13.tsx.txt'), 'utf8');
   assert.equal(sha(englishBefore13), 'c113a108d9c1cd9728cb39c172fc1cbf7aa35fa9de393e23779e96d84d0a845d', 'complete app dictionary after the wave 11 additions remains exact');
   assertOnlyWaveChanges(englishBefore13, englishBefore14, WAVE_13_ENGLISH_REWORDED, WAVE_13_ENGLISH_REMOVED, 'app dictionary', 'wave 13');
@@ -323,11 +389,47 @@ function rewindWave13PendingDictionary(actual: unknown): unknown {
   return before;
 }
 
+/** Wave 15 (copy-07, 22 Oct 2026) put 17 English-pending labels into sentence case. Locales that
+ * still spread those groups untranslated carry the new wording, so dated owners see the exact
+ * pre-wave-15 label again. Each after value must be the live line in lib/i18n-pending.ts. */
+const WAVE_15_PENDING_REWORDED: Record<string, { before: string; after: string }> = {
+  journalOpenRecords: { before: 'Open My Records', after: 'Open my records' },
+  speciesPickerTitle: { before: 'Plant Catalog', after: 'Plant catalog' },
+  designPaletteElementsDragTitle: { before: 'Drag Elements panel', after: 'Drag elements panel' },
+  designPrintTitle: { before: 'Print / Export', after: 'Print / export' },
+  designPrintSheetBase: { before: 'Existing Site & Base', after: 'Existing site & base' },
+  designPrintSheetSector: { before: 'Sector Analysis', after: 'Sector analysis' },
+  designPrintSheetZones: { before: 'Permaculture Zones', after: 'Permaculture zones' },
+  designPrintSheetWater: { before: 'Water & Irrigation', after: 'Water & irrigation' },
+  designPrintSheetEarthworks: { before: 'Earthworks & Contour Setting-Out', after: 'Earthworks & contour setting-out' },
+  designPrintSheetPlanting: { before: 'Planting & Agroforestry', after: 'Planting & agroforestry' },
+  designPrintSheetStructures: { before: 'Livestock & Infrastructure', after: 'Livestock & infrastructure' },
+  designPrintSheetAll: { before: 'Integrated Masterplan', after: 'Integrated masterplan' },
+  designPrintSheetImplementation: { before: 'Implementation & Phasing', after: 'Implementation & phasing' },
+  designGlossyPreviewTitle: { before: 'Preview & Export', after: 'Preview & export' },
+  designGlossyExportShare: { before: 'Export & Share', after: 'Export & share' },
+  designGlossyExactCanvas: { before: 'Design Map', after: 'Design map' },
+  designGlossyAiHybrid: { before: 'AI Polished', after: 'AI polished' },
+};
+function rewindWave15PendingDictionary(actual: unknown): unknown {
+  if (!actual || typeof actual !== 'object') return actual;
+  const dict = actual as Record<string, unknown>;
+  const keys = Object.keys(WAVE_15_PENDING_REWORDED).filter(key => Object.hasOwn(dict, key) && dict[key] === WAVE_15_PENDING_REWORDED[key].after);
+  if (!keys.length) return actual;
+  const pendingSource = readFileSync(path('lib/i18n-pending.ts'), 'utf8');
+  const before = { ...dict };
+  for (const key of keys) {
+    assert.ok(pendingSource.includes(`\n  ${key}: '${WAVE_15_PENDING_REWORDED[key].after}',\n`), `${key}: live English pending source holds the exact wave 15 wording`);
+    before[key] = WAVE_15_PENDING_REWORDED[key].before;
+  }
+  return before;
+}
+
 /** Project the exact prior dictionary; callers compare that result in the older history layer. */
 export function studyUiDueUnlockLocaleBefore(actual: unknown): unknown {
   return withBlindReviewedCorrectionReadScope(() => {
   ensureStudyUiDueUnlockCurrent();
-  actual = rewindWave13PendingDictionary(rewindWave11Dictionary(actual));
+  actual = rewindWave13PendingDictionary(rewindWave11Dictionary(rewindWave15PendingDictionary(actual)));
   assert.deepEqual(currentLocale, JSON.parse(currentLocaleBytes.toString()));
   if (JSON.stringify(actual) === JSON.stringify(predecessorLocale)) return structuredClone(actual);
   if (JSON.stringify(actual) === JSON.stringify(currentLocale)) return structuredClone(predecessorLocale);

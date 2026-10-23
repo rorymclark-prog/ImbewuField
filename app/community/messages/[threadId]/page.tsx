@@ -240,7 +240,7 @@ export default function MessageThreadPage() {
                   {m.body}
                 </div>
                 {!simple && (
-                  <div className="font-sans" style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 2, textAlign: mine ? 'right' : 'left' }}>
+                  <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2, textAlign: mine ? 'right' : 'left' }}>
                     {timeAgo(m.created_at, lang)}
                   </div>
                 )}

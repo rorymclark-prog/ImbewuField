@@ -363,9 +363,14 @@ function SheetScaler({ children }: { children: React.ReactNode }) {
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
+  // w15-01: measure an outer box that is never zoomed. Measuring the zoomed box itself fed the
+  // zoom back into its own clientWidth (390px at zoom 0.35 reads as 1123px), so the zoom
+  // flip-flopped between 1 and the fit value and the page ended up 297mm wide on a phone.
   return (
-    <div ref={wrapRef} className="sheetScaler" style={{ zoom }}>
-      {children}
+    <div ref={wrapRef}>
+      <div className="sheetScaler" style={{ zoom }}>
+        {children}
+      </div>
     </div>
   );
 }

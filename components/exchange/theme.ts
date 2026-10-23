@@ -32,6 +32,11 @@ export const EX = {
   amber: 'var(--color-ochre)',
   /** Amber as TEXT — the ochre-safe reading colour, not the fill above. */
   amberText: 'var(--color-harvest)',
+  /** Solid fills that carry `--on-forest` text: dark in every theme (the themed forest token turns
+   *  leaf-green in dark, which left pale text on a pale fill). Same value as earth light's forest. */
+  fill: '#1E4D33',
+  fillInk: '#20190F',
+  fillBlue: '#235E86',
   /** Destructive. */
   red: 'var(--danger)',
 } as const;

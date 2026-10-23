@@ -8,19 +8,19 @@ import AppHeader from '@/components/layout/AppHeader';
 import { useLanguage } from '@/lib/i18n';
 
 export default function JournalPage() {
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const isZulu = lang === 'zu';
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       {/* Header */}
       <AppHeader
-        title={isZulu ? 'Ijenali Yasensimu' : 'Field journal'}
+        title={t('navFieldJournal')}
         right={<LessonLink id="journal:overview" label={isZulu ? 'Funda' : 'Learn'} />}
       />
       {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own
           real, visible <h1> now that the old header's h1 is gone. */}
       <h1 className="font-display px-3 sm:px-4 pt-3 m-0" style={{ fontSize: 15, color: 'var(--text-primary)' }}>
-        {isZulu ? 'Ijenali Yasensimu' : 'Field journal'}
+        {t('navFieldJournal')}
       </h1>
 
       {/* Body — the dated record of what actually happened on the land. Harvest

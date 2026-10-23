@@ -69,7 +69,7 @@ export default function NearbyMap({ people, onOpenProfile }: Props) {
           >
             <div style={{ minWidth: 160, padding: 2 }}>
               <div className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{active.display_name}</div>
-              <div className="font-sans" style={{ fontSize: 11, color: '#5C5040', marginTop: 2 }}>{active.area_text}</div>
+              <div className="font-sans" style={{ fontSize: 12, color: '#5C5040', marginTop: 2 }}>{active.area_text}</div>
               <button
                 onClick={() => onOpenProfile(active.uid)}
                 className="font-sans font-semibold"

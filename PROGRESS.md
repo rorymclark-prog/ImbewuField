@@ -52,6 +52,24 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 22 Oct 2026 — Wave 15: re-capture, then five swarm tracks (PRs #1061–#1065, folded on one branch)
+- **Re-capture first:** the merged wave 14 build (main `d99108f1`) rendered again; three regressions fixed before the
+  swarm started (/facilitator/print phone width with More options, isiZulu/English pairs read as one word, /account
+  h1) — `docs/audits/2026-10-22/wave-15-recapture-claude.md`.
+- **Words and titles:** about 60 dictionary values and 14 pending labels in sentence case, guarded by
+  `tests/sentence-case-labels.test.ts`; /journal uses the nav name; /updates shows one line per entry with Show more in
+  Simple; /facilitator/print has its own tab title.
+- **Farmer desktop and dark:** /example and /vision use the laptop width; exchange and /vision buttons readable in dark
+  (`EX.fill*`); farmer captions at least 12px (16 more files on the type floor); image width/height; chart numbers off
+  `font-mono` (now only in Codex's crops page).
+- **Staff:** CohortCharts and CohortDashboard on theme tokens; chart notes as one line plus "How this is counted".
+- **isiZulu and records:** /login, /farmer, /prices headings; /prices and /calendar on `AppHeader`; records and farmer
+  fills on tokens; focus rings and emoji tidy in owned files. 23 BRU group names stay English until a translator names them.
+- **Study:** about 40 text arrows replaced by Lucide icons through `ArrowLabel`, guarded by `tests/study-arrow-icons.test.ts`.
+- **Proof layers:** live `lib/i18n.tsx` sha re-pinned in front of the wave 15 layer; Tshivenda rewinds the 17 pending
+  labels with `WAVE_15_PENDING_REWORDED`. Close-out: `docs/audits/2026-10-22/wave-15-integration-claude.md`. Open next:
+  `w15-04` (`--on-forest` in dark), code-11/code-05/nav-17/desk-18 remainders, isiZulu render check.
+
 ### 17 Oct 2026 — Wave 14: finish what wave 13 started (swarm PRs #1022, #1024–#1027, folded on one branch)
 - **Re-capture first:** the merged wave 13 build (main `5acf084c`) was rendered again on 600 frames; 120 "implemented"
   rows checked against pixels, three regressions fixed before the swarm started (/account hydration, /facilitator/print

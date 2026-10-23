@@ -260,7 +260,7 @@ function Card({ children, className = '', accent }: { children: React.ReactNode;
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-xs font-mono mb-1.5 uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
+    <div className="text-xs mb-1.5 uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
       {children}
     </div>
   );
@@ -277,7 +277,7 @@ function Stat({ label, value, sub, color, contextPct }: { label: string; value: 
         {value}
       </div>
       {contextPct !== undefined && (
-        <div style={{ height: 3, background: 'rgba(226,216,196,0.6)', borderRadius: 2, marginTop: 8, overflow: 'hidden' }}>
+        <div style={{ height: 3, background: 'color-mix(in srgb, var(--border) 60%, transparent)', borderRadius: 2, marginTop: 8, overflow: 'hidden' }}>
           <div style={{
             height: '100%',
             width: `${Math.min(100, Math.max(4, contextPct))}%`,
@@ -287,7 +287,7 @@ function Stat({ label, value, sub, color, contextPct }: { label: string; value: 
           }} />
         </div>
       )}
-      {sub && <div className="text-xs mt-1.5 font-mono" style={{ color: 'var(--text-secondary)' }}>{sub}</div>}
+      {sub && <div className="text-xs mt-1.5" style={{ color: 'var(--text-secondary)' }}>{sub}</div>}
     </Card>
   );
 }
@@ -359,14 +359,14 @@ function EmptyState() {
 function Skeleton() {
   return (
     <div className="p-5 space-y-3">
-      <div className="h-6 w-40 rounded-lg animate-pulse" style={{ background: 'rgba(226,216,196,0.5)' }} />
-      <div className="h-3 w-56 rounded animate-pulse" style={{ background: 'rgba(226,216,196,0.5)' }} />
+      <div className="h-6 w-40 rounded-lg animate-pulse" style={{ background: 'color-mix(in srgb, var(--border) 50%, transparent)' }} />
+      <div className="h-3 w-56 rounded animate-pulse" style={{ background: 'color-mix(in srgb, var(--border) 50%, transparent)' }} />
       <div className="grid grid-cols-2 gap-2 mt-4">
         {[1,2,3,4].map(i => (
-          <div key={i} className="h-20 rounded-xl animate-pulse" style={{ background: 'rgba(226,216,196,0.5)', animationDelay: `${i*80}ms` }} />
+          <div key={i} className="h-20 rounded-xl animate-pulse" style={{ background: 'color-mix(in srgb, var(--border) 50%, transparent)', animationDelay: `${i*80}ms` }} />
         ))}
       </div>
-      <div className="h-28 rounded-xl animate-pulse mt-2" style={{ background: 'rgba(226,216,196,0.5)' }} />
+      <div className="h-28 rounded-xl animate-pulse mt-2" style={{ background: 'color-mix(in srgb, var(--border) 50%, transparent)' }} />
     </div>
   );
 }
@@ -863,7 +863,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <span className="font-sans font-bold" style={{ fontSize: 12, color: suitability.text, whiteSpace: 'nowrap' }}>{suitability.label}</span>
           </span>
           {isSaved && (
-            <span className="ml-auto font-mono flex-shrink-0" style={{ fontSize: 12, color: 'var(--gold)' }}>{scorePct}%</span>
+            <span className="ml-auto font-display tabular-nums flex-shrink-0" style={{ fontSize: 12, color: 'var(--gold)' }}>{scorePct}%</span>
           )}
           {isSaved && currentPlace && <SiteManageMenu place={currentPlace} />}
         </div>
@@ -910,12 +910,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               </div>
             )}
             {!simple && (
-              <div className="font-mono mt-1" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+              <div className="mt-1" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
                 {Math.abs(data.lat).toFixed(2)}°&thinsp;S,&ensp;{data.lon.toFixed(2)}°&thinsp;E
               </div>
             )}
             {!simple && data.bru && (
-              <div className="font-mono mt-0.5" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)' }}>
+              <div className="mt-0.5" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)' }}>
                 {lang === 'zu' ? t('bruZoneAttribution') : data.bru.attribution} — {lang === 'zu' ? t('bruZoneNameCaveat') : 'zone name is a best-effort climate match, not verified'}
               </div>
             )}
@@ -1157,7 +1157,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   ? { color: 'var(--gold)', text: t('insightLowSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) }
                   : { color: 'var(--color-forest-800)', text: t('insightGoodSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) },
               ] as { color: string; text: string }[]).map((ins, i) => (
-                <div key={i} className="flex gap-2 items-start text-xs font-display leading-relaxed py-1.5 px-2.5 rounded-lg" style={{ background: 'rgba(255,254,250,0.8)', border: '1px solid rgba(226,216,196,0.5)', color: '#3A2E22' }}>
+                <div key={i} className="flex gap-2 items-start text-xs font-display leading-relaxed py-1.5 px-2.5 rounded-lg" style={{ background: 'color-mix(in srgb, var(--bg-1) 80%, transparent)', border: '1px solid color-mix(in srgb, var(--border) 50%, transparent)', color: '#3A2E22' }}>
                   <span className="flex-shrink-0 font-bold mt-px" style={{ color: ins.color }}>→</span>
                   <span>{ins.text}</span>
                 </div>
@@ -1187,7 +1187,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             {/* 12-month planting calendar strip */}
             {data.rainfall.monthly?.length === 12 && (
               <div className="rounded-xl p-3" style={{ background: '#F4EFE4', border: '1px solid var(--border)' }}>
-                <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: 'var(--color-forest-800)' }}>{t('plantingCalendarHeader')}</span>
+                <span className="text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--color-forest-800)' }}>{t('plantingCalendarHeader')}</span>
                 <div className="flex gap-0.5 mt-2">
                   {['J','F','M','A','M','J','J','A','S','O','N','D'].map((m, i) => {
                     const rain = data.rainfall.monthly![i];
@@ -1200,7 +1200,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     return (
                       <div key={i} className="flex-1 flex flex-col items-center gap-0.5" title={`${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i]}: ${label} (${rain}mm, ${temp.toFixed(0)}°C)`}>
                         <div className="w-full rounded-sm" style={{ height: 26, background: bg }} />
-                        <span style={{ fontSize: 7.5, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{m}</span>
+                        <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{m}</span>
                       </div>
                     );
                   })}
@@ -1209,7 +1209,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   {([['#B5D9B5', t('calendarGrow')],['#E8C87A', t('calendarDry')],['#BFD9EE', t('calendarFrost')],['#D8CEBC', t('calendarRest')]]).map(([c,l]) => (
                     <div key={l} className="flex items-center gap-1">
                       <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: c }} />
-                      <span style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{l}</span>
+                      <span style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)' }}>{l}</span>
                     </div>
                   ))}
                 </div>
@@ -1257,7 +1257,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             >
               <Sprout size={16} />
               {t('generateFullReport')}
-              {siteMetrics.land && <span className="font-mono font-normal" style={{ fontSize: 12, color: 'rgba(234,243,226,0.7)', marginLeft: 4 }}>{siteMetrics.land.areaHa} ha</span>}
+              {siteMetrics.land && <span className="font-normal" style={{ fontSize: 12, color: 'rgba(234,243,226,0.7)', marginLeft: 4 }}>{siteMetrics.land.areaHa} ha</span>}
             </button>
 
             {/* (Saving is the Save-this-site hero at the top of a scouting pin; no second
@@ -1364,7 +1364,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       <span>{name}</span>
                       <span style={{ color }}>{pct}%</span>
                     </div>
-                    <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(226,216,196,0.6)' }}>
+                    <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'color-mix(in srgb, var(--border) 60%, transparent)' }}>
                       <div
                         className="h-full rounded-full transition-all duration-700"
                         style={{ width: `${pct}%`, background: color, opacity: 0.8 }}
@@ -1409,19 +1409,19 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               return (
                 <div className="rounded-xl p-3" style={{ background: '#F4EFE4', border: '1px solid var(--border)' }}>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-mono uppercase tracking-wider font-semibold" style={{ color: 'var(--text-secondary)' }}>{t('soilHealthScoreHeader')}</span>
+                    <span className="text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--text-secondary)' }}>{t('soilHealthScoreHeader')}</span>
                     <div className="flex items-baseline gap-1">
                       <span className="font-display font-bold" style={{ fontSize: 18, color: scoreColor, lineHeight: 1 }}>{total}</span>
-                      <span className="font-mono" style={{ fontSize: 12, color: 'var(--text-muted)' }}>/10</span>
+                      <span className="font-display tabular-nums" style={{ fontSize: 12, color: 'var(--text-muted)' }}>/10</span>
                       <span className="font-sans font-semibold ml-1" style={{ fontSize: 12, color: scoreColor }}>{scoreLabel}</span>
                     </div>
                   </div>
-                  <div className="h-1.5 rounded-full overflow-hidden mb-3" style={{ background: 'rgba(226,216,196,0.6)' }}>
+                  <div className="h-1.5 rounded-full overflow-hidden mb-3" style={{ background: 'color-mix(in srgb, var(--border) 60%, transparent)' }}>
                     <div className="h-full rounded-full" style={{ width: `${total * 10}%`, background: scoreColor, transition: 'width 0.6s ease' }} />
                   </div>
                   {improvements.length > 0 && (
                     <div className="space-y-1.5">
-                      <p className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)', fontSize: 'clamp(12px, 0.85vw, 13px)' }}>{t('priorityImprovementsHeader')}</p>
+                      <p className="text-xs uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)', fontSize: 'clamp(12px, 0.85vw, 13px)' }}>{t('priorityImprovementsHeader')}</p>
                       {lang === 'zu' && <p className="text-xs leading-snug" role="note" style={{ color: 'var(--text-secondary)' }}>{t('soilImprovementZuluDraftNotice')}</p>}
                       {improvements.slice(0, 3).map((imp, i) => (
                         <div key={i} className="flex gap-2 text-xs font-display leading-snug" style={{ color: '#3A2E22' }}>

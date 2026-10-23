@@ -52,7 +52,7 @@
  */
 
 import { useMemo } from 'react';
-import { BarChart3, GraduationCap } from 'lucide-react';
+import { BarChart3, ChevronDown, GraduationCap } from 'lucide-react';
 import { cappedScale, type CappedScale } from '@/lib/chart-scale';
 import { BreakTop } from '@/components/ChartBreakMark';
 import { kgLabel, kgTotalLabel, randLabel, randTick } from '@/lib/format-figures';
@@ -60,13 +60,13 @@ import { soldBarParts, type CohortMonth, type CohortSeries, type SoldBarParts } 
 import type { CohortTraining } from '@/lib/cohort-report';
 
 /* White programme cards and darker labels; preserve the harvest/sales colour meanings. */
-const CARD_STYLE: React.CSSProperties = { background: '#FFFFFF', border: '1px solid #D7E3D9' };
-const INK = '#183427';
-const MUTED = '#44574B';
-const FAINT = '#506158';
-const HAIRLINE = '#D7E3D9';
+const CARD_STYLE: React.CSSProperties = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
+const INK = 'var(--text-primary)';
+const MUTED = 'var(--text-secondary)';
+const FAINT = 'var(--text-muted)';
+const HAIRLINE = 'var(--border)';
 const AXIS = 'rgba(140,122,98,0.45)';
-const SOLD = '#1F4D2B';   // forest — sold kilograms and money in, exactly CashflowChart's IN
+const SOLD = 'var(--color-forest-800)';   // forest — sold kilograms and money in, exactly CashflowChart's IN
 const KEPT = '#C4A46A';   // gold — lighter, so the split survives greyscale and a printed report
 // Gold again, for the whole picked bar when picked and sold are drawn side by side. Not a new
 // hue: gold is already "harvest kilograms this chart is not attributing to a sale", and when the
@@ -78,7 +78,7 @@ const PICKED = KEPT;
 // harvest row in this month" rather than as an alert. Selling stock picked earlier is ordinary
 // farming, and drawing it in the app's warning rust told the funder a fault had been found.
 const OVER = SOLD;
-const TRAIN = '#9E5C08';  // ochre — the course, as on every other training readout in the app
+const TRAIN = 'var(--gold)';  // ochre — the course, as on every other training readout in the app
 
 /** Micro-label floor for this project. Nothing in this file goes under it. */
 const MICRO = 12;
@@ -141,6 +141,19 @@ function NoChart({ reason }: { reason: string }) {
     <p className="px-4 py-5 font-sans" style={{ fontSize: 13, color: MUTED, lineHeight: 1.55, margin: 0 }}>
       {reason}
     </p>
+  );
+}
+
+/* staff-16: one disclosure row for every chart note — 44px tap target, chevron that turns open. */
+function CountedSummary() {
+  return (
+    <summary
+      className="font-sans flex items-center gap-1.5 cursor-pointer list-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded"
+      style={{ fontSize: MICRO, color: FAINT, minHeight: 44 }}
+    >
+      How this is counted
+      <ChevronDown size={14} aria-hidden="true" />
+    </summary>
   );
 }
 
@@ -544,12 +557,11 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
           {/* staff-16: up to five Footnote paragraphs could stack here at once — a wall of
               text on phone under every chart. Folded into one disclosure; the chart and its
               Key legend above stay visible without opening it. */}
-          <details style={{ marginTop: 9 }}>
-            <summary className="font-sans" style={{ fontSize: MICRO, color: FAINT, cursor: 'pointer', minHeight: 32 }}>
-              How this is counted
-            </summary>
+          <Footnote>Harvest not matched to a sale is not measured household consumption.</Footnote>
+          <details style={{ marginTop: 3 }}>
+            <CountedSummary />
             <Footnote>
-              Unmatched harvest may be stored, eaten, donated, lost or missing a sales entry. It is not measured household consumption.
+              Unmatched harvest may be stored, eaten, donated, lost or missing a sales entry.
               These four figures cover the {months.length} months drawn here. A cohort total
               elsewhere on this page counts every record since each farm joined, so it can be a
               little larger — the two are different periods, not two answers.
@@ -755,9 +767,7 @@ export function CohortTrainingChart({ training, className }: { training: CohortT
 
             <div className="px-4 pb-4">
               <details>
-                <summary className="font-sans" style={{ fontSize: MICRO, color: FAINT, cursor: 'pointer', minHeight: 32 }}>
-                  How this is counted
-                </summary>
+                <CountedSummary />
                 <Footnote>
                   A module counts once the farmer has completed it in the app. Farmers who have not
                   shared a training record are not drawn at zero — they are not drawn at all.

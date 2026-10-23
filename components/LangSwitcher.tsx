@@ -14,7 +14,7 @@ export default function LangSwitcher() {
         value={lang}
         onChange={(e) => setLang(e.target.value)}
         aria-label={t('language')}
-        className="font-mono outline-none cursor-pointer"
+        className="outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] cursor-pointer"
         style={{ background: 'transparent', color: 'var(--text-primary)', border: 'none', fontSize: 20 }}
       >
         {APP_LANGS.map((l) => (

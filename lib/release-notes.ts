@@ -41,6 +41,18 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 October 2026', sha: '1fb671ea', changes: [
+    'The printable plan fits a phone; screen readers pause between isiZulu and English.',
+    'Buttons and titles use plain sentence case; Study arrows are icons; staff charts go dark.',
+    'On a laptop, Vision and Example fill the screen and farmer text is never below 12px.',
+    'Sign in, Map, Prices and Account have headings; Prices and Calendar share one header.',
+  ], tour: [{ title: 'Open Prices',
+    where: 'Menu → Prices', href: '/prices',
+    detail: 'Prices now has a heading and the same header as Calendar, and ends at its content.',
+  }, { title: 'Open the Study area',
+    where: 'Menu → Study', href: '/student',
+    detail: 'Arrows on the course buttons are proper icons, and the charts follow dark mode.',
+  }] },
   { when: '22 October 2026', sha: '7f689e73', changes: [
     'Resume an unfinished site survey after reopening this browser, or discard its draft.',
     'Close and keep draft lets you pause. Your report uses answers you explicitly save.',

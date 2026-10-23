@@ -62,6 +62,10 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Wave 15 integration close-out: five tracks folded, 21 assigned IDs dispositioned, w15-04 opened — 22 October 2026](2026-10-22/wave-15-integration-claude.md).
+
+- [Wave 15 rendered re-capture of the wave 14 build: 50 of 54 rows verified, 3 regressions fixed — 22 October 2026](2026-10-22/wave-15-recapture-claude.md).
+
 - [Survey draft recovery and signed-in Ubhejane check — 22 October 2026](2026-10-22/survey-draft-recovery-codex.md).
 
 - [Wave 14 integration close-out: 166 findings dispositioned, five tracks folded — 17 October 2026](2026-10-17/wave-14-integration-claude.md).
