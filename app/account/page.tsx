@@ -260,12 +260,12 @@ export default function AccountPage() {
                   </p>
                   <div className="flex gap-2 flex-wrap">
                     <button onClick={() => router.push('/login')}
-                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-display font-semibold"
+                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-sans font-semibold"
                       style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', border: 'none', cursor: 'pointer' }}>
                       {copy('Sign in', 'Ngena ngemvume')}
                     </button>
                     <button onClick={() => { exitSampleMode(); router.push('/home'); }}
-                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-display"
+                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-sans"
                       style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}>
                       {copy('Exit tour', 'Phuma ohambo')}
                     </button>

@@ -1270,7 +1270,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 {biomeList(data.biome.code, 'species', data.biome.keySpecies, t).slice(0, 6).map((s) => (
                   <span
                     key={s}
-                    className="px-2 py-0.5 rounded-full text-xs font-display"
+                    className="px-2 py-0.5 rounded-full text-xs font-sans"
                     style={{ background: 'var(--badge-bg)', border: '1px solid var(--border)', color: 'var(--color-forest-800)' }}
                   >
                     {s}
