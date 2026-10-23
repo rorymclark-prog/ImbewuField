@@ -303,7 +303,7 @@ export default function FieldJournal() {
             {usedCategories.map((c) => (
               <Chip key={c.key} on={filter === c.key} onClick={() => setFilter(c.key)} tint={c.tint} ink={c.ink}>
                 {getElementArt2(`journal_${c.key}`) ? (
-                  <img className="produce-art" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain', display: 'inline-block', verticalAlign: '-2px' }} />
+                  <img className="produce-art produce-art--inline" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain', display: 'inline-block', verticalAlign: '-2px' }} />
                 ) : (
                   <c.icon size={12} aria-hidden />
                 )}{' '}
@@ -384,7 +384,7 @@ export default function FieldJournal() {
                         font: '700 12px/1 var(--font-sans), sans-serif',
                       }}>
                         {getElementArt2(`journal_${cat.key}`) ? (
-                          <img className="produce-art" src={getElementArt2(`journal_${cat.key}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
+                          <img className="produce-art produce-art--inline" src={getElementArt2(`journal_${cat.key}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
                         ) : (
                           <cat.icon size={11} aria-hidden />
                         )}{' '}
@@ -468,7 +468,7 @@ export default function FieldJournal() {
                           font: '700 12px/1 var(--font-sans), sans-serif',
                         }}>
                           {getElementArt2(`journal_${entry.category}`) ? (
-                            <img className="produce-art" src={getElementArt2(`journal_${entry.category}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
+                            <img className="produce-art produce-art--inline" src={getElementArt2(`journal_${entry.category}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
                           ) : (
                             <cat.icon size={11} aria-hidden />
                           )}{' '}
