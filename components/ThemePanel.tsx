@@ -171,9 +171,13 @@ export default function ThemePanel({ open, onClose }: Props) {
           zIndex: 50,
           background: 'var(--bg-1)',
           borderLeft: '1px solid var(--border)',
-          boxShadow: '-8px 0 32px rgba(0,0,0,0.2)',
+          boxShadow: open ? '-8px 0 32px rgba(0,0,0,0.2)' : 'none',
           transform: open ? 'translateX(0)' : 'translateX(100%)',
-          transition: 'transform 0.26s cubic-bezier(0.32,0.72,0,1)',
+          /* Closed: hidden from layout and assistive tech once the slide-out has finished. */
+          visibility: open ? 'visible' : 'hidden',
+          transition: open
+            ? 'transform 0.26s cubic-bezier(0.32,0.72,0,1), box-shadow 0.26s ease, visibility 0s'
+            : 'transform 0.26s cubic-bezier(0.32,0.72,0,1), box-shadow 0.26s ease, visibility 0s linear 0.26s',
           display: 'flex',
           flexDirection: 'column',
         }}

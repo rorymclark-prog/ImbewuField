@@ -1642,7 +1642,7 @@ export default function RecordsPage() {
                 that only appears on one page of the book does not answer it — she would have to
                 remember which page. Sold, spent and picked stay on screen whichever tab is open.
                 Hidden on lg only because the desktop sheet prints its own, wider stat row. */}
-            <div className="lg:hidden">
+            <div className={tab === 'picked' ? undefined : 'lg:hidden'}>
               <SummaryCards
                 sales={sales}
                 production={production}
@@ -1749,7 +1749,7 @@ export default function RecordsPage() {
                 // ledger below instead. Picked has no desktop ledger substitute yet (its
                 // harvest-entry form has no FinancialSheet equivalent), so it still shows
                 // here at every width.
-                className={`rounded-2xl${tab === 'sold' ? ' lg:hidden' : ''}`}
+                className={`rounded-2xl${tab === 'sold' ? ' lg:hidden' : ''}${tab === 'picked' ? ' lg:max-w-[640px]' : ''}`}
                 style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
               >
                 <MyRecords section={tab} onChanged={loadData} />

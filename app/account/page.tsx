@@ -222,7 +222,7 @@ export default function AccountPage() {
     if (samplePreview) {
       const sandbox = getSandboxProfile();
       const sandboxRoleLabel = sandbox.role ? (lang === 'zu' ? ({ farmer: 'Umlimi', mentor: 'Umeluleki', student: 'Umfundi', ngo: 'Umxhumanisi we-NGO', funder: 'Umxhasi', admin: 'Umphathi' } as Record<UserRole, string>)[sandbox.role] : ROLE_LABELS[sandbox.role]) : null;
-      const sandboxLangLabel = APP_LANGS.find((l) => l.code === sandbox.language)?.label ?? sandbox.language;
+      const sandboxLangLabel = APP_LANGS.find((l) => l.code === lang)?.label ?? lang; // w18-40: the language in use, not the stored sandbox value
       return (
         <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
           <AccountShellHeader copy={copy} />
@@ -251,7 +251,7 @@ export default function AccountPage() {
                 <button onClick={() => setSettingsOpen(true)}
                   className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
                   style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer', textAlign: 'left' }}>
-                  <span>{copy('Appearance & language', 'Ukubukeka nolimi')}</span>
+                  <span>{copy('Appearance', 'Ukubukeka')}</span>
                   <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />
                 </button>
                 <div className="rounded-2xl px-4 py-4 space-y-3" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
