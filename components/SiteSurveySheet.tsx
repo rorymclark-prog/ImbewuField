@@ -639,7 +639,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, sco
         {started && <button className={styles.modeButton} onClick={() => setStarted(false)}><RegionalWelcomeCopy language={lang} field={mode === 'short' ? 'shortTitle' : 'fullTitle'}>{mode === 'short' ? t('surveyShortTitle') : t('surveyFullTitle')}</RegionalWelcomeCopy><ChevronDown size={14}/></button>}
         <button onClick={closeWithConfirm} aria-label={t('surveyCloseAriaLabel')} className={styles.close}><X size={20}/></button>
       </header>
-      {lang === 'zu' && <p className={styles.zuluDraftNotice} role="note">{t('surveyZuluDraftNotice')}</p>}
+      {(lang === 'zu' || lang === 'xh') && <p className={styles.zuluDraftNotice} role="note">{t('surveyZuluDraftNotice')}</p>}
       {(lang === 'st' || lang === 've') && <p className={styles.regionalDraftNotice} role="note">{lang === 'st' ? 'Sesotho' : 'Tshivenda'} welcome labels are unreviewed drafts. English appears beside each machine draft; held labels remain in English.</p>}
       <div className={styles.workspace}>
         {started && <nav className={styles.navigation} aria-label={t('surveySections')}>
