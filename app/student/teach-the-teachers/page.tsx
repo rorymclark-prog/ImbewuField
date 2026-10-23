@@ -16,7 +16,7 @@ export default function TeachTheTeachersPage() {
   return <div className={styles.page}>
     <header className={styles.header}>
       <MenuButton /><BackButton fallback="/student" />
-      <Link href="/student">My Studies</Link><span>Facilitator refresher</span>
+      <Link href="/student">My Studies</Link><span data-header-secondary>Facilitator refresher</span>
     </header>
     <main className={styles.main}>
       <section className={styles.hero}>
@@ -28,7 +28,7 @@ export default function TeachTheTeachersPage() {
 
       <aside className={styles.notice}>
         <p><strong>Proposed English timetable for ACT planning.</strong> This is a facilitation rehearsal, not a qualification or proof of competence.</p>
-        <details><summary>More</summary><p>Confirm the hours, group size, trainers, venue and programme policy with ACT before delivery. The app’s isiZulu, Sesotho and Tshivenda text may include marked machine drafts. Check each lesson’s text, slides and narration separately before teaching; use the exact English source and local language support when a translation is unclear.</p></details>
+        <details><summary>More<ChevronDown className={styles.chevron} size={20} aria-hidden="true" /></summary><p>Confirm the hours, group size, trainers, venue and programme policy with ACT before delivery. The app’s isiZulu, Sesotho and Tshivenda text may include marked machine drafts. Check each lesson’s text, slides and narration separately before teaching; use the exact English source and local language support when a translation is unclear.</p></details>
       </aside>
 
       <section id="prepare" className={styles.panel}>
