@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ChevronDown } from 'lucide-react';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import { ACT_FACILITATOR_DAYS, ACT_OBSERVATION_CRITERIA } from '@/lib/act-facilitator-refresher';
@@ -54,7 +55,7 @@ export default function TeachTheTeachersPage() {
         <div className={styles.dayHeading}><span>Day {day.number}</span><div><h2>{day.theme}</h2><p>{day.promise}</p></div></div>
         <div className={styles.sessions}>
           {day.sessions.map(session => <details key={session.time} className={styles.session} open={session.time === '09:00–09:30'}>
-            <summary><span className={styles.time}>{session.time}</span><span>{session.title}</span></summary>
+            <summary><span className={styles.time}>{session.time}</span><span>{session.title}</span><ChevronDown className={styles.chevron} size={20} aria-hidden="true" /></summary>
             {session.outcome && <div className={styles.sessionBody}>
               <p><strong>By the end:</strong> {session.outcome}</p>
               <ol>{session.run.map(step => <li key={step}>{step}</li>)}</ol>
