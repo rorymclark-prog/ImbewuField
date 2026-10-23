@@ -25,3 +25,9 @@ test('w18-37 lender figures never break mid-number; both buttons are sans', () =
   assert.match(s, /font-display text-lg mt-1 whitespace-nowrap tabular-nums/);
   assert.match(s, /py-2 rounded-xl text-xs font-sans font-semibold flex items-center justify-center gap-2 transition-all/);
 });
+
+test('w18-38 Picked keeps the summary cards on desktop and caps the form', () => {
+  const s = read('app/records/page.tsx');
+  assert.match(s, /className=\{tab === 'picked' \? undefined : 'lg:hidden'\}/);
+  assert.match(s, /tab === 'picked' \? ' lg:max-w-\[640px\]'/);
+});
