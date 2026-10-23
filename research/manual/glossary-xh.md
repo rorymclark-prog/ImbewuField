@@ -833,3 +833,18 @@ noted. Other translators copy the callout labels, the "Key points" heading, the 
 | sweet lupin / white clover / rye / fodder radish | i-sweet lupin / i-white clover / i-rye / i-fodder radish | Ch 5 table. Loans. (check) |
 | sweet thorn | umnga (*Vachellia karroo*) | Ch 5. Same as the section 7 entry; English name added in brackets. (check) |
 | browse (leaves eaten by livestock) | ukutya kwezilwanyana ezidla amagqabi (browse) | Ch 5 table. (check) |
+
+## Chapter 6 additions (tree systems)
+
+| English | isiXhosa | Notes |
+|---|---|---|
+| permaculture orchard | igadi yeziqhamo ye-permaculture (permaculture orchard) | Ch 6. (check) |
+| understorey (layer) | i-understorey (leko lemithi emincinci nezihlahla ezingaphantsi kwemithi emide kakhulu) | Ch 6. Kept as a loan under the 66-word rule although the table above says "not used as a term". (check) |
+| food forest layer | leko (pl. amaleko) | Ch 6. |
+| disturbed land | umhlaba osele uphazamisekile (wonakaliswe ngaphambili) | Ch 6. (check) |
+| veld fire | umlilo wedlelo lendalo | Ch 6. (check) |
+| succulents | izityalo ezigcina amanzi emagqabini (succulents) | Ch 6. (check) |
+| low-chill (variety) | ezidinga ibanda elincinci (low-chill) | Ch 6. (check) |
+| south-easter / north-wester | umoya wasemzantsi-mpuma (south-easter) / umoya wasemntla-ntshona (north-wester) | Ch 6. (check) |
+| planting basin / tree basin | isitya (pl. izitya) / isitya somthi | Ch 6. Same as infiltration basin entry. (check) |
+| Ch 6 tree and shrub names | English common name kept, Latin in italics; only umnga (*Vachellia karroo*) and umqokolo (Kei apple, *Dovyalis caffra*) given in isiXhosa | Ch 6. Apple, pear, plum = iapile, ipere, iplamu (check); other fruit (quince, nectarine, apricot, fig, persimmon, grape, pecan, almond, carob, litchi, pomegranate) kept in English. |
