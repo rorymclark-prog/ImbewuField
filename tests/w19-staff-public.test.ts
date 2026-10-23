@@ -9,7 +9,9 @@ test('w19-38: short header titles and a title that outlasts the nav', () => {
   assert.match(read('app/funder/page.tsx'), /title=\{tr\(lang, 'Funder', 'Umxhasi'\)\}/);
   const h = read('components/layout/AppHeader.tsx');
   assert.match(h, /lg:shrink-0/);
-  assert.match(h, /overflow-hidden whitespace-nowrap/);
+  // w20-37: the nav is shrink-0 and never cut mid-word (was overflow-hidden).
+  assert.match(h, /shrink-0 whitespace-nowrap/);
+  assert.doesNotMatch(h, /overflow-hidden whitespace-nowrap/);
 });
 
 test('w19-39: network stat strip, list column and status colours', () => {

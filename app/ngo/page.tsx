@@ -116,7 +116,7 @@ export default function NgoPage() {
           {!simple && (
             <Link
               href="/network"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 text-sm font-sans font-semibold whitespace-nowrap rounded-full"
+              className="hidden sm:inline-flex lg:hidden items-center gap-1.5 px-3 text-sm font-sans font-semibold whitespace-nowrap rounded-full"
               style={{ minHeight: 44, color: 'var(--text-primary)', border: '1px solid var(--border)', textDecoration: 'none' }}
             >
               <Map size={16} aria-hidden="true" />
