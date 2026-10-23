@@ -59,6 +59,7 @@ import {
   type NetworkSortKey,
 } from '@/lib/network';
 import { DEMO_NETWORK_NOTICE } from '@/lib/network-demo';
+import { inlineTemplate, inlineText } from '@/lib/xh-inline';
 import type { GardenStatus } from '@/lib/db/types';
 
 const NetworkMap = dynamic(() => import('@/components/network/NetworkMap'), {
@@ -71,7 +72,7 @@ function NetworkMapLoading() {
   return (
     <div className="flex-1 flex items-center justify-center" style={{ background: 'var(--bg-0)' }}>
       <span className="font-display" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
-        {lang === 'zu' ? 'Kulayishwa imephu yohlelo…' : 'Loading the portfolio map…'}
+        {lang === 'zu' ? 'Kulayishwa imephu yohlelo…' : inlineText(lang, 'Loading the portfolio map…')}
       </span>
     </div>
   );
@@ -116,7 +117,7 @@ const NETWORK_ALLOWED_ROLES = new Set<UserRole>(['ngo', 'funder', 'admin']);
 export default function NetworkPage() {
   const { lang } = useLanguage();
   const isZulu = lang === 'zu';
-  const tr = (en: string, zu: string) => isZulu ? zu : en;
+  const tr = (en: string, zu: string) => inlineText(lang, en, zu);
   const { user, role, loading: authLoading } = useAuth();
   const router = useRouter();
   const sampleRole = useSampleRole();
@@ -262,9 +263,9 @@ export default function NetworkPage() {
           <AlertTriangle size={13} style={{ color: 'var(--gold-dim)', flexShrink: 0 }} />
           <span className="font-sans" style={{ fontSize: 12, color: 'var(--gold-dim)' }}>
             {portfolio.error === 'No organisation is linked to this account yet.'
-              ? tr(portfolio.error, 'Ayikho inhlangano exhunyiwe kule akhawunti okwamanje.')
+              ? tr('No organisation is linked to this account yet.', 'Ayikho inhlangano exhunyiwe kule akhawunti okwamanje.')
               : portfolio.error === 'Could not reach the portfolio service.'
-                ? tr(portfolio.error, 'Isevisi yohlelo ayitholakali okwamanje.')
+                ? tr('Could not reach the portfolio service.', 'Isevisi yohlelo ayitholakali okwamanje.')
                 : portfolio.error}
           </span>
           <button
@@ -290,10 +291,12 @@ export default function NetworkPage() {
         </div>
       )}
 
-      {isZulu && (
+      {(isZulu || lang === 'xh') && (
         <p role="note" className="flex-shrink-0 px-3 md:px-4 py-1.5 font-sans"
           style={{ fontSize: 12, color: INK_SOFT, background: PAPER, borderBottom: `1px solid ${LINE}` }}>
-          Imephu nemininingwane yomlimi ewindini layo kusaboniswa ngesiNgisi.
+          {isZulu
+            ? 'Imephu nemininingwane yomlimi ewindini layo kusaboniswa ngesiNgisi.'
+            : inlineText(lang, 'The map and some farmer details in its panel are still shown in English.')}
         </p>
       )}
 
@@ -369,10 +372,9 @@ export default function NetworkPage() {
             className="font-sans px-3 md:px-4"
             style={{ fontSize: 12, color: INK_MUTED, paddingBottom: 6 }}
           >
-            {tr(
-              `Totals cover ${totals.reportingCount} of ${totals.farmerCount} sites — the rest are not readable by this account.`,
-              `Izibalo zihlanganisa izindawo ezingu-${totals.reportingCount} kwezingu-${totals.farmerCount} kuphela — le akhawunti ayikwazi ukufunda ezinye.`,
-            )}
+            {isZulu
+              ? `Izibalo zihlanganisa izindawo ezingu-${totals.reportingCount} kwezingu-${totals.farmerCount} kuphela — le akhawunti ayikwazi ukufunda ezinye.`
+              : inlineTemplate(lang, 'Totals cover {reporting} of {total} sites — the rest are not readable by this account.', null, { reporting: totals.reportingCount, total: totals.farmerCount })}
           </p>
         )}
         {/* ux-20 asks for this to move into the map's legend popover at >=12px; that popover
@@ -565,12 +567,13 @@ export default function NetworkPage() {
                 : portfolio.withheldForConsent > 0
                   // Stated, not silent. A roster shorter than the programme's roll is a
                   // consent outcome; unexplained, it reads as a small or shrinking programme.
-                  ? tr(
-                      `${portfolio.withheldForConsent} more ${portfolio.withheldForConsent === 1 ? 'farmer is' : 'farmers are'} enrolled here but have not agreed to share their figures, so they are not listed.`,
-                      portfolio.withheldForConsent === 1
+                  ? (isZulu
+                    ? (portfolio.withheldForConsent === 1
                         ? 'Omunye umlimi ubhalisiwe lapha kodwa akakavumi ukwabelana ngezibalo zakhe, ngakho akafakiwe ohlwini.'
-                        : `Abanye abalimi abangu-${portfolio.withheldForConsent} babhalisiwe lapha kodwa abakavumi ukwabelana ngezibalo zabo, ngakho abafakiwe ohlwini.`,
-                    )
+                        : `Abanye abalimi abangu-${portfolio.withheldForConsent} babhalisiwe lapha kodwa abakavumi ukwabelana ngezibalo zabo, ngakho abafakiwe ohlwini.`)
+                    : portfolio.withheldForConsent === 1
+                      ? inlineTemplate(lang, '{n} more farmer is enrolled here but have not agreed to share their figures, so they are not listed.', null, { n: portfolio.withheldForConsent })
+                      : inlineTemplate(lang, '{n} more farmers are enrolled here but have not agreed to share their figures, so they are not listed.', null, { n: portfolio.withheldForConsent }))
                   : tr(
                       'Every figure here is shared by the farmer it belongs to, and only for the categories they agreed to.',
                       'Wonke amanani alapha abelwane ngabalimi bawo, futhi aboniswa ezigabeni kuphela abavumele ukwabelana ngazo.',
