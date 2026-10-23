@@ -22,7 +22,7 @@ test('w18-49: login inputs are full opacity and a Connecting line shows', () => 
 
 test('w18-50: design/lite clears the Tour pill and says device', () => {
   const src = read('app/design/lite/page.tsx');
-  assert.match(src, /env\(safe-area-inset-top, 0px\) \+ 56px/);
+  assert.match(src, /env\(safe-area-inset-top, 0px\) \+ 72px/);
   assert.ok(!/on this phone|closing on this phone/.test(src.replace(/^\/\/.*$/gm, '')));
 });
 
