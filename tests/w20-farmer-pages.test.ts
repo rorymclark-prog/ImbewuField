@@ -21,3 +21,18 @@ test('w20-02: exchange crop chips and lede use produceLabel; task board keys hav
   }
   assert.match(zu, /w20-02: unreviewed isiZulu drafts/);
 });
+
+test('w20-03: exchange/account controls use the sans font', () => {
+  for (const p of ['app/account/page.tsx', 'components/exchange/ExchangeGuide.tsx', 'components/exchange/NewListingForm.tsx', 'components/exchange/ExchangeBoard.tsx']) {
+    const s = read(p);
+    for (const m of s.matchAll(/<(button|input|select|textarea)\b[^>]*?className=(?:"[^"]*"|\{`[^`]*`\})/gs)) {
+      assert.doesNotMatch(m[0], /font-display/, `${p}: ${m[0].slice(0, 80)}`);
+    }
+  }
+});
+
+test('w20-04: chips are inline-flex; stats are a phone grid', () => {
+  const s = read('components/exchange/ExchangeBoard.tsx');
+  assert.match(s, /display: 'inline-flex',\s*alignItems: 'center',\s*gap: 4,\s*padding: '6px 11px'/);
+  assert.match(s, /grid grid-cols-3 gap-x-3 gap-y-2 sm:flex/);
+});

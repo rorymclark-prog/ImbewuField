@@ -219,7 +219,7 @@ export default function ExchangeBoard() {
       <ExchangeDraftNotice />
 
       {/* Counts */}
-      <div className="flex items-center gap-4 flex-wrap">
+      <div className="grid grid-cols-3 gap-x-3 gap-y-2 sm:flex sm:items-center sm:gap-4 sm:flex-wrap">
         <Stat value={summary.total} label={summary.total === 1 ? tx('listing', 'isikhangiso') : tx('listings', 'izikhangiso')} />
         <Stat value={summary.offers} label={tx('offering', 'ezihlinzekwayo')} />
         <Stat value={summary.wants} label={tx('wanted', 'ezifunwayo')} />
@@ -530,7 +530,7 @@ export default function ExchangeBoard() {
 
 function Stat({ value, label, icon }: { value: number; label: string; icon?: boolean }) {
   return (
-    <div className="flex items-baseline gap-1.5">
+    <div className="flex items-baseline gap-x-1.5 flex-wrap min-w-0">
       {icon && <Users size={12} strokeWidth={2} style={{ color: EX.faint, alignSelf: 'center' }} />}
       <span className="font-display font-bold" style={{ fontSize: 17, color: EX.ink }}>{value}</span>
       <span className="font-sans" style={{ fontSize: 12, color: EX.faint }}>{label}</span>
@@ -570,6 +570,9 @@ function Chip({
       aria-pressed={on}
       className="font-sans font-semibold"
       style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 4,
         padding: '6px 11px',
         borderRadius: 100,
         fontSize: 12,

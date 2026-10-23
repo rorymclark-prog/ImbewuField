@@ -135,7 +135,7 @@ export default function ExchangeGuide({
   // nothing else on the screen to reach past.
   if (simple && variant === 'intro') {
     return (
-      <div className="rounded-2xl" style={{ background: EX.card, border: `1px solid ${EX.border}` }}>
+      <div className="rounded-2xl" style={{ background: 'transparent', border: `1px solid ${EX.border}` }}>
         <button
           type="button"
           onClick={() => setExpanded((v) => !v)}
@@ -149,8 +149,8 @@ export default function ExchangeGuide({
             border: 'none',
             textAlign: 'left',
             cursor: 'pointer',
-            fontSize: 14,
-            color: EX.ink,
+            fontSize: 13,
+            color: EX.muted,
           }}
         >
           <Handshake size={18} strokeWidth={1.7} style={{ color: EX.green, flexShrink: 0 }} />
