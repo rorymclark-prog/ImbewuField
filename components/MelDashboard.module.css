@@ -5,12 +5,13 @@
 .shell { height:100dvh; display:flex; flex-direction:column; overflow:hidden; background:var(--bg-0); }
 .scroller { flex:1; min-height:0; overflow-y:auto; }
 .hero { background:var(--color-forest-800); color:var(--on-forest-800); border-radius:16px; padding:16px 20px; margin-bottom:16px; display:flex; align-items:center; gap:8px 20px; flex-wrap:wrap; }
+:global(html.dark) .hero { background:var(--bg-2); color:var(--text-primary); border:1px solid var(--border); }
 .hero > span { display:none; }
 .hero h1 { font-family:var(--font-display),serif; font-size:28px; margin:0; }
 .hero p { max-width:680px; margin:0; }
 .hero .row { margin-left:auto; }
-.root h2 { font-size:21px; margin:0 0 12px; }
-.root h3 { font-size:17px; margin:0 0 10px; }
+.root h2 { font-size:21px; font-weight:600; margin:0 0 12px; }
+.root h3 { font-size:17px; font-weight:600; margin:0 0 10px; }
 .root p { font-size:14px; line-height:1.6; }
 .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
 .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); gap:16px; margin:18px 0; }
@@ -26,13 +27,15 @@
 .root label > input:not([type=checkbox]),.root label > select,.root label > textarea { display:block; margin-top:6px; }
 .root button { cursor:pointer; }
 .root button:disabled { opacity:.55; cursor:default; }
-.root :is(button,a).primary { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:9px 18px; border-radius:9px; background:var(--color-forest-800); color:var(--on-forest-800); border:1px solid var(--color-forest-800); font-weight:600; font-size:14px; text-decoration:none; }
-.root :is(button,a).secondary { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:9px 18px; border-radius:9px; background:transparent; color:var(--text-primary); border:1px solid var(--border); font-weight:600; font-size:14px; text-decoration:none; }
+.root :is(button,a).primary { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:9px 18px; border-radius:10px; background:var(--color-forest-800); color:var(--on-forest-800); border:1px solid var(--color-forest-800); font-weight:600; font-size:14px; text-decoration:none; }
+.root :is(button,a).secondary { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:9px 18px; border-radius:10px; background:transparent; color:var(--text-primary); border:1px solid var(--border); font-weight:600; font-size:14px; text-decoration:none; }
 .stack { display:grid; gap:16px; margin:16px 0; }
 .root button[aria-pressed=true] { box-shadow:0 0 0 2px var(--emerald); }
 .root :focus-visible { outline:3px solid var(--gold); outline-offset:3px; }
 .error { padding:15px; background:color-mix(in srgb, var(--orange) 14%, var(--bg-0)); color:var(--orange); border:1px solid color-mix(in srgb, var(--orange) 40%, var(--border)); border-radius:10px; }
-.notice { padding:15px; background:color-mix(in srgb, var(--blue) 14%, var(--bg-0)); color:var(--blue); border-radius:10px; margin:14px 0; }
+.notice { position:relative; padding:15px 15px 15px 46px; background:var(--bg-1); color:var(--text-primary); border:1px solid var(--border); border-left:3px solid var(--blue); border-radius:10px; margin:14px 0; }
+/* Lucide "info" glyph, painted in --blue, so every notice carries the icon without markup changes. */
+.notice::before { content:""; position:absolute; left:15px; top:16px; width:20px; height:20px; background:var(--blue); -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 16v-4'/%3E%3Cpath d='M12 8h.01'/%3E%3C/svg%3E") center/contain no-repeat; mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 16v-4'/%3E%3Cpath d='M12 8h.01'/%3E%3C/svg%3E") center/contain no-repeat; }
 .scroll { max-height:300px; overflow:auto; border:1px solid var(--border); border-radius:10px; padding:12px; }
 .option { display:flex !important; align-items:center; gap:9px; }
 .metric { padding:14px 0; border-bottom:1px solid var(--border); }
@@ -65,7 +68,8 @@
   .statsGrid { gap:8px; margin:10px 0 14px; }
   .statsGrid .card { padding:10px; font-size:13px; }
   .statsGrid .stat { font-size:25px; line-height:1.1; margin:6px 0 0; }
-  .notice { padding:10px; margin:10px 0; }
+  .notice { padding:10px 10px 10px 40px; margin:10px 0; }
+  .notice::before { left:10px; top:11px; }
 }
 @media print { .root { background:white; padding:0; color:black; } .hero { background:white; color:black; padding:0; } .root button,.root select { display:none; } .card { break-inside:avoid; box-shadow:none; } }
 
@@ -94,7 +98,7 @@
 .overviewPanels { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
 .overviewPanels .card { padding:18px 20px; }
 .coverageValue { display:flex; align-items:baseline; gap:14px; margin:12px 0; flex-wrap:wrap; }
-.coverageValue > strong { font-size:36px; line-height:1; }
+.coverageValue > strong { font-family:var(--font-display),serif; font-size:36px; line-height:1; }
 .coverageValue > span { font-size:14px; }
 .coverageTrack { height:14px; overflow:hidden; border-radius:20px; background:var(--bg-2); }
 .coverageTrack > span { display:block; height:100%; background:var(--emerald); border-radius:20px; }

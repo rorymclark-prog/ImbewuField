@@ -18,13 +18,13 @@ import { MINI_H, MINI_W, type MiniPlan, type MiniPaint } from '@/lib/mini-plan';
 
 const INK: Record<MiniPaint, { fill: string; fillOpacity: number; stroke: string; strokeWidth: number }> = {
   // The beds are the subject of a crop plan, so they are the only saturated ink.
-  bed: { fill: '#1F4D2B', fillOpacity: 0.5, stroke: '#1F4D2B', strokeWidth: 1.2 },
+  bed: { fill: 'var(--mini-plate-bed, #1F4D2B)', fillOpacity: 0.5, stroke: 'var(--mini-plate-bed, #1F4D2B)', strokeWidth: 1.2 },
   // Staple ground is hatched rather than filled: it is a FIELD, not a bed, and a
   // solid block of it at this size would out-shout the beds it dwarfs.
-  plot: { fill: 'none', fillOpacity: 1, stroke: '#A9812C', strokeWidth: 1.2 },
-  canopy: { fill: '#6F8F5E', fillOpacity: 0.22, stroke: '#6F8F5E', strokeWidth: 0 },
-  structure: { fill: '#6B6152', fillOpacity: 0.16, stroke: '#6B6152', strokeWidth: 0.8 },
-  water: { fill: '#3E6B7A', fillOpacity: 0.32, stroke: '#3E6B7A', strokeWidth: 0.8 },
+  plot: { fill: 'none', fillOpacity: 1, stroke: 'var(--mini-plate-plot, #A9812C)', strokeWidth: 1.2 },
+  canopy: { fill: 'var(--mini-plate-canopy, #6F8F5E)', fillOpacity: 0.22, stroke: 'var(--mini-plate-canopy, #6F8F5E)', strokeWidth: 0 },
+  structure: { fill: 'var(--mini-plate-structure, #6B6152)', fillOpacity: 0.16, stroke: 'var(--mini-plate-structure, #6B6152)', strokeWidth: 0.8 },
+  water: { fill: 'var(--mini-plate-water, #3E6B7A)', fillOpacity: 0.32, stroke: 'var(--mini-plate-water, #3E6B7A)', strokeWidth: 0.8 },
 };
 
 export default function MiniPlanPlate({ plan, className }: { plan: MiniPlan; className?: string }) {
@@ -39,11 +39,11 @@ export default function MiniPlanPlate({ plan, className }: { plan: MiniPlan; cla
       className={className}
       role="presentation"
       aria-hidden="true"
-      style={{ display: 'block', width: '100%', height: 'auto', background: '#F6F1E6' }}
+      style={{ display: 'block', width: '100%', height: 'auto', background: 'var(--mini-plate-bg, #F6F1E6)' }}
     >
       <defs>
         <pattern id={hatchId} width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <line x1="0" y1="0" x2="0" y2="6" stroke="#A9812C" strokeWidth="1.4" strokeOpacity="0.55" />
+          <line x1="0" y1="0" x2="0" y2="6" stroke="var(--mini-plate-plot, #A9812C)" strokeWidth="1.4" strokeOpacity="0.55" />
         </pattern>
       </defs>
 
