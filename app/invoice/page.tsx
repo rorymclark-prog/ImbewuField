@@ -15,6 +15,7 @@ import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
+import LimaBar from '@/components/LimaBar';
 import {
   loadCustomers, addCustomer, findCustomer, loadProducts, addProduct,
   loadInvoices, saveInvoice, deleteInvoice, setInvoiceStatus, invoiceId,
@@ -1365,6 +1366,10 @@ export default function InvoicePage() {
           </div>
         </div>
       </div>
+
+      {/* w19-13: Lima in the page flow, not floating over the note field / Save row;
+          ChatWidget's FAB excludes /invoice. */}
+      <div className="no-print"><LimaBar /></div>
 
       <div className="no-print"><TabBar hideAtDesktop /></div>
 
