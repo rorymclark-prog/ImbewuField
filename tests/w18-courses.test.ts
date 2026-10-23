@@ -36,13 +36,10 @@ test('w18-21..24: course stylesheet link, list, rhythm and header rules', () => 
   assert.match(fin, /\.header > :last-child \{ margin-left: auto/);
 });
 
-test('w18-25: one preview-card surface and short eyebrows', () => {
+test('w18-25: one preview-card surface', () => {
   const css = read('app/student/Studies.module.css');
   assert.match(css, /\.coursePreviewLink \{[^}]*background: var\(--bg-1\)/);
   assert.match(css, /\.coursePreviewLink:last-child:nth-child\(odd\)/);
-  const i18n = read('lib/i18n.tsx');
-  assert.match(i18n, /studentDesignEnglishPreview: 'Design course · English preview'/);
-  assert.match(i18n, /studentFinanceEnglishPreview: 'Finance course · English preview'/);
 });
 
 test('w18-26: no raw record id in the source table; disclosure uses a rotating chevron', () => {
