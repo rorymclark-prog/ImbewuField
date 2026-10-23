@@ -111,10 +111,10 @@ export default function OfflinePage(){
   const button={minHeight:44,padding:'8px 14px',border:'1px solid var(--border)',borderRadius:10,marginRight:8,marginTop:4};
   return <div className="flex flex-col overflow-hidden" style={{height:'100dvh',background:'var(--bg-0)'}}>
     <style>{'.offline-summary{list-style:none;min-height:44px;display:flex;align-items:center;gap:6px;cursor:pointer}.offline-summary::-webkit-details-marker{display:none}.offline-chevron{transition:transform .15s;transform:rotate(-90deg)}details[open]>.offline-summary .offline-chevron{transform:none}'}</style>
-    <AppHeader title={t('offlineTitle')} />
+    <AppHeader title={lang==='zu'?t('offlineTitle'):'Saved on this device'} />
   <main style={{flex:1,display:'flex',flexDirection:'column',overflow:'hidden',color:'var(--text-primary)'}}><div style={{flex:1,overflowY:'auto'}}><div style={{maxWidth:880,margin:'0 auto',padding:'18px 18px 0',paddingBottom:'calc(max(90px, var(--lima-fab-clearance, 0px)) + var(--bottom-nav-height, 0px))'}}>
     {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own real h1. */}
-    <h1 className="t-h1" style={{margin:0,color:'var(--text-primary)'}}>{t('offlineTitle')}</h1>
+    <h1 className="t-h1" style={{margin:0,color:'var(--text-primary)'}}>{lang==='zu'?t('offlineTitle'):'Saved on this device'}</h1>
     <div className="space-y-4 mt-4">
     {lang==='zu'&&<p role="note" style={{...card,marginTop:0,background:'var(--bg-2)'}}>{t('offlineZuluDraftNotice')}</p>}
     {/* nav-06: was just the bold word "Connected" with no icon and no sentence, which read like

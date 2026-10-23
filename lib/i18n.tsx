@@ -1858,7 +1858,7 @@ export const T_en: Dict = {
 
   // Offline preparation and queued fieldwork.
   offlineZuluDraftNotice: 'Unreviewed isiZulu draft. Check the English beside save, sync and remove actions. / IsiZulu sisaluhlaka olungakabuyekezwa. Hlola isiNgisi esiseduze uma ugcina, uvumelanisa noma ususa.',
-  offlineTitle: 'Saved on this device',
+  offlineTitle: 'Saved on this phone',
   offlineConnected: 'Connected',
   offlineUsingSavedCopies: 'Offline — using this device’s saved copies',
   // nav-06: the status line used to be just the bold word "Connected"/"Offline…" with no icon

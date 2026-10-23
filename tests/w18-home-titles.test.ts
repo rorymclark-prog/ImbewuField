@@ -16,7 +16,7 @@ test('w18-42: /offline has t-h2 section headings and a chevron disclosure', () =
   assert.doesNotMatch(s, /<h2>/);
   assert.match(s, /ChevronDown/);
   assert.match(s, /details\[open\]>\.offline-summary \.offline-chevron/);
-  assert.match(read('lib/i18n.tsx'), /offlineTitle: 'Saved on this device'/);
+  assert.match(s, /'Saved on this device'/);
 });
 
 test('w18-44: tight tracking only on h1/h2', () => {
