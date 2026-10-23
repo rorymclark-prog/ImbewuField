@@ -42,7 +42,8 @@
 .metric { padding:14px 0; border-bottom:1px solid var(--border); }
 .bar { height:8px; background:var(--bg-2); border-radius:6px; overflow:hidden; margin:6px 0 12px; }
 .bar span { display:block; height:100%; background:var(--emerald); }
-.compact { padding:12px 20px; background:var(--bg-1); border-bottom:1px solid var(--border); font-size:14px; display:flex; gap:20px; flex-wrap:wrap; }
+/* w20-19: a card in the page column (was a full-bleed band); stacks below 480px. */
+.compact { padding:14px 20px; background:var(--bg-1); border:1px solid var(--border); border-radius:16px; margin:12px 12px 16px; font-size:14px; display:flex; gap:6px 20px; flex-wrap:wrap; align-items:center; }
 .statsGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:14px 0; }
 /* w18-11: one disclosure pattern for every <details> inside the MEL dashboards (About these
    counts, Create an assessment, How assessments work, Learning action): primary-ink 600 label,
@@ -52,8 +53,8 @@
 .root details > summary::after { content:''; flex-shrink:0; width:8px; height:8px; margin-left:auto; border-right:2px solid var(--text-muted); border-bottom:2px solid var(--text-muted); transform:rotate(45deg); transition:transform .15s; }
 .root details[open] > summary::after { transform:rotate(-135deg); }
 .root details.card { margin:16px 0; padding-top:4px; padding-bottom:4px; }
-.about { font-size:14px; border:1px solid var(--border); border-radius:12px; padding:0 14px; margin:14px 0; background:var(--bg-1); }
-.about p { margin-top:0; padding-bottom:14px; }
+.about { font-size:14px; border:1px solid var(--border); border-radius:16px; padding:4px 20px; margin:16px 0; background:var(--bg-1); }
+.about p { margin-top:0; padding-bottom:12px; }
 /* MelMetrics' per-question result bars — sdesk-14: this used to be a plain stacked <div>, so
    each question's bar ran the full 1280px frame on desktop. Reusing .grid puts 2-3 questions
    side by side at lg+ (see minmax above) and the bar itself stays capped so it reads as a bar,
@@ -69,9 +70,12 @@
   .statsGrid { gap:8px; margin:10px 0 14px; }
   .statsGrid .card { padding:10px; font-size:13px; }
   .statsGrid .stat { font-size:25px; line-height:1.1; margin:6px 0 0; }
+  .about { padding:2px 12px; }
   .notice { padding:10px 10px 10px 40px; margin:10px 0; }
   .notice::before { left:10px; top:11px; }
 }
+@media(min-width:768px) { .compact { margin-left:20px; margin-right:20px; } }
+@media(max-width:480px) { .compact { flex-direction:column; align-items:flex-start; } }
 @media print { .root { background:white; padding:0; color:black; } .hero { background:white; color:black; padding:0; } .root button,.root select { display:none; } .card { break-inside:avoid; box-shadow:none; } }
 
 /* Match the programme cards while keeping chooser actions aligned across varying copy. */
