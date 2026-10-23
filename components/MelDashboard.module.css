@@ -5,7 +5,8 @@
 .shell { height:100dvh; display:flex; flex-direction:column; overflow:hidden; background:var(--bg-0); }
 .scroller { flex:1; min-height:0; overflow-y:auto; }
 .hero { background:var(--color-forest-800); color:var(--on-forest-800); border-radius:16px; padding:16px 20px; margin-bottom:16px; display:flex; align-items:center; gap:8px 20px; flex-wrap:wrap; }
-:global(html.dark) .hero { background:var(--bg-2); color:var(--text-primary); border:1px solid var(--border); }
+/* w20-16: desktop only; the phone reset below would otherwise lose to this rule's specificity. */
+@media(min-width:651px) { :global(html.dark) .hero { background:var(--bg-2); color:var(--text-primary); border:1px solid var(--border); } }
 .hero > span { display:none; }
 .hero h1 { font-family:var(--font-display),serif; font-size:28px; margin:0; }
 .hero p { max-width:680px; margin:0; }
