@@ -2,10 +2,10 @@
 /* The global draggable Lima launcher sits over the left edge of lesson copy on a phone.
    This reading page already links to the app exercises where Lima remains available. */
 .page ~ :global(button[aria-label^="Open Lima"]) { display: none; }
-.main { width: min(100%, 1080px); margin: 0 auto; padding: 20px 16px var(--lima-fab-clearance, 96px); }
-.hero, .panel, .day, .notice { border: 1px solid var(--border); border-radius: 20px; background: var(--bg-1); }
-.hero { padding: clamp(24px, 6vw, 48px); background: linear-gradient(145deg, color-mix(in srgb, var(--color-forest-800) 8%, var(--bg-1)), var(--bg-1) 70%); }
-.eyebrow { margin: 0 0 10px; color: var(--gold-dim); font: 700 12px/1.4 var(--font-sans), sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+.main { width: min(100%, 1120px); margin: 0 auto; padding: 20px 20px var(--lima-fab-clearance, 96px); }
+.hero, .panel, .day, .notice { border: 1px solid var(--border-strong); border-radius: 20px; background: var(--bg-1); }
+.hero { padding: clamp(24px, 6vw, 48px); background: var(--bg-1); }
+.eyebrow { margin: 0 0 10px; color: var(--text-secondary); font: 700 12px/1.4 var(--font-sans), sans-serif; letter-spacing: .1em; text-transform: uppercase; }
 .hero h1 { margin: 0; color: var(--color-forest-800); font: 400 clamp(32px, 4vw, 52px)/1.12 var(--font-display), Georgia, serif; }
 .lead { max-width: 72ch; color: var(--text-primary); font-size: clamp(17px, 3vw, 21px); line-height: 1.5; }
 .heroLinks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
@@ -25,7 +25,7 @@
 .panel li + li { margin-top: 8px; }
 .panel > a { display: inline-flex; align-items: center; min-height: 44px; color: var(--color-forest-800); font-weight: 700; text-underline-offset: 3px; }
 .panel ol { list-style: decimal; padding-left: 1.5em; margin: 12px 0 16px; }
-.moduleList { margin-top: 12px; columns: 2; column-gap: 28px; }
+.panel .moduleList { margin-top: 12px; padding-left: 2.25em; columns: 2; column-gap: 28px; }
 .moduleList li { break-inside: avoid; }
 .dayHeading { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px; }
 .dayHeading > span { flex: 0 0 auto; border-radius: 999px; padding: 7px 11px; background: var(--color-forest-800); color: var(--on-forest-800); font-weight: 700; }
