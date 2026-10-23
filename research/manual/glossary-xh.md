@@ -758,3 +758,16 @@ noted. Other translators copy the callout labels, the "Key points" heading, the 
 | Department of Water and Sanitation | uMnyango wezaManzi neNtlambululo | Ch 13. Check against the department's own isiXhosa name. |
 | Act names (ch 13) | English name kept, short isiXhosa gloss in brackets on first use, e.g. *i-National Water Act, umthetho kazwelonke wamanzi* | Ch 13. |
 | electrician | i-electrician eqeqeshiweyo | Ch 13. Loan. (check) |
+| Department of Agriculture | uMnyango wezoLimo | Ch 13. (check) |
+| Conservation of Agricultural Resources Act | i-Conservation of Agricultural Resources Act, umthetho wokulondoloza izibonelelo zezolimo | Ch 13. Gloss coined. (check) |
+| National Veld and Forest Fire Act | i-National Veld and Forest Fire Act, umthetho kazwelonke weemililo yasendle namahlathi | Ch 13. Gloss coined. (check) |
+| National Forests Act | i-National Forests Act, umthetho kazwelonke wamahlathi | Ch 13. Gloss coined. (check) |
+| Fire Protection Association | i-Fire Protection Association, umbutho wokukhusela ekusasazekeni komlilo | Ch 13. Gloss coined. (check) |
+| NEMBA Alien and Invasive Species Lists | i-NEMBA Alien and Invasive Species Lists, uluhlu lwezinto ezingengobasekhaya ezihlaselayo | Ch 13. Gloss coined. (check) |
+| traditional council | ibhunga lemveli | Ch 13. (check) |
+| cellphone | iselula | Ch 13. (check) |
+| Word / What it means (table headers, ch 12) | Igama / Intsingiselo | Ch 12. (check) |
+| strip (of cleared land) | umcu womhlaba | Ch 12, firebreak. *umcu* = strip; not confirmed. (check) |
+| pods (of trees, as fodder) | iimbotyi zemithi | Ch 12, fodder. (check) |
+| pH range "between about 6 and 7" | phakathi kwe-6 ne-7 malunga | Ch 12; number concords after *phakathi kwe-* unconfirmed. (check) |
+| basket (compost basket in a keyhole bed) | ibhasikithi ye-compost | Ch 12. (check) |
