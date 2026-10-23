@@ -101,7 +101,7 @@ test('surveys: Simple hides the question-count metadata for a farmer answering',
   const at = SURVEYS.indexOf("{localUi('From', 'Kuvela ku', lang)} {survey.org_name}");
   assert.ok(at > 0, 'the "From {org}" line moved — recheck this guard');
   const block = SURVEYS.slice(at, at + 300);
-  assert.match(block, /\{!simple && <>&middot;/, 'the question-count metadata must be gated on !simple');
+  assert.match(block, /\{!simple && <>\{' · '\}/, 'the question-count metadata must be gated on !simple');
 });
 
 test('surveys: Simple uses bigger answer targets for yes/no and choice questions', () => {
