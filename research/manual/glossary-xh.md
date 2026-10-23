@@ -814,3 +814,22 @@ noted. Other translators copy the callout labels, the "Key points" heading, the 
 | ammonia | i-ammonia | Ch 4. Loan. (check) |
 | satellite image | ifoto yesatellite | Ch 2. (check) |
 | topographic map (1:50 000) | imephu ye-topographic (1:50 000) | Ch 2. (check) |
+| goose / geese | i-goose (pl. ii-goose) | Ch 5. Loan; isiXhosa name not confirmed. (check) |
+| solar energiser (electric fence) | isixhobo sokunika uthango umbane, esisebenza ngelanga (solar energiser) | Ch 5. Descriptive. (check) |
+| electric netting | umnatha wombane | Ch 5. (check) |
+| closed / open animal tractor | i-animal tractor evaliweyo / evulekileyo | Ch 5. (check) |
+| pig tractor | i-pig tractor (pl. ii-pig tractor) | Ch 5. Coined on the model of *i-chicken tractor*. (check) |
+| nest box / perch (hen house) | ibhokisi yesidleke / intonga yokulala | Ch 5. (check) |
+| calcium | i-calcium | Ch 5. Loan. (check) |
+| oyster shell | iqokobhe le-oyster | Ch 5. (check) |
+| layer / broiler (chicken types) | inkukhu yamaqanda (layer) / inkukhu yenyama (broiler) | Ch 5. Same as "layers / broilers" above. (check) |
+| local (village) breed | uhlobo lwasekhaya / iindidi zasekhaya | Ch 5. (check) |
+| hiss (Muscovy drake) | -hwaqa | Ch 5. (check) |
+| yellow-billed duck | i-yellow-billed duck | Ch 5. Loan; isiXhosa name not confirmed. (check) |
+| foulbrood spore | i-spore ye-foulbrood | Ch 5. Loan. (check) |
+| veil / bee suit | i-veil / isuti yeenyosi | Ch 5. (check) |
+| ambulance | i-ambulensi | Ch 5. Numbers kept: 10177, 112. (check) |
+| faint (lose consciousness) | -quleka | Ch 5, bee-sting warning signs. (check) |
+| sweet lupin / white clover / rye / fodder radish | i-sweet lupin / i-white clover / i-rye / i-fodder radish | Ch 5 table. Loans. (check) |
+| sweet thorn | umnga (*Vachellia karroo*) | Ch 5. Same as the section 7 entry; English name added in brackets. (check) |
+| browse (leaves eaten by livestock) | ukutya kwezilwanyana ezidla amagqabi (browse) | Ch 5 table. (check) |
