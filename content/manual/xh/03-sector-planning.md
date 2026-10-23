@@ -47,7 +47,7 @@ Emini ilanga lisemntla phantse kuyo yonke indawo yoMzantsi weAfrika, ngoko umthu
 
 Ilanga lifudumeza umhlaba, ulwandle namatye ngokungalinganiyo. Umoya ofudumeleyo uyenyuka, umoya opholileyo uyehla, kwaye umoya uhamba usuka kwindawo enoxinzelelo oluphezulu uye kwenoxinzelelo oluphantsi. Lowo ngumoya.
 
-Umoya womisa umhlaba nezityalo, wophula izityalo nemithi, uphephetha i-**topsoil** (umaleko ongaphezulu womhlaba, omnyama nophilayo) kwaye uqhubela phambili imililo. Uqhuba nokupompa amanzi, upholisa indlu ehlotyeni kwaye uthwala umgubo wokuchumisa wombona.
+Umoya womisa umhlaba nezityalo, wophula izityalo nemithi, uphephetha i-**topsoil** (umaleko ongaphezulu womhlaba, omnyama nophilayo) kwaye uqhubela phambili imililo. Uqhuba iipompo zamanzi, upholisa indlu ehlotyeni kwaye uthwala umgubo wokuchumisa wombona.
 
 ### Imimoya eMzantsi weAfrika
 
@@ -56,7 +56,7 @@ Umoya womisa umhlaba nezityalo, wophula izityalo nemithi, uphephetha i-**topsoil
 | I-berg wind | Unxweme ne-escarpment yeNtshona Koloni, yeSouthern Cape, yeMpuma Koloni naseKwaZulu-Natal | Ikakhulu ebusika, rhoqo ngemini enye okanye ezimbini ngaphambi kwe-cold front | Umoya oshushu, owomileyo kakhulu ovela ngaphakathi uye ngasolwandle. Ingozi enkulu kakhulu yomlilo. |
 | Imimoya ye-cold front | KwiNtshona Koloni ngamandla amakhulu, emva koko kwelinye ilizwe | Ebusika | Imimoya yasemntla-ntshona izisa imvula kwiNtshona Koloni. Emva kwe-front, imimoya ebandayo yasemzantsi izisa iqabaka ngaphakathi nekhephu emhlabeni ophakamileyo. |
 | I-south-easter ("Cape Doctor") | ECape Town nasemzantsi-ntshona weNtshona Koloni | Ehlotyeni | Umoya onamandla, owomileyo, ovuthuza ngamaxesha, omisa umhlaba, wonakalisa izityalo kwaye usasaza umlilo. |
-| Imimoya yeThupha (August) | I-Highveld nangaphakathi | Ekupheleni kobusika nasekuqaleni kwentwasahlobo | Imimoya eyomileyo, ovuthuza ngamaxesha phezu kwedlelo lendalo (veld) elomileyo. Uthuli kunye nengozi enkulu kakhulu yomlilo. |
+| Imimoya yeThupha (August) | I-Highveld nangaphakathi | Ekupheleni kobusika nasekuqaleni kwentwasahlobo | Imimoya eyomileyo, evuthuza ngamaxesha phezu kwedlelo lendalo (veld) elomileyo. Uthuli kunye nengozi enkulu kakhulu yomlilo. |
 
 ### Fumana izikhokelo zemimoya yakho ephambili
 
@@ -70,7 +70,7 @@ Umoya womisa umhlaba nezityalo, wophula izityalo nemithi, uphephetha i-**topsoil
 
 Amadlelo engca yendalo, i-savanna ne-fynbos zidinga umlilo ngamaxesha afanelekileyo. Kodwa umlilo wedlelo ongalawulekiyo ubulala abantu nemfuyo, kwaye utshisa amadlelo, izityalo, izindlu noothango.
 
-Kwiindawo ezifumana imvula yasehlotyeni, ixesha lomlilo liqala malunga noCanzibe (May) liye kweyeDwarha (October), libi kakhulu ekupheleni kobusika nasekuqaleni kwentwasahlobo ngaphambi kwemvula. KwiNtshona Koloni efumana imvula yasebusika, liqala malunga neyoMnga (December) liye kweyoKwindla (March). KwiSouthern Cape nakwaKwaZulu-Natal, iintsuku ze-berg wind zasebusika zizisa ingozi yomlilo enkulu kakhulu ngephanyazo.
+Kwiindawo ezifumana imvula yasehlotyeni, ixesha lomlilo liqala malunga noCanzibe (May) liye kweyeDwarha (October), libi kakhulu ekupheleni kobusika nasekuqaleni kwentwasahlobo ngaphambi kwemvula. KwiNtshona Koloni efumana imvula yasebusika, liqala malunga neyoMnga (December) liye kweyoKwindla (March). KwiSouthern Cape naseKwaZulu-Natal, iintsuku ze-berg wind zasebusika zizisa ingozi yomlilo enkulu kakhulu ngephanyazo.
 
 ### Indlela umlilo oziphatha ngayo
 
@@ -128,10 +128,10 @@ Funda eyakho: imvula yokuqala iza nini, kwaye iqabaka lokuqala nelokugqibela liw
 
 Ukwenza ii-microclimate ezifudumeleyo kwiindawo ezibandayo:
 
-- **Akha kwibhanti elifudumeleyo (thermal belt).** Ebusuku obucacileyo, obungenamoya, umoya obandayo uhla ethambekeni njengamanzi uze uqokelelane kwiindawo eziphantsi ezibizwa ngokuba ziimngxuma weqabaka (**ii-frost pocket**). Ibhanti eliphakathi kwethambeka lihlala lifudumele. Beka indlu nezityalo ezinyamezela kakubi iqabaka apho.
+- **Akha kwibhanti elifudumeleyo (thermal belt).** Ebusuku obucacileyo, obungenamoya, umoya obandayo uhla ethambekeni njengamanzi uze uqokelelane kwiindawo eziphantsi ezibizwa ngokuba zii-**frost pocket** (imingxuma yeqabaka). Ibhanti eliphakathi kwethambeka lihlala lifudumele. Beka indlu nezityalo ezinyamezela kakubi iqabaka apho.
 - **Tyala imithi ngaphezulu ethambekeni.** Umgca wemithi ongaphezulu kwendlu ucothisa uze uphambukise umoya obandayo ohla ebusuku.
 - **Sebenzisa amanzi.** Nalo ichibi elincinci okanye itanki ekufutshane nendlu ilinganisa ubushushu.
-- **Jongisa indlu emntla**, uze ubeke unqwaba we-**compost** (inkunkuma yezityalo ebolayo) ngaphakathi kwitonela yeplastiki ukufumana ubushushu ebusika.
+- **Jongisa indlu emntla**, uze ubeke unqwaba we-**compost** (izinto zezityalo ezibolayo) ngaphakathi kwitonela yeplastiki ukufumana ubushushu ebusika.
 
 ### Imozulu efudumeleyo, ephakathi (temperate) nomileyo
 
@@ -143,7 +143,7 @@ Ukwenza ii-microclimate ezifudumeleyo kwiindawo ezibandayo:
 
 ## Ukuhamba kwamanzi (hydrology)
 
-Ukuhamba kwamanzi (hydrology) libali lamanzi emhlabeni wakho. Phambi kokuba ucwangcise, fumana ukuba ngawaphi amanzi onokuwasebenzisa (imilanjana, imithombo, imingxuma yamanzi, iitephu), ixesha lakho lemvula nobuninzi bemvula ngonyaka, ukuba umhlaba wakho uyawakhupha kakuhle na amanzi uze uwabambe, ingakanani imvula onokuyibamba ngophahla lwakho, nokuba i-climate change inokuyenza ntoni imvula yakho.
+Ukuhamba kwamanzi (hydrology) yibali lamanzi emhlabeni wakho. Phambi kokuba ucwangcise, fumana ukuba ngawaphi amanzi onokuwasebenzisa (imilanjana, imithombo, imingxuma yamanzi, iitephu), ixesha lakho lemvula nobuninzi bemvula ngonyaka, ukuba umhlaba wakho uyawakhupha kakuhle na amanzi uze uwabambe, ingakanani imvula onokuyibamba ngophahla lwakho, nokuba i-climate change inokuyenza ntoni imvula yakho.
 
 Qala ngophahla. Imvula ye-1 mm kwimitha yesikwere ye-1 inika ilitha eli-1 lamanzi. Uphahla lwe-50 yeemitha zesikwere kwindawo efumana imvula ye-500 mm ngonyaka lunokubamba ukuya kwiilitha ezingama-25,000 ngonyaka, ngaphandle kwezinye ezilahlekileyo.
 
@@ -153,7 +153,7 @@ Ezi nombolo zibeka imida yoko umhlaba wakho onokukulima.
 
 Iqabaka lifika rhoqo ebusika kuninzi lwangaphakathi: i-Highveld, iFreyistata (Free State), iKaroo, iMpuma Koloni nezindawo eziphakathi zeKwaZulu-Natal, neLesotho. Lihlala nakwiintlambo ezibandayo kwezinye iindawo. Uninzi lonxweme kunye ne-Lowveld lufumana kancinci okanye alufumani nalutho.
 
-Ebusuku obucacileyo, obungenamoya, umhlaba nezityalo zilahlekelwa bubushushu bazo ziye esibhakabhakeni esivulekileyo zibe ngamandla ukubanda kunomoya. Umphunga wamanzi uqhwaba phezu kwazo njengomkhenkce omhlophe: iqabaka elimhlophe. Umoya obandayo uyatyibilika ehla uze uqokelelane, ngoko iqabaka libi kakhulu kwiindawo eziphantsi. Xa umoya womile kakhulu, izityalo zinokuqhwaba ngaphandle komkhenkce nokuba kancinci. Eli **iqabaka elimnyama (black frost)**, kwaye alinikezi siqinisekiso: ngomso amagqabi neentsika zijika zibe mnyama zife.
+Ebusuku obucacileyo, obungenamoya, umhlaba nezityalo zilahlekelwa bubushushu bazo ziye esibhakabhakeni esivulekileyo zibe ngamandla ukubanda kunomoya. Umphunga wamanzi uqhwaba phezu kwazo njengomkhenkce omhlophe: iqabaka elimhlophe. Umoya obandayo uyatyibilika ehla uze uqokelelane, ngoko iqabaka libi kakhulu kwiindawo eziphantsi. Xa umoya womile kakhulu, izityalo zinokuqhwaba ngaphandle komkhenkce kwaphela. Oku kubizwa ngokuba **yiqabaka elimnyama (black frost)**, kwaye akunalumkiso: ngomso amagqabi neentsika zijika zibe mnyama zife.
 
 Iqabaka linokunqanda ukukhula komthi omncinci weziqhamo iminyaka emininzi. Lungiselela phambi kobusika.
 
