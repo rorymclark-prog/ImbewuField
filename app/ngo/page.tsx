@@ -190,7 +190,7 @@ export default function NgoPage() {
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* code-13: the only heading on this page used to be the 13px header chip in AppHeader
               (a <span>, not a heading) — a real, properly-sized h1 on the default tab. */}
-          <h1 className="t-h1 font-display px-4 pt-3" style={{ color: 'var(--text-primary)' }}>
+          <h1 className="t-h1 font-display px-3 md:px-5 pt-3" style={{ color: 'var(--text-primary)' }}>
             {tr(lang, 'Organisation dashboard', 'Ibhodi lenhlangano')}
           </h1>
           <MelDashboard compact />
