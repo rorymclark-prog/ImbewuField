@@ -36,3 +36,10 @@ test('w18-39 kg quantities use the shared kg formatter', () => {
   const s = read('lib/records-regional-drafts.ts');
   assert.match(s, /unit === 'kg'\) return kgPreciseLabel\(quantity\)/);
 });
+
+test('w18-40 sample Account shows the active language and no duplicate setting label', () => {
+  const s = read('app/account/page.tsx');
+  assert.doesNotMatch(s, /code === sandbox\.language/);
+  assert.match(s, /code === lang\)\?\.label/);
+  assert.match(s, /copy\('Appearance', 'Ukubukeka'\)/);
+});
