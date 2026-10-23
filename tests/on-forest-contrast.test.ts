@@ -78,13 +78,8 @@ test('w16-02: LessonLink and the Design labels paint text with the themed forest
 // a forest-800 or emerald fill is paired with plain var(--on-forest) in the same CSS rule or the same
 // inline style object / line. Codex-owned crop paths are excluded.
 const EXCLUDED = [/^app\/facilitator\/crops\//, /^app\/cropplan\//, /^app\/plan\//, /^components\/crop[^/]*\//];
-// owned by another track, wave 17: add "file:line" entries here with that comment
-const ALLOW: string[] = [
-  'app/community/messages/[threadId]/page.tsx:232', // owned by another track, wave 17
-  'app/design/page.tsx:586', // owned by another track, wave 17
-  'app/design/page.tsx:4487', // owned by another track, wave 17
-  'components/SiteManageMenu.tsx:67', // owned by another track, wave 17
-];
+// Every hit the wave 17 tracks listed has been fixed or resolved by the integrator; keep this empty.
+const ALLOW: string[] = [];
 
 function walk(dir: string, out: string[] = []): string[] {
   for (const name of readdirSync(join(root, dir))) {
@@ -103,6 +98,15 @@ test('w17-01: no forest-800/emerald fill is paired with plain --on-forest text (
   const hits: string[] = [];
   for (const f of [...walk('app'), ...walk('components')]) {
     const src = readFileSync(join(root, f), 'utf8').replace(/var\(--on-forest-800, var\(--on-forest\)\)/g, 'OK');
+    // A FOREST/GREEN constant only counts as a themed fill when the file declares it as the themed token;
+    // a fixed '#1F4D2B' stays dark forest in every theme column and cream --on-forest reads on it.
+    const themedConst = (name: string) => new RegExp(`const ${name}\\s*=\\s*'var\\(--(color-forest-800|emerald)\\)'`).test(src);
+    const fillHere = (text: string) => {
+      const m = text.match(FILL);
+      if (!m) return false;
+      const named = m[0].match(/\b(FOREST|GREEN)\b$/);
+      return named ? themedConst(named[1]) : true;
+    };
     const isCss = f.endsWith('.css');
     // CSS: per rule. TSX: per line (style objects here are single-line or one declaration per line, so also scan 6-line windows).
     const units: { text: string; line: number }[] = isCss
@@ -112,7 +116,7 @@ test('w17-01: no forest-800/emerald fill is paired with plain --on-forest text (
       const lines = isCss ? [u.text] : [u.text.split('\n')[0]];
       const body = isCss ? u.text : lines[0];
       const windowText = isCss ? u.text : u.text;
-      if (!(FILL.test(isCss ? body : windowText.split('\n').slice(0, 1).join('')) || (!isCss && FILL.test(body)))) continue;
+      if (!(fillHere(isCss ? body : windowText.split('\n').slice(0, 1).join('')) || (!isCss && fillHere(body)))) continue;
       const scope = isCss ? body : windowText.slice(0, windowText.indexOf('}') >= 0 ? windowText.indexOf('}') : undefined);
       if (PLAIN_ANY.test(scope) && (isCss ? PLAIN.test(scope) : true)) {
         const key = `${f}:${u.line}`;
