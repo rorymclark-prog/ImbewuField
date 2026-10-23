@@ -28,6 +28,7 @@
 .actions a, .actions button { min-height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 1px solid color-mix(in srgb, var(--color-forest-800) 30%, transparent); border-radius: 12px; background: var(--bg-1); font: inherit; }
 /* Same button as Studies.module.css .studyButton: forest fill, 12px radius, 44px, bold 14px. */
 .actions .primary { background: var(--color-forest-800); color: var(--on-forest-800, var(--on-forest)); border-color: transparent; text-decoration: none; font-size: 14px; font-weight: 700; }
+.actions .primary small { color: inherit; opacity: .85; }
 .checklist { padding-top: 12px; color: var(--text-secondary); }
 .checklist p { font-size: 14px; }
 .section summary { min-height: 44px; padding: 8px 0; cursor: pointer; font-weight: 600; font-size: 18px; }
