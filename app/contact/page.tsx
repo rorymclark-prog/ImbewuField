@@ -382,7 +382,7 @@ export default function ContactPage() {
                     >
                       <div className={motion.recipientIcon} style={{
                         width: 34, height: 34, borderRadius: 9, flexShrink: 0,
-                        background: recipient === value ? 'color-mix(in srgb, var(--color-forest-800) 12%, transparent)' : 'rgba(32,25,15,0.05)',
+                        background: recipient === value ? 'color-mix(in srgb, var(--color-forest-800) 12%, transparent)' : 'var(--bg-2)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                       }}>
                         <Icon size={16} style={{ color: recipient === value ? 'var(--color-forest-800)' : 'var(--text-secondary)' }} strokeWidth={1.6} />
@@ -465,7 +465,7 @@ export default function ContactPage() {
               )}
 
               {!isLive && (
-                <p className="font-sans rounded-xl px-3 py-2.5" style={{ fontSize: 12.5, color: 'var(--text-muted)', background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+                <p className="font-sans m-0" style={{ fontSize: 13, lineHeight: 1.5, color: 'var(--text-secondary)', borderLeft: '3px solid var(--border-strong, var(--border))', padding: '4px 0 4px 12px' }}>
                   {/* ux-03/nav-04: was developer vocabulary ("backend", "Firebase") on a
                       farmer-facing screen — rewritten in plain words below. */}
                   {ui('Practice version: your message is kept on this phone and is not sent yet.', 'Inguqulo yokuzilolonga: umlayezo wakho ugcinwa kule foni futhi awukathunyelwa.')}
@@ -475,11 +475,11 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={sending || !body.trim()}
-                className={`flex items-center justify-center gap-2 font-display font-semibold rounded-xl ${motion.send}`}
+                className={`flex items-center justify-center gap-2 font-sans font-semibold rounded-xl ${motion.send}`}
                 style={{
-                  background: body.trim() ? 'var(--color-forest-800)' : 'rgba(32,25,15,0.1)',
+                  background: body.trim() ? 'var(--color-forest-800)' : 'var(--bg-2)',
                   color: body.trim() ? 'var(--color-canvas)' : 'var(--text-muted)',
-                  border: 'none', cursor: body.trim() ? 'pointer' : 'default',
+                  border: body.trim() ? '1px solid transparent' : '1px solid var(--border)', cursor: body.trim() ? 'pointer' : 'default',
                   padding: '13px 20px', fontSize: 15,
                   transition: 'background 0.15s',
                 }}

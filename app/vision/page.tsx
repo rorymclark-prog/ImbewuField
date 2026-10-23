@@ -258,8 +258,8 @@ export default function VisionPage() {
                   aria-pressed={on}
                   className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold transition-all"
                   style={{
-                    background: on ? '#1F4D2B' : 'transparent',
-                    color: on ? 'var(--on-forest)' : 'var(--text-secondary)',
+                    background: on ? 'var(--color-forest-800)' : 'transparent',
+                    color: on ? 'var(--on-forest-800)' : 'var(--text-secondary)',
                     border: 'none',
                     cursor: 'pointer',
                   }}
@@ -272,7 +272,12 @@ export default function VisionPage() {
           </div>
 
           {/* desk-13: capture and result sit side by side at md+ (one column on phone). */}
-          <div className={workspace.twoColumns}>
+          {/* w18-52: the second column only holds the result, so before one exists the capture
+              column is a single centred ~720px column instead of half a blank page. */}
+          <div
+            className={result && !loading ? workspace.twoColumns : undefined}
+            style={result && !loading ? undefined : { maxWidth: 720, marginInline: 'auto' }}
+          >
           <div className="space-y-5">
           {/* Capture card */}
           <div>
@@ -335,7 +340,7 @@ export default function VisionPage() {
               onClick={askLima}
               className="w-full flex items-center justify-center gap-2.5 py-3.5 rounded-2xl text-sm font-display font-semibold"
               style={{
-                background: '#1F4D2B',
+                background: 'var(--color-forest-800)',
                 color: 'var(--on-forest)',
                 border: 'none',
                 cursor: 'pointer',
@@ -382,7 +387,7 @@ export default function VisionPage() {
           {result && !loading && (
             <div
               className="rounded-2xl overflow-hidden"
-              style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderLeft: '3px solid #1F4D2B' }}
+              style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderLeft: '3px solid var(--color-forest-800)' }}
             >
               <div className="px-4 pt-4 pb-3">
                 {/* Header row */}

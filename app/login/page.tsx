@@ -191,7 +191,6 @@ function LoginPageInner() {
     border: `1px solid ${hasError ? 'var(--color-ochre-light)' : 'var(--border)'}`,
     color: 'var(--color-ink)',
     fontSize: 16,
-    opacity: backendReady ? 1 : 0.4,
   });
 
   return (
@@ -347,6 +346,9 @@ function LoginPageInner() {
                 </span>
               )}
             </button>
+            {!backendReady && (
+              <p role="status" className="font-sans text-center m-0" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{t('loginConnecting')}</p>
+            )}
 
             {/* Forgot password link — only on sign-in */}
             {mode === 'signin' && (
