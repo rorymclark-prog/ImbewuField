@@ -1,7 +1,7 @@
 .page { --record-positive: #27633a; --record-negative: #966016; color: var(--color-ink); }
 :global(html.dark) .page { --color-surface: #30271c; --color-border: #675540; --color-muted-strong: #eadbc3; --color-muted: #d0bea3; --color-ink: #fff8ed; --record-positive: #b5db9e; --record-negative: #f0c070; }
-.page :global(input), .page :global(select), .page :global(textarea) { color: #302c24 !important; background: #fffdf7 !important; }
-.page :global(input)::placeholder, .page :global(textarea)::placeholder { color: #72634f; opacity: 1; }
+.page :global(input), .page :global(select), .page :global(textarea) { color: var(--text-primary); background: var(--bg-1); border-color: var(--border); }
+.page :global(input)::placeholder, .page :global(textarea)::placeholder { color: var(--text-muted); opacity: 1; }
 .page :global(.record-paper) { --color-ink:#263b2d; --color-muted:#5d5143; --color-muted-strong:#443b30; --color-border:#d2c7b5; }
 .page :global(header) :global(a[aria-label="ImbewuField home"]) span { color:var(--color-ink) !important; }
 .page :global(header) :global(button[data-header-secondary]) { color:var(--color-muted-strong) !important; }
