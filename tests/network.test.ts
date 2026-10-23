@@ -431,7 +431,7 @@ function listing(overrides: Partial<Listing> = {}): Listing {
 
 test('price and quantity labels cover every price shape', () => {
   assert.equal(priceLabel(listing()), 'R6/kg');
-  assert.equal(priceLabel(listing({ price: { type: 'zar', amount: 1300, per: 'lot' } })), 'R1300 for the lot');
+  assert.equal(priceLabel(listing({ price: { type: 'zar', amount: 1300, per: 'lot' } })), 'R1 300 for the lot');
   assert.equal(priceLabel(listing({ price: { type: 'free' } })), 'Free');
   assert.equal(priceLabel(listing({ price: { type: 'ask' } })), 'Make an offer');
   assert.equal(priceLabel(listing({ price: { type: 'swap', wants: 'maize seed' } })), 'Swap — maize seed');
