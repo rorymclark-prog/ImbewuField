@@ -37,6 +37,18 @@ export interface ProgrammeReportModel {
   coverage: { label: string; available: number; total: number }[];
   rows: NetworkFarmerSummary[];
 }
+/** Keep a vanished selection visible: a consent/data refresh must not widen a cohort export. */
+export function programmeReportCohortChoices(rows: NetworkFarmerSummary[], selectedId = '') {
+  const choices = new Map<string, { id: string; label: string; available: boolean }>();
+  for (const { farmer } of rows) if (farmer.cohortId) choices.set(farmer.cohortId, {
+    id: farmer.cohortId, label: farmer.cohortName || 'Unnamed cohort', available: true,
+  });
+  if (selectedId && !choices.has(selectedId)) choices.set(selectedId, {
+    id: selectedId, label: 'Selected cohort · no visible records', available: false,
+  });
+  return [...choices.values()];
+}
+
 const format = (n: number | null, unit = '') => n === null || !Number.isFinite(n) ? 'Not available' : `${numberLabel(n,2)}${unit}`;
 const money = (n: number | null) => n === null || !Number.isFinite(n) ? 'Not available' : randCentsLabel(n);
 const sum = (values: (number | null)[]) => {

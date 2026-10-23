@@ -1,7 +1,7 @@
 import test from 'node:test';
 import { pdfContentStreams } from './pdf-content-streams';
 import assert from 'node:assert/strict';
-import { buildProgrammeReport, programmeReportFilename, type ProgrammeReportOptions } from '../lib/programme-report';
+import { buildProgrammeReport, programmeReportCohortChoices, programmeReportFilename, type ProgrammeReportOptions } from '../lib/programme-report';
 import { DEMO_NETWORK, DEMO_COHORT_MONTHLY } from '../lib/network-demo';
 import { emptyCohortSeries } from '../lib/cohort-series';
 import { buildProgrammePdf } from '../lib/programme-report-pdf';
@@ -145,4 +145,28 @@ test('the unfinished current month is explicit and two dated scopes have differe
   assert.match(report.period,/current month through/);
   const earlier=buildProgrammeReport({...o,endMonth:o.monthly.months.at(-2)!.key});
   assert.notEqual(programmeReportFilename(report,o.date),programmeReportFilename(earlier,o.date));
+});
+
+
+test('a cohort that disappears after a consent refresh stays selected instead of widening the export', () => {
+  const o=options();
+  const id=o.rows[0].farmer.cohortId!;
+  const remaining=o.rows.filter(row=>row.farmer.cohortId!==id);
+  assert.ok(remaining.length>0,'other cohorts remain visible');
+  const choices=programmeReportCohortChoices(remaining,id);
+  assert.equal(choices.find(c=>c.id===id)?.available,false);
+  const report=buildProgrammeReport({...o,rows:remaining,cohortId:id});
+  assert.equal(report.rows.length,0);
+  assert.equal(report.metrics.find(m=>m.label==='Harvest logged')!.value,'Not available');
+  assert.ok(!report.scope.includes('All visible cohorts'));
+});
+
+test('a branded learning report keeps the entire course distribution with its heading', async () => {
+  const {SAMPLE_BRANDING}=await import('../lib/sample-branding');
+  const report=buildProgrammeReport(options({kind:'training'}));
+  const pdf=await buildProgrammePdf(report.title,true,report.sections,'full',{...SAMPLE_BRANDING,garden:{label:'',image:''}},[],'Evidence',undefined,{metrics:report.metrics,chart:report.chart,tables:report.tables,subtitle:report.scope+' · '+report.period,date:'2026-10-23'});
+  const pages=(pdf.internal as unknown as {pages:string[][]}).pages;
+  const chartPage=pages.find(page=>page?.join('\n').includes(report.chart!.title));
+  assert.ok(chartPage,'the chart heading must be present');
+  assert.ok(chartPage.join('\n').includes(report.chart!.rows.at(-1)!.label),'partner logos must not separate the final course bands from their heading');
 });

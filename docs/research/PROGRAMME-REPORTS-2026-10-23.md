@@ -113,7 +113,7 @@ an app theme cannot turn report text pale on white.
 
 - Node 24 typecheck and whitespace checks pass.
 - Focused report, existing programme/session, PDF, type-floor and manifest checks:
-  128 tests passed, including 13 new report regressions and the existing theme checks.
+  130 tests passed, including 15 new report regressions and the existing theme checks.
 - Browser review: funder/organisation reports, 390 px phone width, desktop,
   month-range read-back, cohort reset, real PDF download, dark mode, paper ink
   preview, and the working organisation progress action. Sample data only.
@@ -128,3 +128,11 @@ an app theme cannot turn report text pale on white.
 The picture changes in programme report layouts. Saved farm geometry, farming
 content and PLAN_VERSION are unchanged. The older shared session-report rule
 against repetitive sample footers remains covered by its existing regression.
+
+A cohort selection also survives disappearance of its readable records after a
+consent/data refresh. It becomes an explicit empty selection, rather than silently
+widening a download to all remaining cohorts.
+
+Final rendering includes the real sample partner marks. The learning distribution
+now keeps its final course bands with the heading on the first page. A new PDF
+regression was confirmed failing on the split chart before the spacing repair.

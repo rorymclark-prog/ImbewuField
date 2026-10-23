@@ -116,7 +116,8 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     const chart=presentation.chart,max=Math.max(chart.minimumScale??1,...chart.rows.map(r=>r.value));
     for(const r of format==='summary'?chart.rows.slice(0,5):chart.rows){
       doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(31,51,39);
-      const names=doc.splitTextToSize(pdfSafe(r.label),52) as string[];const h=Math.max(12,names.length*4+3);ensure(h);doc.text(names,18,y);
+      // Partner marks share the first page; keep a full course distribution beside its heading.
+      const names=doc.splitTextToSize(pdfSafe(r.label),52) as string[];const h=Math.max(presentation.tables?.length?10:12,names.length*4+3);ensure(h);doc.text(names,18,y);
       doc.setFillColor(229,238,232);doc.rect(73,y-3,83,4,'F');doc.setFillColor(46,107,72);doc.rect(73,y-3,83*Math.max(0,r.value)/max,4,'F');
       doc.text(pdfSafe(r.display??`${numberLabel(r.value)}${chart.suffix??''}`),192,y,{align:'right'});y+=h;
     }y+=6;

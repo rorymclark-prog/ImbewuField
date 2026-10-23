@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { FileText, Sprout, GraduationCap, ShieldCheck, ArrowUpRight, SlidersHorizontal } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useNetworkPortfolio } from '@/lib/use-network-portfolio';
-import { buildProgrammeReport, programmeReportFilename, PROGRAMME_REPORT_SOURCES, type ProgrammeReportKind, type ProgrammeReportBasis } from '@/lib/programme-report';
+import { buildProgrammeReport, programmeReportCohortChoices, programmeReportFilename, PROGRAMME_REPORT_SOURCES, type ProgrammeReportKind, type ProgrammeReportBasis } from '@/lib/programme-report';
 import ReportComposer from './ReportComposer';
 import { SAMPLE_BRANDING } from '@/lib/sample-branding';
 
@@ -25,8 +25,8 @@ export default function ProgrammeReports({ funder = false, onOpenProgress, onOpe
   const [basis, setBasis] = useState<ProgrammeReportBasis>('cumulative');
   const [range, setRange] = useState({ start: '', end: '' });
   const [date] = useState(() => new Date().toISOString().slice(0, 10));
-  const cohorts = [...new Map(portfolio.rows.filter(r => r.farmer.cohortId).map(r => [r.farmer.cohortId!, r.farmer.cohortName || 'Unnamed cohort'])).entries()];
-  const selectedCohort = cohorts.some(([id]) => id === cohortId) ? cohortId : '';
+  const cohorts = programmeReportCohortChoices(portfolio.rows, cohortId);
+  const selectedCohort = cohortId;
   // The hook clears/reloads after an organisation change. Do not expose the previous
   // organisation's report in the render before that effect has started.
   const scopeReady = portfolio.isDemo || !portfolio.orgId || portfolio.rows.every(row => row.farmer.orgId === portfolio.orgId);
@@ -49,7 +49,7 @@ export default function ProgrammeReports({ funder = false, onOpenProgress, onOpe
     <section className={reports.scope} aria-labelledby="report-scope-heading"><div className={reports.scopeTitle}><SlidersHorizontal size={18} aria-hidden="true" /><h2 id="report-scope-heading">{ui('Set the scope', 'Khetha ububanzi')}</h2><span>{ui('The preview and PDF use the same selection.', 'Ukubuka kuqala ne-PDF kusebenzisa ukukhetha okufanayo.')}</span></div>
       <div className={reports.filters}>
         <label>{ui('Organisation', 'Inhlangano')}{portfolio.orgs.length ? <select value={portfolio.orgId ?? ''} onChange={e => { portfolio.setOrgId(e.target.value); setCohortId(''); setRange({ start: '', end: '' }); }}>{portfolio.orgs.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}</select> : <span className={reports.fixedValue}>{organisation}</span>}</label>
-        <label>{ui('Cohort', 'Iqembu')}<select value={selectedCohort} onChange={e => { setCohortId(e.target.value); if (e.target.value) setBasis('cumulative'); }}><option value="">{ui('All visible cohorts', 'Wonke amaqembu abonakalayo')}</option>{cohorts.map(([id, label]) => <option key={id} value={id}>{label}</option>)}</select></label>
+        <label>{ui('Cohort', 'Iqembu')}<select value={selectedCohort} onChange={e => { setCohortId(e.target.value); if (e.target.value) setBasis('cumulative'); }}><option value="">{ui('All visible cohorts', 'Wonke amaqembu abonakalayo')}</option>{cohorts.map(({ id, label, available }) => <option key={id} value={id}>{available ? label : ui('Selected cohort · no visible records', 'Iqembu elikhethiwe · awekho amarekhodi abonakalayo')}</option>)}</select></label>
         <label>{ui('Ledger period', 'Isikhathi samarekhodi')}<select value={selectedCohort ? 'cumulative' : basis} onChange={e => setBasis(e.target.value as ProgrammeReportBasis)}><option value="cumulative">{ui('All available records', 'Wonke amarekhodi atholakalayo')}</option><option value="window" disabled={Boolean(selectedCohort) || !months.length}>{ui('Choose recorded months', 'Khetha izinyanga eziqoshiwe')}</option></select></label>
       </div>
       {basis === 'window' && !selectedCohort && <div className={reports.months}><label>{ui('From month', 'Kusukela enyangeni')}<select value={start} onChange={e => setRange({ start: e.target.value, end: end < e.target.value ? e.target.value : end })}>{months.map(m => <option key={m.key} value={m.key}>{m.longLabel}</option>)}</select></label><label>{ui('To month', 'Kuze kube enyangeni')}<select value={end} onChange={e => setRange({ start: start > e.target.value ? e.target.value : start, end: e.target.value })}>{months.filter(m => m.key >= start).map(m => <option key={m.key} value={m.key}>{m.longLabel}</option>)}</select></label></div>}
