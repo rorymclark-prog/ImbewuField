@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import { BarChart3, Sprout, Inbox } from 'lucide-react';
+import { BarChart3, Sprout, Inbox, Map } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -15,7 +15,6 @@ import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import ContactInbox from '@/components/ContactInbox';
 import LessonLink from '@/components/design/LessonLink';
-import { useProductTour } from '@/components/ProductTourProvider';
 import type { UserRole } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n-context';
 import { useAppLevel } from '@/lib/app-level';
@@ -74,10 +73,6 @@ export default function NgoPage() {
   const [view, setView] = useState<NgoView>('cohort');
   const [msgUnread, setMsgUnread] = useState(0);
   const simple = useAppLevel() === 'simple';
-  // staff-10: when a product tour is already running, MenuButton floats its own 'Tour N/total'
-  // pill, so this static text link duplicated that entry point. Hide it only while a tour is
-  // actually active; it is still the way to start one the rest of the time.
-  const tour = useProductTour();
 
   useEffect(() => {
     // Sample mode has no user by design; bouncing it to /login would make the
@@ -121,14 +116,14 @@ export default function NgoPage() {
           {!simple && (
             <Link
               href="/network"
-              className="text-xs font-display hidden sm:block"
-              style={{ color: 'var(--color-forest-800)', textDecoration: 'none', marginRight: 4 }}
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 text-sm font-sans font-semibold whitespace-nowrap rounded-full"
+              style={{ minHeight: 44, color: 'var(--text-primary)', border: '1px solid var(--border)', textDecoration: 'none' }}
             >
-              {tr(lang, 'Portfolio map →', 'Imephu yohlelo →')}
+              <Map size={16} aria-hidden="true" />
+              {tr(lang, 'Portfolio map', 'Imephu yohlelo')}
             </Link>
           )}
           <LessonLink id="ngo:overview" label={tr(lang, 'Learn', 'Funda')} />
-          {!tour?.active && <Link href="/tour" className="shrink-0 text-sm font-semibold inline-flex items-center min-h-[44px]">{tr(lang, 'Take a tour', 'Buka uhambo')}</Link>}
           <RoleSwitcher current="ngo" />
         </>}
       />

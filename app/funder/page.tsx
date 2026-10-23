@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import { BarChart3, Sprout } from 'lucide-react';
+import { BarChart3, Sprout, Map } from 'lucide-react';
 import RoleSwitcher from '@/components/RoleSwitcher';
 import DashboardTabs from '@/components/DashboardTabs';
 import { SampleFunderGate } from '@/components/SampleProgramme';
@@ -11,7 +11,6 @@ import Link from 'next/link';
 import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
-import { useProductTour } from '@/components/ProductTourProvider';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -74,8 +73,6 @@ export default function FunderPage() {
   useEffect(() => { setSample(isSampleMode()); }, []);
   const [view, setView] = useState<FunderView>('cohort');
   const simple = useAppLevel() === 'simple';
-  // staff-10: see the matching comment on app/ngo/page.tsx.
-  const tour = useProductTour();
 
   useEffect(() => {
     // Sample mode has no user by design; bouncing it to /login would make the
@@ -119,14 +116,14 @@ export default function FunderPage() {
             <span className="text-xs px-2 py-0.5 rounded-full font-sans hidden md:block" style={{ background: 'rgba(47,111,158,0.12)', border: '1px solid rgba(47,111,158,0.3)', color: 'var(--blue)' }}>{tr(lang, 'demonstration records', 'amarekhodi esibonelo')}</span>
           )}
           <Link
-            href="/network"
-            className="text-xs font-display hidden sm:block"
-            style={{ color: 'var(--blue)', textDecoration: 'none', marginRight: 4 }}
-          >
-            {tr(lang, 'Portfolio map →', 'Imephu yohlelo →')}
-          </Link>
+              href="/network"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 text-sm font-sans font-semibold whitespace-nowrap rounded-full"
+              style={{ minHeight: 44, color: 'var(--text-primary)', border: '1px solid var(--border)', textDecoration: 'none' }}
+            >
+              <Map size={16} aria-hidden="true" />
+              {tr(lang, 'Portfolio map', 'Imephu yohlelo')}
+            </Link>
           <LessonLink id="funder:overview" label={tr(lang, 'Learn', 'Funda')} />
-          {!tour?.active && <Link href="/tour" className="shrink-0 text-sm font-semibold inline-flex items-center min-h-[44px]">{tr(lang, 'Take a tour', 'Buka uhambo')}</Link>}
           <RoleSwitcher current="funder" />
         </>}
       />
