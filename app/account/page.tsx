@@ -352,7 +352,7 @@ export default function AccountPage() {
               )}
               {roleLabel && (
                 <div className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-xs font-display"
-                  style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.15)', color: 'var(--color-forest-800)' }}>
+                  style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--color-forest-800)' }}>
                   <Sprout size={11} />{roleLabel}
                 </div>
               )}

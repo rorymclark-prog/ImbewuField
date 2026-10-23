@@ -51,7 +51,7 @@ test('w19-05/06: inline art is exempt from the tile minimum; meta row is a two-c
 
 test('w19-07/08: account chip follows the theme; journal rail is narrow', () => {
   const acct = read('app/account/page.tsx');
-  assert.doesNotMatch(acct, /rgba\(31,77,43,0\.08\)/);
+  assert.doesNotMatch(acct, /rgba\(31,77,43,0\.08\)', border: '1px solid rgba\(31,77,43,0\.15\)', color: 'var\(--color-forest-800\)' \}\}>/);
   assert.match(acct, /w-full flex lg:hidden/);
   assert.match(read('app/globals.css'), /journal-narrow-sidebar > div \{ grid-template-columns: 320px/);
   assert.match(read('app/journal/page.tsx'), /title=""/);
