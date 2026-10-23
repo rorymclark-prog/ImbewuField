@@ -13,6 +13,7 @@ import {
   Leaf,
   CalendarDays,
   ClipboardList,
+  FileText,
   Camera,
   MessageCircle,
   Wheat,
@@ -414,6 +415,13 @@ function HomeLandingInner() {
     { href: '/records',           Icon: Wheat,         label: t('homeQuickMyRecords'),   desc: t('homeQuickMyRecordsDesc'),   color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
     { href: '/prices',            Icon: Tag,           label: localUi(lang, 'Prices', 'Amanani'), desc: localUi(lang, 'Wholesale & retail', 'Izintengo zezitolo ezinkulu nezokuthengisa'), color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
   ];
+  const STAFF_LINKS = !staffRole ? [] : [
+    { href: `/${staffRole}`, Icon: staffRole === 'mentor' ? Users : staffRole === 'ngo' ? BarChart3 : Building2,
+      label: staffRole === 'mentor' ? t('homeRoleMentorLabel') : staffRole === 'ngo' ? t('homeRoleNGOLabel') : t('homeRoleFunderLabel') },
+    { href: '/assessments', Icon: ClipboardList, label: t('navAssessments') },
+    { href: '/reports', Icon: FileText, label: t('siteReportOverline') },
+    { href: '/network', Icon: Users, label: t('navNetwork') },
+  ].filter(({ href }) => canSeeNavLink(role, href) && canSeeWorkspaceLink(navigationRole, href));
   const quickActions = simple ? QUICK_ACTIONS.filter((q) => q.href !== '/records') : QUICK_ACTIONS;
 
   return (
@@ -565,6 +573,27 @@ function HomeLandingInner() {
             </div>
           )}
         </section>
+
+        {/* w18-46: staff Home used to end at the hero. A short card of their real pages; each
+            link passes the same role gates as the drawer, so a role is never offered a refusal. */}
+        {staffRole && (
+          <nav aria-label={t('homeDashboards')} className="rounded-2xl overflow-hidden" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+            {STAFF_LINKS.map((l, i) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="home-quick-link flex items-center gap-3 px-4"
+                style={{ minHeight: 56, textDecoration: 'none', borderTop: i ? '1px solid var(--border)' : 'none' }}
+              >
+                <span className="flex items-center justify-center rounded-xl flex-shrink-0" style={{ width: 40, height: 40, color: 'var(--emerald)', background: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' }}>
+                  <l.Icon size={20} strokeWidth={1.6} aria-hidden />
+                </span>
+                <span className="flex-1 min-w-0 font-display font-semibold" style={{ fontSize: 15, color: 'var(--text-primary)' }}>{l.label}</span>
+                <ChevronRight size={16} strokeWidth={1.6} aria-hidden style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
+              </Link>
+            ))}
+          </nav>
+        )}
 
         {/* ── Quick actions ── */}
         {!staffRole && <div className={`home-quick-grid grid grid-cols-2 gap-3${simple ? ' is-simple' : ''}`}>
