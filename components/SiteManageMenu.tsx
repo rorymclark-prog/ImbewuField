@@ -114,7 +114,7 @@ export default function SiteManageMenu({ place }: { place: SavedPlace }) {
 
           {mode === 'rename' && (
             <div style={{ padding: 6 }}>
-              <input
+              <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                 value={name}
                 autoFocus
                 onChange={(e) => setName(e.target.value)}

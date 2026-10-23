@@ -310,7 +310,7 @@ export default function NewListingForm({
       <select
         value={cropKey}
         onChange={(e) => applyCrop(e.target.value)}
-        className="rounded-xl px-3 py-2.5 font-sans"
+        className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 rounded-xl px-3 py-2.5 font-sans"
         style={fieldStyle}
       >
         <option value="">{tx('Not a specific crop (tools, labour, other)', 'Akusona isitshalo esithile (amathuluzi, umsebenzi, okunye)')}</option>
@@ -332,7 +332,7 @@ export default function NewListingForm({
         value={title}
         onChange={(e) => { setTitle(e.target.value.slice(0, 90)); setTitleDirty(true); }}
         placeholder={tx('Swiss chard — cutting weekly', 'I-Swiss chard — ngiyivuna masonto onke')}
-        className="rounded-xl px-3 py-2.5 font-sans"
+        className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 rounded-xl px-3 py-2.5 font-sans"
         style={fieldStyle}
       />
     </div>
@@ -346,7 +346,7 @@ export default function NewListingForm({
         onChange={(e) => setDescription(e.target.value.slice(0, 300))}
         placeholder={tx('Anything a buyer should know — variety, condition, collection.', 'Okufanele kwaziwe umthengi — uhlobo, isimo nendlela yokulanda.')}
         rows={3}
-        className="rounded-xl px-3 py-2.5 font-sans"
+        className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 rounded-xl px-3 py-2.5 font-sans"
         style={{ ...fieldStyle, resize: 'none', lineHeight: 1.5 }}
       />
     </div>
@@ -362,13 +362,13 @@ export default function NewListingForm({
           value={qty}
           onChange={(e) => setQty(e.target.value)}
           placeholder="12"
-          className="rounded-xl px-3 py-2.5 font-sans"
+          className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 rounded-xl px-3 py-2.5 font-sans"
           style={{ ...fieldStyle, flex: 1 }}
         />
         <select
           value={unit}
           onChange={(e) => setUnit(e.target.value as ListingUnit)}
-          className="rounded-xl px-3 py-2.5 font-sans"
+          className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 rounded-xl px-3 py-2.5 font-sans"
           style={{ ...fieldStyle, flex: 1 }}
         >
           {LISTING_UNITS.map((u) => <option key={u} value={u}>{u}</option>)}
@@ -416,14 +416,14 @@ export default function NewListingForm({
               value={priceAmount}
               onChange={(e) => { setPriceAmount(e.target.value); setPriceDirty(true); }}
               placeholder="6"
-              className="rounded-xl px-3 py-2.5 font-sans"
+              className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 rounded-xl px-3 py-2.5 font-sans"
               style={{ ...fieldStyle, flex: 1 }}
             />
             <span className="font-sans" style={{ fontSize: 13, color: EX.faint }}>{tx('per', 'nge-')}</span>
             <select
               value={priceBasis}
               onChange={(e) => setPriceBasis(e.target.value as PriceBasis)}
-              className="rounded-xl px-3 py-2.5 font-sans"
+              className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 rounded-xl px-3 py-2.5 font-sans"
               style={{ ...fieldStyle, flex: 1 }}
             >
               {PRICE_BASES.map((b) => (
@@ -452,7 +452,7 @@ export default function NewListingForm({
           value={swapWants}
           onChange={(e) => setSwapWants(e.target.value.slice(0, 100))}
           placeholder={tx('What would you take? e.g. maize seed or pumpkin seed', 'Yini ongayamukela? Isib. imbewu yommbila noma yethanga')}
-          className="rounded-xl px-3 py-2.5 font-sans"
+          className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 rounded-xl px-3 py-2.5 font-sans"
           style={fieldStyle}
         />
       )}
@@ -467,7 +467,7 @@ export default function NewListingForm({
       <select
         value={month}
         onChange={(e) => setMonth(e.target.value)}
-        className="rounded-xl px-3 py-2.5 font-sans"
+        className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 rounded-xl px-3 py-2.5 font-sans"
         style={fieldStyle}
       >
         <option value="">{tx('Any time', 'Noma nini')}</option>
@@ -484,7 +484,7 @@ export default function NewListingForm({
         value={farmerName}
         onChange={(e) => setFarmerName(e.target.value.slice(0, 60))}
         placeholder={tx("Your name or your group's name", 'Igama lakho noma leqembu lakho')}
-        className="rounded-xl px-3 py-2.5 font-sans"
+        className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 rounded-xl px-3 py-2.5 font-sans"
         style={fieldStyle}
       />
     </div>
@@ -498,7 +498,7 @@ export default function NewListingForm({
         value={areaText}
         onChange={(e) => setAreaText(e.target.value.slice(0, 60))}
         placeholder={tx('e.g. Nquthu', 'isib. iNquthu')}
-        className="rounded-xl px-3 py-2.5 font-sans"
+        className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 rounded-xl px-3 py-2.5 font-sans"
         style={fieldStyle}
       />
     </div>
