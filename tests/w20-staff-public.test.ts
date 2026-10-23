@@ -51,3 +51,7 @@ test('w20-42: cohort Export CSV and filled chips use the forest fill pair, not e
   assert.match(c, /background: 'var\(--color-forest-800\)', color: 'var\(--on-forest-800\)'/);
   assert.match(c, /background: on \? 'var\(--color-forest-800\)' : 'var\(--bg-2\)'/);
 });
+
+test('w20-43: partners h1 keeps "community‑farming" together with a non-breaking hyphen', () => {
+  assert.ok(read('app/partners/page.tsx').includes('community‑farming programmes'));
+});
