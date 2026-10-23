@@ -72,7 +72,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       id: "intro-permaculture-l1",
       infographicAlt: pair(
         "The three ethics as three linked circles of equal size: a hand holding soil for Earth Care, two people for People Care, and a basket passing between hands for Fair Share.",
-        "Imigaqo emithathu yokuziphatha njengemijikelezo emithathu exhunyiweyo enobukhulu obufanayo: isandla sibambe umhlaba sibonisa Ukukhathalela umhlaba, abantu ababini bebonisa Ukukhathalela abantu, kunye nebhasikithi edlula phakathi kwezandla ibonisa Ukwabelana ngokufanelekileyo.",
+        "Imigaqo emithathu yokuziphatha njengemijikelezo emithathu edibeneyo enobukhulu obufanayo: isandla sibambe umhlaba sibonisa Ukukhathalela umhlaba, abantu ababini bebonisa Ukukhathalela abantu, kunye nebhasikithi edlula phakathi kwezandla ibonisa Ukwabelana ngokufanelekileyo.",
       ),
       title: pair(
         "The Three Ethics: Earth Care, People Care, Fair Share",
@@ -80,7 +80,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "Permaculture rests on three ethics. Earth Care means treating soil, water, plants and animals as living systems to protect, not resources to use up. People Care means your family's needs come first, then your community's. Fair Share means taking only what you need and returning the surplus — seeds, food, water, knowledge — back into the system.\n\nThese aren't abstract ideas. A farmer who sells every egg and vegetable but keeps nothing back for the family table is skipping People Care. A community that fences off a shared spring is breaking Fair Share.\n\nEthics matter because they help you decide when there's no rulebook — a neighbour asking to graze cattle after a drought, a flood damaging your swales. Build these three into how you think before you build anything on the ground.",
-        "I-permaculture imi phezu kwemigaqo emithathu yokuziphatha. Ukukhathalela umhlaba (Earth Care) kuthetha ukuphatha umhlaba, amanzi, izityalo nezilwanyana njengeenkqubo eziphilayo ekufuneka sizikhusele, kungekhona izinto zokuzisebenzisa ziphele. Ukukhathalela abantu (People Care) kuthetha ukuba iimfuno zosapho lwakho zize kuqala, emva koko iimfuno zoluntu lwakho. Ukwabelana ngokufanelekileyo (Fair Share) kuthetha ukuthatha kuphela oko ukufunayo nokubuyisela intsalela — imbewu, ukutya, amanzi, ulwazi — kwinkqubo.\n\nEzi azingobungqondo obungacacanga. Umfama othengisa onke amaqanda nemifuno kodwa engagcini nto etafileni yosapho uyeqa Ukukhathalela abantu. Uluntu olusithiyela ngocingo umthombo wamanzi owabelwana ngawo luyaphula Ukwabelana ngokufanelekileyo.\n\nImigaqo yokuziphatha ibalulekile kuba ikunceda uthathe izigqibo xa kungekho ncwadi yemigaqo — xa ummelwane ecela ukufudisa iinkomo emva kwembalela, okanye izikhukula zonakalisa imisele yakho (i-swale, yimisele egrunjiweyo ebamba amanzi emvula). Yakha le migaqo mithathu kwindlela ocinga ngayo phambi kokuba wakhe nantoni na emhlabeni.",
+        "I-permaculture imi phezu kwemigaqo emithathu yokuziphatha. Ukukhathalela umhlaba (Earth Care) kuthetha ukuphatha umhlaba, amanzi, izityalo nezilwanyana njengeenkqubo eziphilayo ekufuneka sizikhusele, kungekhona izinto zokuzisebenzisa ziphele. Ukukhathalela abantu (People Care) kuthetha ukuba iimfuno zosapho lwakho zize kuqala, emva koko iimfuno zoluntu lwakho. Ukwabelana ngokufanelekileyo (Fair Share) kuthetha ukuthatha kuphela oko ukufunayo nokubuyisela intsalela — imbewu, ukutya, amanzi, ulwazi — kwinkqubo.\n\nEzi aziyiyo nje iingcamango ezingabambekiyo. Umfama othengisa onke amaqanda nemifuno kodwa engagcini nto etafileni yosapho uyeqa Ukukhathalela abantu. Uluntu olubiyela ngocingo umthombo wamanzi owabelwana ngawo luyaphula Ukwabelana ngokufanelekileyo.\n\nImigaqo yokuziphatha ibalulekile kuba ikunceda uthathe izigqibo xa kungekho ncwadi yemigaqo — xa ummelwane ecela ukudlisa iinkomo zakhe emva kwembalela, okanye izikhukula zonakalisa imisele yakho (i-swale, yimisele egrunjiweyo ebamba amanzi emvula). Yakha le migaqo mithathu kwindlela ocinga ngayo phambi kokuba wakhe nantoni na emhlabeni.",
       ),
       keyPoints: [
         pair(
@@ -142,7 +142,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
             ),
             pair(
               "Keep all the borehole water for a larger irrigation area",
-              "Gcina onke amanzi omngxuma kummandla omkhulu wokunisela",
+              "Gcina onke amanzi omngxuma kummandla omkhulu wokunkcenkceshela",
             ),
             pair(
               "Find out if sharing is allowed and if the borehole can serve all users. Only then agree how to share fairly and keep watching the water level.",
@@ -156,7 +156,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           sourceCorrectIndex: 2,
           rationale: pair(
             "First find out what water use is allowed and whether the source can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly. Monitoring helps you notice change; it does not give permission to take more water.",
-            "Yazi kuqala ukuba usetyenziso lwamanzi oluvunyelweyo luyintoni nokuba umthombo unokusebenzela bonke abasebenzisi ngaphandle kokuthatha amanzi amaninzi kakhulu. Ukuba ukwabelana kuyavunyelwa kwaye amanzi ayaneleyo, vumelanani ngendlela yokwabelana ngokufanelekileyo. Ukubeka iliso kukunceda uqaphele utshintsho; akukunikeli mvume yokuthatha amanzi amaninzi.",
+            "Yazi kuqala ukuba usetyenziso lwamanzi oluvunyelweyo luyintoni nokuba umthombo unokusebenzela bonke abasebenzisi ngaphandle kokuthatha amanzi amaninzi kakhulu. Ukuba ukwabelana kuyavunyelwa kwaye amanzi ayaneleyo, vumelanani ngendlela yokwabelana ngokufanelekileyo. Ukubeka iliso kukunceda uqaphele utshintsho; akukunikeli mvume yokuthatha amanzi angaphezulu.",
           ),
         },
       ],
@@ -173,7 +173,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
-        "UDavid Holmgren wabeka imigaqo elishumi elinesibini yoyilo kwincwadi ethi Essence of Permaculture. UBill Mollison noDavid Holmgren baqala kunye ingcamango ye-permaculture. Iindawo ezintathu eziluncedo zokuqala kwesi sifundo zezi: bukela uze usebenzisane — jonga umhlaba wakho isizini epheleleyo phambi kokwenza imisebenzi emikhulu yokumba umhlaba; bamba uze ugcine amandla — qaphela imvula, ilanga ne-biomass (izinto zezityalo eziphilayo enjengengca namagqabi) ngaphambi kokuba zishiye indawo yakho; kwaye sebenzisa imiphetho uze ukhathalele okusemaphethelweni — umgca wocingo okanye umtya osecaleni kwendlela unokuba yindawo eluncedo yokubukela.\n\nEminye ekufanele uyazi: ungavelisi nkunkuma (intsalela yokutya ibe ngumgquba, umgquba ube ngumhlaba), sebenzisa izisombululo ezincinci nezicothayo (ibhakethi inokunisela ibhedi ngaphandle kombane), kwaye sebenzisa uze ukhathalele ukwahlukahlukana. Umonakalo wesichotho kumbona uxhomekeke kwisaqhwithi nakwinqanaba lokukhula kwesityalo.\n\nKhetha imigaqo emibini okanye emithathu ethetha nengxaki yakho enkulu uze uyisebenzise ngamandla. Eminye iya kucaca njengoko uqhubeka.",
+        "UDavid Holmgren wabeka imigaqo elishumi elinesibini yoyilo kwincwadi ethi Essence of Permaculture. UBill Mollison noDavid Holmgren baqala kunye ingcamango ye-permaculture. Imigaqo emithathu eluncedo yokuqala kwesi sifundo yile: bukela uze usebenzisane — jonga umhlaba wakho isizini epheleleyo phambi kokwenza imisebenzi emikhulu yokumba umhlaba; bamba uze ugcine amandla — qaphela imvula, ilanga ne-biomass (izinto zezityalo eziphilayo enjengengca namagqabi) ngaphambi kokuba zishiye indawo yakho; kwaye sebenzisa imiphetho uze ukhathalele okusemaphethelweni — umgca wocingo okanye umtya osecaleni kwendlela unokuba yindawo eluncedo yokubukela.\n\nEminye ekufanele uyazi: ungavelisi nkunkuma (intsalela yokutya ibe ngumgquba, umgquba ube ngumhlaba), sebenzisa izisombululo ezincinci nezicothayo (ibhakethi inokunkcenkceshela ibhedi ngaphandle kombane), kwaye sebenzisa uze ukhathalele ukwahlukahlukana. Umonakalo wesichotho kumbona uxhomekeke kwisaqhwithi nakwinqanaba lokukhula kwesityalo.\n\nKhetha imigaqo emibini okanye emithathu ethetha nengxaki yakho enkulu uze uyisebenzise ngamandla. Eminye iya kucaca njengoko uqhubeka.",
       ),
       keyPoints: [
         pair(
@@ -206,7 +206,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
             ),
             pair(
               "Watch where water flows and pools across at least one wet season",
-              "Jonga apho amanzi ahamba aze amelele khona ngexesha elingekho ngaphantsi kwesizini enye yemvula",
+              "Jonga apho amanzi ahamba khona nalapho aqokelelana khona ngexesha elingekho ngaphantsi kwesizini enye yemvula",
             ),
             pair(
               "Copy a neighbour's swale layout",
@@ -220,7 +220,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           sourceCorrectIndex: 1,
           rationale: pair(
             "A wet season shows more than one storm, but observation is only a first step. Check the soil, slope, drainage and safe overflow route with a trained local adviser before digging.",
-            "Isizini yemvula ibonisa ngaphezu kwesaqhwithi esinye, kodwa ukubukela lilinge lokuqala kuphela. Hlola umhlaba, ithambeka, indlela amanzi ahla ngayo nendlela ekhuselekileyo yokuphuphuma kunye nomcebisi wasekuhlaleni oqeqeshiweyo phambi kokumba.",
+            "Isizini yemvula ibonisa ngaphezu kwesaqhwithi esinye, kodwa ukubukela linyathelo lokuqala kuphela. Hlola umhlaba, ithambeka, indlela amanzi ahla ngayo nendlela ekhuselekileyo yokuphuphuma kunye nomcebisi wasekuhlaleni oqeqeshiweyo phambi kokumba.",
           ),
         },
         {
@@ -258,7 +258,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       id: "intro-permaculture-l3",
       infographicAlt: pair(
         "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
-        "Umzekelo wefama oboniswe ngemizobo: iimpawu ezinamanani ukusuka ku-0 ukuya ku-5 zilandela indlela ejikelezayo yabahambi ukusuka endlini nasegadini esondeleyo, zidlula iinkukhu nentsimi, ziye kwimithi nendawo yasecaleni komlambo eyindle ngakumbi. Iimpawu ngumzekelo, ayiyondi imida emiselweyo okanye imigama.",
+        "Umzekelo wefama oboniswe ngemizobo: iimpawu ezinamanani ukusuka ku-0 ukuya ku-5 zilandela indlela ejikelezayo yabahambi ukusuka endlini nasegadini esondeleyo, zidlula iinkukhu nentsimi, ziye kwimithi nendawo yasecaleni komlambo eyindle ngakumbi. Iimpawu ngumzekelo, azizizo imida emiselweyo okanye imigama.",
       ),
       title: pair(
         "Zones and Sectors: Organising Your Farm by Energy",
@@ -266,12 +266,12 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
-        "Imimandla ne-sector zikunceda unciphise ukuchitha umsebenzi. Imimandla ihamba ukusuka ku-0 ukuya ku-5 ngokokuba utyelela kangakanani. Ummandla 0 yindlu. Kulo mzekelo, Ummandla 1 ukufutshane nendlu kwaye ubamba oko ukukhetha rhoqo — imifuno enevumba (herbs), amagqabi esaladi. Ummandla 2 yigadi ephambili nendawo yeenkukhu, etyelelwa kanye okanye kabini ngosuku. Ummandla 3 yintsimi ephambili, etyelelwa kanye evekini. Ummandla 4 uphantse ube yindle — imithi yeziqhamo nokutya kwemfuyo okufuna ingqalelo ngamanye amaxesha. Ummandla 5 uyashiywa ube yindle.\n\nIi-sector (iisekta) ngamandla afika evela ngaphandle — ilanga, umoya, imvula, izikhukula, umlilo. Jonga apho umoya onamandla uvela khona kwifama yakho. Iirekhodi zesikhululo sezulu esikufutshane zinokukunceda uhlole apho umoya uvela khona. Jonga apho amanzi emvula engena khona aze ahambe phezu komhlaba wakho. Zoba iintolo (→) ezibonisa oko ukubonayo.\n\nZoba imimandla ne-sector ephepheni, uya kuba nesakhelo soyilo lwakho.",
+        "Imimandla ne-sector zikunceda unciphise ukuchitha umsebenzi. Imimandla ihamba ukusuka ku-0 ukuya ku-5 ngokokuba utyelela kangakanani. Ummandla 0 yindlu. Kulo mzekelo, Ummandla 1 ukufutshane nendlu kwaye ubamba oko ukukha rhoqo — imifuno enevumba (herbs), amagqabi esaladi. Ummandla 2 yigadi ephambili nendawo yeenkukhu, etyelelwa kanye okanye kabini ngosuku. Ummandla 3 yintsimi ephambili, etyelelwa kanye evekini. Ummandla 4 uphantse ube yindle — imithi yeziqhamo nokutya kwemfuyo okufuna ingqalelo ngamanye amaxesha. Ummandla 5 uyashiywa ube yindle.\n\nIi-sector (iisekta) ngamandla afika evela ngaphandle — ilanga, umoya, imvula, izikhukula, umlilo. Jonga apho umoya onamandla uvela khona kwifama yakho. Iirekhodi zesikhululo sezulu esikufutshane zinokukunceda uhlole apho umoya uvela khona. Jonga apho amanzi emvula engena khona aze ahambe phezu komhlaba wakho. Zoba iintolo (→) ezibonisa oko ukubonayo.\n\nZoba imimandla ne-sector ephepheni, uya kuba nesakhelo soyilo lwakho.",
       ),
       keyPoints: [
         pair(
           "In this example, Zone 1 near the house holds often-picked herbs",
-          "Kulo mzekelo, Ummandla 1 osondele endlini ubamba imifuno enevumba (herbs) ekhethwa rhoqo",
+          "Kulo mzekelo, Ummandla 1 osondele endlini ubamba imifuno enevumba (herbs) ekhiwa rhoqo",
         ),
         pair(
           "Zones organise labour by how often you need to visit",
@@ -283,7 +283,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         ),
         pair(
           "A simple sketch of zones and sectors is enough to start designing",
-          "Umzobo olula wemimandla ne-sector uyaneleyo ukuqala uyilo",
+          "Umzobo olula wemimandla ne-sector wanele ukuqala uyilo",
         ),
       ],
       quiz: [
@@ -299,11 +299,11 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
             ),
             pair(
               "The extra walk may mean you pick or check them less often",
-              "Ukuhamba okongezelelekileyo kunokuthetha ukuba uyikha okanye uyihlole kancinci",
+              "Ukuhamba okongezelelekileyo kunokuthetha ukuba awuyikhi okanye awuyihloli rhoqo",
             ),
             pair(
               "Herbs cross-pollinate with main crops",
-              "Imifuno enevumba iyadlulisa umgubo wokuchumisa kunye nezityalo eziphambili",
+              "Imifuno enevumba yabelana ngomungu nezityalo eziphambili",
             ),
             pair(
               "Zone 3 gets too much sun for herbs",
@@ -313,7 +313,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           sourceCorrectIndex: 1,
           rationale: pair(
             "Put a crop you pick often near a daily path. A distant bed adds walking and may be checked less often.",
-            "Beka isityalo ocikha rhoqo kufuphi nendlela osebenzisa yonke imihla. Ibhedi ekude yongeza ukuhamba kwaye inokuhlolwa kancinci.",
+            "Beka isityalo osikha rhoqo kufuphi nendlela oyisebenzisa yonke imihla. Ibhedi ekude yongeza ukuhamba kwaye inokungahlolwa rhoqo.",
           ),
         },
         {
@@ -521,7 +521,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         {
           question: pair(
             "A farmer plans shade cloth on the north side of her garden. What should she check before fixing it in place?",
-            "Umfama ucwangcisa ilaphu lomthunzi kwicala lasemntla legadi lakhe. Kufuneka ajonge ntoni phambi kokulilungisa endaweni?",
+            "Umfama ucwangcisa ilaphu lomthunzi kwicala lasemntla legadi yakhe. Kufuneka ajonge ntoni phambi kokulilungisa endaweni?",
           ),
           options: [
             pair(
@@ -561,7 +561,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
-        "Umoya unokonakalisa izityalo kwifama encinci. Icala nokomelela komoya onokonakalisa kutshintsha ngommandla, ngexesha lonyaka, nangemiqolo yeentaba nezithuba zendawo yakho. Hamba emhlabeni wakho ngeentsuku ezinomoya. Rekhoda apho umoya uvela khona nento echatshazelwa nguwo. Jonga iirekhodi zemozulu zasekuhlaleni phambi kokugqiba ukuba isikhuselo sidingeka phi.\n\nEbusuku obucacileyo, obuthe cwaka, umoya obandayo unokuhamba ethambekeni ehla uze uqokelelane kwiindawo eziphantsi. Ezi ndawo zinokubanda kunamathambeka aziingqongileyo. Iindlela zeqabaka nazo zixhomekeke kwindawo. Thelekisa iindawo onokuzikhetha kwixesha leqabaka lasekuhlaleni. Jonga iirekhodi zobushushu obuphantsi kakhulu lasekuhlaleni apho zikhoyo. Ukuba iirekhodi aziko, qhubeka ujonga ebusuku obubandayo uze ubuze umcebisi wezolimo wasekuhlaleni phambi kokukhetha ikhaya elisisigxina lezityalo ezincinci ezithambileyo (seedlings).\n\nIqabaka ngumkhenkce owenzeka kumphezulu obandayo. Inkungu yodwa ayibonisi ukuba umkhenkce wenzekile, kwaye umonakalo weqabaka unokwenzeka ngaphandle komkhenkce obonakalayo. Khangela umkhenkce nomonakalo wezityalo, thelekisa umhlaba ophantsi namathambeka, uze ujonge ubushushu obuphantsi kakhulu apho ukwazi. Phawula iindawo apho ukubanda okanye umonakalo kuhlala ixesha elide. Gcina izityalo ezibucayi kude neendawo ezibandayo ozibonileyo.\n\nKutamatisi onengxaki ye-late blight (isifo sezityalo setamatisi), ukuhamba komoya nelanga lekuseni kunganceda amagqabi omile. I-late blight isenokusasazeka ngexesha lemozulu ebandayo, enomswakama exesha elide. Ukuhambisa ibhedi kodwa akuyi kuyilawula; funa nesikhokelo sasekuhlaleni sempilo yezityalo.",
+        "Umoya unokonakalisa izityalo kwifama encinci. Icala nokomelela komoya onokonakalisa kutshintsha ngommandla, ngexesha lonyaka, nangemiqolo yeentaba nezithuba zendawo yakho. Hamba emhlabeni wakho ngeentsuku ezinomoya. Rekhoda apho umoya uvela khona nento echaphazelwa nguwo. Jonga iirekhodi zemozulu zasekuhlaleni phambi kokugqiba ukuba isikhuselo sidingeka phi.\n\nEbusuku obucacileyo, obuthe cwaka, umoya obandayo unokuhamba ethambekeni ehla uze uqokelelane kwiindawo eziphantsi. Ezi ndawo zinokubanda kunamathambeka angqongileyo. Iindlela zeqabaka nazo zixhomekeke kwindawo. Thelekisa iindawo onokuzikhetha kwixesha leqabaka lasekuhlaleni. Jonga iirekhodi zasekuhlaleni zobushushu obuphantsi kakhulu apho zikhoyo. Ukuba iirekhodi azikho, qhubeka ujonga ebusuku obubandayo uze ubuze umcebisi wezolimo wasekuhlaleni phambi kokukhetha ikhaya elisisigxina lezityalo ezincinci ezithambileyo (seedlings).\n\nIqabaka ngumkhenkce owenzeka kumphezulu obandayo. Inkungu yodwa ayibonisi ukuba umkhenkce wenzekile, kwaye umonakalo weqabaka unokwenzeka ngaphandle komkhenkce obonakalayo. Khangela umkhenkce nomonakalo wezityalo, thelekisa umhlaba ophantsi namathambeka, uze ujonge ubushushu obuphantsi kakhulu apho ukwazi. Phawula iindawo apho ukubanda okanye umonakalo kuhlala ixesha elide. Gcina izityalo ezibucayi kude neendawo ezibandayo ozibonileyo.\n\nKwiitumato ezinengxaki ye-late blight (isifo sezityalo setumato), ukuhamba komoya nelanga lekuseni kunganceda amagqabi omile. I-late blight isenokusasazeka ngexesha lemozulu ebandayo, enomswakama exesha elide. Ukuhambisa ibhedi kuphela akuyi kuyilawula; funa nesikhokelo sasekuhlaleni sempilo yezityalo.",
       ),
       keyPoints: [
         pair(
@@ -574,7 +574,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         ),
         pair(
           "Compare cold-night plant damage and temperatures across your site; visible frost is not the only sign",
-          "Thelekisa umonakalo wezityalo ebusuku obubandayo nobushushu kwindawo yakho yonke; iqabaka elibonakalayo asilo kuphela uphawu",
+          "Thelekisa umonakalo wezityalo ebusuku obubandayo nobushushu kwindawo yakho yonke; iqabaka elibonakalayo alilo kuphela uphawu",
         ),
         pair(
           "Airflow and drying may help reduce wet leaves, but do not alone control late blight",
@@ -585,7 +585,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         {
           question: pair(
             "Where should a farmer first look when placing a frost-sensitive seedling nursery on a Highveld smallholding?",
-            "Umfama makakhangele phi kuqala xa ebeka indawo yokuzalela izityalo ezincinci eziva iqabaka kwifama encinci yaseHighveld?",
+            "Umfama makakhangele phi kuqala xa ebeka indawo yokukhulisela izityalo ezincinci eziva iqabaka kwifama encinci yaseHighveld?",
           ),
           options: [
             pair(
@@ -608,13 +608,13 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           sourceCorrectIndex: 2,
           rationale: pair(
             "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
-            "Umoya obandayo unokuhlala kwiindawo eziphantsi ebusuku obucacileyo, obuthe cwaka. Thelekisa iindawo onokuzikhetha zokuzalela izityalo ezincinci kwixesha leqabaka lasekuhlaleni. Jonga iirekhodi zobushushu obuphantsi kakhulu lasekuhlaleni okanye buza umcebisi wezolimo wasekuhlaleni phambi kokwenza ukhetho olusisigxina. Iqabaka elibonakalayo asilo kuphela uphawu lomonakalo weqabaka, kwaye akukho ndawo yenduli iqinisekisa ukungabikho kweqabaka.",
+            "Umoya obandayo unokuhlala kwiindawo eziphantsi ebusuku obucacileyo, obuthe cwaka. Thelekisa iindawo onokuzikhetha zokukhulisela izityalo ezincinci kwixesha leqabaka lasekuhlaleni. Jonga iirekhodi zobushushu obuphantsi kakhulu lasekuhlaleni okanye buza umcebisi wezolimo wasekuhlaleni phambi kokwenza ukhetho olusisigxina. Iqabaka elibonakalayo alilo kuphela uphawu lomonakalo weqabaka, kwaye akukho ndawo yenduli iqinisekisa ukungabikho kweqabaka.",
           ),
         },
         {
           question: pair(
             "A KZN farmer's tomatoes repeatedly develop late blight during cool, damp spells. Which bed position may help leaves dry, alongside local crop-health advice?",
-            "Utamatisi womfama we-KZN uhlala ufumana i-late blight ngexesha lemozulu ebandayo, enomswakama. Yeyiphi indawo yebhedi enokunceda amagqabi omile, kunye nengcebiso yasekuhlaleni yempilo yezityalo?",
+            "Iitumato zomfama wase-KZN zihlala zifumana i-late blight ngexesha lemozulu ebandayo, enomswakama. Yeyiphi indawo yebhedi enokunceda amagqabi omile, kunye nengcebiso yasekuhlaleni yempilo yezityalo?",
           ),
           options: [
             pair(
@@ -637,7 +637,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           sourceCorrectIndex: 1,
           rationale: pair(
             "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
-            "Ukuhamba komoya nelanga lekuseni kunganceda amagqabi omile. I-late blight ikhuthazwa yimozulu ebandayo, enomswakama exesha elide, kwaye ukuhambisa ibhedi kodwa asisicwangciso esipheleleyo solawulo.",
+            "Ukuhamba komoya nelanga lekuseni kunganceda amagqabi omile. I-late blight ikhuthazwa yimozulu ebandayo, enomswakama exesha elide, kwaye ukuhambisa ibhedi kuphela asisicwangciso esipheleleyo solawulo.",
           ),
         },
       ],
@@ -654,7 +654,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "A site map needs paper, a tape measure, a compass, and time to walk your land. Walk the boundary and make a first sketch. Mark it 'not to scale' until you have checked its distances. Mark north. Add the house, trees, water, roads, fences. Draw arrows for summer and winter wind, shade patterns, and where water flows in rain.\n\nNote where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.\n\nOverlay your zones and sectors on the same sketch. Update it season by season. A pencil sketch you actually use is worth more than a perfect one drawn once.",
-        "Imephu yendawo idinga iphepha, itheyiphu yokulinganisa, ikhampasi, nexesha lokuhamba emhlabeni wakho. Hamba ngomda uze wenze umzobo wokuqala. Wubhale 'awulinganiswanga' de uhlole imigama yawo. Phawula emntla. Yongeza indlu, imithi, amanzi, iindlela, iifensi. Zoba imicibisholo yomoya wasehlotyeni nowasebusika, iindlela zomthunzi, nalapho amanzi ahamba khona xa kunetha.\n\nQaphela apho iqabaka lihlala ixesha elide, apho umhlaba unuka ukumanzi ngeenyanga ezomileyo, nalapho i-khakibos okanye i-blackjack ikhula ngokuxineneyo. Ezi zityalo zinokukhula kwiindawo ezothusiweyo, kodwa ukubakho kwazo kodwa akubonisi ukuba umhlaba uxinene na. Hlola umhlaba phambi kokugqiba ukuba loo ndawo ithetha ntoni kuyilo lwakho.\n\nFaka iindawo (zones) neesektha (sectors) zakho phezu komzobo ofanayo. Wuhlaziye ixesha ngalinye lonyaka. Umzobo wepensile osebenzisayo ngokwenene ubaluleke ngakumbi kunalowo ugqibeleleyo owenziwe kanye.",
+        "Imephu yendawo idinga iphepha, itheyiphu yokulinganisa, ikhampasi, nexesha lokuhamba emhlabeni wakho. Hamba ngomda uze wenze umzobo wokuqala. Wubhale 'awulinganiswanga' de uhlole imigama yawo. Phawula emntla. Yongeza indlu, imithi, amanzi, iindlela, iifensi. Zoba imicibisholo yomoya wasehlotyeni nowasebusika, iindlela zomthunzi, nalapho amanzi ahamba khona xa kunetha.\n\nQaphela apho iqabaka lihlala ixesha elide, apho umhlaba unuka ukumanzi ngeenyanga ezomileyo, nalapho i-khakibos okanye i-blackjack ikhula ngokuxineneyo. Ezi zityalo zinokukhula kwiindawo ezothusiweyo, kodwa ukubakho kwazo kuphela akubonisi ukuba umhlaba uxinene na. Hlola umhlaba phambi kokugqiba ukuba loo ndawo ithetha ntoni kuyilo lwakho.\n\nFaka iindawo (zones) neesektha (sectors) zakho phezu komzobo ofanayo. Wuhlaziye ixesha ngalinye lonyaka. Umzobo wepensile osebenzisayo ngokwenene ubaluleke ngakumbi kunalowo ugqibeleleyo owenziwe kanye.",
       ),
       keyPoints: [
         pair(
@@ -691,7 +691,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
             ),
             pair(
               "Mark the patch and check the soil; the plant alone cannot show compaction",
-              "Phawula indawo uze uhlole umhlaba; isityalo kodwa asinakubonisa ukuxinana komhlaba",
+              "Phawula indawo uze uhlole umhlaba; isityalo sodwa asinakubonisa ukuxinana komhlaba",
             ),
             pair(
               "Blackjack only grows in shade, so there's a hidden seep",
@@ -701,7 +701,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           sourceCorrectIndex: 2,
           rationale: pair(
             "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction. Observe and check the soil before deciding what the patch means for your design.",
-            "I-blackjack inokukhula kumhlaba othe wothuswa, kodwa ukubakho kwayo kodwa akubonisi ukuxinana komhlaba. Jonga uze uhlole umhlaba phambi kokugqiba ukuba indawo leyo ithetha ntoni kuyilo lwakho.",
+            "I-blackjack inokukhula kumhlaba othe wothuswa, kodwa ukubakho kwayo kuphela akubonisi ukuxinana komhlaba. Jonga uze uhlole umhlaba phambi kokugqiba ukuba indawo leyo ithetha ntoni kuyilo lwakho.",
           ),
         },
         {
@@ -763,7 +763,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.\n\nThe excavated soil forms a berm on the downhill side, where trees can be planted when the site design is suitable.\n\nTrees planted there may draw on moisture stored in the soil after rain, depending on the site.\n\nHeavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.\n\nThe route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.\n\nAsk a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.\n\nSlope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.\n\nKeep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
-        "Olunye uhlobo lomsele (swale) yimijelo elinganayo elandela umgca wokuphakama. Unciphisa ijubane lamanzi agelekayo aze awasasaze, ukuze amanzi athile afunxeke emhlabeni ofanelekileyo. Eminye imisele yenzelwe ukuba nethambeka elincinci elilawulweyo ukuze iphathe amanzi agqithisileyo iwasingise kancinci kwindawo ekhuselekileyo apho aphumela khona. Eyiphi indlela efanelana nomhlaba wakho ixhomekeke kumhlaba, kwithambeka, ekuphumeni kwamanzi nasekuhambeni kwamanzi esaqhwithi. Cela umcebisi wasekuhlaleni oqeqeshiweyo ahlole umgca, indlela yokuphuphuma kwamanzi nendawo awafikela kuyo phambi kokuba umbe.\n\nUmhlaba okhutshiweyo ekumbeni wenza i-berm (umqolo womhlaba) ngakwicala eliya ezantsi, apho kunokutyalwa khona imithi xa uyilo lwendawo lufanelekile.\n\nImithi etyalwe apho isenokusebenzisa ukufuma okugcinwe emhlabeni emva kwemvula, kuxhomekeke kwindawo.\n\nImvula enkulu isenokugcwalisa umsele ngokukhawuleza kunokuba amanzi afunxeke emhlabeni. Cwangcisa indlela ekhuselekileyo yokuphuphuma kwamanzi phambi kokuba umbe.\n\nIndlela yamanzi mayingawonakalisi ithambeka okanye ithumele amanzi anokonakalisa kummelwane. Umsele okanye idama elingezantsi kufuneka likwazi ukuwamkela ngokukhuselekileyo.\n\nCela umcebisi wasekuhlaleni oqeqeshiweyo ahlole umhlaba, ithambeka nokuhamba kwamanzi esaqhwithi. Umfanekiso awuyonto yoyilo lokwakha.\n\nIthambeka lodwa alikuxeleli ukuba umsele ufanelekile okanye hayi. Umhlaba, ukuphuma kwamanzi, umhlaba ongazinzanga namanzi asuka ngaphezulu entabeni konke kuyabaluleka.\n\nGcina umhlaba ugqunyiwe kakuhle. Funa uvavanyo lwasekuhlaleni phambi kokumba emhlabeni otsiba kakhulu, onamanzi okanye ongazinzanga. Imiqobo yengca nezitebhisi zomhlaba (iitheresi) nazo zifuna uyilo olufanele indawo.",
+        "Olunye uhlobo lomsele (swale) yimijelo elinganayo elandela umgca wokuphakama. Unciphisa ijubane lamanzi agelekayo aze awasasaze, ukuze amanzi athile afunxeke emhlabeni ofanelekileyo. Eminye imisele yenzelwe ukuba nethambeka elincinci elilawulweyo ukuze iphathe amanzi agqithisileyo iwasingise kancinci kwindawo ekhuselekileyo apho aphumela khona. Eyiphi indlela efanelana nomhlaba wakho ixhomekeke kumhlaba, kwithambeka, ekuphumeni kwamanzi nasekuhambeni kwamanzi esaqhwithi. Cela umcebisi wasekuhlaleni oqeqeshiweyo ahlole umgca, indlela yokuphuphuma kwamanzi nendawo awafikela kuyo phambi kokuba umbe.\n\nUmhlaba okhutshiweyo ekumbeni wenza i-berm (umqolo womhlaba) ngakwicala eliya ezantsi, apho kunokutyalwa khona imithi xa uyilo lwendawo lufanelekile.\n\nImithi etyalwe apho isenokusebenzisa ukufuma okugcinwe emhlabeni emva kwemvula, kuxhomekeke kwindawo.\n\nImvula enkulu isenokugcwalisa umsele ngokukhawuleza kunokuba amanzi afunxeke emhlabeni. Cwangcisa indlela ekhuselekileyo yokuphuphuma kwamanzi phambi kokuba umbe.\n\nIndlela yamanzi mayingawonakalisi ithambeka okanye ithumele amanzi anokonakalisa kummelwane. Umsele okanye idama elingezantsi kufuneka likwazi ukuwamkela ngokukhuselekileyo.\n\nCela umcebisi wasekuhlaleni oqeqeshiweyo ahlole umhlaba, ithambeka nokuhamba kwamanzi esaqhwithi. Umfanekiso awuyonto yoyilo lokwakha.\n\nIthambeka lodwa alikuxeleli ukuba umsele ufanelekile okanye hayi. Umhlaba, ukuphuma kwamanzi, umhlaba ongazinzanga namanzi asuka ngaphezulu kwethambeka konke kuyabaluleka.\n\nGcina umhlaba ugqunyiwe kakuhle. Funa uvavanyo lwasekuhlaleni phambi kokumba emhlabeni omnqantsa kakhulu, onamanzi okanye ongazinzanga. Imiqobo yengca nezitebhisi zomhlaba (iitheresi) nazo zifuna uyilo olufanele indawo.",
       ),
       keyPoints: [
         pair(
@@ -816,12 +816,12 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         {
           question: pair(
             "A farmer wants to control erosion on steep land. What should she do before digging?",
-            "Umfama ufuna ukulawula ukukhukuliseka komhlaba ethambekeni elitsiba kakhulu. Kufuneka enze ntoni phambi kokumba?",
+            "Umfama ufuna ukulawula ukukhukuliseka komhlaba ethambekeni elimnqantsa kakhulu. Kufuneka enze ntoni phambi kokumba?",
           ),
           options: [
             pair(
               "Standard swales dug as deep as possible",
-              "Imisele eqhelekileyo emiwe nzulu kangangoko",
+              "Imisele eqhelekileyo embiwe nzulu kangangoko",
             ),
             pair(
               "Keep ground covered and get a site assessment for suitable erosion controls",
@@ -856,7 +856,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.\n\nRainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.\n\nBefore changing a watercourse or building storage works, check the required authorisation with the water authority.\n\nA dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.\n\nDo not assume that annual rainfall tells you the size of a flood or the storage you will have.\n\nAn uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.\n\nWater can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nAnimals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
-        "Idama okanye ichibi lingagcina amanzi agelekayo, kodwa inani elifumanekayo lixhomekeke kwimvula yasekuhlaleni, indawo ekhuphela amanzi (catchment), ilahleko yamanzi nokuba usebenzisa amanzi amaninzi kangakanani.\n\nAmaxesha emvula ayahluka kuyo yonke iMzantsi Afrika. Sebenzisa iirekhodi zasekuhlaleni kwaye ucwangcise amaxesha omileyo; akukho sithembiso sokuba idama liya kuhlala ligcwele.\n\nPhambi kokutshintsha umjelo wamanzi okanye ukwakha imisebenzi yokugcina amanzi, jonga imvume efunekayo kwigunya lamanzi.\n\nIdama lifuna uphando lwendawo noyilo olwenziwa ngumntu oqeqeshelwe oko ngokufanelekileyo. Amanzi agelekayo kwindawo ekhuphela amanzi, umhlaba, iziseko, umngcipheko ongezantsi nendlela ekhuselekileyo yokuphuphuma kwamanzi (spillway) konke kuyabaluleka.\n\nMusa ukucinga ukuba imvula yonyaka ikuxelela ubukhulu bomkhukula okanye amanzi aya kuba nawo egcinwe.\n\nUkuphuphuma okungalawulwanga kunokukhukulisa kwaye kuqhekeze udonga. Cwangcisa indlela ekhuselekileyo yamanzi agqithisileyo phambi kokwakha.\n\nAmanzi anokulahleka ngokuhwamla nangokuvuza emhlabeni. Jonga ukuphakama kwamanzi kwaye ufune ukuvuza okanye ukukhukuliseka.\n\nGcina indlela yokuphuphuma ingavaliwe kwaye ugcine ukugqunywa kwamabhanki njengoko kumiselwe kuyilo. Musa ukutyala imithi kudonga ledama lomhlaba.\n\nIzilwanyana zingonakalisa amabhanki kwaye zongeze ubulongwe emanzini. Ubukho bazo abwenzi amanzi acocekileyo okanye akhuselekileyo.",
+        "Idama okanye ichibi lingagcina amanzi agelekayo, kodwa inani elifumanekayo lixhomekeke kwimvula yasekuhlaleni, indawo ekhuphela amanzi (catchment), ilahleko yamanzi nokuba usebenzisa amanzi amaninzi kangakanani.\n\nAmaxesha emvula ayahluka kulo lonke uMzantsi Afrika. Sebenzisa iirekhodi zasekuhlaleni kwaye ucwangcise amaxesha omileyo; akukho sithembiso sokuba idama liya kuhlala ligcwele.\n\nPhambi kokutshintsha umjelo wamanzi okanye ukwakha imisebenzi yokugcina amanzi, jonga imvume efunekayo kwigunya lamanzi.\n\nIdama lifuna uphando lwendawo noyilo olwenziwa ngumntu oqeqeshelwe oko ngokufanelekileyo. Amanzi agelekayo kwindawo ekhuphela amanzi, umhlaba, iziseko, umngcipheko ongezantsi nendlela ekhuselekileyo yokuphuphuma kwamanzi (spillway) konke kuyabaluleka.\n\nMusa ukucinga ukuba imvula yonyaka ikuxelela ubukhulu bomkhukula okanye amanzi aya kuba nawo egcinwe.\n\nUkuphuphuma okungalawulwanga kunokukhukulisa kwaye kuqhekeze udonga. Cwangcisa indlela ekhuselekileyo yamanzi agqithisileyo phambi kokwakha.\n\nAmanzi anokulahleka ngokuhwamla nangokuvuza emhlabeni. Jonga ukuphakama kwamanzi kwaye ufune ukuvuza okanye ukukhukuliseka.\n\nGcina indlela yokuphuphuma ingavaliwe kwaye ugcine ukugqunywa kwamabhanki njengoko kumiselwe kuyilo. Musa ukutyala imithi kudonga ledama lomhlaba.\n\nIzilwanyana zingonakalisa amabhanki kwaye zongeze ubulongwe emanzini. Ubukho bazo abwenzi amanzi acocekileyo okanye akhuselekileyo.",
       ),
       keyPoints: [
         pair(
@@ -941,7 +941,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       id: "water-harvesting-l3",
       infographicAlt: pair(
         "Rain running off a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.",
-        "Imvula iphuma ophahleni ingena emjelweni wophahla (igatara) ize ihle ngombhobho ingene kwitanki, kukho i-first-flush diverter encinci ihlukana nombhobho ngaphambi kwetanki ukulahla amanzi okuqala angcolileyo.",
+        "Imvula iphuma ophahleni ingena emjelweni wophahla (igatara) ize ihle ngombhobho ingene kwitanki, kukho i-first-flush diverter encinci eyahlukana nombhobho ngaphambi kwetanki ukulahla amanzi okuqala angcolileyo.",
       ),
       title: pair(
         "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
@@ -949,7 +949,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.\n\nCheck whether the roof material is suitable for rainwater collection before connecting a tank.\n\nUse the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.\n\nAn annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.\n\nRoof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.\n\nThe required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.\n\nA diverter does not make the remaining water safe to drink.\n\nTank size depends on water demand, rain, roof area and the length of dry periods.\n\nList the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.\n\nPlan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.\n\nKeep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nA basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
-        "Uphahla lwakho lunokuqokelela amanzi emvula. Inani lixhomekeke kubungakanani bophahla, kwimvula nakwilahleko.\n\nJonga ukuba izinto zophahla zifanelekile na ekuqokeleleni amanzi emvula phambi kokuqhagamshela itanki.\n\nSebenzisa ubungakanani bophahla njengoko buboniwa ngaphezulu kunye neerekhodi zemvula zasekuhlaleni. Emva koko linganisa amanzi angaphumeliyo emjelweni wophahla (igatara), aphambukiswayo okanye aphuphuma kwitanki egcweleyo.\n\nIsixa semvula yonyaka asikuxeleli ukuba mangaphi amanzi aya kubakho ngexesha lokoma. Thelekisa amanzi onawo nokusetyenziswa okucwangcisileyo.\n\nAmanzi asuka ophahleni anokuthwala uthuli, ubulongwe nokunye ukungcola. I-first-flush diverter (isixhobo esiphambukisa amanzi okuqala) igcina inxalenye yamanzi okuqala ingangeni kwitanki.\n\nUbungakanani bamanzi afuneka aphambukiswe buxhomekeke kuphahla nakwinkqubo. Sebenzisa imiyalelo yomthengisi yobungakanani nokugcinwa; akukho mthamo mnye ofanele zonke izophahla.\n\nI-diverter ayiwenzi amanzi asele afanelekile ukusela.\n\nUbungakanani betanki buxhomekeke kwimfuno yamanzi, imvula, ubungakanani bophahla nobude bamaxesha omileyo.\n\nBhala ukusetyenziswa oceba ukukwenza uze uqikelele imfuno yako usebenzisa iirekhodi zakho. Thelekisa oko namanzi onawo ngamaxesha onyaka.\n\nCwangcisa into oya kuyenza xa amanzi agciniweyo ancipha. Igama lephondo ngokwalo alinakukuxelela ubungakanani betanki obuyifunayo.\n\nGcina itanki igqunyiwe, gquma imingxuma ngesikrini ukuthintela izinambuzane, kwaye ugcine uphahla, igatara ne-diverter. Gcina amanzi emvula eyahlukile kwimibhobho yamanzi okusela.\n\nAmanzi abonakala ecocekile asenokuba namagciwane okanye iikhemikhali. Buza kwigunya lezempilo lasekuhlaleni malunga novavanyo nokucoca okufanelekileyo ekusetyenzisweni okuceliweyo.\n\nIsihluzi esiyisiseko sodwa asiyongqiniseko yamanzi okusela. Amanzi asetyenziswa kwizityalo zokutya nawo afuna uvavanyo lokhuseleko.",
+        "Uphahla lwakho lunokuqokelela amanzi emvula. Inani lixhomekeke kubungakanani bophahla, kwimvula nakwilahleko.\n\nJonga ukuba izinto zophahla zifanelekile na ekuqokeleleni amanzi emvula phambi kokuqhagamshela itanki.\n\nSebenzisa ubungakanani bophahla njengoko buboniwa ngaphezulu kunye neerekhodi zemvula zasekuhlaleni. Emva koko qwalasela amanzi angangeni emjelweni wophahla (igatara), aphambukiswayo okanye aphuphuma kwitanki egcweleyo.\n\nIsixa semvula yonyaka asikuxeleli ukuba mangaphi amanzi aya kubakho ngexesha lokoma. Thelekisa amanzi onawo nokusetyenziswa okucwangcisileyo.\n\nAmanzi asuka ophahleni anokuthwala uthuli, ubulongwe nokunye ukungcola. I-first-flush diverter (isixhobo esiphambukisa amanzi okuqala) igcina inxalenye yamanzi okuqala ingangeni kwitanki.\n\nUbungakanani bamanzi afuneka aphambukiswe buxhomekeke kuphahla nakwinkqubo. Sebenzisa imiyalelo yomthengisi yobungakanani nokugcinwa; akukho mthamo mnye ofanele lonke uphahla.\n\nI-diverter ayiwenzi amanzi asele afanelekile ukusela.\n\nUbungakanani betanki buxhomekeke kwimfuno yamanzi, imvula, ubungakanani bophahla nobude bamaxesha omileyo.\n\nBhala ukusetyenziswa oceba ukukwenza uze uqikelele imfuno yako usebenzisa iirekhodi zakho. Thelekisa oko namanzi onawo ngamaxesha onyaka.\n\nCwangcisa into oya kuyenza xa amanzi agciniweyo ancipha. Igama lephondo ngokwalo alinakukuxelela ubungakanani betanki obuyifunayo.\n\nGcina itanki igqunyiwe, gquma imingxuma ngesikrini ukuthintela izinambuzane, kwaye ugcine uphahla, igatara ne-diverter. Gcina amanzi emvula eyahlukile kwimibhobho yamanzi okusela.\n\nAmanzi abonakala ecocekile asenokuba namagciwane okanye iikhemikhali. Buza kwigunya lezempilo lasekuhlaleni malunga novavanyo nokucoca okufanelekileyo ekusetyenzisweni okucetywayo.\n\nIsihluzi esiyisiseko sodwa asisosiqinisekiso yamanzi okusela. Amanzi asetyenziswa kwizityalo zokutya nawo afuna uvavanyo lokhuseleko.",
       ),
       keyPoints: [
         pair(
@@ -958,7 +958,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         ),
         pair(
           "Size and maintain the first-flush diverter for the roof",
-          "Linganisa kwaye ugcine i-first-flush diverter ngokwephahla lakho",
+          "Linganisa kwaye ugcine i-first-flush diverter ngokophahla lakho",
         ),
         pair(
           "Clear water can still contain germs or chemicals",
@@ -966,7 +966,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         ),
         pair(
           "Testing and treatment must match the intended use",
-          "Uvavanyo nokucoca kufuneka kungqamane nokusetyenziswa okuceliweyo",
+          "Uvavanyo nokucoca kufuneka kungqamane nokusetyenziswa okucetywayo",
         ),
       ],
       quiz: [
@@ -996,7 +996,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           sourceCorrectIndex: 1,
           rationale: pair(
             "Tank planning must compare usable supply with demand through wet and dry periods. One fixed regional size cannot do that.",
-            "Ucwangciso lwetanki kufuneka lithelekise amanzi asetyenziswayo nemfuno ngamaxesha emvula nawokoma. Ubungakanani obumiselweyo bommandla omnye abunakukwenza oko.",
+            "Ucwangciso lwetanki kufuneka luthelekise amanzi afumanekayo nemfuno ngamaxesha emvula nawokoma. Ubungakanani obumiselweyo bommandla omnye abunakukwenza oko.",
           ),
         },
         {
@@ -1015,7 +1015,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
             ),
             pair(
               "It's more acidic and changes soil pH over time",
-              "Anesiphekepheke esingakumbi kwaye atshintsha i-pH yomhlaba ngokuhamba kwexesha",
+              "Ane-asidi eninzi ngakumbi kwaye atshintsha i-pH yomhlaba ngokuhamba kwexesha",
             ),
             pair(
               "It stops the tank overfilling in storms",
@@ -1025,7 +1025,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           sourceCorrectIndex: 1,
           rationale: pair(
             "Diverting early runoff can reduce contamination, but it does not guarantee that later water is safe. Assess quality for the intended use.",
-            "Ukuphambukisa amanzi okuqala emvula kunganciphisa ukungcoliseka, kodwa akuqinisekisi ukuba amanzi alandelayo akhuselekile. Vavanya umgangatho wamanzi ngokokusetyenziswa okuceliweyo.",
+            "Ukuphambukisa amanzi okuqala emvula kunganciphisa ukungcoliseka, kodwa akuqinisekisi ukuba amanzi alandelayo akhuselekile. Vavanya umgangatho wamanzi ngokokusetyenziswa okucetywayo.",
           ),
         },
       ],
@@ -1038,7 +1038,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way. South African guidance differs on kitchen water and laundry water.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nA generic picture is not a farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
-        "Amanzi asetyenzisiweyo ekhaya anokuba namagciwane, ityuwa, iimveliso zokucoca nezinye izinto. Izikhokelo azichazi umthombo ngamnye ngendlela efanayo. Izikhokelo zaseMzantsi Afrika ziyahluka malunga namanzi asekhitshini namanzi okuhlamba iimpahla.\n\nMusa ukubandakanya amanzi asetoyilethi, amanzi eediyapha, okuhlamba umntu ogulayo okanye okuhlamba izilwanyana kwicebo lokuwasebenzisa kwakhona. Musa ukuphinda usebenzise amanzi aneekhemikhali eziyingozi.\n\nPhambi kokuphinda usebenzise, cela umasipala nomcebisi oqeqeshiweyo wasekuhlaleni wococeko ukuba ahlole umthombo ngqo, iinkonzo zamanzi nococeko zekhaya, ukusetyenziswa okuceliweyo nendawo. Ukuba eli cebo alifumaneki okanye alicacanga, musa ukuphinda usebenzise amanzi.\n\nUmfanekiso oqhelekileyo awuyonto yoyilo lwefama. Umhlaba nengca yokugquma azibulali ntsholongwane emanzini angcolileyo. Wagcine kude nemibhobho yamanzi okusela kwaye uthintele ukunxibelelana nabantu okanye izilwanyana. Musa ukuwafafaza, ukuwayeka ame, okanye ukuwavumela aphume epropathini aye esitratweni, kumjelo wamanzi okanye emlanjeni.\n\nUkuba inkqubo yokuphinda kusetyenziswe amanzi sele isebenza kwaye amanzi enuka kakubi, ayama, okanye alimaza izityalo, yeka ukuwasebenzisa kwaye ufune ingcebiso eqeshiweyo yasekuhlaleni.",
+        "Amanzi asetyenzisiweyo ekhaya anokuba namagciwane, ityuwa, iimveliso zokucoca nezinye izinto. Izikhokelo azichazi umthombo ngamnye ngendlela efanayo. Izikhokelo zaseMzantsi Afrika ziyahluka malunga namanzi asekhitshini namanzi okuhlamba iimpahla.\n\nMusa ukubandakanya amanzi asetoyilethi, amanzi eediyapha, okuhlamba umntu ogulayo okanye okuhlamba izilwanyana kwicebo lokuwasebenzisa kwakhona. Musa ukuphinda usebenzise amanzi aneekhemikhali eziyingozi.\n\nPhambi kokuphinda usebenzise, cela umasipala nomcebisi oqeqeshiweyo wasekuhlaleni wococeko ukuba ahlole umthombo ngqo, iinkonzo zamanzi nococeko zekhaya, ukusetyenziswa okucetywayo nendawo. Ukuba eli cebo alifumaneki okanye alicacanga, musa ukuphinda usebenzise amanzi.\n\nUmfanekiso oqhelekileyo awuyonto yoyilo lwefama. Umhlaba nengca yokugquma azibulali ntsholongwane emanzini angcolileyo. Wagcine kude nemibhobho yamanzi okusela kwaye uthintele ukunxibelelana nabantu okanye izilwanyana. Musa ukuwafafaza, ukuwayeka ame, okanye ukuwavumela aphume epropathini aye esitratweni, kumjelo wamanzi okanye emlanjeni.\n\nUkuba inkqubo yokuphinda kusetyenziswe amanzi sele isebenza kwaye amanzi enuka kakubi, ayama, okanye alimaza izityalo, yeka ukuwasebenzisa kwaye ufune ingcebiso yomcebisi oqeqeshiweyo wasekuhlaleni.",
       ),
       keyPoints: [
         pair(
@@ -1047,7 +1047,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         ),
         pair(
           "Check the source, service status, intended use and site locally before any reuse",
-          "Jonga ngokwasekuhlaleni umthombo, imeko yeenkonzo, ukusetyenziswa okuceliweyo nendawo phambi kokuphinda usebenzise",
+          "Jonga ngokwasekuhlaleni umthombo, imeko yeenkonzo, ukusetyenziswa okucetywayo nendawo phambi kokuphinda usebenzise",
         ),
         pair(
           "Soil and mulch do not disinfect wastewater",
@@ -1071,7 +1071,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
             ),
             pair(
               "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
-              "Cela umasipala nomcebisi oqeqeshiweyo wococeko ukuba ahlole umthombo, imeko yeenkonzo, ukusetyenziswa okuceliweyo nendawo",
+              "Cela umasipala nomcebisi oqeqeshiweyo wococeko ukuba ahlole umthombo, imeko yeenkonzo, ukusetyenziswa okucetywayo nendawo",
             ),
             pair(
               "Use it if it looks clear",
@@ -1147,7 +1147,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.\n\nSome fungi help roots take up nutrients. Worm channels can help water and air enter soil.\n\nLook at roots, soil structure and water movement as well as visible soil life.\n\nPut soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.\n\nSand settles first. Silt settles next, while clay can remain suspended much longer.\n\nThis is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.\n\nA thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.\n\nCompare the settled layers and feel the soil in the field.\n\nRecord what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.\n\nCompaction, poor drainage and loss of organic matter can limit roots and soil life.\n\nPale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.\n\nLook for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
-        "Umhlaba uqulethe iintlobo ezininzi zezinto eziphilayo. Iibhaktheriya namakhowa (i-fungi) ancedisa ekubolisweni kwe-organic matter (izinto ezibolayo ezivela kwizityalo nakwizilwanyana) kwaye ajikelezise izondlo.\n\nAmanye amakhowa ancedisa iingcambu ukuba zifumane izondlo. Iindledlana zeentshulube zinokunceda amanzi nomoya ukuba zingene emhlabeni.\n\nJonga iingcambu, isakhiwo somhlaba nokuhamba kwamanzi, kunye nobomi bomhlaba obubonakalayo.\n\nFaka umhlaba namanzi kwingqayi ecacileyo, kunye nedetergent encinci efanelekileyo yokwahlula amasuntswana omhlaba (dispersing detergent). Yivale uyihlokohlise, uze uyiyeke ingashukunyiswa.\n\nIsanti iqala ukuhlala. I-silt (umhlaba ocolekileyo kunesanti) ilandela, ngelixa udongwe lunokuhlala lumi emanzini ixesha elide kakhulu.\n\nEli lilingelo elilula lokufunda. Izigaqa nodongwe olungekahlali zinokukulahlekisa; sebenzisa ilebhu yomhlaba xa kufuneka ubume bomhlaba (texture) buchanekile.\n\nUmaleko oqinileyo wesanti ngaphantsi kwamanzi anamafu awukuxeleli okwangoku umlinganiselo wokugqibela. Amanye amasuntswana acolekileyo asenokuba asamile emanzini.\n\nThelekisa imigangatho ehleliyo uze uvavanye umhlaba ngesandla entsimini.\n\nBhala oko ukubonayo nako konke okuseyinto engaqinisekanga. Musa ukumisela ukunisela okanye unyango lomhlaba ngokusekelwe kwingqayi enye kuphela.\n\nUkuxinana komhlaba, ukungaphumi kakuhle kwamanzi nokulahleka kwe-organic matter kunokunciphisa iingcambu nobomi bomhlaba.\n\nUmbala ophaphathekileyo okanye iintshulube ezimbalwa akungqini ukuba imichiza ibulele umhlaba. Umsebenzi weentshulube uyatshintsha nokufuma kunye nexesha lonyaka.\n\nJonga iipatheni kwintsimi yonke. Hlola imbali yolawulo, ukuphuma kwamanzi nokukhula kwezityalo ngaphambi kokukhetha unyango.",
+        "Umhlaba uqulethe iintlobo ezininzi zezinto eziphilayo. Iibhaktheriya namakhowa (i-fungi) ancedisa ekubolisweni kwe-organic matter (izinto ezibolayo ezivela kwizityalo nakwizilwanyana) kwaye ajikelezise izondlo.\n\nAmanye amakhowa ancedisa iingcambu ukuba zifumane izondlo. Iindledlana zeentshulube zinokunceda amanzi nomoya ukuba angene emhlabeni.\n\nJonga iingcambu, isakhiwo somhlaba nokuhamba kwamanzi, kunye nobomi bomhlaba obubonakalayo.\n\nFaka umhlaba namanzi kwingqayi ecacileyo, kunye nedetergent encinci efanelekileyo yokwahlula amasuntswana omhlaba (dispersing detergent). Yivale uyihlokohlise, uze uyiyeke ingashukunyiswa.\n\nIsanti iqala ukuhlala. I-silt (umhlaba ocolekileyo kunesanti) ilandela, ngelixa udongwe lunokuhlala lumi emanzini ixesha elide kakhulu.\n\nEli lilingelo elilula lokufunda. Izigaqa nodongwe olungekahlali zinokukulahlekisa; sebenzisa ilebhu yomhlaba xa kufuneka ubume bomhlaba (texture) buchanekile.\n\nUmaleko oqinileyo wesanti ngaphantsi kwamanzi anamafu awukuxeleli okwangoku umlinganiselo wokugqibela. Amanye amasuntswana acolekileyo asenokuba asamile emanzini.\n\nThelekisa imigangatho ehleliyo uze uvavanye umhlaba ngesandla entsimini.\n\nBhala oko ukubonayo nako konke okuseyinto engaqinisekanga. Musa ukumisela ukunisela okanye unyango lomhlaba ngokusekelwe kwingqayi enye kuphela.\n\nUkuxinana komhlaba, ukungaphumi kakuhle kwamanzi nokulahleka kwe-organic matter kunokunciphisa iingcambu nobomi bomhlaba.\n\nUmbala ophaphathekileyo okanye iintshulube ezimbalwa akungqini ukuba imichiza ibulele umhlaba. Umsebenzi weentshulube uyatshintsha nokufuma kunye nexesha lonyaka.\n\nJonga iipatheni kwintsimi yonke. Hlola imbali yolawulo, ukuphuma kwamanzi nokukhula kwezityalo ngaphambi kokukhetha unyango.",
       ),
       keyPoints: [
         pair(
@@ -1160,7 +1160,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         ),
         pair(
           "A jar exercise gives a rough indication of texture, not a complete soil test",
-          "Ilingelo lengqayi linika umbono ongqongqo wobume bomhlaba, ayisosivivinyo sipheleleyo somhlaba",
+          "Ilingelo lengqayi linika nje umbono ngokubanzi wobume bomhlaba, aliyovavanyo olupheleleyo lomhlaba",
         ),
         pair(
           "Check drainage, roots and management history before choosing a remedy",
@@ -1194,13 +1194,13 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           sourceCorrectIndex: 1,
           rationale: pair(
             "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment.",
-            "Amanzi anamafu anokuba namasuntswana acolekileyo angekahlali. Ukubona kwangethuba kunye akunakuseka umlinganiselo wokugqibela okanye unyango olululo.",
+            "Amanzi anamafu anokuba namasuntswana acolekileyo angekahlali. Ukubona kwangethuba kanye akunakuseka umlinganiselo wokugqibela okanye unyango olululo.",
           ),
         },
         {
           question: pair(
             "A farmer finds compacted soil and few worms. What is the useful next step?",
-            "Umfama ufumana umhlaba oxinene neentshulube ezimbalwa. Linyathelo luluphi eliluncedo elilandelayo?",
+            "Umfama ufumana umhlaba oxinene neentshulube ezimbalwa. Leliphi inyathelo eliluncedo elilandelayo?",
           ),
           options: [
             pair(
@@ -1232,7 +1232,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       id: "soil-health-l2",
       infographicAlt: pair(
         "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
-        "Inqwaba yomgquba ixoxiwe ivuliwe, ibonisa imigangatho elandelelanayo yezinto ezomileyo ezinsundu nezinto ezintsha eziluhlaza, ubushushu bunyuka ephakathi, kunye notolo olubonisa ukuguqulwa kwayo.",
+        "Inqwaba yomgquba isikiwe yavulwa, ibonisa imigangatho elandelelanayo yezinto ezomileyo ezinsundu nezinto ezintsha eziluhlaza, ubushushu bunyuka ephakathi, kunye notolo olubonisa ukuguqulwa kwayo.",
       ),
       title: pair(
         "Making and Using Compost",
@@ -1240,7 +1240,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "Compost is organic matter broken down under managed conditions.\n\nFinished compost can improve soil structure and contribute nutrients.\n\nTime to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.\n\nMix dry browns with fresh greens. Avoid thick, wet layers that keep air out.\n\nIf the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.\n\nCheck moisture and air as the heap changes; one recipe does not suit every mix of materials.\n\nA hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.\n\nKeep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.\n\nDo not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.\n\nKeep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.\n\nUse only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.\n\nCheck the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
-        "Umgquba yi-organic matter ebolisiweyo phantsi kweemeko ezilawulwayo.\n\nUmgquba ogqityiweyo unokuphucula isakhiwo somhlaba kwaye unegalelo kwizondlo.\n\nIxesha lokulunga liyahluka ngokweempahla, ukufuma, umoya nobushushu. Igama lephondo okanye inani elimiselweyo leeveki asiso isivivinyo sokulunga.\n\nXuba i-browns ezomileyo (izinto ezomileyo ezinsundu) ne-greens ezintsha (izinto ezintsha eziluhlaza). Phepha imigangatho eshinyeneyo, emanzi evala umoya.\n\nUkuba inqwaba iba bushelelezi okanye inuka kakhulu i-ammonia, yongeza i-browns ezomileyo uyiguqule.\n\nHlola ukufuma nomoya njengoko inqwaba itshintsha; iresiphi enye ayifaneli zonke ngxubevange zeempahla.\n\nIqondo eliphakathi elishushu aliqinisekisi ukuba yonke inxalenye yenqwaba iphathiwe. Ixesha, ubushushu nolawulo zonke ziyabalulekile.\n\nMusa ukufaka inyama, ubisi neemveliso zobisi, izityalo ezigulayo, inkunkuma yezilwanyana zasekhaya nezinto ezingcolisiweyo kule nkqubo ilula yasekhaya.\n\nMusa ukucinga ukuba ukwenza umgquba ekhaya kutshabalalisa yonke imbewu yokhula okanye zonke izinto eziphilayo ezibangela izifo. Sebenzisa inkqubo eqatshelwayo apho kufuneka ucoceko.\n\nMusa ukufaka iingxowa zembewu ye-wattle enqwabeni yomgquba. Inqwaba eqhelekileyo isenokungawenzi yonke imbewu ingakwazi ukukhula.\n\nSebenzisa kuphela izinto ezicocekileyo, ezingaphathwanga. Ixolo lomthi libola ngokucotha; ukuba lixolo kuphela akuqinisekisi ukuba alinakungcola.\n\nHlola inqwaba uyiguqule xa ifuna umoya okanye ukuxutywa okungakumbi. Yigcine ifumile kunokuba izele ngamanzi.",
+        "Umgquba yi-organic matter ebolisiweyo phantsi kweemeko ezilawulwayo.\n\nUmgquba ogqityiweyo unokuphucula isakhiwo somhlaba kwaye unegalelo kwizondlo.\n\nIxesha lokulunga liyahluka ngokweempahla, ukufuma, umoya nobushushu. Igama lephondo okanye inani elimiselweyo leeveki asiso isivivinyo sokulunga.\n\nXuba i-browns ezomileyo (izinto ezomileyo ezinsundu) ne-greens ezintsha (izinto ezintsha eziluhlaza). Phepha imigangatho eshinyeneyo, emanzi evala umoya.\n\nUkuba inqwaba iba bushelelezi okanye inuka kakhulu i-ammonia, yongeza i-browns ezomileyo uyiguqule.\n\nHlola ukufuma nomoya njengoko inqwaba itshintsha; iresiphi enye ayifaneli zonke ngxubevange zeempahla.\n\nIqondo eliphakathi elishushu aliqinisekisi ukuba yonke inxalenye yenqwaba iphathiwe. Ixesha, ubushushu nolawulo zonke ziyabalulekile.\n\nMusa ukufaka inyama, ubisi neemveliso zobisi, izityalo ezigulayo, inkunkuma yezilwanyana zasekhaya nezinto ezingcolisiweyo kule nkqubo ilula yasekhaya.\n\nMusa ukucinga ukuba ukwenza umgquba ekhaya kutshabalalisa yonke imbewu yokhula okanye zonke izinto eziphilayo ezibangela izifo. Sebenzisa inkqubo eqatshelwayo apho kufuneka ucoceko.\n\nMusa ukufaka amaqokobhe embewu (seed pods) ye-wattle enqwabeni yomgquba. Inqwaba eqhelekileyo isenokungawenzi yonke imbewu ingakwazi ukukhula.\n\nSebenzisa kuphela izinto ezicocekileyo, ezingaphathwanga. Ixolo lomthi libola ngokucotha; ukuba lixolo kuphela akuqinisekisi ukuba alinakungcola.\n\nHlola inqwaba uyiguqule xa ifuna umoya okanye ukuxutywa okungakumbi. Yigcine ifumile kunokuba izele ngamanzi.",
       ),
       keyPoints: [
         pair(
@@ -1249,11 +1249,11 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         ),
         pair(
           "A hot centre does not prove the whole heap is sanitised",
-          "Iqondo eliphakathi elishushu aliqinisekisi ukuba yonke inqwaba icocekile",
+          "Iqondo eliphakathi elishushu aliqinisekisi ukuba yonke inqwaba ibulele iintsholongwane nembewu",
         ),
         pair(
           "Keep seed pods and contaminated materials out",
-          "Musa ukufaka iingxowa zembewu nezinto ezingcolisiweyo",
+          "Musa ukufaka amaqokobhe embewu (seed pods) nezinto ezingcolisiweyo",
         ),
         pair(
           "Judge readiness from the compost condition, not a fixed regional timetable",
@@ -1293,7 +1293,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         {
           question: pair(
             "Why keep wattle seed pods out of an ordinary compost heap?",
-            "Kutheni kungafakwa iingxowa zembewu ye-wattle enqwabeni yomgquba eqhelekileyo?",
+            "Kutheni kungafakwa amaqokobhe embewu (seed pods) ye-wattle enqwabeni yomgquba eqhelekileyo?",
           ),
           options: [
             pair(
@@ -1306,17 +1306,17 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
             ),
             pair(
               "Pods always attract termites",
-              "Iingxowa zihlala zitsala ii-termite",
+              "Amaqokobhe embewu ahlala etsala ii-termite",
             ),
             pair(
               "Pods release a gas that kills every soil organism",
-              "Iingxowa zikhupha irhasi ebulala zonke izinto eziphilayo zomhlaba",
+              "Amaqokobhe embewu akhupha irhasi ebulala zonke izinto eziphilayo zomhlaba",
             ),
           ],
           sourceCorrectIndex: 1,
           rationale: pair(
             "An ordinary heap may not expose every seed to conditions that make it non-viable. Excluding pods avoids spreading them with the compost.",
-            "Inqwaba eqhelekileyo isenokungazityhilela zonke iimbewu kwiimeko ezizenza zingakwazi ukukhula. Ukungazifaki iingxowa kuphepha ukuzisasaza kunye nomgquba.",
+            "Inqwaba eqhelekileyo isenokungazityhilela zonke iimbewu kwiimeko ezizenza zingakwazi ukukhula. Ukungawafaki amaqokobhe embewu kuphepha ukuwasasaza kunye nomgquba.",
           ),
         },
       ],
@@ -1325,7 +1325,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       id: "soil-health-l3",
       infographicAlt: pair(
         "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
-        "Amabala amabini omhlaba phantsi kwelanga elinye: umhlaba ongenanto utyibilikile womile, umhlaba ogqunyiweyo usamnyama usafumile.",
+        "Amabala amabini omhlaba phantsi kwelanga elinye: umhlaba ongenanto uqhekekile womile, umhlaba ogqunyiweyo usamnyama usafumile.",
       ),
       title: pair(
         "Mulching and Cover Crops: Protecting and Building Soil",
@@ -1333,7 +1333,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce evaporation, soften the impact of rain and suppress weeds.\n\nKeep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.\n\nCover crops can protect ground between main crops. Choose for local weather, available water and the next planting.\n\nThe course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.\n\nWorm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.\n\nLiquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.\n\nLeachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.\n\nA Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.\n\nCover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
-        "Gquma umhlaba ongenanto ngengca yokugquma (mulch) efanelekileyo nicocekileyo, njenge-straw, ingca eyomileyo okanye iziqwengana zomthi.\n\nIngca yokugquma inokunciphisa ukuphuma kwamanzi ngomphunga, ithambise ukubetha kwemvula kwaye ithintele ukhula.\n\nYigcine kude neziqu zemithi nezezityalo. Hlola ukufuma ngaphantsi uze ulungise umaleko; ingca yokugquma eninzi ayisoloko ilunge ngakumbi.\n\nIzityalo zokugquma (cover crops) zinokukhusela umhlaba phakathi kwezityalo eziphambili. Khetha ngokwemozulu yasekuhlaleni, amanzi akhoyo nokutyala okulandelayo.\n\nImizekelo yekhosi ibandakanya i-oats, i-lupins, i-sunn hemp ne-cowpea. Hlola ukufaneleka kwasekuhlaleni ngaphambi kokuhlwayela.\n\nIi-legume (izityalo ezifana neembotyi) zifuna ibhaktheriya efanelekileyo neemeko zokukhula ukuze zibambe i-nitrogen. Izondlo ezisentsalelweni yazo ziyafumaneka njengoko impahla ibola.\n\nIifama zeentshulube (worm farms) zinokuguqula intsalela yokutya efanelekileyo nezinto zokulala zibe yinkunkuma yeentshulube (worm castings). Hlola ibhokisi kunokuba ulindele umhla omiselweyo wokuvuna.\n\nUlwelo oluthontelayo ngokwendalo kwibhokisi yeentshulube lubizwa ngokuba yi-leachate. Aluyonto enye neti yenkunkuma yeentshulube elungisiweyo.\n\nI-leachate inokuba nezinto eziphilayo eziyingozi okanye izinto eziyingozi. Musa ukuyisebenzisa kwizityalo ezityiwayo okanye ucinge ukuba ukuyinciphisa ngamanzi kuyenza ikhuseleke.\n\nIntsimi yaseHighveld eshiywe ingenanto emva kokuvuna umbona ijongene neengozi ezimbini eziphambili.\n\nUmoya wobusika unokuthwala umhlaba ongaphezulu owomileyo.\n\nIsaqhwithi sokuqala esikhulu sentwasahlobo sinokubetha umhlaba ongenanto sonakalise umphezulu nesakhiwo sawo. Ukuba amanzi aqukuqela entsimini, anokuthwala umhlaba okhululekileyo.\n\nIzityalo zokugquma, ingca yokugquma ne-organic matter zinokunceda ukubamba umhlaba endaweni nokuwugcina uphila.",
+        "Gquma umhlaba ongenanto ngengca yokugquma (mulch) efanelekileyo necocekileyo, njenge-straw, ingca eyomileyo okanye iziqwengana zomthi.\n\nIngca yokugquma inokunciphisa ukuphuma kwamanzi ngomphunga, ithambise ukubetha kwemvula kwaye ithintele ukhula.\n\nYigcine kude neziqu zemithi nezezityalo. Hlola ukufuma ngaphantsi uze ulungise umaleko; ingca yokugquma eninzi ayisoloko ilunge ngakumbi.\n\nIzityalo zokugquma (cover crops) zinokukhusela umhlaba phakathi kwezityalo eziphambili. Khetha ngokwemozulu yasekuhlaleni, amanzi akhoyo nokutyala okulandelayo.\n\nImizekelo yekhosi ibandakanya i-oats, i-lupins, i-sunn hemp ne-cowpea. Hlola ukufaneleka kwasekuhlaleni ngaphambi kokuhlwayela.\n\nIi-legume (izityalo ezifana neembotyi) zifuna ibhaktheriya efanelekileyo neemeko zokukhula ukuze zibambe i-nitrogen. Izondlo ezisentsalelweni yazo ziyafumaneka njengoko impahla ibola.\n\nIifama zeentshulube (worm farms) zinokuguqula intsalela yokutya efanelekileyo nezinto zokulala zibe yinkunkuma yeentshulube (worm castings). Hlola ibhokisi kunokuba ulindele umhla omiselweyo wokuvuna.\n\nUlwelo oluthontelayo ngokwendalo kwibhokisi yeentshulube lubizwa ngokuba yi-leachate. Aluyonto enye neti yenkunkuma yeentshulube elungisiweyo.\n\nI-leachate inokuba nezinto eziphilayo eziyingozi okanye izinto eziyingozi. Musa ukuyisebenzisa kwizityalo ezityiwayo okanye ucinge ukuba ukuyinciphisa ngamanzi kuyenza ikhuseleke.\n\nIntsimi yaseHighveld eshiywe ingenanto emva kokuvuna umbona ijongene neengozi ezimbini eziphambili.\n\nUmoya wobusika unokuthwala umhlaba ongaphezulu owomileyo.\n\nIsaqhwithi sokuqala esikhulu sentwasahlobo sinokubetha umhlaba ongenanto sonakalise umphezulu nesakhiwo sawo. Ukuba amanzi aqukuqela entsimini, anokuthwala umhlaba okhululekileyo.\n\nIzityalo zokugquma, ingca yokugquma ne-organic matter zinokunceda ukubamba umhlaba endaweni nokuwugcina uphila.",
       ),
       keyPoints: [
         pair(
@@ -1434,7 +1434,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       id: "vegetables-staples-l1",
       infographicAlt: pair(
         "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
-        "Ibhedi ephakanyisiweyo ebanzi cishe imitha e-1.2, enendlela macala omabini, ukuze umntu afikelele embindini usuka macala omabini ngaphandle kokuma kanye phezu komhlaba ekulinywa kuyo.",
+        "Ibhedi ephakanyisiweyo ebanzi malunga nemitha e-1.2, enendlela macala omabini, ukuze umntu afikelele embindini usuka macala omabini ngaphandle kokuma kanye phezu komhlaba ekulinywa kuwo.",
       ),
       title: pair(
         "Preparing and Planting Your Beds",
@@ -1442,7 +1442,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.\n\nThe protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.\n\nOne metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.\n\nNow think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.\n\nThere's no single bed shape that's right everywhere.\n\nStart with the least disturbance that solves your problem.\n\nNo-dig suits most garden soils. Leave the structure alone and build fertility on top.\n\nDo not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.\n\nRaised beds suit wet ground, where water needs somewhere to drain away to.\n\nSunken beds suit dry ground, where you want to catch and hold what rain you get.\n\nLook after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.\n\nSome crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.\n\nOthers do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.\n\nUse spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.\n\nBefore you plant, mark the bed out.\n\nOne point two metres wide. Three metres long. One practice bed.\n\nUse pegs and string. Mark the rectangle, and mark both access paths.\n\nThen prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.\n\nA string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.\n\nThat bed gets easier to improve every season, because you stopped walking on it.",
-        "Umhlaba ocinezelekileyo (compacted) ulahlekelwa zizithuba zawo zomoya. Iingcambu ziyacotha. Amanzi angena ngendlela eyahlukileyo. Ibhedi iya ngokuba nzima ukuyisebenza ngalo lonke ixesha lonyaka.\n\nUkukhusela kulula. Iindlela ezisisigxina, kunye nebhedi emxinwa ngokwaneleyo ukuze ufikelele embindini usuka macala omabini.\n\nUbubanzi obuyimitha e-1 ukuya kwi-1.2. Yinani elisebenzayo elo. Kububanzi obunjalo unokufikelela embindini usuka kwenye yeendlela, kwaye iinyawo zakho aziyichukumisi indawo ekulinywa kuyo.\n\nNgoku cinga ngamabhedi akho. Ngaba unokufikelela embindini ungangeni ngaphakathi? Yiya uzame oko phambi kokuba utyale enye into.\n\nAkukho simo sibhedi esinye esilungileyo kuyo yonke indawo.\n\nQala ngendlela ephazamisa umhlaba kancinci ngokuphambili esonjulula ingxaki yakho.\n\nIndlela yokungombi (no-dig) ilungele uninzi lwemihlaba yegadi. Ungawuphazamisi ulwakhiwo lwawo, wakhe ubutyebi bomhlaba phezulu.\n\nMusa ukumba udongwe olumanzi. Ukuba ukucinezeleka komhlaba okanye ukungaphumi kakuhle kwamanzi kubi kakhulu, chonga unobangela ngokufumana icebiso lasekuhlaleni phambi kokukhetha ukulima nzulu ngakumbi.\n\nAmabhedi aphakanyisiweyo (raised beds) alungele umhlaba omanzi, apho amanzi efuna indawo anokuhamba kuyo.\n\nAmabhedi angena emhlabeni (sunken beds) alungele umhlaba owomileyo, apho ufuna ukubamba nokugcina imvula oyifumanayo.\n\nJonga emva kwemvula enkulu. Amanzi ahlala phi okanye abaleka phi? Dibanisa oko ukubonileyo necebiso lomhlaba nelokuphuma kwamanzi phambi kokukhetha ibhedi.\n\nEzinye izityalo azikuthandi ukuphazanyiswa kweengcambu zazo. Zikhula kakuhle xa zihlwayelwa ngqo apho ziza kukhula khona. Iimbotyi, iikherothi (carrots) nombona zikweli qela.\n\nEzinye zikhula kakuhle xa ziqala zikhuselekile kwindawo yokuhlwayela imbewu (nursery), emva koko zitshintshelwe kwenye indawo. Utamatisi neebrassica (izityalo zosapho lwekhaphetshu) zikweli qela.\n\nSebenzisa isikhokelo somgama phakathi kwezityalo ngokwesityalo, uhlobo lwaso neemeko zasekuhlaleni. Jonga ipakethi yembewu necebiso labalimi basekuhlaleni. Qaphela ukuxinana njengoko izityalo zikhula.\n\nPhambi kokuba utyale, phawula ibhedi.\n\nUbubanzi obuyimitha e-1.2. Ubude obuyimitha emithathu. Ibhedi enye yokuziqhelanisa.\n\nSebenzisa izikhonkwane nentambo. Phawula unxande, uphawule neendlela zombini zokufikelela.\n\nEmva koko lungiselela umhlaba wakho — qala ngokungombi, kwaye ungombe nzulu kuphela xa umhlaba wakho uyidinga ngokwenene.\n\nUmgca wentambo uguqula ingcamango ibe sisigqibo. Xa iindlela sele zikhona, zigcine. Xa indawo ekulinywa kuyo sele ikhona, ikhusele.\n\nLoo bhedi iya ngokuba lula ukuyiphucula ngalo lonke ixesha lonyaka, kuba uyekile ukuhamba phezu kwayo.",
+        "Umhlaba ocinezelekileyo (compacted) ulahlekelwa zizithuba zawo zomoya. Iingcambu ziyacotha. Amanzi angena ngendlela eyahlukileyo. Ibhedi iba nzima ngakumbi ukuyisebenza ixesha ngalinye lonyaka.\n\nUkukhusela kulula. Iindlela ezisisigxina, kunye nebhedi emxinwa ngokwaneleyo ukuze ufikelele embindini usuka macala omabini.\n\nUbubanzi obuyimitha e-1 ukuya kwi-1.2. Yinani elisebenzayo elo. Kububanzi obunjalo unokufikelela embindini usuka kwenye yeendlela, kwaye iinyawo zakho azize ziyichukumise indawo ekulinywa kuyo.\n\nNgoku cinga ngamabhedi akho. Ngaba unokufikelela embindini ungangeni ngaphakathi? Yiya uzame oko phambi kokuba utyale enye into.\n\nAkukho simo sibhedi esinye esilungileyo kuyo yonke indawo.\n\nQala ngeyona ndlela iphazamisa umhlaba kancinci, kodwa esonjulula ingxaki yakho.\n\nIndlela yokungembi (no-dig) ilungele uninzi lwemihlaba yegadi. Ungawuphazamisi ulwakhiwo lwawo, wakhe ubutyebi bomhlaba phezulu.\n\nMusa ukumba udongwe olumanzi. Ukuba ukucinezeleka komhlaba okanye ukungaphumi kakuhle kwamanzi kubi kakhulu, chonga unobangela ngokufumana icebiso lasekuhlaleni phambi kokukhetha ukulima nzulu ngakumbi.\n\nAmabhedi aphakanyisiweyo (raised beds) alungele umhlaba omanzi, apho amanzi efuna indawo anokuhamba kuyo.\n\nAmabhedi angena emhlabeni (sunken beds) alungele umhlaba owomileyo, apho ufuna ukubamba nokugcina imvula oyifumanayo.\n\nJonga emva kwemvula enkulu. Amanzi ahlala phi okanye abaleka phi? Dibanisa oko ukubonileyo necebiso lomhlaba nelokuphuma kwamanzi phambi kokukhetha ibhedi.\n\nEzinye izityalo azikuthandi ukuphazanyiswa kweengcambu zazo. Zikhula kakuhle xa zihlwayelwa ngqo apho ziza kukhula khona. Iimbotyi, iminqathe (carrots) nombona zikweli qela.\n\nEzinye zikhula kakuhle xa ziqala zikhuselekile kwindawo yokuhlwayela imbewu (nursery), emva koko zitshintshelwe kwenye indawo. Iitumato neebrassica (izityalo zosapho lwekhaphetshu) zikweli qela.\n\nSebenzisa isikhokelo somgama phakathi kwezityalo ngokwesityalo, uhlobo lwaso neemeko zasekuhlaleni. Jonga ipakethi yembewu necebiso labalimi basekuhlaleni. Qaphela ukuxinana njengoko izityalo zikhula.\n\nPhambi kokuba utyale, phawula ibhedi.\n\nUbubanzi obuyimitha e-1.2. Ubude obuyimitha emithathu. Ibhedi enye yokuziqhelanisa.\n\nSebenzisa izikhonkwane nentambo. Phawula unxande, uphawule neendlela zombini zokufikelela.\n\nEmva koko lungiselela umhlaba wakho — qala ngokungembi, kwaye wembe nzulu kuphela xa umhlaba wakho uyidinga ngokwenene.\n\nUmgca wentambo uguqula ingcamango ibe sisigqibo. Xa iindlela sele zikhona, zigcine. Xa indawo ekulinywa kuyo sele ikhona, ikhusele.\n\nLoo bhedi iba lula ngakumbi ukuyiphucula ixesha ngalinye lonyaka, kuba uyekile ukuhamba phezu kwayo.",
       ),
       keyPoints: [
         pair(
@@ -1500,7 +1500,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           options: [
             pair(
               "Tomatoes, which need an early start",
-              "Utamatisi, ofuna ukuqala kwangethuba",
+              "Itumato, efuna ukuqala kwangethuba",
             ),
             pair(
               "Brassicas, which need protection while small",
@@ -1518,7 +1518,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           sourceCorrectIndex: 2,
           rationale: pair(
             "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
-            "Iimbotyi nezinye izityalo ezikhawulezayo, ezineengcambu ezibuthathaka, zimila kakubi emva kokothuka kokutshintshelwa — ukuzihlwayela ngqo ebhedini kuyayiphepha loo ngxaki ngokupheleleyo.",
+            "Iimbotyi nezinye izityalo ezikhawulezayo, ezineengcambu ezibuthathaka, zikhula kakubi emva kokothuka kokutshintshelwa — ukuzihlwayela ngqo ebhedini kuyayiphepha loo ngxaki ngokupheleleyo.",
           ),
         },
       ],
@@ -1535,7 +1535,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "Succession planting is a calendar habit, not a special crop.\n\nChoose something your household actually eats often. Then sow a small amount of it, again and again.\n\nPlant a short row every two to three weeks.\n\nLess waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.\n\nSeparate sowings may reduce the risk of losing everything at once. They do not guarantee a harvest if difficult conditions continue.\n\nWhich fast crop could you sow in small batches? Decide on one, and start it this week.\n\nHere's what it looks like in practice.\n\nSow one. Then two to three weeks later, sow two. Then sow three. Then sow four.\n\nWith suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.\n\nTwo to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.\n\nWatch what your own garden does, and adjust the interval. That observation is the skill.\n\nIntercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.\n\nThe Three Sisters is an example from Indigenous farming traditions in the Americas.\n\nMaize gives height and structure.\n\nBeans climb the maize, and store as protein.\n\nPumpkin spreads across the ground, shading the soil and holding moisture.\n\nTiming matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.\n\nThe plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.\n\nA household may have a hungry gap: weeks when stored food runs low before the next harvest is ready.\n\nYours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.\n\nDon't copy somebody else's calendar. Name your own months first.\n\nWrite them down. Then choose the crop and the sowing date that puts food into that gap.\n\nThat's planning backwards, and it's the difference between a garden that looks productive and a household that eats.",
-        "Ukutyala ngokulandelelana (succession planting) yimikhwa yekhalenda, hayi isityalo esikhethekileyo.\n\nKhetha into edliwa rhoqo yikhaya lakho. Emva koko uhlwayele isixa esincinci sayo, kuphindaphindwe.\n\nTyala umqolo omfutshane rhoqo emva kweeveki ezimbini ukuya kwezintathu.\n\nUkonakala kuncinci xa kunesivuno esiphuphumayo. Ukutya okutsha ixesha elide. Kwaye umsebenzi usasazeka ebudeni belixa lonyaka endaweni yokuwela phezu kwakho kanye.\n\nUkuhlwayela ngamaxesha ahlukeneyo kunokunciphisa ingozi yokulahlekelwa yiyo yonke into kanye. Akuqinisekisi isivuno ukuba iimeko ezinzima ziyaqhubeka.\n\nSisiphi isityalo esikhawulezayo onokusihlwayela ngamaqela amancinci? Khetha esinye, uqale kule veki.\n\nNantsi indlela ekubonakala ngayo ekusebenzeni.\n\nHlwayela eyodwa. Emva koko emva kweeveki ezimbini ukuya kwezintathu, hlwayela ezimbini. Emva koko hlwayela ezintathu. Emva koko hlwayela ezine.\n\nNgexesha elifanelekileyo lesityalo, izivuno ziyakwazi ukuqala ukudibana. Iqela lokuqala alisoloko lilungile ngexesha lokuhlwayela okwesine.\n\nIiveki ezimbini ukuya kwezintathu sisingqi sokuqala, asingomthetho. Isityalo samagqabi sexesha elibandayo sinokuhlala ixesha elide. Ubushushu bunokukhawulezisa izinto, okanye bubangele ukuba isityalo singaphumeleli.\n\nQaphela oko igadi yakho ikwenzayo, kwaye uguqule ixesha eliphakathi kokuhlwayela. Oko kuqwalasela kokona buchule.\n\nUkuxuba izityalo (intercropping) akukuthi nje ukuzixinaniselanisa izityalo ezahlukeneyo. Isityalo ngasinye sidinga umsebenzi, nendawo eyaneleyo yokuwenza.\n\nI-Three Sisters ngumzekelo ovela kwizithethe zokulima zabantu bomthonyama baseMerika (the Americas).\n\nUmbona unika ukuphakama nesakhiwo.\n\nIimbotyi ziyakhwela kumbona, kwaye zigcina iprotheyini.\n\nIthanga lisasazeka emhlabeni, lisithile umhlaba kwaye ligcina ukumanzi.\n\nIxesha liyabaluleka. Qala umbona kuqala, ukuze ube nokomelela ngokwaneleyo ukuthwala iimbotyi xa ziqala ukukhwela.\n\nIzityalo zisenokukhuphisana. Zinike indawo, amanzi nokukhanya okufanelekileyo. Iimbotyi zibamba inayitrojeni kunye neebhaktheriya zeengcambu, kodwa musa ukuthatha ngokuthi zondla umbona kwangoko; izondlo ezikwintsalela zikhululwa ngexesha lokubola.\n\nIkhaya linokuba nesikhewu sendlala (hungry gap): iiveki apho ukutya okugciniweyo kuncipha phambi kokuba isivuno esilandelayo silunge.\n\nEyakho isenokuza emva kokuba umbona ogciniweyo uphelile. Isenokuza phambi kokuba imifuno eluhlaza yasebusika ilunge. Isenokuza ngexesha elomileyo apho amanzi ekhawulela igadi.\n\nMusa ukukopa ikhalenda yomnye umntu. Qala ngokubiza amagama eenyanga zakho.\n\nZibhale phantsi. Emva koko ukhethe isityalo nomhla wokuhlwayela ofaka ukutya kuloo sikhewu.\n\nOko kukucwangcisa ubuyela umva, kwaye yiyo eyahlula igadi ebonakala ivelisa kwikhaya elidlayo ngokwenene.",
+        "Ukutyala ngokulandelelana (succession planting) yimikhwa yekhalenda, hayi isityalo esikhethekileyo.\n\nKhetha into edliwa rhoqo yikhaya lakho. Emva koko uhlwayele isixa esincinci sayo, kuphindaphindwe.\n\nTyala umqolo omfutshane rhoqo emva kweeveki ezimbini ukuya kwezintathu.\n\nUkonakala kuncinci xa kunesivuno esiphuphumayo. Ukutya okutsha ixesha elide. Kwaye umsebenzi usasazeka ebudeni bexesha lonyaka endaweni yokuwela phezu kwakho kanye.\n\nUkuhlwayela ngamaxesha ahlukeneyo kunokunciphisa ingozi yokulahlekelwa yiyo yonke into kanye. Akuqinisekisi isivuno ukuba iimeko ezinzima ziyaqhubeka.\n\nSisiphi isityalo esikhawulezayo onokusihlwayela ngamaqela amancinci? Khetha esinye, uqale kule veki.\n\nNantsi indlela ekubonakala ngayo ekusebenzeni.\n\nHlwayela eyodwa. Emva koko emva kweeveki ezimbini ukuya kwezintathu, hlwayela ezimbini. Emva koko hlwayela ezintathu. Emva koko hlwayela ezine.\n\nNgexesha elifanelekileyo lesityalo, izivuno ziyakwazi ukuqala ukudibana. Iqela lokuqala alisoloko lilungile ngexesha lokuhlwayela okwesine.\n\nIiveki ezimbini ukuya kwezintathu sisingqi sokuqala, asingomthetho. Isityalo samagqabi sexesha elibandayo sinokuhlala ixesha elide. Ubushushu bunokukhawulezisa izinto, okanye bubangele ukuba isityalo singaphumeleli.\n\nQaphela oko igadi yakho ikwenzayo, kwaye uguqule ixesha eliphakathi kokuhlwayela. Oko kuqwalasela kokona buchule.\n\nUkuxuba izityalo (intercropping) akukuthi nje ukuzixinaniselanisa izityalo ezahlukeneyo. Isityalo ngasinye sidinga umsebenzi, nendawo eyaneleyo yokuwenza.\n\nI-Three Sisters ngumzekelo ovela kwizithethe zokulima zabantu bomthonyama baseMerika (the Americas).\n\nUmbona unika ukuphakama nesakhiwo.\n\nIimbotyi ziyakhwela kumbona, kwaye zigcina iprotheyini.\n\nIthanga lisasazeka emhlabeni, lisithile umhlaba kwaye ligcina ukumanzi.\n\nIxesha liyabaluleka. Qala umbona kuqala, ukuze ube nokomelela ngokwaneleyo ukuthwala iimbotyi xa ziqala ukukhwela.\n\nIzityalo zisenokukhuphisana. Zinike indawo, amanzi nokukhanya okufanelekileyo. Iimbotyi zibamba inayitrojeni kunye neebhaktheriya zeengcambu, kodwa musa ukuthatha ngokuthi zondla umbona kwangoko; izondlo ezikwintsalela zikhululwa ngexesha lokubola.\n\nIkhaya linokuba nesikhewu sendlala (hungry gap): iiveki apho ukutya okugciniweyo kuncipha phambi kokuba isivuno esilandelayo silunge.\n\nEyakho isenokuza emva kokuba umbona ogciniweyo uphelile. Isenokuza phambi kokuba imifuno eluhlaza yasebusika ilunge. Isenokuza ngexesha elomileyo apho amanzi ekhawulela igadi.\n\nMusa ukukopa ikhalenda yomnye umntu. Qala ngokubiza amagama eenyanga zakho.\n\nZibhale phantsi. Emva koko ukhethe isityalo nomhla wokuhlwayela ofaka ukutya kuloo sikhewu.\n\nOko kukucwangcisa ubuyela umva, kwaye yiyo eyahlula igadi ebonakala ivelisa kwikhaya elidlayo ngokwenene.",
       ),
       keyPoints: [
         pair(
@@ -1620,7 +1620,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       id: "vegetables-staples-l3",
       infographicAlt: pair(
         "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.",
-        "Izityalo ezintathu eziyisiseko kunye: isiqu eside sokusanhlamvu, isityalo esikhwelayo kwisigxina, nesityalo sengcambu esibonakala sisemhlabeni isiqingatha.",
+        "Izityalo ezintathu eziyisiseko kunye: isiqu eside sokusanhlamvu, isityalo esikhwelayo kwisibonda, nesityalo sengcambu esibonakala sisemhlabeni isiqingatha.",
       ),
       title: pair(
         "Staple Crops: Maize, Beans, and Root Vegetables",
@@ -1628,7 +1628,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nIt means one failure doesn't finish your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.",
-        "Isityalo esiyisiseko sifanelwe sisikhundla saso kuba sondla ikhaya ngaphaya kosuku lwesivuno.\n\nSithwala amandla okanye iprotheyini. Siyagcinwa, okanye sihlala emhlabeni side sisidinge. Kwaye rhoqo sithwala nenkumbulo yenkcubeko.\n\nIsityalo esiyisiseko esinye sikushiya ungakhuselekanga. Ezimbini okanye ngaphezulu zikunika ukhetho xa imozulu okanye izitshabalalisi zibetha.\n\nLima ubuncinane ezimbini. Hayi enye.\n\nSesiphi isityalo esiyisiseko ekuxhomekeke kuso ikhaya lakho kakhulu ngoku? Yiloo nto engahlukumeza kakhulu ukuba ayiphumelelanga — ngoko yiloo idinga umhlobo.\n\nIsityalo ngasinye esiyisiseko sikukhusela kwinto eyahlukileyo.\n\nUmbona unika iikhalori, kwaye ugcinwa womile. Umbona we-open-pollinated (ohlwayelwa ngokwemvelo) ukuvumela nokuba ugcine imbewu yakho, ukuba ulawula ukwahlukaniswa kwezityalo (isolation) nokukhetha (selection).\n\nIimbotyi ne-cowpeas zinika isivuno seprotheyini enokugcinwa.\n\nUbhatata uphuhlisa ukunyamezela imbalela ngokuthile emva kokuba iingcambu zokugcina sezenziwe. Udinga amanzi kwiiveki zokuqala nangoxa iingcambu zisenziwa; uxinzelelo lwamanzi ngelo xesha lunokunciphisa isivuno. Amagqabi awo amancinci nawo ayadleka.\n\nAmadumbe asinda emhlabeni omanzi ngakumbi, apho ezinye izityalo eziyisiseko zilwa.\n\nQaphela ukuba ziyasilela kwiimeko ezahlukeneyo. Yiloo nto kanye.\n\nUkunyamezela akuthethi ukuba akukho nto isilelayo.\n\nKuthetha ukuba ukusilela okunye akuliphelisi icebo lokutya lekhaya lakho.\n\nIsityalo esinye sisenye indawo yokusilela.\n\nIzityalo ezimbini okanye ngaphezulu eziyisiseko zikunika iindlela ezininzi zokuqhubeka udla.\n\nIzityalo ezahlukeneyo zisebenzisa amanzi, umhlaba namaxesha ngokwahlukeneyo. Loo mahluko yikhuseleko.",
+        "Isityalo esiyisiseko sifanelwe sisikhundla saso kuba sondla ikhaya ngaphaya kosuku lwesivuno.\n\nSithwala amandla okanye iprotheyini. Siyagcinwa, okanye sihlala emhlabeni side sisidinge. Kwaye rhoqo sithwala nenkumbulo yenkcubeko.\n\nIsityalo esiyisiseko esinye sikushiya ungakhuselekanga. Ezimbini okanye ngaphezulu zikunika ukhetho xa imozulu okanye izitshabalalisi zibetha.\n\nLima ubuncinane ezimbini. Hayi enye.\n\nSesiphi isityalo esiyisiseko ekuxhomekeke kuso ikhaya lakho kakhulu ngoku? Yiloo nto engahlukumeza kakhulu ukuba ayiphumelelanga — ngoko yiyo leyo efuna iqabane.\n\nIsityalo ngasinye esiyisiseko sikukhusela kwinto eyahlukileyo.\n\nUmbona unika iikhalori, kwaye ugcinwa womile. Umbona we-open-pollinated (impova yawo ithwalwa ngokwendalo ngumoya okanye zizinambuzane) ukuvumela nokuba ugcine imbewu yakho, ukuba ulawula ukwahlukaniswa kwezityalo (isolation) nokukhetha (selection).\n\nIimbotyi ne-cowpeas zinika isivuno seprotheyini enokugcinwa.\n\nIbhatata iphuhlisa ukunyamezela imbalela ngokuthile emva kokuba iingcambu zokugcina sezenziwe. Ifuna amanzi kwiiveki zokuqala nangoxa iingcambu zisenziwa; uxinzelelo lwamanzi ngelo xesha lunokunciphisa isivuno. Amagqabi ayo amancinci nawo ayadleka.\n\nAmadumbe asinda emhlabeni omanzi ngakumbi, apho ezinye izityalo eziyisiseko zilwa.\n\nQaphela ukuba ziyasilela kwiimeko ezahlukeneyo. Yiloo nto kanye.\n\nUkunyamezela akuthethi ukuba akukho nto isilelayo.\n\nKuthetha ukuba ukusilela okunye akuliphelisi icebo lokutya lekhaya lakho.\n\nIsityalo esinye sisenye indawo yokusilela.\n\nIzityalo ezimbini okanye ngaphezulu eziyisiseko zikunika iindlela ezininzi zokuqhubeka udla.\n\nIzityalo ezahlukeneyo zisebenzisa amanzi, umhlaba namaxesha ngokwahlukeneyo. Loo mahluko yikhuseleko.",
       ),
       keyPoints: [
         pair(
@@ -1641,7 +1641,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         ),
         pair(
           "Sweet potato develops some drought tolerance after storage roots form, but needs water early; young leaves are edible",
-          "Ubhatata uphuhlisa ukunyamezela imbalela ngokuthile emva kokuba iingcambu zokugcina sezenziwe, kodwa udinga amanzi kwangoko; amagqabi amancinci ayadleka",
+          "Ibhatata iphuhlisa ukunyamezela imbalela ngokuthile emva kokuba iingcambu zokugcina sezenziwe, kodwa ifuna amanzi kwangoko; amagqabi amancinci ayadleka",
         ),
         pair(
           "Amadumbe (taro) is an underused traditional staple suited to wetter KZN and coastal ground",
@@ -1704,7 +1704,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           sourceCorrectIndex: 1,
           rationale: pair(
             "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
-            "Amadumbe enyaneni akhetha umhlaba onomswakama apho umbona wawuza kuzabalaza — agcwalisa isikhundla ezinye izityalo eziyisiseko ezingenakusimamela kakuhle.",
+            "Amadumbe enyaneni akhetha umhlaba onomswakama apho umbona wawuza kuzabalaza — agcwalisa isikhundla ezinye izityalo eziyisiseko ezingenakusizalisa kakuhle.",
           ),
         },
       ],
@@ -1721,7 +1721,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "Pest pressure usually rises for a reason.\n\nPlants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.\n\nSo before you treat anything, look at the whole system.\n\nIs the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?\n\nA yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.\n\nWork through four steps, in order.\n\nOne. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.\n\nTwo. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.\n\nThree. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.\n\nFour. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.\n\nIf a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nBe honest with yourself about which step you usually skip.",
-        "Uxinzelelo lwezitshabalalisi lunyuka ngesizathu.\n\nIzityalo ezikuxinzelelo. Isityalo esinye esilawula umhlaba. Okanye ukusetyenziswa kakhulu kweekhemikhali sele kwasusa izilwanyana ezizingelayo ebezikunceda.\n\nNgoko phambi kokuba unyange nantoni na, jonga yonke inkqubo.\n\nNgaba isityalo sinqongophele amanzi? Ngaba umhlaba ucinezelekile, okanye awunazondlo ezaneleyo? Ngaba izilwanyana ezizingelayo sele zisebenza ukusonjulula ingxaki?\n\nIgqabi eliphuzi aliyiyo ngokuzenzekelayo inambuzane. Linokuba ngamanzi, ukondliwa, okanye umonakalo wengcambu. Zazi ukuba kungoluphi phambi kokuba wenze nto.\n\nLandela amanyathelo amane, ngokulandelelana.\n\nOkokuqala. Jonga. Jonga indlela umonakalo obonakala ngayo, ingaphantsi legqabi, isiqu, nezityalo ezikufutshane.\n\nOkwesibini. Khangela uxinzelelo. Ukumanza komhlaba, iingcambu, umgama phakathi kwezityalo, ukondliwa, ukuphuma kwamanzi.\n\nOkwesithathu. Khusela abakunceda. Izinambuzane ezinceda zenza umsebenzi obungawenza wena.\n\nOkwesine. Kuphela emva koko, yenza into — kwaye uqale ngento elula esebenzayo. Ukususa ngokwasemzimbeni, imiqobo okanye utshintsho kunakekelo lwesityalo kunokunceda. Qinisekisa ukuba isenzo sifanelana nengxaki kwaye ubone iziphumo.\n\nUkuba unyango luyadingeka, sebenzisa imveliso ebhaliswe isityalo kunye nesitshabalalisi, kwaye ulandele ileyibhile yayo. Oku kubandakanya iimveliso ze-neem. Jonga imiyalelo yokhuseleko nexesha lokulinda phambi kokuvuna. Musa ukuyila imixube okanye iidosi ezomeleleyo ngakumbi.\n\nYiba nyanisekile kuwe ngowuphi umnyathelo osoloko ewutsiba.",
+        "Uxinzelelo lwezitshabalalisi lunyuka ngesizathu.\n\nIzityalo ezikuxinzelelo. Isityalo esinye esilawula umhlaba. Okanye ukusetyenziswa kakhulu kweekhemikhali sele kwasusa izilwanyana ezizingelayo ebezikunceda.\n\nNgoko phambi kokuba unyange nantoni na, jonga yonke inkqubo.\n\nNgaba isityalo sinqongophele amanzi? Ngaba umhlaba ucinezelekile, okanye awunazondlo ezaneleyo? Ngaba izilwanyana ezizingelayo sele zisebenza ukusonjulula ingxaki?\n\nIgqabi elimthubi aliyiyo ngokuzenzekelayo inambuzane. Linokuba ngamanzi, ukondliwa, okanye umonakalo wengcambu. Zazi ukuba kungoluphi phambi kokuba wenze nto.\n\nLandela amanyathelo amane, ngokulandelelana.\n\nOkokuqala. Jonga. Jonga indlela umonakalo obonakala ngayo, ingaphantsi legqabi, isiqu, nezityalo ezikufutshane.\n\nOkwesibini. Khangela uxinzelelo. Ukumanza komhlaba, iingcambu, umgama phakathi kwezityalo, ukondliwa, ukuphuma kwamanzi.\n\nOkwesithathu. Khusela abakunceda. Izinambuzane ezinceda zenza umsebenzi obungawenza wena.\n\nOkwesine. Kuphela emva koko, yenza into — kwaye uqale ngento elula esebenzayo. Ukususa ngokwasemzimbeni, imiqobo okanye utshintsho kunakekelo lwesityalo kunokunceda. Qinisekisa ukuba isenzo sifanelana nengxaki kwaye ubone iziphumo.\n\nUkuba unyango luyadingeka, sebenzisa imveliso ebhaliselwe eso sityalo nesitshabalalisi, kwaye ulandele ileyibhile yayo. Oku kubandakanya iimveliso ze-neem. Jonga imiyalelo yokhuseleko nexesha lokulinda phambi kokuvuna. Musa ukuyila imixube okanye iidosi ezomeleleyo ngakumbi.\n\nYiba nyanisekile kuwe ngowuphi umnyathelo osoloko ewutsiba.",
       ),
       keyPoints: [
         pair(
@@ -1738,7 +1738,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         ),
         pair(
           "If treatment is needed, use a registered product for the crop and pest and follow the label",
-          "Ukuba unyango luyadingeka, sebenzisa imveliso ebhaliswe isityalo nesitshabalalisi kwaye ulandele ileyibhile",
+          "Ukuba unyango luyadingeka, sebenzisa imveliso ebhaliselwe isityalo nesitshabalalisi kwaye ulandele ileyibhile",
         ),
       ],
       quiz: [
@@ -1754,7 +1754,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
             ),
             pair(
               "A product registered for the crop and pest, used according to its label",
-              "Imveliso ebhaliswe isityalo nesitshabalalisi, isetyenziswe ngokweleyibhile yayo",
+              "Imveliso ebhaliselwe isityalo nesitshabalalisi, isetyenziswe ngokweleyibhile yayo",
             ),
             pair(
               "Any product described as natural",
@@ -1774,7 +1774,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         {
           question: pair(
             "A farmer's brassica leaves are turning yellow. Before assuming pests, what should she check first?",
-            "Amagqabi eebrassica zomfama ayaphuzisa. Phambi kokucinga ukuba zizitshabalalisi, ufanele ajonge ntoni kuqala?",
+            "Amagqabi eebrassica zomfama ayajika abe mthubi. Phambi kokucinga ukuba zizitshabalalisi, ufanele ajonge ntoni kuqala?",
           ),
           options: [
             pair(
@@ -1797,7 +1797,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           sourceCorrectIndex: 0,
           rationale: pair(
             "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment.",
-            "Ukuphuzisa kunezizathu ezininzi eziqhelekileyo, kwaye ingxaki yezondlo zomhlaba okanye yokunisela idinga isisombululo esahlukileyo ngokupheleleyo kunesitshabalalisi — ukujonga kuqala kuphepha unyango olulahlekileyo.",
+            "Ukuba mthubi kwamagqabi kunezizathu ezininzi eziqhelekileyo, kwaye ingxaki yezondlo zomhlaba okanye yokunisela idinga isisombululo esahlukileyo ngokupheleleyo kunesitshabalalisi — ukujonga kuqala kuphepha unyango olulahlekileyo.",
           ),
         },
       ],
@@ -1830,7 +1830,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "Open-pollinated seed from a stable variety can produce similar plants when pollination is properly managed. F1 hybrids come from selected parents. Their saved seed can germinate, but the next generation varies; it may not keep the combination you wanted.\n\nSeed sovereignty includes the knowledge and choices needed to grow, save and share suitable seed. Keep the crop and variety identity with each batch.\n\nChoose healthy plants with useful traits. Start with a crop you know and ask a seed-saving mentor how to manage its pollination and selection.",
-        "Imbewu ye-open-pollinated esuka kuhlobo oluzinzileyo inokuvelisa izityalo ezifanayo xa i-pollination (ukudluliselwa kothuli lwentyatyambo ukusuka kwenye intyatyambo ukuya kwenye) ilawulwa ngokufanelekileyo. Ii-F1 hybrid zivela kubazali abakhethiweyo. Imbewu yazo egciniweyo inokuhluma, kodwa isizukulwana esilandelayo siyahluka; kusenokwenzeka ukuba singayigcini indibaniselwano owawuyifuna.\n\nUlawulo lwembewu (seed sovereignty) luquka ulwazi nokhetho olufunekayo ukuze utyale, ulondoloze kwaye wabelane ngembewu efanelekileyo. Gcina ukuchongwa kwesityalo nohlobo kunye neqela ngalinye lembewu.\n\nKhetha izityalo ezinempilo ezinezimpawu eziluncedo. Qala ngesityalo osaziyo, ubuze umcebisi wokulondoloza imbewu ukuba angalulawula njani i-pollination nokukhetha kwaso.",
+        "Imbewu ye-open-pollinated esuka kuhlobo oluzinzileyo inokuvelisa izityalo ezifanayo xa i-pollination (ukudluliselwa kothuli lwentyatyambo ukusuka kwenye intyatyambo ukuya kwenye) ilawulwa ngokufanelekileyo. Ii-F1 hybrid zivela kubazali abakhethiweyo. Imbewu yazo egciniweyo inokuhluma, kodwa isizukulwana esilandelayo siyahluka; kusenokwenzeka ukuba singayigcini indibaniselwano owawuyifuna.\n\nUlawulo lwembewu (seed sovereignty) luquka ulwazi nokhetho olufunekayo ukuze utyale, ulondoloze kwaye wabelane ngembewu efanelekileyo. Gcina ukuchongwa kwesityalo nohlobo kunye neqela ngalinye lembewu.\n\nKhetha izityalo ezinempilo ezineempawu eziluncedo. Qala ngesityalo osaziyo, ubuze umcebisi wokulondoloza imbewu ukuba angayilawula njani i-pollination nokukhetha kwaso.",
       ),
       keyPoints: [
         pair(
@@ -1839,7 +1839,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         ),
         pair(
           "Seed sovereignty means freedom from depending on a seed company every season",
-          "Ulawulo lwembewu lithetha inkululeko ekuxhomekekeni kwinkampani yembewu ngesizini nganye",
+          "Ulawulo lwembewu luthetha inkululeko ekuxhomekekeni kwinkampani yembewu ngesizini nganye",
         ),
         pair(
           "Crop and variety diversity can support adaptation to climate change when varieties are suited to local conditions",
@@ -1847,7 +1847,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         ),
         pair(
           "Select healthy plants with useful traits; use crop-specific seed-saving guidance",
-          "Khetha izityalo ezinempilo ezinezimpawu eziluncedo; sebenzisa isikhokelo sokulondoloza imbewu esithile kwisityalo ngasinye",
+          "Khetha izityalo ezinempilo ezineempawu eziluncedo; sebenzisa isikhokelo sokulondoloza imbewu esithile kwisityalo ngasinye",
         ),
       ],
       quiz: [
@@ -1877,7 +1877,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           sourceCorrectIndex: 1,
           rationale: pair(
             "F1 hybrids are bred by crossing two specific parent lines — their seed carries a mixed, unpredictable genetic recombination, not a stable copy of the parent.",
-            "Ii-F1 hybrid zikhiwa ngokuwelisa imigca emibini ethile yabazali — imbewu yazo iphethe idibaniso lemfuza oluxubeneyo nolungaqikelelekiyo, ayiyiyo ikopi ezinzileyo yomzali.",
+            "Ii-F1 hybrid zenziwa ngokuwelisa imigca emibini ethile yabazali — imbewu yazo iphethe idibaniso lemfuza elixubeneyo nelingaqikelelekiyo, ayiyiyo ikopi ezinzileyo yomzali.",
           ),
         },
         {
@@ -1906,7 +1906,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           sourceCorrectIndex: 1,
           rationale: pair(
             "You're selecting for the traits you want to carry forward — health and vigour matter more long-term than one plant's single biggest harvest.",
-            "Ukhetha izimpawu ozifunayo ukuba ziqhubeke — impilo namandla okukhula zibaluleke ngakumbi kwixesha elide kunesivuno esikhulu sesityalo esinye.",
+            "Ukhetha iimpawu ozifunayo ukuba ziqhubeke — impilo namandla okukhula zibaluleke ngakumbi kwixesha elide kunesivuno esikhulu sesityalo esinye.",
           ),
         },
       ],
@@ -1915,7 +1915,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       id: "seeds-sovereignty-l2",
       infographicAlt: pair(
         "Dry seed is collected from mature pods. The tomato wet-method example shows brief fermentation, rinsing and drying.",
-        "Imbewu eyomileyo iqokelelwa kwiipodi (iingxowa zembewu) ezivuthiweyo. Umzekelo wendlela emanzi yetumato ubonisa ukuvundiswa okufutshane, ukuhlambulula nokuyomisa.",
+        "Imbewu eyomileyo iqokelelwa kwiipodi (iingxowa zembewu) ezivuthiweyo. Umzekelo wendlela emanzi yetumato ubonisa ukuvundiswa (fermentation) okufutshane, ukuhlambulula nokuyomisa.",
       ),
       title: pair(
         "How to Save Seed: Dry and Wet Methods",
@@ -1923,7 +1923,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "Dry seed must mature before collection. Clean away chaff and damaged seed, then finish drying with shade and airflow.\n\nSeed in fleshy fruit needs a crop-specific method. Tomato seed can be briefly fermented to help remove its gel, then rinsed and dried thoroughly. Keep an active jar open or loosely covered. Fermentation is not required for every wet-seeded crop and does not guarantee disease-free seed.\n\nPollination matters too. Maize is wind-pollinated and can cross with other varieties. Tomatoes mostly self-pollinate, but crossing is possible. Check the crop and variety before planning isolation or saving seed.",
-        "Imbewu eyomileyo kufuneka ivuthwe phambi kokuqokelelwa. Susa i-chaff (inkunkuma ethambileyo ejikelezayo imbewu) kunye nembewu eyonakeleyo, uze ugqibezele ukuyomisa emthunzini kukho umoya ohambayo.\n\nImbewu esesiqhamweni esinenyama idinga indlela ethile kwisityalo ngasinye. Imbewu yetumato inokuvundiswa ixesha elifutshane ukunceda ukususa ijeli yayo, emva koko ihlanjululwe yomiswe kakuhle. Gcina ingqayi esebenzayo ivulekile okanye igqunywe ngokukhululekileyo. Ukuvundiswa akufuneki kuzo zonke izityalo ezineembewu ezimanzi kwaye akuqinisekisi mbewu engenasifo.\n\nI-pollination (ukudluliselwa kothuli lwentyatyambo ukusuka kwenye intyatyambo ukuya kwenye) nayo ibalulekile. Umbona ungeniswa ngumoya kwaye unganxibelelana nezinye iintlobo. Iitumato ubukhulu becala ziyazi-pollinate ngokwazo, kodwa ukuxubana kuyenzeka. Jonga isityalo nohlobo phambi kokucwangcisa ukwahlula (isolation) okanye ukulondoloza imbewu.",
+        "Imbewu eyomileyo kufuneka ivuthwe phambi kokuqokelelwa. Susa i-chaff (inkunkuma ethambileyo ejikelezayo imbewu) kunye nembewu eyonakeleyo, uze ugqibezele ukuyomisa emthunzini kukho umoya ohambayo.\n\nImbewu esesiqhamweni esinenyama idinga indlela ethile kwisityalo ngasinye. Imbewu yetumato inokuvundiswa (fermentation) ixesha elifutshane ukunceda ukususa ijeli yayo, emva koko ihlanjululwe yomiswe kakuhle. Gcina ingqayi esebenzayo ivulekile okanye igqunywe ngokukhululekileyo. Ukuvundiswa akufuneki kuzo zonke izityalo ezineembewu ezimanzi kwaye akuqinisekisi mbewu engenasifo.\n\nI-pollination (ukudluliselwa kothuli lwentyatyambo ukusuka kwenye intyatyambo ukuya kwenye) nayo ibalulekile. Uthuli lwentyatyambo lombona luthwalwa ngumoya (wind-pollinated), kwaye umbona unokuxubana nezinye iintlobo. Iitumato ubukhulu becala ziyazi-pollinate ngokwazo, kodwa ukuxubana kuyenzeka. Jonga isityalo nohlobo phambi kokucwangcisa ukwahlula (isolation) okanye ukulondoloza imbewu.",
       ),
       keyPoints: [
         pair(
@@ -1932,11 +1932,11 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         ),
         pair(
           "Tomato fermentation removes gel; other wet seeds need their own processing method",
-          "Ukuvundiswa kwetumato kususa ijeli; ezinye iimbewu ezimanzi zidinga indlela yazo yokulungiswa",
+          "Ukuvundiswa (fermentation) kwetumato kususa ijeli; ezinye iimbewu ezimanzi zidinga indlela yazo yokulungiswa",
         ),
         pair(
           "Tomatoes mostly self-pollinate but can cross; maize is wind-pollinated. Check crop- and variety-specific isolation guidance before saving seed",
-          "Iitumato ubukhulu becala ziyazi-pollinate ngokwazo kodwa zinokuxubana; umbona ungeniswa ngumoya. Jonga isikhokelo sokwahlula esithile kwisityalo nohlobo phambi kokulondoloza imbewu",
+          "Iitumato ubukhulu becala ziyazi-pollinate ngokwazo kodwa zinokuxubana; uthuli lwentyatyambo lombona luthwalwa ngumoya. Jonga isikhokelo sokwahlula esithile kwisityalo nohlobo phambi kokulondoloza imbewu",
         ),
         pair(
           "Rinse processed tomato seed and dry it thoroughly before storage",
@@ -1947,7 +1947,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         {
           question: pair(
             "What does brief fermentation help remove when processing tomato seed?",
-            "Ukuvundiswa okufutshane kunceda ukususa ntoni xa kulungiswa imbewu yetumato?",
+            "Ukuvundiswa (fermentation) okufutshane kunceda ukususa ntoni xa kulungiswa imbewu yetumato?",
           ),
           options: [
             pair(
@@ -1964,7 +1964,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
             ),
             pair(
               "It's purely traditional with no practical function",
-              "Yinto yesiko nje engenasebenzo ngokwenene",
+              "Yinto yesiko nje engenamsebenzi ngokwenene",
             ),
           ],
           sourceCorrectIndex: 1,
@@ -1985,7 +1985,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
             ),
             pair(
               "Maize is wind-pollinated and crosses easily over distance; tomatoes mostly self-pollinate",
-              "Umbona ungeniswa ngumoya kwaye uxubana ngokulula emgama; iitumato ubukhulu becala ziyazi-pollinate ngokwazo",
+              "Uthuli lwentyatyambo lombona luthwalwa ngumoya kwaye umbona uxubana ngokulula emgama; iitumato ubukhulu becala ziyazi-pollinate ngokwazo",
             ),
             pair(
               "Tomatoes don't cross-pollinate at all under any conditions",
@@ -2008,7 +2008,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       id: "seeds-sovereignty-l3",
       infographicAlt: pair(
         "Seed envelopes stored in a sealed container, kept cool, dark and dry. Beside it, ten seeds on a damp cloth — some sprouted, some not — as a germination test.",
-        "Iimvulophu zembewu zigcinwe kwisikhongozeli esivaliweyo, zipholile, zimnyama kwaye ziyomile. Ecaleni kwazo, imbewu elishumi kwilaphu elimanzi — ezinye zihlumile, ezinye azihlumanga — njengovavanyo lokuhluma.",
+        "Iimvulophu zembewu zigcinwe kwisikhongozeli esivaliweyo, zipholile, zimnyama kwaye ziyomile. Ecaleni kwazo, iimbewu ezilishumi kwilaphu elimanzi — ezinye zihlumile, ezinye azihlumanga — njengovavanyo lokuhluma.",
       ),
       title: pair(
         "Drying, Storing, and Sharing Seed",
@@ -2016,7 +2016,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "Dry seed properly before storing it: paper envelopes, not plastic, in a shaded, airy spot — never direct sun or sealed heat. The three enemies of seed viability are heat, light, and moisture. Storage life varies by crop and conditions, so test germination before relying on saved seed.\n\nLabel every envelope with crop, variety, and date saved. Keep thoroughly dry seed in a sealed container in a cool, dark, dry place. Sealing damp seed can trap moisture and damage it.\n\nBefore a new planting season, test a small batch for germination so you're not relying on seed that's quietly lost its viability.\n\nOrganise a seed swap with neighbours this season. What one household saves well, several households can share — and the whole group's variety diversity grows with every swap.",
-        "Yomisa imbewu kakuhle phambi kokuyigcina: kwiimvulophu zephepha, hayi iplastiki, kwindawo enomthunzi nomoya ohambayo — ungaze usebenzise ilanga elithe ngqo okanye ubushushu obuvalelweyo. Iintshaba ezintathu zokukwazi kwembewu ukuhluma kukushisa, ukukhanya nokufuma. Ubomi bembewu ekugcinweni buyahluka ngokwesityalo neemeko, ngoko vavanya ukuhluma phambi kokuthembela kwimbewu egciniweyo.\n\nBhala kwimvulophu nganye isityalo, uhlobo nomhla egciniwe ngawo. Gcina imbewu eyomile kakuhle kwisikhongozeli esivaliweyo kwindawo epholileyo, emnyama, eyomileyo. Ukuvala imbewu emanzi kunganqanda ukufuma kwaye kuyonakalise.\n\nPhambi kwesizini entsha yokutyala, vavanya iqela elincinci ngokuhluma ukuze ungathembeli kwimbewu eyaphulukana ngokuthe cwaka nokukwazi ukuhluma.\n\nCwangcisa ukutshintshisana ngembewu nabamelwane kwesi sizini. Oko umzi omnye ukugcina kakuhle, imizi emininzi inokwabelana ngako — kwaye ukwahluka kweentlobo zeqela lonke kukhula ngokutshintshisana ngalinye.",
+        "Yomisa imbewu kakuhle phambi kokuyigcina: kwiimvulophu zephepha, hayi iplastiki, kwindawo enomthunzi nomoya ohambayo — ungaze usebenzise ilanga elithe ngqo okanye ubushushu obuvalelweyo. Iintshaba ezintathu zokukwazi kwembewu ukuhluma kukushisa, ukukhanya nokufuma. Ubomi bembewu ekugcinweni buyahluka ngokwesityalo neemeko, ngoko vavanya ukuhluma phambi kokuthembela kwimbewu egciniweyo.\n\nBhala kwimvulophu nganye isityalo, uhlobo nomhla egciniwe ngawo. Gcina imbewu eyomile kakuhle kwisikhongozeli esivaliweyo kwindawo epholileyo, emnyama, eyomileyo. Ukuvala imbewu emanzi kungavalela ukufuma ngaphakathi kwaye kuyonakalise.\n\nPhambi kwesizini entsha yokutyala, vavanya iqela elincinci ngokuhluma ukuze ungathembeli kwimbewu eyaphulukana ngokuthe cwaka nokukwazi ukuhluma.\n\nCwangcisa ukutshintshisana ngembewu nabamelwane kwesi sizini. Oko umzi omnye ukugcina kakuhle, imizi emininzi inokwabelana ngako — kwaye ukwahluka kweentlobo zeqela lonke kukhula ngokutshintshisana ngalinye.",
       ),
       keyPoints: [
         pair(
@@ -2092,7 +2092,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           sourceCorrectIndex: 1,
           rationale: pair(
             "A germination test catches seed that's died in storage before you've committed a whole season's planting to it.",
-            "Uvavanyo lokuhluma lubamba imbewu esele ifile ekugcinweni phambi kokuba uthembise ityala lonke lesizini kuyo.",
+            "Uvavanyo lokuhluma lubamba imbewu esele ifile ekugcinweni phambi kokuba uthembele kuyo ekutyaleni kwesizini yonke.",
           ),
         },
       ],
@@ -2125,7 +2125,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "These bacteria convert nitrogen from the air into forms the legume can use.\n\nFind nodules on a spare legume plant. Nodulation and growth depend on the plant, suitable bacteria and growing conditions.\n\nReturn suitable leafy prunings, fallen leaves and crop residues as mulch. Soil organisms release nutrients during decomposition.\n\nThis takes time. A living legume is not an instant fertiliser pipe into the fruit tree.\n\nIt is indigenous to KwaZulu-Natal. In suitable warm conditions, manage this short-lived shrub or small tree as a support plant.\n\nAllow room for its growth. Prune for mulch and reassess it when shade or water competition increases.\n\nSesbania punicea is the invasive red sesbania. Its pods have four lengthwise wings. Confirm identity using reliable botanical guidance.\n\nCheck the full name before planting. Respect the agreed project species list, including any restriction on Sesbania sesban.\n\nUse a sunny, freely draining position. It is a short-lived support shrub; frost and waterlogging can limit it.\n\nDecide whether each plant mainly supplies peas or leafy material. Frequent severe cutting can damage it and reduce the food harvest.\n\nCowpea covers sunny gaps. Pigeon pea provides food and leafy material. Managed Sesbania sesban can supply taller temporary support.\n\nAdd suitable flowering and mulch plants. Keep the mango trunk clear and manage light, water and access.\n\nCount woody supports across the spaces between fruit trees. Sow suitable ground cover by area.\n\nThere is no universal number per fruit tree. Adjust density to water, soil, plant size and your ability to prune and thin.",
-        "Ezi bhaktheriya ziguqula i-nitrogen eseMoyeni ibe yiyo i-legume (isityalo esinembotyi emagobolondweni) enokuyisebenzisa.\n\nFumana ii-nodule (amaqhuma asengcambu) kwisityalo se-legume esiyisipheyo. Ukwenza ii-nodule nokukhula kuxhomekeke kwisityalo, kwibhaktheriya efanelekileyo nakwiimeko zokukhula.\n\nBuyisela iinqunqo zamagqabi ezifanelekileyo, amagqabi awileyo kunye neentsalela zezityalo njengengca yokugquma. Izidalwa eziphila emhlabeni zikhulula izondlo ngexesha lokubola.\n\nOku kuthatha ixesha. I-legume ephilayo ayiyombhobho womanyolo osebenza kwangoko ukuya emthini weziqhamo.\n\nImveli yaseKwaZulu-Natal. Kwiimeko ezifudumeleyo ezifanelekileyo, lawula esi sihlahla siphila ixesha elifutshane okanye umthi omncinci njengesityalo sokuxhasa.\n\nYiyekele indawo yokukhula. Yinqunqe ukuze ufumane ingca yokugquma uphinde uyihlole xa umthunzi okanye ukhuphiswano lwamanzi lunyuka.\n\nI-Sesbania punicea yi-red sesbania ehlaselayo (isityalo sangaphandle esithatha indawo yezinye). Iipodi zayo zineempiko ezine ezihamba ubude. Qinisekisa ukuchongwa kwesityalo usebenzisa isikhokelo sezityalo esithembekileyo.\n\nKhangela igama elipheleleyo phambi kokutyala. Hlonipha uluhlu lweentlobo zezityalo olwavunyelwene ngalo kwiprojekthi, kuquka nasiphi na isithintelo kwi-Sesbania sesban.\n\nSebenzisa indawo enelanga namanzi aphumayo kakuhle. Sisihlahla esixhasayo esiphila ixesha elifutshane; iqabaka nokuhlala kwamanzi emhlabeni kunokusithintela.\n\nLatha ukuba isityalo ngasinye sibonelela kakhulu ngee-pea okanye ngamagqabi. Ukusika rhoqo kakhulu kunokusonzakalisa kwaye kunciphise isivuno sokutya.\n\nI-cowpea igubungela izikhewu ezinelanga. I-pigeon pea ibonelela ngokutya nangamagqabi. I-Sesbania sesban elawulwayo inokubonelela ngenkxaso ende yethutyana.\n\nYongeza izityalo ezifanelekileyo ezidubulayo nezokugquma. Gcina isiqu se-mango sicocekile kwaye ulawule ukukhanya, amanzi nendlela yokufikelela.\n\nBala izixhaso ezinomthi ngaphezu kwezikhewu phakathi kwemithi yeziqhamo. Hlwayela isigqubuthelo somhlaba esifanelekileyo ngokwendawo.\n\nAkukho nani lilodwa elisebenza kuyo yonke imithi yeziqhamo. Hlengahlengisa ukuxinana ngokwamanzi, umhlaba, ubukhulu besityalo kunye namandla akho okunqunqa nokunciphisa.",
+        "Ezi bhaktheriya ziguqula i-nitrogen eseMoyeni ibe yiyo i-legume (isityalo esinembotyi emagobolondweni) enokuyisebenzisa.\n\nFumana ii-nodule (amaqhuma asengcambu) kwisityalo se-legume esongezelelweyo (esingadingekiyo). Ukwenza ii-nodule nokukhula kuxhomekeke kwisityalo, kwibhaktheriya efanelekileyo nakwiimeko zokukhula.\n\nBuyisela iinqunqo zamagqabi ezifanelekileyo, amagqabi awileyo kunye neentsalela zezityalo njengengca yokugquma. Izidalwa eziphila emhlabeni zikhulula izondlo ngexesha lokubola.\n\nOku kuthatha ixesha. I-legume ephilayo ayiyombhobho womanyolo osebenza kwangoko ukuya emthini weziqhamo.\n\nImveli yaseKwaZulu-Natal. Kwiimeko ezifudumeleyo ezifanelekileyo, lawula esi sihlahla siphila ixesha elifutshane okanye umthi omncinci njengesityalo sokuxhasa.\n\nYiyekele indawo yokukhula. Yinqunqe ukuze ufumane ingca yokugquma uphinde uyihlole xa umthunzi okanye ukhuphiswano lwamanzi lunyuka.\n\nI-Sesbania punicea yi-red sesbania ehlaselayo (isityalo sangaphandle esithatha indawo yezinye). Iipodi zayo zineempiko ezine ezihamba ubude. Qinisekisa ukuchongwa kwesityalo usebenzisa isikhokelo sezityalo esithembekileyo.\n\nKhangela igama elipheleleyo phambi kokutyala. Hlonipha uluhlu lweentlobo zezityalo olwavunyelwene ngalo kwiprojekthi, kuquka nasiphi na isithintelo kwi-Sesbania sesban.\n\nSebenzisa indawo enelanga namanzi aphumayo kakuhle. Sisihlahla esixhasayo esiphila ixesha elifutshane; iqabaka nokuhlala kwamanzi emhlabeni kunokusithintela.\n\nGqiba ukuba isityalo ngasinye sibonelela kakhulu ngee-pea okanye ngamagqabi. Ukusika kakhulu nangokuphindaphindiweyo kunokusonzakalisa kwaye kunciphise isivuno sokutya.\n\nI-cowpea igubungela izikhewu ezinelanga. I-pigeon pea ibonelela ngokutya nangamagqabi. I-Sesbania sesban elawulwayo inokubonelela ngenkxaso ende yethutyana.\n\nYongeza izityalo ezifanelekileyo ezidubulayo nezokugquma. Gcina isiqu se-mango sicocekile kwaye ulawule ukukhanya, amanzi nendlela yokufikelela.\n\nBala izixhaso ezinomthi kuzo zonke izikhewu eziphakathi kwemithi yeziqhamo. Hlwayela isigqubuthelo somhlaba esifanelekileyo ngokwendawo.\n\nAkukho nani lilodwa elisebenza kuyo yonke imithi yeziqhamo. Hlengahlengisa ukuxinana ngokwamanzi, umhlaba, ubukhulu besityalo kunye namandla akho okunqunqa nokunciphisa.",
       ),
       keyPoints: [
         pair(
@@ -2149,7 +2149,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         {
           question: pair(
             "When does nitrogen in cut legume material become available to other plants?",
-            "I-nitrogen kwimpahla ye-legume esikiweyo iba yafumaneka nini kwezinye izityalo?",
+            "I-nitrogen ekwimpahla ye-legume esikiweyo ifumaneka nini kwezinye izityalo?",
           ),
           options: [
             pair(
@@ -2218,7 +2218,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "The clip shows a branch cut: the support tree remains standing. Leave enough healthy foliage for the plant to recover.\n\nMatch cutting to the species. Avoid frequent severe cuts on pigeon pea, especially when growing it for peas.\n\nMulch protects the surface, helps conserve moisture and returns organic material.\n\nLeave access for watering and inspection. Cut material into manageable pieces and keep observing moisture and decomposition.\n\nObtain the correct cultivar. Bocking 14 does not spread by viable seed, but root pieces can regrow.\n\nPlace it where it has room and sufficient moisture. Cut leaves as it recovers; do not crowd the young fruit tree.\n\nMany ladybirds eat aphids; some parasitoid wasps attack crop pests. Flowering members such as African basil can add resources.\n\nWatch which insects visit and whether damage changes. A flowering plant does not guarantee pest control.\n\nTulbaghia violacea has narrow leaves and lilac flowers. Place a clump where it has light and room to grow.\n\nObserve visiting insects. Do not promise that a ring of wild garlic will repel pests or cure an outbreak.",
-        "Iklip ibonisa ukusikwa kwesebe: umthi ongumxhasi usama. Shiya amagqabi anempilo anele ukuze isityalo siphinde sibuyele kwimeko.\n\nHambisa ukusika ngohlobo lwesityalo. Phepha ukusika kakhulu rhoqo kwi-pigeon pea, ingakumbi xa uyityala ukuze uvune ii-pea.\n\nIngca yokugquma ikhusela umphezulu, inceda ukugcina ukufuma kwaye ibuyisela impahla yezinto eziphilayo.\n\nShiya indlela yokufikelela ekunisweni nasekuhlolweni. Sika impahla ibe ziziqwenga ezilawulekayo uqhubeke ujonga ukufuma nokubola.\n\nFumana i-cultivar (uhlobo olukhethiweyo) echanekileyo. I-Bocking 14 ayisasazeki ngembewu ekwaziyo ukuhluma, kodwa iziqwenga zengcambu zinokuphinda zihlume.\n\nYibeke apho inendawo nokufuma okwaneleyo. Sika amagqabi njengoko ibuyela kwimeko; ungawuxinezeli umthi weziqhamo oselula.\n\nUninzi lwee-ladybird (iinambuzane ezincinci ezinamachokoza) ludla ii-aphid (iinambuzane ezincinci ezifunxa ijusi yezityalo); ezinye ii-parasitoid wasp (iinambuzane ezinjengeenyosi ezihlasela ezinye izinambuzane) zihlasela izinambuzane ezonakalisa izityalo. Izityalo ezidubulayo ezinjenge-African basil zinokongeza izixhobo.\n\nJonga ukuba zeziphi izinambuzane ezityelelayo nokuba umonakalo uyatshintsha na. Isityalo esidubulayo asiqinisekisi ulawulo lwezinambuzane ezonakalisayo.\n\nI-Tulbaghia violacea inamagqabi amancinci amxinwa kunye neentyatyambo ezimfusa ezikhaphukhaphu (lilac). Beka iqela lezityalo apho linokukhanya nendawo yokukhula.\n\nJonga izinambuzane ezityelelayo. Ungathembisi ukuba umqukumbelo we-wild garlic uza kugxotha izinambuzane ezonakalisayo okanye uphilise ukuqhambuka kwazo.",
+        "Iklip ibonisa ukusikwa kwesebe: umthi ongumxhasi usemi. Shiya amagqabi anempilo anele ukuze isityalo siphinde sibuyele kwimeko.\n\nLungelelanisa ukusika nohlobo lwesityalo. Phepha ukusika kakhulu rhoqo kwi-pigeon pea, ingakumbi xa uyityala ukuze uvune ii-pea.\n\nIngca yokugquma ikhusela umphezulu, inceda ukugcina ukufuma kwaye ibuyisela impahla yezinto eziphilayo.\n\nShiya indlela yokufikelela ekunisweni nasekuhlolweni. Sika impahla ibe ziziqwenga ezilawulekayo uqhubeke ujonga ukufuma nokubola.\n\nFumana i-cultivar (uhlobo olukhethiweyo) echanekileyo. I-Bocking 14 ayisasazeki ngembewu ekwaziyo ukuhluma, kodwa iziqwenga zengcambu zinokuphinda zihlume.\n\nYibeke apho inendawo nokufuma okwaneleyo. Sika amagqabi njengoko ibuyela kwimeko; ungawuxinezeli umthi weziqhamo oselula.\n\nUninzi lwee-ladybird (iinambuzane ezincinci ezinamachokoza) ludla ii-aphid (iinambuzane ezincinci ezifunxa ijusi yezityalo); ezinye ii-parasitoid wasp (iinambuzane ezinjengeenyosi ezihlasela ezinye izinambuzane) zihlasela izinambuzane ezonakalisa izityalo. Izityalo ezidubulayo ezinjenge-African basil zinokongeza izixhobo.\n\nJonga ukuba zeziphi izinambuzane ezityelelayo nokuba umonakalo uyatshintsha na. Isityalo esidubulayo asiqinisekisi ulawulo lwezinambuzane ezonakalisayo.\n\nI-Tulbaghia violacea inamagqabi amancinci amxinwa kunye neentyatyambo ezimfusa ezikhaphukhaphu (lilac). Beka iqela lezityalo apho linokukhanya nendawo yokukhula.\n\nJonga izinambuzane ezityelelayo. Ungathembisi ukuba isangqa se-wild garlic uza kugxotha izinambuzane ezonakalisayo okanye uphilise ukuqhambuka kwazo.",
       ),
       keyPoints: [
         pair(
@@ -2265,7 +2265,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           sourceCorrectIndex: 1,
           rationale: pair(
             "A branch falls, while the support tree remains standing. That is pruning and chop-and-drop.",
-            "Isebe liyawa, ngoxa umthi ongumxhasi usama. Oko kukunqunqa kunye ne-chop-and-drop (ukusika uyiyeke iwe emhlabeni).",
+            "Isebe liyawa, ngoxa umthi ongumxhasi usemi. Oko kukunqunqa kunye ne-chop-and-drop (ukusika uyiyeke iwe emhlabeni).",
           ),
         },
         {
@@ -2311,7 +2311,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "Combine the support functions your site needs: nitrogen fixation, food, mulch, flowers and ground cover. Some plants serve several functions.\n\nKeep the trunk area and path open. Reassess each member as the mango and its neighbours grow.\n\nKeep its vines away from the young fruit tree and retain a route for care. Its roots also use water and nutrients.\n\nWhere resources are tight, compare living cover with an ordinary mulch basin.\n\nPlant into a suitable season, mulch and maintain establishment water. Keep the access gap open.\n\nStart with the number of support plants you can care for. Observe survival and growth before adding more.\n\nCut down selected competing supports to open space. Suitable cut material can stay as mulch: this is thinning through chop-and-drop.\n\nManage regrowth to keep the opening. Check light, soil moisture and growth; thinning does not instantly stop root competition.\n\nCarry useful prunings back to established trees. Keep nearby plants only where they still perform well.\n\nMature fruit trees still need nutrients. Monitor growth, harvest and soil conditions; support plants do not remove that need.\n\nCheck fruit-tree growth, shade, soil moisture, useful harvests and pest damage. Note what was cut, returned or removed.\n\nUse these observations to change the layout and care. A plant earns its place through what it does here.",
-        "Dibanisa imisebenzi yenkxaso efunwa yindawo yakho: ukufaka i-nitrogen, ukutya, ingca yokugquma, iintyatyambo nesigqubuthelo somhlaba. Ezinye izityalo zenza imisebenzi emininzi.\n\nGcina indawo yesiqu nendlela ivuliwe. Phinda uhlole ilungu ngalinye njengoko i-mango kunye nabamelwane bayo bekhula.\n\nGcina iziqu zayo ezirhubuluzayo zikude nomthi weziqhamo oselula kwaye ugcine indlela yokuyinakekela. Iingcambu zayo nazo zisebenzisa amanzi nezondlo.\n\nApho izixhobo zinqongophele, qhathanisa isigqubuthelo esiphilayo nebheseni eqhelekileyo yengca yokugquma.\n\nTyala ngexesha elifanelekileyo, gquma ngengca uze ugcine amanzi okumisa isityalo. Gcina isikhewu sokufikelela sivuliwe.\n\nQala ngenani lezityalo ezixhasayo onokuzinakekela. Jonga ukusinda nokukhula phambi kokongeza ezinye.\n\nSika phantsi izixhasi ezikhethiweyo ezikhuphisanayo ukuze uvule indawo. Impahla esikiweyo efanelekileyo inokuhlala njengengca yokugquma: oku kukunciphisa nge-chop-and-drop.\n\nLawula ukuhluma kwakhona ukuze ugcine ivuliwe indawo. Hlola ukukhanya, ukufuma komhlaba nokukhula; ukunciphisa akuyeki ngoko nangoko ukhuphiswano lwengcambu.\n\nBuyisela iinqunqo eziluncedo kwimithi esele imisiwe. Gcina izityalo ezikufutshane kuphela apho zisenza kakuhle.\n\nImithi yeziqhamo evuthiweyo isafuna izondlo. Jonga ukukhula, isivuno nemeko yomhlaba; izityalo ezixhasayo aziyisusi loo mfuno.\n\nHlola ukukhula komthi weziqhamo, umthunzi, ukufuma komhlaba, izivuno eziluncedo nomonakalo ngezinambuzane ezonakalisayo. Bhala oko kusikiweyo, kubuyiselwe okanye kususiwe.\n\nSebenzisa ezi ngqwalaselo ukutshintsha uyilo nenkathalo. Isityalo sifumana indawo yaso ngoko sikwenzayo apha.",
+        "Dibanisa imisebenzi yenkxaso efunwa yindawo yakho: ukufaka i-nitrogen, ukutya, ingca yokugquma, iintyatyambo nesigqubuthelo somhlaba. Ezinye izityalo zenza imisebenzi emininzi.\n\nGcina indawo yesiqu nendlela ivuliwe. Phinda uhlole ilungu ngalinye njengoko i-mango kunye nabamelwane bayo bekhula.\n\nGcina iziqu zayo ezirhubuluzayo zikude nomthi weziqhamo oselula kwaye ugcine indlela yokuyinakekela. Iingcambu zayo nazo zisebenzisa amanzi nezondlo.\n\nApho izixhobo zinqongophele, qhathanisa isigqubuthelo esiphilayo nebheseni eqhelekileyo yengca yokugquma.\n\nTyala ngexesha elifanelekileyo, gquma ngengca uze ugcine amanzi okumisa isityalo. Gcina isikhewu sokufikelela sivuliwe.\n\nQala ngenani lezityalo ezixhasayo onokuzinakekela. Jonga ukusinda nokukhula phambi kokongeza ezinye.\n\nSika phantsi izixhasi ezikhethiweyo ezikhuphisanayo ukuze uvule indawo. Impahla esikiweyo efanelekileyo inokuhlala njengengca yokugquma: oku kukunciphisa nge-chop-and-drop.\n\nLawula ukuhluma kwakhona ukuze ugcine ivuliwe indawo. Hlola ukukhanya, ukufuma komhlaba nokukhula; ukunciphisa akuyeki ngoko nangoko ukhuphiswano lwengcambu.\n\nBuyisela iinqunqo eziluncedo kwimithi esele imisiwe. Gcina izityalo ezikufutshane kuphela apho zisenza kakuhle.\n\nImithi yeziqhamo esele ikhulile isafuna izondlo. Jonga ukukhula, isivuno nemeko yomhlaba; izityalo ezixhasayo aziyisusi loo mfuno.\n\nHlola ukukhula komthi weziqhamo, umthunzi, ukufuma komhlaba, izivuno eziluncedo nomonakalo ngezinambuzane ezonakalisayo. Bhala oko kusikiweyo, kubuyiselwe okanye kususiwe.\n\nSebenzisa ezi ngqwalaselo ukutshintsha uyilo nenkathalo. Isityalo sifumana indawo yaso ngoko sikwenzayo apha.",
       ),
       keyPoints: [
         pair(
@@ -2324,7 +2324,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         ),
         pair(
           "Thin selected whole support plants when pruning no longer gives enough room.",
-          "Nciphisa izityalo ezixhasayo ezikhethiweyo xa ukunqunqa kungasanikezi ndawo yaneleyo.",
+          "Nciphisa izityalo ezixhasayo ezipheleleyo ezikhethiweyo xa ukunqunqa kungasanikezi ndawo yaneleyo.",
         ),
         pair(
           "Suitable cut biomass can stay as mulch; manage regrowth to retain the opening.",
@@ -2369,7 +2369,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           options: [
             pair(
               "Yes, because it never uses water",
-              "Ewe, kuba awusoze usebenzise manzi",
+              "Ewe, kuba akasoze asebenzise amanzi",
             ),
             pair(
               "Yes, because it fixes nitrogen",
@@ -2412,7 +2412,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       id: "food-forest-l1",
       infographicAlt: pair(
         "A food forest cross-section with a tall central tree, smaller trees, shrubs, upright plants, ground cover and a vine, with their roots branching through the soil; sunlight enters from the upper left.",
-        "Isahlulo esinqunyiweyo sehlathi lokutya esinomthi omkhulu omi phakathi, imithi emincinci, amatyholo, izityalo ezime nkqo, izityalo ezigubungela umhlaba nomdiliya, iingcambu zazo zisasazeka emhlabeni; ukukhanya kwelanga kungena ngasekhohlo ngaphezulu.",
+        "Isahlulo esinqunyiweyo sehlathi lokutya esinomthi omkhulu omi phakathi, imithi emincinci, amatyholo, izityalo ezime nkqo, izityalo ezigubungela umhlaba nesityalo esinyukayo, iingcambu zazo zisasazeka emhlabeni; ukukhanya kwelanga kungena ngasekhohlo ngaphezulu.",
       ),
       title: pair(
         "The Seven Layers: How a Forest Feeds Itself",
@@ -2420,7 +2420,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "An indigenous forest fills the space from the highest branches to the roots.\n\nDifferent plants use the light and moisture available at their level.\n\nA food forest copies this pattern with productive species.\n\nThe result is not one crop in one row, but many useful layers growing together.\n\nThink of tall canopy, smaller trees, shrubs and herbaceous plants.\n\nGround cover protects the surface, root crops grow below it, and climbers use suitable supports.\n\nThe heights and spacing depend on the plants and site. These are planning layers, not fixed height bands.\n\nThe original Highveld example includes Wild Fig or pecan above lemon, naartjie and black mulberry.\n\nIt places Cape gooseberry and Wild Medlar with vegetables, wild garlic, sweet potato and granadilla.\n\nTreat this as a layout example, not permission to plant every species. Check identity, frost tolerance, mature size and local restrictions first.\n\nYoung plants need establishment care: moisture checks, weed control and protection from damage.\n\nAs plants grow, shade and leaf litter change conditions below them.\n\nCheck competition and access. Prune, thin or adjust lower planting when observations call for it; the system does not become care-free on a fixed birthday.",
-        "Ihlathi lomdabu lizalisa indawo ukusuka kumasebe aphezulu ukuya kwiingcambu.\n\nIzityalo ezahlukeneyo zisebenzisa ukukhanya nokumanzi okukhoyo kumgangatho wazo.\n\nIhlathi lokutya liyayilingisa le ndlela ngezityalo ezivelisayo.\n\nIsiphumo asiyiyo isityalo esinye kumqolo omnye, kodwa yimigangatho emininzi eluncedo ekhula ndawonye.\n\nCinga ngesithsaba somthi esiphakamileyo, imithi emincinci, amatyholo (ama-shrub) nezityalo ezingenamthi ezithambileyo.\n\nIzityalo ezigubungela umhlaba ziwukhusela ngaphezulu, izityalo ezingcambu zikhula ngaphantsi kwawo, kwaye izityalo ezinyukayo zisebenzisa izixhasi ezifanelekileyo.\n\nUbude nokwahlukana kwezityalo kuxhomekeke kwizityalo nakwindawo. Le yimigangatho yocwangciso, ayizizo iibhanti zobude ezimiselweyo.\n\nUmzekelo wokuqala we-Highveld uquka i-Wild Fig okanye i-pecan ngaphezu kwe-lemon, i-naartjie ne-black mulberry.\n\nUbeka i-Cape gooseberry ne-Wild Medlar kunye nemifuno, i-wild garlic, ubhatata ne-granadilla.\n\nThatha oku njengomzekelo wocwangciso, hayi imvume yokutyala zonke iintlobo. Qala ngokuqinisekisa ukuba sisiphi isityalo, ukumelana neqabaka, ubungakanani xa sele sikhulile, nezithintelo zasekuhlaleni.\n\nIzityalo ezincinci zidinga ukunyanyekelwa ekusekweni kwazo: ukuhlola ukumanzi, ukulawula ukhula nokukhuselwa ekonzakaleni.\n\nNjengoko izityalo zikhula, umthunzi namagqabi awileyo ayaguqula iimeko ezingaphantsi kwazo.\n\nHlola ukukhuphisana nendlela yokufikelela. Sika, ncitshisa okanye hlengahlengisa ukutyala kwemigangatho engaphantsi xa oko ukubonayo kufuna; inkqubo ayiphelelwa kukudinga ukunyanyekelwa ngomhla othile omiselweyo.",
+        "Ihlathi lomdabu lizalisa indawo ukusuka kumasebe aphezulu ukuya kwiingcambu.\n\nIzityalo ezahlukeneyo zisebenzisa ukukhanya nokumanzi okukhoyo kumgangatho wazo.\n\nIhlathi lokutya liyayixelisa le ndlela ngezityalo ezivelisayo.\n\nIsiphumo asiyiyo isityalo esinye kumqolo omnye, kodwa yimigangatho emininzi eluncedo ekhula ndawonye.\n\nCinga ngesithsaba somthi esiphakamileyo, imithi emincinci, amatyholo (ama-shrub) nezityalo ezingenamthi ezithambileyo.\n\nIzityalo ezigubungela umhlaba ziwukhusela ngaphezulu, izityalo ezingcambu zikhula ngaphantsi kwawo, kwaye izityalo ezinyukayo zisebenzisa izixhasi ezifanelekileyo.\n\nUbude nokwahlukana kwezityalo kuxhomekeke kwizityalo nakwindawo. Le yimigangatho yocwangciso, ayizizo iibhanti zobude ezimiselweyo.\n\nUmzekelo wokuqala we-Highveld uquka i-Wild Fig okanye i-pecan ngaphezu kwe-lemon, i-naartjie ne-black mulberry.\n\nUbeka i-Cape gooseberry ne-Wild Medlar kunye nemifuno, i-wild garlic, ubhatata ne-granadilla.\n\nThatha oku njengomzekelo wocwangciso, hayi imvume yokutyala zonke iintlobo. Qala ngokuqinisekisa ukuba sisiphi isityalo, ukumelana neqabaka, ubungakanani xa sele sikhulile, nezithintelo zasekuhlaleni.\n\nIzityalo ezincinci zidinga ukunyanyekelwa ekusekweni kwazo: ukuhlola ukumanzi, ukulawula ukhula nokukhuselwa ekonzakaleni.\n\nNjengoko izityalo zikhula, umthunzi namagqabi awileyo ayaguqula iimeko ezingaphantsi kwazo.\n\nHlola ukukhuphisana nendlela yokufikelela. Sika, nciphisa okanye hlengahlengisa ukutyala kwemigangatho engaphantsi xa oko ukubonayo kufuna; inkqubo ayiphelelwa kukudinga ukunyanyekelwa ngomhla othile omiselweyo.",
       ),
       keyPoints: [
         pair(
@@ -2449,7 +2449,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           options: [
             pair(
               "Wait until the fifth year",
-              "Linda de kube nguwonyaka wesihlanu",
+              "Linda de kube ngunyaka wesihlanu",
             ),
             pair(
               "Add more plants regardless of water",
@@ -2505,7 +2505,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       id: "food-forest-l2",
       infographicAlt: pair(
         "A simple shape of South Africa divided into three growing areas by ground colour and terrain alone: a pale high inland plateau with hills, a green humid coastal strip, and a hot red-brown low-lying area. Different tree shapes stand in each.",
-        "Imilo elula yoMzantsi Afrika ahlulwe yaba yimimandla emithathu yokukhula ngombala womhlaba nemo yomhlaba kuphela: ithafa eliphakamileyo elisemaphakathi elimhlophe-mdaka elinamagquma, umgca osecaleni kolwandle oluhlaza onomswakama, nendawo eshushu ephantsi ebomvu-mdaka. Kwenye nenye kume iimilo zemithi ezahlukeneyo.",
+        "Imilo elula yoMzantsi Afrika ahlulwe yaba yimimandla emithathu yokukhula ngombala womhlaba nemo yomhlaba kuphela: ithafa eliphakamileyo elisemaphakathi elinombala okhanyayo elinamagquma, umgca oluhlaza onomswakama osecaleni kolwandle, nendawo eshushu ephantsi ebomvu-mdaka. Kwenye nenye kume iimilo zemithi ezahlukeneyo.",
       ),
       title: pair(
         "Species Selection for South African Food Forests",
@@ -2513,7 +2513,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "Check local rainfall, frost, heat, soil and water availability before choosing plants.\n\nMango can suffer frost damage. Quince needs suitable winter chilling for reliable cropping.\n\nA regional label or a sheltered corner is not enough. Confirm each plant and variety with reliable local guidance.\n\nThe original list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry.\n\nThis list is not a blanket recommendation. Check each plant against frost, soil, mature size and the approved local species list.\n\nKeep existing legal and project restrictions in force. Do not plant from a picture alone.\n\nThe original warm-region examples include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga.\n\nMarula, Mopane and baobab also appear in the Limpopo examples. Local suitability still needs checking.\n\nUseful trees are not automatically edible. Confirm identity and safe use; a landscape photograph is not a food-identification guide.\n\nLocally appropriate indigenous plants can support habitat as part of the design.\n\nChoose for your ecosystem and the useful role of each plant. There is no sourced percentage target in this lesson.\n\nProtect existing natural vegetation. Do not turn healthy grassland into a food forest simply because trees are useful elsewhere.",
-        "Hlola imvula, iqabaka, ubushushu, umhlaba nokufumaneka kwamanzi kwindawo yakho ngaphambi kokukhetha izityalo.\n\nI-mango inokonakaliswa liqabaka. I-quince idinga ubusika obubandayo ngokufanelekileyo ukuze izale ngokuthembekileyo.\n\nIgama lommandla okanye ikona ekhuselekileyo ayanele. Qinisekisa isityalo ngasinye nohlobo ngalunye ngesikhokelo esithembekileyo sasekuhlaleni.\n\nUluhlu lokuqala luquka pecan, walnut nekhiwane lomdabu; apple, pear, plum, black mulberry ne-loquat; rosemary, Wild Medlar, Cape gooseberry ne-Barbados cherry.\n\nOlu luhlu aluyiyo ingcebiso yazo zonke. Hlola isityalo ngasinye ngokuhambelana neqabaka, umhlaba, ubungakanani xa sele sikhulile noluhlu lweentlobo ezivunyiweyo zasekuhlaleni.\n\nGcina izithintelo ezikhoyo zomthetho nezeprojekthi zisebenza. Ungatyali ngokubona ifoto kuphela.\n\nImizekelo yokuqala yeendawo ezishushu iquka mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry ne-Wild Dagga.\n\nMarula, Mopane ne-baobab nazo zivela kwimizekelo yaseLimpopo. Ukufaneleka kwindawo yakho kusafuna ukuhlolwa.\n\nImithi eluncedo ayizizo ngokuzenzekelayo ezityiwayo. Qinisekisa ukuba sisiphi isityalo nokusetyenziswa kwaso ngokukhuselekileyo; ifoto yembonakalo yomhlaba ayisosikhokelo sokuchonga ukutya.\n\nIzityalo zomdabu ezifanelekileyo kwindawo zinokuxhasa indawo yokuhlala yezilwanyana zasendle njengenxalenye yoyilo.\n\nKhetha ngokwendalo yendawo yakho nangendima eluncedo yesityalo ngasinye. Akukho njongo yepesenti enomthombo osekelwe kuwo kweli sifundo.\n\nKhusela izityalo zendalo ezikhoyo. Musa ukuguqula amathafa aphilileyo abe lihlathi lokutya ngenxa nje yokuba imithi iluncedo kwenye indawo.",
+        "Hlola imvula, iqabaka, ubushushu, umhlaba nokufumaneka kwamanzi kwindawo yakho ngaphambi kokukhetha izityalo.\n\nI-mango inokonakaliswa liqabaka. I-quince idinga ubusika obubandayo ngokufanelekileyo ukuze izale ngokuthembekileyo.\n\nIgama lommandla okanye ikona ekhuselekileyo ayiyonto eyaneleyo. Qinisekisa isityalo ngasinye nohlobo ngalunye ngesikhokelo esithembekileyo sasekuhlaleni.\n\nUluhlu lokuqala luquka pecan, walnut nekhiwane lomdabu; apple, pear, plum, black mulberry ne-loquat; rosemary, Wild Medlar, Cape gooseberry ne-Barbados cherry.\n\nOlu luhlu aluyiyo ingcebiso yazo zonke. Hlola isityalo ngasinye ngokuhambelana neqabaka, umhlaba, ubungakanani xa sele sikhulile noluhlu lweentlobo ezivunyiweyo zasekuhlaleni.\n\nGcina izithintelo ezikhoyo zomthetho nezeprojekthi zisebenza. Ungatyali ngokubona ifoto kuphela.\n\nImizekelo yokuqala yeendawo ezishushu iquka mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry ne-Wild Dagga.\n\nMarula, Mopane ne-baobab nazo zivela kwimizekelo yaseLimpopo. Ukufaneleka kwindawo yakho kusafuna ukuhlolwa.\n\nImithi eluncedo ayizizo ngokuzenzekelayo ezityiwayo. Qinisekisa ukuba sisiphi isityalo nokusetyenziswa kwaso ngokukhuselekileyo; ifoto yembonakalo yomhlaba ayisosikhokelo sokuchonga ukutya.\n\nIzityalo zomdabu ezifanelekileyo kwindawo zinokuxhasa indawo yokuhlala yezilwanyana zasendle njengenxalenye yoyilo.\n\nKhetha ngokwendalo yendawo yakho nangendima eluncedo yesityalo ngasinye. Akukho njongo yepesenti esekelwe kumthombo othembekileyo kwesi sifundo.\n\nKhusela izityalo zendalo ezikhoyo. Musa ukuguqula amathafa aphilileyo abe lihlathi lokutya ngenxa nje yokuba imithi iluncedo kwenye indawo.",
       ),
       keyPoints: [
         pair(
@@ -2550,7 +2550,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
             ),
             pair(
               "It's likely killed or badly damaged by frost, especially as a young tree",
-              "Kusenokwenzeka ibulawe okanye yonakaliswe kakhulu liqabaka, ngakumbi njengomthi omncinci",
+              "Kunokwenzeka kakhulu ukuba ibulawe okanye yonakaliswe kakhulu liqabaka, ngakumbi njengomthi omncinci",
             ),
             pair(
               "It survives with heavy mulch but needs annual replacement",
@@ -2606,7 +2606,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "Start by checking the site, water supply and care available. Protect exposed soil early.\n\nTemporary support plants may provide shelter and useful cut material where appropriate.\n\nMain trees and lower layers can be introduced as conditions allow. Ground cover need not wait until the end; avoid plants competing with young trees.\n\nBegin with an area you can water and maintain. Check existing vegetation before clearing.\n\nWhere appropriate, plain cardboard under suitable mulch can suppress unwanted growth. Keep water able to enter the soil and leave trunks clear.\n\nPlan spacing from mature plant size. Prepare nursery plants for the next suitable planting opportunity.\n\nWatch how shade, roots and available water affect neighbouring plants.\n\nComfrey and wild garlic appear in the original underplanting example; check their local suitability before use.\n\nPrune or thin support plants when needed, using methods suited to each species. Suitable clean cuttings can return as mulch. Do not wait for a fixed year if competition is already harming plants.\n\nChoose a planting opportunity when soil moisture and expected weather support establishment.\n\nRain can help, but check the root zone and keep a backup watering plan. Avoid planting into waterlogged ground.\n\nCheck young plants after planting. Harvest timing and outside inputs depend on the species, site and care; there is no guaranteed fifth-year result.",
-        "Qala ngokuhlola indawo, unikezelo lwamanzi nonyango olukhoyo. Khusela umhlaba ongagqunyiwe kwangoko.\n\nIzityalo zenkxaso zethutyana zinokunika indawo yokukhuselwa nezinto eziluncedo ezisikiweyo apho kufanelekileyo.\n\nImithi ephambili nemigangatho esezantsi inokufakwa njengoko iimeko zivuma. Izityalo ezigubungela umhlaba azifuni ukulindela ukuba kuphele; phepha ukuba izityalo zikhuphisane nemithi emincinci.\n\nQala ngendawo onokuyinkcenkceshela uyigcine. Hlola izityalo ezikhoyo ngaphambi kokucoca.\n\nApho kufanelekileyo, ikhadibhodi eqhelekileyo phantsi kwengca yokugquma efanelekileyo inganciphisa ukukhula okungafunwayo. Gcina amanzi enokungena emhlabeni uzishiye iziqu zemithi zicocekile.\n\nCwangcisa ukwahlukana ngokobungakanani bezityalo xa sele zikhulile. Lungiselela izityalo zasenkulisweni (i-nursery) kwithuba elilandelayo elifanelekileyo lokutyala.\n\nKhangela indlela umthunzi, iingcambu namanzi akhoyo achaphazela ngayo izityalo ezingabamelwane.\n\nI-comfrey ne-wild garlic zivela kumzekelo wokuqala wokutyala ngaphantsi; hlola ukufaneleka kwazo kwindawo yakho ngaphambi kokuzisebenzisa.\n\nSika okanye ncitshisa izityalo zenkxaso xa kuyimfuneko, usebenzisa iindlela ezifanelekileyo kuhlobo ngalunye. Izinqumlo ezicocekileyo ezifanelekileyo zinokubuyela njengengca yokugquma. Ungalindi unyaka othile omiselweyo ukuba ukukhuphisana sele kuzonakalisa izityalo.\n\nKhetha ithuba lokutyala xa ukumanzi komhlaba nemozulu elindelekileyo zixhasa ukusekwa.\n\nImvula inganceda, kodwa hlola indawo yeengcambu kwaye ugcine isicwangciso sokunkcenkceshela xa imvula ingonganga. Phepha ukutyala emhlabeni ozele ngamanzi.\n\nHlola izityalo ezincinci emva kokutyala. Ixesha lokuvuna nezinto ezongezwa zivela ngaphandle zixhomekeke kuhlobo lwesityalo, indawo nonyango; akukho sivuno siqinisekisiweyo kunyaka wesihlanu.",
+        "Qala ngokuhlola indawo, unikezelo lwamanzi nokhathalelo olukhoyo. Khusela umhlaba ongagqunyiwe kwangoko.\n\nIzityalo zenkxaso zethutyana zinokunika indawo yokukhuselwa nezinto eziluncedo ezisikiweyo apho kufanelekileyo.\n\nImithi ephambili nemigangatho esezantsi inokufakwa njengoko iimeko zivuma. Izityalo ezigubungela umhlaba akuyomfuneko ukuba zilinde de kube sekupheleni; phepha ukuba izityalo zikhuphisane nemithi emincinci.\n\nQala ngendawo onokuyinkcenkceshela uyigcine. Hlola izityalo ezikhoyo ngaphambi kokucoca.\n\nApho kufanelekileyo, ikhadibhodi eqhelekileyo phantsi kwengca yokugquma efanelekileyo inganciphisa ukukhula okungafunwayo. Gcina amanzi enokungena emhlabeni uzishiye iziqu zemithi zicocekile.\n\nCwangcisa ukwahlukana ngokobungakanani bezityalo xa sele zikhulile. Lungiselela izityalo zasenkulisweni (i-nursery) kwithuba elilandelayo elifanelekileyo lokutyala.\n\nKhangela indlela umthunzi, iingcambu namanzi akhoyo achaphazela ngayo izityalo ezingabamelwane.\n\nI-comfrey ne-wild garlic zivela kumzekelo wokuqala wokutyala ngaphantsi; hlola ukufaneleka kwazo kwindawo yakho ngaphambi kokuzisebenzisa.\n\nSika okanye nciphisa izityalo zenkxaso xa kuyimfuneko, usebenzisa iindlela ezifanelekileyo kuhlobo ngalunye. Izinqumlo ezicocekileyo ezifanelekileyo zinokubuyela njengengca yokugquma. Ungalindi unyaka othile omiselweyo ukuba ukukhuphisana sele kuzonakalisa izityalo.\n\nKhetha ithuba lokutyala xa ukumanzi komhlaba nemozulu elindelekileyo zixhasa ukusekwa.\n\nImvula inganceda, kodwa hlola indawo yeengcambu kwaye ugcine isicwangciso sokunkcenkceshela esigciniweyo ukuba kuyimfuneko. Phepha ukutyala emhlabeni ozele ngamanzi.\n\nHlola izityalo ezincinci emva kokutyala. Ixesha lokuvuna nezinto ezongezwa zivela ngaphandle zixhomekeke kuhlobo lwesityalo, indawo nokhathalelo; akukho sivuno siqinisekisiweyo kunyaka wesihlanu.",
       ),
       keyPoints: [
         pair(
@@ -2615,7 +2615,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         ),
         pair(
           "Plan the sequence around conditions and available care",
-          "Cwangcisa ulandelelwano ngokweemeko nonyango olukhoyo",
+          "Cwangcisa ulandelelwano ngokweemeko nokhathalelo olukhoyo",
         ),
         pair(
           "Check root-zone moisture even during the rainy season",
@@ -2676,13 +2676,13 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
             ),
             pair(
               "Never, because support plants cannot compete",
-              "Ngekhe, kuba izityalo zenkxaso azikwazi ukukhuphisana",
+              "Soze kufuneke, kuba izityalo zenkxaso azikwazi ukukhuphisana",
             ),
           ],
           sourceCorrectIndex: 1,
           rationale: pair(
             "Temporary support plants can become competitors. Observe light, water and growth, then choose suitable management rather than relying on a fixed year.",
-            "Izityalo zenkxaso zethutyana zinokuba ngabakhuphisana. Qwalasela ukukhanya, amanzi nokukhula, uze ukhethe unyango olufanelekileyo kunokuba ulinde unyaka othile omiselweyo.",
+            "Izityalo zenkxaso zethutyana zinokuba ngabakhuphisana. Qwalasela ukukhanya, amanzi nokukhula, uze ukhethe indlela efanelekileyo yolawulo kunokuba ulinde unyaka othile omiselweyo.",
           ),
         },
       ],
@@ -2700,7 +2700,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
   ),
   description: pair(
     "Chickens, ducks and bees as system components — not afterthoughts.",
-    "Iinkukhu, iidada neenyosi njengamalungu enkqubo — hayi into ecinge ekugqibeleni.",
+    "Iinkukhu, iidada neenyosi njengamalungu enkqubo — hayi izinto ezicingwa emva kwexesha.",
   ),
   lessons: [
     {
@@ -2739,7 +2739,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         {
           question: pair(
             "You want chickens to prepare an empty bed for replanting. When's the right time to put them in?",
-            "Ufuna iinkukhu zilungiselele ibhedi engenanto ukuze itywaliswe kwakhona. Lixesha elifanelekileyo nini ukuzifaka?",
+            "Ufuna iinkukhu zilungiselele ibhedi engenanto ukuze ityalwe kwakhona. Lixesha elifanelekileyo nini ukuzifaka?",
           ),
           options: [
             pair(
@@ -2804,11 +2804,11 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       title: pair(
         "Bees: Pollination, Honey, and System Ecology",
-        "Iinyosi: ukungenisa umgubo, ubusi nendalo yenkqubo",
+        "Iinyosi: ukungenisa umgubo, ubusi nobudlelwane bendalo enkqubeni",
       ),
       body: pair(
         "Honeybees and other insects carry pollen between flowers. This helps many fruit and vegetable crops, including avocado. Different crops and varieties have different pollination needs. A hive does not guarantee higher yields everywhere: weather, water, plant health and other pollinators also matter.\n\nSouth Africa has two native honeybee subspecies. The Cape honeybee is found in the Western Cape and parts of the Eastern Cape. The African honeybee is native to central and most of southern Africa. These broad natural ranges are not a guide for moving bees. The Department's control measures set a demarcation line for bee movement. Check current movement rules with the Department and an experienced local beekeeper before moving bees or hives.\n\nLearn from an experienced local beekeeper before getting a hive. Keep hives away from busy paths, homes and places where children play. Morning sun can help; a safe location comes first. Provide flowering plants through the seasons and avoid exposing bees to pesticides. Active bees do not prove that the farm is free of chemicals or disease. The national honey-bee control measures require registration for defined beekeeping activities, including managed hives for bee products, queen rearing, commercial pollination, and colony removal, eradication or relocation. Check with the Department if you are unsure whether the rules apply to your activity. If a colony swarms repeatedly, ask a trained beekeeper to inspect it. Crowding is one possible cause, not a diagnosis.",
-        "Iinyosi zobusi nezinye izinambuzane zithwala umgubo wezintyatyambo ziwuse kwezinye iintyatyambo. Oku kunceda izityalo ezininzi zeziqhamo nemifuno, kuquka i-avocado. Izityalo neentlobo ezahlukeneyo ziyahluka ngezinto ezizidingayo ekungeniseni umgubo. Umzi wenyosi awuqinisekisi isivuno esingcono kuyo yonke indawo: imozulu, amanzi, impilo yezityalo nezinye izinambuzane ezisasaza umgubo nazo ziyabalulekile.\n\nUMzantsi Afrika unezinye iintlobo ezincinci (subspecies) ezimbini zeenyosi zobusi zemveli. Inyosi yobusi yaseKapa (Cape honeybee) ifumaneka eNtshona Koloni nakwezinye iindawo zeMpuma Koloni. Inyosi yobusi yase-Afrika (African honeybee) yeyemveli kwi-Afrika ephakathi nakubuninzi boMzantsi weAfrika. Ezi ndawo zendalo ngokubanzi aziyondlela yokukhokela ekuhambiseni iinyosi. Amanyathelo okulawula eSebe amisela umgca wokohlula ngokuhamba kweenyosi. Jonga imithetho yangoku yokuhambisa iinyosi kwiSebe nakumgcini weenyosi onamava wasekuhlaleni ngaphambi kokuhambisa iinyosi okanye imizi yeenyosi.\n\nFunda kumgcini weenyosi onamava wasekuhlaleni ngaphambi kokufumana umzi wenyosi. Gcina imizi yeenyosi kude neendlela ezixineneyo, amakhaya neendawo apho abantwana badlala khona. Ilanga lasekuseni linokunceda; indawo ekhuselekileyo ibalulekile kuqala. Nika iinyosi izityalo ezinentyatyambo ngamaxesha onke onyaka kwaye uphephe ukuveza iinyosi kumachiza okubulala izinambuzane. Iinyosi ezisebenzayo aziyongqina lokuba ifama ayinamachiza okanye izifo. Amanyathelo kazwelonke okulawula iinyosi zobusi afuna ukubhaliswa kwimisebenzi echaziweyo yokugcina iinyosi, kuquka imizi yeenyosi elawulwayo yeemveliso zeenyosi, ukukhulisa ookumkanikazi, ukungenisa umgubo ngokurhweba, nokususwa, ukutshatyalaliswa okanye ukuhanjiswa kweqela leenyosi. Buza kwiSebe ukuba awuqinisekanga ukuba imithetho iyasebenza na kumsebenzi wakho. Ukuba iqela leenyosi liphuma ngamaqela ngokuphindaphindiweyo, cela umgcini weenyosi oqeqeshiweyo alihlole. Ukuxinana sesinye sezizathu ezinokubakho, asilolo uxilongo.",
+        "Iinyosi zobusi nezinye izinambuzane zithwala umgubo wezintyatyambo ziwuse kwezinye iintyatyambo. Oku kunceda izityalo ezininzi zeziqhamo nemifuno, kuquka i-avocado. Izityalo neentlobo ezahlukeneyo ziyahluka ngezinto ezizidingayo ekungeniseni umgubo. Umzi wenyosi awuqinisekisi isivuno esingcono kuyo yonke indawo: imozulu, amanzi, impilo yezityalo nezinye izinambuzane ezisasaza umgubo nazo ziyabalulekile.\n\nUMzantsi Afrika uneentlobo ezincinci (subspecies) ezimbini zeenyosi zobusi zemveli. Inyosi yobusi yaseKapa (Cape honeybee) ifumaneka eNtshona Koloni nakwezinye iindawo zeMpuma Koloni. Inyosi yobusi yase-Afrika (African honeybee) yeyemveli kwi-Afrika ephakathi nakubuninzi boMzantsi weAfrika. Ezi ndawo zendalo ngokubanzi aziyondlela yokukhokela ekuhambiseni iinyosi. Amanyathelo okulawula eSebe amisela umgca wokohlula ngokuhamba kweenyosi. Jonga imithetho yangoku yokuhambisa iinyosi kwiSebe nakumgcini weenyosi onamava wasekuhlaleni ngaphambi kokuhambisa iinyosi okanye imizi yeenyosi.\n\nFunda kumgcini weenyosi onamava wasekuhlaleni ngaphambi kokufumana umzi wenyosi. Gcina imizi yeenyosi kude neendlela ezixineneyo, amakhaya neendawo apho abantwana badlala khona. Ilanga lasekuseni linokunceda; indawo ekhuselekileyo ibalulekile kuqala. Nika iinyosi izityalo ezinentyatyambo ngamaxesha onke onyaka kwaye uphephe ukuveza iinyosi kumachiza okubulala izinambuzane. Iinyosi ezisebenzayo aziyongqina lokuba ifama ayinamachiza okanye izifo. Amanyathelo kazwelonke okulawula iinyosi zobusi afuna ukubhaliswa kwimisebenzi echaziweyo yokugcina iinyosi, kuquka imizi yeenyosi elawulwayo yeemveliso zeenyosi, ukukhulisa ookumkanikazi, ukungenisa umgubo ngokurhweba, nokususwa, ukutshatyalaliswa okanye ukuhanjiswa kweqela leenyosi. Buza kwiSebe ukuba awuqinisekanga ukuba imithetho iyasebenza na kumsebenzi wakho. Ukuba iqela leenyosi liphuma ngamaqela ngokuphindaphindiweyo, cela umgcini weenyosi oqeqeshiweyo alihlole. Ukuxinana sesinye sezizathu ezinokubakho, akukuko ukuxilongwa kwengxaki.",
       ),
       keyPoints: [
         pair(
@@ -2861,7 +2861,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         {
           question: pair(
             "A hive has swarmed repeatedly. What is the best next step?",
-            "Iinyosi zomzi wenyosi ziphume ngamaqela ngokuphindaphindiweyo. Lelipi inyathelo elilandelayo elilunge kakhulu?",
+            "Iinyosi zomzi wenyosi ziphume ngamaqela ngokuphindaphindiweyo. Leliphi inyathelo elilandelayo elilunge kakhulu?",
           ),
           options: [
             pair(
@@ -2959,7 +2959,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           options: [
             pair(
               "Continue health checks and the parasite plan agreed with an animal-health adviser",
-              "Qhubeka noluhlolo lwempilo nesicwangciso se-parasite esivunyelwene nomcebisi wempilo yezilwanyana",
+              "Qhubeka nohlolo lwempilo nesicwangciso se-parasite esivunyelwene nomcebisi wempilo yezilwanyana",
             ),
             pair(
               "Stop all worm checks because chickens were present",
@@ -2977,7 +2977,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           sourceCorrectIndex: 0,
           rationale: pair(
             "Chickens are not a proven replacement for goat worm control. Grazing management and animal-health checks must work together.",
-            "Iinkukhu azizondlela eqinisekisiweyo yokuthatha indawo yokulawula iintshulube zeebhokhwe. Ulawulo lokulisa noluhlolo lwempilo yezilwanyana kufuneka kusebenzisane.",
+            "Iinkukhu azizondlela eqinisekisiweyo yokuthatha indawo yokulawula iintshulube zeebhokhwe. Ulawulo lokulisa nohlolo lwempilo yezilwanyana kufuneka kusebenzisane.",
           ),
         },
       ],
@@ -3010,7 +3010,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
-        "Isivuno sinokondla indlu, sithengiswe, sabelwane ngaso, okanye silahleke.\n\nUkurekhoda ezi ndlela zahlukeneyo zokusetyenziswa kukunceda ubone ukuba ifama ivelisa ntoni nokuba yintoni efika kubathengi.\n\nSebenzisa loo lwazi ukukhusela ukutya kwendlu nokwenza izigqibo zorhwebo ezingcono.\n\nBhala phantsi sonke isivuno njengoko senzeka.\n\nRekhoda ii-kg zotamatisi, iidazini zamaqanda, nemixulu yemifino (morogo), uze uqaphele ukuba nganye iye phi.\n\nSebenzisa isiko elilula elifanayo kukutya okugcinwe ekhaya, kwemveliso ethengisiweyo, kweyaphiwe abanye, nekwenziwe umgquba.\n\nMusa ukuthembela kwinkumbulo ekupheleni kwexesha lonyaka.\n\nIirekhodi zexesha elinye lonyaka ziphendula imibuzo esebenzayo.\n\nZeziphi izityalo ezinika isivuno esingcono kwibhedi nganye? Zeziphi ezibuyisa okuninzi kwiyure nganye yomsebenzi?\n\nZeziphi izityalo ezisebenzisa imbewu, amanzi nomgquba ongaphezulu kunokuba zibuyisa?\n\nIrekhodi likwabonisa ukuba zeziphi iinyanga eziyishiya indlu ithenga ukutya.\n\nPhambi kokumisa ixabiso, rekhoda iindleko zemveliso, zokupakisha nezokuthengisa, kuquka umsebenzi nothutho.\n\nNanku umzekelo wokufundisa, ayingoxabiso lemarike: utamatisi uyabiza iR18 ngekhilogram nganye kodwa uthengiswa ngeR15 ngekhilogram nganye. Eli xabiso alizigubungeli iindleko ezichaziweyo.\n\nPhonononga ixabiso, iindleko nokutyala okulandelayo. Jonga ukuba abathengi baza kuthenga ntoni ngokwenene; ixabiso eliphezulu lokucela asisiqinisekiso sentengiso.\n\nSebenzisa irekhodi lakho ukufumana ixesha apho ukutya kwendlu kuphela khona.\n\nKhetha izityalo ezifanelekileyo apho uhlala khona, uze usebenze umva usuka kwisivuno oyidingayo. Jonga iimeko zokutyala nexesha elilindelekileyo lokuvuna.\n\nUmhla osebenza kwenye ifama usenokungasebenzi apha. Quka isicwangciso sasemva xa imvula, amanzi okanye izityalo zisilela.",
+        "Isivuno sinokondla indlu, sithengiswe, sabelwane ngaso, okanye silahleke.\n\nUkurekhoda ezi ndlela zahlukeneyo zokusetyenziswa kukunceda ubone ukuba ifama ivelisa ntoni nokuba yintoni efika kubathengi.\n\nSebenzisa loo lwazi ukukhusela ukutya kwendlu nokwenza izigqibo zorhwebo ezingcono.\n\nBhala phantsi sonke isivuno njengoko senzeka.\n\nRekhoda ii-kg zotamatisi, iidazini zamaqanda, nezithungu zemifino (morogo), uze uqaphele ukuba nganye iye phi.\n\nSebenzisa isiko elilula elifanayo kukutya okugcinwe ekhaya, kwemveliso ethengisiweyo, kweyaphiwe abanye, nekwenziwe umgquba.\n\nMusa ukuthembela kwinkumbulo ekupheleni kwexesha lonyaka.\n\nIirekhodi zexesha elinye lonyaka ziphendula imibuzo esebenzayo.\n\nZeziphi izityalo ezinika isivuno esingcono kwibhedi nganye? Zeziphi ezibuyisa okuninzi kwiyure nganye yomsebenzi?\n\nZeziphi izityalo ezisebenzisa imbewu, amanzi nomgquba ongaphezulu kunokuba zibuyisa?\n\nIrekhodi likwabonisa ukuba zeziphi iinyanga eziyishiya indlu ithenga ukutya.\n\nPhambi kokumisa ixabiso, rekhoda iindleko zemveliso, zokupakisha nezokuthengisa, kuquka umsebenzi nothutho.\n\nNanku umzekelo wokufundisa, ayingoxabiso lemarike: iindleko zokuvelisa utamatisi ziyiR18 ngekhilogram nganye kodwa uthengiswa ngeR15 ngekhilogram nganye. Eli xabiso alizigubungeli iindleko ezichaziweyo.\n\nPhonononga ixabiso, iindleko nokutyala okulandelayo. Jonga ukuba abathengi baza kuthenga ntoni ngokwenene; ixabiso eliphezulu lokucela asisiqinisekiso sentengiso.\n\nSebenzisa irekhodi lakho ukufumana ixesha apho ukutya kwendlu kuphela khona.\n\nKhetha izityalo ezifanelekileyo apho uhlala khona, uze usebenze umva usuka kwisivuno oyidingayo. Jonga iimeko zokutyala nexesha elilindelekileyo lokuvuna.\n\nUmhla osebenza kwenye ifama usenokungasebenzi apha. Quka isicwangciso sasemva xa imvula, amanzi okanye izityalo zisilela.",
       ),
       keyPoints: [
         pair(
@@ -3047,7 +3047,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
             ),
             pair(
               "The selling price, costs and whether another crop would give a better return",
-              "Ixabiso lokuthengisa, iindleko, nokuba ingaba esinye isityalo asinakubuyisa ngcono na",
+              "Ixabiso lokuthengisa, iindleko, nokuba esinye isityalo singanika inzuzo engcono na",
             ),
             pair(
               "Apply for a subsidy to cover the gap",
@@ -3063,7 +3063,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
         {
           question: pair(
             "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
-            "Iirekhodi zomfama zibonisa ukuba uswele imifuno rhoqo ngoJuni noJulayi. Lisiphi inyathelo eliluncedo apha?",
+            "Iirekhodi zomfama zibonisa ukuba uswele imifuno rhoqo ngoJuni noJulayi. Liliphi inyathelo eliluncedo apha?",
           ),
           options: [
             pair(
@@ -3103,7 +3103,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       ),
       body: pair(
         "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
-        "Buza ukuba umthengi ufuna ntoni: imveliso, ubuninzi, umgangatho, ukuhanjiswa nomhla wentlawulo.\n\nThelekisa iifizi zemarike, uthutho, ukupakisha neemveliso ezingathengiswanga kunye nexabiso lokuthengisa.\n\nJonga imithetho yemarike kunye neemfuno zasekuhlaleni zorhwebo nezokutya. Isitali esingekho sesikweni asiyonto ngokuzenzekelayo engenamithetho okanye iindleko.\n\nUkuthengisa ngqo kunokugcina inxalenye enkulu yexabiso lentengiso, kodwa kuthatha ixesha, ukupakisha, uthutho nokukhathalela abathengi.\n\nInkqubo yeebhokisi (box scheme) ibonelela ngokhetho oluqhelekileyo lweemveliso rhoqo kubathengi abavumelaneyo.\n\nVumelanani ngezinto eziya ebhokisini, ixabiso, intlawulo nento eyenzekayo xa izityalo zinqabile. Iiodolo eziqhelekileyo zinceda ukucwangcisa kuphela xa abathengi nabalimi bengakwazi ukugcina isivumelwano.\n\nQala kwinto onokuyibonelela ngokuthembekileyo nakwinto abayifunayo abathengi.\n\nJonga iindleko nezidingo zokutya kwendlu phambi kokuthembisa iibhokisi eziqhelekileyo.\n\nUbungakanani begadi okanye inani labathengi kuphela alikuxeleli ingeniso. Zama ulungiselelo onokululawula uze urekhode iziphumo.\n\nUkuba imveliso iyatshintsha evekini ngeveki, phepha ukuthembisa ukuhanjiswa okungatshintshiyo ongenako ukukubonelela.\n\nNikela ngesivuno esigqithileyo onaso uze uvumelane ngemiqathango ecacileyo nabathengi.\n\nChaza iindlela zakho zokulima ngokunyanisekileyo. Jonga nasiphi na isatifikethi okanye isibango abasifunayo abathengi phambi kokusebenzisa ileyibhile.",
+        "Buza ukuba umthengi ufuna ntoni: imveliso, ubuninzi, umgangatho, ukuhanjiswa nomhla wentlawulo.\n\nThelekisa iifizi zemarike, uthutho, ukupakisha neemveliso ezingathengiswanga kunye nexabiso lokuthengisa.\n\nJonga imithetho yemarike kunye neemfuno zasekuhlaleni zorhwebo nezokutya. Isitali esingekho sesikweni asiyonto ngokuzenzekelayo engenamithetho okanye iindleko.\n\nUkuthengisa ngqo kunokugcina inxalenye enkulu yexabiso lentengiso, kodwa kuthatha ixesha, ukupakisha, uthutho nokukhathalela abathengi.\n\nInkqubo yeebhokisi (box scheme) ibonelela ngokhetho oluqhelekileyo lweemveliso rhoqo kubathengi abavumelaneyo.\n\nVumelanani ngezinto eziya ebhokisini, ixabiso, intlawulo nento eyenzekayo xa izityalo zinqabile. Iiodolo eziqhelekileyo zinceda ukucwangcisa kuphela xa abathengi nabalimi bekwazi ukugcina isivumelwano.\n\nQala kwinto onokuyibonelela ngokuthembekileyo nakwinto abayifunayo abathengi.\n\nJonga iindleko nezidingo zokutya kwendlu phambi kokuthembisa iibhokisi eziqhelekileyo.\n\nUbungakanani begadi okanye inani labathengi kuphela alikuxeleli ingeniso. Zama ulungiselelo onokululawula uze urekhode iziphumo.\n\nUkuba imveliso iyatshintsha evekini ngeveki, phepha ukuthembisa ukuhanjiswa okungatshintshiyo ongenako ukukubonelela.\n\nNikela ngesivuno esigqithileyo onaso uze uvumelane ngemiqathango ecacileyo nabathengi.\n\nChaza iindlela zakho zokulima ngokunyanisekileyo. Jonga nasiphi na isatifikethi okanye isibango abasifunayo abathengi phambi kokusebenzisa ileyibhile.",
       ),
       keyPoints: [
         pair(
@@ -3150,7 +3150,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
           sourceCorrectIndex: 2,
           rationale: pair(
             "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
-            "Le yeyona ndlela engamfuni athembise isixa esimiselweyo veki nganye — uthengisa le anayo ngokwenene.",
+            "Le yeyona ndlela engamfuni athembise isixa esimiselweyo veki nganye — uthengisa oko anako ngokwenene.",
           ),
         },
         {
@@ -3188,7 +3188,7 @@ export const ISIXHOSA_COURSE_DRAFTS: XhosaCourseModuleDraft[] = [
       id: "market-community-l3",
       infographicAlt: pair(
         "Five small planted beds with arrows pointing toward a central crate of produce; a hand trowel and seed jar sit below it.",
-        "Iibhedi ezintlanu ezincinci ezityaliweyo kunye neentolo ezalatha kwibhokisi esembindini yemveliso; itrowula yesandla nejari yembewu zikuyo ngezantsi.",
+        "Iibhedi ezintlanu ezincinci ezityaliweyo kunye neentolo ezalatha kwibhokisi esembindini yemveliso; itrowula yesandla nejari yembewu zingezantsi kwayo.",
       ),
       title: pair(
         "Building Community Food Networks: Strength in Numbers",
