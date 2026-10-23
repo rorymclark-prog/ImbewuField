@@ -104,7 +104,7 @@ export default function ExchangeGuide({
 
       <button
         onClick={onPost}
-        className="font-display font-semibold rounded-xl"
+        className="font-sans font-semibold rounded-xl"
         style={{
           width: '100%',
           padding: '11px',
@@ -140,7 +140,7 @@ export default function ExchangeGuide({
           type="button"
           onClick={() => setExpanded((v) => !v)}
           aria-expanded={expanded}
-          className="flex items-center gap-2.5 font-display font-semibold"
+          className="flex items-center gap-2.5 font-sans font-semibold"
           style={{
             width: '100%',
             minHeight: 44,

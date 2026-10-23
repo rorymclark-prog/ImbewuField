@@ -258,7 +258,7 @@ export default function ExchangeBoard() {
         )}
         <button
           onClick={() => { setShowForm((v) => !v); setShowGuide(false); }}
-          className={`flex items-center gap-1.5 font-display font-semibold rounded-xl${simple ? ' flex-1 md:flex-none' : ''}`}
+          className={`flex items-center gap-1.5 font-sans font-semibold rounded-xl${simple ? ' flex-1 md:flex-none' : ''}`}
           style={{
             justifyContent: simple ? 'center' : undefined,
             minHeight: 44,
