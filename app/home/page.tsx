@@ -196,7 +196,7 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
         <span className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.12em' }}>
           {t('homeUpcomingTasks')}
         </span>
-        <Link href="/facilitator/crops" className="flex items-center gap-1 font-display" style={{ fontSize: 12, color: 'var(--color-forest-800)', textDecoration: 'none' }}>
+        <Link href="/facilitator/crops" className="flex items-center gap-1 font-display" style={{ fontSize: 12, color: 'var(--color-forest-800)', textDecoration: 'none', minHeight: 44 }}>
           {t('homeTaskBoardViewPlan')}<ChevronRight size={13} />
         </Link>
       </div>
@@ -210,7 +210,7 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
             <button
               onClick={() => onToggle(task.id)}
               aria-label={localUi(lang, task.completed ? 'Mark not done' : 'Mark done', task.completed ? 'Susa uphawu lokwenziwe' : 'Maka njengokwenziwe')}
-              className={task.completed ? 'imf-task-check' : undefined}
+              className={`relative before:absolute before:-inset-3 before:content-[''] ${task.completed ? 'imf-task-check' : ''}`}
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: 'var(--color-forest-800)', flexShrink: 0 }}
             >
               {task.completed ? <CheckCircle2 size={20} strokeWidth={1.8} /> : <Circle size={20} strokeWidth={1.8} />}
@@ -230,6 +230,7 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
             <button
               onClick={() => downloadTaskIcs(task)}
               aria-label={localUi(lang, 'Add to calendar', 'Faka ekhalendeni')}
+              className="relative before:absolute before:-inset-[13px] before:content-['']"
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: 'var(--color-muted)', flexShrink: 0 }}
             >
               <CalendarPlus size={18} strokeWidth={1.6} />
@@ -301,7 +302,7 @@ function FarmPlanCard({ places, mainSite, staffRole = null }: { places: SavedPla
       </div>
       <span
         className="home-next-step-arrow flex items-center justify-center flex-shrink-0"
-        style={{ width: 42, height: 42, borderRadius: 999, background: 'var(--color-forest-800)', color: 'var(--on-forest)', boxShadow: '0 3px 10px rgba(31,77,43,0.22)' }}
+        style={{ width: 42, height: 42, borderRadius: 999, background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', boxShadow: '0 3px 10px rgba(31,77,43,0.22)' }}
       >
         <ChevronRight size={20} strokeWidth={2} />
       </span>

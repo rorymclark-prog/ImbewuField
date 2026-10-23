@@ -223,7 +223,7 @@ export default function FieldJournal() {
           onClick={() => openSheet(null)}
           style={{
             width: '100%', minHeight: 50, borderRadius: 14, border: 'none', cursor: 'pointer',
-            background: 'var(--color-forest-800)', color: 'var(--on-forest)', font: '700 15px/1 var(--font-sans), sans-serif',
+            background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', font: '700 15px/1 var(--font-sans), sans-serif',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
             boxShadow: '0 3px 12px rgba(20,40,22,0.18)',
           }}

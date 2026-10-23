@@ -86,6 +86,8 @@ const STAFF_ROUTES = [
   // which is how FarmerPanel.tsx's EXPERT_SURFACES ratchet quietly let a 12px caption regress to
   // 9px with nothing here to catch it.
   'app/network/page.tsx',
+  // Added with wave 16 (w16-05): the worked-example farm. A farmer opens it from /samples.
+  'app/samples/production/page.tsx',
 ];
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
@@ -266,7 +268,7 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
       + 'are 11-11.5px secondary text (error banners, chip labels, roster meta), within the '
       + '11px floor CLAUDE.md sets for non-farmer screens generally, just not this file\'s own '
       + 'zero-tolerance 12px floor yet.',
-    budget: 9,
+    budget: 0,
   },
   'components/NgoDashboard.tsx': {
     reason: 'the NGO/funder gardens-and-gardeners dashboard (PR #371). Its two sub-floor lines '
@@ -286,9 +288,16 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
   'components/network/NetworkMap.tsx': {
     reason: 'the funder/NGO portfolio map canvas, legend and chip controls — laptop-first staff '
       + 'tool. Owned by a different swarm track (map fallback / chrome-and-states) this wave, so '
-      + 'its sub-floor captions are classified here, not fixed.',
-    budget: 12,
+      + 'its sub-floor captions were raised to 12px in wave 16 (w16-06).',
+    budget: 0,
   },
+  // w16-05: the worked-example farm at /samples/production mounts Codex-owned crop components.
+  // They are classified at their current counts so the ratchet holds; this track does not edit them.
+  'app/samples/production/page.tsx': { reason: 'the worked-example farm page; no sub-12px type', budget: 0 },
+  'components/crops/CropPlanExportCard.tsx': { reason: 'crop-plan export card mounted on the example (Codex-owned)', budget: 2 },
+  'components/crops/ProductArtworkGallery.tsx': { reason: 'product artwork gallery on the example (Codex-owned)', budget: 0 },
+  'components/crops/ProductionAvailabilityGraphs.tsx': { reason: 'availability graphs on the example (Codex-owned)', budget: 0 },
+  'components/crops/ProductionRecordsEditor.tsx': { reason: 'production records editor on the example (Codex-owned)', budget: 0 },
   'components/partners/Screenshot.tsx': {
     reason: 'a captioned screenshot tile on the public /partners showcase',
     budget: 0,

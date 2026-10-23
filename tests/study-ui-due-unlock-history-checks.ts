@@ -307,8 +307,14 @@ export function ensureStudyUiDueUnlockCurrent() {
   // Wave 14 (isiZulu and study tracks) adds the shared language-draft note, BRU zone wording and
   // the Home date names, and keeps four Study action arrows from wrapping alone. Check the complete new file,
   // then bind the wave 13 proof to the exact pre-wave-14 fixture so it still holds byte for byte.
-  const liveEnglish = readFileSync(path('lib/i18n.tsx'), 'utf8');
+  // Wave 16 (copy-05) adds one English key, savedSiteUnavailable, for a saved site that no longer
+  // exists; nothing is reworded or removed. Check the complete new file, then bind the wave 15 proof
+  // to the exact pre-wave-16 fixture so it still holds byte for byte.
+  const liveDictionary = readFileSync(path('lib/i18n.tsx'), 'utf8');
+  assert.equal(sha(liveDictionary), '965efb4d398e7996e9a8bbfa061fa608b931d3c9244ce735e40d5c7c280eb671', 'complete app dictionary after the wave 16 edits');
+  const liveEnglish = readFileSync(path('tests/fixtures/i18n-before-wave-16.tsx.txt'), 'utf8');
   assert.equal(sha(liveEnglish), '737049f60cfd7ea083460c212c5f3f7b985e8177ec03045f34619b7627331512', 'complete app dictionary after the wave 15 edits');
+  assertOnlyWaveChanges(liveEnglish, liveDictionary, new Set(), new Set(), 'app dictionary', 'wave 16');
   const englishBefore15 = readFileSync(path('tests/fixtures/i18n-before-wave-15.tsx.txt'), 'utf8');
   assert.equal(sha(englishBefore15), '2485d3cc34a6b8e0b5bf964b8c8fd20ac8ec341be769ebf1094bce3987cdc282', 'complete app dictionary after the wave 14 edits remains exact');
   assertOnlyWaveChanges(englishBefore15, liveEnglish, WAVE_15_ENGLISH_REWORDED, WAVE_14_REMOVED, 'app dictionary', 'wave 15');

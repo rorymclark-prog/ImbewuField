@@ -65,3 +65,17 @@ test('every app route can produce a page title distinct from the root default', 
   }
   assert.deepEqual(failures, [], 'these routes have neither their own metadata nor a layout.tsx title, so every tab shows the same root <title>');
 });
+
+// w16-11: /manual and its sub-routes use the same 'Page name — ImbewuField' shape as every other
+// route, not '·' separators.
+test('manual route titles use the em-dash ImbewuField suffix', () => {
+  const layout = readFileSync(join(APP_ROOT, 'manual/layout.tsx'), 'utf8');
+  assert.match(layout, /title: 'Permaculture manual — ImbewuField'/);
+  for (const rel of ['manual/[lang]/page.tsx', 'manual/[lang]/[slug]/page.tsx']) {
+    const src = readFileSync(join(APP_ROOT, rel), 'utf8');
+    const m = src.match(/generateMetadata[\s\S]*?title: (`[^`]*`)/);
+    assert.ok(m, `${rel} must set a title in generateMetadata`);
+    assert.ok(!m[1].includes('·'), `${rel} title still uses '·': ${m[1]}`);
+    assert.ok(m[1].endsWith(' — ImbewuField`'), `${rel} title must end with ' — ImbewuField': ${m[1]}`);
+  }
+});

@@ -321,7 +321,7 @@ function SimpleMoneySummary({ series, lang }: { series: FinanceSeries; lang: str
           { moneyIn: fmtZAR(series.totalInZar), moneyOut: fmtZAR(series.totalOutZar) },
         )}
       </p>
-      <p className="font-sans text-xs mt-2" style={{ color: 'var(--color-muted)' }}>
+      <p className="font-sans text-xs mt-2" style={{ color: 'var(--text-secondary)' }}>
         {recordsText(lang, 'Only what you have written down.', 'Yilokho kuphela osukubhalile.')}
       </p>
     </div>
@@ -458,7 +458,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
                   {item.title}
                 </p>
                 {item.subtitle && (
-                  <p className="text-xs mt-0.5" style={{ color: 'var(--color-muted)' }}>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
                     {item.subtitle}
                   </p>
                 )}
@@ -471,7 +471,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
                 >
                   {item.positive ? '+' : '-'}{fmtZAR(item.amount)}
                 </p>
-                <p className="text-xs mt-0.5" style={{ color: 'var(--color-muted)' }}>
+                <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
                   {fmtDate(item.iso, lang)}
                 </p>
               </div>
@@ -865,13 +865,13 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         {!isIn && (
           <div>
             <label htmlFor={`${idPrefix}-expense-crop`} className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
-              {recordsText(lang, 'Crop this cost was for', 'Isitshalo lezi zindleko ebezingezaso')} <span className="normal-case" style={{ color: 'var(--color-muted)' }}>({recordsText(lang, 'optional', 'uma uthanda')})</span>
+              {recordsText(lang, 'Crop this cost was for', 'Isitshalo lezi zindleko ebezingezaso')} <span className="normal-case" style={{ color: 'var(--text-secondary)' }}>({recordsText(lang, 'optional', 'uma uthanda')})</span>
             </label>
             <input id={`${idPrefix}-expense-crop`} type="text" placeholder={recordsText(lang, 'Leave blank if it served the whole garden', 'Shiya kungenalutho uma bekusetshenziselwa ingadi yonke')}
               value={form.expenseCrop} onChange={(e) => setForm((f) => ({ ...f, expenseCrop: e.target.value }))}
               className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
               style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-border)', color: 'var(--color-ink)' }} />
-            <p className="text-xs font-sans mt-1" style={{ color: 'var(--color-muted)' }}>{recordsInstruction(lang, 'Only tag a crop when this cost was just for that crop.', 'Faka isitshalo kuphela uma lezi zindleko bekuqondene naso sodwa.')}</p>
+            <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-secondary)' }}>{recordsInstruction(lang, 'Only tag a crop when this cost was just for that crop.', 'Faka isitshalo kuphela uma lezi zindleko bekuqondene naso sodwa.')}</p>
           </div>
         )}
 
@@ -899,7 +899,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         <div>
           <label htmlFor={`${idPrefix}-buyer`} className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
             {recordsText(lang, isIn ? 'Buyer' : 'Supplier', isIn ? 'Umthengi' : 'Umhlinzeki')}
-            <span className="ml-1 normal-case" style={{ color: 'var(--color-muted)' }}>({recordsText(lang, 'optional', 'uma uthanda')})</span>
+            <span className="ml-1 normal-case" style={{ color: 'var(--text-secondary)' }}>({recordsText(lang, 'optional', 'uma uthanda')})</span>
           </label>
           <input id={`${idPrefix}-buyer`} type="text" placeholder={recordsText(lang, isIn ? 'e.g. Local market' : 'e.g. Agri Co-op', isIn ? 'isb. Imakethe yendawo' : 'isb. Inhlangano yezolimo')}
             value={form.buyer} onChange={(e) => setForm((f) => ({ ...f, buyer: e.target.value }))}
@@ -911,7 +911,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         {!isIn && (
           <div>
             <label id={`${idPrefix}-category-label`} className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
-              {recordsText(lang, 'Category', 'Isigaba')} <span className="normal-case" style={{ color: 'var(--color-muted)' }}>({recordsText(lang, 'optional', 'uma uthanda')})</span>
+              {recordsText(lang, 'Category', 'Isigaba')} <span className="normal-case" style={{ color: 'var(--text-secondary)' }}>({recordsText(lang, 'optional', 'uma uthanda')})</span>
             </label>
             <div role="group" aria-labelledby={`${idPrefix}-category-label`} className="flex flex-wrap gap-1.5">
               {EXPENSE_CATEGORIES.map((c) => (
@@ -1119,7 +1119,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
       {/* Title bar */}
       <div className="flex items-end justify-between gap-4 mb-5 flex-wrap">
         <div>
-          <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.14em' }}>{name}</div>
+          <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--text-secondary)', letterSpacing: '0.14em' }}>{name}</div>
           <h2 className="font-display font-semibold" style={{ fontSize: 30, color: 'var(--color-ink)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>{recordsText(lang, 'Financial sheet', 'Ishidi lezimali')}</h2>
         </div>
         <div className="flex items-center gap-2">
@@ -1142,7 +1142,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
           </div>
           <button onClick={exportCsv} disabled={rows.length === 0}
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold transition-all"
-            style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: rows.length ? 'var(--color-ink)' : 'var(--color-muted)', fontSize: 14, cursor: rows.length ? 'pointer' : 'not-allowed' }}>
+            style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: rows.length ? 'var(--color-ink)' : 'var(--text-secondary)', fontSize: 14, cursor: rows.length ? 'pointer' : 'not-allowed' }}>
             <Download size={15} />{recordsText(lang, 'Export', 'Khipha')}
           </button>
           <Link href="/invoice" className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold" style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--record-negative)', fontSize: 14, textDecoration: 'none' }}>
@@ -1167,7 +1167,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
       <div className="grid grid-cols-4 gap-4 mb-5">
         {stats.map((s) => (
           <div key={s.label} className="rounded-2xl px-5 py-4" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.1em' }}>{s.label}</div>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--text-secondary)', letterSpacing: '0.1em' }}>{s.label}</div>
             <div className="t-hero mt-1" style={{ color: s.color }}>{loading ? '…' : s.value}</div>
           </div>
         ))}
@@ -1187,14 +1187,14 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
             <tr style={{ borderBottom: '1px solid var(--color-border)' }}>
           {[recordsText(lang, 'Date', 'Usuku'), recordsText(lang, 'Description', 'Incazelo'), recordsText(lang, 'Qty', 'Inani'), recordsText(lang, 'In', 'Ingenayo'), recordsText(lang, 'Source', 'Umthombo'), recordsText(lang, 'Out', 'Ephumayo')].map((h, i) => (
                 <th key={h} className="font-sans uppercase tracking-wider px-5 py-3"
-                  style={{ fontSize: 12, color: 'var(--color-muted)', textAlign: i === 3 || i === 5 ? 'right' : 'left', letterSpacing: '0.08em', fontWeight: 700 }}>{h}</th>
+                  style={{ fontSize: 12, color: 'var(--text-secondary)', textAlign: i === 3 || i === 5 ? 'right' : 'left', letterSpacing: '0.08em', fontWeight: 700 }}>{h}</th>
               ))}
               <th style={{ width: 40 }} />
             </tr>
           </thead>
           <tbody>
             {rows.length === 0 ? (
-              <tr><td colSpan={7} className="px-5 py-10 text-center font-sans" style={{ fontSize: 14, color: 'var(--color-muted)' }}>
+              <tr><td colSpan={7} className="px-5 py-10 text-center font-sans" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
           {recordsText(lang, `No entries for this ${period}. Use the New-entry button, the Invoice tool, or your phone — everything shows here.`, `Akukho okufakiwe kwale ${period === 'month' ? 'nyanga' : period === 'season' ? 'sizini' : 'minyaka'}. Sebenzisa inkinobho yokufaka okusha, ithuluzi lama-invoyisi noma ifoni yakho — konke kubonakala lapha.`)} {recordsInstruction(lang, DUPLICATE_LEDGER_FOOTER, 'Imigqa yezitshalo kuma-invoyisi akhokhiwe ingena encwadini yokuthengisa ngokuzenzakalelayo futhi ibalwa kanye. Ungayifaki futhi.')}
               </td></tr>
             ) : rows.map((r, i) => (
@@ -1211,7 +1211,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
                 </td>
                 <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: 'var(--color-muted-strong)', whiteSpace: 'nowrap' }}>{r.qty}</td>
                 <td className="px-5 py-3 font-display font-semibold tabular-nums" style={{ fontSize: 14, color: 'var(--record-positive)', textAlign: 'right', whiteSpace: 'nowrap' }}>{r.inAmt != null ? fmtZAR(r.inAmt) : '—'}</td>
-                <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: 'var(--color-muted)' }}>{r.source}</td>
+                <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>{r.source}</td>
                 <td className="px-5 py-3 font-display font-semibold tabular-nums" style={{ fontSize: 14, color: 'var(--record-negative)', textAlign: 'right', whiteSpace: 'nowrap' }}>{r.outAmt != null ? fmtZAR(r.outAmt) : '—'}</td>
                 <td className="pr-4 py-3">
                   {(r.kind === 'sale' || r.kind === 'expense') && (
@@ -1235,7 +1235,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
           </tbody>
         </table>
       </div>
-      <p className="font-sans mt-3" style={{ fontSize: 12, color: 'var(--color-muted)' }}>
+      <p className="font-sans mt-3" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
         {recordsInstruction(lang, 'Synced with your phone', 'Ivumelanisiwe nefoni yakho')} · {rows.length} {recordsText(lang, rows.length === 1 ? 'entry' : 'entries', 'okufakiwe')} {recordsText(lang, period, period === 'month' ? 'kule nyanga' : period === 'season' ? 'kule sizini' : 'kulo nyaka')}. {recordsInstruction(lang, 'Add or edit sales and costs here, or with the New-entry button on your phone.', 'Faka noma uhlele ukudayisa nezindleko lapha, noma usebenzise inkinobho yokufaka okusha efonini yakho.')}
       </p>
     </div>
@@ -1927,7 +1927,7 @@ export default function RecordsPage() {
                     onClick={() => exportLedgerCsv(buildLedgerRows(sales, expenses, production, invoices, 'month', new Date(), csvLang(lang)), 'month', csvLang(lang))}
                     disabled={!hasAnyData}
                     className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold transition-all"
-                    style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: hasAnyData ? 'var(--color-ink)' : 'var(--color-muted)', cursor: hasAnyData ? 'pointer' : 'not-allowed' }}
+                    style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: hasAnyData ? 'var(--color-ink)' : 'var(--text-secondary)', cursor: hasAnyData ? 'pointer' : 'not-allowed' }}
                   >
                     <Download size={15} />{recordsText(lang, 'Export this month (CSV)', 'Khipha okwale nyanga (CSV)')}
                   </button>

@@ -173,7 +173,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
 
   if (unsupported) {
     return compact ? null : (
-      <p className="font-sans text-xs" style={{ color: '#755942' }}>
+      <p className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>
         {t('offlineDownloadUnsupported')}
       </p>
     );
@@ -193,12 +193,12 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
     <div className={shell} style={shellStyle}>
       {!compact && (
         <div className="flex items-start gap-2">
-          <WifiOff size={16} style={{ color: '#1F4D2B', marginTop: 2, flexShrink: 0 }} />
+          <WifiOff size={16} style={{ color: 'var(--color-forest-800)', marginTop: 2, flexShrink: 0 }} />
           <div className="min-w-0">
-            <p className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>{label}</p>
+            <p className="font-display font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>{label}</p>
             {/* Says WHY, in the learner's own terms. A download button with no reason attached
                 reads as an app asking for data; this one is a plan for the month. */}
-            <p className="font-sans text-xs mt-0.5 leading-relaxed" style={{ color: '#5C5040' }}>
+            <p className="font-sans text-xs mt-0.5 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               {regionalSlidePack && variant === 'slides' ? t('offlineGetSlidesWhileSignal') : t('offlineGetWhileSignal')}
             </p>
           </div>
@@ -206,7 +206,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
       )}
 
       {hasEnglishMedia && (
-        <p className="font-sans text-xs leading-relaxed" style={{ color: '#5C5040' }}>
+        <p className="font-sans text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
           {variant === 'slides' ? t('offlineEnglishSlidesFallback') : t('offlineEnglishMediaFallback')}
         </p>
       )}
@@ -215,19 +215,19 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
         {phase === 'done' ? (
           <>
             <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-display font-semibold"
-              style={{ background: 'rgba(31,77,43,0.1)', color: '#1F4D2B', border: '1px solid rgba(31,77,43,0.25)' }}>
+              style={{ background: 'rgba(31,77,43,0.1)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.25)' }}>
               <Check size={13} />{t('offlineOnThisPhone').replace('{size}', formatPackSize(totalBytes))}
             </span>
             <button onClick={remove}
               className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-sans"
-              style={{ color: '#755942', border: '1px solid var(--border)', background: 'transparent' }}>
+              style={{ color: 'var(--text-muted)', border: '1px solid var(--border)', background: 'transparent' }}>
               <Trash2 size={12} />{t('offlineRemovePack')}
             </button>
           </>
         ) : busy ? (
           <>
             <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-display font-semibold"
-              style={{ background: '#1F4D2B', color: '#EAF3E2' }}>
+              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))' }}>
               <Loader2 size={13} className="animate-spin" />
               {t('offlineDownloadBytesProgress')
                 .replace('{current}', formatPackSize(bytes))
@@ -235,14 +235,14 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
             </span>
             <button onClick={cancel}
               className="px-2.5 py-1.5 rounded-xl text-xs font-sans"
-              style={{ color: '#755942', border: '1px solid var(--border)', background: 'transparent' }}>
+              style={{ color: 'var(--text-muted)', border: '1px solid var(--border)', background: 'transparent' }}>
               {t('offlineStopDownload')}
             </button>
           </>
         ) : (
           <button onClick={start} disabled={phase === 'checking'}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-display font-semibold transition-all"
-            style={{ background: '#1F4D2B', color: '#EAF3E2', border: 'none', opacity: phase === 'checking' ? 0.6 : 1 }}>
+            style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', border: 'none', opacity: phase === 'checking' ? 0.6 : 1 }}>
             <Download size={13} />
             {/* A resumed download quotes what is LEFT, not the whole thing — the already-cached
                 files are not fetched again and quoting them would overstate the cost. */}
@@ -277,14 +277,14 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
                   cursor: 'pointer',
                 }}
               >
-                <span className="font-sans text-xs font-semibold block" style={{ color: on ? '#1F4D2B' : '#5C5040' }}>
+                <span className="font-sans text-xs font-semibold block" style={{ color: on ? 'var(--color-forest-800)' : 'var(--text-secondary)' }}>
                   {opt.name} · {formatPackSize(opt.size)}
                 </span>
               </button>
             );
           })}
           {variant === 'full' && (
-            <p className="basis-full font-sans text-xs leading-relaxed" style={{ color: '#5C5040' }}>
+            <p className="basis-full font-sans text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               {t('offlineRegionalFullMediaNote')}
             </p>
           )}
@@ -318,12 +318,12 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
                   cursor: 'pointer',
                 }}
               >
-                <span className="font-sans text-xs font-semibold block" style={{ color: on ? '#1F4D2B' : '#5C5040' }}>
+                <span className="font-sans text-xs font-semibold block" style={{ color: on ? 'var(--color-forest-800)' : 'var(--text-secondary)' }}>
                   {opt.name} · {formatPackSize(opt.size)}
                 </span>
-                <span className="font-sans block" style={{ fontSize: 12, color: '#755942' }}>{opt.note}</span>
+                <span className="font-sans block" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{opt.note}</span>
                 {lang === 'ts' && opt.key === 'standard' && (
-                  <small lang="en" className="font-sans block mt-1" style={{ fontSize: 12, color: '#5C5040' }}>
+                  <small lang="en" className="font-sans block mt-1" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
                     English source: {translate('en', 'offlineQualityStandard')}
                   </small>
                 )}
@@ -336,9 +336,9 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
       {(busy || phase === 'partial') && totalFiles > 0 && (
         <div className="w-full">
           <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(32,25,15,0.08)' }}>
-            <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: '#1F4D2B' }} />
+            <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: 'var(--color-forest-800)' }} />
           </div>
-          <p className="text-xs mt-1" style={{ color: '#755942' }}>
+          <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
             {t('offlineFilesProgress').replace('{done}', String(doneFiles)).replace('{total}', String(totalFiles))}
           </p>
         </div>
@@ -347,20 +347,20 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
       {failed.length > 0 && (
         // Named, not buried. The gap would otherwise surface at the homestead, weeks later, with
         // no signal left to fix it and no way to tell a broken app from a broken download.
-        <p className="flex items-start gap-1.5 font-sans text-xs leading-relaxed" style={{ color: '#8A4B2A' }}>
+        <p className="flex items-start gap-1.5 font-sans text-xs leading-relaxed" style={{ color: 'var(--orange)' }}>
           <AlertTriangle size={13} style={{ marginTop: 1, flexShrink: 0 }} />
           {t('offlineFilesFailed').replace('{count}', String(failed.length))}
         </p>
       )}
 
       {phase === 'done' && notPersisted && (
-        <p className="font-sans text-xs leading-relaxed" style={{ color: '#755942' }}>
+        <p className="font-sans text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
           {t('offlineSavedMayClear')}
         </p>
       )}
 
       {tightOnSpace && phase !== 'done' && (
-        <p className="font-sans text-xs leading-relaxed" style={{ color: '#8A4B2A' }}>
+        <p className="font-sans text-xs leading-relaxed" style={{ color: 'var(--orange)' }}>
           {/* The estimate warrants may-not-fit, so the stronger TS draft stays in the English hold above. */}
           {t('offlineLowStorage')}
         </p>

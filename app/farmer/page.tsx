@@ -329,7 +329,7 @@ function HomeInner() {
     if (!siteId || siteParamHandled.current === siteId) return;
     siteParamHandled.current = siteId;
     const p = loadPlaces().find((pl) => pl.id === siteId);
-    if (!p) { setError('This saved site is no longer available. Go back to Site reports and choose another site.'); return; }
+    if (!p) { setError(t('savedSiteUnavailable')); return; }
     handlePlaceSelect({ name: p.name, id: p.id });
     handleLocationSelect(p.lat, p.lon);
     const jumpTimer = setTimeout(() => setJumpTo({ lat: p.lat, lon: p.lon }), 800);

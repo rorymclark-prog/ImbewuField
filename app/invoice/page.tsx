@@ -772,7 +772,7 @@ export default function InvoicePage() {
           disabled={!valid}
           aria-label={ui('Share PDF (WhatsApp, email…)', 'Yabelana nge-PDF (WhatsApp, i-imeyili…)')}
           className="flex items-center justify-center gap-1.5 px-3 min-h-11 rounded-lg text-xs font-display font-semibold flex-shrink-0"
-          style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest)' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
+          style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest-800)' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
         >
           <Share2 size={16} /><span className="hidden sm:inline">{ui('Share PDF', 'Yabelana nge-PDF')}</span>
         </button>
@@ -1004,7 +1004,7 @@ export default function InvoicePage() {
                                   disabled={syncingInvoiceId === inv.id}
                                   className="px-2.5 py-1 rounded-full text-xs font-sans font-semibold capitalize transition-all"
                                   style={inv.paymentMethod === m
-                                    ? { background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: '1px solid var(--color-forest-800)', cursor: 'pointer' }
+                                    ? { background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: '1px solid var(--color-forest-800)', cursor: 'pointer' }
                                     : { background: 'var(--bg-1)', color: 'var(--text-secondary)', border: '1px solid var(--border)', cursor: 'pointer' }}>
                                   {paymentLabel(m)}
                                 </button>
@@ -1191,7 +1191,7 @@ export default function InvoicePage() {
                       />
                     </div>
                     <button onClick={() => removeItem(it.id)} aria-label={ui('Remove item')}
-                      className="flex-shrink-0 opacity-40 hover:opacity-80 transition-opacity"
+                      className="flex-shrink-0 opacity-40 hover:opacity-80 transition-opacity relative before:absolute before:-inset-3.5 before:content-['']"
                       style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--text-secondary)' }}>
                       <Trash2 size={14} />
                     </button>
@@ -1272,7 +1272,7 @@ export default function InvoicePage() {
                       onClick={() => { setTermsDays(choice.days); patchLetterhead({ paymentTermsDays: choice.days }); }}
                       className="px-2.5 py-1.5 rounded-full text-xs font-sans font-semibold"
                       style={termsDays === choice.days
-                        ? { background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: '1px solid var(--color-forest-800)', cursor: 'pointer' }
+                        ? { background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: '1px solid var(--color-forest-800)', cursor: 'pointer' }
                         : { background: 'var(--bg-1)', color: 'var(--text-secondary)', border: '1px solid var(--border)', cursor: 'pointer' }}>
                       {ui(choice.label)}
                     </button>
@@ -1327,7 +1327,7 @@ export default function InvoicePage() {
 
             <button onClick={() => void persist()} disabled={!valid}
               className="w-full flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-display font-semibold"
-              style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest)' : 'var(--text-muted)', border: 'none' }}>
+              style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest-800)' : 'var(--text-muted)', border: 'none' }}>
               <Save size={16} />{saving ? ui('Saving…') : ui('Save invoice')}
             </button>
             {saveMessage && <p role="status" className="rounded-xl p-3 text-sm" style={{ background: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))', color: 'var(--emerald)' }}>{saveMessage}</p>}
@@ -1335,7 +1335,7 @@ export default function InvoicePage() {
             <div className="flex gap-2">
               <button onClick={shareInvoice} disabled={!valid}
                 className="flex-1 flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest)' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
+                style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest-800)' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
                 <Share2 size={15} />{ui('Share PDF')}
               </button>
               <button onClick={printInvoice} disabled={!valid}

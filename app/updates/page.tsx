@@ -65,7 +65,7 @@ export default function UpdatesPage() {
           </p>
           <button type="button" onClick={() => window.dispatchEvent(new Event(OPEN_UPDATE_GUIDE_EVENT))}
             className="mb-6 px-4 rounded-lg font-semibold"
-            style={{ minHeight: 44, background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}>
+            style={{ minHeight: 44, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)' }}>
             Guide me to recent changes
           </button>
 

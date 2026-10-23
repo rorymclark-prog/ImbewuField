@@ -52,6 +52,24 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 23 Oct 2026 — Wave 16: re-capture, then five swarm tracks (PRs #1067–#1071, folded on one branch)
+- **Re-capture first:** the wave 15 build (`b260f337`) rendered again, 600 frames paired with wave 15; new IDs
+  `w16-01`…`w16-11` — `docs/audits/2026-10-22/wave-16-recapture-claude.md`.
+- **Dark forest buttons:** `--on-forest-800` declared in every theme column (white type on forest-800 stays at least
+  5.8:1 in dark); about 45 places repointed, guarded by `tests/on-forest-contrast.test.ts`; `LessonLink` and /design labels.
+- **Study in dark:** category text colours as `--cat-<name>-text` tokens per theme (`lib/category-text-colors.ts`,
+  `lib/course-modules.ts` untouched); four Study CSS modules and `FinanceCourse` buttons on theme tokens; 12px floor.
+- **Taps and sign-in:** 44px hit areas on /home, /invoice, /contact, /pitch, /login, /funder, /ngo; /login notice and
+  /records small text on readable tokens.
+- **Samples, network, example, farmer:** /samples/production, /network and /example small text at 12px and readable
+  tokens, the production calendar no longer overflows a phone; /farmer Site reports overline on `--gold-dim`.
+- **Leftovers:** last emoji icons in DesignCanvas and SiteCropPlanPreview; `savedSiteUnavailable` behind `t()`
+  (isiZulu pending); /surveys, /assessments, /journal end at their content on desktop; print page back control; manual titles.
+- **Proof layers:** `tests/wave-16-history-checks.ts` pins `app/student/page.tsx` over its wave 15 bytes; live
+  `lib/i18n.tsx` re-pinned with a wave 16 step that allows only the added key. Close-out:
+  `docs/audits/2026-10-23/wave-16-integration-claude.md`. Open next: /home tour card tap size, `MelDashboard`/`FieldJournal`
+  desktop interiors, six inline-style inputs without focus rings, a dark-mode render of /student.
+
 ### 22 Oct 2026 — Wave 15: re-capture, then five swarm tracks (PRs #1061–#1065, folded on one branch)
 - **Re-capture first:** the merged wave 14 build (main `d99108f1`) rendered again; three regressions fixed before the
   swarm started (/facilitator/print phone width with More options, isiZulu/English pairs read as one word, /account

@@ -228,7 +228,7 @@ function LoginPageInner() {
             {mode === 'reset' && t('loginSubtitleReset')}
           </div>
           {from && (
-            <div className="font-sans text-xs mt-1" style={{ color: 'var(--color-ink-faint)' }}>
+            <div className="font-sans text-xs mt-1" style={{ color: 'var(--text-secondary)' }}>
               {t('loginContinueToMap')}
             </div>
           )}
@@ -236,7 +236,7 @@ function LoginPageInner() {
 
         {/* Backend not configured notice */}
         {!backendReady && (
-          <div className="rounded-xl px-3 py-2.5 mb-4 font-sans" style={{ fontSize: 13, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--color-ochre)' }}>
+          <div className="rounded-xl px-3 py-2.5 mb-4 font-sans" style={{ fontSize: 13, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--gold-dim)' }}>
             {t('loginBackendUnavailableNotice')}
           </div>
         )}
@@ -334,7 +334,7 @@ function LoginPageInner() {
                 loading || !backendReady ? 'py-2.5 rounded-xl' : 'u-btn-primary'
               }`}
               style={loading || !backendReady
-                ? { minHeight: 44, background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--color-ink-faint)', cursor: 'not-allowed', fontSize: 15 }
+                ? { minHeight: 44, background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'not-allowed', fontSize: 15 }
                 : undefined}>
               {loading ? (
                 mode === 'signin' ? t('loginSigningIn') :
@@ -352,7 +352,7 @@ function LoginPageInner() {
             {mode === 'signin' && (
               <button type="button" onClick={() => switchMode('reset')}
                 className="font-sans text-center transition-opacity hover:opacity-80"
-                style={{ fontSize: 13, color: 'var(--color-muted-strong)', background: 'none', border: 'none', cursor: 'pointer', marginTop: 2 }}>
+                style={{ fontSize: 13, color: 'var(--color-muted-strong)', background: 'none', border: 'none', cursor: 'pointer', marginTop: 2, minHeight: 44 }}>
                 {authLabel('loginForgotPassword')}
               </button>
             )}
@@ -360,7 +360,7 @@ function LoginPageInner() {
             {mode === 'reset' && (
               <button type="button" onClick={() => switchMode('signin')}
                 className="font-sans text-center transition-opacity hover:opacity-80"
-                style={{ fontSize: 13, color: 'var(--color-muted-strong)', background: 'none', border: 'none', cursor: 'pointer', marginTop: 2 }}>
+                style={{ fontSize: 13, color: 'var(--color-muted-strong)', background: 'none', border: 'none', cursor: 'pointer', marginTop: 2, minHeight: 44 }}>
                 <span className="flex items-center justify-center gap-1"><ChevronLeft size={12} />{t('loginBackToSignIn')}</span>
               </button>
             )}
@@ -372,7 +372,7 @@ function LoginPageInner() {
           <>
             <div className="flex items-center gap-3 my-4">
               <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
-              <span className="font-sans text-xs" style={{ color: 'var(--color-ink-faint)' }}>{t('loginOr')}</span>
+              <span className="font-sans text-xs" style={{ color: 'var(--text-secondary)' }}>{t('loginOr')}</span>
               <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
             </div>
             <button type="button" onClick={handleGoogle} disabled={googleLoading || embedded}
@@ -392,7 +392,7 @@ function LoginPageInner() {
 
             {/* In-app browsers can't run Google's OAuth screen — steer to a real one */}
             {embedded && (
-              <div className="rounded-xl px-3 py-2.5 mt-2 font-sans" style={{ fontSize: 12.5, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--color-ochre)' }}>
+              <div className="rounded-xl px-3 py-2.5 mt-2 font-sans" style={{ fontSize: 12.5, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--gold-dim)' }}>
                 {t('loginGoogleEmbeddedHelp')}
                 <button type="button" onClick={copyAppLink}
                   className="mt-2 w-full flex items-center justify-center gap-1.5 py-1.5 rounded-lg font-semibold"
@@ -406,14 +406,14 @@ function LoginPageInner() {
 
         {/* Back link */}
         <div className="text-center mt-4">
-          <a href="/home" className="font-sans transition-opacity hover:opacity-80" style={{ fontSize: 13, color: 'var(--color-muted-strong)' }}>
+          <a href="/home" className="font-sans transition-opacity hover:opacity-80" style={{ minHeight: 44, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: 'var(--color-muted-strong)' }}>
             <span className="flex items-center justify-center gap-1"><ChevronLeft size={12} />{t('loginBackToApp')}</span>
           </a>
         </div>
 
         {/* Trust footer */}
         <div className="text-center mt-3">
-          <p className="font-sans" style={{ fontSize: 12, color: 'var(--color-ink-faint)', letterSpacing: '0.01em' }}>
+          <p className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', letterSpacing: '0.01em' }}>
             {t('loginTrustFooter')}
           </p>
         </div>

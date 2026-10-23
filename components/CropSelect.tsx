@@ -153,7 +153,7 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
             className="rounded-lg px-3 py-2 text-xs font-display font-semibold"
             style={{
               background: newName.trim() ? 'var(--color-forest-800)' : 'var(--bg-2)',
-              border: 'none', color: newName.trim() ? 'var(--on-forest)' : 'var(--text-muted)',
+              border: 'none', color: newName.trim() ? 'var(--on-forest-800)' : 'var(--text-muted)',
               cursor: newName.trim() ? 'pointer' : 'not-allowed',
             }}
           >

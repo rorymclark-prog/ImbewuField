@@ -231,7 +231,7 @@ export default function AccountPage() {
               <section className="min-w-0 space-y-5" aria-label={copy('Tour account', 'I-akhawunti yohambo')}>
                 <div className="rounded-2xl p-5 flex items-center gap-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
                   <div className="flex items-center justify-center rounded-full font-display font-bold flex-shrink-0"
-                    style={{ width: 64, height: 64, fontSize: 28, background: 'linear-gradient(135deg, var(--color-forest-800), var(--color-forest-700))', color: 'var(--on-forest)' }}>
+                    style={{ width: 64, height: 64, fontSize: 28, background: 'linear-gradient(135deg, var(--color-forest-800), var(--color-forest-700))', color: 'var(--on-forest-800, var(--on-forest))' }}>
                     <Sprout size={28} />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -261,7 +261,7 @@ export default function AccountPage() {
                   <div className="flex gap-2 flex-wrap">
                     <button onClick={() => router.push('/login')}
                       className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-display font-semibold"
-                      style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', cursor: 'pointer' }}>
+                      style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', border: 'none', cursor: 'pointer' }}>
                       {copy('Sign in', 'Ngena ngemvume')}
                     </button>
                     <button onClick={() => { exitSampleMode(); router.push('/home'); }}
@@ -293,7 +293,7 @@ export default function AccountPage() {
           </p>
           <button onClick={() => router.push('/login')}
             className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-display font-semibold"
-            style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', cursor: 'pointer' }}>
+            style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', border: 'none', cursor: 'pointer' }}>
             {copy('Sign in', 'Ngena ngemvume')}
           </button>
         </div>
@@ -457,7 +457,7 @@ export default function AccountPage() {
               <div className="flex gap-2 pt-1">
                 <button onClick={saveProfile} disabled={saving} aria-busy={saving}
                   className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold"
-                  style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', cursor: saving ? 'wait' : 'pointer', opacity: saving ? 0.7 : 1 }}>
+                  style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', border: 'none', cursor: saving ? 'wait' : 'pointer', opacity: saving ? 0.7 : 1 }}>
                   <Check size={14} />{saving ? copy('Saving...', 'Kuyalondolozwa...') : copy('Save', 'Londoloza')}
                 </button>
                 <button onClick={() => setEditing(false)} disabled={saving}
@@ -547,7 +547,7 @@ export default function AccountPage() {
                   <div className="flex gap-2 pt-1">
                     <button onClick={handleChangePw} disabled={pwSaving || !pwForm.current || !pwForm.next || !pwForm.confirm}
                       className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold"
-                      style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', cursor: pwSaving ? 'wait' : 'pointer', opacity: (pwSaving || !pwForm.current || !pwForm.next) ? 0.6 : 1 }}>
+                      style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', border: 'none', cursor: pwSaving ? 'wait' : 'pointer', opacity: (pwSaving || !pwForm.current || !pwForm.next) ? 0.6 : 1 }}>
                       <Lock size={13} />{pwSaving ? copy('Updating...', 'Kuyabuyekezwa...') : copy('Update password', 'Buyekeza iphasiwedi')}
                     </button>
                     <button onClick={() => { setChangingPw(false); setPwForm({ current: '', next: '', confirm: '' }); setPwError(null); }}

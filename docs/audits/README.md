@@ -62,6 +62,10 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Wave 16 integration close-out: five tracks folded, 16 IDs dispositioned, /farmer w16-07 finished — 23 October 2026](2026-10-23/wave-16-integration-claude.md).
+
+- [Wave 16 rendered re-capture of the wave 15 build: new IDs w16-01 to w16-11 — 22 October 2026](2026-10-22/wave-16-recapture-claude.md).
+
 - [Wave 15 integration close-out: five tracks folded, 21 assigned IDs dispositioned, w15-04 opened — 22 October 2026](2026-10-22/wave-15-integration-claude.md).
 
 - [Wave 15 rendered re-capture of the wave 14 build: 50 of 54 rows verified, 3 regressions fixed — 22 October 2026](2026-10-22/wave-15-recapture-claude.md).
