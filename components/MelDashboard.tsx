@@ -16,7 +16,7 @@ import styles from './MelDashboard.module.css';
 import FieldDataStatus from './FieldDataStatus';
 import SampleProgramme from './SampleProgramme';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { inlineText, inlineTemplate, xhInlineDraft } from '@/lib/xh-inline';
 import SurveyZuluDraftPair from './SurveyZuluDraftPair';
 
 export async function melRequest(query = '', body?: unknown) {
@@ -37,11 +37,11 @@ type Analysis = ReturnType<typeof analyseAssessment> & { comments: { question: s
 export function MelMetrics({ metrics, zu = false, lang: langProp }: { metrics: MelMetric[]; zu?: boolean; lang?: string }) {
   const lang = langProp ?? (zu ? 'zu' : 'en');
   return <div className={styles.grid}>{metrics.map(m => <div className={styles.metric} key={m.id}>
-    <strong>{zu ? <SurveyZuluDraftPair english={m.en}>{m.zu}</SurveyZuluDraftPair> : m.en}</strong>
+    <strong>{zu ? <SurveyZuluDraftPair english={m.en}>{m.zu}</SurveyZuluDraftPair> : lang === 'xh' && xhInlineDraft(m.en) ? <SurveyXhosaDraftPair english={m.en}>{xhInlineDraft(m.en)}</SurveyXhosaDraftPair> : m.en}</strong>
     {m.suppressed ? <p className={styles.muted}>{zu ? <SurveyZuluDraftPair english="Withheld to protect a small group.">Kugodliwe ukuvikela iqembu elincane.</SurveyZuluDraftPair> : inlineText(lang, 'Withheld to protect a small group.')}</p> : <>
       <p className={styles.muted}>{m.n} {zu ? <SurveyZuluDraftPair english="answered">baphendulile</SurveyZuluDraftPair> : inlineText(lang, 'answered')} · {m.missing} {zu ? <SurveyZuluDraftPair english="skipped">beqile</SurveyZuluDraftPair> : inlineText(lang, 'skipped')}</p>
       {m.mean !== undefined && <p>{zu ? <SurveyZuluDraftPair english="Average">Isilinganiso</SurveyZuluDraftPair> : inlineText(lang, 'Average')}: <strong>{numberLabel(m.mean, 2)}</strong></p>}
-      {m.choices?.map(o => <div key={o.value}><div className={styles.row}><span>{zu ? <SurveyZuluDraftPair english={o.en}>{o.zu}</SurveyZuluDraftPair> : o.en}</span><strong>{o.count}</strong></div><div className={styles.bar}><span style={{ width: `${m.n ? 100 * o.count / m.n : 0}%` }} /></div></div>)}
+      {m.choices?.map(o => <div key={o.value}><div className={styles.row}><span>{zu ? <SurveyZuluDraftPair english={o.en}>{o.zu}</SurveyZuluDraftPair> : lang === 'xh' && xhInlineDraft(o.en) ? <SurveyXhosaDraftPair english={o.en}>{xhInlineDraft(o.en)}</SurveyXhosaDraftPair> : o.en}</span><strong>{o.count}</strong></div><div className={styles.bar}><span style={{ width: `${m.n ? 100 * o.count / m.n : 0}%` }} /></div></div>)}
     </>}
   </div>)}</div>;
 }
@@ -85,7 +85,8 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
   useEffect(() => { if (!accessOnly) { setZu(appLang === 'zu'); setXh(appLang === 'xh'); } }, [accessOnly, appLang]);
   const isZulu = accessOnly ? appLang === 'zu' : zu;
   const isXhosa = accessOnly ? appLang === 'xh' : xh;
-  // The screen language: isiZulu and isiXhosa chrome comes from t(); the survey questions themselves only exist in English and isiZulu.
+  // The screen language: isiZulu and isiXhosa chrome comes from t(); the survey questions carry isiZulu in
+  // lib/mel-templates.ts and isiXhosa from lib/xh-inline.ts (keyed by the exact English question).
   const dl = isZulu ? 'zu' : isXhosa ? 'xh' : 'en';
   const t = (en: string, zulu: string) => inlineText(dl, en, zulu);
   // A consent / answering line: isiZulu or isiXhosa draft, each beside its exact English source.
@@ -213,7 +214,7 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
           <p className={styles.notice}>{pair('Answering is voluntary. You may skip any question. Responses are linked to your account to compare progress. Authorised NGO analysts can read them; funders see approved summaries only. Do not include ID numbers or other people’s names.', 'Ukuphendula kungukuzithandela. Ungeqa noma yimuphi umbuzo. Izimpendulo zixhunywe ku-akhawunti yakho ukuze kuqhathaniswe intuthuko. Ithimba eligunyaziwe le-NGO lingazifunda; abaxhasi babona izifinyezo ezigunyaziwe kuphela. Ungafaki izinombolo zikamazisi noma amagama abanye abantu.')}</p>
           {zu && <p className={styles.muted} lang="zu"><SurveyZuluDraftPair english="Some isiZulu translations in this assessment are unreviewed drafts; English source text is shown below them.">Ezinye izinguqulo zesiZulu kulokhu kuhlola ziwuhlaka olungakabuyekezwa; umbhalo wesiNgisi oqondene nazo uboniswe ngezansi kwazo.</SurveyZuluDraftPair></p>}
           {isXhosa && <p className={styles.muted} lang="xh">{inlineText(dl, 'Some isiXhosa wording in this assessment is an unreviewed draft; the English source text is shown below it.')}</p>}
-          {MEL_TEMPLATES[selected.stage].questions.map(q => <label key={q.id}>{zu ? <SurveyZuluDraftPair english={q.en}>{q.zu}</SurveyZuluDraftPair> : q.en}{q.kind === 'choice' ? <select disabled={selected.state !== 'open'} value={answers[q.id] ?? ''} onChange={e => setAnswers({ ...answers, [q.id]: e.target.value })}><option value="">{zu ? 'Yeqa / khetha impendulo · Skip / choose an answer' : inlineText(dl, 'Skip / choose an answer')}</option>{q.options?.map(o => <option key={o.value} value={o.value}>{zu ? `${o.zu} · ${o.en}` : o.en}</option>)}</select> : q.kind === 'number' ? <input disabled={selected.state !== 'open'} type="number" min="0" max={q.max} step="any" value={answers[q.id] ?? ''} onChange={e => setAnswers({ ...answers, [q.id]: e.target.value })} /> : <textarea disabled={selected.state !== 'open'} value={answers[q.id] ?? ''} maxLength={1200} onChange={e => setAnswers({ ...answers, [q.id]: e.target.value })} />}</label>)}
+          {MEL_TEMPLATES[selected.stage].questions.map(q => <label key={q.id}>{zu ? <SurveyZuluDraftPair english={q.en}>{q.zu}</SurveyZuluDraftPair> : isXhosa && xhInlineDraft(q.en) ? <SurveyXhosaDraftPair english={q.en}>{xhInlineDraft(q.en)}</SurveyXhosaDraftPair> : q.en}{q.kind === 'choice' ? <select disabled={selected.state !== 'open'} value={answers[q.id] ?? ''} onChange={e => setAnswers({ ...answers, [q.id]: e.target.value })}><option value="">{zu ? 'Yeqa / khetha impendulo · Skip / choose an answer' : inlineText(dl, 'Skip / choose an answer')}</option>{q.options?.map(o => <option key={o.value} value={o.value}>{zu ? `${o.zu} · ${o.en}` : isXhosa && xhInlineDraft(o.en) ? `${xhInlineDraft(o.en)} · ${o.en}` : o.en}</option>)}</select> : q.kind === 'number' ? <input disabled={selected.state !== 'open'} type="number" min="0" max={q.max} step="any" value={answers[q.id] ?? ''} onChange={e => setAnswers({ ...answers, [q.id]: e.target.value })} /> : <textarea disabled={selected.state !== 'open'} value={answers[q.id] ?? ''} maxLength={1200} onChange={e => setAnswers({ ...answers, [q.id]: e.target.value })} />}</label>)}
           {selected.response && <button disabled={busy} onClick={() => void perform({ action: 'withdraw', id: selected.id }, zu ? 'Izimpendulo zisusiwe.' : inlineText(dl, 'Your response has been withdrawn.'))}>{pair('Withdraw my response', 'Susa izimpendulo zami')}</button>}
           {selected.state === 'open' && <><label className={styles.option}><input type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)} />{pair('I have read or had this notice explained and agree to take part.', 'Ngifundile noma ngichazelwe lokhu futhi ngiyavuma ukuphendula.')}</label><button className={styles.primary} disabled={busy || !consent} onClick={() => void perform({ action: 'respond', id: selected.id, expectedSubmittedAt:selected.response?.submittedAt??'', answers, consent, language: zu ? 'zu' : 'en' }, zu ? 'Izimpendulo zigciniwe.' : inlineText(dl, 'Your response is saved.'))}>{pair('Save response', 'Gcina izimpendulo')}</button></>}
         </>}

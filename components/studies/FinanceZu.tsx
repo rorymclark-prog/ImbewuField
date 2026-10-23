@@ -2,21 +2,28 @@
 
 import { useLanguage } from '@/lib/i18n';
 import FinanceText from './FinanceText';
+import { xhInlineDraft } from '@/lib/xh-inline';
 
 /**
  * Renders `zu` in place of `en` when the app language is isiZulu and a draft exists for this
  * exact English string (lib/course-finance-i18n.ts pairs each draft to its live English source).
  * Unreviewed by a fluent isiZulu speaker — see FinanceZuBadge, shown once per lesson rather than
  * once per string, matching the studentZuluLessonDraftBadge convention used elsewhere in Study.
+ *
+ * isiXhosa reads the same English through lib/xh-inline.ts (keyed by the exact English, so an edit
+ * to the course source falls back to English the same way), also an unreviewed machine draft.
  */
 export function FinanceZuText({ en, zu }: { en: string; zu: string | null }) {
   const { lang } = useLanguage();
   if (lang === 'zu' && zu) return <span lang="zu">{zu}</span>;
-  return <span lang={lang === 'zu' ? 'en' : undefined}>{en}</span>;
+  const xhosa = lang === 'xh' ? xhInlineDraft(en) : null;
+  if (xhosa) return <span lang="xh">{xhosa}</span>;
+  return <span lang={lang === 'zu' || lang === 'xh' ? 'en' : undefined}>{en}</span>;
 }
 
 /** Same swap for text passed to FinanceText, which needs a plain string rather than a node. */
 export function financeZuOrEnglish(lang: string, en: string, zu: string | null): string {
+  if (lang === 'xh') return xhInlineDraft(en) ?? en;
   return lang === 'zu' && zu ? zu : en;
 }
 
@@ -31,7 +38,7 @@ export function FinanceZuLessonReading({ en, zu, headingLevel }: { en: string; z
  *  or none exists yet and the learner is seeing the English original. */
 export function FinanceZuBadge({ hasDraft }: { hasDraft: boolean }) {
   const { lang, t } = useLanguage();
-  if (lang !== 'zu') return null;
+  if (lang !== 'zu' && lang !== 'xh') return null;
   return (
     <span
       className="finance-zu-badge"
@@ -50,10 +57,10 @@ export function FinanceZuBadge({ hasDraft }: { hasDraft: boolean }) {
 /** Page-level note for the course outline and the practical project — not repeated per string. */
 export function FinanceZuCourseNotice() {
   const { lang, t } = useLanguage();
-  if (lang !== 'zu') return null;
+  if (lang !== 'zu' && lang !== 'xh') return null;
   return (
     <p role="note" className="finance-zu-notice" style={{ margin: '12px 0', fontSize: 13, color: '#5C5040' }}>
-      <span lang="zu">{t('studentZuluLessonDraftBadge')}</span> — <span lang="en">Machine isiZulu draft, not yet reviewed by a fluent speaker. Lesson bodies not yet translated stay in English.</span>
+      <span lang={lang}>{t('studentZuluLessonDraftBadge')}</span> — <span lang="en">Machine {lang === 'xh' ? 'isiXhosa' : 'isiZulu'} draft, not yet reviewed by a fluent speaker. Lesson bodies not yet translated stay in English.</span>
     </p>
   );
 }
