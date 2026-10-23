@@ -777,7 +777,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     return (
       <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-3" style={{ background: 'var(--bg-1)' }}>
         <div>
-          <div style={{ font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--gold)' }}>
+          <div style={{ font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--gold-dim)' }}>
             {t('siteReportOverline')}
           </div>
           <h2 className="font-display font-bold" style={{ fontSize: 19, color: 'var(--text-primary)', marginTop: 2 }}>
@@ -870,7 +870,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       ) : (
       <div className="flex-shrink-0 px-5 pt-3 pb-4" style={{ borderBottom: '1px solid var(--border)' }}>
         {/* Overline */}
-        <div className="font-sans font-bold uppercase mb-2" style={{ fontSize: 12, color: 'var(--gold)', letterSpacing: '0.16em' }}>
+        <div className="font-sans font-bold uppercase mb-2" style={{ fontSize: 12, color: 'var(--gold-dim)', letterSpacing: '0.16em' }}>
           {t('siteReportOverline')}
         </div>
 
@@ -1044,9 +1044,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       <div className="text-right flex-shrink-0">
                         {siteMetrics.land.areaHa < 1
                           ? <><div className="font-display font-bold" style={{ fontSize: 15, color: 'var(--text-primary)', lineHeight: 1 }}>{numberLabel(siteMetrics.land.areaM2)}</div>
-                              <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>m²</div></>
+                              <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>m²</div></>
                           : <><div className="font-display font-bold" style={{ fontSize: 15, color: 'var(--text-primary)', lineHeight: 1 }}>{siteMetrics.land.areaHa}</div>
-                              <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{t('hectaresUnit')}</div></>
+                              <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{t('hectaresUnit')}</div></>
                         }
                       </div>
                     </div>
@@ -1057,7 +1057,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                             <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--color-forest-800)', opacity: 0.6 }} />
                             <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{demoFeatureLabel(f.name, lang)}</span>
                             {f.category && <span style={{ color: 'var(--text-muted)' }}>{f.category}</span>}
-                            <span className="ml-auto" style={{ color: 'var(--text-muted)' }}>{f.areaHa < 1 ? `${numberLabel(Math.round(f.areaHa * 10000))} m²` : `${f.areaHa} ha`}</span>
+                            <span className="ml-auto" style={{ color: 'var(--text-secondary)' }}>{f.areaHa < 1 ? `${numberLabel(Math.round(f.areaHa * 10000))} m²` : `${f.areaHa} ha`}</span>
                           </div>
                         ) : null)}
                       </div>
