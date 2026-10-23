@@ -901,11 +901,6 @@ export default function SurveysPage() {
           </div>
         )}
 
-        {!isLive && (
-          <p className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-            {localUi('Sample data', 'Idatha yesibonelo', lang)}
-          </p>
-        )}
       </main>
 
       <TabBar hideAtDesktop />

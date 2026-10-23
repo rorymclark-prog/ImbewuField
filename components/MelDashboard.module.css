@@ -10,8 +10,8 @@
 .hero h1 { font-family:var(--font-display),serif; font-size:28px; margin:0; }
 .hero p { max-width:680px; margin:0; }
 .hero .row { margin-left:auto; }
-.root h2 { font-size:21px; margin:0 0 12px; }
-.root h3 { font-size:17px; margin:0 0 10px; }
+.root h2 { font-size:21px; font-weight:600; margin:0 0 12px; }
+.root h3 { font-size:17px; font-weight:600; margin:0 0 10px; }
 .root p { font-size:14px; line-height:1.6; }
 .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
 .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); gap:16px; margin:18px 0; }
@@ -97,7 +97,7 @@
 .overviewPanels { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
 .overviewPanels .card { padding:18px 20px; }
 .coverageValue { display:flex; align-items:baseline; gap:14px; margin:12px 0; flex-wrap:wrap; }
-.coverageValue > strong { font-size:36px; line-height:1; }
+.coverageValue > strong { font-family:var(--font-display),serif; font-size:36px; line-height:1; }
 .coverageValue > span { font-size:14px; }
 .coverageTrack { height:14px; overflow:hidden; border-radius:20px; background:var(--bg-2); }
 .coverageTrack > span { display:block; height:100%; background:var(--emerald); border-radius:20px; }
