@@ -915,7 +915,7 @@ function HomeInner() {
           </div>
         </div>
 
-        <TabBar />
+        <TabBar hideAtDesktop />
       </div>
 
       <ProfileSheet

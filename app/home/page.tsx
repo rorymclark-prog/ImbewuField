@@ -751,7 +751,7 @@ function HomeLandingInner() {
       </main>
 
       <LimaBar />
-      <TabBar />
+      <TabBar hideAtDesktop />
       <ThemePanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </div>
   );

@@ -37,7 +37,7 @@ export default function JournalPage() {
           made. */}
       <LimaBar />
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }
