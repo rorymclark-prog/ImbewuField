@@ -37,5 +37,5 @@ test('w18-52: vision is one centred column until a result exists, no hardcoded g
   assert.match(src, /className=\{result && !loading \? workspace\.twoColumns : undefined\}/);
   assert.match(src, /maxWidth: 720, marginInline: 'auto'/);
   assert.ok(!src.includes("background: on ? '#1F4D2B'"));
-  assert.match(src, /background: on ? 'var(--color-forest-800)'/);
+  assert.ok(src.includes("background: on ? 'var(--color-forest-800)'"));
 });
