@@ -14,3 +14,9 @@ test('w17-02: MyRecords card captions use --text-secondary, not --text-muted', (
     assert.ok(before.includes("color: 'var(--text-secondary)'"), `${key} not secondary`);
   }
 });
+
+test('w17-03: network sort chip text uses forest-800 (>=4.5:1 on its tint in every column)', () => {
+  const src = read('app/network/page.tsx');
+  assert.ok(src.includes("sort === key ? 'var(--color-forest-800)' : INK_MUTED"));
+  assert.ok(!src.includes("sort === key ? 'var(--emerald)'"));
+});
