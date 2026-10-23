@@ -69,3 +69,12 @@ test('w20-45: print sheet toolbar uses forest tokens and font tokens; north arro
   assert.doesNotMatch(p, /fontFamily: 'sans-serif'/);
   assert.doesNotMatch(p, /N ↑/);
 });
+
+test('w20-46: pitch nav uses Lucide chevrons and the counter sits inside .navbtns', () => {
+  const p = read('app/pitch/page.tsx');
+  assert.match(p, /<ChevronLeft size=\{16\}/);
+  assert.match(p, /<ChevronRight size=\{16\}/);
+  assert.doesNotMatch(p, /‹ Back|Next ›/);
+  const group = p.slice(p.indexOf('<div className="pitch-ui navbtns">'), p.indexOf('<div className="pitch-ui hints">'));
+  assert.match(group, /className="counter" aria-live="polite"/);
+});
