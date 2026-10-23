@@ -31,3 +31,8 @@ test('w18-38 Picked keeps the summary cards on desktop and caps the form', () =>
   assert.match(s, /className=\{tab === 'picked' \? undefined : 'lg:hidden'\}/);
   assert.match(s, /tab === 'picked' \? ' lg:max-w-\[640px\]'/);
 });
+
+test('w18-39 kg quantities use the shared kg formatter', () => {
+  const s = read('lib/records-regional-drafts.ts');
+  assert.match(s, /unit === 'kg'\) return kgPreciseLabel\(quantity\)/);
+});

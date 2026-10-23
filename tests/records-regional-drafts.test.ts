@@ -3,6 +3,7 @@
 // drifted from an English instruction someone later edited, (c) sees a wrong or missing rand/kg
 // figure because a draft lost a {placeholder}, or (d) is shown another language's words.
 
+import { kgPreciseLabel } from '@/lib/format-figures';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -30,7 +31,9 @@ test('English is untouched: no draft is ever returned for English, and English l
   for (const unit of RECORD_UNITS) {
     for (const quantity of [1, 2.5, 12, 1000]) {
       const row = { quantity, unit, kg: unit === 'kg' ? quantity : null };
-      assert.equal(recordsQuantityLabel(row, 'en'), recordQuantityLabel(row), `${unit} ${quantity}`);
+      // w18-39: kilograms deliberately use the app's shared kg format ('1 000,0 kg'); every other unit stays byte-identical.
+      const expected = unit === 'kg' ? kgPreciseLabel(quantity) : recordQuantityLabel(row);
+      assert.equal(recordsQuantityLabel(row, 'en'), expected, `${unit} ${quantity}`);
     }
   }
   // Unaffected languages stay English too — a language with no table must never get another's words.
