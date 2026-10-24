@@ -52,7 +52,7 @@ export function FinanceZuCourseNotice() {
   const { lang, t } = useLanguage();
   if (lang !== 'zu') return null;
   return (
-    <p role="note" className="finance-zu-notice" style={{ margin: '12px 0', fontSize: 13, color: '#5C5040' }}>
+    <p role="note" className="finance-zu-notice" style={{ margin: '12px 0', fontSize: 13, color: 'var(--text-secondary)' }}>
       <span lang="zu">{t('studentZuluLessonDraftBadge')}</span> — <span lang="en">Machine isiZulu draft, not yet reviewed by a fluent speaker. Lesson bodies not yet translated stay in English.</span>
     </p>
   );

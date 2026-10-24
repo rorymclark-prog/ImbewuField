@@ -217,7 +217,7 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
           >
             {t('coachOverline')}
           </span>
-          <SpeakButton text={`${title}. ${body}`} englishText={`${enTitle}. ${enBody}`} color="#755942" />
+          <SpeakButton text={`${title}. ${body}`} englishText={`${enTitle}. ${enBody}`} color="var(--text-muted)" />
           <button
             type="button"
             onClick={handleDismiss}
@@ -252,7 +252,8 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
         </p>
 
         {lang === 'zu' && (
-          <p className="font-sans" style={{ fontSize: 12.5, color: '#775F3E', lineHeight: 1.4, margin: '6px 0 0' }}>
+          // w21-05: was a fixed brown hex, 3.09:1 on the dark coach card; the muted token follows the theme.
+          <p className="font-sans" style={{ fontSize: 12.5, color: 'var(--text-muted)', lineHeight: 1.4, margin: '6px 0 0' }}>
             {t('coachZuluEnglishGuidanceNotice')}
           </p>
         )}

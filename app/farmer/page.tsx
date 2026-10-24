@@ -561,7 +561,8 @@ function HomeInner() {
         {/* Heights/sizes scale down on wide screens — phone px must not be reused
             on desktop (handoff §0). Mobile keeps the comfortable 60px bar. */}
         <header
-          className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-3 overflow-hidden"
+          // w21-02: the gap stays 8px until lg; at md the 12px gap pushed the isiZulu bar 7px past a 768px viewport.
+          className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 lg:gap-3 overflow-hidden"
           style={{
             height: 60,
             background: 'var(--bg-1)',
@@ -581,7 +582,7 @@ function HomeInner() {
           <DesktopPrimaryNav />
           <div className="flex-1" />
 
-          <span className="flex-shrink-0"><LessonLink id="map:overview" label="Learn" /></span>
+          <span className="flex-shrink-0"><LessonLink id="map:overview" label={lang === 'zu' ? 'Funda' : 'Learn'} /></span>
 
           {/* ONE design door — Design Studio (canonical /design surface; Zones + the AI suggest
               live here). Now visible ON MOBILE too: farmers on phones could not find the zones

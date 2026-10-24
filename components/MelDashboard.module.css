@@ -36,7 +36,8 @@
 .root :is(button,a).secondary { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:9px 18px; border-radius:10px; background:transparent; color:var(--text-primary); border:1px solid var(--border); font-weight:600; font-size:14px; text-decoration:none; }
 .stack { display:grid; gap:16px; margin:16px 0; }
 /* w20-22: selected = filled --badge-bg + emerald text and border; a 2px ring read as keyboard focus. */
-.root button[aria-pressed=true] { background:var(--badge-bg); color:var(--emerald); border-color:var(--emerald); font-weight:600; }
+/* w21-11: --badge-bg is translucent, so on the forest hero the pressed language button read emerald on forest (1.49:1); the tint now sits on the opaque input fill. */
+.root button[aria-pressed=true] { background:linear-gradient(var(--badge-bg),var(--badge-bg)),var(--input-bg); color:var(--emerald); border-color:var(--emerald); font-weight:600; }
 .root :focus-visible { outline:3px solid var(--gold); outline-offset:3px; }
 .error { padding:15px; background:color-mix(in srgb, var(--orange) 14%, var(--bg-0)); color:var(--orange); border:1px solid color-mix(in srgb, var(--orange) 40%, var(--border)); border-radius:10px; }
 .notice { position:relative; padding:15px 15px 15px 46px; background:var(--bg-1); color:var(--text-primary); border:1px solid var(--border); border-left:3px solid var(--blue); border-radius:10px; margin:14px 0; }

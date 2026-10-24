@@ -46,6 +46,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Records, invoices and the farm data panel use one green and plain, readable controls.',
     'Study pages share one header, open sections show an arrow, and Lima no longer hides text.',
     'Staff headers never cut off links; the network, login and pitch pages are tidier.',
+    'isiZulu notes stay readable in dark mode, and the map header fits on a tablet.',
   ], tour: [{ title: 'Open the Exchange',
     where: 'Menu → Exchange', href: '/exchange',
     detail: 'Crop badges no longer overlap the Sample label, and chips wrap neatly on a phone.',

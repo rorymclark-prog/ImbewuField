@@ -36,7 +36,7 @@ function CalendarDraftSource({
     return (
       <div style={style}>
         <p style={{ margin: 0 }}>
-          <span className="text-xs leading-snug text-stone-600">isiZulu translation pending — English source: </span>
+          <span className="text-xs leading-snug text-[var(--text-muted)]">isiZulu translation pending — English source: </span>
           <span lang="en">{english}</span>
         </p>
       </div>

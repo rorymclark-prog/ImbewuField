@@ -13,10 +13,11 @@ test('w20-37: nav never clips, title and divider only when set and hidden at lg 
   assert.match(read('app/ngo/page.tsx'), /hidden sm:inline-flex lg:hidden/);
 });
 
-test('w20-38: network demo badge leaves the header below sm and sits in the body', () => {
+test('w20-38: network demo badge leaves the header below xl and sits in the body', () => {
   const n = read('app/network/page.tsx');
-  assert.match(n, /whitespace-nowrap shrink-0 hidden sm:inline-block/);
-  assert.match(n, /sm:hidden flex-shrink-0 px-3 py-1\.5/);
+  // w21-03 moved the breakpoint from sm to xl; the label still always renders, header or strip.
+  assert.match(n, /whitespace-nowrap shrink-0 hidden xl:inline-block/);
+  assert.match(n, /xl:hidden flex-shrink-0 px-3 py-1\.5/);
 });
 
 test('w20-39: map and list share one status token map; legend uses Lucide Plus/Minus', () => {

@@ -44,7 +44,7 @@ test('w20-21: reports drops the 720px cap and the repeated heading', () => {
 
 test('w20-22: filled selected tab, chip row gaps', () => {
   assert.doesNotMatch(mel, /button\[aria-pressed=true\] \{ box-shadow/);
-  assert.match(mel, /\.root button\[aria-pressed=true\] \{ background:var\(--badge-bg\)/);
+  assert.match(mel, /\.root button\[aria-pressed=true\] \{ background:linear-gradient\(var\(--badge-bg\),var\(--badge-bg\)\),var\(--input-bg\)/);
   assert.match(mel, /\.row \{[^}]*row-gap:6px/);
   assert.match(mel, /\.row p \{ margin:8px 0; \}/);
 });

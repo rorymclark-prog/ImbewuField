@@ -52,6 +52,19 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 24 Oct 2026 — Wave 21: isiZulu re-capture of the wave 20 build, eleven findings fixed directly
+- **Re-capture:** every sample route at 390/1280px, light and dark, in isiZulu with the sample-language key set,
+  plus a 768/1024/1280px header sweep — `docs/audits/2026-10-24/wave-21-recapture-claude.md` (`w21-01`…`w21-11`).
+- **Fixed:** the 404 page in dark (title was 1.14:1), /farmer's isiZulu header 7px too wide at 768px, /network's
+  isiZulu portfolio pill pushing Settings off-screen at 1024px, the hard-coded "Learn" on /farmer and the community
+  profile, the coach card's isiZulu note in dark, earth `--emerald` as text (4.11 → 4.77:1), the rainfall chart's
+  undefined Tailwind text classes, the Study finance and calendar draft notes in dark, and (found by the verification pass) the pressed
+  isiZulu button on the /assessments forest hero (1.49:1). Guarded by
+  `tests/w21-recapture.test.ts`.
+- **Handed to Codex:** the /samples/production chart legend in dark (`components/crops/*`).
+- **Verified:** the fixed build re-measured — headers fit at 768/1024px, and the 27 desktop routes the first capture
+  lost plus the dark fixes show no overflow and no low-contrast text.
+
 ### 24 Oct 2026 — Wave 20: re-capture, then five swarm tracks (PRs #1093–#1097, folded with wave 19 on one branch)
 - **Re-capture first:** the wave 19 build rendered again; new IDs `w20-01`…`w20-46` across five tracks, w19 partials
   carried to them — `docs/audits/2026-10-23/wave-20-recapture-claude.md`.

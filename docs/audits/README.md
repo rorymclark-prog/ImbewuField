@@ -62,6 +62,7 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Wave 21 rendered re-capture of the wave 20 build in isiZulu: w21-01 to w21-11, ten fixed, one handed to Codex — 24 October 2026](2026-10-24/wave-21-recapture-claude.md).
 - [Wave 20 integration close-out: five tracks folded onto the wave 19 branch with main, w20-01 to w20-46 implemented, w19 partials closed with them — 24 October 2026](2026-10-24/wave-20-integration-claude.md).
 
 - [Wave 20 rendered re-capture and visual review of the wave 19 build: new IDs w20-01 to w20-46 across five tracks, w19 partials carried — 23 October 2026](2026-10-23/wave-20-recapture-claude.md).

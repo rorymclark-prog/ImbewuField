@@ -287,7 +287,8 @@ html[data-theme="earth"] {
      while staying visibly lighter than --text-secondary. */
   --text-muted: #755942;
 
-  --emerald: #3A7518;
+  /* w21-06: was #3A7518, 4.11:1 as text on the page; #346A15 is 4.77:1. */
+  --emerald: #346A15;
   --emerald-bright: #5CA030;
   --gold: #9E5C08;
   --gold-dim: #7A4408;

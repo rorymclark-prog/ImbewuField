@@ -228,7 +228,9 @@ export default function NetworkPage() {
                 // w20-38: in the header only from sm up; below sm the same label sits as a
                 // full-width strip under the header (still on first paint, never hidden), so it
                 // stops pushing the title down to "N" and Settings off-screen.
-                className="font-sans font-semibold whitespace-nowrap shrink-0 hidden sm:inline-block"
+                // w21-03: from xl, not sm. Beside the lg desktop nav the isiZulu pill pushed
+                // Settings 39px past a 1024px viewport; below xl the strip carries it.
+                className="font-sans font-semibold whitespace-nowrap shrink-0 hidden xl:inline-block"
                 style={{
                   fontSize: 12,
                   color: 'var(--gold-dim)',
@@ -251,7 +253,7 @@ export default function NetworkPage() {
       <h1 className="sr-only">{tr('Network', 'Inethiwekhi')}</h1>
       {portfolio.isDemo && (
         <div
-          className="sm:hidden flex-shrink-0 px-3 py-1.5 font-sans font-semibold"
+          className="xl:hidden flex-shrink-0 px-3 py-1.5 font-sans font-semibold"
           style={{ fontSize: 12, color: 'var(--gold-dim)', background: 'color-mix(in srgb, var(--gold) 12%, var(--bg-1))', borderBottom: `1px solid ${LINE}` }}
         >
           {tr('Programme portfolio', 'Iphothifoliyo yohlelo')}
