@@ -959,6 +959,15 @@ body.is-sample-mode .pwa-update-notifier {
 /* Photo previews are keyboard controls as well as tap targets. */
 img[data-photo-preview]:focus-visible { outline: 3px solid var(--accent, #b87924); outline-offset: 3px; }
 
+/* From sm to xl the AppHeader row is shared with the page's right-hand pills (Portfolio map,
+   Learn, the role switcher), and the labels pushed Settings past the edge: 73–174px on /funder and
+   /ngo at 768 (isiZulu worst), 86–160px at 1024–1279 once the desktop nav appears. /ngo hid it by
+   clipping, which cut the Settings button off. On headers that carry the nav, those labels go
+   icon-only until xl; every one of them keeps an aria-label. Below sm the phone rule below applies. */
+@media (min-width: 640px) and (max-width: 1279.98px) {
+  header:has(> nav[aria-label="Primary"]) [data-header-label] { display:none !important; }
+}
+
 /* Keep the same compact navigation on every phone; secondary tools live in the drawer. */
 @media (max-width: 650px) {
   /* The top status-bar inset, the other half of the viewport-fit=cover bargain that

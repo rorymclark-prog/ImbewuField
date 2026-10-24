@@ -55,7 +55,9 @@ test('w19-05/06: inline art is exempt from the tile minimum; meta row is a two-c
     assert.match(read(p), /produce-art produce-art--inline/, p);
   }
   assert.doesNotMatch(read('components/exchange/ExchangeLede.tsx'), /i > 0 && ' · '/);
-  assert.match(read('components/exchange/ListingCard.tsx'), /gridTemplateColumns: '1fr auto'/);
+  // w20-01 widened the identity column to minmax(min-content, 1fr) so the kind badge cannot run under
+  // the status cell; still two columns with status fixed on the right.
+  assert.match(read('components/exchange/ListingCard.tsx'), /gridTemplateColumns: '(?:minmax\(min-content, 1fr\)|1fr) auto'/);
 });
 
 test('w19-07/08: account chip follows the theme; journal rail is narrow', () => {

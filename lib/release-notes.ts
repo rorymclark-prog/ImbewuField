@@ -41,6 +41,18 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 October 2026', sha: '0858cf13', changes: [
+    'Exchange crop chips and the Home task board now read in isiZulu as well.',
+    'Records, invoices and the farm data panel use one green and plain, readable controls.',
+    'Study pages share one header, open sections show an arrow, and Lima no longer hides text.',
+    'Staff headers never cut off links; the network, login and pitch pages are tidier.',
+  ], tour: [{ title: 'Open the Exchange',
+    where: 'Menu → Exchange', href: '/exchange',
+    detail: 'Crop badges no longer overlap the Sample label, and chips wrap neatly on a phone.',
+  }, { title: 'Open your records',
+    where: 'Menu → Records', href: '/records',
+    detail: 'The completeness card follows dark mode and the tabs fit without scrolling.',
+  }] },
   { when: '23 October 2026', sha: '774a3530', changes: [
     'On a laptop each page has one set of links at the top, and titles are no longer cut off.',
     'Invoices keep amounts on one line, and the Share and Print buttons appear once.',
@@ -120,7 +132,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     where: 'Menu → Study', href: '/student',
     detail: 'One header, the language note under it, and the course cards in your language.',
   }, { title: 'See your records in isiZulu',
-    where: 'Menu → My Records', href: '/records',
+    where: 'Menu → Records', href: '/records',
     detail: 'Crop names and the language note now read in isiZulu when that is your language.',
   }] },
   { when: '17 October 2026', sha: '44a7dc08', changes: [

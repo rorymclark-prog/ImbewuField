@@ -52,6 +52,29 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 24 Oct 2026 — Wave 20: re-capture, then five swarm tracks (PRs #1093–#1097, folded with wave 19 on one branch)
+- **Re-capture first:** the wave 19 build rendered again; new IDs `w20-01`…`w20-46` across five tracks, w19 partials
+  carried to them — `docs/audits/2026-10-23/wave-20-recapture-claude.md`.
+- **Farmer daily pages:** /exchange kind badge no longer overlaps the Sample pill, crop chips and Home task board in
+  isiZulu (unreviewed drafts), sans controls on /exchange and /account, journal titles in the real display font, plain
+  /offline copy for farmers, a readable measure on /journal, /calendar and /account.
+- **Farmer data:** themed completeness card, DataPanel tabs that wrap instead of clipping, one primary green on /farmer,
+  sans /records and crop controls, Picked-tab cards aligned, sparklines visible in dark, a standard Invoice pill, "Crèche".
+- **Samples and MEL:** phone dark MEL hero, sample buttons scoped to the content, themed /samples/production, toggle above
+  the metrics, "No answers yet", /reports full width, filled selected tab, design picker on AppHeader, 640px /feedback.
+- **Study:** Lima clearance on /student/finance, Lucide chevron disclosures, one action-row style, StudyHeader on
+  design, finance and Teach the Teachers, /student card titles, finance checklist card, manual and tour icon drift.
+- **Staff and public:** AppHeader nav never clips, /network phone header and shared status colours, mentor follow-up
+  dates, /vision toggle, cohort Export CSV, /partners hyphen, /login, print sheet and /pitch tidies.
+- **Integrator:** folded on top of the wave 19 branch and `main` at `0858cf13` (#1098, Codex reports), so both waves
+  ship in one squash. App dictionary and isiZulu locale pins re-baselined for additions only
+  (`tests/fixtures/i18n-before-wave-20.tsx.txt`, `tests/fixtures/zu-before-wave-20.ts.txt`). Three wave 19 source
+  pins made stale by StudyHeader, `<Summary>` and the wider listing grid now check the new form. /funder's Settings
+  pill sat 86px off-screen in isiZulu at 1280px (16px in English at 1024px), and at 768px /funder and /ngo were 73–196px
+  too wide (/ngo clipped it, cutting Settings off): /funder's Portfolio map pill is now hidden at lg like /ngo's, and from
+  640 to 1279px the Settings, role-switcher and Portfolio map labels go icon-only on headers with the desktop nav. Close-out:
+  `docs/audits/2026-10-24/wave-20-integration-claude.md`.
+
 ### 23 Oct 2026 — Wave 19: re-capture, then five swarm tracks (PRs #1086–#1089 and the staff-public branch, folded on one branch)
 - **Re-capture first:** the wave 18 build (`774a3530`) rendered again, 600 frames; new IDs `w19-01`…`w19-42` across five
   tracks, w18 partials carried to them — `docs/audits/2026-10-23/wave-19-recapture-claude.md`.

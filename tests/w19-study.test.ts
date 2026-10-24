@@ -27,14 +27,16 @@ test('w19-29: course notice summaries carry a rotating Lucide chevron', () => {
 });
 
 test('w19-30: finance header labels are header-secondary', () => {
-  assert.match(read('app/student/finance/page.tsx'), /<span data-header-secondary>Farm Finance/);
+  // w20-30 moved the overview onto the shared AppHeader, whose title span is the header label.
+  assert.match(read('app/student/finance/page.tsx'), /<StudyHeader title="Farm Finance"/);
   assert.match(read('app/student/finance/[lesson]/page.tsx'), /<span data-header-secondary>\{lesson\.code\}/);
 });
 
 test('w19-31: refresher lists, header and weights', () => {
   assert.match(ref, /\.panel ol \{ list-style: decimal; padding-left: 1\.5em; margin: 12px 0 16px; \}/);
   assert.match(ref, /\.moduleList \{ margin-top: 12px;/);
-  assert.match(ref, /\.header \{ padding: 16px max\(20px, calc\(\(100% - 1120px\) \/ 2\)\)/);
+  // w20-30: the refresher's own .header bar gave way to the shared StudyHeader.
+  assert.match(read('app/student/teach-the-teachers/page.tsx'), /<StudyHeader title="Facilitator refresher"/);
   assert.match(ref, /font: 400 clamp\(32px/);
   assert.match(ref, /font: 400 clamp\(25px/);
 });

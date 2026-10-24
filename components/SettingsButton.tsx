@@ -35,7 +35,7 @@ export default function SettingsButton({ showLabel = false }: { showLabel?: bool
         }}
       >
         <Settings size={13} strokeWidth={1.7} />
-        <span className={showLabel ? undefined : 'hidden sm:inline'}>{t('settingsButtonLabel')}</span>
+        <span data-header-label className={showLabel ? undefined : 'hidden sm:inline'}>{t('settingsButtonLabel')}</span>
       </button>
       {open && createPortal(<div style={{ position: 'relative', zIndex: 90 }}><ThemePanel open={open} onClose={() => setOpen(false)} /></div>, document.body)}
     </>
