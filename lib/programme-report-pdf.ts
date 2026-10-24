@@ -28,9 +28,21 @@ const pdfLabel = (en: string, language: 'en' | 'zu' | 'xh' | undefined) => langu
 /** isiXhosa (unreviewed machine draft): the shard draft for this exact English label, English when there is none. */
 /** A survey question or answer option: isiZulu from the template, isiXhosa from the inline drafts, else English. */
 const feedbackWording = (language: 'en' | 'zu' | 'xh' | undefined, zu: string, en: string) => language === 'zu' ? zu : language === 'xh' ? inlineText('xh', en) : en;
-function pdfLabelXh(en: string): string {
-  const attendance = /^(\d+)% present$/.exec(en);
-  if (attendance) return inlineTemplate('xh', '{n}% present', null, { n: attendance[1] });
+// Metric details that carry counts (built in lib/programme-report.ts): each shape is the key of its
+// isiXhosa draft, so the figures stay in the sentence and only the words change.
+const METRIC_TEMPLATES = [
+  '{n}% present',
+  '{a} of {n} farmers · current snapshot', '{a} of {n} farmer · current snapshot',
+  '{a} of {n} farmers · cumulative records', '{a} of {n} farmer · cumulative records',
+  '{a} of {n} farmers · selected months', '{a} of {n} farmer · selected months',
+  '{a} of {n} books readable; known weights only · selected months',
+  '{a} readable learning records · current snapshot', '{a} readable learning record · current snapshot',
+].map(template => ({ template, pattern: new RegExp('^' + template.replace(/[.*+?^$()|[\]\\]/g, '\\$&').replace(/\{(\w+)\}/g, '(?<$1>\\d+)') + '$') }));
+export function pdfLabelXh(en: string): string {
+  for (const { template, pattern } of METRIC_TEMPLATES) {
+    const found = pattern.exec(en);
+    if (found?.groups) return inlineTemplate('xh', template, null, found.groups);
+  }
   return inlineText('xh', en);
 }
 export function programmeReportMetrics(p: ProgrammePresentation): ReportMetric[] {
@@ -47,6 +59,8 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
   const doc = new jsPDF({ compress: true });
   doc.setProperties({title,author:'ImbewuField',subject:presentation.subtitle ?? 'Programme evidence'});
   const ink=presentation.ink===true;
+  // Fixed report wording that isiZulu keeps in English: isiXhosa gets its draft, everyone else the English.
+  const xhText=(en:string)=>presentation.language==='xh'?inlineText('xh',en):en;
   let y=20;
   const page=()=>{doc.addPage();y=23;};
   const ensure=(height:number)=>{if(y+height>273)page();};
@@ -76,7 +90,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     doc.text(pdfSafe(inlineText('xh','The isiXhosa headings are unreviewed; evidence text is kept in the language it was recorded in.')),18,51);
   }
   y=presentation.language==='zu'||presentation.language==='xh'?67:59;
-  if(sample) write('DEMONSTRATION RECORDS - illustrative figures, not real programme results.',9,true);
+  if(sample) write(xhText('DEMONSTRATION RECORDS - illustrative figures, not real programme results.'),9,true);
   if(presentation.subtitle) write(presentation.subtitle,10);
   const partners=branding?(['organisation','garden','funder'] as const).filter(k=>branding[k].label||branding[k].image):[];
   if(branding&&partners.length){
@@ -135,7 +149,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
       doc.text(pdfSafe(r.display??`${numberLabel(r.value)}${chart.suffix??''}`),192,y,{align:'right'});y+=h;
     }y+=6;
   }
-  if(format==='summary')write(presentation.tables?.length ? 'Brief summary: key findings and core evidence tables. Charts and detailed breakdowns are in the full report.' : pdfLabel('Up to five items per section. The full report includes every record.',presentation.language),9);
+  if(format==='summary')write(presentation.tables?.length ? xhText('Brief summary: key findings and core evidence tables. Charts and detailed breakdowns are in the full report.') : pdfLabel('Up to five items per section. The full report includes every record.',presentation.language),9);
   const drawTables = () => {
   // Repeat column headings after page breaks: a number carried onto a new page must keep its unit.
   for (const table of (presentation.tables ?? []).filter(t=>format==='full'||t.includeInSummary!==false)) {
@@ -151,7 +165,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     };
     heading();
     const rows = format === 'summary' ? table.rows.slice(0,5) : table.rows;
-    if (!rows.length) write('No records available for this selection.',9);
+    if (!rows.length) write(xhText('No records available for this selection.'),9);
     for (const row of rows) {
       doc.setFont('helvetica','normal'); doc.setFontSize(8.5);
       const cells = table.columns.map((_,i)=>doc.splitTextToSize(pdfSafe(row[i]??''),widths[i]-5) as string[]);
@@ -167,7 +181,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
         if(cells.some(c=>c.length)) { page(); heading(); }
       }
     }
-    if(format==='summary' && table.rows.length>rows.length) write(`${table.rows.length-rows.length} further rows in the full report.`,9);
+    if(format==='summary' && table.rows.length>rows.length) write(inlineTemplate(presentation.language==='xh'?'xh':'en','{n} further rows in the full report.',null,{n:table.rows.length-rows.length}),9);
     y+=10;
   }
   };
