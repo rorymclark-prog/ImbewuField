@@ -170,7 +170,7 @@ export default function FunderPage() {
       {lang === 'xh' && <p className="px-4 pt-2 text-xs" style={{ color: 'var(--text-secondary)' }}>{inlineText(lang, 'Reports, sourced evidence and other programme details are still shown in English.')}</p>}
 
       <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden">
-        <SampleFunderGate key={view}>{view === 'evidence' ? <ProgrammeEvidence funder /> : view === 'reports' ? <ProgrammeReports funder /> : view === 'cohort' ? (
+        <SampleFunderGate key={view}>{view === 'evidence' ? <ProgrammeEvidence funder /> : view === 'reports' ? <ProgrammeReports funder onOpenProgress={() => setView('evidence')} onOpenCohort={() => setView('cohort')} /> : view === 'cohort' ? (
           // code-13: the only heading on this page used to be the 13px header chip in AppHeader
           // (a <span>, not a heading) — a real, properly-sized h1 on the default tab.
           <div className="flex-1 flex flex-col overflow-hidden min-w-0">
