@@ -63,7 +63,7 @@ Uphahla olukhuni nolugudileyo lunika amanzi amaninzi kakhulu. Isinki, iishiti ze
 
 1. Fakela ii-gutter emaphethelweni aphantsi ophahla, zithambekele kancinci ukuya kwitanki ukuze amanzi angemi kuzo.
 2. Beka **ihluzo lamagqabi** phezu kwe-gutter okanye phezu komngxuma wokungena wetanki.
-3. Faka **i-first-flush diverter** phambi kwetanki. Le yipayipi okanye isitya esibamba amanzi okuqala nawona angcole kakhulu emvuleni nganye, anothuli, ubulongwe beentaka namagqabi. Yilahle emva kwemvula nganye.
+3. Faka **i-first-flush diverter** phambi kwetanki. Le yipayipi okanye isitya esibamba amanzi okuqala nawona angcole kakhulu emvuleni nganye, anothuli, ubulongwe beentaka namagqabi. Yikhuphe amanzi emva kwemvula nganye.
 4. Faka indlela yokuphuphuma kufutshane nencopho yetanki uze uyikhokelele kwenye itanki, kwichibi, kwi-swale okanye kwisitya somthi, kungabi kudonga.
 5. Dibanisa iitanki ezimbini okanye ngaphezulu ngepayipi ekufutshane nesiseko, ukuze zizale kwaye zikhuphe amanzi kunye.
 
@@ -203,7 +203,7 @@ Apho imvula ilula okanye umhlaba ugutyungelwe kakuhle, ii-swale zinokubekwa kude
 
 - **Amathambeka atsiba kakhulu.** Gcina ii-swale kumathambeka angaphantsi kwe-15% malunga (ukuhla kwe-15 m kwi-100 m). Umhlaba omanzi kwindawo etsiba kakhulu unokutyibilika. Sebenzisa ii-terrace (amanyathelo omhlaba) nemithi endaweni yoko.
 - **Udongwe olunzima okanye umhlaba owele amanzi.** Ukuba amanzi awangeni, i-swale iba ngumsele onamanzi amileyo, abolileyo. Sebenzisa ichibi okanye umsele wokuphambukisa amanzi.
-- **Kufutshane nezakhiwo.** Gcina ii-swale nezitya ubuncinane ngo-3 m kwiindonga nasezisekweni, kwaye ungaze uzibeke ngaphezulu kwendlu yangasese engumngxuma, itanki ye-septic okanye i-soak-away.
+- **Kufutshane nezakhiwo.** Gcina ii-swale nezitya ubuncinane ngo-3 m kwiindonga nasezisekweni, kwaye ungaze uzibeke ethambekeni ngaphezulu kwendlu yangasese engumngxuma, itanki ye-septic okanye i-soak-away.
 - **Iindawo ezimanzi kakhulu.** Apho umhlaba umanzi ixesha elininzi lonyaka, udinga imisele ekhokelela amanzi aphume.
 
 ### Ukumba i-swale
@@ -381,7 +381,7 @@ Ipayipi okanye ikeni ilahla amanzi kwiindlela kwaye inkcenkceshela ngokungalinga
 
 Ibhafu nganye neshawa nganye zithumela amanzi amahle ayokuphuma ngombhobho. Kwifama eyomileyo, la manzi anokugcina umgca wemithi yeziqhamo iphila ngexesha elomileyo.
 
-**I-greywater** (amanzi asetyenzisiweyo ekhaya) ngamanzi asetyenzisiweyo asuka ebhafini, eshaweni, kwizihlambi zezandla nakumatshini wokuhlamba iimpahla. **I-blackwater** ngamanzi asuka kwiindlu zangasese. I-blackwater namanzi eedayapha athwala iintsholongwane kwaye awafakwa egadini. Amanzi esinki sasekhitshini yeyona greywater ingcolileyo, izele ngamafutha nenkunkuma yokutya; yisebenzise kuphela ngokudlula kwisithiyo samafutha (grease trap), kwaye kuphela kwimithi nakwiintyatyambo.
+**I-greywater** (amanzi asetyenzisiweyo ekhaya) ngamanzi asetyenzisiweyo asuka ebhafini, eshaweni, kwizihlambi zezandla nakumatshini wokuhlamba iimpahla. **I-blackwater** ngamanzi asuka kwiindlu zangasese. I-blackwater namanzi eedayapha athwala iintsholongwane kwaye ungaze uwafake egadini. Amanzi esinki sasekhitshini yeyona greywater ingcolileyo, izele ngamafutha nenkunkuma yokutya; yisebenzise kuphela ngokudlula kwisithiyo samafutha (grease trap), kwaye kuphela kwimithi nakwiintyatyambo.
 
 | Umthombo wamanzi | Egadini? |
 |---|---|
@@ -396,7 +396,7 @@ Ibhafu nganye neshawa nganye zithumela amanzi amahle ayokuphuma ngombhobho. Kwif
 2. **Ungaze uyifake kokutya okuyiwa kuluhlaza.** Yigcine kude nemifino yamagqabi (morogo), iletisi neengcambu ezifana neekherothi. Yisebenzise kwimithi yeziqhamo, iibhanana, izihlahla nakwiintyatyambo.
 3. **Ungabi namachibi.** Mayingene emhlabeni ngokukhawuleza, apho abantu nezilwanyana bengayi kuyichukumisa.
 4. **Yisebenzise ngosuku olunye.** I-greywater egciniweyo iyonakala kwaye izala iintsholongwane neemosquito.
-5. **Kude namanzi okusela.** Ungaze ibe kufutshane okanye ngaphezulu komthombo obiweyo (well), komngxuma wamanzi (borehole) okanye komthombo wendalo (spring).
+5. **Kude namanzi okusela.** Ungaze ibe kufutshane okanye ethambekeni ngaphezulu komthombo obiweyo (well), komngxuma wamanzi (borehole) okanye komthombo wendalo (spring).
 6. **Iisepha ezibuthathaka.** Iityuwa, i-bleach, i-borax neekhemikhali ezinzima ziyaqokelela kwaye zonakalisa umhlaba nezityalo. Sebenzisa iisepha ezibuthathaka, ezibolayo, ezinetyuwa encinci; isepha yolwelo yokuhlamba iimpahla idla ngokuba netyuwa encinci kunomgubo.
 7. **Yihambise.** Jikelezisa phakathi kwezitya uvumele imvula ihlambulule umhlaba. Imiphetho yamagqabi emiphuzi okanye umaleko omhlophe oqinileyo zithetha ukuba ityuwa iyaqokelela.
 

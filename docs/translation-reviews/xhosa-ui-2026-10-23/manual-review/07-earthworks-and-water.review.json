@@ -1,0 +1,42 @@
+{
+  "unit": "07-earthworks-and-water",
+  "okCount": 279,
+  "items": [
+    {
+      "where": "Harvesting water from roofs, step 3 (first-flush diverter)",
+      "verdict": "repair",
+      "english": "Empty it after every rain.",
+      "draft": "Yilahle emva kwemvula nganye.",
+      "backtranslation": "Throw it away after every rain (the pipe/container itself, by class-9 concord).",
+      "problem": "'-lahla' with a class 9 object concord reads as discarding the diverter, not emptying its water.",
+      "corrected": "Yikhuphe amanzi emva kwemvula nganye."
+    },
+    {
+      "where": "Where not to dig swales - Near buildings",
+      "verdict": "repair",
+      "english": "never uphill of a pit toilet, septic tank or soak-away",
+      "draft": "ungaze uzibeke ngaphezulu kwendlu yangasese engumngxuma, itanki ye-septic okanye i-soak-away",
+      "backtranslation": "never put them above (on top of) a pit toilet, septic tank or soak-away",
+      "problem": "'ngaphezulu kwe-' is ambiguous (over/on top vs. uphill); safety point about contamination running downhill was lost.",
+      "corrected": "ungaze uzibeke ethambekeni ngaphezulu kwendlu yangasese engumngxuma, itanki ye-septic okanye i-soak-away"
+    },
+    {
+      "where": "Using greywater - intro, blackwater",
+      "verdict": "repair",
+      "english": "Blackwater and nappy water carry germs and never go on the garden.",
+      "draft": "...athwala iintsholongwane kwaye awafakwa egadini.",
+      "backtranslation": "...carry germs and are not put in the garden.",
+      "problem": "Prohibition softened to a descriptive statement ('never' lost) in a sanitation-safety sentence.",
+      "corrected": "...athwala iintsholongwane kwaye ungaze uwafake egadini."
+    },
+    {
+      "where": "Greywater rule 5 (far from drinking water)",
+      "verdict": "repair",
+      "english": "Never near, or uphill of, a well, borehole or spring.",
+      "draft": "Ungaze ibe kufutshane okanye ngaphezulu komthombo obiweyo (well), komngxuma wamanzi (borehole) okanye komthombo wendalo (spring).",
+      "backtranslation": "Never near or above a well, borehole or spring.",
+      "problem": "'uphill of' rendered ambiguously as 'above'; drinking-water safety rule.",
+      "corrected": "Ungaze ibe kufutshane okanye ethambekeni ngaphezulu komthombo obiweyo (well), komngxuma wamanzi (borehole) okanye komthombo wendalo (spring)."
+    }
+  ]
+}

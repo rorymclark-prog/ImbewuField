@@ -126,7 +126,7 @@ Yenza ikona ye-habitat kule veki.
 ## Amanqaku aphambili
 
 - Ipiramidi yobomi imi phezu kwezityalo nomhlaba. Ukuba ubulala zonke izinambuzane ezonakalisayo, uyalambisa ii-predator ezikunceda.
-- I-succession yindlela umhlaba oziphilisa ngayo. KuMzantsi weAfrika ihlala iphela ngamadlelo engca yendalo, i-savanna okanye i-fynbos, kungabi lihlathi.
+- I-succession yindlela umhlaba oziphilisa ngayo. KuMzantsi weAfrika idla ngokuphela ngamadlelo engca yendalo, i-savanna okanye i-fynbos, kungabi lihlathi.
 - Amanzi, iikona zasendle, uthango oluphilayo, imfumba yamatye neebhokisi zezikhova zizisa abancedisi basendle ukuba basebenze efameni yakho.
 - Ukwahlukahlukana kwabela umngcipheko kwaye kugcina izinambuzane zilawulekile.
 
