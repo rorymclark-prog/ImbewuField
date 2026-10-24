@@ -36,3 +36,13 @@ export function xhDeckListingBefore(paths: readonly string[]): string[] {
   }
   return paths.filter(path => !XH_CARD.test(path));
 }
+
+/** The same, for listings written as public URLs ('/course-decks/...') of one module's deck folder. */
+export function xhDeckUrlsBefore(urls: readonly string[], moduleId: string): string[] {
+  const prefix = `/course-decks/${moduleId}/xh-silent/`;
+  const cards = urls.filter(url => url.startsWith(prefix)).sort();
+  const expected = [...declared.keys()].filter(path => path.startsWith('public' + prefix)).map(path => path.slice('public'.length)).sort();
+  assert.deepEqual(cards, expected, `${moduleId}: isiXhosa card folder holds exactly the declared release cards`);
+  xhDeckListingBefore(cards.map(url => 'public' + url).concat([...declared.keys()].filter(path => !path.startsWith('public' + prefix))));
+  return urls.filter(url => !url.startsWith(prefix));
+}
