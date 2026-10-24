@@ -503,3 +503,71 @@ test('production purchase facts preserve species choices and late map items with
   assert.deepEqual(raw, before);
   assert.doesNotMatch(JSON.stringify(facts), /"x"|"width"|layingHens|animalCount/);
 });
+
+import { reportProductionYear, normaliseReportProductionYear } from '../lib/report-crop-plan';
+import { buildFoodAvailability } from '../lib/crop-plan';
+import { calendarProduceByMonth } from '../lib/calendar-produce';
+import { placedTreeGroups } from '../lib/perennial-harvest';
+import { planningTreeSeasons } from '../lib/production-product-guidance';
+
+test('the report reuses crop and orchard product windows across the dated year without changing the plan', () => {
+  const canvas = buildDemoDesignCanvasState(), plan = buildDemoCropPlan();
+  const snapshot = captureReportCropPlan(canvas, plan, 'fixture', new Date('2026-12-07T10:00:00Z'));
+  const before = JSON.stringify({ canvas, plan });
+  const items = [{ defId: 'tree_mango', status: 'existing' as const }, { defId: 'chicken_coop', status: 'proposed' as const }, { defId: 'beehive', status: 'existing' as const }];
+  const context = { treeSeasons: { 'mangifera-indica': { months: [12, 1, 2], bearing: true } }, animalChoices: { chicken: 'chicken-layer', bee: 'bees' }, animalSeasons: { chicken: { enterpriseId: 'chicken-layer', months: [1, 2] } } };
+  const year = reportProductionYear(snapshot, items, context);
+  assert.match(year.months[0], /Dec 2026/); assert.match(year.months[1], /Jan 2027/);
+  const cropMonths = buildFoodAvailability(snapshot.plantings, snapshot.beds, 12, 12);
+  for (const row of year.rows.filter(r => r.kind === 'crop')) assert.deepEqual(row.months, cropMonths.flatMap((slot, i) => slot.some(food => row.id === `crop:${food.cropKey}:${food.status}`) ? [i] : []));
+  assert.deepEqual(year.rows.find(r => r.id === 'tree:mangifera-indica')?.months, [0, 1, 2]);
+  assert.deepEqual(year.rows.find(r => r.id === 'animal:chicken-layer')?.months, [1, 2]);
+  assert.match(year.rows.find(r => r.id === 'animal:chicken-layer')!.note, /proposed, no animals yet/);
+  assert.deepEqual(year.rows.find(r => r.id === 'animal:bees')?.months, [], 'undated honey must remain visible without invented flows');
+  assert.equal(JSON.stringify({ canvas, plan }), before);
+  const frozen = normaliseReportProductionYear(JSON.parse(JSON.stringify(year)))!;
+  year.rows[0].months.push(11);
+  assert.notDeepEqual(frozen, year, 'saved month arrays cannot follow later edits');
+});
+
+test('the survey can show mapped products without vegetables and cannot turn a coop into hens or eggs', () => {
+  const canvas = buildDemoDesignCanvasState();
+  canvas.items = canvas.items.filter(item => item.defId === 'tree_avocado');
+  assert.ok(canvas.items.length);
+  const facts = collectReportSiteFacts({ siteId: 'site:-27.72623,31.96304', lat: -27.72623, lon: 31.96304, canvas, cropPlan: { ...buildDemoCropPlan(), plantings: [], updatedAt: 0 } });
+  assert.equal(facts.crop?.plantingCount, 0);
+  assert.ok(facts.crop?.snapshot?.annualProduction?.rows.some(r => r.kind === 'food-forest'));
+  const year = reportProductionYear(calendarSnapshot(), [{ defId: 'chicken_coop' }]);
+  assert.equal(year.rows.length, 1); assert.equal(year.rows[0].product, 'Product not selected');
+  assert.deepEqual(year.rows[0].months, []);
+  assert.doesNotMatch(JSON.stringify(year), /eggs|hens|kg/);
+});
+
+test('the report keeps sourced orchard references distinct and applies the planner maturity gate', () => {
+  const s = calendarSnapshot(), items = [{ defId: 'tree_avocado', status: 'proposed' as const }];
+  const groups = placedTreeGroups(items), planning = planningTreeSeasons(groups, ['subtropical-coast']);
+  const year = reportProductionYear(s, items, { planning });
+  const expected = calendarProduceByMonth(groups, [], {}, [12,1,2,3,4,5,6,7,8,9,10,11], {}, {}, planning, Array.from({length:12}, (_, i) => ({year: i ? 2027 : 2026, month: (11 + i) % 12 + 1})));
+  const row = year.rows.find(r => r.id === 'tree:persea-americana')!;
+  assert.equal(row.reference, true);
+  assert.deepEqual(row.months, expected.flatMap((month,i) => month.trees.length ? [i] : []));
+  assert.match(row.note, /when established|proposed/);
+  const unready = reportProductionYear(s, items, { planning, treeSeasons: { 'persea-americana': { months: [], bearing: false, production: [{ status: 'proposed', plants: 1, planted: '2028-01', yields: [] }] } } });
+  assert.deepEqual(unready.rows.find(r => r.id === row.id)!.months, [], 'future planting must not be printed as next-year picking');
+});
+
+test('annual production evidence survives report storage and prompt input without retrofitting older reports', () => {
+  const facts = demoFacts();
+  const snapshot = captureReportCropPlan(buildDemoDesignCanvasState(), buildDemoCropPlan(), 'fixture', new Date('2026-12-07T10:00:00Z'));
+  facts.crop!.snapshot = snapshot;
+  const clean = normaliseReportSiteFacts(facts)!;
+  assert.deepEqual(clean.crop!.snapshot!.annualProduction, snapshot.annualProduction);
+  const prompt = cropPlanPromptBlock(clean);
+  assert.match(prompt, /WHOLE-YEAR FOOD AND PRODUCT PLAN/); assert.match(prompt, /Dec 2026/);
+  assert.match(prompt, /not recorded harvests/); assert.match(prompt, /Housing units are not animal counts/);
+  const old = { ...snapshot }; delete old.annualProduction;
+  assert.equal(normaliseReportCropSnapshot(old)?.annualProduction, undefined);
+  const damaged = { ...snapshot, annualProduction: { ...snapshot.annualProduction, rows: [{ ...snapshot.annualProduction!.rows[0], months: [12] }] } };
+  assert.equal(normaliseReportCropSnapshot(damaged)?.annualProduction, undefined);
+  assert.equal(normaliseReportCropSnapshot(damaged)?.siteId, 'fixture', 'bad new metadata must not destroy a readable report');
+});

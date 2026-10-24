@@ -9,6 +9,7 @@ import { buildCropPlanPdf, cropPlanPdfFilename, type CropPlanSection } from '@/l
 import { deliverPdf } from '@/lib/report-pdf';
 import type { ReportChart } from '@/lib/report-visuals';
 import styles from './ReportCropPlan.module.css';
+import ProductionYearOverview from './ProductionYearOverview';
 
 export default function ReportCropPlan({ crop, siteName, includeWorking, onIncludeWorking, language = 'en' }: {
   crop: FactCropPlan; siteName: string; includeWorking: boolean; onIncludeWorking: (v: boolean) => void;
@@ -40,6 +41,7 @@ export default function ReportCropPlan({ crop, siteName, includeWorking, onInclu
   const symbol = (cell: { sow: boolean; transplant: boolean }) => `${cell.sow ? 'S' : ''}${cell.sow && cell.transplant ? ' / ' : ''}${cell.transplant ? 'T' : ''}`;
   const title = (cell: { sow: boolean; transplant: boolean }) => [cell.sow ? tr('Sow seed', 'Hlwanyela imbewu') : '', cell.transplant ? tr('Check seedlings; transplant when ready', 'Hlola izithombo; tshala uma sezilungile') : ''].filter(Boolean).join('; ');
   return <section className={styles.section} aria-label="Sowing calendar">
+    <ProductionYearOverview production={s?.annualProduction} language={language}/>
     <h2>{tr('Seasonal sowing calendar', 'Ikhalenda lokuhlwanyela lezinkathi zonyaka')}</h2>
     <p className={styles.note}>{s ? `${tr('Saved plan', 'Uhlelo olugciniwe')} · ${new Date(s.capturedAt).toLocaleDateString('en-ZA')}` : tr('This older report has a crop summary without dated planting records.', 'Lo mbiko omdala unesifinyezo sezitshalo ngaphandle kwamarekhodi anezinsuku.')}</p>
     {changed && <p className={styles.notice}>{tr('The current crop plan has changed. This calendar keeps the plan saved with this report.', 'Uhlelo lwamanje lushintshile. Leli khalenda ligcina uhlelo olwalugcinwe nalo mbiko.')}</p>}

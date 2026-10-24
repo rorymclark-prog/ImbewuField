@@ -6,7 +6,7 @@ import { X, ChevronRight, ChevronLeft, Check, Users, Droplets, Home, Leaf, Alert
 import { useLanguage } from '@/lib/i18n';
 import { useAppConfirm } from '@/components/AppConfirm';
 import {
-  saveSurvey,
+  saveSurvey, siteReportPurposeLabel,
   readSurveyDraft, writeSurveyDraft, clearSurveyDraft, surveyDraftScope, surveyDraftScopeIsActive, surveyRevision,
   type SiteSurveyDraft,
   loadSurvey,
@@ -17,6 +17,7 @@ import {
   type ProductionCategory,
   type ReportedProduction,
   type SiteSurvey,
+  type SiteReportPurpose,
   type SiteProductionConditions,
   type PoultryManagement,
 } from '@/lib/site-survey';
@@ -38,6 +39,7 @@ interface Props {
    *  filled on a freshly-saved pin lands under the same key it's read back from. */
   coords?: { lat: number; lon: number } | null;
   annualRainfallMm?: number;
+  locationData?: LocationData;
   onSaved: (survey: SiteSurvey) => void;
   onClose: () => void;
 }
@@ -326,7 +328,7 @@ function SurveyRecoverySession(props: Props & { siteId: string; scope: string })
     initialDraftToken={choice === 'resume' ? stored.token : null}/>;
 }
 
-function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, scope, initialDraft, initialDraftToken }: Props & {
+function SurveyEditor({ placeId, coords, annualRainfallMm, locationData, onSaved, onClose, scope, initialDraft, initialDraftToken }: Props & {
   scope: string; initialDraft: SiteSurveyDraft | null; initialDraftToken: string | null;
 }) {
   const { lang, t } = useLanguage();
@@ -376,6 +378,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, sco
 
 
   // Step 0 — Site & Goals
+  const [reportPurpose, setReportPurpose] = useState<SiteReportPurpose | undefined>(existing?.reportPurpose);
   const [siteType, setSiteType] = useState<'homestead' | 'community'>(existing?.siteType ?? 'homestead');
   const [adults, setAdults] = useState(existing?.adults ?? '');
   const [memberCount, setMemberCount] = useState(existing?.memberCount ?? '');
@@ -485,6 +488,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, sco
 
   const survey: SiteSurvey = {
       siteId,
+      reportPurpose,
       placeId,
       savedAt: existing?.savedAt ?? '',
       siteType,
@@ -657,6 +661,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, sco
             <p>{t('surveyWelcomeIntro')}</p>
             <div className={styles.illustration}><Illustration name="example-hero"/><span>{t('surveyIllustrationCaption')}</span></div>
           </div>
+          <fieldset className={styles.reviewCard}><legend>What are you preparing?</legend><p>Choose the purpose, then the questionnaire length. Your maps and production plan remain linked to this site.</p><div className={styles.modeCards}>{(['potential','complete'] as const).map(purpose => <button type="button" key={purpose} className={styles.modeCard} aria-pressed={survey.reportPurpose === purpose} onClick={() => setReportPurpose(purpose)}><h2>{siteReportPurposeLabel(purpose, lang)}</h2><p>{purpose === 'potential' ? 'Understand the site, constraints and possibilities before detailed design.' : 'Bring the site survey, saved maps and whole-year production plan together. Missing evidence stays visible.'}</p></button>)}</div></fieldset>
           <div className={styles.modeCards}>
             {(['short','full'] as const).map(value => <button key={value} className={styles.modeCard} aria-pressed={mode === value} onClick={() => setMode(value)}>
               <div className={styles.modeCardTop}>{value === 'short' ? <Sprout size={26}/> : <NotebookPen size={26}/>}<span><RegionalWelcomeCopy language={lang} field={value === 'short' ? 'fiveSections' : 'sevenSections'}>{value === 'short' ? t('surveyFiveSections') : t('surveySevenSections')}</RegionalWelcomeCopy></span>{mode === value ? <CircleCheck size={23}/> : <Circle size={23}/>}</div>
@@ -676,7 +681,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, sco
             <p className={styles.intro}>{step === 2 && lang === 'zu' ? <SurveyZuluDraftPair english="Record what you already grow. In the comprehensive survey, open only the production categories you want to record.">{tips[step]}</SurveyZuluDraftPair> : tips[step]}</p>
             {step < 7 && <details className={styles.mobileGuide}><summary><Info size={16}/>{step === 5 ? paired('surveyFieldGuide', 'Along the way') : step === 6 ? paired('surveyFieldGuide', 'Field guide') : t('surveyFieldGuide')}</summary><p>{step === 2 && lang === 'zu' ? <SurveyZuluDraftPair english="A notebook, harvest record or sales record can help. Do not add kilograms to bunches. Leave figures blank when your records do not cover a full year.">{fieldGuides[step]}</SurveyZuluDraftPair> : fieldGuides[step]}</p></details>}
             {step === 7 && missingSections.length > 0 && <div className={styles.missing}><strong>{t('surveyMissingEssentials')}</strong><p>{lang === 'zu' ? SURVEY_MISSING_HINT_ENGLISH : t('surveyMissingHint')}</p>{missingSections.map(item => <button key={item.step} onClick={() => goTo(item.step)}>{STEPS[item.step]}<ArrowRight size={16}/></button>)}</div>}
-            {step === 7 && <SiteSurveyReview survey={survey} onEdit={id => goTo(mode === 'short' && (id === 3 || id === 4) ? 2 : id)} onEditProduction={() => { setMode('full'); goTo(2); }} productionLabels={PRODUCTION_ROWS} months={MONTH_LABELS}/>}
+            {step === 7 && <SiteSurveyReview survey={survey} onEdit={id => goTo(mode === 'short' && (id === 3 || id === 4) ? 2 : id)} onEditProduction={() => { setMode('full'); goTo(2); }} location={locationData} productionLabels={PRODUCTION_ROWS} months={MONTH_LABELS}/>}
             {step === 7 && ((survey.reportedProduction?.length ?? 0) > 0 || productionYear !== '') && <div lang="en" className="text-sm mb-5" style={{ padding: '14px 16px', borderRadius: 14, border: '1px solid var(--border)', background: 'var(--surface-2)' }}>
               <strong>Year for reported production: {productionYear || 'Not recorded'}</strong>
               <p style={{ color: 'var(--text-2)' }}>These are past or recorded results, separate from future production forecasts.</p>

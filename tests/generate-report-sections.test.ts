@@ -45,3 +45,15 @@ test('site report candidates cannot put listed invasive plants back into the pla
   assert.deepEqual(listedPlantMentions('Black mulberry and Cape silver willow are choices'), []);
   assert.match(reportRoute, /if \(listedPlantMentions\(text\)\.length > 0\) continue/);
 });
+
+import { siteReportPurposeInstruction, normaliseSiteReportPurpose } from '../lib/site-survey.ts';
+test('the two report purposes guide every generated batch without certifying proposed work or inventing missing evidence', () => {
+  assert.equal(normaliseSiteReportPurpose('potential'), 'potential');
+  assert.equal(normaliseSiteReportPurpose('complete'), 'complete');
+  assert.equal(normaliseSiteReportPurpose('progress'), undefined);
+  assert.match(siteReportPurposeInstruction('potential'), /before detailed design/);
+  assert.match(siteReportPurposeInstruction('potential'), /Do not invent/);
+  assert.match(siteReportPurposeInstruction('complete'), /twelve-month crop\/food-forest\/animal-product/);
+  assert.match(siteReportPurposeInstruction('complete'), /does not certify completion on the ground/);
+  assert.match(reportRoute, /siteReportPurposeInstruction\(reportPurpose\)/);
+});

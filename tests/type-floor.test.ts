@@ -114,6 +114,11 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/records/RecordQuantitySummary.tsx': 'eggs and packages need readable separate totals beside weighed harvests',
   'components/SiteSurveySheet.tsx': 'the field survey now has no sub-12px labels; keep that gain',
   'components/SiteSurveyReview.tsx': 'farmers must read their own survey answers before saving',
+  // The annual product plan and report-purpose choices are read by the same farmers as their
+  // saved survey answers. New components must inherit the zero-debt floor from the first release.
+  'components/SiteSurveyProductionYear.tsx': 'farmers open the site-linked annual product plan from survey review',
+  'components/report/ProductionYearOverview.tsx': 'farmers read dated product windows and evidence qualifiers on phones',
+  'components/report/ReportPurposeGuide.tsx': 'farmers distinguish site potential from the complete plan before generating',
   'components/SurveyZuluDraftPair.tsx': 'paired draft translations and English sources must stay readable on phones',
   'app/offline/page.tsx': 'device preparation and unsent fieldwork are read on phones',
   'components/FieldDataStatus.tsx': 'cached and unconfirmed data need readable status',
