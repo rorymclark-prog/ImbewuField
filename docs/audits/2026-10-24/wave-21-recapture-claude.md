@@ -58,7 +58,9 @@ same scripts.
   /finances, /facilitator, /contact, /tour, /reports, /farmer and /community/profile show no
   horizontal overflow, `lang="zu"`, and no low-contrast text. These are the routes the first
   capture lost when the server stopped mid-run.
-- /assessments showed one remaining pair, logged as `w21-11` and fixed. RESULT_ASSESSMENTS
+- /assessments showed one remaining pair, logged as `w21-11` and fixed. Worked by hand, the pressed
+  button is now emerald `#346A15` on a 10% emerald tint over white: about 5.6:1. A container restart
+  lost the served build before that one route could be re-rendered; the next re-capture covers it.
 - Dark isiZulu at 1280px and 390px: /student/finance (`w21-08`), /calendar (`w21-09`), /home
   (`w21-05`), the 404 page (`w21-01`) and /farmer show no low-contrast text and no overflow.
 - `tests/w21-recapture.test.ts` pins every fix. `tests/w20-samples-map.test.ts` is re-pinned to
