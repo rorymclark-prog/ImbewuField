@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, type RefObject } from 'react';
+import { Maximize2, Minimize2 } from 'lucide-react';
 import { DESIGN_WORKED } from '@/lib/design-worked';
 import styles from './DesignWorkedDiagram.module.css';
 
@@ -59,7 +60,7 @@ export default function DesignWorkedDiagram({ view = 'source', svgRef }: { view?
   const compostRect = rect(compost);
 
   return <figure className={styles.figure}>
-    <div className={styles.controls}><button type="button" aria-pressed={enlarged} onClick={() => setEnlarged(current => !current)}>{enlarged ? 'Fit diagram to screen' : 'Enlarge diagram'}</button></div>
+    <div className={styles.controls}><button type="button" aria-pressed={enlarged} onClick={() => setEnlarged(current => !current)}>{enlarged ? <Minimize2 size={16} aria-hidden="true" /> : <Maximize2 size={16} aria-hidden="true" />}{enlarged ? 'Fit diagram to screen' : 'Enlarge diagram'}</button></div>
     <div className={styles.viewport} tabIndex={0} role="region" aria-label="Scrollable fictional classroom yard-plan diagram">
       <svg ref={svgRef} className={`${styles.diagram}${enlarged ? ` ${styles.enlarged}` : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 818" width="720" height="818" role="img" aria-labelledby="worked-diagram-title worked-diagram-description" fontFamily="Arial, sans-serif">
         <title id="worked-diagram-title">{`${DESIGN_WORKED.title}: ${title}`}</title>

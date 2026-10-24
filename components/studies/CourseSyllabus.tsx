@@ -5,6 +5,7 @@ import { useAppLevel } from '@/lib/app-level';
 import OfflinePageLink from './OfflinePageLink';
 import styles from './FinanceCourse.module.css';
 import ArrowLabel from './ArrowLabel';
+import Summary from './Summary';
 
 export interface SyllabusLesson {
   id: string;
@@ -73,7 +74,7 @@ export default function CourseSyllabus({ id, units, basePath, eyebrowPrefix, con
         </section>
       )}
       <details className={styles.card}>
-        <summary>{seeAllLabel}</summary>
+        <Summary>{seeAllLabel}</Summary>
         <div className={styles.grid}>{cards}</div>
       </details>
     </div>

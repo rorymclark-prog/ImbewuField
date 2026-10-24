@@ -33,6 +33,12 @@
   margin: 0 0 0.5rem;
 }
 
+.controls button { min-height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 1px solid color-mix(in srgb, var(--color-forest-800) 30%, transparent); border-radius: 12px; background: var(--bg-1); color: var(--color-forest-800); font: inherit; font-size: 16px; font-weight: 600; cursor: pointer; }
+.controls button:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
+.controls button[aria-pressed="true"] { background: color-mix(in srgb, var(--color-forest-800) 10%, var(--bg-1)); border: 2px solid var(--color-forest-800); font-weight: 700; }
+/* Under 760px the drawing already keeps its 720px size and scrolls, so the toggle would do nothing. */
+@media (max-width: 760px) { .controls { display: none; } }
+
 .enlarged {
   min-width: 720px;
 }

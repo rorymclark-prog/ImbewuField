@@ -1,11 +1,10 @@
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
 import { ACT_FACILITATOR_DAYS, ACT_OBSERVATION_CRITERIA } from '@/lib/act-facilitator-refresher';
 import { COURSE_MODULES } from '@/lib/course-modules';
 import styles from './Refresher.module.css';
 import ArrowLabel from '@/components/studies/ArrowLabel';
+import StudyHeader from '@/components/studies/StudyHeader';
 
 export const metadata = {
   title: 'ACT Teach the Teachers | two-day facilitator refresher',
@@ -14,10 +13,7 @@ export const metadata = {
 
 export default function TeachTheTeachersPage() {
   return <div className={styles.page}>
-    <header className={styles.header}>
-      <MenuButton /><BackButton fallback="/student" />
-      <Link href="/student">My Studies</Link><span data-header-secondary>Facilitator refresher</span>
-    </header>
+    <StudyHeader title="Facilitator refresher" />
     <main className={styles.main}>
       <section className={styles.hero}>
         <p className={styles.eyebrow}>ACT · Agroecology and permaculture</p>

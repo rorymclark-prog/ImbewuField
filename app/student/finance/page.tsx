@@ -1,6 +1,4 @@
 import { ChevronDown } from 'lucide-react';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
 import { FINANCE_UNITS, FINANCE_LESSONS } from '@/lib/course-finance';
 import { financeZu, FINANCE_ZU_UNIT_TITLE, FINANCE_ZU_UNIT_SUMMARY, FINANCE_ZU_LESSON_TITLE } from '@/lib/course-finance-i18n';
 import FinanceReadingChecklist from '@/components/studies/FinanceReadingChecklist';
@@ -11,12 +9,13 @@ import FullToolsOnly from '@/components/studies/FullToolsOnly';
 import { FinanceZuText, FinanceZuCourseNotice } from '@/components/studies/FinanceZu';
 import styles from '@/components/studies/FinanceCourse.module.css';
 import ArrowLabel from '@/components/studies/ArrowLabel';
+import StudyHeader from '@/components/studies/StudyHeader';
 
 export const metadata = { title: 'Farm Finance — ImbewuField teaching preview', robots: { index: false, follow: false } };
 
 export default function FarmFinancePage() {
   return <div className={styles.page}>
-    <header className={styles.header}><MenuButton /><BackButton fallback="/student" /><OfflinePageLink href="/student">My Studies</OfflinePageLink><span data-header-secondary>Farm Finance</span></header>
+    <StudyHeader title="Farm Finance" />
     <main className={styles.main}>
       <section className={styles.hero}>
         <div className={styles.heroText}>

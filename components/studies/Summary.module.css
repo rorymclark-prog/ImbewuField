@@ -1,0 +1,5 @@
+.summary { min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 8px; cursor: pointer; list-style: none; }
+.summary::-webkit-details-marker { display: none; }
+.chevron { flex: 0 0 auto; color: var(--color-forest-800); transition: transform .15s ease; }
+:global(details[open]) > .summary .chevron { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) { .chevron { transition: none; } }

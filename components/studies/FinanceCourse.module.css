@@ -36,11 +36,14 @@
 .card li > a { min-height: 40px; }
 .reading { background: color-mix(in srgb, var(--color-forest-800) 10%, var(--bg-1)); border-color: color-mix(in srgb, var(--color-forest-800) 25%, transparent); }
 .actions { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; margin-top: 18px; }
-.actions a, .actions button { text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 1px solid color-mix(in srgb, var(--color-forest-800) 30%, transparent); border-radius: 12px; background: var(--bg-1); font: inherit; font-size: 16px; font-weight: 600; }
+.actions a, .actions button { text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 1px solid color-mix(in srgb, var(--color-forest-800) 30%, transparent); border-radius: 12px; background: var(--bg-1); color: var(--color-forest-800); text-align: center; font: inherit; font-size: 16px; font-weight: 600; }
 /* Same size and weight as the secondary buttons beside it (16px/600); only the fill differs. */
 .actions .primary { background: var(--color-forest-800); color: var(--on-forest-800, var(--on-forest)); border-color: transparent; text-decoration: none; }
 .actions .primary small { color: inherit; opacity: .85; }
 .checklist { padding-top: 12px; color: var(--text-secondary); }
+.checklistCard { margin: 20px 0; padding: 20px; border: 1px solid var(--border-strong); border-radius: 16px; background: var(--bg-1); }
+.progress { height: 8px; margin-bottom: 12px; border-radius: 999px; overflow: hidden; background: color-mix(in srgb, var(--color-forest-800) 14%, var(--bg-1)); }
+.progress > span { display: block; height: 100%; border-radius: inherit; background: var(--color-forest-800); }
 .checklist p { font-size: 14px; }
 .section summary { min-height: 44px; padding: 8px 0; cursor: pointer; font-weight: 600; font-size: 18px; }
 .prose p { margin: 12px 0; white-space: pre-line; }
@@ -56,7 +59,7 @@
 @media (max-width: 650px) {
   /* The shared app header is fixed to 52px on phones; source captions belong in the page body. */
   .header small { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
-  .main { padding: 16px 12px 80px; }
+  .main { padding: 16px 12px var(--lima-fab-clearance, 100px); }
   .heroText, .card, .section { padding: 22px 18px; }
   .hero img { aspect-ratio: 16/10; }
   .grid, .dayList { grid-template-columns: 1fr; }
@@ -64,7 +67,7 @@
 }
 @media print {
   .page { height: auto; overflow: visible; }
-  .header, .actions, .notice, .checklist { display: none; }
+  .header, .actions, .notice, .checklist, .checklistCard { display: none; }
   .main { padding: 0; max-width: none; }
   .hero img { display: none; }
   .hero, .card, .section { border: 0; padding: 10px 0; }
