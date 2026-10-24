@@ -140,7 +140,9 @@ w19-39 (w20-39) and w19-42 (w20-41, w20-43).
   `w18-teach-tour` w18-14 (w20-32 widened the Teach the Teachers shell to 1120/20 on purpose) and
   `zu-11-ux-18-produce-label` (the w20-14 sparkline underlay used a `color-mix` of
   `--color-forest-800`, which that guard forbids; it is now the token at 30% stroke opacity, which
-  looks the same). All four were fixed on #1091. The remaining failures are the known sandbox-only
+  looks the same). All four were fixed on #1091. CI then caught a fifth the local run missed (it sat
+  in the slow tail): `report-site-facts` reads the demo farm's name, so its two "Creche" asserts
+  became "Crèche" too. The remaining failures are the known sandbox-only
   set (course-audio, course-deck, saved-reports, venue-location, storage-rules (emulator), public-route-ssr, product-tour,
   auth-account-transition, auth-guest-migration; saved-reports and venue-location fail in the
   sandbox's module loader hook before any assertion runs) and the emulator tests. CI runs the full
