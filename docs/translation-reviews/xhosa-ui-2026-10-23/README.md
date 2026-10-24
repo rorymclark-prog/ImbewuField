@@ -122,6 +122,37 @@ Reviewers found these in the English lessons; the drafts follow the English fait
   - Staff training feedback can be recorded in isiXhosa (`FEEDBACK_LANGUAGES`).
   - Participant survey answers can be saved as `xh`.
 
+## Round 2 review (24 Oct 2026): Manual and inline UI strings
+Eight independent reviewers (Sonnet) checked the parts with no blind review yet. Each read the
+isiXhosa first, wrote an English back-translation, then compared it with the source and fixed real
+meaning errors in place. Style preferences were left alone.
+
+**Permaculture Manual, all 14 chapters: 35 repairs, 0 holds.** Records are in `manual-review/`.
+- Greywater: "never put it on the garden" had become a plain description.
+- Wells, boreholes and pit toilets: "uphill of" had become "above" or "on top of".
+- First-flush diverter: "empty it" read as "throw it away".
+- Glossary: "green manure, often a legume" had been reversed to "often NOT a legume".
+- Ethics test: "fence off a spring" had become "block a spring".
+- Parasitic wasps: "cannot sting" had become "cannot tell".
+- Carbon monoxide: "a gas you cannot see" had become "cannot show".
+- Chickens: "close the birds in every night" had become "one by one".
+- Frost hedge: the "open end facing downhill" was lost.
+- Varroa: the sentence was garbled.
+- Soil: "dig in" manure, "sow thickly", and the "never flood the worms" step.
+
+**Inline UI strings, all shards: 49 repairs, 0 holds.** Records are in `inline-review/`.
+- Atlas: "score" had been rendered as "school".
+- Community: the privacy line "never your exact homestead" was garbled.
+- Exchange: "Make an offer" read as "raise the price".
+- Design tools: "move" had become "remove".
+- Training register: "signatures" had become "stamps".
+- Money book: "guessed entry" had been narrowed to "estimated income".
+- Agronomist: had become "agricultural doctor".
+- An isiZulu "nxa" was found.
+- The MEL question preview now shows the isiXhosa drafts.
+
+None of this replaces a fluent-speaker review; it removes the errors a careful reader would catch.
+
 ## Still English for isiXhosa readers
 - Lesson narration audio. No isiXhosa recording or TTS voice exists; the decks are silent or use the
   optional English source voice.

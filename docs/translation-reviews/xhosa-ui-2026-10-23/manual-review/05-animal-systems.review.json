@@ -1,0 +1,42 @@
+{
+  "unit": "05-animal-systems",
+  "okCount": 125,
+  "items": [
+    {
+      "where": "Housing, water and predators, step 6 (Night)",
+      "verdict": "repair",
+      "english": "Close the birds in every night.",
+      "draft": "Vala iinkukhu ngenye ngenye ebusuku.",
+      "backtranslation": "Close the chickens in one by one at night.",
+      "problem": "'Every night' became 'one by one'; the predator-safety rule (shut in nightly) is not stated.",
+      "corrected": "Vala iinkukhu ngobusuku ngabunye."
+    },
+    {
+      "where": "Bees, Feed the bees (varroa paragraph)",
+      "verdict": "repair",
+      "english": "... so beekeepers here do not normally treat for it.",
+      "draft": "... ngoko abagcini beenyosi apha abahlali beyinyanga.",
+      "backtranslation": "... so beekeepers here do not stay with the month (unintelligible).",
+      "problem": "Clause is garbled; the fact that beekeepers do not normally treat for varroa is lost.",
+      "corrected": "... ngoko abagcini beenyosi apha ngokuqhelekileyo abayinyangi."
+    },
+    {
+      "where": "Which chickens? (commercial hybrids)",
+      "verdict": "repair",
+      "english": "Commercial hybrids ... produce more but need good feed and care",
+      "draft": "... ziveliswa ngakumbi kodwa zidinga ...",
+      "backtranslation": "... are bred/produced more but need ...",
+      "problem": "Passive 'are produced' instead of 'produce more'; the benefit of hybrids is misstated.",
+      "corrected": "... zivelisa ngakumbi kodwa zidinga ..."
+    },
+    {
+      "where": "Animal tractors, closed tractor description",
+      "verdict": "repair",
+      "english": "light enough for two people to drag",
+      "draft": "... ukuba bantuababini bayirhuqe",
+      "backtranslation": "... for 'bantuababini' to drag it (typo)",
+      "problem": "Typo (words run together) in 'two people'. Minor.",
+      "corrected": "... ukuba bantu ababini bayirhuqe"
+    }
+  ]
+}

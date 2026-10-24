@@ -32,7 +32,7 @@ Njengoko imozulu iya ngokuthi ingaqikelelekeki, khetha iindidi ezomeleleyo ezikw
 
 **I-animal tractor** sisibaya esihambayo: izilwanyana zisebenza kwiqhekeza elinye lomhlaba, emva koko uhambisa isibaya siye kwelandelayo. Iinkukhu, amadada, ii-goose, iihagu neebhokhwe zonke zisebenza ngale ndlela. Ziyabeka ubulongwe, ziyakrwela, ziyadla ingca kwaye ziyagrumba njengoko zisenza rhoqo, kodwa ngoku kwenzeka apho ufuna khona: kwibhedi yegadi phakathi kwezityalo, ngaphantsi kwemithi yeziqhamo, kwidlelo elidiniweyo, kumhlaba ogqunywe yingca nokhula, okanye emazantsi echibi elitsha, apho iihagu zigrumba zize ziliqinise.
 
-I-animal tractor evaliweyo yimeko yeplanga okanye yeentsika egqunywe ngomnatha wocingo, ngelinye icala inophahla lokunika umthunzi nokukhusela emvuleni, kwaye ilula ngokwaneleyo ukuba bantuababini bayirhuqe. I-animal tractor evulekileyo sisangqa somnatha wombane ohambayo, osebenza ngesixhobo esincinci sokunika uthango umbane, esisebenza ngelanga (solar energiser).
+I-animal tractor evaliweyo yimeko yeplanga okanye yeentsika egqunywe ngomnatha wocingo, ngelinye icala inophahla lokunika umthunzi nokukhusela emvuleni, kwaye ilula ngokwaneleyo ukuba bantu ababini bayirhuqe. I-animal tractor evulekileyo sisangqa somnatha wombane ohambayo, osebenza ngesixhobo esincinci sokunika uthango umbane, esisebenza ngelanga (solar energiser).
 
 1. Beka i-animal tractor kwiqhekeza ofuna ukulisebenza.
 2. Shiya izilwanyana de umhlaba ube ukrwelekile kwaye unobulongwe, kodwa ungabi ungenanto kwaye uqine ngokunyathelwa. Kwiinkukhu ezimbalwa kwibhedi yegadi, oko kuhlala kuyimini embalwa.
@@ -76,7 +76,7 @@ Iinyoka, ii-mongoose, ii-genet, iikati zasendle, izinja, amagundane neentaka ezi
 3. **Iibhokisi zezidleke.** Malunga ne-30 cm ububanzi, ubunzulu nokuphakama, enye kwiinkukhu ezine okanye ezintlanu ezibekayo. Iibhokisi zakudala zeziqhamo ziyasebenza. Zifake ingca eyomileyo okanye iziqwenga zeplanga ezigudiweyo.
 4. **Umoya.** Vumela umoya udlule endlini, kungabikho moya obandayo ohlaba iinkukhu ebusuku.
 5. **Umnatha.** Sebenzisa umnatha wocingo oqinileyo onemingxuma emincinci. Wungcwabe, okanye uwugobe uye ngaphandle emhlabeni, ukuze kungabikho nto igrumba ingene ngaphantsi.
-6. **Ebusuku.** Vala iinkukhu ngenye ngenye ebusuku. Gcina amantshontsho amancinci kwindawo egqunyiweyo enomnatha.
+6. **Ebusuku.** Vala iinkukhu ngobusuku ngabunye. Gcina amantshontsho amancinci kwindawo egqunyiweyo enomnatha.
 7. **Amanzi.** Ibhotile ye-cold drink ejijekileyo emi kwisitya esingenzulu yenza isisela esilula. Sigcine emthunzini size sicoce rhoqo.
 
 Iinkukhu ziyakrwela nezithombo kunye ne-**mulch**, ingca eyomileyo namagqabi agubungela aze akhusele umhlaba, ngoko zijikelezise: ibhedi emva kokuvunwa, emva koko zibuyele egcekeni lazo de ibhedi elandelayo ilunge.
@@ -87,7 +87,7 @@ Iinkukhu ziyakrwela nezithombo kunye ne-**mulch**, ingca eyomileyo namagqabi agu
 
 Kwiimvavanyo ze-ARC ezinokutya nendlu elungileyo, ezi ndidi zaqala ukubeka xa zineeveki ezimalunga nama-24 ukuya kwama-26. Iinkukhu ze-Koekoek zabeka malunga ne-196 yamaqanda ngonyaka, i-Venda malunga ne-154, i-Naked Neck malunga ne-139 kunye ne-Ovambo malunga ne-126. Inkukhu yasezilalini efumana lonke ukutya kwayo ibeka amaqanda amancinci kakhulu, rhoqo amaqela amathathu amalunga ne-10 elowo ngonyaka, kuba iyayeka ukubeka ukuze ihlalele amaqanda ikhulise amantshontsho ayo.
 
-**Ii-hybrid zorhwebo**, **iinkukhu zamaqanda** (layers) zamaqanda kunye **neenkukhu zenyama** (broilers) zenyama, ziveliswa ngakumbi kodwa zidinga ukutya nokukhathalelwa kakuhle, kwaye azomelelanga kangako xa zihamba zodwa.
+**Ii-hybrid zorhwebo**, **iinkukhu zamaqanda** (layers) zamaqanda kunye **neenkukhu zenyama** (broilers) zenyama, zivelisa ngakumbi kodwa zidinga ukutya nokukhathalelwa kakuhle, kwaye azomelelanga kangako xa zihamba zodwa.
 
 ### Ukugcina iinkukhu zisempilweni
 
@@ -164,7 +164,7 @@ Zama ukuba kubekho into eyintyatyambo kuyo yonke isizini.
 - Beka isitya esingenzulu samanzi esinamatye, ukuze iinyosi zisele zingaminzi.
 - Yeka ukusebenzisa ityhefu yokutshiza izinambuzane. Ukuba kufuneka utshize, sebenzisa eyona ithambileyo, ngokuhlwa kakhulu xa iinyosi zingabhabhi, kwaye ungaze utshize kwiintyatyambo ezivulekileyo.
 
-Emhlabeni wonke, iinyosi zobusi ziyafa ngenxa yezinambuzane, izifo, indlala netyhefu yezinambuzane. Ibali loMzantsi Afrika linethemba ngakumbi. **I-varroa mite**, isidalwa esiphila kwesinye, yafika apha ngo-1997, kwaye iinyosi zethu zobusi zaye zakwazi ukumelana nayo kwiminyaka embalwa, ngoko abagcini beenyosi apha abahlali beyinyanga. Esona sisongelo sikhulu yi-**American foulbrood**, isifo esibangelwa yibhaktheriya esibulala iinyosi ezincinci. Sakuqinisekiswa okokuqala eNtshona Koloni (Western Cape) ngo-2009, kwaye ii-spore zaso ziphila amashumi eminyaka kubusi, kwi-wax nakwizixhobo zakudala zomzi wenyosi.
+Emhlabeni wonke, iinyosi zobusi ziyafa ngenxa yezinambuzane, izifo, indlala netyhefu yezinambuzane. Ibali loMzantsi Afrika linethemba ngakumbi. **I-varroa mite**, isidalwa esiphila kwesinye, yafika apha ngo-1997, kwaye iinyosi zethu zobusi zaye zakwazi ukumelana nayo kwiminyaka embalwa, ngoko abagcini beenyosi apha ngokuqhelekileyo abayinyangi. Esona sisongelo sikhulu yi-**American foulbrood**, isifo esibangelwa yibhaktheriya esibulala iinyosi ezincinci. Sakuqinisekiswa okokuqala eNtshona Koloni (Western Cape) ngo-2009, kwaye ii-spore zaso ziphila amashumi eminyaka kubusi, kwi-wax nakwizixhobo zakudala zomzi wenyosi.
 
 ### Iinyosi zobusi zoMzantsi Afrika
 

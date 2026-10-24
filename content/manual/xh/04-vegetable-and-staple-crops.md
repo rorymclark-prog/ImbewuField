@@ -28,7 +28,7 @@ Kwiindawo ezibandayo, iqabaka lelona ngozi iphambili. Umoya obandayo unzima. Ebu
 
 ## Cwangcisa ngobomi onabo
 
-Igadi enkulu ongakwaziyo ukuyikhathalela ngokukhawuleza iba yigadi efunge ukhula, elahlekileyo. Phambi kokuba umbe, yiba nenyaniso ngokuphathelele **ixesha**, **imali** nomdla onabo.
+Igadi enkulu ongakwaziyo ukuyikhathalela iba yigadi efunge ukhula, elahlekileyo kungekudala. Phambi kokuba umbe, yiba nenyaniso ngokuphathelele **ixesha**, **imali** nomdla onabo.
 
 1. Yenza **uvavanyo lwendlela yokuphila (lifestyle audit)** olulula. Bhala ukuba zingaphi iiyure ngeveki onokuzinika igadi, into oyifunayo kuyo (ukutya, ingeniso okanye zozibini) nento onokuyichitha.
 2. Ukuba ixesha lincinci, yenza kube lula. Tyala ii-**perennial** ezininzi, izityalo ezihlala iminyaka emininzi, ezinje ngemithi yeziqhamo, imifuno enevumba nee-asparagus. Gcina umsebenzi nge-**drip irrigation** (unkcenkceshelo ngamathonsi), amapayipi ancancisa amanzi kancinci kwisityalo ngasinye, kunye nesixhobo sokulinganisa ixesha esifakwa kwitephu (tap timer).
@@ -57,9 +57,9 @@ Yenze intle. Incinci kwaye ingasecaleni kwendlu, ngoko thatha ixesha lokuhombisa
 
 Igadi yemifuno inkulu ngakumbi. Inezityalo ezidinga indawo engakumbi okanye ezikhula ixesha elide: ikhaphetshu, ibhitrudi, ii-leek, amatswele, iipilipili, amatumato ne-okra. Uyityelela kanye ngemini okanye emva kweentsuku ezimbalwa, ngoko ikude kancinci, kwi-**zone 2**. Iitonela zasekhaya neendlu zomnatha womthunzi nazo zikule ndawo.
 
-1. Beka iibhedi ezicacileyo ngeendlela phakathi kwazo. Ethambekeni, beka iibhedi neendlela ngokulandela i-**contour** (umgca owele ethambekeni usezingeni elifanayo), ukuze amanzi angene endaweni yokuqukuqela.
+1. Beka iibhedi ezicacileyo ngeendlela phakathi kwazo. Ethambekeni, beka iibhedi neendlela ngokulandela i-**contour** (umgca owele ethambekeni usezingeni elifanayo), ukuze amanzi angene emhlabeni kunokuba abaleke.
 2. Tyala izityalo ezininzi kunye. Yongeza ichibi elincinci lamaxoxo neentyatyambo ezondla izinambuzane eziluncedo (isahluko 10).
-3. Yeka ukwenza imiphetho. Phinda uyilise iibhedi ngesandla izihlandlo ezimbalwa ngonyaka.
+3. Yeka ukwenza imiphetho. Phinda wenze iibhedi zibe nemo entsha ngesandla izihlandlo ezimbalwa ngonyaka.
 
 Umsebenzi uhlala usoloko: ukujonga imigca yamathonsi, ukugquma nge-mulch, ukongeza i-**compost** (inkunkuma yezityalo nezilwanyana ebolileyo), ukukhupha ukhula nokuhlwayela.
 
@@ -134,7 +134,7 @@ Zoba amagadi akho amane kule veki.
 2. Yima kumnyango wekitshi uhambe ngeenyathelo ezili-10. Phawula indawo engcono yegadi yekitshi ngaphakathi kwalo mgama.
 3. Phawula indawo yegadi yemifuno, ekufutshane ongahamba kuyo lula nakufutshane namanzi.
 4. Phawula indawo yezityalo eziphambili zokutya, uze uqaphele ukuba umhlaba utsibela ngaphi.
-5. Ngokuhlwa okuthe cwaka, okubandayo, vakalisa ukuba umoya obandayo uhlala phi. Phawula loo frost pocket.
+5. Ngokuhlwa okuthe cwaka, okubandayo, va ukuba umoya obandayo uhlala phi. Phawula loo frost pocket.
 6. Ecaleni kwegadi nganye, bhala iiyure ngeveki onokuzinika yona.
 
 ## Amanqaku aphambili

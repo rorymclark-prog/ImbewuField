@@ -71,6 +71,10 @@ must provision — not buildable from code alone).
   - The public feedback form gets an isiXhosa notice.
   - Training feedback and survey answers can be stored as `xh`.
   - The Studies player and module cards are in isiXhosa.
+- **Round 2 blind review (Manual and inline UI strings):** 35 Manual repairs and 49 UI-string repairs,
+  with 0 holds. Many were safety wording: greywater "never", "uphill of" wells and pit toilets, "close
+  the birds in every night", and parasitic wasps "cannot sting".
+- **Also translated:** the staff training-records screen (ProgrammeEvidence) and the Offline page title.
 - **Record:** `docs/translation-reviews/xhosa-ui-2026-10-23/README.md` (Phase 3) and
   `docs/study-translation-reviews/isixhosa-2026-10-23/slides/`.
 

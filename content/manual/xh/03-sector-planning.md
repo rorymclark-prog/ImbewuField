@@ -14,7 +14,7 @@ Umfama owaziyo ukuba umoya oshushu uvela phi utyala i-windbreak kwindawo echanek
 
 ## Ukuzoba imephu ye-sector
 
-**I-sector** lamandla okanye amandla angena kumhlaba wakho evela ngaphandle: ilanga, umoya, umlilo, amanzi nezikhukula, iqabaka nomoya obandayo, imibono emihle nembi, iindlela zezilwanyana zasendle, ingxolo nothuli.
+**I-sector** yinto enamandla okanye amandla angena kumhlaba wakho evela ngaphandle: ilanga, umoya, umlilo, amanzi nezikhukula, iqabaka nomoya obandayo, imibono emihle nembi, iindlela zezilwanyana zasendle, ingxolo nothuli.
 
 Imephu ye-sector izoba nganye kuzo njengesiqwenga, njengesiqwenga sekeyiki, esijonge ekhayeni lakho ukusuka kwicala elivela kulo.
 
@@ -159,7 +159,7 @@ Iqabaka linokunqanda ukukhula komthi omncinci weziqhamo iminyaka emininzi. Lungi
 
 1. **Gquma izityalo ebusuku obunamaqabaka** ngelaphu lokukhusela iqabaka, amashiti amadala okanye utyani, ufikelela emhlabeni. Susa ukugquma kusasa.
 2. **Khusela igadi** nge-windbreak okanye ngothango oluphilayo, kodwa shiya isithuba kwicala elingezantsi ukuze umoya obandayo ukwazi ukuphuma kunokuba uqokelelane.
-3. **Phambukisa umoya obandayo ujikeleze igadi** ngothango olunjengesihlangu sehashe ecaleni elingaphezulu ethambekeni, ngomhlaba ovulekileyo ujonge ezantsi.
+3. **Phambukisa umoya obandayo ujikeleze igadi** ngothango olunjengesihlangu sehashe ecaleni elingaphezulu ethambekeni, isiphelo esivulekileyo sijonge ezantsi.
 4. **Yenza iindawo ezibamba ilanga (sun traps).** Udonga olujonge emntla okanye uthango olugobileyo luphatha umoya ofudumeleyo, kwaye amatye okanye iigubu zamanzi ejikeleze izityalo zigcina ubushushu bemini.
 5. **Tyala imithi ekhathalelayo (nurse trees).** **I-canopy** (uphahla lwamagqabi) elula yemithi yokuqala ukumila ehlala ixesha elifutshane ikhusela imithi emincinci yeziqhamo.
 6. **Gquma ngenkathalo.** I-mulch ikhusela iingcambu, kodwa ithintela umhlaba ukuba ukhuphe ubushushu bawo ebusuku, ngoko izityalo ezimfutshane kakhulu zinokufumana iqabaka elininzi ngaphezu kwe-mulch eshinyeneyo. Kwiibhedi ezisemngciphekweni weqabaka, nkcenkcesha umhlaba ngemini ngaphambi kobusuku obunamaqabaka: umhlaba onamanzi ugcina ubushushu obungakumbi.
