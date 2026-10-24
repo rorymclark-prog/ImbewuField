@@ -1387,7 +1387,7 @@ export default function MyRecords({
                 />
               </div>
               {recent.length > 0 && <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
-                <polyline points={pts} fill="none" stroke="color-mix(in srgb, var(--color-forest-800) 30%, var(--bg-1))" strokeWidth="1.5" strokeLinejoin="round" />
+                <polyline points={pts} fill="none" stroke="var(--color-forest-800)" strokeOpacity={0.3} strokeWidth="1.5" strokeLinejoin="round" />
                 <polyline points={pts} fill="none" stroke="var(--color-forest-800)" strokeWidth="1.5" strokeLinejoin="round" strokeDasharray="3 2" />
                 {recent.map((p, i) => {
                   const x = (i / Math.max(recent.length - 1, 1)) * W;

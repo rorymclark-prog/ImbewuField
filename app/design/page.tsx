@@ -524,9 +524,8 @@ function EmptyState() {
         textAlign: 'center',
       }}
     >
-      {/* nav-17: /design had no h1 at all while this empty-site state was showing. One visible
-          h1 matching the nav label ("Design studio"), small so it doesn't compete with the
-          instructional copy below. */}
+      {/* nav-17: /design had no h1 at all while this empty-site state was showing. Since w20-23
+          the AppHeader above shows the title, so this h1 is for screen readers only. */}
       <h1 className="sr-only">
         {isZulu ? 'Isitudiyo Sokuklama' : 'Design Studio'}
       </h1>
