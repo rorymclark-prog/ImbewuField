@@ -54,15 +54,21 @@ export default function AppHeader({
       <MenuButton />
       <BackButton fallback={backFallback} />
       <BrandLogo />
-      <div className="w-px h-5" style={{ background: 'var(--border)' }} />
-      <span
-        className="text-xs font-display truncate min-w-0 lg:shrink-0 lg:overflow-visible whitespace-nowrap"
-        style={{ color: 'var(--text-secondary)' }}
-      >
-        {title}
-      </span>
+      {/* w20-37: the title repeats the h1 and, at lg+, the active nav item, so it only shows when
+          one is set and (when the nav is showing) below lg. The divider goes with it. */}
+      {title && (
+        <>
+          <div className={`w-px h-5${desktopNav ? ' lg:hidden' : ''}`} style={{ background: 'var(--border)' }} />
+          <span
+            className={`text-xs font-display truncate min-w-0 whitespace-nowrap${desktopNav ? ' lg:hidden' : ' lg:shrink-0 lg:overflow-visible'}`}
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            {title}
+          </span>
+        </>
+      )}
       {desktopNav && (
-        <nav aria-label="Primary" className="hidden lg:flex items-center gap-5 ml-2 min-w-0 overflow-hidden whitespace-nowrap">
+        <nav aria-label="Primary" className="hidden lg:flex items-center gap-5 ml-2 shrink-0 whitespace-nowrap">
           {tabs.map(({ href, key }) => (
             <Link
               key={href}

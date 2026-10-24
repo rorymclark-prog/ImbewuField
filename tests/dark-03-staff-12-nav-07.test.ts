@@ -22,9 +22,9 @@ test('NetworkMap ink/paper constants resolve to theme tokens, not hex literals',
   assert.match(network, /const INK_MUTED = 'var\(--text-muted\)'/);
   assert.match(network, /const LINE = 'var\(--border\)'/);
   assert.match(network, /const PAPER = 'var\(--bg-1\)'/);
-  // The pin-status palette is deliberately fixed across themes (so two funder-facing screens
-  // never disagree about what "thriving" looks like) and must stay untouched by this fix.
-  assert.match(network, /thriving: \{ color: '#1F4D2B' \}/);
+  // w20-39: the pin-status palette is now the one shared token map the /network list also uses
+  // (components/network/status-colors.ts), so the map and the list cannot disagree.
+  assert.match(network, /NETWORK_STATUS_COLOR/);
 });
 
 test('NetworkMap has no more literal near-white fills standing in for the paper token', () => {
