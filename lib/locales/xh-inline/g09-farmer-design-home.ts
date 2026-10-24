@@ -59,7 +59,7 @@ const drafts: Record<string, string> = {
   "Just want beds & trees?": "Ufuna imibhede nemithi kuphela?",
   "Skip ahead — place them, then plan your crops.": "Tsiba uye phambili — zibeke, uze ucwangcise izityalo zakho.",
   "Drip all beds": "Beka unkcenkceshelo ngamathontsi kuyo yonke imibhede",
-  "one line down the centre of each": "umgca omnye phakathi kwesinye nesinye",
+  "one line down the centre of each": "umgca omnye ophakathi kwebhedi nganye",
   "Close": "Vala",
 
   // ── components/design/DesignPrint.tsx ──

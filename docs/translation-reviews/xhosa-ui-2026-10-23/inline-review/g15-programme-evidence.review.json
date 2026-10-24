@@ -1,0 +1,4 @@
+{ "unit": "g15-programme-evidence", "okCount": 107, "items": [
+ {"where":"#1 interface draft notice","verdict":"repair","english":"Indicator names, values, reports and evidence notes are kept exactly as entered","draft":"amaxabiso","backtranslation":"prices","problem":"'values' rendered as 'prices' (wrong money term)","corrected":"amanani"},
+ {"where":"#99 saved offline","verdict":"repair","english":"including attached photos and signatures","draft":"iifoto neetywina ezincanyathelisiweyo","backtranslation":"photos and stamps/seals","problem":"signatures rendered as stamps (attendance signatures are consent/evidence records)","corrected":"iifoto neesignitsha ezincanyathelisiweyo"}
+]}

@@ -1,7 +1,7 @@
 // isiXhosa drafts for the inline isiZulu branches in: components/ProgrammeEvidence.tsx
 // Keyed by the exact English the screen shows (see lib/xh-inline.ts). Unreviewed machine drafts.
 const drafts: Record<string, string> = {
-  "This interface is an unreviewed isiXhosa draft. Indicator names, values, reports and evidence notes are kept exactly as entered and may be in English.": "Esi sikrini sisidrafti sesiXhosa esingahlolwanga. Amagama ezalathisi, amaxabiso, iingxelo namanqaku obungqina agcinwa kanye njengoko afakiweyo kwaye anokuba sesiNgesi.",
+  "This interface is an unreviewed isiXhosa draft. Indicator names, values, reports and evidence notes are kept exactly as entered and may be in English.": "Esi sikrini sisidrafti sesiXhosa esingahlolwanga. Amagama ezalathisi, amanani, iingxelo namanqaku obungqina agcinwa kanye njengoko afakiweyo kwaye anokuba sesiNgesi.",
   "Project progress & evidence": "Inkqubela nobungqina beprojekthi",
   "Programme evidence & progress": "Ubungqina nenkqubela yenkqubo",
   "Growing, water, land, livelihoods, participation, learning and delivery. Follow the recorded results and the evidence behind them.": "Ukulima, amanzi, umhlaba, ubomi bemihla ngemihla, ukuthatha inxaxheba, ukufunda nokuphunyezwa. Landela iziphumo ezirekhodiweyo nobungqina bazo.",
@@ -99,7 +99,7 @@ const drafts: Record<string, string> = {
   "This preview includes your current edits. Save the session to update project progress reports.": "Eli jonga-kuqala liquka utshintsho lwakho lwangoku. Gcina iseshoni ukuze uhlaziye iingxelo zenkqubela yeprojekthi.",
   "Published summary; named attendance remains with the organisation.": "Isishwankathelo esipapashiweyo; irejista enamagama ihlala nombutho.",
   "Saved. Reports now include the updated record.": "Kugciniwe. Iingxelo ngoku ziquka irekhodi elihlaziyiweyo.",
-  "Saved on this device, including attached photos and signatures. Waiting to send when connected.": "Kugcinwe kwesi sixhobo, kuquka iifoto neetywina ezincanyathelisiweyo. Kulindwe ukuthunyelwa xa kukho unxibelelwano.",
+  "Saved on this device, including attached photos and signatures. Waiting to send when connected.": "Kugcinwe kwesi sixhobo, kuquka iifoto neesignitsha ezincanyathelisiweyo. Kulindwe ukuthunyelwa xa kukho unxibelelwano.",
   "Added the first available photos. Each session supports up to eight photographs.": "Kongezwe iifoto zokuqala ezifumanekayo. Iseshoni nganye ixhasa iifoto ezi-8 ubuninzi.",
   "Enter a guest name and a stable code using letters, numbers or dashes.": "Faka igama lendwendwe nekhowudi esisigxina usebenzisa oonobumba, amanani okanye imigca.",
   "This guest code is already on the register. Use the existing row.": "Le khowudi yendwendwe sele ikwirejista. Sebenzisa umqolo osele ukhona.",

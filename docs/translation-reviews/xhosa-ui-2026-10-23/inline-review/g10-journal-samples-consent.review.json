@@ -1,0 +1,6 @@
+{ "unit": "g10-journal-samples-consent", "okCount": 330, "items": [
+ {"where":"#140 Plan the growing season (tour tip)","verdict":"repair","english":"Select a bed or tree, move it and try Undo.","draft":"uwususe uze uzame Buyisela","backtranslation":"remove it and try Undo","problem":"move became remove","corrected":"uyihambise uze uzame Buyisela"},
+ {"where":"#165 Move something and try Undo","verdict":"repair","english":"Move something and try Undo","draft":"Susa into uze uzame Buyisela","backtranslation":"Remove something and try Undo","problem":"move became remove","corrected":"Hambisa into uze uzame Buyisela"},
+ {"where":"#166 Layers panel","verdict":"repair","english":"controls which items you can select and move","draft":"onokuzikhetha uzisuse","backtranslation":"which items you can select and remove","problem":"move became remove","corrected":"onokuzikhetha uzihambise"},
+ {"where":"#239 tour reset note","verdict":"repair","english":"Changes stay in this tour session.","draft":"Utshintsho lujika kule seshoni yokhenketho.","backtranslation":"changes turn/revolve in this tour session (unclear)","problem":"unclear verb; 'stay in this session' (not saved to real account) not conveyed","corrected":"Utshintsho lusala kule seshoni yokhenketho."}
+]}

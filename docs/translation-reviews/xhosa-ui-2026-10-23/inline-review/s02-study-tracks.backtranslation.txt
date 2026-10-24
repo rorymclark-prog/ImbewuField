@@ -1,0 +1,1 @@
+s02 blind back-translation done in-session (bookkeeping/study-track explainers); misreads: #31 isiZulu nxa; #27 income instead of entry; #25 malformed verb.

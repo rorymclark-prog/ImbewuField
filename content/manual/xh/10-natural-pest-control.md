@@ -37,7 +37,7 @@ Xa izinambuzane ezonakalisayo zifika, yenza la manyathelo ngokulandelelana:
 2. **Tsala ii-predator.** Zinike ukutya, amanzi nendawo yokukhusela.
 3. **Zikhe ngesandla.** Khupha imibungu, ii-snail namabhungane. Nyonyoba amaqela e-aphid.
 4. **Sebenzisa izithintelo.** Umnatha, umnatha womthunzi, iikhola noothango zigcina izinambuzane ezonakalisayo ngaphandle.
-5. **Zisa iintaka.** Phakathi kwezityalo, iinkukhu okanye amadada akwindlu ehambayo, **i-animal tractor** (Isahluko 5), ahlambulula ii-slug, ii-snail nemibungu yasemhlabeni. Zigcine kude nezithombo ezincinci, kuba ziyaluxovula.
+5. **Zisa iintaka.** Phakathi kwezityalo, iinkukhu okanye amadada akwindlu ehambayo, **i-animal tractor** (Isahluko 5), ahlambulula ii-slug, ii-snail nemibungu yasemhlabeni. Zigcine kude nezithombo ezincinci, kuba ziyazikrwexa zize zizikhuphe.
 6. **Tshiza kuphela njengendlela yokugqibela**, kwaye tshiza kuphela izityalo ezihlaselweyo.
 
 Ukulingana kunokuthatha izizini ezimbalwa ukuba kumile. Ukuba ityhefu incinci kwaye ukwahlukahlukana kuninzi, kufika ngokukhawuleza.
@@ -56,7 +56,7 @@ Ii-aphid zizinambuzane ezincinci, ezithambileyo, ezimile okwepere, eziluhlaza, e
 4. Tyala i-nasturtium emphethweni webhedi yegadi njenge-**trap crop**, isityalo esithandwa yinambuzane ngaphezu kokutya kwakho (jonga I-companion planting).
 5. Ungongezi ubulongwe obutsha okanye inayitrojeni ngokugqithisileyo. Ukukhula okuthambileyo, okukhawulezayo, okunejusi kutsala ii-aphid.
 
-> **Ingcebiso:** Iqela le-aphid eselijike laba mdaka-nsundu libe lithambile njengephepha lixelwe zii-parasitic wasp. Lishiye njalo. Ii-wasp ezilandelayo ziyaphuma kulo.
+> **Ingcebiso:** Iqela le-aphid eselijike laba mdaka-nsundu libe lingathi liphepha, libulewe zii-parasitic wasp. Lishiye njalo. Ii-wasp ezilandelayo ziyaphuma kulo.
 
 ### Ii-cutworm
 
@@ -64,7 +64,7 @@ Ii-cutworm ziimbungu ezityebileyo, ezimdaka-rhwada ezijija zibe yi-C xa ziphazan
 
 1. Susa ukhula kwibhedi iiveki ezimbalwa phambi kokutyala, ukuze imibungu emincinci ingabi nanto yokutya.
 2. Xa ufumana isithombo esinqunyiweyo, mba ngobunono ujikeleze. I-cutworm ihlala iphakathi kweesentimitha ezimbalwa. Yisuse.
-3. Beka ikhola ejikeleze isithombo ngasinye: ityhubhu yekhadibhodi, okanye ibhotile yeplastiki enqunyulwe phezulu naphantsi, ityiwe emhlabeni nge-3 ukuya kwi-5 cm.
+3. Beka ikhola ejikeleze isithombo ngasinye: ityhubhu yekhadibhodi, okanye ibhotile yeplastiki enqunyulwe phezulu naphantsi, ifakwe emhlabeni nge-3 ukuya kwi-5 cm.
 4. Phendula umhlaba phambi kokutyala uvumele iintaka neenkukhu zihlole kuwo.
 
 ### I-African bollworm
@@ -153,7 +153,7 @@ Banike abazingeli **i-habitat**, indawo enokutya, amanzi nendawo yokukhusela aba
 - **Ii-ladybird** nemibungu yazo zitya ii-aphid ezininzi.
 - **Ii-hoverfly** zibukeka njengeenyosi ezincinci. Imibungu yazo itya ii-aphid.
 - **Ii-lacewing** zizinambuzane ezithambileyo, eziluhlaza. Imibungu yazo itya ii-aphid, ii-mite nemibungu emincinci.
-- **Ii-parasitic wasp** zincinci kwaye azinakubaxela abantu. Zizala amaqanda azo ngaphakathi kwemibungu nee-aphid.
+- **Ii-parasitic wasp** zincinci kwaye azinakubaxhela abantu. Zizala amaqanda azo ngaphakathi kwemibungu nee-aphid.
 - **Amabhungane omhlaba, ii-praying mantis nee-spider** zizingela phantse yonke inambuzane encinci kunazo.
 - **Iintaka ezidla izinambuzane** zitya imibungu, amabhabhathane asebusuku, ii-termite, ii-scale insect kwanee-snail.
 
@@ -172,7 +172,7 @@ Shiya imifuno enevumba nemifuno embalwa ukuba intyatyambe kwibhedi nganye. Abanc
 
 ## I-companion planting
 
-**I-companion planting** kuthetha ukutyala izityalo, imifuno enevumba neentyatyambo kunye ukuze zincedisane. Yindala kakhulu. Abalimi baseTshayina babetyala i-fern encinci ebhadula emanzini kunye nerayisi iinkulungwane, kuba yongeza inayitrojeni emanzini. KwiiMelika, umbona, iimbotyi ne-squash zazikhula kunye njengo-"odade abathathu": umbona uxhasa iimbotyi, iimbotyi zongeza inayitrojeni, namagqabi amakhulu e-squash anika umhlaba umthunzi aze acinezele ukhula.
+**I-companion planting** kuthetha ukutyala izityalo, imifuno enevumba neentyatyambo kunye ukuze zincedisane. Yindala kakhulu. Abalimi baseTshayina babetyala i-fern encinci ebhadula emanzini kunye nerayisi amakhulu eminyaka, kuba yongeza inayitrojeni emanzini. KwiiMelika, umbona, iimbotyi ne-squash zazikhula kunye njengo-"odade abathathu": umbona uxhasa iimbotyi, iimbotyi zongeza inayitrojeni, namagqabi amakhulu e-squash anika umhlaba umthunzi aze acinezele ukhula.
 
 Ii-trap crop, iintyatyambo zee-predator nokutyala izityalo ezixutyiweyo kuvavanywe kakuhle. Ezinye iingxelo ezininzi ziingxelo zabalimi kuphela. Zizame, ujonge ngononophelo, ugcine oko kusebenza kumhlaba wakho.
 

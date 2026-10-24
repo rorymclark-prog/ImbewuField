@@ -24,7 +24,7 @@ const drafts: Record<string, string> = {
   "Please add a title, details and a valid page path first.": "Nceda uqale ngokufaka isihloko, iinkcukacha nendlela yephepha esebenzayo.",
   "Download a copy": "Khuphela ikopi",
   "Sign in": "Ngena",
-  "to send, or download your draft first. Signing in may reload this page.": "ukuze uthumele, okanye uqale ukhuphele uyilo lwakho. Ukungena kunokulayisha kwakhona eli phepha.",
+  "to send, or download your draft first. Signing in may reload this page.": "ukuze uthumele, okanye uqale ukhuphele idrafti yakho. Ukungena kunokulayisha kwakhona eli phepha.",
   "Developer inbox": "Ibhokisi yomphuhlisi",
   "Load latest 100 submissions": "Layisha ezili-100 zamva nje",
   "No feedback yet.": "Akukabikho luvo.",

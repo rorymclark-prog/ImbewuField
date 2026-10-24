@@ -136,7 +136,7 @@ Iinkuni zinzima ukuzithwala kwaye zicotha ukukhula kwakhona. Kwaye umsi uyabulal
 4. Beka ipoti ngokuqinileyo, ushiye isithuba esincinci ukuze iirhasi ezishushu zijikeleze ipoti.
 5. Pheka ngaphandle okanye ekhitshini elinishimini.
 
-I-rocket stove isenza i-carbon monoxide, irhasi ongayibonisiyo okanye ongayinuki. Ungaze ungenise isitovu esitshayo, imbawula okanye umlilo wamalahle egumbini elivaliweyo ukuze ufudumale.
+I-rocket stove isenza i-carbon monoxide, irhasi ongayiboniyo okanye ongayinuki. Ungaze ungenise isitovu esitshayo, imbawula okanye umlilo wamalahle egumbini elivaliweyo ukuze ufudumale.
 
 ## Ii-biogas digester
 
@@ -146,7 +146,7 @@ Ungathenga i-digester okanye uyakhe ngeetanki, imibhobho nezixhobo zokudibanisa 
 
 1. Yondle ngobulongwe obutsha beenkomo, iihagu okanye iinkukhu exutywe nomlinganiselo ofanayo wamanzi, kunye neentsalela zemifuno ezinqunyiweyo.
 2. Musa ukufaka izinto ezinjengeenkuni, ingca eyomileyo, amathambo, iplastiki, isepha, i-bleach nezinye iikhemikhali. Iikhemikhali zibulala ibhaktheriya.
-3. Yondle kancinci mihla le kunokuba uyondle kakhulu ngexesha elinye. Usapho luqhele ukufuna ubulongwe obutsha beenkomo okanye iihagu ezininzi ngosuku.
+3. Yondle kancinci mihla le kunokuba uyondle kakhulu ngexesha elinye. Usapho luqhele ukufuna ubulongwe obutsha beenkomo okanye iihagu ezimbalwa ngosuku.
 4. Yigcine ifudumele. Ibhaktheriya isebenza kakuhle malunga nakuma-30 ukuya kuma-38 °C kwaye yenza irhasi encinci kakhulu ngaphantsi kwe-15 °C ngokuqikelelwa. KwiHighveld naseLesotho, yingcwabe emhlabeni, yigqume nge-insulation okanye ubeke itonela encinci yeplastiki phezu kwayo.
 5. Vavanya amalungu ukubona apho kuvuza khona ngamanzi anesepha, apho amaqamza abonisa ukuvuza. Gcina amalangatye kude ne-digester nemibhobho, upheke kwikhitshi elinomoya ofikelelayo kakuhle, uvale itephu yerhasi emva kokupheka.
 6. Gubungela imingxuma yokungenisa neyokuphumisa. Ungaze ungene kwi-digester okanye emngxunyeni, kwanokuba ayinanto: iirhasi ezingaphakathi zinokubulala.

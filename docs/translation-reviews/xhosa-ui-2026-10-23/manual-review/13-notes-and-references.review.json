@@ -1,0 +1,24 @@
+{
+ "unit": "13-notes-and-references",
+ "okCount": 48,
+ "items": [
+  {
+   "where": "Safety and the law",
+   "verdict": "repair",
+   "english": "before you plough steep land",
+   "draft": "phambi kokuba ulime umhlaba otsiba kakhulu",
+   "backtranslation": "land that 'jumps' a lot",
+   "problem": "'otsiba' (jumps) does not mean steep; legal/safety condition unclear.",
+   "corrected": "phambi kokuba ulime umhlaba othambeka kakhulu"
+  },
+  {
+   "where": "Safety and the law",
+   "verdict": "repair",
+   "english": "Report sudden deaths in poultry or pigs",
+   "draft": "kwamahagu",
+   "backtranslation": "hogs (non-standard plural)",
+   "problem": "Plural of ihagu is iihagu (as used in ch 11); 'amahagu' reads as isiZulu-style form. Minor.",
+   "corrected": "kwiihagu"
+  }
+ ]
+}
