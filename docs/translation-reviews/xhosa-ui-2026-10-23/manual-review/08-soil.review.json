@@ -1,0 +1,33 @@
+{
+  "unit": "08-soil",
+  "okCount": 166,
+  "items": [
+    {
+      "where": "Way 5, 'Building and running a worm farm', step 10 (xh line 263)",
+      "verdict": "repair",
+      "english": "Drain the bottom container every few days so it never floods the worms.",
+      "draft": "Khupha ulwelo kwikhonteyina esezantsi rhoqo emva kweentsuku ezimbalwa ukuze ingaze izalise iintshulube.",
+      "backtranslation": "Drain the liquid from the bottom container every few days so that it never fills the worms.",
+      "problem": "The purpose (liquid must not flood/drown the worms in the stack above) is garbled: 'fills the worms' is meaningless, so the reason for draining is lost.",
+      "corrected": "Khupha ulwelo kwikhonteyina esezantsi rhoqo emva kweentsuku ezimbalwa ukuze ingaze ikhukulise iintshulube."
+    },
+    {
+      "where": "Way 1, 'How to use a green manure', step 1 (xh line 113)",
+      "verdict": "repair",
+      "english": "Sow it thickly in a resting bed, or between crops.",
+      "draft": "Yihlwayele ityibilike ebhedini ephumlileyo, okanye phakathi kwezityalo.",
+      "backtranslation": "Sow it slippery/slidingly in the resting bed, or between crops.",
+      "problem": "'ityibilike' (from -tyibilika, slip/be slippery; the same stem is used for 'slimy' at line 199) is the wrong word; 'thickly' (the sowing-density instruction) is lost.",
+      "corrected": "Yihlwayele ngokuxineneyo ebhedini ephumlileyo, okanye phakathi kwezityalo."
+    },
+    {
+      "where": "Way 2, 'How to use manure', step 2 (xh line 141)",
+      "verdict": "repair",
+      "english": "If you must use raw manure, dig it in at least 4 months (120 days) before you harvest crops that touch the soil or are eaten raw...",
+      "draft": "Ukuba kufuneka usebenzise ubulongwe obungekabolisi, buhlele emhlabeni ubuncinane iinyanga ezi-4 ...",
+      "backtranslation": "If you must use manure that has not yet rotted, arrange/set it out in the soil at least 4 months before you harvest...",
+      "problem": "'-hlela' means arrange/edit, not dig in; the instruction to work raw manure into the soil (food-safety withholding step) is unclear. Numbers (4 months/120 days, 3 months/90 days) and the 'never beside growing vegetables' rule were correct.",
+      "corrected": "Ukuba kufuneka usebenzise ubulongwe obungekabolisi, bumbele emhlabeni ubuncinane iinyanga ezi-4 ..."
+    }
+  ]
+}

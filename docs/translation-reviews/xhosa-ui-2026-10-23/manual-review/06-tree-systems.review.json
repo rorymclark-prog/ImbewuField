@@ -1,0 +1,15 @@
+{
+  "unit": "06-tree-systems",
+  "okCount": 161,
+  "items": [
+    {
+      "where": "Table 'Match fruit trees to your climate', row 'Frost-free lowveld and coast', Notes cell (xh line 74)",
+      "verdict": "repair",
+      "english": "Most deciduous fruit does not get enough winter cold here. Choose low-chill varieties.",
+      "draft": "Uninzi lweziqhamo zemithi ephulukana namagqabi alufumani bandla lanele ebusika apha.",
+      "backtranslation": "Most fruit of leaf-losing trees does not get enough 'bandla' (read as ibandla = congregation/church) in winter here.",
+      "problem": "'bandla' is not the word for cold (ibanda); as written it reads as 'congregation', so the reason low-chill varieties are needed is lost. Row 4 of the same table and the glossary use 'ibanda'.",
+      "corrected": "Uninzi lweziqhamo zemithi ephulukana namagqabi alufumani banda lanele ebusika apha."
+    }
+  ]
+}

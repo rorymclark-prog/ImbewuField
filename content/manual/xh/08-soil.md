@@ -110,7 +110,7 @@ I-green manure igubungela umhlaba ongenanto, ibulala ukhula ngokulugubungela, on
 
 ### Indlela yokusebenzisa i-green manure
 
-1. Yihlwayele ityibilike ebhedini ephumlileyo, okanye phakathi kwezityalo.
+1. Yihlwayele ngokuxineneyo ebhedini ephumlileyo, okanye phakathi kwezityalo.
 2. Yiyeke ikhule de iqale ukuqhakaza, xa inamagqabi nenayitrojeni ezininzi kakhulu.
 3. Yinqumle ingekabi nembewu, uyigaye ibe ziziqwenga ezifutshane ngespeyidi okanye nge-slasher.
 4. Yishiye ngaphezulu njenge-mulch (**i-chop and drop**, nqumla uyeke phantsi), okanye uyimbele kancinci kwi-10 ukuya kwi-15 cm ephezulu.
@@ -138,7 +138,7 @@ Sonke isilwanyana ekufameni yifektri encinci yesichumiso. Ubulongwe bongeza i-or
 ### Indlela yokusebenzisa ubulongwe
 
 1. Yenza i-compost ngobulongwe phambi kokuba busondele kwizityalo ozityayo ziluhlaza. I-compost ibulala uninzi lweentsholongwane nembewu yokhula, ithintela ubulongwe ukuba butshise iingcambu, kwaye ibujika bube yi-**humus**: inxalenye emnyama, ezinzileyo ye-organic matter ebamba amanzi nezondlo.
-2. Ukuba kufuneka usebenzise ubulongwe obungekabolisi, buhlele emhlabeni ubuncinane iinyanga ezi-4 (iintsuku ezi-120) phambi kokuba uvune izityalo ezichukumisa umhlaba okanye ezityiwa ziluhlaza, ezifana neletisi, isipinatshi neekherothi. Kwizityalo ezikhula phezu komhlaba, ezifana nombona nemithi yeziqhamo, shiya ubuncinane iinyanga ezi-3 (iintsuku ezi-90). Ungaze ubeke ubulongwe obutsha ecaleni kwemifuno esele ikhula.
+2. Ukuba kufuneka usebenzise ubulongwe obungekabolisi, bumbele emhlabeni ubuncinane iinyanga ezi-4 (iintsuku ezi-120) phambi kokuba uvune izityalo ezichukumisa umhlaba okanye ezityiwa ziluhlaza, ezifana neletisi, isipinatshi neekherothi. Kwizityalo ezikhula phezu komhlaba, ezifana nombona nemithi yeziqhamo, shiya ubuncinane iinyanga ezi-3 (iintsuku ezi-90). Ungaze ubeke ubulongwe obutsha ecaleni kwemifuno esele ikhula.
 3. Ungaze usebenzise ubulongwe babantu, okanye ubulongwe bezinja okanye bekati egadini yokutya. Bukhwelisa iinqolowa nezinye ii-parasite ezosulela abantu, ingakumbi abantwana.
 4. Sebenzisa ubulongwe behagu kuphela emva kokwenza i-compost etshisayo ngokupheleleyo nokugcinwa ixesha elide, kwaye ungaze uyisebenzise kwizityalo ezityiwa ziluhlaza. Amaqanda ayo e-roundworm asinda iminyaka.
 5. Hlamba izandla emva kokuphatha ubulongwe, uhlambe imifuno phambi kokuba uyitye.
@@ -260,7 +260,7 @@ I-worm farm yikhaya nje elinomthunzi, elimanzi, elimnyama, elikhuphela kakuhle a
 7. Gquma ngengxowa emanzi nesiciko. Qala ukondla emva kweentsuku ezimbalwa.
 8. Xa ikhonteyina esebenzayo izele bubulongwe obumnyama beentshulube, rhoqo emva kweenyanga ezi-2 ukuya kwezi-4, beka ikhonteyina yesithathu ngaphezulu kunye nendawo yokulala entsha nokutya, ichukumisa ubulongwe obungezantsi.
 9. Kwiiveki ezimbalwa iintshulube ziyakhwela. Khupha ikhonteyina esezantsi, ubuyisele nayiphi na intshulube, uze usebenzise ubulongwe beentshulube. Ikhonteyina engenanto ibe yeyona iphezulu elandelayo.
-10. Khupha ulwelo kwikhonteyina esezantsi rhoqo emva kweentsuku ezimbalwa ukuze ingaze izalise iintshulube.
+10. Khupha ulwelo kwikhonteyina esezantsi rhoqo emva kweentsuku ezimbalwa ukuze ingaze ikhukulise iintshulube.
 
 Ii-red wiggler zenza kakuhle phakathi kwe-15 ne-25 °C malunga, kwaye ngaphezu kwe-30 °C malunga ziqala ukufa. Gcina i-farm emthunzini onzulu kunye nengxowa emanzi ngaphezulu ehlotyeni, ikhuselekile ebusika obubandayo, kwaye indawo yokulala imanzi njengesipontshi esicinezelweyo.
 
