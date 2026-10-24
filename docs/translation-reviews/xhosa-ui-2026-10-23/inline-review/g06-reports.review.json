@@ -1,0 +1,51 @@
+{
+ "unit": "g06-reports",
+ "okCount": 575,
+ "items": [
+  {
+   "where": "key #21",
+   "verdict": "repair",
+   "english": "Copied!",
+   "draft": "Kukhutshelwe!",
+   "backtranslation": "Downloaded!",
+   "problem": "Wrong action (downloaded vs copied).",
+   "corrected": "Kukopishiwe!"
+  },
+  {
+   "where": "key #155",
+   "verdict": "repair",
+   "english": "Implemented by",
+   "draft": "Isetyenziswa ngu",
+   "backtranslation": "Is used by",
+   "problem": "Wrong meaning; inconsistent with g05 'Iqhutywa ngu'.",
+   "corrected": "Iqhutywa ngu"
+  },
+  {
+   "where": "key #251",
+   "verdict": "repair",
+   "english": "Attach full working plan to PDF (English)",
+   "draft": "Hlomisa isicwangciso somsebenzi esipheleleyo kwi-PDF (isiNgesi)",
+   "backtranslation": "Equip/furnish full work plan in PDF",
+   "problem": "'Hlomisa' = equip/arm, not attach.",
+   "corrected": "Qhotyoshelela isicwangciso somsebenzi esipheleleyo kwi-PDF (isiNgesi)"
+  },
+  {
+   "where": "key #256",
+   "verdict": "repair",
+   "english": "This older report has grouped sowing months without dated planting records.",
+   "draft": "Le ngxelo indala inenyanga zokuhlwayela ezidityanisiweyo…",
+   "backtranslation": "ungrammatical 'has month' with plural concord",
+   "problem": "Grammar error (inenyanga / ezi- plural clash) could mislead.",
+   "corrected": "Le ngxelo indala iqulethe iinyanga zokuhlwayela ezidityanisiweyo ngaphandle kweerekhodi zokutyala ezinemihla."
+  },
+  {
+   "where": "key #291",
+   "verdict": "repair",
+   "english": "Not checked by an agronomist — a planning guide, not an instruction…",
+   "draft": "Ayihlolwanga ngugqirha wezolimo…",
+   "backtranslation": "Not checked by an agricultural doctor",
+   "problem": "'ugqirha' = medical doctor; wrong professional term.",
+   "corrected": "Ayihlolwanga yingcali yezolimo…"
+  }
+ ]
+}
