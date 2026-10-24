@@ -208,7 +208,7 @@ export default function NgoPage() {
         </div>
       )}
       {view === 'access' && <div className="flex-1 min-h-0 flex overflow-hidden"><OrganisationControlCentre /></div>}
-      {view === 'reports' && <div className="flex-1 min-h-0 flex overflow-hidden"><ProgrammeReports /></div>}
+      {view === 'reports' && <div className="flex-1 min-h-0 flex overflow-hidden"><ProgrammeReports onOpenProgress={() => setView('evidence')} onOpenCohort={() => setView('cohort')} /></div>}
       {view === 'area' && <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden"><ProductionAreas /></div>}
       {view === 'assessments' && <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden"><MelDashboard /></div>}
       {view === 'funder-preview' && <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden"><div className="flex-1 overflow-y-auto"><FunderAssessments /><ProductionAreas publishedOnly /></div></div>}
