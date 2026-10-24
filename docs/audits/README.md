@@ -62,6 +62,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Wave 20 rendered re-capture and visual review of the wave 19 build: new IDs w20-01 to w20-46 across five tracks, w19 partials carried — 23 October 2026](2026-10-23/wave-20-recapture-claude.md).
+
 - [Wave 19 integration close-out: five tracks folded, w19-01 to w19-42 implemented, w18 partials closed with them — 23 October 2026](2026-10-23/wave-19-integration-claude.md).
 
 - [Wave 19 rendered re-capture and visual review of the wave 18 build: new IDs w19-01 to w19-42 across five tracks, w18 partials carried — 23 October 2026](2026-10-23/wave-19-recapture-claude.md).
