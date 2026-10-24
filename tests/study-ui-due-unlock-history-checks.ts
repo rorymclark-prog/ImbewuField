@@ -318,11 +318,17 @@ export function ensureStudyUiDueUnlockCurrent() {
   // to the exact pre-wave-16 fixture so it still holds byte for byte.
   // Wave 19 (w19-40) rewords one sign-in notice. Check the complete new file, then bind the wave 16
   // proof to the exact pre-wave-19 fixture so it still holds byte for byte.
+  // Wave 20 (w20-16, w20-04) adds two English keys, limaWhoIsStaff and
+  // offlineSavedEntriesDescriptionFarmer; nothing is reworded or removed. Check the complete new
+  // file, then bind the wave 19 proof to the exact pre-wave-20 fixture so it still holds byte for byte.
   const liveDictionary = readFileSync(path('lib/i18n.tsx'), 'utf8');
-  assert.equal(sha(liveDictionary), 'bf215f73f61fc9d04bb3e89949b1d0c6fb94832276d5a6e4c55ad04a4af80b32', 'complete app dictionary after the wave 19 edit');
+  assert.equal(sha(liveDictionary), '61ff5e66f3c29b33cc0832d1e079dc2f878fa137ac8b8f872085f791f7310223', 'complete app dictionary after the wave 20 additions');
+  const englishBefore20 = readFileSync(path('tests/fixtures/i18n-before-wave-20.tsx.txt'), 'utf8');
+  assert.equal(sha(englishBefore20), 'bf215f73f61fc9d04bb3e89949b1d0c6fb94832276d5a6e4c55ad04a4af80b32', 'complete app dictionary after the wave 19 edit');
+  assertOnlyWaveChanges(englishBefore20, liveDictionary, new Set(), new Set(), 'app dictionary', 'wave 20');
   const englishBefore19 = readFileSync(path('tests/fixtures/i18n-before-wave-19.tsx.txt'), 'utf8');
   assert.equal(sha(englishBefore19), '965efb4d398e7996e9a8bbfa061fa608b931d3c9244ce735e40d5c7c280eb671', 'complete app dictionary after the wave 16 edits');
-  assertOnlyWaveChanges(englishBefore19, liveDictionary, WAVE_19_ENGLISH_REWORDED, new Set(), 'app dictionary', 'wave 19');
+  assertOnlyWaveChanges(englishBefore19, englishBefore20, WAVE_19_ENGLISH_REWORDED, new Set(), 'app dictionary', 'wave 19');
   const liveEnglish = readFileSync(path('tests/fixtures/i18n-before-wave-16.tsx.txt'), 'utf8');
   assert.equal(sha(liveEnglish), '737049f60cfd7ea083460c212c5f3f7b985e8177ec03045f34619b7627331512', 'complete app dictionary after the wave 15 edits');
   assertOnlyWaveChanges(liveEnglish, englishBefore19, new Set(), new Set(), 'app dictionary', 'wave 16');
@@ -344,10 +350,16 @@ export function ensureStudyUiDueUnlockCurrent() {
   assert.equal(sha(predecessor), 'e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318', 'canonical English Study source dictionary remains exact after only the two reviewed non-Study additions');
   assert.equal(sha(readFileSync(path('lib/learner-ui-english.ts'))), '7d29b6d32a551a57070489ad33ccee003a2ebdd84a13874360e976af20e6fe74', 'canonical English learner UI source remains exact');
   const liveZulu = readFileSync(path('lib/locales/zu.ts'), 'utf8');
-  assert.equal(sha(liveZulu), '85491dec24d841716c326c009a1f772a8f44e18ebe259bb940b49652691a2bcf', 'complete isiZulu locale source after the wave 14 edits');
+  // Wave 20 adds unreviewed isiZulu drafts (task verbs, due-month phrases, the staff Lima label and
+  // the farmer offline description); nothing is reworded or removed. Check the complete new file,
+  // then bind the wave 14 proof to the exact pre-wave-20 fixture.
+  assert.equal(sha(liveZulu), 'd884a4c95c73e9ccb985f0a8439386f09ee6ef401a21d9b8a2be1534a80c199e', 'complete isiZulu locale source after the wave 20 additions');
+  const zuluBefore20 = readFileSync(path('tests/fixtures/zu-before-wave-20.ts.txt'), 'utf8');
+  assert.equal(sha(zuluBefore20), '85491dec24d841716c326c009a1f772a8f44e18ebe259bb940b49652691a2bcf', 'complete isiZulu locale source after the wave 14 edits');
+  assertOnlyWaveChanges(zuluBefore20, liveZulu, new Set(), new Set(), 'isiZulu locale', 'wave 20');
   const zuluBefore14 = readFileSync(path('tests/fixtures/zu-before-wave-14.ts.txt'), 'utf8');
   assert.equal(sha(zuluBefore14), '6d2d7aabb38ed86ff6fc114357bc9b767e9bccf7fc4ba3b54858c83c49c00046', 'complete isiZulu locale source after the wave 13 edits remains exact');
-  assertOnlyWaveChanges(zuluBefore14, liveZulu, WAVE_14_ZULU_REWORDED, WAVE_14_REMOVED, 'isiZulu locale', 'wave 14');
+  assertOnlyWaveChanges(zuluBefore14, zuluBefore20, WAVE_14_ZULU_REWORDED, WAVE_14_REMOVED, 'isiZulu locale', 'wave 14');
   const zuluBefore13 = readFileSync(path('tests/fixtures/zu-before-wave-13.ts.txt'), 'utf8');
   assert.equal(sha(zuluBefore13), 'ff57af75e2a8583e76b193bc1a92855d0c259acdd75d39d859cba49f5dee95ce', 'complete isiZulu locale source after the wave 11 Ask drafts remains exact');
   assertOnlyWaveChanges(zuluBefore13, zuluBefore14, WAVE_13_ZULU_REWORDED, WAVE_13_ZULU_REMOVED, 'isiZulu locale', 'wave 13');
