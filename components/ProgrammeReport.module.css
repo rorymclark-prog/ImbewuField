@@ -13,3 +13,25 @@
 .footer{padding:14px 28px;border-top:1px solid var(--border);color:var(--text-secondary);font-size:13px}.ink .head{background:#fff;color:#183427;border-bottom:2px solid #254f36}.ink .head p{color:#405747}.ink .metrics{background:#fff}.ink .bar span{background:#364c3d}
 @media(max-width:700px){.controls,.partners,.metrics,.body,.head{padding:16px}.head h2{font-size:27px}.chapters{grid-template-columns:1fr;gap:20px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.metric{padding:8px}.metric strong{font-size:25px}.gallery{grid-template-columns:1fr}.gallery img{height:auto;max-height:320px}.chartRow{grid-template-columns:100px 1fr auto;gap:8px}.report{margin-top:16px}.partner{min-width:140px}.partner img{width:44px;height:44px}}
 @media print{.report{border:0;box-shadow:none}.controls{display:none}.head{background:white;color:#183427}.head p{color:#334d3c}.chapter,.metrics,.gallery figure{break-inside:avoid}.chapters{display:block}.chapter{margin-bottom:22px}.tableWrap{overflow:visible}}
+/* Shared report language: the same serif hierarchy, numbered chapters and forest cover as the site report. */
+.head h2{font-weight:500;font-size:clamp(30px,3.5vw,42px);letter-spacing:-.02em;max-width:25ch}
+.head .subtitle{max-width:80ch;font-size:14px;line-height:1.6;margin:14px 0 0;color:#e7f1e9}
+.head .sampleStamp{display:inline-block;margin:14px 0 0;padding:5px 8px;border:1px solid #e7f1e9;font-size:12px;font-weight:700;letter-spacing:.04em}
+.chapter h3,.chart h3,.evidenceTable h3{font-family:var(--font-display),Georgia,serif;font-weight:500;font-size:25px;line-height:1.25}
+.chapter h3{margin:6px 0 14px}.number{color:var(--gold)}
+.evidenceTable{margin-top:30px;padding-top:22px;border-top:1px solid var(--border);min-width:0}
+.evidenceTable > p{font-size:14px;line-height:1.6;color:var(--text-secondary);max-width:85ch}
+.evidenceTable .table th[scope=row]{background:transparent;font-weight:600;border-bottom:1px solid var(--border);vertical-align:top;min-width:120px}
+.evidenceTable .table td{vertical-align:top;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.evidenceTable .table th{font-size:13px}.tableCaption{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.evidenceTable .tableWrap:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.ink{color:#183427}.ink .subtitle,.ink .sampleStamp{color:#334d3c;border-color:#334d3c}
+@media print{.evidenceTable{break-inside:auto}.table thead{display:table-header-group}.table tr{break-inside:avoid}}
+.tableHint{display:none}
+@media(max-width:700px){.evidenceTable .tableHint{display:block;font-size:12px;color:var(--text-secondary)}}
+@media print{.evidenceTable .tableHint{display:none}}
+.evidenceTable{grid-column:1/-1}
+/* A paper preview needs its own ink colours even when the surrounding app is in dark mode. */
+.ink{--text-primary:#183427;--text-secondary:#405747;--bg-1:#fff;--bg-2:#fff;--border:#405747;--emerald:#254f36;--gold:#334d3c;--mel-ink:#183427;--input-bg:#fff}
+.ink .controls button{color:#183427;background:#fff;border-color:#405747}
+.references{padding-left:18px}.references a{color:var(--emerald);text-decoration:underline;text-underline-offset:3px}
