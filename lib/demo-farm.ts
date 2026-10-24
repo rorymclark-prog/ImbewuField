@@ -39,7 +39,7 @@ import { designSiteIdFromLocation } from './design-studio';
 import type { LocationData } from './types';
 import { buildDemoGeometryLockFixture } from './demo-geometry-fixture';
 
-export const DEMO_SITE = Object.freeze({ lat: -27.726231, lon: 31.963044, name: 'Ubhejane Creche' });
+export const DEMO_SITE = Object.freeze({ lat: -27.726231, lon: 31.963044, name: 'Ubhejane Crèche' });
 
 // A fictional caretaker profile so ProfileSheet has something plausible to
 // display/edit during the demo — never a real signed-in user's profile, and
@@ -53,7 +53,7 @@ export function buildDemoProfile(): Profile {
     // as an unset field.
     farm_name: 'Ubhejane Crèche garden', farm_logo: SAMPLE_INVOICE_LOGO,
     created_at: new Date().toISOString(),
-    bio: 'Caretaker of the Ubhejane Creche food garden.',
+    bio: 'Caretaker of the Ubhejane Crèche food garden.',
     skills: ['soil health', 'water harvesting'],
     showOnMap: false, mapLat: null, mapLon: null,
   };
@@ -143,7 +143,7 @@ export function buildDemoFacilitatorState(): FacilitatorDesignState {
     // This state is editable in the sample UI. Never hand it the canonical module
     // object by reference or one in-place edit can move every later demo builder.
     bgSite: { ...DEMO_SITE },
-    title: 'Ubhejane Creche garden',
+    title: 'Ubhejane Crèche garden',
     savedAt: Date.now(),
   };
 }
@@ -720,7 +720,7 @@ export function buildDemoBoundaryFC(): FeatureCollection {
 export function buildDemoSavedPlace(): SavedPlace {
   return {
     id: 'demo-place-ubhejane',
-    name: 'Ubhejane Creche',
+    name: 'Ubhejane Crèche',
     lat: DEMO_SITE.lat,
     lon: DEMO_SITE.lon,
     biome: 'Savanna',

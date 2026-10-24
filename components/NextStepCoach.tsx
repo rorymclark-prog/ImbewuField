@@ -202,14 +202,14 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
       className="relative overflow-hidden"
       style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderRadius: 16 }}
     >
-      <div className="absolute left-0 top-0 bottom-0" style={{ width: 3, background: '#C07A1E' }} aria-hidden />
+      <div className="absolute left-0 top-0 bottom-0" style={{ width: 3, background: 'var(--gold)' }} aria-hidden />
       <div className="pl-4 pr-3 py-3.5">
         <div className="flex items-center gap-2.5 mb-2.5">
           <div
             className="flex items-center justify-center rounded-xl flex-shrink-0"
-            style={{ width: 32, height: 32, background: '#1F4D2B' }}
+            style={{ width: 32, height: 32, background: 'var(--color-forest-800)' }}
           >
-            <Footprints size={16} style={{ color: '#F7C97E' }} strokeWidth={1.8} aria-hidden />
+            <Footprints size={16} style={{ color: 'var(--on-forest-800)' }} strokeWidth={1.8} aria-hidden />
           </div>
           <span
             className="font-sans font-bold uppercase flex-1 min-w-0"
@@ -278,8 +278,8 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
             marginTop: 12,
             minHeight: 44,
             borderRadius: 12,
-            background: '#1F4D2B',
-            color: 'var(--on-forest)',
+            background: 'var(--color-forest-800)',
+            color: 'var(--on-forest-800)',
             fontSize: 15,
             border: 'none',
             cursor: 'pointer',

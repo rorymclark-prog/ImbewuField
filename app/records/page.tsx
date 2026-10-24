@@ -1151,7 +1151,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
             style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: rows.length ? 'var(--color-ink)' : 'var(--text-secondary)', fontSize: 14, cursor: rows.length ? 'pointer' : 'not-allowed' }}>
             <Download size={15} />{recordsText(lang, 'Export', 'Khipha')}
           </button>
-          <Link href="/invoice" className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold" style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--record-negative)', fontSize: 14, textDecoration: 'none' }}>
+          <Link href="/invoice" className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', fontSize: 14, textDecoration: 'none' }}>
             <FileText size={15} />{recordsText(lang, 'New invoice', 'I-invoyisi entsha')}
           </Link>
           {/* Was a Link to /records back when the harvest form lived behind a different door.
@@ -1617,8 +1617,8 @@ export default function RecordsPage() {
             nothing on the one screen a farmer most needs explained. */}
         <LessonLink id="finances:overview" label={recordsText(lang, 'Learn', 'Funda')} />
         <Link href="/invoice"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
-          style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--record-negative)', textDecoration: 'none' }}>
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-sans font-semibold"
+          style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', textDecoration: 'none' }}>
           <FileText size={13} />{recordsText(lang, 'Invoice', 'I-invoyisi')}
         </Link>
         <SettingsButton />
@@ -1841,7 +1841,7 @@ export default function RecordsPage() {
                   production={production}
                   expenses={expenses}
                   invoices={invoices}
-                  name={sampling ? 'Ubhejane Creche' : (user ? (user.displayName ?? recordsText(lang, 'My farm', 'Ipulazi lami')) : recordsText(lang, 'My farm', 'Ipulazi lami'))}
+                  name={sampling ? 'Ubhejane Crèche' : (user ? (user.displayName ?? recordsText(lang, 'My farm', 'Ipulazi lami')) : recordsText(lang, 'My farm', 'Ipulazi lami'))}
                   loading={dataLoading}
                   period={period}
                   setPeriod={setPeriod}

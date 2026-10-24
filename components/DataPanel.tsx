@@ -945,23 +945,20 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         className="flex-shrink-0"
         style={{ borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}
       >
-        <div
-          className="flex overflow-x-auto"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        >
+        <div className="flex flex-wrap">
           {(simple ? SIMPLE_TABS : VISIBLE_TABS).map((tabName) => (
             <button
               key={tabName}
               onClick={() => setTab(tabName)}
-              className="flex items-center gap-1.5 flex-shrink-0 transition-all duration-150"
+              className="flex flex-1 items-center justify-center gap-1.5 font-sans transition-all duration-150"
               style={{
                 padding: '9px 12px',
+                minHeight: 44,
                 borderBottom: tab === tabName ? '2px solid var(--ochre)' : '2px solid transparent',
                 borderTop: 'none', borderLeft: 'none', borderRight: 'none',
                 background: 'transparent',
                 color: tab === tabName ? 'var(--gold-dim)' : 'var(--text-muted)',
                 fontSize: 12.5,
-                fontFamily: 'var(--font-display)',
                 fontWeight: tab === tabName ? 600 : 400,
                 whiteSpace: 'nowrap',
                 cursor: 'pointer',
@@ -1008,7 +1005,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             )}
 
             {/* Site-lifecycle completion leaderboard — only once this is your saved site */}
-            {isSaved && <CompletionScore inputs={completionInputs} />}
+            {isSaved && <CompletionScore surface inputs={completionInputs} />}
 
             {/* Guided "next step" card — the ONE thing to do next (the checklist above says
                 where you are; this says what to do). Self-hides when guided mode is off/retired. */}
