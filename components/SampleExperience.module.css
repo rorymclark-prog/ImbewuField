@@ -1,5 +1,8 @@
 .page { height:100dvh; overflow-y:auto; padding:0; background:var(--bg-0, #f5f5ef); color:var(--text-primary); font:16px/1.6 var(--font-sans),sans-serif; }
 .wrap { max-width:1080px; margin:auto; }
+/* w20-25: single-column forms (/feedback) read at 640px with a 65ch measure. */
+.narrow { max-width:640px; }
+.narrow p { max-width:65ch; }
 /* w18-06: the page padding lives on the content below the header, so AppHeader runs edge to edge. */
 .content { padding:24px 20px calc(180px + env(safe-area-inset-bottom,0px)); }
 :global(html.dark) .page { color-scheme:dark; }
@@ -10,6 +13,9 @@
 .page h1 { font:600 clamp(24px,2.4vw,30px)/1.2 var(--font-display),serif; margin:16px 0; }
 .page h2 { font:600 24px/1.3 var(--font-display),serif; margin:0 0 12px; }
 .page p { margin:10px 0; }
+.page details { margin:14px 0; }
+.card > p:last-child { margin-bottom:0; }
+.card > p + button,.card > p + .cardLinks { margin-top:14px; }
 .page p a,.page a.link { text-decoration:underline; text-underline-offset:4px; }
 .page a.button { text-decoration:none; }
 .card { padding:24px; background:var(--bg-1); border:1px solid var(--border); border-radius:18px; margin:18px 0; min-width:0; scroll-margin-top:24px; }
@@ -17,7 +23,9 @@
 .grid > .card { margin:0; display:flex; flex-direction:column; }
 .cardLinks { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:auto; padding-top:8px; }
 .page .filter select { max-width:320px; }
-.notice { padding:14px 18px; border-left:4px solid var(--gold); background:var(--bg-2); border-radius:8px; }
+.notice { position:relative; padding:15px 15px 15px 46px; background:var(--bg-1); color:var(--text-primary); border:1px solid var(--border); border-left:3px solid var(--blue); border-radius:10px; }
+/* w20-17: same Lucide "info" glyph as the MEL notice. */
+.notice::before { content:""; position:absolute; left:15px; top:16px; width:20px; height:20px; background:var(--blue); -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 16v-4'/%3E%3Cpath d='M12 8h.01'/%3E%3C/svg%3E") center/contain no-repeat; mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 16v-4'/%3E%3Cpath d='M12 8h.01'/%3E%3C/svg%3E") center/contain no-repeat; }
 .photo { width:100%; height:240px; object-fit:cover; border-radius:12px; }
 .page figcaption,.meta { font-size:14px; color:var(--text-secondary); }
 .page label { display:block; margin:14px 0; }
@@ -27,12 +35,13 @@
 .page input[type=file] { display:none; }
 .page input:not([type=checkbox]):not([type=file]),.page textarea,.page select { display:block; width:100%; max-width:100%; margin-top:6px; padding:12px; background:var(--bg-1); border:1px solid var(--border); border-radius:9px; color:inherit; font:inherit; }
 .page textarea { min-height:100px; }
-.page button,.button { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:10px 18px; border:1px solid var(--border); border-radius:10px; color:var(--text-primary); background:var(--bg-1); cursor:pointer; font:inherit; }
+/* w20-17: scoped to .content so the AppHeader Back/Settings pills (siblings of .content) keep their own style. */
+.content button,.button { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:10px 18px; border:1px solid var(--border); border-radius:999px; color:var(--text-primary); background:var(--bg-1); cursor:pointer; font:inherit; font-weight:600; }
 .page .primary { background:var(--color-forest-800); border-color:var(--color-forest-800); color:var(--on-forest-800); text-decoration:none; }
-.page button:disabled { opacity:.55; cursor:default; }
+.content button:disabled { opacity:.55; cursor:default; }
 .page :focus-visible { outline:3px solid var(--gold); outline-offset:3px; }
 .check { display:flex!important; gap:12px; align-items:center; min-height:44px; }
 .check input { width:22px; height:22px; accent-color:var(--color-forest-800); }
 .page progress { width:100%; height:14px; accent-color:var(--color-forest-800); }
 @media(max-width:600px) { .content { padding-left:14px; padding-right:14px; } .card { padding:18px; } }
-@media print { .page { height:auto; overflow:visible; background:white; padding:0; color:black; } .content { padding:0; } .header,.actions,.page button { display:none; } .card { break-inside:avoid; border:0; padding:8px 0; } }
+@media print { .page { height:auto; overflow:visible; background:white; padding:0; color:black; } .content { padding:0; } .header,.actions,.content button { display:none; } .card { break-inside:avoid; border:0; padding:8px 0; } }

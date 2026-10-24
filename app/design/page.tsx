@@ -7,9 +7,10 @@
 
 import React, { Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type Dispatch, type SetStateAction } from 'react';
 import Link from 'next/link';
+import AppHeader from '@/components/layout/AppHeader';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
-import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock, AlertTriangle, Droplets } from 'lucide-react';
+import { ArrowLeft, ArrowRight, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock, AlertTriangle, Droplets } from 'lucide-react';
 import { CRASH_LOOP_SETTLE_MS, designSafeMode, exitSafeMode, lastCrashPhase, markPageSettled, noteCrashPhase } from '@/lib/crash-loop';
 import { clearPulseCookie } from '@/lib/server-rescue';
 import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
@@ -507,25 +508,26 @@ function EmptyState() {
     try { setPlaces(loadPlaces()); } catch { /* localStorage unavailable */ }
   }, []);
   return (
+    <div style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column', background: 'var(--bg-0)' }}>
+    {/* w20-23: the shared AppHeader replaces the picker's own Compass-and-title header. */}
+    <AppHeader title={isZulu ? 'Isitudiyo Sokuklama' : 'Design Studio'} backFallback="/home" />
     <div
       style={{
-        minHeight: '100dvh',
+        flex: 1,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         gap: 16,
         padding: 24,
-        background: 'var(--bg-0)',
         color: DARK,
         textAlign: 'center',
       }}
     >
-      <Compass size={40} color="var(--color-forest-800)" />
       {/* nav-17: /design had no h1 at all while this empty-site state was showing. One visible
           h1 matching the nav label ("Design studio"), small so it doesn't compete with the
           instructional copy below. */}
-      <h1 className="t-h1" style={{ color: 'var(--color-forest-800)', margin: 0 }}>
+      <h1 className="sr-only">
         {isZulu ? 'Isitudiyo Sokuklama' : 'Design Studio'}
       </h1>
       {places.length > 0 ? (
@@ -561,7 +563,7 @@ function EmptyState() {
                     <span style={{ display: 'block', fontSize: 12, color: 'var(--text-muted)' }}>{p.biome}</span>
                   )}
                 </span>
-                <span style={{ fontSize: 12, color: 'var(--color-forest-800)', fontWeight: 600, flexShrink: 0 }}>{isZulu ? 'Klama →' : 'Design →'}</span>
+                <span style={{ fontSize: 12, color: 'var(--color-forest-800)', fontWeight: 600, flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: 4 }}>{isZulu ? 'Klama' : 'Design'}<ArrowRight size={14} aria-hidden="true" /></span>
               </Link>
             ))}
           </div>
@@ -592,6 +594,7 @@ function EmptyState() {
         <ArrowLeft size={18} />
         {isZulu ? 'Buyela kumephu' : 'Back to map'}
       </Link>
+    </div>
     </div>
   );
 }
