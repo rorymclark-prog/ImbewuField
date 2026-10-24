@@ -6,7 +6,9 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Site reports and mapping: start here
 
-Latest verification: [CI readability-register follow-up — 24 October 2026](2026-10-24/site-report-ci-followup-codex.md).
+Latest continuation: [Market evidence, real Ubhejane comparison and soil source — 24 October 2026](2026-10-24/site-report-market-evidence-codex.md).
+
+Previous verification: [CI readability-register follow-up — 24 October 2026](2026-10-24/site-report-ci-followup-codex.md).
 
 Implementation: [Two report purposes, annual production handoff and Record plan — 24 October 2026](2026-10-24/site-report-production-mapping-codex.md).
 
@@ -75,6 +77,8 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- [Site report market evidence and soil-source continuation — 24 October 2026](2026-10-24/site-report-market-evidence-codex.md).
 
 - [Site report CI readability-register follow-up — 24 October 2026](2026-10-24/site-report-ci-followup-codex.md).
 

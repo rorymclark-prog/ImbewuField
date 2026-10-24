@@ -16,6 +16,8 @@ import {
   hasDrawnDesign,
   irrigationRowsBlock,
   normaliseReportSiteFacts,
+  normaliseMarketEvidence,
+  marketEvidencePromptBlock,
   roofCalcLine,
   waterPromptBlock,
   zonePromptBlock,
@@ -34,6 +36,7 @@ import { reportPreparation } from '../lib/report-readiness';
 import { reportTreeIllustrations, reportChapterGraphics } from '../lib/report-chapter-visuals';
 import { siteReportVisuals } from '../lib/report-visuals';
 import { DEMO_LOCATION } from '../lib/demo-site';
+import { activeAccountLocalStorageKey } from '../lib/account-local-storage';
 
 test('the report checklist acknowledges saved work without claiming it is verified',()=>{
   const inputs={hasSite:true,boundaryPointCount:3,surveyFilledFields:2,surveyTotalFields:10,zoneCount:1,elementCount:0,hasCropPlan:false};
@@ -570,4 +573,60 @@ test('annual production evidence survives report storage and prompt input withou
   const damaged = { ...snapshot, annualProduction: { ...snapshot.annualProduction, rows: [{ ...snapshot.annualProduction!.rows[0], months: [12] }] } };
   assert.equal(normaliseReportCropSnapshot(damaged)?.annualProduction, undefined);
   assert.equal(normaliseReportCropSnapshot(damaged)?.siteId, 'fixture', 'bad new metadata must not destroy a readable report');
+});
+
+test('market evidence keeps partial notes, rejects impossible dates and never upgrades a claim to a verified buyer', () => {
+  for (const observedOn of ['2026-02-30', '2025-02-29', '2026-10-24T12:00:00Z', '2026-10-24broken']) {
+    const clean = normaliseMarketEvidence({ notes: ' Farmer note ', observedOn });
+    assert.equal(clean?.notes, 'Farmer note');
+    assert.equal(clean?.observedOn, undefined, observedOn);
+  }
+  assert.equal(normaliseMarketEvidence({ observedOn: '2024-02-29' })?.observedOn, '2024-02-29');
+  assert.equal(normaliseMarketEvidence({ notes: 123, source: {}, observedOn: 'bad' }), undefined);
+  assert.equal(normaliseMarketEvidence({ notes: 'x'.repeat(3000) })?.notes?.length, 2000);
+  assert.match(marketEvidencePromptBlock(undefined), /Local market notes \(farmer-reported\): Not recorded/);
+  assert.match(marketEvidencePromptBlock(undefined), /never invent market gaps/);
+  assert.match(marketEvidencePromptBlock({ notes: 'Unconfirmed outlet', source: 'Field discussion' }), /not independently verified demand/);
+});
+
+test('the captured report keeps its dated market source after the live notes change and prints missing metadata honestly', () => {
+  const input = { marketEvidence: { notes: 'Possible outlet | terms unknown', source: 'Market visit', observedOn: '2026-09-14' } };
+  const frozen = normaliseReportSiteFacts(input)!;
+  input.marketEvidence.notes = 'Changed after capture';
+  const header = buildReportHeaderMarkdown({ ...HEADER_BASE, facts: frozen });
+  assert.match(header, /Possible outlet \\\| terms unknown/);
+  assert.match(header, /Market visit/);
+  assert.match(header, /2026-09-14/);
+  assert.doesNotMatch(header, /Changed after capture/);
+  assert.match(buildReportHeaderMarkdown({ ...HEADER_BASE, facts: null }), /Local market notes \(farmer-reported\): Not recorded/);
+});
+
+test('the report collector reads market notes only from this site saved survey, then freezes them', () => {
+  const siteId = 'site:-29.00000,31.00000';
+  const key = activeAccountLocalStorageKey(`imbewu_site_survey_${siteId}`);
+  const prior = localStorage.getItem(key);
+  try {
+    localStorage.setItem(key, JSON.stringify({ siteId, marketEvidence: { notes: 'First saved discussion', source: 'Field visit', observedOn: '2026-09-14' } }));
+    const input = { siteId, lat: -29, lon: 31, canvas: null, waterPoints: [], cropPlan: null };
+    const captured = collectReportSiteFacts(input);
+    assert.equal(captured.marketEvidence?.notes, 'First saved discussion');
+    localStorage.setItem(key, JSON.stringify({ siteId, marketEvidence: { notes: 'Later discussion' } }));
+    assert.equal(captured.marketEvidence?.notes, 'First saved discussion');
+    assert.equal(collectReportSiteFacts({ ...input, siteId: 'site:-28.00000,31.00000', lat: -28 }).marketEvidence, undefined);
+  } finally {
+    if (prior === null) localStorage.removeItem(key); else localStorage.setItem(key, prior);
+  }
+});
+
+test('the full report header cannot turn unsourced soil placeholders into a site measurement', () => {
+  for (const soilSource of [undefined, 'estimate'] as const) {
+    const header = buildReportHeaderMarkdown({ ...HEADER_BASE, facts: null, soilSource });
+    assert.match(header, /Soil \(0-30 cm\) \| Not measured; arrange a soil test/);
+    assert.doesNotMatch(header, /pH 6\.2|1\.1% organic carbon|Sandy clay loam/);
+  }
+  for (const soilSource of ['lab', 'soilgrids'] as const) {
+    const header = buildReportHeaderMarkdown({ ...HEADER_BASE, facts: null, soilSource });
+    assert.match(header, /pH 6\.2 · 1\.1% organic carbon · Sandy clay loam/);
+    assert.doesNotMatch(header, /Soil \(0-30 cm\) \| Not measured/);
+  }
 });
