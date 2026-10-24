@@ -3,9 +3,11 @@ import { numberLabel } from '@/lib/format-figures';
 import { Users, Leaf, Droplets, Sprout, AlertTriangle, Pencil, Check, Circle, ClipboardCheck } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import type { ReactNode } from 'react';
-import type { SiteSurvey, ProductionCategory } from '@/lib/site-survey';
+import { siteReportPurposeLabel, type SiteSurvey, type ProductionCategory } from '@/lib/site-survey';
 import styles from './SiteSurveySheet.module.css';
 import SurveyZuluDraftPair from './SurveyZuluDraftPair';
+import SiteSurveyProductionYear from './SiteSurveyProductionYear';
+import type { LocationData } from '@/lib/types';
 
 const LABELS: Record<string, string> = {
   food:'goalFoodSecurityLabel',income:'goalGenerateIncomeLabel',soil:'challengePoorSoil',education:'goalDemonstrateTeachLabel',
@@ -23,8 +25,8 @@ const LABELS: Record<string, string> = {
   drought:'challengeDrought',pests:'challengePests',water:'challengeLimitedWater',funding:'challengeFunding',labour:'challengeLabour',flooding:'challengeFlooding',market:'challengeMarket',
 };
 
-export default function SiteSurveyReview({ survey:s, onEdit, onEditProduction, productionLabels, months }: {
-  survey:SiteSurvey; onEdit:(step:number)=>void; onEditProduction:()=>void;
+export default function SiteSurveyReview({ survey:s, onEdit, onEditProduction, productionLabels, months, location }: {
+  location?: LocationData; survey:SiteSurvey; onEdit:(step:number)=>void; onEditProduction:()=>void;
   productionLabels:Array<{category:ProductionCategory;label:string}>; months:string[];
 }) {
   const {lang,t}=useLanguage();
@@ -77,19 +79,20 @@ export default function SiteSurveyReview({ survey:s, onEdit, onEditProduction, p
     ]},
   ];
   return <>
-    <div className={styles.reviewIntro}><ClipboardCheck size={30}/><div><h3>{t('surveyYourSiteAtGlance')}</h3><p>{lang === 'zu' ? <SurveyZuluDraftPair english="These are your recorded observations. Blank fields remain unknown. Save to make these answers available to your site report.">{t('surveyReviewBasis')}</SurveyZuluDraftPair> : t('surveyReviewBasis')}</p></div></div>
+    <div className={styles.reviewIntro}><ClipboardCheck size={30}/><div><h3>{t('surveyYourSiteAtGlance')}</h3><p>Report purpose: {s.reportPurpose ? siteReportPurposeLabel(s.reportPurpose, lang) : 'Not recorded'}. Questionnaire length is a separate choice.</p><p>{lang === 'zu' ? <SurveyZuluDraftPair english="These are your recorded observations. Blank fields remain unknown. Save to make these answers available to your site report.">{t('surveyReviewBasis')}</SurveyZuluDraftPair> : t('surveyReviewBasis')}</p></div></div>
     <div className={styles.reviewGrid}>{sections.map(({step,Icon,title,rows})=><section key={step} className={styles.reviewCard}>
       <header><Icon size={19}/><h3>{title}</h3><button aria-label={`${t('surveyEditSection')}: ${editSectionName(step,title)}`} onClick={()=>onEdit(step)}><Pencil size={16}/></button></header>
       <dl>{rows.map(([label,value,source],rowIndex)=><div key={`${step}-${rowIndex}`}><dt>{label}</dt><dd>{value}{source&&<small>{source}</small>}</dd></div>)}</dl>
     </section>)}</div>
     <section className={styles.harvest}>
-      <h3>{t('surveyHarvestOverview')}</h3><p>{lang === 'zu' ? <SurveyZuluDraftPair english="A tick means you recorded a harvest in that month. An empty month means timing is not recorded; it does not mean a food gap.">{t('surveyHarvestUnknown')}</SurveyZuluDraftPair> : t('surveyHarvestUnknown')}</p>
+      <h3>{t('surveyHarvestOverview')}</h3><p>Reporting year: {s.productionYear ?? "not recorded"}. These are observations, separate from the plan below.</p><p>{lang === 'zu' ? <SurveyZuluDraftPair english="A tick means you recorded a harvest in that month. An empty month means timing is not recorded; it does not mean a food gap.">{t('surveyHarvestUnknown')}</SurveyZuluDraftPair> : t('surveyHarvestUnknown')}</p>
       <div className={styles.months}>{months.map((month,i)=><span key={month} data-reported={harvestMonths.has(i+1)} aria-label={`${month}: ${t(harvestMonths.has(i+1)?'surveyHarvestReported':'surveyNotRecorded')}`}>{harvestMonths.has(i+1)?<Check size={15}/>:<Circle size={15}/>} {month}</span>)}</div>
       <div className={styles.reviewProduction}>{entries.length===0?<p className={styles.smallNote}>{t('surveyNoProductionYet')}</p>:entries.map(row=><article key={row.category}>
         <div><strong>{row.name||productionLabels.find(item=>item.category===row.category)?.label}</strong><span>{row.quantityPerYear===null?unknown:`${numberLabel(row.quantityPerYear)} ${row.unit} / ${t('surveyPerYear')}`}</span></div>
-        <p>{t('surveyUsedByHouseholdLabel')}: {row.usedByHousehold===null?unknown:`${row.usedByHousehold} ${row.unit}`} · {t('surveySoldLabel')}: {row.sold===null?unknown:`${row.sold} ${row.unit}`}<br/>{t('surveyIncomeEarnedLabel')}: {row.incomeZar===null?unknown:`R ${numberLabel(row.incomeZar)}`}</p>
+        <p>Recorded picking months: {row.harvestMonths?.length ? row.harvestMonths.map(m => months[m - 1]).join(", ") : unknown}</p><p>{t('surveyUsedByHouseholdLabel')}: {row.usedByHousehold===null?unknown:`${row.usedByHousehold} ${row.unit}`} · {t('surveySoldLabel')}: {row.sold===null?unknown:`${row.sold} ${row.unit}`}<br/>{t('surveyIncomeEarnedLabel')}: {row.incomeZar===null?unknown:`R ${numberLabel(row.incomeZar)}`}</p>
       </article>)}</div>
       <button className={styles.detailLink} onClick={onEditProduction}><Pencil size={16}/>{t('surveyEditProduction')}</button>
     </section>
+    <SiteSurveyProductionYear survey={s} location={location} language={lang}/>
   </>;
 }

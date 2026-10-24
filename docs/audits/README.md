@@ -4,6 +4,18 @@ This is the shared starting point for Rory, Claude and Codex. Read the latest
 record for the area being worked on before opening another audit. Build on its
 findings and subsequent changes; do not restart from an older snapshot.
 
+## Site reports and mapping: start here
+
+Latest: [Two report purposes, annual production handoff and Record plan — 24 October 2026](2026-10-24/site-report-production-mapping-codex.md).
+
+Read this together with the latest survey and crop records below. It reuses the
+existing production calendars and preserves the earlier six Ubhejane reports.
+The [3 October six-report catalogue](https://github.com/rorymclark-prog/ImbewuField/blob/716fb585fa43b54fbfbb8d8777a6b8ba75ba4342/docs/audits/2026-10-03/ubhejane-six-report-continuation-codex.md)
+and [2 October coverage and stages audit](https://github.com/rorymclark-prog/ImbewuField/blob/716fb585fa43b54fbfbb8d8777a6b8ba75ba4342/docs/audits/2026-10-02/site-report-coverage-and-stages-codex.md)
+are retained on their original branch. These immutable links recover that work
+without pretending it was merged into main. The private report folder is listed
+in the catalogue; personal site records are not copied into this archive.
+
 ## Site survey: start here
 
 Latest implementation: [Survey draft recovery and signed-in Ubhejane check — 22 October 2026](2026-10-22/survey-draft-recovery-codex.md).
@@ -61,6 +73,8 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- [Two report purposes, annual production handoff and Record plan — 24 October 2026](2026-10-24/site-report-production-mapping-codex.md).
 
 - [Wave 18 integration close-out: eight tracks folded, w18-01 to w18-59 implemented, w17-08 closed — 23 October 2026](2026-10-23/wave-18-integration-claude.md).
 

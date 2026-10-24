@@ -1,4 +1,5 @@
 import { reportOriginLabel, type ReportGenerationSettings, type ReportOrigin } from '@/lib/saved-reports';
+import { siteReportPurposeLabel } from '@/lib/site-survey';
 import styles from '../ReportView.module.css';
 
 export default function ReportVersionDetails({ settings, language, savedAt, reference, origin }: {
@@ -14,6 +15,7 @@ export default function ReportVersionDetails({ settings, language, savedAt, refe
       <span>Wording: {wording} · Depth: {depth} · Language: {language}</span>
     </summary>
     <dl>
+      <div><dt>Purpose</dt><dd>{settings?.purpose ? siteReportPurposeLabel(settings.purpose) : sample ? 'Prepared example' : 'Not recorded'}</dd></div>
       <div><dt>Report origin</dt><dd>{reportOriginLabel(origin)}</dd></div>
       {reference && <div><dt>Report reference</dt><dd>{reference}</dd></div>}
       <div><dt>Generated</dt><dd>{settings ? date(settings.generatedAt) : 'Not recorded'}</dd></div>

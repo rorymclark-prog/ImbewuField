@@ -6,11 +6,13 @@ import { normaliseReportMapSelection, type ReportMapSelection } from './report-m
 import type { SavedPlace } from './saved-places';
 import { designSiteIdFromLocation } from './design-studio';
 import { normaliseReportSiteFacts, type ReportSiteFacts } from './report-site-facts';
+import { normaliseSiteReportPurpose, type SiteReportPurpose } from './site-survey';
 
 // A permaculture report saved locally so the farmer can re-read it without
 // regenerating (each generation is an AI call). We store the markdown plus a
 // snapshot of the location data so the charts/header re-render exactly.
 export interface ReportGenerationSettings {
+  purpose?: SiteReportPurpose;
   tone: 'simple' | 'professional';
   length: 'one-pager' | 'standard' | 'comprehensive';
   language: string;
@@ -68,6 +70,7 @@ export function normaliseReportSettings(value: unknown): ReportGenerationSetting
     || !s.sections.every(v => typeof v === 'string' && v.trim())
     || typeof s.generatedAt !== 'string' || !Number.isFinite(Date.parse(s.generatedAt))) return undefined;
   return {
+    purpose: normaliseSiteReportPurpose(s.purpose),
     tone: s.tone as ReportGenerationSettings['tone'], length: s.length as ReportGenerationSettings['length'],
     language: s.language, bilingual: s.bilingual, sections: [...new Set(s.sections as string[])], generatedAt: s.generatedAt,
     ...(typeof s.provider === 'string' && s.provider.trim() ? { provider: s.provider } : {}),

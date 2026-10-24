@@ -8,14 +8,16 @@ import type { MapRefLayers } from '@/lib/base-layers';
 import { sitePlanFigure } from '@/lib/report-figures';
 import { svgImage } from '@/lib/report-visual-pdf';
 import { deliverFile } from '@/lib/file-delivery';
+import { useLanguage } from '@/lib/i18n';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 import styles from './RecordPlanOption.module.css';
 
 /** Use the report's drawing authority so this option cannot disagree with its bed numbers or scale. */
-export default function RecordPlanOption({ state, refLayers, language, onAdd }: {
-  state: DesignCanvasState; refLayers: MapRefLayers; language: string;
+export default function RecordPlanOption({ state, refLayers, onAdd }: {
+  state: DesignCanvasState; refLayers: MapRefLayers;
   onAdd: (image: string, siteId: string) => void;
 }) {
+  const { lang: language } = useLanguage();
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');

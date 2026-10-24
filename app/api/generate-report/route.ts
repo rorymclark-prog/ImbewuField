@@ -8,7 +8,7 @@ import Anthropic from '@anthropic-ai/sdk';
 export const maxDuration = 300;
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import type { SiteSurvey } from '@/lib/site-survey';
-import { surveyToPrompt } from '@/lib/site-survey';
+import { surveyToPrompt, normaliseSiteReportPurpose, siteReportPurposeInstruction } from '@/lib/site-survey';
 import { deriveSolar, isValidEarthLatitude } from '@/lib/solar';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
@@ -165,6 +165,7 @@ export async function POST(req: NextRequest) {
     sections: string[];
     language?: string;
     bilingual?: boolean;
+    purpose?: 'potential' | 'complete';
     tone?: 'simple' | 'professional';
     length?: 'one-pager' | 'standard' | 'comprehensive';
   };
@@ -181,6 +182,7 @@ export async function POST(req: NextRequest) {
   // The farmer's drawn geometry, validated. `studioLayers` (the old approved-DesignLayer path) is
   // deliberately no longer read: nothing in the app ever sets `approved: true`, so the branch that
   // consumed it could never run and every report printed "no design exists" over a finished plan.
+  const reportPurpose = normaliseSiteReportPurpose(body.purpose) ?? normaliseSiteReportPurpose(surveyData?.reportPurpose) ?? 'complete';
   const facts: ReportSiteFacts | null = normaliseReportSiteFacts(body.siteFacts);
 
   // THE SHEETS THE MODEL ACTUALLY LOOKS AT. The geometry has always crossed as numbers; this is the
@@ -332,6 +334,8 @@ Treat this as an upper bound on the property, not a measured boundary — shapes
   const siteAreaSourceNote = boundaryFact ? 'traced boundary' : 'sum of all drawn shapes — an upper bound';
 
   const buildPrompt = (sections: string[], withTitle: boolean) => `You are an expert permaculture designer creating a permaculture site report for a small-scale farmer in South Africa. Name REAL species suited to the site, give practical actions, and use the actual site data. No generic permaculture theory. Crop suitability belongs in Suitable Plants for This Site; other chapters refer to the saved crop plan and avoid repeating species lists or sowing calendars. Never assume indigenous plants are automatically low-water or appropriate to this site.${languageInstruction}${toneInstruction}${lengthInstruction}
+
+${siteReportPurposeInstruction(reportPurpose)}
 
 SCREENED PLANTING CANDIDATES for this biome and known frost risk (a shortlist, not proof of suitability): ${screenedPlantingCandidates}
 ${REPORT_PLANTING_SAFETY_RULE}

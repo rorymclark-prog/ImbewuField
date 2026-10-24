@@ -29,7 +29,7 @@ import { loadSheetMetas, loadSheetImage, type StoredSheetMeta } from '@/lib/shee
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 import { reportCoverPlate, type ReportPlate } from '@/lib/report-plates';
 import { prepareSiteAnalysisImages } from '@/lib/report-site-images';
-import { loadSurvey } from '@/lib/site-survey';
+import { loadSurvey, siteReportPurposeLabel, type SiteReportPurpose } from '@/lib/site-survey';
 import { evidenceSiteId, getSiteEvidence } from '@/lib/site-evidence';
 import { groundPhotoGallery, prepareGroundPhotos, type GroundPhotoView } from '@/lib/report-ground-photos';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
@@ -283,6 +283,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [generated, setGenerated] = useState(!!savedReport);
+  const [purpose, setPurpose] = useState<SiteReportPurpose>(() => savedReport?.settings?.purpose ?? loadSurvey(designSiteIdFromLocation(locationData))?.reportPurpose ?? 'potential');
   const [language, setLanguage] = useState(savedReport?.lang ?? appLang ?? 'en');
   const [facts, setFacts] = useState<ReportSiteFacts | null>(savedReport?.facts ?? null);
   const [savedVersion, setSavedVersion] = useState(!!savedReport);
@@ -344,7 +345,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   // one, otherwise in the overview — on screen and in the PDF alike.
   const [figureInputs, setFigureInputs] = useState<ReportFigureInputs>({});
   const figures = useMemo(() => siteReportFigures(facts, d, contentLanguage, figureInputs), [facts, d, contentLanguage, figureInputs]);
-  const visuals = withReportFigures({ ...siteReportVisuals(facts, d, contentLanguage), title: siteName, subtitle: preparedExample ? reportOriginLabel(activeSaved?.origin, contentLanguage) : '' }, figures, contentLanguage);
+  const visuals = withReportFigures({ ...siteReportVisuals(facts, d, contentLanguage), title: siteName, subtitle: preparedExample ? reportOriginLabel(activeSaved?.origin, contentLanguage) : settings?.purpose ? siteReportPurposeLabel(settings.purpose, contentLanguage) : '' }, figures, contentLanguage);
   const chapterVisuals = reportChapterGraphics(report,visuals);
   const placedFigures = placedFigureIds(chapterVisuals);
   const overviewVisuals = { ...visuals, charts: visuals.charts.filter(c => c.kind !== 'calendar' && !placedFigures.has(c.id)) };
@@ -365,7 +366,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   useEffect(() => {
     if (activeSaved) { setFacts(activeSaved.facts ?? null); return; }
     const siteId = designSiteIdFromLocation(d);
-    setFacts(collectReportSiteFacts({ siteId, lat: d.lat, lon: d.lon, canvas: loadCanvasState(siteId), farmName: reportPlace?.name }));
+    setFacts(collectReportSiteFacts({ location: d, siteId, lat: d.lat, lon: d.lon, canvas: loadCanvasState(siteId), farmName: reportPlace?.name }));
   }, [activeSaved, d, reportPlace, evidenceRevision]);
   useEffect(() => {
     setFigureInputs(collectReportFigureInputs({ siteId: designSiteIdFromLocation(d), lat: d.lat, lon: d.lon, biome: resolveSiteEcology(d.biome, d.vegetation).placeName, rainfallMm: d.rainfall?.annual }));
@@ -598,6 +599,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     setActiveSaved(r);
     setReport(r.report);
     setLanguage(r.lang);
+    setPurpose(r.settings?.purpose ?? 'potential');
     setTone(r.settings?.tone ?? 'simple');
     setLength(r.settings?.length ?? 'standard');
     setBilingual(r.settings?.bilingual ?? false);
@@ -631,10 +633,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const generate = useCallback(async () => {
     setJustSaved(false);
     setSaveFailed(false);
-    const requested: ReportGenerationSettings = { tone, length, language, bilingual: language !== 'en' && bilingual, sections: reportSectionsForGeneration(Array.from(selected)), generatedAt: new Date().toISOString() };
+    const requested: ReportGenerationSettings = { purpose, tone, length, language, bilingual: language !== 'en' && bilingual, sections: reportSectionsForGeneration(Array.from(selected)), generatedAt: new Date().toISOString() };
     if (isSampleMode()) {
       const siteId = designSiteIdFromLocation(d);
-      const currentFacts = collectReportSiteFacts({ siteId, lat: d.lat, lon: d.lon, canvas: loadCanvasState(siteId), farmName: savedPlaces?.find(place => place.id === activePlaceId)?.name });
+      const currentFacts = collectReportSiteFacts({ location: d, siteId, lat: d.lat, lon: d.lon, canvas: loadCanvasState(siteId), farmName: savedPlaces?.find(place => place.id === activePlaceId)?.name });
       setFacts(currentFacts);
       const example = preparedSampleReport({ id: reportId(), name: currentFacts.farmName || reportPlace?.name || 'Site report', savedAt: requested.generatedAt, lang: language, location: d, siteData, waterData, facts: currentFacts, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds } });
       setReport(example.report);
@@ -706,7 +708,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       // (the old studioLayers gate keyed off an `approved` flag nothing in the app ever sets), so
       // a finished plan one tab away never reached the document. See lib/report-site-facts.ts.
       const siteFacts = collectReportSiteFacts({
-        siteId,
+        location: d, siteId,
         lat: d.lat,
         lon: d.lon,
         canvas,
@@ -742,6 +744,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           bilingual,
           tone,
           length,
+          purpose,
         }),
         signal: abortRef.current.signal,
       });
@@ -780,7 +783,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       reportAttemptSurvived(window.localStorage);
       setLoading(false);
     }
-  }, [d, photoAnalysis, siteData, waterData, savedPlaces, activePlaceId, selected, language, bilingual, tone, length, plates, collapsePanelOnNarrow, reportPlace, facts, coverChoice, siteKey, selectedMapIds]);
+  }, [d, photoAnalysis, siteData, waterData, savedPlaces, activePlaceId, selected, language, bilingual, tone, length, purpose, plates, collapsePanelOnNarrow, reportPlace, facts, coverChoice, siteKey, selectedMapIds]);
 
   // "Export PDF". This used to be window.print(), which is a silent no-op in an
   // installed iOS PWA (manifest display: standalone) — the button looked dead on
@@ -832,7 +835,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         cropMapMonth,
         includeCropWorkingPlan,
         siteName,
-        reportLabel: preparedExample ? reportOriginLabel(activeSaved?.origin, contentLanguage) : undefined,
+        reportLabel: preparedExample ? reportOriginLabel(activeSaved?.origin, contentLanguage) : settings?.purpose ? siteReportPurposeLabel(settings.purpose, contentLanguage) : undefined,
         biome: ecology.placeName,
         lat: d.lat,
         lon: d.lon,
@@ -1040,7 +1043,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                       className="min-h-11 flex-1 min-w-0 text-left px-2.5 py-1.5 rounded-lg"
                       style={{ color: activeSaved?.id === r.id ? 'var(--report-green)' : 'var(--report-ink)' }}>
                       <div className="text-xs font-display">{reportSiteName(r, savedPlaces)}</div>
-                      <div className="text-xs">{reportOriginLabel(r.origin, language)} · {new Date(r.savedAt).toLocaleString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { dateStyle: 'medium', timeStyle: 'medium' })} · {tr('Ref', 'Inombolo')} {r.id.slice(-5)}</div>
+                      <div className="text-xs">{r.settings?.purpose ? `${siteReportPurposeLabel(r.settings.purpose, language)} · ` : ''}{reportOriginLabel(r.origin, language)} · {new Date(r.savedAt).toLocaleString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { dateStyle: 'medium', timeStyle: 'medium' })} · {tr('Ref', 'Inombolo')} {r.id.slice(-5)}</div>
                     </button>
                     <button onClick={() => deleteReport(r.id)} title={tr('Delete', 'Susa')}
                       className="min-h-11 px-2 py-1.5 text-xs font-display" style={{ color: 'var(--report-muted)' }}>{tr('Delete', 'Susa')}</button>
@@ -1079,6 +1082,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             </button>
           )}
 
+          <label className="block mb-4 text-sm">{tr('Report purpose', 'Injongo yombiko')}<select aria-label={tr('Report purpose', 'Injongo yombiko')} value={purpose} onChange={e => setPurpose(e.target.value as SiteReportPurpose)} className="w-full min-h-11 rounded-lg px-2 mt-2" style={{ background: 'var(--report-panel)', color: 'var(--report-ink)', border: '1px solid var(--report-border)' }}>{(['potential','complete'] as const).map(value => <option key={value} value={value}>{siteReportPurposeLabel(value, language)}</option>)}</select></label>
           {/* Tone */}
           <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Wording')}</div>
           <div className="flex gap-1.5 mb-4">
@@ -1257,7 +1261,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                     ImbewuField
                   </div>
                   <div className={`${styles.title} font-display font-bold`}>
-                    {siteName}<span className="block text-sm">{preparedExample ? reportOriginLabel(activeSaved?.origin, language) : label('Permaculture Site Analysis Report')}</span>
+                    {siteName}<span className="block text-sm">{preparedExample ? reportOriginLabel(activeSaved?.origin, language) : settings?.purpose ? siteReportPurposeLabel(settings.purpose, language) : label('Permaculture Site Analysis Report')}</span>
                   </div>
                 </div>
                 <div className="text-right">
@@ -1468,7 +1472,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           </div>
           <div className={styles.recordTools}>
           {report && !loading && <ReportVersionDetails origin={activeSaved?.origin} reference={activeSaved?.id} settings={settings} language={LANGUAGE_OPTIONS.find(l => l.code === contentLanguage)?.label ?? contentLanguage} savedAt={savedVersion ? activeSaved?.savedAt : undefined} sample={isSampleMode()} />}
-          <ReportPreparation language={language} location={d} place={reportPlace} onSavedPlace={setPreparedPlace} onChanged={()=>setEvidenceRevision(n=>n+1)} snapshot={!!activeSaved} maps={savedMapRecords} onViewMaps={()=>{setReading('full');setPresentation('screen');setMapVisit(n=>n+1);}}/>
+          <ReportPreparation onSurveySaved={survey=>{if(survey.reportPurpose)setPurpose(survey.reportPurpose);}} language={language} location={d} place={reportPlace} onSavedPlace={setPreparedPlace} onChanged={()=>setEvidenceRevision(n=>n+1)} snapshot={!!activeSaved} maps={savedMapRecords} onViewMaps={()=>{setReading('full');setPresentation('screen');setMapVisit(n=>n+1);}}/>
           </div>
         </div>
       </div>

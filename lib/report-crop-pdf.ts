@@ -1,10 +1,11 @@
 import type { jsPDF } from 'jspdf';
 import { pdfSafe } from './crop-export-pdf';
-import { reportSowingCalendar } from './report-crop-plan';
+import { reportSowingCalendar, type ReportProductionYear } from './report-crop-plan';
 import type { FactCropPlan } from './report-site-facts';
 
-/** A single crop-by-month overview; bed allocations remain in the working report. */
+/** Product windows and sowing starts accompany the report; bed allocations remain in the working plan. */
 export function drawReportCropSummary(doc: jsPDF, crop: FactCropPlan, _offset = 0, language = 'en'): void {
+  if (crop.snapshot?.annualProduction) drawReportProductionYear(doc, crop.snapshot.annualProduction, crop.snapshot.capturedAt, language);
   const margin = 40, width = 515, nameWidth = 167, monthWidth = (width - nameWidth) / 12;
   let y = 0;
   const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
@@ -70,5 +71,52 @@ export function drawReportCropSummary(doc: jsPDF, crop: FactCropPlan, _offset = 
   if (s) {
     doc.setFontSize(9); doc.setTextColor('#24583c');
     doc.textWithLink(pdfSafe(tr('Open current crop planner', 'Vula uhlelo lwezitshalo lwamanje')), margin, y, { url: `https://imbewufield.vercel.app/facilitator/crops?canvasSite=${encodeURIComponent(s.siteId)}` });
+  }
+}
+
+/** The report freezes the planner's own product windows; exporting never recalculates a season. */
+export function drawReportProductionYear(doc: jsPDF, production: ReportProductionYear, capturedAt: string, language = 'en'): void {
+  const margin = 40, width = 515, nameWidth = 167, monthWidth = (width - nameWidth) / 12;
+  let y = 0;
+  const write = (value: string, x: number, top: number, max: number, size = 9, bold = false) => {
+    doc.setFont('helvetica', bold ? 'bold' : 'normal'); doc.setFontSize(size); doc.setTextColor('#203d2d');
+    const lines = doc.splitTextToSize(pdfSafe(value), max) as string[];
+    doc.text(lines, x, top); return lines.length * size * 1.3;
+  };
+  function page() {
+    doc.addPage('a4', 'portrait'); y = 42;
+    y += write('SITE REPORT / ANNUAL PRODUCTION', margin, y, width) + 14;
+    y += write('Food and products through the year', margin, y, width, 20, true) + 8;
+    y += write(`Saved plan: ${new Date(capturedAt).toLocaleDateString('en-ZA')}${language !== 'en' ? ' / Production overview in English' : ''}`, margin, y, width) + 8;
+    y += write('P = plan or local season. R = sourced reference. - = timing not established. These windows are not harvest records, measured stock or evidence of enough food. Proposed trees may take years to produce; housing is not an animal count.', margin, y, width) + 15;
+    doc.setFillColor('#edf3ee'); doc.rect(margin, y - 10, width, 30, 'F');
+    write('Product', margin + 5, y + 3, nameWidth - 10, 10, true);
+    production.months.forEach((label, i) => {
+      const [month, year] = label.split(' '), x = margin + nameWidth + i * monthWidth;
+      write(month, x + 2, y, monthWidth - 3, 8, true); write(year, x + 2, y + 12, monthWidth - 3, 7);
+    });
+    y += 34;
+  }
+  page();
+  if (!production.rows.length) write('No crop or mapped product rows are recorded for this site. An empty plan is not evidence of a food gap.', margin, y, width);
+  for (const row of production.rows) {
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(10);
+    const nameLines = doc.splitTextToSize(pdfSafe(`${row.name} / ${row.product}`), nameWidth - 10) as string[];
+    const headingHeight = Math.max(30, nameLines.length * 13 + 8);
+    if (y + headingHeight + 42 > 752) page();
+    write(`${row.name} / ${row.product}`, margin + 5, y + 7, nameWidth - 10, 10, true);
+    production.months.forEach((_month, i) => {
+      const x = margin + nameWidth + i * monthWidth, active = row.months.includes(i);
+      if (active) { doc.setFillColor(row.reference ? '#f4e4c4' : '#d5e9d9'); doc.roundedRect(x + 2, y - 5, monthWidth - 4, headingHeight - 5, 3, 3, 'F'); }
+      write(active ? row.reference ? 'R' : 'P' : '-', x + 9, y + 8, monthWidth - 10, 9, active);
+    });
+    y += headingHeight;
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(9);
+    const notes = doc.splitTextToSize(pdfSafe(`${{crop:'Crop','food-forest':'Food forest',animal:'Animal product'}[row.kind]}: ${row.note}`), width - 10) as string[];
+    for (const note of notes) {
+      if (y + 15 > 752) { page(); y += write(`${row.name} / continued`, margin + 5, y, width - 10, 9, true) + 6; }
+      y += write(note, margin + 5, y + 4, width - 10) + 1;
+    }
+    y += 15; doc.setDrawColor('#d2dfd5'); doc.line(margin, y - 7, margin + width, y - 7);
   }
 }

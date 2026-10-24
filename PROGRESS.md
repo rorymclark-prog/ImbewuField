@@ -52,6 +52,12 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-10-24 — Site reports continue the existing production work
+- The site survey and report now reuse the crop planner's dated crop, food-forest and animal-product windows, preserving unknown timing and proposed status. Saved reports freeze this evidence; legacy reports stay unchanged.
+- Two primary purposes: **Site potential** and **Complete site plan**, independent of questionnaire length and reading edition. The earlier six Ubhejane PDFs remain dated historical outputs; progress reviews are later follow-ups.
+- **Record plan** reuses the existing scaled report diagram in Preview & export, with PNG/SVG downloads and the existing Saved maps gallery. Prepared examples now state their origin and hide unused generation controls.
+- Start with the [dated audit](docs/audits/2026-10-24/site-report-production-mapping-codex.md), which links prior findings, the six-report catalogue and visual evidence. This changes the picture; `PLAN_VERSION` is unchanged.
+
 ### 23 Oct 2026 — Wave 18: re-capture, then eight swarm tracks (PRs #1077–#1081, #1083–#1085, folded on one branch)
 - **Re-capture first:** the wave 17 build (`4cad7c53`) rendered again with a full visual review; new IDs `w18-01`…`w18-59`
   across eight tracks — `docs/audits/2026-10-23/wave-18-recapture-claude.md`.

@@ -18,6 +18,17 @@ export const PRODUCTION_CATEGORIES = [
 ] as const;
 export type ProductionCategory = typeof PRODUCTION_CATEGORIES[number];
 
+export type SiteReportPurpose = 'potential' | 'complete';
+export const normaliseSiteReportPurpose = (value: unknown): SiteReportPurpose | undefined => value === 'potential' || value === 'complete' ? value : undefined;
+export function siteReportPurposeLabel(purpose: SiteReportPurpose, language = 'en'): string {
+  return purpose === 'potential' ? (language === 'zu' ? 'Amathuba endawo' : 'Site potential') : (language === 'zu' ? 'Uhlelo oluphelele lwendawo' : 'Complete site plan');
+}
+export function siteReportPurposeInstruction(purpose: SiteReportPurpose): string {
+  return purpose === 'potential'
+    ? 'SITE POTENTIAL REPORT: assess what could work before detailed design. Cover people and goals, local economy, climate, terrain, soil, water, biome, vegetation, approximate bioresource information, crop/food-forest/animal options and constraints. Identify evidence gaps and next field checks. A mapped proposal is an option, not installed infrastructure or a completed design. Do not invent a layout, implementation budget, local buyer demand, output or completion. Explain missing design sections as work still to do.'
+    : 'COMPLETE SITE PLAN REPORT: integrate the saved assessment, survey, maps and production plan into one evidence-based design and implementation report. Explain existing and proposed systems, the twelve-month crop/food-forest/animal-product picture, dependencies, responsibilities, sourced costs and checks. Preserve missing evidence visibly; the word complete does not certify completion on the ground. Keep reported harvests and actual spending separate from plan windows, assumptions and budgets.';
+}
+
 /** “None” must not travel into a report alongside the resource it denies. */
 export function toggleSurveyChoice(values: string[], value: string, none = 'none'): string[] {
   if (values.includes(value)) return values.filter(item => item !== value);
@@ -98,6 +109,7 @@ export interface SiteSurvey {
   siteId: string;   // canonical key: designSiteIdFromLocation()'s `site:${lat.toFixed(5)},${lon.toFixed(5)}`
   placeId: string;  // legacy key (SavedPlace id) — kept for provenance/migration, no longer used to store
   savedAt: string;
+  reportPurpose?: SiteReportPurpose;
   updatedAt?: number; // ms — drives cross-device newest-wins merge
 
   // Branching
@@ -272,6 +284,7 @@ function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
     siteId,
     placeId: stringValue(row.placeId),
     savedAt: stringValue(row.savedAt),
+    reportPurpose: normaliseSiteReportPurpose(row.reportPurpose),
     updatedAt: typeof row.updatedAt === 'number'
       && Number.isFinite(row.updatedAt)
       && row.updatedAt >= 0
@@ -434,6 +447,7 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string 
   lines.push('A housing structure does not establish the number of birds. Recorded hens and management are not a promised egg yield; reported annual eggs remain separate from plan forecasts.');
 
   lines.push('');
+  if (s.reportPurpose) lines.push(`Requested site report: ${siteReportPurposeLabel(s.reportPurpose)}. Questionnaire length is independent of report purpose.`);
   lines.push('--- FARMER-REPORTED ANNUAL PRODUCTION ---');
   lines.push(`Reporting year for these annual production figures: ${s.productionYear ?? 'not recorded'}. The survey save date is not the reporting year.`);
   const rows = s.reportedProduction ?? [];

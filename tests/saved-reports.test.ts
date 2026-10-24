@@ -356,7 +356,7 @@ test('editing the next report settings cannot relabel the saved report; regenera
   Object.assign(browser, { matchMedia: () => ({ matches: true, addEventListener() {}, removeEventListener() {} }) });
   const ReportView = (await import('../components/ReportView.tsx')).default;
   const initial = report('original', { facts: { farmName: 'Ubhejane Creche' }, settings: {
-    tone: 'professional', length: 'comprehensive', language: 'en', bilingual: false,
+    purpose: 'complete', tone: 'professional', length: 'comprehensive', language: 'en', bilingual: false,
     sections: ['Executive Summary'], generatedAt: '2026-09-07T08:00:00Z', provider: 'Anthropic', model: 'claude-sonnet-4-6',
   } });
   saveReport(initial);
@@ -376,12 +376,15 @@ test('editing the next report settings cannot relabel the saved report; regenera
     assert.equal(new Set(rows.map(textOf)).size, 2, 'versions saved at exactly the same time need distinct visible references');
     await act(async () => { deleteReport('another-version'); });
     await act(async () => button('Simple').props.onClick());
+    await act(async () => view!.root.findAllByType('select').find(n => n.props['aria-label'] === 'Report purpose')!.props.onChange({ target: { value: 'potential' } }));
     await act(async () => button('Save').props.onClick());
+    assert.equal(loadReports()[0].settings?.purpose, 'complete', 'next-purpose controls cannot relabel a saved plan');
     assert.equal(loadReports()[0].settings?.tone, 'professional', 'Save must capture generated wording, not next-report controls');
     assert.equal(loadReports()[0].savedAt, initial.savedAt, 're-saving does not rewrite the original date');
     assert.match(textOf(view!.toJSON()), /Wording: Detailed/);
     await act(async () => button('Generate new report').props.onClick());
     assert.equal(requestBody?.tone, 'simple');
+    assert.equal(requestBody?.purpose, 'potential');
     assert.equal(loadReports().length, 1, 'generation leaves the original saved version alone');
     assert.match(textOf(view!.toJSON()), /New report · not saved yet/);
     await act(async () => {
@@ -391,6 +394,7 @@ test('editing the next report settings cannot relabel the saved report; regenera
     assert.equal(loadReports().length, 2, 'saving regenerated text must create a separate report');
     assert.equal(loadReports().find(r => r.id === 'original')?.report, initial.report);
     assert.equal(loadReports()[0].settings?.tone, 'simple');
+    assert.equal(loadReports()[0].settings?.purpose, 'potential');
     assert.equal(loadReports()[0].settings?.model, 'claude-sonnet-4-6');
     await act(async () => button('Saved').props.onClick());
     assert.equal(loadReports().length, 2, 'repeated Save must not duplicate the new version');

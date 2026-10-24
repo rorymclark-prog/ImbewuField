@@ -11634,7 +11634,7 @@ export default function DesignGlossy({
   initialFilter,
   onImportPhoto,
 }: DesignGlossyProps) {
-  const { t, lang } = useLanguage();
+  const { t } = useLanguage();
   const simple = useAppLevel() === 'simple';
   const { user: renderUser } = useAuth();
   const [approvedRenderUid, setApprovedRenderUid] = useState<string | null>(null);
@@ -15353,7 +15353,7 @@ export default function DesignGlossy({
           gone: beta lives as a pill ON the AI preview, exact is reached via the links. */}
       {!compact && <div className={styles.controlsBackdrop} aria-hidden="true" />}
       <div className={compact ? undefined : styles.settingsRail}>
-        <RecordPlanOption state={state} refLayers={refLayers} language={lang} onAdd={(image, siteId) => {
+        <RecordPlanOption state={state} refLayers={refLayers} onAdd={(image, siteId) => {
           pushGallery('Whole design · Record plan', image, { siteId, resultKind: 'exact', provider: 'exact', geometryLock: true, showcase: false, underlay: 'plain', validationStatus: 'needs-review' });
         }} />
         {/* SHEET — the plan set as a compact 4-up grid (Rory's mockup), canonical 01–09 order.
