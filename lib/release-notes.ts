@@ -41,6 +41,21 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '24 October 2026', sha: 'bae8604fd', changes: [
+    'Farmers can download production and finance reports from My records.',
+    'Mentors and facilitators have reports for visits, training, feedback and follow-up.',
+    'MEL reports compare matched responses and show evidence dates and missing data.',
+    'Reports share full, brief and ink-saving layouts; funders see published evidence.',
+  ], tour: [{ title: 'Open your farm reports',
+    where: 'My records → Production & finance reports', href: '/records',
+    detail: 'Choose production or finances, set the period and download the matching PDF.',
+  }, { title: 'Review visits and training',
+    where: 'Mentor → Field report or Training', href: '/mentor',
+    detail: 'Review follow-up actions or open the facilitator delivery report in Training.',
+  }, { title: 'Review MEL evidence',
+    where: 'Organisation → Reports → MEL evidence', href: '/ngo',
+    detail: 'Choose a project, assessment and compatible earlier stage to review matched change.',
+  }] },
   { when: '23 October 2026', sha: 'ee27178e', changes: [
     'Organisation and funder reports now show coverage, evidence tables and follow-up.',
     'Choose cohorts or recorded months; download a brief, full-colour or ink-saving PDF.',
