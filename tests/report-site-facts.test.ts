@@ -158,7 +158,7 @@ const HEADER_BASE = {
 
 test('the demo farm collects the geometry it actually drew', () => {
   const facts = demoFacts();
-  assert.equal(facts.farmName, 'Ubhejane Creche');
+  assert.equal(facts.farmName, 'Ubhejane Crèche');
   assert.ok(facts.design);
   // 7 veg beds of 6,6,6,6,6,8,6 m² and 4 traced staple plots of 21 m².
   assert.equal(facts.design.bedCount, 7);
@@ -291,7 +291,7 @@ test('the crop-plan block names the farmer\'s crops and refuses to print a yield
 test('the Site at a Glance table names the farm and sources every figure', () => {
   const facts = demoFacts();
   const header = buildReportHeaderMarkdown({ ...HEADER_BASE, facts });
-  assert.match(header, /^# Site Report — Ubhejane Creche/);
+  assert.match(header, /^# Site Report — Ubhejane Crèche/);
   assert.match(header, /\| Measure \| Value \| Where it comes from \|/);
   assert.match(header, /\| Growing area drawn \| 128 m² — 7 beds 44 m² \+ 4 staple plots 84 m² \|/);
   assert.match(header, /\| Property boundary \| 1 037 m²/);

@@ -10,7 +10,7 @@ import { xhInlineDraft } from '@/lib/xh-inline';
 export default function DesignDraftCopy({ en, zu }: { en: string; zu: string }) {
   const { lang } = useLanguage();
   // A trailing "→" / leading "←" in the copy becomes a Lucide arrow (ArrowLabel); the words are unchanged.
-  const arrow = (text: string, children: string) => (text !== stripArrow(text) ? <ArrowLabel dir={/^\s*←/.test(text) ? 'back' : 'next'}>{children}</ArrowLabel> : children);
+  const arrow = (text: string, children: string) => (text !== stripArrow(text) ? <ArrowLabel dir={/^\s*←/.test(text) ? 'back' : /↑\s*$/.test(text) ? 'up' : 'next'}>{children}</ArrowLabel> : children);
   // isiXhosa reads the same exact English through lib/xh-inline.ts and keeps the same English source line.
   const xhosa = lang === 'xh' ? xhInlineDraft(en) : null;
   if (xhosa) return <span lang="xh" style={{ display: 'inline-block', minWidth: 0 }}>{arrow(xhosa, xhosa)}<small lang="en" className={styles.source}>English source: {stripArrow(en)}</small></span>;

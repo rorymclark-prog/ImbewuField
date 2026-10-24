@@ -147,7 +147,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 20px 14px' }}>
             <div style={{ flex: 1 }}>
-              <div style={{ font: '600 17px Newsreader, Georgia, serif', color: 'var(--text-primary)' }}>
+              <div style={{ font: '600 17px var(--font-display), Georgia, serif', color: 'var(--text-primary)' }}>
                 {entry ? ui('Edit journal entry', 'Hlela okubhaliwe kwejenali') : ui('New journal entry', 'Okusha kwejenali')}
               </div>
               <div style={{ font: '400 12px/1.4 var(--font-sans), sans-serif', color: 'var(--text-muted)', marginTop: 1 }}>

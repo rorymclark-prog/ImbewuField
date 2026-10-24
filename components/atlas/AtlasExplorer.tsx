@@ -253,7 +253,7 @@ export default function AtlasExplorer() {
             }}
           >
             <Earth size={15} className="shrink-0" style={{ color: 'var(--color-forest-800)' }} />
-            <span className="font-display" style={{ fontSize: 13.5, color: 'var(--text-primary)' }}>
+            <span className="font-sans" style={{ fontSize: 13.5, color: 'var(--text-primary)' }}>
               {isZulu || isXhosa ? (
                 <>
                   <span className="block">{isZulu ? 'Thinta noma kuphi emhlabeni ukuze ubone isimo sezulu, imvula nomhlabathi.' : inlineText(lang, 'Tap anywhere on Earth to read its climate, rain and soil')}</span>

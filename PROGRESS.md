@@ -93,6 +93,67 @@ must provision — not buildable from code alone).
 - **Marked as draft everywhere:** `LanguageDraftNote`, Settings, survey, Studies and per-screen notices name isiXhosa.
 - **Not translated:** slides with burned-in text and narration audio (no xh media), the printed invoice (English by
   design), staff training-feedback form (answer language stored as en/zu). Record: `docs/translation-reviews/xhosa-ui-2026-10-23/`.
+### 24 Oct 2026 — Wave 21: isiZulu re-capture of the wave 20 build, eleven findings fixed directly
+- **Re-capture:** every sample route at 390/1280px, light and dark, in isiZulu with the sample-language key set,
+  plus a 768/1024/1280px header sweep — `docs/audits/2026-10-24/wave-21-recapture-claude.md` (`w21-01`…`w21-11`).
+- **Fixed:** the 404 page in dark (title was 1.14:1), /farmer's isiZulu header 7px too wide at 768px, /network's
+  isiZulu portfolio pill pushing Settings off-screen at 1024px, the hard-coded "Learn" on /farmer and the community
+  profile, the coach card's isiZulu note in dark, earth `--emerald` as text (4.11 → 4.77:1), the rainfall chart's
+  undefined Tailwind text classes, the Study finance and calendar draft notes in dark, and (found by the verification pass) the pressed
+  isiZulu button on the /assessments forest hero (1.49:1). Guarded by
+  `tests/w21-recapture.test.ts`.
+- **Handed to Codex:** the /samples/production chart legend in dark (`components/crops/*`).
+- **Verified:** the fixed build re-measured — headers fit at 768/1024px, and the 27 desktop routes the first capture
+  lost plus the dark fixes show no overflow and no low-contrast text.
+
+### 24 Oct 2026 — Wave 20: re-capture, then five swarm tracks (PRs #1093–#1097, folded with wave 19 on one branch)
+- **Re-capture first:** the wave 19 build rendered again; new IDs `w20-01`…`w20-46` across five tracks, w19 partials
+  carried to them — `docs/audits/2026-10-23/wave-20-recapture-claude.md`.
+- **Farmer daily pages:** /exchange kind badge no longer overlaps the Sample pill, crop chips and Home task board in
+  isiZulu (unreviewed drafts), sans controls on /exchange and /account, journal titles in the real display font, plain
+  /offline copy for farmers, a readable measure on /journal, /calendar and /account.
+- **Farmer data:** themed completeness card, DataPanel tabs that wrap instead of clipping, one primary green on /farmer,
+  sans /records and crop controls, Picked-tab cards aligned, sparklines visible in dark, a standard Invoice pill, "Crèche".
+- **Samples and MEL:** phone dark MEL hero, sample buttons scoped to the content, themed /samples/production, toggle above
+  the metrics, "No answers yet", /reports full width, filled selected tab, design picker on AppHeader, 640px /feedback.
+- **Study:** Lima clearance on /student/finance, Lucide chevron disclosures, one action-row style, StudyHeader on
+  design, finance and Teach the Teachers, /student card titles, finance checklist card, manual and tour icon drift.
+- **Staff and public:** AppHeader nav never clips, /network phone header and shared status colours, mentor follow-up
+  dates, /vision toggle, cohort Export CSV, /partners hyphen, /login, print sheet and /pitch tidies.
+- **Integrator:** folded on top of the wave 19 branch and `main` at `0858cf13` (#1098, Codex reports), so both waves
+  ship in one squash. App dictionary and isiZulu locale pins re-baselined for additions only
+  (`tests/fixtures/i18n-before-wave-20.tsx.txt`, `tests/fixtures/zu-before-wave-20.ts.txt`). Three wave 19 source
+  pins made stale by StudyHeader, `<Summary>` and the wider listing grid now check the new form. /funder's Settings
+  pill sat 86px off-screen in isiZulu at 1280px (16px in English at 1024px), and at 768px /funder and /ngo were 73–196px
+  too wide (/ngo clipped it, cutting Settings off): /funder's Portfolio map pill is now hidden at lg like /ngo's, and from
+  640 to 1279px the Settings, role-switcher and Portfolio map labels go icon-only on headers with the desktop nav. A
+  per-file run of the whole suite and CI caught five older pins the tracks broke (demo-finance's and report-site-facts'
+  "Crèche", w18-55's Design Studio title, zu-11's sparkline `color-mix`, w18-14's Teach the Teachers width), all fixed. Close-out:
+  `docs/audits/2026-10-24/wave-20-integration-claude.md`.
+
+### 23 Oct 2026 — Wave 19: re-capture, then five swarm tracks (PRs #1086–#1089 and the staff-public branch, folded on one branch)
+- **Re-capture first:** the wave 18 build (`774a3530`) rendered again, 600 frames; new IDs `w19-01`…`w19-42` across five
+  tracks, w18 partials carried to them — `docs/audits/2026-10-23/wave-19-recapture-claude.md`.
+- **Farmer chrome:** one navigation on desktop (TabBar hidden at lg where AppHeader has its nav), /exchange and staff
+  Home on AppHeader, farmer error as a banner below the header, sans controls, /offline card spacing and disabled
+  buttons, inline produce art no longer inflated, themed account chip, narrow /journal rail.
+- **Records and invoice:** one nav bar on desktop, Picked tab full width, on-screen money on a no-break space (the PDF
+  keeps a plain space), Lima in flow on /invoice, sans form controls, Share PDF and Print once.
+- **Samples and map:** /samples/production nav, print and CTA; themed mini plan thumbnail; MEL hero not lime in dark,
+  neutral notices; one Tour control, one radius, Lucide arrows; Atlas title, farmer-facing /feedback, heavier MEL
+  headings, themed /design/lite.
+- **Study:** worked diagram readable on phone and themed in dark (no invert filter); chevron cue on notices; one card
+  surface on /student; /tips on the shared grid; /manual on AppHeader; balanced headings; English notice hidden in isiZulu.
+- **Staff and public:** short header titles that survive the nav, /network strip and statuses, honest /login ("this
+  device", no permanent Connecting line), mentor metric figures and due chip, /partners, /contact, /updates, /vision polish.
+- **Integrator:** `tests/w19-farmer-chrome.test.ts` moved from the storage-emulator script into `npm test`; app
+  dictionary pin re-baselined for the one reworded sign-in line (`tests/fixtures/i18n-before-wave-19.tsx.txt`); w18-50
+  pin now checks the /design/lite top gap is at least 56px (w19-26 made it 72px). /farmer, farmer Home, /records and
+  /invoice hid the TabBar at lg+ without any header links to replace it, so they now carry the shared
+  `DesktopPrimaryNav`; the /farmer header also dropped the role switcher (still in the drawer) so it stops clipping
+  Settings at laptop widths. Close-out:
+  `docs/audits/2026-10-23/wave-19-integration-claude.md`. Open next: wave 20 re-capture; Rory on the items under
+  *Unchanged* in the re-capture record.
 
 ### 23 Oct 2026 — Wave 18: re-capture, then eight swarm tracks (PRs #1077–#1081, #1083–#1085, folded on one branch)
 - **Re-capture first:** the wave 17 build (`4cad7c53`) rendered again with a full visual review; new IDs `w18-01`…`w18-59`

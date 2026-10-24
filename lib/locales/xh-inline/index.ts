@@ -16,9 +16,10 @@ import g13 from './g13-dates-feedback';
 import g14 from './g14-studies-deck';
 import g15 from './g15-programme-evidence';
 import g16 from './g16-programme-reports';
+import g17 from './g17-waves-19-21';
 import s01 from './s01-mel-templates';
 import s02 from './s02-study-tracks';
 
-const SHARDS: Record<string, string>[] = [g01, g02, g03, g04, g05, g06, g07, g08, g09, g10, g11, g13, g14, g15, g16, s01, s02];
+const SHARDS: Record<string, string>[] = [g01, g02, g03, g04, g05, g06, g07, g08, g09, g10, g11, g13, g14, g15, g16, g17, s01, s02];
 
 export const XH_INLINE_SOURCE: Record<string, string> = Object.assign({}, ...SHARDS);

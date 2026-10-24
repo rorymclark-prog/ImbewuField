@@ -62,6 +62,7 @@ import { CATEGORY_LABEL, EX, ZU_CATEGORY_LABEL, exchangeText } from './theme';
 import { getCropArt } from '@/lib/crop-art';
 import { useLanguage } from '@/lib/i18n';
 import { inlineTemplate, inlineText } from '@/lib/xh-inline';
+import { produceLabel } from '@/lib/produce-label';
 import { ExchangeDraftNotice, ExchangeSourceCopy } from './ExchangeCopy';
 
 const SORT_LABEL: Record<ListingSort, string> = {
@@ -220,7 +221,7 @@ export default function ExchangeBoard() {
       <ExchangeDraftNotice />
 
       {/* Counts */}
-      <div className="flex items-center gap-4 flex-wrap">
+      <div className="grid grid-cols-3 gap-x-3 gap-y-2 sm:flex sm:items-center sm:gap-4 sm:flex-wrap">
         <Stat value={summary.total} label={summary.total === 1 ? tx('listing', 'isikhangiso') : tx('listings', 'izikhangiso')} />
         <Stat value={summary.offers} label={tx('offering', 'ezihlinzekwayo')} />
         <Stat value={summary.wants} label={tx('wanted', 'ezifunwayo')} />
@@ -259,7 +260,7 @@ export default function ExchangeBoard() {
         )}
         <button
           onClick={() => { setShowForm((v) => !v); setShowGuide(false); }}
-          className={`flex items-center gap-1.5 font-display font-semibold rounded-xl${simple ? ' flex-1 md:flex-none' : ''}`}
+          className={`flex items-center gap-1.5 font-sans font-semibold rounded-xl${simple ? ' flex-1 md:flex-none' : ''}`}
           style={{
             justifyContent: simple ? 'center' : undefined,
             minHeight: 44,
@@ -335,11 +336,11 @@ export default function ExchangeBoard() {
               onClick={() => setCropKeys((v) => toggle(v, c.cropKey))}
             >
               {getCropArt(c.cropKey) ? (
-                <img className="produce-art" src={getCropArt(c.cropKey)} alt="" aria-hidden style={{ width: 13, height: 13, objectFit: 'contain', verticalAlign: '-2px' }} />
+                <img className="produce-art produce-art--inline" src={getCropArt(c.cropKey)} alt="" aria-hidden style={{ width: 13, height: 13, objectFit: 'contain', verticalAlign: '-2px' }} />
               ) : (
                 c.icon
               )}{' '}
-              {c.name} <span style={{ opacity: 0.65 }}>{c.count}</span>
+              {produceLabel(c.cropKey, lang)} <span style={{ opacity: 0.65 }}>{c.count}</span>
             </Chip>
           ))}
         </ChipRow>
@@ -531,7 +532,7 @@ export default function ExchangeBoard() {
 
 function Stat({ value, label, icon }: { value: number; label: string; icon?: boolean }) {
   return (
-    <div className="flex items-baseline gap-1.5">
+    <div className="flex items-baseline gap-x-1.5 flex-wrap min-w-0">
       {icon && <Users size={12} strokeWidth={2} style={{ color: EX.faint, alignSelf: 'center' }} />}
       <span className="font-display font-bold" style={{ fontSize: 17, color: EX.ink }}>{value}</span>
       <span className="font-sans" style={{ fontSize: 12, color: EX.faint }}>{label}</span>
@@ -571,6 +572,9 @@ function Chip({
       aria-pressed={on}
       className="font-sans font-semibold"
       style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 4,
         padding: '6px 11px',
         borderRadius: 100,
         fontSize: 12,

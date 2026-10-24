@@ -196,7 +196,7 @@ export default function CommunityProfilePage() {
       <AppHeader
         backFallback="/community"
         title={t('communityEditProfileTitle')}
-        right={<LessonLink id="community:profile" label="Learn" />}
+        right={<LessonLink id="community:profile" label={lang === 'zu' ? 'Funda' : inlineText(lang, 'Learn')} />}
       />
 
       <main className={`${workspace.workspace} ${workspace.formWidth} flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6`}>

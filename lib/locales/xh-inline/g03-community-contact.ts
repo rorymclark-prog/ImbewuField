@@ -106,7 +106,7 @@ const drafts: Record<string, string> = {
   "Add a subject": "Yongeza isihloko",
   "Message": "Umyalezo",
   "Write your message here…": "Bhala umyalezo wakho apha…",
-  "Practice version: your message is kept on this phone and is not sent yet.": "Uguqulo lokuziqhelisa: umyalezo wakho ugcinwe kule foni kwaye awukathunyelwa.",
+  "Practice version: your message is kept on this device and is not sent yet.": "Uguqulo lokuziqhelisa: umyalezo wakho ugcinwe kwesi sixhobo kwaye awukathunyelwa.",
   "Send message": "Thumela umyalezo",
   "View profile": "Jonga iprofayile",
 

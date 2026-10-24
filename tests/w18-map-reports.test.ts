@@ -14,9 +14,13 @@ test('w18-53/54: atlas search input fills its wrapper and the hint is not half-w
 
 test('w18-55: design picker uses theme tokens', () => {
   const s = read('app/design/page.tsx');
-  assert.match(s, /<h1 className="t-h1"/);
+  // w20-23 moved the visible title onto the shared AppHeader; the page keeps a screen-reader h1.
+  assert.match(s, /<AppHeader title=\{isZulu \? 'Isitudiyo Sokuklama' : inlineText\(lang, 'Design Studio'\)\}/);
+  assert.match(s, /<h1 className="sr-only">/);
   assert.match(s, /<MapPin size=\{18\} color="var\(--emerald\)"/);
-  assert.match(s, /background: 'var\(--bg-0\)',\n        color: DARK/);
+  // The page background moved to the wrapper that also holds the AppHeader (w20-23).
+  assert.match(s, /flexDirection: 'column', background: 'var\(--bg-0\)' \}\}>/);
+  assert.match(s, /padding: 24,\n        color: DARK/);
 });
 
 test('w18-56: crop plan preview follows the theme', () => {

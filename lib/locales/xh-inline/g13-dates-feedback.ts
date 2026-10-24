@@ -16,7 +16,6 @@ const drafts: Record<string, string> = {
   "Title": "Isihloko",
   "What did you do, what happened, and what did you expect?": "Wenze ntoni, kwenzeke ntoni, yaye ubulindele ntoni?",
   "What would you like to do, and why would it help?": "Ungathanda ukwenza ntoni, yaye kuya kuncedisa njani?",
-  "App page (optional)": "Iphepha le-app (akunyanzelekanga)",
   "Only this form, your name and your role are sent. No screenshot, GPS position or farm record is attached automatically.": "Kuthunyelwa le fomu kuphela, igama lakho nendima yakho. Akukho sikrini esithathiweyo, indawo ye-GPS okanye irekhodi yefama enamathiselwa ngokuzenzekelayo.",
   "Send this feedback, including from the practice version.": "Thumela olu luvo, kwanokuba luvela kwinguqulo yokuziqhelisa.",
   "Sending…": "Iyathunyelwa…",

@@ -43,6 +43,6 @@ test("/surveys' Learn lesson link label uses the translated pattern, like its si
   const surveys = readFileSync(new URL('../app/surveys/page.tsx', import.meta.url), 'utf8');
   assert.doesNotMatch(surveys, /<LessonLink id="surveys:overview" label="Learn" \/>/,
     'the Learn label on /surveys is still hardcoded English');
-  assert.match(surveys, /<LessonLink id="surveys:overview" label=\{localUi\('Learn', 'Funda', lang\)\} \/>/,
+  assert.match(surveys, /<LessonLink id="surveys:overview" tone="chip" label=\{localUi\('Learn', 'Funda', lang\)\} \/>/,
     "the Learn label on /surveys no longer follows tr(lang, 'Learn', 'Funda')");
 });

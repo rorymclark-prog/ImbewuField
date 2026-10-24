@@ -106,7 +106,7 @@ export default function ExchangeGuide({
 
       <button
         onClick={onPost}
-        className="font-display font-semibold rounded-xl"
+        className="font-sans font-semibold rounded-xl"
         style={{
           width: '100%',
           padding: '11px',
@@ -137,12 +137,12 @@ export default function ExchangeGuide({
   // nothing else on the screen to reach past.
   if (simple && variant === 'intro') {
     return (
-      <div className="rounded-2xl" style={{ background: EX.card, border: `1px solid ${EX.border}` }}>
+      <div className="rounded-2xl" style={{ background: 'transparent', border: `1px solid ${EX.border}` }}>
         <button
           type="button"
           onClick={() => setExpanded((v) => !v)}
           aria-expanded={expanded}
-          className="flex items-center gap-2.5 font-display font-semibold"
+          className="flex items-center gap-2.5 font-sans font-semibold"
           style={{
             width: '100%',
             minHeight: 44,
@@ -151,8 +151,8 @@ export default function ExchangeGuide({
             border: 'none',
             textAlign: 'left',
             cursor: 'pointer',
-            fontSize: 14,
-            color: EX.ink,
+            fontSize: 13,
+            color: EX.muted,
           }}
         >
           <Handshake size={18} strokeWidth={1.7} style={{ color: EX.green, flexShrink: 0 }} />

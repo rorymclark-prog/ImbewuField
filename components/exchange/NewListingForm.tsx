@@ -230,7 +230,7 @@ export default function NewListingForm({
         <ShareListingButton listing={listing} label={tx('Share to WhatsApp', 'Yabelana nge-WhatsApp')} />
         <button
           onClick={() => onPosted(justPosted.all)}
-          className="font-display font-semibold rounded-xl"
+          className="font-sans font-semibold rounded-xl"
           style={{
             padding: 11,
             fontSize: 14,
@@ -621,7 +621,7 @@ export default function NewListingForm({
         <button
           onClick={handlePost}
           disabled={!canPost}
-          className="font-display font-semibold rounded-xl"
+          className="font-sans font-semibold rounded-xl"
           style={{
             flex: 2,
             padding: 11,

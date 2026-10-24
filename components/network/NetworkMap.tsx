@@ -72,7 +72,7 @@ import ReactMapGL, {
 } from 'react-map-gl';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { X, Maximize2, Info, MapPinOff } from 'lucide-react';
+import { X, Maximize2, Info, MapPinOff, Plus, Minus } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
 import { useLanguage } from '@/lib/i18n';
 import { inlineText } from '@/lib/xh-inline';
@@ -84,17 +84,14 @@ import {
 } from '@/lib/network';
 import { DEMO_NETWORK_NOTICE, demoFarmerById } from '@/lib/network-demo';
 import FarmerPanel from './FarmerPanel';
+import { NETWORK_STATUS_COLOR } from './status-colors';
 import type { GardenStatus } from '@/lib/db/types';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
-/* Status palette — lifted verbatim from components/NgoDashboard.tsx so two
- * funder-facing screens never disagree about what "thriving" looks like. */
-const STATUS: Record<GardenStatus, { color: string }> = {
-  thriving: { color: '#1F4D2B' },
-  establishing: { color: 'var(--gold-dim)' },
-  support: { color: '#C0531E' },
-};
+/* Status palette — shared with the /network list (components/network/status-colors.ts) so the
+ * map and the list never disagree about what "thriving" looks like. */
+const STATUS = NETWORK_STATUS_COLOR;
 
 /* Below this zoom the map shows one bubble per district municipality; above it,
  * one pin per farmer site. This is the "provincial overview → individual site"
@@ -398,7 +395,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
               const needsAttention = flags.length > 0;
               const urgent = flags.some((f) => f.severity === 'urgent');
               const d = pinDiameter(farmer.plotSizeM2, minM2, maxM2) * (isSel ? 1.25 : 1);
-              const colour = STATUS[farmer.status].color;
+              const colour = STATUS[farmer.status];
 
               return (
                 <Marker
@@ -545,7 +542,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
             }}
           >
             <span>{copy.legend}</span>
-            <span style={{ fontSize: 12, letterSpacing: 0 }}>{legendOpen ? '−' : '+'}</span>
+            {legendOpen ? <Minus size={14} aria-hidden="true" /> : <Plus size={14} aria-hidden="true" />}
           </button>
 
           {legendOpen && (
@@ -560,7 +557,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                       width: 11,
                       height: 11,
                       borderRadius: '50%',
-                      background: STATUS[s].color,
+                      background: STATUS[s],
                       border: '1.5px solid var(--on-forest)',
                       flexShrink: 0,
                     }}

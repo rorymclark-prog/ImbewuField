@@ -19,7 +19,7 @@ import type { SalesLog, ProductionLog, ExpenseLog, ExpenseCategory } from '@/lib
 import { loadInvoices, paymentMethodLabel, type SavedInvoice } from '@/lib/invoices';
 // A sample R12.50 cost appeared as R13 here while its receipt kept the cents.
 // The ledger must use the same exact-money formatter as the buyer's document.
-import { formatInvoiceZar as fmtZAR } from '@/lib/invoice-document';
+import { formatInvoiceZar } from '@/lib/invoice-document';
 import {
   isSampleMode, enterSampleMode,
   getSandboxSales, addSandboxSale, updateSandboxSale, deleteSandboxSale,
@@ -28,6 +28,7 @@ import {
 } from '@/lib/sample-mode';
 import HarvestReconciliation from '@/components/HarvestReconciliation';
 import BrandLogo from '@/components/BrandLogo';
+import DesktopPrimaryNav from '@/components/layout/DesktopPrimaryNav';
 import LanguageDraftNote from '@/components/LanguageDraftNote';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
@@ -66,6 +67,11 @@ import { recordQuantity, recordUnit, recordQuantityPayload, recordWeightKg, quan
 import { parseDecimalInput } from '@/lib/decimal-input';
 import { recordsFill, recordsPaired, recordsTemplate, recordsQuantityLabel, isRecordsRegionalLang, recordsDraftNotice } from '@/lib/records-regional-drafts';
 import { recordsDate } from '@/lib/records-months';
+
+// w19-12: on screen the thousands separator is a no-break space so "R8 175,00" never splits
+// across lines. lib/invoice-document.ts keeps the plain space because jsPDF's core fonts
+// cannot encode U+00A0 and the same formatter feeds the PDF.
+const fmtZAR = (n: number): string => formatInvoiceZar(n).replace(/ /g, '\u00A0');
 
 /* ── One book, three tabs, and the charts as a view inside it ────────────────
  *
@@ -264,12 +270,12 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
           ) : (
             <>
               <p
-                className="font-display font-bold text-sm leading-tight"
+                className="font-display font-bold text-sm leading-tight whitespace-nowrap"
                 style={{ color: 'var(--color-ink)' }}
               >
                 {card.value}
               </p>
-              <p className="text-xs leading-tight" style={{ color: 'var(--color-muted-strong)' }}>
+              <p className="text-xs leading-tight break-words hyphens-auto min-w-0" style={{ color: 'var(--color-muted-strong)' }}>
                 {card.label}
               </p>
             </>
@@ -466,7 +472,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
               </div>
               <div className="flex-shrink-0 text-right">
                 <p
-                  className="text-sm font-display font-semibold"
+                  className="text-sm font-display font-semibold whitespace-nowrap"
                   style={{ color: item.positive ? 'var(--record-positive)' : 'var(--record-negative)' }}
                 >
                   {item.positive ? '+' : '-'}{fmtZAR(item.amount)}
@@ -1156,7 +1162,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
             style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: rows.length ? 'var(--color-ink)' : 'var(--text-secondary)', fontSize: 14, cursor: rows.length ? 'pointer' : 'not-allowed' }}>
             <Download size={15} />{recordsText(lang, 'Export', 'Khipha')}
           </button>
-          <Link href="/invoice" className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold" style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--record-negative)', fontSize: 14, textDecoration: 'none' }}>
+          <Link href="/invoice" className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', fontSize: 14, textDecoration: 'none' }}>
             <FileText size={15} />{recordsText(lang, 'New invoice', 'I-invoyisi entsha')}
           </Link>
           {/* Was a Link to /records back when the harvest form lived behind a different door.
@@ -1614,14 +1620,16 @@ export default function RecordsPage() {
             label simply steps aside — the same pattern the funder and NGO headers use. */}
         <div className="w-px h-5 hidden sm:block" style={{ background: 'var(--color-border)' }} />
         <h1 className="text-xs font-display truncate min-w-0 m-0 sr-only sm:not-sr-only sm:block" style={{ color: 'var(--color-muted-strong)' }}>{t('myRecordsTitle')}</h1>
+        {/* TabBar steps aside at lg+ (hideAtDesktop below), so the four destinations move up here. */}
+        <DesktopPrimaryNav />
         <div className="flex-1" />
         {/* 'finances:overview', which is the id lib/lesson-registry.ts actually holds. The old
             /records header asked for 'finance:overview' — no such lesson — so Learn opened onto
             nothing on the one screen a farmer most needs explained. */}
         <LessonLink id="finances:overview" label={recordsText(lang, 'Learn', 'Funda')} />
         <Link href="/invoice"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
-          style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--record-negative)', textDecoration: 'none' }}>
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-sans font-semibold"
+          style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', textDecoration: 'none' }}>
           <FileText size={13} />{recordsText(lang, 'Invoice', 'I-invoyisi')}
         </Link>
         <SettingsButton />
@@ -1760,8 +1768,9 @@ export default function RecordsPage() {
                 // ledger below instead. Picked has no desktop ledger substitute yet (its
                 // harvest-entry form has no FinancialSheet equivalent), so it still shows
                 // here at every width.
-                className={`rounded-2xl${tab === 'sold' ? ' lg:hidden' : ''}${tab === 'picked' ? ' lg:max-w-[640px]' : ''}`}
-                style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
+                // w19-11: plain wrapper (the MyRecords Card inside is the one surface) and
+                // full width like the other tabs, no half-empty desktop.
+                className={tab === 'sold' ? 'lg:hidden' : undefined}
               >
                 <MyRecords section={tab} onChanged={loadData} />
               </div>
@@ -1843,7 +1852,7 @@ export default function RecordsPage() {
                   production={production}
                   expenses={expenses}
                   invoices={invoices}
-                  name={sampling ? 'Ubhejane Creche' : (user ? (user.displayName ?? recordsText(lang, 'My farm', 'Ipulazi lami')) : recordsText(lang, 'My farm', 'Ipulazi lami'))}
+                  name={sampling ? 'Ubhejane Crèche' : (user ? (user.displayName ?? recordsText(lang, 'My farm', 'Ipulazi lami')) : recordsText(lang, 'My farm', 'Ipulazi lami'))}
                   loading={dataLoading}
                   period={period}
                   setPeriod={setPeriod}
@@ -1971,7 +1980,7 @@ export default function RecordsPage() {
           made. */}
       <LimaBar />
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

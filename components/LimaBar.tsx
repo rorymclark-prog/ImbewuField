@@ -10,6 +10,8 @@ import { useLanguage } from '@/lib/i18n';
 interface LimaBarProps {
   /** Where the ask-for-help control leads. */
   chatHref?: string;
+  /** w20-08: staff Home — align with the page's px-4 content column and use the role-neutral label. */
+  staff?: boolean;
 }
 
 /**
@@ -30,7 +32,7 @@ interface LimaBarProps {
  * the user gesture needed by iPhone Safari. The chosen photo stays in a local Lima dialog
  * until the farmer explicitly sends it.
  */
-export default function LimaBar({ chatHref = '/farmer?chat=1' }: LimaBarProps) {
+export default function LimaBar({ chatHref = '/farmer?chat=1', staff = false }: LimaBarProps) {
   const { t, lang } = useLanguage();
   const sampleRole = useSampleRole();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -49,7 +51,7 @@ export default function LimaBar({ chatHref = '/farmer?chat=1' }: LimaBarProps) {
       className="px-4 pt-2 pb-2.5"
       style={{ background: 'var(--bg-1)', borderTop: '1px solid var(--border)', flexShrink: 0 }}
     >
-      <div className="w-full max-w-5xl mx-auto">
+      <div className={`w-full max-w-5xl mx-auto${staff ? ' px-4' : ''}`}>
         {/* Who Lima is — said every time rather than once, because it costs one short line and a
             farmer who opens the app twice a season should not have to remember. */}
         <div
@@ -66,7 +68,7 @@ export default function LimaBar({ chatHref = '/farmer?chat=1' }: LimaBarProps) {
               <path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
             </svg>
           </span>
-          {t('limaWhoIs')}
+          {t(staff ? 'limaWhoIsStaff' : 'limaWhoIs')}
         </div>
 
         <div className="flex items-center gap-2">
