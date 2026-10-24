@@ -53,6 +53,7 @@ must provision — not buildable from code alone).
 ## Build Log (newest first)
 
 ### 2026-10-24 — Site reports continue the existing production work
+- [CI follow-up](docs/audits/2026-10-24/site-report-ci-followup-codex.md): the full run found one omission in the readability register. The three new farmer-facing components now inherit its strict floor; 174 focused checks pass. Read the fresh full CI result before merging PR #1099.
 - The site survey and report now reuse the crop planner's dated crop, food-forest and animal-product windows, preserving unknown timing and proposed status. Saved reports freeze this evidence; legacy reports stay unchanged.
 - Two primary purposes: **Site potential** and **Complete site plan**, independent of questionnaire length and reading edition. The earlier six Ubhejane PDFs remain dated historical outputs; progress reviews are later follow-ups.
 - **Record plan** reuses the existing scaled report diagram in Preview & export, with PNG/SVG downloads and the existing Saved maps gallery. Prepared examples now state their origin and hide unused generation controls.

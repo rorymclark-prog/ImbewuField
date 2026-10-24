@@ -6,7 +6,9 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Site reports and mapping: start here
 
-Latest: [Two report purposes, annual production handoff and Record plan — 24 October 2026](2026-10-24/site-report-production-mapping-codex.md).
+Latest verification: [CI readability-register follow-up — 24 October 2026](2026-10-24/site-report-ci-followup-codex.md).
+
+Implementation: [Two report purposes, annual production handoff and Record plan — 24 October 2026](2026-10-24/site-report-production-mapping-codex.md).
 
 Read this together with the latest survey and crop records below. It reuses the
 existing production calendars and preserves the earlier six Ubhejane reports.
@@ -73,6 +75,8 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- [Site report CI readability-register follow-up — 24 October 2026](2026-10-24/site-report-ci-followup-codex.md).
 
 - [Two report purposes, annual production handoff and Record plan — 24 October 2026](2026-10-24/site-report-production-mapping-codex.md).
 
