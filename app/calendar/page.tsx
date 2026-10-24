@@ -554,7 +554,7 @@ export default function CalendarPage() {
           </div>
         </div>
 
-        <div style={{ padding: '16px 16px 24px' }}>
+        <div style={{ padding: '16px 16px 24px', maxWidth: 1040, marginInline: 'auto' }}>
           {/* ---- What to do this month ---- */}
           <div
             style={{

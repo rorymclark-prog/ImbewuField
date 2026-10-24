@@ -68,6 +68,13 @@ the §0 desktop targets).
   fill under white type is `#9A6018`. Leaf `#A8D88A` is a fill only — 1.2:1 as text.
 - **Lima** — the field-guide persona, woven through every screen; context-aware,
   advises but never takes control. "Lima" = "to cultivate" (Nguni).
+  **Entry points (w20-08):** the farmer daily pages use two patterns on purpose. Pages that are
+  scroll-and-act lists — `/journal`, `/calendar`, `/records`, `/invoice` (and `/home`, `/student`,
+  `/cropplan`, `/finances`) — use the in-flow `LimaBar` strip above the TabBar, because the floating
+  button sat on top of real tap targets there (`isLimaFabHiddenRoute` in `components/ChatWidget.tsx`
+  lists them). Short or reference pages — `/prices`, `/tips`, `/offline`, `/exchange`, `/account`,
+  `/farmer` — keep the draggable FAB, which can be moved off content. Staff Home passes
+  `<LimaBar staff />`: content-column `px-4` and the role-neutral label (`limaWhoIsStaff`).
 - **No emoji in UI** — real drawn symbols / Lucide icons only.
 
 ## Roles — FIVE, not seven (frames 02, 03, 19)

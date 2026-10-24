@@ -772,7 +772,7 @@ function HomeLandingInner() {
         </footer>
       </main>
 
-      <LimaBar />
+      <LimaBar staff={Boolean(staffRole)} />
       <TabBar hideAtDesktop />
       <ThemePanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </div>

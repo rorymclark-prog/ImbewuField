@@ -95,10 +95,10 @@ export default function ListingCard({
       {/* Kind · category · crop · posted */}
       {/* w19-06: two fixed columns (identity | status), so "Sample · 1d ago" always sits top-right
           instead of landing on a different wrapped line on each card. */}
-      <div className="grid items-start gap-x-2" style={{ gridTemplateColumns: '1fr auto', marginBottom: 8 }}>
+      <div className="grid items-start gap-x-2" style={{ gridTemplateColumns: 'minmax(min-content, 1fr) auto', marginBottom: 8 }}>
         <div className="flex items-center gap-2 flex-wrap min-w-0">
         <span
-          className="font-sans font-bold uppercase"
+          className="font-sans font-bold uppercase shrink-0"
           style={{
             fontSize: 12,
             padding: '3px 9px',
@@ -124,7 +124,7 @@ export default function ListingCard({
           </span>
         )}
         </div>
-        <div className="flex items-center justify-end gap-2 flex-wrap">
+        <div className="flex flex-col items-end gap-1">
         {mine && (
           <span
             className="font-sans font-semibold"
