@@ -133,9 +133,16 @@ w19-39 (w20-39) and w19-42 (w20-41, w20-43).
 - `npx tsc --noEmit` clean; `next build` succeeds on the merged tree.
 - The five `tests/w20-*.test.ts` files pass, as do the re-baselined pins (the dictionary history
   checks, w19-study, w19-farmer-chrome, student-simple), the release-notes tests, and every test
-  that reads AppHeader, RoleSwitcher, SettingsButton, `app/globals.css` or /funder. The only
-  failures are the known sandbox-only set (course-audio, course-deck, saved-reports,
-  public-route-ssr, product-tour, auth-account-transition, auth-guest-migration). CI runs the full
+  that reads AppHeader, RoleSwitcher, SettingsButton, `app/globals.css` or /funder.
+- A per-file run of the whole registered suite then found three older pins that the wave 20 tracks
+  had broken without updating: `demo-finance` (the sample sheet name is now "Crèche", w20-26),
+  `w18-map-reports` w18-55 (the Design Studio picker's title moved to the AppHeader, w20-23) and
+  `zu-11-ux-18-produce-label` (the w20-14 sparkline underlay used a `color-mix` of
+  `--color-forest-800`, which that guard forbids; it is now the token at 30% stroke opacity, which
+  looks the same). All three were fixed on #1091. The remaining failures are the known sandbox-only
+  set (course-audio, course-deck, saved-reports, venue-location, public-route-ssr, product-tour,
+  auth-account-transition, auth-guest-migration; saved-reports and venue-location fail in the
+  sandbox's module loader hook before any assertion runs) and the emulator tests. CI runs the full
   suite on #1091.
 - Rendered in sample mode with `next start`: zero horizontal overflow on every swept route at 390px
   and 1280px, light and dark, in English, and at 390px in isiZulu. After the header fix, the AppHeader
