@@ -14,9 +14,10 @@ import g10 from './g10-journal-samples-consent';
 import g11 from './g11-records-charts';
 import g13 from './g13-dates-feedback';
 import g14 from './g14-studies-deck';
+import g15 from './g15-programme-evidence';
 import s01 from './s01-mel-templates';
 import s02 from './s02-study-tracks';
 
-const SHARDS: Record<string, string>[] = [g01, g02, g03, g04, g05, g06, g07, g08, g09, g10, g11, g13, g14, s01, s02];
+const SHARDS: Record<string, string>[] = [g01, g02, g03, g04, g05, g06, g07, g08, g09, g10, g11, g13, g14, g15, s01, s02];
 
 export const XH_INLINE_SOURCE: Record<string, string> = Object.assign({}, ...SHARDS);
