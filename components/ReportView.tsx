@@ -40,6 +40,7 @@ import type { ReportSiteFacts } from '@/lib/report-site-facts';
 import { reportSummaryPages, buildInkSummaryPdf, sampleFullSiteReport } from '@/lib/report-summary';
 import { REPORT_ZU } from '@/lib/report-localisation';
 import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { formatXhosaDate, localeDate } from '@/lib/xh-dates';
 import { loadLocale, translate } from '@/lib/i18n';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { recordReportAttempt, reportAttemptSurvived, reportShouldGoLight } from '@/lib/report-attempts';
@@ -833,7 +834,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         soilPh: d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.ph : undefined,
         language: contentLanguage,
         meanTempC: d.climate.meanTemp,
-        dateLabel: new Date(reportDate).toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { year: 'numeric', month: 'long', day: 'numeric' }),
+        dateLabel: localeDate(language, new Date(reportDate), { year: 'numeric', month: 'long', day: 'numeric' }, language === 'zu' ? 'zu-ZA' : 'en-ZA'),
         sheets: includeImages ? plates : [],
         loadSheetImage,
         // The same photographs the model read and the screen shows — so the printed report a
@@ -1033,7 +1034,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                       className="min-h-11 flex-1 min-w-0 text-left px-2.5 py-1.5 rounded-lg"
                       style={{ color: activeSaved?.id === r.id ? 'var(--report-green)' : 'var(--report-ink)' }}>
                       <div className="text-xs font-display">{reportSiteName(r, savedPlaces)}</div>
-                      <div className="text-xs">{new Date(r.savedAt).toLocaleString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { dateStyle: 'medium', timeStyle: 'medium' })} · {tr('Ref', 'Inombolo')} {r.id.slice(-5)}</div>
+                      <div className="text-xs">{language === 'xh' ? formatXhosaDate(new Date(r.savedAt), { day: true, month: 'short', year: true, time: true }) : new Date(r.savedAt).toLocaleString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { dateStyle: 'medium', timeStyle: 'medium' })} · {tr('Ref', 'Inombolo')} {r.id.slice(-5)}</div>
                     </button>
                     <button onClick={() => deleteReport(r.id)} title={tr('Delete', 'Susa')}
                       className="min-h-11 px-2 py-1.5 text-xs font-display" style={{ color: 'var(--report-muted)' }}>{tr('Delete', 'Susa')}</button>
@@ -1251,7 +1252,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 </div>
                 <div className="text-right">
                   <div className={`${styles.date} font-sans`}>
-                    {new Date(reportDate).toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    {localeDate(language, new Date(reportDate), { year: 'numeric', month: 'long', day: 'numeric' }, language === 'zu' ? 'zu-ZA' : 'en-ZA')}
                   </div>
                 </div>
               </div>
@@ -1308,7 +1309,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               )}
             </div>
 
-            {presentation !== 'print' && <ReportVisualOverview onOpenImage={openReportImage} viewLabel={tr('View full size', 'Buka ngosayizi ogcwele')} visuals={screenVisuals} stamp={new Date(reportDate).toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })} image={coverPhoto?.dataUrl ?? (captureCover ? `data:image/jpeg;base64,${captureCover}` : useCoverMap ? savedCoverImage : undefined)} imageKind={coverPhoto ? 'photo' : 'map'} imageCaption={coverPhoto ? `${coverPhoto.label} · ${tr('Current site evidence; it may postdate saved report text.', 'Ubufakazi bendawo bamanje; kungenzeka buqoqwe ngemva kombhalo wombiko ogciniwe.')}` : captureCover ? tr('Captured site satellite view', 'Isithombe sesathelayithi esithathwe sendawo') : useCoverMap && coverMap ? `${tr('Saved design', 'Umklamo ogciniwe')}: ${coverMap.label}` : undefined} />}
+            {presentation !== 'print' && <ReportVisualOverview onOpenImage={openReportImage} viewLabel={tr('View full size', 'Buka ngosayizi ogcwele')} visuals={screenVisuals} stamp={localeDate(language, new Date(reportDate), { day: 'numeric', month: 'short', year: 'numeric' }, language === 'zu' ? 'zu-ZA' : 'en-ZA')} image={coverPhoto?.dataUrl ?? (captureCover ? `data:image/jpeg;base64,${captureCover}` : useCoverMap ? savedCoverImage : undefined)} imageKind={coverPhoto ? 'photo' : 'map'} imageCaption={coverPhoto ? `${coverPhoto.label} · ${tr('Current site evidence; it may postdate saved report text.', 'Ubufakazi bendawo bamanje; kungenzeka buqoqwe ngemva kombhalo wombiko ogciniwe.')}` : captureCover ? tr('Captured site satellite view', 'Isithombe sesathelayithi esithathwe sendawo') : useCoverMap && coverMap ? `${tr('Saved design', 'Umklamo ogciniwe')}: ${coverMap.label}` : undefined} />}
 
             {/* Captured satellite view */}
             {showVisuals && mapCapture && !activeSaved && (

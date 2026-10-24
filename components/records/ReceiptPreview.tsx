@@ -8,6 +8,7 @@ import { expenseReceiptScope, loadExpenseReceipt, receiptScopeIsCurrent, type Ex
 import { getSandboxExpenses, isSampleMode } from '@/lib/sample-mode';
 import { useLanguage } from '@/lib/i18n';
 import { recordsFill } from '@/lib/records-regional-drafts';
+import { inlineTemplate } from '@/lib/xh-inline';
 
 /** The tour's receipt is drawn from its own expense, so the slip and ledger always agree. */
 export function ReceiptPaper({ expense }: { expense: Pick<ExpenseLog, 'id' | 'item' | 'supplier' | 'amount' | 'spent_at'> }) {
@@ -94,7 +95,7 @@ export default function ReceiptPreview({ expense }: { expense: ExpenseLog }) {
             <a href={photoUrl} download={receipt.name || 'receipt-photo'} style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, gap: 6, textDecoration: 'underline' }}><Download size={16} /> {text('Download original', 'Landa esokuqala')}</a>
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={photoUrl} alt={`Original receipt photo for ${expense.item}`} style={{ display: 'block', width: '100%', height: 'auto', background: '#fff' }} />
+          <img src={photoUrl} alt={inlineTemplate(lang, 'Original receipt photo for {item}', null, { item: expense.item })} style={{ display: 'block', width: '100%', height: 'auto', background: '#fff' }} />
         </> : prepared ? <ReceiptPaper expense={expense} />
           : <p style={{ margin: '16px 0', lineHeight: 1.6 }}>{text('No receipt photo is saved for this cost on this device. Edit the cost to attach one, or open it on the device where you saved the photo.', 'Asikho isithombe serisidi salezi zindleko esigcinwe kule divayisi. Hlela izindleko ukuze ufake isithombe, noma uzivule kudivayisi owalondoloza kuyo isithombe.')}</p>}
     </dialog>

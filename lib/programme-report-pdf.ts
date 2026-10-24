@@ -25,6 +25,8 @@ const pdfLabel = (en: string, language: 'en' | 'zu' | 'xh' | undefined) => langu
   'Programme report':'Umbiko wohlelo', 'Internal session record':'Irekhodi leseshini yangaphakathi',
 } as Record<string,string>)[en] ?? en.replace(/^(\d+)% present$/, '$1% bakhona') : en;
 /** isiXhosa (unreviewed machine draft): the shard draft for this exact English label, English when there is none. */
+/** A survey question or answer option: isiZulu from the template, isiXhosa from the inline drafts, else English. */
+const feedbackWording = (language: 'en' | 'zu' | 'xh' | undefined, zu: string, en: string) => language === 'zu' ? zu : language === 'xh' ? inlineText('xh', en) : en;
 function pdfLabelXh(en: string): string {
   const attendance = /^(\d+)% present$/.exec(en);
   if (attendance) return inlineTemplate('xh', '{n}% present', null, { n: attendance[1] });
@@ -147,7 +149,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     ensure(30);write(pdfLabel('Training feedback',presentation.language),15,true);write(presentation.language==='zu'?`${feedback.completed} izimpendulo kubantu abangu-${feedback.assigned} abebehambele.`:inlineTemplate(presentation.language??'en','{completed} responses from {assigned} attendees.',null,{completed:feedback.completed,assigned:feedback.assigned}),10);
     if(!feedback.completed)write(pdfLabel('No feedback recorded yet.',presentation.language));
     if(feedback.completed&&feedback.metrics.length&&feedback.metrics.every(m=>m.suppressed))write(pdfLabel('Detailed findings are withheld for this small group.',presentation.language),10);
-    for(const m of feedback.metrics.every(m=>m.suppressed)?[]:feedback.metrics){if(!feedback.completed)break;ensure(22);write(presentation.language==='zu'?m.zu:m.en,11,true);if(m.suppressed){write(pdfLabel('Results withheld for this small group.',presentation.language),9);continue;}write(`${m.n} ${presentation.language==='zu'?'baphendulile':pdfLabel('answered',presentation.language)} · ${m.missing} ${presentation.language==='zu'?'beqile':pdfLabel('skipped',presentation.language)}`,9);for(const c of m.choices??[])if(c.count)write(`${presentation.language==='zu'?c.zu:c.en}: ${c.count}`,10);}
+    for(const m of feedback.metrics.every(m=>m.suppressed)?[]:feedback.metrics){if(!feedback.completed)break;ensure(22);write(feedbackWording(presentation.language,m.zu,m.en),11,true);if(m.suppressed){write(pdfLabel('Results withheld for this small group.',presentation.language),9);continue;}write(`${m.n} ${presentation.language==='zu'?'baphendulile':pdfLabel('answered',presentation.language)} · ${m.missing} ${presentation.language==='zu'?'beqile':pdfLabel('skipped',presentation.language)}`,9);for(const c of m.choices??[])if(c.count)write(`${feedbackWording(presentation.language,c.zu,c.en)}: ${c.count}`,10);}
     if(!presentation.funder)for(const response of session.feedback??[])for(const [key,value] of Object.entries(response.answers))if(['course_change','course_apply'].includes(key)&&value.trim())write(`${pdfLabel(key==='course_apply'?'First action':'Suggested improvement',presentation.language)}: ${value}`);
   }
   if(photos.length&&!visual){

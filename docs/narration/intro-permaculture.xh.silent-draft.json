@@ -1,0 +1,799 @@
+{
+  "language": "xh",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Introduction to Permaculture",
+        "body": [
+          "Before you dig anything, it helps to know how the decisions get made.",
+          "This module is the foundation for everything else in the course. Three ethics, a set of design principles, and one simple way to organise your land.",
+          "None of it needs money. All of it changes where you put things, and how far you walk every day.",
+          "Think about your own plot. Which part of it do you visit most often?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Intshayelelo kwi-permaculture"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Phambi kokuba umbe nantoni na, kuncedisa ukwazi ukuba izigqibo zithathwa njani."
+          },
+          {
+            "status": "draft",
+            "text": "Esi sifundo sisisiseko sayo yonke enye into kule khosi. Imigaqo emithathu yokuziphatha, uluhlu lwemigaqo yoyilo, nendlela enye elula yokuhlela umhlaba wakho."
+          },
+          {
+            "status": "draft",
+            "text": "Akukho nanye kuzo efuna mali. Zonke zitshintsha apho ubeka khona izinto, nokuba uhamba kangakanani yonke imihla."
+          },
+          {
+            "status": "draft",
+            "text": "Cinga ngesiza sakho. Yeyiphi inxalenye oyityelela rhoqo?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Why This Matters",
+        "body": [
+          "A good design saves work before you pick up a spade.",
+          "Most of the effort on a smallholding is not planting or harvesting. It is walking, carrying and fixing what was put in the wrong place.",
+          "Permaculture is a way of deciding where things go, so the land works with you instead of against you.",
+          "Think of one job on your farm that takes longer than it should. Where does the time actually go?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kutheni oku kubalulekile"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Uyilo olulungileyo lusindisa umsebenzi phambi kokuba uphathe ifosholo."
+          },
+          {
+            "status": "draft",
+            "text": "Uninzi lomzamo kwifama encinci aluyontyalo okanye ukuvuna. Kukuhamba, ukuthwala nokulungisa oko kubekwe kwindawo engalunganga."
+          },
+          {
+            "status": "draft",
+            "text": "I-permaculture yindlela yokuthatha isigqibo sokuba izinto zibekwe phi, ukuze umhlaba usebenze nawe kungekhona ngokuchasene nawe."
+          },
+          {
+            "status": "draft",
+            "text": "Cinga ngomsebenzi omnye efama yakho othatha ixesha elide kunalo elifunekayo. Ixesha lonke lihamba phi ngokwenene?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "By the end of this module you will be able to do three things.",
+          "Name the three ethics, and use them to settle a decision that has no obvious answer.",
+          "Name the design principles that matter most on your land, and say why.",
+          "Sketch your zones and your sectors on one sheet of paper.",
+          "That sketch is the skeleton of every plan you make after this."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Iziphumo zokufunda"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ekupheleni kwesi sifundo uya kukwazi ukwenza izinto ezintathu."
+          },
+          {
+            "status": "draft",
+            "text": "Ukubiza imigaqo emithathu yokuziphatha, uyisebenzise ukuthatha isigqibo esingenampendulo icacileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Ukubiza imigaqo yoyilo ebaluleke kakhulu emhlabeni wakho, uchaze isizathu."
+          },
+          {
+            "status": "draft",
+            "text": "Ukuzoba imimandla yakho ne-sector ephepheni elinye."
+          },
+          {
+            "status": "draft",
+            "text": "Lo mzobo ngumqolo wazo zonke izicwangciso oza kuzenza emva koku."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "Earth Care",
+        "body": [
+          "The first ethic is Earth Care.",
+          "It means treating soil, water, plants and animals as living systems to protect, not resources to use up.",
+          "A system you use up stops paying you. A system you protect keeps paying you.",
+          "Look at one patch of bare soil on your land. Is anything protecting it right now?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ukukhathalela umhlaba"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Umgaqo wokuqala wokuziphatha kukukhathalela umhlaba (Earth Care)."
+          },
+          {
+            "status": "draft",
+            "text": "Oku kuthetha ukuphatha umhlaba, amanzi, izityalo nezilwanyana njengeenkqubo eziphilayo ekufuneka sizikhusele, kungekhona izinto zokuzisebenzisa ziphele."
+          },
+          {
+            "status": "draft",
+            "text": "Inkqubo oyisebenzisa iphele iyayeka ukukuvuza. Inkqubo oyikhuselayo iqhubeka ikuvuza."
+          },
+          {
+            "status": "draft",
+            "text": "Jonga isiqwenga esinye somhlaba ongenanto emhlabeni wakho. Ingaba ikhona into eyikhuselayo ngoku?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "People Care",
+        "body": [
+          "The second ethic is People Care.",
+          "Your family's needs come first, then your community's.",
+          "A farmer who sells every egg and every vegetable, and keeps nothing back for the family table, is skipping People Care.",
+          "The farm is meant to feed the household that runs it.",
+          "What comes off your land that your own family never eats?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ukukhathalela abantu"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Umgaqo wesibini wokuziphatha kukukhathalela abantu (People Care)."
+          },
+          {
+            "status": "draft",
+            "text": "Iimfuno zosapho lwakho zize kuqala, emva koko iimfuno zoluntu lwakho."
+          },
+          {
+            "status": "draft",
+            "text": "Umfama othengisa onke amaqanda nemifuno yonke, engagcini nto etafileni yosapho, uyeqa Ukukhathalela abantu."
+          },
+          {
+            "status": "draft",
+            "text": "Ifama yenzelwe ukondla ikhaya eliyisebenzayo."
+          },
+          {
+            "status": "draft",
+            "text": "Yintoni ephuma emhlabeni wakho engayityiyo usapho lwakho?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "Fair Share",
+        "body": [
+          "The third ethic is Fair Share.",
+          "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+          "A farmer who sells all his surplus mielies and keeps nothing back for compost or for seed is breaking this one. Nothing goes back.",
+          "A community that fences off a shared spring is breaking it too.",
+          "What does your land get back from you each season?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ukwabelana ngokufanelekileyo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Umgaqo wesithathu kukwabelana ngokufanelekileyo (Fair Share)."
+          },
+          {
+            "status": "draft",
+            "text": "Thatha kuphela oko ukufunayo, ubuyisele intsalela kwinkqubo — imbewu, ukutya, amanzi, ulwazi."
+          },
+          {
+            "status": "draft",
+            "text": "Umfama othengisa yonke intsalela yombona wakhe, engagcini nto yomgquba okanye yembewu, uyawaphula lo mgaqo. Akukho nto ibuyela emva."
+          },
+          {
+            "status": "draft",
+            "text": "Uluntu olubiyela ngocingo umthombo wamanzi owabelwana ngawo luyawaphula nalo."
+          },
+          {
+            "status": "draft",
+            "text": "Umhlaba wakho ufumana ntoni kuwe ngexesha ngalinye lonyaka?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Watch: One Decision, Three Ethics",
+        "body": [
+          "A borehole serves your household. Neighbours ask for water too.",
+          "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+          "Who could help you check the rules and the water supply?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bukela: isigqibo esinye, imigaqo emithathu"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Umngxuma wamanzi usebenzela ikhaya lakho. Abamelwane bacela amanzi nabo."
+          },
+          {
+            "status": "draft",
+            "text": "Yazi kuqala ukuba ukwabelana kuyavunyelwa na. Hlola ukuba umngxuma unokusebenzela bonke abasebenzisi ngaphandle kokuthatha amanzi amaninzi kakhulu. Ukuba ukwabelana kuyavunyelwa kwaye amanzi ayaneleyo, vumelanani ngendlela yokwabelana ngokufanelekileyo uqhubeke ubukele inqanaba lamanzi. Ukukhathalela abantu nokwabelana ngokufanelekileyo kukhokela isivumelwano. Ukukhathalela umhlaba kuthetha ukukhusela umthombo. Ukubukela inqanaba kuphela akukwenzi ukusebenzisa ngaphezulu kukhuseleke okanye kuvunyelwe."
+          },
+          {
+            "status": "draft",
+            "text": "Ngubani onokukunceda ukuhlola imithetho namanzi akhoyo?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "When There Is No Rulebook",
+        "body": [
+          "This is what the ethics are actually for.",
+          "A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.",
+          "The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.",
+          "Build these three into how you think before you build anything on the ground."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Xa kungekho ncwadi yemigaqo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Yiyo le nto imigaqo yokuziphatha ikhona ngokwenene."
+          },
+          {
+            "status": "draft",
+            "text": "Ummelwane ucela ukudlisa iinkomo zakhe emva kwembalela. Isikhukula sonakalisa imisele yakho. Akukho mntu ubhale phantsi impendulo."
+          },
+          {
+            "status": "draft",
+            "text": "Imigaqo yokuziphatha ikunceda ulinganise ezo ndlela zokukhetha uze uchaze isigqibo sakho. Hlola imithetho ubuze imvume apho ifunekayo."
+          },
+          {
+            "status": "draft",
+            "text": "Yakha ezi zithathu kwindlela ocinga ngayo phambi kokuba wakhe nantoni na emhlabeni."
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Twelve Principles",
+        "body": [
+          "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept.",
+          "You do not need all twelve to start. Three useful starting points for this lesson are: observe and interact, catch and store energy, and use edges and value the marginal.",
+          "We will take those three one at a time."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Imigaqo elishumi elinesibini"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "UDavid Holmgren wabeka imigaqo elishumi elinesibini yoyilo kwincwadi ethi Essence of Permaculture. UBill Mollison noDavid Holmgren baqala kunye ingcamango ye-permaculture."
+          },
+          {
+            "status": "draft",
+            "text": "Akufuneki yonke elishumi elinesibini ukuze uqale. Iindawo ezintathu eziluncedo zokuqala kwesi sifundo zezi: bukela uze usebenzisane, bamba uze ugcine amandla, kwaye sebenzisa imiphetho uze ukhathalele okusemaphethelweni."
+          },
+          {
+            "status": "draft",
+            "text": "Siza kuthatha ezo zintathu nganye ngexesha."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Observe and Interact",
+        "body": [
+          "Watch your land through a full season before you commit to major earthworks.",
+          "One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.",
+          "This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
+          "Where does water leave your land? Do you actually know, or are you guessing?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bukela uze usebenzisane"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Jonga umhlaba wakho isizini epheleleyo phambi kokuba wenze imisebenzi emikhulu yokumba umhlaba."
+          },
+          {
+            "status": "draft",
+            "text": "Isaqhwithi esinye sikubonisa umzuzu omnye. Isizini epheleleyo yemvula ikubonisa ipatheni — apho amanzi ahamba khona, apho aqokelelana khona, apho engafiki khona ngaphandle."
+          },
+          {
+            "status": "draft",
+            "text": "Oku kukunceda uyiqonde indawo. Akubonisi ngokwako ukuba umsele ulungile okanye ukhuselekile ukuwakha. Phambi kokumba, hlola umhlaba, ithambeka, indlela amanzi ahla ngayo nendlela ekhuselekileyo yokuphuphuma engayi kubangela ukukhukuliswa komhlaba okanye ithumele amanzi anokonakalisa kubamelwane. Cela umcebisi wasekuhlaleni oqeqeshiweyo ahlole indawo."
+          },
+          {
+            "status": "draft",
+            "text": "Amanzi aphuma phi emhlabeni wakho? Uyazi ngokwenene, okanye uyaqikelela?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Catch and Store Energy",
+        "body": [
+          "Harvest rain, sun and biomass before they leave your property.",
+          "Every one of those arrives free and leaves free. Water runs off, leaves blow away, sun falls on bare ground.",
+          "Compare the cost and work with the benefit on your own farm.",
+          "Name one thing that arrives on your land free and leaves again without being used."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bamba uze ugcine amandla"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Qokelela imvula, ilanga ne-biomass (ingca namagqabi) phambi kokuba zishiye indawo yakho."
+          },
+          {
+            "status": "draft",
+            "text": "Zonke ezo zifika simahla zize zihambe simahla. Amanzi ayabaleka, amagqabi asuswa ngumoya, ilanga lifika emhlabeni ongenanto."
+          },
+          {
+            "status": "draft",
+            "text": "Thelekisa iindleko nomsebenzi nenzuzo kwifama yakho."
+          },
+          {
+            "status": "draft",
+            "text": "Chaza into enye efika emhlabeni wakho simahla ize ihambe kwakhona ingasetyenzisiwe."
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Use Edges and Value the Marginal",
+        "body": [
+          "The edge is where two things meet — a fence line or the strip beside a path.",
+          "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+          "Which edge on your plot is doing nothing at the moment?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Sebenzisa imiphetho ukhathalele okusemaphethelweni"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Umphetho yindawo apho izinto ezimbini zidibana khona — umgca wocingo okanye ucezu lomhlaba olusecaleni kwendlela."
+          },
+          {
+            "status": "draft",
+            "text": "Ezi zinokuba ziindawo eziluncedo zokubukela. Jonga oko sele kukhula kakuhle ecaleni komphetho wakho. Umhlaba ngowo okuxelela into."
+          },
+          {
+            "status": "draft",
+            "text": "Yeyiphi imiphetho esizeni sakho engenzi nto okwangoku?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Use and Value Diversity",
+        "body": [
+          "Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.",
+          "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+          "What would one bad day cost you right now?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Sebenzisa uze ukhathalele ukwahlukahlukana"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sebenzisa uze ukhathalele ukwahlukahlukana. Umonakalo wesichotho kumbona uxhomekeke kwisaqhwithi nakwinqanaba lokukhula kwesityalo. Lo mgaqo awuthembisi ukuba isityalo siya kusinda kuyo yonke imeko."
+          },
+          {
+            "status": "draft",
+            "text": "Ezinye ezimbini ekufanele uzazi: ungavelisi nkunkuma, ukuze intsalela yokutya ibe ngumgquba, umgquba ube ngumhlaba. Kwaye sebenzisa izisombululo ezincinci nezicothayo — ibhakethi inokunkcenkceshela ibhedi ngaphandle kombane kwaphela."
+          },
+          {
+            "status": "draft",
+            "text": "Imini enye embi ingakuxabisa ntoni ngoku?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Integrate Rather Than Segregate",
+        "body": [
+          "Put each element where it works for its neighbours.",
+          "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+          "The same three things, fenced apart, do only their own job.",
+          "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hlanganisa endaweni yokwahlula"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Beka into nganye apho isebenzela abamelwane bayo."
+          },
+          {
+            "status": "draft",
+            "text": "Igadi, imithi yeziqhamo nendawo yeenkukhu zilungiswe ukuze iinkukhu zijikeleze kwiibhedi emva kokuvuna kukuhlanganisa. Gcina iinkukhu kude nezityalo ezivunelwa ukutya. Ubulongwe obutsha bunokuba neentsholongwane. Cela umcebisi wezolimo akuxelele indlela yokujongana nebhedi ngokukhuselekileyo phambi kokuba izityalo ezityiwayo zibuye. Iinkukhu zinokususa izinambuzane zongeze ukutyeba komhlaba endaweni yokuhlala zingenzi nto kwikhola ezinzileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Izinto ezithathu ezifanayo, zahlulwe ngocingo, zenza kuphela umsebenzi wazo."
+          },
+          {
+            "status": "draft",
+            "text": "Khetha imigaqo emibini okanye emithathu ethetha nengxaki yakho enkulu uze uyisebenzise ngamandla. Eminye iya kucaca njengoko uqhubeka."
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Zones: Organising by How Often You Visit",
+        "body": [
+          "Zones run from 0 to 5, and they are about your feet, not your fences.",
+          "Zone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.",
+          "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+          "Zone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Imimandla: ukuhlela ngokokuba utyelela kangakanani"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Imimandla ihamba ukusuka ku-0 ukuya ku-5, kwaye imalunga neenyawo zakho, hayi uthango lwakho."
+          },
+          {
+            "status": "draft",
+            "text": "Ummandla 0 yindlu. Kulo mzekelo, Ummandla 1 ukufutshane nendlu kwaye ubamba imifuno enevumba (herbs) namagqabi esaladi akhiwa rhoqo."
+          },
+          {
+            "status": "draft",
+            "text": "Ummandla 2 yigadi ephambili nendawo yeenkukhu, etyelelwa kanye okanye kabini ngosuku. Ummandla 3 yintsimi ephambili, etyelelwa kanye evekini."
+          },
+          {
+            "status": "draft",
+            "text": "Ummandla 4 uphantse ube yindle — imithi yeziqhamo nokutya kwemfuyo okufuna ingqalelo ngamanye amaxesha. Ummandla 5 uyashiywa ube yindle."
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "Keep Daily Crops Close",
+        "body": [
+          "Herbs you pick often are easier to tend near the house.",
+          "Put them far away, and the long walk may mean you miss a visit. The herbs may be neglected.",
+          "Think about the paths you walk each day.",
+          "What do you visit often that could be closer?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Gcina izityalo zemihla ngemihla kufuphi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Imifuno enevumba oyikha rhoqo ilula ukuyikhathalela kufuphi nendlu."
+          },
+          {
+            "status": "draft",
+            "text": "Ukuba uyibeka kude, ukuhamba ixesha elide kunokuthetha ukuba uphosa utyelelo. Imifuno enevumba isenokungakhathalelwa."
+          },
+          {
+            "status": "draft",
+            "text": "Cinga ngeendlela ozihamba yonke imihla."
+          },
+          {
+            "status": "draft",
+            "text": "Yintoni oyityelela rhoqo enokuba kufuphi?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Zones Plan Your Labour",
+        "body": [
+          "This is the point of the whole exercise.",
+          "Zones help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+          "The more often something needs you, the closer it lives. That can save walking and work over a season.",
+          "Stand at your kitchen door. What can you reach without thinking about it?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Imimandla icwangcisa umsebenzi wakho"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Le yiyo injongo yalo lonke olu qheliso."
+          },
+          {
+            "status": "draft",
+            "text": "Imimandla inceda ukuhlela indawo ngokwamandla owenzayo — ukuhamba, ukuthwala nokuhlola okuzalisa usuku lokwenyani."
+          },
+          {
+            "status": "draft",
+            "text": "Okukufuna rhoqo kuhlala kufuphi. Oko kunganciphisa ukuhamba nomsebenzi ngexesha lonyaka."
+          },
+          {
+            "status": "draft",
+            "text": "Yima emnyango wekhitshi. Yintoni onokuyifikelela ungacingi?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Sectors: The Energies Arriving From Outside",
+        "body": [
+          "Zones come from inside your land. Sectors come from outside it.",
+          "Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.",
+          "Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land.",
+          "Which direction does the weather that damages you come from?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ii-sector: amandla afika evela ngaphandle"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Imimandla ivela ngaphakathi emhlabeni wakho. Ii-sector zivela ngaphandle."
+          },
+          {
+            "status": "draft",
+            "text": "Ilanga, umoya, imvula, izikhukula nomlilo konke kufika kuwela umda wakho nokuba ucwangcise okanye awucwangcisanga."
+          },
+          {
+            "status": "draft",
+            "text": "Jonga apho umoya onamandla uvela khona kwifama yakho. Iirekhodi zesikhululo sezulu esikufutshane zinokukunceda uhlole apho umoya uvela khona. Jonga apho amanzi emvula engena khona aze ahambe phezu komhlaba wakho."
+          },
+          {
+            "status": "draft",
+            "text": "Imozulu ekonakalisayo ivela kweliphi icala?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "heading": "Watch: Shelter Between Wind and Crops",
+        "body": [
+          "Look at this example. The wind comes from the north-west.",
+          "The trees and shrubs stand between that wind and the crops.",
+          "Some air passes through the windbreak. Other air moves over it or around its ends.",
+          "The shelter can reduce wind speed behind it. The design and care of the windbreak matter.",
+          "On your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bukela: isiphephelo phakathi komoya nezityalo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Jonga lo mzekelo. Umoya uvela emntla-ntshona."
+          },
+          {
+            "status": "draft",
+            "text": "Imithi namatyholo zimi phakathi kwalo moya nezityalo."
+          },
+          {
+            "status": "draft",
+            "text": "Omnye umoya udlula kwisithintelo somoya. Omnye uhamba phezu kwaso okanye ujikeleze iziphelo zaso."
+          },
+          {
+            "status": "draft",
+            "text": "Isiphephelo sinokunciphisa isantya somoya ngasemva kwaso. Uyilo nokukhathalelwa kwesithintelo somoya kubalulekile."
+          },
+          {
+            "status": "draft",
+            "text": "Kwisiza sakho, bukela imimoya eyonakalisayo phambi kokuba ukhethe apho uza kutyala khona. Lo mfanekiso asiso isicwangciso sokutyala."
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "heading": "Sketch It And You Have A Design",
+        "body": [
+          "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.",
+          "Then draw arrows in from outside for sun, wind, fire and water.",
+          "That sheet of paper is the skeleton of your design. Everything else in this course hangs on it.",
+          "It does not need to be neat. It needs to be true."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Yizobe, uya kuba nouyilo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Zoba umda wakho. Phawula indlu. Zoba izangqa ngaphandle ngokokuba utyelela kangakanani."
+          },
+          {
+            "status": "draft",
+            "text": "Emva koko zoba iintolo ezingena zisuka ngaphandle zibonisa ilanga, umoya, umlilo namanzi."
+          },
+          {
+            "status": "draft",
+            "text": "Eli phepha lingumqolo woyilo lwakho. Yonke enye into kule khosi ixhomekeke kulo."
+          },
+          {
+            "status": "draft",
+            "text": "Akufuneki licoceke. Kufuneka libe yinyani."
+          }
+        ]
+      }
+    },
+    {
+      "n": 21,
+      "english": {
+        "heading": "Field Assignment",
+        "body": [
+          "Sketch your own zones and sectors on one sheet of paper.",
+          "Mark Zone 0 and Zone 1 first, then work outward as far as your land goes.",
+          "Add an arrow for each energy that arrives from outside, and label where it comes from.",
+          "Photograph the sketch."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Umsebenzi wasentsimini"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Zoba imimandla ne-sector yakho ephepheni elinye."
+          },
+          {
+            "status": "draft",
+            "text": "Phawula Ummandla 0 noMmandla 1 kuqala, emva koko uqhubeke ngaphandle kangangoko umhlaba wakho uya kuhamba."
+          },
+          {
+            "status": "draft",
+            "text": "Yongeza utolo ngalunye lwamandla afika evela ngaphandle, ubhale apho livela khona."
+          },
+          {
+            "status": "draft",
+            "text": "Thatha ifoto yomzobo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 22,
+      "english": {
+        "heading": "Field Action",
+        "body": [
+          "Walk out and check your sketch against the ground.",
+          "Stand at the kitchen door and count what is really in Zone 1 today.",
+          "Find one thing planted further away than how often you use it, and write down where it should move to.",
+          "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Isenzo sasentsimini"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Phuma uyokuthelekisa umzobo wakho nomhlaba."
+          },
+          {
+            "status": "draft",
+            "text": "Yima emnyango wekhitshi ubale oko kukho ngokwenene kuMmandla 1 namhlanje."
+          },
+          {
+            "status": "draft",
+            "text": "Fumana into enye etyalwe kude kunokuba uyisebenzisa kangakanani, ubhale phantsi apho kufuneka isiwe khona."
+          },
+          {
+            "status": "draft",
+            "text": "Emva koko buza omnye ummelwane omdala ukuba umoya ombi kakhulu uvela kweliphi icala, uthelekise impendulo yakhe nolutolo lwakho."
+          }
+        ]
+      }
+    }
+  ]
+}

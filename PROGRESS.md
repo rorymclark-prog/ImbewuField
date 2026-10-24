@@ -52,6 +52,28 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 24 Oct 2026 — isiXhosa phase 3: Studies slide cards and the last English corners (PR #1090)
+- **Studies slide cards:** all 10 modules (240 slides) as isiXhosa silent cards, with the draft above
+  the exact English narration (`docs/narration/<module>.xh.silent-draft.json`).
+  - Built by `scripts/build-xh-deck-release.mjs` into `public/course-decks/<module>/xh-silent/` (69 MB)
+    and `lib/course-deck-release-bindings-xh-data.ts`.
+  - The isiXhosa release has its own registry, so a fault there withdraws only the isiXhosa cards.
+  - `lib/learner-deck-lang.ts` adds xh to the deck-language and narration-choice rules
+    (`course-deck.ts` and `course-audio.ts` are byte-pinned).
+  - Blind back-translation review made 23 repairs, with 0 holds.
+  - No isiXhosa voice: the decks are silent by default, and the learner can choose English source
+    narration.
+  - Tests: `tests/xh-deck-release.test.ts`, and `tests/xh-deck-history-checks.ts` for the media inventory.
+- **Rest of the app:**
+  - Invoice document and money-book CSV in isiXhosa.
+  - isiXhosa month names in `lib/records-months.ts`.
+  - Date lines via `lib/xh-dates.ts`.
+  - The public feedback form gets an isiXhosa notice.
+  - Training feedback and survey answers can be stored as `xh`.
+  - The Studies player and module cards are in isiXhosa.
+- **Record:** `docs/translation-reviews/xhosa-ui-2026-10-23/README.md` (Phase 3) and
+  `docs/study-translation-reviews/isixhosa-2026-10-23/slides/`.
+
 ### 23 Oct 2026 — isiXhosa: the whole app as a labelled machine draft (PR #1090)
 - **Dictionary:** `lib/locales/xh.ts` from 693 to 2,514 of 2,556 keys (98.4%; the rest are codes/names); 185 shipped
   strings fixed for meaning (e.g. "umonakalo" = damage for impact, flipped negation in `challengeLabour`, snow for frost).

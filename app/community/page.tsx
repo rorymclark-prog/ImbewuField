@@ -12,6 +12,7 @@ import {
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
 import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { localeDate } from '@/lib/xh-dates';
 import { useAppLevel } from '@/lib/app-level';
 import { communityEnabled } from '@/lib/community/flag';
 import { uploadPhoto } from '@/lib/db/queries';
@@ -78,7 +79,7 @@ function timeAgo(ts: unknown, lang: string): string {
     if (diff < 60_000) return lang === 'zu' ? 'Manje' : inlineText(lang, 'Just now');
     if (diff < 3_600_000) return lang === 'zu' ? `Emizuzwini engu-${Math.floor(diff / 60_000)} edlule` : inlineTemplate(lang, '{n}m ago', null, { n: Math.floor(diff / 60_000) });
     if (diff < 86_400_000) return lang === 'zu' ? `Emahoreni angu-${Math.floor(diff / 3_600_000)} edlule` : inlineTemplate(lang, '{n}h ago', null, { n: Math.floor(diff / 3_600_000) });
-    return d.toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-ZA', { day: 'numeric', month: 'short' });
+    return localeDate(lang, d, { day: 'numeric', month: 'short' }, lang === 'zu' ? 'zu-ZA' : 'en-ZA');
   } catch { return ''; }
 }
 

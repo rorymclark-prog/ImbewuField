@@ -397,7 +397,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           <FieldLabel>{recordsFill(lang, 'Produce / product')}</FieldLabel>
           <CropSelect
             ariaLabel={recordsFill(lang, 'Produce / product')}
-            language={lang === 'zu' ? 'zu' : 'en'}
+            language={lang === 'zu' ? 'zu' : lang === 'xh' ? 'xh' : 'en'}
             value={form.crop}
             onChange={(crop, cropKey) => setForm((f) => ({ ...f, crop, cropKey }))}
           />
@@ -549,7 +549,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
             <FieldLabel>{recordsFill(lang, 'Produce / product')}</FieldLabel>
             <CropSelect
               ariaLabel={recordsFill(lang, 'Produce / product')}
-              language={lang === 'zu' ? 'zu' : 'en'}
+              language={lang === 'zu' ? 'zu' : lang === 'xh' ? 'xh' : 'en'}
               value={form.crop}
               onChange={(crop, cropKey) => setForm((f) => ({ ...f, crop, cropKey }))}
             />

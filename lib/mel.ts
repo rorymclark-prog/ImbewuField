@@ -5,7 +5,7 @@ export type MelStage = typeof MEL_STAGES[number];
 export type MelQuestion = { id: string; en: string; zu: string; kind: 'choice' | 'number' | 'text'; options?: { value: string; en: string; zu: string }[]; max?: number; private?: boolean };
 export type MelTemplate = { version: 1; stage: MelStage; en: string; zu: string; timing: string; questions: MelQuestion[] };
 export type MelAssessment = { id: string; orgId: string; project: string; title: string; stage: MelStage; version: 1; participantIds: string[]; due: string; state: 'draft' | 'open' | 'closed'; published: boolean; createdAt: string; updatedAt: string; action: string; actionOwner: string; actionDue: string; actionDone: boolean };
-export type MelResponse = { assessmentId: string; participantId: string; orgId: string; version: 1; answers: Record<string, string>; language: 'en' | 'zu'; submittedAt: string; consent: true };
+export type MelResponse = { assessmentId: string; participantId: string; orgId: string; version: 1; answers: Record<string, string>; language: 'en' | 'zu' | 'xh'; submittedAt: string; consent: true };
 export type MelPermission = { manage?: boolean; analyse?: boolean; people?: boolean; training?: boolean };
 export type OrgControls = { funderAccess?: boolean };
 

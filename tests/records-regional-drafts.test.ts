@@ -257,7 +257,12 @@ test('validation text and the draft notice reach the screen for the regional lan
 
 test('the CSV export never carries an unreviewed regional draft: Sesotho, Tshivenda and Xitsonga export English', () => {
   const page = read('app/records/page.tsx');
-  assert.match(page, /const csvLang = \(lang: string\) => \(lang === 'zu' \? 'zu' : 'en'\);/);
+  assert.match(page, /const csvLang = \(lang: string\) => \(lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : 'en'\);/);
+  // isiXhosa is the one regional-lane language that IS exported (headings only; column order and values unchanged).
+  assert.match(page, /\? \['Umhla', 'Inkcazelo', 'Ubungakanani', 'Engenayo', 'Umthombo', 'Ephumayo', 'Hlola'\]/);
+  assert.match(page, /: \['Date', 'Description', 'Qty', 'In', 'Source', 'Out', 'Check'\]/);
+  const csvLine = page.match(/const csvLang = [^\n]*/)![0];
+  for (const held of ['st', 've', 'ts']) assert.doesNotMatch(csvLine, new RegExp(`'${held}'`), `${held} must not reach the CSV`);
   const calls = [...page.matchAll(/(?<!function )exportLedgerCsv\(([^\n]*)/g)].map((m) => m[1]);
   assert.ok(calls.length >= 2, 'both CSV entry points (desktop sheet and phone button) must still exist');
   for (const call of calls) {

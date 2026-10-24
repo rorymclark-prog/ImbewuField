@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test, { after } from 'node:test';
+import { XH_DECK_RELEASE_ROWS } from '../lib/course-deck-release-bindings-xh-data.ts';
 import { readFileSync, writeFileSync, mkdtempSync, mkdirSync, copyFileSync, cpSync, constants, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { tmpdir } from 'node:os';
@@ -106,7 +107,11 @@ async function isolatedGuard() {
     // The wave 17 layer sits on the wave 16 one the same way.
     'tests/wave-17-history-checks.ts','tests/fixtures/student-page-before-wave-17.tsx.txt',
     // The isiXhosa Studies layer sits on the wave 17 one the same way.
-    'tests/xh-studies-history-checks.ts','tests/fixtures/student-page-before-xh-studies.tsx.txt']);
+    'tests/xh-studies-history-checks.ts','tests/fixtures/student-page-before-xh-studies.tsx.txt',
+    // The isiXhosa slide-card layer accounts for its new media in the listing, so the fixture carries it,
+    // its release declarations and every declared card.
+    'tests/xh-deck-history-checks.ts','lib/course-deck-release-bindings-xh-data.ts',
+    ...XH_DECK_RELEASE_ROWS.flatMap(row => row.slides.map(slide => 'public' + slide.imageUrl))]);
   for (const file of files) { if (retiredJpegs.has(file)) continue;const destination=join(fixture,file);mkdirSync(dirname(destination),{recursive:true});copyFileSync(file,destination,constants.COPYFILE_FICLONE); }
   cpSync(folder,join(fixture,folder),{recursive:true});
   cpSync(webpFolder,join(fixture,webpFolder),{recursive:true});

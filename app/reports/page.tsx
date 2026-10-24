@@ -19,6 +19,7 @@ import { designSiteIdFromLocation } from '@/lib/design-studio';
 import styles from '@/components/MelDashboard.module.css';
 import { useLanguage } from '@/lib/i18n';
 import { inlineText } from '@/lib/xh-inline';
+import { formatXhosaDate } from '@/lib/xh-dates';
 
 const ReportView = dynamic(() => import('@/components/ReportView'), { ssr: false });
 
@@ -57,6 +58,9 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
   }
   const choices = reportSiteChoices(reports, places);
   const dateLocale = lang === 'zu' ? 'zu-ZA' : 'en-ZA';
+  // 'xh-ZA' falls back to English in browsers, so isiXhosa writes its own month names (xh-dates).
+  const dayLabel = (value: string | number) => lang === 'xh' ? formatXhosaDate(new Date(value), { day: true, month: 'short', year: true }) : new Date(value).toLocaleDateString(dateLocale);
+  const stampLabel = (value: string | number) => lang === 'xh' ? formatXhosaDate(new Date(value), { day: true, month: 'short', year: true, time: true }) : new Date(value).toLocaleString(dateLocale);
   const hasEnglishSavedReport = reports.some(report => report.lang === 'en');
   if (opened) return <ReportView locationData={opened.location} siteData={opened.siteData} waterData={opened.waterData} savedPlaces={places} savedReport={opened} activePlaceId={places.find(p => designSiteIdFromLocation(p) === designSiteIdFromLocation(opened.location))?.id} onClose={() => setOpened(null)} />;
   // sdesk-04: /reports used to be three floating Menu/Back/Settings pills over the hero, with no
@@ -95,11 +99,11 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
       <div className={styles.grid}>{choices.filter(c => c.place).map(choice => { const place=choice.place!; const latest=choice.reports[0]; const href=`/farmer?site=${encodeURIComponent(place.id)}&openReport=1`; return <article className={styles.card} style={{ maxWidth: 720 }} key={choice.siteId}>
         <MapPin size={28} aria-hidden="true"/><h2 style={{marginTop:14}}>{place.name || t('reportsSavedSiteFallback')}</h2><p style={{fontSize:12,color:'var(--text-secondary)'}}>{Math.abs(place.lat).toFixed(5)}°{place.lat<0?'S':'N'} · {Math.abs(place.lon).toFixed(5)}°{place.lon<0?'W':'E'}</p>
         <SiteCropPlanPreview siteId={choice.siteId} siteName={place.name || t('reportsSavedSiteFallback')} />
-        <p>{latest ? t(choice.reports.length === 1 ? 'reportsOneSavedReportLatest' : 'reportsManySavedReportsLatest').replace('{count}', String(choice.reports.length)).replace('{date}', new Date(latest.savedAt).toLocaleDateString(dateLocale)) : t('reportsReadyForFirstReport')}</p>
+        <p>{latest ? t(choice.reports.length === 1 ? 'reportsOneSavedReportLatest' : 'reportsManySavedReportsLatest').replace('{count}', String(choice.reports.length)).replace('{date}', dayLabel(latest.savedAt)) : t('reportsReadyForFirstReport')}</p>
         <Link href={href} aria-label={t('reportsOpenWorkspaceForSite').replace('{site}', place.name || t('reportsSavedSiteFallback'))} style={{display:'inline-flex',minHeight:44,alignItems:'center',gap:8,fontWeight:600}}><FileText size={18}/>{t('reportsOpenGenerateReport')}<ArrowRight size={16}/></Link>
         {latest&&<p><button disabled={opening} onClick={()=>void openSaved(latest)}>{opening ? t('reportsOpening') : t('reportsReadLatest')}</button></p>}
       </article>; })}</div></>}
-      {view==='reports'&&<><h2>{t('reportsSavedReports')}</h2><p>{t('reportsEarlierReportsDescription')}</p>{!reports.length&&<p>{t('reportsNoSavedReports')}</p>}{choices.filter(c=>c.reports.length).map(choice=><section className={styles.card} style={{marginBottom:16}} key={choice.siteId}><h3>{choice.place?.name??t('reportsUnlinkedSiteHeading')}</h3>{!choice.place&&<p>{t('reportsRemovedPinNote')}</p>}{choice.reports.map(report=><p key={report.id}><button disabled={opening} onClick={()=>void openSaved(report)}>{report.name} · {new Date(report.savedAt).toLocaleString(dateLocale)}</button></p>)}</section>)}</>}
+      {view==='reports'&&<><h2>{t('reportsSavedReports')}</h2><p>{t('reportsEarlierReportsDescription')}</p>{!reports.length&&<p>{t('reportsNoSavedReports')}</p>}{choices.filter(c=>c.reports.length).map(choice=><section className={styles.card} style={{marginBottom:16}} key={choice.siteId}><h3>{choice.place?.name??t('reportsUnlinkedSiteHeading')}</h3>{!choice.place&&<p>{t('reportsRemovedPinNote')}</p>}{choice.reports.map(report=><p key={report.id}><button disabled={opening} onClick={()=>void openSaved(report)}>{report.name} · {stampLabel(report.savedAt)}</button></p>)}</section>)}</>}
     </>}
   </div></main>
     <TabBar hideAtDesktop />

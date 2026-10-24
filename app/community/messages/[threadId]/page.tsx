@@ -9,6 +9,7 @@ import { Loader2, Send, Flag, MoreHorizontal } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
 import { inlineText } from '@/lib/xh-inline';
+import { localeDate } from '@/lib/xh-dates';
 import { useAppLevel } from '@/lib/app-level';
 import { communityEnabled } from '@/lib/community/flag';
 import { getThread, subscribeMessages, sendMessage, reportContent } from '@/lib/db/community-queries';
@@ -25,7 +26,7 @@ function timeAgo(ts: unknown, lang: string): string {
     if (diff < 60_000) return lang === 'zu' ? 'Manje' : inlineText(lang, 'now');
     if (diff < 3_600_000) return lang === 'zu' ? `Emizuzwini engu-${Math.floor(diff / 60_000)} edlule` : `${Math.floor(diff / 60_000)}m`;
     if (diff < 86_400_000) return lang === 'zu' ? `Emahoreni angu-${Math.floor(diff / 3_600_000)} edlule` : `${Math.floor(diff / 3_600_000)}h`;
-    return d.toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-ZA', { day: 'numeric', month: 'short' });
+    return localeDate(lang, d, { day: 'numeric', month: 'short' }, lang === 'zu' ? 'zu-ZA' : 'en-ZA');
   } catch { return ''; }
 }
 

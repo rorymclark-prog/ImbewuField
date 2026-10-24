@@ -48,6 +48,7 @@ import { APP_HEADER_STYLE } from '@/lib/app-header';
 import { useAppLevel } from '@/lib/app-level';
 import { formatStaffDate } from '@/lib/format-figures';
 import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { formatXhosaDate } from '@/lib/xh-dates';
 
 const tr = (lang: string, en: string, zu: string) => inlineText(lang, en, zu);
 const MENTOR_STATUS_ZU: Record<EnrollmentStatus, string> = {
@@ -63,6 +64,9 @@ function localizedDueDate(dueAt: string | null, today: string, lang: string): st
     if (overdue) return inlineTemplate(lang, '{n} days overdue', null, { n: overdue[1] });
     const soon = en.match(/^Due in (\d+) days$/);
     if (soon) return inlineTemplate(lang, 'Due in {n} days', null, { n: soon[1] });
+    // A far-off date: formatDue has no isiXhosa month names (browsers have no 'xh-ZA' pack), so
+    // write it day-month-year like the isiZulu line below, from the app's own month names.
+    if (dueAt && /^Due \d/.test(en)) return inlineTemplate(lang, 'Due {date}', null, { date: formatXhosaDate(new Date(`${dueAt}T00:00:00`), { day: true, month: 'short', year: true }) });
     return inlineText(lang, en);
   }
   if (lang !== 'zu') return formatDue(dueAt, today, lang);

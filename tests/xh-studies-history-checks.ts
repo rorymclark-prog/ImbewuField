@@ -6,7 +6,8 @@ import { fileURLToPath } from 'node:url';
 
 // isiXhosa Studies (23 Oct 2026): the Studies page joins isiXhosa to the source-paired regional
 // lesson path (Sesotho, Xitsonga, Tshivenda) — its draft badge, notices, module-card English
-// source line and image-description label name isiXhosa. The wave 17 layer pins the page
+// source line and image-description label name isiXhosa, and its module cards announce the isiXhosa
+// slide cards (lib/course-deck-release-bindings-xh-data.ts). The wave 17 layer pins the page
 // byte-exact, so this layer keeps the exact wave 17 bytes as a fixture (the wave 17 layer and every
 // older owner see their predecessor through it), pins the live file byte-exact itself and holds the
 // named markers that distinguish the two.
@@ -18,12 +19,12 @@ const files: Record<string, Row> = {
   'app/student/page.tsx': {
     beforePath: 'tests/fixtures/student-page-before-xh-studies.tsx.txt',
     beforeSha256: 'a361890bfdb03c22e74a01b61516f759cf93225ca20b83edf422aa37a9712272',
-    afterSha256: '3909581e32d2b38916acc4f4421fa35c61e31fc1d02eff4ebc2ec3162bddbc15',
-    afterBytes: 89149,
+    afterSha256: '7e5644602e64bf44427f3c94f9c5ea1c7aed40b61250f0c1885901504387df77',
+    afterBytes: 89749,
     // Present in the wave 17 file, absent from the isiXhosa one.
     gone: ["const SOURCE_PAIRED_LANGUAGES = new Set(['st', 've', 'ts']);", "{regionalDraft && lang !== 've' && <div role=\"status\""],
     // Absent from the wave 17 file, present in the isiXhosa one.
-    arrived: ["const SOURCE_PAIRED_LANGUAGES = new Set(['st', 've', 'ts', 'xh']);", 'Unreviewed isiXhosa AI draft.', "<span lang=\"xh\">{t('xhosaUiDraftNotice')}</span>", "lang === 'xh' ? 'isiXhosa AI draft · review pending'"],
+    arrived: ["const SOURCE_PAIRED_LANGUAGES = new Set(['st', 've', 'ts', 'xh']);", 'Unreviewed isiXhosa AI draft.', "<span lang=\"xh\">{t('xhosaUiDraftNotice')}</span>", "lang === 'xh' ? 'isiXhosa AI draft · review pending'", "'Slides: isiXhosa AI draft + English source'", "inlineText(lang, 'Loading your account…')"],
   },
 };
 const beforeFiles = new Map<string, Buffer>();

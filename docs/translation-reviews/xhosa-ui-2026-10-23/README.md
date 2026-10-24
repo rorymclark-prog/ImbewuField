@@ -72,10 +72,58 @@ Reviewers found these in the English lessons; the drafts follow the English fait
 - `soil-health-l2` quiz 1 option 0 says "Bark" in a question about seed pods.
 - `intro-permaculture-l2`: the hail-damage-to-maize sentence does not fit its paragraph.
 
+## Phase 3 (24 Oct 2026): Studies slide cards, money charts, invoice, CSV, dates, feedback forms
+
+### Studies slide cards
+- All 10 modules (240 slides) now have isiXhosa slide cards. Each card shows the isiXhosa draft above
+  the exact English narration, over the illustrated English slide. The card is labelled
+  "ISIXHOSA AI DRAFT / NOT REVIEWED". This is the same silent-card format as the Sesotho Introduction
+  release.
+- Drafts: `docs/narration/<module>.xh.silent-draft.json`, validated by
+  `scripts/paired-draft-slides.mjs` against the English narration.
+- Build: `node --import ./tests/register-alias.mjs scripts/build-xh-deck-release.mjs`. It renders
+  the cards to `public/course-decks/<module>/xh-silent/` and regenerates
+  `lib/course-deck-release-bindings-xh-data.ts` (pair, text and image digests, plus offline sizes).
+- Rendering here used DejaVu fonts. The other languages' cards were rendered with the Mac faces
+  (Georgia, Avenir), so the type looks plainer, but the layout and checks are the same.
+- **Blind back-translation review:** five reviewers, none reviewing their own module, read the
+  isiXhosa first and wrote back-translations before seeing the English. They found 23 repairs and 0
+  holds. Examples:
+  - compost: "pet waste" had become all domestic-animal manure.
+  - compost: "a hot centre" had become "a medium temperature".
+  - grey water: "contact" had become "communication".
+  - seed selection: "reject" had become "breed from".
+  - drainage: "freely draining" had become "water rises".
+  - One reviewer swapped iintsholongwane (germs) for the isiZulu amagciwane. That swap was reverted.
+- Packet: `docs/study-translation-reviews/isixhosa-2026-10-23/slides/` (briefs, back-translations,
+  review files).
+- **Narration audio:** there is no isiXhosa voice. As for Sesotho, Xitsonga and Tshivenda, the deck
+  is silent by default, and the learner can choose the English source narration.
+- **Wiring:**
+  - The isiXhosa release is a separate registry in `lib/course-deck-release-bindings-registry.ts`. A
+    fault there withdraws only the isiXhosa cards, never the Sesotho release.
+  - `lib/learner-deck-lang.ts` adds isiXhosa to the deck-language and narration-choice rules.
+    `lib/course-deck.ts` and `lib/course-audio.ts` are byte-pinned, so they are left unchanged.
+  - The new media is accounted for by `tests/xh-deck-history-checks.ts`.
+
+### Rest of the app
+- Money charts, receipt and harvest graphs:
+  - These already read the money-book drafts.
+  - The "English source" tooltips now show for isiXhosa too.
+  - `lib/records-months.ts` has isiXhosa month names for chart axes, ledger dates and the CSV.
+- Invoice document: `DOCUMENT_COPY.xh`, with isiXhosa dates, units and payment labels. This works the
+  same way as isiZulu.
+- Money-book CSV export: isiXhosa column headings. Column order and values are unchanged.
+- Dates: `lib/xh-dates.ts` writes day, month and year with isiXhosa month names, because browsers'
+  xh-ZA locale falls back to English. It is used in community, contact inbox, reports, saved
+  reports, mentor due dates and staff dates.
+- Forms:
+  - The public feedback form gets the isiXhosa draft notice and paired labels.
+  - Staff training feedback can be recorded in isiXhosa (`FEEDBACK_LANGUAGES`).
+  - Participant survey answers can be saved as `xh`.
+
 ## Still English for isiXhosa readers
-- Slides with burned-in text and lesson narration audio (no isiXhosa media; producing them needs the slide
-  renderer's fonts and a TTS/recording pass).
-- The printed or PDF invoice a buyer receives (English by design, as for every language).
-- The staff training-feedback form, whose stored answer language is validated as English or isiZulu
-  (`lib/programme-evidence.ts`) — adding isiXhosa there is a data-model change.
-- `toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-ZA')` date lines outside Home and the journal.
+- Lesson narration audio. No isiXhosa recording or TTS voice exists; the decks are silent or use the
+  optional English source voice.
+- Numeric-only dates printed with no month word, such as `toLocaleDateString(dateLocale)` with no
+  options. The numbers read the same either way.

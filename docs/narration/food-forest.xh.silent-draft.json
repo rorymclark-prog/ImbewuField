@@ -1,0 +1,677 @@
+{
+  "language": "xh",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Food Forest Design",
+        "body": [
+          "Build a living food system in layers.",
+          "Grow food from tall canopy down to root crops.",
+          "Use vertical space, soil life, shade, and moisture together.",
+          "Learn how to design and establish a food forest for your farm."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Uyilo lwehlathi lokutya"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Yakha inkqubo yokutya ephilayo ngemigangatho."
+          },
+          {
+            "status": "draft",
+            "text": "Lima ukutya ukusuka kwisithsaba somthi ophakamileyo ukuya kwizityalo ezingcambu."
+          },
+          {
+            "status": "draft",
+            "text": "Sebenzisa indawo ethe nkqo, ubomi bomhlaba, umthunzi nokufuma kunye."
+          },
+          {
+            "status": "draft",
+            "text": "Funda ukuyila nokuseka ihlathi lokutya kwifama yakho."
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Why This Matters",
+        "body": [
+          "A food forest grows useful plants at different heights.",
+          "Good design can combine harvests, shade and soil cover. Plants still compete for light, water and nutrients.",
+          "Plan the care you can provide and watch how the planting changes."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kutheni oku kubalulekile"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ihlathi lokutya likhulisa izityalo eziluncedo ngeendlela ezahlukeneyo zobude."
+          },
+          {
+            "status": "draft",
+            "text": "Uyilo olulungileyo lunokudibanisa izivuno, umthunzi nesigqubuthelo somhlaba. Izityalo zisakhuphisana ngokukhanya, amanzi nezondlo."
+          },
+          {
+            "status": "draft",
+            "text": "Cwangcisa inkathalo onokuyinika uze ujonge indlela ukutyala okutshintsha ngayo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "Name the seven commonly described food-forest layers.",
+          "Check plants against your site, local ecology and the approved project list.",
+          "Plan establishment and ongoing care without assuming a fixed date for harvest or canopy closure."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Iziphumo zokufunda"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Zibize ngamagama imigangatho esixhenxe echazwa rhoqo yehlathi lokutya."
+          },
+          {
+            "status": "draft",
+            "text": "Hlola izityalo ngokuhambelana nendawo yakho, indalo yasekuhlaleni noluhlu lweprojekthi olwamkelweyo."
+          },
+          {
+            "status": "draft",
+            "text": "Cwangcisa ukusekwa nenkathalo eqhubekayo ngaphandle kokucinga umhla othile wesivuno okanye wokuvaleka kwesithsaba."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "The Forest Uses Every Layer",
+        "body": [
+          "An indigenous forest fills the space from the highest branches to the roots.",
+          "Different plants use the light and moisture available at their level.",
+          "A food forest copies this pattern with productive species.",
+          "The result is not one crop in one row, but many useful layers growing together."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ihlathi lisebenzisa wonke umgangatho"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ihlathi lomdabu lizalisa indawo ukusuka kumasebe aphezulu ukuya kwiingcambu."
+          },
+          {
+            "status": "draft",
+            "text": "Izityalo ezahlukeneyo zisebenzisa ukukhanya nokufuma okukhoyo kumgangatho wazo."
+          },
+          {
+            "status": "draft",
+            "text": "Ihlathi lokutya liyayixelisa le ndlela ngezityalo ezivelisayo."
+          },
+          {
+            "status": "draft",
+            "text": "Isiphumo asiyiyo isityalo esinye kumqolo omnye, kodwa yimigangatho emininzi eluncedo ekhula ndawonye."
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "Watch: Read the Seven Planting Layers",
+        "body": [
+          "Find seven planting layers.",
+          "Tall trees form the canopy.",
+          "Smaller trees grow below it.",
+          "Then look for woody shrubs.",
+          "Herbaceous plants have soft stems.",
+          "Ground cover spreads across the surface.",
+          "Root crops grow below the surface.",
+          "Climbers use suitable supports.",
+          "These are planning layers, not fixed height bands. Choose plants and spacing for your site."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bukela: funda imigangatho esixhenxe yokutyala"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Fumana imigangatho esixhenxe yokutyala."
+          },
+          {
+            "status": "draft",
+            "text": "Imithi emide yenza isithsaba."
+          },
+          {
+            "status": "draft",
+            "text": "Imithi emincinci ikhula ngaphantsi kwaso."
+          },
+          {
+            "status": "draft",
+            "text": "Emva koko khangela amatyholo anomthi."
+          },
+          {
+            "status": "draft",
+            "text": "Izityalo ezingenamthi zinemiqu ethambileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Izityalo ezigubungela umhlaba zisasazeka kumphezulu."
+          },
+          {
+            "status": "draft",
+            "text": "Izityalo ezingcambu zikhula ngaphantsi komphezulu."
+          },
+          {
+            "status": "draft",
+            "text": "Izityalo ezinyukayo zisebenzisa izixhasi ezifanelekileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Le yimigangatho yocwangciso, ayizizo iibhanti zobude ezimiselweyo. Khetha izityalo nokwahlukana kwazo ngokwendawo yakho."
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "The Seven Layers",
+        "body": [
+          "Think of tall canopy, smaller trees, shrubs and herbaceous plants.",
+          "Ground cover protects the surface, root crops grow below it, and climbers use suitable supports.",
+          "The heights and spacing depend on the plants and site. These are planning layers, not fixed height bands."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Imigangatho esixhenxe"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Cinga ngesithsaba somthi esiphakamileyo, imithi emincinci, amatyholo nezityalo ezingenamthi ezithambileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Izityalo ezigubungela umhlaba ziwukhusela ngaphezulu, izityalo ezingcambu zikhula ngaphantsi kwawo, kwaye izityalo ezinyukayo zisebenzisa izixhasi ezifanelekileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Ubude nokwahlukana kwezityalo kuxhomekeke kwizityalo nakwindawo. Le yimigangatho yocwangciso, ayizizo iibhanti zobude ezimiselweyo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Read a Layered Planting Example",
+        "body": [
+          "The original Highveld example includes Wild Fig or pecan above lemon, naartjie and black mulberry.",
+          "It places Cape gooseberry and Wild Medlar with vegetables, wild garlic, sweet potato and granadilla.",
+          "Treat this as a layout example, not permission to plant every species. Check identity, frost tolerance, mature size and local restrictions first."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Funda umzekelo wokutyala okunemigangatho"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Umzekelo wokuqala we-Highveld uquka i-Wild Fig okanye i-pecan ngaphezu kwe-lemon, i-naartjie ne-black mulberry."
+          },
+          {
+            "status": "draft",
+            "text": "Ubeka i-Cape gooseberry ne-Wild Medlar kunye nemifuno, i-wild garlic, ubhatata ne-granadilla."
+          },
+          {
+            "status": "draft",
+            "text": "Thatha oku njengomzekelo wocwangciso, hayi imvume yokutyala zonke iintlobo. Qala ngokuqinisekisa ukuba sisiphi isityalo, ukumelana neqabaka, ubungakanani xa sele sikhulile, nezithintelo zasekuhlaleni."
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "Care Changes as Plants Grow",
+        "body": [
+          "Young plants need establishment care: moisture checks, weed control and protection from damage.",
+          "As plants grow, shade and leaf litter change conditions below them.",
+          "Check competition and access. Prune, thin or adjust lower planting when observations call for it; the system does not become care-free on a fixed birthday."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Inkathalo iyatshintsha njengoko izityalo zikhula"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Izityalo ezincinci zidinga ukunyanyekelwa ekusekweni kwazo: ukuhlola ukufuma, ukulawula ukhula nokukhuselwa ekonzakaleni."
+          },
+          {
+            "status": "draft",
+            "text": "Njengoko izityalo zikhula, umthunzi namagqabi awileyo ayaguqula iimeko ezingaphantsi kwazo."
+          },
+          {
+            "status": "draft",
+            "text": "Hlola ukukhuphisana nendlela yokufikelela. Sika, nciphisa okanye hlengahlengisa ukutyala kwemigangatho engaphantsi xa oko ukubonayo kufuna; inkqubo ayiphelelwa kukudinga ukunyanyekelwa ngomhla othile omiselweyo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Choose for Your Site",
+        "body": [
+          "Check local rainfall, frost, heat, soil and water availability before choosing plants.",
+          "Mango can suffer frost damage. Quince needs suitable winter chilling for reliable cropping.",
+          "A regional label or a sheltered corner is not enough. Confirm each plant and variety with reliable local guidance."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khetha ngokwendawo yakho"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Hlola imvula, iqabaka, ubushushu, umhlaba nokufumaneka kwamanzi kwindawo yakho ngaphambi kokukhetha izityalo."
+          },
+          {
+            "status": "draft",
+            "text": "I-mango inokonakaliswa liqabaka. I-quince idinga ubusika obubandayo ngokufanelekileyo ukuze izale ngokuthembekileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Igama lommandla okanye ikona ekhuselekileyo ayiyonto eyaneleyo. Qinisekisa isityalo ngasinye nohlobo ngalunye ngesikhokelo esithembekileyo sasekuhlaleni."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Watch: Match the Species to the Climate",
+        "body": [
+          "Climate decides which species belong.",
+          "On the Highveld, choose cold-tolerant trees and shrubs; on the KZN coast and Lowveld, choose warm-climate species.",
+          "Match every plant to your site."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bukela: dibanisa iintlobo nemozulu"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Imozulu igqiba ukuba zeziphi iintlobo ezifanelekileyo."
+          },
+          {
+            "status": "draft",
+            "text": "EHighveld, khetha imithi namatyholo anyamezela ukubanda; elunxwemeni lwe-KZN nase-Lowveld, khetha iintlobo zeendawo ezishushu."
+          },
+          {
+            "status": "draft",
+            "text": "Dibanisa isityalo ngasinye nendawo yakho."
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Check the Highveld Examples",
+        "body": [
+          "The original list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry.",
+          "This list is not a blanket recommendation. Check each plant against frost, soil, mature size and the approved local species list.",
+          "Keep existing legal and project restrictions in force. Do not plant from a picture alone."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hlola imizekelo yeHighveld"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Uluhlu lokuqala luquka pecan, walnut nekhiwane lomdabu; apple, pear, plum, black mulberry ne-loquat; rosemary, Wild Medlar, Cape gooseberry ne-Barbados cherry."
+          },
+          {
+            "status": "draft",
+            "text": "Olu luhlu aluyiyo ingcebiso yazo zonke. Hlola isityalo ngasinye ngokuhambelana neqabaka, umhlaba, ubungakanani xa sele sikhulile noluhlu lweentlobo ezivunyiweyo zasekuhlaleni."
+          },
+          {
+            "status": "draft",
+            "text": "Gcina izithintelo ezikhoyo zomthetho nezeprojekthi zisebenza. Ungatyali ngokubona ifoto kuphela."
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Check the Warm-Region Examples",
+        "body": [
+          "The original warm-region examples include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga.",
+          "Marula, Mopane and baobab also appear in the Limpopo examples. Local suitability still needs checking.",
+          "Useful trees are not automatically edible. Confirm identity and safe use; a landscape photograph is not a food-identification guide."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hlola imizekelo yeendawo ezishushu"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Imizekelo yokuqala yeendawo ezishushu iquka mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry ne-Wild Dagga."
+          },
+          {
+            "status": "draft",
+            "text": "Marula, Mopane ne-baobab nazo zivela kwimizekelo yaseLimpopo. Ukufaneleka kwindawo yakho kusafuna ukuhlolwa."
+          },
+          {
+            "status": "draft",
+            "text": "Imithi eluncedo ayizizo ngokuzenzekelayo ezityiwayo. Qinisekisa ukuba sisiphi isityalo nokusetyenziswa kwaso ngokukhuselekileyo; ifoto yembonakalo yomhlaba ayisosikhokelo sokuchonga ukutya."
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Include Locally Appropriate Indigenous Plants",
+        "body": [
+          "Locally appropriate indigenous plants can support habitat as part of the design.",
+          "Choose for your ecosystem and the useful role of each plant. There is no sourced percentage target in this lesson.",
+          "Protect existing natural vegetation. Do not turn healthy grassland into a food forest simply because trees are useful elsewhere."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Quka izityalo zomdabu ezifanelekileyo kwindawo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Izityalo zomdabu ezifanelekileyo kwindawo zinokuxhasa indawo yokuhlala yezilwanyana zasendle njengenxalenye yoyilo."
+          },
+          {
+            "status": "draft",
+            "text": "Khetha ngokwendalo yendawo yakho nangendima eluncedo yesityalo ngasinye. Akukho njongo yepesenti esekelwe kumthombo othembekileyo kwesi sifundo."
+          },
+          {
+            "status": "draft",
+            "text": "Khusela izityalo zendalo ezikhoyo. Musa ukuguqula amathafa aphilileyo abe lihlathi lokutya ngenxa nje yokuba imithi iluncedo kwenye indawo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Plan the Sequence for the Site",
+        "body": [
+          "Start by checking the site, water supply and care available. Protect exposed soil early.",
+          "Temporary support plants may provide shelter and useful cut material where appropriate.",
+          "Main trees and lower layers can be introduced as conditions allow. Ground cover need not wait until the end; avoid plants competing with young trees."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Cwangcisa ulandelelwano lwendawo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Qala ngokuhlola indawo, unikezelo lwamanzi nokhathalelo olukhoyo. Khusela umhlaba ongagqunyiwe kwangoko."
+          },
+          {
+            "status": "draft",
+            "text": "Izityalo zenkxaso zethutyana zinokunika indawo yokukhuselwa nezinto eziluncedo ezisikiweyo apho kufanelekileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Imithi ephambili nemigangatho esezantsi inokufakwa njengoko iimeko zivuma. Izityalo ezigubungela umhlaba akuyomfuneko ukuba zilinde de kube sekupheleni; phepha ukuba izityalo zikhuphisane nemithi emincinci."
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Watch: Care for a Young Food Forest",
+        "body": [
+          "This picture shows a young food forest. Start with an area you can care for.",
+          "Protect exposed soil early. Here, loose mulch covers the soil.",
+          "Keep mulch away from the trunk. Notice the clear space at the tree's base.",
+          "Watch for competition. The farmer is removing grass near the young tree.",
+          "Before adding more plants, check moisture, shelter and the care you can provide. Let what you observe guide your next step."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bukela: nyamekela ihlathi lokutya eselula"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Esi sithombe sibonisa ihlathi lokutya eselula. Qala ngendawo onokuyikhathalela."
+          },
+          {
+            "status": "draft",
+            "text": "Khusela umhlaba ongagqunyiwe kwangoko. Apha, ingca yokugquma ekhululekileyo igubungela umhlaba."
+          },
+          {
+            "status": "draft",
+            "text": "Gcina ingca yokugquma ikude nesiqu. Qaphela indawo ecocekileyo esiqwini somthi."
+          },
+          {
+            "status": "draft",
+            "text": "Qaphela ukukhuphisana. Umfama uyasusa ingca ecaleni komthi oselula."
+          },
+          {
+            "status": "draft",
+            "text": "Phambi kokongeza izityalo ezininzi, hlola ukufuma, indawo ekhuselekileyo nenkathalo onokuyinika. Vumela oko ukubonayo kukhokele inyathelo olilandelayo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "Prepare a Manageable First Area",
+        "body": [
+          "Begin with an area you can water and maintain. Check existing vegetation before clearing.",
+          "Where appropriate, plain cardboard under suitable mulch can suppress unwanted growth. Keep water able to enter the soil and leave trunks clear.",
+          "Plan spacing from mature plant size. Prepare nursery plants for the next suitable planting opportunity."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Lungiselela indawo yokuqala elawulekayo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Qala ngendawo onokuyinkcenkceshela uyigcine. Hlola izityalo ezikhoyo ngaphambi kokucoca."
+          },
+          {
+            "status": "draft",
+            "text": "Apho kufanelekileyo, ikhadibhodi eqhelekileyo phantsi kwengca yokugquma efanelekileyo inganciphisa ukukhula okungafunwayo. Gcina amanzi anokungena emhlabeni uzishiye iziqu zemithi zicocekile."
+          },
+          {
+            "status": "draft",
+            "text": "Cwangcisa ukwahlukana ngokobungakanani bezityalo xa sele zikhulile. Lungiselela izityalo zasenkulisweni (i-nursery) kwithuba elilandelayo elifanelekileyo lokutyala."
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Adjust as the Trees Grow",
+        "body": [
+          "Watch how shade, roots and available water affect neighbouring plants.",
+          "Comfrey and wild garlic appear in the original underplanting example; check their local suitability before use.",
+          "Prune or thin support plants when needed, using methods suited to each species. Suitable clean cuttings can return as mulch. Do not wait for a fixed year if competition is already harming plants."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hlengahlengisa njengoko imithi ikhula"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Khangela indlela umthunzi, iingcambu namanzi akhoyo achaphazela ngayo izityalo ezingabamelwane."
+          },
+          {
+            "status": "draft",
+            "text": "I-comfrey ne-wild garlic zivela kumzekelo wokuqala wokutyala ngaphantsi; hlola ukufaneleka kwazo kwindawo yakho ngaphambi kokuzisebenzisa."
+          },
+          {
+            "status": "draft",
+            "text": "Sika okanye nciphisa izityalo zenkxaso xa kuyimfuneko, usebenzisa iindlela ezifanelekileyo kuhlobo ngalunye. Izinqumlo ezicocekileyo ezifanelekileyo zinokubuyela njengengca yokugquma. Ungalindi unyaka othile omiselweyo ukuba ukukhuphisana sele kuzonakalisa izityalo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Plant with Reliable Moisture",
+        "body": [
+          "Choose a planting opportunity when soil moisture and expected weather support establishment.",
+          "Rain can help, but check the root zone and keep a backup watering plan. Avoid planting into waterlogged ground.",
+          "Check young plants after planting. Harvest timing and outside inputs depend on the species, site and care; there is no guaranteed fifth-year result."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Tyala ngokufuma okuthembekileyo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Khetha ithuba lokutyala xa ukufuma komhlaba nemozulu elindelekileyo zixhasa ukusekwa."
+          },
+          {
+            "status": "draft",
+            "text": "Imvula inganceda, kodwa hlola indawo yeengcambu kwaye uhlale unesicwangciso sokunkcenkceshela esilindileyo. Phepha ukutyala emhlabeni ozele ngamanzi."
+          },
+          {
+            "status": "draft",
+            "text": "Hlola izityalo ezincinci emva kokutyala. Ixesha lokuvuna nezinto ezongezwa zivela ngaphandle zixhomekeke kuhlobo lwesityalo, indawo nokhathalelo; akukho sivuno siqinisekisiweyo kunyaka wesihlanu."
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "heading": "Field Assignment",
+        "body": [
+          "Draw the layers for your own proposed planting. Mark access, water and existing natural vegetation.",
+          "Record local frost, rain, soil and available care.",
+          "For each plant from the approved list, record its intended role and the local advice still needed before planting."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Umsebenzi wasentsimini"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Zoba imigangatho yokutyala okucetywayo kwakho. Phawula indlela yokufikelela, amanzi nezityalo zendalo ezikhoyo."
+          },
+          {
+            "status": "draft",
+            "text": "Rekhoda iqabaka, imvula, umhlaba nenkathalo ekhoyo kwindawo yakho."
+          },
+          {
+            "status": "draft",
+            "text": "Kwisityalo ngasinye esikuluhlu olwamkelweyo, rekhoda indima ekujoliswe kuyo nengcebiso yasekuhlaleni eseyimfuneko ngaphambi kokutyala."
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "heading": "Field Action",
+        "body": [
+          "Inspect a manageable area and choose one next step.",
+          "Protect exposed soil, check plant suitability, or prepare nursery plants.",
+          "Plant only when conditions and follow-up care are suitable. Return to the same spot to check survival, soil moisture and competition."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Isenzo sasentsimini"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Hlola indawo elawulekayo ukhethe inyathelo elinye elilandelayo."
+          },
+          {
+            "status": "draft",
+            "text": "Khusela umhlaba ongagqunyiwe, hlola ukufaneleka kwesityalo, okanye ulungiselele izityalo zenkulisa."
+          },
+          {
+            "status": "draft",
+            "text": "Tyala kuphela xa iimeko nenkathalo elandelayo zifanelekile. Buyela kuloo ndawo uhlole ukusinda, ukufuma komhlaba nokukhuphisana."
+          }
+        ]
+      }
+    }
+  ]
+}

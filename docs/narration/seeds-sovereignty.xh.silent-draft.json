@@ -1,0 +1,1161 @@
+{
+  "language": "xh",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Seeds and Seed Sovereignty",
+        "body": [
+          "Seed is where the next season begins.",
+          "When your household can save, store and share good seed, it carries more than a crop forward. It also carries the freedom to choose.",
+          "In this lesson, you will follow seed from the parent plant to the packet, the germination test and a neighbour’s hand.",
+          "Think about the crops in your area. Which ones do you already save seed from? Which seed do you buy? Which seed do you exchange?",
+          "Try to name at least one crop whose seed is already being saved in your area."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Imbewu nolawulo lwembewu"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Imbewu yeyona ndawo isizini elandelayo eqala kuyo."
+          },
+          {
+            "status": "draft",
+            "text": "Xa umzi wakho unokulondoloza, ugcine yaye wabelane ngembewu entle, uthwala ngaphezu kwesivuno. Uthwala nenkululeko yokukhetha."
+          },
+          {
+            "status": "draft",
+            "text": "Kwesi sifundo, uya kulandela imbewu isuka kwisityalo somzali ukuya kwipakethi, kuvavanyo lokuhluma nasesandleni somamelwane."
+          },
+          {
+            "status": "draft",
+            "text": "Cinga ngezityalo zendawo yakho. Zeziphi ozilondoloza imbewu zazo kwangoku? Yeyiphi imbewu oyithengayo? Yeyiphi imbewu oyitshintshisanayo?"
+          },
+          {
+            "status": "draft",
+            "text": "Zama ukuchaza isityalo esinye ubuncinane esele imbewu yaso ilondolozwa kwindawo yakho."
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Why Saving Seed Matters",
+        "body": [
+          "Saving seed does not mean rejecting all bought seed. It means building practical choices.",
+          "Each crop you learn to save well removes one repeated purchase. It also begins a local record of what performs well in your soil and your season.",
+          "Think about the seed you buy again and again. Which repeated seed purchase costs your household the most each year?",
+          "Choose one crop from your planting list. Make it your practical starting point for seed saving. Do not try to save everything at once."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kutheni ukulondoloza imbewu kubalulekile"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ukulondoloza imbewu akuthethi ukwala yonke imbewu ethengiweyo. Kuthetha ukwakha ukhetho olusebenzayo."
+          },
+          {
+            "status": "draft",
+            "text": "Isityalo ngasinye ofunda ukusilondoloza kakuhle sisusa ukuthenga okunye okuphindaphindwayo. Siqala nerekhodi lasekuhlaleni lokuba yintoni esebenza kakuhle emhlabeni wakho nakwisizini yakho."
+          },
+          {
+            "status": "draft",
+            "text": "Cinga ngembewu oyithenga kwakhona nakwakhona. Kukuthenga imbewu kweyiphi okuphindaphindwayo okubiza umzi wakho kakhulu ngonyaka?"
+          },
+          {
+            "status": "draft",
+            "text": "Khetha isityalo esinye kuluhlu lwakho lokutyala. Yenza sibe yindawo yakho yokuqala esebenzayo yokulondoloza imbewu. Musa ukuzama ukulondoloza yonke into ngexesha elinye."
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "This lesson ends with a working seed store, not a list of facts.",
+          "You will make four decisions.",
+          "What will you save?",
+          "How will you process it?",
+          "How will you protect it?",
+          "And how will you know it is still alive before you depend on it?",
+          "Which of these four decisions is least familiar to you?",
+          "Say them again in your own words: select, process, protect and verify."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Iziphumo zokufunda"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Esi sifundo siphelela kwindawo yokugcina imbewu esebenzayo, hayi kuluhlu lweenyani."
+          },
+          {
+            "status": "draft",
+            "text": "Uya kwenza izigqibo ezine."
+          },
+          {
+            "status": "draft",
+            "text": "Uya kulondoloza ntoni?"
+          },
+          {
+            "status": "draft",
+            "text": "Uya kuyilungisa njani?"
+          },
+          {
+            "status": "draft",
+            "text": "Uya kuyikhusela njani?"
+          },
+          {
+            "status": "draft",
+            "text": "Kwaye uya kwazi njani ukuba isaphila phambi kokuba uthembele kuyo?"
+          },
+          {
+            "status": "draft",
+            "text": "Sesiphi kwezi zigqibo zine esingaqhelekanga kuwe kakhulu?"
+          },
+          {
+            "status": "draft",
+            "text": "Zibuye uzithethe ngamazwi akho: khetha, lungisa, khusela kwaye qinisekisa."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "Open-Pollinated Seed and F1 Seed",
+        "body": [
+          "Open-pollinated seed is not magic.",
+          "A stable variety can produce similar generations when it is properly isolated or self-pollinated.",
+          "F1 seed usually remains alive. But the next generation separates into different combinations of the parent traits.",
+          "The problem is unpredictability, not failure to germinate.",
+          "Think about one small bed on your own plot. Why could unpredictable plants be a risk when space is limited?",
+          "If you have seed packets, check whether they are marked open-pollinated or F1. Which would you choose for saving dependable seed?",
+          "Remember: the next F1 generation varies. It does not automatically die."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Imbewu ye-open-pollinated neye-F1"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Akukho mlingo kwimbewu ye-open-pollinated."
+          },
+          {
+            "status": "draft",
+            "text": "Uhlobo oluzinzileyo lunokuvelisa izizukulwana ezifanayo xa lwahlulwe ngokufanelekileyo okanye luyazi-pollinate ngokwalo."
+          },
+          {
+            "status": "draft",
+            "text": "Imbewu ye-F1 ihlala iphila. Kodwa isizukulwana esilandelayo sahlukana saba ngamadibaniselwano ahlukeneyo eempawu zabazali."
+          },
+          {
+            "status": "draft",
+            "text": "Ingxaki kukungalindeleki, hayi ukungahlumi."
+          },
+          {
+            "status": "draft",
+            "text": "Cinga ngebhedi encinci enye kwindawo yakho. Kutheni izityalo ezingalindelekanga zinokuba yingozi xa indawo incinci?"
+          },
+          {
+            "status": "draft",
+            "text": "Ukuba unamapakethi embewu, jonga ukuba aphawulwe ukuba yi-open-pollinated okanye yi-F1. Yeyiphi onokuyikhetha ukulondoloza imbewu enokuthenjwa?"
+          },
+          {
+            "status": "draft",
+            "text": "Khumbula: isizukulwana se-F1 esilandelayo siyahluka. Asifi ngokuzenzekelayo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "Watch: Open-Pollinated Seed and F1 Seed",
+        "body": [
+          "Watch both sides.",
+          "Both kinds of seed germinate.",
+          "Open-pollinated seed produces similar plants when the variety is stable and pollination is properly managed.",
+          "Seed saved from an F1 plant also germinates. But its next generation varies. Some plants may be tall. Others may be short. Their vigour and yield may differ.",
+          "Ask yourself what this means when choosing seed to save.",
+          "If you understand the difference, you can explain it in one sentence: both germinate, but the next F1 generation is unpredictable."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bukela: imbewu ye-open-pollinated neye-F1"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Bukela macala omabini."
+          },
+          {
+            "status": "draft",
+            "text": "Zombini iintlobo zembewu ziyahluma."
+          },
+          {
+            "status": "draft",
+            "text": "Imbewu ye-open-pollinated ivelisa izityalo ezifanayo xa uhlobo luzinzile kwaye i-pollination ilawulwa ngokufanelekileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Imbewu elondolozwe kwisityalo se-F1 nayo iyahluma. Kodwa isizukulwana sayo esilandelayo siyahluka. Ezinye izityalo zinokuba mde. Ezinye zibe mfutshane. Amandla azo nesivuno sazo zinokwahluka."
+          },
+          {
+            "status": "draft",
+            "text": "Zibuze ukuba oku kuthetha ntoni xa ukhetha imbewu eza kulondolozwa."
+          },
+          {
+            "status": "draft",
+            "text": "Ukuba uyawuqonda umahluko, unokuwuchaza ngesivakalisi esinye: zombini ziyahluma, kodwa isizukulwana se-F1 esilandelayo asilindelekanga."
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "Seed Sovereignty",
+        "body": [
+          "Seed sovereignty does not live in a slogan.",
+          "It lives in a dry packet, a written record and knowledge of how the seed behaves.",
+          "Your household begins it. Neighbours extend it. The seasons make the local seed collection more useful.",
+          "Which seed does your household already save best?",
+          "Draw a small map of the homes near you. Beside each home, write one crop that household could bring to a seed exchange.",
+          "Sovereignty needs three things: usable seed, written information and exchange."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ulawulo lwembewu"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ulawulo lwembewu alubonakali kwisiqubulo."
+          },
+          {
+            "status": "draft",
+            "text": "Lubonakala kwipakethi eyomileyo, kwirekhodi ebhaliweyo nasekwazini indlela imbewu eziphethe ngayo."
+          },
+          {
+            "status": "draft",
+            "text": "Umzi wakho uyaluqala. Abamelwane bayaluyandisa. Amaxesha onyaka enza ingqokelela yembewu yasekuhlaleni ibe luncedo ngakumbi."
+          },
+          {
+            "status": "draft",
+            "text": "Yeyiphi imbewu umzi wakho osele uyilondoloza kakuhle kakhulu?"
+          },
+          {
+            "status": "draft",
+            "text": "Zoba imephu encinci yemizi ekufutshane nawe. Ecaleni komzi ngamnye, bhala isityalo esinye loo mzi onokusizisa ekutshintshisaneni ngembewu."
+          },
+          {
+            "status": "draft",
+            "text": "Ulawulo lufuna izinto ezintathu: imbewu enokusetyenziswa, ulwazi olubhaliweyo nokutshintshisana."
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Watch: Household Seed Network",
+        "body": [
+          "Well-saved seed becomes more powerful when it is known and shared.",
+          "Watch one household begin by saving seed well from one crop. Dry seed goes into clean packets. Some packets move to neighbouring homes. The neighbours share different seed in return.",
+          "By the end, each household holds more varieties than it had before.",
+          "Think about which seed you could share and which seed you might receive from a neighbour. Seed moves. Knowledge and trust must move with it."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bukela: uthungelwano lwembewu lwemizi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Imbewu elondolozwe kakuhle iba namandla ngakumbi xa yaziwa kwaye yabelwana ngayo."
+          },
+          {
+            "status": "draft",
+            "text": "Bukela umzi omnye uqala ngokulondoloza kakuhle imbewu yesityalo esinye. Imbewu eyomileyo ingena kumapakethi acocekileyo. Amanye amapakethi aya kwimizi ekufutshane. Abamelwane babelana ngembewu eyahlukileyo ngokubuyisela."
+          },
+          {
+            "status": "draft",
+            "text": "Ekupheleni, umzi ngamnye uphethe iintlobo ezininzi kunangaphambili."
+          },
+          {
+            "status": "draft",
+            "text": "Cinga ngembewu onokwabelana ngayo nembewu onokuyamkela kumamelwane. Imbewu iyahamba. Ulwazi nokuthembana kufuneka kuhambe nayo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "Select Several Parent Plants",
+        "body": [
+          "The largest fruit is not always the best seed parent.",
+          "Look at the whole plant.",
+          "Was it healthy?",
+          "Did it mature at the right time?",
+          "Was it true to type?",
+          "Save from several good plants, especially in cross-pollinated crops. This prevents the next generation from coming from only one parent.",
+          "What would make you reject a seed plant even if its fruit were large?",
+          "Go to your own plot. Point out the plants you would select and the plants you would reject. Choose several healthy, true-to-type plants. Reject diseased plants and those that are not true to type."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khetha izityalo ezininzi zabazali"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Isiqhamo esikhulu kakhulu asisoloko singumzali olungileyo wembewu."
+          },
+          {
+            "status": "draft",
+            "text": "Jonga isityalo sonke."
+          },
+          {
+            "status": "draft",
+            "text": "Sasinempilo?"
+          },
+          {
+            "status": "draft",
+            "text": "Sasivuthwe ngexesha elifanelekileyo?"
+          },
+          {
+            "status": "draft",
+            "text": "Sasifana nohlobo lwaso?"
+          },
+          {
+            "status": "draft",
+            "text": "Londoloza kwizityalo ezininzi ezilungileyo, ngakumbi kwizityalo ezixubanayo (cross-pollinated). Oku kuthintela isizukulwana esilandelayo ekuveleni kumzali omnye kuphela."
+          },
+          {
+            "status": "draft",
+            "text": "Yintoni enokukwenza uwale isityalo sembewu nokuba isiqhamo saso sikhulu?"
+          },
+          {
+            "status": "draft",
+            "text": "Yiya kwindawo yakho. Khomba izityalo ongazikhetha nezo ongazilahla. Khetha izityalo ezininzi ezinempilo ezifana nohlobo lwazo. Wala izityalo ezinesifo neezo zingafaniyo nohlobo lwazo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Control Pollination",
+        "body": [
+          "Some crops mostly self-pollinate. A small garden can therefore keep the variety similar.",
+          "Crops pollinated by wind or insects can cross over long distances.",
+          "The distance needed depends on the crop, the place and the purpose of the seed. Do not promise varietal purity until you have checked the crop.",
+          "How can you separate two varieties without using distance?",
+          "You can plant them at different times so they do not flower together. You can also control pollination by hand or with covers.",
+          "Remember the three tools: distance, flowering time or controlled pollination."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Lawula i-pollination"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ezinye izityalo ubukhulu bazo ziyazi-pollinate ngokwazo. Ke igadi encinci inokugcina uhlobo lufana."
+          },
+          {
+            "status": "draft",
+            "text": "Izityalo eziphiwa uthuli lwentyatyambo ngumoya okanye ngeenambuzane zinokuxubana ngomgama omde."
+          },
+          {
+            "status": "draft",
+            "text": "Umgama odingekayo uxhomekeke kwisityalo, kwindawo nakwinjongo yembewu. Musa ukuthembisa ukuhlambuluka kohlobo de uhlole isityalo."
+          },
+          {
+            "status": "draft",
+            "text": "Ungazahlula njani iintlobo ezimbini ngaphandle kokusebenzisa umgama?"
+          },
+          {
+            "status": "draft",
+            "text": "Unokuzityala ngamaxesha ahlukeneyo ukuze zingatyatyambi kunye. Unokulawula i-pollination nangesandla okanye usebenzise izigqubuthelo."
+          },
+          {
+            "status": "draft",
+            "text": "Khumbula izixhobo ezintathu: umgama, ixesha lokutyatyamba okanye i-pollination elawulwayo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Watch: Self-Pollination and Crossing",
+        "body": [
+          "Follow the path of the pollen.",
+          "In self-pollination, pollen moves within one flower from the part that produces it to the part that receives it. This often helps the variety remain similar.",
+          "In a maize field, wind carries pollen from the tassels to the silks. If two varieties are close together and flower at the same time, they can cross.",
+          "Think about how distance or different flowering times could prevent that on your own plot."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bukela: ukuzi-pollinate nokuxubana"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Landela indlela uthuli lwentyatyambo oluhamba ngayo."
+          },
+          {
+            "status": "draft",
+            "text": "Kwi-self-pollination, uthuli lwentyatyambo luhamba ngaphakathi kwentyatyambo enye lusuka kwinxalenye eluvelisayo lusiya kwinxalenye eluthabathayo. Oku kudla ngokunceda uhlobo lwahlale lufana."
+          },
+          {
+            "status": "draft",
+            "text": "Kwintsimi yombona, umoya uthwala uthuli lwentyatyambo usuka kwii-tassel (iintyatyambo ezisentloko yombona) ukuya kwii-silk (imicu ephuma kwikhoba). Ukuba iintlobo ezimbini zikufutshane zaza zatyatyamba ngaxeshanye, zinokuxubana."
+          },
+          {
+            "status": "draft",
+            "text": "Cinga ukuba umgama okanye amaxesha ahlukeneyo okutyatyamba anokuyithintela njani loo nto kwindawo yakho."
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Dry and Wet Processing",
+        "body": [
+          "There are two broad ways to process seed.",
+          "Dry seed matures in a pod, head or cob. It is collected when fully mature.",
+          "Seed inside a fleshy fruit must first be separated from the flesh.",
+          "Brief fermentation is especially useful for tomato seed. It is not a rule for every wet-seeded crop.",
+          "Think about the crops in your area. Which fit the dry method? Which fit the wet method?",
+          "If you have seed or fruit nearby, sort the examples into these two types. Explain the difference by describing what the seed is like at harvest."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ukulungisa okomileyo nokumanzi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Zimbini iindlela ezinkulu zokulungisa imbewu."
+          },
+          {
+            "status": "draft",
+            "text": "Imbewu eyomileyo ivuthela kwipodi, entlokweni okanye kwikhoba. Iqokelelwa xa ivuthwe ngokupheleleyo."
+          },
+          {
+            "status": "draft",
+            "text": "Imbewu esesiqhamweni esinenyama kufuneka kuqala wahlulwe kwinyama."
+          },
+          {
+            "status": "draft",
+            "text": "Ukuvundiswa okufutshane (fermentation) kuluncedo ngokukodwa kwimbewu yetumato. Asisiso umgaqo kuzo zonke izityalo ezineembewu ezimanzi."
+          },
+          {
+            "status": "draft",
+            "text": "Cinga ngezityalo zendawo yakho. Zeziphi ezilungele indlela eyomileyo? Zeziphi ezilungele indlela emanzi?"
+          },
+          {
+            "status": "draft",
+            "text": "Ukuba unembewu okanye iziqhamo ekufutshane, zihlele kwezi ntlobo zimbini. Chaza umahluko ngokuchaza ukuba imbewu injani ngexesha lokuvuna."
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Process Dry Seed",
+        "body": [
+          "Leave dry-seeded crops on the plant until the seed is fully mature.",
+          "Collect it before weather, birds or bursting pods take the harvest.",
+          "Remove chaff and damaged seed.",
+          "Then spread the clean seed in a single layer in moving air and shade.",
+          "What tells you that dry seed is mature enough to collect?",
+          "If you have a dry pod or seed head, handle it. Listen for the seed. Compare green, flexible plant material with brown, brittle material.",
+          "Wait for maturity. For final drying, use shade and airflow."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Lungisa imbewu eyomileyo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Shiya izityalo ezineembewu ezomileyo esityalweni de imbewu ivuthwe ngokupheleleyo."
+          },
+          {
+            "status": "draft",
+            "text": "Yiqokelele phambi kokuba imozulu, iintaka okanye iipodi ezibhazukayo zithathe isivuno."
+          },
+          {
+            "status": "draft",
+            "text": "Susa i-chaff nembewu eyonakeleyo."
+          },
+          {
+            "status": "draft",
+            "text": "Emva koko yolula imbewu ecocekileyo ibe ngumgangatho omnye emoyeni ohambayo nasemthunzini."
+          },
+          {
+            "status": "draft",
+            "text": "Yintoni ekuxelela ukuba imbewu eyomileyo ivuthe ngokwaneleyo ukuba iqokelelwe?"
+          },
+          {
+            "status": "draft",
+            "text": "Ukuba unepodi eyomileyo okanye intloko yembewu, yibambe. Mamela imbewu. Thelekisa into eluhlaza, ethambileyo nento ezintsundu, eqhekekayo."
+          },
+          {
+            "status": "draft",
+            "text": "Linda ukuvuthwa. Ekomiseni kokugqibela, sebenzisa umthunzi nomoya ohambayo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Watch: Dry Processing",
+        "body": [
+          "Allow the seed to mature on the plant before collecting it.",
+          "Watch how it is collected once mature. Chaff and debris are removed. Damaged seed is taken out.",
+          "The clean seed is then spread in a single layer in moving air and shade.",
+          "Follow the steps in order: mature, collect, clean, dry.",
+          "Think about where you could carry out each part of this process."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bukela: ukulungisa okomileyo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Vumela imbewu ivuthe esityalweni phambi kokuyiqokelela."
+          },
+          {
+            "status": "draft",
+            "text": "Bukela indlela eqokelelwa ngayo xa sele ivuthile. I-chaff nenkunkuma ziyasuswa. Imbewu eyonakeleyo iyakhutshwa."
+          },
+          {
+            "status": "draft",
+            "text": "Imbewu ecocekileyo iyolulwa ibe ngumgangatho omnye emoyeni ohambayo nasemthunzini."
+          },
+          {
+            "status": "draft",
+            "text": "Landela amanyathelo ngokulandelelana: vuthwa, qokelela, coca, yomisa."
+          },
+          {
+            "status": "draft",
+            "text": "Cinga ukuba ungalenza phi icandelo ngalinye lale nkqubo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Wet Processing for Tomato Seed",
+        "body": [
+          "Scoop tomato seed and flesh into a clean jar with a little water.",
+          "Leave it open or loosely covered. Keep it out of direct sun.",
+          "After two to three days, a light film and a sour smell may appear.",
+          "Rinse promptly. Remove debris. Then spread the clean seed thinly to dry.",
+          "Do not seal an actively fermenting jar.",
+          "Think about the signs that tell you the process has begun. Also think about signs that would make you discard the batch.",
+          "Find a jar, a sieve and a drying plate. When you are ready, start a small batch. Remember the order: scoop, ferment briefly, rinse and dry completely."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ukulungisa imbewu yetumato ngokumanzi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Khupha imbewu yetumato nenyama yayo uyibeke kwingqayi ecocekileyo enamanzi amancinane."
+          },
+          {
+            "status": "draft",
+            "text": "Yishiye ivulekile okanye igqunywe ngokukhululekileyo. Yigcine ingekho elangeni eliqinileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Emva kweentsuku ezimbini ukuya kwezintathu, kusenokubonakala ulwelwe olukhanyayo nevumba elimuncu."
+          },
+          {
+            "status": "draft",
+            "text": "Hlambulula ngokukhawuleza. Susa inkunkuma. Emva koko yolula imbewu ecocekileyo ngokubhityileyo ukuze yome."
+          },
+          {
+            "status": "draft",
+            "text": "Musa ukuvala ingqayi esavundisayo."
+          },
+          {
+            "status": "draft",
+            "text": "Cinga ngemiqondiso ekuxelela ukuba inkqubo iqalile. Cinga nangemiqondiso eyakwenza ulahle iqela."
+          },
+          {
+            "status": "draft",
+            "text": "Fumana ingqayi, isihluzo nepleyiti yokomisa. Xa sele ukulungele, qala iqela elincinci. Khumbula ucwangco: khupha, vundisa ixesha elifutshane, hlambulula uze uyomise ngokupheleleyo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Watch: Wet Processing for Tomato Seed",
+        "body": [
+          "Watch the whole process in order.",
+          "A ripe tomato is opened. The seed and gel are scooped into a clean jar. Only a little water is added.",
+          "The jar is left open or loosely covered for two to three days.",
+          "When a light film and sour smell appear, the contents are poured through a sieve. The seed is rinsed until it is clean.",
+          "Finally, the seed is spread in a single layer in the shade until completely dry.",
+          "Repeat the steps to yourself: scoop, ferment briefly, rinse, dry completely."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bukela: ukulungisa imbewu yetumato ngokumanzi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Bukela inkqubo yonke ngokulandelelana."
+          },
+          {
+            "status": "draft",
+            "text": "Itumato evuthiweyo iyavulwa. Imbewu nejeli zikhutshelwa kwingqayi ecocekileyo. Kongezwa amanzi amancinane kuphela."
+          },
+          {
+            "status": "draft",
+            "text": "Ingqayi ishiywa ivulekile okanye igqunywe ngokukhululekileyo iintsuku ezimbini ukuya kwezintathu."
+          },
+          {
+            "status": "draft",
+            "text": "Xa kubonakala ulwelwe olukhanyayo nevumba elimuncu, okuphakathi kuyathululelwa kwisihluzo. Imbewu iyahlanjululwa de icoceke."
+          },
+          {
+            "status": "draft",
+            "text": "Ekugqibeleni, imbewu iyolulwa ibe ngumgangatho omnye emthunzini de yome ngokupheleleyo."
+          },
+          {
+            "status": "draft",
+            "text": "Zibuyisele amanyathelo: khupha, vundisa ixesha elifutshane, hlambulula, yomisa ngokupheleleyo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "Practical Activity",
+        "body": [
+          "This is where the lesson leaves the screen and reaches your hands.",
+          "Start one real batch of wet-processed seed.",
+          "Use one ripe, healthy fruit, a clean jar, a spoon, a little water, a sieve and a drying plate.",
+          "Put the seed, flesh and a little water into the jar. Add a label with the date.",
+          "You will look after this jar after the lesson. Decide now when you will inspect it, when you will rinse it and when you will dry the seed.",
+          "Your jar needs a date and a return plan. Write down the date when you will inspect it after two days."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Umsebenzi wokwenza"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Apha isifundo siyishiya isikrini sifike ezandleni zakho."
+          },
+          {
+            "status": "draft",
+            "text": "Qalisa iqela lenene elinye lembewu elungiswa ngokumanzi."
+          },
+          {
+            "status": "draft",
+            "text": "Sebenzisa isiqhamo esinye esivuthiweyo nesinempilo, ingqayi ecocekileyo, icephe, amanzi amancinane, isihluzo nepleyiti yokomisa."
+          },
+          {
+            "status": "draft",
+            "text": "Beka imbewu, inyama namanzi amancinane kwingqayi. Ncamathisela ileyibhile enomhla."
+          },
+          {
+            "status": "draft",
+            "text": "Uya kuyikhathalela le ngqayi emva kwesifundo. Nqumla ngoku ukuba uya kuyihlola nini, uya kuyihlambulula nini kwaye uya kuyomisa nini imbewu."
+          },
+          {
+            "status": "draft",
+            "text": "Ingqayi yakho ifuna umhla nesicwangciso sokubuya. Bhala phantsi umhla oya kuyihlola ngawo emva kweentsuku ezimbini."
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Dry First, Seal Later",
+        "body": [
+          "Drying is not a decorative final step.",
+          "Moist seed keeps breathing. It can heat, rot or die in storage.",
+          "Use shade, moving air and time.",
+          "Seal seed only when you are sure it is dry.",
+          "Which place in your home has shade and airflow, but is protected from rain and cooking steam?",
+          "Choose one safe drying place. Then identify one unsafe place.",
+          "Repeat this to check your understanding: dry first, seal later."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Yomisa kuqala, vala kamva"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ukomisa asiyonyathelo lokuhombisa lokugqibela."
+          },
+          {
+            "status": "draft",
+            "text": "Imbewu emanzi iyaqhubeka iphefumla. Inokufudumala, ibole okanye ife ekugcinweni."
+          },
+          {
+            "status": "draft",
+            "text": "Sebenzisa umthunzi, umoya ohambayo nexesha."
+          },
+          {
+            "status": "draft",
+            "text": "Vala imbewu kuphela xa uqinisekile ukuba yomile."
+          },
+          {
+            "status": "draft",
+            "text": "Yeyiphi indawo ekhayeni lakho enomthunzi nomoya, kodwa ekhuselekileyo emvuleni nasemhwambini wokupheka?"
+          },
+          {
+            "status": "draft",
+            "text": "Khetha indawo enye yokomisa ekhuselekileyo. Emva koko chonga indawo enye engekhuselekanga."
+          },
+          {
+            "status": "draft",
+            "text": "Phinda oku ukujonga ukuqonda kwakho: yomisa kuqala, vala kamva."
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Protect Seed from Heat, Light and Moisture",
+        "body": [
+          "Paper packets breathe and organise seed. But they are not enough in a humid climate.",
+          "Once the seed is completely dry, place the labelled packets inside a sealed, moisture-proof container. If available, include a food-safe desiccant.",
+          "Keep the container as cool and dark as possible in your home.",
+          "Which room or cupboard in your home stays coolest and driest?",
+          "Compare a paper envelope on its own with an envelope inside a sealed container.",
+          "Safe storage has two layers: a labelled paper packet inside a dry, sealed container."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khusela imbewu ekushiseni, ekukhanyeni nasekufumeni"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Amapakethi ephepha ayaphefumla kwaye ahlela imbewu. Kodwa akonelanga kwimozulu enokufuma."
+          },
+          {
+            "status": "draft",
+            "text": "Ekubeni imbewu yomile ngokupheleleyo, beka amapakethi abhalwe amagama ngaphakathi kwisikhongozeli esivaliweyo, esikhusela ekufumeni. Ukuba unayo, quka i-desiccant (into ebamba ukufuma) ekhuselekileyo ekutyeni."
+          },
+          {
+            "status": "draft",
+            "text": "Gcina isikhongozeli sipholile kwaye simnyama kangangoko kunokwenzeka ekhayeni lakho."
+          },
+          {
+            "status": "draft",
+            "text": "Liliphi igumbi okanye ikhabhathi ekhayeni lakho elihlala lipholile lize lome kakhulu?"
+          },
+          {
+            "status": "draft",
+            "text": "Thelekisa imvulophu yephepha yodwa nemvulophu ngaphakathi kwisikhongozeli esivaliweyo."
+          },
+          {
+            "status": "draft",
+            "text": "Ukugcina okukhuselekileyo kunezinqanaba ezimbini: ipakethi yephepha ebhalwe igama ngaphakathi kwisikhongozeli esomileyo, esivaliweyo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "heading": "Label Every Packet",
+        "body": [
+          "Storage protects the seed physically. Written information protects its meaning.",
+          "The packet must tell the next person what crop it is.",
+          "It must give the variety or local name.",
+          "It must say when the seed was saved and where it came from.",
+          "Which local names could be lost if you write only the crop name?",
+          "Take a blank packet. Practise writing the four pieces of information: crop, variety or local name, date and source.",
+          "Check again that all four are present."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bhala ipakethi nganye"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ukugcina kukhusela imbewu ngokwasemzimbeni. Ulwazi olubhaliweyo lukhusela intsingiselo yayo."
+          },
+          {
+            "status": "draft",
+            "text": "Ipakethi kufuneka ixelele umntu olandelayo ukuba sisityalo esiyintoni."
+          },
+          {
+            "status": "draft",
+            "text": "Kufuneka inike igama loluhlobo okanye igama lasekuhlaleni."
+          },
+          {
+            "status": "draft",
+            "text": "Kufuneka ithi imbewu yalondolozwa nini nokuba ivela phi."
+          },
+          {
+            "status": "draft",
+            "text": "Ngawaphi amagama asekuhlaleni anokulahleka ukuba ubhala kuphela igama lesityalo?"
+          },
+          {
+            "status": "draft",
+            "text": "Thatha ipakethi engenanto. Zilolonge ukubhala iinxalenye ezine zolwazi: isityalo, uhlobo okanye igama lasekuhlaleni, umhla nomthombo."
+          },
+          {
+            "status": "draft",
+            "text": "Jonga kwakhona ukuba zonke ezine zikhona."
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "heading": "Ten-Seed Germination Test",
+        "body": [
+          "A seed packet can look perfect even when the seed is losing life.",
+          "Ten seeds make the calculation easy.",
+          "Keep them warm and moist. Do not submerge them in water.",
+          "Then count the normal seedlings.",
+          "Six out of ten is about sixty percent. That tells you to sow more heavily, use the seed only as a trial, or replace it.",
+          "If eight seeds out of ten germinate, what percentage is that?",
+          "The answer is eighty percent.",
+          "Start a ten-seed test with an old packet. Write down the date and the day when you will count."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Uvavanyo lokuhluma lweembewu ezilishumi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ipakethi yembewu inokubonakala igqibelele nokuba imbewu iphulukana nobomi."
+          },
+          {
+            "status": "draft",
+            "text": "Iimbewu ezilishumi zenza ukubala kube lula."
+          },
+          {
+            "status": "draft",
+            "text": "Zigcine zifudumele zimanzi. Musa ukuzitshonisa emanzini."
+          },
+          {
+            "status": "draft",
+            "text": "Emva koko bala izityalo ezincinci ezikhule ngokuqhelekileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Ezintandathu kwezilishumi zimalunga namashumi amathandathu ekhulwini. Oko kukuxelela ukuba utyale ngokuxinene ngakumbi, usebenzise imbewu njengovavanyo kuphela, okanye uyitshintshe."
+          },
+          {
+            "status": "draft",
+            "text": "Ukuba iimbewu ezisibhozo kwezilishumi ziyahluma, oko kuyingaphi ekhulwini?"
+          },
+          {
+            "status": "draft",
+            "text": "Impendulo ngamashumi asibhozo ekhulwini."
+          },
+          {
+            "status": "draft",
+            "text": "Qala uvavanyo lweembewu ezilishumi usebenzisa ipakethi endala. Bhala phantsi umhla nosuku oya kubala ngalo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 21,
+      "english": {
+        "heading": "Watch: Ten-Seed Germination Test",
+        "body": [
+          "Count exactly ten seeds.",
+          "Place them in two rows of five.",
+          "Keep them on moist paper or cloth. Do not submerge them in water.",
+          "After some time, count again.",
+          "Here, six have germinated. Four have not. The total is still ten.",
+          "The germination rate is therefore sixty percent.",
+          "Check yourself. Did you count ten at the start, six germinated seeds and four ungerminated seeds at the end?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bukela: uvavanyo lokuhluma lweembewu ezilishumi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Bala iimbewu ezilishumi ncam."
+          },
+          {
+            "status": "draft",
+            "text": "Zibeke kwimigca emibini yeembewu ezintlanu."
+          },
+          {
+            "status": "draft",
+            "text": "Zigcine kwiphepha okanye ilaphu elimanzi. Musa ukuzitshonisa emanzini."
+          },
+          {
+            "status": "draft",
+            "text": "Emva kwexesha, bala kwakhona."
+          },
+          {
+            "status": "draft",
+            "text": "Apha, ezintandathu ziyahlumile. Ezine azihlumanga. Isixa sihlala silishumi."
+          },
+          {
+            "status": "draft",
+            "text": "Ke ngoko izinga lokuhluma lingamashumi amathandathu ekhulwini."
+          },
+          {
+            "status": "draft",
+            "text": "Zivavanye. Ingaba wabala eshumi ekuqaleni, iimbewu ezintandathu ezihlumileyo neembewu ezine ezingahlumanga ekugqibeleni?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 22,
+      "english": {
+        "heading": "Share Seed with Its Information",
+        "body": [
+          "A seed exchange is not a table of unknown packets.",
+          "A good exchange moves information with the seed.",
+          "It tells you what the seed is. Where it came from. When it was saved. And whether it has been tested.",
+          "This honesty strengthens the whole network.",
+          "What information would help you trust seed from another household?",
+          "Take one of your packets. Practise describing it before sharing it. Give the seed and its basic history together."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Yabelana ngembewu nolwazi lwayo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ukutshintshisana ngembewu asililo itafile yamapakethi angaziwayo."
+          },
+          {
+            "status": "draft",
+            "text": "Ukutshintshisana okulungileyo kuhambisa ulwazi kunye nembewu."
+          },
+          {
+            "status": "draft",
+            "text": "Kuxelela ukuba imbewu yintoni. Ivela phi. Yalondolozwa nini. Nokuba iye yavavanywa na."
+          },
+          {
+            "status": "draft",
+            "text": "Oku kunyaniseka kuyomeleza uthungelwano lonke."
+          },
+          {
+            "status": "draft",
+            "text": "Ngoluphi ulwazi olunokukunceda uthembe imbewu evela komnye umzi?"
+          },
+          {
+            "status": "draft",
+            "text": "Thatha enye yamapakethi akho. Zilolonge ukuyichaza phambi kokwabelana. Nika imbewu kunye nembali yayo esisiseko."
+          }
+        ]
+      }
+    },
+    {
+      "n": 23,
+      "english": {
+        "heading": "Field Assignment",
+        "body": [
+          "This task is small enough to finish. It is important enough to matter.",
+          "Build one working seed-storage container.",
+          "Put labelled paper packets inside a dry, sealed container.",
+          "Take a photograph of it.",
+          "Then name the crop whose seed you will save this season.",
+          "The photograph is evidence. The packet is a beginning.",
+          "What do you still need to finish this at home?",
+          "Write a short materials list. Choose a completion date.",
+          "Before sealing the container, check your work: the seed is completely dry; every packet has the crop, variety and date; the container is cool, dark and protected from moisture; and you selected several healthy parent plants."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Umsebenzi wasentsimini"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Lo msebenzi mncinci ngokwaneleyo ukuba ugqitywe. Kodwa ubalulekile kakhulu."
+          },
+          {
+            "status": "draft",
+            "text": "Akha isikhongozeli esinye esisebenzayo sokugcina imbewu."
+          },
+          {
+            "status": "draft",
+            "text": "Beka amapakethi ephepha abhalwe amagama ngaphakathi kwisikhongozeli esomileyo, esivaliweyo."
+          },
+          {
+            "status": "draft",
+            "text": "Thatha ifoto yaso."
+          },
+          {
+            "status": "draft",
+            "text": "Emva koko chaza isityalo oya kulondoloza imbewu yaso kwesi sizini."
+          },
+          {
+            "status": "draft",
+            "text": "Ifoto yibungqina. Ipakethi yinto yokuqala."
+          },
+          {
+            "status": "draft",
+            "text": "Yintoni ongekayifumani yokugqiba oku ekhaya?"
+          },
+          {
+            "status": "draft",
+            "text": "Bhala uluhlu olufutshane lweempahla. Khetha umhla wokugqiba."
+          },
+          {
+            "status": "draft",
+            "text": "Phambi kokuvala isikhongozeli, hlola umsebenzi wakho: imbewu yomile ngokupheleleyo; ipakethi nganye inesityalo, uhlobo nomhla; isikhongozeli sipholile, simnyama kwaye sikhuselekile ekufumeni; kwaye ukhethe izityalo zabazali ezininzi ezinempilo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 24,
+      "english": {
+        "heading": "Field Action",
+        "body": [
+          "Select.",
+          "Process.",
+          "Protect.",
+          "Verify.",
+          "Those four actions carry a seed collection from this field into the next season.",
+          "Begin with one crop and do it well.",
+          "Which crop will you begin with?",
+          "Say it aloud. Then choose one action you will take next.",
+          "The next season is already inside the seed you choose today."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Isenzo sasentsimini"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Khetha."
+          },
+          {
+            "status": "draft",
+            "text": "Lungisa."
+          },
+          {
+            "status": "draft",
+            "text": "Khusela."
+          },
+          {
+            "status": "draft",
+            "text": "Qinisekisa."
+          },
+          {
+            "status": "draft",
+            "text": "Ezo zenzo zine zithwala ingqokelela yembewu isuka kule ntsimi iye kwisizini elandelayo."
+          },
+          {
+            "status": "draft",
+            "text": "Qala ngesityalo esinye uyenze kakuhle."
+          },
+          {
+            "status": "draft",
+            "text": "Uya kuqala ngasiphi isityalo?"
+          },
+          {
+            "status": "draft",
+            "text": "Khuphe igama laso ngokuvakalayo. Emva koko khetha isenzo esinye oya kusenza ngokulandelayo."
+          },
+          {
+            "status": "draft",
+            "text": "Isizini elandelayo sele ikwimbewu oyikhethayo namhlanje."
+          }
+        ]
+      }
+    }
+  ]
+}
