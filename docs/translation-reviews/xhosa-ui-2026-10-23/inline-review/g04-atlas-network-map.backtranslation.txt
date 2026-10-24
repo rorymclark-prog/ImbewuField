@@ -1,0 +1,36 @@
+Phase A blind back-translation (values only, by source line number)
+4 Climate | 5 Rain | 6 Rainy season: | 7 Dry season: | 8 Temperature | 9 "Umndilili" (average?) | 10 Coldest month | 11 Hottest month | 12 Land/soil | 13 Land shapes | 14 Height | 15 Side it faces | 16 South African data layers | 17 What can grow here | 18 Summer rain | 19 Winter rain | 20 Rain all year | 21 Summer rain, little frost | 22 Frost is expected | 23 There may be a little frost | 24 No frost | 25 isiXhosa translation awaited
+26 isiXhosa names in this display aren't yet reviewed. English shows below translated labels. Data, place and crop names, descriptions, sources and farming advice remain as given.
+27 Map can't open on this phone | 28 Use the search box above to look at weather, rain and land of a place by name. | 29 Search anywhere on earth... | 30 Delete search | 31 Tap anywhere on earth to see its weather, rain and land | 32 This place | 33 Close panel | 34 Reading weather, rain and land of this place... | 35 Couldn't find data for this place. | 36 Try again
+37 Not visible | 38 Thriving | 39 Being established | 40 Needs support | 41 This account can't read that record | 42 Not yet recorded | 43 Readable - nothing entered
+44 Site survey is saved in the farmer's account and isn't readable here. | 45 Setup progress is taken from the farmer's map data, which isn't readable here.
+46 No money-book line passed to the panel, so nothing can be shown over time. | 47 No production, sales or cost book readable for this farm. | 48 Close farmer record | 49 Site survey completed. | 50 No dated income for now | 51 Latest income in any book | 52 Show this place on map | 53 Money - this season | 54 Month by month | 55 Survey | 56 Progress | 57 Site survey | 58 Completed course modules
+59 Training records of this farmer aren't readable, so no measure shown. | 60 Farmer record | 61 Sales income | 62 Costs | 63 What remains after costs | 64 Sample price situation | 65 Harvested | 66 Sold | 67 Harvest not matching sales
+68 Sample estimate: money income and harvest not matching sales at an estimated price of R15/kg. It isn't income, profit or estimated household income.
+69 No sales recorded for now | 70 Sales book readable and empty | 71 No costs recorded | 72 Costs book readable and empty | 73 No book recorded | 74 Both sales and costs books empty | 75 Needs both sales and production books | 76 No harvest recorded | 77 Production book readable and empty | 78 Nothing sold for now | 79 No harvest remainder beyond sales | 80 This doesn't show what was eaten, given, kept or lost
+81 No survey cycle answered for now | 82 This farmer was sent a survey but hasn't returned any | 83 Registered, but no module marked completed | 84 No visible record | 85 Costs exceed income | 86 Setup not finished | 87 Site survey not finished | 88 Site being checked | 89 Site saved | 90 Boundary traced | 91 Design finished | 92 Production plan finished
+93 Counted out of 5 setup steps, so percentage is completed steps / all steps. | 94 Harvest per month | 95 highest {kg} | 96 Money in/out per month | 97-98 in/out
+99 {n} months to {month} {year}. Bars only show incomes of dated books - a gap is a month with no income, not a month that wasn't worked.
+100 Location | 101 Site | 102 "Ungenile" (Has entered/joined?) | 103 Team | 104 no site name recorded | 105 Not assigned | 106 no team recorded for this place | 107 Sold, as share of {kg} harvested | 108 Origin of crop plan
+109 Measure of one full circle of the crop plan. Not compared with calendar harvest records because the saved plan has no planting year or completed-circle marker.
+110 Plan is visible but has no estimated kilogram measure for crop circle. Missing evidence is not a goal of 0 kg.
+111 No crop plan recorded now. This is a missing plan, not produce not found. | 112 Farmer's crop plan isn't readable here. Not visible isn't the same as no plan existing.
+113 No drawn chart rather than one that was made (garbled) | 114 {filled} of {total} answered
+115 Site survey not started. All {total} questions unanswered - this is a gap in the record, not a "school (isikolo) of zero".
+116 One question {missing} unanswered - not zero. | 117 {missing} questions unanswered - not zero.
+118-119 Treat the empty answer(s) as unknown. Don't read it as a low "school" (isikolo).
+120 Programme survey cycles | 121 {pct} of site setup - {done} of {total} steps done | 122 {pct} of site setup | 123 Furthest stage reached: | 124 not started
+125 All figures here taken by | 126 from records already loaded; | 127 hover over a value to see its source, or read the key of | 128 . | 129 means this account couldn't read that record - not zero. | 130 Tour records have no private farmer data.
+131 Showing real farmers' books in another account needs a permission gate on the server and recorded consent of this farmer - see head of file. | 132 Some long descriptions are still shown in English. Written answers and notes remain in their original language.
+133 Portfolio map loading | 134 No organisation linked to this account for now. | 135 Couldn't reach the portfolio service. | 136 Map and other parts of the farmer in its panel are still shown in English.
+137 Totals cover {reporting} of {total} places - some aren't readable by this account.
+138 One farmer ({n}) registered here but hasn't agreed to share his figures, so isn't marked in the list.
+139 Other {n} farmers registered here but haven't agreed to share their figures, so aren't marked in the list.
+140 All figures here were shared by the farmer who owns them, and only in the categories they allowed. | 141 Tour portfolio | 142 Places | 143 Under plan | 144 Districts | 145 Farmers' income | 146 Mid progress | 147 Needs attention
+148 This is a portfolio view | 149 Shows production and income figures of farmers themselves, so access is open only to programme teams and their funders. | 150 Network | 151 Organisation | 152 Programme portfolio | 153 Loading portfolio | 154 Hide list | 155 List of places
+156 A line (-) means no readable value. It doesn't mean zero. | 157 Farmer, place or district... | 158 Search in portfolio | 159 Close list of places | 160 Arrange | 161 Attention | 162 Name | 163 Harvest | 164 No place matches that search. | 165 Zoom in | 166 Zoom out | 167 Grouped by district - zoom in to see individual places | 168 Show all | 169 Zoom out to see the whole portfolio
+170 Key to symbols | 171 COLOUR - state of place | 172 SIZE - site area | 173 CIRCLE - needs attention | 174 Not working, under plan, or losing
+175 Pins show only state and site size - both recorded in all places. Harvest, income and progress are in the panel, where "no data" can be said in words.
+176 Farmer | 177 Close farmer panel | 178 Some details of the farmer's information may remain in English. Names and evidence entered are shown as recorded. | 179 Farmer details are still working in the list - open the farmer to see his panel. | 180 Map of farmers' places
+181 Ubhejane site | 182 Main house roof | 183 Driveway with tyre | 184 JoJo tank (2500 L) | 185 Municipal tap
+186 Soil carbon isn't measured here. Plan a soil test before buying things to improve it. | 187 English source:

@@ -129,7 +129,7 @@ Qalisa imephu yakho esisiseko kule veki.
 ## Amanqaku aphambili
 
 - Bukela umhlaba wakho kuzo zonke iisizini, uze ubeke oko ukubonayo kwimephu esisiseko.
-- Funda indawo yakho ngokwamanzi, ithambeka, icala elijonge kulo ithambeka (aspect) nendlela yokungena. Amathambeka ajonge emntla naajonge empuma yiwona afudumeleyo.
+- Funda indawo yakho ngokwamanzi, ithambeka, icala elijonge kulo ithambeka (aspect) nendlela yokungena. Amathambeka ajonge emntla nalawo ajonge empuma yiwona afudumeleyo.
 - Ii-zone 0 ukuya ku-5 zibeka izinto ngokokuba uzityelela kangakanani.
 - Beka amanzi phezulu uvumele umxhuzulane uwahambise. Gcina ubulongwe kude namanzi okusela, ne-greywater kude nemifuno oyitya ingaphekwanga.
 

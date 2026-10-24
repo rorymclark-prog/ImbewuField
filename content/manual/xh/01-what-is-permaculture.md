@@ -53,7 +53,7 @@ Phumeza iimfuno zabantu zokutya, amanzi, indawo yokuhlala, impilo, ukufunda nobu
 
 UMhlaba unemida. Ukwabelana ngokufanelekileyo, okuthiwa rhoqo **fair share**, kuthetha ukuthatha oko sikudingayo size sibuyisele intsalela (ukutya, imbewu, ixesha, izakhono nemali) ekukhathaleleni uMhlaba nabantu.
 
-Sebenzisa le migaqo njengovavanyo. Phambi kokuba ulime ithambeka, uthenge ityhefu yokutshiza okanye uthinge umthombo, buza imibuzo emithathu. Ilungele umhlaba? Ilungele abantu? Ifanelekile? Ukuba nayiphi na impendulo ithi hayi, funa enye indlela.
+Sebenzisa le migaqo njengovavanyo. Phambi kokuba ulime ithambeka, uthenge ityhefu yokutshiza okanye ubophe umthombo ngothango, buza imibuzo emithathu. Ilungele umhlaba? Ilungele abantu? Ifanelekile? Ukuba nayiphi na impendulo ithi hayi, funa enye indlela.
 
 ## Imigaqo yoyilo ye-permaculture
 
@@ -67,7 +67,7 @@ Awukwazi ukuyila umhlaba ongawaziyo. Amanzi ahamba phi? Iqabaka lihlala phi? Yin
 
 1. Hamba kumhlaba wakho, nakwidlelo elijikelezileyo, kuzo zonke iisizini.
 2. Hlala ngokuthula ubukele izityalo, iintaka, izinambuzane nezilwanyana.
-3. Gcina incwadi yamanqaku yemvula, yeqabaka lokuqala nelokugqibela, nokuba izinto ziyintyatyamba nini. Abalimi abaninzi baphawula nezigaba zenyanga.
+3. Gcina incwadi yamanqaku yemvula, yeqabaka lokuqala nelokugqibela, nokuba izinto ziqhakaza nini. Abalimi abaninzi baphawula nezigaba zenyanga.
 4. Hamba ngexesha nasemva kwemvula enkulu. Jonga apho amanzi ahamba khona nalapho aqokelelana khona.
 
 Emva konyaka wokubukela, uya kuwazi umhlaba wakho ngcono kunaso nasiphi na isivakashi. Uyilo lwakho luya kuwuhambela endaweni yokulwa nawo.
@@ -125,7 +125,7 @@ Endalweni akukho nkunkuma: isiphumo seqhekeza elinye siba yinto efakwa kweliland
 
 ### 7. Yila usuka kwiipatheni uye kwiinkcukacha
 
-Indalo izele ziipatheni: ukuthi nga kwesebe lomlambo okanye lomthi, isangqa seqokobhe, amanzi ehla ethambekeni. Siqala sifumane ipatheni enkulu yendawo, emva koko sizalise iinkcukacha. UMollison wayecinga ukuba ipatheni ibalulekile kangangokuba wayinika isahluko esipheleleyo kwincwadi yakhe ethi *Permaculture: A Designers' Manual* (1988).
+Indalo izele ziipatheni: ukwahlukana kwamasebe omlambo okanye omthi, isangqa seqokobhe, amanzi ehla ethambekeni. Siqala sifumane ipatheni enkulu yendawo, emva koko sizalise iinkcukacha. UMollison wayecinga ukuba ipatheni ibalulekile kangangokuba wayinika isahluko esipheleleyo kwincwadi yakhe ethi *Permaculture: A Designers' Manual* (1988).
 
 1. Qala ngobume bomhlaba: amathambeka awo **ne-contour**, imigca ewela ithambeka ehleli ekuphakameni okufanayo.
 2. Fumana i-**catchment**, indawo apho amanzi akho evela khona, uze ulandele apho aya khona.
@@ -148,7 +148,7 @@ Xa inxalenye nganye yefama inceda ezinye, iyonke iba namandla ngaphezu kwamacand
 
 *Kancinci kancinci kuyafikelelwa.*
 
-Abalimi abaninzi baqala ngokuphakamisa, benenkalipho enkulu, baze balahlekelwe lithemba xa isiqwenga sikhulu kakhulu ukuba silawulwe. Indawo encinci ekhathalelwe kakuhle inika ngaphezu kwenkulu eshiywe iyendle.
+Abalimi abaninzi baqala ngokukhulu, benenkalipho enkulu, baze balahlekelwe lithemba xa isiqwenga sikhulu kakhulu ukuba silawulwe. Indawo encinci ekhathalelwe kakuhle inika ngaphezu kwenkulu eshiywe iyendle.
 
 1. Qala ngasemnyango wakho wangasemva ngegadi encinci yasekhitshini.
 2. Yenze isebenze phambi kokuba uqale inyathelo elilandelayo.
@@ -161,7 +161,7 @@ Itrektara enkulu kwintsimi encinci iyabiza kwaye iqinisa umhlaba; iinkukhu kwind
 
 *Ungazifaki zonke iqanda zakho kwibhasikithi enye.*
 
-Ukwahlukahlukana kuyinto enamandla. Cinga ngentambo: umtya omnye uyaqhawuka, kodwa imitya emininzi ijijiweyo iyabamba. **I-monoculture**, isityalo esinye kwindawo enkulu esoloko isuka kwimbewu efanayo, ihlwempuzekile ngobomi kwaye ivulekele zonke izinambuzane, izifo nezizini ezimbi. Ifama eyahlukahlukeneyo iyagoba iphinde ime.
+Ukwahlukahlukana kuyinto enamandla. Cinga ngentambo: umtya omnye uyaqhawuka, kodwa imitya emininzi ijijiweyo iyabamba. **I-monoculture**, isityalo esinye kwindawo enkulu rhoqo isuka kwimbewu efanayo, ihlwempuzekile ngobomi kwaye ivulekele zonke izinambuzane, izifo nezizini ezimbi. Ifama eyahlukahlukeneyo iyagoba iphinde ime.
 
 Ukwahlukahlukana kusebenza kuphela xa amacandelo edibana. Isityalo ngasinye nesilwanyana sidinga indawo nenjongo.
 

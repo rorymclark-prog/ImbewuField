@@ -34,7 +34,7 @@ Amanye amagama e-permaculture awanalo igama elifutshane lansuku zonke ezilimini 
 | Food forest | Igadi etyalwe njengehlathi lendalo, ngamaleko emithi, izihlahla ezincinci, imifuno enevumba, izityalo ezigubungela umhlaba nezityalo ezikhwelayo, enika ukutya ngomsebenzi omncinci emva kokuba isele iqinile. |
 | Frost pocket | Indawo esezantsi apho umoya obandayo uhlala khona ngobusuku obungenamoya nobucacileyo, ukuze iqabaka libe likhulu apho kunasethambekeni eliphezulu. |
 | Grafting | Ukudibanisa isiqwenga sesinye isityalo (esinjengohlobo oluhle lwesiqhamo) kwiingcambu zesinye isityalo, ukuze zikhule zibe ngumthi omnye. |
-| Green manure | Isityalo, rhoqo esingesosapho lweembotyi (i-legume), esityalelwa ukuba sinqunyulwe okanye simbelwe emhlabeni ukuze sawondle, hayi ukuba sivunwe. |
+| Green manure | Isityalo, rhoqo esesosapho lweembotyi (i-legume), esityalelwa ukuba sinqunyulwe okanye simbelwe emhlabeni ukuze sawondle, hayi ukuba sivunwe. |
 | Greywater | Amanzi asetyenzisiweyo asuka ekuhlambeni, kwiibhafu nakwiibhesini (hayi asezindlwini zangasese). Ngokuyisebenzisa ngononophelo, ingakwazi ukunkcenkcesha imithi nezityalo ezingezizo ezokutya. |
 | Groundcover | Izityalo eziphantsi ezisasazeka phezu komhlaba ziwukhusele, ezinjengamathanga, ibhatata okanye i-clover. |
 | Guild | Iqela lezityalo (ngamanye amaxesha nezilwanyana) elibekwe kunye ngeenxa zonke kwesona sityalo siphambili, rhoqo umthi weziqhamo, ukuze zincedisane. |

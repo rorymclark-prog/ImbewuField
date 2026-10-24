@@ -92,7 +92,7 @@ const drafts: Record<string, string> = {
   "Choose a photo smaller than 15 MB.": "Khetha ifoto encinci kune-15 MB.",
   "One photo is too large. Choose a smaller image.": "Enye ifoto inkulu kakhulu. Khetha umfanekiso omncinci.",
   "Visit-note AI is off in Settings. You can still edit or dictate your notes.": "I-AI yamanqaku otyelelo icinyiwe kwiisetingi. Usenako ukuhlela okanye ukuthetha amanqaku akho.",
-  "AI cleanup is available for your signed-in visits. Practise typing or dictating here without a charge.": "Ukucocwa nge-AI kufumaneka kutyelelo lwakho olungeneyo. Zilolonge ukubhala okanye ukuthetha apha ngaphandle kwentlawulo.",
+  "AI cleanup is available for your signed-in visits. Practise typing or dictating here without a charge.": "Ukucocwa nge-AI kufumaneka xa ungenile kwi-akhawunti yakho. Zilolonge ukuchwetheza okanye ukuthetha apha ngaphandle kwentlawulo.",
   "Sign in again before cleaning up these notes.": "Ngena kwakhona phambi kokucoca la manqaku.",
   "Speak your visit notes on your phone": "Thetha amanqaku akho otyelelo kwifowuni yakho",
   "Tap the notes box, then the microphone on your phone’s keyboard.": "Cofa ibhokisi yamanqaku, uze ucofe imayikrofoni kwikhibhodi yefowuni yakho.",

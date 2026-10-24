@@ -23,7 +23,7 @@ const drafts: Record<string, string> = {
   "no subject": "akukho sihloko",
   "Unknown sender": "Umthumeli ongaziwayo",
   "(no subject)": "(akukho sihloko)",
-  "Sent to: ": "Kuthunyelwe: ",
+  "Sent to: ": "Umamkeli: ",
   "replied": "kuphendulwe",
   "reply:": "impendulo:",
   "Reply": "Phendula",
@@ -75,7 +75,7 @@ const drafts: Record<string, string> = {
   "Share as much or as little as you like. Nothing here is visible until you save it.": "Yabelana ngokuninzi okanye ngokuncinci ngendlela othanda ngayo. Akukho nto apha ibonakalayo de uyigcine.",
   "Town or district — not your exact address": "Idolophu okanye isithili — hayi idilesi yakho ngqo",
   "Show me on the community map": "Ndibonise kwimephu yoluntu",
-  "Your location shows as an approximate ~1km area, never your exact homestead": "Indawo yakho iboniswa njengommandla oqikelelweyo we-~1km, hayi naxesha umzi wakho ngqo",
+  "Your location shows as an approximate ~1km area, never your exact homestead": "Indawo yakho iboniswa njengommandla oqikelelweyo we-~1km, ayisoze ibe yindawo echanekileyo yomzi wakho",
 
   // Contact page
   "Messaging your mentor or organisation needs a programme link on your account. You can still contact ImbewuField Support.": "Ukuthumela umyalezo kumcebisi wakho okanye kumbutho wakho kufuna ukuba i-akhawunti yakho inxibelelaniswe nenkqubo. Usenokuqhagamshelana ne-ImbewuField Support.",
@@ -166,7 +166,7 @@ const drafts: Record<string, string> = {
   "No learners match that search.": "Akukho bafundi bangqinelana nokukhangelwe.",
   "Learners will appear here once they enrol.": "Abafundi baza kubonakala apha xa sebebhalisile.",
   "Tour records · Sign in to open your own learners": "Iirekhodi zokhenketho · Ngena ukuze uvule abafundi bakho",
-  "Module titles, training descriptions, reports and assessment evidence are still shown in English.": "Izihloko zeemodyuli, inkcazelo yoqeqesho, iingxelo nobungqina boxatyiso zisabonakala ngesiNgesi.",
+  "Module titles, training descriptions, reports and assessment evidence are still shown in English.": "Izihloko zeemodyuli, inkcazelo yoqeqesho, iingxelo nobungqina bovavanyo zisabonakala ngesiNgesi.",
   "Due today": "Kufuneka namhlanje",
   "Due tomorrow": "Kufuneka ngomso",
   "1 day overdue": "Kudlulelwe ngosuku olu-1",

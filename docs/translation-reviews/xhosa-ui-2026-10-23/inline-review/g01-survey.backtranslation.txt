@@ -1,0 +1,32 @@
+Phase A blind back-translation (values only, by source line number)
+4 These questions are shown in English until reviewed translations are available.
+5 Challenges and main things | 6 Yes / No | 7 Many choice | 8 Short text | 9-10 Question text | 11 Remove question | 12 Remove option {n} | 13 Add option
+14-15 Make/New survey | 16-17 Survey title | 18-19 Organisation name | 20 Questions | 21 Add question
+22 Sample data - your survey is not yet saved for now. | 23 Being sent... | 24 Survey has been sent! | 25 Send survey | 26 From | 27 Answered | 28-29 Your answer | 30 Being sent | 31 Send answers | 32 Send | 33 Survey | 34 Read | 35 Survey builder | 36 Available surveys
+37 No surveys for now. Build the first one here above. | 38 Existing surveys | 39 No surveys available now. | 40 Survey is answered by farmers and students
+41 Survey builder of your organisation is available to NGO staff. | 42 Sample data | 43-48 question(s)/answer(s)/Yes/No
+49 Your answers are still here. We couldn't send them. Check your connection and tap Send again.
+50 XHOSA DRAFT - the demo text built into the app is an unreviewed AI draft. Questions written by the organisation come from the original English. Ask the survey creator before sending if something is unclear.
+51 Mid-season check | 52 Have you harvested already this season? | 53 About how much did you sell? | 54 Nothing for now | 55 Under R500 | 56 Over R2000
+57 Water access survey | 58 Do you have reliable water at your site? | 59 Which is your main source of water? | 60 Are there water problems you want to tell us about?
+61 Municipality | 62 Borehole | 63 Rainwater tank | 64 River / stream
+65 Meeting place added. Save the meeting so the place stays. | 66 Place added. Save the visit so the place stays.
+67 Location not available on this phone. You can still save the venue name and photos. | 68 No usable location returned. Please try again.
+69-70 Location added - device reports accuracy about {m} m. Save meeting/visit so location stays.
+71-72 Location added. Save meeting/visit so location stays.
+73 Location permission refused. Allow location for this site in your browser settings, then try again. What you entered is still here.
+74 Couldn't get your location. Try again outside or near a window. What you entered is still here.
+75 Meeting location and directions | 76 At the meeting place? Tap GPS to add location to this meeting. | 77 At the place? Tap GPS to add location to this visit.
+78 GPS is read only after you tap. The location becomes part of this record when you save it; remove it here before saving if you don't want it included.
+79 Location being sought | 80 Use meeting location | 81 Refresh GPS location | 82 Use my GPS location | 83 Hide map | 84 See map here | 85 Directions | 86 Location attached | 87 Map: {venue} | 88 training venue | 89 Remove location
+90 Xhosa names are unreviewed drafts. Notes entered by the user are kept as written.
+91 Attach up to three photos per visit. | 92 Choose a photo smaller than 15 MB. | 93 One photo is too big. Choose a smaller picture.
+94 AI for visit notes is switched off in settings. You can still edit or speak your notes.
+95 AI cleanup is available on your "olungeneyo" visit. Practise writing or speaking here without payment.
+96 Sign in again before cleaning these notes. | 97 Speak your visit notes on your phone | 98 Tap the notes box, then tap the microphone on your phone's keyboard.
+99 Say what you saw, what you did, any measurements, and what needs attention.
+100 Finish with who will do what and follow-up date. Check names and numbers before saving.
+101 No AI cost for the app when you speak using the keyboard. Your phone may need dictation to be turned on along with internet connection.
+102 Start at the notes box | 103 Visit outcome and follow-up | 104 Observed... Work done... Measurements... Support needed... Next step, owner and date...
+105 Clean up my notes - AI optional | 106 Only your notes are sent for cleaning. Check this suggestion before using it; photos are not sent.
+107 Check suggested names | 108 Use these names | 109 Keep the first | 110 Visit photos - up to 3 | 111 Choose existing photos | 112 Visit photo {n} | 113 Photo description {n} | 114 What does this photo show? | 115 Remove photo | 116 Being prepared...
