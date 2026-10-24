@@ -1,0 +1,179 @@
+Phase A blind back-translation (values only, numbered by order in shard). Written before opening English keys.
+1 Assessment and learning
+2 See the assessment forms in the organisation's Assessments tab.
+3 Loading…
+4 assignments | 5 completed | 6 overdue
+7 Open assessments →
+8 Loading your account…
+9 Project assessments | 10 Sign in
+11 so that you see assessments assigned by your organisation.
+12 Listen to farmers. Follow progress. Record what we change.
+13 Organisation | 14 People and access
+15 Set members' roles, assign people assessments, and control sharing with funders for this organisation.
+16 These controls cover the permissions listed below. They do not yet have a separate switch to turn each app feature on or off. Platform admin and funder accounts continue to be managed by the platform.
+17 Loading assessments…
+18 Numbers count assignments of assessments, not different people. "Assigned" means it is available in the app; it does not mean a WhatsApp, email or SMS was sent. "Awaiting review" means closed but not shared; it is not a separate recorded approval status.
+19 People and funder access | 20 Organisation access
+21 Assign app roles to members within your organisation. Platform admins, funder identities and organisation transfers are managed by the platform admin. Role changes take effect at the next server request; the member may need to refresh their screen.
+22 Allow linked funders to see our dashboards | 23 Funder access updated. | 24 Save funder access
+25 Farmer consent still applies. Assessment summaries stay private until published one by one. Files exported earlier cannot be taken back.
+26 Farmer | 27 App role | 28 Student | 29 Mentor | 30 Manage assessments | 31 Read private analysis | 32 Record training and attendance | 33 Manage people | 34 Save access
+35 Your account cannot manage people here. Ask the organisation admin to give you access to Manage people.
+36 Create assessment | 37 Stage | 38 Project / course group | 39 Use the same name across the whole assessment cycle | 40 Assessment title | 41 Last day (deadline)
+42 Review questions · in English and isiZulu
+43 Draft created. Choose its participants before opening it.
+44 Save draft | 45 Draft | 46 Open | 47 Closed | 48 Deadline | 49 See my answer | 50 Answer assessment
+51 No assessments yet. 52 Create a draft using the questions above. 53 Your organisation will assign assessments here.
+54 ← All assessments | 55 Choose participants
+56 Only the chosen farmers and students can answer. No messages are sent out.
+57 Assessment opened for the chosen participants. 58 Assessment closed. Answers can now only be read. 59 Close assessment
+60 Organisation view | 61 Funder summary | 62 assigned | 63 No response rate yet | 64 response rate
+65 Compare with earlier assessment | 66 Earlier assessment | 67 Choose a matching baseline | 68 No matching answers
+69 average change | 70 matching participants
+71 The change shows respondents who have scores for both. It does not confirm that the project caused the change. A garden area reported by a participant is not confirmed as hectares of production.
+72 Private written answer | 73 No written answer yet.
+74 Funders only see these combined numbers after publication. Written answers and staff coding are not included. Small groups and small answer categories are hidden.
+75 Summary removed from funder view. 76 Summary published to linked funders. 77 Remove funder summary 78 Publish reviewed summary
+79 Learning action · what will we change?
+80 Action | 81 Responsible person | 82 Done | 83 Learning action saved. | 84 Save learning action
+85 Hidden to protect a small group. | 86 responded | 87 passed | 88 Average
+89 The isiXhosa text in the assessment has not been checked by a good isiXhosa speaker. Don't treat it as a full, accepted translation.
+90 Comparison questions and analysis notes below are still shown in English. Written answers are shown as participants entered them.
+91 Some isiXhosa words in this assessment are an unchecked draft; the original English text is shown below them.
+92 Skip / choose an answer | 93 Your answer was removed. | 94 Your answer was saved.
+95 About these numbers · {n} answers that are overdue
+96 Access updated for {name}. 97 Open for {n} participants
+98 Answering is voluntary. You can skip any question. Answers are linked to your account so progress can be compared. Authorised NGO analysts may read them; funders see approved summaries only. Don't enter ID numbers or other people's names.
+99 Remove my answer
+100 I have read or been told this notice and I agree to take part.
+101 Save answer | 102 Assigned | 103 answers | 104 Awaiting review | 105 closed, not shared | 106 Shared | 107 summaries | 108 Size of answers | 109 assignments answered
+110 Assignments, not different people. One person can answer many assessments.
+111 Needs attention | 112 Closed assessments not yet shared | 113 Not assigned to anyone
+114 No open learning actions recorded. Add a next action within an assessment.
+115 Assessment cycle | 116 Follow the assessment cycle | 117 Show all stages | 118 App feedback · voluntary | 119 Project and training
+120 Not yet assigned | 121 Not yet started | 122 Assessment | 123 Clear filters | 124 Not yet opened
+125 No assessment matches this view.
+126 How assessment works · stages, time and learning actions | 127 Full assessment cycle
+128 These assessment tools are available. Results appear below when the organisation has reviewed and shared them; a tool listed here does not mean the assessment is complete.
+129 App experience | 130 Turn feedback into the next improvement
+131 Record what needs to change, who will do it and when to review it. Organisations can link a learning action to an assessment. App requests go to the developer through the feedback form.
+132 Report a fault or request a feature → 
+133 Feature requests are tracked separately from assessment results. It is planned to link a request to a new version together with a later assessment.
+134 The isiXhosa text here is an unchecked draft.
+135 Gardens | 136 in this tour register | 137 in your organisation | 138 Farmers | 139 supported farmers | 140 Food planted | 141 this season | 142 Active gardens | 143 registered in this cycle
+144 Production, season | 145 recorded by mentors | 146 Training completed | 147 across all active gardens | 148 Supported gardens | 149 demo sample
+150 Place / village | 151 All places | 152 Close the Lima sample | 153 Try Lima in this role
+154 Loading gardens | 155 Loading gardens…
+156 We could not load this organisation's gardens. Check your account access and try again.
+157 No garden has been added yet. 158 Place not recorded | 159 gardens | 160 farmers | 161 Gardens not available | 162 Choose a garden from the list to see details | 163 Open the sample place | 164 Find this garden on the map | 165 Try again
+166 Produced | 167 Sold | 168 Money received from sales
+169 Harvest not matching sales: unknown — sales exceed the recorded harvest
+170 Studies and training | 171 Open sample garden design → | 172 Close sample
+173 Explore the separate Ubhejane design workspace →
+174 This register does not include the farmer's private design.
+175 Check first, then download this garden's record
+176 Production photos | 177 AI-generated production photos; drawings identify some plants.
+178 Books — production | 179 Books — sales | 180 All gardens | 181 mentor
+182 Open the completed garden report (PDF) →
+183 Training | 184 Garden farmers — tap to see the full record | 185 Loading garden farmers | 186 Loading garden farmers…
+187 No farmers listed for this garden yet.
+188 Funder report
+189 Use Reports to see the shared portfolio. Farmer consent, organisation sharing and funder access decide which records are included; private personal details are not included.
+190 This page's controls and notices are in isiXhosa. Farmers' names, places, crops and lessons, and details kept with reports or sample photos, are shown as entered and may be in English.
+191 Recorded site size does not confirm the real production area.
+192 The PDF report below is in English. Recorded site size does not confirm the real production area; costs are not included, so this report does not show profit.
+193 Showing {n} gardens
+194 We could not load {name}'s production, sales and training data. Check your account access and try again.
+195 Harvest not matching sales: {kg} kg | 196 Not available
+197 Programme overview | 198 Size, production and learning.
+199 Production and sales | 200 Harvests and recorded money with size scores.
+201 Training and participation | 202 Learning progress and recorded activities.
+203 Production and sales | 204 Training and participation | 205 Funder reports | 206 Organisation reports
+207 Choose a report, review its size and send out a clear, brief PDF.
+208 Loading authorised report data…
+209 with readable records | 210 Training completion | 211 Recorded progress | 212 Active growers | 213 Activity in the last 90 days | 214 Recorded harvest | 215 Combined records available | 216 Recorded sales | 217 Groups | 218 Represented in this portfolio
+219 Titles and controls here are in isiXhosa. Text and evidence inside the PDF stays as recorded, and may be in English.
+220 English source: | 221 No measure reported yet | 222 Not yet recorded | 223 No indicators shared with this selection.
+224 {n} dated indicator | 225 {n} dated indicators | 226 {n} current measure | 227 {n} current measures
+228 Latest observation as of {date} or earlier. Each measure keeps its unit and purpose.
+229 of target · {remaining} left
+230 No {area} indicators shared with this selection. | 231 Add indicator: {area}
+232 What the programme changes | 233 Review evidence across the seven areas of work.
+234 Organisation's recent records
+235 Current combined figures from garden and farmer registers. They differ from the dated targets below.
+236 Size and basis of calculation
+237 Loading recent shared records of production, place and money…
+238 Recent organisation totals show when you choose all projects and today's date. In this selection, the dated indicators below set the reporting scale.
+239 Dated indicators and targets | 240 Target not yet agreed | 241 Target: | 242 Baseline: | 243 Observed:
+244 Method and recorded observation
+245 Build evidence across the whole project
+246 These measures can be recorded by the organisation with a description, reporting time and evidence reference.
+247 These are sample assessment questions. Any isiXhosa text here has not been checked by a good isiXhosa speaker.
+248 Change saved. 249 Could not save the change. Try again. 250 shared summaries
+251 The descriptions of consent and data sharing below remain in English so their meaning stays clear.
+252 Descriptions of consent and sharing remain in English so their meaning stays clear.
+253 About these numbers | 254 Choose participants for this assessment. | 255 Participant | 256 Open for | 257 participants
+258 Changes are saved as you go. | 259 Review questions | 260 Tour workspace | 261 Full report | 262 Brief summary
+263 Run by | 264 Community / project | 265 Supported by | 266 Coordinator | 267 Site map / guides
+268 Up to five items per section. The full report includes all records. | 269 Nothing recorded yet.
+270 Attendance register | 271 Present | 272 Absent | 273 Not signed
+274 Feedback on training | 275 No feedback recorded yet.
+276 Result details are hidden because this group is small. | 277 Results are hidden because this group is small.
+278 First action | 279 Suggested improvement | 280 Internal session record | 281 Programme report
+282 isiXhosa titles are not checked; evidence text is kept in the language it was recorded in.
+283 {n}% present | 284 {completed} responses from {assigned} people who were present.
+285 Supported farms | 286 Farms | 287 district | 288 districts | 289 Reported site area | 290 reported; may include shared gardens
+291 Harvested | 292 sold | 293 Farmer income | 294 after costs | 295 Shared training records | 296 farmers who share course progress
+297 Recorded this month | 298 no month-by-month data | 299 Course completed | 300 no shared training records
+301 of | 302 Needs a visit | 303 active within 90 days | 304 Try again | 305 Loading group… | 306 Group you support | 307 Group
+308 No farm visible in this account yet
+309 Farmers appear here once they have agreed to share their records with the organisation.
+310 Nothing is hidden by an error — the list is really empty.
+311 Each farm | 312 Farmer, place, district or group… | 313 Search in group | 314 Clear search | 315 Edit | 316 Harvest | 317 Income | 318 Joined (verb form) | 319 Name | 320 Progress | 321 Site size | 322 Distance | 323 Clear filters
+324 No farm matches the search. | 325 Place | 326 Course | 327 Last recorded
+328 A dash means a missing number. It doesn't mean zero. | 329 A dash means a number this account isn't allowed to read. It doesn't mean zero.
+330 Close farmer's record | 331 today | 332 day gone by | 333 days gone by | 334 No recent records
+335 Behind plan | 336 Costs are higher than income | 337 Setting up not finished | 338 Site survey not finished | 339 No visible records
+340 harvested | 341 income | 342 course
+343 The controls and sharing notices of this page are in isiXhosa. Some charts, data-state warnings and the farmer details panel are still shown in English; names, numbers and evidence typed by people are shown as saved.
+344 Export everything as CSV
+345 All numbers below were recorded by the farmer ({n}) for themselves, and are shown only in categories they have agreed to share.
+346 All numbers below were recorded by the farmers ({n}) for themselves, shown only in categories they agreed to share.
+347 Totals include {reporting} of {total} farms' records that this account is allowed to read. The other {other} are counted as farms, not counted as zero.
+348 A farmer ({n}) is registered here but has not yet consented. 349 Farmers ({n}) are registered here but have not yet consented.
+350 Export {n} as CSV
+351 Showing farm {shown} of {total}. Totals and charts above always include the whole group — month-by-month numbers are counted for the organisation, not each district, so the filter here cannot change them.
+352 Showing {shown} of {total} farms. (same)
+353 One other farmer ({n}) is registered here but has not agreed to share their numbers, so is not listed. A dash means a number this account isn't allowed to read — it doesn't mean zero.
+354 Other farmers ({n}) ... (plural of same)
+355 Open {name}'s record | 356 Loading group... | 357 Loading dashboard...
+358 This is an organisation area | 359 This dashboard is for programme groups of the organisation and managers.
+360 Organisation · programme overview | 361 sample records | 362 Portfolio map | 363 Learn | 364 Group | 365 Messages | 366 Reports | 367 Control centre | 368 Training and progress | 369 Production area | 370 Viewing funder summary | 371 Organisation dashboard
+372 Reports, sourced evidence and other programme parts are still shown in English.
+373 Loading dashboard… | 374 This is a funder area | 375 This dashboard is for funders and managers.
+376 Funder · impact monitoring | 377 Progress and milestones | 378 Funder dashboard
+379 Organisation control centre | 380 Manage your group, decide what is shared and review each role.
+381 People and permissions | 382 Mentor groups | 383 View as role | 384 Names and logos
+385 Explore each role's workspace. Your account's permissions do not change.
+386 Mentor / extension officer | 387 Funder
+388 The practice area could not open. Please try again.
+389 Open workspace → | 390 Thriving | 391 Starting | 392 Needs support | 393 Tour portfolio
+394 Baseline | 395 Before training | 396 After training | 397 Midpoint | 398 Closing | 399 App at midpoint | 400 App at closing | 401 Project baseline | 402 Before the face-to-face course | 403 After the face-to-face course | 404 Project midpoint | 405 Project close | 406 App feedback · midpoint | 407 App feedback · closing
+408 Before project support begins. Record a retrospective baseline as looking back.
+409 At the start of the course, before teaching.
+410 On the last day. These skills are reported by the learner themselves; use observed active work separately.
+411 Midway through delivery, early enough to change support.
+412 At the end of the project, using the same recall periods as the baseline.
+413 Together with the midpoint review, as a separate voluntary form.
+414 Repeat at closing to see whether the change helped.
+415 Planting and production | 416 Water and energy | 417 Land and living things | 418 Income and livelihoods | 419 Participation and families | 420 Learning and doing | 421 Delivery and support | 422 Other agreed measures
+423 Productive gardens, vegetable beds, staple-food sites, harvests and shared food.
+424 Installed storage, reliable water access, harvested water and working solar.
+425 Planted and surviving trees, soil condition, compost and regenerated land.
+426 Sold produce, recorded income and costs, paid work and market access.
+427 Active growers, families reached, food access and completed follow-up.
+428 Attendance, demonstrated skills and accepted farming practices after training.
+429 Completed installations, mentor visits, agreed actions and evidence checks.
+430 Extra indicators defined by the running organisation.
+431 Awaiting evidence | 432 Target achieved | 433 Continuing | 434 Overdue | 435 Reported · no target | 436 No observation on that date
+437 Review: | 438 Deadline: | 439 Attendance | 440 No register yet | 441 Signed register | 442 Attendance signature | 443 Feedback | 444 Responses / present | 445 Photos | 446 Session evidence | 447 ID / reference | 448 Signature | 449 Certificate | 450 (you) | 451 There was a problem. Error details are shown in English: 452 farms recording in | 453 average over ... farms

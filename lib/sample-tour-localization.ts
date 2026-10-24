@@ -1,4 +1,5 @@
 import { PRODUCT_TOUR, PRODUCT_TOUR_FEATURES, type ProductTourStep, type TourFeature } from './sample-tour';
+import { fillInline, inlineText, xhInlineDraft } from '@/lib/xh-inline';
 
 type TourId = (typeof PRODUCT_TOUR)[number]['id'];
 type TourFeatureId = keyof typeof PRODUCT_TOUR_FEATURES;
@@ -103,6 +104,16 @@ export const PRODUCT_TOUR_FEATURES_ZU: Record<TourFeatureId, readonly LocalizedT
 };
 
 export function productTourStepCopy(step: ProductTourStep, language: string): LocalizedTourStep {
+  // isiXhosa: the draft for each exact English string, keyed in lib/locales/xh-inline; anything
+  // without a draft keeps its English.
+  if (language === 'xh') {
+    return {
+      ...step,
+      title: inlineText(language, step.title),
+      task: inlineText(language, step.task),
+      ...(step.secondaryLabel === undefined ? {} : { secondaryLabel: inlineText(language, step.secondaryLabel) }),
+    };
+  }
   if (language !== 'zu') return step;
   return PRODUCT_TOUR_ZU[step.id as TourId] ?? step;
 }
@@ -113,6 +124,9 @@ export function productTourFeatureCopy(
   language: string,
   fallback: TourFeature | undefined,
 ): TourFeature | undefined {
+  if (language === 'xh') {
+    return fallback && { title: inlineText(language, fallback.title), text: inlineText(language, fallback.text) };
+  }
   if (language !== 'zu') return fallback;
   const translated = PRODUCT_TOUR_FEATURES_ZU[id as TourFeatureId]?.[index];
   return translated ?? fallback;
@@ -132,12 +146,42 @@ const UI_ZU: Record<TourUiKey, string> = {
   gettingReady: 'Kuyalungiswa…', draftDisclosure: 'Uhlaka lwesiZulu olungakabuyekezwa: izihloko, imisebenzi namacebiso kuhunyushwe ngokuhambisana nombhalo wesiNgisi. Kudinga ukubuyekezwa umuntu okhuluma isiZulu kahle futhi owazi ukusetshenziswa kwalolu hlelo.',
 };
 
+// The English each tour label shows (the callers pass the same words as their fallback), so the
+// isiXhosa draft is bound to the English sentence in lib/locales/xh-inline.
+const UI_EN: Record<TourUiKey, string> = {
+  tour: 'Tour', close: 'Close tour guide', tip: 'Tip', aboutMinutes: 'About {duration}',
+  tipAria: 'Tip {current} of {total}: {title}', nextTip: 'Next tip', tryNow: 'Try it now',
+  openView: 'Open this view', hint: 'Tap Tour beside the menu whenever you want these tips back.',
+  exploredNext: 'I’ve explored this · Next', skip: 'Skip this stop', previous: 'Previous stop',
+  overview: 'Tour overview', end: 'End tour', stopAria: 'Open stop {current}: {title}',
+  buttonAria: 'Tour guide, stop {current} of {total}', continue: 'Continue tour · stop {current}',
+  tryAgain: 'Try the tour again', start: 'Start the 15-minute tour', loading: 'Getting the tour ready…',
+  browseGardens: 'Browse the gardens', unavailable: 'Unavailable for this account', opening: 'Opening…',
+  gettingReady: 'Getting ready…',
+  draftDisclosure: 'Unreviewed isiXhosa draft: titles, tasks and tips are translated to match the English text. They need review by a good isiXhosa speaker who knows how this app is used.',
+};
+
+/** The provider hands over an isiZulu duration; give isiXhosa readers their own. */
+function xhDuration(duration: string | number): string {
+  const text = String(duration);
+  if (text === 'umzuzu') return inlineText('xh', '1 minute');
+  const minutes = /^imizuzu engu-(\d+)$/.exec(text)?.[1];
+  return minutes ? fillInline(inlineText('xh', '{n} minutes'), { n: minutes }) : text;
+}
+
 export function productTourUi(key: TourUiKey, language: string, values: Record<string, string | number> = {}): string | undefined {
+  if (language === 'xh') {
+    const draft = xhInlineDraft(UI_EN[key]);
+    if (!draft) return undefined;
+    const filled = key === 'aboutMinutes' && values.duration !== undefined ? { ...values, duration: xhDuration(values.duration) } : values;
+    return Object.entries(filled).reduce((text, [name, value]) => text.replaceAll(`{${name}}`, String(value)), draft);
+  }
   if (language !== 'zu') return undefined;
   return Object.entries(values).reduce((text, [name, value]) => text.replaceAll(`{${name}}`, String(value)), UI_ZU[key]);
 }
 
 export function productTourError(message: string, language: string): string {
+  if (language === 'xh') return inlineText(language, message);
   if (language !== 'zu') return message;
   const known: Record<string, string> = {
     'Your browser could not save tour progress. You can still explore the views.': 'Isiphequluli asikwazanga ukugcina inqubekelaphambili yohambo. Usengaqhubeka nokuhlola izikrini.',

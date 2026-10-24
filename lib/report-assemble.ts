@@ -58,7 +58,7 @@ export function assembleReportDocument(input: AssembleInput): AssembledReport {
   // 3 — then sections, which also yields the heading list the contents needs.
   const numbered = numberSections(figured.markdown);
 
-  const contents = buildContents(numbered.headings).replace('## Contents', input.language === 'zu' ? '## Okuqukethwe' : '## Contents');
+  const contents = buildContents(numbered.headings).replace('## Contents', input.language === 'zu' ? '## Okuqukethwe' : input.language === 'xh' ? '## Okuqulathwe' : '## Contents');
   const figuresList = buildListOfFigures(figured.figures);
 
   // 4 — front matter goes in only now, and is itself never numbered (see UNNUMBERED_TITLES).

@@ -4,6 +4,7 @@ import type { ReportSiteFacts } from './report-site-facts';
 import type { SampleGarden } from './sample-gardens';
 import { buildBillOfQuantities } from './report-boq';
 import type { ReportFigure } from './report-figures';
+import { inlineText } from '@/lib/xh-inline';
 
 export type ReportPresentation = 'screen' | 'colour' | 'ink';
 export type ReportMetric = { label: string; value: string; note: string };
@@ -24,7 +25,7 @@ const valid = (value: number) => Number.isFinite(value) && value >= 0;
 /** Charts use typed saved quantities, never numbers extracted from generated prose.
  * Missing data stays missing; a planned tank is not a tank of water on the ground. */
 export function siteReportVisuals(facts: ReportSiteFacts | null, location: LocationData, language = 'en'): ReportVisuals {
-  const t = (en: string, zu: string) => language === 'zu' ? zu : en;
+  const t = (en: string, zu: string) => inlineText(language, en, zu);
   const metrics: ReportMetric[] = [];
   const charts: ReportChart[] = [];
   if (facts?.boundary) metrics.push({ label: t('Mapped site', 'Indawo ebalazwe'), value: `${n(facts.boundary.areaM2)} m²`, note: facts.boundary.source });
@@ -60,12 +61,13 @@ const FIGURES_FIRST = ['site-plan', 'land-use', 'status'];
  * figures need the saved drawing, which only the browser holds; the typed charts need only facts. */
 export function withReportFigures(visuals: ReportVisuals, figures: ReportFigure[], language = 'en'): ReportVisuals {
   if (!figures.length) return visuals;
-  const source = language === 'zu' ? 'Umthombo' : 'Source';
-  const asChart = (figure: ReportFigure): ReportChart => ({ id: FIGURE_REPLACES[figure.id] === 'rainfall' ? 'rainfall' : figure.id, title: figure.title, note: `${figure.note} ${source}: ${figure.source}`.trim(), unit: FIGURE_KICKER[figure.id]?.[language === 'zu' ? 1 : 0] ?? '', kind: 'figure', rows: [], figure });
+  const source = inlineText(language, 'Source', 'Umthombo');
+  const kicker = (id: string) => { const k = FIGURE_KICKER[id]; return k ? inlineText(language, k[0], k[1]) : ''; };
+  const asChart = (figure: ReportFigure): ReportChart => ({ id: FIGURE_REPLACES[figure.id] === 'rainfall' ? 'rainfall' : figure.id, title: figure.title, note: `${figure.note} ${source}: ${figure.source}`.trim(), unit: kicker(figure.id), kind: 'figure', rows: [], figure });
   const replaced = new Set(figures.map(figure => FIGURE_REPLACES[figure.id]).filter(Boolean));
   const first = figures.filter(figure => FIGURES_FIRST.includes(figure.id)).map(asChart);
   const rest = figures.filter(figure => !FIGURES_FIRST.includes(figure.id)).map(asChart);
-  return { ...visuals, slideHint: language === 'zu' ? 'Shelelezisa eceleni ukuze ubone konke' : 'Slide to see more', charts: [...first, ...visuals.charts.filter(chart => !replaced.has(chart.id)), ...rest] };
+  return { ...visuals, slideHint: inlineText(language, 'Slide to see more', 'Shelelezisa eceleni ukuze ubone konke'), charts: [...first, ...visuals.charts.filter(chart => !replaced.has(chart.id)), ...rest] };
 }
 
 export function sampleReportVisuals(g: SampleGarden): ReportVisuals {

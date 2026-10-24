@@ -32,7 +32,8 @@ import {
   type JournalEntryInput,
 } from '@/lib/field-journal';
 import JournalEntrySheet, { type BedOption } from './JournalEntrySheet';
-import { formatZuluJournalDate, formatZuluMonth, journalCategoryLabel } from './journal-labels';
+import { inlineText } from '@/lib/xh-inline';
+import { formatXhosaJournalDate, formatXhosaMonth, formatZuluJournalDate, formatZuluMonth, journalCategoryLabel } from './journal-labels';
 import motion from './JournalMotion.module.css';
 
 type Filter = 'all' | JournalCategory;
@@ -95,7 +96,7 @@ const EXAMPLE_JOURNAL_ENTRIES: ReadonlyArray<{
 export default function FieldJournal() {
   const { t, lang } = useLanguage();
   const isZulu = lang === 'zu';
-  const ui = (english: string, zulu: string) => isZulu ? zulu : english;
+  const ui = (english: string, zulu: string) => inlineText(lang, english, zulu);
   const simple = useAppLevel() === 'simple';
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [ready, setReady] = useState(false);
@@ -283,7 +284,7 @@ export default function FieldJournal() {
                   background: 'linear-gradient(transparent, rgba(0,0,0,0.55))',
                   font: '600 12px/1 var(--font-sans), sans-serif', color: '#fff',
                 }}>
-                  {isZulu ? formatZuluJournalDate(p.date) : formatJournalDate(p.date)}
+                  {isZulu ? formatZuluJournalDate(p.date) : lang === 'xh' ? formatXhosaJournalDate(p.date) : formatJournalDate(p.date)}
                 </div>
               </div>
             ))}
@@ -307,7 +308,7 @@ export default function FieldJournal() {
                 ) : (
                   <c.icon size={12} aria-hidden />
                 )}{' '}
-                {isZulu ? journalCategoryLabel(c.key) : c.label}
+                {isZulu ? journalCategoryLabel(c.key) : inlineText(lang, c.label)}
               </Chip>
             ))}
           </div>
@@ -318,6 +319,9 @@ export default function FieldJournal() {
       <div className={workspace.journalTimeline}>
       {isZulu && <div role="note" style={{ marginBottom: 10, padding: '9px 12px', borderRadius: 10, background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', color: 'var(--gold-dim)', font: '500 12px/1.45 var(--font-sans), sans-serif' }}>
         Izibonelo namanothi akho akhonjiswa njengoba ebhaliwe. Isibonelo neminye imibhalo isesiNgisini.
+      </div>}
+      {lang === 'xh' && <div role="note" style={{ marginBottom: 10, padding: '9px 12px', borderRadius: 10, background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', color: 'var(--gold-dim)', font: '500 12px/1.45 var(--font-sans), sans-serif' }}>
+        {inlineText(lang, 'Examples and your own notes are shown as written. The example and other text stay in English.')}
       </div>}
 
       {/* Timeline */}
@@ -388,7 +392,7 @@ export default function FieldJournal() {
                         ) : (
                           <cat.icon size={11} aria-hidden />
                         )}{' '}
-                        {isZulu ? journalCategoryLabel(cat.key) : cat.label}
+                        {isZulu ? journalCategoryLabel(cat.key) : inlineText(lang, cat.label)}
                       </span>
                     </div>
 
@@ -436,7 +440,7 @@ export default function FieldJournal() {
             font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em',
             textTransform: 'uppercase', color: 'var(--text-muted)',
           }}>
-            {isZulu ? formatZuluMonth(group.key) : group.label} · {group.entries.length}
+            {isZulu ? formatZuluMonth(group.key) : lang === 'xh' ? formatXhosaMonth(group.key) : group.label} · {group.entries.length}
           </div>
 
           <div style={{ position: 'relative', paddingLeft: 16 }}>
@@ -460,7 +464,7 @@ export default function FieldJournal() {
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap', marginBottom: 4 }}>
                         <span style={{ font: '600 12px/1 var(--font-sans), sans-serif', color: 'var(--text-muted)' }}>
-                          {isZulu ? formatZuluJournalDate(entry.date) : formatJournalDate(entry.date)}
+                          {isZulu ? formatZuluJournalDate(entry.date) : lang === 'xh' ? formatXhosaJournalDate(entry.date) : formatJournalDate(entry.date)}
                         </span>
                         <span style={{
                           display: 'inline-flex', alignItems: 'center', gap: 4,
@@ -472,7 +476,7 @@ export default function FieldJournal() {
                           ) : (
                             <cat.icon size={11} aria-hidden />
                           )}{' '}
-                          {isZulu ? journalCategoryLabel(cat.key) : cat.label}
+                          {isZulu ? journalCategoryLabel(cat.key) : inlineText(lang, cat.label)}
                         </span>
                       </div>
 
@@ -513,7 +517,7 @@ export default function FieldJournal() {
                       type="button"
                       className={motion.editEntry}
                       onClick={() => openSheet(entry)}
-                      aria-label={`${ui('Edit entry', 'Hlela okufakiwe')}: ${entry.title || (isZulu ? formatZuluJournalDate(entry.date) : formatJournalDate(entry.date))}`}
+                      aria-label={`${ui('Edit entry', 'Hlela okufakiwe')}: ${entry.title || (isZulu ? formatZuluJournalDate(entry.date) : lang === 'xh' ? formatXhosaJournalDate(entry.date) : formatJournalDate(entry.date))}`}
                       style={{
                         flexShrink: 0, width: 40, height: 40, borderRadius: 10, cursor: 'pointer',
                         background: 'rgba(31,77,43,0.07)', border: '1px solid rgba(31,77,43,0.16)', color: 'var(--color-forest-800)',

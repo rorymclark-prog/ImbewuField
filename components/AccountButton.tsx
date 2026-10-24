@@ -5,13 +5,17 @@ import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 
 export default function AccountButton() {
   const { user, signOutUser } = useAuth();
   const { lang, t } = useLanguage();
   const isZulu = lang === 'zu';
+  // isiXhosa is also an unreviewed machine draft, so it keeps the English beside it like isiZulu.
+  const isDraft = lang === 'zu' || lang === 'xh';
   const signOutCopy = 'Signing out ends access to this account on this device. Sign in again to continue.';
   const signOutZulu = 'Ukuphuma ngemvume kuvala ukufinyelela kule akhawunti kule divayisi. Ngena futhi ukuze uqhubeke.';
+  const signOutDraft = inlineText(lang, signOutCopy, signOutZulu);
 
   // Don't render at all when Firebase is unconfigured — no auth to surface.
   if (!isBackendConfigured()) return null;
@@ -44,10 +48,10 @@ export default function AccountButton() {
           onClick={signOutUser}
           className="font-sans transition-opacity hover:opacity-80"
           style={{ color: 'var(--text-secondary)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 17 }}
-          aria-label={isZulu ? `${signOutZulu} (${signOutCopy})` : signOutCopy}
-          title={isZulu ? `${signOutZulu} (${signOutCopy})` : signOutCopy}
+          aria-label={isDraft ? `${signOutDraft} (${signOutCopy})` : signOutCopy}
+          title={isDraft ? `${signOutDraft} (${signOutCopy})` : signOutCopy}
         >
-          {isZulu ? 'Phuma ngemvume (Sign out)' : 'Sign out'}
+          {isZulu ? 'Phuma ngemvume (Sign out)' : isDraft ? `${inlineText(lang, 'Sign out')} (Sign out)` : 'Sign out'}
         </button>
       </div>
     );
@@ -70,7 +74,7 @@ export default function AccountButton() {
         fontSize: 20,
       }}
     >
-      {isZulu ? 'Ngena ngemvume (Sign in)' : 'Sign in'}
+      {isZulu ? 'Ngena ngemvume (Sign in)' : isDraft ? `${inlineText(lang, 'Sign in')} (Sign in)` : 'Sign in'}
     </Link>
   );
 }

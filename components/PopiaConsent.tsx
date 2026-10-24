@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { ShieldCheck, Check, Utensils, TrendingUp, Recycle, ArrowRight } from 'lucide-react';
 import { translate, useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import {
   activeAccountLocalStorageKey,
   removeSignedInLegacyLocalStorageKey,
@@ -10,7 +11,7 @@ import {
 
 const POPIA_KEY = 'imbewu_popia';
 const ONBOARD_KEY = 'permamap_onboarded';
-const ENGLISH_SOURCE_LANGS = new Set(['zu', 'st', 've']);
+const ENGLISH_SOURCE_LANGS = new Set(['zu', 'xh', 'st', 've']);
 
 type Goal = 'feed' | 'income' | 'soil';
 
@@ -139,7 +140,7 @@ export default function PopiaConsent() {
         }}
       >
         {lang === 'zu' && <p role="note" className="rounded-lg px-3 py-2 mb-4 font-sans" style={{ fontSize: 12, lineHeight: 1.4, background: 'color-mix(in srgb, var(--gold) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--gold) 25%, transparent)', color: 'var(--text-muted)' }}>{t('popiaZuluDraftNotice')}</p>}
-        {(lang === 'st' || lang === 've') && <p role="note" className="rounded-lg px-3 py-2 mb-4 font-sans" style={{ fontSize: 12, lineHeight: 1.4, background: 'color-mix(in srgb, var(--gold) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--gold) 25%, transparent)', color: 'var(--text-muted)' }}>Translation status: unreviewed. Read the English source before choosing.</p>}
+        {(lang === 'st' || lang === 've' || lang === 'xh') && <p role="note" className="rounded-lg px-3 py-2 mb-4 font-sans" style={{ fontSize: 12, lineHeight: 1.4, background: 'color-mix(in srgb, var(--gold) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--gold) 25%, transparent)', color: 'var(--text-muted)' }}>{inlineText(lang, 'Translation status: unreviewed. Read the English source before choosing.')}</p>}
         {/* ── Step indicator ── */}
         <div className="flex gap-1.5 mb-6">
           {([1, 2] as const).map((s) => (

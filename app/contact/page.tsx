@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { MessageCircle, Phone, Mail, Users, Building2, Send, CheckCircle, MailOpen, ChevronDown, ChevronUp, Plus } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { useAppLevel } from '@/lib/app-level';
 import { isBackendConfigured, getFirebase } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -47,7 +48,7 @@ export default function ContactPage() {
   const router = useRouter();
   const isLive = isBackendConfigured();
   const { lang } = useLanguage();
-  const ui = (en: string, zu: string) => lang === 'zu' ? zu : en;
+  const ui = (en: string, zu: string) => inlineText(lang, en, zu);
   const simple = useAppLevel() === 'simple';
 
   const [profile, setProfile] = useState<Profile | null>(null);

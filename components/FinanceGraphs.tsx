@@ -506,11 +506,11 @@ function PlanView({ plan, source, wide, orchard, lang }: {
       </div>
 
       <div className="px-4 pb-3 flex flex-wrap items-center" style={{ gap: '4px 14px' }}>
-        <Chip dot={BENCH} title={lang === 'zu' ? 'English source: plan benchmark' : undefined} label={tx('plan benchmark', 'isilinganiso sohlelo')} value="" />
-        <Chip dot={SOLD} title={lang === 'zu' ? 'English source: logged picked' : undefined} label={tx('logged picked', 'okuvuniwe okurekhodiwe')} value="" />
+        <Chip dot={BENCH} title={lang === 'zu' || lang === 'xh' ? 'English source: plan benchmark' : undefined} label={tx('plan benchmark', 'isilinganiso sohlelo')} value="" />
+        <Chip dot={SOLD} title={lang === 'zu' || lang === 'xh' ? 'English source: logged picked' : undefined} label={tx('logged picked', 'okuvuniwe okurekhodiwe')} value="" />
         {plan.lossConfirmed
           ? <Chip dot="#C07A1E"
-              title={lang === 'zu' ? `English source: after your ${Math.round(plan.lossPercent)}% loss allowance` : undefined}
+              title={lang === 'zu' || lang === 'xh' ? `English source: after your ${Math.round(plan.lossPercent)}% loss allowance` : undefined}
               label={recordsTemplate(lang, 'after your {pct}% loss allowance', 'ngemva kwesilinganiso sokulahleka esingu-{pct}%', { pct: Math.round(plan.lossPercent) })} value="" />
           : (
             <Link href="/facilitator/crops" className="font-sans"
@@ -566,7 +566,7 @@ function PlanRow({ row, pct, lossPercent, clipped, lang }: {
           <span aria-hidden="true">{row.icon}</span> {row.cropName}
         </span>
         <span className="font-display tabular-nums flex-shrink-0" style={{ fontSize: 12, color: MUTED }}
-          title={lang === 'zu' ? `English source: ${kgLabel(row.harvestedKg)} harvested of ${kgLabel(row.benchmarkKg)} benchmark` : undefined}>
+          title={lang === 'zu' || lang === 'xh' ? `English source: ${kgLabel(row.harvestedKg)} harvested of ${kgLabel(row.benchmarkKg)} benchmark` : undefined}>
           {lang === 'zu'
             ? <>Kuvunyiwe {kgLabel(row.harvestedKg)} · isilinganiso {kgLabel(row.benchmarkKg)}</>
             : <>{kgLabel(row.harvestedKg)} <span style={{ color: 'var(--text-muted)' }}>{recordsTemplate(lang, 'of {benchmark}', null, { benchmark: kgLabel(row.benchmarkKg) })}</span></>}

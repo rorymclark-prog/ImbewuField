@@ -2,12 +2,13 @@ import type { jsPDF } from 'jspdf';
 import { pdfSafe } from './crop-export-pdf';
 import { reportSowingCalendar } from './report-crop-plan';
 import type { FactCropPlan } from './report-site-facts';
+import { inlineText } from '@/lib/xh-inline';
 
 /** A single crop-by-month overview; bed allocations remain in the working report. */
 export function drawReportCropSummary(doc: jsPDF, crop: FactCropPlan, _offset = 0, language = 'en'): void {
   const margin = 40, width = 515, nameWidth = 167, monthWidth = (width - nameWidth) / 12;
   let y = 0;
-  const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
+  const tr = (en: string, zu: string) => inlineText(language, en, zu);
   const text = (value: string, x: number, top: number, max: number, size = 10, bold = false) => {
     doc.setFont('helvetica', bold ? 'bold' : 'normal'); doc.setFontSize(size); doc.setTextColor('#203d2d');
     const lines = doc.splitTextToSize(pdfSafe(value), max) as string[];

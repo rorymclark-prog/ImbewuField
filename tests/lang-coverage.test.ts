@@ -110,8 +110,11 @@ test('ThemePanel wires the generic partial-language notice through lib/lang-cove
   // The per-button "partly in English" second line.
   assert.match(src, /\{translate\(l\.code, 'langPartialTag'\)\}/);
 
-  // The below-grid note for a partial active language other than Xitsonga.
-  assert.match(src, /lang !== 'ts' && isPartialLang\(lang\)/);
+  // isiXhosa (fully drafted, unreviewed) gets its own draft line, like Xitsonga.
+  assert.match(src, /<span lang="xh">\{t\('xhosaUiDraftNotice'\)\}<\/span>/);
+
+  // The below-grid note for a partial active language other than Xitsonga and isiXhosa.
+  assert.match(src, /lang !== 'ts' && lang !== 'xh' && isPartialLang\(lang\)/);
   assert.match(src, /translate\(lang, 'langPartialActiveNote'\)/);
 
   // Buttons must stay at least 46px tall regardless of the added caption line.

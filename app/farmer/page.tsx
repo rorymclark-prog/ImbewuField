@@ -22,6 +22,7 @@ import BackButton from '@/components/BackButton';
 import ProfileSheet from '@/components/ProfileSheet';
 import LessonLink from '@/components/design/LessonLink';
 import { useLanguage, translate } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { useAppLevel } from '@/lib/app-level';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
@@ -118,7 +119,7 @@ function HomeInner() {
           title: t('reportsOfflineTitle'),
           message: recoveryDraft
             ? `${t('reportsOfflineMessage')}\n\n${recoveryDraftNotice}\n\nEnglish source: ${translate('en', 'reportsOfflineTitle')}\n${translate('en', 'reportsOfflineMessage')}`
-            : lang === 'zu'
+            : lang === 'zu' || lang === 'xh'
             ? `${t('reportsOfflineMessage')}\n${t('reportsOfflineZuluDraftNotice')}\n\nEnglish source: ${translate('en', 'reportsOfflineMessage')}`
             : t('reportsOfflineMessage'),
           confirmLabel: recoveryDraft ? `${t('reportsOfflineRetry')} · ${translate('en', 'reportsOfflineRetry')}` : t('reportsOfflineRetry'),
@@ -424,9 +425,13 @@ function HomeInner() {
         appConfirm({
           title: lang === 'zu'
             ? `${t('openSurveyNoSiteTitleZuDraft')} — ${translate('zu', 'designStudioZuluDraftBadge')} / unreviewed isiZulu draft. English: ${translate('en', 'openSurveyNoSiteTitle')}`
+            : lang === 'xh'
+            ? `${t('openSurveyNoSiteTitle')} / ${inlineText(lang, 'Unreviewed isiXhosa draft. English:')} ${translate('en', 'openSurveyNoSiteTitle')}`
             : t('openSurveyNoSiteTitle'),
           message: lang === 'zu'
             ? `${t('openSurveyNoSiteMessageZuDraft')}\n\nUnreviewed isiZulu draft. English source: ${translate('en', 'openSurveyNoSiteMessage')}`
+            : lang === 'xh'
+            ? `${t('openSurveyNoSiteMessage')}\n\n${inlineText(lang, 'Unreviewed isiXhosa draft. English source:')} ${translate('en', 'openSurveyNoSiteMessage')}`
             : t('openSurveyNoSiteMessage'),
           confirmLabel: lang === 'zu' ? t('openSurveyNoSiteConfirmZuDraft') : t('openSurveyNoSiteConfirm'),
         });
@@ -582,7 +587,7 @@ function HomeInner() {
           <DesktopPrimaryNav />
           <div className="flex-1" />
 
-          <span className="flex-shrink-0"><LessonLink id="map:overview" label={lang === 'zu' ? 'Funda' : 'Learn'} /></span>
+          <span className="flex-shrink-0"><LessonLink id="map:overview" label={lang === 'zu' ? 'Funda' : inlineText(lang, 'Learn')} /></span>
 
           {/* ONE design door — Design Studio (canonical /design surface; Zones + the AI suggest
               live here). Now visible ON MOBILE too: farmers on phones could not find the zones
@@ -632,8 +637,8 @@ function HomeInner() {
 
           <button
             onClick={() => setSettingsOpen(true)}
-            aria-label={lang === 'zu' ? 'Izilungiselelo zokubukeka' : 'Appearance settings'}
-            title={lang === 'zu' ? 'Ukubukeka' : 'Appearance'}
+            aria-label={lang === 'zu' ? 'Izilungiselelo zokubukeka' : inlineText(lang, 'Appearance settings')}
+            title={lang === 'zu' ? 'Ukubukeka' : inlineText(lang, 'Appearance')}
             className="hidden md:flex flex-shrink-0 items-center justify-center rounded-lg transition-all"
             style={{
               width: 40, height: 40,
@@ -657,10 +662,10 @@ function HomeInner() {
         )}
 
         {reportSiteFlow && !showReport && <div style={{padding:'12px 20px',background:'var(--bg-1)',borderBottom:'1px solid var(--border)',fontSize:14}}>
-          <strong>{searchParams.get('reportSite') === 'new' ? (lang === 'zu' ? 'Khetha indawo yombiko wakho' : 'Choose a site for your report') : (lang === 'zu' ? 'Kuvulwa umbiko wendawo yakho' : 'Opening your site report')}</strong>
-          <p style={{margin:'6px 0'}}>{loading ? (lang === 'zu' ? 'Kulayishwa izimo zendawo ekhethiwe…' : 'Loading the selected site’s conditions…') : (lang === 'zu' ? 'Sesha indawo noma thepha kuyo emephini. Umbiko wokuhlaziywa kwendawo uzovuleka uma isilungile.' : 'Search for a place or tap its position on the map. Its Site Analysis Report will open when the site is ready.')}</p>
+          <strong>{searchParams.get('reportSite') === 'new' ? (lang === 'zu' ? 'Khetha indawo yombiko wakho' : inlineText(lang, 'Choose a site for your report')) : (lang === 'zu' ? 'Kuvulwa umbiko wendawo yakho' : inlineText(lang, 'Opening your site report'))}</strong>
+          <p style={{margin:'6px 0'}}>{loading ? (lang === 'zu' ? 'Kulayishwa izimo zendawo ekhethiwe…' : inlineText(lang, 'Loading the selected site’s conditions…')) : (lang === 'zu' ? 'Sesha indawo noma thepha kuyo emephini. Umbiko wokuhlaziywa kwendawo uzovuleka uma isilungile.' : inlineText(lang, 'Search for a place or tap its position on the map. Its Site Analysis Report will open when the site is ready.'))}</p>
           {error && <p role="alert">{error}</p>}
-          <Link href="/reports" style={{display:'inline-flex',alignItems:'center',minHeight:44,fontWeight:600}}>{lang === 'zu' ? 'Buyela ezindaweni ezilondoloziwe' : 'Back to saved sites'}</Link>
+          <Link href="/reports" style={{display:'inline-flex',alignItems:'center',minHeight:44,fontWeight:600}}>{lang === 'zu' ? 'Buyela ezindaweni ezilondoloziwe' : inlineText(lang, 'Back to saved sites')}</Link>
         </div>}
 
         {/* ── Main ──────────────────────────────── */}

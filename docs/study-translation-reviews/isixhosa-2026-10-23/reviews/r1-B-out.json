@@ -1,0 +1,828 @@
+[
+ {
+  "path": "food-forest/title",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/description",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l1/infographicAlt",
+  "verdict": "repair",
+  "problem": "'umdiliya' names the grapevine specifically; English says a generic vine/climber.",
+  "repaired": "Isahlulo esinqunyiweyo sehlathi lokutya esinomthi omkhulu omi phakathi, imithi emincinci, amatyholo, izityalo ezime nkqo, izityalo ezigubungela umhlaba nesityalo esinyukayo, iingcambu zazo zisasazeka emhlabeni; ukukhanya kwelanga kungena ngasekhohlo ngaphezulu.",
+  "severity": "minor"
+ },
+ {
+  "path": "food-forest/food-forest-l1/title",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l1/body",
+  "verdict": "repair",
+  "problem": "'liyayilingisa' (-lingisa) is isiZulu for 'imitate'; 'ncitshisa' is non-standard for 'thin'.",
+  "repaired": "Ihlathi lomdabu lizalisa indawo ukusuka kumasebe aphezulu ukuya kwiingcambu.\n\nIzityalo ezahlukeneyo zisebenzisa ukukhanya nokumanzi okukhoyo kumgangatho wazo.\n\nIhlathi lokutya liyayixelisa le ndlela ngezityalo ezivelisayo.\n\nIsiphumo asiyiyo isityalo esinye kumqolo omnye, kodwa yimigangatho emininzi eluncedo ekhula ndawonye.\n\nCinga ngesithsaba somthi esiphakamileyo, imithi emincinci, amatyholo (ama-shrub) nezityalo ezingenamthi ezithambileyo.\n\nIzityalo ezigubungela umhlaba ziwukhusela ngaphezulu, izityalo ezingcambu zikhula ngaphantsi kwawo, kwaye izityalo ezinyukayo zisebenzisa izixhasi ezifanelekileyo.\n\nUbude nokwahlukana kwezityalo kuxhomekeke kwizityalo nakwindawo. Le yimigangatho yocwangciso, ayizizo iibhanti zobude ezimiselweyo.\n\nUmzekelo wokuqala we-Highveld uquka i-Wild Fig okanye i-pecan ngaphezu kwe-lemon, i-naartjie ne-black mulberry.\n\nUbeka i-Cape gooseberry ne-Wild Medlar kunye nemifuno, i-wild garlic, ubhatata ne-granadilla.\n\nThatha oku njengomzekelo wocwangciso, hayi imvume yokutyala zonke iintlobo. Qala ngokuqinisekisa ukuba sisiphi isityalo, ukumelana neqabaka, ubungakanani xa sele sikhulile, nezithintelo zasekuhlaleni.\n\nIzityalo ezincinci zidinga ukunyanyekelwa ekusekweni kwazo: ukuhlola ukumanzi, ukulawula ukhula nokukhuselwa ekonzakaleni.\n\nNjengoko izityalo zikhula, umthunzi namagqabi awileyo ayaguqula iimeko ezingaphantsi kwazo.\n\nHlola ukukhuphisana nendlela yokufikelela. Sika, nciphisa okanye hlengahlengisa ukutyala kwemigangatho engaphantsi xa oko ukubonayo kufuna; inkqubo ayiphelelwa kukudinga ukunyanyekelwa ngomhla othile omiselweyo.",
+  "severity": "wording"
+ },
+ {
+  "path": "food-forest/food-forest-l1/keyPoints/0",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l1/keyPoints/1",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l1/keyPoints/2",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l1/keyPoints/3",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/0/q",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/0/options/0",
+  "verdict": "repair",
+  "problem": "Grammar: 'nguwonyaka' should be 'ngunyaka'.",
+  "repaired": "Linda de kube ngunyaka wesihlanu",
+  "severity": "minor"
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/0/options/1",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/0/options/2",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/0/rationale",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/1/q",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/1/rationale",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l2/infographicAlt",
+  "verdict": "repair",
+  "problem": "Word order makes 'oluhlaza' read as 'the green sea' rather than a green coastal strip; 'elimhlophe-mdaka' (white-brown) is an odd rendering of 'pale'.",
+  "repaired": "Imilo elula yoMzantsi Afrika ahlulwe yaba yimimandla emithathu yokukhula ngombala womhlaba nemo yomhlaba kuphela: ithafa eliphakamileyo elisemaphakathi elinombala okhanyayo elinamagquma, umgca oluhlaza onomswakama osecaleni kolwandle, nendawo eshushu ephantsi ebomvu-mdaka. Kwenye nenye kume iimilo zemithi ezahlukeneyo.",
+  "severity": "minor"
+ },
+ {
+  "path": "food-forest/food-forest-l2/title",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l2/body",
+  "verdict": "repair",
+  "problem": "Negation at risk: 'Igama lommandla okanye ikona ekhuselekileyo ayanele' can be read as 'is enough' (English: 'is NOT enough' - a frost-safety warning). Rephrased with unambiguous negation. Also garbled 'sourced percentage' sentence.",
+  "repaired": "Hlola imvula, iqabaka, ubushushu, umhlaba nokufumaneka kwamanzi kwindawo yakho ngaphambi kokukhetha izityalo.\n\nI-mango inokonakaliswa liqabaka. I-quince idinga ubusika obubandayo ngokufanelekileyo ukuze izale ngokuthembekileyo.\n\nIgama lommandla okanye ikona ekhuselekileyo ayiyonto eyaneleyo. Qinisekisa isityalo ngasinye nohlobo ngalunye ngesikhokelo esithembekileyo sasekuhlaleni.\n\nUluhlu lokuqala luquka pecan, walnut nekhiwane lomdabu; apple, pear, plum, black mulberry ne-loquat; rosemary, Wild Medlar, Cape gooseberry ne-Barbados cherry.\n\nOlu luhlu aluyiyo ingcebiso yazo zonke. Hlola isityalo ngasinye ngokuhambelana neqabaka, umhlaba, ubungakanani xa sele sikhulile noluhlu lweentlobo ezivunyiweyo zasekuhlaleni.\n\nGcina izithintelo ezikhoyo zomthetho nezeprojekthi zisebenza. Ungatyali ngokubona ifoto kuphela.\n\nImizekelo yokuqala yeendawo ezishushu iquka mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry ne-Wild Dagga.\n\nMarula, Mopane ne-baobab nazo zivela kwimizekelo yaseLimpopo. Ukufaneleka kwindawo yakho kusafuna ukuhlolwa.\n\nImithi eluncedo ayizizo ngokuzenzekelayo ezityiwayo. Qinisekisa ukuba sisiphi isityalo nokusetyenziswa kwaso ngokukhuselekileyo; ifoto yembonakalo yomhlaba ayisosikhokelo sokuchonga ukutya.\n\nIzityalo zomdabu ezifanelekileyo kwindawo zinokuxhasa indawo yokuhlala yezilwanyana zasendle njengenxalenye yoyilo.\n\nKhetha ngokwendalo yendawo yakho nangendima eluncedo yesityalo ngasinye. Akukho njongo yepesenti esekelwe kumthombo othembekileyo kwesi sifundo.\n\nKhusela izityalo zendalo ezikhoyo. Musa ukuguqula amathafa aphilileyo abe lihlathi lokutya ngenxa nje yokuba imithi iluncedo kwenye indawo.",
+  "severity": "meaning"
+ },
+ {
+  "path": "food-forest/food-forest-l2/keyPoints/0",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l2/keyPoints/1",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l2/keyPoints/2",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l2/keyPoints/3",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/0/q",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/0/options/1",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/0/options/2",
+  "verdict": "repair",
+  "problem": "'Kusenokwenzeka' (it may possibly happen) softens the frost warning; English says 'likely'. This is the correct option and must stay clearly right.",
+  "repaired": "Kunokwenzeka kakhulu ukuba ibulawe okanye yonakaliswe kakhulu liqabaka, ngakumbi njengomthi omncinci",
+  "severity": "wording"
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/0/rationale",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/1/q",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/1/rationale",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l3/infographicAlt",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l3/title",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l3/body",
+  "verdict": "repair",
+  "problem": "'unyango' means medical treatment/cure, not 'care available'; garbled 'groundcovers do not want to wait for it to finish'; 'xa imvula ingonganga' is not a word and adds a condition - English says keep a BACKUP watering plan (always); 'ncitshisa' non-standard.",
+  "repaired": "Qala ngokuhlola indawo, unikezelo lwamanzi nokhathalelo olukhoyo. Khusela umhlaba ongagqunyiwe kwangoko.\n\nIzityalo zenkxaso zethutyana zinokunika indawo yokukhuselwa nezinto eziluncedo ezisikiweyo apho kufanelekileyo.\n\nImithi ephambili nemigangatho esezantsi inokufakwa njengoko iimeko zivuma. Izityalo ezigubungela umhlaba akuyomfuneko ukuba zilinde de kube sekupheleni; phepha ukuba izityalo zikhuphisane nemithi emincinci.\n\nQala ngendawo onokuyinkcenkceshela uyigcine. Hlola izityalo ezikhoyo ngaphambi kokucoca.\n\nApho kufanelekileyo, ikhadibhodi eqhelekileyo phantsi kwengca yokugquma efanelekileyo inganciphisa ukukhula okungafunwayo. Gcina amanzi enokungena emhlabeni uzishiye iziqu zemithi zicocekile.\n\nCwangcisa ukwahlukana ngokobungakanani bezityalo xa sele zikhulile. Lungiselela izityalo zasenkulisweni (i-nursery) kwithuba elilandelayo elifanelekileyo lokutyala.\n\nKhangela indlela umthunzi, iingcambu namanzi akhoyo achaphazela ngayo izityalo ezingabamelwane.\n\nI-comfrey ne-wild garlic zivela kumzekelo wokuqala wokutyala ngaphantsi; hlola ukufaneleka kwazo kwindawo yakho ngaphambi kokuzisebenzisa.\n\nSika okanye nciphisa izityalo zenkxaso xa kuyimfuneko, usebenzisa iindlela ezifanelekileyo kuhlobo ngalunye. Izinqumlo ezicocekileyo ezifanelekileyo zinokubuyela njengengca yokugquma. Ungalindi unyaka othile omiselweyo ukuba ukukhuphisana sele kuzonakalisa izityalo.\n\nKhetha ithuba lokutyala xa ukumanzi komhlaba nemozulu elindelekileyo zixhasa ukusekwa.\n\nImvula inganceda, kodwa hlola indawo yeengcambu kwaye ugcine isicwangciso sokunkcenkceshela esigciniweyo ukuba kuyimfuneko. Phepha ukutyala emhlabeni ozele ngamanzi.\n\nHlola izityalo ezincinci emva kokutyala. Ixesha lokuvuna nezinto ezongezwa zivela ngaphandle zixhomekeke kuhlobo lwesityalo, indawo nokhathalelo; akukho sivuno siqinisekisiweyo kunyaka wesihlanu.",
+  "severity": "meaning"
+ },
+ {
+  "path": "food-forest/food-forest-l3/keyPoints/0",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l3/keyPoints/1",
+  "verdict": "repair",
+  "problem": "'unyango' = medical treatment; English is 'available care'.",
+  "repaired": "Cwangcisa ulandelelwano ngokweemeko nokhathalelo olukhoyo",
+  "severity": "wording"
+ },
+ {
+  "path": "food-forest/food-forest-l3/keyPoints/2",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l3/keyPoints/3",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/0/q",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/0/options/1",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/0/options/2",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/0/rationale",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/1/q",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/1/options/3",
+  "verdict": "repair",
+  "problem": "'Ngekhe' is isiZulu.",
+  "repaired": "Soze kufuneke, kuba izityalo zenkxaso azikwazi ukukhuphisana",
+  "severity": "wording"
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/1/rationale",
+  "verdict": "repair",
+  "problem": "'unyango' = medical treatment; English is 'management'.",
+  "repaired": "Izityalo zenkxaso zethutyana zinokuba ngabakhuphisana. Qwalasela ukukhanya, amanzi nokukhula, uze ukhethe indlela efanelekileyo yolawulo kunokuba ulinde unyaka othile omiselweyo.",
+  "severity": "wording"
+ },
+ {
+  "path": "intro-permaculture/title",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/description",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/infographicAlt",
+  "verdict": "repair",
+  "problem": "'exhunyiweyo' (-xhuma) is isiZulu for 'connected'.",
+  "repaired": "Imigaqo emithathu yokuziphatha njengemijikelezo emithathu edibeneyo enobukhulu obufanayo: isandla sibambe umhlaba sibonisa Ukukhathalela umhlaba, abantu ababini bebonisa Ukukhathalela abantu, kunye nebhasikithi edlula phakathi kwezandla ibonisa Ukwabelana ngokufanelekileyo.",
+  "severity": "minor"
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/title",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/body",
+  "verdict": "repair",
+  "problem": "'olusithiyela' has the wrong object concord for 'umthombo' and an uncommon verb (use -biyela, fence); 'ukufudisa iinkomo' is not a clear isiXhosa verb for 'graze cattle'; 'obungqondo obungacacanga' is awkward for 'abstract ideas'.",
+  "repaired": "I-permaculture imi phezu kwemigaqo emithathu yokuziphatha. Ukukhathalela umhlaba (Earth Care) kuthetha ukuphatha umhlaba, amanzi, izityalo nezilwanyana njengeenkqubo eziphilayo ekufuneka sizikhusele, kungekhona izinto zokuzisebenzisa ziphele. Ukukhathalela abantu (People Care) kuthetha ukuba iimfuno zosapho lwakho zize kuqala, emva koko iimfuno zoluntu lwakho. Ukwabelana ngokufanelekileyo (Fair Share) kuthetha ukuthatha kuphela oko ukufunayo nokubuyisela intsalela — imbewu, ukutya, amanzi, ulwazi — kwinkqubo.\n\nEzi aziyiyo nje iingcamango ezingabambekiyo. Umfama othengisa onke amaqanda nemifuno kodwa engagcini nto etafileni yosapho uyeqa Ukukhathalela abantu. Uluntu olubiyela ngocingo umthombo wamanzi owabelwana ngawo luyaphula Ukwabelana ngokufanelekileyo.\n\nImigaqo yokuziphatha ibalulekile kuba ikunceda uthathe izigqibo xa kungekho ncwadi yemigaqo — xa ummelwane ecela ukudlisa iinkomo zakhe emva kwembalela, okanye izikhukula zonakalisa imisele yakho (i-swale, yimisele egrunjiweyo ebamba amanzi emvula). Yakha le migaqo mithathu kwindlela ocinga ngayo phambi kokuba wakhe nantoni na emhlabeni.",
+  "severity": "wording"
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/keyPoints/0",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/keyPoints/1",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/keyPoints/2",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/keyPoints/3",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/0/q",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/0/options/1",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/0/options/2",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/0/rationale",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/1/q",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/1/options/1",
+  "verdict": "repair",
+  "problem": "'ukunisela' is isiZulu-leaning; isiXhosa 'ukunkcenkceshela'.",
+  "repaired": "Gcina onke amanzi omngxuma kummandla omkhulu wokunkcenkceshela",
+  "severity": "minor"
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/1/rationale",
+  "verdict": "repair",
+  "problem": "Last clause says 'take a lot of water'; English 'take more water'.",
+  "repaired": "Yazi kuqala ukuba usetyenziso lwamanzi oluvunyelweyo luyintoni nokuba umthombo unokusebenzela bonke abasebenzisi ngaphandle kokuthatha amanzi amaninzi kakhulu. Ukuba ukwabelana kuyavunyelwa kwaye amanzi ayaneleyo, vumelanani ngendlela yokwabelana ngokufanelekileyo. Ukubeka iliso kukunceda uqaphele utshintsho; akukunikeli mvume yokuthatha amanzi angaphezulu.",
+  "severity": "minor"
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/infographicAlt",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/title",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/body",
+  "verdict": "repair",
+  "problem": "'Iindawo ezintathu' = 'three places' (English: three starting points/principles); 'inokunisela' isiZulu-leaning.",
+  "repaired": "UDavid Holmgren wabeka imigaqo elishumi elinesibini yoyilo kwincwadi ethi Essence of Permaculture. UBill Mollison noDavid Holmgren baqala kunye ingcamango ye-permaculture. Imigaqo emithathu eluncedo yokuqala kwesi sifundo yile: bukela uze usebenzisane — jonga umhlaba wakho isizini epheleleyo phambi kokwenza imisebenzi emikhulu yokumba umhlaba; bamba uze ugcine amandla — qaphela imvula, ilanga ne-biomass (izinto zezityalo eziphilayo enjengengca namagqabi) ngaphambi kokuba zishiye indawo yakho; kwaye sebenzisa imiphetho uze ukhathalele okusemaphethelweni — umgca wocingo okanye umtya osecaleni kwendlela unokuba yindawo eluncedo yokubukela.\n\nEminye ekufanele uyazi: ungavelisi nkunkuma (intsalela yokutya ibe ngumgquba, umgquba ube ngumhlaba), sebenzisa izisombululo ezincinci nezicothayo (ibhakethi inokunkcenkceshela ibhedi ngaphandle kombane), kwaye sebenzisa uze ukhathalele ukwahlukahlukana. Umonakalo wesichotho kumbona uxhomekeke kwisaqhwithi nakwinqanaba lokukhula kwesityalo.\n\nKhetha imigaqo emibini okanye emithathu ethetha nengxaki yakho enkulu uze uyisebenzise ngamandla. Eminye iya kucaca njengoko uqhubeka.",
+  "severity": "wording"
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/keyPoints/0",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/keyPoints/1",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/keyPoints/2",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/keyPoints/3",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/0/q",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/0/options/1",
+  "verdict": "repair",
+  "problem": "'amelele' is not a clear form for 'pools'; this is the correct option and must read clearly.",
+  "repaired": "Jonga apho amanzi ahamba khona nalapho aqokelelana khona ngexesha elingekho ngaphantsi kwesizini enye yemvula",
+  "severity": "wording"
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/0/options/2",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/0/rationale",
+  "verdict": "repair",
+  "problem": "'lilinge' = attempt; English 'first step'.",
+  "repaired": "Isizini yemvula ibonisa ngaphezu kwesaqhwithi esinye, kodwa ukubukela linyathelo lokuqala kuphela. Hlola umhlaba, ithambeka, indlela amanzi ahla ngayo nendlela ekhuselekileyo yokuphuphuma kunye nomcebisi wasekuhlaleni oqeqeshiweyo phambi kokumba.",
+  "severity": "minor"
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/1/q",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/1/rationale",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/infographicAlt",
+  "verdict": "repair",
+  "problem": "'ayiyondi' is not a word.",
+  "repaired": "Umzekelo wefama oboniswe ngemizobo: iimpawu ezinamanani ukusuka ku-0 ukuya ku-5 zilandela indlela ejikelezayo yabahambi ukusuka endlini nasegadini esondeleyo, zidlula iinkukhu nentsimi, ziye kwimithi nendawo yasecaleni komlambo eyindle ngakumbi. Iimpawu ngumzekelo, azizizo imida emiselweyo okanye imigama.",
+  "severity": "minor"
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/title",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/body",
+  "verdict": "repair",
+  "problem": "'oko ukukhetha rhoqo' = 'what you CHOOSE often'; English 'what you pick often' (-kha).",
+  "repaired": "Imimandla ne-sector zikunceda unciphise ukuchitha umsebenzi. Imimandla ihamba ukusuka ku-0 ukuya ku-5 ngokokuba utyelela kangakanani. Ummandla 0 yindlu. Kulo mzekelo, Ummandla 1 ukufutshane nendlu kwaye ubamba oko ukukha rhoqo — imifuno enevumba (herbs), amagqabi esaladi. Ummandla 2 yigadi ephambili nendawo yeenkukhu, etyelelwa kanye okanye kabini ngosuku. Ummandla 3 yintsimi ephambili, etyelelwa kanye evekini. Ummandla 4 uphantse ube yindle — imithi yeziqhamo nokutya kwemfuyo okufuna ingqalelo ngamanye amaxesha. Ummandla 5 uyashiywa ube yindle.\n\nIi-sector (iisekta) ngamandla afika evela ngaphandle — ilanga, umoya, imvula, izikhukula, umlilo. Jonga apho umoya onamandla uvela khona kwifama yakho. Iirekhodi zesikhululo sezulu esikufutshane zinokukunceda uhlole apho umoya uvela khona. Jonga apho amanzi emvula engena khona aze ahambe phezu komhlaba wakho. Zoba iintolo (→) ezibonisa oko ukubonayo.\n\nZoba imimandla ne-sector ephepheni, uya kuba nesakhelo soyilo lwakho.",
+  "severity": "wording"
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/keyPoints/0",
+  "verdict": "repair",
+  "problem": "'ekhethwa' = chosen; English 'picked' (-khiwa).",
+  "repaired": "Kulo mzekelo, Ummandla 1 osondele endlini ubamba imifuno enevumba (herbs) ekhiwa rhoqo",
+  "severity": "wording"
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/keyPoints/1",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/keyPoints/2",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/keyPoints/3",
+  "verdict": "repair",
+  "problem": "'uyaneleyo' ungrammatical; use stative 'wanele'.",
+  "repaired": "Umzobo olula wemimandla ne-sector wanele ukuqala uyilo",
+  "severity": "minor"
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/0/q",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/0/options/0",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/0/options/1",
+  "verdict": "repair",
+  "problem": "'kancinci' (a little) is vague for 'less often'; clarified. Correct option stays right.",
+  "repaired": "Ukuhamba okongezelelekileyo kunokuthetha ukuba awuyikhi okanye awuyihloli rhoqo",
+  "severity": "minor"
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/0/options/2",
+  "verdict": "repair",
+  "problem": "'umgubo wokuchumisa' = fertiliser powder; English 'cross-pollinate'. Distractor remains wrong.",
+  "repaired": "Imifuno enevumba yabelana ngomungu nezityalo eziphambili",
+  "severity": "wording"
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/0/options/3",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/0/rationale",
+  "verdict": "repair",
+  "problem": "'ocikha' is not a word (intended 'osikha', that you pick); 'kancinci' vague for 'less often'.",
+  "repaired": "Beka isityalo osikha rhoqo kufuphi nendlela oyisebenzisa yonke imihla. Ibhedi ekude yongeza ukuhamba kwaye inokungahlolwa rhoqo.",
+  "severity": "wording"
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/1/q",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/1/options/0",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/1/options/1",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/1/options/2",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/1/options/3",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/1/rationale",
+  "verdict": "ok",
+  "problem": null,
+  "repaired": null,
+  "severity": null
+ }
+]

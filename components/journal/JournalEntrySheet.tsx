@@ -17,6 +17,7 @@ import {
 } from '@/lib/field-journal';
 import { getElementArt2 } from '@/lib/element-art-2';
 import motion from './JournalMotion.module.css';
+import { inlineText } from '@/lib/xh-inline';
 import { journalCategoryLabel } from './journal-labels';
 
 export interface BedOption {
@@ -42,7 +43,7 @@ interface Props {
 export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete, onClose, error }: Props) {
   const { lang } = useLanguage();
   const isZulu = lang === 'zu';
-  const ui = (english: string, zulu: string) => isZulu ? zulu : english;
+  const ui = (english: string, zulu: string) => inlineText(lang, english, zulu);
   const simple = useAppLevel() === 'simple';
   const [date, setDate] = useState(entry?.date ?? todayISODate());
   const [title, setTitle] = useState(entry?.title ?? '');
@@ -194,7 +195,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
                       ) : (
                         <c.icon size={15} aria-hidden />
                       )}
-                      {isZulu ? journalCategoryLabel(c.key) : c.label}
+                      {isZulu ? journalCategoryLabel(c.key) : inlineText(lang, c.label)}
                     </button>
                   );
                 })}

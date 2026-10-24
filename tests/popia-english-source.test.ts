@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 const source = readFileSync(new URL('../components/PopiaConsent.tsx', import.meta.url), 'utf8');
 
 test('first-run consent pairs supported draft languages with English and leaves Xitsonga out', () => {
-  assert.match(source, /ENGLISH_SOURCE_LANGS = new Set\(\['zu', 'st', 've'\]\)/);
+  assert.match(source, /ENGLISH_SOURCE_LANGS = new Set\(\['zu', 'xh', 'st', 've'\]\)/);
   assert.match(source, /translate\('en', key\)/);
   assert.match(source, /English source:/);
   assert.match(source, /Translation status: unreviewed/);

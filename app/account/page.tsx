@@ -11,6 +11,7 @@ import { updateMyProfile, uploadPhoto, getOrganizationName } from '@/lib/db/quer
 import { resizeLogoForStorage } from '@/lib/invoice-logo';
 import { resizeFileForUpload } from '@/lib/site-evidence';
 import { APP_LANGS, useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import TabBar from '@/components/TabBar';
 import AppHeader from '@/components/layout/AppHeader';
 import ThemePanel from '@/components/ThemePanel';
@@ -59,7 +60,7 @@ function Row({ icon: Icon, label, value }: { icon: LucideIcon; label: string; va
 export default function AccountPage() {
   const { user, profile, signOutUser, changePassword, refreshProfile, loading } = useAuth();
   const { lang, setLang } = useLanguage();
-  const copy = (en: string, zu: string) => lang === 'zu' ? zu : en;
+  const copy = (en: string, zu: string) => inlineText(lang, en, zu);
   const router = useRouter();
   // Simple / All tools (Settings → "How much to show", lib/app-level.ts). All tools keeps this
   // page exactly as it always was. Simple shows name, photo, farm/organisation, language and
@@ -221,7 +222,7 @@ export default function AccountPage() {
     }
     if (samplePreview) {
       const sandbox = getSandboxProfile();
-      const sandboxRoleLabel = sandbox.role ? (lang === 'zu' ? ({ farmer: 'Umlimi', mentor: 'Umeluleki', student: 'Umfundi', ngo: 'Umxhumanisi we-NGO', funder: 'Umxhasi', admin: 'Umphathi' } as Record<UserRole, string>)[sandbox.role] : ROLE_LABELS[sandbox.role]) : null;
+      const sandboxRoleLabel = sandbox.role ? (lang === 'zu' ? ({ farmer: 'Umlimi', mentor: 'Umeluleki', student: 'Umfundi', ngo: 'Umxhumanisi we-NGO', funder: 'Umxhasi', admin: 'Umphathi' } as Record<UserRole, string>)[sandbox.role] : inlineText(lang, ROLE_LABELS[sandbox.role])) : null;
       const sandboxLangLabel = APP_LANGS.find((l) => l.code === lang)?.label ?? lang; // w18-40: the language in use, not the stored sandbox value
       return (
         <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
@@ -304,7 +305,7 @@ export default function AccountPage() {
 
   const displayName = profile?.full_name ?? user.displayName;
   const langLabel = profile?.language ? (APP_LANGS.find((l) => l.code === profile.language)?.label ?? profile.language) : null;
-  const roleLabel = profile?.role ? (lang === 'zu' ? ({ farmer: 'Umlimi', mentor: 'Umeluleki', student: 'Umfundi', ngo: 'Umxhumanisi we-NGO', funder: 'Umxhasi', admin: 'Umphathi' } as Record<UserRole, string>)[profile.role] : ROLE_LABELS[profile.role]) : null;
+  const roleLabel = profile?.role ? (lang === 'zu' ? ({ farmer: 'Umlimi', mentor: 'Umeluleki', student: 'Umfundi', ngo: 'Umxhumanisi we-NGO', funder: 'Umxhasi', admin: 'Umphathi' } as Record<UserRole, string>)[profile.role] : inlineText(lang, ROLE_LABELS[profile.role])) : null;
 
   return (
     <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
@@ -500,6 +501,10 @@ export default function AccountPage() {
               {lang === 'zu' && <p className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: '#FFF4D6', color: 'var(--text-secondary)' }} role="note">
                 <strong>isiZulu machine drafts — not reviewed.</strong> English source wording is shown beside each draft until first-language and consent-meaning review.
                 <span className="block mt-1"><strong>Imibhalo yesiZulu eyisivivinyo yomshini — ayikabuyekezwa.</strong> Umbhalo wesiNgisi uboniswa eduze kwayo kuze kuqedwe ukubuyekezwa ngumuntu okhuluma isiZulu njengolimi lokuqala nokuhlolwa kwencazelo yemvume. <span className="font-semibold">(isiZulu machine draft)</span></span>
+              </p>}
+              {lang === 'xh' && <p className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: '#FFF4D6', color: 'var(--text-secondary)' }} role="note">
+                <strong>isiXhosa machine drafts — not reviewed.</strong> English source wording is shown beside each draft until first-language and consent-meaning review.
+                <span className="block mt-1" lang="xh"><strong>{inlineText(lang, 'isiXhosa machine drafts — not reviewed.')}</strong> {inlineText(lang, 'English source wording is shown beside each draft until first-language and consent-meaning review.')} <span className="font-semibold">({inlineText(lang, 'isiXhosa machine draft')})</span></span>
               </p>}
               <ConsentPanel orgName={orgName} />
             </>

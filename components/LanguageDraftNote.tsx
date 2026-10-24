@@ -15,7 +15,13 @@ import { useLanguage, translate } from '@/lib/i18n';
  * so it cannot turn a nav pill into two lines or pad out an accordion label. Dismissible per page
  * for the session (sessionStorage), so returning to the same page later in a fresh tab shows it
  * again rather than hiding it forever after one tap.
+ *
+ * isiXhosa joined isiZulu as a labelled machine-draft language (the full UI dictionary was
+ * drafted in one pass, unreviewed). Its English source line is the same sentence with the
+ * language name swapped, so lib/i18n.tsx does not need a second copy of it.
  */
+const DRAFT_LANGUAGE_NAMES: Record<string, string> = { zu: 'isiZulu', xh: 'isiXhosa' };
+
 export default function LanguageDraftNote({ lang, scope }: { lang: string; scope: string }) {
   const { t } = useLanguage();
   const [dismissed, setDismissed] = useState(false);
@@ -27,7 +33,8 @@ export default function LanguageDraftNote({ lang, scope }: { lang: string; scope
     } catch { /* sessionStorage unavailable (private browsing); the note just stays visible */ }
   }, [storageKey]);
 
-  if (lang !== 'zu' || dismissed) return null;
+  const languageName = DRAFT_LANGUAGE_NAMES[lang];
+  if (!languageName || dismissed) return null;
 
   const dismiss = () => {
     setDismissed(true);
@@ -41,7 +48,7 @@ export default function LanguageDraftNote({ lang, scope }: { lang: string; scope
       style={{ fontSize: 12, lineHeight: 1.45, color: 'var(--text-secondary)', background: 'var(--bg-1)', border: '1px solid var(--border)' }}
     >
       <div className="flex items-start justify-between gap-2">
-        <p lang="zu" style={{ margin: 0 }}>{t('languageDraftNoticeText')}</p>
+        <p lang={lang} style={{ margin: 0 }}>{t('languageDraftNoticeText')}</p>
         <button
           type="button"
           onClick={dismiss}
@@ -54,7 +61,7 @@ export default function LanguageDraftNote({ lang, scope }: { lang: string; scope
       </div>
       <details className="mt-1">
         <summary style={{ cursor: 'pointer', color: 'var(--text-muted)', fontSize: 12 }}>{t('languageDraftNoticeEnglishToggle')}</summary>
-        <p lang="en" style={{ margin: '4px 0 0' }}>{translate('en', 'languageDraftNoticeEnglishText')}</p>
+        <p lang="en" style={{ margin: '4px 0 0' }}>{translate('en', 'languageDraftNoticeEnglishText').replace('isiZulu', languageName)}</p>
       </details>
     </div>
   );

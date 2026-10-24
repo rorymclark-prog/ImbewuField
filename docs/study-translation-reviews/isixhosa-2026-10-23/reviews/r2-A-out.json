@@ -1,0 +1,631 @@
+[
+ {
+  "path": "market-community/title",
+  "back": "Farming with the purpose of the market and the community",
+  "flags": []
+ },
+ {
+  "path": "market-community/description",
+  "back": "Keeping records, selling surplus harvest and building a local food network.",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l1/infographicAlt",
+  "back": "A person holds a pencil over an empty record grid in an open book, beside a basket and loose vegetables.",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l1/title",
+  "back": "Keeping records: knowing what your farm really produces",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l1/body",
+  "back": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches buyers.\n\nUse that knowledge to protect household food and make better trade decisions.\n\nWrite down every harvest as it happens.\n\nRecord kg of tomatoes, dozens of eggs, and bundles(?) of greens (morogo), and note where each one went.\n\nUse the same simple habit for food kept at home, produce sold, given to others, and composted.\n\nDo not rely on memory at the end of the season.\n\nRecords of one season answer practical questions.\n\nWhich crops give a better harvest per bed? Which return more per hour of work?\n\nWhich crops use more seed, water and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record the costs of production, packing and selling, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost (are expensive at) R18 per kilogram but are sold at R15 per kilogram. This price does not cover the stated costs.\n\nReview the price, costs and the next planting. Check what buyers will really buy; a high asking price is not a guarantee of a sale.\n\nUse your record to find the time when household food runs out.\n\nChoose crops suitable where you live, then work backwards from the harvest you need. Check planting conditions and expected harvest time.\n\nA date that works on another farm may not work here. Include a backup plan for when rain, water or crops fail.",
+  "flags": [
+   "'imixulu yemifino' - 'imixulu' is not a recognisable isiXhosa word for bundles (expected 'izithungu'); check",
+   "'utamatisi uyabiza iR18 ngekhilogram' reads as 'tomatoes are expensive/cost R18' - ambiguous between buying price and production cost; should say production cost explicitly"
+  ]
+ },
+ {
+  "path": "market-community/market-community-l1/keyPoints/0",
+  "back": "Record harvest quantities and destinations separately from money",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l1/keyPoints/1",
+  "back": "Include production and marketing costs when you assess a price",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l1/keyPoints/2",
+  "back": "Mark teaching examples; use your real costs when making decisions",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l1/keyPoints/3",
+  "back": "Plan food gaps using local growing conditions and harvest time",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l1/quiz/0/q",
+  "back": "In this teaching example, tomatoes are sold at R15/kg and the costs of producing them are R18/kg. What should the farmer review?",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l1/quiz/0/options/0",
+  "back": "Keep selling at R15 - a temporary loss builds relationships",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l1/quiz/0/options/1",
+  "back": "Stop growing tomatoes completely",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l1/quiz/0/options/2",
+  "back": "The selling price, the costs, and whether another crop could not (?) return better",
+  "flags": [
+   "Negative 'asinakubuyisa' inside an embedded 'whether' question can read as 'whether another crop cannot return better'; positive 'singabuyisa ngcono na' is unambiguous"
+  ]
+ },
+ {
+  "path": "market-community/market-community-l1/quiz/0/options/3",
+  "back": "Apply for a grant to cover the difference",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l1/quiz/0/rationale",
+  "back": "The example price is lower than the stated cost. Review the difference and buyer demand before making the next production decision.",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l1/quiz/1/q",
+  "back": "The farmer's records show he regularly lacks vegetables in June and July. Which step is useful here?",
+  "flags": [
+   "'Lisiphi inyathelo' - wrong concord for class 5 'inyathelo' (should be 'Liliphi')"
+  ]
+ },
+ {
+  "path": "market-community/market-community-l1/quiz/1/options/0",
+  "back": "Buy vegetables at the market every June and July",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l1/quiz/1/options/1",
+  "back": "Work backwards from the food gap using suitable local crops and their harvest time",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l1/quiz/1/options/2",
+  "back": "Accept that his farm cannot produce in winter",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l1/quiz/1/options/3",
+  "back": "The records show a soil fertility problem",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l1/quiz/1/rationale",
+  "back": "The records identify the gap. Crop choice and sowing dates must then match local weather, water and the expected harvest time.",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l2/infographicAlt",
+  "back": "Three ways of selling from one farm: a roadside stall, group delivery to a shop, and a box going direct to a household.",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l2/title",
+  "back": "Selling surplus harvest: where to sell and how to set a price",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l2/body",
+  "back": "Ask what the buyer wants: produce, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce with the selling price.\n\nCheck market rules and local trading and food requirements. An informal stall is not automatically something without rules or costs.\n\nSelling direct can keep a bigger part of the sale price, but it takes time, packing, transport and customer care.\n\nA box scheme provides a regular selection of produce to agreed buyers.\n\nAgree on what goes in the box, price, payment and what happens when crops are scarce. Regular orders help planning only when buyers and growers CANNOT keep the agreement.\n\nStart with what you can reliably supply and what buyers want.\n\nCheck costs and household food needs before promising regular boxes.\n\nGarden size or number of buyers alone does not tell you income. Try an arrangement you can manage and record the results.\n\nIf produce changes week by week, avoid promising fixed deliveries you cannot supply.\n\nOffer the surplus you have and agree clear terms with buyers.\n\nDescribe your farming methods honestly. Check any certificate or claim buyers require before using a label.",
+  "flags": [
+   "NEGATION ERROR: 'bengakwazi ukugcina isivumelwano' = 'cannot keep the agreement' - the sentence says regular orders help only when buyers and growers CANNOT keep it; should be 'bekwazi'"
+  ]
+ },
+ {
+  "path": "market-community/market-community-l2/keyPoints/0",
+  "back": "Agree on produce, quantity, quality, delivery and payment",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l2/keyPoints/1",
+  "back": "Compare costs and losses with the selling price",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l2/keyPoints/2",
+  "back": "Promise regular boxes only when supply and buyer terms support it",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l2/keyPoints/3",
+  "back": "Check market rules and describe farming methods honestly",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l2/quiz/0/q",
+  "back": "A small farmer has uneven produce week to week - surplus in some weeks, little in others. Which way of selling suits him best?",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l2/quiz/0/options/0",
+  "back": "A formal market stall that requires consistent supply each week",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l2/quiz/0/options/1",
+  "back": "A box scheme that requires the same produce each week",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l2/quiz/0/options/2",
+  "back": "An informal market or selling to neighbours without a fixed commitment",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l2/quiz/0/options/3",
+  "back": "A school contract for daily delivery",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l2/quiz/0/rationale",
+  "back": "This is the way that least requires him to promise a fixed amount each week - he sells what he actually has.",
+  "flags": [
+   "'uthengisa le anayo' - 'le' is a dangling demonstrative; expected 'oko anako/into anayo' (minor grammar)"
+  ]
+ },
+ {
+  "path": "market-community/market-community-l2/quiz/1/q",
+  "back": "How do agreed regular orders help the grower to plan?",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l2/quiz/1/options/0",
+  "back": "Box buyers always pay more per kilogram",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l2/quiz/1/options/1",
+  "back": "Box schemes let you charge more for packaging",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l2/quiz/1/options/2",
+  "back": "Guaranteed subscription income lets you plan production by real demand instead of growing by guesswork",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l2/quiz/1/options/3",
+  "back": "Box schemes avoid tax obligations",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l2/quiz/1/rationale",
+  "back": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l3/infographicAlt",
+  "back": "Five small planted beds with arrows pointing to a central produce box; a hand trowel and seed jar are in it(?) below.",
+  "flags": [
+   "'zikuyo ngezantsi' = 'are in it below' - places trowel and jar inside the box; likely meant 'zingezantsi' (below)"
+  ]
+ },
+ {
+  "path": "market-community/market-community-l3/title",
+  "back": "Building a community food network: strength is in numbers",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l3/body",
+  "back": "Neighbours can share different varieties and the work of seed saving.\n\nRecord the crop, variety, source and date collected. Plan suitable isolation (keeping plants apart), selection, drying and storage for each crop.\n\nSharing does not automatically increase diversity or improve quality. Confirm what the seed really is and whether it germinates before relying on shared seed. Before swapping seed, check whether the variety is protected and whether permission is needed.\n\nSharing tools makes expensive tools accessible to the group.\n\nA water pump or grain mill may not be affordable on one household's budget.\n\nShared use spreads the cost across the group and helps each farm do work it could not do alone.\n\nHandle the harvest gently and keep shade, packing and suitable storage until delivery is finished.\n\nA nearby buyer may reduce travel, but losses and selling costs still need measuring.\n\nCompare money received after fees, transport and spoilage for each route. Do not assume a nearby buyer always gives the better profit.\n\nNeighbours can demonstrate useful skills and compare what happens on their farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek advice from trained people when there is an unusual disease or technical problems. Shared experience and expert help can work together.",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l3/keyPoints/0",
+  "back": "Record seed identity, source and quality, and check whether permission is needed before sharing",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l3/keyPoints/1",
+  "back": "Agree on responsibility for care, booking and repair of shared tools",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l3/keyPoints/2",
+  "back": "Measure losses and net profit for each selling route",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l3/keyPoints/3",
+  "back": "Combine shared experience with help from trained people when needed",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l3/quiz/0/q",
+  "back": "Neighbours want to share saved seed. What helps make shared seed useful?",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l3/quiz/0/options/0",
+  "back": "Mix all varieties without labels",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l3/quiz/0/options/1",
+  "back": "Agree on seed quality checks and check whether permission is needed to share the variety",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l3/quiz/0/options/2",
+  "back": "Assume that sharing automatically improves all seed",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l3/quiz/0/options/3",
+  "back": "Rely only on the size of the group",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l3/quiz/0/rationale",
+  "back": "Seed quality depends on specific isolation, selection, labelling, storage and germination testing for each crop. Those checks do not confirm permission to swap a protected variety; check the applicable rights before sharing.",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l3/quiz/1/q",
+  "back": "A grower compares a distant market and nearby buyers. What should guide the decision?",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l3/quiz/1/options/0",
+  "back": "Always choose the highest advertised price",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l3/quiz/1/options/1",
+  "back": "Always choose the shortest trip",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l3/quiz/1/options/2",
+  "back": "Compare money received after fees, transport, unsold produce and losses",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l3/quiz/1/options/3",
+  "back": "Assume that joining a group removes all costs",
+  "flags": []
+ },
+ {
+  "path": "market-community/market-community-l3/quiz/1/rationale",
+  "back": "Distance affects costs, but it is not the only reason. Use real profit and losses to compare options.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/title",
+  "back": "Choosing plants together with a guild",
+  "flags": [
+   "Awkward: 'kunye ne-guild' = 'together with a guild'; 'zeguild/ze-guild' (for a guild) is clearer (minor)"
+  ]
+ },
+ {
+  "path": "plant-guilds/description",
+  "back": "Choose useful plants that work together, return mulch and manage the guild (a group of plants that cooperate) as the trees grow.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/infographicAlt",
+  "back": "A conceptual teaching drawing of a guild; confirm plant identification using a reliable plant guide.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/title",
+  "back": "Nitrogen-fixing plants: choose and manage support plants",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/body",
+  "back": "These bacteria convert nitrogen from the Air into what the legume (a plant with beans in pods) can use.\n\nFind nodules (lumps on the root) on a legume plant that is [esiyisipheyo = ?]. Nodule formation and growth depend on the plant, the right bacteria and growing conditions.\n\nReturn suitable leaf cuttings, fallen leaves and plant residues as mulch. Soil organisms release nutrients during decomposition.\n\nThis takes time. A living legume is not a fertiliser pipe that works immediately to the fruit tree.\n\nNative to KwaZulu-Natal. In suitable warm conditions, manage this short-lived shrub or small tree as a support plant.\n\nLeave it room to grow. Cut it back to get mulch and recheck it when shade or water competition increases.\n\nSesbania punicea is the invasive red sesbania (a foreign plant that takes the place of others). Its pods have four wings running lengthwise. Confirm plant identification using a reliable plant guide.\n\nCheck the full name before planting. Respect the project's agreed list of plant species, including any restriction on Sesbania sesban.\n\nUse a sunny, well-drained site. It is a short-lived support shrub; frost and waterlogging can limit it.\n\nIndicate(?) whether each plant mainly provides peas or leaves. Cutting too often can harm it and reduce the food harvest.\n\nCowpea covers sunny gaps. Pigeon pea provides food and leaves. Managed Sesbania sesban can provide longer temporary support.\n\nAdd suitable flowering and cover plants. Keep the mango trunk clear and manage light, water and access.\n\nCount woody supports above/more than gaps between fruit trees. Sow ground cover suitable for the site.\n\nNo single number works for all fruit trees. Adjust density by water, soil, plant size and your capacity to prune and thin.",
+  "flags": [
+   "Opens with 'Ezi bhaktheriya' (these bacteria) with no antecedent - the bacteria (rhizobia) are never introduced in this paragraph; possible missing text",
+   "'esiyisipheyo' is not a recognisable isiXhosa word (perhaps meant 'esimbiweyo' = dug up, or 'esiyisampulu' = sample); nonsense word",
+   "'Imveli yaseKwaZulu-Natal' has no subject - the plant (presumably Sesbania sesban) is not named; reader cannot tell which plant is native vs the invasive S. punicea that follows - safety-relevant",
+   "'Latha ukuba' = 'point/direct whether' - wrong verb, expected 'Gqiba' (decide) (wording)",
+   "'Bala izixhaso ezinomthi ngaphezu kwezikhewu' - 'ngaphezu' = above/more than; meaning unclear",
+   "'eseMoyeni' unnecessary capital M (minor)"
+  ]
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/keyPoints/0",
+  "back": "Legumes work with rhizobia (bacteria) in root nodules; nitrogen fixing depends on suitable conditions.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/keyPoints/1",
+  "back": "Return useful cut material to the soil; nutrient release takes time.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/keyPoints/2",
+  "back": "Use suitable seasonal covers, support shrubs and temporary trees.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/keyPoints/3",
+  "back": "Manage the density of supports as plants grow; no single number works for all fruit trees.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/quiz/0/q",
+  "back": "When does the nitrogen in cut legume material become available to other plants?",
+  "flags": [
+   "'iba yafumaneka' ungrammatical tense mix; expected 'ifumaneka nini' (minor)"
+  ]
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/quiz/0/options/0",
+  "back": "Immediately when it is cut",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/quiz/0/options/1",
+  "back": "As soil organisms decompose this material",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/quiz/0/options/2",
+  "back": "Only when the fruit tree touches the legume",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/quiz/0/options/3",
+  "back": "It can never become available",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/quiz/0/rationale",
+  "back": "Decomposition releases nutrients over time. The rate depends on the type of material and growing conditions.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/quiz/1/q",
+  "back": "What should decide the number of support plants you put in?",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/quiz/1/options/0",
+  "back": "One fixed number for the whole area",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/quiz/1/options/1",
+  "back": "Water, soil, plant size and the care you can give",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/quiz/1/options/2",
+  "back": "Always putting all support higher up the slope",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/quiz/1/options/3",
+  "back": "Planting as many trees as actually fit",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l1/quiz/1/rationale",
+  "back": "Support plants also need resources and management. Watch growth and competition, and adjust.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/infographicAlt",
+  "back": "A conceptual teaching drawing of a guild; confirm plant identification using a reliable plant guide.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/title",
+  "back": "Mulch plants and beneficial insects",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/body",
+  "back": "The clip shows a branch being cut: the support tree [usama = ?]. Leave enough healthy leaves so the plant can recover.\n\n[Hambisa = move/carry] cutting according to the plant type. Avoid cutting too often on pigeon pea, especially when you grow it to harvest peas.\n\nMulch protects the surface, helps keep moisture and returns organic material.\n\nLeave access for watering and inspection. Cut material into manageable pieces and keep checking moisture and decomposition.\n\nGet the correct cultivar (selected variety). Bocking 14 does not spread by viable seed, but root pieces can regrow.\n\nPlace it where it has enough room and moisture. Cut the leaves as it recovers; do not crowd the young fruit tree.\n\nMany ladybirds (small spotted insects) eat aphids (small insects that suck plant juice); some parasitoid wasps (bee-like insects that attack other insects) attack insects that damage plants. Flowering plants such as African basil can add resources.\n\nCheck which insects visit and whether damage changes. A flowering plant does not guarantee pest control.\n\nTulbaghia violacea has small narrow leaves and pale purple (lilac) flowers. Place the group of plants where it has light and room to grow.\n\nWatch visiting insects. Do not promise that a wild garlic CONCLUSION/SUMMARY [umqukumbelo] will repel pests or cure their outbreak.",
+  "flags": [
+   "'usama' is not a recognisable isiXhosa word; expected 'uyasala/usele' (remains standing)",
+   "'Hambisa ukusika ngohlobo lwesityalo' = 'carry/move the cutting by plant type'; expected 'Lungelelanisa/Hlengahlengisa' (adjust) (wording)",
+   "Comfrey is never named - 'Bocking 14' and 'Yibeke' (place it) have no stated plant; possible missing text",
+   "'umqukumbelo' means 'conclusion/summary', not border/edge - wrong word (expected 'umda')",
+   "'iinambuzane ezinjengeenyosi' = 'bee-like insects' for wasps (oonomeva) - loose gloss (minor); mixed 'izinambuzane'/'iinambuzane' spellings"
+  ]
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/keyPoints/0",
+  "back": "Pruning cuts branches while the support plant is kept.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/keyPoints/1",
+  "back": "Return suitable cut leaves as mulch while keeping the trunk clear.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/keyPoints/2",
+  "back": "Bocking 14 does not spread by viable seed, but root pieces can regrow.",
+  "flags": [
+   "Plant (comfrey) not named; key point opaque without it (minor)"
+  ]
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/keyPoints/3",
+  "back": "Flowering plants can support beneficial insects; check how they actually visit and the plant damage.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/quiz/0/q",
+  "back": "What does the branch-cutting clip show?",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/quiz/0/options/0",
+  "back": "Removing the whole support tree",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/quiz/0/options/1",
+  "back": "Pruning a support tree that is kept, to get light and mulch",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/quiz/0/options/2",
+  "back": "Harvesting the fruit tree",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/quiz/0/options/3",
+  "back": "Proof that root competition has stopped",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/quiz/0/rationale",
+  "back": "The branch falls, while the support tree [usama = ?]. That is pruning with chop-and-drop (cutting and letting it fall on the ground).",
+  "flags": [
+   "'usama' not a recognisable word; expected 'usele/uyasala' (remains)"
+  ]
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/quiz/1/q",
+  "back": "How can you test flowering plants used to support beneficial insects?",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/quiz/1/options/0",
+  "back": "Assume they will eliminate pests",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/quiz/1/options/1",
+  "back": "Watch visiting insects and changes in plant damage",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/quiz/1/options/2",
+  "back": "Remove all flowers before they open",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/quiz/1/options/3",
+  "back": "Count everything that flowers as a nitrogen-fixing plant",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l2/quiz/1/rationale",
+  "back": "Flowers can provide resources, but their presence does not guarantee pest control.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/infographicAlt",
+  "back": "A conceptual teaching drawing of a guild; confirm plant identification using a reliable plant guide.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/title",
+  "back": "Build a guild and adjust it as it grows",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/body",
+  "back": "Combine the support functions your site needs: nitrogen fixing, food, mulch, flowers and ground cover. Some plants do several functions.\n\nKeep the trunk area and path open. Recheck each member as the mango and its neighbours grow.\n\nKeep its creeping stems away from the young fruit tree and keep a way to tend it. Its roots also use water and nutrients.\n\nWhere resources are scarce, compare living cover with an ordinary mulch basin.\n\nPlant at the right time, mulch and keep water to establish the plant. Keep the access gap open.\n\nStart with a number of support plants you can look after. Check survival and growth before adding more.\n\nCut down selected competing supports to open space. Suitable cut material can stay as mulch: this is thinning with chop-and-drop.\n\nManage regrowth to keep the space open. Check light, soil moisture and growth; thinning does not immediately stop root competition.\n\nReturn useful cuttings around established trees. Keep nearby plants only where they are doing well.\n\nRipe(?) fruit trees still need nutrients. Check growth, harvest and soil condition; support plants do not remove that need.\n\nCheck fruit tree growth, shade, soil moisture, useful harvests and pest damage. Write down what is cut, returned or removed.\n\nUse these observations to change design and care. A plant earns its place by what it does here.",
+  "flags": [
+   "'iziqu zayo ezirhubuluzayo' (its creeping stems) - the plant (presumably sweet potato) is never named in this paragraph; possible missing text",
+   "'evuthiweyo' = ripe (of fruit); for mature trees expected 'ekhulileyo' (wording)"
+  ]
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/keyPoints/0",
+  "back": "Give each plant a useful role while protecting the fruit tree's space.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/keyPoints/1",
+  "back": "Living ground cover competes with others for water and nutrients.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/keyPoints/2",
+  "back": "Thin selected support plants when pruning no longer gives enough space.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/keyPoints/3",
+  "back": "Suitable cut material can stay as mulch; manage regrowth to keep the space open.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/quiz/0/q",
+  "back": "The support plant still crowds the mango after pruning. What could thinning include?",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/quiz/0/options/0",
+  "back": "Cutting only one small stick",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/quiz/0/options/1",
+  "back": "Cutting down a selected competing support and managing regrowth",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/quiz/0/options/2",
+  "back": "Removing the mango instead",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/quiz/0/options/3",
+  "back": "Always taking all cut material away from the site",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/quiz/0/rationale",
+  "back": "Thinning reduces the selected standing support plants. Suitable cut material can stay as mulch.",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/quiz/1/q",
+  "back": "Is sweet potato always better than a mulch basin around a young fruit tree?",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/quiz/1/options/0",
+  "back": "Yes, because you will never use water",
+  "flags": [
+   "'awusoze usebenzise' is 2nd person ('you') rather than 'it' (sweet potato would be 'akasoze'); distractor still wrong (minor)"
+  ]
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/quiz/1/options/1",
+  "back": "Yes, because it fixes nitrogen",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/quiz/1/options/2",
+  "back": "No; compare its food and cover benefits with resource competition",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/quiz/1/options/3",
+  "back": "No, because no ground cover can be useful",
+  "flags": []
+ },
+ {
+  "path": "plant-guilds/plant-guilds-l3/quiz/1/rationale",
+  "back": "Choose cover by site. Keep the access path and trunk area clear, and watch the young tree.",
+  "flags": []
+ }
+]

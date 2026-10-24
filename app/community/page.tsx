@@ -11,6 +11,8 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { localeDate } from '@/lib/xh-dates';
 import { useAppLevel } from '@/lib/app-level';
 import { communityEnabled } from '@/lib/community/flag';
 import { uploadPhoto } from '@/lib/db/queries';
@@ -63,10 +65,10 @@ const zuCopy: Record<string, string> = {
   'No conversations yet.': 'Akukabikho zingxoxo.', 'Couldn\'t post — check your connection and try again.': 'Akukwazanga ukuthunyelwa. Hlola uxhumano lwakho bese uzama futhi.',
   'Remove photo': 'Susa isithombe', 'Uploading photo…': 'Kulayishwa isithombe…', 'Posting…': 'Kuyathunyelwa…',
 };
-const copyCommunity = (en: string, lang: string) => lang === 'zu' ? (zuCopy[en] ?? en) : en;
+const copyCommunity = (en: string, lang: string) => lang === 'zu' ? (zuCopy[en] ?? en) : inlineText(lang, en);
 
-const categoryLabel = (value: BoardCategory, lang: string) => lang === 'zu' ? ({ seed: 'Imbewu', seedlings: 'Izithombo', produce: 'Umkhiqizo', tools: 'Amathuluzi', other: 'Okunye' } as Record<BoardCategory, string>)[value] : CATEGORY_LABEL[value];
-const kindLabel = (value: BoardKind, lang: string) => lang === 'zu' ? ({ have: 'Nginakho', want: 'Ngifuna', free: 'Mahhala' } as Record<BoardKind, string>)[value] : KIND_LABEL[value];
+const categoryLabel = (value: BoardCategory, lang: string) => lang === 'zu' ? ({ seed: 'Imbewu', seedlings: 'Izithombo', produce: 'Umkhiqizo', tools: 'Amathuluzi', other: 'Okunye' } as Record<BoardCategory, string>)[value] : inlineText(lang, CATEGORY_LABEL[value]);
+const kindLabel = (value: BoardKind, lang: string) => lang === 'zu' ? ({ have: 'Nginakho', want: 'Ngifuna', free: 'Mahhala' } as Record<BoardKind, string>)[value] : inlineText(lang, KIND_LABEL[value]);
 
 function timeAgo(ts: unknown, lang: string): string {
   const t = ts as { toDate?: () => Date; seconds?: number } | null;
@@ -74,10 +76,10 @@ function timeAgo(ts: unknown, lang: string): string {
   try {
     const d = typeof t.toDate === 'function' ? t.toDate() : new Date((t.seconds ?? 0) * 1000);
     const diff = Date.now() - d.getTime();
-    if (diff < 60_000) return lang === 'zu' ? 'Manje' : 'Just now';
-    if (diff < 3_600_000) return lang === 'zu' ? `Emizuzwini engu-${Math.floor(diff / 60_000)} edlule` : `${Math.floor(diff / 60_000)}m ago`;
-    if (diff < 86_400_000) return lang === 'zu' ? `Emahoreni angu-${Math.floor(diff / 3_600_000)} edlule` : `${Math.floor(diff / 3_600_000)}h ago`;
-    return d.toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-ZA', { day: 'numeric', month: 'short' });
+    if (diff < 60_000) return lang === 'zu' ? 'Manje' : inlineText(lang, 'Just now');
+    if (diff < 3_600_000) return lang === 'zu' ? `Emizuzwini engu-${Math.floor(diff / 60_000)} edlule` : inlineTemplate(lang, '{n}m ago', null, { n: Math.floor(diff / 60_000) });
+    if (diff < 86_400_000) return lang === 'zu' ? `Emahoreni angu-${Math.floor(diff / 3_600_000)} edlule` : inlineTemplate(lang, '{n}h ago', null, { n: Math.floor(diff / 3_600_000) });
+    return localeDate(lang, d, { day: 'numeric', month: 'short' }, lang === 'zu' ? 'zu-ZA' : 'en-ZA');
   } catch { return ''; }
 }
 

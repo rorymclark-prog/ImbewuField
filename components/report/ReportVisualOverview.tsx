@@ -3,12 +3,13 @@ import { numberLabel } from '@/lib/format-figures';
 import { reportChartSvg, REPORT_COLOURS, type ReportChart, type ReportVisuals } from '@/lib/report-visuals';
 import { Maximize2 } from 'lucide-react';
 import SidewaysScroller from './SidewaysScroller';
+import { inlineText } from '@/lib/xh-inline';
 import styles from './VisualReport.module.css';
 
 export type OpenReportImage = (label: string, image: string) => void;
 
 export function ReportChartCard({ chart, ink = false, slideHint, onOpenImage, viewLabel = 'View full size', language = 'en' }: { chart: ReportChart; ink?: boolean; slideHint?: string; onOpenImage?: OpenReportImage; viewLabel?: string; language?: string }) {
-  const ui = (en: string, zu: string) => language === 'zu' ? zu : en;
+  const ui = (en: string, zu: string) => inlineText(language, en, zu);
   const art = reportChartSvg(chart, ink);
   const maximum = Math.max(...chart.rows.map(row => row.value), 1);
   return <figure className={`${styles.chart} ${chart.id === 'cost' ? styles.wideChart : ''}`}>
@@ -29,7 +30,7 @@ export function ReportChartCard({ chart, ink = false, slideHint, onOpenImage, vi
 }
 
 export default function ReportVisualOverview({ visuals, image, imageCaption, imageKind = 'map', ink = false, compact = false, stamp, children, onOpenImage, viewLabel, language = 'en' }: { onOpenImage?: OpenReportImage; viewLabel?: string; visuals: ReportVisuals; image?: string; imageCaption?: string; imageKind?: 'photo' | 'map'; ink?: boolean; compact?: boolean; stamp?: string; children?: React.ReactNode; language?: string }) {
-  const ui = (en: string, zu: string) => language === 'zu' ? zu : en;
+  const ui = (en: string, zu: string) => inlineText(language, en, zu);
   const translatedViewLabel = viewLabel ?? ui('View full size','Buka ngosayizi ogcwele');
   // Full-width cards: month charts, calendars and drawn figures. The figures that open the list
   // (the site plan, what the land is used for, built / planned) lead the section; the rest follow the grid.

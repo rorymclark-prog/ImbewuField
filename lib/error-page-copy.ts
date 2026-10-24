@@ -5,12 +5,13 @@
 // choice directly from localStorage, safely, and returns a small fixed English/isiZulu copy
 // pair instead (lang-07): never the raw JavaScript error message.
 
-export type ErrorPageLang = 'en' | 'zu';
+export type ErrorPageLang = 'en' | 'zu' | 'xh';
 
 export function readErrorPageLang(): ErrorPageLang {
   if (typeof window === 'undefined') return 'en';
   try {
-    return window.localStorage.getItem('permamap_lang') === 'zu' ? 'zu' : 'en';
+    const saved = window.localStorage.getItem('permamap_lang');
+    return saved === 'zu' ? 'zu' : saved === 'xh' ? 'xh' : 'en';
   } catch {
     return 'en';
   }
@@ -23,7 +24,7 @@ export interface ErrorPageCopy {
   notFoundTitle: string;
   notFoundBody: string;
   goHome: string;
-  /** Set only for the isiZulu copy — shown as a small separate line, never folded into errorBody/notFoundBody. */
+  /** Set only for the isiZulu and isiXhosa copy — shown as a small separate line, never folded into errorBody/notFoundBody. */
   zuluDraftNotice?: string;
 }
 
@@ -50,6 +51,19 @@ const ZU: ErrorPageCopy = {
   zuluDraftNotice: 'Unreviewed isiZulu draft.',
 };
 
+// Unreviewed isiXhosa machine draft (23 Oct 2026). Written out here rather than looked up through
+// lib/xh-inline: these pages can render without the locale chunk that registers those drafts, so
+// an inline lookup would quietly fall back to English exactly when this copy is needed.
+const XH: ErrorPageCopy = {
+  errorTitle: 'Kukho into engahambanga kakuhle',
+  errorBody: 'Eli phepha lihlangabezane nengxaki. Ezinye iingxelo zakho, iifoto neendawo zakho zikhuselekile.',
+  tryAgain: 'Zama kwakhona',
+  notFoundTitle: 'Iphepha alifumanekanga',
+  notFoundBody: 'Elo phepha alikho.',
+  goHome: 'Buyela ekhaya',
+  zuluDraftNotice: 'Unreviewed isiXhosa draft.',
+};
+
 export function errorPageCopy(lang: ErrorPageLang): ErrorPageCopy {
-  return lang === 'zu' ? ZU : EN;
+  return lang === 'zu' ? ZU : lang === 'xh' ? XH : EN;
 }

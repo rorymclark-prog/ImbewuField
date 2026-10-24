@@ -4,6 +4,7 @@ import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import { ArrowRight, MapPin, Eye, ChevronRight, Users, BarChart3, Building2 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { useSiteProgress } from '@/lib/site-progress';
 import { nextAction } from '@/lib/home-next-step';
 import type { AppLevel } from '@/lib/app-level';
@@ -183,7 +184,7 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
   // never the farmer's land/site prompt (there is nothing for them to act on there). ──
   if (staffRole) {
     const copy = STAFF_HERO_COPY[staffRole];
-    const text = lang === 'zu' ? copy.zu : copy.en;
+    const text = lang === 'zu' ? copy.zu : lang === 'xh' ? { title: inlineText(lang, copy.en.title), desc: inlineText(lang, copy.en.desc), cta: inlineText(lang, copy.en.cta) } : copy.en;
     const Icon = copy.Icon;
     return (
       <Link href={copy.href} className="imf-hero-settle" style={{ ...SHELL_STYLE, textDecoration: 'none' }}>

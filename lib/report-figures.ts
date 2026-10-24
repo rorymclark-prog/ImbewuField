@@ -35,6 +35,7 @@ import { deriveSectorModel, labelToBearing, sectorSiteFromLocation } from './sec
 import { isValidEarthLatitude } from './solar';
 import { aspectLabel } from './biome';
 import type { PhasePlan } from './phasing';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 
 /** `note` says how to read the drawing and what it cannot tell you; `source` says where every mark came from. */
 export type ReportFigure = { id: string; title: string; note: string; source: string; svg: string; width: number; height: number; alt: string };
@@ -46,7 +47,7 @@ const GREEN = '#245738', BLUE = '#24738a', AMBER = '#af6b24', VIOLET = '#766395'
 const FONT = 'Arial, sans-serif';
 
 type Translate = (en: string, zu: string) => string;
-const translator = (language: string): Translate => (en, zu) => language === 'zu' ? zu : en;
+const translator = (language: string): Translate => (en, zu) => inlineText(language, en, zu);
 const finite = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v);
 const escapeXml = (s: string) => s.replace(/[<>&"']/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&apos;' }[c]!));
 /** Space-grouped thousands and a decimal point, built by hand: en-ZA's own formatter groups with
@@ -401,7 +402,7 @@ export function sitePlanFigure(canvas: DesignCanvasState | null | undefined, lan
   if (present.has('boundary')) key.push({ draw: (x, y) => p.line(x, y, x + 24, y, { stroke: INK, width: 2, dash: '11 4 2 4' }), text: t('Site boundary', 'Umngcele wendawo') });
   if (present.has('building')) key.push({ draw: (x, y) => p.rect(x + 2, y - 7, 20, 14, { fill: SLATE }), text: t('Buildings', 'Izakhiwo') });
   if (counts.bed) key.push({ draw: swatch('bed', false, '1'), text: some(counts.bed.all, t('vegetable bed, numbered', 'umbhede wemifino, unenombolo'), t('vegetable beds, numbered', 'imibhede yemifino, inezinombolo')) });
-  if (plotNumber) key.push({ draw: (x, y) => p.rect(x + 2, y - 7, 20, 14, { fill: plotHatch, stroke: AMBER, width: 1.4 }), text: plotNumber === 1 ? t('1 staple plot (P1)', 'isiza esiyisisekelo esi-1 (P1)') : t(`${plotNumber} staple plots (P1–P${plotNumber})`, `iziza eziyisisekelo ezi-${plotNumber} (P1–P${plotNumber})`) });
+  if (plotNumber) key.push({ draw: (x, y) => p.rect(x + 2, y - 7, 20, 14, { fill: plotHatch, stroke: AMBER, width: 1.4 }), text: plotNumber === 1 ? t('1 staple plot (P1)', 'isiza esiyisisekelo esi-1 (P1)') : inlineTemplate(language, '{plotNumber} staple plots (P1–P{plotNumber})', 'iziza eziyisisekelo ezi-{plotNumber} (P1–P{plotNumber})', { plotNumber }) });
   if (counts.planting) key.push({ draw: swatch('planting', true), text: some(counts.planting.all, t('tree or planting, to scale', 'isihlahla noma isitshalo, ngesikali'), t('trees and plantings, to scale', 'izihlahla nezitshalo, ngesikali')) });
   if (counts.water) key.push({ draw: swatch('water', true), text: some(counts.water.all, t('water tank or water point', 'ithangi noma indawo yamanzi'), t('water tanks and points', 'amathangi nezindawo zamanzi')) });
   if (present.has('hard')) key.push({ draw: (x, y) => p.rect(x + 2, y - 7, 20, 14, { fill: GROUND_FILL.driveway, stroke: '#b9c0bb', width: 1 }), text: t('Paving and driveway', 'Indawo egandayiwe') });
@@ -732,7 +733,7 @@ export function sectorFigure(location: LocationData | null | undefined, facts: R
 
   // The finding first: the low winter sun is what decides where shade falls when it matters most.
   p.text(14, 25, winter.noonSide === 'overhead' ? t('The midday sun stands almost overhead', 'Ilanga lasemini licishe libe phezulu ngqo') : `${t('The midday sun stands', 'Ilanga lasemini lima')} ${side(winter.noonSide)}`, { size: 17, weight: 700, fill: INK });
-  const shadowOf = (path: typeof winter) => { if (!finite(path.shadowRatio) || path.shadowRatio <= 0.05) return ''; const n = figureNumber(path.shadowRatio, 1); return t(`a 1 m post throws a ${n} m shadow`, `isigxobo esingu-1 m senza isithunzi esingu-${n} m`); };
+  const shadowOf = (path: typeof winter) => { if (!finite(path.shadowRatio) || path.shadowRatio <= 0.05) return ''; const n = figureNumber(path.shadowRatio, 1); return inlineTemplate(language, 'a 1 m post throws a {n} m shadow', 'isigxobo esingu-1 m senza isithunzi esingu-{n} m', { n }); };
   p.text(14, 46, `${t('Winter', 'Ubusika')}: ${Math.round(winter.noonAltitudeDeg)}° ${t('above the horizon', 'ngaphezu komkhathizwe')}${shadowOf(winter) ? `, ${shadowOf(winter)}` : ''}   ·   ${t('Summer', 'Ihlobo')}: ${Math.round(summer.noonAltitudeDeg)}°`, { size: 13, fill: MUTED });
 
   p.circle(cx, cy, R, { fill: PAPER, stroke: HAIR, width: 1.5 });

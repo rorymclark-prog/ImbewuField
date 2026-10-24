@@ -25,6 +25,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { Search, X, Loader2, Earth, MapPinOff } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { networkFailureMessage } from '@/lib/network-failure';
 import EmptyState from '@/components/EmptyState';
@@ -43,6 +44,9 @@ type FetchState =
 export default function AtlasExplorer() {
   const { lang, t } = useLanguage();
   const isZulu = lang === 'zu';
+  const isXhosa = lang === 'xh';
+  // isiXhosa follows the same "draft first, English beside it" pairing the isiZulu strings use.
+  const bi = (en: string) => { const xh = inlineText(lang, en); return xh === en ? en : `${xh} / ${en}`; };
   const mapRef = useRef<MapRef>(null);
   // sdesk-08/desk-10/nav-14: no WebGL used to leave this area empty under the search box, with
   // no message, icon or next step — same fix as components/Map.tsx.
@@ -175,20 +179,20 @@ export default function AtlasExplorer() {
           <EmptyState
             className="h-full"
             icon={MapPinOff}
-            title={isZulu ? 'Imephu ayikwazi kuvuleka kule divayisi' : 'The map cannot open on this device'}
+            title={isZulu ? 'Imephu ayikwazi kuvuleka kule divayisi' : inlineText(lang, 'The map cannot open on this device')}
             message={isZulu
               ? 'Sebenzisa isibhokisi sokusesha ngenhla ukuze uthole isimo sezulu, imvula nomhlabathi yendawo.'
-              : 'Use the search box above to look up climate, rain and soil for a place by name.'}
+              : inlineText(lang, 'Use the search box above to look up climate, rain and soil for a place by name.')}
           />
         )}
 
         {/* Search overlay */}
         <div className="absolute top-3 left-3 right-3 md:right-auto md:w-[340px] z-10">
           <div
-            className={`flex ${isZulu ? 'flex-col items-stretch justify-center gap-0' : 'items-center gap-2'} px-3`}
+            className={`flex ${isZulu || isXhosa ? 'flex-col items-stretch justify-center gap-0' : 'items-center gap-2'} px-3`}
             style={{
               background: 'var(--bg-1)', border: '1px solid var(--border)', borderRadius: 12,
-              height: isZulu ? 56 : 42, boxShadow: '0 4px 16px rgba(32,25,15,0.12)',
+              height: isZulu || isXhosa ? 56 : 42, boxShadow: '0 4px 16px rgba(32,25,15,0.12)',
             }}
           >
             <div className="flex flex-1 w-full items-center gap-2 min-w-0">
@@ -196,22 +200,22 @@ export default function AtlasExplorer() {
               <input
                 value={query}
                 onChange={(e) => { setQuery(e.target.value); fetchSuggestions(e.target.value); }}
-                placeholder={isZulu ? 'Sesha noma kuphi eMhlabeni…' : 'Search anywhere on Earth…'}
-                aria-label={isZulu ? 'Sesha noma kuphi eMhlabeni… / Search anywhere on Earth…' : 'Search anywhere on Earth…'}
+                placeholder={isZulu ? 'Sesha noma kuphi eMhlabeni…' : inlineText(lang, 'Search anywhere on Earth…')}
+                aria-label={isZulu ? 'Sesha noma kuphi eMhlabeni… / Search anywhere on Earth…' : isXhosa ? bi('Search anywhere on Earth…') : 'Search anywhere on Earth…'}
                 className="flex-1 w-full min-w-0 font-sans bg-transparent outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
                 style={{ minWidth: 0, fontSize: 13.5, color: 'var(--text-primary)', border: 'none' }}
               />
               {query && (
                 <button
                   onClick={() => { setQuery(''); setSuggestions([]); }}
-                  aria-label={isZulu ? 'Sula usesho / Clear search' : 'Clear search'}
+                  aria-label={isZulu ? 'Sula usesho / Clear search' : isXhosa ? bi('Clear search') : 'Clear search'}
                   style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: 'var(--text-muted)', display: 'flex' }}
                 >
                   <X size={14} />
                 </button>
               )}
             </div>
-            {isZulu && <span className="font-sans pl-6" style={{ fontSize: 9.5, lineHeight: 1.1, color: 'var(--text-muted)' }}>Search anywhere on Earth</span>}
+            {(isZulu || isXhosa) && <span className="font-sans pl-6" style={{ fontSize: 9.5, lineHeight: 1.1, color: 'var(--text-muted)' }}>Search anywhere on Earth</span>}
           </div>
           {suggestions.length > 0 && (
             <div
@@ -250,9 +254,9 @@ export default function AtlasExplorer() {
           >
             <Earth size={15} className="shrink-0" style={{ color: 'var(--color-forest-800)' }} />
             <span className="font-sans" style={{ fontSize: 13.5, color: 'var(--text-primary)' }}>
-              {isZulu ? (
+              {isZulu || isXhosa ? (
                 <>
-                  <span className="block">Thinta noma kuphi emhlabeni ukuze ubone isimo sezulu, imvula nomhlabathi.</span>
+                  <span className="block">{isZulu ? 'Thinta noma kuphi emhlabeni ukuze ubone isimo sezulu, imvula nomhlabathi.' : inlineText(lang, 'Tap anywhere on Earth to read its climate, rain and soil')}</span>
                   <span className="block mt-0.5 font-sans" style={{ fontSize: 10.5, color: 'var(--text-muted)' }}>Tap anywhere on Earth to read its climate, rain and soil</span>
                 </>
               ) : 'Tap anywhere on Earth to read its climate, rain and soil'}
@@ -275,11 +279,11 @@ export default function AtlasExplorer() {
           <div className="flex items-center justify-between px-4 pt-2.5 pb-1.5 flex-shrink-0">
             <div className="md:hidden mx-auto absolute left-1/2 -translate-x-1/2 top-2" style={{ width: 40, height: 4, borderRadius: 2, background: 'var(--border-strong)' }} />
             <span className="font-sans font-bold uppercase" style={{ fontSize: 10.5, letterSpacing: '0.12em', color: 'var(--text-muted)', marginTop: 6 }}>
-              {isZulu ? 'Le ndawo / This point' : 'This point'}
+              {isZulu ? 'Le ndawo / This point' : isXhosa ? bi('This point') : 'This point'}
             </span>
             <button
               onClick={close}
-              aria-label={isZulu ? 'Vala iphaneli / Close panel' : 'Close panel'}
+              aria-label={isZulu ? 'Vala iphaneli / Close panel' : isXhosa ? bi('Close panel') : 'Close panel'}
               style={{
                 background: 'rgba(32,25,15,0.06)', border: '1px solid var(--border)', borderRadius: 8,
                 padding: 6, cursor: 'pointer', color: 'var(--text-secondary)', display: 'flex', marginTop: 4,
@@ -296,7 +300,7 @@ export default function AtlasExplorer() {
                 <span className="font-display" style={{ fontSize: 13.5, color: 'var(--text-secondary)' }}>
                   {isZulu
                     ? 'Kufundwa isimo sezulu, imvula nomhlabathi kule ndawo… / Reading climate, rain and soil for this point…'
-                    : 'Reading climate, rain and soil for this point…'}
+                    : isXhosa ? bi('Reading climate, rain and soil for this point…') : 'Reading climate, rain and soil for this point…'}
                 </span>
               </div>
             )}
@@ -304,7 +308,7 @@ export default function AtlasExplorer() {
               <div className="flex flex-col items-center gap-3 py-12 text-center px-4">
                 <span className="font-display" style={{ fontSize: 14, color: 'var(--text-primary)' }}>
                   {state.message
-                    ?? (isZulu ? 'Ayikwazanga ukuthola idatha yale ndawo. / Could not fetch data for this point.' : 'Could not fetch data for this point.')}
+                    ?? (isZulu ? 'Ayikwazanga ukuthola idatha yale ndawo. / Could not fetch data for this point.' : isXhosa ? bi('Could not fetch data for this point.') : 'Could not fetch data for this point.')}
                 </span>
                 <button
                   onClick={() => selectPoint(state.lat, state.lon, state.placeName)}
@@ -314,7 +318,7 @@ export default function AtlasExplorer() {
                     padding: '8px 18px', fontSize: 13, cursor: 'pointer',
                   }}
                 >
-                  {isZulu ? 'Zama futhi / Try again' : 'Try again'}
+                  {isZulu ? 'Zama futhi / Try again' : isXhosa ? bi('Try again') : 'Try again'}
                 </button>
               </div>
             )}

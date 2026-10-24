@@ -21,7 +21,7 @@ test('w21-04: the Learn link is translated on /farmer and the community profile'
   for (const p of ['app/farmer/page.tsx', 'app/community/profile/page.tsx']) {
     const src = read(p);
     assert.doesNotMatch(src, /<LessonLink id="[^"]+" label="Learn" \/>/, p);
-    assert.match(src, /label=\{lang === 'zu' \? 'Funda' : 'Learn'\}/, p);
+    assert.match(src, /label=\{lang === 'zu' \? 'Funda' : inlineText\(lang, 'Learn'\)\}/, p);
   }
 });
 

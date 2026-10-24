@@ -64,8 +64,10 @@ test('the Planting Calendar has a door in Farm Tools', () => {
     ...['af', 'zu', 'xh', 'nso', 'tn', 'st', 'ts', 've', 'ss', 'nr']
       .map((code) => read(`../lib/locales/${code}.ts`)),
   ];
+  // isiXhosa joined isiZulu as a fully drafted language (23 Oct 2026).
+  assert.match(read('../lib/locales/xh.ts'), /navPlantingCalendar: '[^']+'/);
   const allOccurrences = localeFiles.flatMap((src) => src.match(/^\s*navPlantingCalendar:/gm) ?? []);
-  assert.equal(allOccurrences.length, 2, 'the label should exist once in each of English and isiZulu');
+  assert.equal(allOccurrences.length, 3, 'the label should exist once in each of English, isiZulu and isiXhosa');
 });
 
 test('the calendar page it links to renders real content on its own', () => {

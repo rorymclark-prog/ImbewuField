@@ -217,7 +217,7 @@ export function unlockReason(
   return null; // previous module is complete — moduleId should already be unlocked
 }
 
-const UNLOCK_REASON_LANGUAGES = new Set(['zu', 'st', 've', 'ts']);
+const UNLOCK_REASON_LANGUAGES = new Set(['zu', 'st', 've', 'ts', 'xh']);
 
 /**
  * Localise only the three known unlock-reason shapes. Other languages and unknown future reason

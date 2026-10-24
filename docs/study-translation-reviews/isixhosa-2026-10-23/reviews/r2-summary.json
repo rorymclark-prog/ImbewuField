@@ -1,0 +1,69 @@
+{
+ "round": 2,
+ "items": 118,
+ "verdicts": {
+  "ok": 105,
+  "repair": 13
+ },
+ "repair_severity": {
+  "wording": 5,
+  "minor": 6,
+  "meaning": 2
+ },
+ "holds": 0,
+ "reviewer_note": "Machine review by an independent model (Claude), not a fluent isiXhosa speaker. Repairs are machine suggestions; a fluent first-language isiXhosa reviewer should confirm before shipping, especially items flagged meaning.",
+ "method": "Phase A blind back-translation (r2-A-out.json) written before opening r2-B-compare.json; Phase B compared against English.",
+ "quiz_check": "All quiz items checked: correct options (by content) remain correct and distractors remain wrong after repair; no quiz option flips found.",
+ "top_issues": [
+  {
+   "path": "market-community/market-community-l2/body",
+   "severity": "meaning",
+   "issue": "Negation inverted: 'bengakwazi' says regular box orders help planning only when buyers/growers CANNOT keep the agreement. Repaired to 'bekwazi'."
+  },
+  {
+   "path": "plant-guilds/plant-guilds-l2/body",
+   "severity": "meaning",
+   "issue": "'umqukumbelo' (conclusion/summary) used for a 'ring' of wild garlic; 'usama' non-word for 'remains standing'; 'Hambisa' (move) for 'match'. Repaired (isangqa / usemi / Lungelelanisa)."
+  },
+  {
+   "path": "market-community/market-community-l1/body",
+   "severity": "wording",
+   "issue": "Teaching example 'utamatisi uyabiza iR18' reads as a buying price, not the R18/kg production cost the quiz depends on; 'imixulu' non-word for bundles. Repaired."
+  },
+  {
+   "path": "market-community/market-community-l1/quiz/0/options/2",
+   "severity": "wording",
+   "issue": "Correct quiz option phrased with negative 'asinakubuyisa ngcono na' ('whether another crop cannot return better'); made positive so the right answer is unambiguous."
+  },
+  {
+   "path": "plant-guilds/plant-guilds-l1/body",
+   "severity": "wording",
+   "issue": "Non-word 'esiyisipheyo' (spare plant), wrong verb 'Latha' (decide), garbled 'ngaphezu kwezikhewu' (across the spaces), lost 'severe' cutting. Repaired."
+  },
+  {
+   "path": "plant-guilds/plant-guilds-l1/body",
+   "severity": "source",
+   "issue": "SOURCE issue (English too): 'These bacteria' and 'It is indigenous to KwaZulu-Natal' have no named antecedent in text; learners cannot tell which Sesbania is native vs the invasive S. punicea without the media. Flag to course authors."
+  },
+  {
+   "path": "plant-guilds/plant-guilds-l2/quiz/0/rationale",
+   "severity": "wording",
+   "issue": "Quiz rationale uses non-word 'usama' for 'remains standing'; repaired to 'usemi'."
+  },
+  {
+   "path": "plant-guilds/plant-guilds-l3/body",
+   "severity": "wording",
+   "issue": "'evuthiweyo' (ripe) used for mature fruit trees; repaired. English source also leaves 'its vines' (sweet potato) without antecedent."
+  },
+  {
+   "path": "plant-guilds/plant-guilds-l3/keyPoints/2",
+   "severity": "minor",
+   "issue": "Dropped 'whole' - loses the thinning vs pruning distinction; repaired with 'ezipheleleyo'."
+  },
+  {
+   "path": "plant-guilds/plant-guilds-l3/quiz/1/options/0",
+   "severity": "minor",
+   "issue": "Distractor 'awusoze usebenzise manzi' says 'you never use water' instead of 'it never uses water'; still wrong, repaired for clarity. Also minor fixes at items 15 (Liliphi concord), 33, 40, 68."
+  }
+ ]
+}

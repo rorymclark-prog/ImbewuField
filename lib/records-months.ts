@@ -10,11 +10,12 @@
 // Tshivenda and Xitsonga are UNREVIEWED MACHINE DRAFTS: two independent drafts agreed on every long
 // name and a blind reviewer mapped each name back to a month, but no fluent speaker has checked
 // them. A wrong month name would mislead, so a language with no name for a month falls back to
-// English for that month alone. The short forms are 3 to 4 letters and all different, for a chart
+// English for that month alone. isiXhosa uses the month names the app already carries for Home and
+// the journal (lib/locales/xh.ts homeMonth*), also an unreviewed machine draft. The short forms are 3 to 4 letters and all different, for a chart
 // axis; they are not an established abbreviation convention. See
 // docs/translation-reviews/records-finance-2026-10-06/README.md (Round 5) for the open questions.
 
-export type RecordsMonthLang = 'zu' | 'st' | 've' | 'ts';
+export type RecordsMonthLang = 'zu' | 'st' | 've' | 'ts' | 'xh';
 
 const ENGLISH_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] as const;
 
@@ -23,6 +24,7 @@ const LONG: Record<RecordsMonthLang, readonly string[]> = {
   st: ['Pherekgong', 'Hlakola', 'Hlakubele', 'Mmesa', 'Motsheanong', 'Phupjane', 'Phupu', 'Phata', 'Leotshe', 'Mphalane', 'Pundungwane', 'Tshitwe'],
   ve: ['Phando', 'Luhuhi', 'Ṱhafamuhwe', 'Lambamai', 'Shundunthule', 'Fulwi', 'Fulwana', 'Ṱhangule', 'Khubvumedzi', 'Tshimedzi', 'Ḽara', 'Nyendavhusiku'],
   ts: ['Sunguti', 'Nyenyenyani', 'Nyenyankulu', 'Dzivamisoko', 'Mudyaxihi', 'Khotavuxika', 'Mawuwani', 'Mhawuri', 'Ndzhati', 'Nhlangula', 'Hukuri', "N'wendzamhala"],
+  xh: ['Janyuwari', 'Februwari', 'Matshi', 'Epreli', 'Meyi', 'Juni', 'Julayi', 'Agasti', 'Septemba', 'Okthobha', 'Novemba', 'Disemba'],
 };
 
 const SHORT: Record<RecordsMonthLang, readonly string[]> = {
@@ -30,6 +32,7 @@ const SHORT: Record<RecordsMonthLang, readonly string[]> = {
   st: ['Phe', 'Hlk', 'Hlb', 'Mme', 'Mot', 'Php', 'Phu', 'Pha', 'Leo', 'Mph', 'Pun', 'Tsh'],
   ve: ['Phan', 'Luhu', 'Ṱhaf', 'Lamb', 'Shun', 'Fulw', 'Fwan', 'Ṱhan', 'Khub', 'Tshi', 'Ḽara', 'Nyen'],
   ts: ['Sung', 'Nyny', 'Nyku', 'Dziv', 'Mudy', 'Khot', 'Maw', 'Mhaw', 'Ndzh', 'Nhla', 'Huku', "N'we"],
+  xh: ['Jan', 'Feb', 'Mat', 'Epr', 'Mey', 'Jun', 'Jul', 'Aga', 'Sep', 'Okt', 'Nov', 'Dis'],
 };
 
 function hasMonthNames(lang: string): lang is RecordsMonthLang {

@@ -14,7 +14,12 @@ export type TrainingPhotoKind = keyof typeof TRAINING_PHOTO_KINDS;
 export type VenuePhoto = { image: string; caption: string; kind?: TrainingPhotoKind; shared?: boolean };
 export type AttendanceSignature = { strokes: [number, number][][]; signedAt: string };
 export type Attendance = { id: string; name: string; present: boolean; reference?: string; signature?: AttendanceSignature; certificate?: string };
-export type TrainingFeedback = { participantId: string; answers: Record<string,string>; language: 'en'|'zu'; consent: true; recordedAt: string };
+// The language the participant answered in. isiXhosa questions come from the inline drafts
+// (lib/locales/xh-inline/s01-mel-templates.ts, keyed by the English question), so the template
+// itself stays en/zu; older stored records are en or zu and stay valid.
+export const FEEDBACK_LANGUAGES = ['en','zu','xh'] as const;
+export type FeedbackLanguage = typeof FEEDBACK_LANGUAGES[number];
+export type TrainingFeedback = { participantId: string; answers: Record<string,string>; language: FeedbackLanguage; consent: true; recordedAt: string };
 export const TRAINING_FEEDBACK_TEMPLATE = { ...MEL_TEMPLATES.course_after, questions: MEL_TEMPLATES.course_after.questions.filter(q=>['course_clear','course_practice','course_language','course_change','course_apply'].includes(q.id)) };
 export type TrainingRecord = {
   id: string; project: string; title: string; date: string; venue: string; latitude: number | null; longitude: number | null;
@@ -76,7 +81,7 @@ export function validTrainingRecord(s: unknown, today: string): s is TrainingRec
       && (a.reference === undefined || text(a.reference,80)) && (a.certificate === undefined || text(a.certificate,80))
       && (a.signature === undefined || a.present && validAttendanceSignature(a.signature) && a.signature.signedAt.slice(0,10) <= today))
     && (r.feedback === undefined || Array.isArray(r.feedback) && r.feedback.length <= 250 && new Set(r.feedback.map(f=>f?.participantId)).size===r.feedback.length
-      && r.feedback.every(f=>!!f && r.attendance.some(a=>a.id===f.participantId&&a.present) && f.consent===true && ['en','zu'].includes(f.language) && text(f.recordedAt,30,true) && Number.isFinite(Date.parse(f.recordedAt)) && f.recordedAt.slice(0,10)<=today && validAnswers(TRAINING_FEEDBACK_TEMPLATE,f.answers) && Object.values(f.answers).some(a=>a.trim())))
+      && r.feedback.every(f=>!!f && r.attendance.some(a=>a.id===f.participantId&&a.present) && f.consent===true && (FEEDBACK_LANGUAGES as readonly string[]).includes(f.language) && text(f.recordedAt,30,true) && Number.isFinite(Date.parse(f.recordedAt)) && f.recordedAt.slice(0,10)<=today && validAnswers(TRAINING_FEEDBACK_TEMPLATE,f.answers) && Object.values(f.answers).some(a=>a.trim())))
     && new TextEncoder().encode(JSON.stringify({attendance:r.attendance,feedback:r.feedback})).length <= 650000
     && Array.isArray(r.photos) && r.photos.length<=8 && r.photos.every(p=>!!p && validEvidenceImage(p.image) && text(p.caption,240,true)
       && (p.kind === undefined || Object.hasOwn(TRAINING_PHOTO_KINDS,p.kind)) && (p.shared === undefined || typeof p.shared === 'boolean') && !(p.kind === 'register' && p.shared))

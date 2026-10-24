@@ -214,8 +214,8 @@ export default function SectorSummary({ lat, lon, site, onLooksRight }: SectorSu
             <div key={r.key} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
               <span style={{ flexShrink: 0, marginTop: 5, width: 9, height: 9, borderRadius: 9, background: r.dot }} />
               <span style={{ fontSize: 12.5, lineHeight: 1.45, color: DARK }}>
-                <span lang={lang === 'zu' ? 'zu' : undefined}>{r.text}</span>
-                {lang === 'zu' && <span lang="en" style={{ display: 'block', marginTop: 2, fontSize: 11, lineHeight: 1.35, color: 'rgba(11,18,11,0.66)' }}>{r.sourceText}</span>}
+                <span lang={lang === 'zu' || lang === 'xh' ? lang : undefined}>{r.text}</span>
+                {(lang === 'zu' || lang === 'xh') && <span lang="en" style={{ display: 'block', marginTop: 2, fontSize: 11, lineHeight: 1.35, color: 'rgba(11,18,11,0.66)' }}>{r.sourceText}</span>}
               </span>
             </div>
           ))}

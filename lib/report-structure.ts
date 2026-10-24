@@ -243,7 +243,7 @@ export function ensureDocumentArchitecture(markdown: string): string {
   const text = markdown ?? '';
   if (!text.trim()) return text;
   // Already a structured document — leave it exactly as generated.
-  if (/^##\s+(?:Contents|Okuqukethwe)\s*$/im.test(text)) return text;
+  if (/^##\s+(?:Contents|Okuqukethwe|Okuqulathwe)\s*$/im.test(text)) return text;
 
   const figured = numberFigures(text);
   const numbered = numberSections(figured.markdown);

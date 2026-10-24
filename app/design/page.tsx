@@ -16,6 +16,7 @@ import { clearPulseCookie } from '@/lib/server-rescue';
 import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
 import { useAppConfirm } from '@/components/AppConfirm';
 import { translatedDesignStepLabel } from '@/lib/design-studio-i18n';
+import { inlineText } from '@/lib/xh-inline';
 
 import type { LocationData } from '@/lib/types';
 import type { SectorSite } from '@/lib/sector';
@@ -510,7 +511,7 @@ function EmptyState() {
   return (
     <div style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column', background: 'var(--bg-0)' }}>
     {/* w20-23: the shared AppHeader replaces the picker's own Compass-and-title header. */}
-    <AppHeader title={isZulu ? 'Isitudiyo Sokuklama' : 'Design Studio'} backFallback="/home" />
+    <AppHeader title={isZulu ? 'Isitudiyo Sokuklama' : inlineText(lang, 'Design Studio')} backFallback="/home" />
     <div
       style={{
         flex: 1,
@@ -527,12 +528,12 @@ function EmptyState() {
       {/* nav-17: /design had no h1 at all while this empty-site state was showing. Since w20-23
           the AppHeader above shows the title, so this h1 is for screen readers only. */}
       <h1 className="sr-only">
-        {isZulu ? 'Isitudiyo Sokuklama' : 'Design Studio'}
+        {isZulu ? 'Isitudiyo Sokuklama' : inlineText(lang, 'Design Studio')}
       </h1>
       {places.length > 0 ? (
         <>
           <p style={{ fontSize: 16, maxWidth: 340, lineHeight: 1.5, fontWeight: 600 }}>
-            {isZulu ? 'Khetha indawo oyigcinile ukuze uqale ukuklama' : 'Pick a saved place to start designing'}
+            {isZulu ? 'Khetha indawo oyigcinile ukuze uqale ukuklama' : inlineText(lang, 'Pick a saved place to start designing')}
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%', maxWidth: 380 }}>
             {places.map((p) => (
@@ -562,17 +563,17 @@ function EmptyState() {
                     <span style={{ display: 'block', fontSize: 12, color: 'var(--text-muted)' }}>{p.biome}</span>
                   )}
                 </span>
-                <span style={{ fontSize: 12, color: 'var(--color-forest-800)', fontWeight: 600, flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: 4 }}>{isZulu ? 'Klama' : 'Design'}<ArrowRight size={14} aria-hidden="true" /></span>
+                <span style={{ fontSize: 12, color: 'var(--color-forest-800)', fontWeight: 600, flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: 4 }}>{isZulu ? 'Klama' : inlineText(lang, 'Design')}<ArrowRight size={14} aria-hidden="true" /></span>
               </Link>
             ))}
           </div>
           <p style={{ fontSize: 12.5, color: 'var(--text-muted)', maxWidth: 340 }}>
-            {isZulu ? 'Icebiso: indawo enomngcele odwetshiwe iba nesithombe sesathelayithi esilingana kahle.' : 'Tip: sites with a traced boundary get a perfectly-fitted satellite view.'}
+            {isZulu ? 'Icebiso: indawo enomngcele odwetshiwe iba nesithombe sesathelayithi esilingana kahle.' : inlineText(lang, 'Tip: sites with a traced boundary get a perfectly-fitted satellite view.')}
           </p>
         </>
       ) : (
         <p style={{ fontSize: 16, maxWidth: 320, lineHeight: 1.5 }}>
-          {isZulu ? 'Vula indawo kumephu kuqala, bese ucindezela Isitudiyo Sokuklama — noma gcina indawo ukuze ivele lapha.' : 'Open a site on the map first, then tap Design Studio — or save a place and it will appear here.'}
+          {isZulu ? 'Vula indawo kumephu kuqala, bese ucindezela Isitudiyo Sokuklama — noma gcina indawo ukuze ivele lapha.' : inlineText(lang, 'Open a site on the map first, then tap Design Studio — or save a place and it will appear here.')}
         </p>
       )}
       <Link
@@ -591,7 +592,7 @@ function EmptyState() {
         }}
       >
         <ArrowLeft size={18} />
-        {isZulu ? 'Buyela kumephu' : 'Back to map'}
+        {isZulu ? 'Buyela kumephu' : inlineText(lang, 'Back to map')}
       </Link>
     </div>
     </div>
@@ -601,7 +602,7 @@ function EmptyState() {
 function DesignStudioInner() {
   const { lang, t } = useLanguage();
   const isZulu = lang === 'zu';
-  const tr = (en: string, zu: string) => isZulu ? zu : en;
+  const tr = (en: string, zu: string) => inlineText(lang, en, zu);
   // Simple / All tools (lib/app-level.ts). Farmers default to Simple: one fixed layout, the
   // guided wizard steps, and no expert chrome. All tools is this screen exactly as it was.
   const simple = useAppLevel() === 'simple';
@@ -3012,7 +3013,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
 
   // Saved-place name (effect-resolved) with coordinates as the fallback.
   const siteName = placeName ?? `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
-  const stepName = (step: WizardStep) => isZulu ? translatedDesignStepLabel(t, step) : step === 'glossy' ? 'Preview & Export' : STEP_LABELS[step];
+  const stepName = (step: WizardStep) => isZulu ? translatedDesignStepLabel(t, step) : lang === 'xh' ? (step === 'glossy' ? inlineText(lang, 'Preview & Export') : translatedDesignStepLabel(t, step)) : step === 'glossy' ? 'Preview & Export' : STEP_LABELS[step];
 
   return (
     <div
@@ -3442,7 +3443,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                 key={layout}
                 type="button"
                 aria-pressed={workspaceMode === layout}
-                title={tr(`${layout[0].toUpperCase()}${layout.slice(1)} workspace`, `Indawo yokusebenza: ${layout === 'docked' ? 'amaphaneli amile' : layout === 'floating' ? 'amaphaneli antantayo' : 'iphaneli elingezansi'}`)}
+                title={tr(layout === 'docked' ? 'Docked workspace' : layout === 'floating' ? 'Floating workspace' : 'Tray workspace', `Indawo yokusebenza: ${layout === 'docked' ? 'amaphaneli amile' : layout === 'floating' ? 'amaphaneli antantayo' : 'iphaneli elingezansi'}`)}
                 onClick={() => changeWorkspaceMode(layout)}
                 style={{
                   minWidth: 54, minHeight: 34, padding: '4px 9px', borderRadius: 8,

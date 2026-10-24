@@ -1,0 +1,78 @@
+{
+  "unit": "g02-account-settings",
+  "okCount": 139,
+  "items": [
+    {
+      "where": "line 39",
+      "verdict": "repair",
+      "english": "Farm guidance is built from South African climate, soil and terrain data.",
+      "draft": "Ulwalathiso lwefama lwakhelwe kwidatha yemozulu, yomhlaba nethafa laseMzantsi Afrika.",
+      "backtranslation": "...built on South African climate, soil and 'ithafa' (plateau/plain) data.",
+      "problem": "'ithafa' means plateau/plain, not terrain.",
+      "corrected": "Ulwalathiso lwefama lwakhelwe kwidatha yemozulu, yomhlaba nobume bomhlaba baseMzantsi Afrika."
+    },
+    {
+      "where": "line 41",
+      "verdict": "repair",
+      "english": "Explore role views",
+      "draft": "Phonononga iinkqubo zeendima",
+      "backtranslation": "Explore role programmes",
+      "problem": "'inkqubo' (programme) used for 'view'; xh.ts uses 'imbonakalo' for practice view.",
+      "corrected": "Phonononga iimbonakalo zeendima"
+    },
+    {
+      "where": "line 43",
+      "verdict": "repair",
+      "english": "Choose a view",
+      "draft": "Khetha inkqubo",
+      "backtranslation": "Choose programme",
+      "problem": "same: view rendered as programme",
+      "corrected": "Khetha imbonakalo"
+    },
+    {
+      "where": "line 63",
+      "verdict": "repair",
+      "english": "Choose a practice view",
+      "draft": "Khetha inkqubo yokuziqhelisa",
+      "backtranslation": "Choose practice programme",
+      "problem": "same",
+      "corrected": "Khetha imbonakalo yokuziqhelisa"
+    },
+    {
+      "where": "line 65",
+      "verdict": "repair",
+      "english": "Open {name} practice view",
+      "draft": "Vula inkqubo yokuziqhelisa: {name}",
+      "backtranslation": "Open practice programme: {name}",
+      "problem": "same",
+      "corrected": "Vula imbonakalo yokuziqhelisa: {name}"
+    },
+    {
+      "where": "line 142",
+      "verdict": "repair",
+      "english": "Practice views",
+      "draft": "Iinkqubo zokuziqhelisa",
+      "backtranslation": "Practice programmes",
+      "problem": "same",
+      "corrected": "Iimbonakalo zokuziqhelisa"
+    },
+    {
+      "where": "line 119",
+      "verdict": "repair",
+      "english": "Replace",
+      "draft": "Tshintshela",
+      "backtranslation": "Switch to",
+      "problem": "'Tshintshela' = switch to; English is Replace (logo/photo).",
+      "corrected": "Tshintsha"
+    },
+    {
+      "where": "line 136",
+      "verdict": "repair",
+      "english": "English source wording is shown beside each draft until first-language and consent-meaning review.",
+      "draft": "Umbhalo wesiNgesi wemvelaphi ubonisiwe ecaleni kwedrafti nganye kude kuhlolwe ngumntu osithetha kakuhle isiXhosa, nentsingiselo yemvume.",
+      "backtranslation": "...until reviewed by a person who speaks isiXhosa well, and the meaning of consent.",
+      "problem": "'consent-meaning review' lost its 'review'; read as a dangling noun.",
+      "corrected": "Umbhalo wesiNgesi wemvelaphi ubonisiwe ecaleni kwedrafti nganye kude kuhlolwe ngumntu othetha isiXhosa njengolwimi lwakhe lwebele, kwaye kuhlolwe nentsingiselo yemvume."
+    }
+  ]
+}

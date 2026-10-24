@@ -26,6 +26,7 @@ export const PAIRED_DRAFT_LANGUAGE_LABELS = Object.freeze({
   st: 'SESOTHO',
   ts: 'XITSONGA',
   ve: 'TSHIVENḒA',
+  xh: 'ISIXHOSA',
   zu: 'ISIZULU',
 });
 

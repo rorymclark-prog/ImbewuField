@@ -19,6 +19,7 @@ import LimaBar from '@/components/LimaBar';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import { CROP_PLAN_MONTH_FOCUS_HOLD_MONTHS, CROP_PLAN_MONTH_FOCUS_ZU } from '@/lib/calendar-zu-draft';
 import {
   TASK_BOARD_CHANGED_EVENTS, loadCropBoardYear,
@@ -114,14 +115,50 @@ function taskSubtitleDraft(task: BoardTask): string | null {
   return dueDraft ? `${bedLabel}${separator}${dueDraft}` : null;
 }
 
+// isiXhosa for the same task lines. A local table, not shard entries: the English verbs are bare words
+// ('Sow', 'Harvest') that other screens use as nouns, and the shard is keyed by English alone.
+const ACTION_XH_VERB: Partial<Record<NonNullable<BoardTask['action']>, string>> = {
+  prep: 'Lungisa umbhede:',
+  sow: 'Tyala',
+  transplant: 'Tyala izithole:',
+  mulch: 'Nisela uze ugqume ngengca:',
+  harvest: 'Vuna',
+  'terminate-cover': 'Sika okanye jikelisa phantsi:',
+  'weed-early': 'Sula ukhula ejikeleze:',
+  'weed-mid': 'Sula ukhula uze ukhangele:',
+};
+
+function taskTitleXh(task: BoardTask, lang: string): string | undefined {
+  if (lang !== 'xh' || task.kind !== 'crop' || !task.action) return undefined;
+  const verb = ACTION_XH_VERB[task.action];
+  const sourceVerb = ACTION_SOURCE_VERB[task.action];
+  if (!verb || !sourceVerb || !task.title.startsWith(sourceVerb)) return undefined;
+  const cropName = task.title.slice(sourceVerb.length).trim();
+  return `${verb} ${inlineText(lang, cropName)}`;
+}
+
+function taskSubtitleXh(task: BoardTask, lang: string): string | undefined {
+  if (lang !== 'xh' || task.kind !== 'crop') return undefined;
+  const separator = ' · ';
+  const splitAt = task.subtitle.lastIndexOf(separator);
+  if (splitAt < 0) return undefined;
+  const bedLabel = task.subtitle.slice(0, splitAt);
+  const dueSource = task.subtitle.slice(splitAt + separator.length);
+  const months = dueSource.match(/^Due in (\d+) months$/);
+  const due = dueSource === 'Due this month' || dueSource === 'Due next month'
+    ? inlineText(lang, dueSource)
+    : months ? inlineTemplate(lang, 'Due in {n} months', null, { n: months[1] }) : null;
+  return due && due !== dueSource ? `${bedLabel}${separator}${due}` : undefined;
+}
+
 function CropPlanDraftSource({ lang, english, zulu, heldForReview = false, className = '', style }: {
   lang: string; english: string; zulu: string; heldForReview?: boolean; className?: string; style?: React.CSSProperties;
 }) {
-  if (lang === 'zu' && heldForReview) {
+  if ((lang === 'zu' || lang === 'xh') && heldForReview) {
     return (
       <div className={className} style={style}>
         <p style={{ margin: 0 }}>
-          <span className="text-xs leading-snug text-stone-600">isiZulu translation pending — English source: </span>
+          <span className="text-xs leading-snug text-stone-600">{lang === 'xh' ? inlineText(lang, 'isiXhosa translation pending — English source:') : 'isiZulu translation pending — English source:'} </span>
           <span lang="en">{english}</span>
         </p>
       </div>
@@ -204,6 +241,7 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel, lang
                   lang={lang}
                   english={task.title}
                   zulu={taskTitleDraft(task) ?? task.title}
+                  xhosa={taskTitleXh(task, lang)}
                 />
               </div>
               <div className="font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>
@@ -211,6 +249,7 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel, lang
                   lang={lang}
                   english={task.subtitle}
                   zulu={taskSubtitleDraft(task) ?? task.subtitle}
+                  xhosa={taskSubtitleXh(task, lang)}
                 />
               </div>
             </div>
@@ -230,14 +269,16 @@ export default function CropPlanPage() {
   // and the map-planner promo. The task list itself (what actually needs doing) is never gated,
   // same reasoning as the bed×month grid in app/facilitator/crops/page.tsx.
   const simple = useAppLevel() === 'simple';
-  const ui = (english: string, zulu: string) => lang === 'zu' ? zulu : english;
+  const ui = (english: string, zulu: string) => inlineText(lang, english, zulu);
   const zuMonths = [t('surveyMonthJan'), t('surveyMonthFeb'), t('surveyMonthMar'), t('surveyMonthApr'),
     t('surveyMonthMay'), t('surveyMonthJun'), t('surveyMonthJul'), t('surveyMonthAug'),
     t('surveyMonthSep'), t('surveyMonthOct'), t('surveyMonthNov'), t('surveyMonthDec')];
   const monthNames = lang === 'zu'
     ? MONTHS.map((english, month) => `${zuMonths[month]} / ${english}`)
-    : MONTHS;
-  const monthShortNames = lang === 'zu'
+    : lang === 'xh'
+      ? MONTHS.map((english) => `${inlineText(lang, english)} / ${english}`)
+      : MONTHS;
+  const monthShortNames = lang === 'zu' || lang === 'xh'
     ? zuMonths
     : MONTHS_SHORT;
   const [view, setView] = useState<View>('month');
@@ -309,6 +350,12 @@ export default function CropPlanPage() {
         <p role="note" className="flex-shrink-0 px-4 py-2 font-sans" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: 'var(--text-secondary)', background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
           Amagama emisebenzi nezifinyezo zesizini abonisa uhlaka lwesiZulu nomthombo wesiNgisi. Eminye imiyalo yokulima isalindele ukubuyekezwa.
           <span lang="en" style={{ display: 'block', marginTop: 4 }}>Unreviewed isiZulu drafts with English sources; some farming instructions remain in English for review.</span>
+        </p>
+      )}
+      {lang === 'xh' && (
+        <p role="note" className="flex-shrink-0 px-4 py-2 font-sans" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: 'var(--text-secondary)', background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
+          {inlineText(lang, 'Unreviewed isiXhosa drafts with English sources; some farming instructions remain in English for review.')}
+          <span lang="en" style={{ display: 'block', marginTop: 4 }}>Unreviewed isiXhosa drafts with English sources; some farming instructions remain in English for review.</span>
         </p>
       )}
 
@@ -397,7 +444,7 @@ export default function CropPlanPage() {
                   {ui('Your crop plan is not producing any jobs', 'Uhlelo lwakho lwezitshalo alukhiqizi imisebenzi')}
                 </div>
                 <p className="font-sans" style={{ fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                  {ui(`It has ${savedPlantings} ${savedPlantings === 1 ? 'planting' : 'plantings'} saved, but nothing in it lands in any month. That happens when a planting sits on a bed that has been deleted, when its crop has no verified timings in the app, or when it is an existing crop whose picking months have already passed. Open the crop plan to check it.`, `Lunokutshala ${savedPlantings} okulondoloziwe, kodwa akukho okuvela emsebenzini wanoma iyiphi inyanga. Lokhu kwenzeka uma ukutshala kusembhedeni osusuliwe, uma isitshalo singenazo izikhathi eziqinisekisiwe kuhlelo lokusebenza, noma uma kuyisitshalo esivele sikhona futhi izinyanga zaso zokuvuna sezidlulile. Vula uhlelo lwezitshalo uluhlole.`)}
+                  {lang === 'zu' ? `Lunokutshala ${savedPlantings} okulondoloziwe, kodwa akukho okuvela emsebenzini wanoma iyiphi inyanga. Lokhu kwenzeka uma ukutshala kusembhedeni osusuliwe, uma isitshalo singenazo izikhathi eziqinisekisiwe kuhlelo lokusebenza, noma uma kuyisitshalo esivele sikhona futhi izinyanga zaso zokuvuna sezidlulile. Vula uhlelo lwezitshalo uluhlole.` : inlineTemplate(lang, savedPlantings === 1 ? 'It has {n} planting saved, but nothing in it lands in any month. That happens when a planting sits on a bed that has been deleted, when its crop has no verified timings in the app, or when it is an existing crop whose picking months have already passed. Open the crop plan to check it.' : 'It has {n} plantings saved, but nothing in it lands in any month. That happens when a planting sits on a bed that has been deleted, when its crop has no verified timings in the app, or when it is an existing crop whose picking months have already passed. Open the crop plan to check it.', null, { n: savedPlantings })}
                 </p>
                 <Link href="/facilitator/crops" className="inline-flex items-center gap-1 mt-2 font-sans font-semibold" style={{ fontSize: 13, color: 'var(--color-forest-800)' }}>
                   {ui('Open crop plan', 'Vula uhlelo lwezitshalo')}<ChevronRight size={14} />
@@ -421,7 +468,7 @@ export default function CropPlanPage() {
                   const n = countFor(m);
                   return (
                     <button key={label} onClick={() => setCursorMonth(m)}
-                      aria-label={`${monthNames[i]} — ${n} ${ui(n === 1 ? 'job' : 'jobs', n === 1 ? 'umsebenzi' : 'imisebenzi')}`}
+                      aria-label={lang === 'xh' ? inlineTemplate(lang, n === 1 ? '{month} — {n} job' : '{month} — {n} jobs', null, { month: monthNames[i], n }) : `${monthNames[i]} — ${n} ${ui(n === 1 ? 'job' : 'jobs', n === 1 ? 'umsebenzi' : 'imisebenzi')}`}
                       aria-current={on ? 'true' : undefined}
                       className="rounded-lg py-1.5 flex flex-col items-center justify-center"
                       style={{
@@ -438,7 +485,7 @@ export default function CropPlanPage() {
 
               <div className="flex items-center gap-2 mb-3 flex-wrap">
                 <span className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.12em' }}>
-                  {monthTasks.length} {ui(monthTasks.length === 1 ? 'job' : 'jobs', monthTasks.length === 1 ? 'umsebenzi' : 'imisebenzi')} {ui('in', 'ku')} {monthName}
+                  {lang === 'xh' ? inlineTemplate(lang, monthTasks.length === 1 ? '{n} job in {month}' : '{n} jobs in {month}', null, { n: monthTasks.length, month: monthName }) : <>{monthTasks.length} {ui(monthTasks.length === 1 ? 'job' : 'jobs', monthTasks.length === 1 ? 'umsebenzi' : 'imisebenzi')} {ui('in', 'ku')} {monthName}</>}
                 </span>
                 {/* Describes the MONTH you are browsing, never the jobs in it — a job
                     carries its own "Due in N months" line, and a picking that lands in
@@ -446,14 +493,14 @@ export default function CropPlanPage() {
                     here would read as a claim about the jobs. */}
                 {mounted && (
                   <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 12, background: away === 0 ? 'var(--brand-soft)' : 'var(--bg-2)', color: away === 0 ? 'var(--color-forest-800)' : 'var(--text-secondary)' }}>
-                    {away === 0 ? ui('Current month', 'Inyanga yamanje') : away === 1 ? ui('1 month ahead', 'Inyanga e-1 ezayo') : `${away} ${ui('months ahead', 'izinyanga ezizayo')}`}
+                    {away === 0 ? ui('Current month', 'Inyanga yamanje') : away === 1 ? ui('1 month ahead', 'Inyanga e-1 ezayo') : lang === 'xh' ? inlineTemplate(lang, '{n} months ahead', null, { n: away }) : `${away} ${ui('months ahead', 'izinyanga ezizayo')}`}
                   </span>
                 )}
               </div>
               <TaskList
                 tasks={monthTasks}
                 onToggle={toggleTask}
-                emptyMessage={ui(`Nothing due from your crop plan in ${monthName}.`, `Akukho msebenzi ohlelweni lwezitshalo ngo-${monthName}.`)}
+                emptyMessage={lang === 'zu' ? `Akukho msebenzi ohlelweni lwezitshalo ngo-${monthName}.` : lang === 'xh' ? inlineTemplate(lang, 'Nothing due from your crop plan in {month}.', null, { month: monthName }) : `Nothing due from your crop plan in ${monthName}.`}
                 doneLabel={ui('Mark done', 'Maka njengokwenziwe')}
                 notDoneLabel={ui('Mark not done', 'Susa uphawu lokwenziwe')}
                 lang={lang}
@@ -486,7 +533,7 @@ export default function CropPlanPage() {
                       <span className="font-display font-semibold" style={{ fontSize: 'clamp(16px, 1.2vw, 18px)', color: 'var(--text-primary)' }}>{monthNames[m - 1]}</span>
                       {mounted && m === todayMonth && <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 12, background: 'var(--brand-soft)', color: 'var(--color-forest-800)' }}>{ui('Now', 'Manje')}</span>}
                       <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 12, background: 'var(--bg-2)', color: 'var(--text-secondary)' }}>
-                        {n} {ui(n === 1 ? 'job' : 'jobs', n === 1 ? 'umsebenzi' : 'imisebenzi')} {ui('from your plan', 'ohlelweni lwakho')}
+                        {lang === 'xh' ? inlineTemplate(lang, n === 1 ? '{n} job from your plan' : '{n} jobs from your plan', null, { n }) : <>{n} {ui(n === 1 ? 'job' : 'jobs', n === 1 ? 'umsebenzi' : 'imisebenzi')} {ui('from your plan', 'ohlelweni lwakho')}</>}
                       </span>
                     </div>
                     {/* Generic seasonal guidance, not derived from this farmer's beds —

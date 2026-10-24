@@ -30,6 +30,7 @@ import SiteSurveyReview from './SiteSurveyReview';
 import SurveyZuluDraftPair, { surveyZuluConfirmDraft, SURVEY_DISCARD_CONFIRM_ENGLISH, SURVEY_DISCARD_BUTTON_ENGLISH } from './SurveyZuluDraftPair';
 import { resolveSiteSurveyWelcomeDraft, type SiteSurveyWelcomeField } from '@/lib/site-survey-welcome-drafts';
 import type { LocationData } from '@/lib/types';
+import { inlineText } from '@/lib/xh-inline';
 
 interface Props {
   placeId: string;
@@ -639,7 +640,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, sco
         {started && <button className={styles.modeButton} onClick={() => setStarted(false)}><RegionalWelcomeCopy language={lang} field={mode === 'short' ? 'shortTitle' : 'fullTitle'}>{mode === 'short' ? t('surveyShortTitle') : t('surveyFullTitle')}</RegionalWelcomeCopy><ChevronDown size={14}/></button>}
         <button onClick={closeWithConfirm} aria-label={t('surveyCloseAriaLabel')} className={styles.close}><X size={20}/></button>
       </header>
-      {lang === 'zu' && <p className={styles.zuluDraftNotice} role="note">{t('surveyZuluDraftNotice')}</p>}
+      {(lang === 'zu' || lang === 'xh') && <p className={styles.zuluDraftNotice} role="note">{t('surveyZuluDraftNotice')}</p>}
       {(lang === 'st' || lang === 've') && <p className={styles.regionalDraftNotice} role="note">{lang === 'st' ? 'Sesotho' : 'Tshivenda'} welcome labels are unreviewed drafts. English appears beside each machine draft; held labels remain in English.</p>}
       <div className={styles.workspace}>
         {started && <nav className={styles.navigation} aria-label={t('surveySections')}>
@@ -1114,7 +1115,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, sco
             {(livestock.includes('chickens') || Object.keys(poultryManagement).length > 0 || layingHens !== '') && <details lang="en" style={{ padding: '8px 14px', borderRadius: 12, border: '1px solid var(--border)', background: 'var(--surface-2)' }}>
               <summary className="font-sans font-semibold" style={{ minHeight: 48, cursor: 'pointer', paddingTop: 12 }}>Current chicken details (optional)</summary>
               <div className="space-y-4 pb-3">
-                <p className="text-sm" style={{ color: 'var(--text-2)' }}>Describe the birds you keep now. A coop is a building; it does not tell us how many hens are laying.{lang === 'zu' && ' These questions are shown in English until reviewed translations are available.'}</p>
+                <p className="text-sm" style={{ color: 'var(--text-2)' }}>Describe the birds you keep now. A coop is a building; it does not tell us how many hens are laying.{lang === 'zu' && ' These questions are shown in English until reviewed translations are available.'}{lang === 'xh' && <span lang="xh"> {inlineText(lang, 'These questions are shown in English until reviewed translations are available.')}</span>}</p>
                 <ObservationChoices label="What are these chickens kept for?" value={poultryManagement.purpose} options={POULTRY_PURPOSE_OPTIONS} onChange={purpose => setPoultryManagement(previous => ({ ...previous, purpose }))}/>
                 <label className="font-sans block text-sm">Breed or strain, if you know it (optional)
                   <input type="text" value={poultryManagement.recordedBreed ?? ''} maxLength={120} onChange={event => setPoultryManagement(previous => ({ ...previous, recordedBreed: event.target.value }))} placeholder="Name on your bird supplier's record" className="w-full mt-2" style={{ minHeight: 48, padding: '10px 14px', borderRadius: 11, background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)' }}/>

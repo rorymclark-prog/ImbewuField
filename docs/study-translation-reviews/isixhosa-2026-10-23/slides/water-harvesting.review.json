@@ -1,0 +1,46 @@
+{
+ "module": "water-harvesting",
+ "items": [
+  {
+   "n": 20,
+   "field": "body[1]",
+   "verdict": "repair",
+   "english": "If this advice is unavailable or unclear, do not reuse the water. Soil and mulch do not disinfect wastewater.",
+   "draft": "Ukuba eli cebo alifumaneki okanye alicacanga, musa ukuphinda usebenzise amanzi. Umhlaba nengca yokugquma azibulali ntsholongwane emanzini angcolileyo.",
+   "backtranslation": "If this advice is not available or not clear, do not reuse the water. Soil and mulch do not kill viruses in dirty water.",
+   "problem": "\"this advice\" rendered \"eli cebo\" (this plan); \"ntsholongwane\" = virus only, narrower than germs/pathogens (safety text)",
+   "corrected": "Ukuba le ngcebiso ayifumaneki okanye ayicacanga, musa ukuphinda usebenzise amanzi. Umhlaba nengca yokugquma azibulali magciwane emanzini angcolileyo."
+  },
+  {
+   "n": 21,
+   "field": "body[1]",
+   "verdict": "repair",
+   "english": "Check with qualified local advisers before any reuse. Soil and mulch do not disinfect wastewater.",
+   "draft": "Hlola nabacebisi basekuhlaleni abaqeqeshiweyo phambi kokuphinda usebenzise. Umhlaba nengca yokugquma azibulali ntsholongwane emanzini angcolileyo.",
+   "backtranslation": "Check with trained local advisors before reuse. Soil and mulch do not kill viruses in dirty water.",
+   "problem": "\"ntsholongwane\" = virus only; narrower than germs/pathogens/disinfect (safety text)",
+   "corrected": "Hlola nabacebisi basekuhlaleni abaqeqeshiweyo phambi kokuphinda usebenzise. Umhlaba nengca yokugquma azibulali magciwane emanzini angcolileyo."
+  },
+  {
+   "n": 22,
+   "field": "heading",
+   "verdict": "repair",
+   "english": "Prevent Contact and Pollution",
+   "draft": "Thintela unxibelelwano nokungcoliseka",
+   "backtranslation": "Prevent contact and pollution",
+   "problem": "\"unxibelelwano\" = communication/connection, not physical contact",
+   "corrected": "Thintela ukuchukumisa amanzi nokungcoliseka"
+  },
+  {
+   "n": 22,
+   "field": "body[0]",
+   "verdict": "repair",
+   "english": "Prevent contact with people or animals. Do not connect washwater to drinking-water plumbing, spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.",
+   "draft": "Thintela ukunxibelelana nabantu okanye izilwanyana. Musa ukudibanisa amanzi okuhlamba nemibhobho yamanzi okusela, ukuwafafaza, ukuwayeka ame, okanye ukuwavumela aphume epropathini aye esitratweni, kwi-drain okanye emlanjeni.",
+   "backtranslation": "Prevent contact with people or animals. Do not join wash water to drinking-water pipes, spray it, let it stand, or let it leave the property to the street, drain or stream.",
+   "problem": "\"ukunxibelelana nabantu\" = communicating/connecting with people, not contact with the water",
+   "corrected": "Thintela abantu okanye izilwanyana ukuba bachukumise la manzi. Musa ukudibanisa amanzi okuhlamba nemibhobho yamanzi okusela, ukuwafafaza, ukuwayeka ame, okanye ukuwavumela aphume epropathini aye esitratweni, kwi-drain okanye emlanjeni."
+  }
+ ],
+ "okCount": 82
+}

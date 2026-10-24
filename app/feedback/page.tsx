@@ -4,6 +4,7 @@ import Link from 'next/link';
 import AppHeader from '@/components/layout/AppHeader';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { useAppLevel } from '@/lib/app-level';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -11,12 +12,15 @@ import { feedbackText,validFeedback,type FeedbackInput } from '@/lib/product-fee
 import { downloadFile } from '@/lib/file-delivery';
 import styles from '@/components/SampleExperience.module.css';
 
+// The isiXhosa draft notice sits next to its English, like the isiZulu one below (shard: g13-dates-feedback).
+const XH_DRAFT_NOTICE='ISIXHOSA DRAFT — This translation has not been reviewed by a fluent isiXhosa speaker.';
 type Ticket={id:string;title:string;kind:string;details:string;createdAt:string;role:string;sample:boolean;path:string};
 export default function FeedbackPage(){
   const {user,role}=useAuth();const {lang}=useLanguage();const simple=useAppLevel()==='simple';const [kind,setKind]=useState<'bug'|'feature'>('bug'),[title,setTitle]=useState(''),[details,setDetails]=useState(''),[path,setPath]=useState(''),[agree,setAgree]=useState(false),[busy,setBusy]=useState(false),[receipt,setReceipt]=useState(''),[error,setError]=useState(''),[tickets,setTickets]=useState<Ticket[]|null>(null);
-  const label=(en:string,zu:string)=>lang==='zu'?zu:en;
-  // Keep exact English visible for decisions about sending personal information.
-  const paired=(en:string,zu:string)=>lang==='zu'?`${zu} / ${en}`:en;
+  const label=(en:string,zu:string)=>inlineText(lang,en,zu);
+  // Keep exact English visible for decisions about sending personal information. isiXhosa readers
+  // get the isiXhosa draft followed by the English, like isiZulu (no draft yet: the English alone).
+  const paired=(en:string,zu:string)=>{if(lang==='zu')return `${zu} / ${en}`;const xh=inlineText(lang,en);return lang==='xh'&&xh!==en?`${xh} / ${en}`:en;};
   const [id,setId]=useState('');
   // Simple has no separate Title field, so the single "Tell us" box drives both — the title is
   // just the start of what was typed, silently kept valid for validFeedback's 3-char floor.
@@ -30,6 +34,7 @@ export default function FeedbackPage(){
     <AppHeader backFallback="/account" title={label('Feedback','Impendulo')} /><div className={styles.content}><div className={`${styles.wrap} ${styles.narrow}`}>
     <h1>{label('Report a bug or suggest a feature','Bika inkinga noma phakamisa isici esisha')}</h1>
     {lang==='zu'&&<p role="note">UMBHALO WESIZULU USALUHLAKA — Le nguqulo ayikabuyekezwa umuntu okhuluma kahle isiZulu. / ISIZULU DRAFT — This translation has not been reviewed by a fluent isiZulu speaker.</p>}
+    {lang==='xh'&&<p role="note">{paired(XH_DRAFT_NOTICE,'')}</p>}
     {/* ux-03/nav-04: was developer-addressed phrasing on a farmer-facing screen — rewritten to
         speak to the person filling the form in, below. */}
     <p>{paired('Tell us what happened or what would help. Please leave out passwords, identity numbers, private survey answers and other people’s personal information.','Sitshele okwenzekile noma okungasiza. Ungafaki amagama ayimfihlo, izinombolo zomazisi, izimpendulo eziyimfihlo zezinhlolovo noma imininingwane yomuntu siqu yabanye abantu.')}</p>
@@ -56,7 +61,7 @@ export default function FeedbackPage(){
       </div>
       {!user&&<p><Link href="/login?from=%2Ffeedback">{label('Sign in','Ngena ngemvume')}</Link> {paired('to send, or download your draft first. Signing in may reload this page.','ukuze uthumele, noma landa uhlaka lwakho kuqala. Ukungena ngemvume kungase kulayishe leli khasi kabusha.')}</p>}
     </fieldset></form>}
-    {error&&<p role="alert" className={styles.notice}>{lang==='zu'?'Iphutha / Error: ':''}{error}</p>}
+    {error&&<p role="alert" className={styles.notice}>{lang==='zu'?'Iphutha / Error: ':lang==='xh'?`${inlineText(lang,'Error')} / Error: `:''}{error}</p>}
     {role==='admin'&&<section className={styles.card}>
       <h2>{label('Developer inbox','Ibhokisi lomthuthukisi')}</h2>
       <button disabled={busy} onClick={()=>void inbox()}>{label('Load latest 100 submissions','Layisha imibiko eyi-100 yakamuva')}</button>

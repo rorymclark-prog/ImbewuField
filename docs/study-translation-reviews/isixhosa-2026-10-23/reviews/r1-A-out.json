@@ -1,0 +1,652 @@
+[
+ {
+  "path": "food-forest/title",
+  "back": "Design of a food forest",
+  "flags": []
+ },
+ {
+  "path": "food-forest/description",
+  "back": "Place layer by layer a food system with many layers, from the crown of the tall tree to the root plants.",
+  "flags": [
+   "wording: 'izityalo ezingcambu' ('plants which are roots') is awkward; 'izityalo zeengcambu' is clearer"
+  ]
+ },
+ {
+  "path": "food-forest/food-forest-l1/infographicAlt",
+  "back": "A cut-away section of a food forest with a big tree standing in the middle, small trees, shrubs, upright-standing plants, ground-covering plants and a grapevine, their roots spreading in the soil; sunlight enters from the upper left.",
+  "flags": [
+   "wording: 'izityalo ezime nkqo' = upright/vertical plants, may not match the intended layer (herbaceous?)",
+   "wording: 'umdiliya' specifically means grapevine, not a generic climber/vine"
+  ]
+ },
+ {
+  "path": "food-forest/food-forest-l1/title",
+  "back": "Seven layers: how a forest feeds itself",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l1/body",
+  "back": "A natural forest fills the space from the top branches to the roots.\n\nDifferent plants use the light and moisture present at their layer.\n\nA food forest imitates this pattern with productive plants.\n\nThe result is not one plant in one row, but many useful layers growing together.\n\nThink of the crown of the tall tree, small trees, shrubs and soft non-woody plants.\n\nGround-covering plants protect it (the soil) on top, root plants grow beneath it, and climbing plants use suitable supports.\n\nThe height and spacing of plants depend on the plants and the site. These are planning layers, not fixed height bands.\n\nA first Highveld example includes Wild Fig or pecan above lemon, naartjie and black mulberry.\n\nYou place Cape gooseberry and Wild Medlar together with vegetables, wild garlic, sweet potato and granadilla.\n\nTake this as a planning example, not permission to plant all the species. Start by confirming which plant it is, frost tolerance, size when mature, and local restrictions.\n\nYoung plants need care during establishment: checking moisture, controlling weeds and protection from damage.\n\nAs plants grow, shade and fallen leaves change the conditions beneath them.\n\nCheck competition and access. Cut, make-small (thin) or adjust the planting of lower layers when what you see requires it; the system does not stop needing care on a fixed date.",
+  "flags": [
+   "possible isiZulu: 'liyayilingisa' (-lingisa = imitate is isiZulu; isiXhosa -xelisa / -linganisa)",
+   "wording: 'ncitshisa' is non-standard; isiXhosa 'nciphisa' / 'ukuhlutha' for thinning",
+   "wording: 'Ubeka' ('you place') has a 2nd-person subject; the example is the subject in context"
+  ]
+ },
+ {
+  "path": "food-forest/food-forest-l1/keyPoints/0",
+  "back": "Seven planning layers can combine useful plants of different heights",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l1/keyPoints/1",
+  "back": "Plants can compete for light, water and nutrients",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l1/keyPoints/2",
+  "back": "Care during establishment and afterwards depends on observed conditions",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l1/keyPoints/3",
+  "back": "Confirm that it suits your site before following any planting example",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/0/q",
+  "back": "Weeds compete strongly with young plants of the lower layers. What should guide the next step?",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/0/options/0",
+  "back": "Wait until it is the fifth year",
+  "flags": [
+   "grammar: 'nguwonyaka' should be 'ngunyaka'"
+  ]
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/0/options/1",
+  "back": "Add plants without thinking about water",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/0/options/2",
+  "back": "Check the affected plants and control the competition",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/0/options/3",
+  "back": "Assume all seven layers look after themselves",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/0/rationale",
+  "back": "Observe the competition that is happening and the condition of the plants. A fixed establishment calendar cannot tell you which plants need care now.",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/1/q",
+  "back": "How can fallen leaves and shade help protect soil moisture?",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/1/options/0",
+  "back": "They guarantee access to underground water",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/1/options/1",
+  "back": "They can reduce water loss at the soil surface",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/1/options/2",
+  "back": "They guarantee a high yield per litre across the whole system",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/1/options/3",
+  "back": "They remove the need to check irrigation",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l1/quiz/1/rationale",
+  "back": "Shade and suitable covering-grass (mulch) can reduce vapour/evaporation from the soil surface. The plants' need for water and establishment requirements still need attention.",
+  "flags": [
+   "wording: 'ingca yokugquma' (lit. 'covering grass') narrows mulch to grass; used throughout"
+  ]
+ },
+ {
+  "path": "food-forest/food-forest-l2/infographicAlt",
+  "back": "A simple shape of South Africa divided into three growing regions by soil colour and landform only: a high central plateau that is white-brown with hills, a line beside the green sea that is humid, and a low hot area that is red-brown. In each one stand different tree shapes.",
+  "flags": [
+   "grammar: 'umgca osecaleni kolwandle oluhlaza' - 'oluhlaza' agrees with ulwandle (sea), so it reads 'the green sea', not 'green coastal strip'",
+   "wording: 'elimhlophe-mdaka' (white-brown) colour term odd"
+  ]
+ },
+ {
+  "path": "food-forest/food-forest-l2/title",
+  "back": "Choosing plant species for South African food forests",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l2/body",
+  "back": "Check the rainfall, frost, heat, soil and water availability at your site before choosing plants.\n\nMango can be damaged by frost. Quince needs a suitably cold winter in order to fruit reliably.\n\nThe name of a region or a protected corner suffices(?). Confirm each plant and each variety with a reliable local guide.\n\nThe first list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry.\n\nThis list is not a recommendation for all of them. Check each plant against frost, soil, mature size and the local list of approved species.\n\nKeep existing legal and project restrictions in force. Do not plant just from seeing a photo.\n\nFirst examples for hot areas include mango, avocado, Natal Mahogany, banana, pawpaw, litchi, Wild Fig, Barbados cherry and Wild Dagga.\n\nMarula, Mopane and baobab also appear in Limpopo examples. Suitability for your site still needs checking.\n\nUseful trees are not automatically edible. Confirm which plant it is and its safe use; a landscape photo is not a guide for identifying food.\n\nIndigenous plants suited to the site can support wildlife habitat as part of the design.\n\nChoose by your site's ecology and the useful role of each plant. There is no percentage target with a source based on it in this lesson.\n\nProtect existing natural vegetation. Do not convert healthy grasslands into a food forest just because the trees are useful elsewhere.",
+  "flags": [
+   "MEANING (negation): 'Igama lommandla okanye ikona ekhuselekileyo ayanele' - final -e reads as positive 'is/are enough'; negative should be 'alanele/akwanele' or '...ayonelanga'. Negation likely lost.",
+   "wording: 'Akukho njongo yepesenti enomthombo osekelwe kuwo' is garbled"
+  ]
+ },
+ {
+  "path": "food-forest/food-forest-l2/keyPoints/0",
+  "back": "Match each plant and each variety to the real site",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l2/keyPoints/1",
+  "back": "Check identification, safe use and current local restrictions",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l2/keyPoints/2",
+  "back": "A regional example is not permission for all species on its list",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l2/keyPoints/3",
+  "back": "Use suitable indigenous plants and protect existing natural habitat",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/0/q",
+  "back": "A farmer wants to plant a young mango where severe frost occurs. Which risk needs attention?",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/0/options/0",
+  "back": "It succeeds - the site blocks the effect of frost",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/0/options/1",
+  "back": "It fruits early because of the temperature change",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/0/options/2",
+  "back": "It may be killed or badly damaged by frost, especially as a young tree",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/0/options/3",
+  "back": "It survives with thick mulch but needs replacing every year",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/0/rationale",
+  "back": "A young mango can be damaged by frost. Check the conditions of your real site and a reliable local guide, rather than assuming a protected spot removes the risk.",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/1/q",
+  "back": "Why are suitable indigenous plants included in the design?",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/1/options/0",
+  "back": "They always produce a lot of food per square metre",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/1/options/1",
+  "back": "They can support local habitat, pollinating insects and other wildlife",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/1/options/2",
+  "back": "All introduced species are illegal",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/1/options/3",
+  "back": "They will never need care during establishment",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l2/quiz/1/rationale",
+  "back": "Choose plants by local ecology and their role. This does not set a percentage that applies everywhere and does not remove the need to check suitability.",
+  "flags": [
+   "minor: 'peresenti' here vs 'pesenti' in body - inconsistent spelling"
+  ]
+ },
+ {
+  "path": "food-forest/food-forest-l3/infographicAlt",
+  "back": "One section of land in four stages, from left to right: loose mulch spread over cardboard on the ground, then first low fast-growing plants, then young canopy trees and lower layers being filled in, finally stable layered planting.",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l3/title",
+  "back": "Establishing a food forest: observe and adjust",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l3/body",
+  "back": "Start by checking the site, water supply and the available treatment. Protect bare soil early.\n\nTemporary support plants can give shelter and useful cut material where suitable.\n\nMain trees and lower layers can be added as conditions allow. Ground-cover plants do not want to wait for it to finish; avoid plants competing with young trees.\n\nStart with the area you can water and maintain. Check existing plants before clearing.\n\nWhere suitable, plain cardboard under suitable mulch can reduce unwanted growth. Keep water able to enter the soil and leave tree trunks clear.\n\nPlan spacing by the size of plants when mature. Prepare nursery plants for the next suitable planting window.\n\nLook at how shade, roots and available water affect neighbouring plants.\n\nComfrey and wild garlic appear in a first underplanting example; check their suitability for your site before using them.\n\nCut or thin support plants when needed, using methods suitable for each species. Suitable clean cuttings can go back as mulch. Do not wait for a certain fixed year if competition is already damaging plants.\n\nChoose the planting time when soil moisture and expected weather support establishment.\n\nRain can help, but check the root zone and keep a watering plan when the rain is [?nonsense word]. Avoid planting in waterlogged soil.\n\nCheck young plants after planting. Harvest time and inputs from outside depend on the species, site and treatment; there is no guaranteed harvest in the fifth year.",
+  "flags": [
+   "wording: 'unyango' means (medical) treatment/cure; reads oddly for management/maintenance capacity (also keyPoints/1)",
+   "wording/unclear: 'Izityalo ezigubungela umhlaba azifuni ukulindela ukuba kuphele' = 'groundcovers do not want to wait for it to finish' - garbled",
+   "nonsense word: 'xa imvula ingonganga' - not a recognisable isiXhosa form; intended 'xa imvula inganelanga / ingoneli' (rain not enough)",
+   "wording: 'ncitshisa' non-standard for thin"
+  ]
+ },
+ {
+  "path": "food-forest/food-forest-l3/keyPoints/0",
+  "back": "Protect bare soil early",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l3/keyPoints/1",
+  "back": "Plan the sequence according to conditions and the available treatment",
+  "flags": [
+   "wording: 'unyango' = treatment/cure"
+  ]
+ },
+ {
+  "path": "food-forest/food-forest-l3/keyPoints/2",
+  "back": "Check moisture in the root zone also during the rains",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l3/keyPoints/3",
+  "back": "Manage competition as it appears; harvest dates are not guaranteed",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/0/q",
+  "back": "A farmer puts plain cardboard under suitable mulch where grass grows. What can it help with?",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/0/options/0",
+  "back": "It forms a moisture barrier that blocks water from entering the soil",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/0/options/1",
+  "back": "It blocks light and helps suppress the grass while it rots; check that it does not grow back",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/0/options/2",
+  "back": "It gives a stable base so the wood chips do not move",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/0/options/3",
+  "back": "It reflects heat upward to warm the soil",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/0/rationale",
+  "back": "Cardboard under suitable mulch can block light and reduce grass growth. Existing grass can regrow, so check the area. Keep water able to enter the soil and the mulch away from the trunks.",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/1/q",
+  "back": "When should a farmer consider cutting or thinning temporary support plants?",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/1/options/0",
+  "back": "Only on a certain fixed date of the year",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/1/options/1",
+  "back": "When observed competition requires it, using methods suitable for the species",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/1/options/2",
+  "back": "Immediately when any leaf falls",
+  "flags": []
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/1/options/3",
+  "back": "Never, because support plants cannot compete",
+  "flags": [
+   "isiZulu: 'Ngekhe' (never) is isiZulu; isiXhosa 'Soze' / 'Nanini na'"
+  ]
+ },
+ {
+  "path": "food-forest/food-forest-l3/quiz/1/rationale",
+  "back": "Temporary support plants can be competitors. Consider light, water and growth, then choose suitable treatment rather than waiting for a fixed year.",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/title",
+  "back": "Introduction to permaculture",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/description",
+  "back": "Ethics, principles and patterns - the foundation of everything else you will build.",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/infographicAlt",
+  "back": "The three ethics as three connected circles of equal size: a hand holding soil showing Earth Care, two people showing People Care, and a basket passing between hands showing Fair Share.",
+  "flags": [
+   "possible isiZulu: 'exhunyiweyo' (-xhuma = connect is isiZulu); isiXhosa 'ezidibeneyo'"
+  ]
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/title",
+  "back": "The three ethics: earth care, people care, fair sharing",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/body",
+  "back": "Permaculture stands on three ethics. Earth Care means treating soil, water, plants and animals as living systems we must protect, not things to use up. People Care means the needs of your family come first, then the needs of your community. Fair Share means taking only what you need and returning the surplus - seed, food, water, knowledge - to the system.\n\nThese are not vague ideas. A farmer who sells all the eggs and vegetables but keeps nothing on the family table breaks People Care. A community that fences off a shared water source breaks Fair Share.\n\nThe ethics matter because they help you make decisions when there is no rulebook - when a neighbour asks to graze(?) cattle after a drought, or floods damage your swales (swale: a dug channel that catches rainwater). Build these three ethics into how you think before you build anything on the land.",
+  "flags": [
+   "uncertain word: 'ukufudisa iinkomo' - not a standard isiXhosa verb for grazing; 'ukudlisa / ukwalusa iinkomo' is clear",
+   "wording: 'obungqondo obungacacanga' (unclear-mindedness) is awkward for 'abstract ideas'"
+  ]
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/keyPoints/0",
+  "back": "Earth Care: protect soil, water and biodiversity",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/keyPoints/1",
+  "back": "People Care: your family's needs come before production for sale",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/keyPoints/2",
+  "back": "Fair Share: return the surplus to the system - seed, water, food, knowledge",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/keyPoints/3",
+  "back": "Ethics guide decisions when there is no rulebook",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/0/q",
+  "back": "A farmer sells all the surplus of his maize but keeps nothing for making compost or saving seed. Which ethic does he break most?",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/0/options/0",
+  "back": "Earth Care only",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/0/options/1",
+  "back": "People Care only",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/0/options/2",
+  "back": "Fair Share - he returns nothing to the system",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/0/options/3",
+  "back": "All three equally",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/0/rationale",
+  "back": "Fair Share means returning part of what you take - such as seed, compost, or food for others. Selling everything and keeping nothing breaks that cycle.",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/1/q",
+  "back": "Your water hole/borehole serves your household. The neighbours ask for water too. Which action best shows all three ethics?",
+  "flags": [
+   "wording: 'umngxuma' = hole/pit; borehole is usually 'umngxuma wamanzi'/'iqula' - acceptable but loose"
+  ]
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/1/options/0",
+  "back": "Sell access to the person offering the highest price",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/1/options/1",
+  "back": "Keep all the borehole water for a large irrigation area",
+  "flags": [
+   "possible isiZulu: 'ukunisela' (water/irrigate); isiXhosa 'ukunkcenkceshela'"
+  ]
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/1/options/2",
+  "back": "Find out whether sharing is permitted and whether the borehole can serve all users. Only then agree on a fair way of sharing and keep watching the water level.",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/1/options/3",
+  "back": "Cover the borehole with a lid so that only underground water is kept",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l1/quiz/1/rationale",
+  "back": "First find out what permitted water use is and whether the source can serve all users without taking too much water. If sharing is permitted and the water is enough, agree on a fair way of sharing. Monitoring helps you notice change; it does not give you permission to take a lot of water.",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/infographicAlt",
+  "back": "Twelve design principles arranged as segments around a small seedling starting to grow in the centre, each shown with a simple picture - an eye for observing, a drop for catching water, a sun for energy, a circle for recycling waste.",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/title",
+  "back": "Twelve principles: designing in harmony with nature",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/body",
+  "back": "David Holmgren set out twelve design principles in the book Essence of Permaculture. Bill Mollison and David Holmgren together started the idea of permaculture. The three useful first places in this lesson are: observe and interact - look at your land for a full season before doing big earthworks; catch and store energy - notice rain, sun and biomass (living plant material such as grass and leaves) before they leave your site; and use edges and value the marginal - a fence line or a strip beside a road can be a useful place for watching.\n\nOthers you should know: produce no waste (food scraps become compost, compost becomes soil), use small and slow solutions (a bucket can water a bed without electricity), and use and value diversity. Hail damage to maize depends on the storm and the growth stage of the plant.\n\nChoose two or three principles that speak to your biggest problem and apply them strongly. The others will become clear as you go.",
+  "flags": [
+   "wording: 'Iindawo ezintathu' = 'three places'; principles/points intended ('imigaqo emithathu')",
+   "content: hail-damage sentence is a non-sequitur under 'use and value diversity' - check source"
+  ]
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/keyPoints/0",
+  "back": "Look at your land for a full season before big earthworks",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/keyPoints/1",
+  "back": "Catch and store rain, sun and biomass before they leave your site",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/keyPoints/2",
+  "back": "Edges and boundaries can be useful places for watching what grows well",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/keyPoints/3",
+  "back": "Hail damage to maize depends on the storm and the growth stage of the plant",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/0/q",
+  "back": "A farmer wants to dig a swale to collect rainwater. What should he do first, following 'observe and interact'?",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/0/options/0",
+  "back": "Dig straight away after the first good rain",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/0/options/1",
+  "back": "Watch where water flows and pools(?) over a period of no less than one rainy season",
+  "flags": [
+   "wording: 'amelele' unclear for 'pools/collects'; 'aqokelelana' / 'adibana' clearer"
+  ]
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/0/options/2",
+  "back": "Copy the neighbour's swale design",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/0/options/3",
+  "back": "Assume the same swale design suits all sites",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/0/rationale",
+  "back": "A rainy season shows more than one storm, but observing is only the first attempt. Check soil, slope, how water runs down and the safe overflow route together with a trained local adviser before digging.",
+  "flags": [
+   "minor: 'lilinge' = attempt; 'linyathelo' = step"
+  ]
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/1/q",
+  "back": "Which plan best uses 'integrate rather than segregate'?",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/1/options/0",
+  "back": "Chickens are shut away from the garden",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/1/options/1",
+  "back": "Garden, fruit trees and chicken area arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/1/options/2",
+  "back": "Separate pastures for each crop",
+  "flags": [
+   "wording: 'amadlelo' = grazing pastures; odd with 'per crop' (fields/beds?) - wrong option anyway"
+  ]
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/1/options/3",
+  "back": "All animals are kept outside the cultivated area",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l2/quiz/1/rationale",
+  "back": "Integrating makes each thing serve its neighbours - here, chickens remove insects and add soil fertility instead of sitting idle in a fixed closed pen. Fresh manure can carry germs, so check safe management before edible crops return.",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/infographicAlt",
+  "back": "An example farm shown in drawings: numbered markers from 0 to 5 follow a winding walking path from the house and nearby garden, past the chickens and field, to the trees and the wilder riverside area. The markers are an example, [nonsense] fixed boundaries or distances.",
+  "flags": [
+   "nonsense/typo: 'ayiyondi' is not a word; should be 'ayingomida emiselweyo...' / 'ayizizo imida...'"
+  ]
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/title",
+  "back": "Zones and sectors: organising your farm by energy",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/body",
+  "back": "Zones and sectors help you reduce wasted work. Zones run from 0 to 5 according to how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you CHOOSE often - herbs, salad leaves. Zone 2 is the main garden and chicken area, visited once or twice a day. Zone 3 is the main field, visited once a week. Zone 4 is almost wild - fruit trees and livestock fodder needing attention occasionally. Zone 5 is left wild.\n\nSectors are energies coming from outside - sun, wind, rain, floods, fire. Look where strong wind comes from on your farm. Records from a nearby weather station can help you check where the wind comes from. Look where rainwater enters and flows over your land. Draw arrows (→) showing what you see.\n\nDraw the zones and sectors on paper, and you will have a framework for your design.",
+  "flags": [
+   "wording: 'oko ukukhetha rhoqo' = 'what you choose often'; should be 'oko ukukha rhoqo' (what you pick/harvest often)"
+  ]
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/keyPoints/0",
+  "back": "In this example, Zone 1 near the house holds herbs that are chosen often",
+  "flags": [
+   "wording: 'ekhethwa' = chosen; should be 'ekhiwa' (picked)"
+  ]
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/keyPoints/1",
+  "back": "Zones organise work by how often you need to visit",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/keyPoints/2",
+  "back": "Sectors show the incoming sun, wind, rainwater, floods and fire",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/keyPoints/3",
+  "back": "A simple drawing of zones and sectors is enough to start a design",
+  "flags": [
+   "grammar minor: 'uyaneleyo' should be 'wanele' / 'uyanela'"
+  ]
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/0/q",
+  "back": "You plant herbs in Zone 3, the main field far from the house. Which problem does this cause?",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/0/options/0",
+  "back": "The herbs grow too big",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/0/options/1",
+  "back": "The extra walking can mean you pick or check them less",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/0/options/2",
+  "back": "The herbs pass fertilising powder together with the main crops",
+  "flags": [
+   "wording: 'umgubo wokuchumisa' = fertiliser powder; if pollen/cross-pollination intended, 'umungu'. Distractor still wrong"
+  ]
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/0/options/3",
+  "back": "Zone 3 gets too much sun for herbs",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/0/rationale",
+  "back": "Place a plant you [nonsense] often near the path you use every day. A distant bed adds walking and may be checked less.",
+  "flags": [
+   "nonsense/typo: 'ocikha' - should be 'oyikha' (that you pick)"
+  ]
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/1/q",
+  "back": "You see damaging wind coming from the north-west on a Highveld farm. Where should a windbreak be placed?",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/1/options/0",
+  "back": "The south-east boundary",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/1/options/1",
+  "back": "The north-west boundary, between the wind and the plants",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/1/options/2",
+  "back": "In the middle of the farm",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/1/options/3",
+  "back": "Windbreaks are not needed because winds come seasonally",
+  "flags": []
+ },
+ {
+  "path": "intro-permaculture/intro-permaculture-l3/quiz/1/rationale",
+  "back": "A windbreak works by standing between the wind source and what it could damage - so it should be on the side where the wind actually comes from.",
+  "flags": []
+ }
+]

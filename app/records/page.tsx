@@ -1067,16 +1067,27 @@ function filterLedgerRows(rows: LedgerRow[], only: 'picked' | 'in' | 'out' | und
   return rows;
 }
 
-/** The export keeps isiZulu's existing wording; the unreviewed regional drafts never go into a file. */
-const csvLang = (lang: string) => (lang === 'zu' ? 'zu' : 'en');
+/**
+ * The export keeps isiZulu's existing wording and, since 24 Oct 2026, carries isiXhosa headings
+ * (the whole isiXhosa app is an unreviewed machine draft, like the isiZulu one). The unreviewed
+ * Sesotho, Tshivenda and Xitsonga drafts still never go into a file.
+ */
+const csvLang = (lang: string) => (lang === 'zu' ? 'zu' : lang === 'xh' ? 'xh' : 'en');
 
 function exportLedgerCsv(rows: LedgerRow[], period: Period, lang = 'en') {
   const head = lang === 'zu'
     ? ['Usuku', 'Incazelo', 'Inani', 'Ingenayo', 'Umthombo', 'Ephumayo', 'Hlola']
-    : ['Date', 'Description', 'Qty', 'In', 'Source', 'Out', 'Check'];
+    : lang === 'xh'
+      ? ['Umhla', 'Inkcazelo', 'Ubungakanani', 'Engenayo', 'Umthombo', 'Ephumayo', 'Hlola']
+      : ['Date', 'Description', 'Qty', 'In', 'Source', 'Out', 'Check'];
   // The CSV can leave the app for a lender or accountant, so unreviewed Sesotho, Tshivenda and
   // Xitsonga drafts stay out of it: those languages export English headings, as before.
-  const duplicateNote = lang === 'zu' ? 'Kungenzeka ukuthi ukuthengisa kubalwe kabili — i-invoyisi ekhokhiwe isivele ibalwa njengemali engenayo.' : DUPLICATE_ROW_NOTE;
+  // isiXhosa (unreviewed too) is exported on request of the isiXhosa rollout, headings only; every value is unchanged.
+  const duplicateNote = lang === 'zu'
+    ? 'Kungenzeka ukuthi ukuthengisa kubalwe kabili — i-invoyisi ekhokhiwe isivele ibalwa njengemali engenayo.'
+    : lang === 'xh'
+      ? 'Kusenokwenzeka ukuba yintengiso enye — i-invoyisi ehlawulweyo sele ibaliwe njengengeniso.'
+      : DUPLICATE_ROW_NOTE;
   const body = rows.map((r) => [r.date, r.desc, r.qty, r.inAmt != null ? fmtZAR(r.inAmt) : '', r.source, r.outAmt != null ? fmtZAR(r.outAmt) : '', r.duplicateSuspect ? duplicateNote : '']);
   const csv = [head, ...body].map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
   const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));

@@ -1,0 +1,36 @@
+{
+ "module": "soil-health",
+ "items": [
+  {
+   "n": 5,
+   "field": "body[1]",
+   "verdict": "repair",
+   "english": "First, look at soil structure. In the field, feel how a moist piece breaks apart.",
+   "draft": "Okokuqala, jonga isakhiwo somhlaba. Entsimini, vakalisa indlela esiqhekeka ngayo isiqwenga esifumileyo.",
+   "backtranslation": "First, look at the soil structure. In the field, observe how a moist lump breaks.",
+   "problem": "'vakalisa' means make audible/show, not feel; the hands-on feel test was lost.",
+   "corrected": "Okokuqala, jonga isakhiwo somhlaba. Entsimini, bamba isiqwenga esifumileyo uzive ngesandla indlela esiqhekeka ngayo."
+  },
+  {
+   "n": 12,
+   "field": "body[0]",
+   "verdict": "repair",
+   "english": "A hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.",
+   "draft": "Iqondo eliphakathi elishushu aliqinisekisi ukuba yonke inxalenye yenqwaba iphathiwe. Ixesha, ubushushu nolawulo zonke ziyabalulekile.",
+   "backtranslation": "A medium warm degree does not confirm that every part of the heap has been treated. Time, heat and management are all important.",
+   "problem": "Safety: 'iqondo eliphakathi elishushu' reads as 'medium warm temperature', not 'a hot centre'; meaning of the heat-is-not-proof warning blurred.",
+   "corrected": "Ukuba umbindi wenqwaba ushushu akuqinisekisi ukuba yonke inxalenye yenqwaba iphathiwe. Ixesha, ubushushu nolawulo zonke ziyabalulekile."
+  },
+  {
+   "n": 12,
+   "field": "body[1]",
+   "verdict": "repair",
+   "english": "Keep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.",
+   "draft": "Musa ukufaka inyama, ubisi neemveliso zobisi, izityalo ezigulayo, inkunkuma yezilwanyana zasekhaya nezinto ezingcolisiweyo kule nkqubo ilula yasekhaya.",
+   "backtranslation": "Do not put in meat, milk and dairy products, diseased plants, pet/domestic animal waste and contaminated things in this simple home process.",
+   "problem": "Safety/term: 'pet waste' rendered as waste of domestic animals generally, which wrongly bars livestock manure (normal compost input) and is wider than the source.",
+   "corrected": "Musa ukufaka inyama, ubisi neemveliso zobisi, izityalo ezigulayo, inkunkuma yeenja neekati nezinto ezingcolisiweyo kule nkqubo ilula yasekhaya."
+  }
+ ],
+ "okCount": 79
+}

@@ -1,0 +1,1078 @@
+{
+  "language": "xh",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Plant Selection and Guilds",
+        "body": [
+          "Choose plants that work together—and change the planting as it grows."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ukukhetha izityalo kunye ne-guild"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Khetha izityalo ezisebenza kunye—uze utshintshe ukutyala njengoko kukhula."
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Plant Selection and Guilds",
+        "body": [
+          "A fruit tree needs light, water, soil nutrients and room. Support plants can supply food, leafy mulch, flowers and living cover.  Give each plant a useful job. Keep observing whether it helps the tree and the household. Which jobs does your planting need?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ukukhetha izityalo kunye ne-guild"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Umthi weziqhamo udinga ukukhanya, amanzi, izondlo zomhlaba nendawo. Izityalo ezixhasayo zinganika ukutya, amagqabi engca yokugquma, iintyatyambo nesigqubuthelo esiphilayo.  Nika isityalo ngasinye umsebenzi oluncedo. Qhubeka ujonga ukuba siyawunceda na umthi nekhaya. Yimiphi imisebenzi efunwa kukutyala kwakho?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Start With the Site",
+        "body": [
+          "Find out what is limiting growth before choosing a plant."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Qala ngendawo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Fumanisa ukuba yintoni ethintela ukukhula ngaphambi kokukhetha isityalo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "Start With the Site",
+        "body": [
+          "Check sunlight, drainage, soil condition and water availability. Nitrogen is only one possible limitation.  Compare the soil beneath mulch with exposed soil. Choose support plants that fit the actual conditions. What does this site need first?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Qala ngendawo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Hlola ukukhanya kwelanga, ukukhutshwa kwamanzi, imeko yomhlaba nokufumaneka kwamanzi. I-nitrogen yenye kuphela yezinto ezinokuthintela.  Qhathanisa umhlaba ongaphantsi kwengca yokugquma nomhlaba ongagqunyiwe. Khetha izityalo ezixhasayo ezihambelana neemeko ezikhoyo. Yintoni efunwa yile ndawo kuqala?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "Give Every Plant a Job",
+        "body": [
+          "A useful guild produces benefits you can observe."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Nika isityalo ngasinye umsebenzi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "I-guild eluncedo ivelisa iinzuzo onokuzibona."
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "Give Every Plant a Job",
+        "body": [
+          "Choose members for food, nitrogen fixation, mulch, flowers or ground cover. One plant may do several jobs.  By the end, plan a guild, explain how residues feed soil, and decide which support plants to keep, cut or remove. Which job is still missing?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Nika isityalo ngasinye umsebenzi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Khetha amalungu ngenxa yokutya, ukufaka i-nitrogen, ingca yokugquma, iintyatyambo okanye isigqubuthelo somhlaba. Isityalo esinye sinokwenza imisebenzi emininzi.  Ekupheleni, cwangcisa i-guild, chaza indlela intsalela yezityalo eondla ngayo umhlaba, uze uthathe isigqibo sokuba ziziphi izityalo ezixhasayo ozigcinayo, ozisikayo okanye ozisusayo. Yimuphi umsebenzi ongekabikho?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Look for Root Nodules",
+        "body": [
+          "Legumes work with rhizobia in nodules on their roots."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khangela ii-nodule zengcambu"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ii-legume zisebenza kunye ne-rhizobia kwii-nodule ezisezingcambeni zazo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "Look for Root Nodules",
+        "body": [
+          "These bacteria convert nitrogen from the air into forms the legume can use.  Find nodules on a spare legume plant. Nodulation and growth depend on the plant, suitable bacteria and growing conditions. Can you find the nodules?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khangela ii-nodule zengcambu"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ezi bhaktheriya ziguqula i-nitrogen esemoyeni ibe yiyo i-legume enokuyisebenzisa.  Fumana ii-nodule kwisityalo se-legume esongezelelweyo. Ukwenza ii-nodule nokukhula kuxhomekeke kwisityalo, kwibhaktheriya efanelekileyo nakwiimeko zokukhula. Ngaba unokuzifumana ii-nodule?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Return Leaves to the Soil",
+        "body": [
+          "Nitrogen in plant material becomes useful as that material breaks down."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Buyisela amagqabi emhlabeni"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "I-nitrogen ekwimpahla yesityalo iba luncedo njengoko loo mpahla ibola."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Return Leaves to the Soil",
+        "body": [
+          "Return suitable leafy prunings, fallen leaves and crop residues as mulch. Soil organisms release nutrients during decomposition.  This takes time. A living legume is not an instant fertiliser pipe into the fruit tree. Which residues can you return?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Buyisela amagqabi emhlabeni"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Buyisela iinqunqo zamagqabi ezifanelekileyo, amagqabi awileyo nentsalela yezityalo njengengca yokugquma. Izidalwa eziphila emhlabeni zikhulula izondlo ngexesha lokubola.  Oku kuthatha ixesha. I-legume ephilayo ayiyompompo womanyolo okhawulezileyo oya emthini weziqhamo. Yeyiphi intsalela onokuyibuyisela?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Sesbania Has a Useful Role",
+        "body": [
+          "Sesbania sesban can supply fast growth and leafy mulch."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "I-Sesbania inendima eluncedo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "I-Sesbania sesban inganika ukukhula okukhawulezayo namagqabi engca yokugquma."
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Sesbania Has a Useful Role",
+        "body": [
+          "It is indigenous to KwaZulu-Natal. In suitable warm conditions, manage this short-lived shrub or small tree as a support plant.  Allow room for its growth. Prune for mulch and reassess it when shade or water competition increases. Where could you manage its growth?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "I-Sesbania inendima eluncedo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ngowomdabu eKwaZulu-Natal. Kwiimeko ezifanelekileyo ezifudumeleyo, lawula esi sihlahla okanye umthi omncinci ophila ixesha elifutshane njengesityalo esixhasayo.  Yishiyele indawo yokukhula. Yisike ukuze ufumane ingca yokugquma uphinde uyihlole xa umthunzi okanye ukukhuphisana ngamanzi kunyuka. Ungalawula phi ukukhula kwayo?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Check the Full Plant Name",
+        "body": [
+          "Sesbania sesban and Sesbania punicea are different species."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hlola igama elipheleleyo lesityalo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "I-Sesbania sesban ne-Sesbania punicea ziintlobo ezahlukeneyo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Check the Full Plant Name",
+        "body": [
+          "Sesbania punicea is the invasive red sesbania. Its pods have four lengthwise wings. Confirm identity using reliable botanical guidance.  Check the full name before planting. Respect the agreed project species list, including any restriction on Sesbania sesban. Can the supplier verify the species?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hlola igama elipheleleyo lesityalo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "I-Sesbania punicea yi-red sesbania ehlasela ngokungalawulekiyo. Iipodi zayo zinamaphiko amane ahamba ubude bepodi. Qinisekisa ukuba sisiphi isityalo usebenzisa isikhokelo sezityalo esithembekileyo.  Hlola igama elipheleleyo ngaphambi kokutyala. Hlonipha uluhlu lweentlobo lweprojekthi olwamkelweyo, kuquka naluphi na uthintelo kwi-Sesbania sesban. Ngaba umthengisi angaqinisekisa ukuba sisiphi na isityalo?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Pigeon Pea Gives Food Too",
+        "body": [
+          "Pigeon pea—Cajanus cajan—can provide peas, leafy material and nitrogen fixation."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "I-pigeon pea inika nokutya"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "I-pigeon pea—Cajanus cajan—inganika ii-pea, impahla yamagqabi nokufaka i-nitrogen."
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "Pigeon Pea Gives Food Too",
+        "body": [
+          "Use a sunny, freely draining position. It is a short-lived support shrub; frost and waterlogging can limit it.  Decide whether each plant mainly supplies peas or leafy material. Frequent severe cutting can damage it and reduce the food harvest. Are you growing this plant for peas or mulch?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "I-pigeon pea inika nokutya"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sebenzisa indawo enelanga namanzi aphumayo kakuhle. Sisihlahla esixhasayo esiphila ixesha elifutshane; iqabaka nomhlaba ozele ngamanzi kunokuyithintela.  Gqiba ukuba isityalo ngasinye sinika ii-pea okanye impahla yamagqabi ngokuyintloko. Ukusika kakhulu rhoqo kunganonzakalisa isityalo kwaye kunciphise isivuno sokutya. Ngaba uyityala esi sityalo ukuze uvune ii-pea okanye ufumane ingca yokugquma?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Choose for Place and Size",
+        "body": [
+          "A useful support tree in one place may be too large or unsuitable in another."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khetha ngokwendawo nobukhulu"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Umthi oxhasayo oluncedo kwenye indawo unokuba mkhulu kakhulu okanye ungafaneli kwenye."
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Choose for Place and Size",
+        "body": [
+          "Compare mature crown, roots, shade, rainfall and temperature. Check locally appropriate species and planting rules.  Put large support trees where they have space. For a small young guild, a manageable shrub may be easier to maintain. How large will this plant become?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khetha ngokwendawo nobukhulu"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Qhathanisa isithsaba, iingcambu, umthunzi, imvula nobushushu xa sele sikhulile. Hlola iintlobo ezifanelekileyo kwindawo yakho nemithetho yokutyala.  Beka imithi emikhulu exhasayo apho inendawo. Kwi-guild encinci eselula, isihlahla esilawulekayo sinokulula ukusigcina. Siza kuba sikhulu kangakanani esi sityalo?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "heading": "Annual Cover Has a Place",
+        "body": [
+          "Sunn hemp can cover a suitable warm-season gap before the next crop."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Isigqubuthelo sonyaka sinendawo yaso"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "I-sunn hemp inokugubungela isikhewu esifanelekileyo sexesha elifudumeleyo phambi kwesityalo esilandelayo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "heading": "Annual Cover Has a Place",
+        "body": [
+          "Grow it where its season and space fit the plan. Its contribution depends on growth, nodulation and the material returned.  After cutting, allow for decomposition. An annual cover crop plays a different role from a longer-lived support shrub. When will this space be needed again?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Isigqubuthelo sonyaka sinendawo yaso"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Yityale apho ixesha layo nendawo zihambelana nesicwangciso. Igalelo layo lixhomekeke ekukhuleni, ekwenzeni ii-nodule nakwimpahla ebuyiselwayo.  Emva kokusika, shiya ixesha lokubola. Isityalo sokugquma sonyaka sinendima eyahlukileyo kwisihlahla esixhasayo esiphila ixesha elide. Le ndawo iza kuphinda ifuneke nini?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 21,
+      "english": {
+        "heading": "Leave Room Around the Tree",
+        "body": [
+          "Keep the young fruit tree in light and retain access for care."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Shiya indawo ejikeleze umthi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Gcina umthi weziqhamo oselula ukhanyiselwe kwaye ushiye indlela yokufikelela ukuze uwukhathalele."
+          }
+        ]
+      }
+    },
+    {
+      "n": 22,
+      "english": {
+        "heading": "Leave Room Around the Tree",
+        "body": [
+          "Keep an open establishment basin and access to the fruit tree. Place temporary support plants where their size and water use can be managed.  Put leafy cuttings where mulch is needed. Neighbouring fruit trees can share support strips between them. Can you reach both plants as they grow?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Shiya indawo ejikeleze umthi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Gcina ibheseni yokusekwa ivulekile nendlela eya emthini weziqhamo. Beka izityalo ezixhasayo zethutyana apho ubukhulu bazo nokusebenzisa kwazo amanzi kunokulawulwa.  Beka izinqunqo zamagqabi apho kufuneka ingca yokugquma. Imithi yeziqhamo engabamelwane inokwabelana ngemizila yezixhasi phakathi kwayo. Ngaba ungazifikelela zombini izityalo xa zikhula?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 23,
+      "english": {
+        "heading": "Build a Layered Support Guild",
+        "body": [
+          "Combine seasonal cover, support shrubs and temporary small trees."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Yakha i-guild exhasayo enemigangatho"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Dibanisa isigqubuthelo sexesha, izihlahla ezixhasayo nemithi emincinci yethutyana."
+          }
+        ]
+      }
+    },
+    {
+      "n": 24,
+      "english": {
+        "heading": "Build a Layered Support Guild",
+        "body": [
+          "Cowpea covers sunny gaps. Pigeon pea provides food and leafy material. Managed Sesbania sesban can supply taller temporary support.  Add suitable flowering and mulch plants. Keep the mango trunk clear and manage light, water and access. Which layers fit your site?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Yakha i-guild exhasayo enemigangatho"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "I-cowpea igubungela izikhewu ezinelanga. I-pigeon pea inika ukutya nempahla yamagqabi. I-Sesbania sesban elawulwayo inganika inkxaso yethutyana ephakamileyo.  Yongeza izityalo ezifanelekileyo ezidubulayo nezengca yokugquma. Gcina isiqu se-mango sicocekile kwaye ulawule ukukhanya, amanzi nendlela yokufikelela. Yimiphi imigangatho ehambelana nendawo yakho?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 25,
+      "english": {
+        "heading": "How Many Support Plants?",
+        "body": [
+          "Plan abundant support where the site and your care can sustain it."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Zingaphi izityalo ezixhasayo?"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Cwangcisa inkxaso eninzi apho indawo nenkathalo yakho zinokuyixhasa."
+          }
+        ]
+      }
+    },
+    {
+      "n": 26,
+      "english": {
+        "heading": "How Many Support Plants?",
+        "body": [
+          "Count woody supports across the spaces between fruit trees. Sow suitable ground cover by area.  There is no universal number per fruit tree. Adjust density to water, soil, plant size and your ability to prune and thin. How much support can you maintain?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Zingaphi izityalo ezixhasayo?"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Bala izixhasi ezinomthi kuyo yonke indawo ephakathi kwemithi yeziqhamo. Hlwayela isigqubuthelo somhlaba esifanelekileyo ngokobukhulu bendawo.  Akukho nani lilodwa elisebenza kumthi ngamnye weziqhamo. Hlengahlengisa ukuxinana ngokwamanzi, umhlaba, ubukhulu besityalo nokukwazi kwakho ukusika nokunciphisa. Ungayigcina inkxaso engakanani?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 27,
+      "english": {
+        "heading": "Chop-and-Drop for Light and Mulch",
+        "body": [
+          "Watch the branch fall onto the cut leaves."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "I-chop-and-drop yokukhanya nengca yokugquma"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Bukela isebe liwela phezu kwamagqabi asikiweyo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 28,
+      "english": {
+        "heading": "Chop-and-Drop for Light and Mulch",
+        "body": [
+          "Prune a support tree and return suitable leafy cuttings to the soil. The clip shows a branch cut: the support tree remains standing. Leave enough healthy foliage for the plant to recover.  Match cutting to the species. Avoid frequent severe cuts on pigeon pea, especially when growing it for peas. Which plant needs a cut—and how much?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "I-chop-and-drop yokukhanya nengca yokugquma"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Nqunqa umthi oxhasayo ubuyisele izinqunqo zamagqabi ezifanelekileyo emhlabeni. Iklip ibonisa ukusikwa kwesebe: umthi oxhasayo usemi. Shiya amagqabi anempilo anele ukuze isityalo siphinde sibuyele kwimeko.  Lungelelanisa ukusika nohlobo lwesityalo. Phepha ukusika kakhulu rhoqo kwi-pigeon pea, ingakumbi xa uyityala ukuze uvune ii-pea. Sesiphi isityalo esifuna ukusikwa—kwaye kangakanani?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 29,
+      "english": {
+        "heading": "Keep Mulch Off the Trunk",
+        "body": [
+          "Spread suitable cut material over the soil, with the trunk and root collar clear."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Gcina ingca yokugquma ikude nesiqu"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Phalaza impahla esikiweyo efanelekileyo phezu komhlaba, isiqu nentamo yengcambu zishiywe zicocekile."
+          }
+        ]
+      }
+    },
+    {
+      "n": 30,
+      "english": {
+        "heading": "Keep Mulch Off the Trunk",
+        "body": [
+          "Mulch protects the surface, helps conserve moisture and returns organic material.  Leave access for watering and inspection. Cut material into manageable pieces and keep observing moisture and decomposition. Is the root collar still clear?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Gcina ingca yokugquma ikude nesiqu"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ingca yokugquma ikhusela umphezulu, inceda ukugcina ukufuma kwaye ibuyisela impahla yezinto eziphilayo.  Shiya indlela yokunkcenkceshela nokuhlola. Sika impahla ibe ziziqwenga ezilawulekayo uqhubeke ujonga ukufuma nokubola. Ingaba intamo yengcambu isacocekile?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 31,
+      "english": {
+        "heading": "Choose the Right Comfrey",
+        "body": [
+          "Bocking 14 comfrey can supply cut leaves for mulch."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khetha i-comfrey echanekileyo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "I-comfrey ye-Bocking 14 inganika amagqabi asikiweyo engca yokugquma."
+          }
+        ]
+      }
+    },
+    {
+      "n": 32,
+      "english": {
+        "heading": "Choose the Right Comfrey",
+        "body": [
+          "Obtain the correct cultivar. Bocking 14 does not spread by viable seed, but root pieces can regrow.  Place it where it has room and sufficient moisture. Cut leaves as it recovers; do not crowd the young fruit tree. Is this a good permanent place for the clump?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khetha i-comfrey echanekileyo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Fumana uhlobo olufanelekileyo (i-cultivar). I-Bocking 14 ayisasazeki ngembewu ekwaziyo ukuhluma, kodwa iziqwenga zengcambu zinokuphinda zihlume.  Yibeke apho inendawo nokufuma okwaneleyo. Sika amagqabi njengoko iphinda ikhule; musa ukuwuxinezela umthi weziqhamo oselula. Ngaba le yindawo elungileyo yaphakade yeli qela le-comfrey?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 33,
+      "english": {
+        "heading": "Observe Helpful Insects",
+        "body": [
+          "Flowers can provide resources for useful insects."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Jonga izinambuzane eziluncedo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Iintyatyambo zinokubonelela ngezixhobo zezinambuzane eziluncedo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 34,
+      "english": {
+        "heading": "Observe Helpful Insects",
+        "body": [
+          "Many ladybirds eat aphids; some parasitoid wasps attack crop pests. Flowering members such as African basil can add resources.  Watch which insects visit and whether damage changes. A flowering plant does not guarantee pest control. What is the insect actually doing?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Jonga izinambuzane eziluncedo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ii-ladybird ezininzi zitya ii-aphid; ezinye ii-parasitoid wasp zihlasela izinambuzane ezonakalisa izityalo. Amalungu adubulayo afana ne-African basil anokongeza izixhobo.  Khangela ukuba zeziphi izinambuzane ezityelelayo nokuba umonakalo uyatshintsha na. Isityalo esidubulayo asiqinisekisi ulawulo lwezinambuzane ezonakalisayo. Isinambuzane sisenza ntoni ngokwenyani?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 35,
+      "english": {
+        "heading": "Give Flowers Their Space",
+        "body": [
+          "Wild garlic can be a flowering member where the site suits it."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Nika iintyatyambo indawo yazo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "I-wild garlic inokuba lilungu elidubulayo apho indawo ilifaneleyo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 36,
+      "english": {
+        "heading": "Give Flowers Their Space",
+        "body": [
+          "Tulbaghia violacea has narrow leaves and lilac flowers. Place a clump where it has light and room to grow.  Observe visiting insects. Do not promise that a ring of wild garlic will repel pests or cure an outbreak. Where can flowers grow without crowding?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Nika iintyatyambo indawo yazo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "I-Tulbaghia violacea inamagqabi amxinwa neentyatyambo ezi-lilac. Beka iqela apho linokukhanya nendawo yokukhula.  Jonga izinambuzane ezityelelayo. Musa ukuthembisa ukuba umjikelo we-wild garlic uza kugxotha izinambuzane ezonakalisayo okanye uphilise ukuqubuka kwazo. Iintyatyambo zinokukhula phi ngaphandle kokuxinana?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 37,
+      "english": {
+        "heading": "Bring the Jobs Together",
+        "body": [
+          "Choose useful partners while protecting the mango's growing space."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Dibanisa imisebenzi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Khetha amaqabane aluncedo ngoxa ukhusela indawo yokukhula ye-mango."
+          }
+        ]
+      }
+    },
+    {
+      "n": 38,
+      "english": {
+        "heading": "Bring the Jobs Together",
+        "body": [
+          "Combine the support functions your site needs: nitrogen fixation, food, mulch, flowers and ground cover. Some plants serve several functions.  Keep the trunk area and path open. Reassess each member as the mango and its neighbours grow. Does each member have space and a job?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Dibanisa imisebenzi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Dibanisa imisebenzi yenkxaso efunwa yindawo yakho: ukufaka i-nitrogen, ukutya, ingca yokugquma, iintyatyambo nesigqubuthelo somhlaba. Ezinye izityalo zenza imisebenzi emininzi.  Gcina indawo yesiqu nendlela ivuliwe. Phinda uhlole ilungu ngalinye njengoko i-mango kunye nabamelwane bayo bekhula. Ngaba ilungu ngalinye linendawo nomsebenzi?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 39,
+      "english": {
+        "heading": "Food Cover Also Competes",
+        "body": [
+          "Sweet potato can cover ground and provide food in a suitable sunny space."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Isigqubuthelo sokutya sikhuphisana nawo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ubhatata ungagubungela umhlaba unike ukutya kwindawo efanelekileyo enelanga."
+          }
+        ]
+      }
+    },
+    {
+      "n": 40,
+      "english": {
+        "heading": "Food Cover Also Competes",
+        "body": [
+          "Keep its vines away from the young fruit tree and retain a route for care. Its roots also use water and nutrients.  Where resources are tight, compare living cover with an ordinary mulch basin. Is this cover helping the tree establish?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Isigqubuthelo sokutya sikhuphisana nawo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Gcina iziqu zawo ezirhubuluzayo zikude nomthi weziqhamo oselula kwaye ugcine indlela yokukhathalela. Iingcambu zawo nazo zisebenzisa amanzi nezondlo.  Apho izixhobo zinqabileyo, qhathanisa isigqubuthelo esiphilayo nebheseni yengca yokugquma eqhelekileyo. Ingaba esi sigqubuthelo siwunceda umthi ukuba usekwe?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 41,
+      "english": {
+        "heading": "First, Establish the Guild",
+        "body": [
+          "Start while the young fruit tree and its support plants have enough light and water."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kuqala, seka i-guild"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Qala ngoxa umthi weziqhamo oselula nezityalo zawo ezixhasayo zinokukhanya namanzi anele."
+          }
+        ]
+      }
+    },
+    {
+      "n": 42,
+      "english": {
+        "heading": "First, Establish the Guild",
+        "body": [
+          "Plant into a suitable season, mulch and maintain establishment water. Keep the access gap open.  Start with the number of support plants you can care for. Observe survival and growth before adding more. Can you care for every plant through establishment?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kuqala, seka i-guild"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Tyala ngexesha elifanelekileyo, gquma ngengca yokugquma uze unikele amanzi okusekwa. Gcina isithuba sokufikelela sivulekile.  Qala ngenani lezityalo ezixhasayo onokulikhathalela. Jonga ukusinda nokukhula phambi kokongeza ezinye. Ungazikhathalela zonke izityalo ngexesha lokusekwa?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 43,
+      "english": {
+        "heading": "Thin as the Fruit Tree Grows",
+        "body": [
+          "When pruning is no longer enough, reduce selected support plants. Cut down selected competing supports to open space. Suitable cut material can stay as mulch: this is thinning through chop-and-drop.  Manage regrowth to keep the opening. Check light, soil moisture and growth; thinning does not instantly stop root competition. Which support plants should now give way?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Nciphisa njengoko umthi weziqhamo ukhula"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Xa ukunqunqa kungasaneli, nciphisa izityalo ezixhasayo ezikhethiweyo. Sika phantsi izixhasi ezikhuphisanayo ezikhethiweyo ukuze uvule indawo. Impahla esikiweyo efanelekileyo inokuhlala njengengca yokugquma: oku kukunciphisa nge-chop-and-drop.  Lawula ukuhluma kwakhona ukuze ugcine indawo evuliweyo. Hlola ukukhanya, ukufuma komhlaba nokukhula; ukunciphisa akuyekisi ngoko nangoko ukukhuphisana kweengcambu. Zeziphi izityalo ezixhasayo ekufuneka ngoku zinikezele indawo?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 44,
+      "english": {
+        "heading": "Move Support Into the Light",
+        "body": [
+          "As shade increases, renew sun-loving support plants in open edges and younger plantings."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hambisa inkxaso ekukhanyeni"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Njengoko umthunzi unyuka, hlaziya izityalo ezixhasayo ezithanda ilanga emacaleni avulekileyo nakutyalo olutsha."
+          }
+        ]
+      }
+    },
+    {
+      "n": 45,
+      "english": {
+        "heading": "Move Support Into the Light",
+        "body": [
+          "Carry useful prunings back to established trees. Keep nearby plants only where they still perform well.  Mature fruit trees still need nutrients. Monitor growth, harvest and soil conditions; support plants do not remove that need. Where is the next useful sunny space?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hambisa inkxaso ekukhanyeni"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Thatha izinqunqo eziluncedo uzibuyisele emithini esekiweyo. Gcina izityalo ezikufutshane kuphela apho zisenza kakuhle.  Imithi yeziqhamo ekhulile isadinga izondlo. Jonga ukukhula, isivuno neemeko zomhlaba; izityalo ezixhasayo aziyisusi loo mfuneko. Iphi indawo elandelayo eluncedo enelanga?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 46,
+      "english": {
+        "heading": "Let Observation Decide",
+        "body": [
+          "Keep a short record of how the guild performs."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Vumela oko ukubonayo kugqibe"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Gcina irekhodi emfutshane yendlela i-guild esebenza ngayo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 47,
+      "english": {
+        "heading": "Let Observation Decide",
+        "body": [
+          "Check fruit-tree growth, shade, soil moisture, useful harvests and pest damage. Note what was cut, returned or removed.  Use these observations to change the layout and care. A plant earns its place through what it does here. What evidence would make you change the guild?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Vumela oko ukubonayo kugqibe"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Hlola ukukhula komthi weziqhamo, umthunzi, ukufuma komhlaba, izivuno eziluncedo nomonakalo wezinambuzane ezonakalisayo. Bhala oko kusikiweyo, kubuyiselweyo okanye kususiweyo.  Sebenzisa ezi zinto uzibonileyo ukutshintsha uyilo nenkathalo. Isityalo sifanelekela indawo yaso ngokwenza apha. Ubungqina obungantoni obungakwenza utshintshe i-guild?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 48,
+      "english": {
+        "heading": "Plan One Real Guild",
+        "body": [
+          "Choose one fruit tree and mark a layout you can manage."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Cwangcisa i-guild enye yokwenyani"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Khetha umthi weziqhamo omnye uphawule uyilo onokululawula."
+          }
+        ]
+      }
+    },
+    {
+      "n": 49,
+      "english": {
+        "heading": "Plan One Real Guild",
+        "body": [
+          "Record the tree, site conditions and missing jobs. Name the support species fully, mark the starting number and leave access.  Write down what will trigger pruning or thinning. Agree the species list with the project team where required. Can someone else explain your plan back to you?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Cwangcisa i-guild enye yokwenyani"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Rekhoda umthi, iimeko zendawo nemisebenzi engekabikho. Chaza izityalo ezixhasayo ngegama eliphelele, uphawule inani lokuqala kwaye ushiye indlela yokufikelela.  Bhala phantsi oko kuza kubangela ukunqunqa okanye ukunciphisa. Vumelana noluhlu lweentlobo neqela leprojekthi apho kufuneka. Ngaba omnye umntu angakuchazela kwakhona isicwangciso sakho?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 50,
+      "english": {
+        "heading": "Plant, Observe, Adjust",
+        "body": [
+          "Start one suitable guild and care for it through its first stage."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Tyala, jonga, hlengahlengisa"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Qala i-guild enye efanelekileyo uyikhathalele kwisigaba sayo sokuqala."
+          }
+        ]
+      }
+    },
+    {
+      "n": 51,
+      "english": {
+        "heading": "Plant, Observe, Adjust",
+        "body": [
+          "Use the right species, a manageable number of plants and room to grow. Return useful biomass and protect the fruit tree.  Review the planting as crowns expand. Keep, cut, replace or remove each support plant when its role changes. What will you do first—and when will you review it?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Tyala, jonga, hlengahlengisa"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sebenzisa uhlobo olululo, inani lezityalo elilawulekayo nendawo yokukhula. Buyisela impahla eluncedo yezityalo ukhusele umthi weziqhamo.  Phonononga ukutyala njengoko izithsaba zandile. Gcina, sika, tshintsha okanye susa isityalo esixhasayo ngasinye xa indima yaso itshintsha. Uza kwenza ntoni kuqala—kwaye uza kuyihlola nini?"
+          }
+        ]
+      }
+    }
+  ]
+}

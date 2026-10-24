@@ -18,9 +18,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Play, Pause, Volume2, AlertCircle } from 'lucide-react';
 import {
-  availableNarrationLanguages, formatClock, narrationFor, requiresExplicitNarrationChoice, resolveNarrationLang, trackTitle, trackUrl,
+  availableNarrationLanguages, formatClock, narrationFor, resolveNarrationLang, trackTitle, trackUrl,
   type NarrationTrack,
 } from '@/lib/course-audio';
+import { requiresLearnerNarrationChoice } from '@/lib/learner-deck-lang';
 import { useLanguage } from '@/lib/i18n-context';
 import { narrationReviewPending, regionalNarrationDraft } from '@/lib/narration-blockers';
 import { isiZuluDeckReviewHold } from '@/lib/course-deck-review-holds';
@@ -60,7 +61,7 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
 
   // Chosen language is state so the learner can override the resolved default. Re-resolves if
   // the app language changes underneath us.
-  const needsExplicitChoice = requiresExplicitNarrationChoice(moduleId, appLang);
+  const needsExplicitChoice = requiresLearnerNarrationChoice(moduleId, appLang);
   const defaultLang = needsExplicitChoice ? null : resolved?.lang ?? null;
   const [lang, setLang] = useState<string | null>(defaultLang);
   const selectionRef = useRef({ moduleId, lang: defaultLang });

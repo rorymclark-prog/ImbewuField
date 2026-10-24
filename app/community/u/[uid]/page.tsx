@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { Loader2, MapPin, MessageCircle, Flag, ChevronDown, ChevronUp } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { useAppLevel } from '@/lib/app-level';
 import { communityEnabled } from '@/lib/community/flag';
 import { getCommunityProfile, getOrCreateThread, reportContent } from '@/lib/db/community-queries';
@@ -82,7 +83,7 @@ export default function PublicCommunityProfilePage() {
 
   if (busy || loading || !communityEnabled()) {
     return (
-      <div role="status" aria-label={lang === 'zu' ? t('communityLoadingStatus') : 'Loading community profile'} className="h-[100dvh] flex items-center justify-center" style={{ background: 'var(--bg-0)' }}>
+      <div role="status" aria-label={lang === 'zu' ? t('communityLoadingStatus') : inlineText(lang, 'Loading community profile')} className="h-[100dvh] flex items-center justify-center" style={{ background: 'var(--bg-0)' }}>
         <Loader2 size={24} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
       </div>
     );
@@ -92,14 +93,14 @@ export default function PublicCommunityProfilePage() {
     <div className="h-[100dvh] flex flex-col font-sans" style={{ background: 'var(--bg-0)', color: 'var(--text-primary)' }}>
       <AppHeader
         backFallback="/community"
-        title={lang === 'zu' ? 'Iphrofayela' : 'Profile'}
-        right={<LessonLink id="community:profile" label={lang === 'zu' ? 'Funda' : 'Learn'} />}
+        title={lang === 'zu' ? 'Iphrofayela' : inlineText(lang, 'Profile')}
+        right={<LessonLink id="community:profile" label={lang === 'zu' ? 'Funda' : inlineText(lang, 'Learn')} />}
       />
 
       <main className={`${workspace.workspace} ${workspace.readingWidth} flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6`}>
         {!profile ? (
           <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-            <p className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{lang === 'zu' ? t('communityProfileUnavailable') : 'This profile is no longer available.'}</p>
+            <p className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{lang === 'zu' ? t('communityProfileUnavailable') : inlineText(lang, 'This profile is no longer available.')}</p>
           </div>
         ) : (
           <>

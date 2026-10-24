@@ -1,0 +1,51 @@
+{
+  "unit": "01-what-is-permaculture",
+  "okCount": 130,
+  "items": [
+    {
+      "where": "Three ethics, closing test paragraph",
+      "verdict": "repair",
+      "english": "Before you plough a slope, buy a spray or fence off a spring, ask three questions.",
+      "draft": "... uthenge ityhefu yokutshiza okanye uthinge umthombo, buza imibuzo emithathu.",
+      "backtranslation": "... buy a poison spray or block a spring ...",
+      "problem": "'fence off a spring' (protect it) became 'block a spring' (damage it): wrong action in a water-source safety example.",
+      "corrected": "... uthenge ityhefu yokutshiza okanye ubophe umthombo ngothango, buza imibuzo emithathu."
+    },
+    {
+      "where": "Principle 1, step 3",
+      "verdict": "repair",
+      "english": "Keep a notebook of the rain, the first and last frosts, and when things flower.",
+      "draft": "... nokuba izinto ziyintyatyamba nini.",
+      "backtranslation": "... and when things are 'intyatyamba' (non-word, unclear)",
+      "problem": "Garbled, ungrammatical word for 'flower'; the observation instruction is unclear.",
+      "corrected": "... nokuba izinto ziqhakaza nini."
+    },
+    {
+      "where": "Principle 9, opening",
+      "verdict": "repair",
+      "english": "Many farmers begin big, with fire in the belly, and lose heart when the patch is too big to manage.",
+      "draft": "Abalimi abaninzi baqala ngokuphakamisa, benenkalipho enkulu ...",
+      "backtranslation": "Many farmers start by lifting/raising ...",
+      "problem": "'begin big' mistranslated as 'start by lifting'; the warning against starting too big is lost.",
+      "corrected": "Abalimi abaninzi baqala ngokukhulu, benenkalipho enkulu ..."
+    },
+    {
+      "where": "Principle 10, monoculture definition",
+      "verdict": "repair",
+      "english": "one crop over a big area and often from near-identical seed",
+      "draft": "... esoloko isuka kwimbewu efanayo",
+      "backtranslation": "... always from the same seed",
+      "problem": "'often' hardened to 'always'.",
+      "corrected": "... rhoqo isuka kwimbewu efanayo"
+    },
+    {
+      "where": "Principle 7, opening",
+      "verdict": "repair",
+      "english": "the branching of a river or a tree",
+      "draft": "ukuthi nga kwesebe lomlambo okanye lomthi",
+      "backtranslation": "'ukuthi nga' of a branch of river or tree (unclear, garbled)",
+      "problem": "Garbled phrase, meaning of 'branching' not recoverable.",
+      "corrected": "ukwahlukana kwamasebe omlambo okanye omthi"
+    }
+  ]
+}

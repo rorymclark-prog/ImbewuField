@@ -36,6 +36,7 @@ import BackButton from '@/components/BackButton';
 import HomeHeroCard from '@/components/home/HomeHeroCard';
 import CropIcon from '@/components/CropIcon';
 import { useLanguage, translate } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { useAuth } from '@/lib/auth';
 import { canSeeNavLink } from '@/lib/role-access';
 import { canSeeWorkspaceLink } from '@/lib/role-navigation';
@@ -64,7 +65,7 @@ const LANG_TO_LOCALE: Record<string, string> = {
   ss: 'ss-ZA',
   nr: 'nr-ZA',
 };
-const localUi = (lang: string, english: string, zulu: string) => lang === 'zu' ? zulu : english;
+const localUi = (lang: string, english: string, zulu: string) => inlineText(lang, english, zulu);
 
 // zu-01: zu-ZA has no Intl.DateTimeFormat data in most browsers, so toLocaleDateString silently
 // fell back to the runtime default locale and rendered English, month-first ('FRIDAY · OCTOBER
@@ -78,6 +79,12 @@ function getDayDate(lang: string, now: Date = new Date()) {
   if (lang === 'zu') {
     const day = translate('zu', ZU_WEEKDAY_KEYS[now.getDay()]);
     const month = translate('zu', ZU_MONTH_KEYS[now.getMonth()]);
+    return `${day} · ${now.getDate()} ${month}`;
+  }
+  // xh-ZA has the same missing-Intl problem as zu-ZA, so isiXhosa reads the same key tables.
+  if (lang === 'xh') {
+    const day = translate('xh', ZU_WEEKDAY_KEYS[now.getDay()]);
+    const month = translate('xh', ZU_MONTH_KEYS[now.getMonth()]);
     return `${day} · ${now.getDate()} ${month}`;
   }
   const locale = LANG_TO_LOCALE[lang] ?? 'en-ZA';
@@ -559,6 +566,11 @@ function HomeLandingInner() {
           </h1>
         )}
 
+        {lang === 'xh' && (
+          <p role="note" lang="xh" className="rounded-xl px-3 py-2 font-sans" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: 'var(--color-muted-strong)', background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
+            {inlineText(lang, 'Unreviewed isiXhosa draft. These Home and site-selection labels may be inaccurate; switch to English before changing saved site settings.')}
+          </p>
+        )}
         {lang === 'zu' && (
           <p role="note" className="rounded-xl px-3 py-2 font-sans" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: 'var(--color-muted-strong)', background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
             ISIZULU DRAFT — These Home and site-selection labels are unreviewed drafts. Check the English before changing saved site settings. / UMBHALO WESIZULU USALUHLAKA — Lezi zinguqulo zasekhaya nezokukhetha indawo azikabuyekezwa. Hlola isiNgisi ngaphambi kokushintsha izilungiselelo zendawo egciniwe.

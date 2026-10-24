@@ -1,0 +1,3 @@
+{ "unit": "g13-dates-feedback", "okCount": 32, "items": [
+ {"where":"#26 feedback sign-in note","verdict":"repair","english":"to send, or download your draft first.","draft":"uqale ukhuphele uyilo lwakho","backtranslation":"first download your design","problem":"draft (of the feedback) rendered as 'design'","corrected":"ukuze uthumele, okanye uqale ukhuphele idrafti yakho. Ukungena kunokulayisha kwakhona eli phepha."}
+]}

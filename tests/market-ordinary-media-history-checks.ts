@@ -1,3 +1,4 @@
+import { xhDeckUrlsBefore } from './xh-deck-history-checks.ts';
 import { blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import { finalLanguageNextMediaBefore } from './final-language-next-media-history-checks.ts';
@@ -102,6 +103,8 @@ export function validateCurrentMarketOrdinaryMedia(currentManifest = readFileSyn
   const actualPaths = readdirSync('public/course-decks/market-community', { recursive: true }).map(String)
     .filter(path => statSync('public/course-decks/market-community/' + path).isFile())
     .map(path => '/course-decks/market-community/' + path).sort();
+  // The isiXhosa slide cards are a newer layer (tests/xh-deck-history-checks.ts); this layer sees the folder before them.
+  actualPaths.splice(0, actualPaths.length, ...xhDeckUrlsBefore(actualPaths, 'market-community'));
   assert.deepEqual(actualPaths, oldAssets.map((row: { path: string }) => row.path).sort(), 'no Market asset is added or removed');
   assert.equal(oldAssets.filter((row: { path: string }) => !changed.has(row.path)).length, 90);
   for (const row of oldAssets) {

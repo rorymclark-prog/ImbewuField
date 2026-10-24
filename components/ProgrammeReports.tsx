@@ -11,13 +11,14 @@ import { SAMPLE_BRANDING } from '@/lib/sample-branding';
 import styles from './MelDashboard.module.css';
 import reports from './ProgrammeReports.module.css';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 
 // This portfolio spans several cohorts; a single demonstration garden is not its identity.
 const SAMPLE_PORTFOLIO_BRANDING = { ...SAMPLE_BRANDING, garden: { label: '', image: '' } };
 
 export default function ProgrammeReports({ funder = false, onOpenProgress, onOpenCohort }: { funder?: boolean; onOpenProgress?: () => void; onOpenCohort?: () => void }) {
   const { lang } = useLanguage();
-  const ui = (en: string, zu: string) => lang === 'zu' ? zu : en;
+  const ui = (en: string, zu: string) => inlineText(lang, en, zu);
   const { user } = useAuth();
   const portfolio = useNetworkPortfolio(Boolean(user));
   const [kind, setKind] = useState<ProgrammeReportKind>('overview');
@@ -45,10 +46,11 @@ export default function ProgrammeReports({ funder = false, onOpenProgress, onOpe
     <header className={reports.intro}><div><p className={reports.eyebrow}>{ui('EVIDENCE INTO DECISIONS', 'UBUFAKAZI BUBE YIZINQUMO')}</p><h1>{funder ? ui('Funder reports', 'Imibiko yabaxhasi') : ui('Organisation reports', 'Imibiko yenhlangano')}</h1><p>{funder ? ui('A clear account of what is recorded, who it covers and what needs a closer look.', 'Incazelo ecacile yokuqoshiwe, ukuthi kubandakanya bani nokuthi yini edinga ukuhlolwa.') : ui('Bring delivery, learning and reporting gaps into one reviewable record.', 'Hlanganisa ukulethwa, ukufunda nezikhala zemibiko kurekhodi elilodwa.')}</p></div><ShieldCheck size={44} strokeWidth={1.25} aria-hidden="true" /></header>
     {portfolio.isDemo && <p className={reports.sample} role="note"><strong>{ui('Demonstration records', 'Amarekhodi esibonelo')}</strong> · {ui('Illustrative figures, not evidence of real programme results.', 'Amanani ayizibonelo, awubona ubufakazi bemiphumela yohlelo lwangempela.')}</p>}
     {lang === 'zu' && <p className={reports.languageNote} role="note">Izilawuli zalapha zisesiZulu. Umbhalo wokuhlaziya, amathebula nemininingwane ye-PDF kusengesiNgisi. Amagama nobufakazi kugcinwa njengoba kuqoshwe.</p>}
+    {lang === 'xh' && <p className={reports.languageNote} role="note">{inlineText(lang, 'The controls here are in isiXhosa. The analysis text, tables and PDF details are still in English. Names and evidence are kept as recorded.')}</p>}
     <div className={reports.choices} aria-label={ui('Report type', 'Uhlobo lombiko')}>{choices.map(({ key, Icon, label, desc }, i) => <button type="button" key={key} className={reports.choice} aria-pressed={key === kind} onClick={() => setKind(key)}><span className={reports.choiceTop}><Icon size={22} aria-hidden="true" /><span>0{i + 1}</span></span><strong>{label}</strong><span>{desc}</span></button>)}</div>
     <section className={reports.scope} aria-labelledby="report-scope-heading"><div className={reports.scopeTitle}><SlidersHorizontal size={18} aria-hidden="true" /><h2 id="report-scope-heading">{ui('Set the scope', 'Khetha ububanzi')}</h2><span>{ui('The preview and PDF use the same selection.', 'Ukubuka kuqala ne-PDF kusebenzisa ukukhetha okufanayo.')}</span></div>
       <div className={reports.filters}>
-        <label>{ui('Organisation', 'Inhlangano')}{portfolio.orgs.length ? <select value={portfolio.orgId ?? ''} onChange={e => { portfolio.setOrgId(e.target.value); setCohortId(''); setRange({ start: '', end: '' }); }}>{portfolio.orgs.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}</select> : <span className={reports.fixedValue}>{organisation}</span>}</label>
+        <label>{ui('Organisation', 'Inhlangano')}{portfolio.orgs.length ? <select value={portfolio.orgId ?? ''} onChange={e => { portfolio.setOrgId(e.target.value); setCohortId(''); setRange({ start: '', end: '' }); }}>{portfolio.orgs.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}</select> : <span className={reports.fixedValue}>{portfolio.isDemo ? inlineText(lang, 'Demonstration portfolio') : portfolio.orgs.find(o => o.id === portfolio.orgId)?.name ?? inlineText(lang, 'Authorised organisation')}</span>}</label>
         <label>{ui('Cohort', 'Iqembu')}<select value={selectedCohort} onChange={e => { setCohortId(e.target.value); if (e.target.value) setBasis('cumulative'); }}><option value="">{ui('All visible cohorts', 'Wonke amaqembu abonakalayo')}</option>{cohorts.map(({ id, label, available }) => <option key={id} value={id}>{available ? label : ui('Selected cohort · no visible records', 'Iqembu elikhethiwe · awekho amarekhodi abonakalayo')}</option>)}</select></label>
         <label>{ui('Ledger period', 'Isikhathi samarekhodi')}<select value={selectedCohort ? 'cumulative' : basis} onChange={e => setBasis(e.target.value as ProgrammeReportBasis)}><option value="cumulative">{ui('All available records', 'Wonke amarekhodi atholakalayo')}</option><option value="window" disabled={Boolean(selectedCohort) || !months.length}>{ui('Choose recorded months', 'Khetha izinyanga eziqoshiwe')}</option></select></label>
       </div>
