@@ -22,6 +22,7 @@ import {
   designPromptBlock,
   irrigationRowsBlock,
   measurementsPromptBlock,
+  marketEvidencePromptBlock,
   normaliseReportSiteFacts,
   roofCalcLine,
   waterPromptBlock,
@@ -382,7 +383,8 @@ Refer to these phases by number when you sequence work. Do not invent a differen
 ${facts ? `\n${measurementsPromptBlock(facts)}` : ''}
 ${facts?.crop ? `\n${cropPlanPromptBlock(facts)}` : ''}
 ${photoAnalysis ? `\nSITE PHOTO ANALYSIS:\n${photoAnalysis}` : ''}
-${surveyData ? `\nSITE SURVEY (farmer-completed — treat this as authoritative ground truth about the site):\n${surveyToPrompt(surveyData, d.rainfall.annual)}` : ''}
+${marketEvidencePromptBlock(facts?.marketEvidence ?? surveyData?.marketEvidence)}
+${surveyData ? `\nSITE SURVEY (farmer-reported observations; preserve their source and uncertainty):\n${surveyToPrompt(surveyData, d.rainfall.annual, false)}` : ''}
 ${evidenceData && Object.keys(evidenceData).length > 0 ? `\nFARMER-SUPPLIED EVIDENCE (reported observations and document references; preserve their source and uncertainty):\n${
   Object.entries(evidenceData)
     .map(([key, { count, notes }]) => {
@@ -567,15 +569,12 @@ Prevailing wind is FROM the ${d.climate.windFromSummer} in summer and FROM the $
 ` : ''}${sections.includes('Economic Opportunities') ? `## Economic Opportunities
 
 Ways this ${siteAreaForCalcM2 ? `${(siteAreaForCalcM2 / 10000).toFixed(siteAreaForCalcM2 < 10000 ? 3 : 2)} ha ` : ''}property could earn income for a small-scale farmer in this area. Ground EVERYTHING in the real location — use the municipality, district and province named in the SITE DATA above${admin ? ` (${admin.label})` : ''}.
-- **Where this farm sits:** name the local municipality, the district municipality and the province, and one line on the character of the area (rural/peri-urban, distance to the nearest town/city).
-- **What this area is known for in agriculture:** the dominant commercial and small-scale farming of THIS municipality/district (e.g. specific crops, livestock, forestry, citrus, sugarcane, deciduous fruit, dryland grain). Be specific to the place, not generic.
-- **Economic zone & infrastructure:** any relevant economic context near here — agri-parks, Fresh Produce Markets, a Special Economic Zone or development corridor, co-ops, pack-houses, abattoirs, or major buyers (mines, lodges, hospitals, retailers) within reach. Note the nearest market town.
-- **⭐ MARKET GAPS (most important):** what produce is in real DEMAND in this area but UNDER-supplied locally — food currently trucked in from far away that a local grower could supply fresher and cheaper. Name 2–4 specific crops/products this farmer could grow to fill a genuine gap, and explain WHY the gap exists (seasonality, distance from supply, no nearby grower, post-harvest losses). This is the highest-value advice — be concrete.
-- **Best cash crops:** 3–5 crops with real local market demand that grow well here — mix quick-return (veg, herbs, eggs) with longer-term (fruit, nuts, honey).
-- **Value-adding:** simple ways to earn more (drying, jam, packaging, free-range eggs, seedlings, compost).
-- **Markets:** where to sell — local markets, bakkie traders, co-ops, schools/clinics, restaurants, roadside, and any institutional buyers named above.
-- **Cheapest start:** what needs the least money to start earning in year 1.
-- **Local support:** point to real SA help — ARC, the provincial Department of Agriculture extension officer, LandCare, local co-ops, and Land Bank / CASP funding for small farmers.
+- **Location and local economy:** use supplied administrative names. Describe local agriculture, infrastructure, market towns or travel distances only where supplied evidence supports them. Otherwise list the missing context for a field check. Regional context alone is not buyer evidence.
+- **Reported market evidence:** quote the supplied notes as farmer-reported, including source and observation date or their absence. A dated note still needs checking; do not call it independently verified or a guaranteed sale.
+- **Market opportunities to investigate:** link the existing crop, food-forest and animal-product plan to possible outlets. Unless supplied evidence supports demand or undersupply, label each as an untested opportunity and explain what to ask buyers. Do not manufacture a list of genuine market gaps or best cash crops.
+- **Sales checks:** confirm product, required quality, seasonal timing, quantity and unit, offered price and date, transport, payment and reliability. A mapped enterprise or a product window does not establish saleable surplus or profit.
+- **Value-adding and first steps:** identify options within the recorded resources and constraints, with missing costs, equipment and food-handling requirements visible. Do not promise earnings or a payback period.
+- **Support to check:** suggest asking an extension officer about appropriate assistance. Name a local programme, buyer, facility, eligibility rule or funding offer as current only if supplied evidence establishes it; otherwise request confirmation of availability and contact details.
 
 Keep it realistic for a grower with limited capital.
 

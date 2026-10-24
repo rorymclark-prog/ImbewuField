@@ -52,6 +52,8 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+- **2026-10-24 — Site-report continuation: market evidence and soil source (Codex).** Built on unmerged #1099 at `45d3dabe`; merge it first. Re-read the original six private Ubhejane reports and exported/inspected the current real five-page handout. Added optional market notes/source/observation date to the existing survey, recovery, capture, prompt and exports; unverified opportunities remain unverified. Full headers now reject unsourced soil placeholders. Desktop/phone and actual PDFs inspected; 211 focused tests pass, final typecheck/whitespace clean. Full suite and prerequisite CI are pending. [Shared audit and private-folder pointers](docs/audits/2026-10-24/site-report-market-evidence-codex.md). This changes the picture; `PLAN_VERSION` retained.
+
 ### 2026-10-24 — Site reports continue the existing production work
 - [CI follow-up](docs/audits/2026-10-24/site-report-ci-followup-codex.md): the full run found one omission in the readability register. The three new farmer-facing components now inherit its strict floor; 174 focused checks pass. Read the fresh full CI result before merging PR #1099.
 - The site survey and report now reuse the crop planner's dated crop, food-forest and animal-product windows, preserving unknown timing and proposed status. Saved reports freeze this evidence; legacy reports stay unchanged.

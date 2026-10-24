@@ -57,3 +57,11 @@ test('the two report purposes guide every generated batch without certifying pro
   assert.match(siteReportPurposeInstruction('complete'), /does not certify completion on the ground/);
   assert.match(reportRoute, /siteReportPurposeInstruction\(reportPurpose\)/);
 });
+
+test('every report batch receives market evidence and cannot demand invented local buyers or undersupply', () => {
+  assert.match(reportRoute, /marketEvidencePromptBlock\(facts\?\.marketEvidence \?\? surveyData\?\.marketEvidence\)/);
+  assert.match(reportRoute, /surveyToPrompt\(surveyData, d\.rainfall\.annual, false\)/);
+  assert.match(reportRoute, /label each as an untested opportunity/);
+  assert.match(reportRoute, /Regional context alone is not buyer evidence/);
+  assert.doesNotMatch(reportRoute, /Name 2–4 specific crops\/products this farmer could grow to fill a genuine gap/);
+});

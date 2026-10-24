@@ -557,3 +557,30 @@ test('the two site-report purposes persist in saved answers and recovery without
   const corrupt = saveSurvey(survey({ reportPurpose: 'progress' as SiteSurvey['reportPurpose'] }))!;
   assert.equal(corrupt.reportPurpose, undefined, 'legacy stage labels must not be guessed into one of the two new purposes');
 });
+
+test('market observations survive recovery and saving without borrowing the survey save date', () => {
+  installBrowser();
+  const evidence = { notes: 'An outlet asked about weekly deliveries; quantity and price still to check.', source: 'Farmer discussion', observedOn: '2026-09-14' };
+  const answers = survey({ isCommercial: true, marketType: 'local-market', marketEvidence: evidence });
+  const draft = draftFor(answers), scope = surveyDraftScope(answers.siteId);
+  assert.ok(writeSurveyDraft(scope, draft, null));
+  assert.deepEqual(readSurveyDraft(scope).draft?.answers.marketEvidence, evidence);
+  assert.equal(loadSurvey(answers.siteId), null, 'unfinished buyer notes must not feed a saved report');
+  const saved = saveSurvey(answers)!;
+  assert.deepEqual(loadSurvey(saved.siteId)?.marketEvidence, evidence);
+  assert.match(surveyToPrompt(saved, 800), /Farmer discussion/);
+  assert.match(surveyToPrompt(saved, 800), /2026-09-14/);
+  assert.match(surveyToPrompt(saved, 800), /not independently verified demand/);
+  const undated = saveSurvey(survey({ marketEvidence: { notes: 'An undated discussion' } }))!;
+  assert.equal(undated.marketEvidence?.observedOn, undefined);
+  assert.match(surveyToPrompt(undated, 800), /survey save date is not an observation date/);
+});
+
+test('damaged market-note drafts stay recoverable without rendering non-text fields', () => {
+  const { local } = installBrowser();
+  const answers = survey(), scope = surveyDraftScope(answers.siteId);
+  const damaged = JSON.stringify({ ...draftFor(answers), answers: { ...answers, marketEvidence: { notes: { invalid: true } } } });
+  local.setItem(scope, damaged);
+  assert.equal(readSurveyDraft(scope).error, true);
+  assert.equal(local.getItem(scope), damaged, 'the damaged draft remains available for deliberate discard');
+});
