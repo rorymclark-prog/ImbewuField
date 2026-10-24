@@ -101,7 +101,7 @@ export default function FunderPage() {
   return (
     <div className="h-screen flex flex-col" style={{ background: 'var(--bg-0)' }}>
       <AppHeader
-        title={tr(lang, 'Funder · impact oversight', 'Umxhasi · ukubheka umthelela')}
+        title={tr(lang, 'Funder', 'Umxhasi')}
         backFallback="/"
         right={<>
           {/* Was an unconditional "demo data". NgoDashboard reads REAL Firestore via listGardens()
@@ -117,11 +117,12 @@ export default function FunderPage() {
           )}
           <Link
               href="/network"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 text-sm font-sans font-semibold whitespace-nowrap rounded-full"
+              aria-label={tr(lang, 'Portfolio map', 'Imephu yohlelo')}
+              className="hidden sm:inline-flex lg:hidden items-center gap-1.5 px-3 text-sm font-sans font-semibold whitespace-nowrap rounded-full"
               style={{ minHeight: 44, color: 'var(--text-primary)', border: '1px solid var(--border)', textDecoration: 'none' }}
             >
               <Map size={16} aria-hidden="true" />
-              {tr(lang, 'Portfolio map', 'Imephu yohlelo')}
+              <span data-header-label>{tr(lang, 'Portfolio map', 'Imephu yohlelo')}</span>
             </Link>
           <LessonLink id="funder:overview" label={tr(lang, 'Learn', 'Funda')} />
           <RoleSwitcher current="funder" />

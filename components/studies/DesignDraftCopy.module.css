@@ -1,1 +1,1 @@
-.source { display:block; margin-top:3px; font-size:12px; line-height:1.45; font-weight:400; color:var(--text-muted); }
+.source { display:block; font-family:var(--font-sans), system-ui, sans-serif; margin-top:3px; font-size:12px; line-height:1.45; font-weight:400; color:var(--text-muted); }

@@ -39,7 +39,8 @@ test('w18-06/07/08: sample pages, gardens grid and feedback', () => {
   assert.match(fb, /useState\(''\)/);
   assert.match(fb, /path:path\.trim\(\)\|\|'\/'/);
   assert.ok(fb.indexOf('<AppHeader') < fb.indexOf('styles.wrap'));
-  assert.match(read('app/samples/farm/page.tsx'), /aria-label=\{ui\('15-minute tour'/);
+  // w19-20: the header's second Tour link is gone; the MenuButton pill is the one Tour control.
+  assert.doesNotMatch(read('app/samples/farm/page.tsx'), /aria-label=\{ui\('15-minute tour'/);
 });
 
 test('w18-09/10/11: MEL tiles, labels and one disclosure pattern', () => {

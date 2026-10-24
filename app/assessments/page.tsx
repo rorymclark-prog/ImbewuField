@@ -17,7 +17,7 @@ export default function AssessmentsPage() {
     <div className="flex flex-col overflow-hidden h-[100dvh] lg:h-auto lg:min-h-0 lg:overflow-visible" style={{ background: 'var(--bg-0)' }}>
       <AppHeader
         title={tr(lang, 'Assessments', 'Ukuhlola')}
-        right={<LessonLink id="assessments:overview" label={tr(lang, 'Learn', 'Funda')} />}
+        right={<LessonLink id="assessments:overview" tone="chip" label={tr(lang, 'Learn', 'Funda')} />}
       />
       <main className="flex-1 overflow-y-auto lg:flex-none lg:overflow-visible" style={{ paddingBottom: 'var(--lima-fab-clearance, 96px)' }}>
         <MelDashboard />

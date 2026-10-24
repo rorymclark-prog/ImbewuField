@@ -38,11 +38,12 @@ export default function LessonLink({
           minHeight: 44,
           padding: '4px 10px',
           borderRadius: 999,
-          border: tone === 'menu' ? '1px solid var(--border)' : `1px solid ${GREEN}`,
-          background: 'transparent',
-          color: tone === 'menu' ? 'var(--text-primary)' : GREEN,
+          // w20-24: 'chip' matches the header Settings pill (bg-1 fill, hairline border, primary ink).
+          border: '1px solid var(--border)',
+          background: tone === 'chip' ? 'var(--bg-1)' : 'transparent',
+          color: 'var(--text-primary)',
           fontSize: 12,
-          fontWeight: 700,
+          fontWeight: tone === 'chip' ? 500 : 700,
           cursor: 'pointer',
         }
       : {

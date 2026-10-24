@@ -162,7 +162,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
               {(() => { const GroupIcon = EVIDENCE_GROUP_ICON[group.key] ?? FileText; return <GroupIcon size={18} />; })()}
             </div>
             <div style={{ flex: 1 }}>
-              <div style={{ font: '600 17px Newsreader, Georgia, serif', color: 'var(--text-primary)' }}>{groupLabel}</div>
+              <div style={{ font: '600 17px var(--font-display), Georgia, serif', color: 'var(--text-primary)' }}>{groupLabel}</div>
               <div style={{ font: '400 13px/1.4 var(--font-sans), sans-serif', color: 'var(--text-secondary)', marginTop: 1 }}>{groupDesc}</div>
             </div>
             <button onClick={onClose} aria-label={t('evidenceSheetClose')} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--text-secondary)', minWidth: 44, minHeight: 44, display: 'grid', placeItems: 'center' }}>
@@ -387,7 +387,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
               </svg>
             </div>
             <div style={{ flex: 1 }}>
-              <div style={{ font: '400 13px/1.45 Newsreader, Georgia, serif', color: 'var(--on-forest-800)', fontStyle: 'italic' }}>{limaTip}</div>
+              <div style={{ font: '400 13px/1.45 var(--font-display), Georgia, serif', color: 'var(--on-forest-800)', fontStyle: 'italic' }}>{limaTip}</div>
               <div style={{ font: '400 12px/1 var(--font-sans), sans-serif', color: 'color-mix(in srgb, var(--on-forest-800) 70%, transparent)', marginTop: 5 }}>
                 {isLab ? t('evidenceSheetLimaLabNote') : t('evidenceSheetLimaDefaultNote')}
               </div>

@@ -16,13 +16,17 @@ test('w18-48: contact send button, icon tile and notice follow the theme', () =>
 test('w18-49: login inputs are full opacity and a Connecting line shows', () => {
   const src = read('app/login/page.tsx');
   assert.ok(!src.includes('opacity: backendReady'));
-  assert.match(src, /!backendReady && \(\s*<p role="status"[^>]*>\{t\('loginConnecting'\)\}/);
+  // w19-40: the permanent "Connecting…" under a disabled button was removed (nothing connects).
+  assert.doesNotMatch(src, /!backendReady && \(\s*<p role="status"/);
   assert.match(read('components/SampleModeBanner.tsx'), /pathname\.startsWith\('\/login'\)/);
 });
 
 test('w18-50: design/lite clears the Tour pill and says device', () => {
   const src = read('app/design/lite/page.tsx');
-  assert.match(src, /env\(safe-area-inset-top, 0px\) \+ 56px/);
+  // w19-26 raised the top gap from 56px to 72px so the Tour pill no longer crowds the notice; at
+  // least 56px is what w18-50 needs to clear the pill.
+  const top = Number(/env\(safe-area-inset-top, 0px\) \+ (\d+)px/.exec(src)?.[1]);
+  assert.ok(top >= 56, `top gap ${top}px clears the Tour pill`);
   assert.ok(!/on this phone|closing on this phone/.test(src.replace(/^\/\/.*$/gm, '')));
 });
 

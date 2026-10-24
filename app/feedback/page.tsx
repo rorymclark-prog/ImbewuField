@@ -27,7 +27,7 @@ export default function FeedbackPage(){
   }catch(e){setError((e as Error).message);}finally{setBusy(false);}}
   async function inbox(){setBusy(true);setError('');try{const response=await fetch('/api/product-feedback',{headers:await paidApiHeaders(user)});const result=await response.json();if(!response.ok)throw Error(result.error);setTickets(result.tickets);}catch(e){setError((e as Error).message);}finally{setBusy(false);}}
   return <main className={styles.page}>
-    <AppHeader backFallback="/account" title={label('Feedback','Impendulo')} /><div className={styles.content}><div className={styles.wrap}>
+    <AppHeader backFallback="/account" title={label('Feedback','Impendulo')} /><div className={styles.content}><div className={`${styles.wrap} ${styles.narrow}`}>
     <h1>{label('Report a bug or suggest a feature','Bika inkinga noma phakamisa isici esisha')}</h1>
     {lang==='zu'&&<p role="note">UMBHALO WESIZULU USALUHLAKA — Le nguqulo ayikabuyekezwa umuntu okhuluma kahle isiZulu. / ISIZULU DRAFT — This translation has not been reviewed by a fluent isiZulu speaker.</p>}
     {/* ux-03/nav-04: was developer-addressed phrasing on a farmer-facing screen — rewritten to
@@ -45,7 +45,7 @@ export default function FeedbackPage(){
       <label>{label('Title','Isihloko')}<input required minLength={3} maxLength={160} value={title} onChange={e=>{setTitle(e.target.value);setId('');}}/></label>
       <label>{kind==='bug'?label('What did you do, what happened, and what did you expect?','Wenzeni, kwenzekeni, futhi ubulindeleni?'):label('What would you like to do, and why would it help?','Ufuna ukwenzani, futhi kungasiza ngani?')}<textarea required minLength={10} maxLength={4000} value={details} onChange={e=>{setDetails(e.target.value);setId('');}}/></label>
       </>}
-      <label>{label('App page (optional)','Ikhasi lohlelo (ungalikhetha)')}<input value={path} maxLength={200} placeholder="/mentor" onChange={e=>{setPath(e.target.value);setId('');}}/></label>
+      <label>{label('Which screen? (optional)','Yikuphi ikhasi? (ungalikhetha)')}<input value={path} maxLength={200} placeholder={label('e.g. Today, Map','isib. Namuhla, Imephu')} onChange={e=>{setPath(e.target.value);setId('');}}/></label>
       {/* ux-03/nav-04: was developer-addressed phrasing on a farmer-facing screen — rewritten
           below to speak plainly about what gets sent and who it goes to. */}
       <p className={styles.meta}>{paired('Only this form, your name and your role are sent. No screenshot, GPS position or farm record is attached automatically.','Kuthunyelwa leli fomu kuphela, igama lakho nendima yakho. Akunamathiselwa isithombe sesikrini, indawo ye-GPS noma irekhodi lepulazi ngokuzenzakalelayo.')}</p>
