@@ -1,0 +1,15 @@
+import styles from '../ReportView.module.css';
+
+export default function ReportPurposeGuide({ language }: { language: string }) {
+  const t = (en: string, zu: string) => language === 'zu' ? zu : en;
+  return <details className={`${styles.versionDetails} no-print`}>
+    <summary style={{ minHeight: 44 }}><strong>{t('Which report do I need?', 'Ngidinga muphi umbiko?')}</strong></summary>
+    <p>{t('Choose the purpose first. Simple and comprehensive describe how much detail you need at each stage. The reading views above shorten the saved records; they do not create a new assessment.', 'Khetha injongo kuqala. Olula nophelele kuchaza ubuningi bemininingwane edingekayo esigabeni ngasinye. Izindlela zokufunda ezingenhla zifinyeza amarekhodi agciniwe; azikhiqizi ukuhlolwa okusha.')}</p>
+    <dl>
+      <div><dt>{t('Site assessment · before deciding', 'Ukuhlola indawo · ngaphambi kokuthatha isinqumo')}</dt><dd>{t('Describe the site and its potential: people and goals, local economy and markets, climate, water, soil, terrain, biome, vegetation, bioresource unit and resources. Assess crop and animal agriculture options against the evidence. Mark estimates, missing information and field checks.', 'Chaza indawo namathuba ayo: abantu nezinhloso, umnotho wendawo nezimakethe, isimo sezulu, amanzi, umhlabathi, ukuma komhlaba, i-biome, izimila, iyunithi yezinsiza zemvelo nezinsiza. Hlola amathuba ezitshalo nemfuyo ngokobufakazi. Khomba izilinganiso eziqageliwe, imininingwane engekho nokuhlola okusadingeka endaweni.')}</dd></div>
+      <div><dt>{t('Design & implementation · before building', 'Umklamo nokuqalisa · ngaphambi kokwakha')}</dt><dd>{t('Use the assessment to explain the proposed layout, crops and animal systems, water and soil work, resources, costs, responsibilities and order of work. Distinguish existing features from proposals and obtain missing measurements and quotes.', 'Sebenzisa ukuhlola ukuchaza uhlelo lwendawo, izitshalo nemfuyo, umsebenzi wamanzi nomhlabathi, izinsiza, izindleko, izibopho nokulandelana komsebenzi. Hlukanisa okukhona nokuphakanyisiwe, uthole izilinganiso namanani angekho.')}</dd></div>
+      <div><dt>{t('Progress & review · after recorded work', 'Inqubekela-phambili nokubuyekeza · ngemva komsebenzi obhaliwe')}</dt><dd>{t('Set the review dates and compare the baseline and plan with dated observations, completed work, harvests and actual costs. Explain changes and next actions. A mapped proposal or completion score does not prove that work happened.', 'Beka izinsuku zokubuyekeza, uqhathanise isiqalo nohlelo nokubonwe ngezinsuku, umsebenzi oqediwe, izivuno nezindleko zangempela. Chaza ushintsho nezinyathelo ezilandelayo. Okuhleliwe ebalazweni noma amaphuzu okugcwaliswa kwedatha akufakazeli ukuthi umsebenzi wenzekile.')}</dd></div>
+    </dl>
+    <p>{t('This guide explains the stages. The current generator produces a site analysis; separate stage-specific generation and comparison of review periods are still to be added.', 'Lo mhlahlandlela uchaza izigaba. Okwamanje kukhiqizwa ukuhlaziywa kwendawo; ukukhiqiza ngokwezigaba nokuqhathanisa izikhathi zokubuyekeza kusazofakwa.')}</p>
+  </details>;
+}

@@ -22,6 +22,13 @@ export interface ReportGenerationSettings {
 }
 
 export type ReportCoverChoice = 'auto' | 'map' | 'photo' | 'none';
+export type ReportOrigin = 'prepared-example' | 'generated';
+
+export function reportOriginLabel(origin: ReportOrigin | undefined, language = 'en'): string {
+  if (origin === 'prepared-example') return language === 'zu' ? 'Isibonelo esilungiselelwe' : 'Prepared example';
+  if (origin === 'generated') return language === 'zu' ? 'Umbiko okhiqiziwe' : 'Generated report';
+  return language === 'zu' ? 'Indlela yokukhiqiza ayibhalwanga' : 'Origin not recorded';
+}
 
 export interface SavedReport {
   id: string;
@@ -29,6 +36,8 @@ export interface SavedReport {
   savedAt: string;       // ISO date
   lang: string;
   report: string;        // the generated markdown
+  /** Current sample mode cannot establish how a historical report was made. */
+  origin?: ReportOrigin;
   location: LocationData;
   siteData?: SiteData;
   waterData?: WaterData;
@@ -96,10 +105,11 @@ function normaliseReport(value: unknown): SavedReport | null {
   };
   if (isValidSiteData(row.siteData)) report.siteData = row.siteData;
   if (isValidWaterData(row.waterData)) report.waterData = row.waterData;
+  if (row.origin === 'prepared-example' || row.origin === 'generated') report.origin = row.origin;
   const facts = normaliseReportSiteFacts(row.facts);
   if (facts) report.facts = facts;
   const settings = normaliseReportSettings(row.settings);
-  if (settings) report.settings = settings;
+  if (settings && report.origin !== 'prepared-example') report.settings = settings;
   if (['auto', 'map', 'photo', 'none'].includes(row.coverChoice as string)) report.coverChoice = row.coverChoice as ReportCoverChoice;
   const maps = normaliseReportMapSelection(row.mapSelection, designSiteIdFromLocation(report.location));
   if (maps) report.mapSelection = maps;

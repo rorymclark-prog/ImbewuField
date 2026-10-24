@@ -94,6 +94,7 @@ import { geometryLockCompositionPolicy, polishModelInputMarks, RENDERED_DRIVEWAY
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { PLAN_VERSION } from '@/lib/plan-version';
+import RecordPlanOption from './RecordPlanOption';
 import { SHEET_RENDER_RECIPE, savedSheetFreshness, type SavedSheetFreshness } from '@/lib/sheet-render-recipe';
 import { newestSavedMapForSheet } from '@/lib/saved-map-preview';
 import { SHADE_CLOTH_ALPHA, STRUCTURES_LEGEND_SECTION_ORDER, isShadeClothStructure, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
@@ -11633,7 +11634,7 @@ export default function DesignGlossy({
   initialFilter,
   onImportPhoto,
 }: DesignGlossyProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const simple = useAppLevel() === 'simple';
   const { user: renderUser } = useAuth();
   const [approvedRenderUid, setApprovedRenderUid] = useState<string | null>(null);
@@ -15352,6 +15353,9 @@ export default function DesignGlossy({
           gone: beta lives as a pill ON the AI preview, exact is reached via the links. */}
       {!compact && <div className={styles.controlsBackdrop} aria-hidden="true" />}
       <div className={compact ? undefined : styles.settingsRail}>
+        <RecordPlanOption state={state} refLayers={refLayers} language={lang} onAdd={(image, siteId) => {
+          pushGallery('Whole design · Record plan', image, { siteId, resultKind: 'exact', provider: 'exact', geometryLock: true, showcase: false, underlay: 'plain', validationStatus: 'needs-review' });
+        }} />
         {/* SHEET — the plan set as a compact 4-up grid (Rory's mockup), canonical 01–09 order.
             Tapping a chip selects it in the CURRENT mode (AI by default); the "View non-AI exact
             version" link under the preview flips the same sheet to its exact render and back. */}

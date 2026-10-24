@@ -11,6 +11,7 @@ import { defaultReportMapIds, emptyMapReview, loadSiteMapReview, selectedReportM
 import ReportVisualOverview, { type OpenReportImage } from './report/ReportVisualOverview';
 import ReportPreparation from './report/ReportPreparation';
 import ReportReadingGuide from './report/ReportReadingGuide';
+import ReportPurposeGuide from './report/ReportPurposeGuide';
 import ReportChapterGraphics from './report/ReportChapterGraphics';
 import { reportChapterGraphics, placedFigureIds, type ChapterGraphic } from '@/lib/report-chapter-visuals';
 import { siteReportVisuals, withReportFigures } from '@/lib/report-visuals';
@@ -18,7 +19,7 @@ import { siteReportFigures, type ReportFigureInputs } from '@/lib/report-figures
 import { collectReportFigureInputs } from '@/lib/report-figure-inputs';
 import { prepareVisualPdfAssets } from '@/lib/report-visual-pdf';
 import styles from './ReportView.module.css';
-import { loadReports, saveReport, deleteReport, reportId, MAX_REPORTS, type SavedReport, type SaveReportReason, reportSiteName, type ReportGenerationSettings, type ReportCoverChoice } from '@/lib/saved-reports';
+import { loadReports, saveReport, deleteReport, reportId, MAX_REPORTS, reportOriginLabel, type SavedReport, type SaveReportReason, reportSiteName, type ReportGenerationSettings, type ReportCoverChoice } from '@/lib/saved-reports';
 import { isSampleMode } from '@/lib/sample-mode';
 import { type SavedPlace } from '@/lib/saved-places';
 import { Loader2, Check, Circle, ChevronRight, Share2, SlidersHorizontal, FileText } from 'lucide-react';
@@ -37,7 +38,7 @@ import { resolveBaseLayers } from '@/lib/base-layers';
 import { buildPhasePlan } from '@/lib/phasing';
 import { collectReportSiteFacts } from '@/lib/report-site-facts-collect';
 import type { ReportSiteFacts } from '@/lib/report-site-facts';
-import { reportSummaryPages, buildInkSummaryPdf, sampleFullSiteReport } from '@/lib/report-summary';
+import { reportSummaryPages, buildInkSummaryPdf, preparedSampleReport, preparedExampleNote } from '@/lib/report-summary';
 import { REPORT_ZU } from '@/lib/report-localisation';
 import { loadLocale, translate } from '@/lib/i18n';
 import { paidApiHeaders } from '@/lib/api-client-auth';
@@ -287,6 +288,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [savedVersion, setSavedVersion] = useState(!!savedReport);
   const [coverChoice, setCoverChoice] = useState<ReportCoverChoice>(savedReport?.coverChoice ?? 'auto');
   const settings = activeSaved?.settings;
+  const sampleMode = isSampleMode();
+  const preparedExample = activeSaved?.origin === 'prepared-example';
   const siteName = activeSaved ? reportSiteName(activeSaved, savedPlaces) : facts?.farmName || reportPlace?.name || 'Site report';
   const contentLanguage = activeSaved?.lang ?? language;
   const [reading, setReading] = useState<'full' | 'one' | 'five'>('full');
@@ -341,7 +344,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   // one, otherwise in the overview — on screen and in the PDF alike.
   const [figureInputs, setFigureInputs] = useState<ReportFigureInputs>({});
   const figures = useMemo(() => siteReportFigures(facts, d, contentLanguage, figureInputs), [facts, d, contentLanguage, figureInputs]);
-  const visuals = withReportFigures({ ...siteReportVisuals(facts, d, contentLanguage), title: siteName, subtitle: '' }, figures, contentLanguage);
+  const visuals = withReportFigures({ ...siteReportVisuals(facts, d, contentLanguage), title: siteName, subtitle: preparedExample ? reportOriginLabel(activeSaved?.origin, contentLanguage) : '' }, figures, contentLanguage);
   const chapterVisuals = reportChapterGraphics(report,visuals);
   const placedFigures = placedFigureIds(chapterVisuals);
   const overviewVisuals = { ...visuals, charts: visuals.charts.filter(c => c.kind !== 'calendar' && !placedFigures.has(c.id)) };
@@ -538,7 +541,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   useEffect(() => {
     if (!isSampleMode() || savedReport || !facts || sampleReportSeeded.current) return;
     sampleReportSeeded.current = true;
-    setReport(sampleFullSiteReport(facts, d, language));
+    const example = preparedSampleReport({ id: reportId(), name: siteName, savedAt: new Date().toISOString(), lang: language, location: d, siteData, waterData, facts });
+    setReport(example.report);
+    setActiveSaved(example);
+    setLanguage(example.lang);
     setGenerated(true);
     setIncludeImages(true);
     setPanelOpen(false);
@@ -556,6 +562,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       savedAt: savedVersion && activeSaved ? activeSaved.savedAt : new Date().toISOString(),
       lang: activeSaved?.lang ?? language,
       report,
+      origin: activeSaved?.origin,
       location: d,
       siteData: siteData ?? undefined,
       waterData: waterData ?? undefined,
@@ -629,9 +636,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       const siteId = designSiteIdFromLocation(d);
       const currentFacts = collectReportSiteFacts({ siteId, lat: d.lat, lon: d.lon, canvas: loadCanvasState(siteId), farmName: savedPlaces?.find(place => place.id === activePlaceId)?.name });
       setFacts(currentFacts);
-      const sampleText = sampleFullSiteReport(currentFacts, d, language);
-      setReport(sampleText);
-      setActiveSaved({ id: reportId(), name: currentFacts.farmName || reportPlace?.name || 'Site report', savedAt: requested.generatedAt, lang: language, report: sampleText, location: d, siteData, waterData, facts: currentFacts, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds }, analysedMapIds: [] });
+      const example = preparedSampleReport({ id: reportId(), name: currentFacts.farmName || reportPlace?.name || 'Site report', savedAt: requested.generatedAt, lang: language, location: d, siteData, waterData, facts: currentFacts, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds } });
+      setReport(example.report);
+      setActiveSaved(example);
       setSavedVersion(false);
       setGenerated(true);
       setReading('full');
@@ -750,7 +757,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       }
       const provider = res.headers.get('X-Report-Provider') || undefined;
       const model = res.headers.get('X-Report-Model') || undefined;
-      setActiveSaved({ id: reportId(), name: siteFacts.farmName || reportPlace?.name || 'Site report', savedAt: requested.generatedAt, lang: requested.language, report: text, location: d, siteData, waterData, facts: siteFacts, settings: { ...requested, provider, model }, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds }, analysedMapIds: siteImages.length ? plates.filter(p => siteImages.some(image => image.label === p.label)).map(p => p.id) : [] });
+      setActiveSaved({ id: reportId(), name: siteFacts.farmName || reportPlace?.name || 'Site report', savedAt: requested.generatedAt, lang: requested.language, report: text, origin: 'generated', location: d, siteData, waterData, facts: siteFacts, settings: { ...requested, provider, model }, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds }, analysedMapIds: siteImages.length ? plates.filter(p => siteImages.some(image => image.label === p.label)).map(p => p.id) : [] });
       setSavedVersion(false);
       setReading('full');
       setGenerated(true);
@@ -784,7 +791,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     setPdfState('working');
     try {
       if (reading !== 'full') {
-        const blob = await buildInkSummaryPdf(reportSummaryPages(facts, d, reading === 'one' ? 1 : 5, language), (activeSaved?.savedAt ?? new Date().toISOString()).slice(0, 10), language);
+        const blob = await buildInkSummaryPdf(reportSummaryPages(facts, d, reading === 'one' ? 1 : 5, language), new Date(reportDate).toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { year: 'numeric', month: 'long', day: 'numeric' }), language, preparedExample ? preparedExampleNote(language) : undefined);
         await deliverPdf(blob, reportPdfFilename(siteName, new Date(reportDate)).replace('.pdf', `-${reading === 'one' ? '1' : '5'}-page-summary.pdf`));
         setPdfState('done');
         setTimeout(() => setPdfState('idle'), 2500);
@@ -825,6 +832,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         cropMapMonth,
         includeCropWorkingPlan,
         siteName,
+        reportLabel: preparedExample ? reportOriginLabel(activeSaved?.origin, contentLanguage) : undefined,
         biome: ecology.placeName,
         lat: d.lat,
         lon: d.lon,
@@ -852,7 +860,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       setError(displayError('Could not build the PDF. Check your connection and try again.'));
       setTimeout(() => setPdfState('idle'), 4000);
     }
-  }, [report, d, reading, language, facts, includeImages, activeSaved, ecology.placeName, photoGallery, reportDate, presentation, mapCapture, chapterVisuals, siteName, contentLanguage, coverPhoto, captureCover, useCoverMap, cropMapMonth, includeCropWorkingPlan, pdfVisuals, siteKey, selectedMapIds]);
+  }, [report, d, reading, language, facts, includeImages, activeSaved, preparedExample, ecology.placeName, photoGallery, reportDate, presentation, mapCapture, chapterVisuals, siteName, contentLanguage, coverPhoto, captureCover, useCoverMap, cropMapMonth, includeCropWorkingPlan, pdfVisuals, siteKey, selectedMapIds]);
 
   async function shareReport() {
     if (!d || !report) return;
@@ -970,7 +978,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       <div className={`${styles.readingControls} ${!isWide && !viewOptionsOpen ? styles.readingCompact : ''} no-print`}>
           <button
             onClick={generate}
-            disabled={loading || selected.size === 0 || plateSet.scope !== sheetScope}
+            disabled={loading || (!sampleMode && selected.size === 0) || plateSet.scope !== sheetScope}
             className="min-h-11 flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-semibold transition-all"
             style={
               loading || selected.size === 0
@@ -983,7 +991,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                   }
             }
           >
-              {loading ? <><Loader2 size={14} className="animate-spin inline mr-1" /> {tr('Generating…', 'Kuyakhiwa…')}</> : label(generated ? 'Generate new report' : 'Generate report')}
+              {loading ? <><Loader2 size={14} className="animate-spin inline mr-1" /> {tr('Generating…', 'Kuyakhiwa…')}</> : sampleMode ? tr('Refresh prepared example', 'Vuselela isibonelo esilungiselelwe') : label(generated ? 'Generate new report' : 'Generate report')}
           </button>
         {!isWide && <button type="button" aria-expanded={viewOptionsOpen} onClick={() => setViewOptionsOpen(open => !open)}>{tr('View and print options', 'Izinketho zokubuka nokuphrinta')} <span aria-hidden="true">{viewOptionsOpen ? '▴' : '▾'}</span></button>}
         <div><button aria-pressed={presentation === 'screen'} onClick={() => { setPresentation('screen'); setIncludeImages(true); }}>{tr('Screen', 'Isikrini')}</button><button aria-pressed={presentation === 'colour'} onClick={() => { setPresentation('colour'); setIncludeImages(true); }}>{tr('Print · full colour', 'Phrinta · imibala egcwele')}</button><button aria-pressed={presentation === 'print'} onClick={() => { setPresentation('print'); setIncludeImages(false); }}>{tr('Print · save ink', 'Phrinta · yonga uyinki')}</button></div>
@@ -993,8 +1001,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         {reading === 'full' && <label><input type="checkbox" checked={includeImages} onChange={e => setIncludeImages(e.target.checked)} /> {tr('Include photos and maps in PDF', 'Faka izithombe namamephu ku-PDF')}</label>}
       </div>
       {(isWide || viewOptionsOpen) && <p className={`${styles.languageNote} no-print`}>{tr('Screen, print and summary controls change the view or export without a new AI call.', 'Izilawuli zesikrini, zokuphrinta nezifinyezo zishintsha indlela yokubuka noma yokukhipha umbiko ngaphandle kokusebenzisa i-AI futhi.')}</p>}
-      {(isWide || viewOptionsOpen) && isSampleMode() && <p className={`${styles.languageNote} no-print`}>{tr('Generate new report refreshes the advice from this design. Saved reports stay available while you explore; restarting the workspace clears them. Prepared full advice is in English; translated summaries are available.', 'Ukukhiqiza umbiko omusha kuvuselela izeluleko ezisuselwe kulo mklamo. Imibiko egciniwe izohlala ikhona ngenkathi ubheka; ukuqala kabusha indawo yokusebenza kuyayisusa. Umbiko ophelele olungiselelwe ungowesiNgisi; izifinyezo ezihunyushiwe ziyatholakala.')}</p>}
-      {language !== contentLanguage && report && reading === 'full' && <p className={`${styles.languageNote} no-print`}>{tr('Language changes apply to new reports and summaries. Regenerate to translate the full advice.', 'Ushintsho lolimi lusebenza emibikweni emisha nasezifinyezweni. Khiqiza kabusha ukuhumusha zonke izeluleko.')}</p>}
+      {(isWide || viewOptionsOpen) && sampleMode && <p className={`${styles.languageNote} no-print`}>{tr('Refresh updates this prepared example from saved records. It does not write new advice. Sample history clears when you restart the workspace.', 'Ukuvuselela kusebenzisa amarekhodi agciniwe kulesi sibonelo. Akubhali izeluleko ezintsha. Umlando wesibonelo uyasulwa uma uqala kabusha indawo yokusebenza.')}</p>}
+      {language !== contentLanguage && report && reading === 'full' && <p className={`${styles.languageNote} no-print`}>{sampleMode ? tr('Refresh prepared example to apply this language.', 'Vuselela isibonelo esilungiselelwe ukuze usebenzise lolu limi.') : tr('Language changes apply to new reports and summaries. Regenerate to translate the full advice.', 'Ushintsho lolimi lusebenza emibikweni emisha nasezifinyezweni. Khiqiza kabusha ukuhumusha zonke izeluleko.')}</p>}
       <div className="flex-1 flex overflow-hidden">
 
         {/* ── Section controls sidebar ───────────
@@ -1032,7 +1040,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                       className="min-h-11 flex-1 min-w-0 text-left px-2.5 py-1.5 rounded-lg"
                       style={{ color: activeSaved?.id === r.id ? 'var(--report-green)' : 'var(--report-ink)' }}>
                       <div className="text-xs font-display">{reportSiteName(r, savedPlaces)}</div>
-                      <div className="text-xs">{new Date(r.savedAt).toLocaleString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { dateStyle: 'medium', timeStyle: 'medium' })} · {tr('Ref', 'Inombolo')} {r.id.slice(-5)}</div>
+                      <div className="text-xs">{reportOriginLabel(r.origin, language)} · {new Date(r.savedAt).toLocaleString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { dateStyle: 'medium', timeStyle: 'medium' })} · {tr('Ref', 'Inombolo')} {r.id.slice(-5)}</div>
                     </button>
                     <button onClick={() => deleteReport(r.id)} title={tr('Delete', 'Susa')}
                       className="min-h-11 px-2 py-1.5 text-xs font-display" style={{ color: 'var(--report-muted)' }}>{tr('Delete', 'Susa')}</button>
@@ -1043,8 +1051,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           )}
 
           <div className={styles.settingsNote}>
-            <strong>{report ? tr('Next report settings', 'Izilungiselelo zombiko olandelayo') : tr('Report settings', 'Izilungiselelo zombiko')}</strong>
-            <p>{tr('Wording changes how the advice reads. Depth changes how much advice is written. Generate a new report to apply these choices.', 'Indlela yokubhala ishintsha ukufundeka kwezeluleko. Ukujula kushintsha ubude bazo. Khiqiza umbiko omusha ukuze usebenzise lezi zinqumo.')}</p>
+            <strong>{sampleMode ? tr('Prepared example', 'Isibonelo esilungiselelwe') : report ? tr('Next report settings', 'Izilungiselelo zombiko olandelayo') : tr('Report settings', 'Izilungiselelo zombiko')}</strong>
+            <p>{sampleMode ? preparedExampleNote(language) : tr('Wording changes how the advice reads. Depth changes how much advice is written. Generate a new report to apply these choices.', 'Indlela yokubhala ishintsha ukufundeka kwezeluleko. Ukujula kushintsha ubude bazo. Khiqiza umbiko omusha ukuze usebenzise lezi zinqumo.')}</p>
           </div>
           <fieldset disabled={loading}>
           {/* Language */}
@@ -1055,8 +1063,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             className="min-h-11 w-full text-xs font-display rounded-lg px-2.5 py-1.5 mb-2 outline-none cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--report-panel)]"
             style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-ink)' }}
           >
-            {LANGUAGE_OPTIONS.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
+            {LANGUAGE_OPTIONS.filter(l => !sampleMode || l.code === 'en' || l.code === 'zu').map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
           </select>
+          {!sampleMode && <>
           {language !== 'en' && (
             <button
               onClick={() => setBilingual(!bilingual)}
@@ -1164,7 +1173,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             ))}
           </div>
 
-          {photoAnalysis && (
+          </>}
+          {!sampleMode && photoAnalysis && (
             <div className="mt-4 p-2.5 rounded-lg" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.2)' }}>
               <div className="text-xs font-display font-medium mb-0.5" style={{ color: 'var(--report-green)' }}>{label('Photos included')}</div>
               <div className="text-xs font-sans" style={{ color: 'var(--report-muted)' }}>{label('Photo analysis will inform the report')}</div>
@@ -1217,7 +1227,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         <div className={`${styles.column} report-column flex-1 overflow-y-auto relative`}
              ref={reportRef}
              style={{ display: showReportColumn ? 'block' : 'none' }}>
-          <ReportReadingGuide reading={reading} onChange={value => { setReading(value); setPanelOpen(false); }} language={language} chapters={chapters} onChapter={jumpToChapter} />
+          <ReportReadingGuide preparedExample={preparedExample} reading={reading} onChange={value => { setReading(value); setPanelOpen(false); }} language={language} chapters={chapters} onChapter={jumpToChapter} />
           {/* Progress while the report is being written. It used to stay pinned at full width
               afterwards, a green rule drawn through whatever line of the report scrolled under it. */}
           {report && loading && (
@@ -1235,7 +1245,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               }} />
             </div>
           )}
+          <ReportPurposeGuide language={language} />
           <div className={styles.document}>
+            {preparedExample && <div className={styles.settingsNote} role="note"><strong>{reportOriginLabel(activeSaved?.origin, language)}</strong><p>{preparedExampleNote(language)}</p></div>}
 
             {/* Print header */}
             <div className="print-header mb-8 pb-6" hidden={reading !== 'full' || presentation !== 'print'} style={{ borderBottom: '2px solid var(--report-border)' }}>
@@ -1245,7 +1257,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                     ImbewuField
                   </div>
                   <div className={`${styles.title} font-display font-bold`}>
-                    {siteName}<span className="block text-sm">{label('Permaculture Site Analysis Report')}</span>
+                    {siteName}<span className="block text-sm">{preparedExample ? reportOriginLabel(activeSaved?.origin, language) : label('Permaculture Site Analysis Report')}</span>
                   </div>
                 </div>
                 <div className="text-right">
@@ -1455,7 +1467,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             )}
           </div>
           <div className={styles.recordTools}>
-          {report && !loading && <ReportVersionDetails reference={activeSaved?.id} settings={settings} language={LANGUAGE_OPTIONS.find(l => l.code === contentLanguage)?.label ?? contentLanguage} savedAt={savedVersion ? activeSaved?.savedAt : undefined} sample={isSampleMode()} />}
+          {report && !loading && <ReportVersionDetails origin={activeSaved?.origin} reference={activeSaved?.id} settings={settings} language={LANGUAGE_OPTIONS.find(l => l.code === contentLanguage)?.label ?? contentLanguage} savedAt={savedVersion ? activeSaved?.savedAt : undefined} sample={isSampleMode()} />}
           <ReportPreparation language={language} location={d} place={reportPlace} onSavedPlace={setPreparedPlace} onChanged={()=>setEvidenceRevision(n=>n+1)} snapshot={!!activeSaved} maps={savedMapRecords} onViewMaps={()=>{setReading('full');setPresentation('screen');setMapVisit(n=>n+1);}}/>
           </div>
         </div>

@@ -3,8 +3,21 @@ import type { LocationData } from './types';
 import type { ReportSiteFacts } from './report-site-facts';
 import { buildBillOfQuantities } from './report-boq';
 import { pdfSafe } from './crop-export-pdf';
+import type { SavedReport } from './saved-reports';
 
 export type ReportSummaryPage = { title: string; lines: string[] };
+
+/** A prepared example has no AI settings: those choices never produced its text. */
+export function preparedSampleReport(input: Omit<SavedReport, 'report' | 'origin' | 'settings' | 'analysedMapIds'>): SavedReport {
+  const lang = input.lang === 'zu' ? 'zu' : 'en';
+  return { ...input, lang, origin: 'prepared-example', report: sampleFullSiteReport(input.facts ?? null, input.location, lang), analysedMapIds: [] };
+}
+
+export function preparedExampleNote(language = 'en'): string {
+  return language === 'zu'
+    ? 'Isibonelo esilungiselelwe samarekhodi agciniwe. Akusikho ukuhlolwa okuphelele kwendawo, umbiko womklamo noma ubufakazi benqubekela-phambili. Akukho ukuhlaziywa okusha kwe-AI.'
+    : 'Prepared example of saved records. It is not a comprehensive site assessment, design report or evidence of progress. No new AI analysis.';
+}
 export function reportSummaryPages(facts: ReportSiteFacts | null, location: LocationData, pageCount: 1 | 5, language = 'en'): ReportSummaryPage[] {
   const zu = language === 'zu';
   const t = (en: string, zulu: string) => zu ? zulu : en;
@@ -52,7 +65,7 @@ export function reportSummaryPages(facts: ReportSiteFacts | null, location: Loca
 
 /** Fixed page count, white paper, no photograph plates. Readable type has priority
  * over squeezing unlimited crop/BOQ rows onto a page; omissions are stated. */
-export async function buildInkSummaryPdf(pages: ReportSummaryPage[], stamp: string, language = 'en'): Promise<Blob> {
+export async function buildInkSummaryPdf(pages: ReportSummaryPage[], stamp: string, language = 'en', scopeNote?: string): Promise<Blob> {
   const { jsPDF } = await import('jspdf');
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
   for (let i = 0; i < pages.length; i++) {
@@ -62,6 +75,10 @@ export async function buildInkSummaryPdf(pages: ReportSummaryPage[], stamp: stri
     doc.text(titleLines.slice(0, 2), 46, 56);
     doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
     let y = 70 + Math.min(titleLines.length, 2) * 20;
+    if (scopeNote) {
+      const scopeLines = doc.splitTextToSize(pdfSafe(scopeNote), 503) as string[];
+      doc.text(scopeLines, 46, y); y += scopeLines.length * 13 + 12;
+    }
     let omitted = false;
     for (const line of pages[i].lines) {
       const wrapped = doc.splitTextToSize(pdfSafe(line), 503) as string[];
