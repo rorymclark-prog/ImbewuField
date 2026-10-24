@@ -73,8 +73,8 @@ must provision — not buildable from code alone).
   pill sat 86px off-screen in isiZulu at 1280px (16px in English at 1024px), and at 768px /funder and /ngo were 73–196px
   too wide (/ngo clipped it, cutting Settings off): /funder's Portfolio map pill is now hidden at lg like /ngo's, and from
   640 to 1279px the Settings, role-switcher and Portfolio map labels go icon-only on headers with the desktop nav. A
-  per-file run of the whole suite caught three older pins the tracks broke (demo-finance's "Crèche", w18-55's Design
-  Studio title, zu-11's sparkline `color-mix`), all fixed. Close-out:
+  per-file run of the whole suite caught four older pins the tracks broke (demo-finance's "Crèche", w18-55's Design
+  Studio title, zu-11's sparkline `color-mix`, w18-14's Teach the Teachers width), all fixed. Close-out:
   `docs/audits/2026-10-24/wave-20-integration-claude.md`.
 
 ### 23 Oct 2026 — Wave 19: re-capture, then five swarm tracks (PRs #1086–#1089 and the staff-public branch, folded on one branch)
