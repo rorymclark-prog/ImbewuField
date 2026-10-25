@@ -1,0 +1,84 @@
+Browser tab: 1, Title: "Isolated weather component verification", URL: "http://127.0.0.1:4266/".
+1 AXWebArea Isolated weather component verification, URL: 127.0.0.1:4266/
+	2 container
+		3 text Isolated component test · synthetic forecast · provider calls:  1
+	4 container
+		5 text Language
+		6 pop up button (collapsed, settable) Description: Language, Value: zu, Secondary Actions: Expand
+			7 menu
+				8 en
+				9 (selected) zu
+				10 st
+				11 ts
+				12 ve
+				13 xx
+		14 text Scenario
+		15 pop up button (collapsed, settable) Description: Scenario, Value: forecast, Secondary Actions: Expand
+			16 menu
+				17 (selected) forecast
+				18 error
+				19 zero
+				20 missing
+				21 clear
+				22 loading
+		23 text Context
+		24 pop up button (collapsed, settable) Description: Context, Value: report, Secondary Actions: Expand
+			25 menu
+				26 (selected) report
+				27 home
+		28 checkbox (settable, integer) Description: Compact, Value: 0
+		29 checkbox (settable, integer) Description: Original snapshot, Value: 0
+		30 button Light
+		31 button Dark
+		71 text Kulindeleke isithwathwa: Namuhla — vikela izithombo
+		72 container
+			73 text Unreviewed isiZulu draft.  English source:  Frost expected Today — protect seedlings
+		74 text Isexwayiso sokushisa: Mso — nisela ekuseni kakhulu, umthunzi wezithombo
+		75 container
+			76 text Unreviewed isiZulu draft.  English source:  Heat warning Mon — water early morning, shade seedlings
+		77 text Kulindeleke imvula enkulu: Bil — hlola ukuphuma kwamanzi, ulibazise ukutshala
+		78 container
+			79 text Unreviewed isiZulu draft.  English source:  Heavy rain expected Tue — check drainage, delay planting
+		35 container
+			36 text 23 °C
+		80 text Amafu kancane
+		81 container
+			82 text Unreviewed isiZulu draft.  English source:  Partly cloudy
+		38 text 12  km/h
+		83 text Izitshalo ziyolahlekelwa amanzi angaba ngu-3.2mm namuhla — nisela cishe lokho uma kungekho mvula
+		84 container
+			85 text Unreviewed isiZulu draft.  English source:  Crops will lose about 3.2mm of water today — water roughly that much if there's no rain
+		41 container
+			42 text Namuhla
+			43 container
+				44 text 23 ° -1 °
+			45 text Ayikho imvula
+			46 text Mso
+			47 container
+				48 text 38 ° 12 °
+			49 text Ayikho imvula
+			50 text Bil
+			51 container
+				52 text 23 ° 12 °
+			53 container
+				54 text 30mm  · 80%
+			55 text Tha
+			56 container
+				57 text 23 ° 12 °
+			58 text Ayikho imvula
+			59 text Sin
+			60 container
+				61 text 23 ° 12 °
+			62 text Ayikho imvula
+			63 text Hla
+			64 container
+				65 text 23 ° 12 °
+			66 text Ayikho imvula
+			67 text Mgq
+			68 container
+				69 text 23 ° 12 °
+			70 text Ayikho imvula
+		86 container
+			87 text Unreviewed isiZulu draft. English source for the days:  Sun, Mon, Tue, Wed, Thu, Fri, Sat ; Today.
+
+The focused UI element is 6 pop up button (collapsed, settable) Description: Language, Value: zu, Secondary Actions: Expand

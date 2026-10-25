@@ -41,6 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  {"when": "25 October 2026", "sha": "cfb75437", "changes": ["Weather drafts now include Sesotho, Xitsonga and Tshivenda.", "Weather cards keep the English source beside draft instructions."], "tour": [{"title": "Check weather drafts", "where": "Home → Weather", "detail": "Read the weather card in your language and compare the English source.", "href": "/home"}]},
   { when: '25 October 2026', sha: '8d2e1a9a', changes: [
     'Home and Invoice open faster and no longer redraw the day after an update.',
     'On a computer the Lima button sits bottom-right and no longer hides buttons.',
