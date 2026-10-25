@@ -162,7 +162,7 @@ const drafts: Record<string, string> = {
   "Download the guided source and decision record": "Khuphela umthombo okhokelweyo nerekhodi lesigqibo",
   "Open my learning folder →": "Vula ifolda yam yokufunda →",
   "Return to the final design stage →": "Buyela kwinqanaba lokugqibela loyilo →",
-  "Some navigation, headings and exercise prompts on this pathway are unreviewed isiXhosa drafts. Core lesson text, model measurements and narration remain in English.": "Ezinye izinto zokuhamba, izihloko nemiyalelo yemisebenzi kule ndlela yokufunda ziidrafti zesiXhosa ezingekahlolwa. Umbhalo ophambili wezifundo, imilinganiselo yomzekelo nokufundwa ngelizwi kuhlala kusesiNgesini.",
+  "Navigation, headings, lesson text and exercise prompts on this pathway are unreviewed isiXhosa drafts. Model measurements and narration remain in English.": "Iindlela zokuhamba, izihloko, umbhalo wezifundo nemiyalelo yemisebenzi kule ndlela yokufunda ziidrafti zesiXhosa ezingekahlolwa. Imilinganiselo yomzekelo nokufundwa ngelizwi kuhlala kusesiNgesini.",
 };
 
 export default drafts;

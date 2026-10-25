@@ -23,9 +23,12 @@ import g20 from './g20-study-components';
 import g21 from './g21-staff-misc';
 import g22 from './g22-production-data';
 import g23 from './g23-funder-charts';
+import g24 from './g24-product-guidance';
+import g25 from './g25-facilitator-crops';
+import g26 from './g26-study-content';
 import s01 from './s01-mel-templates';
 import s02 from './s02-study-tracks';
 
-const SHARDS: Record<string, string>[] = [g01, g02, g03, g04, g05, g06, g07, g08, g09, g10, g11, g13, g14, g15, g16, g17, g18, g19, g20, g21, g22, g23, s01, s02];
+const SHARDS: Record<string, string>[] = [g01, g02, g03, g04, g05, g06, g07, g08, g09, g10, g11, g13, g14, g15, g16, g17, g18, g19, g20, g21, g22, g23, g24, g25, g26, s01, s02];
 
 export const XH_INLINE_SOURCE: Record<string, string> = Object.assign({}, ...SHARDS);

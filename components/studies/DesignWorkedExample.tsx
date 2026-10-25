@@ -55,7 +55,7 @@ export default function DesignWorkedExample() {
     : <DesignDraftCopy en={downloadMessage} zu={downloadMessage.startsWith('Download requested:') ? `Kucelwe ukulanda: ${downloadMessage.match(/^Download requested: (.+?)\. Open the saved file and check it before leaving this page\.$/)?.[1] ?? 'ifayela'}. Vula ifayela elilondoloziwe ulihlole ngaphambi kokuphuma kuleli khasi.` : 'Ukulanda akukwazanga ukulungiswa. Gcina leli khasi livuliwe bese uzama futhi.'} />);
 
   return <>
-    <aside className={`${styles.notice} ${styles.projectNotice}`}><p><strong><Tx en="English teaching preview." /></strong> {pack.notice}</p></aside>
+    <aside className={`${styles.notice} ${styles.projectNotice}`}><p><strong><Tx en="English teaching preview." /></strong> {tx(pack.notice)}</p></aside>
     <nav className={styles.actions} aria-label={tx('Worked example stages')}>
       <a href="#read"><DesignDraftCopy en="1 · Sources" zu="1 · Imithombo" /></a><a href="#map"><DesignDraftCopy en="2 · Influences" zu="2 · Imithelela" /></a><a href="#compare"><DesignDraftCopy en="3 · Alternatives" zu="3 · Ezinye izindlela" /></a>
       <a href="#develop"><DesignDraftCopy en="4 · Fit" zu="4 · Ukuhambisana" /></a><a href="#work"><DesignDraftCopy en="5 · Work and care" zu="5 · Umsebenzi nokunakekela" /></a><a href="#revision"><DesignDraftCopy en="6 · Revision" zu="6 · Ukubuyekeza" /></a><a href="#handover"><DesignDraftCopy en="7 · Handover" zu="7 · Ukudlulisela irekhodi" /></a>
@@ -63,15 +63,15 @@ export default function DesignWorkedExample() {
 
     <section className={styles.section} id="read">
       <p className={styles.eyebrow}><Tx en="1 · Read the brief and source map" /></p><h2><Tx en="What must this plan answer?" /></h2>
-      <p>{pack.sourceCards.find(card => card.id === 'W-BRIEF')!.text}</p>
+      <p>{tx(pack.sourceCards.find(card => card.id === 'W-BRIEF')!.text)}</p>
       <p><Tx en="Read the source cards before accepting a mark on a drawing. The frame is a classroom model; the top edge is model north by convention." /></p>
-      {pack.sourceCards.map(card => <details key={card.id}><Summary>{card.id} · {card.title}</Summary><p><strong>{card.kind}.</strong> {card.text}</p></details>)}
+      {pack.sourceCards.map(card => <details key={card.id}><Summary>{card.id} · {tx(card.title)}</Summary><p><strong>{tx(card.kind)}.</strong> {tx(card.text)}</p></details>)}
       <details><Summary><DesignDraftCopy en="Read every supplied coordinate" zu="Funda zonke izixhumanisi ezinikeziwe" /></Summary>
         <p><Tx en="All values below are fictional classroom inputs in metres. Existing features belong to W-MAP; the alternative belongs to W-B; the compost proposal belongs to W-A. No value is inferred from the picture." /></p>
-        <p><Tx en="Frame: {width} × {height} m." values={{ width: pack.frame.width, height: pack.frame.height }} /> {pack.coordinateSystem.axis}.</p>
+        <p><Tx en="Frame: {width} × {height} m." values={{ width: pack.frame.width, height: pack.frame.height }} /> {tx(pack.coordinateSystem.axis)}.</p>
         <div className={styles.tableScroll} tabIndex={0} role="region" aria-label={tx('Supplied fictional geometry')}><table>
           <caption><DesignDraftCopy en="Model coordinates — rectangles use their top-left corner" zu="Izixhumanisi zemodeli — onxande basebenzisa ikhoneni eliphezulu kwesokunxele" /></caption><thead><tr><th><Tx en="Reference" /></th><th>x / y (m)</th><th><Tx en="Width × height (m)" /></th></tr></thead>
-          <tbody>{geometry.map(feature => <tr key={feature.id}><th>{feature.id}<br />{feature.label}</th><td>{feature.x} / {feature.y}</td><td>{'width' in feature ? `${feature.width} × ${feature.height}` : tx('Reference point only')}</td></tr>)}</tbody>
+          <tbody>{geometry.map(feature => <tr key={feature.id}><th>{feature.id}<br />{tx(feature.label)}</th><td>{feature.x} / {feature.y}</td><td>{'width' in feature ? `${feature.width} × ${feature.height}` : tx('Reference point only')}</td></tr>)}</tbody>
         </table></div>
       </details>
       <OfflinePageLink href="/student/design/folder#folder-d1"><DesignDraftCopy en="Record your own brief and evidence sources →" zu="Rekhoda incazelo yakho nemithombo yobufakazi →" /></OfflinePageLink>
@@ -80,7 +80,7 @@ export default function DesignWorkedExample() {
     <section className={styles.section} id="map">
       <p className={styles.eyebrow}><Tx en="2 · Read influences" /></p><h2><Tx en="Follow people and care before adding features" /></h2>
       <p><Tx en="The water point, growing area and home-to-gate route suggest journeys to discuss with the people doing the work. They do not establish a measured travel time or an agreed workload." /></p>
-      <p><strong><Tx en="Reported, not surveyed:" /></strong> {pack.sourceCards.find(card => card.id === 'W-OBS')!.text}</p>
+      <p><strong><Tx en="Reported, not surveyed:" /></strong> {tx(pack.sourceCards.find(card => card.id === 'W-OBS')!.text)}</p>
       <div className={styles.actions} role="group" aria-label={tx('Worked-example drawing view')}>{views.map(item => <button key={item.id} type="button" aria-pressed={view === item.id} onClick={() => { setView(item.id); setDownloadMessage(''); }}><DesignDraftCopy en={item.label} zu={viewZu[item.id]} /></button>)}</div>
       <DesignWorkedDiagram view={view} svgRef={mapRef} />
       <div className={styles.actions}><button type="button" onClick={() => {
@@ -97,10 +97,10 @@ export default function DesignWorkedExample() {
       <div className={styles.actions} role="group" aria-label={tx('Provisional response')}>{[['A', 'Investigate A first'], ['B', 'Investigate B first'], ['defer', 'Defer physical changes']].map(([id, label]) => <button key={id} type="button" aria-pressed={choice === id} onClick={() => { setChoice(id); setChoiceChecked(false); }}><DesignDraftCopy en={label} zu={id==='A'?'Phenya u-A kuqala':id==='B'?'Phenya u-B kuqala':'Hlehlisa izinguquko ezibonakalayo'} /></button>)}</div>
       <div className={styles.actions}><button type="button" disabled={!choice} aria-expanded={choiceChecked} onClick={() => setChoiceChecked(value => !value)}><DesignDraftCopy en={choiceChecked ? 'Hide comparison feedback' : 'Compare my reasoning'} zu={choiceChecked ? 'Fihla impendulo yokuqhathanisa' : 'Qhathanisa izizathu zami'} /></button></div>
       {choiceChecked && <div className={styles.practice}>
-        <p><strong><Tx en="Discuss the reason, not just the selection." /></strong> {choice === 'B' ? tx('Investigating B can be reasonable if you explain its additional location checks. A relocated outline is not evidence of better growing conditions.') : choice === 'defer' ? pack.decision.deferral : pack.decision.provisional}</p>
-        <p>{pack.decision.rejected} {pack.reconsider}</p>
+        <p><strong><Tx en="Discuss the reason, not just the selection." /></strong> {choice === 'B' ? tx('Investigating B can be reasonable if you explain its additional location checks. A relocated outline is not evidence of better growing conditions.') : choice === 'defer' ? tx(pack.decision.deferral) : tx(pack.decision.provisional)}</p>
+        <p>{tx(pack.decision.rejected)} {tx(pack.reconsider)}</p>
         <div className={styles.tableScroll} role="region" tabIndex={0} aria-label={tx('Same criteria for both concepts')}><table><caption><Tx en="Compare each option against the same evidence" /></caption><thead><tr><th><Tx en="Criterion / source" /></th><th><Tx en="Concept A" /></th><th><Tx en="Concept B" /></th><th><Tx en="Still unknown" /></th></tr></thead>
-          <tbody>{pack.comparison.map(row => <tr key={row.criterion}><th>{row.criterion}<br /><small>{row.source}</small></th><td>{row.A}</td><td>{row.B}</td><td>{row.limit}</td></tr>)}</tbody>
+          <tbody>{pack.comparison.map(row => <tr key={row.criterion}><th>{tx(row.criterion)}<br /><small>{row.source}</small></th><td>{tx(row.A)}</td><td>{tx(row.B)}</td><td>{tx(row.limit)}</td></tr>)}</tbody>
         </table></div>
       </div>}
       <p><Tx en="This is a discussion exercise, not an assessment result. A facilitator reviews the evidence and explanation." /></p><OfflinePageLink href="/student/design/folder#folder-d3"><DesignDraftCopy en="Record alternatives and your reasoned choice →" zu="Rekhoda ezinye izindlela nokukhetha kwakho okunezizathu →" /></OfflinePageLink>
@@ -120,27 +120,27 @@ export default function DesignWorkedExample() {
     <section className={styles.section} id="work">
       <p className={styles.eyebrow}><Tx en="5 · Make work and care feasible" /></p><h2><Tx en="Keep each feature connected to its next task" /></h2>
       <p><Tx en="Only discussion and investigation may proceed. Agree the evidence and care first, then define materials and request comparable quotations. No construction budget is supplied." /></p>
-      {pack.dependencies.map(row => <article className={styles.practice} key={row.item}><h3>{row.item}</h3><p><strong><Tx en="Drawing references:" /></strong> {row.featureIds.join(', ')}</p><p><strong><Tx en="Before physical work:" /></strong> {row.before}.</p><p><strong><Tx en="Cost:" /></strong> {row.cost}.</p><p><strong><Tx en="R1 record:" /></strong> {row.R1.phase}. {row.R1.quantity}. {row.R1.careStatus}.</p><p><strong><Tx en="Who discusses the next check:" /></strong> {row.owner}.</p></article>)}
+      {pack.dependencies.map(row => <article className={styles.practice} key={row.item}><h3>{tx(row.item)}</h3><p><strong><Tx en="Drawing references:" /></strong> {row.featureIds.join(', ')}</p><p><strong><Tx en="Before physical work:" /></strong> {tx(row.before)}.</p><p><strong><Tx en="Cost:" /></strong> {tx(row.cost)}.</p><p><strong><Tx en="R1 record:" /></strong> {tx(row.R1.phase)}. {tx(row.R1.quantity)}. {tx(row.R1.careStatus)}.</p><p><strong><Tx en="Who discusses the next check:" /></strong> {tx(row.owner)}.</p></article>)}
       <p><TxRich en="Use {link} to practise cash timing. A sales or packaging practice budget cannot serve as a garden-construction budget." nodes={{ link: <OfflinePageLink href="/student/finance"><Tx en="Farm Finance" /></OfflinePageLink> }} /></p><OfflinePageLink href="/student/design/folder#folder-d5"><ArrowLabel>{tx('Record work, costs and agreed care')}</ArrowLabel></OfflinePageLink>
     </section>
 
     <section className={styles.section} id="revision">
       <p className={styles.eyebrow}><Tx en="6 · Respond to later information" /></p><h2><Tx en="What changes when care is not agreed?" /></h2>
-      <p><strong>{pack.revision.source}:</strong> {pack.sourceCards.find(card => card.id === pack.revision.source)!.text}</p><p><Tx en="Before opening the record, name what should change in the drawing, work sequence, purchasing and care plan." /></p>
-      <details><Summary><DesignDraftCopy en="Read the R1 → R2 revision record" zu="Funda irekhodi lokubuyekeza kusukela ku-R1 kuya ku-R2" /></Summary><p>{pack.revision.change} {pack.revision.reason}</p>
-        {pack.dependencies.map(row => <article key={row.item} className={styles.practice}><h3>{row.item} · {row.featureIds.join(', ')}</h3><p><strong><Tx en="Work:" /></strong> {row.R1.phase} → {row.R2.phase}.</p><p><strong><Tx en="Quantity / purchasing:" /></strong> {row.R1.quantity} → {row.R2.quantity}.</p><p><strong><Tx en="Cost:" /></strong> {row.R1.costStatus} → {row.R2.costStatus}.</p><p><strong><Tx en="Care:" /></strong> {row.R1.careStatus} → {row.R2.careStatus}.</p></article>)}
-        <p><strong><Tx en="Next owner:" /></strong> {pack.revision.nextOwner}</p>
+      <p><strong>{pack.revision.source}:</strong> {tx(pack.sourceCards.find(card => card.id === pack.revision.source)!.text)}</p><p><Tx en="Before opening the record, name what should change in the drawing, work sequence, purchasing and care plan." /></p>
+      <details><Summary><DesignDraftCopy en="Read the R1 → R2 revision record" zu="Funda irekhodi lokubuyekeza kusukela ku-R1 kuya ku-R2" /></Summary><p>{tx(pack.revision.change)} {tx(pack.revision.reason)}</p>
+        {pack.dependencies.map(row => <article key={row.item} className={styles.practice}><h3>{tx(row.item)} · {row.featureIds.join(', ')}</h3><p><strong><Tx en="Work:" /></strong> {tx(row.R1.phase)} → {tx(row.R2.phase)}.</p><p><strong><Tx en="Quantity / purchasing:" /></strong> {tx(row.R1.quantity)} → {tx(row.R2.quantity)}.</p><p><strong><Tx en="Cost:" /></strong> {tx(row.R1.costStatus)} → {tx(row.R2.costStatus)}.</p><p><strong><Tx en="Care:" /></strong> {tx(row.R1.careStatus)} → {tx(row.R2.careStatus)}.</p></article>)}
+        <p><strong><Tx en="Next owner:" /></strong> {tx(pack.revision.nextOwner)}</p>
       </details>
       <div className={styles.actions}><button type="button" onClick={() => setView('revision')}><DesignDraftCopy en="Show R2 on the diagram above" zu="Bonisa u-R2 emdwebeni ongenhla" /></button><a href="#map"><DesignDraftCopy en="Go to the diagram ↑" zu="Yiya emdwebeni ↑" /></a></div>
       <h3><Tx en="Plan the next observations" /></h3><p><Tx en="Agree the observer and timing with the household. These are proposed checks; no later field results are supplied." /></p>
-      {pack.observationPlan.map(row => <details key={row.goal}><Summary>{row.goal}</Summary><p>{row.task}</p><p><strong><Tx en="When:" /></strong> {row.trigger}.</p><p><strong><Tx en="What would prompt review:" /></strong> {row.review}</p></details>)}
+      {pack.observationPlan.map(row => <details key={row.goal}><Summary>{tx(row.goal)}</Summary><p>{tx(row.task)}</p><p><strong><Tx en="When:" /></strong> {tx(row.trigger)}.</p><p><strong><Tx en="What would prompt review:" /></strong> {tx(row.review)}</p></details>)}
       <OfflinePageLink href="/student/design/folder#folder-d6"><DesignDraftCopy en="Record feedback, observation plans and revisions →" zu="Rekhoda impendulo, izinhlelo zokuqaphela nokubuyekeza →" /></OfflinePageLink>
     </section>
 
     <section className={styles.section} id="practice">
       <p className={styles.eyebrow}><Tx en="Independent practice and facilitator discussion" /></p><h2><Tx en="Apply the method to new evidence" /></h2>
-      <p><strong>{pack.variation.id} · {pack.variation.kind}.</strong> {pack.variation.text}</p><p>{pack.variation.question}</p><details><Summary><DesignDraftCopy en="After your attempt: compare the reasoning" zu="Ngemva kokuzama: qhathanisa izizathu" /></Summary><p>{pack.variation.feedback}</p></details>
-      <h3><Tx en="Explain the guided evidence" /></h3>{pack.facilitator.map(item => <details key={item.question}><Summary>{item.question}</Summary><p>{item.answer}</p></details>)}<p><Tx en="Keep your spoken or written explanation for a facilitator to review. Reading or revealing an answer does not award design competence." /></p>
+      <p><strong>{pack.variation.id} · {tx(pack.variation.kind)}.</strong> {tx(pack.variation.text)}</p><p>{tx(pack.variation.question)}</p><details><Summary><DesignDraftCopy en="After your attempt: compare the reasoning" zu="Ngemva kokuzama: qhathanisa izizathu" /></Summary><p>{tx(pack.variation.feedback)}</p></details>
+      <h3><Tx en="Explain the guided evidence" /></h3>{pack.facilitator.map(item => <details key={item.question}><Summary>{tx(item.question)}</Summary><p>{tx(item.answer)}</p></details>)}<p><Tx en="Keep your spoken or written explanation for a facilitator to review. Reading or revealing an answer does not award design competence." /></p>
     </section>
 
     <section className={styles.section} id="handover">

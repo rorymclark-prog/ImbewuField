@@ -52,6 +52,28 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 25 Oct 2026 — isiXhosa phases 4–5: reports, crops, production data and Study content (PR #1090)
+All unreviewed machine drafts keyed by the exact English (`lib/locales/xh-inline/g18`–`g26`); English
+and isiZulu output are unchanged.
+- **Reports:** programme report builder takes a language option (`lib/programme-report.ts`, g18), and
+  the funder cohort charts are translated (g23).
+- **Crops and production:**
+  - Crop components and `/samples/production` (g19).
+  - Production data prose and product guidance (g22, g24). `lib/xh-inline-match.ts` translates
+    sentences a lib has already built, so exports and PDFs stay English.
+  - The facilitator crop-plan page (g25): tasks, auto-suggest, review lines and the WhatsApp share text.
+- **Studies:**
+  - Study components and staff screens (g20, g21).
+  - App guides, the finance practice and source bodies, design lessons and cases, the worked example,
+    its diagram and the design folder (g26, 1,512 strings).
+  - `FinanceText` looks up whole bodies; `components/studies/TxLabelled.tsx` carries aria-labels on
+    server pages. The Design draft notice now says lesson text is drafted.
+- **Still English:**
+  - Crop and species names, catalogue notes and bed labels.
+  - PDFs and download texts.
+  - Narration audio.
+  - Guide card titles on `/student`, which is byte-pinned.
+
 ### 24 Oct 2026 — isiXhosa phase 3: Studies slide cards and the last English corners (PR #1090)
 - **Studies slide cards:** all 10 modules (240 slides) as isiXhosa silent cards, with the draft above
   the exact English narration (`docs/narration/<module>.xh.silent-draft.json`).

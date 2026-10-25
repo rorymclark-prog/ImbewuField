@@ -20,12 +20,12 @@ export default function GuideScreenSlides({ guideId }: { guideId: string }) {
     </div>
     <div className={styles.screenSlides} role="list" aria-label={tx('Example app screens')}>
       {screens.map((screen, index) => <figure className={styles.screenSlide} role="listitem" key={screen.src}>
-        <a href={screen.src} target="_blank" rel="noopener noreferrer" aria-label={inlineTemplate(lang, 'Open {title} picture at full size', null, { title: screen.title })}>
-          <img src={screen.src} alt={inlineTemplate(lang, '{title} screen in the sample farm', null, { title: screen.title })} loading="lazy" />
+        <a href={screen.src} target="_blank" rel="noopener noreferrer" aria-label={inlineTemplate(lang, 'Open {title} picture at full size', null, { title: tx(screen.title) })}>
+          <img src={screen.src} alt={inlineTemplate(lang, '{title} screen in the sample farm', null, { title: tx(screen.title) })} loading="lazy" />
         </a>
         <figcaption>
-          <strong>{inlineTemplate(lang, 'Screen {n} of {total}: {title}', null, { n: index + 1, total: screens.length, title: screen.title })}</strong>
-          <span>{screen.caption}</span>
+          <strong>{inlineTemplate(lang, 'Screen {n} of {total}: {title}', null, { n: index + 1, total: screens.length, title: tx(screen.title) })}</strong>
+          <span>{tx(screen.caption)}</span>
           {screen.src.endsWith('/map-tools.png') && <small>Imagery: Esri, Maxar, Earthstar Geographics · <a href="https://www.mapbox.com/about/maps/">© Mapbox</a> · <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a></small>}
         </figcaption>
       </figure>)}

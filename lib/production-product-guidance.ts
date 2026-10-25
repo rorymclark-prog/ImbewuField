@@ -1,10 +1,12 @@
 // The buying shortlist and the calendar assumption answer different questions. A mixed
 // early/middle/late orchard can extend supply, but its union is not one tree's season.
-import { bananaCirclesIn, firstCropAgeLabel, formatMonthSpan, formatRange, isHouseholdFoodHarvest, placedTreeGroups, type PlacedPlant, type PlacedTreeGroup, type TreeSeasonChoices, confirmedTreeMonths, type HarvestWindow } from './perennial-harvest';
+import { PERENNIAL_HARVEST, bananaCirclesIn, firstCropAgeLabel, formatMonthSpan, formatRange, isHouseholdFoodHarvest, placedTreeGroups, type PlacedPlant, type PlacedTreeGroup, type TreeSeasonChoices, confirmedTreeMonths, type HarvestWindow } from './perennial-harvest';
 import { enterprisesForHousing, HOUSING_LABEL, placedAnimalGroups, type HousingKind, type PlacedAnimalGroup } from './animal-enterprises';
 import type { GrowingZoneId } from './growing-zones';
 import type { SiteProductionConditions } from './site-survey';
 import type { ProductionGuideItem } from './crop-export-schedule';
+import { inlineText, inlineTemplate } from './xh-inline';
+import { inlineBuilt } from './xh-inline-match';
 
 interface Reference { label: string; url: string }
 interface Profile {
@@ -311,4 +313,86 @@ export function productPurchasingMarkdown(context: ProductGuideContext, zones: r
   const guide = buildProductGuidance(context, zones, conditions);
   if (!guide.foodForest.length && !guide.animalProducts.length) return '';
   return ['## Production purchases and variety assumptions', 'Research checked 11 October 2026. Buy only proposed stock after checking local suitability. Existing plants and structures are inventory, not repeat purchases. Early/middle/late describes picking order; compatible flowering is a separate pollination check. Expected seasons describe established production, not guaranteed food this year.', ...[...guide.foodForest, ...guide.animalProducts].flatMap(item => [`### ${item.title}`, ...item.lines, ...(item.sources ?? []).map(s => `Source: [${s.label}](${s.url})`)])].join('\n\n');
+}
+
+// ── The same guidance, read in isiXhosa ──────────────────────────────────────────────────
+//
+// buildProductGuidance's English is shared with the printed plan and the tests, so it stays as it
+// is. The screen asks productionGuideText (lib/crop-export-schedule) for each line, which falls
+// back to productGuideLine below: the composed lines are matched against these templates and
+// filled again with the same values, and each piece the sentence was built from (a profile's care
+// or buying text, a reference note) is translated by its exact English, with the isiXhosa in
+// lib/locales/xh-inline/g24-product-guidance.ts. Plant, animal and variety names, regions,
+// numbers and units are put back untouched. A line that fits nothing stays English.
+export const PRODUCT_GUIDE_TEMPLATES = [
+  '{existing} existing; {proposed} proposed. Products: {products}.',
+  '{existing} existing; {proposed} proposed structure(s). No animal count or production dates assumed.',
+  '{existing} existing; {proposed} proposed structure(s). Selected enterprise: {product}. No animal head count or output is assumed.',
+  'Enterprise options: {options}.',
+  'Count assumption: {n} banana circle(s) × 3 planted bananas. Followers are not additional planted trees.',
+  'First crop reference: {age}. {note} Actual timing depends on variety and site care.',
+  'Established production reference: {range} years. {note}',
+  'Production reference: {range} {unit}. {note}',
+  'First product reference: {range} weeks. {note}',
+  'Productive-life reference: {range} years. {note}',
+  'Age/system reference: {point}',
+  'Season reference: {text} This commercial management reference is not a naturally flat household egg supply.',
+  'Pollination: {kind}. Check the chosen cultivar\'s requirements with the nursery.',
+  '{label}. {region}. {note} Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.',
+  '{label}. {region}. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.',
+  'Reference only — {region}: {span}.',
+  'Reference only (pods, not leaf-picking dates) — {region}: {span}.',
+  'Regional reference: {name}',
+] as const;
+
+/** Pollination.value with its hyphens read as spaces, as the line above shows it. */
+const POLLINATION_KINDS: readonly string[] = ['self fertile', 'partly self fertile', 'needs cross pollinator', 'separate male female plants'];
+
+let referenceLineIndex: Map<string, { title: string; note: string }> | undefined;
+/** "Title: note" lines of the supplementary references, which are the only lines made of two drafted parts. */
+function referenceLines(): Map<string, { title: string; note: string }> {
+  if (!referenceLineIndex) {
+    referenceLineIndex = new Map();
+    for (const harvest of Object.values(PERENNIAL_HARVEST)) {
+      for (const reference of harvest.supplementaryReferences ?? []) referenceLineIndex.set(`${reference.title}: ${reference.note}`, { title: reference.title, note: reference.note });
+    }
+  }
+  return referenceLineIndex;
+}
+
+const lowerFirst = (text: string) => text.charAt(0).toLowerCase() + text.slice(1);
+
+/** "eggs" or "wool (non-food)" with the product word in the reader's language. */
+function productWordText(lang: string, text: string): string {
+  const match = /^(eggs|meat|milk|honey|fish|wool)( \(non-food\))?$/.exec(text);
+  if (!match) return text;
+  const word = lowerFirst(inlineText(lang, match[1].charAt(0).toUpperCase() + match[1].slice(1)));
+  return match[2] ? `${word} (${inlineText(lang, 'non-food')})` : word;
+}
+
+function productGuideValue(lang: string, name: string, captured: string): string {
+  switch (name) {
+    case 'products': case 'note': case 'point': case 'text': case 'unit': return inlineBuilt(lang, captured, []);
+    case 'label': return inlineBuilt(lang, captured, ['Regional reference: {name}']);
+    case 'span': return inlineText(lang, captured);
+    case 'kind': return POLLINATION_KINDS.includes(captured) ? inlineText(lang, captured) : captured;
+    case 'age': {
+      const unit = /^(.+) (months|years)$/.exec(captured);
+      return unit ? inlineTemplate(lang, `{n} ${unit[2]}`, null, { n: unit[1] }) : captured;
+    }
+    case 'product': return productWordText(lang, captured);
+    case 'options': return captured.split('; ').map((option) => {
+      const match = /^(.*) \(((?:eggs|meat|milk|honey|fish|wool)(?:, non-food)?)\)$/.exec(option);
+      return match ? `${match[1]} (${match[2].split(', ').map((word) => word === 'non-food' ? inlineText(lang, word) : productWordText(lang, word)).join(', ')})` : option;
+    }).join('; ');
+    default: return captured;
+  }
+}
+
+/** One composed line of the product guide in the reader's language; English for every language but isiXhosa. */
+export function productGuideLine(lang: string, english: string): string {
+  if (lang !== 'xh') return english;
+  const reference = referenceLines().get(english);
+  if (reference) return `${inlineText(lang, reference.title)}: ${inlineText(lang, reference.note)}`;
+  return inlineBuilt(lang, english, PRODUCT_GUIDE_TEMPLATES, (name, captured) => productGuideValue(lang, name, captured));
 }

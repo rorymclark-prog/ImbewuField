@@ -8,11 +8,12 @@ import { projectMoney } from '@/lib/finance-project';
 import OfflinePageLink from '@/components/studies/OfflinePageLink';
 import styles from '@/components/studies/FinanceCourse.module.css';
 import Tx, { TxImg, TxRich } from '@/components/studies/Tx';
+import TxLabelled from '@/components/studies/TxLabelled';
 
 export const metadata = { title: 'Farm Finance practical project — teaching preview', robots: { index: false, follow: false } };
 export function generateStaticParams() { return project.cases.map(exercise => ({ case: exercise.id })); }
 function Table({ title, headers, rows }: { title: string; headers: string[]; rows: ReactNode[][] }) {
-  return <div className={styles.tableScroll} tabIndex={0} role="region" aria-label={`${title}; scroll sideways if needed`}><table><caption><Tx en={title} /> · <Tx en="Scroll sideways if any columns are hidden." /></caption><thead><tr>{headers.map(h => <th scope="col" key={h}><Tx en={h} /></th>)}</tr></thead><tbody>{rows.map((row, i) => <tr key={i}>{row.map((cell, j) => <td key={j}>{cell}</td>)}</tr>)}</tbody></table></div>;
+  return <TxLabelled className={styles.tableScroll} tabIndex={0} role="region" en="{title}; scroll sideways if needed" values={{ title }} lookup={['title']}><table><caption><Tx en={title} /> · <Tx en="Scroll sideways if any columns are hidden." /></caption><thead><tr>{headers.map(h => <th scope="col" key={h}><Tx en={h} /></th>)}</tr></thead><tbody>{rows.map((row, i) => <tr key={i}>{row.map((cell, j) => <td key={j}>{cell}</td>)}</tr>)}</tbody></table></TxLabelled>;
 }
 
 export default async function FinanceProjectPage({ params }: { params: Promise<{ case: string }> }) {
@@ -25,7 +26,7 @@ export default async function FinanceProjectPage({ params }: { params: Promise<{
     <main className={styles.main}>
       <section className={styles.hero}><div className={styles.heroText}><p className={styles.eyebrow}><Tx en="Bring the course together · {title}" values={{ title: c.title }} lookup={['title']} /></p><h1><Tx en="One growing area." /><br /><Tx en="Follow every record." /></h1><p><Tx en="Start with a plan. Then check what was harvested, delivered and paid. Show your calculations and explain what the evidence cannot tell you." /></p><div className={styles.actions}><a href="#source-cards"><Tx en="Read the source cards" /></a><a href="#worksheet"><Tx en="Go to my worksheet" /></a></div></div><TxImg src="/studies-guides/expense-record.jpg" alt="Illustrated grower studying records at a homestead table" width={1672} height={941} /></section>
       <aside className={`${styles.notice} ${styles.projectNotice}`}><p><strong><Tx en="English teaching preview." /></strong> <Tx en="Every date, amount, quantity and measurement in these cases is invented for practice. These are not local prices, expected yields or recommendations for a real farm. Practitioner and learner review remain open." /></p></aside>
-      <nav aria-label="Project cases" className={styles.actions}>{project.cases.map(entry => <OfflinePageLink key={entry.id} href={`/student/finance/project/${entry.id}`} aria-current={entry.id === id ? 'page' : undefined}><Tx en={entry.title} /></OfflinePageLink>)}</nav>
+      <TxLabelled as="nav" en="Project cases" className={styles.actions}>{project.cases.map(entry => <OfflinePageLink key={entry.id} href={`/student/finance/project/${entry.id}`} aria-current={entry.id === id ? 'page' : undefined}><Tx en={entry.title} /></OfflinePageLink>)}</TxLabelled>
       <section className={styles.section}><h2><Tx en="How to use this project" /></h2><p><Tx en="For the supported project day, use “Work together”. For an independent attempt, use “Try it yourself”. After feedback, use “A fresh case”. Each case starts again with its own sources and opening balances." /></p><p><Tx en="Save your worksheet before changing cases. A facilitator can collect your paper or oral explanation as well as your calculations. The self-check is practice feedback; it is not a submitted or accredited assessment." /></p><p><Tx en="Keep the original plan separate from the later records. Make a short final pack: a marked site sketch, budget with exclusions, dated cash forecast, harvest destinations, invoice/payment trail, and a review with a next action." /></p></section>
       <section id="source-cards" className={styles.section}>
         <p className={styles.eyebrow}><Tx en="1 · Set the boundary" /></p><h2><Tx en="The practice site and opening record" /></h2>

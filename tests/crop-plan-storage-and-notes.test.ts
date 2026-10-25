@@ -547,7 +547,8 @@ test('the plan page renders the accepted notes with the same grouping the review
   // the label is what carries that honesty.
   // Month AND year — "suggested in Sep" read thirteen months later points at
   // the wrong September.
-  assert.match(PAGE, /From the plan suggested in \{planNotesDateLabel\(generatedAt\)\}/);
+  // The sentence is an inlineTemplate so isiXhosa readers get a draft: the date is its {date} value.
+  assert.match(PAGE, /From the plan suggested in \{date\}\.[^;]*\{ date: planNotesDateLabel\(generatedAt\) \}/);
   assert.match(PAGE, /Anything you have changed by hand since is not\s*\n?\s*described here\./);
 });
 

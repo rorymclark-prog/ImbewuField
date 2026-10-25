@@ -26,7 +26,9 @@ function sourceFiles(dir: string, out: string[] = []): string[] {
 }
 const SOURCE = ['app', 'components', 'lib'].flatMap((d) => sourceFiles(join(ROOT, d))).map((f) => readFileSync(f, 'utf8')).join('\n');
 // Literals may be written with escaped quotes or apostrophes in the source.
-const inSource = (english: string) => [english, english.replace(/'/g, "\\'"), english.replace(/"/g, '\\"'), english.replace(/’/g, "\\u2019")]
+// A multi-line course body (the markdown-lite text in lib/course-*-content.json) is stored there with its
+// line breaks and quotes JSON-escaped, so that escaped form counts as the source showing it too.
+const inSource = (english: string) => [english, english.replace(/'/g, "\\'"), english.replace(/"/g, '\\"'), english.replace(/’/g, "\\u2019"), JSON.stringify(english).slice(1, -1)]
   .some((form) => SOURCE.includes(form));
 
 test('every shard is spread into the index', () => {

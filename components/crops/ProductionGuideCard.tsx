@@ -23,8 +23,8 @@ function GuideItem({ item, product = false, named = false }: { item: ProductionG
   const { lang } = useLanguage();
   return <div className="py-2" style={{ borderTop: '1px solid var(--border)' }}>
     <h4 className="font-sans font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{named ? item.title : productionGuideText(lang, item.title)}</h4>
-    {item.expectedSeason && <div className="my-2" role="img" aria-label={`${item.expectedSeason.label}: ${item.expectedSeason.months.map(m => ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m - 1]).join(', ')}. ${item.expectedSeason.basis}`}>
-      <p className="font-sans text-xs mb-2">{item.expectedSeason.label} · {inlineText(lang, 'expected when established')}</p>
+    {item.expectedSeason && <div className="my-2" role="img" aria-label={`${productionGuideText(lang, item.expectedSeason.label)}: ${item.expectedSeason.months.map(m => ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m - 1]).join(', ')}. ${productionGuideText(lang, item.expectedSeason.basis)}`}>
+      <p className="font-sans text-xs mb-2">{productionGuideText(lang, item.expectedSeason.label)} · {inlineText(lang, 'expected when established')}</p>
       <div className="grid grid-cols-12 gap-0.5">{['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map((label, i) => <div key={i} className="text-center font-sans text-xs rounded py-2" style={{ background: item.expectedSeason!.months.includes(i + 1) ? 'var(--emerald)' : 'var(--bg-2)', color: item.expectedSeason!.months.includes(i + 1) ? 'white' : 'var(--text-secondary)' }}>{label}</div>)}</div>
     </div>}
     {product && <p className="font-sans mt-1 text-xs" style={{ color: 'var(--text-secondary)' }}>{productionGuideText(lang, item.lines[0])}</p>}

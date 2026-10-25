@@ -13,6 +13,7 @@ import { FinanceZuText, FinanceZuBadge, FinanceZuLessonReading } from '@/compone
 import styles from '@/components/studies/FinanceCourse.module.css';
 import Summary from '@/components/studies/Summary';
 import Tx, { TxArrow, TxImg } from '@/components/studies/Tx';
+import TxLabelled from '@/components/studies/TxLabelled';
 
 export const metadata = { title: 'Farm Finance lesson — ImbewuField teaching preview', robots: { index: false, follow: false } };
 export function generateStaticParams() { return FINANCE_LESSONS.map(({ lesson }) => ({ lesson: lesson.id })); }
@@ -56,7 +57,7 @@ export default async function FinanceLessonPage({ params }: { params: Promise<{ 
       {unit.sources.length > 0 && <FullToolsOnly><section className={`${styles.section} ${styles.sourceLinks}`}><details><Summary><Tx en="Sources and further reading" /></Summary><ul>{unit.sources.map(source => <li key={source.url}><a href={source.url}>{source.label}</a></li>)}</ul></details></section></FullToolsOnly>}
       {lesson.id === 'f8-3' && <section className={styles.section}><h2><Tx en="Bring the course together" /></h2><p><Tx en="Try the connected practice case, then work through an independent case with fresh figures." /></p><div className={styles.actions}><OfflinePageLink href="/student/finance/project/guided"><TxArrow en="Open the practical project" /></OfflinePageLink></div></section>}
       <section className={styles.section}><h2><Tx en="Keep your place" /></h2><FinanceReadingChecklist lessonId={lesson.id} lessonIds={FINANCE_LESSONS.map(e => e.lesson.id)} />
-        <nav aria-label="Finance lesson navigation" className={styles.actions}>{previous && <OfflinePageLink href={`/student/finance/${previous.id}`}><TxArrow dir="back" en={previous.title} /></OfflinePageLink>}{next ? <OfflinePageLink className={styles.primary} href={`/student/finance/${next.id}`}><TxArrow en="Next: {title}" values={{ title: next.title }} lookup={['title']} /></OfflinePageLink> : <OfflinePageLink className={styles.primary} href="/student/finance"><Tx en="Return to the course outline" /></OfflinePageLink>}</nav>
+        <TxLabelled as="nav" en="Finance lesson navigation" className={styles.actions}>{previous && <OfflinePageLink href={`/student/finance/${previous.id}`}><TxArrow dir="back" en={previous.title} /></OfflinePageLink>}{next ? <OfflinePageLink className={styles.primary} href={`/student/finance/${next.id}`}><TxArrow en="Next: {title}" values={{ title: next.title }} lookup={['title']} /></OfflinePageLink> : <OfflinePageLink className={styles.primary} href="/student/finance"><Tx en="Return to the course outline" /></OfflinePageLink>}</TxLabelled>
       </section>
     </main>
   </div>;

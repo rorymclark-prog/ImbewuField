@@ -1,4 +1,4 @@
-import { buildProductGuidance, type ProductGuideContext, type ExpectedSeason } from './production-product-guidance';
+import { buildProductGuidance, productGuideLine, type ProductGuideContext, type ExpectedSeason } from './production-product-guidance';
 // ── Crop plan → the things a farmer takes away from the screen ──────────────
 //
 // Two exports are built on top of this module: a calendar file
@@ -785,6 +785,9 @@ export function productionGuideText(lang: string, english: string): string {
     return captured;
   });
   if (translated !== english || lang !== 'xh') return translated;
+  // The product guidance's composed lines (care, buying advice, references) and their pieces.
+  const product = productGuideLine(lang, english);
+  if (product !== english) return product;
   // "Chickens: Laying hens (commercial)" — the structure's name is drafted, the enterprise name is kept.
   const colon = english.indexOf(': ');
   const head = colon > 0 ? english.slice(0, colon) : '';

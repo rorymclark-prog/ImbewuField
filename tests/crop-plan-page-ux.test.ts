@@ -130,7 +130,8 @@ test('existing October and November pickings cannot be contradicted by a separat
   assert.ok(comparison.some(line => /^For crops with a verified kg\/m² benchmark,.*total about/.test(line)), 'the useful sourced benchmark comparison remains');
   assert.doesNotMatch(comparison.join(' '), /No verified fresh-picking window|Nothing (?:is )?due for picking|should still be usable in/,
     'the comparison cannot declare annual gaps or storage months beside a dated food chart');
-  assert.match(productionPage, /> Planned crop comparison<\/div>/);
+  // The heading may be wrapped in inlineText(lang, …) so isiXhosa readers get a draft; the English is unchanged.
+  assert.match(productionPage, /> (?:Planned crop comparison|\{inlineText\(lang, 'Planned crop comparison'\)\})<\/div>/);
   assert.match(productionPage, /New vegetable and staple crop cycles, using published yield benchmarks\./);
   const timingDestination = productionPage.match(/See ([^.]+) above for picking months and gaps\./)?.[1];
   const foodCard = ts.createSourceFile('YearOfFoodCard.tsx', source('../components/crops/YearOfFoodCard.tsx'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
@@ -465,7 +466,7 @@ test('the overlap warning leads with words and keeps the percentage secondary', 
 test('the red benchmark state names the conflicting plantings and can open each one', () => {
   const page = source('../app/facilitator/crops/page.tsx');
   // The JSX itself, not the prose about it in a comment above.
-  const at = page.indexOf('>Resolve overlapping bed space<');
+  const at = Math.max(page.indexOf('>Resolve overlapping bed space<'), page.indexOf("inlineText(lang, 'Resolve overlapping bed space')"));
   assert.ok(at > 0, 'the red state is gone; rewrite this test rather than deleting it');
   const block = page.slice(at, at + 3800);
   assert.match(block, /areaConflictDetails\.map/, 'the conflicting plantings must be listed, not only the bed labels');
@@ -475,7 +476,7 @@ test('the red benchmark state names the conflicting plantings and can open each 
 test('a disabled "Suggest a plan" says why, without softening the irrigation gate', () => {
   const page = source('../app/facilitator/crops/page.tsx');
   // Anchored on the words, not the icon that precedes them.
-  const at = page.indexOf('Suggest a plan</>');
+  const at = Math.max(page.indexOf('Suggest a plan</>'), page.indexOf("inlineText(lang, 'Suggest a plan')}</>"));
   assert.ok(at > 0);
   const block = page.slice(at - 1800, at + 900);
   assert.match(block, /Turn on “Reliable irrigation for every crop cycle” above/);
@@ -499,7 +500,7 @@ test('the two long reference cards open on demand, with nothing deleted', () => 
   const proveAt = page.indexOf('What the planner can prove');
   assert.match(
     page.slice(proveAt, proveAt + 700),
-    /summary="Every yield figure and date here is either from a published source or labelled as an estimate/,
+    /summary=(?:"|\{inlineText\(lang, ')Every yield figure and date here is either from a published source or labelled as an estimate/,
     'the always-visible summary must carry the honesty claim itself, not just name the topic',
   );
 
@@ -585,7 +586,7 @@ test('the whole-year branch runs from the REAL current month and the busy state 
   const page = source('../app/facilitator/crops/page.tsx');
   assert.match(page, /suggestIdealYearPlan\(answers, pattern, beds, plantings, currentMonth, new Date\(\)\.getFullYear\(\)\)/,
     'the sweep must receive the device month and year, never synthetic ones — the year dates the one-time starters\' `once` stamps');
-  assert.match(page, /generating \? IDEAL_PLAN_COPY\.busyLabel/,
+  assert.match(page, /generating \? (?:inlineText\(lang, )?IDEAL_PLAN_COPY\.busyLabel/,
     'the Suggest button must show the busy label while the sweep runs');
   assert.match(page, /blockers\.length === 0 && !generating/,
     'the generating flag must gate the button against a double tap');
@@ -639,16 +640,16 @@ test('the "already growing" pill and tooltip speak nursery wording for a settled
   const pillBlock = page.slice(pillAt - 200, pillAt + 50);
   assert.match(
     pillBlock,
-    /planting\.inNursery \? 'Trays sown — not yet planted out' : 'Already growing'/,
+    /planting\.inNursery \? (?:inlineText\(lang, )?'Trays sown — not yet planted out'\)? : (?:inlineText\(lang, )?'Already growing'/,
     'the pill text must read "Already growing" only when the row is not still in the nursery',
   );
 
-  const tooltipAt = page.indexOf('· already growing');
+  const tooltipAt = page.indexOf("'already growing')");
   assert.ok(tooltipAt > 0);
   const tooltipLine = page.slice(tooltipAt - 200, tooltipAt + 50);
   assert.match(
     tooltipLine,
-    /planting\.inNursery \? ' · trays sown, not yet planted out' : planting\.existing \? ' · already growing' : ''/,
+    /planting\.inNursery \? ` · \$\{inlineText\(lang, 'trays sown, not yet planted out'\)\}` : planting\.existing \? ` · \$\{inlineText\(lang, 'already growing'\)\}` : ''/,
     'the Gantt tooltip must not call a nursery cohort "already growing"',
   );
 });
@@ -769,5 +770,5 @@ test('animal save failures remain visible until both choices and production mont
       assert.equal(failed, !enterpriseSaved || !seasonsSaved, `${name} must not claim saving while one record failed`);
     }
   }
-  assert.match(productionPage, /animalSaveFailed && <p role="alert"[^>]*>Animal products and production months could not be saved/);
+  assert.match(productionPage, /animalSaveFailed && <p role="alert"[^>]*>(?:\{inlineText\(lang, ')?Animal products and production months could not be saved/);
 });

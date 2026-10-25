@@ -20,7 +20,7 @@ export default function DesignDraftCopy({ en, zu }: { en: string; zu: string }) 
 export function DesignDraftNotice() {
   const { lang } = useLanguage();
   if (lang === 'xh') {
-    const source = 'Some navigation, headings and exercise prompts on this pathway are unreviewed isiXhosa drafts. Core lesson text, model measurements and narration remain in English.';
+    const source = 'Navigation, headings, lesson text and exercise prompts on this pathway are unreviewed isiXhosa drafts. Model measurements and narration remain in English.';
     return <aside role="note" className={`${courseStyles.notice} ${courseStyles.projectNotice}`}><p><strong>isiXhosa draft.</strong> <span lang="xh">{xhInlineDraft(source) ?? source}</span><small lang="en" className={styles.source}>English source: {source}</small></p></aside>;
   }
   if (lang !== 'zu') return null;
